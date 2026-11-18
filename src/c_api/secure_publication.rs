@@ -164,7 +164,6 @@ fn count_registration_context(
         _ => Err(runtime_error("unsupported R88y registration context")),
     }
 }
-
 fn publish_and_snapshot_member(
     state: &mut LuaState,
     namespace: &str,
@@ -174,36 +173,72 @@ fn publish_and_snapshot_member(
     ordinary_snapshots: Val,
     secure_snapshots: Val,
 ) -> LuaResult<bool> {
-    let ordinary_history = namespace_snapshot_table(state, ordinary_snapshots, namespace)?;
-    let secure_history = namespace_snapshot_table(state, secure_snapshots, namespace)?;
-    let previous_ordinary = table_get(state, ordinary_history, member);
-    let previous_secure = table_get(state, secure_history, member);
+    let (ordinary_history, secure_history, previous) = snapshot_member_history(
+        state,
+        ordinary_snapshots,
+        secure_snapshots,
+        namespace,
+        member,
+    )?;
     let implemented = if context_is_active {
-        publish_verified_member(
-            state,
-            namespace,
-            member,
-            flag,
-            previous_ordinary,
-            previous_secure,
-        )?
+        publish_verified_member(state, namespace, member, flag, previous.0, previous.1)?
     } else {
-        let (ordinary_namespace, secure_namespace) = namespace_tables(state, namespace)?;
-        let ordinary_implemented =
-            function_value(table_get(state, ordinary_namespace, member)).is_some();
-        let secure_implemented =
-            function_value(table_get(state, secure_namespace, member)).is_some();
-        let preserve_fixed_base = is_fixed_base_copy(state, namespace, member)?;
-        remove_namespace_member(state, namespace, member, true, !preserve_fixed_base)?;
-        ordinary_implemented || secure_implemented
+        preserve_inactive_member(state, namespace, member)?
     };
-
-    let (ordinary_namespace, secure_namespace) = namespace_tables(state, namespace)?;
-    let ordinary_value = table_get(state, ordinary_namespace, member);
-    let secure_value = table_get(state, secure_namespace, member);
-    store_snapshot(state, ordinary_history, member, ordinary_value);
-    store_snapshot(state, secure_history, member, secure_value);
+    snapshot_current_member(state, namespace, member, ordinary_history, secure_history)?;
     Ok(implemented)
+}
+
+fn snapshot_member_history(
+    state: &mut LuaState,
+    ordinary_snapshots: Val,
+    secure_snapshots: Val,
+    namespace: &str,
+    member: &str,
+) -> LuaResult<(Val, Val, (Val, Val))> {
+    let ordinary = namespace_snapshot_table(state, ordinary_snapshots, namespace)?;
+    let secure = namespace_snapshot_table(state, secure_snapshots, namespace)?;
+    let previous = (
+        table_get(state, ordinary, member),
+        table_get(state, secure, member),
+    );
+    Ok((ordinary, secure, previous))
+}
+
+fn preserve_inactive_member(
+    state: &mut LuaState,
+    namespace: &str,
+    member: &str,
+) -> LuaResult<bool> {
+    let (ordinary, secure) = namespace_tables(state, namespace)?;
+    let ordinary_implemented = function_value(table_get(state, ordinary, member)).is_some();
+    let secure_implemented = function_value(table_get(state, secure, member)).is_some();
+    let preserve_fixed_base = is_fixed_base_copy(state, namespace, member)?;
+    remove_namespace_member(state, namespace, member, true, !preserve_fixed_base)?;
+    Ok(ordinary_implemented || secure_implemented)
+}
+
+fn snapshot_current_member(
+    state: &mut LuaState,
+    namespace: &str,
+    member: &str,
+    ordinary_history: Val,
+    secure_history: Val,
+) -> LuaResult<()> {
+    let (ordinary, secure) = namespace_tables(state, namespace)?;
+    store_snapshot(
+        state,
+        ordinary_history,
+        member,
+        table_get(state, ordinary, member),
+    );
+    store_snapshot(
+        state,
+        secure_history,
+        member,
+        table_get(state, secure, member),
+    );
+    Ok(())
 }
 
 fn trace_r88y_manifest(context_counts: [usize; 3]) {
@@ -266,7 +301,6 @@ fn snapshot_changed(previous: Val, current: Val) -> bool {
         _ => true,
     }
 }
-
 fn publish_verified_member(
     state: &mut LuaState,
     namespace: &str,
@@ -276,20 +310,32 @@ fn publish_verified_member(
     previous_secure: Val,
 ) -> LuaResult<bool> {
     let (ordinary_namespace, secure_namespace) = namespace_tables(state, namespace)?;
-    let ordinary_value = table_get(state, ordinary_namespace, member);
-    let secure_value = table_get(state, secure_namespace, member);
-    let (publish_global, publish_secure) = native_registration_destinations(flag);
-    match (publish_global, publish_secure) {
-        (true, true) => publish_to_both(
-            state,
-            namespace,
-            member,
-            flag,
-            ordinary_value,
-            secure_value,
-            previous_ordinary,
-            previous_secure,
-        ),
+    let ordinary = table_get(state, ordinary_namespace, member);
+    let secure = table_get(state, secure_namespace, member);
+    let destinations = native_registration_destinations(flag);
+    route_verified_member_by_destinations(
+        state,
+        namespace,
+        member,
+        flag,
+        destinations,
+        (ordinary, secure),
+        (previous_ordinary, previous_secure),
+    )
+}
+
+fn route_verified_member_by_destinations(
+    state: &mut LuaState,
+    namespace: &str,
+    member: &str,
+    flag: u8,
+    destinations: (bool, bool),
+    values: (Val, Val),
+    previous: (Val, Val),
+) -> LuaResult<bool> {
+    let (ordinary, secure) = values;
+    match destinations {
+        (true, true) => publish_to_both(state, namespace, member, flag, values, previous),
         (true, false) => {
             let secure_base_copy = is_fixed_base_copy(state, namespace, member)?;
             publish_ordinary_only(
@@ -297,62 +343,93 @@ fn publish_verified_member(
                 namespace,
                 member,
                 flag,
-                ordinary_value,
-                secure_value,
+                ordinary,
+                secure,
                 secure_base_copy,
             )
         }
-        (false, true) => {
-            publish_secure_only(state, namespace, member, flag, ordinary_value, secure_value)
-        }
+        (false, true) => publish_secure_only(state, namespace, member, flag, ordinary, secure),
         (false, false) => Ok(false),
     }
 }
-
 fn publish_to_both(
     state: &mut LuaState,
     namespace: &str,
     member: &str,
     flag: u8,
-    ordinary: Val,
-    secure: Val,
-    previous_ordinary: Val,
-    previous_secure: Val,
+    values: (Val, Val),
+    previous: (Val, Val),
 ) -> LuaResult<bool> {
-    let ordinary = function_value(ordinary);
-    let secure = function_value(secure);
-    if let Some(ordinary) = ordinary {
-        if let Some(secure) = secure {
-            update_changed_dual_handler(
-                state,
-                namespace,
-                member,
-                flag,
-                ordinary,
-                secure,
-                previous_ordinary,
-                previous_secure,
-            )?;
-        } else {
-            let secure = separate_flag3_destination_function_object(state, ordinary, flag)?;
-            set_member_in_both(state, namespace, member, ordinary, secure, flag)?;
+    let handlers = (function_value(values.0), function_value(values.1));
+    match handlers {
+        (Some(ordinary), Some(secure)) => update_existing_dual_handler(
+            state,
+            namespace,
+            member,
+            flag,
+            (ordinary, secure),
+            previous,
+        ),
+        (Some(ordinary), None) => publish_from_ordinary(state, namespace, member, flag, ordinary),
+        (None, Some(secure)) => {
+            publish_from_secure(state, namespace, member, flag, secure, previous.1)
         }
-        return Ok(true);
+        (None, None) => remove_missing_dual_handler(state, namespace, member, previous),
     }
-    if let Some(secure) = secure {
-        if matches!(previous_secure, Val::Function(_)) {
-            // Public-table cleanup does not revoke a prior secure registration.
-            return Ok(true);
-        }
-        let ordinary = separate_flag3_destination_function_object(state, secure, flag)?;
-        set_member_in_both(state, namespace, member, ordinary, secure, flag)?;
-        return Ok(true);
-    }
+}
 
-    remove_stale_secure_handler(state, namespace, member, previous_ordinary, previous_secure)?;
+fn update_existing_dual_handler(
+    state: &mut LuaState,
+    namespace: &str,
+    member: &str,
+    flag: u8,
+    handlers: (Val, Val),
+    previous: (Val, Val),
+) -> LuaResult<bool> {
+    update_changed_dual_handler(
+        state, namespace, member, flag, handlers.0, handlers.1, previous.0, previous.1,
+    )?;
+    Ok(true)
+}
+
+fn remove_missing_dual_handler(
+    state: &mut LuaState,
+    namespace: &str,
+    member: &str,
+    previous: (Val, Val),
+) -> LuaResult<bool> {
+    remove_stale_secure_handler(state, namespace, member, previous.0, previous.1)?;
     Ok(false)
 }
 
+fn publish_from_ordinary(
+    state: &mut LuaState,
+    namespace: &str,
+    member: &str,
+    flag: u8,
+    ordinary: Val,
+) -> LuaResult<bool> {
+    let secure = separate_flag3_destination_function_object(state, ordinary, flag)?;
+    set_member_in_both(state, namespace, member, ordinary, secure, flag)?;
+    Ok(true)
+}
+
+fn publish_from_secure(
+    state: &mut LuaState,
+    namespace: &str,
+    member: &str,
+    flag: u8,
+    secure: Val,
+    previous_secure: Val,
+) -> LuaResult<bool> {
+    if matches!(previous_secure, Val::Function(_)) {
+        // Public-table cleanup does not revoke a prior secure registration.
+        return Ok(true);
+    }
+    let ordinary = separate_flag3_destination_function_object(state, secure, flag)?;
+    set_member_in_both(state, namespace, member, ordinary, secure, flag)?;
+    Ok(true)
+}
 fn update_changed_dual_handler(
     state: &mut LuaState,
     namespace: &str,
@@ -363,30 +440,55 @@ fn update_changed_dual_handler(
     previous_ordinary: Val,
     previous_secure: Val,
 ) -> LuaResult<()> {
-    let ordinary_changed = snapshot_changed(previous_ordinary, ordinary);
-    let secure_changed = snapshot_changed(previous_secure, secure);
-    let destinations = match (ordinary_changed, secure_changed) {
-        (true, false) => Some((
-            ordinary,
-            separate_flag3_destination_function_object(state, ordinary, flag)?,
-        )),
-        (false, true) => Some((
-            separate_flag3_destination_function_object(state, secure, flag)?,
-            secure,
-        )),
-        (true, true) | (false, false) if ordinary == secure => Some((
-            ordinary,
-            separate_flag3_destination_function_object(state, ordinary, flag)?,
-        )),
-        _ => None,
+    let Some((ordinary_value, secure_value)) = changed_dual_destinations(
+        state,
+        flag,
+        ordinary,
+        secure,
+        previous_ordinary,
+        previous_secure,
+    )?
+    else {
+        return Ok(());
     };
-    if let Some((ordinary_value, secure_value)) = destinations {
-        let destination_changed = ordinary_value != ordinary || secure_value != secure;
-        if destination_changed {
-            set_member_in_both(state, namespace, member, ordinary_value, secure_value, flag)?;
-        }
+    if ordinary_value != ordinary || secure_value != secure {
+        set_member_in_both(state, namespace, member, ordinary_value, secure_value, flag)?;
     }
     Ok(())
+}
+
+fn changed_dual_destinations(
+    state: &mut LuaState,
+    flag: u8,
+    ordinary: Val,
+    secure: Val,
+    previous_ordinary: Val,
+    previous_secure: Val,
+) -> LuaResult<Option<(Val, Val)>> {
+    let ordinary_changed = snapshot_changed(previous_ordinary, ordinary);
+    let secure_changed = snapshot_changed(previous_secure, secure);
+    match (ordinary_changed, secure_changed) {
+        (true, false) => clone_ordinary_destination(state, ordinary, flag).map(Some),
+        (false, true) => clone_secure_destination(state, secure, flag).map(Some),
+        (true, true) | (false, false) if ordinary == secure => {
+            clone_ordinary_destination(state, ordinary, flag).map(Some)
+        }
+        _ => Ok(None),
+    }
+}
+
+fn clone_ordinary_destination(
+    state: &mut LuaState,
+    ordinary: Val,
+    flag: u8,
+) -> LuaResult<(Val, Val)> {
+    let secure = separate_flag3_destination_function_object(state, ordinary, flag)?;
+    Ok((ordinary, secure))
+}
+
+fn clone_secure_destination(state: &mut LuaState, secure: Val, flag: u8) -> LuaResult<(Val, Val)> {
+    let ordinary = separate_flag3_destination_function_object(state, secure, flag)?;
+    Ok((ordinary, secure))
 }
 
 fn remove_stale_secure_handler(
@@ -592,7 +694,6 @@ fn validate_target_namespace(
     }
     Ok(())
 }
-
 fn remove_namespace_member(
     state: &mut LuaState,
     namespace: &str,
@@ -604,29 +705,39 @@ fn remove_namespace_member(
         return Ok(());
     }
     if namespace == "_G" {
-        if secure {
-            set_secure_env_key_state(state, member, Val::Nil)?;
-        } else {
-            set_global_val(state, member, Val::Nil);
-        }
-        return Ok(());
+        return remove_global_member(state, member, secure);
     }
+    let parent = namespace_parent(state, secure)?;
+    remove_namespace_function(state, parent, namespace, member);
+    Ok(())
+}
 
-    let parent = if secure {
-        Val::Table(secure_env_table(state)?)
+fn remove_global_member(state: &mut LuaState, member: &str, secure: bool) -> LuaResult<()> {
+    if secure {
+        set_secure_env_key_state(state, member, Val::Nil)?;
     } else {
-        Val::Table(state.global)
-    };
-    let namespace_value = table_get(state, parent, namespace);
-    if let Val::Table(table) = namespace_value
-        && matches!(
-            table_get(state, Val::Table(table), member),
-            Val::Function(_)
-        )
-    {
-        table_set(state, Val::Table(table), member, Val::Nil);
+        set_global_val(state, member, Val::Nil);
     }
     Ok(())
+}
+
+fn namespace_parent(state: &mut LuaState, secure: bool) -> LuaResult<Val> {
+    if secure {
+        Ok(Val::Table(secure_env_table(state)?))
+    } else {
+        Ok(Val::Table(state.global))
+    }
+}
+
+fn remove_namespace_function(state: &mut LuaState, parent: Val, namespace: &str, member: &str) {
+    let namespace = table_get(state, parent, namespace);
+    let Val::Table(table) = namespace else { return };
+    if matches!(
+        table_get(state, Val::Table(table), member),
+        Val::Function(_)
+    ) {
+        table_set(state, Val::Table(table), member, Val::Nil);
+    }
 }
 
 pub(crate) fn verified_r88y_flag(namespace: &str, member: &str) -> Option<u8> {
@@ -644,39 +755,7 @@ mod tests {
     use crate::screen::ScreenKind;
     use rilua::LuaApiMut;
 
-    #[test]
-    fn verified_manifest_routes_implemented_functions_and_leaves_gaps_absent() {
-        let env = WowLuaEnv::new().expect("lua env");
-        if !crate::client_profile::is_active_retail_12_1_5() {
-            return;
-        }
-
-        let unmodeled = publish_verified_secure_namespace_members(
-            env.rilua_mut().state_mut(),
-            ScreenKind::Game,
-        )
-        .expect("verified publication is idempotent");
-        assert!(
-            VERIFIED_MEMBERS.len() > unmodeled + 2,
-            "at least two verified implementations should be routed"
-        );
-
-        let routes_and_gap: (
-            bool,
-            bool,
-            bool,
-            bool,
-            bool,
-            bool,
-            bool,
-            bool,
-            bool,
-            bool,
-            bool,
-            bool,
-        ) = env
-            .eval(
-                r#"
+    const VERIFIED_MANIFEST_PROBE: &str = r#"
                 local ping = rawget(_G, "C_Ping")
                 local securePing = rawget(__secureenv, "C_Ping")
                 local services = rawget(_G, "C_CharacterServices")
@@ -739,8 +818,84 @@ mod tests {
                         and type(rawget(__secureenv, "CreateFromMixins")) == "function",
                     type(rawget(_G, "newproxy")) == "function"
                         and rawget(__secureenv, "newproxy") == nil
-                "#,
-            )
+                "#;
+    const SCREEN_SWITCH_INITIAL_PROBE: &str = r#"
+                local ordinaryNamespace = rawget(_G, "C_CharacterCreation")
+                local secureNamespace = rawget(__secureenv, "C_CharacterCreation")
+                local ordinary = type(ordinaryNamespace) == "table"
+                    and rawget(ordinaryNamespace, "GetTrialBoostStartingLevel")
+                local secure = type(secureNamespace) == "table"
+                    and rawget(secureNamespace, "GetTrialBoostStartingLevel")
+                return type(ordinary) == "function", type(secure) == "function"
+                "#;
+    const SCREEN_SWITCH_GLUE_PROBE: &str = r#"
+                local ordinaryNamespace = rawget(_G, "C_CharacterCreation")
+                local secureNamespace = rawget(__secureenv, "C_CharacterCreation")
+                local ordinary = type(ordinaryNamespace) == "table"
+                    and rawget(ordinaryNamespace, "GetTrialBoostStartingLevel")
+                local secure = type(secureNamespace) == "table"
+                    and rawget(secureNamespace, "GetTrialBoostStartingLevel")
+                local ordinaryLevel = type(ordinary) == "function" and ordinary()
+                local secureLevel = type(secure) == "function" and secure()
+                return type(ordinary) == "function",
+                    type(secure) == "function",
+                    not rawequal(ordinary, secure),
+                    type(ordinaryLevel) == "number",
+                    type(secureLevel) == "number",
+                    ordinaryLevel == secureLevel
+                "#;
+    const SCREEN_SWITCH_REPLACED_PROBE: &str = r#"
+                local ordinary = C_Ping.GetDefaultPingOptions
+                local secure = __secureenv.C_Ping.GetDefaultPingOptions
+                return type(ordinary) == "function",
+                    type(secure) == "function",
+                    ordinary(),
+                    secure()
+                "#;
+    const SCREEN_SWITCH_FLAG1_PROBE: &str = r#"
+                return type(rawget(_G, "newproxy")) == "function",
+                    rawget(__secureenv, "newproxy") == nil
+                "#;
+
+    #[test]
+    fn verified_manifest_routes_implemented_functions_and_leaves_gaps_absent() {
+        let env = WowLuaEnv::new().expect("lua env");
+        if !crate::client_profile::is_active_retail_12_1_5() {
+            return;
+        }
+        let unmodeled = publish_verified_secure_namespace_members(
+            env.rilua_mut().state_mut(),
+            ScreenKind::Game,
+        )
+        .expect("verified publication is idempotent");
+        assert_manifest_route_count(unmodeled);
+        assert_verified_manifest_destinations(&env);
+        assert_verified_r88y_flags();
+    }
+
+    fn assert_manifest_route_count(unmodeled: usize) {
+        assert!(
+            VERIFIED_MEMBERS.len() > unmodeled + 2,
+            "at least two verified implementations should be routed"
+        );
+    }
+
+    fn assert_verified_manifest_destinations(env: &WowLuaEnv) {
+        let routes_and_gap: (
+            bool,
+            bool,
+            bool,
+            bool,
+            bool,
+            bool,
+            bool,
+            bool,
+            bool,
+            bool,
+            bool,
+            bool,
+        ) = env
+            .eval(VERIFIED_MANIFEST_PROBE)
             .expect("verified R88y destinations should be observable");
         assert_eq!(
             routes_and_gap,
@@ -748,7 +903,9 @@ mod tests {
                 true, true, true, true, true, true, true, true, true, true, true, true
             )
         );
+    }
 
+    fn assert_verified_r88y_flags() {
         assert_eq!(
             verified_r88y_flag("C_Ping", "GetDefaultPingOptions"),
             Some(3)
@@ -770,71 +927,43 @@ mod tests {
             return;
         }
         let env = WowLuaEnv::new().expect("lua env");
+        assert_pre_screen_flag3_absent(&env);
+        assert_glue_screen_flag3_published(&env);
+        replace_flag3_and_assert_late_handler(&env);
+        assert_flag1_remains_ordinary_only(&env);
+    }
+
+    fn assert_pre_screen_flag3_absent(env: &WowLuaEnv) {
         let before: (bool, bool) = env
-            .eval(
-                r#"
-                local ordinaryNamespace = rawget(_G, "C_CharacterCreation")
-                local secureNamespace = rawget(__secureenv, "C_CharacterCreation")
-                local ordinary = type(ordinaryNamespace) == "table"
-                    and rawget(ordinaryNamespace, "GetTrialBoostStartingLevel")
-                local secure = type(secureNamespace) == "table"
-                    and rawget(secureNamespace, "GetTrialBoostStartingLevel")
-                return type(ordinary) == "function", type(secure) == "function"
-                "#,
-            )
+            .eval(SCREEN_SWITCH_INITIAL_PROBE)
             .expect("read pre-screen registration state");
         assert_eq!(before, (false, false));
+    }
 
+    fn assert_glue_screen_flag3_published(env: &WowLuaEnv) {
         env.set_screen_mode(ScreenKind::CharacterSelect);
         let late_flag3: (bool, bool, bool, bool, bool, bool) = env
-            .eval(
-                r#"
-                local ordinaryNamespace = rawget(_G, "C_CharacterCreation")
-                local secureNamespace = rawget(__secureenv, "C_CharacterCreation")
-                local ordinary = type(ordinaryNamespace) == "table"
-                    and rawget(ordinaryNamespace, "GetTrialBoostStartingLevel")
-                local secure = type(secureNamespace) == "table"
-                    and rawget(secureNamespace, "GetTrialBoostStartingLevel")
-                local ordinaryLevel = type(ordinary) == "function" and ordinary()
-                local secureLevel = type(secure) == "function" and secure()
-                return type(ordinary) == "function",
-                    type(secure) == "function",
-                    not rawequal(ordinary, secure),
-                    type(ordinaryLevel) == "number",
-                    type(secureLevel) == "number",
-                    ordinaryLevel == secureLevel
-                "#,
-            )
+            .eval(SCREEN_SWITCH_GLUE_PROBE)
             .expect("read late flag-3 publication");
         assert_eq!(late_flag3, (true, true, true, true, true, true));
+    }
 
+    fn replace_flag3_and_assert_late_handler(env: &WowLuaEnv) {
         env.exec("rawset(C_Ping, 'GetDefaultPingOptions', function() return 'late' end)")
             .expect("replace ordinary flag-3 namespace member");
         env.set_screen_mode(ScreenKind::Game);
         let replaced_flag3: (bool, bool, String, String) = env
-            .eval(
-                r#"
-                local ordinary = C_Ping.GetDefaultPingOptions
-                local secure = __secureenv.C_Ping.GetDefaultPingOptions
-                return type(ordinary) == "function",
-                    type(secure) == "function",
-                    ordinary(),
-                    secure()
-                "#,
-            )
+            .eval(SCREEN_SWITCH_REPLACED_PROBE)
             .expect("read late flag-3 replacement behavior");
         assert_eq!(replaced_flag3, (true, true, "late".into(), "late".into()));
+    }
 
+    fn assert_flag1_remains_ordinary_only(env: &WowLuaEnv) {
         env.exec("rawset(_G, 'newproxy', function() return 'late' end)")
             .expect("replace ordinary flag-1 global for route test");
         env.set_screen_mode(ScreenKind::Game);
         let flag1: (bool, bool) = env
-            .eval(
-                r#"
-                return type(rawget(_G, "newproxy")) == "function",
-                    rawget(__secureenv, "newproxy") == nil
-                "#,
-            )
+            .eval(SCREEN_SWITCH_FLAG1_PROBE)
             .expect("read late flag-1 publication");
         assert_eq!(flag1, (true, true));
     }
