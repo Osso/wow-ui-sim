@@ -115,6 +115,16 @@ fn load_panel_publishers(env: &WowLuaEnv) {
     {
         load_addon(&env.loader_env(), &toc_path)
             .unwrap_or_else(|error| panic!("[load {name}] FAILED: {error}"));
+        // The low-level loader does not dispatch startup's ADDON_LOADED event.
+        // ContainerFrameSettingsManager creates its original token tracker when
+        // Blizzard_TokenUI finishes, before VARIABLES_LOADED configures bags.
+        let arguments = wow_ui_sim::loader::addon_loaded_arguments(
+            &env.state().borrow(),
+            &name,
+            env.lua_string(&name),
+        );
+        env.fire_event_with_args("ADDON_LOADED", &arguments)
+            .expect("original panel owners receive their load-completion event");
     }
     load_lod_bootstrap(env, &ui, "Blizzard_Collections");
     load_lod_bootstrap(env, &ui, "Blizzard_Professions");

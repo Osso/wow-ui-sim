@@ -1,3 +1,7 @@
+## [2026-11-18] investigation | Retail bag tracker fixture lifecycle
+
+The [panel fixture investigation](investigations/showuipanel-toggle-fixture-owners.md#retail-bag-tracker-lifecycle-lt-c0e6) records the missing per-addon completion event. Original TokenUI creates the bag tracker after `ADDON_LOADED`; assertions and vendor code remain unchanged.
+
 ## [2026-11-17] verification | Retail call-pet flyout results
 
 The [call-pet contract](../specs/call-pet-spell-info.md) and [Spellbook follow-ups](investigations/spellbook-r88m4-followups.md#retail-call-pet-flyout) record the original Retail ActionBar consumer and empty-default host inputs. **VERIFIED (Retail simulator):** named and unmapped spells stay visible, nameless entries hide, and the callable-wrong producer fails inside the consumer. **UNKNOWN:** same-build spell-ID rows and the runtime pet-info writer.
