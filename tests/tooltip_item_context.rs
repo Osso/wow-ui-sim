@@ -538,16 +538,19 @@ fn unknown_catalog_id_stays_empty_even_with_explicit_host_level() {
     );
 }
 
+/// VERIFIED (R88au.2, 12.1.5.70688); applicability to 70783 is INFERRED.
 #[test]
-fn finite_integral_u32_context_boundaries_can_select_explicit_keys() {
+fn item_context_signed32_values_normalize_to_context_bytes() {
     let env = seeded_env();
     env.state().borrow_mut().item_tooltip_levels.extend([
-        (key(ITEM, Some(u32::MAX), Some(0)), 605),
+        (key(ITEM, Some(191), None), 605),
+        (key(ITEM, Some(0), None), 607),
         (key(ITEM, Some(0), Some(u32::MAX)), 606),
     ]);
+    // UNKNOWN native domain (R88au.5): preserve the existing treasureContextLevel max-key case.
     probe(
         &env,
-        "ITCheck(605,211995,nil,4294967295,0); ITCheck(606,211995,nil,0,4294967295)",
+        "ITCheck(605,211995,nil,191); ITCheck(601,211995,nil,'1'); ITCheck(601,211995,nil,1.9); ITCheck(607,211995,nil,-1); ITCheck(607,211995,nil,192); ITCheck(607,211995,nil,2147483647); ITCheck(606,211995,nil,0,4294967295)",
     );
 }
 
