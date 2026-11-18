@@ -1,3 +1,7 @@
+## [2026-11-18] implementation | Retail role and friends settings
+
+The [social settings investigation](investigations/retail-social-settings.md) separates the verified R88ap.3–4 Boolean rules from inferred host type tags/settings bytes and unknown writers/events. Original UnitPopup and FriendsFrame consumers supply regression coverage.
+
 ## [2026-11-18] implementation | Retail cinematic summary
 
 The [cinematic summary investigation](investigations/retail-cinematic-summary.md) separates the verified R88ap.1 ID lifecycle and nil/string contract from inferred host data and argument admission. The original MovieFrame dialog is the regression consumer.
@@ -5,6 +9,10 @@ The [cinematic summary investigation](investigations/retail-cinematic-summary.md
 ## [2026-11-18] implementation | Retail social-UI policy
 
 The [social-UI policy investigation](investigations/social-ui-policy.md) records the R88ap.6 one-Boolean contract, explicit empty-default host input, selected FriendsFrame consumer, and unknown writers/events. Other profiles retain their existing behavior.
+
+## [2026-11-17] system | Retail Guild faction group
+
+The [Guild faction group system page](systems/guild-faction-group.md) links the [contract](../specs/guild-faction-group.md). **VERIFIED (R88ap.2):** player-object absence returns zero values; otherwise race-linked faction flags follow 4→0, 2→1, 1→0, else -1, with no guild test. **VERIFIED (simulator source):** the raw per-race flag input is empty by default. **UNKNOWN:** raw Retail DB2 rows and native object-unavailable conditions. **INFERRED (DB2 export build 70448):** the contract records classification outputs as context only; the simulator does not seed them. **VERIFIED (Retail 12.1.5.70783 runtime):** the byte-identical GuildNews consumer test passes for Orc, Human, missing-row, and flag-order fixtures, while the constant-1 and faction-name overlays fail at its assertions.
 
 ## [2026-11-18] investigation | Retail bag tracker fixture lifecycle
 
