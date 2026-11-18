@@ -69,12 +69,6 @@ if rawget(C_Commentator, "SendAddonMessage") == nil then
         return Enum and Enum.SendAddonMessageResult and Enum.SendAddonMessageResult.Success or 0
     end
 end
--- No cinematic ever plays (InCinematic is a false stub), so there is no summary;
--- the documented result is a non-nil string. Replace with cinematic playback state.
-if type(GetBuildInfo) == "function" and select(4, GetBuildInfo()) >= 120005
-        and GetCurrentCinematicSummary == nil then
-    function GetCurrentCinematicSummary() return "" end
-end
 -- 12.0.5 logged variant; mirrors SendAddonMessage until commentator comms are modeled.
 if type(GetBuildInfo) == "function" and select(4, GetBuildInfo()) >= 120005
         and rawget(C_Commentator, "SendAddonMessageLogged") == nil then
@@ -234,6 +228,16 @@ if rawget(C_SocialUI, "IsSystemEnabled") == nil then
 end
 "#;
 
+#[cfg(not(all(feature = "profile-retail", feature = "retail-12-1-5")))]
+const CINEMATIC_SUMMARY_DEFAULT_LUA: &str = r#"
+-- No cinematic ever plays (InCinematic is a false stub), so there is no summary;
+-- the documented result is a non-nil string. Replace with cinematic playback state.
+if type(GetBuildInfo) == "function" and select(4, GetBuildInfo()) >= 120005
+        and GetCurrentCinematicSummary == nil then
+    function GetCurrentCinematicSummary() return "" end
+end
+"#;
+
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     #[cfg(not(all(
         feature = "retail-12-0-5",
@@ -241,6 +245,8 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     )))]
     lua.exec(UNMODELED_SPELL_CONFIRMATION_QUERY_LUA)?;
     lua.exec(INERT_GLOBAL_DEFAULTS_LUA)?;
+    #[cfg(not(all(feature = "profile-retail", feature = "retail-12-1-5")))]
+    lua.exec(CINEMATIC_SUMMARY_DEFAULT_LUA)?;
     #[cfg(not(all(feature = "profile-retail", feature = "retail-12-1-5")))]
     if cfg!(feature = "retail-12-1-0")
         || crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever

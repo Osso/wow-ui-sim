@@ -1,3 +1,7 @@
+## [2026-11-18] implementation | Retail cinematic summary
+
+The [cinematic summary investigation](investigations/retail-cinematic-summary.md) separates the verified R88ap.1 ID lifecycle and nil/string contract from inferred host data and argument admission. The original MovieFrame dialog is the regression consumer.
+
 ## [2026-11-18] implementation | Retail social-UI policy
 
 The [social-UI policy investigation](investigations/social-ui-policy.md) records the R88ap.6 one-Boolean contract, explicit empty-default host input, selected FriendsFrame consumer, and unknown writers/events. Other profiles retain their existing behavior.
