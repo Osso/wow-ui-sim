@@ -24,6 +24,17 @@ pub struct ProfessionSpecInputs {
     pub points_eligible_skill_lines: HashSet<u32>,
 }
 
+impl ProfessionSpecInputs {
+    /// INFERRED (simulator mapping): return supplied children for one path ID.
+    pub(crate) fn children_for_path(&self, path_id: i32) -> Vec<i32> {
+        self.path_group_ids
+            .get(&path_id)
+            .and_then(|group_id| self.group_node_ids.get(group_id))
+            .cloned()
+            .unwrap_or_default()
+    }
+}
+
 #[derive(Debug, Clone, Copy)]
 pub struct SkillRank {
     pub current: i32,
