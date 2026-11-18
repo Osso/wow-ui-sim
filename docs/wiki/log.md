@@ -1,6 +1,6 @@
 ## [2026-11-18] investigation | Panel triage A
 
-The [panel triage](investigations/master-test-fixture-triage.md#panel-triage-a-lt-d032-2026-11-18) records original startup-owner omissions and non-Retail compatibility-default regressions. Targeted Retail/PTR results separate passing fixes, intentional profession RED, and the escalated achievement assertion.
+The [panel triage](investigations/master-test-fixture-triage.md#panel-triage-a-lt-d032-2026-11-18) records original startup-owner omissions, the source-backed geometric achievement assertion correction, and intentional profession RED. Scope is Retail only with four compile gates; provisional non-Retail fallback restorations were removed.
 
 ## [2026-11-18] implementation | Retail role and friends settings
 
