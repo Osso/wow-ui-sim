@@ -913,7 +913,7 @@ fn performance_bar_tooltip_uses_supplied_protocols_and_zero_bandwidth() {
             local labels = { [0] = UNKNOWN, "TCP", "UDP" }
 
             local function capture_results(...)
-                return select("#", ...), ...
+                return select('#', ...), ...
             end
 
             local function tooltip_line_matches(expected)
