@@ -8,6 +8,8 @@
 - [ ] Require signed 32-bit path IDs, and also a config ID for `GetStateForPath`; accept numeric strings and fractions after range validation, and raise the documented Usage errors for invalid arguments.
 - [ ] Return exactly one numeric state from `Enum.ProfessionsSpecPathState`: Locked 0, Progressing 1, or Completed 2. Missing path/config and rank below the required rank return Locked; otherwise equality with effective maximum returns Completed, and other ranks return Progressing. (R88ax.1, VERIFIED.)
 - [ ] Return the selected type-7 spend entry, type-9 unlock entry, or first qualifying type-1 spend currency. Unknown paths return 0 for entry getters and nil for currency. (R88ax.3, VERIFIED.)
+- [ ] `GetPerksForPath` returns ordered perk records; `isMajorPerk` tests the `IsMajorBonus` flag (2). `GetUnlockRankForPerk` returns nil on a miss; `GetEntryIDForPerk` returns 0 on a miss. (R88ax.2, VERIFIED.)
+- [ ] `GetStateForPerk` returns one `Enum.ProfessionsSpecPerkState` number: Unearned 0, Pending 1, Earned 2. (R88ax.2, VERIFIED.)
 - [ ] **INFERRED (simulator mapping):** use empty-default host inputs for path entry ranks, per-config current/effective maximum ranks, entry IDs, spend currency IDs, perk groups/flags/entries/ranks, and trait configuration IDs. Do not synthesize DB2 or runtime rows.
 
 ## How it works
@@ -23,12 +25,13 @@
 ## Tests asserting this spec
 
 - `tests/c_prof_specs_get_state_for_path.rs` — state results and argument boundary.
+- `tests/c_prof_specs_perks.rs` — perk list, rank, entry, state, and argument contracts.
 - `tests/test_showuipanel_lod.rs` — original Retail specialization-tree consumer.
 
 ## Known gaps (current cycle)
 
 - [ ] Trait-condition rows and their runtime evaluation are UNKNOWN (R88ax.1); keep them unsupplied by default. Supply effective maximum rank directly instead of inventing condition behavior.
-- [ ] Perk getters remain outside this spec until their decomp evidence is filed.
+- [ ] `GetDescriptionForPerk` is only in scope if the consumer test reaches it; its formatter dependencies remain UNKNOWN (R88ax.2).
 
 ## Out of scope
 
