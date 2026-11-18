@@ -87,12 +87,9 @@ const ASSERTIONS: &str = r#"
         ITPublic(data)
         return data
     end
-    function ITMiss(...)
+    function ITBaseSelection(...)
         local data = ITData(C_TooltipInfo.GetItemByID(...))
-        assert(data.id == nil and next(data.lines) == nil, 'empty Item DTO, no invented name')
-        local count = 0
-        for k in pairs(data) do assert(k == 'type' or k == 'lines'); count=count+1 end
-        assert(count == 2)
+        ITEqual(ITBase, data)
         return data
     end
     function ITMissingCatalog(...)
@@ -434,7 +431,7 @@ fn tooltip_item_payload_survives_collection_during_color_callback() {
 fn default_no_map_is_meaningful_base_catalog_not_a_missing_provider() {
     probe(
         &empty_env(),
-        "ITEqual(ITBase,ITCheck(571,211995)); ITEqual(ITBase,ITCheck(571,211995,nil,nil,nil)); ITMiss(211995,nil,1); ITMiss(211995,nil,nil,70)",
+        "ITEqual(ITBase,ITCheck(571,211995)); ITEqual(ITBase,ITCheck(571,211995,nil,nil,nil)); ITBaseSelection(211995,nil,1); ITBaseSelection(211995,nil,nil,70)",
     );
 }
 
@@ -476,7 +473,7 @@ fn context_two_independently_selects_same_item_distinct_variant() {
 fn treasure_seventy_selects_exact_context_one_variant() {
     probe(
         &seeded_env(),
-        "ITCheck(603,211995,nil,1,70); ITMiss(211995,nil,2,70)",
+        "ITCheck(603,211995,nil,1,70); ITBaseSelection(211995,nil,2,70)",
     );
 }
 
@@ -516,11 +513,12 @@ fn nil_and_zero_are_distinct_in_both_optional_positions() {
     );
 }
 
+/// INFERRED (simulator mapping; R88au.4 + R88av): a missing variant key keeps the base tooltip.
 #[test]
-fn missing_combinations_never_default_cross_context_or_nearest_scale() {
+fn missing_variant_keys_preserve_base_without_cross_context_or_nearest_scale() {
     probe(
         &seeded_env(),
-        "for _,c in ipairs({3,70,4294967295}) do ITMiss(211995,nil,c) end; ITMiss(211995,nil,1,71); ITMiss(211995,nil,2,80); ITMiss(211995,nil,nil,70); ITMiss(211995,nil,1,0); ITMiss(211995,nil,0,70)",
+        "for _,c in ipairs({3,70,191}) do ITBaseSelection(211995,nil,c) end; ITBaseSelection(211995,nil,1,71); ITBaseSelection(211995,nil,2,80); ITBaseSelection(211995,nil,nil,70); ITBaseSelection(211995,nil,1,0); ITBaseSelection(211995,nil,0,70)",
     );
 }
 
@@ -600,7 +598,7 @@ fn ordinary_quality_is_ignored_without_new_type_or_output_policy() {
 fn repeated_variants_misses_and_base_reads_never_mutate_inputs() {
     probe(
         &seeded_env(),
-        "for i=1,4 do ITCheck(601,211995,nil,1); ITCheck(604,211995,nil,1,80); ITMiss(211995,nil,3,80); ITCheck(571,211995) end",
+        "for i=1,4 do ITCheck(601,211995,nil,1); ITCheck(604,211995,nil,1,80); ITBaseSelection(211995,nil,3,80); ITCheck(571,211995) end",
     );
 }
 
@@ -619,10 +617,10 @@ fn returned_dtos_lines_and_colors_are_fresh_and_mutations_are_isolated() {
         a.lines[1].leftColor.r = 0; a.lines[1].leftText = 'mutated'
         a.lines[6] = nil; a.id = 99; a.extra = true
         ITEqual(b,ITCheck(604,211995,nil,1,80))
-        local m,n=ITMiss(211995,nil,99),ITMiss(211995,nil,99)
+        local m,n=ITBaseSelection(211995,nil,99),ITBaseSelection(211995,nil,99)
         assert(not rawequal(m,n))
         assert(not rawequal(m.lines,n.lines))
-        m.lines[1]={leftText='invented'}; ITEqual(n,ITMiss(211995,nil,99))
+        m.lines[1]={leftText='invented'}; ITEqual(n,ITBaseSelection(211995,nil,99))
     "#,
     );
 }
@@ -642,7 +640,7 @@ fn live_host_replace_and_clear_affect_new_reads_not_old_dtos() {
     env.state().borrow_mut().item_tooltip_levels.clear();
     probe(
         &env,
-        "ITMiss(211995,nil,1); ITCheck(571,211995); assert(ITOld.lines[2].leftText == 'Item Level 601')",
+        "ITBaseSelection(211995,nil,1); ITCheck(571,211995); assert(ITOld.lines[2].leftText == 'Item Level 601')",
     );
 }
 
@@ -651,7 +649,7 @@ fn independent_environments_do_not_share_variant_inputs() {
     let a = seeded_env();
     let b = empty_env();
     probe(&a, "ITCheck(604,211995,nil,1,80)");
-    probe(&b, "ITMiss(211995,nil,1,80); ITCheck(571,211995)");
+    probe(&b, "ITBaseSelection(211995,nil,1,80); ITCheck(571,211995)");
     b.state()
         .borrow_mut()
         .item_tooltip_levels
@@ -664,7 +662,7 @@ fn independent_environments_do_not_share_variant_inputs() {
 fn public_tainted_queries_retain_meaningful_context_and_caller_trust() {
     probe(
         &seeded_env(),
-        "ITContexts(function() ITCheck(601,211995,nil,1); ITCheck(602,211995,nil,2); ITCheck(603,211995,nil,1,70); ITCheck(604,211995,nil,1,80); ITMiss(211995,nil,3) end)",
+        "ITContexts(function() ITCheck(601,211995,nil,1); ITCheck(602,211995,nil,2); ITCheck(603,211995,nil,1,70); ITCheck(604,211995,nil,1,80); ITBaseSelection(211995,nil,3) end)",
     );
 }
 
@@ -678,7 +676,7 @@ fn secure_authentic_secret_numbers_select_meaningful_item_context_and_treasure()
 #[test]
 fn secure_authentic_secret_nil_optionals_follow_nil_default_and_exact_keys() {
     secret_probe(
-        "assert(issecure()); ITEqual(ITBase,ITCheck(571,211995,ITNil,ITNil,ITNil)); ITCheck(601,211995,ITNil,ITOne,ITNil); ITMiss(211995,nil,ITNil,IT70)",
+        "assert(issecure()); ITEqual(ITBase,ITCheck(571,211995,ITNil,ITNil,ITNil)); ITCheck(601,211995,ITNil,ITOne,ITNil); ITBaseSelection(211995,nil,ITNil,IT70)",
     );
 }
 

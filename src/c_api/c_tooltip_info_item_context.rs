@@ -99,9 +99,7 @@ fn select_item(state: &LuaState, key: ItemTooltipContext) -> LuaResult<Option<It
     let Some(catalog_item) = items::get_item(key.item_id) else {
         return Ok(None);
     };
-    if level.is_none() && (key.item_context.is_some() || key.treasure_context_level.is_some()) {
-        return Ok(None);
-    }
+    // INFERRED (simulator mapping; R88au.4 + R88av): a missing variant key keeps the base item.
     let mut item = catalog_item.clone();
     if let Some(level) = level {
         item.item_level = level;
