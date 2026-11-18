@@ -1,6 +1,6 @@
 //! temporary: master `4f073e8ea` `string.format` patch, kept unchanged for every
-//! profile except Retail 12.1.5 (decision A). Those profiles have no R88ag or
-//! R88af.3 evidence; their native formatter behavior is UNKNOWN. Retail 12.1.5
+//! profile except Retail 12.1.5 (decision A). Those profiles have no R88ag or Evidence: pr46-49-decomp-answers.md, sections R88ag.
+//! R88af.3 evidence; their native formatter behavior is UNKNOWN. Retail 12.1.5 Evidence: pr46-49-decomp-answers.md, sections R88af.3.
 //! uses `string_format`. Retire per profile once native evidence exists.
 //!
 //! Original header: WoW-compatible `string.format` patch — rilua port of the master-era

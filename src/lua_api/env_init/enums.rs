@@ -217,7 +217,7 @@ Enum.PingSetTargetStateMeta = {
 const MISSING_CONSTANTS_LUA: &str = include_str!("../globals/enum_data/missing_constants.lua");
 const CONSTANTS_VALUES_LUA: &str = include_str!("../globals/enum_data/constants_values.lua");
 const COMPAT_CONSTANTS_LUA: &str = include_str!("../globals/enum_data/compat_constants.lua");
-// R88n.10 verifies these native-installed Retail values in both environments.
+// R88n.10 verifies these native-installed Retail values in both environments. Evidence: pr46-49-decomp-answers.md, sections R88n.10.
 const NATIVE_CONSTANTS_LUA: &str = r#"
 Constants = Constants or {}
 local roles = rawget(Constants, "LFG_ROLEConstants")
@@ -352,7 +352,7 @@ fn register_base_constants(lua: &mut rilua::Lua) -> crate::Result<()> {
             end,
         })
         "#;
-    // R88t.t2 publishes native Constants.* tables without member flags. Keep
+    // R88t.t2 publishes native Constants.* tables without member flags. Keep Evidence: pr46-49-decomp-answers.md, sections R88t.t2.
     // missing and compatibility datasets ordinary-only.
     let publish_generated_constants = crate::client_profile::is_active_retail_12_1_5();
     if publish_generated_constants {
@@ -404,7 +404,7 @@ fn register_compat_constant_values(lua: &mut rilua::Lua) -> crate::Result<()> {
     Ok(())
 }
 
-// R88t verifies direct, no-flag publication of only these AccountStoreConsts values.
+// R88t verifies direct, no-flag publication of only these AccountStoreConsts values. Evidence: pr46-49-decomp-answers.md, sections R88t.
 fn publish_retail_account_store_constants(lua: &mut rilua::Lua) -> crate::Result<()> {
     if !crate::client_profile::is_active_retail_12_1_5() {
         return Ok(());

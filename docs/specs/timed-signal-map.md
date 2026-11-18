@@ -10,7 +10,7 @@ Retail, PTR and Forever provide `C_Timer.NewTimedSignalMap` as a state-backed C 
 - [x] Defer signals scheduled from a callback until the next timer pass.
 - [x] Release scheduled signals and callback retention when the map is finalized, including collection from a tainted context.
 - [x] Support the Retail, PTR and Forever `TimerUtil.CreateTimedSignalCallbackMap` wrappers.
-- [ ] VERIFIED — R88y: Retail 12.1.5.70688 `C_Timer.NewTimedSignalMap` uses flag 3. Publish the implemented factory in separate ordinary and secure `C_Timer` tables; do not infer identity from the flag alone. Other profiles keep their current route.
+- [ ] VERIFIED — R88y: Retail 12.1.5.70688 `C_Timer.NewTimedSignalMap` uses flag 3. Publish the implemented factory in separate ordinary and secure `C_Timer` tables; do not infer identity from the flag alone. Other profiles keep their current route. Evidence: pr46-49-decomp-answers.md, sections R88y.
 - [x] Store each deadline's actual finite numeric time and authentic secrecy together in simulator state. Rust fixtures supply arbitrary VM host-secret numbers through the same scheduling API; no constant deadline or global restriction switch substitutes for stored state.
 - [x] Accept authentic secret deadlines/delays in `SignalAt` and `SignalAfter` only when rilua's guarded secret access permits the caller. Preserve the input wrapper and caller taint. Rejected input leaves the existing schedule unchanged.
 - [x] Reject access to secret-holding maps through `CancelAllSignals`, `CancelSignal`, `GetNextSignal`, `GetSignalCount`, `GetSignalTime`, `HasSignal`, `SignalAfter` and `SignalAt` when rilua denies secret access (tainted or revoked context). Public-only maps remain usable by addon callers.

@@ -90,7 +90,7 @@ The [StoreSecure system page](systems/store-secure-catalog.md) and [RED proof re
 
 [Taint system](systems/taint-system.md#dual-lua-environment) and the [load-phase contract](../specs/addon-load-phases.md#r88y-verified-secure-publication) record object-taint preservation on distinct Retail flag-3 Lua closure clones. **VERIFIED (simulator test at `f68ef3fbc`, 28/28):** stamped ordinary and secure calls return matching taint outcomes; unstamped calls stay secure. **VERIFIED (overlay RED):** without stamp copying, the secure-side call loses that taint; see the handoff report.
 
-## [2026-11-17] verification | Retail R88n.11b flag-3 function identity
+## [2026-11-17] verification | Retail R88n.11b flag-3 function identity Evidence: pr46-49-decomp-answers.md, sections R88n.11b.
 
 [Taint system](systems/taint-system.md#dual-lua-environment) and the [load-phase contract](../specs/addon-load-phases.md#r88y-verified-secure-publication) record the 31 implemented namespace functions and 3 implemented `C_Texture` functions with distinct ordinary/secure objects; 14 unimplemented producers remain absent. **VERIFIED (simulator source at `0710907`):** Lua closure copies retain the prototype, captured upvalues, and function environment. **VERIFIED (simulator tests at `0710907`):** representative `C_ColorUtil.ConvertHSVToRGB` and `C_Texture.GetAtlasExists` results match across environments.
 
@@ -106,15 +106,15 @@ The [StoreSecure system page](systems/store-secure-catalog.md) and [RED proof re
 
 [Taint system](systems/taint-system.md#dual-lua-environment) and [add-on load-phase contract](../specs/addon-load-phases.md#r88ac-globalstrings-secure-publication) record the SOURCE-DERIVED 153-name simulator route and its UNKNOWN native publication boundary. **VERIFIED (master 725 control):** the prefork control passes and Retail Lua-errors returns `[]`; candidate consumer proof is pending.
 
-## [2026-11-15] correction | R88y flag-3 function identity
+## [2026-11-15] correction | R88y flag-3 function identity Evidence: pr46-49-decomp-answers.md, sections R88y.
 
 [Taint system](systems/taint-system.md#dual-lua-environment) now distinguishes separate no-capture native C closures for verified flag-3 functions from shared function values in shallow-copied standard-library tables. Identity after later script replacement or deliberate aliasing remains UNVERIFIED.
 
-## [2026-11-15] system | Retail C_ColorOverrides R88y publication
+## [2026-11-15] system | Retail C_ColorOverrides R88y publication Evidence: pr46-49-decomp-answers.md, sections R88y.
 
 [Color overrides](systems/color-overrides.md) now records the six VERIFIED flag-3 rows and the generic simulator publication path. The old two-member test guarded the pre-R88y fallback period; the merged-head six-member runtime test remains pending.
 
-## [2026-11-15] system | Retail R88t dependencies and R88v source attribution
+## [2026-11-15] system | Retail R88t dependencies and R88v source attribution Evidence: pr46-49-decomp-answers.md, sections R88t, R88v.
 
 [Addon load phases](../specs/addon-load-phases.md) records R88t request order and named publication plus R88v source attribution. The ordinary-request failure-independence clause is VERIFIED natively but untested; transitive copying remains UNKNOWN. **VERIFIED (simulator test at `adf8d25f9`):** the one-file AddSource consumer returns a saved `file:line`, preserves it after the exclusion list changes, and returns `UnknownFile` for a later texture from the excluded file. At that earlier handoff, the full C_ColorOverrides stateful model was deferred; the later R88y integration is recorded above. [Taint system](systems/taint-system.md#dual-lua-environment) records publication boundaries and current implementation.
 ## [2026-11-15] fix | Retail Blizzard UI cache provenance
@@ -159,7 +159,7 @@ The [Round 7 getter contract](../specs/tooltip-r7-getters.md) and [Lua API](syst
 
 **VERIFIED (R88v and revision-1 tests):** [Color overrides](systems/color-overrides.md) records the six-method Retail API, corrected original-consumer RED/GREEN, master secure-snapshot member set, and `playerColorOverrides` round-trip seams. **INFERRED:** the local GlobalColor projection, setting encoding, and event mapping. **UNKNOWN:** automatic save/load triggers and final storage.
 
-**VERIFIED (R88v and revision-1 tests):** [Color overrides](systems/color-overrides.md) records the six-method Retail API, corrected original-consumer RED/GREEN, and `playerColorOverrides` round-trip seams. **HISTORICAL (revision-1):** the secure member-set test covered two master snapshot names before R88y. **VERIFIED (R88y source at `5cd3cc29e`):** all six implemented members have VERIFIED flag-3 rows; current-head runtime proof is pending. **INFERRED:** the local GlobalColor projection, setting encoding, and event mapping. **UNKNOWN:** automatic save/load triggers and final storage.
+**VERIFIED (R88v and revision-1 tests):** [Color overrides](systems/color-overrides.md) records the six-method Retail API, corrected original-consumer RED/GREEN, and `playerColorOverrides` round-trip seams. **HISTORICAL (revision-1):** the secure member-set test covered two master snapshot names before R88y. **VERIFIED (R88y source at `5cd3cc29e`):** all six implemented members have VERIFIED flag-3 rows; current-head runtime proof is pending. **INFERRED:** the local GlobalColor projection, setting encoding, and event mapping. **UNKNOWN:** automatic save/load triggers and final storage. Evidence: pr46-49-decomp-answers.md, sections R88v, R88y.
 
 ## [2026-11-15] implementation | Retail Store Glue R88q
 

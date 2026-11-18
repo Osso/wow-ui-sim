@@ -312,7 +312,7 @@ fn secure_addon_loads_nonsecure_dependency_in_ordinary_then_secure_environment()
             "#,
         )
         .unwrap();
-    // R88t marks the initial default-file execution count as INFERRED.
+    // R88t marks the initial default-file execution count as INFERRED. Evidence: pr46-49-decomp-answers.md, sections R88t.
     let (
         ordinary_count,
         secure_count,

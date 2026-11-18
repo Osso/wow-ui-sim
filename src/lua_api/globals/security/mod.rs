@@ -109,7 +109,7 @@ fn register_secure_handler_stubs(lua: &mut rilua::Lua) -> LuaResult<()> {
 }
 
 fn register_secure_command_option_parse(lua: &mut rilua::Lua) -> LuaResult<()> {
-    // UNKNOWN (R88k.7): retained secure allowlist entry; native flags are not established.
+    // UNKNOWN (R88k.7): retained secure allowlist entry; native flags are not established. Evidence: pr46-49-decomp-answers.md, sections R88k.7.
     secure_env::register_unknown_allowlist_function(
         lua,
         "SecureCmdOptionParse",
@@ -117,7 +117,7 @@ fn register_secure_command_option_parse(lua: &mut rilua::Lua) -> LuaResult<()> {
     )
 }
 
-/// Register a fallback when nil; Retail uses the verified R88y destination flag.
+/// Register a fallback when nil; Retail uses the verified R88y destination flag. Evidence: pr46-49-decomp-answers.md, sections R88y.y1.
 fn register_if_missing(lua: &mut rilua::Lua, name: &str, func: rilua::RustFn) -> LuaResult<()> {
     if crate::client_profile::is_active_retail_12_1_5() {
         return crate::c_api::register_global_function_if_missing_from_r88y(lua, name, func);

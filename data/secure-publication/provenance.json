@@ -22,5 +22,5 @@
   "runtime_rows": "VERIFIED only; INFERRED rows remain in the source CSV",
   "generator": "tools/gen_r88y_secure_publication.py",
   "generated_table": "src/c_api/secure_publication_data.rs",
-  "generated_table_sha256": "77d32812b08072289b2706d463220e52eaa60bd3f2ad448590bb867bd0e7e463"
+  "generated_table_sha256": "e4fe762030552850c1c4de004423a6562f1c23c3bc179b5f4a2bcd770b3c0366"
 }

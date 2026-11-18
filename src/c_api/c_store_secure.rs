@@ -1,6 +1,6 @@
 //! Retail registers the profile-specific catalog and VAS models for `C_StoreSecure`.
 //! Non-Retail retains the legacy group-list projection over simulator state;
-//! native non-Retail behavior is UNKNOWN. R88y supplies publication flags only.
+//! native non-Retail behavior is UNKNOWN. R88y supplies publication flags only. Evidence: pr46-49-decomp-answers.md, sections R88y.
 
 use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::methods::{create_table, table_get_static};

@@ -20,7 +20,7 @@ This spec defines the Retail `C_ColorOverrides` API and its state model. See the
 
 ### Namespace and persistence
 
-- [ ] The Retail secure environment exposes the six simulator-implemented `C_ColorOverrides` members selected by VERIFIED flag-3 R88y rows, without publishing unimplemented members.
+- [ ] The Retail secure environment exposes the six simulator-implemented `C_ColorOverrides` members selected by VERIFIED flag-3 R88y rows, without publishing unimplemented members. Evidence: pr46-49-decomp-answers.md, sections R88y.
 - [x] Explicit save/load seams round-trip two active records through `playerColorOverrides`; loading replaces stale active records.
 
 ## How it works

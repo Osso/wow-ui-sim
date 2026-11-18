@@ -405,7 +405,7 @@ fn scoped_modifier_scripts_use_given_env_for_scripts_and_mixins() {
 #[test]
 fn scoped_modifier_scripts_use_secure_env_fallback_for_secure_addons() {
     let env = WowLuaEnv::new().unwrap();
-    // INFERRED — R88g.3.q2: this pre-construction write is visible through the
+    // INFERRED — R88g.3.q2: this pre-construction write is visible through the Evidence: pr46-49-decomp-answers.md, sections R88g.3.q2.
     // shared secure-table reference used by the inline chunk.
     env.exec("__secureenv.ScopedSecureEnvOnlyValue = 'secure-fallback'")
         .unwrap();

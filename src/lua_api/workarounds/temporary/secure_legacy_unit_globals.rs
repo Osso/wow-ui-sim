@@ -1,10 +1,10 @@
 //! pre-existing simulator route preserved from the former blanket _G copy;
-//! native secure publication UNKNOWN (R88ac.ac1, R88af.1/.2); remove when
+//! native secure publication UNKNOWN (R88ac.ac1, R88af.1/.2); remove when Evidence: pr46-49-decomp-answers.md, sections R88ac.ac1, R88af.1.
 //! native evidence lands.
 //!
 //! SOURCE-DERIVED from master 725fb6e3a: each entry records the profiles
 //! where its registrar runs and the profiles that use this compatibility
-//! route. VERIFIED R88y publication is active only on Retail.
+//! route. VERIFIED R88y publication is active only on Retail. Evidence: pr46-49-decomp-answers.md, sections R88y.
 
 use rilua::{LuaApiMut, LuaResult, Val};
 

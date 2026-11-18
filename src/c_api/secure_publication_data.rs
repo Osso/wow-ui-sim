@@ -1,7 +1,7 @@
 //! Generated from data/secure-publication/retail-12-1-5-70688.csv.
 //! Source SHA-256: 3a8922d84756171f666fe79b61068d3344ce2db866250dede1de384fa9878f82.
-//! The CSV has 6763 rows: 6554 VERIFIED and 209 INFERRED.
-//! Runtime flag routing uses VERIFIED rows only; the source CSV keeps both labels.
+//! The CSV has 6763 rows: 6554 VERIFIED and 209 INFERRED. Evidence: pr46-49-decomp-answers.md, section R88y.y1.
+//! Runtime flag routing uses VERIFIED rows only; the source CSV keeps both labels. Evidence: pr46-49-decomp-answers.md, section R88y.y1.
 //! Row context codes are 0=Game, 1=Glue, 2=both.
 
 pub(crate) const SOURCE_SHA256: &str =

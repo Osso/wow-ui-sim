@@ -724,7 +724,7 @@ mod tests {
     #[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
     #[test]
     fn secure_environment_contains_exact_verified_base_list() {
-        // R88n.11 part 1: exact Retail 12.1.5.70688 constructor copy list.
+        // R88n.11 part 1: exact Retail 12.1.5.70688 constructor copy list. Evidence: pr46-49-decomp-answers.md, sections R88n.11.
         const VERIFIED_BASE_NAMES: [&str; 39] = [
             "assert",
             "bit",

@@ -23,7 +23,7 @@ const DEFAULT_MAX_TRAVERSAL_DEPTH: f64 = 100.0;
 
 /// Maintain the current secure allowlist on profiles whose generated docs declare these names.
 ///
-/// R88y supplies current Retail flags for both globals. Other profiles retain their existing routes.
+/// R88y supplies current Retail flags for both globals. Other profiles retain their existing routes. Evidence: pr46-49-decomp-answers.md, sections R88y.
 /// Registration also restores a missing `CreateSecureDelegate` after cleanup clears it.
 pub(crate) fn register(lua: &mut rilua::Lua) -> LuaResult<()> {
     register_create_secure_delegate(lua)?;

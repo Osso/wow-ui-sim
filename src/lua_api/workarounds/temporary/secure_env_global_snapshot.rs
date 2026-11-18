@@ -2,8 +2,8 @@
 //! without native secure-publication evidence.
 //!
 //! UNKNOWN: native secure publication for Mists, PTR, WoW Forever, Wrath, Era
-//! and Anniversary. Only Retail 12.1.5.70688 has the verified fixed 39-name
-//! base plus the R88y publisher. Every other profile keeps master's behavior
+//! and Anniversary. Only Retail 12.1.5.70688 has the verified fixed 39-name Evidence: pr46-49-decomp-answers.md, sections R88g.1, R88y.y1.
+//! base plus the R88y publisher. Every other profile keeps master's behavior Evidence: pr46-49-decomp-answers.md, sections R88y.
 //! (copy every `_G` pair after protected-global wrapping, shallow-copy `Enum`,
 //! log global nil reads). Retire this module per profile once that profile has
 //! native publication evidence and its own publisher.
@@ -45,7 +45,7 @@ const COPY_GLOBALS_INTO_SECUREENV_LUA: &str = r##"
 "##;
 
 /// Copy the ordinary globals into secureenv unless the active profile has the
-/// verified Retail 12.1.5 publication model.
+/// verified Retail 12.1.5 publication model. Evidence: pr46-49-decomp-answers.md, sections R88g.1, R88y.y1.
 pub(crate) fn copy_globals_into_secureenv_without_publication_evidence(
     lua: &mut rilua::Lua,
 ) -> LuaResult<()> {

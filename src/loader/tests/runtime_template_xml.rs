@@ -597,7 +597,7 @@ post_wrath_ui_fixture! {
 fn test_catalog_shop_file_prefix_numeric_error_probe() {
     let env = WowLuaEnv::new().expect("lua env");
     env.set_screen_size(1024.0, 768.0);
-    // VERIFIED — R88g.3.q4: seterrorhandler and debug are ordinary-environment members.
+    // VERIFIED — R88g.3.q4: seterrorhandler and debug are ordinary-environment members. Evidence: pr46-49-decomp-answers.md, sections R88g.3.q4.
     env.exec(
         r#"
         __catalog_shop_probe_traces = {}

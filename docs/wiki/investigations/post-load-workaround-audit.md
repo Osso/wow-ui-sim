@@ -33,13 +33,13 @@ consumer evidence. The test and XML `parentArray` root-cause fix are recorded in
 Authentication parenting, secure/public binding and Submit behavior are outside
 this retirement.
 
-### Retail R88y string.split alias collision
+### Retail R88y string.split alias collision Evidence: pr46-49-decomp-answers.md, sections R88y.
 
-**VERIFIED (Retail 12.1.5.70688, R88y.y2):** `string.split` aliases the `strsplit` handler before secure-table construction.
+**VERIFIED (Retail 12.1.5.70688, R88y.y2):** `string.split` aliases the `strsplit` handler before secure-table construction. Evidence: pr46-49-decomp-answers.md, sections R88y.y2.
 
-**VERIFIED (simulator RED at source `f3564d89a`):** after startup, ordinary `string.split` did not share identity with `strsplit`, while `__secureenv.string.split` did. The temporary formatting-default script wrote a `split` method into the string metatable's `__index` table after the secure copy.
+**VERIFIED (simulator RED at source `f3564d89a`):** after startup, ordinary `string.split` did not share identity with `strsplit`, while `__secureenv.string.split` did. The temporary formatting-default script wrote a `split` method into the string metatable's `__index` table after the secure copy. Evidence: pr46-49-decomp-answers.md, sections R88y.y2.
 
-**VERIFIED (simulator source and Retail tests at `8f12a1a21`):** Retail skips this compatibility method, and both ordinary and secure aliases retain `strsplit` identity after startup and defaults reapplication. **VERIFIED (simulator source only):** other profiles still execute the existing compatibility path; no non-Retail runtime result is claimed.
+**VERIFIED (simulator source and Retail tests at `8f12a1a21`):** Retail skips this compatibility method, and both ordinary and secure aliases retain `strsplit` identity after startup and defaults reapplication. **VERIFIED (simulator source only):** other profiles still execute the existing compatibility path; no non-Retail runtime result is claimed. Evidence: pr46-49-decomp-answers.md, sections R88y.y2.
 
 ### Store Glue VAS fallback replacement
 

@@ -40,7 +40,7 @@ pub fn create_frame(state: &mut LuaState) -> LuaResult<u32> {
     create_frame_from_args(state, args)
 }
 
-/// Retail native `GetFrameMetatable` handler. R88i.1 VERIFIES only its
+/// Retail native `GetFrameMetatable` handler. R88i.1 VERIFIES only its Evidence: pr46-49-decomp-answers.md, sections R88i.1.
 /// registration route (pair list, ordinary and secure tables). INFERRED: a
 /// missing argument creates a default frame when `CreateFrame` exists, then
 /// returns `getmetatable(frame)`; native argument and return semantics are UNKNOWN.
@@ -397,7 +397,7 @@ pub fn register_global_frames(lua: &mut rilua::Lua) -> LuaResult<()> {
 }
 
 /// Publish the Retail bootstrap UIParent name through the secure named-frame route.
-/// R88t verifies creation-policy flag 32, same-object publication, and preservation of existing names.
+/// R88t verifies creation-policy flag 32, same-object publication, and preservation of existing names. Evidence: pr46-49-decomp-answers.md, sections R88t.
 fn publish_retail_ui_parent_name(state: &mut LuaState, frame: Val) -> LuaResult<()> {
     let global = Val::Table(state.global);
     if crate::lua_api::methods::table_get(state, global, "UIParent").is_nil() {
@@ -427,10 +427,10 @@ pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
 }
 
 fn register_frame_creation_globals(lua: &mut rilua::Lua) -> LuaResult<()> {
-    // UNKNOWN (R88k.7): retained secure allowlist entry; native flags are not established.
+    // UNKNOWN (R88k.7): retained secure allowlist entry; native flags are not established. Evidence: pr46-49-decomp-answers.md, sections R88k.7.
     super::security::register_unknown_allowlist_function(lua, "CreateFrame", create_frame)?;
     if crate::client_profile::is_active_retail_12_1_5() {
-        // VERIFIED (R88i.1, R88k.7): Retail native pair-list registration has no per-name flag.
+        // VERIFIED (R88i.1, R88k.7): Retail native pair-list registration has no per-name flag. Evidence: pr46-49-decomp-answers.md, sections R88i.1, R88k.7.
         super::security::register_pair_list_function(
             lua,
             "GetFrameMetatable",

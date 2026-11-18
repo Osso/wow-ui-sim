@@ -304,7 +304,7 @@ end
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(FORMATTING_UTILITY_DEFAULTS_LUA)?;
-    // Preserve the verified Retail string.split alias; keep this wrapper elsewhere.
+    // Preserve the verified Retail string.split alias; keep this wrapper elsewhere. Evidence: pr46-49-decomp-answers.md, sections R88y.y2.
     if !crate::client_profile::is_active_retail_12_1_5() {
         lua.exec(STRING_SPLIT_METHOD_COMPAT_LUA)?;
     }

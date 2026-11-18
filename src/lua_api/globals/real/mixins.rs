@@ -11,10 +11,10 @@ use rilua::{LuaResult, Val};
 mod secure_registry;
 use secure_registry::resolve_mixin_methods;
 
-/// Earlier Retail builds keep their existing flag route; R88y supplies the current flag.
+/// Earlier Retail builds keep their existing flag route; R88y supplies the current flag. Evidence: pr46-49-decomp-answers.md, sections R88y.
 const LEGACY_RETAIL_MIXIN_FLAGS: u8 = 7;
 
-/// Register the verified Retail native entries. Bootstrap fallbacks stay ordinary-only.
+/// Register the verified Retail native entries. Bootstrap fallbacks stay ordinary-only. Evidence: pr46-49-decomp-answers.md, sections R88g.2.
 pub(crate) fn register(lua: &mut rilua::Lua) -> LuaResult<()> {
     if ACTIVE != ClientProfile::Retail {
         return Ok(());

@@ -339,7 +339,7 @@ fn load_secure_dependencies_for_pass(
     Ok(())
 }
 
-/// R88g.1 (Retail 70688) loads a secure addon's dependencies in secureenv.
+/// R88g.1 (Retail 70688) loads a secure addon's dependencies in secureenv. Evidence: pr46-49-decomp-answers.md, sections R88g.1.
 /// Other profiles keep master's library replay; their native behavior is UNKNOWN.
 fn uses_secure_dependency_pass() -> bool {
     crate::client_profile::is_active_retail_12_1_5()
@@ -505,7 +505,7 @@ fn load_secure_dependency_toc(
 ) -> Result<(), LoadError> {
     let folder_name = addon_folder_name(dependency_toc);
     let ordinary_loaded = addon_loaded_in_environment(env, folder_name, false);
-    // R88t requires this secure request regardless of the ordinary request result.
+    // R88t requires this secure request regardless of the ordinary request result. Evidence: pr46-49-decomp-answers.md, sections R88t.
     let ordinary_result = load_ordinary_dependency_if_needed(
         env,
         dependency_toc,
@@ -1121,7 +1121,7 @@ const SECURE_REPLAY_LIBRARY_ADDONS: &[&str] = &[
 
 pub(super) fn is_secure_replay_library_addon(folder_name: &str) -> bool {
     // Retail 12.1.5 secure loads use the shared dependency pass; preserve the
-    // legacy replay path where R88g.1 does not apply.
+    // legacy replay path where R88g.1 does not apply. Evidence: pr46-49-decomp-answers.md, sections R88g.1.
     if crate::client_profile::is_active_retail_12_1_5() {
         return false;
     }

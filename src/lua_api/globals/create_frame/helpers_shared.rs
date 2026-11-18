@@ -423,7 +423,7 @@ fn register_global_name(
     Ok(())
 }
 
-/// INFERRED (consistent with R88an): keep the widget name index aligned when
+/// INFERRED (consistent with R88an): keep the widget name index aligned when Evidence: pr46-49-decomp-answers.md, sections R88an.
 /// secure-mode publication cannot update either occupied environment name.
 fn should_preserve_existing_frame_name(
     state: &mut LuaState,

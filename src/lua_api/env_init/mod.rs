@@ -93,7 +93,7 @@ fn initialize_bootstrap_registry_and_secure_base(
     registry::init_registry_tables(lua, state)?;
     bootstrap::init_shared_bootstrap(lua)?;
     if crate::client_profile::is_active_retail_12_1_5() {
-        // R88ag/R88af.3 formatter; other profiles keep master's patch (timer_layout).
+        // R88ag/R88af.3 formatter; other profiles keep master's patch (timer_layout). Evidence: pr46-49-decomp-answers.md, sections R88ag, R88af.3.
         crate::lua_api::string_format::patch_string_format(lua)?;
     }
     super::globals::security::register_environment_helpers(lua)?;
@@ -114,7 +114,7 @@ fn initialize_secure_environment_core(lua: &mut rilua::Lua) -> crate::Result<()>
     // Legacy profiles still need this table for their post-bootstrap snapshot.
     // C API namespace peers are created only by the Retail 12.1.5-gated helpers.
     super::globals::security::create_secure_environment(lua)?;
-    // R88n.10/R88n.11 part 1 verify Constants and Enum are installed after creation.
+    // R88n.10/R88n.11 part 1 verify Constants and Enum are installed after creation. Evidence: pr46-49-decomp-answers.md, sections R88n.10, R88n.11.
     crate::c_api::c_ui_color::register(lua)?;
     publish_retail_secure_template_method_binder(lua)?;
     super::globals::real::mixins::register(lua)?;
@@ -204,8 +204,8 @@ fn install_secure_runtime_surface(
     // temporary: master's `_G` snapshot where native publication is UNKNOWN.
     // Master took it after protected-global wrapping, before color overrides.
     copy_globals_into_secureenv_without_publication_evidence(lua)?;
-    // Register the model after secureenv construction. The R88y pass applies
-    // verified destinations for the active screen.
+    // Register the model after secureenv construction. The R88y pass applies Evidence: pr46-49-decomp-answers.md, sections R88y.
+    // verified destinations for the active screen. Evidence: pr46-49-decomp-answers.md, sections R88y.y1.
     crate::c_api::c_color_overrides::register(lua)?;
     #[cfg(feature = "forbidden-aspects")]
     super::script_object_transfer::install(lua)?;
@@ -320,7 +320,7 @@ fn publish_retail_secure_template_method_binder(lua: &mut rilua::Lua) -> LuaResu
 }
 
 fn publish_unknown_bootstrap_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
-    // UNKNOWN (R88k.7): retain existing secure bootstrap values where no Retail native entry replaces them.
+    // UNKNOWN (R88k.7): retain existing secure bootstrap values where no Retail native entry replaces them. Evidence: pr46-49-decomp-answers.md, sections R88k.7.
     let names: &[&str] =
         if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
             &["CreateAndInitFromMixin"]

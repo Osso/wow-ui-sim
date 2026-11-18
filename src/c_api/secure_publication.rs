@@ -1,4 +1,4 @@
-//! Retail secure publication driven by the verified R88y registration table.
+//! Retail secure publication driven by the verified R88y registration table. Evidence: pr46-49-decomp-answers.md, sections R88y.y1.
 
 use super::secure_publication_data::{
     CONTEXT_BOTH, CONTEXT_GAME, CONTEXT_GLUE, INFERRED_ROW_COUNT, SOURCE_ROW_COUNT, SOURCE_SHA256,

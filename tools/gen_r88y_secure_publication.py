@@ -93,8 +93,8 @@ def render_rust(rows):
     lines = [
         "//! Generated from data/secure-publication/retail-12-1-5-70688.csv.",
         f"//! Source SHA-256: {SOURCE_SHA256}.",
-        f"//! The CSV has {len(rows)} rows: {len(verified)} VERIFIED and {len(inferred)} INFERRED.",
-        "//! Runtime flag routing uses VERIFIED rows only; the source CSV keeps both labels.",
+        f"//! The CSV has {len(rows)} rows: {len(verified)} VERIFIED and {len(inferred)} INFERRED. Evidence: pr46-49-decomp-answers.md, section R88y.y1.",
+        "//! Runtime flag routing uses VERIFIED rows only; the source CSV keeps both labels. Evidence: pr46-49-decomp-answers.md, section R88y.y1.",
         "//! Row context codes are 0=Game, 1=Glue, 2=both.",
         "",
         "pub(crate) const SOURCE_SHA256: &str =",

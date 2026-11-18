@@ -31,7 +31,7 @@ pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
 
 fn register_secure_count(state: &mut LuaState) -> LuaResult<()> {
     let secure_table = crate::c_api::ensure_secure_namespace(state, "table")?;
-    // R88t verifies a distinct C function object for the secure table.count entry.
+    // R88t verifies a distinct C function object for the secure table.count entry. Evidence: pr46-49-decomp-answers.md, sections R88t.
     table_set_rust_fn_unpaired(state, secure_table, "count", count)
 }
 

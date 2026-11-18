@@ -90,7 +90,7 @@ Added the Retail catalog state contract and system page. **VERIFIED (R88ad.1/R88
 
 Updated the [taint system](systems/taint-system.md#dual-lua-environment), [load-phase contract](../specs/addon-load-phases.md#r88y-verified-secure-publication), and index. **VERIFIED (simulator source at `0f5ada40a`):** the Retail publisher copies a Lua closure's taint stamp to its distinct clone with rilua's public taint API and leaves an unstamped clone unstamped. **VERIFIED (simulator test at `f68ef3fbc`, 28/28):** ordinary and secure calls return equal secure-state and stack-taint results. **VERIFIED (overlay RED):** the exact taint test fails when the copy step is removed; the logged mismatch is in the handoff report.
 
-## [2026-11-17] verification | Retail R88n.11b flag-3 function identity
+## [2026-11-17] verification | Retail R88n.11b flag-3 function identity Evidence: pr46-49-decomp-answers.md, sections R88n.11b.
 
 Updated the [taint system](systems/taint-system.md#dual-lua-environment) and [load-phase contract](../specs/addon-load-phases.md#r88y-verified-secure-publication). **VERIFIED (simulator source at `0710907`):** the generic publisher creates a distinct `LuaClosure` with the same prototype, captured upvalue references, and function environment; Rust closure handling is unchanged. **VERIFIED (simulator tests at `0710907`):** 31 existing namespace producers and 3 `C_Texture` producers have distinct ordinary/secure functions, while the 14 unimplemented members remain absent; representative color-conversion and atlas-query results match.
 
@@ -106,7 +106,7 @@ Added the [investigation](investigations/limited-listfile-reproducibility.md) an
 
 Updated the [taint system](systems/taint-system.md#dual-lua-environment) and [add-on load-phase contract](../specs/addon-load-phases.md#r88ac-globalstrings-secure-publication). **SOURCE-DERIVED (VERIFIED simulator source at master `725fb6e3a`):** the profile-tagged table records 173 distinct Unit-prefixed globals; Retail copies 153 compatibility entries, while the six VERIFIED R88y Unit rows use the publisher only on Retail and remain compatibility entries on uncovered profiles. The supplied R88ac supplement has no VERIFIED Unit-prefixed rows. The new profile guard checks `_G` registration, not secureenv membership. **UNKNOWN (R88ac.ac1, R88af.1/.2):** native secure publication. Master controls pass; candidate consumer and Retail Lua-errors proof is pending.
 
-## [2026-11-15] verified | Retail LE_GAME numeric secure publication
+## [2026-11-15] verified | Retail LE_GAME numeric secure publication Evidence: pr46-49-decomp-answers.md, sections R88ac.ac3.
 
 Updated the [taint system](systems/taint-system.md#dual-lua-environment) and [add-on load-phase contract](../specs/addon-load-phases.md#r88ac-globalstrings-secure-publication). **VERIFIED (R88ac.ac3; supplement SHA-256 `107dad291c11c9a80949d7063e02d849bb394155663870db0631c96c54d9659b`):** the native numeric setter writes each Game `LE_GAME_*` name and ordinal to both destinations. **VERIFIED (simulator source/data intersection):** all 42 currently modeled `GAME_ERROR_STRINGS` names occur in the supplement; the code mirrors only those existing values. **UNVERIFIED:** targeted runtime and original-consumer results are pending.
 
@@ -122,19 +122,19 @@ The [taint system](systems/taint-system.md#dual-lua-environment) and [add-on loa
 
 Updated the [taint system](systems/taint-system.md#dual-lua-environment) and [add-on load-phase contract](../specs/addon-load-phases.md#r88t-secure-dependency-and-named-publication-routes). **VERIFIED (native Retail 12.1.5.70688, R88t.t2):** `Constants.*` tables use a no-flag secure-publication route. **VERIFIED (simulator source, commit `49e4d091d`):** Retail publishes generated constants data to secureenv while keeping missing and compatibility datasets ordinary-only. **UNVERIFIED:** the new `InventoryConstants` consumer test and final gates on this commit.
 
-## [2026-11-15] correction | R88y flag-3 function identity
+## [2026-11-15] correction | R88y flag-3 function identity Evidence: pr46-49-decomp-answers.md, sections R88y.
 
 Updated the [taint system](systems/taint-system.md#dual-lua-environment) and the [R88y load-phase contract](../specs/addon-load-phases.md#r88y-verified-secure-publication). **RETRACTED:** the prior shared-identity conclusion came from simulator value copying and did not establish native identity. **VERIFIED (R88 series, Retail 12.1.5.70688 decomp line 13165):** flag-3 native C functions use separate zero-capture closures with the same handler. **VERIFIED (R88y.y2):** copied standard-library function values retain shared identity. **UNVERIFIED:** identity after later script replacement or deliberate aliasing; current tests do not claim it.
 
-## [2026-11-15] system | Retail C_ColorOverrides R88y publication
+## [2026-11-15] system | Retail C_ColorOverrides R88y publication Evidence: pr46-49-decomp-answers.md, sections R88y.
 
 Updated the [color-overrides system](systems/color-overrides.md) and its [feature contract](../specs/color-overrides.md). **VERIFIED (pinned CSV and simulator source at `5cd3cc29e`):** the six modeled members have VERIFIED flag-3 rows; Retail now uses the generic publisher, with the temporary fallback methods and custom bridge retired. The old two-member baseline was a pre-R88y preservation guard. The exact merged-head secure member-set test remains pending.
 
-## [2026-11-15] investigation | Retail R88y string.split alias collision
+## [2026-11-15] investigation | Retail R88y string.split alias collision Evidence: pr46-49-decomp-answers.md, sections R88y.
 
 [Post-load workaround audit](investigations/post-load-workaround-audit.md#retail-r88y-stringsplit-alias-collision) and [taint system](systems/taint-system.md#dual-lua-environment) record the verified native alias, the simulator's late overwrite and its Retail-only exclusion. RED/GREEN receipts are in the secure-env-shared handoff.
 
-## [2026-11-15] system | Retail R88t dependencies and R88v source attribution
+## [2026-11-15] system | Retail R88t dependencies and R88v source attribution Evidence: pr46-49-decomp-answers.md, sections R88t, R88v.
 
 Updated the [add-on load-phase contract](../specs/addon-load-phases.md) and [taint system](systems/taint-system.md#dual-lua-environment). **VERIFIED (Retail 12.1.5.70688):** R88t dependency order and named publication; R88v.v4 shared source-exclusion state, suffix matching, and `CreateTexture`/`GetSourceLocation` output. **VERIFIED (simulator test at `adf8d25f9`):** the one-file source consumer passes through the secure registration object and ordinary `CreateTexture`, returns a saved `file:line`, and does not rescan an existing texture after exclusions change. At that earlier handoff, the full `C_ColorOverrides` stateful model was deferred; it is now integrated through R88y (see the current entry above). Ordinary-request failure-independence remains VERIFIED but untested; transitive copying remains UNKNOWN.
 ## [2026-11-15] fix | Retail Blizzard UI cache provenance
@@ -167,7 +167,7 @@ Updated [taint system](systems/taint-system.md#dual-lua-environment) with the me
 
 ## [2026-11-14] investigation | Retail secure tooltip color route — pre-merge
 
-**VERIFIED (simulator at `7f81a8853`):** `Color.lua` ran in secureenv, `GetCurrentEnvironment()` returned its `_G`, and the old `C_UIColor.GetColors()` payload lacked the tag used by `SharedTooltipTemplates.lua:57`; the fallback-disabled test was RED. **UNVERIFIED at that pre-merge SHA:** whether Retail's `GlobalColor` export contained `TOOLTIP_DEFAULT_BACKGROUND_COLOR`. No direct publication or guessed catalog row was added.
+**VERIFIED (simulator at `7f81a8853`):** `Color.lua` ran in secureenv, `GetCurrentEnvironment()` returned its `_G`, and the old `C_UIColor.GetColors()` payload lacked the tag used by `SharedTooltipTemplates.lua:57`; the fallback-disabled test was RED. **UNVERIFIED at that pre-merge SHA:** whether Retail's `GlobalColor` export contained `TOOLTIP_DEFAULT_BACKGROUND_COLOR`. No direct publication or guessed catalog row was added. Evidence: pr46-49-decomp-answers.md, sections R88g.2, R88n.9.
 
 ## [2026-11-13] system | Secure environment and dependency replay
 

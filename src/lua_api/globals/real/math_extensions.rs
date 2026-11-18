@@ -8,7 +8,7 @@ use crate::lua_bridge::{FromStack, stack_val, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
 use rilua::{LuaApiMut, LuaResult, Val, runtime_error};
 
-// R88y.y2 verifies the ordinary alias to base math.random; its later replacement stays unknown.
+// R88y.y2 verifies the ordinary alias to base math.random; its later replacement stays unknown. Evidence: pr46-49-decomp-answers.md, sections R88y.y2.
 pub(crate) fn register_retail_fast_random_alias(lua: &mut rilua::Lua) -> LuaResult<()> {
     if !crate::client_profile::is_active_retail_12_1_5() {
         return Ok(());

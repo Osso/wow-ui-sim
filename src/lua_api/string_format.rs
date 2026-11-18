@@ -1,7 +1,7 @@
 //! WoW-compatible `string.format` patch — rilua port of the master-era
 //! `src/lua_api/string_format.rs`.
 //!
-//! Handles WoW's verified `string.format` extensions:
+//! Handles WoW's verified `string.format` extensions: Evidence: pr46-49-decomp-answers.md, sections R88ag, R88af.3.
 //! - `%F`, `%t`, and `%T` are rewritten to `%f` with their format fields.
 //! - Positional arguments select positions 0 through 99. Position 0 selects
 //!   the format argument, and sequential arguments continue after the last
@@ -26,7 +26,7 @@ const WIDTH_PRECISION_ERROR: &str = "invalid format (width or precision too long
 /// Install the WoW `string.format` patch on the rilua VM.
 ///
 /// Replaces `string.format` and the `format` global with a RustFn wrapper
-/// that handles WoW's verified conversions and positional arguments before
+/// that handles WoW's verified conversions and positional arguments before Evidence: pr46-49-decomp-answers.md, sections R88ag, R88af.3.
 /// delegating to the original implementation (stashed under registry keys).
 pub fn patch_string_format(lua: &mut rilua::Lua) -> LuaResult<()> {
     let existing = registry_get(lua.state_mut(), ORIG_REGISTRY_KEY);
@@ -234,7 +234,7 @@ fn convert_public_number(
     }
 }
 
-/// R88ag: `%d` and `%i` store a signed 32-bit integer after conversion.
+/// R88ag: `%d` and `%i` store a signed 32-bit integer after conversion. Evidence: pr46-49-decomp-answers.md, sections R88ag.
 fn check_signed_integer_range(number: f64) -> LuaResult<()> {
     if (f64::from(i32::MIN)..=f64::from(i32::MAX)).contains(&number) {
         return Ok(());
@@ -244,7 +244,7 @@ fn check_signed_integer_range(number: f64) -> LuaResult<()> {
     )))
 }
 
-/// R88ag: `%F`, `%t` and `%T` read secret numbers under native policy.
+/// R88ag: `%F`, `%t` and `%T` read secret numbers under native policy. Evidence: pr46-49-decomp-answers.md, sections R88ag.
 fn is_secret_number(state: &LuaState, value: Val) -> bool {
     rilua::table_security::secret_payload_kind(state, value)
         == Some(rilua::table_security::SecretPayloadKind::Number)
@@ -301,7 +301,7 @@ fn delegate(state: &mut LuaState, original: Val, args: &[Val]) -> LuaResult<u32>
     }
 }
 
-/// The result of a secret numeric conversion stays secret. INFERRED: R88ag
+/// The result of a secret numeric conversion stays secret. INFERRED: R88ag Evidence: pr46-49-decomp-answers.md, sections R88ag.
 /// verifies acceptance, not the result classification.
 fn delegate_secret(state: &mut LuaState, original: Val, args: &[Val]) -> LuaResult<u32> {
     let formatted = call_function_state(state, original, args)?;
@@ -630,7 +630,7 @@ impl RewrittenArgument {
 }
 
 /// Parse positional arguments and apply the conversions that rilua does not
-/// implement with the verified WoW semantics.
+/// implement with the verified WoW semantics. Evidence: pr46-49-decomp-answers.md, sections R88ag, R88af.3.
 fn process_wow_format(
     state: &mut LuaState,
     tonumber: Val,

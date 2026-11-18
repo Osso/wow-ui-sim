@@ -4,7 +4,7 @@ use rilua::vm::state::LuaState;
 
 /// INFERRED (simulator model from `shared_bootstrap.lua`): resolve methods from
 /// the secure registry first, then the public registry, then the source mixin.
-/// R88k.7 verifies the registration flags, not this lookup order.
+/// R88k.7 verifies the registration flags, not this lookup order. Evidence: pr46-49-decomp-answers.md, sections R88k.7.
 pub(super) fn resolve_mixin_methods(state: &mut LuaState, mixin: Val) -> Val {
     if !matches!(mixin, Val::Table(_)) {
         return mixin;

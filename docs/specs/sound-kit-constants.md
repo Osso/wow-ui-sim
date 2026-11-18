@@ -47,7 +47,7 @@ the addon loader publishes it for the full UI (see
 
 ## Known gaps (current cycle)
 
-- [ ] Ordinary `_G` writes after the initial snapshot remain invisible unless a secure-mode chunk assigns the name or a verified dual registration publishes it. Do not add generic post-load synchronization; the temporary private snapshot bridge and its deferred `TooltipDataProcessor` provenance are tracked in [addon load phases](addon-load-phases.md).
+- [ ] Ordinary `_G` writes after the initial snapshot remain invisible unless a secure-mode chunk assigns the name or a verified dual registration publishes it. Do not add generic post-load synchronization; the temporary private snapshot bridge and its deferred `TooltipDataProcessor` provenance are tracked in [addon load phases](addon-load-phases.md). Evidence: pr46-49-decomp-answers.md, sections R88y.y1.
 - [ ] The nine seeded values duplicate pinned table entries and can drift on the
       next pin; no test compares them with the pinned file.
 - [ ] No test asserts that the full-UI loader publishes the TOC-selected file.

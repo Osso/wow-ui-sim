@@ -173,7 +173,7 @@ local function __wow_project_inbound_results(project, ...)
   return unpack(results, 1, count)
 end
 
--- Keep an internal closure because R88y flag 6 publishes the global secure-only.
+-- Keep an internal closure because R88y flag 6 publishes the global secure-only. Evidence: pr46-49-decomp-answers.md, sections R88y.
 local function getForbiddenObjectTable(object)
   local public = type(object) == "table" and rawget(object, "__wowPublicObject")
   if public and __wow_forbidden_object_tables[public] == object then

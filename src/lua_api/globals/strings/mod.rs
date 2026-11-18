@@ -65,7 +65,7 @@ fn register_global_strings(
         let lua_value = create_string(state, &resolved);
         table_set(state, global, name, lua_value);
         if let Some(secure_global) = secure_global {
-            // INFERRED (R88ac.ac2): the PHF source has no native Flags field.
+            // INFERRED (R88ac.ac2): the PHF source has no native Flags field. Evidence: pr46-49-decomp-answers.md, sections R88ac.ac2.
             table_set(state, secure_global, name, lua_value);
         }
     }
@@ -84,8 +84,8 @@ fn register_integer_constants(
                 let value = Val::Num(value as f64);
                 table_set(state, global, name, value);
                 if let Some(secure_global) = secure_global {
-                    // VERIFIED for CSV-listed LE_GAME_*; INFERRED for other rows
-                    // because the R88ac shared numeric name list is unavailable.
+                    // VERIFIED for CSV-listed LE_GAME_*; INFERRED for other rows Evidence: pr46-49-decomp-answers.md, sections R88ac.ac3.
+                    // because the R88ac shared numeric name list is unavailable. Evidence: pr46-49-decomp-answers.md, sections R88ac.
                     table_set(state, secure_global, name, value);
                 }
             }

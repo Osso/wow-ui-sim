@@ -275,7 +275,7 @@ fn register_ping_results(state: &mut LuaState, enums: Val) {
     );
 }
 
-/// Forever Constants groups stay ordinary-only, as on master; the R88y
+/// Forever Constants groups stay ordinary-only, as on master; the R88y Evidence: pr46-49-decomp-answers.md, sections R88y.
 /// secure peer model applies to `Enum` registration here.
 fn publish_constant_group(
     state: &mut LuaState,

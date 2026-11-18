@@ -43,7 +43,7 @@ use std::time::{Duration, Instant};
 /// Maximum allowed timer duration in seconds ((2^32 - 1) / 1000).
 const MAX_TIMER_SECS: f64 = (u32::MAX as f64) / 1000.0;
 
-/// Earlier Retail profiles retain their pre-R88y dual-publication route.
+/// Earlier Retail profiles retain their pre-R88y dual-publication route. Evidence: pr46-49-decomp-answers.md, sections R88y.
 const LEGACY_RETAIL_TIMER_FLAGS: u8 = 3;
 
 /// Registry key for the timer callback storage table.
@@ -440,7 +440,7 @@ fn register_c_timer(lua: &mut rilua::Lua) -> LuaResult<()> {
 
 fn register_c_timer_functions(state: &mut LuaState, retail: bool) -> LuaResult<()> {
     register_c_timer_member(state, retail, "After", timer_after)?;
-    // UNKNOWN: NewTimerID has no verified registration flags.
+    // UNKNOWN: NewTimerID has no verified registration flags. Evidence: pr46-49-decomp-answers.md, sections R88n.9.
     crate::c_api::register_unknown_namespace_function(
         state,
         "C_Timer",

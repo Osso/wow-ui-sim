@@ -729,7 +729,7 @@ fn register_system_globals(lua: &mut rilua::Lua) -> LuaResult<()> {
     install_xpcall(lua)?;
     LuaApiMut::register_function(lua, "securecall", securecall)?;
     LuaApiMut::register_function(lua, "seterrorhandler", seterrorhandler)?;
-    // VERIFIED (BASELINE-39): the name is in the secure base. UNKNOWN (R88k.7): flags are unproved.
+    // VERIFIED (BASELINE-39): the name is in the secure base. UNKNOWN (R88k.7): flags are unproved. Evidence: pr46-49-decomp-answers.md, sections R88k.7.
     crate::lua_api::globals::security::register_unknown_allowlist_function(
         lua,
         "geterrorhandler",

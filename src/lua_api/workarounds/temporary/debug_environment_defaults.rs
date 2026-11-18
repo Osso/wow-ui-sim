@@ -186,7 +186,7 @@ end
 "#;
 
 /// temporary: master's no-op fallback. Only Retail 12.1.5 registers the real
-/// R88y `AddSourceLocationExclude`; other profiles' native behavior is UNKNOWN.
+/// R88y `AddSourceLocationExclude`; other profiles' native behavior is UNKNOWN. Evidence: pr46-49-decomp-answers.md, sections R88y.
 const SOURCE_LOCATION_EXCLUDE_FALLBACK_LUA: &str = r#"
 if AddSourceLocationExclude == nil then
   function AddSourceLocationExclude()

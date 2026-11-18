@@ -204,7 +204,7 @@ pub(crate) fn register(lua: &mut rilua::Lua) -> crate::Result<()> {
 }
 
 fn publish_retail_secure_factory(lua: &mut rilua::Lua) -> crate::Result<()> {
-    // VERIFIED — R88g.3.q3: native publication creates distinct function objects.
+    // VERIFIED — native publication creates distinct function objects. Evidence: pr46-49-decomp-answers.md, section R88g.3.q3.
     // This wrapper keeps one simulator configuration store without sharing identity.
     if !matches!(
         crate::lua_api::methods::registry_get(lua.state_mut(), "__secureenv"),
