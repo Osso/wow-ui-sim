@@ -1155,12 +1155,23 @@ mod tests {
             .iter()
             .filter(|entry| entry.registered_profiles.contains(&profile))
             .collect();
+        let script = build_missing_registered_globals_script(&entries);
+        let env = WowLuaEnv::new().expect("initialize Lua environment");
+        let missing_csv = env.eval::<String>(&script).expect("check _G registrations");
+        let missing_names = missing_csv
+            .split(',')
+            .filter(|name| !name.is_empty())
+            .collect::<Vec<_>>();
+        registered_global_miss_sources(&entries, missing_names)
+    }
+
+    fn build_missing_registered_globals_script(entries: &[&super::MasterUnitGlobal]) -> String {
         let names = entries
             .iter()
             .map(|entry| format!("'{}'", entry.name))
             .collect::<Vec<_>>()
             .join(", ");
-        let script = format!(
+        format!(
             concat!(
                 "local names = {{{names}}}\n",
                 "local missing = {{}}\n",
@@ -1172,14 +1183,7 @@ mod tests {
                 "return table.concat(missing, ',')"
             ),
             names = names
-        );
-        let env = WowLuaEnv::new().expect("initialize Lua environment");
-        let missing_csv = env.eval::<String>(&script).expect("check _G registrations");
-        let missing_names = missing_csv
-            .split(',')
-            .filter(|name| !name.is_empty())
-            .collect::<Vec<_>>();
-        registered_global_miss_sources(&entries, missing_names)
+        )
     }
 
     fn registered_global_miss_sources(

@@ -605,6 +605,64 @@ struct RewrittenFormat {
     secret_result: bool,
 }
 
+struct FormatRewrite {
+    output: Vec<u8>,
+    reordered: Vec<Val>,
+    has_positional: bool,
+    has_argument_rewrite: bool,
+    secret_result: bool,
+    previous_end: usize,
+}
+
+impl FormatRewrite {
+    fn new(capacity: usize) -> Self {
+        Self {
+            output: Vec::with_capacity(capacity),
+            reordered: Vec::new(),
+            has_positional: false,
+            has_argument_rewrite: false,
+            secret_result: false,
+            previous_end: 0,
+        }
+    }
+
+    fn append_specifier(
+        &mut self,
+        state: &mut LuaState,
+        tonumber: Val,
+        bytes: &[u8],
+        format_argument: Val,
+        args: &[Val],
+        specifier: ParsedFormatSpecifier,
+    ) -> LuaResult<()> {
+        self.output
+            .extend_from_slice(&bytes[self.previous_end..specifier.start_index]);
+        self.has_positional |= specifier.positional;
+        append_format_conversion(&mut self.output, bytes, specifier);
+        let value = format_argument_at(format_argument, args, specifier.argument_position);
+        let argument = rewrite_format_argument(state, tonumber, value, specifier.conversion)?;
+        self.reordered.push(argument.value);
+        self.has_argument_rewrite |= argument.rewritten;
+        self.secret_result |= argument.secret;
+        self.previous_end = specifier.next_index;
+        Ok(())
+    }
+
+    fn finish(mut self, bytes: &[u8], args: &[Val]) -> RewrittenFormat {
+        self.output.extend_from_slice(&bytes[self.previous_end..]);
+        let args = if self.has_positional || self.has_argument_rewrite {
+            self.reordered
+        } else {
+            args.to_vec()
+        };
+        RewrittenFormat {
+            format: self.output,
+            args,
+            secret_result: self.secret_result,
+        }
+    }
+}
+
 struct RewrittenArgument {
     value: Val,
     rewritten: bool,
@@ -638,37 +696,12 @@ fn process_wow_format(
     format_argument: Val,
     args: &[Val],
 ) -> LuaResult<RewrittenFormat> {
-    let mut output = Vec::with_capacity(bytes.len());
-    let mut reordered = Vec::new();
-    let mut has_positional = false;
-    let mut has_argument_rewrite = false;
-    let mut secret_result = false;
-    let mut previous_end = 0;
+    let mut rewrite = FormatRewrite::new(bytes.len());
     let mut scan = FormatScan::new(bytes);
-
     while let Some(specifier) = scan.next_specifier()? {
-        output.extend_from_slice(&bytes[previous_end..specifier.start_index]);
-        has_positional |= specifier.positional;
-        append_format_conversion(&mut output, bytes, specifier);
-        let value = format_argument_at(format_argument, args, specifier.argument_position);
-        let argument = rewrite_format_argument(state, tonumber, value, specifier.conversion)?;
-        reordered.push(argument.value);
-        has_argument_rewrite |= argument.rewritten;
-        secret_result |= argument.secret;
-        previous_end = specifier.next_index;
+        rewrite.append_specifier(state, tonumber, bytes, format_argument, args, specifier)?;
     }
-    output.extend_from_slice(&bytes[previous_end..]);
-
-    let args = if has_positional || has_argument_rewrite {
-        reordered
-    } else {
-        args.to_vec()
-    };
-    Ok(RewrittenFormat {
-        format: output,
-        args,
-        secret_result,
-    })
+    Ok(rewrite.finish(bytes, args))
 }
 
 fn append_format_conversion(output: &mut Vec<u8>, bytes: &[u8], specifier: ParsedFormatSpecifier) {

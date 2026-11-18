@@ -85,36 +85,8 @@ mod tests {
             return;
         }
         let env = WowLuaEnv::new().expect("Lua environment should initialize");
-        let (implemented, missing_members) = {
-            let mut lua = env.rilua_mut();
-            collect_store_secure_member_status(lua.state_mut())
-        };
-        assert!(
-            implemented > 1,
-            "the verified Store UI inventory is not vacuous"
-        );
-        assert!(
-            missing_members.is_empty(),
-            "implemented flag-3 members are missing from secure C_StoreSecure: {missing_members:?}"
-        );
-
-        let request_count_before = store_product_list_request_count(&env);
-        env.exec_rilua_secure(
-            "SecureStoreProductListResultCount = select('#', C_StoreSecure.GetProductList())",
-        )
-        .expect("secure Store UI can call the simulated product-list API");
-        let returns_zero_values: bool = env
-            .eval("return rawget(__secureenv, 'SecureStoreProductListResultCount') == 0")
-            .expect("secure product-list result count should be readable");
-        assert!(
-            returns_zero_values,
-            "product-list request returns no values"
-        );
-        assert_eq!(
-            store_product_list_request_count(&env),
-            request_count_before.wrapping_add(1),
-            "secure product-list request should update the host model"
-        );
+        assert_store_secure_members(&env);
+        assert_secure_product_list_request(&env);
     }
 
     #[cfg(feature = "client-retail")]
@@ -131,24 +103,78 @@ mod tests {
             if namespace != "C_StoreSecure" || flag % 4 != 3 {
                 continue;
             }
-            match table_get_static(state, ordinary, member) {
-                Val::Function(_) => {
-                    implemented += 1;
-                    if !matches!(
-                        table_get_static(state, secure_namespace, member),
-                        Val::Function(_)
-                    ) {
-                        missing_members.push(member.to_string());
-                    }
-                }
-                Val::Nil => {}
-                value => missing_members.push(format!(
-                    "{member} has ordinary value type {}",
-                    value.type_name()
-                )),
+            let (count, missing) =
+                store_secure_member_status(state, ordinary, secure_namespace, member);
+            implemented += count;
+            if let Some(missing) = missing {
+                missing_members.push(missing);
             }
         }
         (implemented, missing_members)
+    }
+
+    #[cfg(feature = "client-retail")]
+    fn assert_store_secure_members(env: &WowLuaEnv) {
+        let (implemented, missing_members) = {
+            let mut lua = env.rilua_mut();
+            collect_store_secure_member_status(lua.state_mut())
+        };
+        assert!(
+            implemented > 1,
+            "the verified Store UI inventory is not vacuous"
+        );
+        assert!(
+            missing_members.is_empty(),
+            "implemented flag-3 members are missing from secure C_StoreSecure: {missing_members:?}"
+        );
+    }
+
+    #[cfg(feature = "client-retail")]
+    fn assert_secure_product_list_request(env: &WowLuaEnv) {
+        let request_count_before = store_product_list_request_count(env);
+        env.exec_rilua_secure(
+            "SecureStoreProductListResultCount = select('#', C_StoreSecure.GetProductList())",
+        )
+        .expect("secure Store UI can call the simulated product-list API");
+        let returns_zero_values: bool = env
+            .eval("return rawget(__secureenv, 'SecureStoreProductListResultCount') == 0")
+            .expect("secure product-list result count should be readable");
+        assert!(
+            returns_zero_values,
+            "product-list request returns no values"
+        );
+        assert_eq!(
+            store_product_list_request_count(env),
+            request_count_before.wrapping_add(1),
+            "secure product-list request should update the host model"
+        );
+    }
+
+    #[cfg(feature = "client-retail")]
+    fn store_secure_member_status(
+        state: &mut rilua::vm::state::LuaState,
+        ordinary: Val,
+        secure_namespace: Val,
+        member: &str,
+    ) -> (usize, Option<String>) {
+        match table_get_static(state, ordinary, member) {
+            Val::Function(_) => {
+                let missing = (!matches!(
+                    table_get_static(state, secure_namespace, member),
+                    Val::Function(_)
+                ))
+                .then(|| member.to_string());
+                (1, missing)
+            }
+            Val::Nil => (0, None),
+            value => (
+                0,
+                Some(format!(
+                    "{member} has ordinary value type {}",
+                    value.type_name()
+                )),
+            ),
+        }
     }
 
     #[cfg(feature = "client-retail")]
