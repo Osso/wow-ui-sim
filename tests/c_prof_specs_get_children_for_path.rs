@@ -47,25 +47,25 @@ fn invalid_argument_script() -> String {
 #[test]
 fn get_children_returns_one_ordered_table_for_numeric_paths() {
     let env = env_with_path_rows();
-    assert!(env.eval::<bool>(r#"
+    assert!(env.eval::<bool>(r##"
         local count, children = select("#", C_ProfSpecs.GetChildrenForPath(1001.9)), C_ProfSpecs.GetChildrenForPath("1001.9")
         if count ~= 1 or type(children) ~= "table" then return false end
         if #children ~= 2 or children[1] ~= 2001 or children[2] ~= 2002 then return false end
         local nested = C_ProfSpecs.GetChildrenForPath(2001)
         return #nested == 1 and nested[1] == 3001
-    "#).expect("GetChildrenForPath returns ordered child IDs"));
+    "##).expect("GetChildrenForPath returns ordered child IDs"));
 }
 
 #[test]
 fn get_children_returns_one_empty_table_for_absent_paths_and_leaves() {
     let env = env_with_path_rows();
-    assert!(env.eval::<bool>(r#"
+    assert!(env.eval::<bool>(r##"
         local function empty_result(pathID)
             local count, children = select("#", C_ProfSpecs.GetChildrenForPath(pathID)), C_ProfSpecs.GetChildrenForPath(pathID)
             return count == 1 and type(children) == "table" and next(children) == nil
         end
         return empty_result(9999) and empty_result(4001) and empty_result(3001)
-    "#).expect("unknown and leaf paths return empty tables"));
+    "##).expect("unknown and leaf paths return empty tables"));
 }
 
 #[test]
