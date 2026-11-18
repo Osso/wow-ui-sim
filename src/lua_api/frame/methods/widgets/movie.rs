@@ -14,6 +14,8 @@ use rilua::{LuaResult, Val, runtime_error};
 #[cfg(feature = "client-mists")]
 const MOVIE_SUCCESS_CODE: u32 = 0;
 #[cfg(feature = "client-mists")]
+const MOVIE_MISSING_RECORD_CODE: u32 = 2;
+#[cfg(feature = "client-mists")]
 const MOVIE_MAX_RESULT_CODE: u32 = 4;
 
 fn enable_subtitles(state: &mut LuaState) -> LuaResult<u32> {
@@ -44,17 +46,13 @@ fn start_movie(state: &mut LuaState) -> LuaResult<u32> {
     let frame_id = frame_id_from_stack(state, 1)?;
     let movie_id = u32::from_stack(state, 2)?;
     require_movie_frame(state, frame_id, "StartMovie")?;
-    let result_code = borrow_state(state)?
+    let host_result = borrow_state(state)?
         .movie_playback
         .start_results
         .get(&movie_id)
         .copied();
-    let Some(result_code) = result_code else {
-        // UNKNOWN native result; nils preserve the absent host input without a guessed code.
-        state.push(Val::Nil);
-        state.push(Val::Nil);
-        return Ok(2);
-    };
+    // INFERRED (simulator mapping): no simulator Movie records => native Missing Rec path.
+    let result_code = host_result.unwrap_or(MOVIE_MISSING_RECORD_CODE);
     if result_code > MOVIE_MAX_RESULT_CODE {
         return Err(runtime_error(
             "StartMovie host result code must be between 0 and 4",

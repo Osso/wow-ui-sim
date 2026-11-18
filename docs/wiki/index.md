@@ -16,7 +16,7 @@ The [Mists Glue intro movie login investigation](investigations/mists-glue-intro
 
 ## [2026-11-17] investigation | Mists Glue intro movie login
 
-[Mists Glue intro movie login](investigations/mists-glue-intro-movie-login.md) records the selected 5.5.4.70268 GlueParent/MovieFrame path, R88ao native facts for 5.5.4.70631, the empty-default offline movie-input boundary, and the original-consumer RED.
+[Mists Glue intro movie login](investigations/mists-glue-intro-movie-login.md) records the selected 5.5.4.70268 GlueParent/MovieFrame path, R88ao native facts for 5.5.4.70631, the inferred no-record `(false, 2)` mapping, and the original-consumer RED.
 
 ## [2026-11-17] verification | Retail call-pet flyout results
 

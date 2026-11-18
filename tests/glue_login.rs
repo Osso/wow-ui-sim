@@ -440,19 +440,18 @@ fn mists_classic_cached_login_consumer_hides_rows_and_checks_api_scopes() {
     }
 }
 
-// VERIFIED (R88ao, Mists Classic 5.5.4.70631): StartMovie returns a boolean and code.
-// UNKNOWN (R88ao offline result); VERIFIED (simulator model): absent host results yield nil values.
+// VERIFIED (R88ao, Mists Classic 5.5.4.70631): StartMovie returns a Boolean and numeric code;
+// no accepted movie record returns code 2, "Missing Rec".
+// INFERRED (simulator mapping): no simulator Movie records take that native path.
 #[cfg(feature = "client-mists")]
 #[test]
-fn mists_movie_start_keeps_missing_host_result_unknown() {
+fn mists_movie_missing_record_returns_false_and_code() {
     test_timeout! {
         let env = load_blizzard_screen(ScreenKind::Login);
-        let result: (i32, String, String) = env.eval(r#"
-            local function pack(...) return { n = select('#', ...), ... } end
-            local result = pack(MovieFrame:StartMovie(999))
-            return result.n, type(result[1]), type(result[2])
-        "#).expect("an absent host outcome should not invent playback values");
-        assert_eq!(result, (2, "nil".into(), "nil".into()));
+        let result: (bool, i32) = env
+            .eval("return MovieFrame:StartMovie(999)")
+            .expect("an absent Movie record should return the Missing Rec pair");
+        assert_eq!(result, (false, 2));
     }
 }
 

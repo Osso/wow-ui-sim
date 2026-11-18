@@ -16,7 +16,9 @@
 
 **VERIFIED (Mists Classic 5.5.4.70631, R88ao):** `StartMovie` returns `(success, code)`; code 0 is success, codes 1–4 identify the documented failure paths, and no-record search returns code 2. An error return does not itself dispatch `OnMovieFinished`. `StopMovie` queues `OnMovieFinished` for an active handle; natural end uses the same stop path. `CinematicFinished` records completion state but does not close MovieFrame.
 
-**UNKNOWN (offline playback):** the result for a movie ID depends on available records, files, and playback state. The simulator must keep that result as an empty-default host input; it must not claim that an offline client returns a particular code.
+**INFERRED (simulator mapping):** the simulator has no Movie DB2 records, so an absent `start_results` entry maps to the native no-accepted-record result `(false, 2)` (`Missing Rec`). Explicit host outcomes remain available for success and codes 1–4. This does not claim that an offline client with available records or files always returns code 2.
+
+**UNKNOWN (native offline playback):** outcomes for available records and files depend on the records, files, and playback state.
 
 ### Simulator evidence
 
@@ -42,7 +44,9 @@
 
 **VERIFIED (R88aq-b):** cinematic types are GlueMovie=0, GameMovie=1, GameClientScene=2, and GameCinematicSequence=3. `CinematicFinished` updates the record and shared state before its type-1 follow-up, then clears the manager movie ID. The follow-up requires a separate game-movie flag. **UNKNOWN:** the flag writer and observer/listener effects. The simulator keeps that flag unset and does not model unknown observer effects.
 
-**INFERRED (5.5.4.70631 behavior applied to cached 5.5.4.70268):** cached `MovieFrame.lua` uses the movie completion callback to close the secondary screen and restore AccountLogin. The simulator keeps offline `StartMovie` results as empty-default host input; it does not invent a native offline result.
+**VERIFIED (Mists 5.5.4.70268 cache):** `MovieFrame_PlayMovie` checks only the truth value of `playSuccess`; a false result closes the secondary screen. The failure path does not depend on the old `(nil, nil)` pair.
+
+**INFERRED (R88ao, 5.5.4.70631 behavior applied to cached 5.5.4.70268):** the simulator's no-record pair `(false, 2)` follows that same close path. The cached close operation restores AccountLogin. A later `StopMovie` may dispatch `OnMovieFinished` for the installed handle, but the cached finish handler does not advance while MovieFrame is hidden.
 
 ## R88ar Mists Glue chat selection
 
