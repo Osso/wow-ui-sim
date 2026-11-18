@@ -49,6 +49,8 @@ pub struct CinematicFinishRecord {
 pub struct MoviePlaybackState {
     /// UNKNOWN native playback outcome; absent movie IDs have no supplied result.
     pub start_results: HashMap<u32, u32>,
+    /// UNKNOWN game-movie flag; no verified setter in this scope, so it starts unset.
+    pub(crate) game_movie_flag_set: bool,
     pub manager_movie_id: Option<i32>,
     pub cinematic_records: HashMap<i32, CinematicRecord>,
     pub last_cinematic_finish: Option<CinematicFinishRecord>,

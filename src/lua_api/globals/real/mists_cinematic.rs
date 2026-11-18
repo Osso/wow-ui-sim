@@ -9,6 +9,7 @@ use rilua::{LuaApiMut, LuaResult, Val, runtime_error};
 const CINEMATIC_STARTED_USAGE: &str = "Usage: CinematicStarted(movieType, movieID [, canCancel])";
 const CINEMATIC_TYPE_MIN: i32 = 0;
 const CINEMATIC_TYPE_MAX: i32 = 3;
+const GAME_MOVIE_TYPE: i32 = 1;
 const MOVIE_ID_RANGE_ERROR: &str =
     "bad argument #2 to CinematicStarted (outside of expected range -2147483648 to 2147483647)";
 
@@ -32,6 +33,7 @@ fn cinematic_started(state: &mut LuaState) -> LuaResult<u32> {
         movie_id,
         can_cancel,
     );
+    update_cinematic_observers();
     Ok(0)
 }
 
@@ -137,21 +139,42 @@ fn finish_cinematic(
     user_canceled: bool,
     did_error: bool,
 ) {
-    let finished = match playback.cinematic_records.get_mut(&movie_type) {
-        Some(record) if record.active => {
-            record.active = false;
-            Some(CinematicFinishRecord {
-                movie_type,
-                elapsed: record.started_at.elapsed(),
-                user_canceled,
-                did_error,
-            })
-        }
-        _ => None,
-    };
-    if let Some(finished) = finished {
-        playback.last_cinematic_finish = Some(finished);
+    record_cinematic_finish(playback, movie_type, user_canceled, did_error);
+    update_cinematic_observers();
+    if movie_type == GAME_MOVIE_TYPE {
+        finish_game_movie_followup(playback);
     }
-    // UNKNOWN (R88aq): type-1 follow-up and observer effects are not modeled.
     playback.manager_movie_id = None;
+}
+
+/// UNKNOWN (R88aq-b): native observer effects are not modeled; no Lua event is synthesized.
+fn update_cinematic_observers() {}
+
+fn record_cinematic_finish(
+    playback: &mut MoviePlaybackState,
+    movie_type: i32,
+    user_canceled: bool,
+    did_error: bool,
+) {
+    let Some(record) = playback.cinematic_records.get_mut(&movie_type) else {
+        return;
+    };
+    if !record.active {
+        return;
+    }
+    record.active = false;
+    playback.last_cinematic_finish = Some(CinematicFinishRecord {
+        movie_type,
+        elapsed: record.started_at.elapsed(),
+        user_canceled,
+        did_error,
+    });
+}
+
+/// UNKNOWN (R88aq-b): the game-movie flag has no verified setter in this scope.
+fn finish_game_movie_followup(playback: &mut MoviePlaybackState) {
+    if !playback.game_movie_flag_set {
+        return;
+    }
+    // Its state changes, cursor refresh, and STOP_MOVIE dispatch remain unmodeled.
 }

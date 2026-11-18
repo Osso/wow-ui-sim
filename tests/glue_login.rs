@@ -452,6 +452,19 @@ fn mists_movie_start_returns_boolean_and_code() {
     }
 }
 
+// VERIFIED (R88aq-b, Mists 5.5.4.70631): cinematic type values are stable.
+#[cfg(feature = "client-mists")]
+#[test]
+fn mists_cinematic_type_enum_matches_native_values() {
+    test_timeout! {
+        let env = new_mists_api_env();
+        let values: (i32, i32, i32, i32) = env.eval(
+            "return Enum.CinematicType.GlueMovie, Enum.CinematicType.GameMovie, Enum.CinematicType.GameClientScene, Enum.CinematicType.GameCinematicSequence",
+        ).expect("CinematicType values should be readable");
+        assert_eq!(values, (0, 1, 2, 3));
+    }
+}
+
 // VERIFIED (R88aq, Mists 5.5.4.70631): numeric strings truncate toward zero; Started returns no values.
 #[cfg(feature = "client-mists")]
 #[test]
