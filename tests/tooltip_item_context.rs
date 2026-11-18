@@ -233,7 +233,7 @@ fn seed_item_tooltip_inputs(env: &WowLuaEnv) {
     }
 }
 
-fn seed_item_tooltip_input(env: &WowLuaEnv, level: u32, amounts: [i32; 4]) {
+fn seed_item_tooltip_input(env: &WowLuaEnv, level: u16, amounts: [i32; 4]) {
     use wow_ui_sim::c_api::item_tooltip::{ItemTooltipInput, ItemTooltipStat};
     let labels = ["Strength", "Stamina", "Mastery", "Versatility"];
     env.state().borrow_mut().item_tooltip_inputs.insert(
