@@ -1,4 +1,4 @@
-//! Supplied inputs for the `C_ProfSpecs` reminder queries (WM49 part A).
+//! Supplied inputs for modeled `C_ProfSpecs` queries.
 //!
 //! The simulator has no profession trait configuration, purchase-eligibility,
 //! condition or cost model, nor ranks for related SkillLines.

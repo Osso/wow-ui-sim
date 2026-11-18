@@ -20,7 +20,6 @@
 
 ## Tests asserting this spec
 
-- `tests/c_prof_specs_get_children_for_path.rs` — API argument conversion, return shape, empty cases, and ordering.
 - `tests/prof_specs_get_children_for_path.rs` — conversion, error, return-shape, empty-case, and ordering contract.
 - `tests/test_showuipanel_lod.rs` — original Retail Blizzard specialization-tree consumer.
 
