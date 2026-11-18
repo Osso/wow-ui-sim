@@ -27,6 +27,26 @@ const GUILD_FACTION_GROUP_HORDE_SHORTCUT_OVERLAY: &str = r#"
         return UnitFactionGroup("player") == "Horde" and 0 or 1
     end
 "#;
+const GUILD_FACTION_GROUP_CONSTANT_ONE_FIXTURE: &str = r#"
+    A_Admin.SetGuildFactionGroupFlags(2, 4)
+    A_Admin.SetPlayerRace(1)
+    local ok, err = pcall(
+        GuildFactionAssertTexture,
+        "Interface\\Calendar\\UI-Calendar-Event-PVP01",
+        "constant-one"
+    )
+    assert(not ok and tostring(err):find("constant-one", 1, true))
+"#;
+const GUILD_FACTION_GROUP_FLAG_ORDER_FIXTURE: &str = r#"
+    A_Admin.SetGuildFactionGroupFlags(1, 6)
+    A_Admin.SetPlayerRace(0)
+    local ok, err = pcall(
+        GuildFactionAssertTexture,
+        "Interface\\Calendar\\UI-Calendar-Event-PVP01",
+        "faction-shortcut"
+    )
+    assert(not ok and tostring(err):find("faction-shortcut", 1, true))
+"#;
 
 fn load_full_game_ui() -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("Failed to create Lua environment");
@@ -142,20 +162,40 @@ fn wrong_guild_faction_group_producers_fail_guild_news_assertions(env: &WowLuaEn
         .eval("return CommunitiesFrame.GuildDetailsFrame.News ~= nil")
         .expect("GuildNews frame query must succeed");
     assert!(frame_exists, "GuildNews frame must be instantiated");
-    assert_eq!(format!("{:x}", Sha256::digest(GUILD_FACTION_GROUP_CONSTANT_ONE_OVERLAY.as_bytes())), "aa5d9dcedf8a5d346b725ef9e8807927b2153dcd84efb69296756c4366591a35");
-    assert_eq!(format!("{:x}", Sha256::digest(GUILD_FACTION_GROUP_HORDE_SHORTCUT_OVERLAY.as_bytes())), "73a30b8febf7866ff867e02acb54ce38815413d477771247522b798a99c85893");
-    env.exec("GuildFactionOriginal = GetGuildFactionGroup; function GuildFactionAssertTexture(expected, label) CommunitiesGuildNewsFrame_OnLoad(CommunitiesFrame.GuildDetailsFrame.News); assert(GUILD_EVENT_TEXTURES[Enum.CalendarEventType.PvP] == expected, label) end")
-        .expect("original GuildNews consumer assertion must be installed");
+    assert_eq!(
+        format!(
+            "{:x}",
+            Sha256::digest(GUILD_FACTION_GROUP_CONSTANT_ONE_OVERLAY.as_bytes())
+        ),
+        "aa5d9dcedf8a5d346b725ef9e8807927b2153dcd84efb69296756c4366591a35"
+    );
+    assert_eq!(
+        format!(
+            "{:x}",
+            Sha256::digest(GUILD_FACTION_GROUP_HORDE_SHORTCUT_OVERLAY.as_bytes())
+        ),
+        "73a30b8febf7866ff867e02acb54ce38815413d477771247522b798a99c85893"
+    );
+    env.exec(
+        r#"
+        GuildFactionOriginal = GetGuildFactionGroup
+        function GuildFactionAssertTexture(expected, label)
+            CommunitiesGuildNewsFrame_OnLoad(CommunitiesFrame.GuildDetailsFrame.News)
+            assert(GUILD_EVENT_TEXTURES[Enum.CalendarEventType.PvP] == expected, label)
+        end
+        "#,
+    )
+    .expect("original GuildNews consumer assertion must be installed");
     assert_wrong_guild_faction_group_producer_fails(
         env,
         GUILD_FACTION_GROUP_CONSTANT_ONE_OVERLAY,
-        "A_Admin.SetGuildFactionGroupFlags(2, 4); A_Admin.SetPlayerRace(1); local ok, err = pcall(GuildFactionAssertTexture, 'Interface\\\\Calendar\\\\UI-Calendar-Event-PVP01', 'constant-one'); assert(not ok and tostring(err):find('constant-one', 1, true))",
+        GUILD_FACTION_GROUP_CONSTANT_ONE_FIXTURE,
         "constant-one",
     );
     assert_wrong_guild_faction_group_producer_fails(
         env,
         GUILD_FACTION_GROUP_HORDE_SHORTCUT_OVERLAY,
-        "A_Admin.SetGuildFactionGroupFlags(1, 6); A_Admin.SetPlayerRace(0); local ok, err = pcall(GuildFactionAssertTexture, 'Interface\\\\Calendar\\\\UI-Calendar-Event-PVP01', 'faction-shortcut'); assert(not ok and tostring(err):find('faction-shortcut', 1, true))",
+        GUILD_FACTION_GROUP_FLAG_ORDER_FIXTURE,
         "faction shortcut",
     );
 }
