@@ -83,6 +83,35 @@ fn blizzard_communities_appears_in_game_discovery() {
 }
 
 prefork_full_ui_case! {
+fn guild_news_pvp_texture_uses_player_faction_group(env: &WowLuaEnv) {
+    env.exec(
+        r#"
+        local newsFrame = CommunitiesFrame.News
+        A_Admin.SetGuildFactionGroupFlags(2, 4)
+        A_Admin.SetGuildFactionGroupFlags(1, 2)
+        local function assertPvpTexture(raceIndex, expectedTexture, label, flags)
+            if flags then
+                A_Admin.SetGuildFactionGroupFlags(raceIndex + 1, flags)
+            end
+            A_Admin.SetPlayerRace(raceIndex)
+            CommunitiesGuildNewsFrame_OnLoad(newsFrame)
+            assert(
+                GUILD_EVENT_TEXTURES[Enum.CalendarEventType.PvP] == expectedTexture,
+                label .. ": unexpected PvP texture"
+            )
+        end
+
+        assertPvpTexture(1, "Interface\\Calendar\\UI-Calendar-Event-PVP01", "Orc")
+        assertPvpTexture(0, "Interface\\Calendar\\UI-Calendar-Event-PVP02", "Human")
+        assertPvpTexture(99, "Interface\\Calendar\\UI-Calendar-Event-PVP02", "missing race row")
+        assertPvpTexture(0, "Interface\\Calendar\\UI-Calendar-Event-PVP01", "flag 4 precedes flag 2", 6)
+        "#,
+    )
+    .expect("GuildNews must select its PvP texture from GetGuildFactionGroup");
+}
+}
+
+prefork_full_ui_case! {
 fn blizzard_communities_loads_without_errors(env: &WowLuaEnv) {
 
     let addon_errors: Vec<String> = env

@@ -248,6 +248,8 @@ pub struct PlayerState {
     pub health_max: i32,
     pub class_index: i32,
     pub race_index: usize,
+    /// UNKNOWN native FactionTemplate group flags, supplied by the host; empty means no row.
+    pub guild_faction_group_flags: HashMap<i32, u32>,
     pub level: i32,
     /// Supplied effective-level field; zero selects the ordinary `level`, matching
     /// the native standard interface (WM97c A).
