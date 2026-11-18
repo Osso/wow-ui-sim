@@ -655,14 +655,17 @@ mod tests {
 
     #[test]
     fn mask_without_room_for_its_margins_stretches_whole() {
-        let mask = Rectangle::new(iced::Point::new(0.0, 0.0), iced::Size::new(6.0, 6.0));
-        let mut frame = sliced_mask(1, mask);
-        frame.layout_rect = Some(crate::LayoutRect {
-            x: 0.0,
-            y: 0.0,
-            width: 6.0 / UI_SCALE,
-            height: 6.0 / UI_SCALE,
-        });
-        assert_eq!(mask_slice(&frame, mask), None);
+        let bounds = Rectangle::new(iced::Point::new(0.0, 0.0), iced::Size::new(6.0, 6.0));
+        let mut batch = QuadBatch::new();
+        batch.vertices.extend(quad(bounds));
+        batch.indices.extend([0, 1, 2, 0, 2, 3]);
+        let mut registry = WidgetRegistry::new();
+        registry.register(sliced_mask(1, bounds));
+
+        apply_mask_texture(&mut batch, 0, bounds, &[1], &registry);
+
+        assert_eq!(batch.vertices.len(), 4);
+        assert_eq!(batch.vertices[0].mask_tex_coords, [0.0, 0.0]);
+        assert_eq!(batch.vertices[2].mask_tex_coords, [1.0, 1.0]);
     }
 }
