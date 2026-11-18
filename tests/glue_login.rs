@@ -635,8 +635,7 @@ fn mists_cinematic_finished_clears_matching_active_type() {
             .expect("active completion should be recorded");
         assert_eq!(finished.movie_type, 3);
         assert!(finished.elapsed >= std::time::Duration::from_millis(10));
-        assert!(finished.user_canceled);
-        assert!(finished.did_error);
+        assert_eq!((finished.user_canceled, finished.did_error), (true, true));
     }
 }
 
