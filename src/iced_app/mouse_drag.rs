@@ -101,7 +101,22 @@ pub(super) fn reanchor_moving_drag_frame(
             state.widgets.add_anchor_dependent(parent_id, drag_id);
         }
     }
+    set_moving_drag_frame_anchor(state, drag_id, parent_id, x_offset, y_offset);
+    if uses_retail_clamp_producers() {
+        state
+            .widgets
+            .resolve_named_anchor_targets_for_frame(drag_id);
+    }
+    state.widgets.mark_rect_dirty(drag_id);
+}
 
+fn set_moving_drag_frame_anchor(
+    state: &mut crate::lua_api::SimState,
+    drag_id: u64,
+    parent_id: Option<u64>,
+    x_offset: f32,
+    y_offset: f32,
+) {
     if let Some(frame) = state.widgets.get_mut_visual(drag_id) {
         frame.clear_all_points();
         frame.set_point(
@@ -112,12 +127,6 @@ pub(super) fn reanchor_moving_drag_frame(
             y_offset,
         );
     }
-    if uses_retail_clamp_producers() {
-        state
-            .widgets
-            .resolve_named_anchor_targets_for_frame(drag_id);
-    }
-    state.widgets.mark_rect_dirty(drag_id);
 }
 
 /// Calculate new size for a frame being resized via StartSizing.

@@ -998,10 +998,23 @@ fn load_modified_click_defaults(env: &LoaderEnv<'_>, toc: &TocFile, result: &mut
             return;
         }
     };
-    let install: crate::Result<()> = env.with_state(|state| {
+    let install = install_modified_click_defaults(env, ui.elements);
+    if let Err(error) = install {
+        result.warnings.push(format!(
+            "{}: installing modified-click defaults: {error}",
+            path.display()
+        ));
+    }
+}
+
+fn install_modified_click_defaults(
+    env: &LoaderEnv<'_>,
+    elements: Vec<crate::xml::XmlElement>,
+) -> crate::Result<()> {
+    env.with_state(|state| {
         use crate::lua_api::methods::{create_string, create_table, table_set};
         let table = create_table(state);
-        for element in ui.elements {
+        for element in elements {
             if let crate::xml::XmlElement::ModifiedClick(click) = element
                 && let Some(action) = click.action
             {
@@ -1016,13 +1029,7 @@ fn load_modified_click_defaults(env: &LoaderEnv<'_>, toc: &TocFile, result: &mut
             table,
         );
         Ok(())
-    });
-    if let Err(error) = install {
-        result.warnings.push(format!(
-            "{}: installing modified-click defaults: {error}",
-            path.display()
-        ));
-    }
+    })
 }
 
 fn load_conventional_bindings(
@@ -1055,9 +1062,7 @@ fn read_conventional_binding_metadata(
     }
     match crate::xml::parse_xml_file(&path) {
         Ok(ui) => {
-            let contains_bindings = ui.elements.iter().any(|element| {
-                matches!(element, crate::xml::XmlElement::Binding(binding) if binding.name.is_some())
-            });
+            let contains_bindings = has_named_binding(&ui.elements);
             if let Some(addon) = env
                 .state()
                 .borrow_mut()
@@ -1070,6 +1075,12 @@ fn read_conventional_binding_metadata(
         }
         Err(error) => result.warnings.push(format!("{}: {error}", path.display())),
     }
+}
+
+fn has_named_binding(elements: &[crate::xml::XmlElement]) -> bool {
+    elements.iter().any(|element| {
+        matches!(element, crate::xml::XmlElement::Binding(binding) if binding.name.is_some())
+    })
 }
 
 fn loads_file_in_bootstrap_phase(
