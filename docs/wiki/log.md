@@ -26,6 +26,10 @@ Updated the [investigation](investigations/mists-glue-intro-movie-login.md) and 
 
 Added the [investigation](investigations/mists-glue-intro-movie-login.md). **VERIFIED (Mists 5.5.4.70268 cache):** the selected original GlueParent/MovieFrame path hides AccountLogin and its edit boxes. **VERIFIED (R88ao, Mists Classic 5.5.4.70631):** cursor global scope and movie return/finish semantics. **INFERRED:** first launch applies the 70631 default/display values to the 70268 cache. **UNKNOWN:** offline StartMovie outcome; its host input stays empty by default.
 
+## [2026-11-17] verification | Mists MovieFrame Missing Rec mapping
+
+Updated the [investigation](investigations/mists-glue-intro-movie-login.md) and [Glue login contract](../specs/glue-login-flow.md). **INFERRED (simulator mapping):** absent Movie records return `(false, 2)` while explicit host outcomes remain available. **VERIFIED (Mists simulator at source `7158e98de`):** original login boot passes 1/1 with AccountLogin visible, edit-box focus passes 1/1, and `glue_login::mists_` passes 15/15. **VERIFIED (Retail 12.1.5.70783 at the same source):** `cinematic_summary` passes 2/2. **VERIFIED (profile gates at source `f420c5c15`):** Forever, Mists, Wrath, and Retail compile-only targets pass with zero warnings.
+
 ## [2026-11-17] verification | Retail PerformanceBar tooltip
 
 **VERIFIED (final source):** Retail's byte-identical RED/GREEN original-consumer test passes 1/1; constant-`(1,1)` protocol and bandwidth-from-`GetNetStats` mutants fail at their tooltip assertions. PTR, Forever and Mists fallback-preservation tests pass 1/1. The final five-profile all-targets no-run matrix has zero warnings; Wrath remains compile-only. See the [PerformanceBar contract](../specs/performance-bar-queries.md) and handoff for hashes.

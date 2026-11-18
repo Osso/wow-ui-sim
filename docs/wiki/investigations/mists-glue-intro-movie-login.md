@@ -24,7 +24,13 @@
 
 **VERIFIED (Mists integration RED at source SHA `537f369a949468051115b7c68bed02704f93eb88`):** the selected original `GlueParent_CheckCinematic` opened MovieFrame, whose `OnShow` failed at `MovieFrame.lua:37` because `HideCursor` was nil. The original login-boot assertion found AccountLogin hidden, and the original edit-box hit test found no target under the full-screen frame.
 
-**Historical note (source SHA `b265305c2`):** the cursor visibility globals were added for the original Mists consumer. Later build and test evidence appears below.
+**Historical note (source SHA `b265305c2`):** the cursor visibility globals were added for the original Mists consumer.
+
+## Current verification
+
+**VERIFIED (Mists simulator at source `7158e98de86b74db848a25cc12d1100e5ce59e35`):** the original login boot test passes 1/1 with AccountLogin visible, edit-box focus passes 1/1, and `glue_login::mists_` passes 15/15. The focused group includes the `(false, 2)` missing-record result and explicit host outcome codes. **VERIFIED (Retail 12.1.5.70783 at the same source):** the two `cinematic_summary` tests pass 2/2.
+
+**VERIFIED (profile builds at source `f420c5c15be4c898c299745610afc688816c00cd`):** Forever, Mists, Wrath, and Retail `--lib --test integration --no-run` builds pass with zero warnings. These receipts are from before the `origin/master` merge.
 
 ## Sources
 

@@ -20,7 +20,7 @@ The [panel fixture investigation](investigations/showuipanel-toggle-fixture-owne
 
 ## [2026-11-17] verification | Mists Glue chat placeholder and movie flow
 
-The [Mists Glue intro movie login investigation](investigations/mists-glue-intro-movie-login.md) and [Glue login contract](../specs/glue-login-flow.md) record the synthetic `ChatFrame1` root cause and fix. **VERIFIED (Mists simulator source at `e9ec1c669`):** the loader already rejects both Game-only chat add-ons; a bootstrap placeholder caused the visible frame. **VERIFIED (Mists integration run):** login boot passes 1/1, the original edit-box test passes 1/1, and the focused movie/API tests pass 16/16 with zero build warnings. **INFERRED (R88ar, 70631 applied to 70268):** the original Glue login has no ChatFrame1 from those Game-only add-ons.
+The [Mists Glue intro movie login investigation](investigations/mists-glue-intro-movie-login.md) and [Glue login contract](../specs/glue-login-flow.md) record the synthetic `ChatFrame1` root cause and fix. **VERIFIED (Mists simulator source at `e9ec1c669`):** the loader already rejects both Game-only chat add-ons; a bootstrap placeholder caused the visible frame. **VERIFIED (Mists simulator at source `7158e98de`):** original login boot passes 1/1 with AccountLogin visible, edit-box focus passes 1/1, and `glue_login::mists_` passes 15/15, including the `(false, 2)` no-record result. **INFERRED (R88ar, 70631 applied to 70268):** the original Glue login has no ChatFrame1 from those Game-only add-ons.
 
 ## [2026-11-17] investigation | Mists Glue intro movie login
 
