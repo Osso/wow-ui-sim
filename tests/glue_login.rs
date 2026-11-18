@@ -17,8 +17,16 @@ fn blizzard_ui_dir() -> PathBuf {
 }
 
 fn load_blizzard_screen(screen: ScreenKind) -> common::LockedEnv {
+    load_blizzard_screen_with_setup(screen, |_| {})
+}
+
+fn load_blizzard_screen_with_setup(
+    screen: ScreenKind,
+    configure: impl FnOnce(&WowLuaEnv),
+) -> common::LockedEnv {
     common::lock_env(move || {
         let env = WowLuaEnv::new().expect("Failed to create Lua environment");
+        configure(&env);
         env.set_screen_size(1024.0, 768.0);
         env.set_screen_mode(screen);
 
@@ -459,6 +467,28 @@ fn mists_movie_failed_start_defers_finish_until_stop() {
             MovieFrame:StopMovie()
             assert(finishCount == 1)
         "#).expect("StopMovie should dispatch only for the installed handle");
+    }
+}
+
+// INFERRED: 70631 movie results applied to the cached 70268 Glue consumer.
+#[cfg(feature = "client-mists")]
+#[test]
+fn mists_movie_success_consumes_stop_and_restores_login() {
+    test_timeout! {
+        let env = load_blizzard_screen_with_setup(ScreenKind::Login, |env| {
+            env.state().borrow_mut().movie_playback.start_results.insert(115, 0);
+        });
+        let shown: (bool, bool) = env.eval(
+            "return MovieFrame:IsShown(), AccountLogin:IsShown()",
+        ).expect("the successful movie should keep the secondary screen open");
+        assert_eq!(shown, (true, false));
+
+        env.exec("MovieFrame:StopMovie()")
+            .expect("StopMovie should dispatch the original finish callback");
+        let shown: (bool, bool) = env.eval(
+            "return MovieFrame:IsShown(), AccountLogin:IsShown()",
+        ).expect("the finished movie should close its secondary screen");
+        assert_eq!(shown, (false, true));
     }
 }
 
