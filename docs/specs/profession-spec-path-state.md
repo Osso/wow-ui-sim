@@ -1,16 +1,16 @@
 # Profession specialization path state
 
-`C_ProfSpecs.GetStateForPath` and the path entry/currency lookups provide the state consumed by the Retail profession specialization tree. Native behavior is documented in `pr46-49-decomp-answers.md` §§R88ax.1 and R88ax.3.
+`C_ProfSpecs.GetStateForPath` and the path entry/currency lookups provide the state consumed by the Retail profession specialization tree. Native behavior is documented in `pr46-49-decomp-answers.md` §§R88ax.1, R88ax.2, and R88ax.3.
 
 ## What it must do
 
 - [ ] Register the getters in the Game screen on Retail 12.1.5 only.
-- [ ] Require signed 32-bit path IDs, and also a config ID for `GetStateForPath`; accept numeric strings and fractions after range validation, and raise the documented Usage errors for invalid arguments.
-- [ ] Return exactly one numeric state from `Enum.ProfessionsSpecPathState`: Locked 0, Progressing 1, or Completed 2. Missing path/config and rank below the required rank return Locked; otherwise equality with effective maximum returns Completed, and other ranks return Progressing. (R88ax.1, VERIFIED.)
-- [ ] Return the selected type-7 spend entry, type-9 unlock entry, or first qualifying type-1 spend currency. Unknown paths return 0 for entry getters and nil for currency. (R88ax.3, VERIFIED.)
-- [ ] `GetPerksForPath` returns ordered perk records; `isMajorPerk` tests the `IsMajorBonus` flag (2). `GetUnlockRankForPerk` returns nil on a miss; `GetEntryIDForPerk` returns 0 on a miss. (R88ax.2, VERIFIED.)
-- [ ] `GetStateForPerk` returns one `Enum.ProfessionsSpecPerkState` number: Unearned 0, Pending 1, Earned 2. (R88ax.2, VERIFIED.)
-- [ ] **INFERRED (simulator mapping):** use empty-default host inputs for path entry ranks, per-config current/effective maximum ranks, entry IDs, spend currency IDs, perk groups/flags/entries/ranks, and trait configuration IDs. Do not synthesize DB2 or runtime rows.
+- [x] `GetStateForPath` requires signed 32-bit path and config IDs; numeric strings are accepted, fractional values truncate after range validation, and invalid inputs raise the documented Usage and range errors. (R88ax.1, tests assert.)
+- [x] Return exactly one numeric state from `Enum.ProfessionsSpecPathState`: Locked 0, Progressing 1, or Completed 2. Missing path/config and rank below the required rank return Locked; otherwise equality with effective maximum returns Completed, and other ranks return Progressing. (R88ax.1, VERIFIED.)
+- [x] Return the selected type-7 spend entry, type-9 unlock entry, or first qualifying type-1 spend currency. Unknown paths return 0 for entry getters and nil for currency. (R88ax.3, VERIFIED.)
+- [x] `GetPerksForPath` returns ordered perk records; `isMajorPerk` tests the `IsMajorBonus` flag (2). `GetUnlockRankForPerk` returns nil on a miss; `GetEntryIDForPerk` returns 0 on a miss. (R88ax.2, VERIFIED.)
+- [x] `GetStateForPerk` returns one `Enum.ProfessionsSpecPerkState` number: Unearned 0, Pending 1, Earned 2. (R88ax.2, VERIFIED.)
+- [x] **INFERRED (simulator mapping):** use empty-default host inputs for path entry ranks, per-config current/effective maximum ranks, entry IDs, spend currency IDs, perk groups/flags/entries/ranks, and trait configuration IDs. Do not synthesize DB2 or runtime rows.
 
 ## How it works
 
