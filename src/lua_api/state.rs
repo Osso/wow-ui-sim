@@ -22,6 +22,43 @@ pub struct WrathUnitTapState {
     pub by_all_threat_list: bool,
 }
 
+/// One Mists cinematic record, keyed by cinematic type.
+#[cfg(feature = "client-mists")]
+#[derive(Clone, Debug)]
+pub struct CinematicRecord {
+    pub movie_type: i32,
+    pub movie_id: i32,
+    pub can_cancel: bool,
+    pub started_at: Instant,
+    pub active: bool,
+}
+
+/// One recorded CinematicFinished result.
+#[cfg(feature = "client-mists")]
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct CinematicFinishRecord {
+    pub movie_type: i32,
+    pub elapsed: std::time::Duration,
+    pub user_canceled: bool,
+    pub did_error: bool,
+}
+
+/// Empty-default Mists movie inputs and cinematic state.
+#[cfg(feature = "client-mists")]
+#[derive(Debug, Default)]
+pub struct MoviePlaybackState {
+    /// UNKNOWN native playback outcome; absent movie IDs have no supplied result.
+    pub start_results: HashMap<u32, u32>,
+    /// UNKNOWN game-movie flag; no verified setter in this scope, so it starts unset.
+    pub(crate) game_movie_flag_set: bool,
+    pub manager_movie_id: Option<i32>,
+    pub cinematic_records: HashMap<i32, CinematicRecord>,
+    pub last_cinematic_finish: Option<CinematicFinishRecord>,
+    pub(crate) active_handles: HashSet<u64>,
+    pub(crate) pending_finishes: VecDeque<u64>,
+    pub(crate) dispatching_finish: bool,
+}
+
 macro_rules! build_empty_sim_state {
     ($collections:ident, $runtime:ident, $session_wtf_path:ident) => {{
         let cvars = CVarStorage::with_session_wtf_path(&$session_wtf_path);
@@ -53,6 +90,8 @@ macro_rules! build_empty_sim_state {
             #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
             last_gamepad_input_timestamp: None,
             video_capability_bytes: Default::default(),
+            #[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+            performance_bar_protocol_types: None,
             #[cfg(any(feature = "client-wowforever", feature = "client-ptr"))]
             gamepad_mapped_sticks: None,
             #[cfg(any(feature = "client-wowforever", feature = "client-ptr"))]
@@ -67,6 +106,8 @@ macro_rules! build_empty_sim_state {
             addon_initialization_failures: HashMap::new(),
             save_failed_addons: false,
             cinematic_active: false,
+            #[cfg(feature = "client-mists")]
+            movie_playback: Default::default(),
             in_world: false,
             reload_allows_protected_actions: false,
             account_cvar_chunks_ready: [true; 2],

@@ -8,15 +8,10 @@ const FIRST_UNIT_ARGUMENT: i32 = 3;
 /// R88aj: the handler reads at most four unit arguments.
 const MAX_UNIT_ARGUMENTS: i32 = 4;
 
-/// R88aj: read up to four unit arguments, stopping at the first one that is
-/// not a string or number. Unknown tokens (and numbers) use a position but are
-/// skipped. Tokens are case-insensitive.
-///
-/// VERIFIED for Mists 70631, Retail 70688 and Forever 70707 (the Forever cache
-/// build). INFERRED for the Mists 70268, Retail, PTR, Wrath and other cached
-/// builds: the unit-argument rules are identical in the three decoded builds.
-/// Retail and Forever add secret-value, forbidden-aspect and post-return
-/// checks, which are not modelled.
+/// R88aj scan rules are VERIFIED for Mists 5.5.4.70631, Retail 12.1.5.70688,
+/// and Forever 1.60.1.70707. Do not claim native parity for other profiles.
+/// Retail and Forever's secret-value state and forbidden-aspect lookup remain
+/// UNKNOWN; the simulator supplies no native values for those inputs.
 pub(super) fn scan_unit_arguments(state: &LuaState) -> Vec<String> {
     let mut units = Vec::new();
     for index in FIRST_UNIT_ARGUMENT..FIRST_UNIT_ARGUMENT + MAX_UNIT_ARGUMENTS {
@@ -31,6 +26,11 @@ pub(super) fn scan_unit_arguments(state: &LuaState) -> Vec<String> {
 }
 
 pub(super) fn is_valid_unit_filter(unit: &str) -> bool {
+    #[cfg(feature = "client-mists")]
+    if matches!(unit, "boss6" | "boss7" | "boss8") {
+        return false;
+    }
+
     matches!(
         unit,
         "player" | "pet" | "vehicle" | "target" | "focus" | "mouseover" | "npc" | "none"

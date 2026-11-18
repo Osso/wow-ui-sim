@@ -46,6 +46,11 @@ pub struct SimState {
     pub last_gamepad_input_timestamp: Option<u32>,
     /// INFERRED host byte projection, independent of CVars and GPU detection.
     pub video_capability_bytes: crate::c_api::video_capabilities::VideoCapabilityBytes,
+    /// UNKNOWN live protocol values. INFERRED (simulator mapping): None means
+    /// no host pair is supplied.
+    #[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+    pub performance_bar_protocol_types:
+        Option<crate::c_api::performance_bar::PerformanceProtocolTypes>,
     /// Explicit mapped-stick input; None means no configured snapshot, not device absence.
     #[cfg(any(feature = "client-wowforever", feature = "client-ptr"))]
     pub gamepad_mapped_sticks: Option<crate::c_api::c_game_pad::MappedStickSnapshot>,
@@ -1259,6 +1264,8 @@ pub struct SimState {
     pub save_failed_addons: bool,
     /// Explicit host-supplied cinematic playback state; no playback engine implied.
     pub cinematic_active: bool,
+    #[cfg(feature = "client-mists")]
+    pub movie_playback: MoviePlaybackState,
     /// World entry is distinct from IsLoggedIn; supplied/transitioned by the owner.
     pub in_world: bool,
     /// Wrath reload's temporary protected-action phase, not the player's combat bit.

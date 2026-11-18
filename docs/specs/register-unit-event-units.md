@@ -1,18 +1,16 @@
 # RegisterUnitEvent unit arguments (R88aj)
 
-`Frame:RegisterUnitEvent(event, ...)` unit-argument handling in `src/lua_api/frame/methods/text_attribute_event/`. The native answer is `pr46-49-decomp-answers.md` (untracked decomp handoff), section `R88aj`. The unit-argument rules are identical in the three decoded builds, Mists 5.5.4.70631, Retail 12.1.5.70688 and Forever 1.60.1.70707; Retail and Forever add secret-value, forbidden-aspect and post-return checks, which are not modelled. This supersedes the two-unit bounded model in [frame unit-event filter](frame-unit-event-filter.md).
+`Frame:RegisterUnitEvent(event, ...)` unit-argument handling lives in `src/lua_api/frame/methods/text_attribute_event/`. The native answer is `pr46-49-decomp-answers.md` (untracked decomp handoff), section `R88aj`. The scan rules are VERIFIED for Mists 5.5.4.70631, Retail 12.1.5.70688 and Forever 1.60.1.70707. Retail and Forever secret-value state and forbidden-aspect lookup inputs remain UNKNOWN and empty by default; this contract does not invent their values or error text. This supersedes the two-unit bounded model in [frame unit-event filter](frame-unit-event-filter.md).
 
 ## What it must do
 
-- [x] **VERIFIED (R88aj aj1/aj3):** no Lua table support. The handler reads at most four unit arguments (Lua positions after the event) and stops at the first one that is not a string or number; valid units read before it stay in the filter. A table as the first unit gives zero units.
+- [x] **VERIFIED (R88aj aj1/aj2/aj3):** the handler reads at most four unit positions after the event and stops at the first value that is neither a string nor a number. Valid units before that value stay in the filter. A table at the first unit position gives zero units; the handler does not read table contents or later arguments.
 - [x] **VERIFIED (R88aj aj1/aj2):** zero valid units register the event with an empty filter, the same as `RegisterEvent`, without an error.
-- [x] **VERIFIED (R88aj aj2):** an unknown token (for example `""`, `"0"`, `"pettarget"`, `"playerpet"`) is skipped without error but uses one of the four positions. Unit tokens are case-insensitive.
+- [x] **VERIFIED (R88aj aj2):** unknown unit strings are skipped without error and the scan continues; each still uses one of the four positions. Mists 5.5.4.70631 specifically rejects `boss6`–`boss8`. Retail and Forever known-token lists are UNKNOWN. Unit tokens are case-insensitive.
 - [x] **VERIFIED (R88aj aj4):** each successful call returns exactly one boolean: true when the frame was not registered, or when the call changed the unit filter (position by position); false when the filter is identical, including an empty filter registered again with zero units.
 - [x] **VERIFIED (R88aj aj5):** a second call replaces the filter (no merge). `RegisterEvent` after `RegisterUnitEvent` clears the filter and returns true.
 - [x] **PRESERVATION:** `UnregisterEvent` removes the registration and its filter. This is the pre-existing simulator behaviour, already covered on all profiles by `tests/unit_event_second_unit.rs:61-66`. VERIFIED natively only for Mists 70631 (R88aj aj5); UNKNOWN for Retail 70688 and Forever 70707 (not decoded).
-- [x] **VERIFIED consumer path:** with `CAAEnabled=1`, the original Mists `CombatAudioAlertManagerMixin:RegisterForUnitHealth` (`Blizzard_CombatAudioAlertManager.lua:438`) registers `UNIT_HEALTH` from its unit table with an empty filter when player or target health alerts are on, and leaves it unregistered when both are off.
-- [x] **INFERRED (R88aj):** an empty filter delivers the event for all units (dispatch not decoded). Existing dispatch behavior; not asserted.
-- [x] **INFERRED (R88aj applicability):** the scan applies to every profile. Forever's cache is the decoded 70707 build; the Mists 70268, Retail, PTR and Wrath caches are not decoded builds.
+- [x] **VERIFIED preservation consumer:** the selected Mists `Blizzard_ChatFrameBase_Classic.toc` loads `Shared/CastSequenceManager.lua`, whose original consumer registers `UNIT_SPELLCAST_*` for `player` and `pet`. Its original cast sequence advances for those units and does not advance for `target` or `focus`.
 
 ## How it works
 
@@ -27,13 +25,15 @@
 
 ## Tests asserting this spec
 
-- `tests/register_unit_event_units.rs` — return values for table, mixed, nil-stopped, unknown-token, case, order, five-unit, zero-unit, RegisterEvent and UnregisterEvent sequences. The test has no profile gate. On PTR, Wrath, Era and Anniversary it applies only by INFERRED applicability (no decoded build of those client lines). Era and Anniversary are not built, and Wrath is compile-only, so the test has run on Retail, PTR, Forever and Mists.
-- `tests/mists_r88aj.rs` — original Mists `RefreshEvents` → `RegisterForUnitHealth` table registration for player, target, both and neither.
+- `tests/register_unit_event_units.rs` — return-value and filter-replacement cases using the Mists-decoded unit-token evidence.
+- `tests/mists_r88aj.rs::register_unit_event_scans_native_unit_argument_boundaries` — five-position, unknown-token continuation, non-string stop and table-first boundaries; `boss6` is rejected in Mists.
+- `tests/mists_r88aj.rs::cast_sequence_consumer_receives_only_registered_units` — selected original Mists `CastSequenceManager` consumer with real spellcast events.
+- `tests/mists_r88aj.rs::combat_audio_manager_table_registers_unit_health_with_empty_filter` — original table-first consumer path.
 
 ## Known gaps (current cycle)
 
 - [ ] **VERIFIED, not modelled:** the usage error for a missing or non-string event (`Usage: ("event", "unit1" [,"unit2", "unit3", "unit4"])` with the `%s:%s(): %s` prefix) and the unit-event set check; the simulator keeps its previous event validation.
-- [ ] **VERIFIED for Mists, not modelled:** the exact known-token list (`boss6`–`boss8` are unknown in Mists 70631; the simulator accepts any numbered `boss` token).
-- [ ] **VERIFIED, not modelled:** deferred registration during event dispatch, the tainted zero-unit `COMBAT_LOG_*`/`MINIMAP_PING` false return, secret-value arguments, and Retail/Forever forbidden-aspect and post-return routines.
-- [ ] **UNKNOWN (R88aj):** Retail and Forever known-token and unit-event lists.
+- [ ] **VERIFIED (R88aj):** the full Mists known-token list, strict event-name and unit-event validation, deferred registration, tainted zero-unit special returns, secret-value conversion and Retail/Forever post-return routine remain outside this implementation slice.
+- [ ] **UNKNOWN (Retail/Forever):** secret-value gate setting and forbidden-aspect lookup/source values remain empty by default; no native setting or aspect name is invented.
+- [ ] **UNKNOWN (R88aj):** Retail and Forever known-token and unit-event lists; no native token-list parity is claimed for those profiles.
 - [ ] **VERIFIED (R88aj aj1), not modelled:** event names are not case-sensitive natively; the simulator matches event names case-sensitively.

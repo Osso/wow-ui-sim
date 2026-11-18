@@ -518,6 +518,9 @@ fn install_screen_mode_globals(env: &WowLuaEnv, screen_kind: ScreenKind) {
     );
     #[cfg(feature = "client-ptr")]
     register_ptr_screen_queries(env);
+    #[cfg(feature = "client-mists")]
+    super::globals::real::mouse_probes::update_screen_registration(env, screen_kind.is_glue())
+        .expect("Mists cursor visibility globals should follow Glue screen mode");
     #[cfg(any(feature = "client-ptr", feature = "client-wowforever"))]
     let _ = super::globals::real::glue_feature_status::register_all(&mut env.lua.borrow_mut());
     let is_glue = if screen_kind.is_glue() {

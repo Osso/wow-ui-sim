@@ -184,9 +184,12 @@ pub(crate) fn apply_permanent_bootstrap(lua: &mut rilua::Lua) -> crate::Result<(
     permanent::apply_bootstrap(lua)
 }
 
-pub(crate) fn apply_temporary_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
+pub(crate) fn apply_temporary_bootstrap(
+    lua: &mut rilua::Lua,
+    skip_chat_frame_placeholder: bool,
+) -> crate::Result<()> {
     apply_temporary_state_bootstrap(lua)?;
-    apply_temporary_namespace_bootstrap(lua)
+    apply_temporary_namespace_bootstrap(lua, skip_chat_frame_placeholder)
 }
 
 pub(crate) fn update_adventureguide_for_screen(
@@ -264,26 +267,38 @@ fn apply_unit_state_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     temporary::unit_threat_defaults::apply_bootstrap(lua)
 }
 
-fn apply_temporary_namespace_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
-    apply_core_temporary_namespace_bootstrap(lua)?;
+fn apply_temporary_namespace_bootstrap(
+    lua: &mut rilua::Lua,
+    skip_chat_frame_placeholder: bool,
+) -> crate::Result<()> {
+    apply_core_temporary_namespace_bootstrap(lua, skip_chat_frame_placeholder)?;
     apply_feature_temporary_namespace_bootstrap(lua)
 }
 
-fn apply_core_temporary_namespace_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
-    apply_core_foundation_defaults(lua)?;
+fn apply_core_temporary_namespace_bootstrap(
+    lua: &mut rilua::Lua,
+    skip_chat_frame_placeholder: bool,
+) -> crate::Result<()> {
+    apply_core_foundation_defaults(lua, skip_chat_frame_placeholder)?;
     apply_core_legacy_defaults(lua)?;
     Ok(())
 }
 
-fn apply_core_foundation_defaults(lua: &mut rilua::Lua) -> crate::Result<()> {
-    apply_core_foundation_frame_defaults(lua)?;
+fn apply_core_foundation_defaults(
+    lua: &mut rilua::Lua,
+    skip_chat_frame_placeholder: bool,
+) -> crate::Result<()> {
+    apply_core_foundation_frame_defaults(lua, skip_chat_frame_placeholder)?;
     apply_core_foundation_state_defaults(lua)?;
     apply_core_dispatcher_and_format_defaults(lua)
 }
 
-fn apply_core_foundation_frame_defaults(lua: &mut rilua::Lua) -> crate::Result<()> {
+fn apply_core_foundation_frame_defaults(
+    lua: &mut rilua::Lua,
+    skip_chat_frame_placeholder: bool,
+) -> crate::Result<()> {
     apply_core_foundation_addon_defaults(lua)?;
-    apply_core_foundation_chat_defaults(lua)?;
+    apply_core_foundation_chat_defaults(lua, skip_chat_frame_placeholder)?;
     apply_core_foundation_journal_defaults(lua)?;
     apply_core_foundation_catalog_defaults(lua)?;
     apply_core_foundation_environment_defaults(lua)
@@ -321,11 +336,14 @@ fn apply_core_foundation_environment_defaults(lua: &mut rilua::Lua) -> crate::Re
     Ok(())
 }
 
-fn apply_core_foundation_chat_defaults(lua: &mut rilua::Lua) -> crate::Result<()> {
+fn apply_core_foundation_chat_defaults(
+    lua: &mut rilua::Lua,
+    skip_chat_frame_placeholder: bool,
+) -> crate::Result<()> {
     temporary::c_chat_info_defaults::apply_bootstrap(lua)?;
     temporary::character_services_defaults::apply_bootstrap(lua)?;
     temporary::chat_voice_button_surface::apply_bootstrap(lua)?;
-    temporary::chat_window_defaults::apply_bootstrap(lua)
+    temporary::chat_window_defaults::apply_bootstrap(lua, skip_chat_frame_placeholder)
 }
 
 fn apply_core_foundation_tracking_defaults(lua: &mut rilua::Lua) -> crate::Result<()> {

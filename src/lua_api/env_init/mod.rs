@@ -58,10 +58,14 @@ pub(crate) fn trace_debug_getter_values(lua: &mut rilua::Lua, phase: &str) {
 pub(super) fn init_lua_state(
     lua: &mut rilua::Lua,
     state: Rc<RefCell<SimState>>,
+    bootstrap_screen: crate::screen::ScreenKind,
 ) -> crate::Result<()> {
     trace_debug_getter_values(lua, "init_entry");
     initialize_bootstrap_registry_and_secure_base(lua, &state)?;
     initialize_secure_environment_core(lua)?;
+    let skip_chat_frame_placeholder = crate::client_profile::ACTIVE
+        == crate::client_profile::ClientProfile::Mists
+        && bootstrap_screen.is_glue();
     // register_globals calls gc_stop at its entry; finalize_bootstrap_gc
     // below restores the collector once bootstrap is complete. Between
     // those two points the mark phase is paused.
@@ -70,7 +74,7 @@ pub(super) fn init_lua_state(
     trace_debug_getter_values(lua, "after_globals_register");
     register_runtime_surface_bootstrap(lua)?;
     register_permanent_bootstrap(lua)?;
-    register_temporary_bootstrap(lua)?;
+    register_temporary_bootstrap(lua, skip_chat_frame_placeholder)?;
     register_runtime_api_functions(lua)?;
     trace_debug_getter_values(lua, "before_profile_bootstrap");
     register_profile_bootstrap(lua)?;
@@ -139,7 +143,7 @@ fn register_temporary_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     trace_debug_getter_values(lua, "before_temporary_bootstrap");
     #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
     crate::c_api::c_combat_log::register_filters(lua)?;
-    crate::lua_api::workarounds::apply_temporary_bootstrap(lua)?;
+    crate::lua_api::workarounds::apply_temporary_bootstrap(lua, skip_chat_frame_placeholder)?;
     trace_debug_getter_values(lua, "after_temporary_bootstrap");
     Ok(())
 }
@@ -150,6 +154,8 @@ fn register_runtime_api_functions(lua: &mut rilua::Lua) -> crate::Result<()> {
     super::globals::real::totems::register(lua)?;
     super::globals::real::bank_reagents::register(lua)?;
     crate::c_api::action_combat_range_check::register(lua.state_mut())?;
+    #[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+    crate::c_api::performance_bar::register(lua.state_mut())?;
     crate::c_api::c_tts_settings::register(lua)?;
     crate::c_api::c_click_bindings::register(lua)?;
     #[cfg(feature = "retail-12-0-5")]
