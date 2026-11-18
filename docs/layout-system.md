@@ -305,6 +305,9 @@ let bottom = screen_height - rect.y - rect.height;
 3. **Layout branches** on `anchors.len()`:
    - 0 anchors -> position at parent top-left
    - 1 anchor -> use single anchor with explicit size
+   - INFERRED for 12.1.5.70783 from verified 12.1.5.70688 R88az z3: one
+     anchor with zero stored width and height leaves an invalid rectangle;
+     dependent children are also invalid
    - 2+ anchors -> resolve to edge constraints, compute bounds
 4. **Result:** LayoutRect with final x, y, width, height (screen coordinates)
 5. **Renderer** uses LayoutRect to draw frame quads and child regions
