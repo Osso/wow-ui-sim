@@ -38,6 +38,12 @@ pub fn get_width(state: &mut LuaState) -> LuaResult<u32> {
 #[cfg(feature = "client-retail")]
 const INVALID_RECT_TEXT_WIDTH_FLOOR: f64 = 1.0;
 
+/// VERIFIED (70688; 70783 applicability INFERRED): `pr46-49-decomp-answers.md`
+/// (untracked decomp handoff) §R88az z3. With an invalid rectangle, GetWidth uses the
+/// FontString accessor: explicit width first, otherwise measured text with a one-unit floor.
+/// INFERRED (simulator mapping): "horizontal coordinate unavailable" is approximated by
+/// whole-rectangle invalidity; the native per-axis case (invalid rectangle with a usable
+/// nonzero horizontal span) is not modelled separately.
 #[cfg(feature = "client-retail")]
 fn invalid_font_string_width(
     state: &LuaState,
