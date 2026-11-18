@@ -160,22 +160,67 @@ pub(super) fn frame_global_or_ref(state: &mut LuaState, id: u64) -> LuaResult<Va
     frame_ref(state, id)
 }
 
-pub(super) fn bind_named_child_global(
+fn publish_retail_secure_named_child(
     state: &mut LuaState,
     name: &str,
-    child_id: u64,
+    child_ref: Val,
+    hide_from_global_env: bool,
+    existing_sibling: bool,
 ) -> LuaResult<()> {
-    if existing_named_sibling_region_owns_global(state, name, child_id)? {
-        return Ok(());
+    if !hide_from_global_env && !existing_sibling {
+        crate::lua_api::globals::create_frame::helpers_shared::publish_global_name_if_vacant(
+            state, name, child_ref,
+        );
     }
+    crate::lua_api::globals::security::publish_secure_env_key_if_vacant(state, name, child_ref)?;
+    Ok(())
+}
 
-    let child_ref = frame_ref(state, child_id)?;
+fn publish_named_child_to_global(state: &mut LuaState, name: &str, child_ref: Val) {
     let key = state.gc.intern_string(name.as_bytes());
     let global = state.global;
     if let Some(globals) = state.gc.tables.get_mut(global) {
         let _ = globals.raw_set(Val::Str(key), child_ref, &state.gc.string_arena);
     }
     state.gc.barrier_back(global);
+}
+
+fn named_child_global_publication_state(state: &mut LuaState) -> LuaResult<(bool, bool)> {
+    if crate::client_profile::is_active_retail_12_1_5() {
+        let sim = borrow_state(state)?;
+        return Ok((
+            sim.loading_hide_from_global_env,
+            crate::lua_api::globals::create_frame::helpers_shared::
+                is_retail_secure_named_object_publication(&sim),
+        ));
+    }
+    Ok((false, false))
+}
+
+pub(super) fn bind_named_child_global(
+    state: &mut LuaState,
+    name: &str,
+    child_id: u64,
+) -> LuaResult<()> {
+    let (hide_from_global_env, retail_secure_xml_name) =
+        named_child_global_publication_state(state)?;
+    let existing_sibling = existing_named_sibling_region_owns_global(state, name, child_id)?;
+    if existing_sibling && !retail_secure_xml_name {
+        return Ok(());
+    }
+
+    let child_ref = frame_ref(state, child_id)?;
+    if retail_secure_xml_name {
+        return publish_retail_secure_named_child(
+            state,
+            name,
+            child_ref,
+            hide_from_global_env,
+            existing_sibling,
+        );
+    }
+
+    publish_named_child_to_global(state, name, child_ref);
     Ok(())
 }
 

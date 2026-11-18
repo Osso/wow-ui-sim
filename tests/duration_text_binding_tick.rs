@@ -214,7 +214,7 @@ fn automatic_binding_updates_native_custom_aura_button_after_assignment() {
                     Clock = C_DurationUtil.CreateManualClock(0)
                     local container = CreateFrame('AuraContainer', nil, UIParent, 'CustomAuraContainerTemplate')
                     local provider = __secureenv.AuraContainerUtil.CreateCustomFrameProvider(
-                        GetForbiddenObjectTable(container), {batchSize=1,
+                        (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(container), {batchSize=1,
                         templateNames={'CustomAuraButtonTemplate'}, initializeFrame=function(button)
                             NativeLabel = button:CreateFontString(nil, 'OVERLAY')
                             local formatter = C_StringUtil.CreateSecondsFormatter()
@@ -223,7 +223,7 @@ fn automatic_binding_updates_native_custom_aura_button_after_assignment() {
                             button:SetDurationText(NativeLabel, {textFormatter=formatter})
                         end})
                     NativeButton = provider:AcquireFrame()
-                    local private = GetForbiddenObjectTable(NativeButton)
+                    local private = (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(NativeButton)
                     private:SetAuraInstance('player', {auraInstanceID=9981, spellId=19750,
                         name='Automatic binding', duration=8, expirationTime=8, timeMod=1,
                         applications=1, isHelpful=true, sourceUnit='player'})

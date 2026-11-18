@@ -173,6 +173,24 @@ fn blizzard_frame_xml_loads_via_full_game_ui_without_errors(env: &WowLuaEnv) {
 }
 
 prefork_full_ui_case! {
+fn blizzard_ui_errors_frame_consumes_game_error_number(env: &WowLuaEnv) {
+    let (enabled, disabled): (bool, bool) = env
+        .eval(
+            r#"
+            local messageType = LE_GAME_ERR_OUT_OF_ENERGY
+            UIErrorsFrame:SetMessageTypeEnabled(messageType, true)
+            local enabled = UIErrorsFrame:ShouldDisplayMessageType(messageType, "probe")
+            UIErrorsFrame:SetMessageTypeEnabled(messageType, false)
+            local disabled = UIErrorsFrame:ShouldDisplayMessageType(messageType, "probe")
+            return enabled, disabled
+            "#,
+        )
+        .expect("original UIErrorsFrame consumer should accept the Game error number");
+    assert_eq!((enabled, disabled), (true, false));
+}
+}
+
+prefork_full_ui_case! {
 fn blizzard_frame_xml_is_addon_loaded_returns_true_after_full_game_ui_load(env: &WowLuaEnv) {
 
     let post_load: bool = env

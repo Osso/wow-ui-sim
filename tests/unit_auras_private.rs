@@ -1,7 +1,9 @@
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 fn env() -> WowLuaEnv {
-    WowLuaEnv::new().expect("Failed to create Lua environment")
+    let env = WowLuaEnv::new().expect("Failed to create Lua environment");
+    crate::common::install_private_aura_api_alias(&env);
+    env
 }
 
 #[cfg(feature = "retail-12-1-0")]
@@ -104,10 +106,10 @@ fn private_aura_anchor_callbacks_and_state_are_tracked() {
             r#"
             local added = {}
             local removed = {}
-            C_UnitAurasPrivate.SetPrivateAuraAnchorAddedCallback(function(anchorInfo)
+            SecurePrivateAuras.SetPrivateAuraAnchorAddedCallback(function(anchorInfo)
                 added[#added + 1] = anchorInfo
             end)
-            C_UnitAurasPrivate.SetPrivateAuraAnchorRemovedCallback(function(anchorID)
+            SecurePrivateAuras.SetPrivateAuraAnchorRemovedCallback(function(anchorID)
                 removed[#removed + 1] = anchorID
             end)
 
@@ -123,11 +125,11 @@ fn private_aura_anchor_callbacks_and_state_are_tracked() {
                 parent = parent,
             })
 
-            local allAnchors = C_UnitAurasPrivate.GetPrivateAuraAnchors()
-            local playerAnchors = C_UnitAurasPrivate.GetPrivateAuraAnchors("player")
+            local allAnchors = SecurePrivateAuras.GetPrivateAuraAnchors()
+            local playerAnchors = SecurePrivateAuras.GetPrivateAuraAnchors("player")
 
             local removedOk = select('#', C_UnitAuras.RemovePrivateAuraAnchor(anchorID1)) == 0
-            local anchorsAfterRemove = C_UnitAurasPrivate.GetPrivateAuraAnchors()
+            local anchorsAfterRemove = SecurePrivateAuras.GetPrivateAuraAnchors()
 
             return anchorID1 > 0 and anchorID2 > anchorID1,
                    #added == 2 and added[1].anchorID == anchorID1 and added[1].unitToken == "player",
@@ -172,7 +174,7 @@ fn private_warning_and_show_dispel_callbacks_are_state_backed() {
         env.eval(
             r#"
             local warningFrame = CreateFrame("Frame", "UnitAurasPrivateWarningFrame")
-            C_UnitAurasPrivate.SetPrivateWarningTextFrame(warningFrame)
+            SecurePrivateAuras.SetPrivateWarningTextFrame(warningFrame)
 
             local dispelCallbackOk = true
             local lastShowTypeRecorded = true
@@ -218,7 +220,7 @@ fn private_aura_update_callbacks_do_not_dispatch_plain_functions() {
     env.exec(
         r#"
         local called = false
-        C_UnitAurasPrivate.AddPrivateAuraUpdateCallback('player', function() called = true end)
+        SecurePrivateAuras.AddPrivateAuraUpdateCallback('player', function() called = true end)
         local ok = pcall(C_UnitAurasPrivate._TriggerPrivateAuraUpdate, 'player', 'Private', {})
         assert(not ok, 'plain-function callbacks must not be dispatched')
         assert(not called, 'unsupported callback was invoked')
@@ -244,17 +246,17 @@ fn private_aura_update_callbacks_and_lookup_queries_are_stateful() {
 
             local callbackCalls = 0
             local sawFullUpdate = false
-            C_UnitAurasPrivate.AddPrivateAuraUpdateCallback("player", C_FunctionContainers.CreateCallback(function(updateInfo)
+            SecurePrivateAuras.AddPrivateAuraUpdateCallback("player", C_FunctionContainers.CreateCallback(function(updateInfo)
                 callbackCalls = callbackCalls + 1
                 sawFullUpdate = updateInfo and updateInfo.isFullUpdate == true
             end))
 
             local fired = C_UnitAurasPrivate._TriggerPrivateAuraUpdate("player", "Private", { isFullUpdate = true })
-            local allAuras = C_UnitAurasPrivate.GetAllPrivateAuras("player")
-            local auraByID = C_UnitAurasPrivate.GetAuraDataByAuraInstanceIDPrivate("player", 11)
+            local allAuras = SecurePrivateAuras.GetAllPrivateAuras("player")
+            local auraByID = SecurePrivateAuras.GetAuraDataByAuraInstanceIDPrivate("player", 11)
 
             allAuras[1].spellId = 9999
-            local secondRead = C_UnitAurasPrivate.GetAllPrivateAuras("player")
+            local secondRead = SecurePrivateAuras.GetAllPrivateAuras("player")
 
             return fired == 1 and callbackCalls == 1 and sawFullUpdate,
                    #allAuras == 2 and auraByID and auraByID.spellId == 1001,

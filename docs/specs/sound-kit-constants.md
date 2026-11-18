@@ -26,10 +26,8 @@ the addon loader publishes it for the full UI (see
 ## How it works
 
 - [addon loading pipeline](../addon-loading-pipeline.md)
-- `src/lua_api/globals/security/secure_env.rs` — `__secureenv` is a snapshot of
-  `_G` taken during env init, before Blizzard addons load. Secure addons
-  (`## UseSecureEnvironment: 1`) resolve globals through it, so they cannot see
-  the Blizzard `SOUNDKIT` table.
+- [addon load phases](addon-load-phases.md)
+- [taint system](../wiki/systems/taint-system.md#dual-lua-environment)
 
 ## Implementation inventory
 
@@ -49,10 +47,7 @@ the addon loader publishes it for the full UI (see
 
 ## Known gaps (current cycle)
 
-- [ ] `__secureenv` never tracks `_G` after Blizzard UI load, so every Blizzard
-      global defined in Lua after env init is invisible to secure code. The
-      `SOUNDKIT` seed covers one consumer; the root fix is a post-load secureenv
-      synchronization.
+- [ ] Ordinary `_G` writes after the initial snapshot remain invisible unless a secure-mode chunk assigns the name or a verified dual registration publishes it. Do not add generic post-load synchronization; the temporary private snapshot bridge and its deferred `TooltipDataProcessor` provenance are tracked in [addon load phases](addon-load-phases.md). Evidence: pr46-49-decomp-answers.md, sections R88y.y1.
 - [ ] The nine seeded values duplicate pinned table entries and can drift on the
       next pin; no test compares them with the pinned file.
 - [ ] No test asserts that the full-UI loader publishes the TOC-selected file.

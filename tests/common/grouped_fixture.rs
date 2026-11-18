@@ -82,7 +82,11 @@ impl GlobalParents {
         while self.entries.len() >= capacity() {
             self.entries.pop_front();
         }
-        self.entries.push_back(Parent { key: key.to_string(), env, loaded });
+        self.entries.push_back(Parent {
+            key: key.to_string(),
+            env,
+            loaded,
+        });
     }
 
     #[cfg(target_os = "linux")]
@@ -102,7 +106,11 @@ fn fixture_key(
     for entry in overrides {
         let _ = write!(key, "|override={}+{:?}", entry.addon, entry.extra_roots);
     }
-    let _ = write!(key, "|profile={}", wow_ui_sim::client_profile::ACTIVE.subdir());
+    let _ = write!(
+        key,
+        "|profile={}",
+        wow_ui_sim::client_profile::ACTIVE.subdir()
+    );
     let mut environment: Vec<(String, String)> = std::env::vars()
         .filter(|(name, _)| name.starts_with("WOW_SIM_") || name == "XDG_DATA_HOME")
         .collect();
@@ -153,9 +161,16 @@ fn record(reason: &str) {
     let Some(path) = std::env::var_os(REPORT_ENV) else {
         return;
     };
-    let name = std::thread::current().name().unwrap_or("<unknown>").to_string();
+    let name = std::thread::current()
+        .name()
+        .unwrap_or("<unknown>")
+        .to_string();
     let line = format!("{name}\t{reason}\n");
-    if let Ok(mut file) = std::fs::OpenOptions::new().create(true).append(true).open(path) {
+    if let Ok(mut file) = std::fs::OpenOptions::new()
+        .create(true)
+        .append(true)
+        .open(path)
+    {
         let _ = file.write_all(line.as_bytes());
     }
 }
@@ -221,7 +236,10 @@ where
     R: Default,
     F: FnOnce(&WowLuaEnv, &[String]) -> R,
 {
-    let name = std::thread::current().name().unwrap_or("<unknown>").to_string();
+    let name = std::thread::current()
+        .name()
+        .unwrap_or("<unknown>")
+        .to_string();
     let _ = std::io::stdout().flush();
     let _ = std::io::stderr().flush();
     // SAFETY: the caller guarantees a single-threaded test process, so no other
@@ -265,7 +283,10 @@ where
             unsafe { libc::kill(pid, libc::SIGKILL) };
             // SAFETY: reaping the child we just killed.
             unsafe { libc::waitpid(pid, &mut status, 0) };
-            panic!("grouped fixture: child for test `{name}` exceeded {:?}", child_deadline());
+            panic!(
+                "grouped fixture: child for test `{name}` exceeded {:?}",
+                child_deadline()
+            );
         }
         std::thread::sleep(Duration::from_millis(2));
     }

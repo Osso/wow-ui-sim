@@ -69,6 +69,11 @@ pub(crate) fn item_link_for_id(item_id: u32) -> Option<String> {
     item_spell::item_link_for_id(item_id)
 }
 
+pub(crate) fn register_secure_environment_base_globals(lua: &mut rilua::Lua) -> LuaResult<()> {
+    register_string_globals(lua)?;
+    install_date_alias(lua)
+}
+
 pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
     register_legacy_global_shims(lua)?;
     let state = lua.state_mut();
@@ -84,7 +89,6 @@ fn register_legacy_global_shims(lua: &mut rilua::Lua) -> LuaResult<()> {
     register_audio_and_utility_globals(lua)?;
     register_item_spell_globals(lua)?;
     register_scene_and_ui_globals(lua)?;
-    register_string_globals(lua)?;
     register_spellbook_and_totem_globals(lua)?;
     encounter_journal::register_ej_globals(lua)
 }
@@ -98,7 +102,6 @@ fn register_audio_and_utility_globals(lua: &mut rilua::Lua) -> LuaResult<()> {
     LuaApiMut::register_function(lua, "StopSound", stop_sound)?;
     LuaApiMut::register_function(lua, "LaunchURL", launch_url)?;
     LuaApiMut::register_function(lua, "CopyToClipboard", copy_to_clipboard)?;
-    install_date_alias(lua)?;
     Ok(())
 }
 

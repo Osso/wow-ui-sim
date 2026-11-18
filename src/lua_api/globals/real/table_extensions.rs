@@ -4,7 +4,7 @@
 //! before other Blizzard modules can use it.
 
 use crate::lua_api::methods::create_table_with_capacity;
-use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
+use crate::lua_bridge::{stack_val, table_set_rust_fn_static, table_set_rust_fn_unpaired};
 use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
 use rilua::vm::table::Table;
@@ -15,13 +15,24 @@ pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
     let table = table_library(state)?;
     table_set_rust_fn_static(state, table, "indexof", index_of)?;
     table_set_rust_fn_static(state, table, "contains", contains)?;
-    table_set_rust_fn_static(state, table, "count", count)?;
+    if crate::client_profile::is_active_retail_12_1_5() {
+        crate::c_api::register_namespace_function_from_r88y(state, "table", "count", count)?;
+        register_secure_count(state)?;
+    } else {
+        table_set_rust_fn_static(state, table, "count", count)?;
+    }
     table_set_rust_fn_static(state, table, "isempty", is_empty)?;
     table_set_rust_fn_static(state, table, "removeunordered", remove_unordered)?;
     table_set_rust_fn_static(state, table, "removevalue", remove_value)?;
     table_set_rust_fn_static(state, table, "keys", keys)?;
     table_set_rust_fn_static(state, table, "values", values)?;
     Ok(())
+}
+
+fn register_secure_count(state: &mut LuaState) -> LuaResult<()> {
+    let secure_table = crate::c_api::ensure_secure_namespace(state, "table")?;
+    // R88t verifies a distinct C function object for the secure table.count entry. Evidence: pr46-49-decomp-answers.md, sections R88t.
+    table_set_rust_fn_unpaired(state, secure_table, "count", count)
 }
 
 pub(super) fn table_library(state: &mut LuaState) -> LuaResult<GcRef<Table>> {
@@ -248,4 +259,32 @@ fn keys(state: &mut LuaState) -> LuaResult<u32> {
 
 fn values(state: &mut LuaState) -> LuaResult<u32> {
     keys_or_values(state, false)
+}
+
+#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+#[cfg(test)]
+mod tests {
+    use crate::lua_api::WowLuaEnv;
+
+    #[test]
+    fn retail_table_count_has_distinct_handlers_in_separate_library_tables() {
+        let env = WowLuaEnv::new().expect("lua env");
+        let result: (bool, bool, bool, bool, bool) = env
+            .eval(
+                r#"
+                local ordinary = rawget(table, "count")
+                local secureTable = rawget(__secureenv, "table")
+                local secure = type(secureTable) == "table" and rawget(secureTable, "count")
+                return type(ordinary) == "function",
+                    type(secure) == "function",
+                    type(secureTable) == "table" and not rawequal(table, secureTable)
+                        and not rawequal(ordinary, secure),
+                    type(rawget(table, "keys")) == "function"
+                        and type(rawget(secureTable, "keys")) == "function",
+                    rawget(table, "join") == nil and rawget(secureTable, "join") == nil
+                "#,
+            )
+            .expect("table.count copies should remain distinct");
+        assert_eq!(result, (true, true, true, true, true));
+    }
 }

@@ -1,7 +1,6 @@
 //! PTR 12.1.7.70493 Edit Mode declarations, not Lua initialization replacements.
 
 use crate::client_profile::{ACTIVE, ClientProfile};
-use crate::lua_api::methods::{create_table, table_get, table_set};
 use rilua::Val;
 use rilua::vm::state::LuaState;
 
@@ -9,18 +8,13 @@ pub(crate) fn register(state: &mut LuaState) {
     if ACTIVE != ClientProfile::Ptr {
         return;
     }
-    let enums = super::helpers::ensure_global_table(state, "Enum");
+    let enums = super::helpers::ensure_enum_table(state);
     for &(name, fields) in DECLARATIONS {
-        let values = match table_get(state, enums, name) {
-            values @ Val::Table(_) => values,
-            _ => {
-                let values = create_table(state);
-                table_set(state, enums, name, values);
-                values
-            }
-        };
+        let values = super::helpers::ensure_paired_table_field(state, enums, name)
+            .expect("Enum group must have a secure registration peer");
         for &(field, value) in fields {
-            table_set(state, values, field, Val::Num(f64::from(value)));
+            super::helpers::set_namespace_member(state, values, field, Val::Num(f64::from(value)))
+                .expect("Enum group must have a secure registration peer");
         }
     }
 }

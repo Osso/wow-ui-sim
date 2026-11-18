@@ -1,4 +1,6 @@
-//! Legacy non-Retail group-list projection; native behavior remains UNKNOWN there.
+//! Retail registers the profile-specific catalog and VAS models for `C_StoreSecure`.
+//! Non-Retail retains the legacy group-list projection over simulator state;
+//! native non-Retail behavior is UNKNOWN. R88y supplies publication flags only. Evidence: pr46-49-decomp-answers.md, sections R88y.
 
 use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::methods::{create_table, table_get_static};
@@ -65,4 +67,120 @@ fn read_group_ids(state: &mut LuaState, groups: GcRef<Table>) -> LuaResult<Vec<V
             }
         })
         .collect()
+}
+
+#[cfg(test)]
+mod tests {
+    #[cfg(feature = "client-retail")]
+    use crate::lua_api::WowLuaEnv;
+    #[cfg(feature = "client-retail")]
+    use crate::lua_api::methods::table_get_static;
+    #[cfg(feature = "client-retail")]
+    use rilua::{LuaApiMut, Val};
+
+    #[cfg(feature = "client-retail")]
+    #[test]
+    fn secure_store_ui_can_call_simulated_product_list() {
+        if !crate::client_profile::is_active_retail_12_1_5() {
+            return;
+        }
+        let env = WowLuaEnv::new().expect("Lua environment should initialize");
+        assert_store_secure_members(&env);
+        assert_secure_product_list_request(&env);
+    }
+
+    #[cfg(feature = "client-retail")]
+    fn collect_store_secure_member_status(
+        state: &mut rilua::vm::state::LuaState,
+    ) -> (usize, Vec<String>) {
+        let ordinary = crate::c_api::global_val(state, "C_StoreSecure");
+        let secure_env = crate::lua_api::methods::registry_get(state, "__secureenv");
+        let secure_namespace = table_get_static(state, secure_env, "C_StoreSecure");
+        let statuses: Vec<_> = super::super::secure_publication_data::VERIFIED_MEMBERS
+            .iter()
+            .filter_map(|&(namespace, member, flag, _)| {
+                (namespace == "C_StoreSecure" && flag % 4 == 3).then_some(member)
+            })
+            .map(|member| store_secure_member_status(state, ordinary, secure_namespace, member))
+            .collect();
+        let implemented = statuses.iter().map(|(count, _)| count).sum();
+        let missing_members = statuses
+            .into_iter()
+            .filter_map(|(_, missing)| missing)
+            .collect();
+        (implemented, missing_members)
+    }
+
+    #[cfg(feature = "client-retail")]
+    fn assert_store_secure_members(env: &WowLuaEnv) {
+        let (implemented, missing_members) = {
+            let mut lua = env.rilua_mut();
+            collect_store_secure_member_status(lua.state_mut())
+        };
+        assert!(
+            implemented > 1,
+            "the verified Store UI inventory is not vacuous"
+        );
+        assert!(
+            missing_members.is_empty(),
+            "implemented flag-3 members are missing from secure C_StoreSecure: {missing_members:?}"
+        );
+    }
+
+    #[cfg(feature = "client-retail")]
+    fn assert_secure_product_list_request(env: &WowLuaEnv) {
+        let request_count_before = store_product_list_request_count(env);
+        env.exec_rilua_secure(
+            "SecureStoreProductListResultCount = select('#', C_StoreSecure.GetProductList())",
+        )
+        .expect("secure Store UI can call the simulated product-list API");
+        let returns_zero_values: bool = env
+            .eval("return rawget(__secureenv, 'SecureStoreProductListResultCount') == 0")
+            .expect("secure product-list result count should be readable");
+        assert!(
+            returns_zero_values,
+            "product-list request returns no values"
+        );
+        assert_eq!(
+            store_product_list_request_count(env),
+            request_count_before.wrapping_add(1),
+            "secure product-list request should update the host model"
+        );
+    }
+
+    #[cfg(feature = "client-retail")]
+    fn store_secure_member_status(
+        state: &mut rilua::vm::state::LuaState,
+        ordinary: Val,
+        secure_namespace: Val,
+        member: &str,
+    ) -> (usize, Option<String>) {
+        match table_get_static(state, ordinary, member) {
+            Val::Function(_) => {
+                let missing = (!matches!(
+                    table_get_static(state, secure_namespace, member),
+                    Val::Function(_)
+                ))
+                .then(|| member.to_string());
+                (1, missing)
+            }
+            Val::Nil => (0, None),
+            value => (
+                0,
+                Some(format!(
+                    "{member} has ordinary value type {}",
+                    value.type_name()
+                )),
+            ),
+        }
+    }
+
+    #[cfg(feature = "client-retail")]
+    fn store_product_list_request_count(env: &WowLuaEnv) -> u32 {
+        env.state()
+            .borrow()
+            .store_glue
+            .store_secure
+            .product_list_request_count
+    }
 }

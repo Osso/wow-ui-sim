@@ -38,7 +38,11 @@ fn is_retail_12_1_5() -> bool {
 }
 
 pub(crate) fn register_c_ping_secure_surface(state: &mut LuaState) -> LuaResult<()> {
-    let table_ref = ensure_namespace(state, "C_PingSecure")?;
+    let table_ref = if is_retail_12_1_5() {
+        super::ensure_secure_namespace(state, "C_PingSecure")?
+    } else {
+        ensure_namespace(state, "C_PingSecure")?
+    };
     table_set_rust_fn_static(state, table_ref, "CreateFrame", create_frame)?;
     #[cfg(any(feature = "retail-12-0-7", feature = "retail-12-1-0"))]
     register_global_callback_accessors(state)?;

@@ -334,7 +334,7 @@ fn c_addons_is_addon_loaded(state: &mut LuaState) -> LuaResult<u32> {
             .addons
             .iter()
             .find(|addon| addon.folder_name == addon_name)
-            .map(|addon| addon.loaded)
+            .map(|addon| addon.is_loaded())
             .unwrap_or(false);
         let loading = sim.is_addon_loading(&addon_name);
         (loaded || loading, loaded)
@@ -644,8 +644,9 @@ fn addon_request_state(state: &LuaState, addon_name: &str) -> (Option<bool>, boo
         .addons
         .iter()
         .find(|addon| addon.folder_name == addon_name);
-    let loaded_or_loading =
-        addon.is_some_and(|addon| addon.loaded) || sim.is_addon_loading(addon_name);
+    let loaded_or_loading = addon
+        .is_some_and(|addon| addon.is_loaded_in_environment(addon.use_secure_env))
+        || sim.is_addon_loading(addon_name);
     (addon.map(|addon| addon.enabled), loaded_or_loading)
 }
 

@@ -104,6 +104,7 @@ pub mod merchant_repair;
 mod merchant_requirements;
 #[cfg(feature = "client-mists")]
 pub(crate) mod mists_cinematic;
+pub(crate) mod mixins;
 pub mod modifier_keys;
 pub mod mouse_probes;
 #[cfg(feature = "client-wowforever")]
@@ -146,6 +147,7 @@ pub mod session_exit;
 pub mod shapeshift;
 #[cfg(feature = "retail-12-0-7")]
 pub mod simulate_mouse;
+pub(crate) mod source_location;
 pub mod specialization_helpers;
 pub mod specialization_legacy;
 #[cfg(feature = "client-retail")]

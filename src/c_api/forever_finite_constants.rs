@@ -10,7 +10,7 @@ pub(crate) fn register(state: &mut LuaState) {
 }
 
 fn register_enums(state: &mut LuaState) {
-    let enums = super::helpers::ensure_global_table(state, "Enum");
+    let enums = super::helpers::ensure_enum_table(state);
     publish(
         state,
         enums,
@@ -79,7 +79,7 @@ fn register_provider_experience_enums(state: &mut LuaState, enums: Val) {
 
 pub(crate) fn register_player_swing_type(state: &mut LuaState) {
     // Shared enum bootstrap also restores this publication after cleanup.
-    let enums = super::helpers::ensure_global_table(state, "Enum");
+    let enums = super::helpers::ensure_enum_table(state);
     // Forever SwingTimerDocumentation.lua publishes the event payload enum.
     publish(
         state,
@@ -114,6 +114,13 @@ fn register_gamepad_overrides(state: &mut LuaState, enums: Val) {
 
 fn register_constants(state: &mut LuaState) {
     let constants = super::helpers::ensure_global_table(state, "Constants");
+    register_character_name_separators(state, constants);
+    register_pet_constants(state, constants);
+    register_transmog_constants(state, constants);
+    register_quest_and_level_constants(state, constants);
+}
+
+fn register_character_name_separators(state: &mut LuaState, constants: Val) {
     // Native Forever 70425 camelot-enums.txt and Wowless 70532 globals.yaml:
     // display names use a space between first name and surname; links use '-'.
     let separators = match table_get(state, constants, "CharacterNameSeparatorConsts") {
@@ -132,10 +139,13 @@ fn register_constants(state: &mut LuaState) {
         let value = create_string(state, separator);
         table_set(state, separators, name, value);
     }
+}
+
+fn register_pet_constants(state: &mut LuaState, constants: Val) {
     // Forever PetConstantsDocumentation 1.60.1 lines 49-54: one learned slot,
     // two stable slots, and three hunter slots (2 + 1). MAX_SUMMONABLE_HUNTER_PETS
     // and STABLED_PETS_FIRST_SLOT_INDEX alias the learned-slot value there.
-    publish(
+    publish_constant_group(
         state,
         constants,
         "PetConsts",
@@ -147,21 +157,27 @@ fn register_constants(state: &mut LuaState) {
             ("NUM_PET_SLOTS_HUNTER", 3),
         ],
     );
-    publish(state, constants, "Transmog", &[("NoTransmogID", 0)]);
-    publish(
+}
+
+fn register_transmog_constants(state: &mut LuaState, constants: Val) {
+    publish_constant_group(state, constants, "Transmog", &[("NoTransmogID", 0)]);
+    publish_constant_group(
         state,
         constants,
         "TransmogOutfitDataConsts",
         &[("CLEAR_TRANSMOG_OUTFIT_MANUAL_SPELL_ID", 1_247_917)],
     );
-    publish(state, constants, "LegacyConsts", LEGACY_CONSTANTS);
-    publish(
+    publish_constant_group(state, constants, "LegacyConsts", LEGACY_CONSTANTS);
+}
+
+fn register_quest_and_level_constants(state: &mut LuaState, constants: Val) {
+    publish_constant_group(
         state,
         constants,
         "QuestLogConsts",
         &[("MAXIMUM_NUM_QUESTS_LOG_CAN_ACCEPT", 40)],
     );
-    publish(
+    publish_constant_group(
         state,
         constants,
         "LevelConstsExposed",
@@ -204,6 +220,11 @@ fn register_bag_indices(state: &mut LuaState, enums: Val) {
 }
 
 fn register_item_container_enums(state: &mut LuaState, enums: Val) {
+    register_item_container_subclasses(state, enums);
+    register_item_quiver_subclasses(state, enums);
+}
+
+fn register_item_container_subclasses(state: &mut LuaState, enums: Val) {
     // Forever 1.60.1.70707 ItemConstantsDocumentation.lua:325-346.
     publish(
         state,
@@ -230,6 +251,9 @@ fn register_item_container_enums(state: &mut LuaState, enums: Val) {
         "ItemContainerSubclassMeta",
         &[("MinValue", 0), ("MaxValue", 11), ("NumValues", 12)],
     );
+}
+
+fn register_item_quiver_subclasses(state: &mut LuaState, enums: Val) {
     // Forever 1.60.1.70707 ItemConstantsDocumentation.lua:493-506.
     publish(
         state,
@@ -275,17 +299,33 @@ fn register_ping_results(state: &mut LuaState, enums: Val) {
     );
 }
 
-fn publish(state: &mut LuaState, root: Val, name: &str, fields: &[(&str, i32)]) {
-    let values = match table_get(state, root, name) {
+/// Forever Constants groups stay ordinary-only, as on master; the R88y Evidence: pr46-49-decomp-answers.md, sections R88y.
+/// secure peer model applies to `Enum` registration here.
+fn publish_constant_group(
+    state: &mut LuaState,
+    constants: Val,
+    name: &str,
+    fields: &[(&str, i32)],
+) {
+    let values = match table_get(state, constants, name) {
         value @ Val::Table(_) => value,
         _ => {
             let value = create_table(state);
-            table_set(state, root, name, value);
+            table_set(state, constants, name, value);
             value
         }
     };
     for &(field, value) in fields {
         table_set(state, values, field, Val::Num(f64::from(value)));
+    }
+}
+
+fn publish(state: &mut LuaState, root: Val, name: &str, fields: &[(&str, i32)]) {
+    let values = super::helpers::ensure_paired_table_field(state, root, name)
+        .expect("Enum group must have a secure registration peer");
+    for &(field, value) in fields {
+        super::helpers::set_namespace_member(state, values, field, Val::Num(f64::from(value)))
+            .expect("Enum group must have a secure registration peer");
     }
 }
 

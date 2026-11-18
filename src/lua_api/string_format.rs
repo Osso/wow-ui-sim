@@ -1,12 +1,11 @@
 //! WoW-compatible `string.format` patch — rilua port of the master-era
 //! `src/lua_api/string_format.rs`.
 //!
-//! Handles the two dialect extensions real WoW's patched LuaJIT ships:
-//! - `%F` (uppercase float) — plain Lua 5.1 would error on this; we
-//!   rewrite to `%f` before delegating to the underlying `string.format`.
-//! - Positional arguments (`%1$s`, `%2$d`, …) — the Nth arg (1-based)
-//!   is spliced in place; mixing positional and sequential specifiers in
-//!   the same format string is supported (matches retail behaviour).
+//! Handles WoW's verified `string.format` extensions: Evidence: pr46-49-decomp-answers.md, sections R88ag, R88af.3.
+//! - `%F`, `%t`, and `%T` are rewritten to `%f` with their format fields.
+//! - Positional arguments select positions 0 through 99. Position 0 selects
+//!   the format argument, and sequential arguments continue after the last
+//!   positional selection.
 //!
 //! Being a Rust RustFn, the patched `format` appears as a C function to
 //! Lua's `coroutine.create` — matching WoW's real runtime where
@@ -20,17 +19,29 @@ use rilua::vm::state::LuaState;
 use rilua::{LuaApiMut, LuaResult, Val, runtime_error};
 
 const ORIG_REGISTRY_KEY: &str = "__original_string_format";
+const ORIGINAL_TONUMBER_REGISTRY_KEY: &str = "__original_string_tonumber";
+const INVALID_OPTION_ERROR: &str = "invalid option in `format'";
+const WIDTH_PRECISION_ERROR: &str = "invalid format (width or precision too long)";
 
 /// Install the WoW `string.format` patch on the rilua VM.
 ///
 /// Replaces `string.format` and the `format` global with a RustFn wrapper
-/// that handles `%F` and positional args before delegating to the
-/// original implementation (stashed under a registry key).
+/// that handles WoW's verified conversions and positional arguments before Evidence: pr46-49-decomp-answers.md, sections R88ag, R88af.3.
+/// delegating to the original implementation (stashed under registry keys).
 pub fn patch_string_format(lua: &mut rilua::Lua) -> LuaResult<()> {
     let existing = registry_get(lua.state_mut(), ORIG_REGISTRY_KEY);
     if !matches!(existing, Val::Function(_)) {
         let original = read_string_format(lua)?;
         registry_set(lua.state_mut(), ORIG_REGISTRY_KEY, original);
+    }
+
+    let original_tonumber = registry_get(lua.state_mut(), ORIGINAL_TONUMBER_REGISTRY_KEY);
+    if !matches!(original_tonumber, Val::Function(_)) {
+        let tonumber = LuaApiMut::get_global_val(lua, "tonumber");
+        if !matches!(tonumber, Val::Function(_)) {
+            return Err(runtime_error("tonumber global missing"));
+        }
+        registry_set(lua.state_mut(), ORIGINAL_TONUMBER_REGISTRY_KEY, tonumber);
     }
 
     LuaApiMut::register_function(lua, "format", wow_string_format)?;
@@ -93,37 +104,49 @@ fn install_on_string_table(lua: &mut rilua::Lua) -> LuaResult<()> {
 
 /// Rust implementation of WoW's extended `string.format`.
 fn wow_string_format(state: &mut LuaState) -> LuaResult<u32> {
+    let (original, tonumber) = read_original_format_functions(state)?;
+    let args = read_stack_args(state);
+    let Some((format_argument, fmt)) = read_format_argument(state, &args)? else {
+        return delegate(state, original, &args);
+    };
+    if !validate_format_arguments(state, tonumber, &fmt, &args)? {
+        return delegate(state, original, &args);
+    }
+
+    let rewritten = rewrite_wow_format(state, tonumber, &fmt, format_argument, &args[1..])?;
+    let new_fmt_val = create_string_bytes(state, &rewritten.format);
+    let mut delegated = Vec::with_capacity(rewritten.args.len() + 1);
+    delegated.push(new_fmt_val);
+    delegated.extend(rewritten.args);
+    if rewritten.secret_result {
+        return delegate_secret(state, original, &delegated);
+    }
+    delegate(state, original, &delegated)
+}
+
+fn read_original_format_functions(state: &mut LuaState) -> LuaResult<(Val, Val)> {
     let original = registry_get(state, ORIG_REGISTRY_KEY);
+    let tonumber = registry_get(state, ORIGINAL_TONUMBER_REGISTRY_KEY);
     if !matches!(original, Val::Function(_)) {
         return Err(runtime_error("__original_string_format missing"));
     }
-    let args = read_stack_args(state);
-
-    // Non-string first arg: pass through.
-    let Some(Val::Str(first)) = args.first().copied() else {
-        return delegate(state, original, &args);
-    };
-    let fmt = match read_string(state, first) {
-        Some(s) => s,
-        None => return delegate(state, original, &args),
-    };
-
-    validate_required_string_arg(&fmt, &args)?;
-
-    // Fast path: plain format string.
-    if !fmt.contains(&b'F') && !fmt.contains(&b'$') {
-        let normalized_args = normalize_nil_numeric_args(&fmt, &args);
-        return delegate(state, original, &normalized_args);
+    if !matches!(tonumber, Val::Function(_)) {
+        return Err(runtime_error("__original_string_tonumber missing"));
     }
+    Ok((original, tonumber))
+}
 
-    let rest: Vec<Val> = args.iter().skip(1).copied().collect();
-    let (new_fmt, new_rest) = process_wow_format(&fmt, &rest)?;
-    let new_fmt_val = create_string_bytes(state, &new_fmt);
-    let mut delegated: Vec<Val> = Vec::with_capacity(new_rest.len() + 1);
-    delegated.push(new_fmt_val);
-    delegated.extend(new_rest);
-    let normalized_args = normalize_nil_numeric_args(&new_fmt, &delegated);
-    delegate(state, original, &normalized_args)
+fn read_format_argument(state: &LuaState, args: &[Val]) -> LuaResult<Option<(Val, Vec<u8>)>> {
+    let Some(format_argument) = args.first().copied() else {
+        return Err(format_type_error(state, 0, "string"));
+    };
+    match format_argument {
+        Val::Str(format_ref) => {
+            Ok(read_string(state, format_ref).map(|bytes| (format_argument, bytes)))
+        }
+        Val::Num(_) => Ok(None),
+        _ => Err(format_type_error(state, 0, "string")),
+    }
 }
 
 fn read_stack_args(state: &LuaState) -> Vec<Val> {
@@ -139,104 +162,138 @@ fn read_string(
     Some(lua_str.data().to_vec())
 }
 
-fn format_requires_string_arg(bytes: &[u8]) -> bool {
-    let mut i = 0;
-    while i < bytes.len() {
-        if bytes[i] != b'%' {
-            i += 1;
-            continue;
-        }
-        if i + 1 < bytes.len() && bytes[i + 1] == b'%' {
-            i += 2;
-            continue;
-        }
-        let mut j = i + 1;
-        while j < bytes.len()
-            && matches!(
-                bytes[j] as char,
-                '-' | '+' | ' ' | '#' | '0' | '.' | '1'..='9'
-            )
-        {
-            j += 1;
-        }
-        if j < bytes.len() && matches!(bytes[j] as char, 's' | 'q') {
-            return true;
-        }
-        i = j.saturating_add(1);
+fn validate_format_arguments(
+    state: &mut LuaState,
+    tonumber: Val,
+    bytes: &[u8],
+    args: &[Val],
+) -> LuaResult<bool> {
+    let mut needs_processing = false;
+    let mut scan = FormatScan::new(bytes);
+    while let Some(specifier) = scan.next_specifier()? {
+        needs_processing |= specifier.positional || is_float_alias(specifier.conversion);
+        let value = args
+            .get(specifier.argument_position)
+            .copied()
+            .unwrap_or(Val::Nil);
+        needs_processing |= validate_format_argument(
+            state,
+            tonumber,
+            value,
+            specifier.argument_position,
+            specifier.conversion,
+        )?;
     }
-    false
+    Ok(needs_processing)
 }
 
-fn validate_required_string_arg(fmt: &[u8], args: &[Val]) -> LuaResult<()> {
-    if !format_requires_string_arg(fmt) {
+fn validate_format_argument(
+    state: &mut LuaState,
+    tonumber: Val,
+    value: Val,
+    argument_position: usize,
+    conversion: u8,
+) -> LuaResult<bool> {
+    match conversion {
+        b's' if matches!(value, Val::Str(_) | Val::Num(_)) => Ok(false),
+        b's' => Err(format_type_error(state, argument_position, "string")),
+        b'q' => match value {
+            Val::Str(_) => Ok(false),
+            Val::Num(_) => Ok(true),
+            _ => Err(format_type_error(state, argument_position, "string")),
+        },
+        b'd' | b'i' => validate_signed_integer_argument(state, tonumber, value),
+        b'F' | b't' | b'T' if is_secret_number(state, value) => Ok(false),
+        b'c' | b'o' | b'u' | b'x' | b'X' | b'e' | b'E' | b'f' | b'F' | b'g' | b'G' | b't'
+        | b'T' => {
+            if convert_public_number(state, tonumber, value)?.is_some() {
+                Ok(false)
+            } else {
+                Err(numeric_type_error(state, argument_position))
+            }
+        }
+        _ => Ok(false),
+    }
+}
+
+fn validate_signed_integer_argument(
+    state: &mut LuaState,
+    tonumber: Val,
+    value: Val,
+) -> LuaResult<bool> {
+    match convert_public_number(state, tonumber, value)? {
+        Some(number) => check_signed_integer_range(number).map(|()| false),
+        None => Ok(true),
+    }
+}
+
+fn convert_public_number(
+    state: &mut LuaState,
+    tonumber: Val,
+    value: Val,
+) -> LuaResult<Option<f64>> {
+    match value {
+        Val::Num(number) => Ok(Some(number)),
+        Val::Str(_) => match call_function_state(state, tonumber, &[value])? {
+            Val::Num(number) => Ok(Some(number)),
+            _ => Ok(None),
+        },
+        _ => Ok(None),
+    }
+}
+
+/// R88ag: `%d` and `%i` store a signed 32-bit integer after conversion. Evidence: pr46-49-decomp-answers.md, sections R88ag.
+fn check_signed_integer_range(number: f64) -> LuaResult<()> {
+    if (f64::from(i32::MIN)..=f64::from(i32::MAX)).contains(&number) {
         return Ok(());
     }
-
-    match args.get(1).copied() {
-        None => Err(runtime_error(
-            "bad argument #2 to '?' (string expected, got no value)",
-        )),
-        Some(Val::Nil) => Err(runtime_error(
-            "bad argument #2 to '?' (string expected, got nil)",
-        )),
-        _ => Ok(()),
-    }
+    Err(runtime_error(format!(
+        "integer overflow attempting to store {number:.6}"
+    )))
 }
 
-fn normalize_nil_numeric_args(fmt: &[u8], args: &[Val]) -> Vec<Val> {
-    if !args.iter().any(|arg| matches!(arg, Val::Nil)) {
-        return args.to_vec();
-    }
-
-    let mut normalized = args.to_vec();
-    for index in numeric_format_arg_indices(fmt) {
-        if matches!(normalized.get(index), Some(Val::Nil)) {
-            normalized[index] = Val::Num(0.0);
-        }
-    }
-    normalized
+/// R88ag: `%F`, `%t` and `%T` read secret numbers under native policy. Evidence: pr46-49-decomp-answers.md, sections R88ag.
+fn is_secret_number(state: &LuaState, value: Val) -> bool {
+    rilua::table_security::secret_payload_kind(state, value)
+        == Some(rilua::table_security::SecretPayloadKind::Number)
 }
 
-fn numeric_format_arg_indices(bytes: &[u8]) -> Vec<usize> {
-    let mut indices = Vec::new();
-    let mut arg_index = 1;
-    let mut i = 0;
-
-    while i < bytes.len() {
-        if bytes[i] != b'%' {
-            i += 1;
-            continue;
-        }
-        if i + 1 < bytes.len() && bytes[i + 1] == b'%' {
-            i += 2;
-            continue;
-        }
-
-        let mut j = i + 1;
-        while j < bytes.len()
-            && matches!(
-                bytes[j] as char,
-                '-' | '+' | ' ' | '#' | '0' | '.' | '1'..='9'
-            )
-        {
-            j += 1;
-        }
-        if j >= bytes.len() {
-            break;
-        }
-
-        if matches!(
-            bytes[j] as char,
-            'c' | 'd' | 'i' | 'u' | 'o' | 'x' | 'X' | 'f' | 'e' | 'E' | 'g' | 'G'
-        ) {
-            indices.push(arg_index);
-        }
-
-        arg_index += 1;
-        i = j + 1;
+fn format_type_error(state: &LuaState, argument_index: usize, expected: &str) -> rilua::LuaError {
+    let stack_index = state.base + argument_index;
+    let actual = if stack_index < state.top {
+        state.stack_get(stack_index).type_name()
+    } else {
+        "no value"
+    };
+    if rilua::vm::debug_info::getfuncname(state, state.ci, &state.gc.string_arena).is_none() {
+        return runtime_error(format!(
+            "bad argument #{} ({expected} expected, got {actual})",
+            argument_index + 1
+        ));
     }
+    rilua::stdlib::type_error(state, argument_index, expected)
+}
 
-    indices
+fn numeric_type_error(state: &LuaState, argument_index: usize) -> rilua::LuaError {
+    let stack_index = state.base + argument_index;
+    if stack_index < state.top
+        && rilua::table_security::secret_payload_kind(state, state.stack_get(stack_index))
+            == Some(rilua::table_security::SecretPayloadKind::String)
+    {
+        return format_argument_error(state, argument_index + 1, "number expected, got string");
+    }
+    format_type_error(state, argument_index, "number")
+}
+
+fn format_argument_error(
+    state: &LuaState,
+    argument_number: usize,
+    message: &str,
+) -> rilua::LuaError {
+    if rilua::vm::debug_info::getfuncname(state, state.ci, &state.gc.string_arena).is_none() {
+        return runtime_error(format!("bad argument #{argument_number} ({message})"));
+    }
+    rilua::stdlib::arg_error(state, argument_number, message)
 }
 
 fn delegate(state: &mut LuaState, original: Val, args: &[Val]) -> LuaResult<u32> {
@@ -250,6 +307,15 @@ fn delegate(state: &mut LuaState, original: Val, args: &[Val]) -> LuaResult<u32>
             Err(e)
         }
     }
+}
+
+/// The result of a secret numeric conversion stays secret. INFERRED: R88ag Evidence: pr46-49-decomp-answers.md, sections R88ag.
+/// verifies acceptance, not the result classification.
+fn delegate_secret(state: &mut LuaState, original: Val, args: &[Val]) -> LuaResult<u32> {
+    let formatted = call_function_state(state, original, args)?;
+    let secret = rilua::table_security::wrap_secret(state, formatted)?;
+    state.push(secret);
+    Ok(1)
 }
 
 fn trace_format_error(state: &LuaState, args: &[Val]) {
@@ -291,10 +357,38 @@ fn describe_string_value(state: &LuaState, value: Val) -> Option<String> {
     Some(String::from_utf8_lossy(bytes).to_string())
 }
 
-#[cfg(test)]
+#[cfg(all(test, feature = "client-retail", feature = "retail-12-1-5"))]
 mod tests {
     use super::patch_string_format;
     use crate::lua_api::WowLuaEnv;
+    use rilua::LuaApiMut;
+
+    const FORMAT_ARGUMENT_ERROR_PROBE: &str = r#"
+            local ok, err = pcall(function() return string.format('%s') end)
+            assert(not ok)
+            assert(err == "bad argument #2 to 'format' (string expected, got no value)")
+
+            ok, err = pcall(function() return string.format('%2$s', 'first') end)
+            assert(not ok)
+            assert(err == "bad argument #3 to 'format' (string expected, got no value)")
+
+            ok, err = pcall(function() return string.format('%s', false) end)
+            assert(not ok)
+            assert(err == "bad argument #2 to 'format' (string expected, got boolean)")
+
+            ok, err = pcall(function() return string.format('%t', 'not numeric') end)
+            assert(not ok)
+            assert(err == "bad argument #2 to 'format' (number expected, got string)")
+
+            local fmt = string.format
+            ok, err = pcall(function() return fmt('%s') end)
+            assert(not ok)
+            assert(err == "bad argument #2 to 'fmt' (string expected, got no value)")
+
+            ok, err = pcall(function() return string:format('%s') end)
+            assert(not ok)
+            assert(err == "calling 'format' on bad self (string expected, got table)")
+        "#;
 
     #[test]
     fn patch_string_format_is_idempotent() {
@@ -304,10 +398,15 @@ mod tests {
             let mut lua = loader.rilua_mut();
             patch_string_format(&mut lua).expect("second patch should succeed");
         }
-        let out: String = env
-            .eval(r#"return string.format("%2$s %1$s %.1F", "first", "second", 3.25)"#)
+        let matches_lowercase: bool = env
+            .eval(
+                r#"
+                return string.format("%2$s %1$s %3$.1F", "first", "second", 3.25)
+                    == string.format("%2$s %1$s %3$.1f", "first", "second", 3.25)
+                "#,
+            )
             .expect("patched format should still work");
-        assert_eq!(out, "second first 3.2");
+        assert!(matches_lowercase);
     }
 
     #[test]
@@ -316,147 +415,518 @@ mod tests {
         env.exec(
             r#"
             local bytes = string.char(255, 128)
-            assert(string.format(bytes .. ' %% %.1F ' .. bytes, 2.5) == bytes .. ' % 2.5 ' .. bytes)
-            assert(string.format('é %% %1$d 雪', 7) == 'é % 7 雪')
+            local fixed = string.format('%.1f', 2.5)
+            assert(string.format(bytes .. ' %% %.1F ' .. bytes, 2.5)
+                == bytes .. ' % ' .. fixed .. ' ' .. bytes)
+            assert(string.format('é %% %1$d 雪', 7) == string.format('é %% %d 雪', 7))
         "#,
         )
         .expect("format must preserve literal bytes");
     }
 
     #[test]
-    fn nil_numeric_format_args_are_zero() {
+    fn integer_conversions_return_zero_when_conversion_fails() {
         let env = WowLuaEnv::new().expect("env");
-        let out: String = env
-            .eval(r#"return string.format("%d %.1f %2$d", nil, nil)"#)
-            .expect("nil numeric args should format as zero");
-        assert_eq!(out, "0 0.0 0");
+        env.exec(
+            r#"
+            assert(string.format('%d/%i/%d/%i', nil, 'not numeric', false)
+                == '0/0/0/0')
+            local ok, err = pcall(function() return string.format('%u', nil) end)
+            assert(not ok)
+            assert(err == "bad argument #2 to 'format' (number expected, got nil)")
+        "#,
+        )
+        .expect("only %d and %i should replace conversion failures with zero");
+    }
+
+    #[test]
+    fn signed_integer_formats_report_i32_overflow() {
+        let env = WowLuaEnv::new().expect("env");
+        env.exec(
+            r#"
+            assert(string.format('%d/%i', 2147483647, -2147483648)
+                == '2147483647/-2147483648')
+
+            local cases = {
+                { '%d', 2147483648, '2147483648.000000' },
+                { '%d', -2147483649, '-2147483649.000000' },
+                { '%i', 2147483648, '2147483648.000000' },
+                { '%i', -2147483649, '-2147483649.000000' },
+            }
+            for _, case in ipairs(cases) do
+                local ok, err = pcall(function()
+                    return string.format(case[1], case[2])
+                end)
+                assert(not ok, 'overflow must fail for ' .. case[1])
+                assert(err == 'integer overflow attempting to store ' .. case[3], tostring(err))
+            end
+        "#,
+        )
+        .expect("%d and %i must reject values outside signed 32-bit range");
+    }
+
+    #[test]
+    fn positional_formats_select_the_format_and_reset_the_cursor() {
+        let env = WowLuaEnv::new().expect("env");
+        env.exec(
+            r#"
+            assert(string.format('%0$s') == '%0$s')
+            assert(string.format('%01$s', 'first') == 'first')
+            assert(string.format('%3$s %1$s %s', 'one', 'two', 'three')
+                == 'three one two')
+        "#,
+        )
+        .expect("positional and sequential selectors should share a resettable cursor");
+    }
+
+    #[test]
+    fn positional_prefixes_and_parser_errors_match_native_templates() {
+        let env = WowLuaEnv::new().expect("env");
+        env.exec(
+            r#"
+            local ok, err = pcall(function() return string.format('%001$s', 'first') end)
+            assert(not ok and err == 'invalid format (width or precision too long)')
+            ok, err = pcall(function() return string.format('%100$s', 'first') end)
+            assert(not ok and err == 'invalid format (width or precision too long)')
+            ok, err = pcall(function() return string.format('%123f', 1) end)
+            assert(not ok and err == 'invalid format (width or precision too long)')
+            ok, err = pcall(function() return string.format('%1.123f', 1) end)
+            assert(not ok and err == 'invalid format (width or precision too long)')
+            ok, err = pcall(function() return string.format('%z') end)
+            assert(not ok and err == "invalid option in `format'")
+            ok, err = pcall(function() return string.format('%a', 1) end)
+            assert(not ok and err == "invalid option in `format'")
+            ok, err = pcall(function() return string.format('%') end)
+            assert(not ok and err == "invalid option in `format'")
+        "#,
+        )
+        .expect("format parser errors should match the Retail templates");
+    }
+
+    #[test]
+    fn format_argument_errors_use_caller_and_method_names() {
+        let env = WowLuaEnv::new().expect("env");
+        env.exec(FORMAT_ARGUMENT_ERROR_PROBE)
+            .expect("format type errors should use the caller and method context");
+    }
+
+    #[test]
+    fn verified_format_extensions_map_and_ignore_quoted_width() {
+        let env = WowLuaEnv::new().expect("env");
+        env.exec(
+            r#"
+            assert(string.format('%08.2t', 12.5) == string.format('%08.2f', 12.5))
+            assert(string.format('%20.3q', 'text') == string.format('%q', 'text'))
+            assert(string.format('%q', 12) == string.format('%q', '12'))
+        "#,
+        )
+        .expect("verified conversion mapping and quote conversion should match");
+    }
+
+    #[cfg(feature = "client-retail")]
+    #[test]
+    fn numeric_conversion_rejects_secret_marked_strings() {
+        let env = WowLuaEnv::new().expect("env");
+        env.exec(
+            r#"
+            local ok, err = pcall(function() return string.format('%t', secretwrap('12')) end)
+            assert(not ok)
+            assert(err == "bad argument #2 to 'format' (number expected, got string)")
+        "#,
+        )
+        .expect("numeric conversion should reject a secret-marked string without reading it");
+    }
+
+    #[cfg(feature = "client-retail")]
+    #[test]
+    fn numeric_conversion_accepts_secret_numbers() {
+        let env = WowLuaEnv::new().expect("env");
+        env.exec(
+            r#"
+            local function assert_secret_format(format, value, expected)
+                local result = string.format(format, secretwrap(value))
+                assert(issecretvalue(result), format .. ' must keep secret input private')
+                assert(secretunwrap(result) == expected, tostring(secretunwrap(result)))
+            end
+
+            assert_secret_format('%t', 12.5, string.format('%f', 12.5))
+            assert_secret_format('%T', 0, string.format('%f', 0))
+            assert_secret_format('%08.2F', -3.25, string.format('%08.2f', -3.25))
+            assert_secret_format('%1$t', 7, string.format('%f', 7))
+
+            local ok, err = pcall(function() return string.format('%t') end)
+            assert(not ok)
+            assert(err == "bad argument #2 to 'format' (number expected, got no value)")
+        "#,
+        )
+        .expect("numeric conversion should format secret numbers into secret results");
+    }
+
+    #[test]
+    fn host_format_errors_omit_function_name_without_a_debug_caller() {
+        let env = WowLuaEnv::new().expect("env");
+        let format_string = {
+            let loader = env.loader_env();
+            let mut lua = loader.rilua_mut();
+            LuaApiMut::create_string(lua.state_mut(), b"%s")
+        };
+        let error = env
+            .call_global("format", &[format_string])
+            .expect_err("missing format values should fail");
+        assert_eq!(
+            error.to_string(),
+            "Lua error: bad argument #2 (string expected, got no value)"
+        );
+    }
+
+    #[cfg(feature = "client-retail")]
+    #[test]
+    fn secure_string_format_uses_retail_globalstring_templates() {
+        let env = WowLuaEnv::new().expect("env");
+        let (same_function, positional, plain): (bool, String, String) = env
+            .eval(
+                r#"
+                local secure_format = rawget(rawget(__secureenv, "string"), "format")
+                local positional = secure_format(
+                    TEXT_MODE_A_STRING_1,
+                    "source", "spell", "action", "destination", "value", "result",
+                    "school", "power", "amount", "extra", "points"
+                )
+                local plain = secure_format(TEXT_MODE_A_STRING_TIMESTAMP, "time", "line")
+                return rawequal(secure_format, string.format), positional, plain
+                "#,
+            )
+            .expect("secure string.format should use the WoW wrapper");
+
+        assert!(same_function);
+        assert_eq!(
+            positional,
+            "source spell action destination value. result points"
+        );
+        assert_eq!(plain, "time> line");
     }
 }
 
-/// Parse a WoW-dialect format string: replace `%F` → `%f` and reorder
-/// positional args (`%1$s`). Returns the cleaned format + the arg slice
-/// in positional order (or the original args when no positional spec
-/// was found — matching master behaviour and avoiding unnecessary
-/// cloning on the hot path).
-fn process_wow_format(bytes: &[u8], args: &[Val]) -> LuaResult<(Vec<u8>, Vec<Val>)> {
-    let mut out = Vec::with_capacity(bytes.len());
-    let mut reordered: Vec<Val> = Vec::new();
-    let mut seq: usize = 0;
-    let mut has_positional = false;
-    let mut i = 0;
+struct RewrittenFormat {
+    format: Vec<u8>,
+    args: Vec<Val>,
+    secret_result: bool,
+}
 
-    while i < bytes.len() {
-        if bytes[i] != b'%' {
-            out.push(bytes[i]);
-            i += 1;
-        } else if i + 1 < bytes.len() && bytes[i + 1] == b'%' {
-            out.extend_from_slice(b"%%");
-            i += 2;
-        } else {
-            i = parse_format_specifier(
-                bytes,
-                i,
-                args,
-                &mut out,
-                &mut reordered,
-                &mut seq,
-                &mut has_positional,
-            )?;
+struct FormatRewrite {
+    output: Vec<u8>,
+    reordered: Vec<Val>,
+    has_positional: bool,
+    has_argument_rewrite: bool,
+    secret_result: bool,
+    previous_end: usize,
+}
+
+impl FormatRewrite {
+    fn new(capacity: usize) -> Self {
+        Self {
+            output: Vec::with_capacity(capacity),
+            reordered: Vec::new(),
+            has_positional: false,
+            has_argument_rewrite: false,
+            secret_result: false,
+            previous_end: 0,
         }
     }
 
-    if has_positional {
-        Ok((out, reordered))
-    } else {
-        Ok((out, args.to_vec()))
+    fn append_specifier(
+        &mut self,
+        state: &mut LuaState,
+        tonumber: Val,
+        bytes: &[u8],
+        format_argument: Val,
+        args: &[Val],
+        specifier: ParsedFormatSpecifier,
+    ) -> LuaResult<()> {
+        self.output
+            .extend_from_slice(&bytes[self.previous_end..specifier.start_index]);
+        self.has_positional |= specifier.positional;
+        append_format_conversion(&mut self.output, bytes, specifier);
+        let value = format_argument_at(format_argument, args, specifier.argument_position);
+        let argument = rewrite_format_argument(state, tonumber, value, specifier.conversion)?;
+        self.reordered.push(argument.value);
+        self.has_argument_rewrite |= argument.rewritten;
+        self.secret_result |= argument.secret;
+        self.previous_end = specifier.next_index;
+        Ok(())
+    }
+
+    fn finish(mut self, bytes: &[u8], args: &[Val]) -> RewrittenFormat {
+        self.output.extend_from_slice(&bytes[self.previous_end..]);
+        let args = if self.has_positional || self.has_argument_rewrite {
+            self.reordered
+        } else {
+            args.to_vec()
+        };
+        RewrittenFormat {
+            format: self.output,
+            args,
+            secret_result: self.secret_result,
+        }
     }
 }
 
-/// Parse one format specifier starting at `%`, appending to `out` and
-/// collecting the matched arg. Returns the index after the specifier.
-fn parse_format_specifier(
+struct RewrittenArgument {
+    value: Val,
+    rewritten: bool,
+    secret: bool,
+}
+
+impl RewrittenArgument {
+    fn unchanged(value: Val) -> Self {
+        Self {
+            value,
+            rewritten: false,
+            secret: false,
+        }
+    }
+
+    fn public(value: Val) -> Self {
+        Self {
+            value,
+            rewritten: true,
+            secret: false,
+        }
+    }
+}
+
+/// Parse positional arguments and apply the conversions that rilua does not
+/// implement with the verified WoW semantics. Evidence: pr46-49-decomp-answers.md, sections R88ag, R88af.3.
+fn rewrite_wow_format(
+    state: &mut LuaState,
+    tonumber: Val,
+    bytes: &[u8],
+    format_argument: Val,
+    args: &[Val],
+) -> LuaResult<RewrittenFormat> {
+    let mut rewrite = FormatRewrite::new(bytes.len());
+    let mut scan = FormatScan::new(bytes);
+    while let Some(specifier) = scan.next_specifier()? {
+        rewrite.append_specifier(state, tonumber, bytes, format_argument, args, specifier)?;
+    }
+    Ok(rewrite.finish(bytes, args))
+}
+
+fn append_format_conversion(output: &mut Vec<u8>, bytes: &[u8], specifier: ParsedFormatSpecifier) {
+    output.push(b'%');
+    if specifier.conversion != b'q' {
+        output.extend_from_slice(&bytes[specifier.body_start..specifier.conversion_index]);
+    }
+    output.push(if is_float_alias(specifier.conversion) {
+        b'f'
+    } else {
+        specifier.conversion
+    });
+}
+
+fn format_argument_at(format_argument: Val, args: &[Val], position: usize) -> Val {
+    if position == 0 {
+        format_argument
+    } else {
+        args.get(position - 1).copied().unwrap_or(Val::Nil)
+    }
+}
+
+fn rewrite_format_argument(
+    state: &mut LuaState,
+    tonumber: Val,
+    value: Val,
+    conversion: u8,
+) -> LuaResult<RewrittenArgument> {
+    if matches!(conversion, b'd' | b'i') && convert_public_number(state, tonumber, value)?.is_none()
+    {
+        return Ok(RewrittenArgument::public(Val::Num(0.0)));
+    }
+    if is_float_alias(conversion) && is_secret_number(state, value) {
+        let number = rilua::table_security::inspect_host_secret_number(state, value, Ok)?;
+        return Ok(RewrittenArgument {
+            value: Val::Num(number),
+            rewritten: true,
+            secret: true,
+        });
+    }
+    if conversion == b'q'
+        && let Val::Num(_) = value
+    {
+        let string = format!("{value}");
+        return Ok(RewrittenArgument::public(create_string_bytes(
+            state,
+            string.as_bytes(),
+        )));
+    }
+    Ok(RewrittenArgument::unchanged(value))
+}
+
+#[derive(Clone, Copy)]
+struct ParsedFormatSpecifier {
+    start_index: usize,
+    next_index: usize,
+    argument_position: usize,
+    body_start: usize,
+    conversion_index: usize,
+    conversion: u8,
+    positional: bool,
+}
+
+struct FormatScan<'a> {
+    bytes: &'a [u8],
+    index: usize,
+    argument_cursor: usize,
+}
+
+impl<'a> FormatScan<'a> {
+    fn new(bytes: &'a [u8]) -> Self {
+        Self {
+            bytes,
+            index: 0,
+            argument_cursor: 0,
+        }
+    }
+
+    fn next_specifier(&mut self) -> LuaResult<Option<ParsedFormatSpecifier>> {
+        while self.index < self.bytes.len() {
+            let start = self.index;
+            if self.bytes[start] != b'%' {
+                self.index += 1;
+                continue;
+            }
+            if start + 1 < self.bytes.len() && self.bytes[start + 1] == b'%' {
+                self.index += 2;
+                continue;
+            }
+
+            let specifier =
+                parse_next_format_specifier(self.bytes, start, &mut self.argument_cursor)?;
+            self.index = specifier.next_index;
+            return Ok(Some(specifier));
+        }
+        Ok(None)
+    }
+}
+
+fn parse_next_format_specifier(
     bytes: &[u8],
     start: usize,
-    args: &[Val],
-    out: &mut Vec<u8>,
-    reordered: &mut Vec<Val>,
-    seq: &mut usize,
-    has_positional: &mut bool,
-) -> LuaResult<usize> {
-    let mut i = start + 1; // skip the '%'
-
-    if let Some((n, after)) = parse_positional_index(bytes, i) {
-        if n >= 100 {
-            return Err(runtime_error(
-                "invalid format (width or precision too long)",
-            ));
-        }
-        *has_positional = true;
-        // A positional spec `%N$` bumps `seq` to max(seq, N) without
-        // consuming. Later sequential specs then pick from `seq+1` onward,
-        // matching WoW's patched LuaJIT where sequential consumes the
-        // lowest arg slot not yet "seen" by positional refs.
-        *seq = std::cmp::max(*seq, n);
-        reordered.push(args.get(n - 1).copied().unwrap_or(Val::Nil));
-        out.push(b'%');
-        i = after;
-    } else {
-        *seq += 1;
-        reordered.push(args.get(*seq - 1).copied().unwrap_or(Val::Nil));
-        out.push(b'%');
-    }
-
-    i = skip_flags_width_precision(bytes, i, out);
-    if i < bytes.len() && is_format_conversion(bytes[i]) {
-        out.push(if bytes[i] == b'F' { b'f' } else { bytes[i] });
-        i += 1;
-    }
-    Ok(i)
+    argument_cursor: &mut usize,
+) -> LuaResult<ParsedFormatSpecifier> {
+    let (argument_position, body_start, positional) =
+        parse_argument_position(bytes, start + 1, argument_cursor)?;
+    let conversion_index = skip_flags_width_precision(bytes, body_start)?;
+    let conversion = parse_conversion(bytes, conversion_index)?;
+    Ok(ParsedFormatSpecifier {
+        start_index: start,
+        next_index: conversion_index + 1,
+        argument_position,
+        body_start,
+        conversion_index,
+        conversion,
+        positional,
+    })
 }
 
-/// Skip flags (`-+ #0`), width digits, and precision (`.N`) — appending
-/// to `out` as we go.
-fn skip_flags_width_precision(bytes: &[u8], start: usize, out: &mut Vec<u8>) -> usize {
-    let mut i = start;
-    while i < bytes.len() && matches!(bytes[i], b'-' | b'+' | b' ' | b'#' | b'0') {
-        out.push(bytes[i]);
-        i += 1;
+fn parse_argument_position(
+    bytes: &[u8],
+    start: usize,
+    argument_cursor: &mut usize,
+) -> LuaResult<(usize, usize, bool)> {
+    if let Some((position, after_prefix)) = parse_positional_index(bytes, start)? {
+        *argument_cursor = position;
+        return Ok((position, after_prefix, true));
     }
-    while i < bytes.len() && bytes[i].is_ascii_digit() {
-        out.push(bytes[i]);
-        i += 1;
-    }
-    if i < bytes.len() && bytes[i] == b'.' {
-        out.push(b'.');
-        i += 1;
-        while i < bytes.len() && bytes[i].is_ascii_digit() {
-            out.push(bytes[i]);
-            i += 1;
-        }
-    }
-    i
+    *argument_cursor += 1;
+    Ok((*argument_cursor, start, false))
 }
 
-/// Try to parse `N$` (digits followed by `$`) at `start`. Returns
-/// `(N, index_after_$)` on match, `None` otherwise.
-fn parse_positional_index(bytes: &[u8], start: usize) -> Option<(usize, usize)> {
-    let mut i = start;
-    while i < bytes.len() && bytes[i].is_ascii_digit() {
-        i += 1;
+fn parse_conversion(bytes: &[u8], index: usize) -> LuaResult<u8> {
+    let Some(conversion) = bytes.get(index).copied() else {
+        return Err(runtime_error(INVALID_OPTION_ERROR));
+    };
+    if !is_format_conversion(conversion) {
+        return Err(runtime_error(INVALID_OPTION_ERROR));
     }
-    if i == start || i >= bytes.len() || bytes[i] != b'$' {
-        return None;
-    }
-    let n: usize = std::str::from_utf8(&bytes[start..i]).ok()?.parse().ok()?;
-    Some((n, i + 1))
+    Ok(conversion)
 }
 
-/// Valid printf conversion characters. `%F` is accepted here and
-/// rewritten to `%f` by the caller.
-fn is_format_conversion(b: u8) -> bool {
+/// Parse flags, width and precision. Each numeric field has at most two
+/// digits, and the whole section has at most sixteen characters.
+fn skip_flags_width_precision(bytes: &[u8], start: usize) -> LuaResult<usize> {
+    let flags_end = skip_format_flags(bytes, start);
+    let width_end = skip_format_width(bytes, flags_end)?;
+    let specifier_end = skip_format_precision(bytes, width_end)?;
+    if specifier_end - start > 16 {
+        return Err(runtime_error(WIDTH_PRECISION_ERROR));
+    }
+    Ok(specifier_end)
+}
+
+fn skip_format_flags(bytes: &[u8], start: usize) -> usize {
+    let mut index = start;
+    while index < bytes.len() && matches!(bytes[index], b'-' | b'+' | b' ' | b'#' | b'0') {
+        index += 1;
+    }
+    index
+}
+
+fn skip_format_width(bytes: &[u8], start: usize) -> LuaResult<usize> {
+    let mut index = start;
+    while index < bytes.len() && bytes[index].is_ascii_digit() {
+        index += 1;
+    }
+    if index - start > 2 {
+        return Err(runtime_error(WIDTH_PRECISION_ERROR));
+    }
+    Ok(index)
+}
+
+fn skip_format_precision(bytes: &[u8], start: usize) -> LuaResult<usize> {
+    if start >= bytes.len() || bytes[start] != b'.' {
+        return Ok(start);
+    }
+    let mut index = start + 1;
+    while index < bytes.len() && bytes[index].is_ascii_digit() {
+        index += 1;
+    }
+    if index - start - 1 > 2 {
+        return Err(runtime_error(WIDTH_PRECISION_ERROR));
+    }
+    Ok(index)
+}
+
+/// Parse the one- or two-digit positional prefix `N$` at `start`.
+fn parse_positional_index(bytes: &[u8], start: usize) -> LuaResult<Option<(usize, usize)>> {
+    let mut index = start;
+    while index < bytes.len() && bytes[index].is_ascii_digit() {
+        index += 1;
+    }
+    if index == start || index >= bytes.len() || bytes[index] != b'$' {
+        return Ok(None);
+    }
+    if index - start > 2 {
+        return Err(runtime_error(WIDTH_PRECISION_ERROR));
+    }
+
+    let position = std::str::from_utf8(&bytes[start..index])
+        .ok()
+        .and_then(|digits| digits.parse().ok())
+        .ok_or_else(|| runtime_error(WIDTH_PRECISION_ERROR))?;
+    Ok(Some((position, index + 1)))
+}
+
+fn is_float_alias(conversion: u8) -> bool {
+    matches!(conversion, b'F' | b't' | b'T')
+}
+
+/// WoW's native formatter accepts exactly these conversion letters.
+fn is_format_conversion(byte: u8) -> bool {
     matches!(
-        b,
-        b'd' | b'i'
+        byte,
+        b'c' | b'd'
+            | b'i'
             | b'o'
             | b'u'
             | b'x'
@@ -467,12 +937,9 @@ fn is_format_conversion(b: u8) -> bool {
             | b'F'
             | b'g'
             | b'G'
-            | b'a'
-            | b'A'
-            | b'c'
-            | b's'
-            | b'p'
             | b'q'
-            | b'n'
+            | b's'
+            | b't'
+            | b'T'
     )
 }

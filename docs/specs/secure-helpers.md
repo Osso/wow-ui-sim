@@ -4,7 +4,7 @@
 
 Source: pinned `Blizzard_APIDocumentationGenerated/FrameScriptDocumentation.lua`. Retail, PTR and Forever declare `CreateSecureDelegate` (:113), `securecopy` (:462), `SecureCopyOptions` (:589) and `SecureDelegateOptions` (:599). Mists, Era and Anniversary declare only `CreateSecureDelegate(luaFunction)` (:93), with no options or documentation text. Wrath declares neither.
 
-Publication follows these declarations: `CreateSecureDelegate` is published on every profile except Wrath, and `securecopy` only on Retail, PTR and Forever. Implementation: `src/lua_api/globals/real/secure_helpers.rs`, on the rilua taint model. Post-cleanup restoration re-registers `CreateSecureDelegate` after `Blizzard_EnvironmentCleanup` sets it to nil.
+Publication follows these declarations: `CreateSecureDelegate` is published on every profile except Wrath, and `securecopy` only on Retail, PTR and Forever. R88y verifies flag 7 for both globals on Retail 12.1.5.70688, so the simulator routes existing handlers to ordinary and secure environments. The flag alone does not prove function identity or the additional native action. Other profiles keep their current routes. See [addon load phases](addon-load-phases.md#runtime-loading). Implementation: `src/lua_api/globals/real/secure_helpers.rs`, on the rilua taint model. Post-cleanup restoration re-registers `CreateSecureDelegate` after `Blizzard_EnvironmentCleanup` sets it to nil.
 
 Documented behaviour and bounded native findings:
 

@@ -8,7 +8,11 @@
 
 **VERIFIED (Retail 12.1.5.70688, R88v.v1–v3):** the namespace publishes `ClearColorOverrides`, `GetColorForQuality`, `GetColorOverrideInfo`, `GetDefaultColorForQuality`, `RemoveColorOverride`, and `SetColorOverride`. Override types are 0–7. `SetColorOverride` converts RGBA table components to single precision, clamps finite values to `[0, 1]`, rounds them to byte channels, and replaces a matching type or adds a new record. `RemoveColorOverride` removes a matching record; `ClearColorOverrides` empties the active records.
 
-**VERIFIED (simulator source and test):** the model lives in `src/c_api/c_color_overrides.rs`, stores active records in a private Lua-registry table, and registers only when `client_profile::ACTIVE` is Retail. `color_defaults.rs` retains `GetColorOverrideInfo` and `GetColorForQuality` before secure-environment creation. The secure snapshot's member set matches the two-member `origin/master` baseline at `ffc9675274b9cc21922daea9fa901c3efd1723ee`; Retail then replaces only the ordinary namespace with the six modeled methods. The test checks member names, not secure method behavior or flag-3 publication.
+**VERIFIED (pinned Retail R88y CSV SHA-256 `3a8922d84756171f666fe79b61068d3344ce2db866250dede1de384fa9878f82`):** all six modeled members have VERIFIED flag 3 and `both` context. Evidence: pr46-49-decomp-answers.md, sections R88y.
+
+**VERIFIED (simulator source at `5cd3cc29e`):** the model registers six handlers in the ordinary namespace after secureenv construction. The generic R88y pass publishes implemented members from the verified flag table. The Retail fallback methods and custom secure-publication Lua bridge are removed; non-Retail defaults remain. Evidence: pr46-49-decomp-answers.md, sections R88y.
+
+**UNVERIFIED (merged-head runtime):** the exact secure member-set test has not passed at merge HEAD. Do not claim that the six-member secure table is proven until it passes.
 
 **VERIFIED (Retail 12.1.5.70688, R88v.v2):** `GetColorOverrideInfo` returns one nil when no record matches. A match returns an `overrideType`, an RGB `ColorMixin` table without an `a` field, and an `overrideColorString`. `GetColorForQuality` returns a `ColorMixin` RGBA table, selects a matching override when one exists, and otherwise selects that quality's default color.
 
@@ -38,14 +42,14 @@
 
 **CORRECTION (VERIFIED):** the initial RED at test commit `589d1278958b6d14867abba6d6dfe6736cb91378` called `GetDefaultColorForQuality` directly before the original consumer. It did not prove a ColorManager failure. The corrected RED at test-only commit `9f94060da3c33f8dc32b8474cc51da5301bb5600` removes that ordinary method through a test adapter before Blizzard_Colors loads; the original `ColorManager.lua:66` call then fails on the missing method. The test source blob is unchanged at GREEN (`c973568cd3c22fbecf56bafc2fa26b30e47add34`).
 
-**VERIFIED (secure snapshot RED/GREEN):** the unchanged test body at test commit `1f0c2605b407b9024e758bcecd812c98f3b45858` failed with an empty secure member set against the expected master members `GetColorForQuality` and `GetColorOverrideInfo`. After the pre-snapshot defaults were restored, the same test passed at the revision-1 source. Its test-body SHA-256 is `a971afd72d030ce1d519cfc5e0e8f5dc000fcd0462ed46aa7b3b682e7e56fa21`.
+**HISTORICAL (pre-R88y secure snapshot RED/GREEN):** the unchanged test body at test commit `1f0c2605b407b9024e758bcecd812c98f3b45858` failed with an empty secure member set against the then-expected master members `GetColorForQuality` and `GetColorOverrideInfo`. After the pre-snapshot defaults were restored, the same test passed at the revision-1 source. Its test-body SHA-256 is `a971afd72d030ce1d519cfc5e0e8f5dc000fcd0462ed46aa7b3b682e7e56fa21`. R88y replaces that preservation baseline; the six-member test is listed above. Evidence: pr46-49-decomp-answers.md, sections R88y.
 
 ## Sources
 
 - [Retail C_ColorOverrides contract](../../specs/color-overrides.md) — tested requirements and current gaps.
 - [GlobalColor catalog](global-color-catalog.md) — source table and version boundary.
 - [Consumer selection and RED proof](../investigations/consumer-selection-and-red-proof.md#retail-colormanager-and-c-coloroverrides) — TOC, profile selection, and original consumer proof.
-- Simulator source: [C_ColorOverrides model](../../../src/c_api/c_color_overrides.rs) and [pre-secure color defaults](../../../src/lua_api/workarounds/temporary/color_defaults.rs).
+- Simulator source: [C_ColorOverrides model](../../../src/c_api/c_color_overrides.rs), [R88y secure publisher](../../../src/c_api/secure_publication.rs), and [color defaults](../../../src/lua_api/workarounds/temporary/color_defaults.rs). Evidence: pr46-49-decomp-answers.md, sections R88y.
 - Retail API documentation cache: `~/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ColorOverridesDocumentation.lua`.
 - Local native evidence: `pr46-49-decomp-answers.md`, section `R88v`, Retail 12.1.5.70688.
 
@@ -54,3 +58,4 @@
 - [[global-color-catalog]] — generated GlobalColor source and native export behavior.
 - [[lua-api]] — C API registration boundary.
 - [[client-profiles]] — profile-specific runtime selection.
+- [Taint system](taint-system.md) — ordinary and secure environment registration boundaries.

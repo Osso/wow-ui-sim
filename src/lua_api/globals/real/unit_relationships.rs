@@ -3,7 +3,7 @@
 use crate::lua_api::methods::val_to_string;
 use crate::lua_bridge::stack_val;
 use rilua::vm::state::LuaState;
-use rilua::{LuaApiMut, LuaResult, Val};
+use rilua::{LuaResult, Val};
 
 fn is_controlled_or_group_token(unit: &str) -> bool {
     if matches!(unit, "player" | "pet" | "vehicle") {
@@ -32,7 +32,8 @@ fn unit_is_player_controlled_or_group_member(state: &mut LuaState) -> LuaResult<
 }
 
 pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
-    LuaApiMut::register_function(
+    // UNKNOWN (R88k.7): publication and flags are unproved; retain the current allowlist entry. Evidence: pr46-49-decomp-answers.md, sections R88k.7.
+    crate::lua_api::globals::security::register_unknown_allowlist_function(
         lua,
         "UnitIsPlayerControlledOrGroupMember",
         unit_is_player_controlled_or_group_member,

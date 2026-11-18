@@ -1,10 +1,8 @@
 //! Retail `C_UIColor.GetColors` backed by generated GlobalColor DB2 rows.
 
-use crate::c_api::helpers::ensure_namespace;
+use crate::c_api::helpers::register_namespace_function_with_flags;
 use crate::client_profile::{ACTIVE, ClientProfile};
-use crate::lua_api::globals::security::set_secure_env_key_state;
 use crate::lua_api::methods::{table_set_num, table_set_static};
-use crate::lua_bridge::table_set_rust_fn_static;
 use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
 use rilua::vm::table::Table;
@@ -20,13 +18,16 @@ pub(crate) fn register(lua: &mut rilua::Lua) -> LuaResult<()> {
         return Ok(());
     }
 
-    let state = lua.state_mut();
-    let namespace = ensure_namespace(state, "C_UIColor")?;
-    table_set_rust_fn_static(state, namespace, "GetColors", get_colors)?;
+    if crate::client_profile::is_active_retail_12_1_5() {
+        return crate::c_api::register_namespace_function_from_r88y(
+            lua.state_mut(),
+            "C_UIColor",
+            "GetColors",
+            get_colors,
+        );
+    }
 
-    // Flag 3 publishes the same namespace member to ordinary and secure code.
-    // Reuse this table so both environments hold the same function value.
-    set_secure_env_key_state(state, "C_UIColor", Val::Table(namespace))
+    register_namespace_function_with_flags(lua.state_mut(), "C_UIColor", "GetColors", get_colors, 3)
 }
 
 fn get_colors(state: &mut LuaState) -> LuaResult<u32> {
