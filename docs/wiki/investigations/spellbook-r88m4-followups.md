@@ -11,7 +11,7 @@ Tracker `lt-39c0`, comment `1090`, supplies VERIFIED Retail **12.1.5.70688** con
 | `C_SpellBook.FindFlyoutSlotBySpellID` | One numeric zero on the represented miss path. Native ordered candidates/marks and kind-4 player-book rows are absent; existing display flyouts do not supply that choice map. |
 | `C_SpellBook.GetSpellBookItemAutoCast` | Missing/unsupported item, zero resolved ID or missing Spell record: zero values. Represented supported record with absent candidate/flag state: two false booleans. No pet-book order is inferred from the membership set or action-bar indices. |
 | `C_SpellBook.GetSpellBookItemLossOfControlCooldownInfo` | Retail item rejection or failed query: zero values. Supplied successful decoded query: one fresh five-field table. Sibling `C_Spell` absence behavior is not changed incidentally. |
-| `GetCallPetSpellInfo` | Numeric-string/signed-range/truncation boundary and exact overflow reason. No supplied first-effect-56/index/pet-info records: temporary zero-result seam, not an exhaustive accepted-ID claim. |
+| `GetCallPetSpellInfo` | **VERIFIED (Retail 12.1.5.70688):** zero values for missing membership/invalid index; `(index, pet-info name-or-nil)` for indices 0–4, preserving empty strings. Retail now reads explicit empty-default host inputs; same-build ID rows and runtime name writers remain UNKNOWN. |
 | `IsSelectedSpellBookItem` | Numeric-slot versus name form, invalid-slot errors, checked conversion, and missing-slot/name arity. Existing represented player rows remain an explicitly unselected seam; native variant/effect/selection caches are absent. |
 | `C_SpellBook.GetOverrideSpell` | UNKNOWN outside-census publication, no selected Retail consumer: retire both Rust publication and fallback on Retail only. |
 | `_G.GetSpellInfo` | UNKNOWN outside-census publication; no identified Retail producer or selected caller, so no new alias or removal needed. Preserve existing non-Retail publishers. |
@@ -29,6 +29,14 @@ Native secret modes, stack-capacity and integrity checks remain separate constra
 `LossOfControlInfo` is an already-decoded supplied DTO: seconds, modulation and explicit activity/replacement flags. Serialization is distinct from the native upstream calculation (milliseconds conversion, nonzero-pair activity and comparison of cooldown ends). Do not rescale seconds or overwrite supplied flags to manufacture a native producer. Existing off-spec book rejection is preserved, not proof that `off_spec_id` equals the native rejected-item flag. Arbitrary native row kinds and ordered pet rows are not represented.
 
 Pet membership, ten existing action slots and an indexed autocast toggle do not constitute the verified native snapshot handler's spell-keyed flag map or full writer/event sequence. Selection queries similarly must not invent effect predicates, reaction/command/category mappings, locale name variants, or runtime pet names. None of these getter corrections creates a public update event.
+
+## Retail call-pet flyout
+
+**VERIFIED (R88i.28/R88j.3, Retail 12.1.5.70688):** accepted indices 0–4 publish exactly `(index, name-or-nil)`; missing membership or an invalid index publishes zero values, and an empty name stays empty. **VERIFIED (simulator source):** Retail supplies spell/index membership and current-player names through explicit empty-default host inputs; this does not claim that a native fresh client has no call-pet data.
+
+**VERIFIED (Retail runtime cache, ActionBar TOC and `Shared/SpellFlyout.lua:270-273`):** the original `SpellFlyoutMixin:Toggle` hides call-pet entries with nil or empty names only for the action bar. **VERIFIED (Retail simulator test):** named and unmapped inputs remain visible, empty/missing names are hidden, and a callable-wrong producer fails the same original-consumer assertion.
+
+**UNKNOWN (R88i.28/R88j.3):** same-build spell-ID/index rows, the current-player pet-info writer, and event effects. The simulator does not seed export-derived candidate IDs or fixed pet names. See the [call-pet contract](../../specs/call-pet-spell-info.md).
 
 ## Original-source census and consumer proof
 
@@ -52,6 +60,9 @@ All four original-consumer baseline selectors passed after the authentic UI-cach
 - [C_SpellBook](../../../src/c_api/c_spell_book.rs), [legacy input seams](../../../src/lua_api/workarounds/temporary/retail_spellbook_legacy.rs), [legacy aliases](../../../src/lua_api/workarounds/temporary/legacy_spell_globals.rs), [bootstrap defaults](../../../src/lua_api/workarounds/temporary/spell_book_static_defaults.rs).
 - [Item API tests](../../../tests/spellbook_r88m4_items.rs), [original item consumers](../../../tests/spellbook_r88m4_consumer_items.rs), [Find consumers](../../../tests/spellbook_r88m4_consumer_find.rs), [alias boundary tests](../../../tests/spellbook_r88m4_aliases.rs).
 - [Earlier LoC output spec](../../specs/spell-book-loss-of-control-outputs.md) — prior supplied-DTO policy; R88m.4 supersedes Retail book one-nil absence claims, not sibling Spell policy.
+
+- `pr46-49-decomp-answers.md` — R88i.28 and R88j.3.
+- [Call-pet spell contract](../../specs/call-pet-spell-info.md) and [original ActionBar consumer test](../../../tests/blizzard_ui/blizzard_actionbar/behavior_spell_flyout.rs).
 
 ## See Also
 

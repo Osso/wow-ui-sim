@@ -1,3 +1,15 @@
+## [2026-11-18] implementation | Retail cinematic summary
+
+The [cinematic summary investigation](investigations/retail-cinematic-summary.md) separates the verified R88ap.1 ID lifecycle and nil/string contract from inferred host data and argument admission. The original MovieFrame dialog is the regression consumer.
+
+## [2026-11-18] implementation | Retail social-UI policy
+
+The [social-UI policy investigation](investigations/social-ui-policy.md) records the R88ap.6 one-Boolean contract, explicit empty-default host input, selected FriendsFrame consumer, and unknown writers/events. Other profiles retain their existing behavior.
+
+## [2026-11-18] investigation | Retail bag tracker fixture lifecycle
+
+The [panel fixture investigation](investigations/showuipanel-toggle-fixture-owners.md#retail-bag-tracker-lifecycle-lt-c0e6) records the missing per-addon completion event. Original TokenUI creates the bag tracker after `ADDON_LOADED`; assertions and vendor code remain unchanged.
+
 ## [2026-11-17] verification | Mists Glue chat placeholder and movie flow
 
 Updated the [investigation](investigations/mists-glue-intro-movie-login.md) and [Glue login contract](../specs/glue-login-flow.md). **VERIFIED (source at `e9ec1c669`):** the shared loader already rejects the Game-only chat add-ons; `chat_window_defaults` created the synthetic frame before screen selection. Bootstrap now skips that placeholder only on Mists Glue and does not hide it. **VERIFIED (Mists integration run):** login boot passes 1/1, edit-box focus passes 1/1, and the focused movie/API tests pass 16/16; the build reports zero warnings. **INFERRED (R88ar, 70631 applied to cached 70268):** the original Mists Glue login does not load the Game-only chat add-ons.
@@ -5,6 +17,10 @@ Updated the [investigation](investigations/mists-glue-intro-movie-login.md) and 
 ## [2026-11-17] investigation | Mists Glue intro movie login
 
 Added the [investigation](investigations/mists-glue-intro-movie-login.md). **VERIFIED (Mists 5.5.4.70268 cache):** the selected original GlueParent/MovieFrame path hides AccountLogin and its edit boxes. **VERIFIED (R88ao, Mists Classic 5.5.4.70631):** cursor global scope and movie return/finish semantics. **INFERRED:** first launch applies the 70631 default/display values to the 70268 cache. **UNKNOWN:** offline StartMovie outcome; its host input stays empty by default.
+
+## [2026-11-17] implementation | Retail call-pet flyout spell results
+
+Updated the [call-pet contract](../specs/call-pet-spell-info.md) and [Spellbook follow-ups](investigations/spellbook-r88m4-followups.md#retail-call-pet-flyout). **VERIFIED (Retail simulator):** the original ActionBar flyout keeps named and unmapped spells, hides empty/missing names, and rejects a callable-wrong producer. **UNKNOWN:** same-build spell-ID rows and the runtime pet-info writer remain empty-default host inputs.
 
 ## [2026-11-17] verification | Retail mask-2 original CooldownViewer consumer
 

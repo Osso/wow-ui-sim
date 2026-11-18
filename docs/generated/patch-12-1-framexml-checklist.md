@@ -194,7 +194,7 @@
 194. [best-effort] `added:LandingSoulbinds_LoadUI` — vendor-present
 195. [best-effort] `added:LFGListApplicationViewer_OpenEditMode` — vendor-present
 196. [best-effort] `added:LFGListApplicationViewerRemoveEntryButton_OnClick` — vendor-present
-197. [implemented] `added:LoadAddOnWithErrorHandling` — compat
+197. [implemented] `added:LoadAddOnWithErrorHandling` — vendor-present
 198. [best-effort] `added:LocaleUtil.GetLocaleDisplayName` — vendor-present
 199. [best-effort] `added:LocalizePlayerFrame_zhCN` — vendor-present
 200. [best-effort] `added:LocalizePlayerFrame_zhTW` — vendor-present

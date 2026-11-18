@@ -1,3 +1,15 @@
+## [2026-11-18] implementation | Retail cinematic summary
+
+The [cinematic summary investigation](investigations/retail-cinematic-summary.md) separates the verified R88ap.1 ID lifecycle and nil/string contract from inferred host data and argument admission. The original MovieFrame dialog is the regression consumer.
+
+## [2026-11-18] implementation | Retail social-UI policy
+
+The [social-UI policy investigation](investigations/social-ui-policy.md) records the R88ap.6 one-Boolean contract, explicit empty-default host input, selected FriendsFrame consumer, and unknown writers/events. Other profiles retain their existing behavior.
+
+## [2026-11-18] investigation | Retail bag tracker fixture lifecycle
+
+The [panel fixture investigation](investigations/showuipanel-toggle-fixture-owners.md#retail-bag-tracker-lifecycle-lt-c0e6) records the missing per-addon completion event. Original TokenUI creates the bag tracker after `ADDON_LOADED`; assertions and vendor code remain unchanged.
+
 ## [2026-11-17] verification | Mists Glue chat placeholder and movie flow
 
 The [Mists Glue intro movie login investigation](investigations/mists-glue-intro-movie-login.md) and [Glue login contract](../specs/glue-login-flow.md) record the synthetic `ChatFrame1` root cause and fix. **VERIFIED (Mists simulator source at `e9ec1c669`):** the loader already rejects both Game-only chat add-ons; a bootstrap placeholder caused the visible frame. **VERIFIED (Mists integration run):** login boot passes 1/1, the original edit-box test passes 1/1, and the focused movie/API tests pass 16/16 with zero build warnings. **INFERRED (R88ar, 70631 applied to 70268):** the original Glue login has no ChatFrame1 from those Game-only add-ons.
@@ -5,6 +17,10 @@ The [Mists Glue intro movie login investigation](investigations/mists-glue-intro
 ## [2026-11-17] investigation | Mists Glue intro movie login
 
 [Mists Glue intro movie login](investigations/mists-glue-intro-movie-login.md) records the selected 5.5.4.70268 GlueParent/MovieFrame path, R88ao native facts for 5.5.4.70631, the empty-default offline movie-input boundary, and the original-consumer RED.
+
+## [2026-11-17] verification | Retail call-pet flyout results
+
+The [call-pet contract](../specs/call-pet-spell-info.md) and [Spellbook follow-ups](investigations/spellbook-r88m4-followups.md#retail-call-pet-flyout) record the original Retail ActionBar consumer and empty-default host inputs. **VERIFIED (Retail simulator):** named and unmapped spells stay visible, nameless entries hide, and the callable-wrong producer fails inside the consumer. **UNKNOWN:** same-build spell-ID rows and the runtime pet-info writer.
 
 ## [2026-11-17] verification | Retail mask-2 original CooldownViewer consumer
 

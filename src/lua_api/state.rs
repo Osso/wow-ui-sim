@@ -451,6 +451,10 @@ macro_rules! build_empty_sim_state {
             spell_loss_of_control: HashMap::new(),
             active_loss_of_control: HashMap::new(),
             spell_flyouts: HashMap::new(),
+            #[cfg(feature = "client-retail")]
+            call_pet_spell_indices: HashMap::new(),
+            #[cfg(feature = "client-retail")]
+            player_call_pet_names: Vec::new(),
             action_profession_quality: HashMap::new(),
             addon_base_paths: $collections.addon_base_paths,
             texture_manager: Default::default(),
@@ -850,6 +854,12 @@ macro_rules! build_empty_sim_state {
             bnet_custom_message: String::new(),
             social_friends: default_social_friends(),
             social_restrictions: SocialRestrictionsState::default(),
+            #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+            social_system_policy_enabled: None,
+            #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+            cinematic_summaries: HashMap::new(),
+            #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+            current_cinematic_id: 0,
             restricted_actions,
             restricted_actions_natural: [false; 6],
             restriction_chat_client_flag: false,
