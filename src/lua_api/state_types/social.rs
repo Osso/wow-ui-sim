@@ -3,6 +3,9 @@
 /// Supplied local social restriction input, not a native account-policy query.
 #[derive(Debug, Clone, Default)]
 pub struct SocialRestrictionsState {
+    /// INFERRED host mapping of R88ap.4 settings byte; writers/events UNKNOWN.
+    #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+    pub friends_disabled_byte: u8,
     /// The simulator seeds an unrestricted local player; callers can supply either value.
     pub is_squelched: bool,
 }
