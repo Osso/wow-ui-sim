@@ -468,7 +468,15 @@ fn append_local_eligibility_line(
     record: &PvpTalentTooltipRecord,
     eligibility: Option<bool>,
 ) -> LuaResult<()> {
-    // R73: dispatch exactly one result, with combat before grant and unlock.
+    // INFERRED (simulator mapping): R88at.1/at3 orders these supplied failures as
+    // late level, grant rejection, then combat; display priority does not reorder eligibility.
+    if record.eligibility_level_failed {
+        return append_unlock_line(state, tooltip, record.level_required, true);
+    }
+    if record.grant_rejected_by_item {
+        append_local_grant_line(state, tooltip, record)?;
+        return Ok(());
+    }
     if context.in_combat {
         return append_key_line(
             state,
@@ -477,13 +485,6 @@ fn append_local_eligibility_line(
             "HOSTILE_STATUS_COLOR",
             true,
         );
-    }
-    if record.grant_rejected_by_item {
-        append_local_grant_line(state, tooltip, record)?;
-        return Ok(());
-    }
-    if record.eligibility_level_failed {
-        return append_unlock_line(state, tooltip, record.level_required, true);
     }
     if eligibility == Some(false) || context.rest_permission == Some(false) {
         return append_key_line(

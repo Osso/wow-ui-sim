@@ -574,14 +574,16 @@ fn game_tooltip_pvp_talent_failure_and_inspect_annotations() {
             .get_mut(&TALENT_ID)
             .unwrap();
         talent.grant_rejected_by_item = true;
-        talent.granted_item_id = Some(u32::MAX);
+        talent.granted_item_id = Some(6948);
         state.player.in_combat = true;
     }
     env.exec(
         r#"
         local data = TestGetPvpTalent(91001)
-        assert(data.lines[#data.lines].leftText == TALENT_TOOLTIP_ADD_COMBAT_ERROR,
-            "combat status precedes the grant outcome")
+        local lines = data.lines
+        assert(lines[#lines].leftText == TALENT_GRANTED_BY_ITEM:format("Hearthstone"),
+            "grant rejection precedes combat")
+        assert(lines[#lines - 1].type == 1 and lines[#lines - 2].type == 1)
         "#,
     )
     .unwrap();
@@ -899,7 +901,7 @@ mod r73 {
     }
 
     #[test]
-    fn tooltip_pvp_talent_list_combat_error_precedes_grant_and_later_unlock() {
+    fn tooltip_pvp_talent_list_later_unlock_precedes_grant_and_combat() {
         let env = candidate();
         {
             let mut sim = env.state().borrow_mut();
@@ -911,7 +913,7 @@ mod r73 {
             record.granted_item_id = Some(6948);
             record.eligibility_level_failed = true;
         }
-        hover(&env, false, "TALENT_TOOLTIP_ADD_COMBAT_ERROR");
+        hover(&env, false, "UNLOCKED_AT_LEVEL:format(25)");
     }
 
     #[test]
