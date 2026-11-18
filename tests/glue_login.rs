@@ -420,6 +420,32 @@ fn mists_classic_cached_login_consumer_hides_rows_and_api_is_glue_only() {
     }
 }
 
+// VERIFIED (R88ao, Mists Classic 5.5.4.70631): StartMovie returns a boolean and code.
+#[cfg(feature = "client-mists")]
+#[test]
+fn mists_movie_start_returns_boolean_and_code() {
+    test_timeout! {
+        let env = load_blizzard_screen(ScreenKind::Login);
+        let result: (i32, String, String) = env.eval(r#"
+            local function pack(...) return { n = select('#', ...), ... } end
+            local start = pack(MovieFrame:StartMovie(115))
+            return start.n, type(start[1]), type(start[2])
+        "#).expect("StartMovie should publish its native return pair");
+        assert_eq!(result, (2, "boolean".into(), "number".into()));
+    }
+}
+
+// VERIFIED (R88ao, Mists Classic 5.5.4.70631): StopMovie without a handle returns no values.
+#[cfg(feature = "client-mists")]
+#[test]
+fn mists_movie_stop_without_handle_returns_no_values() {
+    test_timeout! {
+        let env = load_blizzard_screen(ScreenKind::Login);
+        env.exec("assert(select('#', MovieFrame:StopMovie()) == 0)")
+            .expect("StopMovie without a handle should return no values");
+    }
+}
+
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn enter_credentials_and_submit(env: &WowLuaEnv, click_button: bool) {
     for (path, text) in [
