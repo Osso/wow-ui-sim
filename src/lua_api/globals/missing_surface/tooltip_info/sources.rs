@@ -51,7 +51,7 @@ fn item_link_level_resolution_enabled() -> bool {
 fn resolve_item_link_info(
     state: &mut LuaState,
     descriptor: &crate::c_api::item_descriptor::ItemDescriptor,
-) -> LuaResult<Option<crate::c_api::item_descriptor::ItemInfo>> {
+) -> LuaResult<Option<crate::items::ItemInfo>> {
     let player_level = item_link_player_level(state)?;
     descriptor
         .resolve(player_level)

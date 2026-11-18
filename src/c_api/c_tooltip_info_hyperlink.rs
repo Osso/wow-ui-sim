@@ -94,7 +94,7 @@ fn route_special_hyperlink(
 fn currency_hyperlink_tooltip(
     state: &mut LuaState,
     id: u32,
-    quantity: u32,
+    quantity: i32,
 ) -> LuaResult<Option<Val>> {
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
         return retail_currency_hyperlink_tooltip(state, id, quantity);
@@ -105,7 +105,7 @@ fn currency_hyperlink_tooltip(
 fn retail_currency_hyperlink_tooltip(
     state: &mut LuaState,
     id: u32,
-    quantity: u32,
+    quantity: i32,
 ) -> LuaResult<Option<Val>> {
     let Ok(currency_id) = i32::try_from(id) else {
         return Ok(None);
@@ -120,7 +120,7 @@ fn retail_currency_hyperlink_tooltip(
 fn non_retail_currency_hyperlink_tooltip(
     state: &mut LuaState,
     id: u32,
-    quantity: u32,
+    quantity: i32,
 ) -> LuaResult<Option<Val>> {
     let Some(currency) = i32::try_from(id)
         .ok()
