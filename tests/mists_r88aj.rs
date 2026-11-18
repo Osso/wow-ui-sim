@@ -109,7 +109,13 @@ const CAST_SEQUENCE_CONSUMER: &str = r#"
     C_SpellBook.FindSpellOverrideByID = function(spellID) return spellID end
     C_SpellBook.FindBaseSpellByID = function(spellID) return spellID end
 
-    local handler = SecureCmdList["CASTSEQUENCE"]
+    local handler
+    for index = 1, 20 do
+        local key, value = debug.getupvalue(SlashCommandUtil.CheckAddSecureSlashCommand, index)
+        if not key then break end
+        if key == "addonTbl" then handler = value.SecureCmdList["CASTSEQUENCE"] end
+    end
+    assert(handler, "original cast-sequence command should be registered")
     local source = debug.getinfo(handler, "S").source
     assert(source:find("CastSequenceManager.lua", 1, true), source)
     handler("Alpha,Beta,Gamma,Delta")
@@ -135,8 +141,6 @@ const CAST_SEQUENCE_CONSUMER: &str = r#"
 fn cast_sequence_consumer_receives_only_registered_units() {
     let ui = closure::blizzard_ui_dir();
     let env = closure::new_blizzard_addon_env(&ui);
-    env.exec("SecureCmdList = SecureCmdList or {}")
-        .expect("secure command list should exist");
     let loaded =
         closure::load_blizzard_addon_closure_into_env(&env, &ui, &["Blizzard_ChatFrameBase"], &[]);
     assert!(loaded.iter().any(|name| name == "Blizzard_ChatFrameBase"));
