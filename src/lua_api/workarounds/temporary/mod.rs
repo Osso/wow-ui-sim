@@ -130,6 +130,8 @@ pub(crate) mod merchant_filter_state;
 pub(crate) mod merchant_raid_defaults;
 pub(crate) mod minimap_tracking_defaults;
 pub(crate) mod misc_global_frame_defaults;
+#[cfg(feature = "client-mists")]
+pub(crate) mod mists_cinematic_started;
 pub(crate) mod modified_click_defaults;
 #[cfg(not(feature = "client-retail"))]
 pub(crate) mod mount_journal_dynamic_flight_popup;

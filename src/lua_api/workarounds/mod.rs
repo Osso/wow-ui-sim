@@ -7,6 +7,8 @@ mod temporary;
 pub(crate) use temporary::legacy_talent_skill_defaults::get_legacy_talent_info;
 pub(crate) use temporary::lfg_encounters::get_search_result_encounter_info;
 pub(crate) use temporary::minimap_tracking_defaults::RETAIL_TRACKING_DEFAULT_MASK;
+#[cfg(feature = "client-mists")]
+pub(crate) use temporary::mists_cinematic_started::update_screen_registration as update_mists_cinematic_started_registration;
 #[cfg(feature = "client-retail")]
 pub(crate) use temporary::pvp_talent_defaults::pvp_slot_default;
 pub(crate) use temporary::quest_campaign_header_default::update_campaign_headers;
