@@ -102,9 +102,9 @@ pub mod merchant_item_link;
 #[cfg(feature = "client-wowforever")]
 pub mod merchant_repair;
 mod merchant_requirements;
-pub(crate) mod mixins;
 #[cfg(feature = "client-mists")]
 pub(crate) mod mists_cinematic;
+pub(crate) mod mixins;
 pub mod modifier_keys;
 pub mod mouse_probes;
 #[cfg(feature = "client-wowforever")]
