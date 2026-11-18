@@ -118,6 +118,18 @@ fn frame_center(env: &WowLuaEnv, frame_path: &str) -> Point {
     Point::new(rect.x + rect.width / 2.0, rect.y + rect.height / 2.0)
 }
 
+// VERIFIED (R88ao, Mists Classic 5.5.4.70631): display expansion level is 4.
+// INFERRED: this value applies to the 70268 cached Glue consumer.
+#[cfg(feature = "client-mists")]
+#[test]
+fn mists_client_display_expansion_level_returns_four() {
+    test_timeout! {
+        let env = common::lock_env(|| WowLuaEnv::new().unwrap());
+        let level: i32 = env.eval("return GetClientDisplayExpansionLevel()").unwrap();
+        assert_eq!(level, 4, "R88ao verifies the Mists display expansion level");
+    }
+}
+
 #[cfg(feature = "client-mists")]
 #[test]
 fn mists_movie_boot_has_no_movie_frame_lifecycle_errors() {
