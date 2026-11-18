@@ -6,6 +6,8 @@
 use crate::common;
 
 use std::path::{Path, PathBuf};
+#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+use wow_ui_sim::c_api::performance_bar::{PerformanceProtocolTypes, ProtocolCode};
 use wow_ui_sim::loader::{find_toc_file, load_addon};
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::paths::default_blizzard_ui_addons_path;
@@ -895,74 +897,80 @@ fn main_menu_performance_bar_uses_seeded_network_stats() {
 }
 
 #[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
-#[test]
-fn performance_bar_tooltip_uses_supplied_protocols_and_zero_bandwidth() {
-    let env = setup_env();
+fn load_performance_bar_tooltip(env: &WowLuaEnv) {
+    env.exec(
+        r#"
+        local loaded, reason = C_AddOns.LoadAddOn("Blizzard_PerformanceBar")
+        assert(loaded, "load original PerformanceBar.lua: " .. tostring(reason))
+        assert(type(MainMenuBarPerformanceBarFrame_OnEnter) == "function",
+            "original performance tooltip handler must be loaded")
+        A_Admin.SetNetStats(128, 256, 47, 89)
+        "#,
+    )
+    .expect("original PerformanceBar tooltip should load");
+}
+
+#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+fn check_performance_bar_tooltip(env: &WowLuaEnv, input: Option<PerformanceProtocolTypes>) {
+    env.state().borrow_mut().performance_bar_protocol_types = input;
+    let (home, world) = input.map_or((0, 0), |pair| (pair.home.value(), pair.world.value()));
+    env.exec(&format!(
+        "__expected_protocol_home = {home}; __expected_protocol_world = {world}"
+    ))
+    .expect("set expected protocol codes");
     let result: String = env
         .eval(
             r#"
-            local loaded, reason = C_AddOns.LoadAddOn("Blizzard_PerformanceBar")
-            assert(loaded, "load original PerformanceBar.lua: " .. tostring(reason))
-            assert(type(MainMenuBarPerformanceBarFrame_OnEnter) == "function",
-                "original performance tooltip handler must be loaded")
-
-            C_PerformanceBar = C_PerformanceBar or {}
-            C_PerformanceBar._state = C_PerformanceBar._state or {}
-            A_Admin.SetNetStats(128, 256, 47, 89)
-            local bar = MainMenuMicroButton.MainMenuBarPerformanceBar
-            local labels = { [0] = UNKNOWN, "TCP", "UDP" }
-
             local function capture_results(...)
                 return select('#', ...), ...
             end
-
-            local function tooltip_line_matches(expected)
-                local actual = {}
+            local function has_tooltip_line(expected)
                 for index = 1, GameTooltip:NumLines() do
                     local line = _G["GameTooltipTextLeft" .. index]
-                    local text = line and line:GetText()
-                    if text then
-                        actual[#actual + 1] = text
-                        if text == expected then
-                            return true, table.concat(actual, " | ")
-                        end
-                    end
+                    if line and line:GetText() == expected then return true end
                 end
-                return false, table.concat(actual, " | ")
+                return false
             end
-
-            local function check_pair(home, world)
-                C_PerformanceBar._state.protocolTypes = { home = home, world = world }
-                GameTooltip:Hide()
-                MainMenuBarPerformanceBarFrame_OnEnter(bar)
-                local protocol = string.format(MAINMENUBAR_COMMUNICATION_PROTOCOL_LABEL,
-                    labels[home], labels[world])
-                local bandwidth = string.format(MAINMENUBAR_BANDWIDTH_LABEL, 0)
-                local protocol_matches, actual_lines = tooltip_line_matches(protocol)
-                assert(protocol_matches,
-                    "original tooltip protocol line did not match supplied pair: " ..
-                    protocol .. "; actual lines: " .. actual_lines)
-                local bandwidth_matches = tooltip_line_matches(bandwidth)
-                assert(bandwidth_matches,
-                    "original tooltip bandwidth line must format zero: " .. actual_lines)
-                local protocol_count, actual_home, actual_world = capture_results(GetProtocolTypes())
-                assert(protocol_count == 2 and type(actual_home) == "number"
-                    and type(actual_world) == "number" and actual_home == home
-                    and actual_world == world,
-                    "GetProtocolTypes must return the supplied numeric pair")
-                local bandwidth_count, actual_bandwidth = capture_results(GetAvailableBandwidth())
-                assert(bandwidth_count == 1 and type(actual_bandwidth) == "number"
-                    and actual_bandwidth == 0,
-                    "GetAvailableBandwidth must return one numeric zero")
-            end
-
-            check_pair(1, 2)
-            check_pair(2, 1)
-            C_PerformanceBar._state.protocolTypes = nil
-            check_pair(0, 0)
+            GameTooltip:Hide()
+            MainMenuBarPerformanceBarFrame_OnEnter(MainMenuMicroButton.MainMenuBarPerformanceBar)
+            local labels = { [0] = UNKNOWN, "TCP", "UDP" }
+            local protocol = string.format(MAINMENUBAR_COMMUNICATION_PROTOCOL_LABEL,
+                labels[__expected_protocol_home], labels[__expected_protocol_world])
+            local bandwidth = string.format(MAINMENUBAR_BANDWIDTH_LABEL, 0)
+            assert(has_tooltip_line(protocol), "original tooltip protocol row: " .. protocol)
+            assert(has_tooltip_line(bandwidth), "original tooltip bandwidth row must show zero")
+            local count, home, world = capture_results(GetProtocolTypes())
+            assert(count == 2 and type(home) == "number" and type(world) == "number"
+                and home == __expected_protocol_home and world == __expected_protocol_world,
+                "GetProtocolTypes must return exactly the supplied numeric pair")
+            local bandwidth_count, available = capture_results(GetAvailableBandwidth())
+            assert(bandwidth_count == 1 and type(available) == "number" and available == 0,
+                "GetAvailableBandwidth must return exactly one numeric zero")
             return "ok"
             "#,
         )
         .expect("original PerformanceBar tooltip should consume supplied native values");
     assert_eq!(result, "ok");
+}
+
+#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+#[test]
+fn performance_bar_tooltip_uses_supplied_protocols_and_zero_bandwidth() {
+    let env = setup_env();
+    load_performance_bar_tooltip(&env);
+    check_performance_bar_tooltip(
+        &env,
+        Some(PerformanceProtocolTypes {
+            home: ProtocolCode::One,
+            world: ProtocolCode::Two,
+        }),
+    );
+    check_performance_bar_tooltip(
+        &env,
+        Some(PerformanceProtocolTypes {
+            home: ProtocolCode::Two,
+            world: ProtocolCode::One,
+        }),
+    );
+    check_performance_bar_tooltip(&env, None);
 }

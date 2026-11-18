@@ -39,6 +39,10 @@ pub struct SimState {
     pub last_gamepad_input_timestamp: Option<u32>,
     /// INFERRED host byte projection, independent of CVars and GPU detection.
     pub video_capability_bytes: crate::c_api::video_capabilities::VideoCapabilityBytes,
+    /// UNKNOWN live protocol codes; None means no endpoint input was supplied.
+    #[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+    pub performance_bar_protocol_types:
+        Option<crate::c_api::performance_bar::PerformanceProtocolTypes>,
     /// Explicit mapped-stick input; None means no configured snapshot, not device absence.
     #[cfg(any(feature = "client-wowforever", feature = "client-ptr"))]
     pub gamepad_mapped_sticks: Option<crate::c_api::c_game_pad::MappedStickSnapshot>,

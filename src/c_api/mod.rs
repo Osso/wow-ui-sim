@@ -27,6 +27,8 @@ pub(crate) mod c_tooltip_info_loot;
 #[cfg(any(feature = "retail-12-1-5", feature = "client-wowforever"))]
 pub(crate) mod c_tooltip_info_merchant_cost;
 pub(crate) mod experience_preset;
+#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+pub mod performance_bar;
 pub(crate) mod tooltip_azerite_catalog_data;
 #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 pub(crate) mod tooltip_info_retail_epoch_and_forever;
