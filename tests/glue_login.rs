@@ -151,21 +151,9 @@ fn mists_movie_boot_has_no_movie_frame_lifecycle_errors() {
     }
 }
 
-#[cfg(feature = "client-mists")]
-#[test]
-fn mists_login_boot_returns_to_account_login_after_intro_movie() {
-    test_timeout! {
-        let env = load_blizzard_screen(ScreenKind::Login);
-        let visible: bool = env.eval("return AccountLogin:IsShown()")
-            .expect("Mists Classic AccountLogin visibility should be queryable");
-        assert!(visible, "login boot should leave AccountLogin visible");
-    }
-}
-
-// PRESERVATION (Mists simulator): `src/cvars.yaml:1075` defaults `playIntroMovie`
-// to 0; Classic `GlueParent.lua:15,425-431` opens full-screen MovieFrame, which
-// hides AccountLogin. `MovieFrame.lua:37` also reports missing `HideCursor`.
-#[cfg(not(feature = "client-mists"))]
+// INFERRED (R88ao applied to cached 70268): startup opens MovieFrame; with no
+// host result, the simulator's nil pair takes the cached failed-start close.
+// UNKNOWN: the native offline StartMovie result.
 #[test]
 fn login_boot_hides_non_login_frontend_frames() {
     test_timeout! {
@@ -336,27 +324,9 @@ fn login_boot_keeps_settings_preview_panels_wired_to_settings_panel() {
     }
 }
 
-#[cfg(feature = "client-mists")]
-#[test]
-fn mists_login_editboxes_gain_focus_when_clicking_visible_centers() {
-    test_timeout! {
-        let env = load_blizzard_screen(ScreenKind::Login);
-        for path in ["AccountLogin.UI.AccountEditBox", "AccountLogin.UI.PasswordEditBox"] {
-            let hit = hit_test_like_gui(&env, frame_center(&env, path))
-                .expect("Mists login edit-box center should be hittable");
-            env.send_click(hit).expect("edit-box click should dispatch");
-            let focused: bool = env.eval(&format!("return {path}:HasFocus()"))
-                .expect("edit-box focus should be queryable");
-            assert!(focused, "Mists login edit box should gain focus: {path}");
-        }
-    }
-}
-
-// PRESERVATION (Mists simulator): `src/cvars.yaml:1075` defaults `playIntroMovie`
-// to 0; Classic `GlueParent.lua:15,425-431` opens full-screen MovieFrame, so
-// AccountLogin edit-box centers are not hittable. `MovieFrame.lua:37` reports
-// missing `HideCursor`.
-#[cfg(not(feature = "client-mists"))]
+// INFERRED (R88ao applied to cached 70268): the simulator's empty movie result
+// follows the cached close path, so AccountLogin's original hit targets are used.
+// UNKNOWN: the native offline StartMovie result.
 #[test]
 fn login_editboxes_gain_focus_when_clicking_their_visible_centers() {
     test_timeout! {
