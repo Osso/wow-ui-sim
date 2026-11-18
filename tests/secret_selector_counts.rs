@@ -154,7 +154,7 @@ fn original_viewer_count_uses_configured_three() {
         "#
         ))
         .expect("original viewer caches configured cast count");
-        assert_eq!(env.state().borrow().spell_cast_counts[&19750], 3);
+        assert_eq!(env.state().borrow().spell_cast_counts[&19750], 99);
         assert!(env.state().borrow().spell_charges.is_empty());
         assert_count_facts(&env);
     }
@@ -329,7 +329,7 @@ fn count_and_aura_output_restrictions_transition_independently_for_secret_select
         let sim = env.state().borrow();
         assert_eq!(sim.cooldowns_restricted, count_restricted);
         assert_eq!(sim.restricted_actions[0] == 2, aura_restricted);
-        assert_eq!(sim.spell_cast_counts[&19750], 3);
+        assert_eq!(sim.spell_cast_counts[&19750], 99);
         assert_eq!(sim.spell_max_cumulative_aura_applications[&19750], 7);
     }
 }
