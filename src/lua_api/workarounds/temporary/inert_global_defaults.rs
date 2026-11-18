@@ -203,6 +203,10 @@ if GetGuildRenameRequired == nil then
         return false
     end
 end
+"#;
+
+#[cfg(not(all(feature = "client-retail", feature = "retail-12-1-5")))]
+const AVAILABLE_BANDWIDTH_DEFAULT_LUA: &str = r#"
 if GetAvailableBandwidth == nil then
     function GetAvailableBandwidth()
         local bandwidthIn, bandwidthOut = GetNetStats()
@@ -240,6 +244,8 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     )))]
     lua.exec(UNMODELED_SPELL_CONFIRMATION_QUERY_LUA)?;
     lua.exec(INERT_GLOBAL_DEFAULTS_LUA)?;
+    #[cfg(not(all(feature = "client-retail", feature = "retail-12-1-5")))]
+    lua.exec(AVAILABLE_BANDWIDTH_DEFAULT_LUA)?;
     if cfg!(feature = "retail-12-1-0")
         || crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever
     {

@@ -60,7 +60,10 @@ if GetMovieDownloadProgress == nil then
 end
 
 MAINMENUBAR_COMMUNICATION_PROTOCOL_LABEL = MAINMENUBAR_COMMUNICATION_PROTOCOL_LABEL or "Protocol: %s (home) %s (world)"
+"#;
 
+#[cfg(not(all(feature = "client-retail", feature = "retail-12-1-5")))]
+const PROTOCOL_TYPES_DEFAULT_LUA: &str = r#"
 if GetProtocolTypes == nil then
   function GetProtocolTypes()
     return 1, 1
@@ -92,6 +95,8 @@ end
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(PERFORMANCE_METRIC_DEFAULTS_LUA)?;
+    #[cfg(not(all(feature = "client-retail", feature = "retail-12-1-5")))]
+    lua.exec(PROTOCOL_TYPES_DEFAULT_LUA)?;
     #[cfg(not(feature = "retail-12-0-7"))]
     lua.exec(LEGACY_PROFILING_DEFAULTS_LUA)?;
     Ok(())
@@ -109,8 +114,15 @@ mod tests {
         } else {
             2
         };
-        env.exec(&format!("ExpectedScriptArity = {script_arity}"))
-            .expect("set profile-specific script metric arity");
+        let protocol_type = if cfg!(all(feature = "client-retail", feature = "retail-12-1-5")) {
+            0
+        } else {
+            1
+        };
+        env.exec(&format!(
+            "ExpectedScriptArity = {script_arity}; ExpectedProtocolType = {protocol_type}"
+        ))
+        .expect("set profile-specific script metric arity");
 
         let result: String = env
             .eval(
@@ -132,7 +144,7 @@ mod tests {
                 local inProgress, downloaded, total = GetMovieDownloadProgress(1)
                 if inProgress or downloaded ~= 0 or total ~= 0 then return "movie_download" end
                 local protocolHome, protocolWorld = GetProtocolTypes()
-                if protocolHome ~= 1 or protocolWorld ~= 1 then return "protocol_types" end
+                if protocolHome ~= ExpectedProtocolType or protocolWorld ~= ExpectedProtocolType then return "protocol_types" end
                 if type(MAINMENUBAR_COMMUNICATION_PROTOCOL_LABEL) ~= "string" then return "protocol_label" end
                 return "ok"
                 "#,
