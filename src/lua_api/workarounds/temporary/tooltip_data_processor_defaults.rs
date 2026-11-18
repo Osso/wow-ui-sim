@@ -38,6 +38,7 @@ mod tests {
                            type(rawget(__secureenv, "AddTooltipDataAccessor"))
                     "#;
 
+    #[cfg(not(feature = "client-retail"))]
     const NON_RETAIL_TOOLTIP_DEFAULTS_PROBE: &str = r#"
                     return type(TooltipDataProcessor),
                            TooltipDataProcessor.AllTypes,
