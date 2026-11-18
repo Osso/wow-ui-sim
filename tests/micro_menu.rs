@@ -912,14 +912,19 @@ fn performance_bar_tooltip_uses_supplied_protocols_and_zero_bandwidth() {
             local bar = MainMenuMicroButton.MainMenuBarPerformanceBar
             local labels = { [0] = UNKNOWN, "TCP", "UDP" }
 
-            local function has_tooltip_line(expected)
+            local function tooltip_line_matches(expected)
+                local actual = {}
                 for index = 1, GameTooltip:NumLines() do
                     local line = _G["GameTooltipTextLeft" .. index]
-                    if line and line:GetText() == expected then
-                        return true
+                    local text = line and line:GetText()
+                    if text then
+                        actual[#actual + 1] = text
+                        if text == expected then
+                            return true, table.concat(actual, " | ")
+                        end
                     end
                 end
-                return false
+                return false, table.concat(actual, " | ")
             end
 
             local function check_pair(home, world)
@@ -929,10 +934,13 @@ fn performance_bar_tooltip_uses_supplied_protocols_and_zero_bandwidth() {
                 local protocol = string.format(MAINMENUBAR_COMMUNICATION_PROTOCOL_LABEL,
                     labels[home], labels[world])
                 local bandwidth = string.format(MAINMENUBAR_BANDWIDTH_LABEL, 0)
-                assert(has_tooltip_line(protocol),
-                    "original tooltip protocol line did not match supplied pair: " .. protocol)
-                assert(has_tooltip_line(bandwidth),
-                    "original tooltip bandwidth line must format zero")
+                local protocol_matches, actual_lines = tooltip_line_matches(protocol)
+                assert(protocol_matches,
+                    "original tooltip protocol line did not match supplied pair: " ..
+                    protocol .. "; actual lines: " .. actual_lines)
+                local bandwidth_matches = tooltip_line_matches(bandwidth)
+                assert(bandwidth_matches,
+                    "original tooltip bandwidth line must format zero: " .. actual_lines)
             end
 
             check_pair(1, 2)
