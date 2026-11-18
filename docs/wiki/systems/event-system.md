@@ -15,6 +15,12 @@ Predefined constants include PLAYER_LOGIN, PLAYER_ENTERING_WORLD, ADDON_LOADED, 
 
 Registerability does not model an event producer, payload, or `C_ExternalEventURL` behavior.
 
+## `Frame:RegisterUnitEvent` unit scan (R88aj)
+
+**VERIFIED (R88aj, Mists 5.5.4.70631; Retail 12.1.5.70688; Forever 1.60.1.70707):** the method scans at most four unit positions, stops at a value that is not a string or number, skips unknown string tokens and continues, and treats a table in the first unit position as zero units. Mists specifically treats `boss6`–`boss8` as unknown. The Mists `Blizzard_ChatFrameBase_Classic.toc` selects the original `CastSequenceManager.lua` consumer, which registers spellcast events for `player` and `pet`.
+
+**UNKNOWN (Retail/Forever):** the secret-value gate setting and forbidden-aspect lookup inputs have no supplied host values; the simulator does not invent native values or error text. Retail/Forever known-token and unit-event lists are also unknown. See [the contract](../../specs/register-unit-event-units.md) for implementation inventory and tests.
+
 ## State-based removal source checkpoint — 2026-10-13
 
 [Removal owner](../../specs/frame-event-removal.md#current-source-checkpoint--2026-10-13) links [Current bounded gate](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/ui-widget-spell-display-2026-10-13/README.md#current-bounded-runtime-gate--2026-10-13): independent Retail PASS; PTR independent PASS; selected retention PASS. Strict insertion/state-based removal are simulator policy; Classic preservation and native parity unproved, last requirement not fully checked.
@@ -75,6 +81,7 @@ Three handler forms: `function="X"` uses X directly, `method="X"` wraps as `self
 
 ## Sources
 
+- [RegisterUnitEvent unit arguments](../../specs/register-unit-event-units.md) — verified scan rules, profile scope and unknown state inputs
 - [Unit role assignment](../../specs/unit-role-assignment.md) — role producer, original callers and proof limits
 
 - [event-system.md](../../event-system.md) — EventQueue, ScriptHandler types, dispatch, OnUpdate, input flow, startup sequence
