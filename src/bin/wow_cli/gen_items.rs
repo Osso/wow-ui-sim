@@ -1445,6 +1445,21 @@ fn format_item_socket_fields(
     (artifact_id, format_array(&socket_types), gem_properties)
 }
 
+fn format_item_info_base_fields(base: &ItemInfoBaseFields) -> String {
+    format!(
+        "quality: {}, item_level: {}, required_level: {}, inventory_type: {}, \
+         sell_price: {}, stackable: {}, bonding: {}, expansion_id: {},",
+        base.quality,
+        base.item_level,
+        base.required_level,
+        base.inventory_type,
+        base.sell_price,
+        base.stackable,
+        base.bonding,
+        base.expansion_id,
+    )
+}
+
 fn format_item_info(
     fields: &[String],
     idx: &HashMap<String, usize>,
@@ -1454,6 +1469,7 @@ fn format_item_info(
 ) -> String {
     let escaped_name = escape_str(name);
     let base = parse_item_info_base_fields(fields, idx);
+    let base_fields = format_item_info_base_fields(&base);
     let flags = format_item_flags(fields, idx);
     let (item_class, item_subclass) = classification
         .map(|(item_class, item_subclass)| (Some(item_class), Some(item_subclass)))
@@ -1461,10 +1477,8 @@ fn format_item_info(
     let (stat_percent_editor, stat_modifier_bonus_stat) = format_item_stat_fields(fields, idx);
     let (artifact_id, socket_types, gem_properties) = format_item_socket_fields(fields, idx);
     format!(
-        "ItemInfo {{ name: \"{escaped_name}\", quality: {base.quality}, item_level: {base.item_level}, \
-         required_level: {base.required_level}, inventory_type: {base.inventory_type}, \
-         sell_price: {base.sell_price}, stackable: {base.stackable}, bonding: {base.bonding}, \
-         expansion_id: {base.expansion_id}, icon_file_data_id: {icon_file_data_id}, \
+        "ItemInfo {{ name: \"{escaped_name}\", {base_fields} \
+         icon_file_data_id: {icon_file_data_id}, \
          {flags} \
          item_class: {item_class:?}, item_subclass: {item_subclass:?}, \
          stat_percent_editor: {stat_percent_editor}, \
