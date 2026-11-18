@@ -209,6 +209,20 @@ pub struct Frame {
     pub clamped_to_screen: bool,
     /// R88n.5r dedicated geometry bit; not equivalent to moving/user placement.
     pub screen_clamp_suppressed: bool,
+    /// Last requested/effective anchor propagation state, distinct from suppression.
+    pub anchor_propagation: bool,
+    /// True stops propagation as well as the entire branch below this region.
+    pub anchor_propagation_guard: bool,
+    /// Geometry projection of the Frame-family stored Window context.
+    pub has_window_movement_context: bool,
+    /// Host-supplied inputs for the UNKNOWN GameTooltip ancestor predicate.
+    pub clamp_notification_ancestor_eligible: bool,
+    pub clamp_geometry_aux: super::ClampGeometryAuxWord,
+    pub clamp_notification_boundary: bool,
+    /// Separate R88n.5r-q3.3 marks, independent from layout invalidation.
+    pub clamp_secret_notified: bool,
+    pub clamp_geometry_notified: bool,
+    pub clamp_parent_notification_byte: u8,
     pub is_moving: bool,
     /// Whether the frame is currently being resized via StartSizing.
     pub is_sizing: bool,
@@ -789,6 +803,13 @@ impl Frame {
         } else {
             self.anchors.push(anchor);
         }
+    }
+
+    pub(crate) fn has_frame_carrier(&self) -> bool {
+        !matches!(
+            self.widget_type,
+            WidgetType::FontString | WidgetType::Texture | WidgetType::Line
+        )
     }
 
     pub fn effective_screen_clamp(&self) -> bool {

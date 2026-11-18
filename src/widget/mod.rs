@@ -1,6 +1,7 @@
 //! Widget system implementing WoW's UI object hierarchy.
 
 use sim_widget::widget::anchor;
+pub(crate) mod clamp_geometry;
 pub(crate) mod editbox;
 mod editbox_history;
 mod frame;
@@ -11,6 +12,7 @@ mod registry;
 
 pub use crate::atlas::NineSliceAtlasInfo;
 pub use anchor::{Anchor, AnchorPoint};
+pub use clamp_geometry::{ClampGeometryAuxWord, ClampInsetAccessInput};
 pub use editbox::EditBoxPresentation;
 pub use frame::{
     AlphaGradient, AttributeValue, Backdrop, Color, Frame, Gradient, LineAnchor,
