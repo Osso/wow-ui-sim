@@ -131,7 +131,7 @@ fn delegate_rewritten_format(
     args: &[Val],
 ) -> LuaResult<u32> {
     let rest: Vec<Val> = args.iter().skip(1).copied().collect();
-    let (new_format, new_rest) = process_wow_format(format, &rest)?;
+    let (new_format, new_rest) = rewrite_wow_format(format, &rest)?;
     let format_value = create_string_bytes(state, &new_format);
     let mut delegated = Vec::with_capacity(new_rest.len() + 1);
     delegated.push(format_value);
@@ -355,7 +355,7 @@ mod tests {
 /// in positional order (or the original args when no positional spec
 /// was found — matching master behaviour and avoiding unnecessary
 /// cloning on the hot path).
-fn process_wow_format(bytes: &[u8], args: &[Val]) -> LuaResult<(Vec<u8>, Vec<Val>)> {
+fn rewrite_wow_format(bytes: &[u8], args: &[Val]) -> LuaResult<(Vec<u8>, Vec<Val>)> {
     let mut out = Vec::with_capacity(bytes.len());
     let mut reordered = Vec::new();
     let mut seq = 0;

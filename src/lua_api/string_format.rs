@@ -113,7 +113,7 @@ fn wow_string_format(state: &mut LuaState) -> LuaResult<u32> {
         return delegate(state, original, &args);
     }
 
-    let rewritten = process_wow_format(state, tonumber, &fmt, format_argument, &args[1..])?;
+    let rewritten = rewrite_wow_format(state, tonumber, &fmt, format_argument, &args[1..])?;
     let new_fmt_val = create_string_bytes(state, &rewritten.format);
     let mut delegated = Vec::with_capacity(rewritten.args.len() + 1);
     delegated.push(new_fmt_val);
@@ -698,7 +698,7 @@ impl RewrittenArgument {
 
 /// Parse positional arguments and apply the conversions that rilua does not
 /// implement with the verified WoW semantics. Evidence: pr46-49-decomp-answers.md, sections R88ag, R88af.3.
-fn process_wow_format(
+fn rewrite_wow_format(
     state: &mut LuaState,
     tonumber: Val,
     bytes: &[u8],
