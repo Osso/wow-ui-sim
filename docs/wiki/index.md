@@ -1,3 +1,7 @@
+## [2026-11-17] verification | Mists Glue chat placeholder and movie flow
+
+The [Mists Glue intro movie login investigation](investigations/mists-glue-intro-movie-login.md) and [Glue login contract](../specs/glue-login-flow.md) record the synthetic `ChatFrame1` root cause and fix. **VERIFIED (Mists simulator source at `e9ec1c669`):** the loader already rejects both Game-only chat add-ons; a bootstrap placeholder caused the visible frame. **VERIFIED (Mists integration run):** login boot passes 1/1, the original edit-box test passes 1/1, and the focused movie/API tests pass 16/16 with zero build warnings. **INFERRED (R88ar, 70631 applied to 70268):** the original Glue login has no ChatFrame1 from those Game-only add-ons.
+
 ## [2026-11-17] investigation | Mists Glue intro movie login
 
 [Mists Glue intro movie login](investigations/mists-glue-intro-movie-login.md) records the selected 5.5.4.70268 GlueParent/MovieFrame path, R88ao native facts for 5.5.4.70631, the empty-default offline movie-input boundary, and the original-consumer RED.

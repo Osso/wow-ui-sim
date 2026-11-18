@@ -50,6 +50,8 @@
 
 **VERIFIED (simulator source at `67d34fbc`):** `screen_allowed_toc` applies `TocFile::allows_screen` and the active game-type filter. **VERIFIED (Mists login runtime at that source):** `C_AddOns.IsAddOnLoaded` returned false for both chat add-ons, yet `ChatFrame1` existed and was shown with built-in ownership. The loader filter was already correct.
 
-**VERIFIED (source and simulator runtime at `67d34fbc`):** `chat_window_defaults` created a synthetic `ChatFrame1` before startup applied the requested screen. **INFERRED (R88ar applied to the 70268 cache):** the original Mists Glue login does not receive this Game-only chat frame. **UNVERIFIED (working-tree implementation):** the simulator skips its synthetic placeholder only for Mists Glue; it does not hide the frame. The default Mists Game placeholder and all other profiles should remain unchanged.
+**VERIFIED (source and simulator runtime at `67d34fbc`):** `chat_window_defaults` created a synthetic `ChatFrame1` before startup applied the requested screen. **INFERRED (R88ar applied to the 70268 cache):** the original Mists Glue login does not receive this Game-only chat frame.
 
-**UNVERIFIED (working-tree implementation):** the original login test keeps its `ChatFrame1`-not-shown assertion and checks that the frame is absent and both Game-only chat add-ons are unloaded. A separate Mists Game test checks that the placeholder remains. Profile gate results are pending.
+**VERIFIED (source at `e9ec1c669`):** bootstrap skips the synthetic placeholder only when the active profile is Mists and the requested screen is Glue. The change adds no hide call. Mists Game and all other profile paths still create the placeholder.
+
+**VERIFIED (Mists integration build at `e9ec1c669`, zero warnings):** the original login boot test passes 1/1 with its existing `ChatFrame1`-not-shown assertion unchanged; an added assertion confirms `ChatFrame1` is absent and both Game-only chat add-ons are unloaded. The original edit-box test passes 1/1. The focused `glue_login::mists_` movie/API filter passes 16/16, including the Mists Game placeholder test.
