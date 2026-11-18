@@ -217,6 +217,8 @@ fn empty_env() -> WowLuaEnv {
         (606, [61, 113, 35, 47]),
         (607, [67, 127, 39, 53]),
         (608, [71, 131, 45, 59]),
+        (609, [73, 137, 51, 67]),
+        (610, [79, 139, 57, 71]),
     ] {
         let labels = ["Strength", "Stamina", "Mastery", "Versatility"];
         env.state().borrow_mut().item_tooltip_inputs.insert(
