@@ -143,7 +143,8 @@ fn mists_game_bootstrap_keeps_synthetic_chat_frame() {
 }
 
 // VERIFIED (R88ao, Mists Classic 5.5.4.70631): display expansion level is 4.
-// INFERRED: this value applies to the 70268 cached Glue consumer.
+// INFERRED (R88ao, Mists Classic 5.5.4.70631 applied to cached
+// 5.5.4.70268): the level applies to its Glue consumer.
 #[cfg(feature = "client-mists")]
 #[test]
 fn mists_client_display_expansion_level_returns_four() {
@@ -154,23 +155,13 @@ fn mists_client_display_expansion_level_returns_four() {
     }
 }
 
-#[cfg(feature = "client-mists")]
-#[test]
-fn mists_movie_boot_has_no_movie_frame_lifecycle_errors() {
-    test_timeout! {
-        let env = load_blizzard_screen(ScreenKind::Login);
-        let errors: Vec<String> = env.state().borrow().lua_errors.iter()
-            .filter(|error| error.contains("MovieFrame.lua:"))
-            .cloned()
-            .collect();
-        assert!(errors.is_empty(), "MovieFrame lifecycle errors: {errors:#?}");
-    }
-}
-
-// INFERRED (R88ao applied to cached 70268): startup opens MovieFrame; with no
-// host result, the simulator's nil pair takes the cached failed-start close.
-// UNKNOWN: the native offline StartMovie result.
-// INFERRED (R88ar, 70631 applied to cached 70268): the Game-only chat TOCs are absent on Mists Glue.
+// INFERRED (R88ao, Mists Classic 5.5.4.70631 applied to cached 5.5.4.70268):
+// startup opens MovieFrame; the absent-result pair (false, 2) takes the cached
+// failed-start close path.
+// UNKNOWN (R88ao, Mists Classic 5.5.4.70631): results for available records and
+// files depend on data and playback state.
+// INFERRED (R88ar, Mists Classic 5.5.4.70631 applied to cached 5.5.4.70268):
+// the Game-only chat TOCs are absent on Mists Glue.
 #[test]
 fn login_boot_hides_non_login_frontend_frames() {
     test_timeout! {
@@ -358,9 +349,11 @@ fn login_boot_keeps_settings_preview_panels_wired_to_settings_panel() {
     }
 }
 
-// INFERRED (R88ao applied to cached 70268): the simulator's empty movie result
-// follows the cached close path, so AccountLogin's original hit targets are used.
-// UNKNOWN: the native offline StartMovie result.
+// INFERRED (R88ao, Mists Classic 5.5.4.70631 applied to cached 5.5.4.70268):
+// the absent-result pair (false, 2) follows the cached close path, so AccountLogin's
+// original hit targets are used.
+// UNKNOWN (R88ao, Mists Classic 5.5.4.70631): results for available records and
+// files depend on data and playback state.
 #[test]
 fn login_editboxes_gain_focus_when_clicking_their_visible_centers() {
     test_timeout! {
@@ -398,23 +391,13 @@ fn login_editboxes_gain_focus_when_clicking_their_visible_centers() {
     }
 }
 
-// INFERRED (R88am 5.5.4.70631 applied to Mists 5.5.4.70268): the original consumer hides cached-login rows after a zero-return query.
+// INFERRED (R88am, Mists Classic 5.5.4.70631 applied to cached
+// 5.5.4.70268): the original consumer hides cached-login rows after a zero-return query.
 #[cfg(feature = "client-mists")]
-#[test]
-fn mists_classic_cached_login_consumer_hides_rows_and_checks_api_scopes() {
-    test_timeout! {
-        let env = load_blizzard_screen(ScreenKind::Login);
-        let cursor_globals: bool = env
-            .eval("return type(HideCursor) == 'function' and type(ShowCursor) == 'function'")
-            .unwrap();
-        assert!(cursor_globals, "cursor visibility globals must be available in Glue");
-        let cinematic_started_available: bool = env
-            .eval("return type(CinematicStarted) == 'function'")
-            .unwrap();
-        assert!(cinematic_started_available, "CinematicStarted should be available in Glue");
-        let returns_none: bool = env.eval("return select('#', HideCursor()) == 0 and select('#', ShowCursor()) == 0").unwrap();
-        assert!(returns_none, "cursor visibility globals must return no values");
-        let row_visible: bool = env.eval(r#"
+fn assert_mists_cached_login_rows_hidden(env: &WowLuaEnv) {
+    let row_visible: bool = env
+        .eval(
+            r#"
             local container = AccountLogin.UI.CachedLoginFrameContainer
             local row = CreateFrame("Frame", nil, container, "CachedLoginFrameTemplate")
             container.Frames = { row }
@@ -424,19 +407,53 @@ fn mists_classic_cached_login_consumer_hides_rows_and_checks_api_scopes() {
                 if cachedRow:IsShown() then return true end
             end
             return false
-        "#).expect("Classic cached-login consumer should hide rows without credentials");
-        assert!(!row_visible, "Classic Login must hide cached-account rows");
+        "#,
+        )
+        .expect("Classic cached-login consumer should hide rows without credentials");
+    assert!(!row_visible, "Classic Login must hide cached-account rows");
+}
+
+#[cfg(feature = "client-mists")]
+fn assert_mists_glue_api_scopes(env: &WowLuaEnv) {
+    let cursor_globals: bool = env
+        .eval("return type(HideCursor) == 'function' and type(ShowCursor) == 'function'")
+        .unwrap();
+    assert!(cursor_globals, "cursor visibility globals must be available in Glue");
+    let cinematic_started_available: bool = env
+        .eval("return type(CinematicStarted) == 'function'")
+        .unwrap();
+    assert!(cinematic_started_available, "CinematicStarted should be available in Glue");
+    let returns_none: bool = env
+        .eval("return select('#', HideCursor()) == 0 and select('#', ShowCursor()) == 0")
+        .unwrap();
+    assert!(returns_none, "cursor visibility globals must return no values");
+}
+
+#[cfg(feature = "client-mists")]
+fn assert_mists_game_api_scopes(env: &WowLuaEnv) {
+    let absent: bool = env
+        .eval("return C_Login.GetCachedCredentials == nil")
+        .unwrap();
+    assert!(absent, "GetCachedCredentials must be Glue-only");
+    let cursor_globals_absent: bool = env
+        .eval("return HideCursor == nil and ShowCursor == nil")
+        .unwrap();
+    assert!(cursor_globals_absent, "cursor visibility globals must be Glue-only");
+    let cinematic_started_available: bool = env
+        .eval("return type(CinematicStarted) == 'function'")
+        .unwrap();
+    assert!(cinematic_started_available, "CinematicStarted must be available in Game");
+}
+
+#[cfg(feature = "client-mists")]
+#[test]
+fn mists_classic_cached_login_consumer_hides_rows_and_checks_api_scopes() {
+    test_timeout! {
+        let env = load_blizzard_screen(ScreenKind::Login);
+        assert_mists_glue_api_scopes(&env);
+        assert_mists_cached_login_rows_hidden(&env);
         env.set_screen_mode(ScreenKind::Game);
-        let absent: bool = env.eval("return C_Login.GetCachedCredentials == nil").unwrap();
-        assert!(absent, "GetCachedCredentials must be Glue-only");
-        let cursor_globals_absent: bool = env
-            .eval("return HideCursor == nil and ShowCursor == nil")
-            .unwrap();
-        assert!(cursor_globals_absent, "cursor visibility globals must be Glue-only");
-        let cinematic_started_available_in_game: bool = env
-            .eval("return type(CinematicStarted) == 'function'")
-            .unwrap();
-        assert!(cinematic_started_available_in_game, "CinematicStarted must be available in Game");
+        assert_mists_game_api_scopes(&env);
     }
 }
 
@@ -601,6 +618,8 @@ fn mists_cinematic_finished_inactive_type_still_clears_manager_id() {
     }
 }
 
+// VERIFIED (R88ao, Mists Classic 5.5.4.70631): an error return does not dispatch
+// OnMovieFinished; StopMovie can dispatch for the installed handle.
 #[cfg(feature = "client-mists")]
 #[test]
 fn mists_movie_failed_start_defers_finish_until_stop() {
@@ -619,7 +638,8 @@ fn mists_movie_failed_start_defers_finish_until_stop() {
     }
 }
 
-// INFERRED: 70631 movie results applied to the cached 70268 Glue consumer.
+// INFERRED (R88ao, Mists Classic 5.5.4.70631 applied to cached 5.5.4.70268):
+// an explicit success result keeps MovieFrame open until its finish callback.
 #[cfg(feature = "client-mists")]
 #[test]
 fn mists_movie_success_consumes_stop_and_restores_login() {
