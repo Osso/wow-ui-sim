@@ -52,7 +52,8 @@ pub fn namespace_peer(
     })
 }
 
-/// Write one registration value into a namespace and its paired environment table.
+/// Write one registration value into a namespace and its linked peer, if present.
+/// The simulator links peers only for Retail 12.1.5 C API publication; this bridge remains profile-agnostic.
 pub fn table_set_namespace_member(
     state: &mut LuaState,
     table_ref: GcRef<RiluaTable>,

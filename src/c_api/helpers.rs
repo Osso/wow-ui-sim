@@ -243,6 +243,7 @@ fn ensure_namespace_tables_for_flags(
 ) -> LuaResult<(Option<GcRef<Table>>, Option<GcRef<Table>>)> {
     let (publish_global, publish_secure) =
         crate::lua_api::globals::security::native_registration_destinations(flags);
+    let publish_secure = publish_secure && crate::client_profile::is_active_retail_12_1_5();
     let global_parent = state.global;
     let ordinary = publish_global.then(|| ensure_table_at_parent(state, global_parent, namespace));
     let secure_parent = if publish_secure {
@@ -306,9 +307,12 @@ pub(crate) fn ensure_namespace_pair(
     state: &mut LuaState,
     name: &str,
 ) -> LuaResult<(GcRef<Table>, GcRef<Table>)> {
-    let ordinary_parent = state.global;
+    let ordinary = ensure_table_at_parent(state, state.global, name);
+    if !crate::client_profile::is_active_retail_12_1_5() {
+        return Ok((ordinary, ordinary));
+    }
+
     let secure_parent = crate::lua_api::globals::security::secure_env_table(state)?;
-    let ordinary = ensure_table_at_parent(state, ordinary_parent, name);
     let secure = ensure_table_at_parent(state, secure_parent, name);
     crate::lua_bridge::set_namespace_peer(state, ordinary, secure)?;
     Ok((ordinary, secure))
@@ -319,9 +323,13 @@ pub(crate) fn ensure_namespace_table_field(
     ordinary_parent: GcRef<Table>,
     name: &str,
 ) -> LuaResult<GcRef<Table>> {
+    let ordinary = ensure_table_at_parent(state, ordinary_parent, name);
+    if !crate::client_profile::is_active_retail_12_1_5() {
+        return Ok(ordinary);
+    }
+
     let secure_parent = crate::lua_bridge::namespace_peer(state, ordinary_parent)?
         .ok_or_else(|| rilua::runtime_error("secure namespace parent was not registered"))?;
-    let ordinary = ensure_table_at_parent(state, ordinary_parent, name);
     let secure = ensure_table_at_parent(state, secure_parent, name);
     crate::lua_bridge::set_namespace_peer(state, ordinary, secure)?;
     Ok(ordinary)
@@ -386,55 +394,84 @@ mod tests {
     use rilua::vm::state::LuaState;
     use rilua::{LuaApiMut, LuaResult, Val};
 
+    const NAMESPACE_FLAGS_PROBE: &str = r#"
+        local function has(parent, namespace)
+            local table = rawget(parent, namespace)
+            return type(table) == "table" and type(rawget(table, "probe")) == "function"
+        end
+        local public = rawget(_G, "flagnamespaceboth")
+        local secure = rawget(__secureenv, "flagnamespaceboth")
+        return {
+            has(_G, "flagnamespaceordinary"), has(__secureenv, "flagnamespaceordinary"),
+            has(_G, "flagnamespacesecure"), has(__secureenv, "flagnamespacesecure"),
+            has(_G, "flagnamespaceboth"), has(__secureenv, "flagnamespaceboth"),
+            public ~= secure,
+            has(_G, "flagnamespacebothseven"), has(__secureenv, "flagnamespacebothseven"),
+            has(_G, "flagnamespaceneither"), has(__secureenv, "flagnamespaceneither"),
+        }
+        "#;
+    const PEER_FLAGS_PROBE: &str = r#"
+        local public = rawget(_G, "existingpairedflagnamespace")
+        local secure = rawget(__secureenv, "existingpairedflagnamespace")
+        return {
+            type(rawget(public, "ordinaryonly")) == "function",
+            rawget(secure, "ordinaryonly") == nil,
+            rawget(public, "secureonly") == nil,
+            type(rawget(secure, "secureonly")) == "function",
+        }
+        "#;
+    const C_TIMER_FLAG3_PROBE: &str = r#"
+        local public = rawget(_G, "C_Timer")
+        local secure = rawget(__secureenv, "C_Timer")
+        local publicAfter, secureAfter = rawget(public, "After"), rawget(secure, "After")
+        local publicTicker, secureTicker = rawget(public, "NewTicker"), rawget(secure, "NewTicker")
+        local publicTimer, secureTimer = rawget(public, "NewTimer"), rawget(secure, "NewTimer")
+        return not rawequal(publicAfter, secureAfter),
+            publicAfter() == true and secureAfter() == true,
+            not rawequal(publicTicker, secureTicker),
+            publicTicker() == true and secureTicker() == true,
+            not rawequal(publicTimer, secureTimer),
+            publicTimer() == true and secureTimer() == true
+        "#;
+
     fn flag_probe(state: &mut LuaState) -> LuaResult<u32> {
         state.push(Val::Bool(true));
         Ok(1)
     }
 
+    fn register_namespace_flag_probes(env: &WowLuaEnv) {
+        let mut lua = env.rilua_mut();
+        for (namespace, flags) in [
+            ("flagnamespaceordinary", 1),
+            ("flagnamespacesecure", 2),
+            ("flagnamespaceboth", 3),
+            ("flagnamespacebothseven", 7),
+            ("flagnamespaceneither", 4),
+        ] {
+            register_namespace_function_with_flags(
+                lua.state_mut(),
+                namespace,
+                "probe",
+                flag_probe,
+                flags,
+            )
+            .expect("register flagged namespace member");
+        }
+    }
+
+    fn namespace_flags_probe(env: &WowLuaEnv) -> Vec<bool> {
+        env.eval(NAMESPACE_FLAGS_PROBE)
+            .expect("namespace flag destination probe")
+    }
+
     #[test]
     fn namespace_flags_select_tables_and_members() {
-        let env = WowLuaEnv::new().expect("lua env");
-        {
-            let mut lua = env.rilua_mut();
-            for (namespace, flags) in [
-                ("flagnamespaceordinary", 1),
-                ("flagnamespacesecure", 2),
-                ("flagnamespaceboth", 3),
-                ("flagnamespacebothseven", 7),
-                ("flagnamespaceneither", 4),
-            ] {
-                register_namespace_function_with_flags(
-                    lua.state_mut(),
-                    namespace,
-                    "probe",
-                    flag_probe,
-                    flags,
-                )
-                .expect("register flagged namespace member");
-            }
+        if !crate::client_profile::is_active_retail_12_1_5() {
+            return;
         }
-
-        let result: Vec<bool> = env
-            .eval(
-                r#"
-                local function has(parent, namespace)
-                    local table = rawget(parent, namespace)
-                    return type(table) == "table" and type(rawget(table, "probe")) == "function"
-                end
-                local public = rawget(_G, "flagnamespaceboth")
-                local secure = rawget(__secureenv, "flagnamespaceboth")
-                return {
-                    has(_G, "flagnamespaceordinary"), has(__secureenv, "flagnamespaceordinary"),
-                    has(_G, "flagnamespacesecure"), has(__secureenv, "flagnamespacesecure"),
-                    has(_G, "flagnamespaceboth"), has(__secureenv, "flagnamespaceboth"),
-                    public ~= secure,
-                    has(_G, "flagnamespacebothseven"), has(__secureenv, "flagnamespacebothseven"),
-                    has(_G, "flagnamespaceneither"), has(__secureenv, "flagnamespaceneither"),
-                }
-                "#,
-            )
-            .expect("namespace flag destination probe");
-
+        let env = WowLuaEnv::new().expect("lua env");
+        register_namespace_flag_probes(&env);
+        let result = namespace_flags_probe(&env);
         assert_eq!(
             result,
             vec![
@@ -444,80 +481,85 @@ mod tests {
     }
 
     #[test]
-    fn flag_destinations_do_not_mirror_into_an_existing_namespace_peer() {
-        let env = WowLuaEnv::new().expect("lua env");
-        {
-            let mut lua = env.rilua_mut();
-            let state = lua.state_mut();
-            let _ = ensure_namespace_pair(state, "existingpairedflagnamespace")
-                .expect("create paired namespace");
-            register_namespace_function_with_flags(
-                state,
-                "existingpairedflagnamespace",
-                "ordinaryonly",
-                flag_probe,
-                1,
-            )
-            .expect("register ordinary-only member");
-            register_namespace_function_with_flags(
-                state,
-                "existingpairedflagnamespace",
-                "secureonly",
-                flag_probe,
-                2,
-            )
-            .expect("register secure-only member");
+    fn non_retail_namespace_flags_do_not_create_secure_namespaces() {
+        if crate::client_profile::is_active_retail_12_1_5() {
+            return;
         }
+        let env = WowLuaEnv::new().expect("lua env");
+        register_namespace_flag_probes(&env);
+        let result = namespace_flags_probe(&env);
+        assert_eq!(
+            result,
+            vec![
+                true, false, false, false, true, false, true, true, false, false, false
+            ]
+        );
+    }
 
-        let result: Vec<bool> = env
-            .eval(
-                r#"
-                local public = rawget(_G, "existingpairedflagnamespace")
-                local secure = rawget(__secureenv, "existingpairedflagnamespace")
-                return {
-                    type(rawget(public, "ordinaryonly")) == "function",
-                    rawget(secure, "ordinaryonly") == nil,
-                    rawget(public, "secureonly") == nil,
-                    type(rawget(secure, "secureonly")) == "function",
-                }
-                "#,
-            )
-            .expect("paired namespace flag probe");
+    fn register_peer_namespace_probes(env: &WowLuaEnv) {
+        let mut lua = env.rilua_mut();
+        let state = lua.state_mut();
+        let _ = ensure_namespace_pair(state, "existingpairedflagnamespace")
+            .expect("create paired namespace");
+        register_namespace_function_with_flags(
+            state,
+            "existingpairedflagnamespace",
+            "ordinaryonly",
+            flag_probe,
+            1,
+        )
+        .expect("register ordinary-only member");
+        register_namespace_function_with_flags(
+            state,
+            "existingpairedflagnamespace",
+            "secureonly",
+            flag_probe,
+            2,
+        )
+        .expect("register secure-only member");
+    }
 
+    fn peer_namespace_flags_probe(env: &WowLuaEnv) -> Vec<bool> {
+        env.eval(PEER_FLAGS_PROBE)
+            .expect("paired namespace flag probe")
+    }
+
+    #[test]
+    fn flag_destinations_do_not_mirror_into_an_existing_namespace_peer() {
+        if !crate::client_profile::is_active_retail_12_1_5() {
+            return;
+        }
+        let env = WowLuaEnv::new().expect("lua env");
+        register_peer_namespace_probes(&env);
+        let result = peer_namespace_flags_probe(&env);
         assert_eq!(result, vec![true, true, true, true]);
+    }
+
+    #[cfg(feature = "client-retail")]
+    fn register_c_timer_flag3_probes(env: &WowLuaEnv) {
+        let mut lua = env.rilua_mut();
+        let state = lua.state_mut();
+        for member in ["After", "NewTicker", "NewTimer"] {
+            register_namespace_function_with_flags(state, "C_Timer", member, flag_probe, 3)
+                .expect("register dual-published C_Timer member");
+        }
+    }
+
+    #[cfg(feature = "client-retail")]
+    fn c_timer_flag3_probe(env: &WowLuaEnv) -> (bool, bool, bool, bool, bool, bool) {
+        env.eval(C_TIMER_FLAG3_PROBE)
+            .expect("C_Timer flag-3 handler probe")
     }
 
     #[cfg(feature = "client-retail")]
     #[test]
     fn retail_c_timer_dual_publication_constructs_distinct_rust_handlers() {
-        let env = WowLuaEnv::new().expect("lua env");
-        {
-            let mut lua = env.rilua_mut();
-            let state = lua.state_mut();
-            for member in ["After", "NewTicker", "NewTimer"] {
-                register_namespace_function_with_flags(state, "C_Timer", member, flag_probe, 3)
-                    .expect("register dual-published C_Timer member");
-            }
+        if !crate::client_profile::is_active_retail_12_1_5() {
+            return;
         }
-
-        let result: (bool, bool, bool, bool, bool, bool) = env
-            .eval(
-                r#"
-                local public = rawget(_G, "C_Timer")
-                local secure = rawget(__secureenv, "C_Timer")
-                local publicAfter, secureAfter = rawget(public, "After"), rawget(secure, "After")
-                local publicTicker, secureTicker = rawget(public, "NewTicker"), rawget(secure, "NewTicker")
-                local publicTimer, secureTimer = rawget(public, "NewTimer"), rawget(secure, "NewTimer")
-                return not rawequal(publicAfter, secureAfter),
-                    publicAfter() == true and secureAfter() == true,
-                    not rawequal(publicTicker, secureTicker),
-                    publicTicker() == true and secureTicker() == true,
-                    not rawequal(publicTimer, secureTimer),
-                    publicTimer() == true and secureTimer() == true
-                "#,
-            )
-            .expect("C_Timer flag-3 handler probe");
-
+        let env = WowLuaEnv::new().expect("lua env");
+        register_c_timer_flag3_probes(&env);
+        let result = c_timer_flag3_probe(&env);
         assert_eq!(result, (true, true, true, true, true, true));
     }
 
@@ -542,9 +584,7 @@ mod tests {
         assert!(published_to_both);
     }
 
-    #[test]
-    fn namespace_secure_publication_requires_an_existing_secure_table() {
-        let mut lua = rilua::Lua::new().expect("lua state");
+    fn register_namespace_values_without_secure_env(lua: &mut rilua::Lua) {
         register_namespace_function_with_flags(
             lua.state_mut(),
             "secureonlywithoutenv",
@@ -569,6 +609,12 @@ mod tests {
             3,
         )
         .expect("register dual namespace value without secure environment");
+    }
+
+    #[test]
+    fn namespace_secure_publication_requires_an_existing_secure_table() {
+        let mut lua = rilua::Lua::new().expect("lua state");
+        register_namespace_values_without_secure_env(&mut lua);
 
         assert!(matches!(
             LuaApiMut::get_global_val(&mut lua, "secureonlywithoutenv"),

@@ -111,8 +111,10 @@ fn initialize_bootstrap_registry_and_secure_base(
 }
 
 fn initialize_secure_environment_core(lua: &mut rilua::Lua) -> crate::Result<()> {
-    // R88n.10/R88n.11 part 1 verify Constants and Enum are installed after creation.
+    // Legacy profiles still need this table for their post-bootstrap snapshot.
+    // C API namespace peers are created only by the Retail 12.1.5-gated helpers.
     super::globals::security::create_secure_environment(lua)?;
+    // R88n.10/R88n.11 part 1 verify Constants and Enum are installed after creation.
     crate::c_api::c_ui_color::register(lua)?;
     publish_retail_secure_template_method_binder(lua)?;
     super::globals::real::mixins::register(lua)?;
