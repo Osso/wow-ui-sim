@@ -191,6 +191,13 @@ pub struct SimState {
     pub item_tooltip_levels: HashMap<crate::c_api::ItemTooltipContext, u16>,
     /// R80 final item-mod amounts and metadata, keyed by item ID and resolved level.
     pub item_tooltip_inputs: HashMap<(u32, u16), crate::c_api::item_tooltip::ItemTooltipInput>,
+    /// INFERRED (simulator mapping): explicit calculated unit prices keyed by item ID and working level.
+    /// Empty by default; unknown price calculations do not produce a row.
+    pub item_tooltip_sell_price_unit_prices: HashMap<(u32, u16), u32>,
+    /// INFERRED (simulator mapping): explicit Retail bag-item status snapshots for R88aw.
+    /// Empty by default; no status input does not imply an unsuppressed row.
+    pub bag_item_tooltip_sell_price_statuses:
+        HashMap<(i32, i32), crate::c_api::item_tooltip::SellPriceStatusInput>,
     /// UNKNOWN Retail SellPrice inputs: item ID to (current, prepared maximum) quantity.
     /// Empty by default; these values are not derived from Stackable.
     pub item_tooltip_sell_price_quantities: HashMap<u32, (u32, u32)>,

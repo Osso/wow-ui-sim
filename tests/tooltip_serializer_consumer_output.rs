@@ -63,10 +63,9 @@ const REPAIR_COST_ROWS: &str = r#"
     end
 "#;
 
-// INFERRED: catalog `sell_price` stands in for the native initial unit price.
-// VERIFIED (R88n.4b, R88p.p1): `price` sits on a type-11 line; a zero initial
-// price adds no line; the item-instance branch leaves `maxPrice` at -1, so the
-// original `SellPrice` rule renders one SELL_PRICE row.
+// INFERRED (simulator mapping; R88aw): generated flags and stored price data supply these fixtures.
+// The bag test supplies an explicit no-status-record snapshot for its occupied item instances.
+// VERIFIED (R88n.4b, R88p.p1): `price` sits on a type-11 line and zero adds no row.
 const SELL_PRICE_ROWS: &str = r#"
     local cases = {{slot = 1, price = 1}, {slot = 2, price = 50}, {slot = 3}}
     for _, case in ipairs(cases) do
@@ -79,7 +78,7 @@ const SELL_PRICE_ROWS: &str = r#"
                 assert(text == string.format('%s: %s', SELL_PRICE, money), text)
             end
         end
-        assert(sellRows == (case.price and 1 or 0), 'slot '..case.slot..' sell rows')
+        assert(sellRows == (case.price and 1 or 0), 'slot '..case.slot..' eligible sell rows')
     end
 "#;
 
@@ -235,6 +234,15 @@ fn bag_sell_price_rule_renders_only_type_11_line_prices() {
         assert_eq!(item.sell_price, price, "backed catalog price for {item_id}");
     }
     let env = consumer_env(&items.map(|(slot, item_id, _)| (slot, item_id)));
+    {
+        let mut sim = env.state().borrow_mut();
+        use wow_ui_sim::c_api::item_tooltip::SellPriceStatusInput::NoStatusRecord;
+        sim.bag_item_tooltip_sell_price_statuses.extend([
+            ((0, 1), NoStatusRecord { instance_marker_flags: 0 }),
+            ((0, 2), NoStatusRecord { instance_marker_flags: 0 }),
+            ((0, 3), NoStatusRecord { instance_marker_flags: 0 }),
+        ]);
+    }
     exec_without_new_lua_errors(&env, SELL_PRICE_ROWS);
 }
 

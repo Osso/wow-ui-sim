@@ -202,6 +202,8 @@ macro_rules! build_empty_sim_state {
             #[cfg(feature = "retail-12-0-5")]
             item_tooltip_levels: ::std::collections::HashMap::new(),
             item_tooltip_inputs: ::std::collections::HashMap::new(),
+            item_tooltip_sell_price_unit_prices: ::std::collections::HashMap::new(),
+            bag_item_tooltip_sell_price_statuses: ::std::collections::HashMap::new(),
             item_tooltip_sell_price_quantities: ::std::collections::HashMap::new(),
             blocked_auras_by_unit: $collections.blocked_auras_by_unit,
             #[cfg(feature = "client-wowforever")]

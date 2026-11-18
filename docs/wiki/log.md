@@ -1,3 +1,7 @@
+## [2026-11-18] correction | Retail SellPrice gates
+
+Corrected the broad host gate in the [tooltip contract](../specs/tooltip-data-serialization.md) and [Lua API page](systems/lua-api.md#retail-sellprice-line-r88pp1). **VERIFIED (R88aw):** supported routes have distinct preview and instance-status inputs, and known ItemSparse flags decide exclusion. **INFERRED (simulator mapping):** generated metadata drives those known flags; host inputs remain only for unavailable bag status, calculated prices, and prepared quantities.
+
 ## [2026-11-18] implementation | RegisterUnitEvent unit scan
 
 Updated the [event-system record](../systems/event-system.md#frame-registerunitevent-unit-scan-r88aj) and [contract](../specs/register-unit-event-units.md). **VERIFIED (R88aj):** four-position scan rules are established for Mists, Retail and Forever; Mists rejects the documented unknown `boss6`–`boss8` tokens. **VERIFIED (Mists simulator):** 3/3 original-consumer/boundary cases and 2/2 unit-scan cases pass. Retail/Forever secret-state and forbidden-aspect inputs remain UNKNOWN and empty by default.

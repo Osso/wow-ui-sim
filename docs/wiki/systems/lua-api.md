@@ -174,27 +174,14 @@ the source-matched master baseline; this is not a clean PTR startup claim.
 **VERIFIED (Retail 12.1.5.70688, R88n.4b):** `repairCost` and battle-pet
 fields are TooltipData-level; `price` and `maxPrice` belong on a type-11
 `SellPrice` line. See the [serialization contract](../../specs/tooltip-data-serialization.md).
-**VERIFIED (simulator):** the item catalog supplies `ItemInfo.sell_price`.
-**INFERRED (simulator policy):** `ItemInfo.sell_price` stands in for the initial
-unit-price calculation. Repair cost and battle-pet tooltip fields stay absent
-because those inputs are not modeled. See the [consumer investigation](../investigations/consumer-selection-and-red-proof.md#retail-tooltip-serializer-field-consumers)
+**VERIFIED (simulator):** the item catalog supplies `ItemInfo.sell_price` and generated optional item-flag and Item.csv classification fields. **INFERRED (simulator mapping):** stored catalog prices are used on the evidenced stored-price branches; calculated prices use an explicit host input and remain absent by default. Repair cost and battle-pet tooltip fields stay absent because those inputs are not modeled. See the [consumer investigation](../investigations/consumer-selection-and-red-proof.md#retail-tooltip-serializer-field-consumers)
 for TOC selection, tests and the quest-cache/LFG seam boundaries.
 
 ### Retail SellPrice line (R88p.p1)
 
-**VERIFIED (Retail 12.1.5.70688):** a zero initial unit-price result adds no
-SellPrice row. Eligible rows use type 11, empty `leftText`, the resolved default
-`leftColor`, `price`, and `maxPrice`, which starts at -1. Eligibility also checks
-request mode, item-status suppression, sell-exclusion flags, and the interaction
-preview/exception flags. There is no quality, bound, quest, or merchant-open gate.
+**VERIFIED (Retail 12.1.5.70688, R88aw):** supported item-ID, item/keystone hyperlink, ordinary bag-item, loot-roll, and merchant-offer requests pass mode 0. Only ordinary bag-item supplies an item-instance identity for status processing. Merchant offers set preview; item-link preview follows `hideVendorPrice`. Item-record masks 4096 (`Flags_1`), 524288 (`Flags_3`), and preview exception 32768 (`Flags_3`) gate the row; the names are **INFERRED** from the 70391 export. An emitted type-11 row requires a nonzero initial unit price and carries empty `leftText`, default `leftColor`, `price`, and `maxPrice`.
 
-**INFERRED:** the masks map to `ItemSparse.Flags_1` 4096 and `Flags_3` 524288;
-the preview exception maps to `Flags_3` 32768. These column names are not present
-in simulator `ItemInfo`, so the simulator does not apply those gates.
-**INFERRED (simulator policy):** the backed `sell_price` is the initial price
-proxy. **UNKNOWN/unmodeled:** per-instance refund/status records, prepared
-quantity recomputation, and calculated-price inputs beyond the stored catalog
-price. With no prepared quantity input, the emitted row keeps `maxPrice = -1`.
+**INFERRED (simulator mapping):** generated `ItemInfo` carries optional `Flags_0`, `Flags_1`, `Flags_3`, and Item.csv classification. Those records drive the known masks. Empty-default host inputs supply only bag-instance status snapshots, calculated unit prices, or prepared quantities that the simulator does not model. Missing status or calculated-price input does not assert that the native gate passed. Prepared quantity is not inferred from `Stackable`; without an item instance, the prepared maximum applies only when greater than current quantity, with 32-bit wrapping. With an item instance, `maxPrice` remains -1.
 See the [SellPrice contract](../../specs/tooltip-data-serialization.md#retail-sellprice-behavior-r88pp1).
 
 ## Cursor modes and ActionBar transitions

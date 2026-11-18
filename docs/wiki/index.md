@@ -1,3 +1,7 @@
+## [2026-11-18] correction | Retail SellPrice gates
+
+[Tooltip data](systems/lua-api.md#retail-sellprice-line-r88pp1) now records the R88aw request, instance-status, item-flag and preview rules. **INFERRED (simulator mapping):** generated catalog metadata drives known flags; explicit empty-default inputs remain only for bag status and calculated prices.
+
 ## [2026-11-18] implementation | RegisterUnitEvent unit scan
 
 [Event system](systems/event-system.md#frame-registerunitevent-unit-scan-r88aj) links the [R88aj contract](../specs/register-unit-event-units.md): Mists boundary and original CastSequenceManager tests pass; native scan evidence is limited to Mists, Retail and Forever.
