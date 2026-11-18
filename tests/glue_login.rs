@@ -502,7 +502,9 @@ fn mists_movie_success_consumes_stop_and_restores_login() {
 #[test]
 fn mists_cinematic_finished_clears_matching_active_type() {
     test_timeout! {
-        let env = load_blizzard_screen(ScreenKind::Login);
+        let env = load_blizzard_screen_with_setup(ScreenKind::Login, |env| {
+            env.state().borrow_mut().movie_playback.start_results.insert(115, 0);
+        });
         {
             let mut state = env.state().borrow_mut();
             state.cinematic_active = true;
@@ -513,6 +515,10 @@ fn mists_cinematic_finished_clears_matching_active_type() {
         }
         env.exec("CinematicFinished(7, true, true)")
             .expect("CinematicFinished should record an active completion");
+        let movie_shown: bool = env
+            .eval("return MovieFrame:IsShown()")
+            .expect("MovieFrame visibility should remain queryable");
+        assert!(movie_shown, "CinematicFinished must not close MovieFrame");
         let state = env.state().borrow();
         assert!(!state.cinematic_active);
         let finished = state.movie_playback.last_cinematic_finish.as_ref()
