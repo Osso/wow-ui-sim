@@ -240,6 +240,7 @@ fn bag_sell_price_rule_renders_only_type_11_line_prices() {
         sim.bag_item_tooltip_sell_price_statuses.extend([
             ((0, 1), NoStatusRecord { instance_marker_flags: 0 }),
             ((0, 2), NoStatusRecord { instance_marker_flags: 0 }),
+            ((0, 3), NoStatusRecord { instance_marker_flags: 0 }),
         ]);
     }
     exec_without_new_lua_errors(&env, SELL_PRICE_ROWS);
