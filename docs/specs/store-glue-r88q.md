@@ -49,6 +49,8 @@ The duplicate `SetDisconnectOnLogout` and `SetVASProductReady` definitions and `
 
 Optional tests drive selected original Glue consumers and real XML list templates. The R88q/R88w selectors use at least two distinct backed records plus absence. Runtime receipts are evidence artifacts, not part of this behavior spec; native parity outside Retail remains separately labeled.
 
+**INFERRED (simulator mapping):** Retail fixtures seed host product rows in the modeled Store catalog so the original Glue consumer can resolve the product IDs returned by q1. R88q.q1 verifies that the consumer passes the ID to `C_StoreSecure.GetProductInfo`; it does not prove how native product details are acquired. Other profiles retain their compatibility-bootstrap fixture. Evidence: `pr46-49-decomp-answers.md`, section `R88q.q1`.
+
 ## Tests asserting this spec
 
 - `tests/glue_character_select.rs` covers the original CharacterSelect and Store VAS error consumers.
