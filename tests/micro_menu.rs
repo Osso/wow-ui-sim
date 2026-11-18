@@ -893,3 +893,55 @@ fn main_menu_performance_bar_uses_seeded_network_stats() {
         "Main menu performance bar should use seeded latency values and stay green for low latency: {result}"
     );
 }
+
+#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+#[test]
+fn performance_bar_tooltip_uses_supplied_protocols_and_zero_bandwidth() {
+    let env = setup_env();
+    let result: String = env
+        .eval(
+            r#"
+            local loaded, reason = C_AddOns.LoadAddOn("Blizzard_PerformanceBar")
+            assert(loaded, "load original PerformanceBar.lua: " .. tostring(reason))
+            assert(type(MainMenuBarPerformanceBarFrame_OnEnter) == "function",
+                "original performance tooltip handler must be loaded")
+
+            C_PerformanceBar = C_PerformanceBar or {}
+            C_PerformanceBar._state = C_PerformanceBar._state or {}
+            A_Admin.SetNetStats(128, 256, 47, 89)
+            local bar = MainMenuMicroButton.MainMenuBarPerformanceBar
+            local labels = { [0] = UNKNOWN, "TCP", "UDP" }
+
+            local function has_tooltip_line(expected)
+                for index = 1, GameTooltip:NumLines() do
+                    local line = _G["GameTooltipTextLeft" .. index]
+                    if line and line:GetText() == expected then
+                        return true
+                    end
+                end
+                return false
+            end
+
+            local function check_pair(home, world)
+                C_PerformanceBar._state.protocolTypes = { home, world }
+                GameTooltip:Hide()
+                MainMenuBarPerformanceBarFrame_OnEnter(bar)
+                local protocol = string.format(MAINMENUBAR_COMMUNICATION_PROTOCOL_LABEL,
+                    labels[home], labels[world])
+                local bandwidth = string.format(MAINMENUBAR_BANDWIDTH_LABEL, 0)
+                assert(has_tooltip_line(protocol),
+                    "original tooltip protocol line did not match supplied pair: " .. protocol)
+                assert(has_tooltip_line(bandwidth),
+                    "original tooltip bandwidth line must format zero")
+            end
+
+            check_pair(1, 2)
+            check_pair(2, 1)
+            C_PerformanceBar._state.protocolTypes = nil
+            check_pair(0, 0)
+            return "ok"
+            "#,
+        )
+        .expect("original PerformanceBar tooltip should consume supplied native values");
+    assert_eq!(result, "ok");
+}
