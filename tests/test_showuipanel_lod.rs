@@ -666,6 +666,13 @@ fn settings_open_to_interface_category_opens_settings_panel() {
 fn professions_frame_loads_and_populates_specialization_tab() {
     test_timeout! {
         let env = setup_env();
+        {
+            let mut sim = env.state().borrow_mut();
+            sim.profession_spec_inputs.path_group_ids.extend([(1001, 10), (2001, 20)]);
+            sim.profession_spec_inputs
+                .group_node_ids
+                .extend([(10, vec![2001, 2002]), (20, vec![3001])]);
+        }
         let ui = blizzard_ui_dir();
         for (name, toc) in [
             ("Blizzard_FrameXMLUtil", "Blizzard_FrameXMLUtil.toc"),
@@ -703,13 +710,26 @@ fn professions_frame_loads_and_populates_specialization_tab() {
             if ProfessionsFrame.SpecPage:GetTalentTreeID() ~= selectedTab.traitTreeID then
                 return "talent_tree_id=" .. tostring(ProfessionsFrame.SpecPage:GetTalentTreeID())
             end
-            local children = C_ProfSpecs.GetChildrenForPath(rootNodeID)
-            if #children == 0 then
-                return "root_children=0"
-            end
-
             if not ProfessionsFrame.SpecPage:IsTreeDirty() then
                 return "tree_not_marked_dirty"
+            end
+
+            ProfessionsFrame.SpecPage:LoadTalentTreeInternal()
+            local buttonsParent = ProfessionsFrame.SpecPage.ButtonsParent
+            if not buttonsParent then
+                return "talent_buttons_parent_missing"
+            end
+            local nodes = {}
+            for _, button in ipairs({ buttonsParent:GetChildren() }) do
+                local nodeID = button:GetNodeID()
+                if nodeID then
+                    nodes[nodeID] = true
+                end
+            end
+            for _, nodeID in ipairs({ rootNodeID, 2001, 2002, 3001 }) do
+                if not nodes[nodeID] then
+                    return "missing_talent_node=" .. tostring(nodeID)
+                end
             end
 
             return "ok"
