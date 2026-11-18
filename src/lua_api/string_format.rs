@@ -202,10 +202,7 @@ fn validate_format_argument(
             Val::Num(_) => Ok(true),
             _ => Err(format_type_error(state, argument_position, "string")),
         },
-        b'd' | b'i' => match convert_public_number(state, tonumber, value)? {
-            Some(number) => check_signed_integer_range(number).map(|()| false),
-            None => Ok(true),
-        },
+        b'd' | b'i' => validate_signed_integer_argument(state, tonumber, value, argument_position),
         b'F' | b't' | b'T' if is_secret_number(state, value) => Ok(false),
         b'c' | b'o' | b'u' | b'x' | b'X' | b'e' | b'E' | b'f' | b'F' | b'g' | b'G' | b't'
         | b'T' => {
@@ -216,6 +213,18 @@ fn validate_format_argument(
             }
         }
         _ => Ok(false),
+    }
+}
+
+fn validate_signed_integer_argument(
+    state: &mut LuaState,
+    tonumber: Val,
+    value: Val,
+    argument_position: usize,
+) -> LuaResult<bool> {
+    match convert_public_number(state, tonumber, value)? {
+        Some(number) => check_signed_integer_range(number).map(|()| false),
+        None => Ok(true),
     }
 }
 
@@ -355,6 +364,33 @@ mod tests {
     use crate::lua_api::WowLuaEnv;
     use rilua::LuaApiMut;
 
+    const FORMAT_ARGUMENT_ERROR_PROBE: &str = r#"
+            local ok, err = pcall(function() return string.format('%s') end)
+            assert(not ok)
+            assert(err == "bad argument #2 to 'format' (string expected, got no value)")
+
+            ok, err = pcall(function() return string.format('%2$s', 'first') end)
+            assert(not ok)
+            assert(err == "bad argument #3 to 'format' (string expected, got no value)")
+
+            ok, err = pcall(function() return string.format('%s', false) end)
+            assert(not ok)
+            assert(err == "bad argument #2 to 'format' (string expected, got boolean)")
+
+            ok, err = pcall(function() return string.format('%t', 'not numeric') end)
+            assert(not ok)
+            assert(err == "bad argument #2 to 'format' (number expected, got string)")
+
+            local fmt = string.format
+            ok, err = pcall(function() return fmt('%s') end)
+            assert(not ok)
+            assert(err == "bad argument #2 to 'fmt' (string expected, got no value)")
+
+            ok, err = pcall(function() return string:format('%s') end)
+            assert(not ok)
+            assert(err == "calling 'format' on bad self (string expected, got table)")
+        "#;
+
     #[test]
     fn patch_string_format_is_idempotent() {
         let env = WowLuaEnv::new().expect("env");
@@ -471,35 +507,8 @@ mod tests {
     #[test]
     fn format_argument_errors_use_caller_and_method_names() {
         let env = WowLuaEnv::new().expect("env");
-        env.exec(
-            r#"
-            local ok, err = pcall(function() return string.format('%s') end)
-            assert(not ok)
-            assert(err == "bad argument #2 to 'format' (string expected, got no value)")
-
-            ok, err = pcall(function() return string.format('%2$s', 'first') end)
-            assert(not ok)
-            assert(err == "bad argument #3 to 'format' (string expected, got no value)")
-
-            ok, err = pcall(function() return string.format('%s', false) end)
-            assert(not ok)
-            assert(err == "bad argument #2 to 'format' (string expected, got boolean)")
-
-            ok, err = pcall(function() return string.format('%t', 'not numeric') end)
-            assert(not ok)
-            assert(err == "bad argument #2 to 'format' (number expected, got string)")
-
-            local fmt = string.format
-            ok, err = pcall(function() return fmt('%s') end)
-            assert(not ok)
-            assert(err == "bad argument #2 to 'fmt' (string expected, got no value)")
-
-            ok, err = pcall(function() return string:format('%s') end)
-            assert(not ok)
-            assert(err == "calling 'format' on bad self (string expected, got table)")
-        "#,
-        )
-        .expect("format type errors should use the caller and method context");
+        env.exec(FORMAT_ARGUMENT_ERROR_PROBE)
+            .expect("format type errors should use the caller and method context");
     }
 
     #[test]

@@ -1,4 +1,58 @@
 use super::*;
+const PARTITIONED_CHILD_HANDLERS_XML: &str = r#"
+        <Ui xmlns="http://www.blizzard.com/wow/ui/">
+            <Script>
+                PartitionedAuraPrivateMixin = {}
+                function PartitionedAuraPrivateMixin:OnLoad_Intrinsic()
+                    self:RegisterEvent("PLAYER_LOGIN")
+                    self.loaded = true
+                end
+                function PartitionedAuraPrivateMixin:OnUpdate_Intrinsic(elapsed)
+                    self.elapsed = elapsed
+                end
+
+                PartitionedAuraInboundMixin = {}
+            </Script>
+            <ScopedModifier useForbiddenObjectTable="true">
+                <AuraContainer name="PartitionedAuraContainerTemplate" virtual="true">
+                    <Mixins>
+                        <Mixin key="PartitionedAuraInboundMixin" source="secure" targetPartition="public" inboundPartition="forbidden" secureDelegates="true"/>
+                        <Mixin key="PartitionedAuraPrivateMixin" source="secure"/>
+                    </Mixins>
+                    <Scripts>
+                        <OnLoad method="OnLoad_Intrinsic"/>
+                        <OnUpdate method="OnUpdate_Intrinsic"/>
+                    </Scripts>
+                </AuraContainer>
+            </ScopedModifier>
+            <Frame name="PartitionedAuraContainerParent" parent="UIParent">
+                <Frames>
+                    <AuraContainer parentKey="Auras" inherits="PartitionedAuraContainerTemplate"/>
+                </Frames>
+            </Frame>
+        </Ui>
+        "#;
+
+const PARTITIONED_INTRINSIC_ONLOAD_XML: &str = r#"
+        <Ui xmlns="http://www.blizzard.com/wow/ui/">
+            <Script>
+                PartitionedIntrinsicPrivateMixin = {}
+                function PartitionedIntrinsicPrivateMixin:OnLoad_Intrinsic()
+                    self.intrinsicLoaded = true
+                end
+            </Script>
+            <ScopedModifier useForbiddenObjectTable="true">
+                <Frame name="PartitionedIntrinsicFrame" parent="UIParent">
+                    <Mixins>
+                        <Mixin key="PartitionedIntrinsicPrivateMixin" source="secure"/>
+                    </Mixins>
+                    <Scripts>
+                        <OnLoad/>
+                    </Scripts>
+                </Frame>
+            </ScopedModifier>
+        </Ui>
+        "#;
 
 #[test]
 fn test_fontstring_template_inherits_apply_mixin_methods() {
@@ -186,46 +240,15 @@ fn test_runtime_template_partitioned_child_binds_private_method_handlers() {
 fn test_runtime_aura_container_partitioned_child_binds_private_method_handlers() {
     assert_partitioned_child_handlers("AuraContainer");
 }
-
 fn assert_partitioned_child_handlers(widget_type: &str) {
-    let xml = r#"
-        <Ui xmlns="http://www.blizzard.com/wow/ui/">
-            <Script>
-                PartitionedAuraPrivateMixin = {}
-                function PartitionedAuraPrivateMixin:OnLoad_Intrinsic()
-                    self:RegisterEvent("PLAYER_LOGIN")
-                    self.loaded = true
-                end
-                function PartitionedAuraPrivateMixin:OnUpdate_Intrinsic(elapsed)
-                    self.elapsed = elapsed
-                end
-
-                PartitionedAuraInboundMixin = {}
-            </Script>
-            <ScopedModifier useForbiddenObjectTable="true">
-                <AuraContainer name="PartitionedAuraContainerTemplate" virtual="true">
-                    <Mixins>
-                        <Mixin key="PartitionedAuraInboundMixin" source="secure" targetPartition="public" inboundPartition="forbidden" secureDelegates="true"/>
-                        <Mixin key="PartitionedAuraPrivateMixin" source="secure"/>
-                    </Mixins>
-                    <Scripts>
-                        <OnLoad method="OnLoad_Intrinsic"/>
-                        <OnUpdate method="OnUpdate_Intrinsic"/>
-                    </Scripts>
-                </AuraContainer>
-            </ScopedModifier>
-            <Frame name="PartitionedAuraContainerParent" parent="UIParent">
-                <Frames>
-                    <AuraContainer parentKey="Auras" inherits="PartitionedAuraContainerTemplate"/>
-                </Frames>
-            </Frame>
-        </Ui>
-        "#;
-    let xml = xml
+    let xml = PARTITIONED_CHILD_HANDLERS_XML
         .replace("<AuraContainer", &format!("<{widget_type}"))
         .replace("</AuraContainer>", &format!("</{widget_type}>"));
     let t = load_test_xml("runtime-template-partitioned-private-method-handlers", &xml);
+    assert_partitioned_child_handler_state(&t);
+}
 
+fn assert_partitioned_child_handler_state(t: &TestCtx) {
     t.assert_lua_true(
         "return PartitionedAuraContainerParent.Auras ~= nil",
         "concrete inherited child should remain reachable through parentKey",
@@ -242,9 +265,7 @@ fn assert_partitioned_child_handlers(widget_type: &str) {
         "return PartitionedAuraContainerParent.Auras:IsEventRegistered('PLAYER_LOGIN')",
         "private OnLoad should dispatch frame methods through the public frame",
     );
-
     t.env.fire_on_update(0.016).unwrap();
-
     t.assert_lua_true(
         "return (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(PartitionedAuraContainerParent.Auras).elapsed == 0.016",
         "private OnUpdate method should run with forbidden self",
@@ -255,28 +276,8 @@ fn assert_partitioned_child_handlers(widget_type: &str) {
 fn test_xml_partitioned_intrinsic_onload_uses_forbidden_self() {
     let t = load_test_xml(
         "xml-partitioned-intrinsic-onload-forbidden-self",
-        r#"
-        <Ui xmlns="http://www.blizzard.com/wow/ui/">
-            <Script>
-                PartitionedIntrinsicPrivateMixin = {}
-                function PartitionedIntrinsicPrivateMixin:OnLoad_Intrinsic()
-                    self.intrinsicLoaded = true
-                end
-            </Script>
-            <ScopedModifier useForbiddenObjectTable="true">
-                <Frame name="PartitionedIntrinsicFrame" parent="UIParent">
-                    <Mixins>
-                        <Mixin key="PartitionedIntrinsicPrivateMixin" source="secure"/>
-                    </Mixins>
-                    <Scripts>
-                        <OnLoad/>
-                    </Scripts>
-                </Frame>
-            </ScopedModifier>
-        </Ui>
-        "#,
+        PARTITIONED_INTRINSIC_ONLOAD_XML,
     );
-
     t.assert_lua_true(
         "return type((__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(PartitionedIntrinsicFrame).OnLoad_Intrinsic) == 'function'",
         "private intrinsic method should be installed on forbidden frame table",

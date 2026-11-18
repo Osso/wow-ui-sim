@@ -185,22 +185,25 @@ fn publish_named_child_to_global(state: &mut LuaState, name: &str, child_ref: Va
     state.gc.barrier_back(global);
 }
 
+fn named_child_global_publication_state(state: &mut LuaState) -> LuaResult<(bool, bool)> {
+    if crate::client_profile::is_active_retail_12_1_5() {
+        let sim = borrow_state(state)?;
+        return Ok((
+            sim.loading_hide_from_global_env,
+            crate::lua_api::globals::create_frame::helpers_shared::
+                is_retail_secure_named_object_publication(&sim),
+        ));
+    }
+    Ok((false, false))
+}
+
 pub(super) fn bind_named_child_global(
     state: &mut LuaState,
     name: &str,
     child_id: u64,
 ) -> LuaResult<()> {
     let (hide_from_global_env, retail_secure_xml_name) =
-        if crate::client_profile::is_active_retail_12_1_5() {
-            let sim = borrow_state(state)?;
-            (
-                sim.loading_hide_from_global_env,
-                crate::lua_api::globals::create_frame::helpers_shared::
-                    is_retail_secure_named_object_publication(&sim),
-            )
-        } else {
-            (false, false)
-        };
+        named_child_global_publication_state(state)?;
     let existing_sibling = existing_named_sibling_region_owns_global(state, name, child_id)?;
     if existing_sibling && !retail_secure_xml_name {
         return Ok(());

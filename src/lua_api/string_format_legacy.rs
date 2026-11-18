@@ -121,13 +121,22 @@ fn wow_string_format(state: &mut LuaState) -> LuaResult<u32> {
         return delegate(state, original, &normalized_args);
     }
 
+    delegate_rewritten_format(state, original, &fmt, &args)
+}
+
+fn delegate_rewritten_format(
+    state: &mut LuaState,
+    original: Val,
+    format: &[u8],
+    args: &[Val],
+) -> LuaResult<u32> {
     let rest: Vec<Val> = args.iter().skip(1).copied().collect();
-    let (new_fmt, new_rest) = process_wow_format(&fmt, &rest)?;
-    let new_fmt_val = create_string_bytes(state, &new_fmt);
-    let mut delegated: Vec<Val> = Vec::with_capacity(new_rest.len() + 1);
-    delegated.push(new_fmt_val);
+    let (new_format, new_rest) = process_wow_format(format, &rest)?;
+    let format_value = create_string_bytes(state, &new_format);
+    let mut delegated = Vec::with_capacity(new_rest.len() + 1);
+    delegated.push(format_value);
     delegated.extend(new_rest);
-    let normalized_args = normalize_nil_numeric_args(&new_fmt, &delegated);
+    let normalized_args = normalize_nil_numeric_args(&new_format, &delegated);
     delegate(state, original, &normalized_args)
 }
 
@@ -206,7 +215,6 @@ fn numeric_format_arg_indices(bytes: &[u8]) -> Vec<usize> {
     let mut indices = Vec::new();
     let mut arg_index = 1;
     let mut i = 0;
-
     while i < bytes.len() {
         if bytes[i] != b'%' {
             i += 1;
@@ -216,32 +224,36 @@ fn numeric_format_arg_indices(bytes: &[u8]) -> Vec<usize> {
             i += 2;
             continue;
         }
-
-        let mut j = i + 1;
-        while j < bytes.len()
-            && matches!(
-                bytes[j] as char,
-                '-' | '+' | ' ' | '#' | '0' | '.' | '1'..='9'
-            )
-        {
-            j += 1;
-        }
-        if j >= bytes.len() {
+        let Some(conversion_index) = format_conversion_index(bytes, i) else {
             break;
-        }
-
-        if matches!(
-            bytes[j] as char,
-            'c' | 'd' | 'i' | 'u' | 'o' | 'x' | 'X' | 'f' | 'e' | 'E' | 'g' | 'G'
-        ) {
+        };
+        if is_numeric_format_conversion(bytes[conversion_index]) {
             indices.push(arg_index);
         }
-
         arg_index += 1;
-        i = j + 1;
+        i = conversion_index + 1;
     }
-
     indices
+}
+
+fn format_conversion_index(bytes: &[u8], start: usize) -> Option<usize> {
+    let mut index = start + 1;
+    while index < bytes.len()
+        && matches!(
+            bytes[index] as char,
+            '-' | '+' | ' ' | '#' | '0' | '.' | '1'..='9'
+        )
+    {
+        index += 1;
+    }
+    (index < bytes.len()).then_some(index)
+}
+
+fn is_numeric_format_conversion(byte: u8) -> bool {
+    matches!(
+        byte as char,
+        'c' | 'd' | 'i' | 'u' | 'o' | 'x' | 'X' | 'f' | 'e' | 'E' | 'g' | 'G'
+    )
 }
 
 fn delegate(state: &mut LuaState, original: Val, args: &[Val]) -> LuaResult<u32> {
@@ -345,36 +357,55 @@ mod tests {
 /// cloning on the hot path).
 fn process_wow_format(bytes: &[u8], args: &[Val]) -> LuaResult<(Vec<u8>, Vec<Val>)> {
     let mut out = Vec::with_capacity(bytes.len());
-    let mut reordered: Vec<Val> = Vec::new();
-    let mut seq: usize = 0;
+    let mut reordered = Vec::new();
+    let mut seq = 0;
     let mut has_positional = false;
-    let mut i = 0;
-
-    while i < bytes.len() {
-        if bytes[i] != b'%' {
-            out.push(bytes[i]);
-            i += 1;
-        } else if i + 1 < bytes.len() && bytes[i + 1] == b'%' {
-            out.extend_from_slice(b"%%");
-            i += 2;
-        } else {
-            i = parse_format_specifier(
-                bytes,
-                i,
-                args,
-                &mut out,
-                &mut reordered,
-                &mut seq,
-                &mut has_positional,
-            )?;
-        }
+    let mut index = 0;
+    while index < bytes.len() {
+        index = append_next_format_item(
+            bytes,
+            index,
+            args,
+            &mut out,
+            &mut reordered,
+            &mut seq,
+            &mut has_positional,
+        )?;
     }
-
-    if has_positional {
-        Ok((out, reordered))
+    let args = if has_positional {
+        reordered
     } else {
-        Ok((out, args.to_vec()))
+        args.to_vec()
+    };
+    Ok((out, args))
+}
+
+fn append_next_format_item(
+    bytes: &[u8],
+    index: usize,
+    args: &[Val],
+    output: &mut Vec<u8>,
+    reordered: &mut Vec<Val>,
+    sequence: &mut usize,
+    has_positional: &mut bool,
+) -> LuaResult<usize> {
+    if bytes[index] != b'%' {
+        output.push(bytes[index]);
+        return Ok(index + 1);
     }
+    if index + 1 < bytes.len() && bytes[index + 1] == b'%' {
+        output.extend_from_slice(b"%%");
+        return Ok(index + 2);
+    }
+    parse_format_specifier(
+        bytes,
+        index,
+        args,
+        output,
+        reordered,
+        sequence,
+        has_positional,
+    )
 }
 
 /// Parse one format specifier starting at `%`, appending to `out` and
@@ -388,35 +419,51 @@ fn parse_format_specifier(
     seq: &mut usize,
     has_positional: &mut bool,
 ) -> LuaResult<usize> {
-    let mut i = start + 1; // skip the '%'
+    let index =
+        append_format_specifier_argument(bytes, start, args, out, reordered, seq, has_positional)?;
+    let index = skip_flags_width_precision(bytes, index, out);
+    append_format_conversion(bytes, index, out)
+}
 
-    if let Some((n, after)) = parse_positional_index(bytes, i) {
-        if n >= 100 {
+fn append_format_specifier_argument(
+    bytes: &[u8],
+    start: usize,
+    args: &[Val],
+    out: &mut Vec<u8>,
+    reordered: &mut Vec<Val>,
+    seq: &mut usize,
+    has_positional: &mut bool,
+) -> LuaResult<usize> {
+    let index = start + 1;
+    if let Some((position, after)) = parse_positional_index(bytes, index) {
+        if position >= 100 {
             return Err(runtime_error(
                 "invalid format (width or precision too long)",
             ));
         }
         *has_positional = true;
-        // A positional spec `%N$` bumps `seq` to max(seq, N) without
-        // consuming. Later sequential specs then pick from `seq+1` onward,
-        // matching WoW's patched LuaJIT where sequential consumes the
-        // lowest arg slot not yet "seen" by positional refs.
-        *seq = std::cmp::max(*seq, n);
-        reordered.push(args.get(n - 1).copied().unwrap_or(Val::Nil));
+        // Positional references mark slots seen for later sequential conversions.
+        *seq = std::cmp::max(*seq, position);
+        reordered.push(args.get(position - 1).copied().unwrap_or(Val::Nil));
         out.push(b'%');
-        i = after;
-    } else {
-        *seq += 1;
-        reordered.push(args.get(*seq - 1).copied().unwrap_or(Val::Nil));
-        out.push(b'%');
+        return Ok(after);
     }
+    *seq += 1;
+    reordered.push(args.get(*seq - 1).copied().unwrap_or(Val::Nil));
+    out.push(b'%');
+    Ok(index)
+}
 
-    i = skip_flags_width_precision(bytes, i, out);
-    if i < bytes.len() && is_format_conversion(bytes[i]) {
-        out.push(if bytes[i] == b'F' { b'f' } else { bytes[i] });
-        i += 1;
+fn append_format_conversion(bytes: &[u8], index: usize, out: &mut Vec<u8>) -> LuaResult<usize> {
+    if index < bytes.len() && is_format_conversion(bytes[index]) {
+        out.push(if bytes[index] == b'F' {
+            b'f'
+        } else {
+            bytes[index]
+        });
+        return Ok(index + 1);
     }
-    Ok(i)
+    Ok(index)
 }
 
 /// Skip flags (`-+ #0`), width digits, and precision (`.N`) — appending

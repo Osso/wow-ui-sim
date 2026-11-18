@@ -419,6 +419,10 @@ pub(crate) fn build_cursor_anchor(
             scale,
         );
     }
+    build_legacy_cursor_anchor(mx, my, x_offset, y_offset)
+}
+
+fn build_legacy_cursor_anchor(mx: f32, my: f32, x_offset: f32, y_offset: f32) -> Anchor {
     let cursor_y = if x_offset == 0.0 && y_offset == 0.0 {
         my + DEFAULT_CURSOR_Y_OFFSET
     } else {

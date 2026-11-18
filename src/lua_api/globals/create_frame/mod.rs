@@ -97,11 +97,7 @@ fn create_frame_from_args(state: &mut LuaState, mut args: CreateFrameArgs) -> Lu
     args.name = resolve_frame_name(state, args.name.take(), parent_id, parent_explicit)?;
     let fire_on_load = borrow_state(state)?.suppress_runtime_on_load_depth == 0;
     let frame_id = register_runtime_frame(state, args, parent_id, parent_explicit)?;
-    clear_xml_creation_context(state)?;
-    if let Some(flags) = initial_flags {
-        flags.apply(state, frame_id)?;
-    }
-    apply_runtime_frame_templates(
+    initialize_runtime_frame(
         state,
         frame_id,
         runtime_inherits.as_deref(),
@@ -109,9 +105,6 @@ fn create_frame_from_args(state: &mut LuaState, mut args: CreateFrameArgs) -> Lu
         template_initializer,
         initial_flags,
     )?;
-    if initial_flags.is_some() {
-        fire_options_initial_on_show(state, frame_id)?;
-    }
     let frame_val = frame_ref(state, frame_id)?;
     #[cfg(feature = "forbidden-aspects")]
     let frame_val = crate::lua_api::script_object_transfer::project_created_frame(
@@ -241,6 +234,32 @@ fn apply_runtime_frame_templates(
         initial_flags,
     )?;
     replay_runtime_template_parent_links(state, frame_id, runtime_inherits)
+}
+
+fn initialize_runtime_frame(
+    state: &mut LuaState,
+    frame_id: u64,
+    runtime_inherits: Option<&str>,
+    fire_on_load: bool,
+    template_initializer: Val,
+    initial_flags: Option<InitialFrameFlags>,
+) -> LuaResult<()> {
+    clear_xml_creation_context(state)?;
+    if let Some(flags) = initial_flags {
+        flags.apply(state, frame_id)?;
+    }
+    apply_runtime_frame_templates(
+        state,
+        frame_id,
+        runtime_inherits,
+        fire_on_load,
+        template_initializer,
+        initial_flags,
+    )?;
+    if initial_flags.is_some() {
+        fire_options_initial_on_show(state, frame_id)?;
+    }
+    Ok(())
 }
 
 fn parse_create_frame_args(state: &mut LuaState) -> LuaResult<CreateFrameArgs> {

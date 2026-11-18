@@ -9,16 +9,15 @@ use crate::widget::{AnchorPoint, Frame, FrameStrata, WidgetType};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 
-pub fn create_frame_instance(
+fn build_initial_frame(
     state: &mut LuaState,
     widget_type: WidgetType,
     frame_type: &str,
     name: Option<String>,
     parent_id: Option<u64>,
-    parent_explicit: bool,
     id: Option<i32>,
-) -> LuaResult<u64> {
-    let mut frame = Frame::new(widget_type, name.clone(), parent_id);
+) -> LuaResult<Frame> {
+    let mut frame = Frame::new(widget_type, name, parent_id);
     if widget_type == WidgetType::GameTooltip {
         frame.frame_strata = FrameStrata::Tooltip;
         frame.has_fixed_frame_strata = true;
@@ -28,10 +27,37 @@ pub fn create_frame_instance(
     }
     apply_initial_visibility(state, &mut frame)?;
     apply_addon_ownership(state, parent_id, &mut frame)?;
-
     if let Some(user_id) = id {
         frame.user_id = user_id;
     }
+    Ok(frame)
+}
+
+fn initialize_created_frame(
+    state: &mut LuaState,
+    widget_type: WidgetType,
+    frame_id: u64,
+) -> LuaResult<()> {
+    install_default_children(state, widget_type, frame_id)?;
+    mark_loading_forbidden_object_table_scope(state, frame_id)?;
+    if widget_type == WidgetType::MessageFrame {
+        crate::lua_api::frame::methods::widgets::message_frame::install_message_frame_fields(
+            state, frame_id,
+        )?;
+    }
+    Ok(())
+}
+
+pub fn create_frame_instance(
+    state: &mut LuaState,
+    widget_type: WidgetType,
+    frame_type: &str,
+    name: Option<String>,
+    parent_id: Option<u64>,
+    parent_explicit: bool,
+    id: Option<i32>,
+) -> LuaResult<u64> {
+    let frame = build_initial_frame(state, widget_type, frame_type, name.clone(), parent_id, id)?;
 
     let preserve_existing_name_binding = should_preserve_existing_frame_name(state, &name)?;
     let frame_id = frame.id;
@@ -43,13 +69,7 @@ pub fn create_frame_instance(
         frame_id,
         preserve_existing_name_binding,
     )?;
-    install_default_children(state, widget_type, frame_id)?;
-    mark_loading_forbidden_object_table_scope(state, frame_id)?;
-    if widget_type == WidgetType::MessageFrame {
-        crate::lua_api::frame::methods::widgets::message_frame::install_message_frame_fields(
-            state, frame_id,
-        )?;
-    }
+    initialize_created_frame(state, widget_type, frame_id)?;
     register_global_name(
         state,
         name.as_deref(),
@@ -432,18 +452,8 @@ fn should_preserve_existing_frame_name(
     let Some(name) = name.as_deref() else {
         return Ok(false);
     };
-    let (existing_id, existing_is_placeholder, secure_mode) = {
-        let sim = borrow_state(state)?;
-        let existing_id = sim.widgets.get_id_by_name(name);
-        let is_placeholder = existing_id
-            .and_then(|id| sim.widgets.get(id))
-            .is_some_and(|frame| frame.is_simulator_placeholder);
-        (
-            existing_id,
-            is_placeholder,
-            is_retail_secure_named_object_publication(&sim),
-        )
-    };
+    let (existing_id, existing_is_placeholder, secure_mode) =
+        existing_frame_name_state(state, name)?;
     if matches!(name, "UIParent" | "WorldFrame") {
         return Ok(existing_id.is_some());
     }
@@ -457,6 +467,22 @@ fn should_preserve_existing_frame_name(
         return Ok(false);
     }
     secure_name_destinations_are_occupied(state, name)
+}
+
+fn existing_frame_name_state(
+    state: &mut LuaState,
+    name: &str,
+) -> LuaResult<(Option<u64>, bool, bool)> {
+    let sim = borrow_state(state)?;
+    let existing_id = sim.widgets.get_id_by_name(name);
+    let is_placeholder = existing_id
+        .and_then(|id| sim.widgets.get(id))
+        .is_some_and(|frame| frame.is_simulator_placeholder);
+    Ok((
+        existing_id,
+        is_placeholder,
+        is_retail_secure_named_object_publication(&sim),
+    ))
 }
 
 fn secure_name_destinations_are_occupied(state: &mut LuaState, name: &str) -> LuaResult<bool> {

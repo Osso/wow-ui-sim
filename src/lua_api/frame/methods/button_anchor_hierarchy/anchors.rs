@@ -242,16 +242,7 @@ pub(super) fn clear_point(state: &mut LuaState) -> LuaResult<u32> {
         return Ok(0);
     }
     let mut sim = borrow_state_mut(state)?;
-    let target_id = sim
-        .widgets
-        .get(id)
-        .and_then(|f| f.anchors.iter().find(|a| a.point == point))
-        .and_then(|a| a.relative_to_id);
-    if !uses_retail_clamp_producers()
-        && let Some(target) = target_id
-    {
-        sim.widgets.remove_anchor_dependent(target as u64, id);
-    }
+    clear_anchor_dependency_for_point(&mut sim, id, point);
     if let Some(frame) = sim.widgets.get_mut_for_anchor_edit(id) {
         frame.anchors.retain(|a| a.point != point);
         frame
@@ -261,6 +252,24 @@ pub(super) fn clear_point(state: &mut LuaState) -> LuaResult<u32> {
     finish_clear_point_retail(&mut sim, id);
     sim.widgets.mark_anchor_rect_dirty(id);
     Ok(0)
+}
+
+fn clear_anchor_dependency_for_point(
+    sim: &mut crate::lua_api::SimState,
+    id: u64,
+    point: crate::widget::AnchorPoint,
+) {
+    if uses_retail_clamp_producers() {
+        return;
+    }
+    let target_id = sim
+        .widgets
+        .get(id)
+        .and_then(|frame| frame.anchors.iter().find(|anchor| anchor.point == point))
+        .and_then(|anchor| anchor.relative_to_id);
+    if let Some(target) = target_id {
+        sim.widgets.remove_anchor_dependent(target as u64, id);
+    }
 }
 
 fn finish_clear_point_retail(sim: &mut crate::lua_api::SimState, id: u64) {

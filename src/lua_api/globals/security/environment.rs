@@ -47,24 +47,28 @@ fn is_in_global_environment(state: &mut LuaState) -> LuaResult<u32> {
 
 #[cfg(test)]
 mod tests {
-    use crate::lua_api::WowLuaEnv;
-
-    #[test]
-    fn environment_helpers_track_and_swap_caller_environment() {
-        let env = WowLuaEnv::new().expect("lua env should initialize");
-
-        env.exec_rilua_secure(
-            r##"
+    const ENVIRONMENT_SWAP_SETUP: &str = r##"
             local globalEnv = GetGlobalEnvironment()
             globalEnv.CapturedSecureEnv = GetCurrentEnvironment()
             globalEnv.BeforeSwapWasSecure = globalEnv.CapturedSecureEnv ~= globalEnv
             SwapToGlobalEnvironmentReturnCount = select("#", SwapToGlobalEnvironment())
             AfterSwapIsGlobal = GetCurrentEnvironment() == GetGlobalEnvironment()
             SwapProbeValue = "global-after-swap"
-            "##,
-        )
-        .expect("secure chunk should execute");
+            "##;
+    const ENVIRONMENT_SWAP_PROBE: &str = r#"
+                return BeforeSwapWasSecure,
+                       AfterSwapIsGlobal,
+                       rawget(_G, "SwapToGlobalEnvironmentReturnCount"),
+                       tostring(rawget(_G, "SwapProbeValue")),
+                       tostring(rawget(CapturedSecureEnv, "SwapProbeValue"))
+                "#;
+    use crate::lua_api::WowLuaEnv;
 
+    #[test]
+    fn environment_helpers_track_and_swap_caller_environment() {
+        let env = WowLuaEnv::new().expect("lua env should initialize");
+        env.exec_rilua_secure(ENVIRONMENT_SWAP_SETUP)
+            .expect("secure chunk should execute");
         let (before_was_secure, after_is_global, return_count, global_value, secure_value): (
             bool,
             bool,
@@ -72,17 +76,8 @@ mod tests {
             String,
             String,
         ) = env
-            .eval(
-                r#"
-                return BeforeSwapWasSecure,
-                       AfterSwapIsGlobal,
-                       rawget(_G, "SwapToGlobalEnvironmentReturnCount"),
-                       tostring(rawget(_G, "SwapProbeValue")),
-                       tostring(rawget(CapturedSecureEnv, "SwapProbeValue"))
-                "#,
-            )
+            .eval(ENVIRONMENT_SWAP_PROBE)
             .expect("probe result should evaluate");
-
         assert!(before_was_secure);
         assert!(after_is_global);
         assert_eq!(return_count, 0);
