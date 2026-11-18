@@ -604,15 +604,15 @@ fn mists_cinematic_finished_clears_matching_active_type() {
         let env = load_blizzard_screen_with_setup(ScreenKind::Login, |env| {
             env.state().borrow_mut().movie_playback.start_results.insert(115, 0);
         });
-        env.exec("CinematicStarted(7, 42, true)")
+        env.exec("CinematicStarted(3, 42, true)")
             .expect("CinematicStarted should create an active record");
         {
             let mut state = env.state().borrow_mut();
-            state.movie_playback.cinematic_records.get_mut(&7).unwrap().started_at =
+            state.movie_playback.cinematic_records.get_mut(&3).unwrap().started_at =
                 std::time::Instant::now() - std::time::Duration::from_millis(10);
         }
         let returns: i32 = env
-            .eval("return select('#', CinematicFinished(7, true, true))")
+            .eval("return select('#', CinematicFinished(3, true, true))")
             .expect("CinematicFinished should record an active completion");
         assert_eq!(returns, 0);
         let movie_shown: bool = env
@@ -621,10 +621,10 @@ fn mists_cinematic_finished_clears_matching_active_type() {
         assert!(movie_shown, "CinematicFinished must not close MovieFrame");
         let state = env.state().borrow();
         assert_eq!(state.movie_playback.manager_movie_id, None);
-        assert!(!state.movie_playback.cinematic_records[&7].active);
+        assert!(!state.movie_playback.cinematic_records[&3].active);
         let finished = state.movie_playback.last_cinematic_finish.as_ref()
             .expect("active completion should be recorded");
-        assert_eq!(finished.movie_type, 7);
+        assert_eq!(finished.movie_type, 3);
         assert!(finished.elapsed >= std::time::Duration::from_millis(10));
         assert!(finished.user_canceled);
         assert!(finished.did_error);
