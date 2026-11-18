@@ -3,6 +3,9 @@
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::widget::AnchorPoint;
 
+#[path = "tooltip_full_env_helpers.rs"]
+mod tooltip_full_env_helpers;
+
 // WM63 O17:20-41 applies to Retail and PTR.
 fn native_tooltip_anchors() -> bool {
     matches!(
@@ -23,6 +26,15 @@ fn prepare_tooltip_layout(env: &WowLuaEnv) {
 fn update_tooltip_layout(env: &WowLuaEnv) {
     let mut state = env.state().borrow_mut();
     state.ensure_layout_rects();
+}
+
+fn load_clamped_tooltip_env() -> WowLuaEnv {
+    let env = tooltip_full_env_helpers::setup_full_env();
+    let is_clamped: bool = env
+        .eval("return GameTooltip:IsClampedToScreen()")
+        .expect("loaded GameTooltip clamp state");
+    assert!(is_clamped, "GameTooltip must inherit screen clamping");
+    env
 }
 
 #[test]
@@ -197,7 +209,7 @@ fn test_non_cursor_anchor_uses_offsets() {
 
 #[test]
 fn test_tooltip_layout_is_clamped_to_viewport_edges() {
-    let env = WowLuaEnv::new().unwrap();
+    let env = load_clamped_tooltip_env();
 
     {
         let mut state = env.state().borrow_mut();
@@ -261,7 +273,7 @@ fn test_tooltip_layout_is_clamped_to_viewport_edges() {
 
 #[test]
 fn test_tooltip_layout_is_clamped_to_top_left_viewport_edge() {
-    let env = WowLuaEnv::new().unwrap();
+    let env = load_clamped_tooltip_env();
 
     {
         let mut state = env.state().borrow_mut();
