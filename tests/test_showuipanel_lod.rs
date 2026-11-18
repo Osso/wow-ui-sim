@@ -661,7 +661,11 @@ fn settings_open_to_interface_category_opens_settings_panel() {
     }
 }
 
-#[cfg(feature = "optional-tests")]
+#[cfg(all(
+    feature = "optional-tests",
+    feature = "client-retail",
+    feature = "retail-12-1-5"
+))]
 #[test]
 fn professions_frame_loads_and_populates_specialization_tab() {
     test_timeout! {
