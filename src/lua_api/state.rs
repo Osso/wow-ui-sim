@@ -817,6 +817,8 @@ macro_rules! build_empty_sim_state {
             bnet_custom_message: String::new(),
             social_friends: default_social_friends(),
             social_restrictions: SocialRestrictionsState::default(),
+            #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+            social_system_policy_enabled: None,
             restricted_actions,
             restricted_actions_natural: [false; 6],
             restriction_chat_client_flag: false,
