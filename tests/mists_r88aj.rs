@@ -55,6 +55,49 @@ fn unit_health_registration(env: &WowLuaEnv) -> String {
     .expect("original combat-audio manager refresh should be observable")
 }
 
+const UNIT_SCAN_BOUNDARIES: &str = r#"
+    local calls = {}
+    local frame = CreateFrame("Frame")
+    frame:SetScript("OnEvent", function(_, _, unit)
+        calls[#calls + 1] = unit
+    end)
+
+    frame:RegisterUnitEvent("UNIT_HEALTH", "player", "bogus", "target")
+    FireEvent("UNIT_HEALTH", "target")
+    assert(table.concat(calls, ",") == "target", "scan continues after unknown unit")
+
+    calls = {}
+    frame:RegisterUnitEvent("UNIT_HEALTH", "player", "target", "focus", "pet", "boss1")
+    FireEvent("UNIT_HEALTH", "boss1")
+    assert(#calls == 0, "fifth unit position is ignored")
+
+    frame:RegisterUnitEvent("UNIT_HEALTH", "player", false, "target")
+    FireEvent("UNIT_HEALTH", "target")
+    assert(#calls == 0, "non-string stops the scan")
+    FireEvent("UNIT_HEALTH", "player")
+    assert(table.concat(calls, ",") == "player", "valid units before non-string remain")
+
+    local tableFrame = CreateFrame("Frame")
+    local changed = tableFrame:RegisterUnitEvent("UNIT_HEALTH", {"player"}, "target")
+    local registered, unit = tableFrame:IsEventRegistered("UNIT_HEALTH")
+    assert(changed and registered and unit == nil, "table first registers with an empty filter")
+
+    local unknownFrame = CreateFrame("Frame")
+    unknownFrame:SetScript("OnEvent", function(_, _, unit)
+        calls[#calls + 1] = unit
+    end)
+    unknownFrame:RegisterUnitEvent("UNIT_HEALTH", "player", "boss6")
+    FireEvent("UNIT_HEALTH", "boss6")
+    assert(#calls == 1, "unknown Mists token is skipped")
+"#;
+
+#[test]
+fn register_unit_event_scans_native_unit_argument_boundaries() {
+    let env = WowLuaEnv::new().expect("create Mists unit-event environment");
+    env.exec(UNIT_SCAN_BOUNDARIES)
+        .expect("Mists unit-event scan follows the verified argument rules");
+}
+
 #[test]
 fn combat_audio_manager_table_registers_unit_health_with_empty_filter() {
     let mut observed = Vec::new();
