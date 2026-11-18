@@ -44,6 +44,7 @@ fn start_movie(state: &mut LuaState) -> LuaResult<u32> {
         .get(&movie_id)
         .copied();
     let Some(result_code) = result_code else {
+        // UNKNOWN native result; nils preserve the absent host input without a guessed code.
         state.push(Val::Nil);
         state.push(Val::Nil);
         return Ok(2);
