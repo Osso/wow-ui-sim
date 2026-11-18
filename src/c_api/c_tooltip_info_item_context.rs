@@ -1,5 +1,5 @@
 //! Retail item-context lookup with AllowedWhenUntainted authentication.
-//! GetItemByID itemContext follows R88au.2; treasureContextLevel's input domain is UNKNOWN.
+//! Argument 3 follows R88au.2; argument 4 follows R88au-a.
 
 use super::ItemTooltipContext;
 use crate::items::{self, ItemInfo};
@@ -25,7 +25,7 @@ fn get_item_by_id(state: &mut LuaState) -> LuaResult<u32> {
     let key = ItemTooltipContext {
         item_id: parse_u32(arguments[0], 1)?,
         item_context: parse_optional_item_context(state, arguments[2], 3)?,
-        treasure_context_level: parse_optional_u32(arguments[3], 4)?,
+        treasure_context_level: parse_optional_treasure_level(state, arguments[3], 4)?,
     };
     // Quality is authenticated above, then ignored just as in the prior producer.
     let catalog_item_missing = items::get_item(key.item_id).is_none();
@@ -71,11 +71,22 @@ fn parse_optional_item_context(
     Ok(Some(u32::from(if context <= 191 { context } else { 0 })))
 }
 
-fn parse_optional_u32(value: Val, position: i32) -> LuaResult<Option<u32>> {
+fn parse_optional_treasure_level(
+    state: &LuaState,
+    value: Val,
+    position: i32,
+) -> LuaResult<Option<u32>> {
     if value == Val::Nil {
         return Ok(None);
     }
-    parse_u32(value, position).map(Some)
+    let signed = crate::c_api::read_untainted_signed32_argument(
+        state,
+        position,
+        API_NAME,
+        GET_ITEM_BY_ID_USAGE,
+    )?;
+    // INFERRED (simulator mapping): preserve the native signed32 request's complete bit pattern.
+    Ok(Some(signed as u32))
 }
 
 fn parse_u32(value: Val, position: i32) -> LuaResult<u32> {

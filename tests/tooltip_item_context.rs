@@ -176,6 +176,7 @@ const ASSERTIONS: &str = r#"
         assert(debug.getstacktaint() == before)
         ITCheck(601,211995,nil,1,nil); ITProperties()
         assert(debug.getstacktaint() == before, 'public recovery preserves caller')
+        return err
     end
 "#;
 
@@ -536,36 +537,45 @@ fn unknown_catalog_id_stays_empty_even_with_explicit_host_level() {
     );
 }
 
-/// VERIFIED (R88au.2, 12.1.5.70688); applicability to 70783 is INFERRED.
+/// VERIFIED (R88au.2/R88au-a, Retail 12.1.5.70688); applicability to 70783 is INFERRED.
 #[test]
-fn item_context_signed32_values_normalize_to_context_bytes() {
+fn context_arguments_use_their_distinct_signed32_conversions() {
     let env = seeded_env();
     env.state().borrow_mut().item_tooltip_levels.extend([
         (key(ITEM, Some(191), None), 605),
         (key(ITEM, Some(0), None), 607),
+        (key(ITEM, Some(0), Some(2)), 609),
+        (key(ITEM, Some(0), Some(2147483647)), 610),
         (key(ITEM, Some(0), Some(u32::MAX)), 606),
     ]);
-    // UNKNOWN native domain (R88au.5): preserve the existing treasureContextLevel max-key case.
+    // VERIFIED (R88au-a): treasure stores signed32 bits without the arg3 byte filter.
     probe(
         &env,
-        "ITCheck(605,211995,nil,191); ITCheck(601,211995,nil,'1'); ITCheck(601,211995,nil,1.9); ITCheck(607,211995,nil,-1); ITCheck(607,211995,nil,192); ITCheck(607,211995,nil,2147483647); ITCheck(606,211995,nil,0,4294967295)",
+        "ITCheck(605,211995,nil,191); ITCheck(601,211995,nil,'1'); ITCheck(601,211995,nil,1.9); ITCheck(607,211995,nil,-1); ITCheck(607,211995,nil,192); ITCheck(607,211995,nil,2147483647); ITCheck(609,211995,nil,0,'2.9'); ITCheck(609,211995,nil,0,2.9); ITCheck(610,211995,nil,0,2147483647); ITCheck(606,211995,nil,0,-1)",
     );
 }
 
-/// VERIFIED (R88au.2, 12.1.5.70688); applicability to 70783 is INFERRED.
+/// VERIFIED (R88au.2/R88au-a, Retail 12.1.5.70688); applicability to 70783 is INFERRED.
 #[test]
-fn public_context_domains_reject_wrong_types_nonfinite_fractional_and_overflow() {
+fn public_context_domains_reject_wrong_types_nonfinite_and_signed32_overflow() {
     probe(
         &seeded_env(),
         r#"
-        -- R88au.2 verifies argument-error routing, but gives no exact error text.
-        for _,v in ipairs({false,true,'PRIVATE-ItemContext',{},ITFrame,2147483648,4294967296,-2147483649,math.huge,-math.huge,0/0}) do
+        -- R88au.2: itemContext uses the signed32 reader and then filters to one byte.
+        for _,v in ipairs({false,true,'PRIVATE-ItemContext',{},ITFrame,2147483648,4294967295,4294967296,-2147483649,math.huge,-math.huge,0/0}) do
             ITReject(false,211995,nil,v,nil)
         end
-        -- UNKNOWN native arg4 conversion domain (R88au.5): retain the prior simulator cases.
-        for _,v in ipairs({false,true,'1','PRIVATE-ItemContext',{},ITFrame,-1,1.5,4294967296,math.huge,-math.huge,0/0}) do
+        -- VERIFIED (R88au-a): arg4 shares signed32 parsing but stores all 32 bits.
+        for _,v in ipairs({false,true,'PRIVATE-ItemContext','4294967295',{},ITFrame,2147483648,4294967295,-2147483649,math.huge,-math.huge,0/0}) do
             ITReject(false,211995,nil,1,v)
         end
+        local rangeError = ITReject(false,211995,nil,nil,4294967295)
+        assert(string.find(rangeError,
+            'outside of expected range -2147483648 to 2147483647', 1, true),
+            'R88au-a range reason')
+        assert(string.find(rangeError,
+            'Usage: local data = C_TooltipInfo.GetItemByID', 1, true),
+            'R88au-a Usage substring; final public text is UNKNOWN')
     "#,
     );
 }
