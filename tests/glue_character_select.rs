@@ -2619,10 +2619,7 @@ mod storeglue_r88q_tuple {
     fn env_with_records() -> common::LockedEnv {
         let env = load_blizzard_screen(ScreenKind::CharacterSelect);
         seed_purchase_records(&env);
-        env.exec(
-            "__wow_store_state.productsByID[189] = {productID=189, sharedData={name='Fixture B'}}",
-        )
-        .unwrap();
+        seed_r88q_product_inputs(&env);
         env.exec(
             r#"
             local source = debug.getinfo(CharacterSelectListUtil.GetVASInfoForGUID, 'S')
