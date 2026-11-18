@@ -33,6 +33,12 @@ const CLIENT_BUILD: &str = if cfg!(feature = "client-wowforever") {
     "68256"
 };
 
+const CLIENT_DISPLAY_EXPANSION_LEVEL: u32 = if cfg!(feature = "client-mists") {
+    4
+} else {
+    10
+};
+
 const CLIENT_INTERFACE: u32 = if cfg!(feature = "client-ptr") || cfg!(feature = "client-wowforever")
 {
     crate::client_profile::ACTIVE_INTERFACE_VERSION
@@ -153,7 +159,7 @@ end
 
 if GetClientDisplayExpansionLevel == nil then
   function GetClientDisplayExpansionLevel()
-    return 10
+    return __WOW_CLIENT_DISPLAY_EXPANSION_LEVEL__
   end
 end
 
@@ -246,6 +252,10 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
         .replace("__WOW_CLIENT_VERSION__", &version)
         .replace("__WOW_CLIENT_BUILD__", &build)
         .replace("__WOW_CLIENT_INTERFACE__", &CLIENT_INTERFACE.to_string())
+        .replace(
+            "__WOW_CLIENT_DISPLAY_EXPANSION_LEVEL__",
+            &CLIENT_DISPLAY_EXPANSION_LEVEL.to_string(),
+        )
         .replace(
             "__WOW_EXPANSION_LEVEL__",
             &crate::client_profile::ACTIVE.expansion_level().to_string(),
