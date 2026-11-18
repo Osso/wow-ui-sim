@@ -12,6 +12,7 @@ const LINK: &str = "|cff71d5ff|Hspell:101|h[Fixture Classification]|h|r";
 
 fn fixture_env() -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("classification environment");
+    crate::common::install_private_aura_api_alias(&env);
     env.exec(
         r#"
         function CheckClassification(identifier, defensive, private)
@@ -326,7 +327,7 @@ fn private_instance_state_does_not_supply_or_change_spell_classifications() {
         local record = {spellID = 101, auraInstanceID = 777, name = 'Private instance'}
         C_UnitAurasPrivate._state.privateAurasByUnit.player = {record}
         C_UnitAurasPrivate._state.auraDataByUnit.player = {[777] = record}
-        assert(C_UnitAurasPrivate.GetAuraDataByAuraInstanceIDPrivate('player', 777).spellID == 101)
+        assert(SecurePrivateAuras.GetAuraDataByAuraInstanceIDPrivate('player', 777).spellID == 101)
         CheckClassification(101, true, false); CheckClassification(777, false, false)
         CheckClassification(202, false, true)
         assert(C_UnitAurasPrivate._state.privateAurasByUnit.player[1] == record)

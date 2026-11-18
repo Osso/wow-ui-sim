@@ -9,16 +9,15 @@ use crate::widget::{AnchorPoint, Frame, FrameStrata, WidgetType};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 
-pub fn create_frame_instance(
+fn build_initial_frame(
     state: &mut LuaState,
     widget_type: WidgetType,
     frame_type: &str,
     name: Option<String>,
     parent_id: Option<u64>,
-    parent_explicit: bool,
     id: Option<i32>,
-) -> LuaResult<u64> {
-    let mut frame = Frame::new(widget_type, name.clone(), parent_id);
+) -> LuaResult<Frame> {
+    let mut frame = Frame::new(widget_type, name, parent_id);
     if widget_type == WidgetType::GameTooltip {
         frame.frame_strata = FrameStrata::Tooltip;
         frame.has_fixed_frame_strata = true;
@@ -28,12 +27,64 @@ pub fn create_frame_instance(
     }
     apply_initial_visibility(state, &mut frame)?;
     apply_addon_ownership(state, parent_id, &mut frame)?;
-
     if let Some(user_id) = id {
         frame.user_id = user_id;
     }
+    Ok(frame)
+}
 
-    let preserve_existing_name_binding = should_preserve_existing_root_frame_name(state, &name)?;
+fn initialize_created_frame(
+    state: &mut LuaState,
+    widget_type: WidgetType,
+    frame_id: u64,
+) -> LuaResult<()> {
+    install_default_children(state, widget_type, frame_id)?;
+    mark_loading_forbidden_object_table_scope(state, frame_id)?;
+    if widget_type == WidgetType::MessageFrame {
+        crate::lua_api::frame::methods::widgets::message_frame::install_message_frame_fields(
+            state, frame_id,
+        )?;
+    }
+    Ok(())
+}
+
+pub fn create_frame_instance(
+    state: &mut LuaState,
+    widget_type: WidgetType,
+    frame_type: &str,
+    name: Option<String>,
+    parent_id: Option<u64>,
+    parent_explicit: bool,
+    id: Option<i32>,
+) -> LuaResult<u64> {
+    let frame = build_initial_frame(state, widget_type, frame_type, name.clone(), parent_id, id)?;
+
+    let preserve_existing_name_binding = should_preserve_existing_frame_name(state, &name)?;
+    let (frame_id, replaced_placeholder) = register_new_frame_instance(
+        state,
+        frame,
+        parent_id,
+        parent_explicit,
+        preserve_existing_name_binding,
+    )?;
+    initialize_created_frame(state, widget_type, frame_id)?;
+    finish_frame_global_registration(
+        state,
+        name.as_deref(),
+        frame_id,
+        preserve_existing_name_binding,
+        replaced_placeholder,
+    )?;
+    Ok(frame_id)
+}
+
+fn register_new_frame_instance(
+    state: &mut LuaState,
+    frame: Frame,
+    parent_id: Option<u64>,
+    parent_explicit: bool,
+    preserve_existing_name_binding: bool,
+) -> LuaResult<(u64, Option<u64>)> {
     let frame_id = frame.id;
     let replaced_placeholder = register_and_attach_parent(
         state,
@@ -43,24 +94,21 @@ pub fn create_frame_instance(
         frame_id,
         preserve_existing_name_binding,
     )?;
-    install_default_children(state, widget_type, frame_id)?;
-    mark_loading_forbidden_object_table_scope(state, frame_id)?;
-    if widget_type == WidgetType::MessageFrame {
-        crate::lua_api::frame::methods::widgets::message_frame::install_message_frame_fields(
-            state, frame_id,
-        )?;
-    }
-    register_global_name(
-        state,
-        name.as_deref(),
-        frame_id,
-        preserve_existing_name_binding,
-    )?;
-    if let (Some(name), Some(placeholder)) = (name.as_deref(), replaced_placeholder) {
+    Ok((frame_id, replaced_placeholder))
+}
+
+fn finish_frame_global_registration(
+    state: &mut LuaState,
+    name: Option<&str>,
+    frame_id: u64,
+    preserve_existing_name_binding: bool,
+    replaced_placeholder: Option<u64>,
+) -> LuaResult<()> {
+    register_global_name(state, name, frame_id, preserve_existing_name_binding)?;
+    if let (Some(name), Some(placeholder)) = (name, replaced_placeholder) {
         rebind_secure_env_placeholder(state, name, placeholder, frame_id)?;
     }
-
-    Ok(frame_id)
+    Ok(())
 }
 
 fn mark_loading_forbidden_object_table_scope(state: &mut LuaState, frame_id: u64) -> LuaResult<()> {
@@ -333,6 +381,68 @@ fn retire_replaced_named_frame(sim: &mut SimState, old_frame_id: u64, new_frame_
     sim.invalidate_strata_buckets();
 }
 
+/// Secure-mode named objects use this policy; explicit addToSecureEnv remains separate.
+pub(crate) fn is_retail_secure_named_object_publication(sim: &SimState) -> bool {
+    crate::client_profile::is_active_retail_12_1_5() && sim.loading_addon_secure_env == Some(true)
+}
+
+pub(crate) fn publish_global_name_if_vacant(state: &mut LuaState, name: &str, value: Val) -> bool {
+    let key = state.gc.intern_string(name.as_bytes());
+    let global = state.global;
+    let existing = state.gc.tables.get(global).map_or(Val::Nil, |globals| {
+        globals.get_str(key, &state.gc.string_arena)
+    });
+    if !matches!(existing, Val::Nil) {
+        return false;
+    }
+    if let Some(globals) = state.gc.tables.get_mut(global) {
+        let _ = globals.raw_set(Val::Str(key), value, &state.gc.string_arena);
+    }
+    state.gc.barrier_back(global);
+    true
+}
+
+fn publish_named_frame_to_global_env(
+    state: &mut LuaState,
+    name: &str,
+    frame_val: Val,
+    only_if_vacant: bool,
+) -> LuaResult<()> {
+    let published = if only_if_vacant {
+        publish_global_name_if_vacant(state, name, frame_val)
+    } else {
+        let key = state.gc.intern_string(name.as_bytes());
+        let global = state.global;
+        if let Some(globals) = state.gc.tables.get_mut(global) {
+            let _ = globals.raw_set(Val::Str(key), frame_val, &state.gc.string_arena);
+        }
+        state.gc.barrier_back(global);
+        true
+    };
+    if published {
+        crate::lua_api::global_slots::refresh_installed_slots_for_name(state, name);
+        crate::lua_api::globals::compat_overrides::record_public_global_publication(state, name)?;
+    }
+    Ok(())
+}
+
+fn publish_named_frame_to_secure_env(
+    state: &mut LuaState,
+    name: &str,
+    frame_val: Val,
+    add_to_secure_env: bool,
+    only_if_vacant: bool,
+) -> LuaResult<()> {
+    if only_if_vacant {
+        crate::lua_api::globals::security::publish_secure_env_key_if_vacant(
+            state, name, frame_val,
+        )?;
+    } else if add_to_secure_env {
+        crate::lua_api::globals::security::set_secure_env_key_state(state, name, frame_val)?;
+    }
+    Ok(())
+}
+
 fn register_global_name(
     state: &mut LuaState,
     name: Option<&str>,
@@ -346,40 +456,82 @@ fn register_global_name(
         return Ok(());
     }
     let frame_val = frame_ref(state, frame_id)?;
-    let (hide_from_global_env, add_to_secure_env) = {
+    let (hide_from_global_env, add_to_secure_env, only_if_vacant) = {
         let sim = borrow_state(state)?;
         (
             sim.loading_hide_from_global_env,
             sim.loading_add_to_secure_env,
+            is_retail_secure_named_object_publication(&sim),
         )
     };
     if !hide_from_global_env {
-        let key = state.gc.intern_string(name.as_bytes());
-        let global = state.global;
-        if let Some(globals) = state.gc.tables.get_mut(global) {
-            let _ = globals.raw_set(Val::Str(key), frame_val, &state.gc.string_arena);
-        }
-        state.gc.barrier_back(global);
-        crate::lua_api::global_slots::refresh_installed_slots_for_name(state, name);
-        crate::lua_api::globals::compat_overrides::record_public_global_publication(state, name)?;
+        publish_named_frame_to_global_env(state, name, frame_val, only_if_vacant)?;
     }
-    if add_to_secure_env {
-        crate::lua_api::globals::security::set_secure_env_key_state(state, name, frame_val)?;
-    }
+    publish_named_frame_to_secure_env(state, name, frame_val, add_to_secure_env, only_if_vacant)?;
     Ok(())
 }
 
-fn should_preserve_existing_root_frame_name(
+/// INFERRED (consistent with R88an): keep the widget name index aligned when Evidence: pr46-49-decomp-answers.md, sections R88an.
+/// secure-mode publication cannot update either occupied environment name.
+fn should_preserve_existing_frame_name(
     state: &mut LuaState,
     name: &Option<String>,
 ) -> LuaResult<bool> {
     let Some(name) = name.as_deref() else {
         return Ok(false);
     };
-    if !matches!(name, "UIParent" | "WorldFrame") {
+    let (existing_id, existing_is_placeholder, secure_mode) =
+        existing_frame_name_state(state, name)?;
+    if matches!(name, "UIParent" | "WorldFrame") {
+        return Ok(existing_id.is_some());
+    }
+    if existing_id.is_none() {
         return Ok(false);
     }
-    Ok(borrow_state(state)?.widgets.get_id_by_name(name).is_some())
+    if existing_is_placeholder {
+        return Ok(false);
+    }
+    if !secure_mode {
+        return Ok(false);
+    }
+    secure_name_destinations_are_occupied(state, name)
+}
+
+fn existing_frame_name_state(
+    state: &mut LuaState,
+    name: &str,
+) -> LuaResult<(Option<u64>, bool, bool)> {
+    let sim = borrow_state(state)?;
+    let existing_id = sim.widgets.get_id_by_name(name);
+    let is_placeholder = existing_id
+        .and_then(|id| sim.widgets.get(id))
+        .is_some_and(|frame| frame.is_simulator_placeholder);
+    Ok((
+        existing_id,
+        is_placeholder,
+        is_retail_secure_named_object_publication(&sim),
+    ))
+}
+
+fn secure_name_destinations_are_occupied(state: &mut LuaState, name: &str) -> LuaResult<bool> {
+    let key = state.gc.intern_string(name.as_bytes());
+    let global_value = state
+        .gc
+        .tables
+        .get(state.global)
+        .map_or(Val::Nil, |global| {
+            global.get_str(key, &state.gc.string_arena)
+        });
+    if matches!(global_value, Val::Nil) {
+        return Ok(false);
+    }
+    let secureenv = crate::lua_api::globals::security::secure_env_table(state)?;
+    let secure_value = state
+        .gc
+        .tables
+        .get(secureenv)
+        .map_or(Val::Nil, |table| table.get_str(key, &state.gc.string_arena));
+    Ok(!matches!(secure_value, Val::Nil))
 }
 
 pub(crate) fn apply_parent_sub(name: &str, parent_id: Option<u64>, state: &SimState) -> String {

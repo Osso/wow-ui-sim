@@ -61,10 +61,9 @@ impl OnUpdateMode {
 
 #[cfg(feature = "on-update-modes")]
 pub(crate) fn register(state: &mut rilua::vm::state::LuaState) {
-    use crate::lua_api::methods::{create_table, table_set};
-
-    let enums = super::helpers::ensure_global_table(state, "Enum");
-    let modes = create_table(state);
+    let enums = super::helpers::ensure_enum_table(state);
+    let modes = super::helpers::ensure_paired_table_field(state, enums, "OnUpdateMode")
+        .expect("Enum group must have a secure registration peer");
     for (name, mode) in [
         ("Disabled", OnUpdateMode::Disabled),
         ("RunWhenVisible", OnUpdateMode::RunWhenVisible),
@@ -72,12 +71,13 @@ pub(crate) fn register(state: &mut rilua::vm::state::LuaState) {
         ("RunOnce", OnUpdateMode::RunOnce),
         ("RunAlways", OnUpdateMode::RunAlways),
     ] {
-        table_set(state, modes, name, mode.value());
+        super::helpers::set_namespace_member(state, modes, name, mode.value())
+            .expect("Enum group must have a secure registration peer");
     }
-    table_set(state, enums, "OnUpdateMode", modes);
-    let metadata = create_table(state);
+    let metadata = super::helpers::ensure_paired_table_field(state, enums, "OnUpdateModeMeta")
+        .expect("Enum metadata must have a secure registration peer");
     for (name, value) in [("MinValue", 0), ("MaxValue", 4), ("NumValues", 5)] {
-        table_set(state, metadata, name, Val::Num(f64::from(value)));
+        super::helpers::set_namespace_member(state, metadata, name, Val::Num(f64::from(value)))
+            .expect("Enum metadata must have a secure registration peer");
     }
-    table_set(state, enums, "OnUpdateModeMeta", metadata);
 }

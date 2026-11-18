@@ -31,11 +31,13 @@ VERIFIED: Retail `C_TooltipInfo.GetPvpTalent` uses the PvP talent row to build s
 - [x] VERIFIED: The early `UNLOCKED_AT_LEVEL` line uses `LevelRequired` and `HOSTILE_STATUS_COLOR` without wrapping.
 - [x] VERIFIED: Eligibility annotations are suppressed when the talent is present in each of the active group's four positions.
 - [x] VERIFIED (R73): The category mask tests the requested index shifted by its low five bits; current-slot access is guarded to `0..=3`. Tests cover supported positions and masking. UNKNOWN: general out-of-range requested-position results are not asserted. Absent helper and permission inputs retain neutral output.
-- [x] VERIFIED: A supplied eligibility pass after combat, grant, level and permission checks appends `TALENT_TOOLTIP_ADDPREVIEWPOINT` with `FRIENDLY_STATUS_COLOR`, type `0`, and wrapping.
+- [x] VERIFIED: A supplied eligibility pass after required/later level and progression checks, grant rejection, combat and permission checks appends `TALENT_TOOLTIP_ADDPREVIEWPOINT` with `FRIENDLY_STATUS_COLOR`, type `0`, and wrapping.
 - [x] VERIFIED: A supplied later level failure appends `UNLOCKED_AT_LEVEL` with `HOSTILE_STATUS_COLOR`, type `0`, and wrapping.
 - [x] VERIFIED: A supplied item-grant rejection uses a catalogued item row; it adds blank rows and either `TALENT_GRANTED_BY_ITEM` or the host-confirmed essence message. The lines use `REFUND_TOOLTIP_COLOR`, type `0`, and wrapping.
-- [x] VERIFIED (R73): Combat status takes priority over grant and later unlock status. Combat selects `TALENT_TOOLTIP_ADD_COMBAT_ERROR` with `HOSTILE_STATUS_COLOR`, type `0`, and wrapping.
-- [x] VERIFIED (R73): A failed rest-like permission or any other supplied eligibility failure selects `TALENT_TOOLTIP_ADD_REST_ERROR_PVP`. Host `rest_permission: Option<bool>` replaces the unproved mapping to XP/resting fields. `None` with no explicit eligibility result preserves neutral output; supplied permission permits preview or rejects with a rest error. This host seam is not a native default.
+- [x] VERIFIED (R88at.1/at3): Eligibility selects one failure in order: level/progression, grant rejection, combat, rest-like condition, then final player-state restriction. The later display dispatcher checks combat before grant and late unlock, but this does not reorder the earlier eligibility result. Combat selects `TALENT_TOOLTIP_ADD_COMBAT_ERROR` with `HOSTILE_STATUS_COLOR`, type `0`, and wrapping when combat is the selected status.
+- [x] INFERRED (simulator mapping): Available supplied inputs model late unlock before grant rejection before combat; the tests assert each combined case.
+- [x] VERIFIED (R88at.1/at3): The display dispatcher uses `TALENT_TOOLTIP_ADD_REST_ERROR_PVP` for rest and other selected failure statuses not handled by its combat, grant or late-unlock branches.
+- [x] INFERRED (simulator mapping): Host `rest_permission: Option<bool>` and `eligibility_by_position` supply outcomes without mapping native XP/resting fields. `None` with no explicit eligibility result preserves neutral output; supplied permission permits preview or rejects with a rest error. This host seam is not a native default.
 - [ ] UNKNOWN: The progression gate, talent/GUID rejection predicate, indirect Flags-bit reads and final player-state helper remain unmodelled; tests supply eligibility outcomes, not guessed predicates.
 - [x] VERIFIED: Inspect mode bypasses local group, selection, level and eligibility checks. It reads the granting item from current inspect GUID context, not local PvP state; a supplied item result appends `TALENT_GRANTED_BY_ITEM` with `ITEM_LEGENDARY_COLOR`, type `0`, and wrapping. An absent inspect granting-item result adds no line.
 
@@ -84,6 +86,6 @@ VERIFIED: Retail `C_TooltipInfo.GetPvpTalent` uses the PvP talent row to build s
 - Invented PvP talent, aura, essence, item-grant or resolved-spell rows.
 - Native miss-result parity and UNKNOWN eligibility failure messages.
 
-## R73 evidence boundary
+## Evidence boundary
 
-VERIFIED: R73 describes Retail 12.1.5.70688 builder decisions; the catalog export remains labeled 12.1.5.70783. INFERRED: native Retail field-name mapping (field 7 selects category, field 8 supplies the level, fields 3/4 feed ordinary spell/replacement content). The separate Forever talent-to-spell input mapping is also INFERRED and is not seeded. UNKNOWN: native final miss results and inspect-unit details remain outside this change. The existing Retail inspect seam is preserved, not extended.
+VERIFIED: R73 and R88at describe Retail 12.1.5.70688 builder and eligibility decisions; the catalog export remains labeled 12.1.5.70783. INFERRED: these decisions apply to the 70783 runtime cache. INFERRED: native Retail field-name mapping (field 7 selects category, field 8 supplies the level, fields 3/4 feed ordinary spell/replacement content). The separate Forever talent-to-spell input mapping is also INFERRED and is not seeded. UNKNOWN: native final miss results and inspect-unit details remain outside this change. The existing Retail inspect seam is preserved, not extended.

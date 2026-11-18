@@ -1,10 +1,6 @@
 use super::*;
 
-#[test]
-fn test_runtime_minimal_scrollbar_avoids_lua_createframe_for_nested_thumb() {
-    let t = load_test_xml(
-        "runtime-minimal-scrollbar-direct-grandchildren",
-        r#"
+const MINIMAL_SCROLLBAR_TEMPLATE_XML: &str = r#"
         <Ui xmlns="http://www.blizzard.com/wow/ui/">
             <EventFrame name="MinimalScrollBar" virtual="true">
                 <Frames>
@@ -20,12 +16,9 @@ fn test_runtime_minimal_scrollbar_avoids_lua_createframe_for_nested_thumb() {
                 </Frames>
             </EventFrame>
         </Ui>
-        "#,
-    );
+        "#;
 
-    t.env
-        .exec(
-            r#"
+const MINIMAL_SCROLLBAR_TEMPLATE_PROBE: &str = r#"
             local originalCreateFrame = CreateFrame
             local createCount = 0
             CreateFrame = function(...)
@@ -38,16 +31,9 @@ fn test_runtime_minimal_scrollbar_avoids_lua_createframe_for_nested_thumb() {
             assert(scrollbar.Track.Thumb ~= nil, "Thumb grandchild should exist")
             assert(scrollbar.Track.Thumb.loaded == true, "Thumb OnLoad should fire")
             assert(createCount == 1, "nested thumb should avoid Lua CreateFrame fallback, got " .. createCount)
-        "#,
-        )
-        .unwrap();
-}
+        "#;
 
-#[test]
-fn test_runtime_template_anchor_keeps_direct_offset_attributes() {
-    let t = load_test_xml(
-        "runtime-template-direct-offset",
-        r#"
+const DIRECT_OFFSET_TEMPLATE_XML: &str = r#"
         <Ui xmlns="http://www.blizzard.com/wow/ui/">
             <Frame name="DirectOffsetTemplate" virtual="true">
                 <Frames>
@@ -62,28 +48,18 @@ fn test_runtime_template_anchor_keeps_direct_offset_attributes() {
                 </Frames>
             </Frame>
         </Ui>
-        "#,
-    );
+        "#;
 
-    t.env
-        .exec(
-            r#"
+const DIRECT_OFFSET_TEMPLATE_PROBE: &str = r#"
             local parent = CreateFrame("Frame", "DirectOffsetTemplateParent", UIParent, "DirectOffsetTemplate")
             local point, relativeTo, relativePoint, x, y = parent.Child:GetPoint(1)
             assert(point == "BOTTOMLEFT", "point=" .. tostring(point))
             assert(relativePoint == "BOTTOMLEFT", "relativePoint=" .. tostring(relativePoint))
             assert(x == 19, "x=" .. tostring(x))
             assert(y == -30, "y=" .. tostring(y))
-        "#,
-        )
-        .unwrap();
-}
+        "#;
 
-#[test]
-fn test_anonymous_runtime_template_uses_registry_frame_refs_without_global_alias() {
-    let t = load_test_xml(
-        "runtime-anon-template-registry-ref",
-        r#"
+const ANONYMOUS_TEMPLATE_REGISTRY_XML: &str = r#"
         <Ui xmlns="http://www.blizzard.com/wow/ui/">
             <Frame name="AnonymousTemplate" virtual="true">
                 <Frames>
@@ -98,31 +74,16 @@ fn test_anonymous_runtime_template_uses_registry_frame_refs_without_global_alias
                 </Scripts>
             </Frame>
         </Ui>
-        "#,
-    );
+        "#;
 
-    t.env
-        .exec(
-            r#"
+const ANONYMOUS_TEMPLATE_REGISTRY_PROBE: &str = r#"
             __test_frame = CreateFrame("Frame", nil, UIParent, "AnonymousTemplate")
             assert(__test_frame.loaded == true, "anonymous template OnLoad should fire")
             assert(__test_frame.Child ~= nil, "anonymous template child should exist")
             assert(__test_frame.Child.loaded == true, "anonymous template child OnLoad should fire")
-        "#,
-        )
-        .unwrap();
+        "#;
 
-    t.assert_lua_true(
-        "return __test_frame ~= nil and __test_frame.Child ~= nil",
-        "anonymous runtime template frame should stay reachable",
-    );
-}
-
-#[test]
-fn test_partitioned_mixins_use_forbidden_object_table() {
-    let t = load_test_xml(
-        "partitioned-mixins-use-forbidden-object-table",
-        r#"
+const PARTITIONED_MIXINS_XML: &str = r#"
         <Ui xmlns="http://www.blizzard.com/wow/ui/">
             <Script>
                 PartitionedInboundMixin = {};
@@ -150,14 +111,12 @@ fn test_partitioned_mixins_use_forbidden_object_table() {
                 </Frame>
             </ScopedModifier>
         </Ui>
-        "#,
-    );
+        "#;
 
-    t.env
-        .exec(
-            r#"
-            assert(type(GetForbiddenObjectTable) == "function", "forbidden object table helper should exist")
-            local forbidden = GetForbiddenObjectTable(PartitionedFrame)
+const PARTITIONED_MIXINS_PROBE: &str = r#"
+            assert(type(__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable) == "function",
+                "forbidden object table helper should exist")
+            local forbidden = (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(PartitionedFrame)
             assert(type(forbidden) == "table", "forbidden partition should be a table")
             assert(forbidden ~= PartitionedFrame, "forbidden partition should be distinct from public frame")
             assert(PartitionedFrame.secret == nil, "KeyValues should not leak onto public partition")
@@ -168,22 +127,14 @@ fn test_partitioned_mixins_use_forbidden_object_table() {
             PartitionedFrame:WriteSecret("changed")
             assert(forbidden.secret == "changed", "delegate writes should update forbidden partition")
             assert(PartitionedFrame.secret == nil, "delegate writes should not leak onto public partition")
-        "#,
-        )
-        .unwrap();
-}
+        "#;
 
-// useForbiddenObjectTable XML ships only in the Retail, PTR and Forever Blizzard UI.
 #[cfg(any(
     feature = "client-retail",
     feature = "client-ptr",
     feature = "client-wowforever"
 ))]
-#[test]
-fn test_partitioned_inbound_mixin_returns_public_object_views() {
-    let t = load_test_xml(
-        "partitioned-inbound-mixin-public-results",
-        r#"
+const PARTITIONED_INBOUND_XML: &str = r#"
         <Ui xmlns="http://www.blizzard.com/wow/ui/">
             <Script>
                 PartitionedReturnInboundMixin = {};
@@ -194,7 +145,7 @@ fn test_partitioned_inbound_mixin_returns_public_object_views() {
                     return self.OwnedChild, self, "tail";
                 end
                 function PartitionedReturnInboundMixin:EchoViews(child, nested)
-                    assert(child == GetForbiddenObjectTable(child));
+                    assert(child == (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(child));
                     return child, nested;
                 end
             </Script>
@@ -209,16 +160,18 @@ fn test_partitioned_inbound_mixin_returns_public_object_views() {
                 </Frame>
             </ScopedModifier>
         </Ui>
-        "#,
-    );
+        "#;
 
-    t.env
-        .exec(
-            r#"
+#[cfg(any(
+    feature = "client-retail",
+    feature = "client-ptr",
+    feature = "client-wowforever"
+))]
+const PARTITIONED_INBOUND_PROBE: &str = r#"
             local frame = PartitionedInboundReturnFrame
-            local forbidden = GetForbiddenObjectTable(frame)
+            local forbidden = (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(frame)
             assert(forbidden ~= frame, "forbidden partition should be distinct from public frame")
-            assert(forbidden.OwnedChild == GetForbiddenObjectTable(frame.OwnedChild),
+            assert(forbidden.OwnedChild == (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(frame.OwnedChild),
                 "private self should hold the forbidden child view")
             assert(frame:GetOwnedChild() == frame.OwnedChild,
                 "inbound result should publish the public object view")
@@ -233,48 +186,9 @@ fn test_partitioned_inbound_mixin_returns_public_object_views() {
             assert(direct == frame.OwnedChild, "direct result is public")
             assert(returnedNested == nested and nested.child == forbidden.OwnedChild,
                 "nested references are not projected")
-        "#,
-        )
-        .unwrap();
-}
+        "#;
 
-#[test]
-fn test_plain_literal_mixins_block_still_applies_to_public_frame() {
-    let t = load_test_xml(
-        "plain-literal-mixins-block",
-        r#"
-        <Ui xmlns="http://www.blizzard.com/wow/ui/">
-            <Script>
-                PlainLiteralMixin = {};
-                function PlainLiteralMixin:MarkPlain()
-                    self.plainApplied = true;
-                end
-            </Script>
-            <Frame name="PlainLiteralMixinFrame" parent="UIParent">
-                <Mixins>
-                    <Mixin key="PlainLiteralMixin"/>
-                </Mixins>
-            </Frame>
-        </Ui>
-        "#,
-    );
-
-    t.env
-        .exec(
-            r#"
-            assert(type(PlainLiteralMixinFrame.MarkPlain) == "function", "plain literal Mixins block should apply to public frame")
-            PlainLiteralMixinFrame:MarkPlain()
-            assert(PlainLiteralMixinFrame.plainApplied == true, "plain literal mixin should run with public self")
-        "#,
-        )
-        .unwrap();
-}
-
-#[test]
-fn test_partitioned_runtime_template_uses_forbidden_object_table() {
-    let t = load_test_xml(
-        "partitioned-runtime-template-use-forbidden-object-table",
-        r#"
+const PARTITIONED_RUNTIME_TEMPLATE_XML: &str = r#"
         <Ui xmlns="http://www.blizzard.com/wow/ui/">
             <Script>
                 PartitionedTemplateInboundMixin = {};
@@ -299,30 +213,20 @@ fn test_partitioned_runtime_template_uses_forbidden_object_table() {
                 </Frame>
             </ScopedModifier>
         </Ui>
-        "#,
-    );
+        "#;
 
-    t.env
-        .exec(
-            r#"
+const PARTITIONED_RUNTIME_TEMPLATE_PROBE: &str = r#"
             local frame = CreateFrame("Frame", "PartitionedRuntimeFrame", UIParent, "PartitionedRuntimeTemplate")
-            local forbidden = GetForbiddenObjectTable(frame)
+            local forbidden = (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(frame)
             assert(frame.secret == nil, "runtime template KeyValues should not leak onto public partition")
             assert(forbidden.secret == "template-hidden", "runtime template KeyValues should land on forbidden partition")
             assert(type(frame.ReadSecret) == "function", "runtime template inbound mixin should expose public delegate")
             assert(frame.PrivateReadSecret == nil, "runtime template private mixin should not be public")
             assert(type(forbidden.PrivateReadSecret) == "function", "runtime template private mixin should be forbidden")
             assert(frame:ReadSecret() == "template-hidden", "runtime template delegate should use forbidden self")
-        "#,
-        )
-        .unwrap();
-}
+        "#;
 
-#[test]
-fn test_frame_literal_mixins_block_applies_mixins() {
-    let t = load_test_xml(
-        "frame-literal-mixins-block",
-        r#"
+const FRAME_LITERAL_MIXINS_XML: &str = r#"
         <Ui xmlns="http://www.blizzard.com/wow/ui/">
             <Script>
                 LiteralAuraContainerInboundMixin = {};
@@ -381,13 +285,10 @@ fn test_frame_literal_mixins_block_applies_mixins() {
                 </Frame>
             </ScopedModifier>
         </Ui>
-        "#,
-    );
+        "#;
 
-    t.env
-        .exec(
-            r#"
-            local forbidden = GetForbiddenObjectTable(LiteralAuraContainer)
+const FRAME_LITERAL_MIXINS_PROBE: &str = r#"
+            local forbidden = (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(LiteralAuraContainer)
             assert(LiteralAuraContainer.MarkInbound ~= nil, "literal Mixins block should apply first mixin")
             assert(LiteralAuraContainer.MarkPrivate == nil, "private secure mixin should not apply to public partition")
             assert(forbidden.MarkPrivate ~= nil, "private secure mixin should apply to forbidden partition")
@@ -422,9 +323,136 @@ fn test_frame_literal_mixins_block_applies_mixins() {
             assert(rawget(_G, "AddonLocalDirectMixin") == nil, "addon-local mixin should not leak into the public globals")
             assert(AddonLocalDirectMixinFrame.addonLocalLoaded == true, "static XML should resolve an ordinary direct mixin from the loading addon table before lifecycle dispatch")
             assert(SlotBackedDirectMixinFrame.slotBackedLoaded == true, "static XML should resolve a slot-backed public mixin after resolver functions receive a scoped fenv")
+        "#;
+
+const PARTITIONED_XML_METHOD_XML: &str = r#"
+        <Ui xmlns="http://www.blizzard.com/wow/ui/">
+            <Script>
+                PartitionedMethodPrivateMixin = {}
+                function PartitionedMethodPrivateMixin:OnLoad_Intrinsic()
+                    self.loadedSecret = true
+                end
+                function PartitionedMethodPrivateMixin:OnEvent_Intrinsic(event)
+                    self.eventSecret = event
+                end
+            </Script>
+            <ScopedModifier useForbiddenObjectTable="true">
+                <Frame name="PartitionedMethodFrame" parent="UIParent">
+                    <Mixins>
+                        <Mixin key="PartitionedMethodPrivateMixin" source="secure"/>
+                    </Mixins>
+                    <Scripts>
+                        <OnLoad method="OnLoad_Intrinsic"/>
+                        <OnEvent method="OnEvent_Intrinsic"/>
+                    </Scripts>
+                </Frame>
+            </ScopedModifier>
+        </Ui>
+        "#;
+
+const PARTITIONED_XML_METHOD_PROBE: &str = r#"
+            local handler = PartitionedMethodFrame:GetScript("OnEvent")
+            assert(type(handler) == "function", "OnEvent method binding should install a handler")
+            handler(PartitionedMethodFrame, "XML_METHOD_PROBE")
+        "#;
+
+#[test]
+fn test_runtime_minimal_scrollbar_avoids_lua_createframe_for_nested_thumb() {
+    let t = load_test_xml(
+        "runtime-minimal-scrollbar-direct-grandchildren",
+        MINIMAL_SCROLLBAR_TEMPLATE_XML,
+    );
+    t.env.exec(MINIMAL_SCROLLBAR_TEMPLATE_PROBE).unwrap();
+}
+
+#[test]
+fn test_runtime_template_anchor_keeps_direct_offset_attributes() {
+    let t = load_test_xml("runtime-template-direct-offset", DIRECT_OFFSET_TEMPLATE_XML);
+    t.env.exec(DIRECT_OFFSET_TEMPLATE_PROBE).unwrap();
+}
+
+#[test]
+fn test_anonymous_runtime_template_uses_registry_frame_refs_without_global_alias() {
+    let t = load_test_xml(
+        "runtime-anon-template-registry-ref",
+        ANONYMOUS_TEMPLATE_REGISTRY_XML,
+    );
+    t.env.exec(ANONYMOUS_TEMPLATE_REGISTRY_PROBE).unwrap();
+    t.assert_lua_true(
+        "return __test_frame ~= nil and __test_frame.Child ~= nil",
+        "anonymous runtime template frame should stay reachable",
+    );
+}
+
+#[test]
+fn test_partitioned_mixins_use_forbidden_object_table() {
+    let t = load_test_xml(
+        "partitioned-mixins-use-forbidden-object-table",
+        PARTITIONED_MIXINS_XML,
+    );
+    t.env.exec(PARTITIONED_MIXINS_PROBE).unwrap();
+}
+
+// useForbiddenObjectTable XML ships only in the Retail, PTR and Forever Blizzard UI.
+#[cfg(any(
+    feature = "client-retail",
+    feature = "client-ptr",
+    feature = "client-wowforever"
+))]
+#[test]
+fn test_partitioned_inbound_mixin_returns_public_object_views() {
+    let t = load_test_xml(
+        "partitioned-inbound-mixin-public-results",
+        PARTITIONED_INBOUND_XML,
+    );
+    t.env.exec(PARTITIONED_INBOUND_PROBE).unwrap();
+}
+
+#[test]
+fn test_plain_literal_mixins_block_still_applies_to_public_frame() {
+    let t = load_test_xml(
+        "plain-literal-mixins-block",
+        r#"
+        <Ui xmlns="http://www.blizzard.com/wow/ui/">
+            <Script>
+                PlainLiteralMixin = {};
+                function PlainLiteralMixin:MarkPlain()
+                    self.plainApplied = true;
+                end
+            </Script>
+            <Frame name="PlainLiteralMixinFrame" parent="UIParent">
+                <Mixins>
+                    <Mixin key="PlainLiteralMixin"/>
+                </Mixins>
+            </Frame>
+        </Ui>
+        "#,
+    );
+
+    t.env
+        .exec(
+            r#"
+            assert(type(PlainLiteralMixinFrame.MarkPlain) == "function", "plain literal Mixins block should apply to public frame")
+            PlainLiteralMixinFrame:MarkPlain()
+            assert(PlainLiteralMixinFrame.plainApplied == true, "plain literal mixin should run with public self")
         "#,
         )
         .unwrap();
+}
+
+#[test]
+fn test_partitioned_runtime_template_uses_forbidden_object_table() {
+    let t = load_test_xml(
+        "partitioned-runtime-template-use-forbidden-object-table",
+        PARTITIONED_RUNTIME_TEMPLATE_XML,
+    );
+    t.env.exec(PARTITIONED_RUNTIME_TEMPLATE_PROBE).unwrap();
+}
+
+#[test]
+fn test_frame_literal_mixins_block_applies_mixins() {
+    let t = load_test_xml("frame-literal-mixins-block", FRAME_LITERAL_MIXINS_XML);
+    t.env.exec(FRAME_LITERAL_MIXINS_PROBE).unwrap();
 }
 
 #[test]
@@ -494,52 +522,19 @@ fn test_xml_method_script_binds_after_inherited_template_overrides() {
 fn test_partitioned_xml_method_script_uses_forbidden_object_table() {
     let t = load_test_xml(
         "partitioned-xml-method-script-forbidden-self",
-        r#"
-        <Ui xmlns="http://www.blizzard.com/wow/ui/">
-            <Script>
-                PartitionedMethodPrivateMixin = {}
-                function PartitionedMethodPrivateMixin:OnLoad_Intrinsic()
-                    self.loadedSecret = true
-                end
-                function PartitionedMethodPrivateMixin:OnEvent_Intrinsic(event)
-                    self.eventSecret = event
-                end
-            </Script>
-            <ScopedModifier useForbiddenObjectTable="true">
-                <Frame name="PartitionedMethodFrame" parent="UIParent">
-                    <Mixins>
-                        <Mixin key="PartitionedMethodPrivateMixin" source="secure"/>
-                    </Mixins>
-                    <Scripts>
-                        <OnLoad method="OnLoad_Intrinsic"/>
-                        <OnEvent method="OnEvent_Intrinsic"/>
-                    </Scripts>
-                </Frame>
-            </ScopedModifier>
-        </Ui>
-        "#,
+        PARTITIONED_XML_METHOD_XML,
     );
-
-    t.env
-        .exec(
-            r#"
-            local handler = PartitionedMethodFrame:GetScript("OnEvent")
-            assert(type(handler) == "function", "OnEvent method binding should install a handler")
-            handler(PartitionedMethodFrame, "XML_METHOD_PROBE")
-        "#,
-        )
-        .unwrap();
-
+    t.env.exec(PARTITIONED_XML_METHOD_PROBE).unwrap();
     t.assert_lua_true(
         "return PartitionedMethodFrame.loadedSecret == nil",
         "private XML method script should not write to public frame",
     );
     t.assert_lua_true(
-        "return GetForbiddenObjectTable(PartitionedMethodFrame).loadedSecret == true",
+        "return (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(PartitionedMethodFrame).loadedSecret == true",
         "private XML method script should run with forbidden self",
     );
     t.assert_lua_true(
-        "return GetForbiddenObjectTable(PartitionedMethodFrame).eventSecret == 'XML_METHOD_PROBE'",
+        "return (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(PartitionedMethodFrame).eventSecret == 'XML_METHOD_PROBE'",
         "private XML event method should run with forbidden self",
     );
 }

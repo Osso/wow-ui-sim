@@ -158,7 +158,7 @@ fn on_update_modes_process_actual_managed_aura_dirty_phases() {
     );
     env.exec(r#"
         ModeAuraContainer = CreateFrame("ManagedAuraContainer", nil, UIParent, "CustomAuraContainerTemplate")
-        local private = GetForbiddenObjectTable(ModeAuraContainer)
+        local private = (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(ModeAuraContainer)
         assert(type(private.ProcessDirtyFlags) == "function")
         private:MarkClean(private.dirtyFlags:GetFlags())
         ModeAuraContainer:Hide()
@@ -170,7 +170,7 @@ fn on_update_modes_process_actual_managed_aura_dirty_phases() {
     env.exec(
         r#"
         assert(ModeAuraContainer:GetOnUpdateMode() == 2)
-        assert(GetForbiddenObjectTable(ModeAuraContainer):IsDirty())
+        assert((__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(ModeAuraContainer):IsDirty())
         ModeAuraContainer:Show()
     "#,
     )
@@ -178,7 +178,7 @@ fn on_update_modes_process_actual_managed_aura_dirty_phases() {
     env.fire_on_update(0.016).unwrap();
     env.exec(
         r#"
-        assert(not GetForbiddenObjectTable(ModeAuraContainer):IsDirty())
+        assert(not (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(ModeAuraContainer):IsDirty())
         assert(ModeAuraContainer:GetOnUpdateMode() == 0)
     "#,
     )
@@ -186,7 +186,7 @@ fn on_update_modes_process_actual_managed_aura_dirty_phases() {
     env.fire_on_update(0.016).unwrap();
     env.exec(
         r#"
-        assert(not GetForbiddenObjectTable(ModeAuraContainer):IsDirty())
+        assert(not (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(ModeAuraContainer):IsDirty())
         assert(ModeAuraContainer:GetOnUpdateMode() == 0)
     "#,
     )

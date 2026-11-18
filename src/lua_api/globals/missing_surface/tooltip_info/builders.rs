@@ -7,14 +7,52 @@ use crate::lua_api::frame::methods::widgets::tooltip::text_markup::{
     TooltipColorSegment, tooltip_line_text_and_color,
 };
 use crate::lua_api::methods::{
-    borrow_state, call_function_state, create_string, create_table, table_get, table_set,
-    val_to_string,
+    borrow_state, borrow_state_mut, call_function_state, create_string, create_table, table_get,
+    table_set, val_to_string,
 };
 use crate::lua_bridge::stack_val;
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 
 const LINE_TYPE_SELL_PRICE: f64 = 11.0;
+const SELL_PRICE_REQUEST_MODE: u8 = 0;
+const SELL_PRICE_NO_INVENTORY_TYPE: u8 = 0;
+const SELL_PRICE_CALCULATED_ITEM_CLASS: u8 = 3;
+const SELL_PRICE_CALCULATED_ITEM_SUBCLASS: u8 = 11;
+const SELL_PRICE_EXCLUSION_FLAGS_1: u32 = 4096;
+const SELL_PRICE_FORCE_STORED_FLAGS_1: u32 = 16384;
+const SELL_PRICE_EXCLUSION_FLAGS_3: u32 = 524288;
+const SELL_PRICE_PREVIEW_EXCEPTION_FLAGS_3: u32 = 32768;
+const SELL_PRICE_ITEM_STATUS_FLAGS: u32 = 1;
+const SELL_PRICE_ITEM_STATUS_FLAGS_0: u32 = 4096;
+const SELL_PRICE_INSTANCE_STATUS_MARKER: u32 = 2;
+const SELL_PRICE_STATUS_DURATION_SECONDS: i64 = 7_200;
+
+/// INFERRED (simulator mapping; R88aw.1-.3): carry each supported getter's request, preview and instance inputs.
+#[derive(Clone, Copy)]
+pub(super) struct RetailSellPriceRequest {
+    request_mode: u8,
+    preview: bool,
+    item_instance_location: Option<(i32, i32)>,
+}
+
+impl RetailSellPriceRequest {
+    pub(super) const fn without_instance(preview: bool) -> Self {
+        Self {
+            request_mode: SELL_PRICE_REQUEST_MODE,
+            preview,
+            item_instance_location: None,
+        }
+    }
+
+    pub(super) const fn bag_item(bag: i32, slot: i32) -> Self {
+        Self {
+            request_mode: SELL_PRICE_REQUEST_MODE,
+            preview: false,
+            item_instance_location: Some((bag, slot)),
+        }
+    }
+}
 
 #[cfg(all(test, any(feature = "profile-retail", feature = "client-ptr")))]
 #[path = "builder_contract_tests.rs"]
@@ -93,8 +131,7 @@ pub(super) fn uses_modern_tooltip_data() -> bool {
     crate::c_api::tooltip_data::enabled()
 }
 
-/// D56 builder initialization: populated results get the next `dataInstanceID`.
-/// Miss results keep their prior shape because WM82 leaves miss publication UNKNOWN.
+/// D56 builder initialization assigns the next `dataInstanceID` when a producer opts in.
 pub(super) fn stamp_data_instance(state: &mut LuaState, tooltip: Val) {
     if !uses_modern_tooltip_data() {
         return;
@@ -479,7 +516,15 @@ fn push_item_name_line(state: &mut LuaState, lines: Val, item: &items::ItemInfo)
 
 /// VERIFIED (R88p.p1): prepared maximum quantity recalculates `maxPrice` only
 /// when it exceeds current quantity; absent and non-increasing inputs keep -1.
-fn calculate_retail_sell_price_max(state: &LuaState, item_id: u32, price: u32) -> f64 {
+fn calculate_retail_sell_price_max(
+    state: &LuaState,
+    item_id: u32,
+    price: u32,
+    has_item_instance: bool,
+) -> f64 {
+    if has_item_instance {
+        return -1.0;
+    }
     let Some((current, prepared_max)) = borrow_state(state).ok().and_then(|sim| {
         sim.item_tooltip_sell_price_quantities
             .get(&item_id)
@@ -493,23 +538,146 @@ fn calculate_retail_sell_price_max(state: &LuaState, item_id: u32, price: u32) -
     f64::from(price.wrapping_mul(prepared_max))
 }
 
-/// INFERRED: catalog `sell_price` stands in for the native initial unit price.
-/// UNKNOWN: request mode, status, flags, and preview remain unmodeled.
+/// VERIFIED (R88aw.3): the forced-stored flag and inventory/class branch select stored SellPrice.
+/// INFERRED (simulator mapping): other calculated prices need an explicit host value.
+fn calculate_initial_retail_unit_price(
+    state: &LuaState,
+    item_id: u32,
+    item: &items::ItemInfo,
+) -> Option<u32> {
+    let forced_stored_price = item
+        .flags_1
+        .is_some_and(|flags| flags & SELL_PRICE_FORCE_STORED_FLAGS_1 != 0);
+    let has_item_classification = item.item_class.is_some() && item.item_subclass.is_some();
+    let uses_calculated_price_exception = item.item_class == Some(SELL_PRICE_CALCULATED_ITEM_CLASS)
+        && item.item_subclass == Some(SELL_PRICE_CALCULATED_ITEM_SUBCLASS);
+    let uses_stored_price_by_type = item.inventory_type == SELL_PRICE_NO_INVENTORY_TYPE
+        && has_item_classification
+        && !uses_calculated_price_exception;
+    if forced_stored_price || uses_stored_price_by_type {
+        return Some(item.sell_price);
+    }
+
+    borrow_state(state)
+        .ok()?
+        .item_tooltip_sell_price_unit_prices
+        .get(&(item_id, item.item_level))
+        .copied()
+}
+
+fn retail_sell_price_flags_allow(item: &items::ItemInfo, preview: bool) -> bool {
+    let Some(flags_1) = item.flags_1 else {
+        return false;
+    };
+    let Some(flags_3) = item.flags_3 else {
+        return false;
+    };
+    let no_sell_exclusion =
+        flags_1 & SELL_PRICE_EXCLUSION_FLAGS_1 == 0 && flags_3 & SELL_PRICE_EXCLUSION_FLAGS_3 == 0;
+    let preview_allowed = !preview || flags_3 & SELL_PRICE_PREVIEW_EXCEPTION_FLAGS_3 != 0;
+    no_sell_exclusion && preview_allowed
+}
+
+fn update_retail_item_status_for_sell_price(
+    state: &mut LuaState,
+    item: &items::ItemInfo,
+    location: (i32, i32),
+) -> Option<bool> {
+    let mut sim = borrow_state_mut(state).ok()?;
+    let status = sim
+        .bag_item_tooltip_sell_price_statuses
+        .get_mut(&location)?;
+    match status {
+        crate::c_api::item_tooltip::SellPriceStatusInput::StatusRecord {
+            flags,
+            recorded_time,
+            client_clock,
+        } => Some(recorded_sell_price_status_allows(
+            *flags,
+            *recorded_time,
+            *client_clock,
+        )),
+        crate::c_api::item_tooltip::SellPriceStatusInput::NoStatusRecord {
+            instance_marker_flags,
+        } => {
+            let item_flags = item.flags_0?;
+            Some(mark_sell_price_status_instance(
+                item_flags,
+                instance_marker_flags,
+            ))
+        }
+    }
+}
+
+fn recorded_sell_price_status_allows(flags: u32, recorded_time: i64, client_clock: i64) -> bool {
+    let remaining = recorded_time + SELL_PRICE_STATUS_DURATION_SECONDS - client_clock;
+    flags & SELL_PRICE_ITEM_STATUS_FLAGS == 0 && remaining > 0
+}
+
+fn mark_sell_price_status_instance(item_flags: u32, instance_marker_flags: &mut u32) -> bool {
+    let should_mark = item_flags & SELL_PRICE_ITEM_STATUS_FLAGS_0 != 0
+        && *instance_marker_flags & SELL_PRICE_INSTANCE_STATUS_MARKER == 0;
+    if should_mark {
+        *instance_marker_flags |= SELL_PRICE_INSTANCE_STATUS_MARKER;
+    }
+    should_mark
+}
+
+/// VERIFIED (R88p.p1/R88aw): mode, status, item flags, preview and nonzero initial price gate type 11.
+/// INFERRED (simulator mapping): catalog/stored-price fields and explicit status snapshots supply those inputs.
 fn push_retail_sell_price_line(
     state: &mut LuaState,
     lines: Val,
     index: i64,
     item_id: u32,
-    price: u32,
+    item: &items::ItemInfo,
+    request: Option<RetailSellPriceRequest>,
 ) {
-    if price == 0 || crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail {
+    let Some((request, price)) = eligible_retail_sell_price(state, item_id, item, request) else {
         return;
-    }
-
-    let max_price = calculate_retail_sell_price_max(state, item_id, price);
+    };
+    let max_price = calculate_retail_sell_price_max(
+        state,
+        item_id,
+        price,
+        request.item_instance_location.is_some(),
+    );
     let line = push_tooltip_line(state, lines, index, LINE_TYPE_SELL_PRICE, "", None, false);
     table_set(state, line, "price", Val::Num(f64::from(price)));
     table_set(state, line, "maxPrice", Val::Num(max_price));
+}
+
+fn eligible_retail_sell_price(
+    state: &mut LuaState,
+    item_id: u32,
+    item: &items::ItemInfo,
+    request: Option<RetailSellPriceRequest>,
+) -> Option<(RetailSellPriceRequest, u32)> {
+    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail {
+        return None;
+    }
+    let request = request?;
+    if !retail_sell_price_gates_allow(state, item, request) {
+        return None;
+    }
+    let price = calculate_initial_retail_unit_price(state, item_id, item)?;
+    (price != 0).then_some((request, price))
+}
+
+fn retail_sell_price_gates_allow(
+    state: &mut LuaState,
+    item: &items::ItemInfo,
+    request: RetailSellPriceRequest,
+) -> bool {
+    if request.request_mode != SELL_PRICE_REQUEST_MODE
+        || !retail_sell_price_flags_allow(item, request.preview)
+    {
+        return false;
+    }
+    let Some(location) = request.item_instance_location else {
+        return true;
+    };
+    update_retail_item_status_for_sell_price(state, item, location) == Some(false)
 }
 
 fn tooltip_detail_color(state: &mut LuaState) -> (f64, f64, f64) {
@@ -674,14 +842,43 @@ pub(super) fn tooltip_for_item_id(state: &mut LuaState, item_id: u32) -> Val {
     tooltip_for_item_info(state, item_id, item)
 }
 
+pub(super) fn tooltip_for_item_id_with_request(
+    state: &mut LuaState,
+    item_id: u32,
+    request: RetailSellPriceRequest,
+) -> Val {
+    let Some(item) = items::get_item(item_id) else {
+        return empty_tooltip(state, TOOLTIP_TYPE_ITEM);
+    };
+    tooltip_for_item_info_with_request(state, item_id, item, request)
+}
+
 pub(super) fn tooltip_for_item_info(
     state: &mut LuaState,
     item_id: u32,
     item: &items::ItemInfo,
 ) -> Val {
+    build_item_tooltip(state, item_id, item, None)
+}
+
+pub(super) fn tooltip_for_item_info_with_request(
+    state: &mut LuaState,
+    item_id: u32,
+    item: &items::ItemInfo,
+    request: RetailSellPriceRequest,
+) -> Val {
+    build_item_tooltip(state, item_id, item, Some(request))
+}
+
+fn build_item_tooltip(
+    state: &mut LuaState,
+    item_id: u32,
+    item: &items::ItemInfo,
+    request: Option<RetailSellPriceRequest>,
+) -> Val {
     let tooltip = create_identified_tooltip(state, TOOLTIP_TYPE_ITEM, item_id);
     stamp_data_instance(state, tooltip);
-    populate_item_tooltip_lines(state, tooltip, item_id, item);
+    populate_item_tooltip_lines(state, tooltip, item_id, item, request);
     tooltip
 }
 
@@ -790,6 +987,7 @@ pub(super) fn populate_item_tooltip_lines(
     tooltip: Val,
     item_id: u32,
     item: &items::ItemInfo,
+    sell_price_request: Option<RetailSellPriceRequest>,
 ) {
     let saved_top = state.top;
     state.push(tooltip);
@@ -810,7 +1008,7 @@ pub(super) fn populate_item_tooltip_lines(
         publish_item_metadata(state, tooltip, &input);
         push_item_stat_lines(state, lines, &input.stats, &mut next_index);
     }
-    push_retail_sell_price_line(state, lines, next_index, item_id, item.sell_price);
+    push_retail_sell_price_line(state, lines, next_index, item_id, item, sell_price_request);
     state.top = saved_top;
 }
 

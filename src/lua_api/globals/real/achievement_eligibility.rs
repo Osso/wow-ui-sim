@@ -4,7 +4,7 @@
 
 use crate::c_api::parse_numeric_string;
 use crate::client_profile::{ACTIVE, ClientProfile};
-use crate::lua_api::globals::security::{secure_env_table, set_in_both_envs_rilua};
+use crate::lua_api::globals::security::{secure_env_table, set_secure_env_key_state};
 use crate::lua_api::methods::borrow_state;
 use crate::lua_api::state::{AchievementEligibilityInputs, AchievementEligibilityOperation};
 use crate::lua_bridge::stack_val;
@@ -25,7 +25,7 @@ pub(crate) fn register(lua: &mut rilua::Lua) -> crate::Result<()> {
     // simulator mechanism; never manufacture a shared context.
     if secure_env_table(lua.state_mut()).is_ok() {
         let handler = LuaApiMut::get_global_val(lua, NAME);
-        set_in_both_envs_rilua(lua, NAME, handler)?;
+        set_secure_env_key_state(lua.state_mut(), NAME, handler)?;
     }
     Ok(())
 }

@@ -73,7 +73,7 @@ fn selected_communities_consumer_uses_original_channel_color_and_local_id() {
                 .borrow()
                 .addons
                 .iter()
-                .filter(|addon| addon.loaded)
+                .filter(|addon| addon.is_loaded())
                 .map(|addon| addon.folder_name.clone())
                 .collect();
             let owner_position = addon_order

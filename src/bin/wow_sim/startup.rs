@@ -269,7 +269,7 @@ mod tests {
             .iter()
             .find(|addon| addon.folder_name == "EnhanceQoLSharedMedia");
         let encountered = shared_media.is_some();
-        let loaded = shared_media.is_some_and(|addon| addon.loaded);
+        let loaded = shared_media.is_some_and(|addon| addon.is_loaded());
         eprintln!(
             "[trusted-budget-probe] phase=after_headless_settle owner=EnhanceQoLSharedMedia encountered={encountered} loaded={loaded}"
         );

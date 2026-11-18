@@ -13,110 +13,177 @@ use crate::lua_bridge::FromStack;
 use parse::{HyperlinkRequest, Marker};
 use rilua::{LuaResult, Val, vm::state::LuaState};
 
+enum HyperlinkOutput {
+    Tooltip(Val),
+    False,
+    Unknown,
+    AlreadyPublished(u32),
+}
+
 pub(crate) fn get_hyperlink(state: &mut LuaState) -> LuaResult<u32> {
+    let Some(request) = parse_hyperlink_request(state)? else {
+        return crate::c_api::tooltip_data::unknown_getter_failure();
+    };
+    match route_hyperlink(state, request)? {
+        HyperlinkOutput::Tooltip(tooltip) => {
+            state.push(tooltip);
+            Ok(1)
+        }
+        HyperlinkOutput::False => {
+            state.push(Val::Bool(false));
+            Ok(1)
+        }
+        HyperlinkOutput::Unknown => crate::c_api::tooltip_data::unknown_getter_failure(),
+        HyperlinkOutput::AlreadyPublished(results) => Ok(results),
+    }
+}
+
+fn parse_hyperlink_request(state: &mut LuaState) -> LuaResult<Option<HyperlinkRequest>> {
     let text = String::from_stack(state, 1)?;
     let first = Option::<i32>::from_stack(state, 2)?;
     let second = Option::<i32>::from_stack(state, 3)?;
     let hide_price = Option::<bool>::from_stack(state, 4)?.unwrap_or(false);
     // The initializer's pre-existing second field is zero in our request model.
-    let Some(request) = parse::parse(&text, first, second, hide_price, 0) else {
-        return crate::c_api::tooltip_data::unknown_getter_failure();
-    };
-    let tooltip = match request {
-        HyperlinkRequest::Item(request) => tooltip_for_item_hyperlink(state, &request.link)?,
-        HyperlinkRequest::Spell(request) => tooltip_for_link_spell(state, request.spell_id),
+    Ok(parse::parse(&text, first, second, hide_price, 0))
+}
+
+fn route_hyperlink(state: &mut LuaState, request: HyperlinkRequest) -> LuaResult<HyperlinkOutput> {
+    match request {
+        HyperlinkRequest::Item(request) => Ok(HyperlinkOutput::Tooltip(
+            tooltip_for_item_hyperlink(state, &request.link, request.hide_vendor_price)?,
+        )),
+        HyperlinkRequest::Spell(request) => Ok(HyperlinkOutput::Tooltip(tooltip_for_link_spell(
+            state,
+            request.spell_id,
+        ))),
         HyperlinkRequest::Currency { id, quantity } => {
-            if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
-                let Some(currency_id) = i32::try_from(id).ok() else {
-                    return crate::c_api::tooltip_data::unknown_getter_failure();
-                };
-                let Some(tooltip) = crate::c_api::c_tooltip_info_currency::build_currency_tooltip(
-                    state,
-                    currency_id,
-                    Some(quantity),
-                )?
-                else {
-                    return crate::c_api::tooltip_data::unknown_getter_failure();
-                };
-                tooltip
-            } else {
-                let Some(currency) = i32::try_from(id)
-                    .ok()
-                    .and_then(crate::lua_api::globals::currency_data::get_currency_by_id)
-                else {
-                    return crate::c_api::tooltip_data::unknown_getter_failure();
-                };
-                let tooltip = tooltip_for_currency(state, currency, Some(quantity));
-                // R82 Q3 currency title is type 0, not a spell-name line.
-                let lines = crate::lua_api::methods::table_get(state, tooltip, "lines");
-                if let Val::Table(lines) = lines {
-                    let line = state
-                        .gc
-                        .tables
-                        .get(lines)
-                        .map(|lines| lines.get_int(1))
-                        .unwrap_or(Val::Nil);
-                    restore_plain_line_type(state, line);
-                }
-                tooltip
-            }
+            Ok(currency_hyperlink_tooltip(state, id, quantity)?
+                .map_or(HyperlinkOutput::Unknown, HyperlinkOutput::Tooltip))
         }
         // R82 proves the service's false result, not a synchronous server response.
-        HyperlinkRequest::Trade { .. } => {
-            state.push(Val::Bool(false));
-            return Ok(1);
-        }
+        HyperlinkRequest::Trade { .. } => Ok(HyperlinkOutput::False),
+        other => route_special_hyperlink(state, other),
+    }
+}
+
+fn route_special_hyperlink(
+    state: &mut LuaState,
+    request: HyperlinkRequest,
+) -> LuaResult<HyperlinkOutput> {
+    let output = match request {
         HyperlinkRequest::Single {
             marker: Marker::Quest,
             id,
-        } => {
-            let title = borrow_state(state)?
-                .quest_log_entries
-                .entries
-                .iter()
-                .find(|entry| entry.quest_id as u32 == id)
-                .map(|entry| entry.title.clone());
-            let Some(title) = title else {
-                return crate::c_api::tooltip_data::unknown_getter_failure();
-            };
-            let tooltip = compose_tooltip(state, 23.0, (id != 0).then_some(f64::from(id)));
-            let line = append_line(state, tooltip, 0.0, &title, None);
-            restore_plain_line_type(state, line);
-            tooltip
-        }
+        } => quest_hyperlink_tooltip(state, id)?
+            .map_or(HyperlinkOutput::Unknown, HyperlinkOutput::Tooltip),
         HyperlinkRequest::Single {
             marker: Marker::PvpTalent,
             id,
-        } => {
-            let Some(spell_id) = pvp_talent_spell(state, id)? else {
-                return crate::c_api::tooltip_data::unknown_getter_failure();
-            };
-            // R82 secondaryFlag=true suppresses all grant/inspect annotations.
-            tooltip_for_link_spell(state, spell_id)
-        }
+        } => pvp_talent_hyperlink_tooltip(state, id)?
+            .map_or(HyperlinkOutput::Unknown, HyperlinkOutput::Tooltip),
         HyperlinkRequest::AzeriteEssence { id, rank } => {
-            let Some(input) = borrow_state(state)?
-                .hyperlink_tooltip
-                .essence_spells
-                .get(&(id, rank))
-                .cloned()
-            else {
-                return crate::c_api::tooltip_data::unknown_getter_failure();
-            };
-            let tooltip = compose_tooltip(state, 8.0, Some(f64::from(id)));
-            let line = append_line(state, tooltip, 0.0, &input.main_heading, None);
-            restore_plain_line_type(state, line);
-            append_spell_lines(state, tooltip, input.main_spell_id);
-            let line = append_line(state, tooltip, 0.0, &input.passive_heading, None);
-            restore_plain_line_type(state, line);
-            append_spell_lines(state, tooltip, input.passive_spell_id);
-            tooltip
+            essence_hyperlink_tooltip(state, id, rank)?
+                .map_or(HyperlinkOutput::Unknown, HyperlinkOutput::Tooltip)
         }
         // Producer-specific descriptor rows are composed by the hyperlink route.
-        other => return power_route(state, other),
+        other => HyperlinkOutput::AlreadyPublished(power_route(state, other)?),
     };
-    state.push(tooltip);
-    Ok(1)
+    Ok(output)
+}
+
+fn currency_hyperlink_tooltip(
+    state: &mut LuaState,
+    id: u32,
+    quantity: i32,
+) -> LuaResult<Option<Val>> {
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+        return retail_currency_hyperlink_tooltip(state, id, quantity);
+    }
+    non_retail_currency_hyperlink_tooltip(state, id, quantity)
+}
+
+fn retail_currency_hyperlink_tooltip(
+    state: &mut LuaState,
+    id: u32,
+    quantity: i32,
+) -> LuaResult<Option<Val>> {
+    let Ok(currency_id) = i32::try_from(id) else {
+        return Ok(None);
+    };
+    crate::c_api::c_tooltip_info_currency::build_currency_tooltip(
+        state,
+        currency_id,
+        Some(quantity),
+    )
+}
+
+fn non_retail_currency_hyperlink_tooltip(
+    state: &mut LuaState,
+    id: u32,
+    quantity: i32,
+) -> LuaResult<Option<Val>> {
+    let Some(currency) = i32::try_from(id)
+        .ok()
+        .and_then(crate::lua_api::globals::currency_data::get_currency_by_id)
+    else {
+        return Ok(None);
+    };
+    let tooltip = tooltip_for_currency(state, currency, Some(quantity));
+    // R82 Q3 currency title is type 0, not a spell-name line.
+    let lines = crate::lua_api::methods::table_get(state, tooltip, "lines");
+    if let Val::Table(lines) = lines {
+        let line = state
+            .gc
+            .tables
+            .get(lines)
+            .map(|lines| lines.get_int(1))
+            .unwrap_or(Val::Nil);
+        restore_plain_line_type(state, line);
+    }
+    Ok(Some(tooltip))
+}
+
+fn quest_hyperlink_tooltip(state: &mut LuaState, id: u32) -> LuaResult<Option<Val>> {
+    let title = borrow_state(state)?
+        .quest_log_entries
+        .entries
+        .iter()
+        .find(|entry| entry.quest_id as u32 == id)
+        .map(|entry| entry.title.clone());
+    let Some(title) = title else {
+        return Ok(None);
+    };
+    let tooltip = compose_tooltip(state, 23.0, (id != 0).then_some(f64::from(id)));
+    let line = append_line(state, tooltip, 0.0, &title, None);
+    restore_plain_line_type(state, line);
+    Ok(Some(tooltip))
+}
+
+fn pvp_talent_hyperlink_tooltip(state: &mut LuaState, id: u32) -> LuaResult<Option<Val>> {
+    let Some(spell_id) = pvp_talent_spell(state, id)? else {
+        return Ok(None);
+    };
+    // R82 secondaryFlag=true suppresses all grant/inspect annotations.
+    Ok(Some(tooltip_for_link_spell(state, spell_id)))
+}
+
+fn essence_hyperlink_tooltip(state: &mut LuaState, id: u32, rank: u32) -> LuaResult<Option<Val>> {
+    let input = borrow_state(state)?
+        .hyperlink_tooltip
+        .essence_spells
+        .get(&(id, rank))
+        .cloned();
+    let Some(input) = input else {
+        return Ok(None);
+    };
+    let tooltip = compose_tooltip(state, 8.0, Some(f64::from(id)));
+    let line = append_line(state, tooltip, 0.0, &input.main_heading, None);
+    restore_plain_line_type(state, line);
+    append_spell_lines(state, tooltip, input.main_spell_id);
+    let line = append_line(state, tooltip, 0.0, &input.passive_heading, None);
+    restore_plain_line_type(state, line);
+    append_spell_lines(state, tooltip, input.passive_spell_id);
+    Ok(Some(tooltip))
 }
 
 fn pvp_talent_spell(state: &LuaState, id: u32) -> LuaResult<Option<u32>> {

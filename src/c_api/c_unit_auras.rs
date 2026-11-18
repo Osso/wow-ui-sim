@@ -167,16 +167,18 @@ pub(crate) fn register_sound_trigger_enum(state: &mut LuaState, enums: Val) {
     )) {
         return;
     }
-    let values = create_table(state);
+    let values = super::ensure_paired_table_field(state, enums, "UnitAuraSoundTrigger")
+        .expect("Enum group must have a secure registration peer");
     for (name, value) in [("Added", 0), ("ApplicationsIncreased", 1), ("Removed", 2)] {
-        table_set(state, values, name, Val::Num(value as f64));
+        super::set_namespace_member(state, values, name, Val::Num(value as f64))
+            .expect("Enum group must have a secure registration peer");
     }
-    table_set(state, enums, "UnitAuraSoundTrigger", values);
-    let metadata = create_table(state);
+    let metadata = super::ensure_paired_table_field(state, enums, "UnitAuraSoundTriggerMeta")
+        .expect("Enum metadata must have a secure registration peer");
     for (name, value) in [("MinValue", 0), ("MaxValue", 2), ("NumValues", 3)] {
-        table_set(state, metadata, name, Val::Num(value as f64));
+        super::set_namespace_member(state, metadata, name, Val::Num(value as f64))
+            .expect("Enum metadata must have a secure registration peer");
     }
-    table_set(state, enums, "UnitAuraSoundTriggerMeta", metadata);
 }
 
 fn get_aura_caster_guid(state: &mut LuaState) -> LuaResult<u32> {

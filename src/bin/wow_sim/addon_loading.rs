@@ -357,11 +357,9 @@ fn merged_addon_enable_overrides(
 }
 
 fn is_addon_loaded(env: &WowLuaEnv, name: &str) -> bool {
-    env.state()
-        .borrow()
-        .addons
-        .iter()
-        .any(|addon| addon.folder_name == name && addon.loaded)
+    env.state().borrow().addons.iter().any(|addon| {
+        addon.folder_name == name && addon.is_loaded_in_environment(addon.use_secure_env)
+    })
 }
 
 pub fn scan_addon_paths(
@@ -564,7 +562,7 @@ fn record_lua_failure_addons(env: &WowLuaEnv, first_error: usize, stats: &mut Lo
     stats.loaded_with_lua_errors = state
         .addons
         .iter()
-        .filter(|addon| addon.loaded && stats.lua_error_addons.contains(&addon.folder_name))
+        .filter(|addon| addon.is_loaded() && stats.lua_error_addons.contains(&addon.folder_name))
         .count();
 }
 
@@ -714,7 +712,7 @@ fn should_load_registered_addon(env: &WowLuaEnv, name: &str) -> bool {
         .addons
         .iter()
         .find(|addon| addon.folder_name == name)
-        .is_some_and(|addon| addon.enabled && !addon.loaded)
+        .is_some_and(|addon| addon.enabled && !addon.is_loaded_in_environment(addon.use_secure_env))
 }
 
 fn missing_required_dependency_error(env: &WowLuaEnv, name: &str) -> Option<String> {
@@ -764,7 +762,11 @@ fn mark_addon_loaded(env: &WowLuaEnv, name: &str, r: &LoadResult) {
     let t = r.timing.total().as_secs_f64();
     let mut s = env.state().borrow_mut();
     if let Some(a) = s.addons.iter_mut().find(|a| a.folder_name == name) {
-        a.loaded = true;
+        if a.use_secure_env {
+            a.secure_loaded = true;
+        } else {
+            a.loaded = true;
+        }
         a.load_time_secs = t;
     }
 }

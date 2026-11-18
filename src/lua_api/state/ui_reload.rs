@@ -82,6 +82,7 @@ impl SimState {
         self.addon_initialization_failures.clear();
         self.loading_addon_index = None;
         self.loading_addon_stack.clear();
+        self.loading_addon_secure_env = None;
         self.executing_addon_index = None;
         self.loading_nil_symbol_environment = None;
         self.loading_scoped_script_env = None;
