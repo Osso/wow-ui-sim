@@ -695,6 +695,9 @@ pub struct SimState {
     pub ranged_auto_attack_spell_id: u32,
     /// Host null override; None uses the INFERRED active-player context.
     pub spell_cast_context_is_null: Option<bool>,
+    /// UNKNOWN native value; INFERRED mapping: None means no metadata-source input.
+    #[cfg(feature = "retail-12-1-5")]
+    pub spell_identifier_metadata_source: Option<i32>,
     /// Explicit simulator input for older C_Spell and spellbook count queries.
     #[cfg(feature = "retail-12-0-0")]
     pub spell_cast_counts: HashMap<u32, u32>,
