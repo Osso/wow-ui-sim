@@ -2,6 +2,8 @@ use crate::common;
 
 #[cfg(all(feature = "optional-tests", feature = "client-retail"))]
 use wow_ui_sim::c_api::c_character_creation::{StartingZoneChoiceInput, StartingZoneChoicesInput};
+#[cfg(all(feature = "optional-tests", feature = "client-retail"))]
+use wow_ui_sim::c_api::store_catalog_model::{StoreProductInput, StoreProductSharedData};
 use wow_ui_sim::loader::{discover_blizzard_addons_for_screen, load_addon};
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::paths::default_blizzard_ui_addons_path;
@@ -2617,10 +2619,7 @@ mod storeglue_r88q_tuple {
     fn env_with_records() -> common::LockedEnv {
         let env = load_blizzard_screen(ScreenKind::CharacterSelect);
         seed_purchase_records(&env);
-        env.exec(
-            "__wow_store_state.productsByID[189] = {productID=189, sharedData={name='Fixture B'}}",
-        )
-        .unwrap();
+        seed_r88q_product_inputs(&env);
         env.exec(
             r#"
             local source = debug.getinfo(CharacterSelectListUtil.GetVASInfoForGUID, 'S')
@@ -3064,9 +3063,31 @@ const R88Q_REMOVAL_BEFORE: &str = r#"
     R88qBeforeAbsent = {CharacterSelectListUtil.GetVASInfoForGUID('Player-3-c3')}
 "#;
 
-// Shared RED/GREEN host product input for the original Glue consumer.
-// Preserve the existing complete product 2003; supply only the absent fixture 189.
-#[cfg(feature = "optional-tests")]
+// INFERRED (simulator mapping): fixture product rows supply details to the
+// original Glue consumer through C_StoreSecure.GetProductInfo. R88q.q1 proves
+// that the consumer passes the product ID; it does not prove native acquisition.
+#[cfg(all(feature = "optional-tests", feature = "client-retail"))]
+fn seed_r88q_product_inputs(env: &WowLuaEnv) {
+    let products = [2003, 189].map(|product_id| StoreProductInput {
+        product_id,
+        supported: true,
+        session_eligible: true,
+        display_eligible: true,
+        dynamic_bundle: false,
+        product_type: None,
+        shared_data: StoreProductSharedData::default(),
+    });
+    env.state()
+        .borrow_mut()
+        .store_glue
+        .store_secure
+        .catalog
+        .products
+        .extend(products);
+}
+
+// Other profiles still expose the compatibility bootstrap's Lua product table.
+#[cfg(all(feature = "optional-tests", not(feature = "client-retail")))]
 fn seed_r88q_product_inputs(env: &WowLuaEnv) {
     env.exec(
         "__wow_store_state.productsByID[189] = {productID=189, sharedData={name='Fixture B'}}",
