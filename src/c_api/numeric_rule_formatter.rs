@@ -5,8 +5,7 @@ mod model;
 
 use crate::c_api::ensure_namespace;
 use crate::lua_api::methods::{
-    call_function_state, create_string, create_table, registry_get, registry_set, table_get,
-    table_set_static,
+    call_function_state, create_string, registry_get, registry_set, table_get, table_set_static,
 };
 use crate::lua_bridge::{FromStack, stack_val, table_set_rust_fn_static};
 use model::Breakpoint;
@@ -38,27 +37,23 @@ pub(super) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResu
 
 fn register_rounding_enum(state: &mut LuaState) -> LuaResult<()> {
     let enums = ensure_namespace(state, "Enum")?;
-    let values = create_table(state);
-    for (name, value) in [("Nearest", 0.0), ("Up", 1.0), ("Down", 2.0)] {
-        table_set_static(state, values, name, Val::Num(value));
-    }
-    table_set_static(
+    let values = Val::Table(crate::c_api::ensure_namespace_table_field(
         state,
-        Val::Table(enums),
+        enums,
         "NumericRuleFormatRounding",
-        values,
-    );
-    let metadata = create_table(state);
-    for (name, value) in [("MinValue", 0.0), ("MaxValue", 2.0), ("NumValues", 3.0)] {
-        table_set_static(state, metadata, name, Val::Num(value));
+    )?);
+    for (name, value) in [("Nearest", 0.0), ("Up", 1.0), ("Down", 2.0)] {
+        crate::c_api::set_namespace_member(state, values, name, Val::Num(value))?;
     }
     let enum_meta = ensure_namespace(state, "EnumMeta")?;
-    table_set_static(
+    let metadata = Val::Table(crate::c_api::ensure_namespace_table_field(
         state,
-        Val::Table(enum_meta),
+        enum_meta,
         "NumericRuleFormatRounding",
-        metadata,
-    );
+    )?);
+    for (name, value) in [("MinValue", 0.0), ("MaxValue", 2.0), ("NumValues", 3.0)] {
+        crate::c_api::set_namespace_member(state, metadata, name, Val::Num(value))?;
+    }
     Ok(())
 }
 

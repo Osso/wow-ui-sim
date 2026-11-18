@@ -98,6 +98,7 @@ fn mark_declared_dependencies_unloaded(env: &wow_ui_sim::lua_api::WowLuaEnv) {
     for addon in &mut state.addons {
         if dependencies.iter().any(|name| addon.folder_name == *name) {
             addon.loaded = false;
+            addon.secure_loaded = false;
         }
     }
 }
@@ -120,10 +121,7 @@ fn assert_addons_start_unloaded(env: &wow_ui_sim::lua_api::WowLuaEnv) {
         .expect("initial addon loaded-state probe should run");
 
     assert!(
-        !colors_loaded
-            && !help_plate_loaded
-            && !managed_frame_system_loaded
-            && !root_loaded,
+        !colors_loaded && !help_plate_loaded && !managed_frame_system_loaded && !root_loaded,
         "the declared dependencies and `{ROOT}` must start unloaded"
     );
 }

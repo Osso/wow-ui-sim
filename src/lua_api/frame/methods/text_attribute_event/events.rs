@@ -230,12 +230,20 @@ pub(super) fn set_script(state: &mut LuaState) -> LuaResult<u32> {
     if matches!(handler, Val::Nil) {
         remove_rilua_script_binding(state, frame_id, &handler_name, ScriptBinding::Normal);
     } else {
-        if !matches!(handler, Val::Function(_)) {
+        let Val::Function(function_ref) = handler else {
             return Err(runtime_error(format!(
                 "SetScript: handler for '{handler_name}' must be a function or nil"
             )));
-        }
-        set_rilua_script(state, frame_id, &handler_name, handler);
+        };
+        let function = rilua::Function::from_gc_ref(function_ref);
+        crate::lua_api::loader_env::apply_loading_scoped_fenv_state(state, &function)
+            .map_err(|error| runtime_error(error.to_string()))?;
+        set_rilua_script(
+            state,
+            frame_id,
+            &handler_name,
+            Val::Function(function.gc_ref()),
+        );
         imply_mouse_enabled_for_mouse_handler(state, frame_id, &handler_name)?;
     }
     Ok(0)

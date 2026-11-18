@@ -93,8 +93,10 @@ pub fn get_source_location(state: &mut LuaState) -> LuaResult<u32> {
         state.push(Val::Nil);
         return Ok(1);
     };
-    let owner_addon = frame.owner_addon;
-    let location = source_location_for_owner(&sim, owner_addon);
+    let location = frame
+        .source_location
+        .clone()
+        .or_else(|| source_location_for_owner(&sim, frame.owner_addon));
     drop(sim);
     match location {
         Some(loc) => {

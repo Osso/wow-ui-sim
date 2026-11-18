@@ -51,11 +51,9 @@ pub fn load_discovered_blizzard_addons_into_env(
 }
 
 fn is_addon_loaded(env: &WowLuaEnv, name: &str) -> bool {
-    env.state()
-        .borrow()
-        .addons
-        .iter()
-        .any(|addon| addon.folder_name == name && addon.loaded)
+    env.state().borrow().addons.iter().any(|addon| {
+        addon.folder_name == name && addon.is_loaded_in_environment(addon.use_secure_env)
+    })
 }
 
 pub fn build_blizzard_addon_closure_env(

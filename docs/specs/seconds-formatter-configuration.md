@@ -11,7 +11,7 @@
 - [x] Configuration remains intact while a formatter survives garbage collection and is isolated from other formatter instances.
 - [x] Formatter identity and stored setter values remain intact; maximum-mode switching is specified below. Retail 12.0.5+, PTR, and Forever formatting use the shared native-duration backend; profiles without that feature retain their existing placeholder behavior. Formatting policy is specified separately in [duration formatting](seconds-formatter-format.md).
 - [x] Both current PTR and earlier retail expose these methods through the existing proxy lookup path.
-- [x] Re-registering `C_StringUtil` during post-EnvironmentCleanup restoration preserves the existing namespace and formatter factory, keeping public/secure references consistent and existing/new formatters usable. This preserves existing profile formatting behavior; it does not add a fallback or upgrade formatting semantics.
+- [ ] On Retail 12.1.5, initial publication exposes callable ordinary and secure factories with distinct function objects, and simulator post-cleanup restoration keeps existing and newly created formatter objects usable through both environments. VERIFIED — Native evidence establishes the initial function distinction only; it does not establish identity after restoration. This preserves existing profile formatting behavior without adding a fallback or upgrading formatting semantics. Evidence: pr46-49-decomp-answers.md, sections R88g.3.q3.
 
 ### Interval whitespace modes
 

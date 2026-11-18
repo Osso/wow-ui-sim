@@ -237,11 +237,11 @@ fn seconds_formatter_native_custom_aura_button_keeps_formatter_handle() {
                     local container = CreateFrame('AuraContainer', nil, UIParent, 'CustomAuraContainerTemplate')
                     local ran = false
                     local provider = __secureenv.AuraContainerUtil.CreateCustomFrameProvider(
-                        GetForbiddenObjectTable(container), {batchSize=1,
+                        (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(container), {batchSize=1,
                         templateNames={'CustomAuraButtonTemplate'}, initializeFrame=function(button)
                             local label = button:CreateFontString(nil, 'OVERLAY')
                             button:SetDurationText(label, {textFormatter=formatter})
-                            local binding = GetForbiddenObjectTable(button):GetDurationTextBinding()
+                            local binding = (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(button):GetDurationTextBinding()
                             for _, case in ipairs({{5, '5s'}, {60, '1m'}, {0.125, '0.125s'}}) do
                                 binding:SetDuration(case[1])
                                 binding:UpdateFontString()

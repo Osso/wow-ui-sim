@@ -176,7 +176,7 @@ fn load_auto_hide_real_dependencies() -> WowLuaEnv {
                 .borrow()
                 .addons
                 .iter()
-                .any(|addon| { addon.folder_name == prerequisite && addon.loaded }),
+                .any(|addon| { addon.folder_name == prerequisite && addon.is_loaded() }),
             "{prerequisite} did not finish loading"
         );
     }

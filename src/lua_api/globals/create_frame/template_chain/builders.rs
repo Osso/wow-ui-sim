@@ -647,7 +647,7 @@ fn chained_handler_template() -> (&'static str, &'static str) {
     (
         r#"
             local handler_name, first, second = ...
-            local report = debug.getregistry()["__report_script_error"]
+            local report = GetGlobalEnvironment().debug.getregistry()["__report_script_error"]
             return function(self, ...)
                 if securecall then
                     securecall(first, self, ...)

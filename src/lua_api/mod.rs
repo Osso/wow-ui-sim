@@ -70,6 +70,7 @@ mod state_hit_grid;
 pub(crate) mod state_render;
 pub(crate) mod state_types;
 pub(crate) mod string_format;
+pub(crate) mod string_format_legacy;
 #[allow(dead_code)] // Phase 3 infrastructure — callers added during VM switch
 pub(crate) mod taint;
 pub(crate) mod talent_state;

@@ -5,11 +5,6 @@
 //! modeled simulator state, so keep them out of the central runtime bootstrap.
 
 const DEBUG_ENVIRONMENT_DEFAULTS_LUA: &str = r#"
-if AddSourceLocationExclude == nil then
-  function AddSourceLocationExclude()
-  end
-end
-
 if GetButtonMetatable == nil then
   function GetButtonMetatable()
     if CreateFrame == nil then
@@ -190,7 +185,19 @@ if debug ~= nil and debug.getfenv ~= nil then
 end
 "#;
 
+/// temporary: master's no-op fallback. Only Retail 12.1.5 registers the real
+/// R88y `AddSourceLocationExclude`; other profiles' native behavior is UNKNOWN. Evidence: pr46-49-decomp-answers.md, sections R88y.
+const SOURCE_LOCATION_EXCLUDE_FALLBACK_LUA: &str = r#"
+if AddSourceLocationExclude == nil then
+  function AddSourceLocationExclude()
+  end
+end
+"#;
+
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
+    if !crate::client_profile::is_active_retail_12_1_5() {
+        lua.exec(SOURCE_LOCATION_EXCLUDE_FALLBACK_LUA)?;
+    }
     lua.exec(DEBUG_ENVIRONMENT_DEFAULTS_LUA)?;
     Ok(())
 }
@@ -199,19 +206,10 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
 mod tests {
     use crate::lua_api::WowLuaEnv;
 
-    #[test]
-    fn installs_debug_environment_defaults() {
-        let env = WowLuaEnv::new().expect("lua env should initialize");
-        crate::lua_api::env_init::trace_debug_getter_values(
-            &mut env.lua.borrow_mut(),
-            "installs_debug_environment_defaults_before_probe",
-        );
-
-        let trace_enabled = std::env::var("WOW_SIM_TRACE_DEBUG_GETTERS").as_deref() == Ok("1");
-        let retail_secret_values = cfg!(feature = "retail-12-1-0");
-        let probe = format!(
-            "local traceDebugGettersEnabled = {trace_enabled}\nlocal retailSecretValues = {retail_secret_values}\n{}",
-            r#"
+    const DEBUG_ENVIRONMENT_DEFAULTS_PROBE: &str = concat!(
+        "local traceDebugGettersEnabled = __TRACE_GETTERS_ENABLED__\n",
+        "local retailSecretValues = __RETAIL_SECRET_VALUES__\n",
+        r#"
                 local function traceDebugGetters(phase, marker)
                     if not traceDebugGettersEnabled then return end
                     print("[DebugGetterProbe]", phase, "GetCallstackHeight",
@@ -242,14 +240,35 @@ mod tests {
                 if type(debuglocals) ~= "function" then return "debuglocals_type" end
                 if type(debuglocals(1)) ~= "string" then return "debuglocals_value" end
                 SetErrorCallstackHeight(4)
-                AddSourceLocationExclude("example.lua")
                 return "ok"
-                "#,
+                "#
+    );
+
+    #[test]
+    fn installs_debug_environment_defaults() {
+        let env = WowLuaEnv::new().expect("lua env should initialize");
+        crate::lua_api::env_init::trace_debug_getter_values(
+            &mut env.lua.borrow_mut(),
+            "installs_debug_environment_defaults_before_probe",
         );
+        let trace_enabled = std::env::var("WOW_SIM_TRACE_DEBUG_GETTERS").as_deref() == Ok("1");
+        let retail_secret_values = cfg!(feature = "retail-12-1-0");
+        let probe = DEBUG_ENVIRONMENT_DEFAULTS_PROBE
+            .replace(
+                "__TRACE_GETTERS_ENABLED__",
+                if trace_enabled { "true" } else { "false" },
+            )
+            .replace(
+                "__RETAIL_SECRET_VALUES__",
+                if retail_secret_values {
+                    "true"
+                } else {
+                    "false"
+                },
+            );
         let result: String = env
             .eval(&probe)
             .expect("debug environment defaults probe should run");
-
         assert_eq!(result, "ok");
     }
 }

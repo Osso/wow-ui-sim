@@ -18,12 +18,10 @@ fn retail_game_startup_env() -> WowLuaEnv {
 
     let startup = discover_blizzard_startup_addons_for_screen(&ui, ScreenKind::Game);
     for addon in startup {
-        let already_loaded = env
-            .state()
-            .borrow()
-            .addons
-            .iter()
-            .any(|loaded| loaded.folder_name == addon.name && loaded.loaded);
+        let already_loaded = env.state().borrow().addons.iter().any(|loaded| {
+            loaded.folder_name == addon.name
+                && loaded.is_loaded_in_environment(loaded.use_secure_env)
+        });
         if !already_loaded {
             load_startup_addon(&env.loader_env(), &addon.toc_path, addon.kind, None)
                 .unwrap_or_else(|error| panic!("load startup {}: {error}", addon.name));

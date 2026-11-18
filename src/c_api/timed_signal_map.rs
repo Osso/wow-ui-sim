@@ -37,6 +37,15 @@ pub(crate) struct DueTimedSignal {
 }
 
 pub(crate) fn register_c_timer_timed_signal_map(state: &mut LuaState) -> LuaResult<()> {
+    if crate::client_profile::is_active_retail_12_1_5() {
+        return crate::c_api::register_namespace_function_from_r88y(
+            state,
+            "C_Timer",
+            "NewTimedSignalMap",
+            new_timed_signal_map,
+        );
+    }
+
     let c_timer = ensure_namespace(state, "C_Timer")?;
     table_set_rust_fn_static(state, c_timer, "NewTimedSignalMap", new_timed_signal_map)
 }
