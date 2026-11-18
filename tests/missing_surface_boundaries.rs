@@ -3,13 +3,8 @@ fn loaded_global_table_owners_publish_tables() {
     // VERIFIED — the Retail panel fixture loads the original table owners.
     // UIParentPanelManager.lua:21 replaces UISpecialFrames after bootstrap.
     let env = crate::common::panel_fixtures::setup_env();
-    let (static_popups, panel_windows, soundkit, special_frames): (
-        String,
-        String,
-        String,
-        String,
-    ) = env
-        .eval(
+    let (static_popups, panel_windows, soundkit, special_frames): (String, String, String, String) =
+        env.eval(
             r#"
             return type(StaticPopupDialogs),
                    type(UIPanelWindows),
