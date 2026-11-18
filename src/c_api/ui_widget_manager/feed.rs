@@ -312,6 +312,25 @@ fn upsert_membership(entries: &mut Vec<WidgetSetEntry>, entry: &WidgetSetEntry) 
 
 fn supply_visualization(sim: &mut crate::lua_api::SimState, id: f64, record: WidgetVisualization) {
     let key = WidgetId::from_number(id);
+    clear_visualization_inputs(sim, id, key);
+    insert_visualization(sim, id, key, record);
+}
+
+fn clear_visualization_inputs(sim: &mut crate::lua_api::SimState, id: f64, key: WidgetId) {
+    clear_primary_visualization_inputs(sim, key);
+    sim.button_header_inputs.widgets.remove(&key);
+    #[cfg(feature = "retail-12-0-0")]
+    if id > 0.0 && id <= u32::MAX as f64 && id.fract() == 0.0 {
+        sim.prey_inputs.widgets.remove(&(id as u32));
+    }
+}
+
+fn clear_primary_visualization_inputs(sim: &mut crate::lua_api::SimState, key: WidgetId) {
+    clear_first_visualization_inputs(sim, key);
+    clear_second_visualization_inputs(sim, key);
+}
+
+fn clear_first_visualization_inputs(sim: &mut crate::lua_api::SimState, key: WidgetId) {
     let inputs = &mut sim.ui_widget_inputs;
     inputs.icon_and_text.remove(&key);
     inputs.icon_text_and_background.remove(&key);
@@ -328,6 +347,10 @@ fn supply_visualization(sim: &mut crate::lua_api::SimState, id: f64, record: Wid
     inputs.unit_power_bars.remove(&key);
     inputs.fill_up_frames.remove(&key);
     inputs.map_pin_animations.remove(&key);
+}
+
+fn clear_second_visualization_inputs(sim: &mut crate::lua_api::SimState, key: WidgetId) {
+    let inputs = &mut sim.ui_widget_inputs;
     inputs.tug_of_war.remove(&key);
     inputs.texture_and_text.remove(&key);
     inputs.texture_and_text_row.remove(&key);
@@ -343,115 +366,186 @@ fn supply_visualization(sim: &mut crate::lua_api::SimState, id: f64, record: Wid
     inputs.discrete_progress_steps.remove(&key);
     inputs.bullet_text_lists.remove(&key);
     inputs.text_column_rows.remove(&key);
-    sim.button_header_inputs.widgets.remove(&key);
-    #[cfg(feature = "retail-12-0-0")]
-    if id > 0.0 && id <= u32::MAX as f64 && id.fract() == 0.0 {
-        sim.prey_inputs.widgets.remove(&(id as u32));
+}
+
+fn insert_visualization(
+    sim: &mut crate::lua_api::SimState,
+    id: f64,
+    key: WidgetId,
+    record: WidgetVisualization,
+) {
+    let Some(record) = store_first_visualization_group(sim, key, record) else {
+        return;
+    };
+    let Some(record) = store_second_visualization_group(sim, key, record) else {
+        return;
+    };
+    let Some(record) = store_third_visualization_group(sim, key, record) else {
+        return;
+    };
+    let Some(record) = store_fourth_visualization_group(sim, key, record) else {
+        return;
+    };
+    let Some(record) = store_fifth_visualization_group(sim, key, record) else {
+        return;
+    };
+    store_remaining_visualization(sim, id, key, record);
+}
+
+fn store_first_visualization_group(
+    sim: &mut crate::lua_api::SimState,
+    key: WidgetId,
+    record: WidgetVisualization,
+) -> Option<WidgetVisualization> {
+    match record {
+        WidgetVisualization::IconTextAndBackground(record) => store_visualization_record(
+            &mut sim.ui_widget_inputs.icon_text_and_background,
+            key,
+            record,
+        ),
+        WidgetVisualization::IconTextAndCurrencies(record) => store_visualization_record(
+            &mut sim.ui_widget_inputs.icon_text_and_currencies,
+            key,
+            record,
+        ),
+        WidgetVisualization::HorizontalCurrencies(record) => {
+            store_visualization_record(&mut sim.ui_widget_inputs.horizontal_currencies, key, record)
+        }
+        WidgetVisualization::ItemDisplay(record) => {
+            store_visualization_record(&mut sim.ui_widget_inputs.item_display, key, record)
+        }
+        WidgetVisualization::CaptureBar(record) => {
+            store_visualization_record(&mut sim.ui_widget_inputs.capture_bars, key, record)
+        }
+        record => Some(record),
     }
+}
+
+fn store_second_visualization_group(
+    sim: &mut crate::lua_api::SimState,
+    key: WidgetId,
+    record: WidgetVisualization,
+) -> Option<WidgetVisualization> {
+    match record {
+        WidgetVisualization::StatusBar(record) => {
+            store_visualization_record(&mut sim.ui_widget_inputs.status_bars, key, record)
+        }
+        WidgetVisualization::DoubleStatusBar(record) => {
+            store_visualization_record(&mut sim.ui_widget_inputs.double_status_bars, key, record)
+        }
+        WidgetVisualization::DoubleStateIconRow(record) => {
+            store_visualization_record(&mut sim.ui_widget_inputs.double_state_icons, key, record)
+        }
+        WidgetVisualization::ZoneControl(record) => {
+            store_visualization_record(&mut sim.ui_widget_inputs.zone_controls, key, record)
+        }
+        WidgetVisualization::CaptureZone(record) => {
+            store_visualization_record(&mut sim.ui_widget_inputs.capture_zones, key, record)
+        }
+        WidgetVisualization::TextureWithAnimation(record) => store_visualization_record(
+            &mut sim.ui_widget_inputs.textures_with_animation,
+            key,
+            record,
+        ),
+        record => Some(record),
+    }
+}
+
+fn store_third_visualization_group(
+    sim: &mut crate::lua_api::SimState,
+    key: WidgetId,
+    record: WidgetVisualization,
+) -> Option<WidgetVisualization> {
+    match record {
+        WidgetVisualization::UnitPowerBar(record) => {
+            store_visualization_record(&mut sim.ui_widget_inputs.unit_power_bars, key, record)
+        }
+        WidgetVisualization::FillUpFrames(record) => {
+            store_visualization_record(&mut sim.ui_widget_inputs.fill_up_frames, key, record)
+        }
+        WidgetVisualization::MapPinAnimation(record) => {
+            store_visualization_record(&mut sim.ui_widget_inputs.map_pin_animations, key, record)
+        }
+        WidgetVisualization::TugOfWar(record) => {
+            store_visualization_record(&mut sim.ui_widget_inputs.tug_of_war, key, record)
+        }
+        WidgetVisualization::TextureAndText(record) => {
+            store_visualization_record(&mut sim.ui_widget_inputs.texture_and_text, key, record)
+        }
+        WidgetVisualization::TextureAndTextRow(record) => {
+            store_visualization_record(&mut sim.ui_widget_inputs.texture_and_text_row, key, record)
+        }
+        record => Some(record),
+    }
+}
+
+fn store_fourth_visualization_group(
+    sim: &mut crate::lua_api::SimState,
+    key: WidgetId,
+    record: WidgetVisualization,
+) -> Option<WidgetVisualization> {
+    match record {
+        WidgetVisualization::TextWithState(record) => {
+            store_visualization_record(&mut sim.ui_widget_inputs.text_with_state, key, record)
+        }
+        WidgetVisualization::TextWithSubtext(record) => {
+            store_visualization_record(&mut sim.ui_widget_inputs.text_with_subtext, key, record)
+        }
+        WidgetVisualization::DoubleIconAndText(record) => {
+            store_visualization_record(&mut sim.ui_widget_inputs.double_icon_and_text, key, record)
+        }
+        WidgetVisualization::BulletTextList(record) => {
+            store_visualization_record(&mut sim.ui_widget_inputs.bullet_text_lists, key, record)
+        }
+        WidgetVisualization::TextColumnRow(record) => {
+            store_visualization_record(&mut sim.ui_widget_inputs.text_column_rows, key, record)
+        }
+        WidgetVisualization::SpellDisplay(record) => {
+            store_visualization_record(&mut sim.ui_widget_inputs.spell_display, key, record)
+        }
+        record => Some(record),
+    }
+}
+
+fn store_fifth_visualization_group(
+    sim: &mut crate::lua_api::SimState,
+    key: WidgetId,
+    record: WidgetVisualization,
+) -> Option<WidgetVisualization> {
+    match record {
+        WidgetVisualization::Spacer(record) => {
+            store_visualization_record(&mut sim.ui_widget_inputs.spacers, key, record)
+        }
+        WidgetVisualization::StackedResourceTracker(record) => {
+            store_visualization_record(&mut sim.ui_widget_inputs.stacked_resources, key, record)
+        }
+        WidgetVisualization::ScenarioHeaderCurrencies(record) => {
+            store_visualization_record(&mut sim.ui_widget_inputs.scenario_currencies, key, record)
+        }
+        WidgetVisualization::ScenarioHeaderTimer(record) => {
+            store_visualization_record(&mut sim.ui_widget_inputs.scenario_timers, key, record)
+        }
+        WidgetVisualization::ScenarioHeaderDelves(record) => {
+            store_visualization_record(&mut sim.ui_widget_inputs.scenario_delves, key, record)
+        }
+        WidgetVisualization::DiscreteProgressSteps(record) => store_visualization_record(
+            &mut sim.ui_widget_inputs.discrete_progress_steps,
+            key,
+            record,
+        ),
+        record => Some(record),
+    }
+}
+
+fn store_remaining_visualization(
+    sim: &mut crate::lua_api::SimState,
+    id: f64,
+    key: WidgetId,
+    record: WidgetVisualization,
+) {
     match record {
         WidgetVisualization::IconAndText(record) => {
             sim.ui_widget_inputs.icon_and_text.insert(key, record);
-        }
-        WidgetVisualization::IconTextAndBackground(record) => {
-            sim.ui_widget_inputs
-                .icon_text_and_background
-                .insert(key, record);
-        }
-        WidgetVisualization::IconTextAndCurrencies(record) => {
-            sim.ui_widget_inputs
-                .icon_text_and_currencies
-                .insert(key, record);
-        }
-        WidgetVisualization::HorizontalCurrencies(record) => {
-            sim.ui_widget_inputs
-                .horizontal_currencies
-                .insert(key, record);
-        }
-        WidgetVisualization::ItemDisplay(record) => {
-            sim.ui_widget_inputs.item_display.insert(key, record);
-        }
-        WidgetVisualization::CaptureBar(record) => {
-            sim.ui_widget_inputs.capture_bars.insert(key, record);
-        }
-        WidgetVisualization::StatusBar(record) => {
-            sim.ui_widget_inputs.status_bars.insert(key, record);
-        }
-        WidgetVisualization::TugOfWar(record) => {
-            sim.ui_widget_inputs.tug_of_war.insert(key, record);
-        }
-        WidgetVisualization::MapPinAnimation(record) => {
-            sim.ui_widget_inputs.map_pin_animations.insert(key, record);
-        }
-        WidgetVisualization::FillUpFrames(record) => {
-            sim.ui_widget_inputs.fill_up_frames.insert(key, record);
-        }
-        WidgetVisualization::UnitPowerBar(record) => {
-            sim.ui_widget_inputs.unit_power_bars.insert(key, record);
-        }
-        WidgetVisualization::TextureWithAnimation(record) => {
-            sim.ui_widget_inputs
-                .textures_with_animation
-                .insert(key, record);
-        }
-        WidgetVisualization::CaptureZone(record) => {
-            sim.ui_widget_inputs.capture_zones.insert(key, record);
-        }
-        WidgetVisualization::ZoneControl(record) => {
-            sim.ui_widget_inputs.zone_controls.insert(key, record);
-        }
-        WidgetVisualization::DoubleStateIconRow(record) => {
-            sim.ui_widget_inputs.double_state_icons.insert(key, record);
-        }
-        WidgetVisualization::DoubleStatusBar(record) => {
-            sim.ui_widget_inputs.double_status_bars.insert(key, record);
-        }
-        WidgetVisualization::TextureAndText(record) => {
-            sim.ui_widget_inputs.texture_and_text.insert(key, record);
-        }
-        WidgetVisualization::TextureAndTextRow(record) => {
-            sim.ui_widget_inputs
-                .texture_and_text_row
-                .insert(key, record);
-        }
-        WidgetVisualization::Spacer(record) => {
-            sim.ui_widget_inputs.spacers.insert(key, record);
-        }
-        WidgetVisualization::StackedResourceTracker(record) => {
-            sim.ui_widget_inputs.stacked_resources.insert(key, record);
-        }
-        WidgetVisualization::ScenarioHeaderDelves(record) => {
-            sim.ui_widget_inputs.scenario_delves.insert(key, record);
-        }
-        WidgetVisualization::ScenarioHeaderTimer(record) => {
-            sim.ui_widget_inputs.scenario_timers.insert(key, record);
-        }
-        WidgetVisualization::ScenarioHeaderCurrencies(record) => {
-            sim.ui_widget_inputs.scenario_currencies.insert(key, record);
-        }
-        WidgetVisualization::SpellDisplay(record) => {
-            sim.ui_widget_inputs.spell_display.insert(key, record);
-        }
-        WidgetVisualization::TextWithState(record) => {
-            sim.ui_widget_inputs.text_with_state.insert(key, record);
-        }
-        WidgetVisualization::TextWithSubtext(record) => {
-            sim.ui_widget_inputs.text_with_subtext.insert(key, record);
-        }
-        WidgetVisualization::DoubleIconAndText(record) => {
-            sim.ui_widget_inputs
-                .double_icon_and_text
-                .insert(key, record);
-        }
-        WidgetVisualization::DiscreteProgressSteps(record) => {
-            sim.ui_widget_inputs
-                .discrete_progress_steps
-                .insert(key, record);
-        }
-        WidgetVisualization::BulletTextList(record) => {
-            sim.ui_widget_inputs.bullet_text_lists.insert(key, record);
-        }
-        WidgetVisualization::TextColumnRow(record) => {
-            sim.ui_widget_inputs.text_column_rows.insert(key, record);
         }
         WidgetVisualization::ButtonHeader(record) => {
             sim.button_header_inputs.widgets.insert(key, record);
@@ -461,4 +555,13 @@ fn supply_visualization(sim: &mut crate::lua_api::SimState, id: f64, record: Wid
             sim.prey_inputs.widgets.insert(id as u32, record);
         }
     }
+}
+
+fn store_visualization_record<T>(
+    map: &mut std::collections::HashMap<WidgetId, T>,
+    key: WidgetId,
+    record: T,
+) -> Option<WidgetVisualization> {
+    map.insert(key, record);
+    None
 }
