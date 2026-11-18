@@ -83,33 +83,18 @@ impl WidgetRegistry {
     pub fn new() -> Self {
         Self {
             layout_pixel_scale: pixel_scale::LayoutPixelScale::default(),
-            widgets: FxHashMap::with_capacity_and_hasher(
-                Self::INITIAL_CAPACITY,
-                Default::default(),
-            ),
-            names: FxHashMap::with_capacity_and_hasher(Self::INITIAL_CAPACITY, Default::default()),
+            widgets: Self::reserved_widget_map(Self::INITIAL_CAPACITY),
+            names: Self::reserved_widget_map(Self::INITIAL_CAPACITY),
             ordered_ids: Vec::with_capacity(Self::INITIAL_CAPACITY),
             child_links: Self::initial_id_pair_set(),
-            event_listeners: FxHashMap::with_capacity_and_hasher(512, Default::default()),
+            event_listeners: Self::reserved_widget_map(512),
             all_event_listeners: FxHashSet::with_capacity_and_hasher(64, Default::default()),
-            render_dirty_ids: RefCell::new(FxHashSet::with_capacity_and_hasher(
-                256,
-                Default::default(),
-            )),
-            render_dirty_sources: RefCell::new(FxHashMap::with_capacity_and_hasher(
-                64,
-                Default::default(),
-            )),
+            render_dirty_ids: RefCell::new(Self::initial_render_dirty_ids()),
+            render_dirty_sources: RefCell::new(Self::reserved_widget_map(64)),
             current_dirty_source: RefCell::new(None),
-            anchor_dependents: FxHashMap::with_capacity_and_hasher(
-                Self::INITIAL_CAPACITY,
-                Default::default(),
-            ),
+            anchor_dependents: Self::reserved_widget_map(Self::INITIAL_CAPACITY),
             ordered_anchor_dependents: FxHashMap::default(),
-            frame_anchor_targets: FxHashMap::with_capacity_and_hasher(
-                Self::INITIAL_CAPACITY,
-                Default::default(),
-            ),
+            frame_anchor_targets: Self::reserved_widget_map(Self::INITIAL_CAPACITY),
             rect_dirty_ids: Self::initial_id_set(),
             hit_grid_dirty_ids: Self::initial_id_set(),
             pending_layout_ids: Self::initial_id_set(),
@@ -119,6 +104,14 @@ impl WidgetRegistry {
             layout_canvas_size: None,
             size_changed_ids: FxHashSet::default(),
         }
+    }
+
+    fn reserved_widget_map<K, V>(capacity: usize) -> FxHashMap<K, V> {
+        FxHashMap::with_capacity_and_hasher(capacity, Default::default())
+    }
+
+    fn initial_render_dirty_ids() -> FxHashSet<u64> {
+        FxHashSet::with_capacity_and_hasher(256, Default::default())
     }
 
     fn initial_id_set() -> FxHashSet<u64> {
@@ -434,6 +427,23 @@ impl WidgetRegistry {
             .get(&parent_id)
             .map(|p| (p.effective_alpha, p.effective_scale))
             .unwrap_or((1.0, 1.0));
+        self.reparent_child_if_needed(parent_id, child_id);
+        let new_link = if let Some(parent) = self.widgets.get_mut(&parent_id)
+            && self.child_links.insert((parent_id, child_id))
+        {
+            parent.children.push(child_id);
+            true
+        } else {
+            false
+        };
+        if new_link {
+            self.copy_window_movement_context(child_id, Some(parent_id));
+        }
+        self.propagate_effective_alpha(child_id, parent_eff_alpha);
+        self.propagate_effective_scale(child_id, parent_eff_scale);
+    }
+
+    fn reparent_child_if_needed(&mut self, parent_id: u64, child_id: u64) {
         let old_parent_id = self
             .widgets
             .get(&child_id)
@@ -452,19 +462,6 @@ impl WidgetRegistry {
                 child.parent_id = Some(parent_id);
             }
         }
-        let new_link = if let Some(parent) = self.widgets.get_mut(&parent_id)
-            && self.child_links.insert((parent_id, child_id))
-        {
-            parent.children.push(child_id);
-            true
-        } else {
-            false
-        };
-        if new_link {
-            self.copy_window_movement_context(child_id, Some(parent_id));
-        }
-        self.propagate_effective_alpha(child_id, parent_eff_alpha);
-        self.propagate_effective_scale(child_id, parent_eff_scale);
     }
 
     /// Iterate over all widget IDs.

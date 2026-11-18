@@ -146,15 +146,24 @@ fn apply_tooltip_owner(
         args.x_offset,
         args.y_offset,
     );
-    if uses_retail_clamp_producers() && args.anchor_kind != "ANCHOR_PRESERVE" {
+    reindex_tooltip_owner_anchors(sim, tooltip_id, &args.anchor_kind, mouse_position.is_none());
+    record_tooltip_owner(sim, tooltip_id, args);
+    true
+}
+
+fn reindex_tooltip_owner_anchors(
+    sim: &mut crate::lua_api::SimState,
+    tooltip_id: u64,
+    anchor_kind: &str,
+    cursor_position_missing: bool,
+) {
+    if uses_retail_clamp_producers() && anchor_kind != "ANCHOR_PRESERVE" {
         sim.widgets
             .resolve_named_anchor_targets_for_frame(tooltip_id);
-        if is_cursor_tooltip_anchor(&args.anchor_kind) && mouse_position.is_none() {
+        if is_cursor_tooltip_anchor(anchor_kind) && cursor_position_missing {
             sim.widgets.request_anchor_propagation(tooltip_id, false);
         }
     }
-    record_tooltip_owner(sim, tooltip_id, args);
-    true
 }
 
 fn reset_propagation_on_changed_tooltip_owner(
@@ -200,8 +209,6 @@ fn record_tooltip_owner(
 }
 
 pub(super) fn set_object_tooltip_position(state: &mut LuaState) -> LuaResult<u32> {
-    use crate::widget::{Anchor, AnchorPoint};
-
     let tooltip_id = frame_id_from_stack(state, 1)?;
     let owner_id = {
         let sim = borrow_state(state)?;
@@ -218,6 +225,18 @@ pub(super) fn set_object_tooltip_position(state: &mut LuaState) -> LuaResult<u32
     let Some(tooltip) = sim.widgets.get_mut_visual(tooltip_id) else {
         return Ok(0);
     };
+    anchor_object_tooltip(tooltip, owner_id);
+    if uses_retail_clamp_producers() {
+        sim.widgets
+            .resolve_named_anchor_targets_for_frame(tooltip_id);
+    }
+    sim.widgets.mark_rect_dirty(tooltip_id);
+    Ok(0)
+}
+
+fn anchor_object_tooltip(tooltip: &mut crate::widget::Frame, owner_id: u64) {
+    use crate::widget::{Anchor, AnchorPoint};
+
     tooltip.anchors.clear();
     tooltip.anchors.push(Anchor {
         point: AnchorPoint::Bottom,
@@ -227,12 +246,6 @@ pub(super) fn set_object_tooltip_position(state: &mut LuaState) -> LuaResult<u32
         x_offset: 0.0,
         y_offset: 0.0,
     });
-    if uses_retail_clamp_producers() {
-        sim.widgets
-            .resolve_named_anchor_targets_for_frame(tooltip_id);
-    }
-    sim.widgets.mark_rect_dirty(tooltip_id);
-    Ok(0)
 }
 
 fn apply_tooltip_anchor(

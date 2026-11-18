@@ -33,16 +33,7 @@ pub(super) fn moving_drag_anchor_update(
 
     let rect = frame.layout_rect?;
     let scale = frame.effective_scale.max(1e-6);
-    let parent_id = if uses_retail_clamp_producers() {
-        Some(COORDINATE_ROOT as u64)
-    } else {
-        frame.parent_id
-    };
-    let (parent_x, parent_y) = parent_id
-        .and_then(|id| state.widgets.get(id).and_then(|parent| parent.layout_rect))
-        .map(|rect| (rect.x, rect.y))
-        .unwrap_or((0.0, 0.0));
-
+    let (parent_id, parent_x, parent_y) = moving_drag_origin(state, frame);
     let mut new_left = rect.x + dx;
     let mut new_top = rect.y + dy;
     if frame.effective_screen_clamp() {
@@ -54,6 +45,22 @@ pub(super) fn moving_drag_anchor_update(
         (new_left - parent_x) / scale,
         -(new_top - parent_y) / scale,
     ))
+}
+
+fn moving_drag_origin(
+    state: &crate::lua_api::SimState,
+    frame: &crate::widget::Frame,
+) -> (Option<u64>, f32, f32) {
+    let parent_id = if uses_retail_clamp_producers() {
+        Some(COORDINATE_ROOT as u64)
+    } else {
+        frame.parent_id
+    };
+    let (parent_x, parent_y) = parent_id
+        .and_then(|id| state.widgets.get(id).and_then(|parent| parent.layout_rect))
+        .map(|rect| (rect.x, rect.y))
+        .unwrap_or((0.0, 0.0));
+    (parent_id, parent_x, parent_y)
 }
 
 pub(super) fn active_motion_drag_frame(
@@ -106,9 +113,7 @@ pub(super) fn reanchor_moving_drag_frame(
         );
     }
     if uses_retail_clamp_producers() {
-        state
-            .widgets
-            .resolve_named_anchor_targets_for_frame(drag_id);
+        state.widgets.resolve_named_anchor_targets_for_frame(drag_id);
     }
     state.widgets.mark_rect_dirty(drag_id);
 }

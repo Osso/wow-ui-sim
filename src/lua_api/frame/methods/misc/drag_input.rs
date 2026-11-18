@@ -222,6 +222,17 @@ fn anchor_movement_to_coordinate_root(sim: &mut crate::lua_api::SimState, id: u6
         sim.screen_height,
         &mut cache,
     );
+    reanchor_resolved_movement(sim, id, layout);
+    // Also covers an accepted movement with no resolved geometry. This equal
+    // request cannot repeat the suppression write on an already false frame.
+    sim.widgets.request_anchor_propagation(id, false);
+}
+
+fn reanchor_resolved_movement(
+    sim: &mut crate::lua_api::SimState,
+    id: u64,
+    layout: crate::layout::CachedFrameLayout,
+) {
     if layout.rect_valid
         && layout.eff_scale.is_finite()
         && layout.eff_scale > 0.0
@@ -240,9 +251,6 @@ fn anchor_movement_to_coordinate_root(sim: &mut crate::lua_api::SimState, id: u6
         sim.widgets.resolve_named_anchor_targets_for_frame(id);
         sim.widgets.mark_anchor_rect_dirty(id);
     }
-    // Also covers an accepted movement with no resolved geometry. This equal
-    // request cannot repeat the suppression write on an already false frame.
-    sim.widgets.request_anchor_propagation(id, false);
 }
 
 pub fn set_user_placed(state: &mut LuaState) -> LuaResult<u32> {

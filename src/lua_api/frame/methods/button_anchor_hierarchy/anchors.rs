@@ -247,9 +247,7 @@ pub(super) fn clear_point(state: &mut LuaState) -> LuaResult<u32> {
         .get(id)
         .and_then(|f| f.anchors.iter().find(|a| a.point == point))
         .and_then(|a| a.relative_to_id);
-    if !uses_retail_clamp_producers()
-        && let Some(target) = target_id
-    {
+    if !uses_retail_clamp_producers() && let Some(target) = target_id {
         sim.widgets.remove_anchor_dependent(target as u64, id);
     }
     if let Some(frame) = sim.widgets.get_mut_for_anchor_edit(id) {
@@ -258,6 +256,12 @@ pub(super) fn clear_point(state: &mut LuaState) -> LuaResult<u32> {
             .secret_anchor_points
             .retain(|existing| *existing != point);
     }
+    finish_clear_point_retail(&mut sim, id);
+    sim.widgets.mark_anchor_rect_dirty(id);
+    Ok(0)
+}
+
+fn finish_clear_point_retail(sim: &mut crate::lua_api::SimState, id: u64) {
     if uses_retail_clamp_producers() {
         sim.widgets.resolve_named_anchor_targets_for_frame(id);
         if sim
@@ -268,8 +272,6 @@ pub(super) fn clear_point(state: &mut LuaState) -> LuaResult<u32> {
             sim.widgets.request_anchor_propagation(id, false);
         }
     }
-    sim.widgets.mark_anchor_rect_dirty(id);
-    Ok(0)
 }
 
 /// ClearPointsOffset() resets each anchor offset; native storage semantics are unknown.
@@ -653,28 +655,32 @@ fn apply_set_point(
         reindex_legacy_point_dependency(sim, id, &request);
     }
     if let Some(frame) = sim.widgets.get_mut_for_anchor_edit(id) {
-        match request.pending_key {
-            Some(pending_key) => frame.set_point_with_name(
-                request.point,
-                Some(pending_key),
-                request.relative_point,
-                request.x_offset,
-                request.y_offset,
-            ),
-            None => frame.set_point(
-                request.point,
-                request.relative_to,
-                request.relative_point,
-                request.x_offset,
-                request.y_offset,
-            ),
-        }
+        write_set_point(frame, request);
     }
     if uses_retail_clamp_producers() {
         sim.widgets.resolve_named_anchor_targets_for_frame(id);
     }
     sim.widgets.mark_anchor_rect_dirty(id);
     Ok(0)
+}
+
+fn write_set_point(frame: &mut crate::widget::Frame, request: SetPointRequest) {
+    match request.pending_key {
+        Some(pending_key) => frame.set_point_with_name(
+            request.point,
+            Some(pending_key),
+            request.relative_point,
+            request.x_offset,
+            request.y_offset,
+        ),
+        None => frame.set_point(
+            request.point,
+            request.relative_to,
+            request.relative_point,
+            request.x_offset,
+            request.y_offset,
+        ),
+    }
 }
 
 fn reindex_legacy_point_dependency(
@@ -715,6 +721,15 @@ pub(super) fn set_all_points(state: &mut LuaState) -> LuaResult<u32> {
     };
     ensure_no_anchor_cycle(state, id, relative_to_id, "SetAllPoints")?;
     let mut sim = borrow_state_mut(state)?;
+    apply_set_all_points(&mut sim, id, relative_to_id);
+    Ok(0)
+}
+
+fn apply_set_all_points(
+    sim: &mut crate::lua_api::SimState,
+    id: u64,
+    relative_to_id: Option<usize>,
+) {
     if !uses_retail_clamp_producers() {
         sim.widgets.remove_all_anchor_dependents_for(id);
         if let Some(rel_id) = relative_to_id {
@@ -728,7 +743,6 @@ pub(super) fn set_all_points(state: &mut LuaState) -> LuaResult<u32> {
         sim.widgets.resolve_named_anchor_targets_for_frame(id);
     }
     sim.widgets.mark_anchor_rect_dirty(id);
-    Ok(0)
 }
 
 fn resolve_wrath_all_points_target(
