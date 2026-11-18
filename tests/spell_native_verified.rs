@@ -9,6 +9,8 @@
 use std::collections::HashMap;
 
 use crate::common::blizzard_addon_harness::{blizzard_ui_dir, build_blizzard_addon_closure_env};
+use rilua::table_security::wrap_host_secret_number;
+use rilua::{LuaApiMut, Val};
 use wow_ui_sim::client_profile::{ACTIVE, ClientProfile};
 use wow_ui_sim::loader::discover_blizzard_startup_addons_for_screen;
 use wow_ui_sim::lua_api::{WowLuaEnv, state::BagItem};
@@ -56,6 +58,41 @@ fn add_bag_stack(env: &WowLuaEnv, slot: i32, item_id: u32, stack_count: i32) {
         },
     );
 }
+
+fn publish_secret_number(env: &WowLuaEnv, name: &str, number: f64) {
+    let loader = env.loader_env();
+    let mut lua = loader.rilua_mut();
+    let value = wrap_host_secret_number(lua.state_mut(), number);
+    lua.state_mut().push(value);
+    lua.set_global_val(name, value).unwrap();
+    lua.state_mut().pop();
+}
+
+const R88R_SECRET_READER_OVERLAY: &str = r#"
+local castUsage = 'Usage: local castCount = C_Spell.GetSpellCastCount(spellIdentifier)'
+local displayUsage = 'Usage: local displayCount = C_Spell.GetSpellDisplayCount(spellIdentifier [, maxDisplayCount, replacementString])'
+local function expectUsage(call, usage)
+    local ok, err = pcall(call)
+    assert(not ok and tostring(err):find(usage, 1, true), tostring(err))
+end
+local function expectRange(call)
+    local ok, err = pcall(call)
+    assert(not ok and tostring(err):find('outside of expected range -2147483648 to 2147483647', 1, true), tostring(err))
+end
+expectUsage(function() C_Spell.GetSpellCastCount(R88RLowA) end, castUsage)
+expectUsage(function() C_Spell.GetSpellCastCount(R88RLowB) end, castUsage)
+assert(C_Spell.GetSpellCastCount(R88RHighA) == 7)
+assert(C_Spell.GetSpellCastCount(R88RHighB) == 2)
+expectUsage(function() C_Spell.GetSpellCastCount() end, castUsage)
+expectUsage(function() C_Spell.GetSpellDisplayCount(R88RLowA) end, displayUsage)
+assert(C_Spell.GetSpellDisplayCount(R88RHighA, R88RMaxOne, 'OVER') == 'OVER')
+for _, maximum in ipairs({R88RMaxOne, R88RMaxZero, R88RMaxMinusOne}) do
+    assert(C_Spell.GetSpellDisplayCount(R88RHighA, maximum, 'OVER') == 'OVER')
+end
+expectRange(function() C_Spell.GetSpellDisplayCount(R88RHighA, R88RMaxHigh) end)
+expectRange(function() C_Spell.GetSpellDisplayCount(R88RHighA, R88RMaxLow) end)
+assert(C_Spell.GetSpellDisplayCount(R88RHighA) == '7')
+"#;
 
 const MASK2_CACHE_ASSERTIONS: &str = r#"
     for _, case in ipairs(cases) do
@@ -114,6 +151,34 @@ fn seed_mask2_reagent(
 fn assert_mask2_cached_counts(env: &WowLuaEnv, cases: &str) {
     env.exec(&format!("local cases = {cases}\n{MASK2_CACHE_ASSERTIONS}"))
         .expect("the original CooldownViewer must cache every expected reagent count");
+}
+
+#[test]
+fn r88r_secret_selector_and_display_maximum_readers() {
+    let env = WowLuaEnv::new().unwrap();
+    seed_mask2_reagent(&env, 19_750, 31_001, 1, 1, &[(1, 7)]);
+    seed_mask2_reagent(&env, 642, 31_002, 1, 2, &[(1, 2)]);
+    for (name, number) in [
+        ("R88RLowA", 0.5),
+        ("R88RLowB", 1.0),
+        ("R88RHighA", 19_750.5),
+        ("R88RHighB", 642.5),
+        ("R88RMaxOne", 1.0),
+        ("R88RMaxZero", 0.0),
+        ("R88RMaxMinusOne", -1.0),
+        ("R88RMaxHigh", 2_147_483_648.0),
+        ("R88RMaxLow", -2_147_483_649.0),
+    ] {
+        publish_secret_number(&env, name, number);
+    }
+    env.exec("assert(C_Spell.GetSpellCastCount(R88RLowB) == 0)")
+        .expect("empty metadata source skips the selector gate");
+    env.state().borrow_mut().spell_identifier_metadata_source = Some(0);
+    env.exec("assert(C_Spell.GetSpellCastCount(R88RLowB) == 0)")
+        .expect("zero metadata source skips the selector gate");
+    env.state().borrow_mut().spell_identifier_metadata_source = Some(1);
+    env.exec(R88R_SECRET_READER_OVERLAY)
+        .expect("R88r.r1 secret selector and maximum readers");
 }
 
 #[test]
