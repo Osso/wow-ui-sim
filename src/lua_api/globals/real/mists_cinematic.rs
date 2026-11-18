@@ -1,13 +1,29 @@
 //! Mists cinematic completion state from explicit host inputs.
 
+use crate::lua_api::WowLuaEnv;
 use crate::lua_api::methods::borrow_state_mut;
 use crate::lua_bridge::FromStack;
 use rilua::vm::state::LuaState;
-use rilua::{LuaApiMut, LuaResult};
+use rilua::{LuaApiMut, LuaResult, Val};
 
 pub(crate) fn register_cinematic_finished(lua: &mut rilua::Lua) -> crate::Result<()> {
     LuaApiMut::register_function(lua, "CinematicFinished", cinematic_finished)?;
     Ok(())
+}
+
+pub(crate) fn update_screen_registration(env: &WowLuaEnv, is_glue: bool) -> crate::Result<()> {
+    let mut lua = env.lua.borrow_mut();
+    if is_glue {
+        LuaApiMut::register_function(&mut *lua, "CinematicStarted", cinematic_started_unknown)?;
+    } else {
+        LuaApiMut::set_global_val(&mut *lua, "CinematicStarted", Val::Nil)?;
+    }
+    Ok(())
+}
+
+/// UNKNOWN (R88aq pending): Glue registration only; this consumes no args and returns no values.
+fn cinematic_started_unknown(_state: &mut LuaState) -> LuaResult<u32> {
+    Ok(0)
 }
 
 /// VERIFIED (R88ao, Mists 5.5.4.70631): finish records flags for an active type and clears it.
