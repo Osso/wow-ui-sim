@@ -132,6 +132,12 @@ The [font-source contract](../../specs/font-sources.md) separates simulator file
 
 `0624da720` adds independent `Frame.font_string_smooth_scaling`, shared fractional line-height shaping, mode-keyed caches, and ordinary/runtime/inherited XML handling under retail 12.0.5+. `3c8b48012` adds wrapped render/cache measurement assertions. Contract, inferred-policy boundaries, RED provenance, current GREEN status, earlier XML epoch gap, and future native recorder live in [FontString smooth scaling](../../specs/fontstring-smooth-scaling.md). No native/GPU visual proof is claimed.
 
+## Sliced mask textures
+
+A MaskTexture with slice margins (`SetTextureSliceMargins`, stretched mode) keeps its margins at their texel size and stretches only its centre, as a sliced texture does. `apply_mask_texture` (`src/iced_app/masking.rs`) splits each masked quad at the mask's slice lines before it sets mask UVs; within one slice the mapping is linear, so per-vertex interpolation is exact. The texture requests of the split quads move with their vertices, and the mask request covers the new ones. A mask without margins, in tiled mode, with tex coords, without a known source size, or without room for a centre (source or screen rect) stretches whole as before. EllesmereUI's rounded corners rely on it: a (2r + 1)-texel mask sliced at r texels rounds tooltips, borders and bars of any size; stretched whole it blurred the full rect.
+
+**VERIFIED (WoW Forever 1.60.1.70959, in-game screenshot):** EllesmereUI's rounded tooltip corners render crisp with a 1 px outline. **INFERRED (consumer code):** EllesmereUI_RoundedCorners.lua is written for that and notes that the client shrinks the corners of a sliced texture larger than its region (not modelled here: such a mask stretches whole).
+
 ## Performance
 
 - Quad batch rebuilt only when `quads_dirty` flag is set or screen resized
@@ -148,6 +154,8 @@ The headless path is implemented in `src/render/headless.rs` and uses the same W
 ## Sources
 
 - [font.rs](../../../src/render/font.rs) — CASC fonts, addon fonts and the pinned fallback family
+- [masking.rs](../../../src/iced_app/masking.rs) — mask UVs, sliced masks split at their slice lines
+- [EllesmereUI_RoundedCorners.lua](https://github.com/EllesmereGaming/EllesmereUI/blob/main/EllesmereUI_RoundedCorners.lua) — consumer: nine-sliced rounded masks on tooltips, borders and bars
 - [inline_markup.rs](../../../crates/sim-render/src/inline_markup.rs) — inline `|T`/`|A` escape fields, sizes and first-line width
 - [inline_emit.rs](../../../src/render/glyph/inline_emit.rs) — inline icon layout and quads
 - R88d / R88e.6 / R88e.7 / R88f.L.2 (Retail 12.1.5.70688) — byte-verified native parser, measurement and layout findings

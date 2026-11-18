@@ -10,7 +10,9 @@ use crate::render::{QuadBatch, TextureRequest};
 ///
 /// Uses the mask frame's computed layout bounds to determine the UV mapping. The mask
 /// texture is stretched to fill the mask's layout area; the icon UVs are computed based
-/// on where the icon falls within that area.
+/// on where the icon falls within that area. A mask with slice margins
+/// (`SetTextureSliceMargins`, stretched mode) keeps its margins at their texel size,
+/// as the client draws it: each masked quad is split at the slice lines first.
 pub fn apply_mask_texture(
     batch: &mut QuadBatch,
     vert_before: usize,
@@ -29,6 +31,8 @@ pub fn apply_mask_texture(
     };
     let mask_path = mask_info.path.clone();
     apply_mask_to_quads(batch, vert_before, mask_info);
+    // A sliced mask has split the quads: the request covers the new ones.
+    let count = batch.vertices.len() - vert_before;
     batch.mask_texture_requests.push(TextureRequest::new(
         mask_path,
         vert_before as u32,
@@ -54,6 +58,7 @@ pub fn apply_mask_path(
         path: mask_path.to_string(),
         screen_rect: icon_bounds,
         tex_coords: (0.0, 1.0, 0.0, 1.0),
+        slice: None,
     };
     apply_mask_to_quads(batch, vert_before, mask_info);
     batch.mask_texture_requests.push(TextureRequest::new(
@@ -67,6 +72,49 @@ struct MaskInfo {
     path: String,
     screen_rect: Rectangle,
     tex_coords: (f32, f32, f32, f32),
+    slice: Option<MaskSlice>,
+}
+
+/// Slice margins of a mask texture in texels of its source, which are also
+/// their size on screen (times `UI_SCALE`), and the source size in texels.
+#[derive(Clone, Copy, Debug, PartialEq)]
+struct MaskSlice {
+    left: f32,
+    right: f32,
+    top: f32,
+    bottom: f32,
+    width: f32,
+    height: f32,
+}
+
+const TEXTURE_SLICE_MODE_STRETCHED: i32 = 0;
+
+/// The slice layout of a mask frame, when it has margins in the stretched
+/// mode, its source size is known and both the source and the mask's screen
+/// rect leave a centre between the margins. Otherwise the mask stretches whole.
+fn mask_slice(mask_frame: &crate::widget::Frame, mask_screen: Rectangle) -> Option<MaskSlice> {
+    let (left, right, top, bottom) = mask_frame.texture_slice_margins;
+    let margins = [left, right, top, bottom];
+    if margins.iter().all(|m| *m == 0.0)
+        || margins.iter().any(|m| !m.is_finite() || *m < 0.0)
+        || mask_frame.texture_slice_mode != TEXTURE_SLICE_MODE_STRETCHED
+        || mask_frame.tex_coords.is_some()
+    {
+        return None;
+    }
+    let (width, height) = mask_frame.texture_source_dimensions?;
+    let (width, height) = (width as f32, height as f32);
+    let source_has_center = width > left + right && height > top + bottom;
+    let screen_has_center = mask_screen.width > (left + right) * UI_SCALE
+        && mask_screen.height > (top + bottom) * UI_SCALE;
+    (source_has_center && screen_has_center).then_some(MaskSlice {
+        left,
+        right,
+        top,
+        bottom,
+        width,
+        height,
+    })
 }
 
 fn resolve_mask_info(
@@ -89,6 +137,7 @@ fn resolve_mask_info(
         path,
         screen_rect: mask_screen,
         tex_coords: mask_frame.tex_coords.unwrap_or((0.0, 1.0, 0.0, 1.0)),
+        slice: mask_slice(mask_frame, mask_screen),
     })
 }
 
@@ -104,6 +153,10 @@ fn truncate_masked_vertices(batch: &mut QuadBatch, vert_before: usize) {
 }
 
 fn apply_mask_to_quads(batch: &mut QuadBatch, vert_before: usize, mask_info: MaskInfo) {
+    if let Some(slice) = mask_info.slice {
+        apply_sliced_mask_to_quads(batch, vert_before, mask_info.screen_rect, slice);
+        return;
+    }
     let (tl, tr, tt, tb) = mask_info.tex_coords;
     for i in (vert_before..batch.vertices.len()).step_by(4) {
         let end = (i + 4).min(batch.vertices.len());
@@ -139,6 +192,132 @@ fn apply_mask_to_quad(
     for (index, vertex) in vertices.iter_mut().enumerate() {
         vertex.mask_tex_index = -2;
         vertex.mask_tex_coords = mask_uvs[index];
+    }
+}
+
+/// Splits each quad from `vert_before` on at the mask's slice lines, so the
+/// mask UVs, interpolated linearly per quad, follow the piecewise mapping of
+/// the nine slices. Texture requests of those quads move with their vertices.
+fn apply_sliced_mask_to_quads(
+    batch: &mut QuadBatch,
+    vert_before: usize,
+    mask_screen: Rectangle,
+    slice: MaskSlice,
+) {
+    let cells = slice_cells(mask_screen, slice);
+    let mut out = Vec::with_capacity(batch.vertices.len() - vert_before);
+    let mut starts = Vec::new();
+    for quad in batch.vertices[vert_before..].as_chunks::<4>().0 {
+        starts.push(out.len());
+        let quad = *quad;
+        let bounds = quad_rect(&quad);
+        let before = out.len();
+        for cell in &cells {
+            let Some(clipped) = rect_intersection(bounds, *cell) else {
+                continue;
+            };
+            let mut piece = quad;
+            clip_quad_to_rect(&mut piece, bounds, clipped);
+            let uvs = sliced_mask_uvs(mask_screen, slice, clipped);
+            for (vertex, uv) in piece.iter_mut().zip(uvs) {
+                vertex.mask_tex_index = -2;
+                vertex.mask_tex_coords = uv;
+            }
+            out.extend(piece);
+        }
+        if out.len() == before {
+            let mut hidden = quad;
+            hide_quad(&mut hidden);
+            out.extend(hidden);
+        }
+    }
+    starts.push(out.len());
+    remap_tail_requests(&mut batch.texture_requests, vert_before, &starts);
+    batch.vertices.truncate(vert_before);
+    batch.indices.truncate(vert_before / 4 * 6);
+    for (index, piece) in out.as_chunks::<4>().0.iter().enumerate() {
+        let base = (vert_before + index * 4) as u32;
+        batch.vertices.extend_from_slice(piece);
+        batch
+            .indices
+            .extend_from_slice(&[base, base + 1, base + 2, base, base + 2, base + 3]);
+    }
+}
+
+/// The nine slice rects of the mask on screen, empty ones left out.
+fn slice_cells(mask: Rectangle, slice: MaskSlice) -> Vec<Rectangle> {
+    let xs = [
+        mask.x,
+        mask.x + slice.left * UI_SCALE,
+        mask.x + mask.width - slice.right * UI_SCALE,
+        mask.x + mask.width,
+    ];
+    let ys = [
+        mask.y,
+        mask.y + slice.top * UI_SCALE,
+        mask.y + mask.height - slice.bottom * UI_SCALE,
+        mask.y + mask.height,
+    ];
+    let mut cells = Vec::with_capacity(9);
+    for row in ys.windows(2) {
+        for col in xs.windows(2) {
+            if col[1] > col[0] && row[1] > row[0] {
+                cells.push(Rectangle::new(
+                    iced::Point::new(col[0], row[0]),
+                    iced::Size::new(col[1] - col[0], row[1] - row[0]),
+                ));
+            }
+        }
+    }
+    cells
+}
+
+/// Mask UVs of a rect that lies within one slice cell.
+fn sliced_mask_uvs(mask: Rectangle, slice: MaskSlice, rect: Rectangle) -> [[f32; 2]; 4] {
+    let u = |x: f32| {
+        sliced_texel(x - mask.x, mask.width, slice.left, slice.right, slice.width) / slice.width
+    };
+    let v = |y: f32| {
+        sliced_texel(
+            y - mask.y,
+            mask.height,
+            slice.top,
+            slice.bottom,
+            slice.height,
+        ) / slice.height
+    };
+    let (u0, u1) = (u(rect.x), u(rect.x + rect.width));
+    let (v0, v1) = (v(rect.y), v(rect.y + rect.height));
+    [[u0, v0], [u1, v0], [u1, v1], [u0, v1]]
+}
+
+/// The source texel at `offset` screen pixels into a span of `span` pixels:
+/// the margins map one texel to `UI_SCALE` pixels, the centre stretches.
+fn sliced_texel(offset: f32, span: f32, near: f32, far: f32, source: f32) -> f32 {
+    let (near_px, far_px) = (near * UI_SCALE, far * UI_SCALE);
+    let texel = if offset <= near_px {
+        offset / UI_SCALE
+    } else if offset >= span - far_px {
+        source - (span - offset) / UI_SCALE
+    } else {
+        near + (offset - near_px) * (source - near - far) / (span - near_px - far_px)
+    };
+    texel.clamp(0.0, source)
+}
+
+/// Moves the texture requests at or after `vert_before` onto the quads that
+/// replaced theirs: `starts[i]` is where old quad i begins in the new tail,
+/// the last entry its end.
+fn remap_tail_requests(requests: &mut [TextureRequest], vert_before: usize, starts: &[usize]) {
+    let quads = starts.len() - 1;
+    for request in requests
+        .iter_mut()
+        .filter(|r| r.vertex_start as usize >= vert_before)
+    {
+        let first = ((request.vertex_start as usize - vert_before) / 4).min(quads);
+        let last = (first + request.vertex_count as usize / 4).min(quads);
+        request.vertex_start = (vert_before + starts[first]) as u32;
+        request.vertex_count = (starts[last] - starts[first]) as u32;
     }
 }
 
@@ -376,5 +555,95 @@ mod tests {
                 .iter()
                 .all(|vertex| vertex.mask_tex_index == -2)
         );
+    }
+
+    fn sliced_mask(id: u64, rect: Rectangle) -> Frame {
+        Frame {
+            id,
+            texture: Some("Interface/Rounded".to_string()),
+            texture_slice_margins: (4.0, 4.0, 4.0, 4.0),
+            texture_source_dimensions: Some((9, 9)),
+            layout_rect: Some(crate::LayoutRect {
+                x: rect.x / UI_SCALE,
+                y: rect.y / UI_SCALE,
+                width: rect.width / UI_SCALE,
+                height: rect.height / UI_SCALE,
+            }),
+            ..Default::default()
+        }
+    }
+
+    #[test]
+    fn sliced_texel_keeps_margins_and_stretches_the_centre() {
+        assert_eq!(sliced_texel(2.0 * UI_SCALE, 100.0, 4.0, 4.0, 9.0), 2.0);
+        assert_eq!(sliced_texel(50.0, 100.0, 4.0, 4.0, 9.0), 4.5);
+        assert_eq!(
+            sliced_texel(100.0 - 2.0 * UI_SCALE, 100.0, 4.0, 4.0, 9.0),
+            7.0
+        );
+    }
+
+    #[test]
+    fn sliced_mask_splits_quads_at_the_slice_lines() {
+        let bounds = Rectangle::new(iced::Point::new(0.0, 0.0), iced::Size::new(100.0, 40.0));
+        let mut batch = QuadBatch::new();
+        batch.vertices.extend(quad(bounds));
+        batch.indices.extend([0, 1, 2, 0, 2, 3]);
+        batch
+            .texture_requests
+            .push(TextureRequest::new("Interface/Body", 0, 4));
+        let mut registry = WidgetRegistry::new();
+        registry.register(sliced_mask(1, bounds));
+
+        apply_mask_texture(&mut batch, 0, bounds, &[1], &registry);
+
+        assert_eq!(batch.vertices.len(), 9 * 4);
+        assert_eq!(batch.indices.len(), 9 * 6);
+        assert_eq!(batch.texture_requests[0].vertex_start, 0);
+        assert_eq!(batch.texture_requests[0].vertex_count, 36);
+        assert_eq!(batch.mask_texture_requests[0].vertex_count, 36);
+        // The top-left corner piece maps its 4 pixels onto the mask's first 4 texels.
+        let corner = &batch.vertices[0..4];
+        assert_eq!(corner[0].position, [0.0, 0.0]);
+        assert_eq!(corner[2].position, [4.0 * UI_SCALE, 4.0 * UI_SCALE]);
+        assert_eq!(corner[0].mask_tex_coords, [0.0, 0.0]);
+        assert_eq!(corner[2].mask_tex_coords, [4.0 / 9.0, 4.0 / 9.0]);
+        // The centre piece samples only the middle texel column and row.
+        let centre = &batch.vertices[16..20];
+        assert_eq!(centre[0].mask_tex_coords, [4.0 / 9.0, 4.0 / 9.0]);
+        assert_eq!(centre[2].mask_tex_coords, [5.0 / 9.0, 5.0 / 9.0]);
+    }
+
+    #[test]
+    fn sliced_mask_on_a_quad_inside_one_slice_keeps_one_quad() {
+        let mask = Rectangle::new(iced::Point::new(0.0, 0.0), iced::Size::new(100.0, 40.0));
+        let bounds = Rectangle::new(iced::Point::new(10.0, 10.0), iced::Size::new(20.0, 20.0));
+        let mut batch = QuadBatch::new();
+        batch.vertices.extend(quad(bounds));
+        batch.indices.extend([0, 1, 2, 0, 2, 3]);
+        let mut registry = WidgetRegistry::new();
+        registry.register(sliced_mask(1, mask));
+
+        apply_mask_texture(&mut batch, 0, bounds, &[1], &registry);
+
+        // Inside the centre slice, which maps 92 x 32 pixels onto one texel.
+        assert_eq!(batch.vertices.len(), 4);
+        let u = |x: f32| (4.0 + (x - 4.0) / 92.0) / 9.0;
+        let v = |y: f32| (4.0 + (y - 4.0) / 32.0) / 9.0;
+        assert_eq!(batch.vertices[0].mask_tex_coords, [u(10.0), v(10.0)]);
+        assert_eq!(batch.vertices[2].mask_tex_coords, [u(30.0), v(30.0)]);
+    }
+
+    #[test]
+    fn mask_without_room_for_its_margins_stretches_whole() {
+        let mask = Rectangle::new(iced::Point::new(0.0, 0.0), iced::Size::new(6.0, 6.0));
+        let mut frame = sliced_mask(1, mask);
+        frame.layout_rect = Some(crate::LayoutRect {
+            x: 0.0,
+            y: 0.0,
+            width: 6.0 / UI_SCALE,
+            height: 6.0 / UI_SCALE,
+        });
+        assert_eq!(mask_slice(&frame, mask), None);
     }
 }
