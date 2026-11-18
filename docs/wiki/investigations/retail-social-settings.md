@@ -8,7 +8,7 @@ Retail 12.1.5 role selection and friends availability consume explicit settings 
 
 **VERIFIED (same handoff, §4):** `C_SocialRestrictions.IsFriendsDisabled` returns one Boolean from a settings byte initialized to zero; early calls return false without a nil or initialization error.
 
-**INFERRED (simulator representation):** existing `game_rules.rules_by_id` stores integer values only. Retail `non_integer_rule_ids` supplies type tags overriding integer storage, allowing the verified non-integer case without interpreting a float as an integer. `social_restrictions.friends_disabled_byte` is an explicit host-supplied mapping of the native settings byte, defaulting to zero. These host mappings are isolated in a separate commit.
+**INFERRED (simulator mapping):** existing `game_rules.rules_by_id` stores integer values only. Retail `non_integer_rule_ids` supplies type tags overriding integer storage, allowing the verified non-integer case without interpreting a float as an integer. `social_restrictions.friends_disabled_byte` is an explicit host-supplied mapping of the native settings byte, defaulting to zero. These host mappings are isolated in a separate commit.
 
 **UNKNOWN:** settings-packet ingestion, server conditions, and refresh events. None are invented. The host supplies snapshots; these queries do not derive account policy from friend lists or group membership.
 

@@ -141,7 +141,7 @@ pub struct GameRulesState {
     pub rules: HashMap<String, GameRuleValue>,
     /// Native numeric rule values keyed by rule ID; no name/Enum mapping is implied.
     pub rules_by_id: HashMap<i32, i64>,
-    /// INFERRED host type tags for numeric-ID rules; tags override integer storage.
+    /// INFERRED (simulator mapping): host type tags for numeric-ID rules; tags override integer storage.
     /// Native settings packet ingestion remains UNKNOWN (R88ap.3).
     #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
     pub non_integer_rule_ids: std::collections::HashSet<i32>,

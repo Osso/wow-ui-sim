@@ -26,6 +26,7 @@ fn is_squelched(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 /// VERIFIED R88ap part A §4: one Boolean from settings byte, initially zero.
+/// INFERRED (simulator mapping): `friends_disabled_byte` is the host stand-in for that byte.
 #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
 fn is_friends_disabled(state: &mut LuaState) -> LuaResult<u32> {
     let disabled = borrow_state(state)?

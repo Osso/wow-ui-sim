@@ -1,5 +1,7 @@
 //! VERIFIED: pr46-49-decomp-answers.md R88ap part A §3 (Retail 12.1.5).
 //! UNKNOWN settings packet ingestion and refresh events remain unmodeled.
+//! INFERRED (simulator mapping): rule 93 is read from `game_rules.rules_by_id` plus the
+//! `non_integer_rule_ids` type tags, standing in for the native settings-packet rule store.
 use crate::lua_api::methods::borrow_state;
 use crate::lua_bridge::table_set_rust_fn_static;
 use rilua::vm::state::LuaState;
