@@ -2,6 +2,10 @@
 
 [Event system](systems/event-system.md#frame-registerunitevent-unit-scan-r88aj) links the [R88aj contract](../specs/register-unit-event-units.md): Mists boundary and original CastSequenceManager tests pass; native scan evidence is limited to Mists, Retail and Forever.
 
+## [2026-11-18] implementation | Retail role and friends settings
+
+The [social settings investigation](investigations/retail-social-settings.md) separates the verified R88ap.3–4 Boolean rules from inferred host type tags/settings bytes and unknown writers/events. Original UnitPopup and FriendsFrame consumers supply regression coverage.
+
 ## [2026-11-18] implementation | Retail cinematic summary
 
 The [cinematic summary investigation](investigations/retail-cinematic-summary.md) separates the verified R88ap.1 ID lifecycle and nil/string contract from inferred host data and argument admission. The original MovieFrame dialog is the regression consumer.

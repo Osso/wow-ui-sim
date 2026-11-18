@@ -2,6 +2,10 @@
 
 Updated the [event-system record](../systems/event-system.md#frame-registerunitevent-unit-scan-r88aj) and [contract](../specs/register-unit-event-units.md). **VERIFIED (R88aj):** four-position scan rules are established for Mists, Retail and Forever; Mists rejects the documented unknown `boss6`–`boss8` tokens. **VERIFIED (Mists simulator):** 3/3 original-consumer/boundary cases and 2/2 unit-scan cases pass. Retail/Forever secret-state and forbidden-aspect inputs remain UNKNOWN and empty by default.
 
+## [2026-11-18] implementation | Retail role and friends settings
+
+The [social settings investigation](../investigations/retail-social-settings.md) separates the verified R88ap.3–4 Boolean rules from inferred host type tags/settings bytes and unknown writers/events. Original UnitPopup and FriendsFrame consumers supply regression coverage.
+
 ## [2026-11-18] implementation | Retail cinematic summary
 
 The [cinematic summary investigation](investigations/retail-cinematic-summary.md) separates the verified R88ap.1 ID lifecycle and nil/string contract from inferred host data and argument admission. The original MovieFrame dialog is the regression consumer.
