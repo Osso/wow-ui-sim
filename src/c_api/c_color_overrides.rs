@@ -543,6 +543,7 @@ mod tests {
         let result: String = env
             .eval(
                 r#"
+                ColorMixin = {}
                 local ordinary = rawget(_G, "C_ColorOverrides")
                 local secure = rawget(__secureenv, "C_ColorOverrides")
                 local names = {
