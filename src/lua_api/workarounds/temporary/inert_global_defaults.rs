@@ -242,14 +242,6 @@ if CanShowSetRoleButton == nil then
 end
 "#;
 
-// UNKNOWN: non-Retail native behavior; restore pre-f7c27bf0d simulator fallback.
-#[cfg(not(all(feature = "profile-retail", feature = "retail-12-1-5")))]
-const ITEM_LEVEL_COLOR_DEFAULT_LUA: &str = r#"
-if GetItemLevelColor == nil then
-    function GetItemLevelColor() return 1, 1, 1 end
-end
-"#;
-
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     #[cfg(not(all(
         feature = "retail-12-0-5",
@@ -257,8 +249,6 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     )))]
     lua.exec(UNMODELED_SPELL_CONFIRMATION_QUERY_LUA)?;
     lua.exec(INERT_GLOBAL_DEFAULTS_LUA)?;
-    #[cfg(not(all(feature = "profile-retail", feature = "retail-12-1-5")))]
-    lua.exec(ITEM_LEVEL_COLOR_DEFAULT_LUA)?;
     #[cfg(not(all(feature = "profile-retail", feature = "retail-12-1-5")))]
     lua.exec(SOCIAL_SETTINGS_DEFAULTS_LUA)?;
     #[cfg(not(all(feature = "profile-retail", feature = "retail-12-1-5")))]

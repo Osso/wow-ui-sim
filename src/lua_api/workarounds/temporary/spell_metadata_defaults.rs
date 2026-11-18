@@ -52,28 +52,8 @@ installSpellDefault("GetSpellDisplayCount", function(_spellID, _maxDisplayCount)
 end)
 "#;
 
-// UNKNOWN: non-Retail native behavior; restore pre-a1cfb4a2c simulator default.
-#[cfg(not(all(feature = "profile-retail", feature = "retail-12-1-5")))]
-const RANGED_AUTO_DEFAULT_LUA: &str = r#"
-if rawget(C_Spell, "IsRangedAutoAttackSpell") == nil then
-    function C_Spell.IsRangedAutoAttackSpell(_spellID) return false end
-end
-"#;
-
-// UNKNOWN: restore the pre-997a1b958 non-Retail simulator behavior, not native semantics.
-#[cfg(not(all(feature = "client-retail", feature = "retail-12-1-5")))]
-const PASSIVE_DEFAULT_LUA: &str = r#"
-if rawget(C_Spell, "IsSpellPassive") == nil then
-    function C_Spell.IsSpellPassive(_spellID) return false end
-end
-"#;
-
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(SPELL_METADATA_DEFAULTS_LUA)?;
-    #[cfg(not(all(feature = "client-retail", feature = "retail-12-1-5")))]
-    lua.exec(PASSIVE_DEFAULT_LUA)?;
-    #[cfg(not(all(feature = "profile-retail", feature = "retail-12-1-5")))]
-    lua.exec(RANGED_AUTO_DEFAULT_LUA)?;
     apply_count_defaults(lua)?;
     Ok(())
 }
