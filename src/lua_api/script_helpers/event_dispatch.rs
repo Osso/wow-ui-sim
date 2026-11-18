@@ -1,6 +1,6 @@
 use super::{
-    ScriptBinding, ScriptHandlerLookup, call_error_handler, call_error_handler_state,
-    get_scripts_for_dispatch, registry_table, table_get_str,
+    ScriptBinding, ScriptHandlerLookup, call_error_handler_state, get_scripts_for_dispatch,
+    registry_table, table_get_str,
 };
 use crate::c_api::on_update_modes::OnUpdateMode;
 use crate::lua_api::handler_timing;
@@ -10,7 +10,7 @@ use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
 use rilua::vm::string::LuaString;
 use rilua::vm::table::Table;
-use rilua::{LuaApi, LuaApiMut, Val};
+use rilua::{LuaApiMut, Val};
 use std::borrow::Cow;
 use std::collections::HashSet;
 use std::time::Instant;
