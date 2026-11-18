@@ -67,13 +67,33 @@ fn read_cinematic_movie_id(state: &LuaState) -> LuaResult<i32> {
 fn read_numeric_argument(state: &LuaState, index: i32) -> LuaResult<f64> {
     match stack_val(state, index) {
         Val::Num(value) => Ok(value),
-        Val::Str(_) => String::from_stack(state, index)
-            .map_err(|_| runtime_error(CINEMATIC_STARTED_USAGE))?
-            .trim()
-            .parse()
-            .map_err(|_| runtime_error(CINEMATIC_STARTED_USAGE)),
+        Val::Str(_) => {
+            let value = String::from_stack(state, index)
+                .map_err(|_| runtime_error(CINEMATIC_STARTED_USAGE))?;
+            parse_numeric_string(&value).ok_or_else(|| runtime_error(CINEMATIC_STARTED_USAGE))
+        }
         _ => Err(runtime_error(CINEMATIC_STARTED_USAGE)),
     }
+}
+
+fn parse_numeric_string(value: &str) -> Option<f64> {
+    let trimmed = value.trim();
+    let (sign, unsigned) = if let Some(rest) = trimmed.strip_prefix('-') {
+        (-1.0, rest)
+    } else if let Some(rest) = trimmed.strip_prefix('+') {
+        (1.0, rest)
+    } else {
+        (1.0, trimmed)
+    };
+    if let Some(hex) = unsigned
+        .strip_prefix("0x")
+        .or_else(|| unsigned.strip_prefix("0X"))
+    {
+        return u64::from_str_radix(hex, 16)
+            .ok()
+            .map(|number| sign * number as f64);
+    }
+    trimmed.parse().ok()
 }
 
 fn truncate_to_i32(value: f64) -> Option<i32> {

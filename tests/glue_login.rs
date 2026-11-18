@@ -462,12 +462,21 @@ fn mists_cinematic_started_parses_arguments_and_returns_nothing() {
             "return select('#', CinematicStarted('2.9', '-9.7', false, 'ignored'))",
         ).expect("CinematicStarted should accept numeric strings");
         assert_eq!(returns, 0);
+        {
+            let state = env.state().borrow();
+            let record = &state.movie_playback.cinematic_records[&2];
+            assert_eq!((record.movie_type, record.movie_id), (2, -9));
+            assert!(!record.can_cancel);
+            assert!(record.active);
+            assert_eq!(state.movie_playback.manager_movie_id, Some(-9));
+        }
+        let hex_return: i32 = env
+            .eval("return select('#', CinematicStarted('0x3', '0xA'))")
+            .expect("Lua hexadecimal strings should convert to cinematic integers");
+        assert_eq!(hex_return, 0);
         let state = env.state().borrow();
-        let record = &state.movie_playback.cinematic_records[&2];
-        assert_eq!((record.movie_type, record.movie_id), (2, -9));
-        assert!(!record.can_cancel);
-        assert!(record.active);
-        assert_eq!(state.movie_playback.manager_movie_id, Some(-9));
+        assert_eq!(state.movie_playback.cinematic_records[&3].movie_id, 10);
+        assert_eq!(state.movie_playback.manager_movie_id, Some(10));
     }
 }
 
