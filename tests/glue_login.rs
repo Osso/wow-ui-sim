@@ -44,6 +44,11 @@ fn load_blizzard_screen_with_setup(
     })
 }
 
+#[cfg(feature = "client-mists")]
+fn new_mists_api_env() -> common::LockedEnv {
+    common::lock_env(|| WowLuaEnv::new().expect("Mists API environment should initialize"))
+}
+
 fn hit_test_like_gui(env: &WowLuaEnv, pos: Point) -> Option<u64> {
     let mut state = env.state().borrow_mut();
     state.ensure_layout_rects();
@@ -369,7 +374,7 @@ fn login_editboxes_gain_focus_when_clicking_their_visible_centers() {
 // INFERRED (R88am 5.5.4.70631 applied to Mists 5.5.4.70268): the original consumer hides cached-login rows after a zero-return query.
 #[cfg(feature = "client-mists")]
 #[test]
-fn mists_classic_cached_login_consumer_hides_rows_and_api_is_glue_only() {
+fn mists_classic_cached_login_consumer_hides_rows_and_checks_api_scopes() {
     test_timeout! {
         let env = load_blizzard_screen(ScreenKind::Login);
         let cursor_globals: bool = env
@@ -379,7 +384,7 @@ fn mists_classic_cached_login_consumer_hides_rows_and_api_is_glue_only() {
         let cinematic_started_available: bool = env
             .eval("return type(CinematicStarted) == 'function'")
             .unwrap();
-        assert!(cinematic_started_available, "unknown movie-start placeholder is Glue-only");
+        assert!(cinematic_started_available, "CinematicStarted should be available in Glue");
         let returns_none: bool = env.eval("return select('#', HideCursor()) == 0 and select('#', ShowCursor()) == 0").unwrap();
         assert!(returns_none, "cursor visibility globals must return no values");
         let row_visible: bool = env.eval(r#"
@@ -401,12 +406,29 @@ fn mists_classic_cached_login_consumer_hides_rows_and_api_is_glue_only() {
             .eval("return HideCursor == nil and ShowCursor == nil")
             .unwrap();
         assert!(cursor_globals_absent, "cursor visibility globals must be Glue-only");
-        let cinematic_started_absent: bool = env.eval("return CinematicStarted == nil").unwrap();
-        assert!(cinematic_started_absent, "unknown movie-start placeholder must be absent in Game");
+        let cinematic_started_available_in_game: bool = env
+            .eval("return type(CinematicStarted) == 'function'")
+            .unwrap();
+        assert!(cinematic_started_available_in_game, "CinematicStarted must be available in Game");
     }
 }
 
 // VERIFIED (R88ao, Mists Classic 5.5.4.70631): StartMovie returns a boolean and code.
+// UNKNOWN (R88ao offline result); VERIFIED (simulator model): absent host results yield nil values.
+#[cfg(feature = "client-mists")]
+#[test]
+fn mists_movie_start_keeps_missing_host_result_unknown() {
+    test_timeout! {
+        let env = load_blizzard_screen(ScreenKind::Login);
+        let result: (i32, String, String) = env.eval(r#"
+            local function pack(...) return { n = select('#', ...), ... } end
+            local result = pack(MovieFrame:StartMovie(999))
+            return result.n, type(result[1]), type(result[2])
+        "#).expect("an absent host outcome should not invent playback values");
+        assert_eq!(result, (2, "nil".into(), "nil".into()));
+    }
+}
+
 #[cfg(feature = "client-mists")]
 #[test]
 fn mists_movie_start_returns_boolean_and_code() {
@@ -427,6 +449,107 @@ fn mists_movie_start_returns_boolean_and_code() {
                 assert(resultCode == code)
             end
         "#).expect("configured StartMovie outcomes should match the native return pair");
+    }
+}
+
+// VERIFIED (R88aq, Mists 5.5.4.70631): numeric strings truncate toward zero; Started returns no values.
+#[cfg(feature = "client-mists")]
+#[test]
+fn mists_cinematic_started_parses_arguments_and_returns_nothing() {
+    test_timeout! {
+        let env = new_mists_api_env();
+        let returns: i32 = env.eval(
+            "return select('#', CinematicStarted('2.9', '-9.7', false, 'ignored'))",
+        ).expect("CinematicStarted should accept numeric strings");
+        assert_eq!(returns, 0);
+        let state = env.state().borrow();
+        let record = &state.movie_playback.cinematic_records[&2];
+        assert_eq!((record.movie_type, record.movie_id), (2, -9));
+        assert!(!record.can_cancel);
+        assert!(record.active);
+        assert_eq!(state.movie_playback.manager_movie_id, Some(-9));
+    }
+}
+
+#[cfg(feature = "client-mists")]
+#[test]
+fn mists_cinematic_started_defaults_cancel_and_skips_zero_id() {
+    test_timeout! {
+        let env = new_mists_api_env();
+        env.exec("CinematicStarted(0, 10); CinematicStarted(1, 20, nil); CinematicStarted(2, 30, false); CinematicStarted(3, 40, 0, 'extra'); CinematicStarted(3, 0, false)")
+            .expect("valid cinematic starts should update their records");
+        let state = env.state().borrow();
+        assert!(state.movie_playback.cinematic_records[&0].can_cancel);
+        assert!(state.movie_playback.cinematic_records[&1].can_cancel);
+        assert!(!state.movie_playback.cinematic_records[&2].can_cancel);
+        assert!(state.movie_playback.cinematic_records[&3].can_cancel);
+        assert!(state.movie_playback.cinematic_records[&3].active);
+        assert_eq!(state.movie_playback.cinematic_records[&3].movie_id, 40);
+        assert!(state.movie_playback.last_cinematic_finish.is_none());
+        assert_eq!(state.movie_playback.manager_movie_id, Some(40));
+    }
+}
+
+#[cfg(feature = "client-mists")]
+#[test]
+fn mists_cinematic_started_restarts_active_type_without_manager_id() {
+    test_timeout! {
+        let env = new_mists_api_env();
+        env.exec("CinematicStarted(2, 10, false); CinematicStarted(2, 11, true)")
+            .expect("restarting an active type should finish before starting again");
+        let state = env.state().borrow();
+        let record = &state.movie_playback.cinematic_records[&2];
+        assert_eq!(record.movie_id, 11);
+        assert!(record.can_cancel && record.active);
+        assert_eq!(state.movie_playback.manager_movie_id, None);
+        let finished = state.movie_playback.last_cinematic_finish.as_ref().unwrap();
+        assert_eq!(finished.movie_type, 2);
+        assert!(!finished.user_canceled && !finished.did_error);
+    }
+}
+
+#[cfg(feature = "client-mists")]
+#[test]
+fn mists_cinematic_started_rejects_invalid_arguments_and_ranges() {
+    test_timeout! {
+        let env = new_mists_api_env();
+        env.exec(r#"
+            local usage = "Usage: CinematicStarted(movieType, movieID [, canCancel])"
+            local invalid = {
+                function() CinematicStarted() end,
+                function() CinematicStarted(1) end,
+                function() CinematicStarted(nil, 1) end,
+                function() CinematicStarted(1, nil) end,
+                function() CinematicStarted("bad", 1) end,
+                function() CinematicStarted(1, "bad") end,
+                function() CinematicStarted(-1, 1) end,
+                function() CinematicStarted(4, 1) end,
+            }
+            for _, call in ipairs(invalid) do
+                local ok, err = pcall(call)
+                assert(not ok and string.find(tostring(err), usage, 1, true))
+            end
+            local okId, errId = pcall(CinematicStarted, 1, 2147483648)
+            assert(not okId and string.find(tostring(errId), "outside of expected range -2147483648 to 2147483647", 1, true))
+            local okLowId, errLowId = pcall(CinematicStarted, 1, -2147483649)
+            assert(not okLowId and string.find(tostring(errLowId), "outside of expected range -2147483648 to 2147483647", 1, true))
+            local okType, errType = pcall(CinematicStarted, 1e100, 1)
+            assert(not okType and string.find(tostring(errType), "integer overflow attempting to store", 1, true))
+        "#).expect("CinematicStarted should reject invalid inputs with native errors");
+    }
+}
+
+#[cfg(feature = "client-mists")]
+#[test]
+fn mists_cinematic_finished_inactive_type_still_clears_manager_id() {
+    test_timeout! {
+        let env = new_mists_api_env();
+        env.exec("CinematicStarted(2, 9, true); CinematicFinished(3)")
+            .expect("inactive type completion should still clear manager movie ID");
+        let state = env.state().borrow();
+        assert_eq!(state.movie_playback.manager_movie_id, None);
+        assert!(state.movie_playback.cinematic_records[&2].active);
+        assert!(state.movie_playback.last_cinematic_finish.is_none());
     }
 }
 
@@ -467,6 +590,10 @@ fn mists_movie_success_consumes_stop_and_restores_login() {
             "return MovieFrame:IsShown(), AccountLogin:IsShown()",
         ).expect("the finished movie should close its secondary screen");
         assert_eq!(shown, (false, true));
+        let state = env.state().borrow();
+        let finished = state.movie_playback.last_cinematic_finish.as_ref()
+            .expect("natural finish should record the active movie");
+        assert!(!finished.user_canceled && !finished.did_error);
     }
 }
 
@@ -477,26 +604,28 @@ fn mists_cinematic_finished_clears_matching_active_type() {
         let env = load_blizzard_screen_with_setup(ScreenKind::Login, |env| {
             env.state().borrow_mut().movie_playback.start_results.insert(115, 0);
         });
+        env.exec("CinematicStarted(7, 42, true)")
+            .expect("CinematicStarted should create an active record");
         {
             let mut state = env.state().borrow_mut();
-            state.cinematic_active = true;
-            state.movie_playback.active_cinematic_type = Some(7);
-            state.movie_playback.cinematic_started_at = Some(
-                std::time::Instant::now() - std::time::Duration::from_millis(10),
-            );
+            state.movie_playback.cinematic_records.get_mut(&7).unwrap().started_at =
+                std::time::Instant::now() - std::time::Duration::from_millis(10);
         }
-        env.exec("CinematicFinished(7, true, true)")
+        let returns: i32 = env
+            .eval("return select('#', CinematicFinished(7, true, true))")
             .expect("CinematicFinished should record an active completion");
+        assert_eq!(returns, 0);
         let movie_shown: bool = env
             .eval("return MovieFrame:IsShown()")
             .expect("MovieFrame visibility should remain queryable");
         assert!(movie_shown, "CinematicFinished must not close MovieFrame");
         let state = env.state().borrow();
-        assert!(!state.cinematic_active);
+        assert_eq!(state.movie_playback.manager_movie_id, None);
+        assert!(!state.movie_playback.cinematic_records[&7].active);
         let finished = state.movie_playback.last_cinematic_finish.as_ref()
             .expect("active completion should be recorded");
         assert_eq!(finished.movie_type, 7);
-        assert!(finished.elapsed.is_some());
+        assert!(finished.elapsed >= std::time::Duration::from_millis(10));
         assert!(finished.user_canceled);
         assert!(finished.did_error);
     }

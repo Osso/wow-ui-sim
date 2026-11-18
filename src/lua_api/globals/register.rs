@@ -106,7 +106,7 @@ fn register_bootstrap_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
     #[cfg(feature = "retail-12-0-5")]
     crate::c_api::private_aura_sounds::register(lua.state_mut())?;
     #[cfg(feature = "client-mists")]
-    super::real::mists_cinematic::register_cinematic_finished(lua)?;
+    super::real::mists_cinematic::register_all(lua)?;
     Ok(())
 }
 
