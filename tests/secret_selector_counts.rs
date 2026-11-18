@@ -6,21 +6,41 @@
 use crate::common;
 use rilua::LuaApiMut;
 use wow_ui_sim::lua_api::WowLuaEnv;
+use wow_ui_sim::lua_api::state::{BagItem, SimState};
+
+fn seed_retail_spell_count_fixture(sim: &mut SimState, restricted: bool) {
+    sim.spell_cast_counts.clear();
+    // VERIFIED — Retail 12.1.5 reads the reagent pair and inventory, not this legacy map.
+    sim.spell_cast_counts.insert(19750, 99);
+    sim.spell_reagent_pairs.clear();
+    sim.spell_reagent_pairs.insert(19750, vec![(900_001, 1)]);
+    sim.spell_max_cumulative_aura_applications.clear();
+    sim.spell_max_cumulative_aura_applications.insert(19750, 7);
+    sim.known_spells.clear();
+    sim.known_spells.insert(19750);
+    sim.spell_charges.clear();
+    sim.bag_items.clear();
+    sim.bag_items.insert(
+        (0, 1),
+        BagItem {
+            owned_identity: None,
+            item_id: 900_001,
+            stack_count: 3,
+            hyperlink: None,
+            durability: None,
+            applied_transmog: None,
+        },
+    );
+    sim.spell_id_aliases.clear();
+    sim.cooldowns_restricted = restricted;
+    sim.restricted_actions[0] = if restricted { 2 } else { 0 };
+}
 
 fn fixture(restricted: bool) -> WowLuaEnv {
     let env = WowLuaEnv::new().unwrap();
     {
         let mut sim = env.state().borrow_mut();
-        sim.spell_cast_counts.clear();
-        sim.spell_max_cumulative_aura_applications.clear();
-        sim.spell_cast_counts.insert(19750, 3);
-        sim.spell_max_cumulative_aura_applications.insert(19750, 7);
-        sim.known_spells.clear();
-        sim.known_spells.insert(19750);
-        sim.spell_charges.clear();
-        sim.spell_id_aliases.clear();
-        sim.cooldowns_restricted = restricted;
-        sim.restricted_actions[0] = if restricted { 2 } else { 0 };
+        seed_retail_spell_count_fixture(&mut sim, restricted);
     }
     let loader = env.loader_env();
     let mut lua = loader.rilua_mut();
@@ -171,7 +191,10 @@ fn original_viewer_colors_known_spell_usable() {
 fn assert_count_facts(env: &WowLuaEnv) {
     let sim = env.state().borrow();
     assert_eq!(sim.spell_cast_counts.len(), 1);
-    assert_eq!(sim.spell_cast_counts[&19750], 3);
+    assert_eq!(sim.spell_cast_counts[&19750], 99);
+    assert_eq!(sim.spell_reagent_pairs[&19750], vec![(900_001, 1)]);
+    assert_eq!(sim.bag_items[&(0, 1)].item_id, 900_001);
+    assert_eq!(sim.bag_items[&(0, 1)].stack_count, 3);
     assert_eq!(sim.spell_max_cumulative_aura_applications.len(), 1);
     assert_eq!(sim.spell_max_cumulative_aura_applications[&19750], 7);
     assert_eq!(sim.known_spells.len(), 1);
