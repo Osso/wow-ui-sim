@@ -1,8 +1,8 @@
 //! Temporary `C_SpellBook` static/default fallbacks.
 //!
 //! The state-backed `C_SpellBook` surface owns real spellbook rows. These
-//! defaults cover unmodeled pet-call, override, flyout, base-spell, autocast,
-//! and loss-of-control cooldown gaps until those domains are modeled.
+//! defaults cover unmodeled non-Retail call-pet results and spellbook override,
+//! flyout, base-spell, autocast, and cooldown gaps.
 
 const SPELL_BOOK_STATIC_DEFAULTS_LUA: &str = r#"
 C_SpellBook = C_SpellBook or __wow_namespace()
@@ -67,9 +67,7 @@ end
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(SPELL_BOOK_STATIC_DEFAULTS_LUA)?;
-    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
-        super::retail_spellbook_legacy::register_call_pet(lua)?;
-    } else {
+    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail {
         lua.exec(NON_RETAIL_OVERRIDE_ALIAS_LUA)?;
         lua.exec(NON_RETAIL_CALL_PET_INFO_LUA)?;
     }

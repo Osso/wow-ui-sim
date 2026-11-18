@@ -19,6 +19,16 @@ const STARTUP_OVERRIDES: &[BlizzardAddonOverride<'static>] = &[BlizzardAddonOver
 const FLYOUT_ID: u32 = 7001;
 const FIRST_SPELL_ID: u32 = 19750;
 const SECOND_SPELL_ID: u32 = 35395;
+#[cfg(feature = "client-retail")]
+const NAMED_CALL_PET_SPELL_ID: u32 = 901001;
+#[cfg(feature = "client-retail")]
+const EMPTY_NAME_CALL_PET_SPELL_ID: u32 = 901002;
+#[cfg(feature = "client-retail")]
+const MISSING_NAME_CALL_PET_SPELL_ID: u32 = 901003;
+#[cfg(feature = "client-retail")]
+const UNMAPPED_CALL_PET_SPELL_ID: u32 = 901004;
+#[cfg(feature = "client-retail")]
+const INVALID_INDEX_CALL_PET_SPELL_ID: u32 = 901005;
 
 post_wrath_ui_fixture! {
 #[cfg(not(feature = "client-ptr"))]
@@ -51,6 +61,22 @@ fn spell_flyout_toggle_shows_populates_and_hides_from_same_button() {
         assert_flyout_shown_with_seeded_spells(env);
         toggle_spell_flyout(env);
         assert_flyout_hidden_after_second_toggle(env);
+    });
+    }
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn spell_flyout_filters_call_pet_slots_using_supplied_names() {
+    test_timeout! {
+    with_blizzard_addon_startup_shape(&[ROOT], &[], |env, loaded| {
+        assert!(loaded.iter().any(|name| name == ROOT));
+        assert_spell_flyout_toggle_is_original(env);
+        seed_call_pet_flyout(env);
+        install_test_flyout_button(env);
+        apply_call_pet_wrong_producer_overlay(env);
+        toggle_spell_flyout(env);
+        assert_call_pet_flyout_results(env);
     });
     }
 }
@@ -135,6 +161,144 @@ fn seed_spell_flyout(env: &WowLuaEnv) {
                 },
             ],
         },
+    );
+}
+
+#[cfg(feature = "client-retail")]
+fn seed_call_pet_flyout(env: &WowLuaEnv) {
+    seed_call_pet_inputs(env);
+    seed_call_pet_slots(env);
+}
+
+#[cfg(feature = "client-retail")]
+fn seed_call_pet_inputs(env: &WowLuaEnv) {
+    let mut state = env.state().borrow_mut();
+    state.call_pet_spell_indices.extend([
+        (NAMED_CALL_PET_SPELL_ID, 0),
+        (EMPTY_NAME_CALL_PET_SPELL_ID, 1),
+        (MISSING_NAME_CALL_PET_SPELL_ID, 2),
+        (INVALID_INDEX_CALL_PET_SPELL_ID, 5),
+    ]);
+    state.player_call_pet_names = vec![Some("Kado".to_string()), Some(String::new()), None];
+    state.known_spells.extend([
+        NAMED_CALL_PET_SPELL_ID,
+        EMPTY_NAME_CALL_PET_SPELL_ID,
+        MISSING_NAME_CALL_PET_SPELL_ID,
+        UNMAPPED_CALL_PET_SPELL_ID,
+        INVALID_INDEX_CALL_PET_SPELL_ID,
+    ]);
+}
+
+#[cfg(feature = "client-retail")]
+fn seed_call_pet_slots(env: &WowLuaEnv) {
+    let slots = [
+        NAMED_CALL_PET_SPELL_ID,
+        EMPTY_NAME_CALL_PET_SPELL_ID,
+        MISSING_NAME_CALL_PET_SPELL_ID,
+        UNMAPPED_CALL_PET_SPELL_ID,
+        INVALID_INDEX_CALL_PET_SPELL_ID,
+    ]
+    .map(call_pet_flyout_slot)
+    .to_vec();
+    env.state().borrow_mut().spell_flyouts.insert(
+        FLYOUT_ID,
+        SpellFlyoutInfo {
+            name: "Call-pet test flyout".to_string(),
+            description: "Explicit call-pet inputs".to_string(),
+            is_known: true,
+            slots,
+        },
+    );
+}
+
+#[cfg(feature = "client-retail")]
+fn call_pet_flyout_slot(spell_id: u32) -> SpellFlyoutSlot {
+    SpellFlyoutSlot {
+        spell_id,
+        override_spell_id: spell_id,
+        is_known: true,
+        spell_name: "Fixture call-pet spell".to_string(),
+        spec_id: 0,
+    }
+}
+
+#[cfg(feature = "client-retail")]
+fn apply_call_pet_wrong_producer_overlay(env: &WowLuaEnv) {
+    let Ok(path) = std::env::var("WOW_SIM_CALL_PET_WRONG_PRODUCER_OVERLAY") else {
+        return;
+    };
+    let overlay = std::fs::read_to_string(path).expect("call-pet overlay should be readable");
+    env.exec(&overlay)
+        .expect("call-pet overlay should leave the producer callable");
+}
+
+#[cfg(feature = "client-retail")]
+fn assert_spell_flyout_toggle_is_original(env: &WowLuaEnv) {
+    let source: String = env
+        .eval("return debug.getinfo(SpellFlyoutMixin.Toggle, 'S').source")
+        .expect("SpellFlyout source probe must run");
+    assert!(
+        source.contains("SpellFlyout.lua"),
+        "Toggle must come from the selected Shared/SpellFlyout.lua consumer: {source}"
+    );
+}
+
+#[cfg(feature = "client-retail")]
+fn assert_call_pet_flyout_results(env: &WowLuaEnv) {
+    let (is_shown, first_spell_id, second_spell_id, third_spell_id, fourth_visible) =
+        observe_call_pet_flyout_buttons(env);
+    assert!(is_shown, "SpellFlyout should open");
+    assert_eq!(first_spell_id, NAMED_CALL_PET_SPELL_ID as i64);
+    assert_eq!(second_spell_id, UNMAPPED_CALL_PET_SPELL_ID as i64);
+    assert_eq!(third_spell_id, INVALID_INDEX_CALL_PET_SPELL_ID as i64);
+    assert!(
+        !fourth_visible,
+        "nameless call-pet entries should be hidden"
+    );
+    assert_call_pet_api_results(env);
+}
+
+#[cfg(feature = "client-retail")]
+fn observe_call_pet_flyout_buttons(env: &WowLuaEnv) -> (bool, i64, i64, i64, bool) {
+    env.eval(
+        r#"
+        local function visible_spell_id(index)
+            local button = _G["SpellFlyoutPopupButton" .. index]
+            if button and button:IsShown() then return button.spellID end
+            return -1
+        end
+        return SpellFlyout:IsShown() == true,
+               visible_spell_id(1), visible_spell_id(2), visible_spell_id(3),
+               visible_spell_id(4) ~= -1
+        "#,
+    )
+    .expect("call-pet results should reach the original flyout")
+}
+
+#[cfg(feature = "client-retail")]
+fn assert_call_pet_api_results(env: &WowLuaEnv) {
+    let results_match: bool = env
+        .eval(
+            r##"
+            local named_count = select("#", GetCallPetSpellInfo(901001))
+            local named_index, named_name = GetCallPetSpellInfo(901001)
+            local empty_count = select("#", GetCallPetSpellInfo(901002))
+            local empty_index, empty_name = GetCallPetSpellInfo(901002)
+            local missing_count = select("#", GetCallPetSpellInfo(901003))
+            local missing_index, missing_name = GetCallPetSpellInfo(901003)
+            local unmapped_count = select("#", GetCallPetSpellInfo(901004))
+            local invalid_index_count = select("#", GetCallPetSpellInfo(901005))
+            return named_count == 2 and named_index == 0 and named_name == "Kado"
+                and empty_count == 2 and empty_index == 1 and empty_name == ""
+                and missing_count == 2 and missing_index == 2 and missing_name == nil
+                and unmapped_count == 0 and invalid_index_count == 0
+            "##,
+        )
+        .expect("call-pet API result probe should run");
+
+    assert!(
+        results_match,
+        "call-pet API arity and values should match host inputs"
     );
 }
 
