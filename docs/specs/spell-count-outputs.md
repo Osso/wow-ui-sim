@@ -43,6 +43,8 @@ Display formatting/maximum and secret-output behavior remain Retail125-scoped. O
 
 ### Authentication and partial input parity
 
+- [ ] **VERIFIED (R88r.r1):** for an accepted secret numeric spell selector, a nonzero native metadata source rejects values at or below 1 through the required-argument Usage path; values above 1 continue to signed-32 conversion. The native metadata-source value/type is UNKNOWN. **INFERRED (simulator mapping):** Retail has `spell_identifier_metadata_source: Option<i32>`; `None` is the empty default, `Some(0)` skips the gate, and nonzero values enable it.
+- [ ] **VERIFIED (R88r.r1):** `GetSpellDisplayCount` converts an accepted secret `maxDisplayCount` within the inclusive signed-32 range by truncating toward zero; 1, 0 and -1 are accepted. A value outside that range takes the signed-range argument error. The identifier's <=1 gate does not apply to this maximum.
 - [ ] Retail 12.1.5 cast keeps the bounded [numeric-secret selector subset](secret-selector-count-usability.md); other secret kinds remain conservatively rejected. Exact native `AllowedWhenTainted` access modes and all guard states are UNKNOWN.
 - [ ] Retail 12.1.5 display authenticates all three original VM arguments, in argument order, before identifier conversion, maximum parsing, or model lookup. Secure authenticated identifiers resolve without stack mutation; tainted secret inputs remain rejected.
 - [ ] Older-profile count APIs retain the existing strict public reader. Output-restriction policy is separate from selector permission.
