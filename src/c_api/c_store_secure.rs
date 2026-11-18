@@ -96,20 +96,18 @@ mod tests {
         let ordinary = crate::c_api::global_val(state, "C_StoreSecure");
         let secure_env = crate::lua_api::methods::registry_get(state, "__secureenv");
         let secure_namespace = table_get_static(state, secure_env, "C_StoreSecure");
-        let mut implemented = 0;
-        let mut missing_members = Vec::new();
-        for &(namespace, member, flag, _) in super::super::secure_publication_data::VERIFIED_MEMBERS
-        {
-            if namespace != "C_StoreSecure" || flag % 4 != 3 {
-                continue;
-            }
-            let (count, missing) =
-                store_secure_member_status(state, ordinary, secure_namespace, member);
-            implemented += count;
-            if let Some(missing) = missing {
-                missing_members.push(missing);
-            }
-        }
+        let statuses: Vec<_> = super::super::secure_publication_data::VERIFIED_MEMBERS
+            .iter()
+            .filter_map(|&(namespace, member, flag, _)| {
+                (namespace == "C_StoreSecure" && flag % 4 == 3).then_some(member)
+            })
+            .map(|member| store_secure_member_status(state, ordinary, secure_namespace, member))
+            .collect();
+        let implemented = statuses.iter().map(|(count, _)| count).sum();
+        let missing_members = statuses
+            .into_iter()
+            .filter_map(|(_, missing)| missing)
+            .collect();
         (implemented, missing_members)
     }
 

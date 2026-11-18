@@ -70,17 +70,28 @@ pub fn create_frame_instance(
         preserve_existing_name_binding,
     )?;
     initialize_created_frame(state, widget_type, frame_id)?;
-    register_global_name(
+    finish_frame_global_registration(
         state,
         name.as_deref(),
         frame_id,
         preserve_existing_name_binding,
+        replaced_placeholder,
     )?;
-    if let (Some(name), Some(placeholder)) = (name.as_deref(), replaced_placeholder) {
+    Ok(frame_id)
+}
+
+fn finish_frame_global_registration(
+    state: &mut LuaState,
+    name: Option<&str>,
+    frame_id: u64,
+    preserve_existing_name_binding: bool,
+    replaced_placeholder: Option<u64>,
+) -> LuaResult<()> {
+    register_global_name(state, name, frame_id, preserve_existing_name_binding)?;
+    if let (Some(name), Some(placeholder)) = (name, replaced_placeholder) {
         rebind_secure_env_placeholder(state, name, placeholder, frame_id)?;
     }
-
-    Ok(frame_id)
+    Ok(())
 }
 
 fn mark_loading_forbidden_object_table_scope(state: &mut LuaState, frame_id: u64) -> LuaResult<()> {
