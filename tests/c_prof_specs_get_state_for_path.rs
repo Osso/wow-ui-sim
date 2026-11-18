@@ -60,7 +60,7 @@ fn get_state_returns_locked_progressing_and_completed_for_backed_paths() {
         local api = C_ProfSpecs.GetStateForPath
         local states = Enum.ProfessionsSpecPathState
         if states.Locked ~= 0 or states.Progressing ~= 1 or states.Completed ~= 2 then return false end
-        local n, state = select('#', api(1001, 700)), api(1001, 700)
+        local n, state = select('#', api('1001.9', '700.9')), api('1001.9', '700.9')
         if n ~= 1 or state ~= states.Progressing then return false end
         if api(2001, 700) ~= states.Completed then return false end
         return api(3001, 700) == states.Locked
