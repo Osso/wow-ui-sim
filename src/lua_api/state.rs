@@ -22,12 +22,26 @@ pub struct WrathUnitTapState {
     pub by_all_threat_list: bool,
 }
 
+/// One recorded CinematicFinished result.
+#[cfg(feature = "client-mists")]
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct CinematicFinishRecord {
+    pub movie_type: i32,
+    pub elapsed: Option<std::time::Duration>,
+    pub user_canceled: bool,
+    pub did_error: bool,
+}
+
 /// Empty-default Mists movie inputs and active frame handles.
 #[cfg(feature = "client-mists")]
 #[derive(Debug, Default)]
 pub struct MoviePlaybackState {
     /// UNKNOWN native playback outcome; absent movie IDs have no supplied result.
     pub start_results: HashMap<u32, u32>,
+    /// UNKNOWN CinematicStarted effects; host-supplied active type and start time.
+    pub active_cinematic_type: Option<i32>,
+    pub cinematic_started_at: Option<Instant>,
+    pub last_cinematic_finish: Option<CinematicFinishRecord>,
     pub(crate) active_handles: HashSet<u64>,
     pub(crate) pending_finishes: VecDeque<u64>,
     pub(crate) dispatching_finish: bool,

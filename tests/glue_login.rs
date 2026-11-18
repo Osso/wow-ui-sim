@@ -462,6 +462,32 @@ fn mists_movie_failed_start_defers_finish_until_stop() {
     }
 }
 
+#[cfg(feature = "client-mists")]
+#[test]
+fn mists_cinematic_finished_clears_matching_active_type() {
+    test_timeout! {
+        let env = load_blizzard_screen(ScreenKind::Login);
+        {
+            let mut state = env.state().borrow_mut();
+            state.cinematic_active = true;
+            state.movie_playback.active_cinematic_type = Some(7);
+            state.movie_playback.cinematic_started_at = Some(
+                std::time::Instant::now() - std::time::Duration::from_millis(10),
+            );
+        }
+        env.exec("CinematicFinished(7, true, true)")
+            .expect("CinematicFinished should record an active completion");
+        let state = env.state().borrow();
+        assert!(!state.cinematic_active);
+        let finished = state.movie_playback.last_cinematic_finish.as_ref()
+            .expect("active completion should be recorded");
+        assert_eq!(finished.movie_type, 7);
+        assert!(finished.elapsed.is_some());
+        assert!(finished.user_canceled);
+        assert!(finished.did_error);
+    }
+}
+
 // VERIFIED (R88ao, Mists Classic 5.5.4.70631): StopMovie without a handle returns no values.
 #[cfg(feature = "client-mists")]
 #[test]
