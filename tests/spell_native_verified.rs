@@ -68,6 +68,30 @@ fn publish_secret_number(env: &WowLuaEnv, name: &str, number: f64) {
     lua.state_mut().pop();
 }
 
+const R88R_ORDINARY_CONSUMER_PRESERVATION: &str = r#"
+        for _, case in ipairs({{19750, 7}, {642, 2}}) do
+            local item = {
+                GetSpellChargeInfo = function() return nil end,
+                GetSpellID = function() return case[1] end,
+                SetCachedChargeValues = function(self, count, shown)
+                    self.count, self.shown = count, shown
+                end,
+            }
+            CooldownViewerCooldownItemMixin.CacheChargeValues(item)
+            assert(item.count == case[2] and item.shown)
+        end
+        local absent = {
+            cooldownChargesCount = 11,
+            GetSpellChargeInfo = function() return nil end,
+            GetSpellID = function() return nil end,
+            SetCachedChargeValues = function(self, count, shown)
+                self.count, self.shown = count, shown
+            end,
+        }
+        CooldownViewerCooldownItemMixin.CacheChargeValues(absent)
+        assert(absent.count == 11 and not absent.shown)
+    "#;
+
 const R88R_SECRET_READER_OVERLAY: &str = r#"
 local castUsage = 'Usage: local castCount = C_Spell.GetSpellCastCount(spellIdentifier)'
 local displayUsage = 'Usage: local displayCount = C_Spell.GetSpellDisplayCount(spellIdentifier [, maxDisplayCount, replacementString])'
@@ -190,32 +214,7 @@ fn cast_count_consumers_preserve_ordinary_and_absent_inputs() {
     );
     seed_mask2_reagent(&env, 19_750, 31_001, 1, 1, &[(1, 7)]);
     seed_mask2_reagent(&env, 642, 31_002, 1, 2, &[(1, 2)]);
-    env.exec(
-        r#"
-        for _, case in ipairs({{19750, 7}, {642, 2}}) do
-            local item = {
-                GetSpellChargeInfo = function() return nil end,
-                GetSpellID = function() return case[1] end,
-                SetCachedChargeValues = function(self, count, shown)
-                    self.count, self.shown = count, shown
-                end,
-            }
-            CooldownViewerCooldownItemMixin.CacheChargeValues(item)
-            assert(item.count == case[2] and item.shown)
-        end
-        local absent = {
-            cooldownChargesCount = 11,
-            GetSpellChargeInfo = function() return nil end,
-            GetSpellID = function() return nil end,
-            SetCachedChargeValues = function(self, count, shown)
-                self.count, self.shown = count, shown
-            end,
-        }
-        CooldownViewerCooldownItemMixin.CacheChargeValues(absent)
-        assert(absent.count == 11 and not absent.shown)
-    "#,
-    )
-    .unwrap();
+    env.exec(R88R_ORDINARY_CONSUMER_PRESERVATION).unwrap();
 }
 
 #[test]
