@@ -212,7 +212,7 @@ Exhaustive human-readable status inventory for the local 12.1 FrameXML API snaps
 | `LandingSoulbinds_LoadUI` | best-effort | VERIFIED (runtime): Full PTR loading confirms LandingSoulbinds_LoadUI callable; a byte scan finds its token in pinned PTR source, but the source owner is not mapped. |
 | `LFGListApplicationViewer_OpenEditMode` | best-effort | VERIFIED (runtime): Full PTR loading confirms LFGListApplicationViewer_OpenEditMode callable; a byte scan finds its token in pinned PTR source, but the source owner is not mapped. |
 | `LFGListApplicationViewerRemoveEntryButton_OnClick` | best-effort | VERIFIED (runtime): Full PTR loading confirms LFGListApplicationViewerRemoveEntryButton_OnClick callable; a byte scan finds its token in pinned PTR source, but the source owner is not mapped. |
-| `LoadAddOnWithErrorHandling` | implemented | 12.1 wrapper in `src/ptr/compat_bootstrap.lua`; focused delegation test in `global_functions.rs`. |
+| `LoadAddOnWithErrorHandling` | implemented | Original `Blizzard_SharedXML/AddOnUtil.lua:3-11` calls `C_AddOns.LoadAddOn`; preservation test in `global_functions.rs`. The old PTR wrapper was removed in `6a786fbd8`, before `d54da90d9`. |
 | `LocaleUtil.GetLocaleDisplayName` | best-effort | VERIFIED (runtime): Full PTR loading confirms LocaleUtil.GetLocaleDisplayName callable; a byte scan finds its token in pinned PTR source, but the source owner is not mapped. |
 | `LocalizePlayerFrame_zhCN` | best-effort | VERIFIED (runtime): Full PTR loading confirms LocalizePlayerFrame_zhCN callable; a byte scan finds its token in pinned PTR source, but the source owner is not mapped. |
 | `LocalizePlayerFrame_zhTW` | best-effort | VERIFIED (runtime): Full PTR loading confirms LocalizePlayerFrame_zhTW callable; a byte scan finds its token in pinned PTR source, but the source owner is not mapped. |
@@ -459,8 +459,8 @@ Exhaustive human-readable status inventory for the local 12.1 FrameXML API snaps
 - [Raw 12.1 FrameXML patch list](../../../data/patch-api/sources/12.1-framexml.json) — checked-in exact added/removed symbol arrays.
 - [12.1 FrameXML audit register](../../../data/patch-api/12.1-framexml.json) — per-row machine SSOT and lifecycle/evidence metadata.
 - [Generated compact checklist](../../generated/patch-12-1-framexml-checklist.md) — one itemized line per patch-list occurrence.
-- [PTR compatibility bootstrap](../../../src/ptr/compat_bootstrap.lua) — implemented `LoadAddOnWithErrorHandling` wrapper and post-load dynamic `DifficultyUtil` color delegates.
-- [Global-function regressions](../../../src/loader/tests/wow_api_globals/global_functions.rs) — focused `LoadAddOnWithErrorHandling` wrapper regression.
+- [PTR compatibility bootstrap](../../../src/ptr/compat_bootstrap.lua) — current CooldownManagerLayout wrappers and post-load dynamic `DifficultyUtil` color delegates.
+- [Global-function regressions](../../../src/loader/tests/wow_api_globals/global_functions.rs) — original `LoadAddOnWithErrorHandling` owner preservation test.
 - [PTR compatibility tests](../../../src/ptr/compat_bootstrap.rs) — focused reset, argument/return, hot-swap, missing-global, and preservation coverage for the five `DifficultyUtil` delegates.
 - [FrameXMLUtil lifecycle tests](../../../tests/blizzard_frame_xml_util_loads.rs) — full PTR Game UI lifecycle/threshold proof and older-retail non-exposure proof.
 - [Garrison UI tests](../../../tests/blizzard_garrison_ui_loads.rs) — recursive PTR Garrison source scan plus explicit LoD addon-load proof for the two absent Garrison hide wrappers.
