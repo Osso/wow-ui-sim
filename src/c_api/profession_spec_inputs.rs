@@ -20,6 +20,18 @@ pub struct ProfessionSpecInputs {
     pub path_group_ids: HashMap<i32, i32>,
     /// INFERRED (simulator mapping): groups to ordered TraitNode IDs.
     pub group_node_ids: HashMap<i32, Vec<i32>>,
+    /// INFERRED (simulator mapping): supplied runtime trait configurations.
+    pub trait_config_ids: HashSet<i32>,
+    /// INFERRED (simulator mapping): path type-9 entries to their required rank.
+    pub path_required_ranks: HashMap<i32, i32>,
+    /// INFERRED (simulator mapping): current and effective maximum ranks by path and config.
+    pub path_ranks_by_config: HashMap<(i32, i32), ProfessionPathRanks>,
+    /// INFERRED (simulator mapping): path type-7 spend entries.
+    pub path_spend_entry_ids: HashMap<i32, i32>,
+    /// INFERRED (simulator mapping): path type-9 unlock entries.
+    pub path_unlock_entry_ids: HashMap<i32, i32>,
+    /// INFERRED (simulator mapping): first qualifying type-1 spend currency by path.
+    pub path_spend_currency_ids: HashMap<i32, i32>,
     /// SkillLines whose configuration has an eligible unlock-kind-9/spend-kind-7 node.
     pub points_eligible_skill_lines: HashSet<u32>,
 }
@@ -34,6 +46,13 @@ impl ProfessionSpecInputs {
             .cloned()
             .unwrap_or_default()
     }
+}
+
+/// INFERRED (simulator mapping): rank values supplied for one path and config.
+#[derive(Debug, Clone, Copy)]
+pub struct ProfessionPathRanks {
+    pub current: i32,
+    pub effective_max: i32,
 }
 
 #[derive(Debug, Clone, Copy)]
