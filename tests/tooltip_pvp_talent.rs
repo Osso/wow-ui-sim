@@ -696,7 +696,26 @@ fn game_tooltip_pvp_talent_failure_and_inspect_annotations() {
 #[cfg(feature = "optional-tests")]
 mod r73 {
     use super::*;
+    use wow_ui_sim::c_api::c_spec::PvpTalentInfoRecord;
     use wow_ui_sim::c_api::c_tooltip_info_pvp_talent::PvpTalentSlotInput;
+
+    // INFERRED (simulator mapping): explicit host input for the original UI lookup;
+    // it does not model native PvP talent acquisition.
+    fn supplied_talent_info(selected: bool) -> PvpTalentInfoRecord {
+        PvpTalentInfoRecord {
+            talent_id: 5573,
+            name: "Fixture talent".into(),
+            icon: 204018,
+            selected,
+            available: true,
+            spell_id: 204018,
+            unlocked: true,
+            known: true,
+            granted_by_aura: false,
+            dependencies_unmet: false,
+            dependencies_unmet_reason: None,
+        }
+    }
 
     fn panel(selected: bool, level: i32) -> WowLuaEnv {
         let env = crate::common::panel_fixtures::setup_env_with_inputs(|env| {
@@ -704,6 +723,9 @@ mod r73 {
                 let mut sim = env.state().borrow_mut();
                 sim.player.level = level;
                 sim.player.effective_level = 0;
+                sim.pvp_talents
+                    .info_by_id
+                    .insert(5573, supplied_talent_info(selected));
                 sim.pvp_talent_tooltip
                     .groups
                     .insert(0, [selected.then_some(5573), None, None, None]);
