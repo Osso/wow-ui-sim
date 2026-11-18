@@ -87,6 +87,34 @@ fn setup_env() -> WowLuaEnv {
     common::panel_fixtures::setup_env()
 }
 
+fn run_dashboard_empty_list_request(env: &WowLuaEnv) -> String {
+    env.eval(
+        r#"
+            local loaded, reason = C_AddOns.LoadAddOn("Blizzard_HousingDashboard")
+            if not loaded then
+                return "dashboard_load_failed:" .. tostring(reason)
+            end
+
+            C_Housing.GetPlayerOwnedHouses = function()
+                HousingDashboardFrame.HouseDropdown:OnHouseListUpdated({})
+            end
+            ShowUIPanel(HousingDashboardFrame)
+            HousingDashboardFrame.HouseDropdown.playerHouseList = nil
+            HousingDashboardFrame.HouseDropdown:LoadHouses()
+
+            if HousingDashboardFrame.HouseInfoContent.LoadingSpinner:IsShown() then
+                return "spinner_still_shown"
+            end
+            if not HousingDashboardFrame.HouseInfoContent.DashboardNoHousesFrame:IsShown() then
+                return "empty_dashboard_not_shown"
+            end
+
+            return "ok"
+        "#,
+    )
+    .unwrap()
+}
+
 post_wrath_ui_fixture! {
 #[test]
 fn start_tutorial_button_opens_house_finder() {
@@ -144,39 +172,21 @@ fn start_tutorial_button_opens_house_finder() {
 }
 
 post_wrath_ui_fixture! {
+// VERIFIED — HousingTutorials.toc:2-5 marks an eager Game addon with its own dependency; Dashboard.toc:4 omits it.
 #[test]
 fn dashboard_house_list_request_hides_main_spinner() {
     test_timeout! {
-        let env = setup_env();
-        let result: String = env
-            .eval(
-                r#"
-                    local loaded, reason = C_AddOns.LoadAddOn("Blizzard_HousingDashboard")
-                    if not loaded then
-                        return "dashboard_load_failed:" .. tostring(reason)
-                    end
-
-                    C_Housing.GetPlayerOwnedHouses = function()
-                        HousingDashboardFrame.HouseDropdown:OnHouseListUpdated({})
-                    end
-                    ShowUIPanel(HousingDashboardFrame)
-                    HousingDashboardFrame.HouseDropdown.playerHouseList = nil
-                    HousingDashboardFrame.HouseDropdown:LoadHouses()
-
-                    if HousingDashboardFrame.HouseInfoContent.LoadingSpinner:IsShown() then
-                        return "spinner_still_shown"
-                    end
-                    if not HousingDashboardFrame.HouseInfoContent.DashboardNoHousesFrame:IsShown() then
-                        return "empty_dashboard_not_shown"
-                    end
-
-                    return "ok"
-                "#,
-            )
-            .unwrap();
-        assert_eq!(
-            result, "ok",
-            "Housing dashboard should resolve the owned-house request: {result}"
+        common::blizzard_addon_harness::with_blizzard_addon_startup_shape(
+            &["Blizzard_HousingTutorials"],
+            &[],
+            |env, loaded| {
+                assert!(loaded.iter().any(|name| name == "Blizzard_HousingTutorials"));
+                let result = run_dashboard_empty_list_request(env);
+                assert_eq!(
+                    result, "ok",
+                    "Housing dashboard should resolve the owned-house request: {result}"
+                );
+            },
         );
     }
 }
