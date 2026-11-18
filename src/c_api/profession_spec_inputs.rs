@@ -26,6 +26,7 @@ pub struct ProfessionSpecInputs {
 
 impl ProfessionSpecInputs {
     /// INFERRED (simulator mapping): return supplied children for one path ID.
+    #[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
     pub(crate) fn children_for_path(&self, path_id: i32) -> Vec<i32> {
         self.path_group_ids
             .get(&path_id)
