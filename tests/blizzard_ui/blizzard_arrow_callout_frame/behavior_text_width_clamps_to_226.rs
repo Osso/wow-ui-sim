@@ -8,7 +8,7 @@ const ROOT: &str = "Blizzard_ArrowCalloutFrame";
 // INFERRED for Retail 12.1.5.70783 from verified R88az behavior: the original
 // 0x0 TOP-only Content parent leaves its all-points FontString rect invalid.
 // See Blizzard_ArrowCalloutFrame/ArrowCalloutFrame.xml and pr46-49-decomp-answers.md §R88az.
-const TEXT_WIDTH_CLAMP_PROBE: &str = r#"
+const TEXT_WIDTH_CLAMP_PROBE: &str = r##"
 local failures = {}
 local widthTolerance = 0.01
 
@@ -27,6 +27,42 @@ end
 
 makeAnchor("LongTextCalloutAnchor", 120)
 makeAnchor("ShortTextCalloutAnchor", 320)
+
+local setupDiagnostics = {}
+local function hasValidRect(frame)
+    return select("#", frame:GetRect()) == 4
+end
+
+local originalSetup = ArrowCalloutContainerMixin.Setup
+ArrowCalloutContainerMixin.Setup = function(self, calloutInfo)
+    local textFrame = self.Content.Text
+    local originalSetText = textFrame.SetText
+    local originalGetWidth = textFrame.GetWidth
+    local widthCalls = 0
+    textFrame.SetText = function(frame, text)
+        originalSetText(frame, text)
+        local contentValid = hasValidRect(self.Content)
+        local textValid = hasValidRect(frame)
+        table.insert(setupDiagnostics, string.format(
+            "Setup %s after SetText: Content rect valid=%s; Text rect valid=%s; stored width=%s; text width=%s",
+            tostring(calloutInfo.calloutID), tostring(contentValid), tostring(textValid),
+            tostring(originalGetWidth(frame, true)), tostring(frame:GetStringWidth())))
+        frame.GetWidth = function(widthFrame, ...)
+            widthCalls = widthCalls + 1
+            local width = originalGetWidth(widthFrame, ...)
+            local branch = hasValidRect(widthFrame) and "resolved-rect" or "invalid-rect"
+            table.insert(setupDiagnostics, string.format(
+                "Setup %s GetWidth #%d branch=%s value=%s",
+                tostring(calloutInfo.calloutID), widthCalls, branch, tostring(width)))
+            return width
+        end
+        frame.SetText = originalSetText
+    end
+    local result = originalSetup(self, calloutInfo)
+    textFrame.SetText = originalSetText
+    textFrame.GetWidth = originalGetWidth
+    return result
+end
 
 local function showCallout(calloutID, anchorName, text)
     return C_ArrowCalloutManager.ShowCallout({
@@ -63,8 +99,9 @@ expect(shortNaturalWidth < 226, "short text should naturally measure below the c
 expect(math.abs(shortAppliedWidth - math.min(226, shortNaturalWidth)) < widthTolerance, "short callout should apply min(226, measured text width): " .. tostring(shortAppliedWidth))
 expect(shortAppliedWidth ~= 226, "short text width should not be forced to the maximum clamp: " .. tostring(shortAppliedWidth))
 
-return table.concat(failures, "\n")
-"#;
+ArrowCalloutContainerMixin.Setup = originalSetup
+return table.concat(failures, "\n"), table.concat(setupDiagnostics, "\n")
+"##;
 
 // Wrath has no ArrowCallout vendor widget/handler input; mixed and modeled probes remain enabled.
 post_wrath_ui_fixture! {
@@ -74,12 +111,13 @@ fn callout_text_width_clamps_to_maximum_only_for_long_text() {
     with_blizzard_addon_smoke_shape(&[], &[], |env, _loaded| {
         load_arrow_callout_frame(env);
 
-        let failures: String = env
+        let (failures, diagnostics): (String, String) = env
             .eval(TEXT_WIDTH_CLAMP_PROBE)
             .expect("text-width clamp behavior probe must run cleanly");
+        eprintln!("ArrowCallout setup probe:\n{diagnostics}");
         assert!(
             failures.is_empty(),
-            "ArrowCalloutFrame text-width clamp behavior mismatches:\n{failures}"
+            "ArrowCalloutFrame text-width clamp behavior mismatches:\n{failures}\n{diagnostics}"
         );
     });
 }
