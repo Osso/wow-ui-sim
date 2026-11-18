@@ -318,6 +318,8 @@ pub mod c_secrets;
 pub mod c_settings_util;
 pub mod c_social;
 mod c_social_restrictions;
+#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+mod c_social_ui;
 pub mod c_sound;
 pub mod c_spec;
 mod c_spectating_ui;
@@ -601,6 +603,8 @@ pub(crate) fn register_utility_bootstrap_tables(state: &mut LuaState) -> LuaResu
     c_cvar_info::register(state)?;
     c_engraving::register(state)?;
     c_social_restrictions::register(state)?;
+    #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+    c_social_ui::register(state)?;
     restricted_actions::register(state)?;
     c_loot_history::register_c_loot_history(state)?;
     c_date_and_time::register(state)?;
