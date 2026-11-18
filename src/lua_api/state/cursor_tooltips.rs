@@ -45,6 +45,11 @@ fn reanchor_tooltip_to_cursor(state: &mut SimState, tooltip_id: u64, anchor: Anc
     frame.anchors.clear();
     frame.anchors.push(anchor);
     let _ = frame;
+    if crate::widget::clamp_geometry::uses_retail_clamp_producers() {
+        state
+            .widgets
+            .resolve_named_anchor_targets_for_frame(tooltip_id);
+    }
     state.widgets.mark_rect_dirty(tooltip_id);
     state.widgets.mark_visual_dirty(tooltip_id);
 }

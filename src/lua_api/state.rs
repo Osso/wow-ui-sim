@@ -187,6 +187,7 @@ macro_rules! build_empty_sim_state {
             party_countdown_request: None,
             quest_portrait_state: None,
             tooltips: $collections.tooltips,
+            clamp_inset_access_input: Default::default(),
             item_overrides: ::std::collections::HashMap::new(),
             item_level_color_condition_23: None,
             item_level_color_condition_24: None,
