@@ -107,7 +107,8 @@ const ASSERTIONS: &str = r#"
     function ITCheck(level, ...)
         local data = ITData(C_TooltipInfo.GetItemByID(...))
         -- R80 Q2: four preserved header rows plus four explicitly supplied stat rows.
-        assert(data.id == 211995 and #data.lines == 8, 'headers plus supplied stat rows')
+        assert(data.id == 211995 and #data.lines == 8,
+            'headers plus supplied stat rows: id='..tostring(data.id)..', count='..#data.lines)
         assert(data.lines[1].type == 22 and data.lines[1].leftText == "Entombed Seraph's Sabatons")
         assert(data.lines[2].type == 31 and data.lines[2].leftText == 'Item Level '..level)
         assert(data.lines[3].type == 21 and data.lines[3].leftText == 'Feet')
