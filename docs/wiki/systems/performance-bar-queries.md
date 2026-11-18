@@ -8,6 +8,7 @@ The Retail 12.1.5 simulator registers the two network getters consumed by the or
 - **VERIFIED (Retail 12.1.5.70688, R88ap.8):** `GetProtocolTypes()` returns two numeric endpoint codes in order. Unsupported endpoints return zero; supported results use codes 1 or 2; only the second can use an alternate endpoint.
 - **VERIFIED (simulator source):** `SimState.performance_bar_protocol_types` is an optional typed pair. No input returns `(0, 0)`. The producer does not derive live values or dispatch an update event.
 - **VERIFIED (simulator source):** the Retail producer replaces the former bandwidth and protocol fallbacks. Those fallback defaults remain enabled for other profiles.
+- **INFERRED (pinned Retail 12.1.5.70783 consumer):** `PerformanceBar.lua:44–45, 81–82` displays the first protocol code as home and the second as world; code 1 selects TCP and code 2 selects UDP. These are UI labels, not proof of the live endpoint values or wire transport.
 - **UNKNOWN:** live protocol values, their writers, and the update event.
 
 The original tooltip consumer is `Blizzard_PerformanceBar/PerformanceBar.lua:81–93` in the pinned Retail 12.1.5.70783 cache. The R88ap native return evidence is from build 70688; this does not claim the caches are byte-equivalent.

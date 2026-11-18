@@ -17,6 +17,8 @@ Retail 12.1.5 publishes the two legacy network getters used by the original Perf
 - [ ] Profiles other than Retail 12.1.5 keep their previous fallback behavior.
 - [ ] The original `Blizzard_PerformanceBar/PerformanceBar.lua` tooltip consumes both getters. The pinned Retail 12.1.5.70783 consumer is at lines 81–93; its TOC selects this file.
 
+**INFERRED (pinned Retail 12.1.5.70783 consumer):** `PerformanceBar.lua:44–45, 81–82` displays the first code as home and the second as world; codes 1 and 2 select TCP and UDP labels. These are tooltip labels, not evidence of live endpoint values or actual transport behavior.
+
 ## How it works
 
 - [Retail PerformanceBar query system](../wiki/systems/performance-bar-queries.md).

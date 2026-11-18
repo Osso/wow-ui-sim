@@ -1,6 +1,6 @@
 ## [2026-11-17] system | Retail PerformanceBar network queries
 
-Added the [PerformanceBar query system page](systems/performance-bar-queries.md) and linked it from [[lua-api]]. **VERIFIED (R88ap.7/.8):** Retail 12.1.5 returns bandwidth zero and two ordered protocol codes; live endpoint values and their update path remain UNKNOWN.
+Added the [PerformanceBar query system page](systems/performance-bar-queries.md) and linked it from [[lua-api]]. **VERIFIED (R88ap.7/.8):** Retail 12.1.5 returns bandwidth zero and two ordered protocol codes. **INFERRED (70783 tooltip):** codes 1/2 display as TCP/UDP; live endpoint values and their update path remain UNKNOWN.
 
 ## [2026-11-17] implementation | Retail call-pet flyout spell results
 
