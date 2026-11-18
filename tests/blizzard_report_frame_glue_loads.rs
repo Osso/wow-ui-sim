@@ -347,58 +347,13 @@ fn publishes_named_top_level_frame_under_glue_parent() {
             "#,
         )
         .expect("ReportFrame parent diagnostic should succeed");
-    let (glue_parent_ids, addon_modes, report_parent_ids) = {
-        let state = env.state().borrow();
-        let report_id = state.widgets.get_id_by_name("ReportFrame");
-        let report_parent_id = report_id.and_then(|id| state.widgets.get(id)?.parent_id);
-        let current_glue_parent_id = state.widgets.get_id_by_name("GlueParent");
-        let glue_parent_ids = state
-            .widgets
-            .iter_ids()
-            .filter_map(|id| {
-                let frame = state.widgets.get(id)?;
-                (frame.name.as_deref() == Some("GlueParent")).then(|| {
-                    format!(
-                        "id={id}:parent={:?}:placeholder={}",
-                        frame.parent_id, frame.is_simulator_placeholder
-                    )
-                })
-            })
-            .collect::<Vec<_>>();
-        let addon_modes = state
-            .addons
-            .iter()
-            .filter(|addon| {
-                matches!(
-                    addon.folder_name.as_str(),
-                    "Blizzard_GlueParent"
-                        | "Blizzard_ReportFrameGlue"
-                        | "Blizzard_ReportFrameShared"
-                )
-            })
-            .map(|addon| {
-                format!(
-                    "{} loaded={} secure_loaded={}",
-                    addon.folder_name, addon.loaded, addon.secure_loaded
-                )
-            })
-            .collect::<Vec<_>>();
-        (
-            glue_parent_ids,
-            addon_modes,
-            format!(
-                "report={report_id:?}:parent={report_parent_id:?}:current={current_glue_parent_id:?}"
-            ),
-        )
-    };
     assert!(
         parented_to_glue_parent,
         "ReportFrame must be parented to GlueParent (NOT UIParent) — `parent=\"GlueParent\"` \
          XML attribute at line 4. This is the structural difference from the Game variant: \
          GlueParent is the root frame for glue-screen UI created by Blizzard_GlueXML, while \
          UIParent is the in-game equivalent created by Blizzard_UIParent. The two never \
-         coexist within a single screen; {parent_diagnostic}; frames={glue_parent_ids:?}; \
-         addon_modes={addon_modes:?}; registry={report_parent_ids}"
+         coexist within a single screen; {parent_diagnostic}"
     );
 
     let strata: String = env
