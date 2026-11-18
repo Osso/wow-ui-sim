@@ -8,6 +8,9 @@ pub(crate) struct RegisteredLoadWith {
 }
 
 pub struct SimState {
+    /// VERIFIED R88ap.1: zero initially and after CinematicFinished.
+    #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+    pub current_cinematic_id: u32,
     /// INFERRED simulator source for Movie DB2 rows/summary refs (R88ap.1).
     /// Missing key = no row; None = no summary ref. No native data is fabricated.
     #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
