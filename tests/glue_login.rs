@@ -25,7 +25,7 @@ fn load_blizzard_screen_with_setup(
     configure: impl FnOnce(&WowLuaEnv),
 ) -> common::LockedEnv {
     common::lock_env(move || {
-        let env = WowLuaEnv::new().expect("Failed to create Lua environment");
+        let env = WowLuaEnv::new_for_screen(screen).expect("Failed to create Lua environment");
         configure(&env);
         env.set_screen_size(1024.0, 768.0);
         env.set_screen_mode(screen);
@@ -131,6 +131,17 @@ fn frame_center(env: &WowLuaEnv, frame_path: &str) -> Point {
     Point::new(rect.x + rect.width / 2.0, rect.y + rect.height / 2.0)
 }
 
+// VERIFIED (simulator): a default Mists Game environment keeps its placeholder.
+#[cfg(feature = "client-mists")]
+#[test]
+fn mists_game_bootstrap_keeps_synthetic_chat_frame() {
+    let env = new_mists_api_env();
+    let chat_frame_exists: bool = env
+        .eval("return type(ChatFrame1) == 'table'")
+        .expect("Mists Game ChatFrame1 presence should be queryable");
+    assert!(chat_frame_exists);
+}
+
 // VERIFIED (R88ao, Mists Classic 5.5.4.70631): display expansion level is 4.
 // INFERRED: this value applies to the 70268 cached Glue consumer.
 #[cfg(feature = "client-mists")]
@@ -159,8 +170,7 @@ fn mists_movie_boot_has_no_movie_frame_lifecycle_errors() {
 // INFERRED (R88ao applied to cached 70268): startup opens MovieFrame; with no
 // host result, the simulator's nil pair takes the cached failed-start close.
 // UNKNOWN: the native offline StartMovie result.
-// Mists gate: VERIFIED (simulator test at 4ef691dd2): ChatFrame1 is shown on AccountLogin; native visibility is pending R88ar.
-#[cfg(not(feature = "client-mists"))]
+// INFERRED (R88ar, 70631 applied to cached 70268): the Game-only chat TOCs are absent on Mists Glue.
 #[test]
 fn login_boot_hides_non_login_frontend_frames() {
     test_timeout! {
@@ -201,6 +211,23 @@ fn login_boot_hides_non_login_frontend_frames() {
             .eval("return AccountLogin ~= nil and AccountLogin:IsShown()")
             .expect("AccountLogin visibility should be queryable");
         assert!(account_login_visible, "login screen should show AccountLogin");
+
+        #[cfg(feature = "client-mists")]
+        {
+            let chat_frame_exists: bool = env
+                .eval("return ChatFrame1 ~= nil")
+                .expect("ChatFrame1 presence should be queryable");
+            assert!(!chat_frame_exists, "Mists Glue must not create a chat placeholder");
+            let chat_addons_loaded: (bool, bool) = env
+                .eval(
+                    r#"
+                    return C_AddOns.IsAddOnLoaded('Blizzard_ChatFrameBase'),
+                        C_AddOns.IsAddOnLoaded('Blizzard_ChatFrame')
+                    "#,
+                )
+                .expect("Mists chat addon load state should be queryable");
+            assert_eq!(chat_addons_loaded, (false, false));
+        }
 
         // R62: Retail AccountLogin chat visibility is UNKNOWN. Its unconditional
         // shared definition must not be replaced or forced hidden. Other profiles

@@ -22,7 +22,7 @@
 
 **VERIFIED (Mists integration RED at source SHA `537f369a949468051115b7c68bed02704f93eb88`):** the selected original `GlueParent_CheckCinematic` opened MovieFrame, whose `OnShow` failed at `MovieFrame.lua:37` because `HideCursor` was nil. The original login-boot assertion found AccountLogin hidden, and the original edit-box hit test found no target under the full-screen frame.
 
-**IMPLEMENTED, UNVERIFIED (source SHA `b265305c2`):** Mists cursor visibility globals now follow Glue/Game screen registration. The post-change build and test are pending.
+**Historical note (source SHA `b265305c2`):** the cursor visibility globals were added for the original Mists consumer. Later build and test evidence appears below.
 
 ## Sources
 
@@ -35,3 +35,21 @@
 
 - [[glue-login-lifecycle]] — related Retail Glue lifecycle; not evidence for Mists native behavior.
 - [MovieFrame subtitle contract](../../specs/movie-subtitles.md) — existing MovieFrame method model and its playback boundary.
+
+## R88aq cinematic behavior
+
+**VERIFIED (Mists Classic 5.5.4.70631, R88aq):** `CinematicStarted` requires numeric or numeric-string type and movie ID values, truncates toward zero, accepts type 0–3 and signed-int32 IDs, treats only Boolean false as `canCancel=false`, ignores extra arguments, and returns no values. ID 0 skips record updates. An active same-type record is finished before its replacement starts.
+
+**VERIFIED (R88aq-b):** cinematic types are GlueMovie=0, GameMovie=1, GameClientScene=2, and GameCinematicSequence=3. `CinematicFinished` updates the record and shared state before its type-1 follow-up, then clears the manager movie ID. The follow-up requires a separate game-movie flag. **UNKNOWN:** the flag writer and observer/listener effects. The simulator keeps that flag unset and does not model unknown observer effects.
+
+**INFERRED (5.5.4.70631 behavior applied to cached 5.5.4.70268):** cached `MovieFrame.lua` uses the movie completion callback to close the secondary screen and restore AccountLogin. The simulator keeps offline `StartMovie` results as empty-default host input; it does not invent a native offline result.
+
+## R88ar Mists Glue chat selection
+
+**VERIFIED (5.5.4.70268 cached TOCs):** `Blizzard_ChatFrameBase_Classic.toc` declares `AllowLoad: game` and `AllowLoadGameType: classic`; `Blizzard_ChatFrame_Mists.toc` declares `AllowLoad: game` and `AllowLoadGameType: mists`. The Mists game-type tokens match the active profile, while the `AllowLoad` screen gate rejects both add-ons on Glue.
+
+**VERIFIED (simulator source at `67d34fbc`):** `screen_allowed_toc` applies `TocFile::allows_screen` and the active game-type filter. **VERIFIED (Mists login runtime at that source):** `C_AddOns.IsAddOnLoaded` returned false for both chat add-ons, yet `ChatFrame1` existed and was shown with built-in ownership. The loader filter was already correct.
+
+**VERIFIED (source and simulator runtime at `67d34fbc`):** `chat_window_defaults` created a synthetic `ChatFrame1` before startup applied the requested screen. **INFERRED (R88ar applied to the 70268 cache):** the original Mists Glue login does not receive this Game-only chat frame. **UNVERIFIED (working-tree implementation):** the simulator skips its synthetic placeholder only for Mists Glue; it does not hide the frame. The default Mists Game placeholder and all other profiles should remain unchanged.
+
+**UNVERIFIED (working-tree implementation):** the original login test keeps its `ChatFrame1`-not-shown assertion and checks that the frame is absent and both Game-only chat add-ons are unloaded. A separate Mists Game test checks that the placeholder remains. Profile gate results are pending.

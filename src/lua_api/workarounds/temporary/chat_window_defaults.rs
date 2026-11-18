@@ -27,10 +27,6 @@ end
 
 ChatFrameUtil = ChatFrameUtil or {}
 
-if rawget(_G, "ChatFrame1") == nil and type(CreateFrame) == "function" then
-  CreateFrame("ScrollingMessageFrame", "ChatFrame1", UIParent)
-end
-
 if ChatFrameUtil.GetChatWindowName == nil then
   function ChatFrameUtil.GetChatWindowName(index)
     return string.format("Chat Window %d", tonumber(index) or 1)
@@ -132,8 +128,20 @@ if SetChatWindowSavedPosition == nil then
 end
 "#;
 
-pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
+const CHAT_FRAME_PLACEHOLDER_LUA: &str = r#"
+if rawget(_G, "ChatFrame1") == nil and type(CreateFrame) == "function" then
+  CreateFrame("ScrollingMessageFrame", "ChatFrame1", UIParent)
+end
+"#;
+
+pub(crate) fn apply_bootstrap(
+    lua: &mut rilua::Lua,
+    skip_chat_frame_placeholder: bool,
+) -> crate::Result<()> {
     lua.exec(CHAT_WINDOW_DEFAULTS_LUA)?;
+    if !skip_chat_frame_placeholder {
+        lua.exec(CHAT_FRAME_PLACEHOLDER_LUA)?;
+    }
     Ok(())
 }
 

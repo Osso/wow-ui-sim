@@ -883,3 +883,25 @@ adds no host credential input.
   shown. The test also checks the simulator's Glue-only publication choice.
 - [ ] **UNKNOWN (native):** Game availability and ordinary/secure publication
   classification are not established by R88am.
+
+## Mists Classic Glue chat frame
+
+**INFERRED (R88ar, Mists Classic 5.5.4.70631 applied to cached 5.5.4.70268):**
+Glue rejects Game-only add-ons, including the cached `Blizzard_ChatFrameBase`
+and `Blizzard_ChatFrame` TOCs. The original Mists Glue login should not have
+`ChatFrame1` when these add-ons do not load. **UNVERIFIED (R88ar):** whether
+another Glue add-on can create `ChatFrame1` is not established.
+
+**VERIFIED (simulator source and Mists login run at `67d34fbc`):** the shared
+loader excludes those two Game-only add-ons on Glue, but the temporary chat
+window default still creates a synthetic `ChatFrame1` during environment
+bootstrap.
+
+The simulator must not create that synthetic frame on Mists Glue. It must not
+hide the frame as a substitute. Mists Game keeps its existing default frame. Retail Glue behavior remains
+unchanged; this Mists-specific rule does not establish Retail behavior.
+
+The login test must keep its existing `ChatFrame1`-not-shown assertion. It also
+checks that Mists Glue has no `ChatFrame1` and that the two Game-only chat
+add-ons are not loaded. A Mists Game test checks that the default placeholder
+remains.

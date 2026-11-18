@@ -54,9 +54,10 @@ pub(crate) fn trace_debug_getter_values(lua: &mut rilua::Lua, phase: &str) {
 pub(super) fn init_lua_state(
     lua: &mut rilua::Lua,
     state: Rc<RefCell<SimState>>,
+    bootstrap_screen: crate::screen::ScreenKind,
 ) -> crate::Result<()> {
     initialize_lua_state_foundation(lua, &state)?;
-    register_lua_globals_and_bootstraps(lua, state.clone())?;
+    register_lua_globals_and_bootstraps(lua, state.clone(), bootstrap_screen)?;
     register_common_api_modules(lua)?;
     initialize_profile_bootstrap(lua)?;
     // secureenv is shallow-copied from `_G` here. It keeps its copy of
@@ -86,7 +87,11 @@ fn initialize_lua_state_foundation(
 fn register_lua_globals_and_bootstraps(
     lua: &mut rilua::Lua,
     state: Rc<RefCell<SimState>>,
+    bootstrap_screen: crate::screen::ScreenKind,
 ) -> crate::Result<()> {
+    let skip_chat_frame_placeholder = crate::client_profile::ACTIVE
+        == crate::client_profile::ClientProfile::Mists
+        && bootstrap_screen.is_glue();
     // register_globals calls gc_stop at its entry; finalize_bootstrap_gc
     // below restores the collector once bootstrap is complete. Between
     // those two points the mark phase is paused.
@@ -106,7 +111,7 @@ fn register_lua_globals_and_bootstraps(
     trace_debug_getter_values(lua, "before_temporary_bootstrap");
     #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
     crate::c_api::c_combat_log::register_filters(lua)?;
-    crate::lua_api::workarounds::apply_temporary_bootstrap(lua)?;
+    crate::lua_api::workarounds::apply_temporary_bootstrap(lua, skip_chat_frame_placeholder)?;
     trace_debug_getter_values(lua, "after_temporary_bootstrap");
     Ok(())
 }
