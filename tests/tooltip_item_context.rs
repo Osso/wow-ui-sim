@@ -572,11 +572,12 @@ fn public_context_domains_reject_wrong_types_nonfinite_fractional_and_overflow()
     );
 }
 
+/// INFERRED (simulator mapping from R88av): item ID zero takes the initial catalog-miss path.
 #[test]
 fn item_id_retains_existing_u32_positive_and_zero_miss_behavior() {
     probe(
         &seeded_env(),
-        "ITCheck(571,211995); ITMiss(0); ITMiss(0,nil,1,70)",
+        "ITCheck(571,211995); ITMissingCatalog(0); ITMissingCatalog(0,nil,1,70)",
     );
 }
 
