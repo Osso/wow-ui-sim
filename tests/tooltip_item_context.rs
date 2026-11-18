@@ -554,13 +554,19 @@ fn item_context_signed32_values_normalize_to_context_bytes() {
     );
 }
 
+/// VERIFIED (R88au.2, 12.1.5.70688); applicability to 70783 is INFERRED.
 #[test]
 fn public_context_domains_reject_wrong_types_nonfinite_fractional_and_overflow() {
     probe(
         &seeded_env(),
         r#"
+        -- R88au.2 verifies argument-error routing, but gives no exact error text.
+        for _,v in ipairs({false,true,'PRIVATE-ItemContext',{},ITFrame,2147483648,4294967296,-2147483649,math.huge,-math.huge,0/0}) do
+            ITReject(false,211995,nil,v,nil)
+        end
+        -- UNKNOWN native arg4 conversion domain (R88au.5): retain the prior simulator cases.
         for _,v in ipairs({false,true,'1','PRIVATE-ItemContext',{},ITFrame,-1,1.5,4294967296,math.huge,-math.huge,0/0}) do
-            ITReject(false,211995,nil,v,nil); ITReject(false,211995,nil,1,v)
+            ITReject(false,211995,nil,1,v)
         end
     "#,
     );
