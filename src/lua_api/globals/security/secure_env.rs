@@ -476,6 +476,161 @@ mod tests {
     use rilua::vm::state::LuaState;
     use rilua::{LuaApiMut, LuaResult, Val};
 
+    const NATIVE_GLOBAL_FLAGS_PROBE: &str = r#"
+                local function exists(table, name)
+                    return type(rawget(table, name)) == "function"
+                end
+                return {
+                    exists(_G, "flagordinary"), exists(__secureenv, "flagordinary"),
+                    exists(_G, "flagsecure"), exists(__secureenv, "flagsecure"),
+                    exists(_G, "flagboth"), exists(__secureenv, "flagboth"),
+                    exists(_G, "flagbothseven"), exists(__secureenv, "flagbothseven"),
+                    exists(_G, "flagneither"), exists(__secureenv, "flagneither"),
+                }
+                "#;
+    const FLAG3_GLOBAL_HANDLERS_PROBE: &str = r#"
+                local ordinary3 = rawget(_G, "flagshared3")
+                local secure3 = rawget(__secureenv, "flagshared3")
+                local ordinary7 = rawget(_G, "flagshared7")
+                local secure7 = rawget(__secureenv, "flagshared7")
+                return {
+                    type(ordinary3) == "function",
+                    type(secure3) == "function",
+                    not rawequal(ordinary3, secure3),
+                    ordinary3() == true,
+                    secure3() == true,
+                    type(ordinary7) == "function",
+                    type(secure7) == "function",
+                    ordinary7() == true,
+                    secure7() == true,
+                }
+                "#;
+    const FIXED_BASE_COPY_PROBE: &str = r#"
+                local secure = __secureenv
+                local probe = "__secure_env_copy_probe"
+                local before = rawget(math, probe)
+                rawset(math, probe, true)
+                local secureEnum = rawget(secure, "Enum")
+                local secureTooltipDataType = secureEnum and rawget(secureEnum, "TooltipDataType")
+                local secureBit = rawget(secure, "bit")
+                local ordinaryBit = rawget(_G, "bit")
+                local result = {
+                    type(rawget(secure, "assert")) == "function",
+                    type(secureEnum) == "table"
+                        and secureEnum ~= Enum
+                        and type(secureTooltipDataType) == "table"
+                        and type(rawget(secureTooltipDataType, "Unit")) == "number",
+                    rawget(secure, "TooltipDataProcessor") == nil,
+                    rawget(secure, "math") ~= math,
+                    rawget(secure, "math").abs == math.abs
+                        and rawget(rawget(secure, "math"), probe) == nil,
+                    type(secureBit) == "table"
+                        and secureBit ~= ordinaryBit
+                        and secureBit.band == ordinaryBit.band,
+                }
+                rawset(math, probe, before)
+                return result[1], result[2], result[3], result[4], result[5], result[6]
+                "#;
+    const SECURE_LIBRARY_ALIASES_PROBE: &str = r#"
+                local secure = __secureenv
+                local secureString = rawget(secure, "string")
+                local secureMath = rawget(secure, "math")
+                return type(string.concat) == "function"
+                        and rawequal(string.concat, strconcat)
+                        and rawequal(secureString.concat, string.concat),
+                    type(string.split) == "function"
+                        and rawequal(string.split, strsplit),
+                    type(secureString.split) == "function"
+                        and rawequal(secureString.split, strsplit),
+                    type(string.join) == "function"
+                        and rawequal(string.join, strjoin)
+                        and rawequal(secureString.join, string.join),
+                    secureString ~= string,
+                    secureMath ~= math and rawequal(secureMath.random, math.random),
+                    type(math.round) == "function"
+                        and type(secureMath.round) == "function",
+                    type(string.contains) == "function"
+                        and type(secureString.contains) == "function",
+                    type(fastrandom) == "function"
+                        and rawequal(fastrandom, math.random)
+                        and rawget(secure, "fastrandom") == nil
+                "#;
+    #[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+    const MISSING_SECURE_BASE_MEMBERS_PROBE: &str = r#"
+                    local names = {__VERIFIED_BASE_NAMES__}
+                    local missing = {}
+                    for _, name in ipairs(names) do
+                        if rawget(_G, name) ~= nil and rawget(__secureenv, name) == nil then
+                            missing[#missing + 1] = name
+                        end
+                    end
+                    return missing
+                "#;
+    #[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+    const SEED_SECURE_ENVIRONMENT_PROBE: &str = r#"
+                local names = {__VERIFIED_BASE_NAMES__}
+                for _, name in ipairs(names) do
+                    if rawget(_G, name) == nil then rawset(_G, name, true) end
+                end
+                rawset(_G, "coroutine", {})
+                rawset(_G, "os", {})
+                rawset(_G, "__secureenv", nil)
+            "#;
+    #[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+    const SECURE_ENVIRONMENT_BASE_PROBE: &str = r#"
+                local names = {}
+                for name in pairs(__secureenv) do
+                    names[#names + 1] = name
+                end
+                return names,
+                    rawget(__secureenv, "coroutine") == nil
+                        and rawget(__secureenv, "os") == nil
+                "#;
+
+    #[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+    // R88n.11 part 1: exact Retail 12.1.5.70688 constructor copy list. Evidence: pr46-49-decomp-answers.md, sections R88n.11.
+    const VERIFIED_BASE_NAMES: [&str; 39] = [
+        "assert",
+        "bit",
+        "date",
+        "error",
+        "forceinsecure",
+        "GetCurrentEnvironment",
+        "geterrorhandler",
+        "getfenv",
+        "GetGlobalEnvironment",
+        "getmetatable",
+        "ipairs",
+        "issecure",
+        "math",
+        "next",
+        "pairs",
+        "pcall",
+        "pcallwithenv",
+        "rawget",
+        "rawset",
+        "securecall",
+        "securecallfunction",
+        "secureexecuterange",
+        "select",
+        "setfenv",
+        "setmetatable",
+        "string",
+        "strcmputf8i",
+        "strconcat",
+        "strjoin",
+        "strlenutf8",
+        "strsplit",
+        "table",
+        "time",
+        "tonumber",
+        "tostring",
+        "type",
+        "unpack",
+        "IsInGlobalEnvironment",
+        "SwapToGlobalEnvironment",
+    ];
+
     fn flag_probe(state: &mut LuaState) -> LuaResult<u32> {
         state.push(Val::Bool(true));
         Ok(1)
@@ -497,24 +652,9 @@ mod tests {
                     .expect("register flagged function");
             }
         }
-
         let result: Vec<bool> = env
-            .eval(
-                r#"
-                local function exists(table, name)
-                    return type(rawget(table, name)) == "function"
-                end
-                return {
-                    exists(_G, "flagordinary"), exists(__secureenv, "flagordinary"),
-                    exists(_G, "flagsecure"), exists(__secureenv, "flagsecure"),
-                    exists(_G, "flagboth"), exists(__secureenv, "flagboth"),
-                    exists(_G, "flagbothseven"), exists(__secureenv, "flagbothseven"),
-                    exists(_G, "flagneither"), exists(__secureenv, "flagneither"),
-                }
-                "#,
-            )
+            .eval(NATIVE_GLOBAL_FLAGS_PROBE)
             .expect("flag destination probe");
-
         assert_eq!(
             result,
             vec![
@@ -533,29 +673,9 @@ mod tests {
             register_native_function_with_flags(&mut lua, "flagshared7", flag_probe, 7)
                 .expect("register flag-7 function");
         }
-
         let routes: Vec<bool> = env
-            .eval(
-                r#"
-                local ordinary3 = rawget(_G, "flagshared3")
-                local secure3 = rawget(__secureenv, "flagshared3")
-                local ordinary7 = rawget(_G, "flagshared7")
-                local secure7 = rawget(__secureenv, "flagshared7")
-                return {
-                    type(ordinary3) == "function",
-                    type(secure3) == "function",
-                    not rawequal(ordinary3, secure3),
-                    ordinary3() == true,
-                    secure3() == true,
-                    type(ordinary7) == "function",
-                    type(secure7) == "function",
-                    ordinary7() == true,
-                    secure7() == true,
-                }
-                "#,
-            )
+            .eval(FLAG3_GLOBAL_HANDLERS_PROBE)
             .expect("flagged function publication probe");
-
         assert_eq!(
             routes,
             vec![true, true, true, true, true, true, true, true, true]
@@ -627,36 +747,8 @@ mod tests {
     fn secure_environment_uses_fixed_base_and_shallow_table_copies() {
         let env = WowLuaEnv::new().expect("lua env");
         let result: (bool, bool, bool, bool, bool, bool) = env
-            .eval(
-                r#"
-                local secure = __secureenv
-                local probe = "__secure_env_copy_probe"
-                local before = rawget(math, probe)
-                rawset(math, probe, true)
-                local secureEnum = rawget(secure, "Enum")
-                local secureTooltipDataType = secureEnum and rawget(secureEnum, "TooltipDataType")
-                local secureBit = rawget(secure, "bit")
-                local ordinaryBit = rawget(_G, "bit")
-                local result = {
-                    type(rawget(secure, "assert")) == "function",
-                    type(secureEnum) == "table"
-                        and secureEnum ~= Enum
-                        and type(secureTooltipDataType) == "table"
-                        and type(rawget(secureTooltipDataType, "Unit")) == "number",
-                    rawget(secure, "TooltipDataProcessor") == nil,
-                    rawget(secure, "math") ~= math,
-                    rawget(secure, "math").abs == math.abs
-                        and rawget(rawget(secure, "math"), probe) == nil,
-                    type(secureBit) == "table"
-                        and secureBit ~= ordinaryBit
-                        and secureBit.band == ordinaryBit.band,
-                }
-                rawset(math, probe, before)
-                return result[1], result[2], result[3], result[4], result[5], result[6]
-                "#,
-            )
+            .eval(FIXED_BASE_COPY_PROBE)
             .expect("secure environment base probe");
-
         assert_eq!(result, (true, true, true, true, true, true));
     }
 
@@ -688,32 +780,7 @@ mod tests {
     fn secure_library_aliases_follow_base_copy_and_keep_random_identity() {
         let env = WowLuaEnv::new().expect("lua env");
         let contract: (bool, bool, bool, bool, bool, bool, bool, bool, bool) = env
-            .eval(
-                r#"
-                local secure = __secureenv
-                local secureString = rawget(secure, "string")
-                local secureMath = rawget(secure, "math")
-                return type(string.concat) == "function"
-                        and rawequal(string.concat, strconcat)
-                        and rawequal(secureString.concat, string.concat),
-                    type(string.split) == "function"
-                        and rawequal(string.split, strsplit),
-                    type(secureString.split) == "function"
-                        and rawequal(secureString.split, strsplit),
-                    type(string.join) == "function"
-                        and rawequal(string.join, strjoin)
-                        and rawequal(secureString.join, string.join),
-                    secureString ~= string,
-                    secureMath ~= math and rawequal(secureMath.random, math.random),
-                    type(math.round) == "function"
-                        and type(secureMath.round) == "function",
-                    type(string.contains) == "function"
-                        and type(secureString.contains) == "function",
-                    type(fastrandom) == "function"
-                        and rawequal(fastrandom, math.random)
-                        and rawget(secure, "fastrandom") == nil
-                "#,
-            )
+            .eval(SECURE_LIBRARY_ALIASES_PROBE)
             .expect("verified library initialization routes should be observable");
         assert_eq!(
             contract,
@@ -724,110 +791,71 @@ mod tests {
     #[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
     #[test]
     fn secure_environment_contains_exact_verified_base_list() {
-        // R88n.11 part 1: exact Retail 12.1.5.70688 constructor copy list. Evidence: pr46-49-decomp-answers.md, sections R88n.11.
-        const VERIFIED_BASE_NAMES: [&str; 39] = [
-            "assert",
-            "bit",
-            "date",
-            "error",
-            "forceinsecure",
-            "GetCurrentEnvironment",
-            "geterrorhandler",
-            "getfenv",
-            "GetGlobalEnvironment",
-            "getmetatable",
-            "ipairs",
-            "issecure",
-            "math",
-            "next",
-            "pairs",
-            "pcall",
-            "pcallwithenv",
-            "rawget",
-            "rawset",
-            "securecall",
-            "securecallfunction",
-            "secureexecuterange",
-            "select",
-            "setfenv",
-            "setmetatable",
-            "string",
-            "strcmputf8i",
-            "strconcat",
-            "strjoin",
-            "strlenutf8",
-            "strsplit",
-            "table",
-            "time",
-            "tonumber",
-            "tostring",
-            "type",
-            "unpack",
-            "IsInGlobalEnvironment",
-            "SwapToGlobalEnvironment",
-        ];
         let env = WowLuaEnv::new().expect("lua env");
-        let names = VERIFIED_BASE_NAMES
+        let names = verified_base_names_argument();
+        let missing_secure_members = read_missing_secure_base_members(&env, &names);
+        assert_no_missing_secure_base_members(missing_secure_members);
+        seed_secure_environment_constructor_inputs(&env, &names);
+        super::create_secure_environment(&mut env.rilua_mut())
+            .expect("recreate secure environment from seeded globals");
+        let (actual, excluded_standard_libraries) = read_secure_environment_base(&env);
+        let expected = expected_secure_environment_base();
+        assert_secure_environment_matches_base(actual, expected, excluded_standard_libraries);
+    }
+
+    #[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+    fn verified_base_names_argument() -> String {
+        VERIFIED_BASE_NAMES
             .iter()
             .map(|name| format!("{name:?}"))
             .collect::<Vec<_>>()
-            .join(", ");
-        let missing_secure_members: Vec<String> = env
-            .eval(&format!(
-                r#"
-                    local names = {{ {names} }}
-                    local missing = {{}}
-                    for _, name in ipairs(names) do
-                        if rawget(_G, name) ~= nil and rawget(__secureenv, name) == nil then
-                            missing[#missing + 1] = name
-                        end
-                    end
-                    return missing
-                "#
-            ))
-            .expect("compare installed base globals");
+            .join(", ")
+    }
+
+    #[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+    fn read_missing_secure_base_members(env: &WowLuaEnv, names: &str) -> Vec<String> {
+        let probe = MISSING_SECURE_BASE_MEMBERS_PROBE.replace("__VERIFIED_BASE_NAMES__", names);
+        env.eval(&probe).expect("compare installed base globals")
+    }
+
+    #[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+    fn assert_no_missing_secure_base_members(missing_secure_members: Vec<String>) {
         assert!(
             missing_secure_members.is_empty(),
             "ordinary base globals missing from secureenv: {missing_secure_members:?}"
         );
+    }
 
-        env.exec(&format!(
-            r#"
-                local names = {{ {names} }}
-                for _, name in ipairs(names) do
-                    if rawget(_G, name) == nil then rawset(_G, name, true) end
-                end
-                rawset(_G, "coroutine", {{}})
-                rawset(_G, "os", {{}})
-                rawset(_G, "__secureenv", nil)
-            "#
-        ))
-        .expect("seed constructor inputs");
+    #[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+    fn seed_secure_environment_constructor_inputs(env: &WowLuaEnv, names: &str) {
+        let seed = SEED_SECURE_ENVIRONMENT_PROBE.replace("__VERIFIED_BASE_NAMES__", names);
+        env.exec(&seed).expect("seed constructor inputs");
+    }
 
-        super::create_secure_environment(&mut env.rilua_mut())
-            .expect("recreate secure environment from seeded globals");
+    #[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+    fn read_secure_environment_base(env: &WowLuaEnv) -> (Vec<String>, bool) {
+        env.eval(SECURE_ENVIRONMENT_BASE_PROBE)
+            .expect("read secure-environment base")
+    }
 
-        let (mut actual, excluded_standard_libraries): (Vec<String>, bool) = env
-            .eval(
-                r#"
-                local names = {}
-                for name in pairs(__secureenv) do
-                    names[#names + 1] = name
-                end
-                return names,
-                    rawget(__secureenv, "coroutine") == nil
-                        and rawget(__secureenv, "os") == nil
-                "#,
-            )
-            .expect("read secure-environment base");
+    #[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+    fn expected_secure_environment_base() -> Vec<String> {
         let mut expected = VERIFIED_BASE_NAMES
             .iter()
             .map(|name| (*name).to_string())
             .collect::<Vec<_>>();
         expected.push("_G".to_string());
         expected.sort_unstable();
-        actual.sort_unstable();
+        expected
+    }
 
+    #[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+    fn assert_secure_environment_matches_base(
+        mut actual: Vec<String>,
+        expected: Vec<String>,
+        excluded_standard_libraries: bool,
+    ) {
+        actual.sort_unstable();
         assert_eq!(actual, expected);
         assert!(excluded_standard_libraries);
     }
