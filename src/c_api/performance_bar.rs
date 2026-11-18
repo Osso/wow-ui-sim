@@ -44,7 +44,9 @@ fn available_bandwidth(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-/// VERIFIED R88ap.8: publish two numeric endpoint codes in order; absent input is (0, 0).
+/// VERIFIED R88ap.8: publish two numeric endpoint codes in endpoint order.
+/// INFERRED (simulator mapping): the optional typed input supplies the codes;
+/// no input maps to (0, 0).
 fn protocol_types(state: &mut LuaState) -> LuaResult<u32> {
     let input = borrow_state(state)?.performance_bar_protocol_types;
     let (home, world) = input.map_or((0, 0), |types| (types.home.value(), types.world.value()));

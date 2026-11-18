@@ -16,7 +16,7 @@ The [panel fixture investigation](investigations/showuipanel-toggle-fixture-owne
 
 ## [2026-11-17] system | Retail PerformanceBar network queries
 
-[PerformanceBar network queries](systems/performance-bar-queries.md) records the Retail 12.1.5 getters, the typed empty-default endpoint input, and the preserved non-Retail fallbacks. **INFERRED (70783 tooltip):** codes 1/2 display as TCP/UDP; live endpoint values remain UNKNOWN.
+[PerformanceBar network queries](systems/performance-bar-queries.md) records the Retail 12.1.5 getters and preserved non-Retail fallbacks. **INFERRED (simulator mapping):** the typed endpoint input is empty by default. **INFERRED (70783 tooltip):** codes 1/2 display as TCP/UDP; live endpoint values remain UNKNOWN.
 
 ## [2026-11-17] verification | Retail call-pet flyout results
 

@@ -6,7 +6,7 @@ The Lua API layer bridges Lua addon code with the Rust simulation engine. It pro
 
 ## Tooltip data and merchant cursor presentation
 
-The [Retail PerformanceBar query system](performance-bar-queries.md) records the native `GetAvailableBandwidth` and `GetProtocolTypes` contracts, the empty-default simulator input, and the unknown live-state boundary.
+The [Retail PerformanceBar query system](performance-bar-queries.md) records the native `GetAvailableBandwidth` and `GetProtocolTypes` contracts, the **INFERRED (simulator mapping)** empty-default input, and the unknown live-state boundary.
 
 ### GameTooltip minimum width and FontString pairs
 

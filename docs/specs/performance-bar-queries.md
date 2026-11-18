@@ -1,6 +1,6 @@
 # Retail PerformanceBar network queries
 
-Retail 12.1.5 publishes the two legacy network getters used by the original PerformanceBar tooltip. Their native contract is based on the `pr46-49-decomp-answers.md` handoff, R88ap part B, sections 7–8; the simulator keeps unknown live endpoint state as empty host input. See the [PerformanceBar query system page](../wiki/systems/performance-bar-queries.md) for implementation details.
+Retail 12.1.5 publishes the two legacy network getters used by the original PerformanceBar tooltip. Their native contract is based on the `pr46-49-decomp-answers.md` handoff, R88ap part B, sections 7–8. **INFERRED (simulator mapping):** unknown live endpoint state uses an empty host input. See the [PerformanceBar query system page](../wiki/systems/performance-bar-queries.md) for implementation details.
 
 ## What it must do
 
@@ -14,7 +14,7 @@ Retail 12.1.5 publishes the two legacy network getters used by the original Perf
 
 ### Simulator inputs and profile scope
 
-- [x] **VERIFIED (simulator source and Retail test):** Retail 12.1.5 stores protocol codes in an empty-default `SimState` input. An absent input returns `(0, 0)`; the typed input permits only codes `0`, `1`, and `2`.
+- [x] **INFERRED (simulator mapping):** the optional typed `SimState` pair supplies the protocol codes; absent input publishes `(0, 0)`. Its type limits codes to `0`, `1`, and `2`.
 - [x] **VERIFIED (simulator source and Retail test):** `GetAvailableBandwidth()` returns `0` even when `GetNetStats()` has nonzero bandwidth values.
 - [x] **VERIFIED (PTR, Forever, Mists tests):** profiles other than Retail 12.1.5 retain the previous fallback values.
 - [ ] Wrath retains its prior fallback by source and compiles, but it is compile-only and has no runtime assertion.
