@@ -173,6 +173,13 @@ fn register_ptr_glue_producers(state: &mut LuaState) -> LuaResult<()> {
 
 /// Update screen-scoped C_Login members.
 pub(crate) fn update_screen_registration(env: &WowLuaEnv, screen: ScreenKind) {
+    #[cfg(feature = "client-mists")]
+    if ACTIVE == ClientProfile::Mists {
+        let mut lua = env.lua.borrow_mut();
+        update_mists_cached_credentials_registration(lua.state_mut(), screen.is_glue())
+            .expect("register Mists Glue C_Login.GetCachedCredentials");
+        return;
+    }
     if ACTIVE == ClientProfile::Retail {
         let mut lua = env.lua.borrow_mut();
         retail_lifecycle::update_screen_registration(lua.state_mut(), screen.is_glue())
@@ -192,6 +199,37 @@ pub(crate) fn update_screen_registration(env: &WowLuaEnv, screen: ScreenKind) {
         borrow_state_mut(state)
             .expect("borrow login state when starting the login screen")
             .selected_super_district_id = 0;
+    }
+}
+
+// INFERRED (R88am 70631 applied to 70268): expose this for the selected Classic Glue consumer.
+// UNKNOWN native: Game availability and ordinary/secure publication classification.
+#[cfg(feature = "client-mists")]
+fn update_mists_cached_credentials_registration(
+    state: &mut LuaState,
+    is_glue: bool,
+) -> LuaResult<()> {
+    let namespace = match LuaApiMut::get_global_val(state, "C_Login") {
+        Val::Table(namespace) => namespace,
+        _ if is_glue => ensure_namespace(state, "C_Login")?,
+        _ => return Ok(()),
+    };
+
+    if is_glue {
+        table_set_rust_fn_static(
+            state,
+            namespace,
+            "GetCachedCredentials",
+            mists_get_cached_credentials,
+        )
+    } else {
+        table_set_static(
+            state,
+            Val::Table(namespace),
+            "GetCachedCredentials",
+            Val::Nil,
+        );
+        Ok(())
     }
 }
 
@@ -222,6 +260,11 @@ fn update_selected_super_district_registration(
         );
         LuaApiMut::set_global_val(state, "SelectSuperDistrict", Val::Nil)
     }
+}
+
+#[cfg(feature = "client-mists")]
+fn mists_get_cached_credentials(_state: &mut LuaState) -> LuaResult<u32> {
+    Ok(0)
 }
 
 fn get_selected_super_district_id(state: &mut LuaState) -> LuaResult<u32> {

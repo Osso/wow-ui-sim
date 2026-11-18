@@ -148,6 +148,8 @@ macro_rules! build_empty_sim_state {
             quest_portrait_state: None,
             tooltips: $collections.tooltips,
             item_overrides: ::std::collections::HashMap::new(),
+            item_level_color_condition_23: None,
+            item_level_color_condition_24: None,
             #[cfg(feature = "retail-12-0-0")]
             item_stats: crate::c_api::ItemStatsState::default(),
             #[cfg(feature = "retail-12-0-0")]
@@ -359,6 +361,8 @@ macro_rules! build_empty_sim_state {
             is_active_battlefield: false,
             spell_trade_skill_links: HashMap::new(),
             spell_id_aliases: HashMap::new(),
+            #[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+            spell_passive_attribute_masks: HashMap::new(),
             spell_tooltip_inputs: HashMap::new(),
             recipe_rank_tooltip_cache: Default::default(),
             aura_tooltip_inputs: HashMap::new(),

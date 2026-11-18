@@ -547,9 +547,9 @@ fn test_is_priority_aura_returns_false_for_zero_id() {
     assert!(!result);
 }
 
-// ── Temporary classification shims ───────────────────────────────────────────
+// ── IsSpellPassive ───────────────────────────────────────────────────────────
 
-#[cfg(feature = "client-retail")]
+#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
 #[test]
 fn test_is_spell_passive_returns_false_for_zero_id() {
     let env = env();

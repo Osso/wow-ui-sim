@@ -118,8 +118,9 @@ fn frame_center(env: &WowLuaEnv, frame_path: &str) -> Point {
     Point::new(rect.x + rect.width / 2.0, rect.y + rect.height / 2.0)
 }
 
-// UNKNOWN (Mists 5.5.4.70268 native login surface): selected AccountLogin.lua:163
-// calls C_Login.GetCachedCredentials, which is outside the R88ak contract.
+// PRESERVATION (Mists simulator): `src/cvars.yaml:1075` defaults `playIntroMovie`
+// to 0; Classic `GlueParent.lua:15,425-431` opens full-screen MovieFrame, which
+// hides AccountLogin. `MovieFrame.lua:37` also reports missing `HideCursor`.
 #[cfg(not(feature = "client-mists"))]
 #[test]
 fn login_boot_hides_non_login_frontend_frames() {
@@ -291,8 +292,10 @@ fn login_boot_keeps_settings_preview_panels_wired_to_settings_panel() {
     }
 }
 
-// UNKNOWN (Mists 5.5.4.70268 native login surface): selected AccountLogin.lua:163
-// calls C_Login.GetCachedCredentials, which is outside the R88ak contract.
+// PRESERVATION (Mists simulator): `src/cvars.yaml:1075` defaults `playIntroMovie`
+// to 0; Classic `GlueParent.lua:15,425-431` opens full-screen MovieFrame, so
+// AccountLogin edit-box centers are not hittable. `MovieFrame.lua:37` reports
+// missing `HideCursor`.
 #[cfg(not(feature = "client-mists"))]
 #[test]
 fn login_editboxes_gain_focus_when_clicking_their_visible_centers() {
@@ -328,6 +331,30 @@ fn login_editboxes_gain_focus_when_clicking_their_visible_centers() {
             "password edit box should gain focus when clicked; hit chain={:?}",
             frame_chain(&env, password_hit)
         );
+    }
+}
+
+// INFERRED (R88am 5.5.4.70631 applied to Mists 5.5.4.70268): the original consumer hides cached-login rows after a zero-return query.
+#[cfg(feature = "client-mists")]
+#[test]
+fn mists_classic_cached_login_consumer_hides_rows_and_api_is_glue_only() {
+    test_timeout! {
+        let env = load_blizzard_screen(ScreenKind::Login);
+        let row_visible: bool = env.eval(r#"
+            local container = AccountLogin.UI.CachedLoginFrameContainer
+            local row = CreateFrame("Frame", nil, container, "CachedLoginFrameTemplate")
+            container.Frames = { row }
+            row:Show()
+            CachedLoginFrameContainer_Update(container)
+            for _, cachedRow in ipairs(container.Frames) do
+                if cachedRow:IsShown() then return true end
+            end
+            return false
+        "#).expect("Classic cached-login consumer should hide rows without credentials");
+        assert!(!row_visible, "Classic Login must hide cached-account rows");
+        env.set_screen_mode(ScreenKind::Game);
+        let absent: bool = env.eval("return C_Login.GetCachedCredentials == nil").unwrap();
+        assert!(absent, "GetCachedCredentials must be Glue-only");
     }
 }
 
