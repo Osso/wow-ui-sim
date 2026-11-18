@@ -55,11 +55,6 @@ C_SocialRestrictions = C_SocialRestrictions or __wow_namespace()
 if rawget(C_SocialRestrictions, "IsChatDisabled") == nil then
     function C_SocialRestrictions.IsChatDisabled() return false end
 end
-if type(GetBuildInfo) == "function" and select(4, GetBuildInfo()) >= 120100 then
-    if rawget(C_SocialRestrictions, "IsFriendsDisabled") == nil then
-        function C_SocialRestrictions.IsFriendsDisabled() return false end
-    end
-end
 C_Commentator = C_Commentator or __wow_namespace()
 if rawget(C_Commentator, "IsSpectating") == nil then
     function C_Commentator.IsSpectating() return false end
@@ -132,11 +127,6 @@ if GetGuildFactionGroup == nil then
 end
 if WorldLootObjectExists == nil then
     function WorldLootObjectExists(_unit)
-        return false
-    end
-end
-if CanShowSetRoleButton == nil then
-    function CanShowSetRoleButton()
         return false
     end
 end
@@ -238,6 +228,20 @@ if type(GetBuildInfo) == "function" and select(4, GetBuildInfo()) >= 120005
 end
 "#;
 
+#[cfg(not(all(feature = "profile-retail", feature = "retail-12-1-5")))]
+const SOCIAL_SETTINGS_DEFAULTS_LUA: &str = r#"
+if type(GetBuildInfo) == "function" and select(4, GetBuildInfo()) >= 120100 then
+    if rawget(C_SocialRestrictions, "IsFriendsDisabled") == nil then
+        function C_SocialRestrictions.IsFriendsDisabled() return false end
+    end
+end
+if CanShowSetRoleButton == nil then
+    function CanShowSetRoleButton()
+        return false
+    end
+end
+"#;
+
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     #[cfg(not(all(
         feature = "retail-12-0-5",
@@ -245,6 +249,8 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     )))]
     lua.exec(UNMODELED_SPELL_CONFIRMATION_QUERY_LUA)?;
     lua.exec(INERT_GLOBAL_DEFAULTS_LUA)?;
+    #[cfg(not(all(feature = "profile-retail", feature = "retail-12-1-5")))]
+    lua.exec(SOCIAL_SETTINGS_DEFAULTS_LUA)?;
     #[cfg(not(all(feature = "profile-retail", feature = "retail-12-1-5")))]
     lua.exec(CINEMATIC_SUMMARY_DEFAULT_LUA)?;
     #[cfg(not(all(feature = "profile-retail", feature = "retail-12-1-5")))]
