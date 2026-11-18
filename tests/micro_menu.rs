@@ -910,6 +910,18 @@ fn load_performance_bar_tooltip(env: &WowLuaEnv) {
     .expect("original PerformanceBar tooltip should load");
 }
 
+#[cfg(not(all(feature = "client-retail", feature = "retail-12-1-5")))]
+#[test]
+fn performance_bar_fallbacks_preserve_other_profile_values() {
+    let env = WowLuaEnv::new().expect("lua env should initialize");
+    env.exec("A_Admin.SetNetStats(128, 256, 47, 89)")
+        .expect("seed network stats");
+    let values: (f64, f64, f64) = env
+        .eval("return GetAvailableBandwidth(), GetProtocolTypes()")
+        .expect("legacy fallback getters should return values");
+    assert_eq!(values, (256.0, 1.0, 1.0));
+}
+
 #[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
 const PERFORMANCE_BAR_TOOLTIP_ASSERTIONS: &str = r#"
     local function capture_results(...)
