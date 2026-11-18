@@ -182,6 +182,43 @@ fn r88r_secret_selector_and_display_maximum_readers() {
 }
 
 #[test]
+fn cast_count_consumers_preserve_ordinary_and_absent_inputs() {
+    let env = load_selected_consumers(
+        &["Blizzard_CooldownViewer"],
+        "CooldownViewerCooldownItemMixin.CacheChargeValues",
+        "Blizzard_CooldownViewer/CooldownViewer.lua",
+    );
+    seed_mask2_reagent(&env, 19_750, 31_001, 1, 1, &[(1, 7)]);
+    seed_mask2_reagent(&env, 642, 31_002, 1, 2, &[(1, 2)]);
+    env.exec(
+        r#"
+        for _, case in ipairs({{19750, 7}, {642, 2}}) do
+            local item = {
+                GetSpellChargeInfo = function() return nil end,
+                GetSpellID = function() return case[1] end,
+                SetCachedChargeValues = function(self, count, shown)
+                    self.count, self.shown = count, shown
+                end,
+            }
+            CooldownViewerCooldownItemMixin.CacheChargeValues(item)
+            assert(item.count == case[2] and item.shown)
+        end
+        local absent = {
+            cooldownChargesCount = 11,
+            GetSpellChargeInfo = function() return nil end,
+            GetSpellID = function() return nil end,
+            SetCachedChargeValues = function(self, count, shown)
+                self.count, self.shown = count, shown
+            end,
+        }
+        CooldownViewerCooldownItemMixin.CacheChargeValues(absent)
+        assert(absent.count == 11 and not absent.shown)
+    "#,
+    )
+    .unwrap();
+}
+
+#[test]
 fn cast_count_mask2_divides_candidate_counts_before_summing_in_cooldown_viewer() {
     let env = load_selected_consumers(
         &["Blizzard_CooldownViewer"],
