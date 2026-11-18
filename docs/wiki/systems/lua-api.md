@@ -6,6 +6,8 @@ The Lua API layer bridges Lua addon code with the Rust simulation engine. It pro
 
 ## Tooltip data and merchant cursor presentation
 
+The [Retail PerformanceBar query system](performance-bar-queries.md) records the native `GetAvailableBandwidth` and `GetProtocolTypes` contracts, the **INFERRED (simulator mapping)** empty-default input, and the unknown live-state boundary.
+
 ### GameTooltip minimum width and FontString pairs
 
 [GameTooltip methods](../../specs/game-tooltip-methods.md) records R88n.7 for Retail 12.1.5.70688. **VERIFIED (R88n.7):** Retail `GetMinimumWidth` uses `Usage: local width, forced = self:GetMinimumWidth()` and returns the stored width number followed by the stored forced boolean; constructor defaults are `0` and `false`. **VERIFIED (simulator source):** `SetMinimumWidth` stores both fields, and `TooltipData::row_wraps`, `double_column_reservation` and `select_content_width` already read the forced flag.

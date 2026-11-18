@@ -55,11 +55,6 @@ C_SocialRestrictions = C_SocialRestrictions or __wow_namespace()
 if rawget(C_SocialRestrictions, "IsChatDisabled") == nil then
     function C_SocialRestrictions.IsChatDisabled() return false end
 end
-if type(GetBuildInfo) == "function" and select(4, GetBuildInfo()) >= 120100 then
-    if rawget(C_SocialRestrictions, "IsFriendsDisabled") == nil then
-        function C_SocialRestrictions.IsFriendsDisabled() return false end
-    end
-end
 C_Commentator = C_Commentator or __wow_namespace()
 if rawget(C_Commentator, "IsSpectating") == nil then
     function C_Commentator.IsSpectating() return false end
@@ -135,11 +130,6 @@ if WorldLootObjectExists == nil then
         return false
     end
 end
-if CanShowSetRoleButton == nil then
-    function CanShowSetRoleButton()
-        return false
-    end
-end
 
 if GetActiveLootRollIDs == nil then
     function GetActiveLootRollIDs()
@@ -197,6 +187,10 @@ if GetGuildRenameRequired == nil then
         return false
     end
 end
+"#;
+
+#[cfg(not(all(feature = "client-retail", feature = "retail-12-1-5")))]
+const AVAILABLE_BANDWIDTH_DEFAULT_LUA: &str = r#"
 if GetAvailableBandwidth == nil then
     function GetAvailableBandwidth()
         local bandwidthIn, bandwidthOut = GetNetStats()
@@ -238,6 +232,20 @@ if type(GetBuildInfo) == "function" and select(4, GetBuildInfo()) >= 120005
 end
 "#;
 
+#[cfg(not(all(feature = "profile-retail", feature = "retail-12-1-5")))]
+const SOCIAL_SETTINGS_DEFAULTS_LUA: &str = r#"
+if type(GetBuildInfo) == "function" and select(4, GetBuildInfo()) >= 120100 then
+    if rawget(C_SocialRestrictions, "IsFriendsDisabled") == nil then
+        function C_SocialRestrictions.IsFriendsDisabled() return false end
+    end
+end
+if CanShowSetRoleButton == nil then
+    function CanShowSetRoleButton()
+        return false
+    end
+end
+"#;
+
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     #[cfg(not(all(
         feature = "retail-12-0-5",
@@ -245,6 +253,10 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     )))]
     lua.exec(UNMODELED_SPELL_CONFIRMATION_QUERY_LUA)?;
     lua.exec(INERT_GLOBAL_DEFAULTS_LUA)?;
+    #[cfg(not(all(feature = "client-retail", feature = "retail-12-1-5")))]
+    lua.exec(AVAILABLE_BANDWIDTH_DEFAULT_LUA)?;
+    #[cfg(not(all(feature = "profile-retail", feature = "retail-12-1-5")))]
+    lua.exec(SOCIAL_SETTINGS_DEFAULTS_LUA)?;
     #[cfg(not(all(feature = "profile-retail", feature = "retail-12-1-5")))]
     lua.exec(CINEMATIC_SUMMARY_DEFAULT_LUA)?;
     #[cfg(not(all(feature = "profile-retail", feature = "retail-12-1-5")))]
@@ -265,6 +277,16 @@ mod tests {
     // UnitPopupSharedButtonMixins.lua:1824,1854,1902 consumes the modeled globals.
     fn installs_region_social_and_group_defaults() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
+        let expected_guild_faction =
+            if cfg!(all(feature = "profile-retail", feature = "retail-12-1-5")) {
+                -1
+            } else {
+                1
+            };
+        env.exec(&format!(
+            "EXPECTED_GUILD_FACTION = {expected_guild_faction}"
+        ))
+        .expect("expected faction query result should be set");
 
         let result: String = env
             .eval(
@@ -304,7 +326,7 @@ mod tests {
                 if Ambiguate("Alyth-Realm", "short") ~= "Alyth" then return "ambiguate_short" end
                 if Ambiguate("Alyth-Realm", "none") ~= "Alyth-Realm" then return "ambiguate_none" end
                 if AreTalentsLocked() ~= false then return "talents_locked" end
-                if GetGuildFactionGroup() ~= 1 then return "guild_faction" end
+                if GetGuildFactionGroup() ~= EXPECTED_GUILD_FACTION then return "guild_faction" end
                 if WorldLootObjectExists("player") ~= false then return "world_loot_object" end
                 if CanShowSetRoleButton() ~= false then return "role_button" end
                 if #GetSpellConfirmationPromptsInfo() ~= 0 then return "spell_prompts" end

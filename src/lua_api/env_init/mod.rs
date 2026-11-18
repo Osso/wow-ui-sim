@@ -122,6 +122,8 @@ fn register_common_api_modules(lua: &mut rilua::Lua) -> crate::Result<()> {
     super::globals::real::totems::register(lua)?;
     super::globals::real::bank_reagents::register(lua)?;
     crate::c_api::action_combat_range_check::register(lua.state_mut())?;
+    #[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+    crate::c_api::performance_bar::register(lua.state_mut())?;
     crate::c_api::c_tts_settings::register(lua)?;
     crate::c_api::c_click_bindings::register(lua)?;
     #[cfg(feature = "retail-12-0-5")]

@@ -1,3 +1,7 @@
+## [2026-11-18] implementation | Retail role and friends settings
+
+The [social settings investigation](investigations/retail-social-settings.md) separates the verified R88ap.3–4 Boolean rules from inferred host type tags/settings bytes and unknown writers/events. Original UnitPopup and FriendsFrame consumers supply regression coverage.
+
 ## [2026-11-18] implementation | Retail cinematic summary
 
 The [cinematic summary investigation](investigations/retail-cinematic-summary.md) separates the verified R88ap.1 ID lifecycle and nil/string contract from inferred host data and argument admission. The original MovieFrame dialog is the regression consumer.
@@ -5,6 +9,10 @@ The [cinematic summary investigation](investigations/retail-cinematic-summary.md
 ## [2026-11-18] implementation | Retail social-UI policy
 
 The [social-UI policy investigation](investigations/social-ui-policy.md) records the R88ap.6 one-Boolean contract, explicit empty-default host input, selected FriendsFrame consumer, and unknown writers/events. Other profiles retain their existing behavior.
+
+## [2026-11-17] system | Retail Guild faction group
+
+The [Guild faction group system page](systems/guild-faction-group.md) links the [contract](../specs/guild-faction-group.md). **VERIFIED (R88ap.2):** player-object absence returns zero values; otherwise race-linked faction flags follow 4→0, 2→1, 1→0, else -1, with no guild test. **VERIFIED (simulator source):** the raw per-race flag input is empty by default. **UNKNOWN:** raw Retail DB2 rows and native object-unavailable conditions. **INFERRED (DB2 export build 70448):** the contract records classification outputs as context only; the simulator does not seed them. **VERIFIED (Retail 12.1.5.70783 runtime):** the byte-identical GuildNews consumer test passes for Orc, Human, missing-row, and flag-order fixtures, while the constant-1 and faction-name overlays fail at its assertions.
 
 ## [2026-11-18] investigation | Retail bag tracker fixture lifecycle
 
@@ -17,6 +25,14 @@ The [Mists Glue intro movie login investigation](investigations/mists-glue-intro
 ## [2026-11-17] investigation | Mists Glue intro movie login
 
 [Mists Glue intro movie login](investigations/mists-glue-intro-movie-login.md) records the selected 5.5.4.70268 GlueParent/MovieFrame path, R88ao native facts for 5.5.4.70631, the inferred no-record `(false, 2)` mapping, and the original-consumer RED.
+
+## [2026-11-17] verification | Retail PerformanceBar tooltip
+
+**VERIFIED (final source):** the original Retail 12.1.5.70783 tooltip test passes 1/1, both callable-wrong producer mutants fail at consumer assertions, and the PTR/Forever/Mists fallback tests pass 1/1 each. The five-profile all-targets no-run matrix has zero warnings; Wrath is compile-only. See the [query contract](../specs/performance-bar-queries.md) for hashes and UNKNOWNs.
+
+## [2026-11-17] system | Retail PerformanceBar network queries
+
+[PerformanceBar network queries](systems/performance-bar-queries.md) records the Retail 12.1.5 getters and preserved non-Retail fallbacks. **INFERRED (simulator mapping):** the typed endpoint input is empty by default. **INFERRED (70783 tooltip):** codes 1/2 display as TCP/UDP; live endpoint values remain UNKNOWN.
 
 ## [2026-11-17] verification | Retail call-pet flyout results
 

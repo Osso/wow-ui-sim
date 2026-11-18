@@ -89,6 +89,8 @@ macro_rules! build_empty_sim_state {
             #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
             last_gamepad_input_timestamp: None,
             video_capability_bytes: Default::default(),
+            #[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+            performance_bar_protocol_types: None,
             #[cfg(any(feature = "client-wowforever", feature = "client-ptr"))]
             gamepad_mapped_sticks: None,
             #[cfg(any(feature = "client-wowforever", feature = "client-ptr"))]
