@@ -1,10 +1,6 @@
 //! R88aj RegisterUnitEvent unit-argument scan, observed through return values.
 
-#![cfg(any(
-    feature = "client-mists",
-    feature = "client-retail",
-    feature = "client-wowforever"
-))]
+#![cfg(feature = "client-mists")]
 
 use wow_ui_sim::lua_api::WowLuaEnv;
 

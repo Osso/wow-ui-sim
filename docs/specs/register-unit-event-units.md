@@ -25,7 +25,7 @@
 
 ## Tests asserting this spec
 
-- `tests/register_unit_event_units.rs` — return-value and filter-replacement cases for the three profiles with decoded scan rules (Retail, Forever and Mists).
+- `tests/register_unit_event_units.rs` — return-value and filter-replacement cases using the Mists-decoded unit-token evidence.
 - `tests/mists_r88aj.rs::register_unit_event_scans_native_unit_argument_boundaries` — five-position, unknown-token continuation, non-string stop and table-first boundaries; `boss6` is rejected in Mists.
 - `tests/mists_r88aj.rs::cast_sequence_consumer_receives_only_registered_units` — selected original Mists `CastSequenceManager` consumer with real spellcast events.
 - `tests/mists_r88aj.rs::combat_audio_manager_table_registers_unit_health_with_empty_filter` — original table-first consumer path.
