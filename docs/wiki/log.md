@@ -1,3 +1,7 @@
+## [2026-11-18] implementation | Sliced mask textures
+
+The [rendering pipeline](systems/rendering-pipeline.md#sliced-mask-textures) records **INFERRED (ordinary texture slice semantics):** a MaskTexture with slice margins keeps its margins and stretches its centre; no native MaskTexture slice evidence was found. **VERIFIED (simulator unit tests):** quads split at slice lines, corner and centre UVs match the expected mapping, texture requests move with the split quads, and no-centre masks use whole-stretch behavior. **INFERRED (consumer code):** EllesmereUI's rounded tooltip corners depend on the kept margins. Masks larger than their region (native corner shrinking) remain unmodelled.
+
 ## [2026-11-18] correction | Retail SellPrice gates
 
 Corrected the broad host gate in the [tooltip contract](../specs/tooltip-data-serialization.md) and [Lua API page](systems/lua-api.md#retail-sellprice-line-r88pp1). **VERIFIED (R88aw):** supported routes have distinct preview and instance-status inputs, and known ItemSparse flags decide exclusion. **INFERRED (simulator mapping):** generated metadata drives those known flags; host inputs remain only for unavailable bag status, calculated prices, and prepared quantities.
