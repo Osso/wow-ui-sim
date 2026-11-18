@@ -93,8 +93,7 @@ pub(super) fn uses_modern_tooltip_data() -> bool {
     crate::c_api::tooltip_data::enabled()
 }
 
-/// D56 builder initialization: populated results get the next `dataInstanceID`.
-/// Miss results keep their prior shape because WM82 leaves miss publication UNKNOWN.
+/// D56 builder initialization assigns the next `dataInstanceID` when a producer opts in.
 pub(super) fn stamp_data_instance(state: &mut LuaState, tooltip: Val) {
     if !uses_modern_tooltip_data() {
         return;

@@ -27,8 +27,15 @@ fn get_item_by_id(state: &mut LuaState) -> LuaResult<u32> {
         treasure_context_level: parse_optional_u32(arguments[3], 4)?,
     };
     // Quality is authenticated above, then ignored just as in the prior producer.
+    let catalog_item_missing = items::get_item(key.item_id).is_none();
     let item = select_item(state, key)?;
-    let tooltip = tooltip_for_item_context(state, key.item_id, item.as_ref());
+    let tooltip = if catalog_item_missing {
+        crate::lua_api::globals::missing_surface::tooltip_info::tooltip_for_missing_item_by_id(
+            state,
+        )
+    } else {
+        tooltip_for_item_context(state, key.item_id, item.as_ref())
+    };
     state.push(tooltip);
     Ok(1)
 }

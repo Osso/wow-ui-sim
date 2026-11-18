@@ -170,6 +170,13 @@ pub(crate) fn tooltip_for_item_context(
     }
 }
 
+/// Publish an unpopulated GetItemByID result for an initial catalog miss.
+pub(crate) fn tooltip_for_missing_item_by_id(state: &mut LuaState) -> rilua::Val {
+    let tooltip = builders::empty_tooltip(state, super::TOOLTIP_TYPE_ITEM);
+    builders::stamp_data_instance(state, tooltip);
+    tooltip
+}
+
 /// R82 item descriptor bridge; parsing and selection remain in the dispatcher.
 pub(crate) fn tooltip_for_item_hyperlink(
     state: &mut LuaState,

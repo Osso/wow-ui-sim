@@ -95,6 +95,18 @@ const ASSERTIONS: &str = r#"
         assert(count == 2)
         return data
     end
+    function ITMissingCatalog(...)
+        local data = ITData(C_TooltipInfo.GetItemByID(...))
+        assert(data.id == nil and next(data.lines) == nil, 'initial catalog miss is empty')
+        assert(type(data.dataInstanceID) == 'number', 'R88av builder instance ID')
+        local count = 0
+        for key in pairs(data) do
+            assert(key == 'type' or key == 'lines' or key == 'dataInstanceID')
+            count = count + 1
+        end
+        assert(count == 3, 'initial GetItemByID miss has the verified fields')
+        return data
+    end
     function ITCheck(level, ...)
         local data = ITData(C_TooltipInfo.GetItemByID(...))
         -- R80 Q2: four preserved header rows plus four explicitly supplied stat rows.
@@ -520,7 +532,10 @@ fn unknown_catalog_id_stays_empty_even_with_explicit_host_level() {
         (key(u32::MAX, None, None), 601),
         (key(u32::MAX, Some(1), Some(70)), 604),
     ]);
-    probe(&env, "ITMiss(4294967295); ITMiss(4294967295,nil,1,70)");
+    probe(
+        &env,
+        "ITMissingCatalog(4294967295); ITMissingCatalog(4294967295,nil,1,70)",
+    );
 }
 
 #[test]
