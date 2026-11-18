@@ -8,7 +8,7 @@
 - [ ] Require signed 32-bit path IDs, and also a config ID for `GetStateForPath`; accept numeric strings and fractions after range validation, and raise the documented Usage errors for invalid arguments.
 - [ ] Return exactly one numeric state from `Enum.ProfessionsSpecPathState`: Locked 0, Progressing 1, or Completed 2. Missing path/config and rank below the required rank return Locked; otherwise equality with effective maximum returns Completed, and other ranks return Progressing. (R88ax.1, VERIFIED.)
 - [ ] Return the selected type-7 spend entry, type-9 unlock entry, or first qualifying type-1 spend currency. Unknown paths return 0 for entry getters and nil for currency. (R88ax.3, VERIFIED.)
-- [ ] **INFERRED (simulator mapping):** use empty-default host inputs for path entry ranks, per-config current/effective maximum ranks, entry IDs, spend currency IDs, and trait configuration IDs. Do not synthesize DB2 or runtime rows.
+- [ ] **INFERRED (simulator mapping):** use empty-default host inputs for path entry ranks, per-config current/effective maximum ranks, entry IDs, spend currency IDs, perk groups/flags/entries/ranks, and trait configuration IDs. Do not synthesize DB2 or runtime rows.
 
 ## How it works
 
