@@ -233,8 +233,8 @@ fn assert_scalar_selector_contract(api: &str, expected: u32, fractional_expected
                         assert(not pcall(getter,id))
                     else
                         local value = getter(id)
-                        assert(select('#',getter(id)) == 1)
-                        assert(issecretvalue(value) == {restricted})
+                        assert(select('#',getter(id)) == 1, 'fractional selector return arity')
+                        assert(issecretvalue(value) == {restricted}, 'fractional selector secrecy')
                         if not {restricted} or not before then
                             assert(secretunwrap(value) == fractionalExpected, 'fractional selector quantity')
                         end
