@@ -5,6 +5,10 @@
 
 use std::collections::{HashMap, HashSet};
 
+pub(crate) const PROF_SPEC_PATH_LOCKED: i32 = 0;
+pub(crate) const PROF_SPEC_PATH_PROGRESSING: i32 = 1;
+pub(crate) const PROF_SPEC_PATH_COMPLETED: i32 = 2;
+
 /// Supplied profession specialization results. Empty defaults make both
 /// reminders report nothing.
 #[derive(Debug, Default, Clone)]
@@ -37,6 +41,27 @@ pub struct ProfessionSpecInputs {
 }
 
 impl ProfessionSpecInputs {
+    /// INFERRED (simulator mapping): classify supplied path ranks for one config.
+    #[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+    pub(crate) fn state_for_path(&self, path_id: i32, config_id: i32) -> i32 {
+        if !self.trait_config_ids.contains(&config_id) {
+            return PROF_SPEC_PATH_LOCKED;
+        }
+        let Some(required) = self.path_required_ranks.get(&path_id) else {
+            return PROF_SPEC_PATH_LOCKED;
+        };
+        let Some(ranks) = self.path_ranks_by_config.get(&(path_id, config_id)) else {
+            return PROF_SPEC_PATH_LOCKED;
+        };
+        if ranks.current < *required {
+            PROF_SPEC_PATH_LOCKED
+        } else if ranks.current == ranks.effective_max {
+            PROF_SPEC_PATH_COMPLETED
+        } else {
+            PROF_SPEC_PATH_PROGRESSING
+        }
+    }
+
     /// INFERRED (simulator mapping): return supplied children for one path ID.
     #[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
     pub(crate) fn children_for_path(&self, path_id: i32) -> Vec<i32> {

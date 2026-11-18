@@ -716,6 +716,8 @@ const PROFESSIONS_SPECIALIZATION_TREE_LUA: &str = r#"
 #[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
 fn seed_professions_specialization_paths(env: &WowLuaEnv) {
     let mut sim = env.state().borrow_mut();
+    // INFERRED (simulator mapping): the temporary config query supplies config 1.
+    sim.profession_spec_inputs.trait_config_ids.insert(1);
     sim.profession_spec_inputs
         .path_group_ids
         .extend([(1001, 10), (2001, 20)]);
