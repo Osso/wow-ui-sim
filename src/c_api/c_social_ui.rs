@@ -1,5 +1,7 @@
 //! VERIFIED: pr46-49-decomp-answers.md, R88ap part B §6 (Retail 12.1.5).
 //! No system-ID argument; one Boolean. UNKNOWN writers/events remain host inputs.
+//! INFERRED (simulator mapping): one optional Boolean stands in for the native no-owner
+//! default-plus-policy-bytes path and the absent-subordinate false path; `None` yields false.
 
 use crate::lua_api::methods::borrow_state;
 use crate::lua_bridge::table_set_rust_fn_static;

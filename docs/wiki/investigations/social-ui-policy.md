@@ -4,9 +4,9 @@ The Retail 12.1.5 social-system availability producer consumes an explicit optio
 
 ## Native contract and boundary
 
-**VERIFIED (Retail 12.1.5.70688, `pr46-49-decomp-answers.md`, R88ap part B §6):** `C_SocialUI.IsSystemEnabled` returns exactly one Boolean and reads no system ID. Extra arguments do not select an ID or cause unknown-ID rejection. Without a subordinate value it returns false.
+**VERIFIED (Retail 12.1.5.70688, `pr46-49-decomp-answers.md`, R88ap part B §6):** `C_SocialUI.IsSystemEnabled` returns exactly one Boolean and reads no system ID, so it performs no ID selection and no unknown-ID rejection. Without a subordinate value it returns false. **INFERRED:** that extra arguments are otherwise ignored; complete native argument validation is not established.
 
-**UNKNOWN:** native state writers and event emission. `SimState.social_system_policy_enabled` is an explicit host input, not a derived friend-list/account state. `None` represents the absent subordinate value and projects to false. No writer, refresh event, or server policy is invented.
+**UNKNOWN:** native state writers and event emission. `SimState.social_system_policy_enabled` is an explicit host input, not a derived friend-list/account state. **INFERRED (simulator mapping):** a single optional Boolean collapses the native no-owner default-plus-policy-bytes path and the absent-subordinate path; `None` represents the absent subordinate value and projects to false. No writer, refresh event, or server policy is invented.
 
 ## Original consumer
 
