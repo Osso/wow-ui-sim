@@ -39,7 +39,7 @@ fn debug_registry_global_divergences(env: &WowLuaEnv) {
     let (duplicates, registry_ids) = collect_duplicate_frame_names(env);
     let differences = env
         .loader_env()
-        .with_state(|lua| first_registry_divergences(lua, duplicates, &registry_ids))
+        .with_state(|lua| Ok(first_registry_divergences(lua, duplicates, &registry_ids)))
         .expect("Lua state is available");
     for (name, registry_id, previous_latest_id) in differences {
         eprintln!(
