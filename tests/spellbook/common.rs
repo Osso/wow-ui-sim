@@ -30,8 +30,11 @@ fn debug_edit_mode_system_frame_count(env: &WowLuaEnv) {
     if mode == "divergences" {
         debug_registry_global_divergences(env);
     }
-    if mode == "rollback" {
-        rollback_registry_global_divergences(env);
+    if let Some(limit) = mode
+        .strip_prefix("rollback-")
+        .and_then(|value| value.parse().ok())
+    {
+        rollback_registry_global_divergences(env, limit);
     }
     if mode == "wrap" {
         install_debug_edit_mode_anchor_trace(env);
@@ -41,7 +44,7 @@ fn debug_edit_mode_system_frame_count(env: &WowLuaEnv) {
 fn debug_registry_global_divergences(env: &WowLuaEnv) {
     for (name, registry_id, previous_latest_id) in collect_registry_global_divergences(env)
         .into_iter()
-        .take(20)
+        .take(64)
     {
         eprintln!(
             "registry divergence candidate: {name} registry={registry_id} previous-latest={previous_latest_id}"
@@ -49,15 +52,15 @@ fn debug_registry_global_divergences(env: &WowLuaEnv) {
     }
 }
 
-fn rollback_registry_global_divergences(env: &WowLuaEnv) {
+fn rollback_registry_global_divergences(env: &WowLuaEnv, limit: usize) {
     let differences = collect_registry_global_divergences(env);
     let mut state = env.state().borrow_mut();
-    for (name, _, previous_latest_id) in &differences {
+    for (name, _, previous_latest_id) in differences.iter().take(limit) {
         state.widgets.set_name(*previous_latest_id, name.clone());
     }
     eprintln!(
         "temporarily restored {} duplicate-name bindings",
-        differences.len()
+        differences.len().min(limit)
     );
 }
 
@@ -106,30 +109,41 @@ fn first_registry_divergences(
                 return None;
             }
             ids.sort_unstable();
-            let global_id = lua_global_frame_id(lua, &name)?;
+            if !public_only_occupies_name(lua, &name)? {
+                return None;
+            }
             let previous_latest_id = *ids.last()?;
             let registry_id = *registry_ids.get(&name)?;
-            (registry_id == global_id && registry_id != previous_latest_id).then_some((
-                name,
-                registry_id,
-                previous_latest_id,
-            ))
+            (registry_id != previous_latest_id).then_some((name, registry_id, previous_latest_id))
         })
         .collect()
 }
 
-fn lua_global_frame_id(lua: &mut rilua::vm::state::LuaState, name: &str) -> Option<u64> {
-    let key = lua.gc.intern_string(name.as_bytes());
-    let global = lua
+fn public_only_occupies_name(lua: &mut rilua::vm::state::LuaState, name: &str) -> Option<bool> {
+    let name_key = lua.gc.intern_string(name.as_bytes());
+    let public = lua
         .gc
         .tables
         .get(lua.global)?
-        .get_str(key, &lua.gc.string_arena);
-    let rilua::Val::Table(reference) = global else {
-        return None;
+        .get_str(name_key, &lua.gc.string_arena);
+    if matches!(public, rilua::Val::Nil) {
+        return Some(false);
+    }
+    let secure_key = lua.gc.intern_string(b"__secureenv");
+    let secure_env = lua
+        .gc
+        .tables
+        .get(lua.global)?
+        .get_str(secure_key, &lua.gc.string_arena);
+    let rilua::Val::Table(secure_env) = secure_env else {
+        return Some(true);
     };
-    let (index, generation) = lua.gc.tables.get(reference)?.backing()?;
-    Some((u64::from(generation) << 32) | u64::from(index))
+    let secure_name = lua
+        .gc
+        .tables
+        .get(secure_env)?
+        .get_str(name_key, &lua.gc.string_arena);
+    Some(matches!(secure_name, rilua::Val::Nil))
 }
 
 fn install_debug_edit_mode_anchor_trace(env: &WowLuaEnv) {
