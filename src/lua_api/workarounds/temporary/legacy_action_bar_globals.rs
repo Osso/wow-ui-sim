@@ -1,9 +1,8 @@
 //! Temporary legacy action-bar global wrappers for Wrath.
 //!
-//! The selected Blizzard UI caches for newer profiles provide these globals.
-//! Wrath has no cached Lua provider, so it keeps the compatibility wrappers.
+//! Verified Retail and Forever providers replace these defaults; Mists and Wrath keep them.
 
-#[cfg(feature = "client-wrath")]
+#[cfg(any(feature = "client-mists", feature = "client-wrath"))]
 const LEGACY_ACTION_BAR_GLOBALS_LUA: &str = r#"
 if ActionButtonUtil == nil then
   ActionButtonUtil = {}
@@ -121,7 +120,25 @@ __wow_legacy_action_bar_forward("GetActionBarPage", "GetActionBarPage")
 __wow_legacy_action_bar_forward("ChangeActionBarPage", "SetActionBarPage")
 "#;
 
-#[cfg(feature = "client-wrath")]
+#[cfg(feature = "client-mists")]
+const MISTS_LEGACY_ACTION_BAR_GLOBALS_LUA: &str = r#"
+local function __wow_legacy_action_bar_forward(globalName, methodName)
+    if _G[globalName] == nil and C_ActionBar ~= nil and type(C_ActionBar[methodName]) == "function" then
+        _G[globalName] = function(...)
+            return C_ActionBar[methodName](...)
+        end
+    end
+end
+
+__wow_legacy_action_bar_forward("HasVehicleActionBar", "HasVehicleActionBar")
+__wow_legacy_action_bar_forward("HasOverrideActionBar", "HasOverrideActionBar")
+__wow_legacy_action_bar_forward("HasBonusActionBar", "HasBonusActionBar")
+__wow_legacy_action_bar_forward("HasTempShapeshiftActionBar", "HasTempShapeshiftActionBar")
+__wow_legacy_action_bar_forward("HasExtraActionBar", "HasExtraActionBar")
+__wow_legacy_action_bar_forward("IsPossessBarVisible", "IsPossessBarVisible")
+"#;
+
+#[cfg(any(feature = "client-mists", feature = "client-wrath"))]
 const ACTION_BUTTON_QUICK_KEYBIND_DEFAULTS_LUA: &str = r#"
 local function __wow_legacy_action_bar_noop()
 end
@@ -148,14 +165,16 @@ end
 
 "#;
 
-#[cfg(feature = "client-wrath")]
+#[cfg(any(feature = "client-mists", feature = "client-wrath"))]
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(LEGACY_ACTION_BAR_GLOBALS_LUA)?;
     lua.exec(ACTION_BUTTON_QUICK_KEYBIND_DEFAULTS_LUA)?;
+    #[cfg(feature = "client-mists")]
+    lua.exec(MISTS_LEGACY_ACTION_BAR_GLOBALS_LUA)?;
     Ok(())
 }
 
-#[cfg(not(feature = "client-wrath"))]
+#[cfg(not(any(feature = "client-mists", feature = "client-wrath")))]
 pub(crate) fn apply_bootstrap(_: &mut rilua::Lua) -> crate::Result<()> {
     Ok(())
 }
