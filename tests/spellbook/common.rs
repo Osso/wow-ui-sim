@@ -15,13 +15,20 @@ pub fn blizzard_ui_dir() -> PathBuf {
 }
 
 fn debug_edit_mode_system_frame_count(env: &WowLuaEnv) {
-    if std::env::var_os("WOW_SIM_DEBUG_EDIT_MODE_FRAME_COUNT").is_none() {
+    let mode = std::env::var("WOW_SIM_DEBUG_EDIT_MODE_FRAME_COUNT").unwrap_or_default();
+    if mode.is_empty() {
         return;
     }
     let count: f64 = env
         .eval("return #EditModeManagerFrame.registeredSystemFrames")
         .unwrap();
     eprintln!("EditModeManagerFrame.registeredSystemFrames={count}");
+    if mode == "wrap" {
+        install_debug_edit_mode_anchor_trace(env);
+    }
+}
+
+fn install_debug_edit_mode_anchor_trace(env: &WowLuaEnv) {
     env.exec(
         r#"
         local registered = EditModeManagerFrame.registeredSystemFrames
