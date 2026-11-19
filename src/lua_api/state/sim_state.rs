@@ -594,8 +594,8 @@ pub struct SimState {
     pub party_members: Vec<PartyMember>,
     pub party_group_active: bool,
     /// INFERRED (simulator mapping): owner roster inputs are empty until supplied.
-    pub home_subgroup_roster: Option<super::game_data::SubgroupOwnerRoster>,
-    pub instance_subgroup_roster: Option<super::game_data::SubgroupOwnerRoster>,
+    pub home_subgroup_roster: Option<SubgroupOwnerRoster>,
+    pub instance_subgroup_roster: Option<SubgroupOwnerRoster>,
     /// Retail PartyInfo roster input used by `GetGroupMemberCounts`.
     pub group_member_counts: GroupMemberCountsState,
     /// INFERRED: host-owned identity classification; no automatic context inference.

@@ -163,15 +163,6 @@ if SetCursorHoveredItemTradeItem == nil then
         return nil
     end
 end
-if UnitInSubgroup == nil then
-    function UnitInSubgroup(unit)
-        if unit == nil or unit == "player" then
-            return false
-        end
-        return type(UnitInParty) == "function" and UnitInParty(unit) or false
-    end
-end
-
 if GetNumGuildPerks == nil then
     function GetNumGuildPerks()
         return 0

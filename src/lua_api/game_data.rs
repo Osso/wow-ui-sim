@@ -80,7 +80,8 @@ pub struct PartyMember {
 /// One host-supplied identity and subgroup in a group-owner roster.
 #[derive(Debug, Clone, Default)]
 pub struct SubgroupMemberRecord {
-    pub identity: String,
+    /// INFERRED (simulator mapping): `None` represents an empty roster slot.
+    pub identity: Option<String>,
     pub subgroup: u32,
 }
 
