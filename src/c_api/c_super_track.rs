@@ -2,6 +2,8 @@
 
 #[derive(Debug, Clone, Default)]
 pub struct SuperTrackState {
+    /// INFERRED (simulator mapping): absent item text means no return values.
+    pub item_name: Option<(String, String)>,
     /// Optional public projection of the saved quest ID; its tracking flag is separate.
     pub quest_id: Option<i32>,
     pub quest_tracking: bool,
@@ -36,6 +38,7 @@ use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 
 const METHODS: &[(&str, RustFn)] = &[
+    ("GetSuperTrackedItemName", item_name),
     ("GetSuperTrackedQuestID", quest_id),
     ("GetSuperTrackedContent", content),
     ("GetSuperTrackedMapPin", map_pin),
@@ -78,6 +81,17 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
 fn supplied_id(state: &LuaState, index: i32) -> LuaResult<i32> {
     validate_supplied_relation_id(stack_val(state, index), "SuperTrack ID must be a number")?
         .ok_or_else(|| rilua::runtime_error("SuperTrack ID must be a finite i32 integer"))
+}
+
+fn item_name(state: &mut LuaState) -> LuaResult<u32> {
+    let Some((name, description)) = borrow_state(state)?.super_track.item_name.clone() else {
+        return Ok(0);
+    };
+    let name = create_string(state, &name);
+    let description = create_string(state, &description);
+    state.push(name);
+    state.push(description);
+    Ok(2)
 }
 
 fn quest_id(state: &mut LuaState) -> LuaResult<u32> {

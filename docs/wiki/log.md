@@ -2,6 +2,10 @@
 
 Updated the [gamepad system](../systems/gamepad-mapped-state.md#retail-device-queries) and [contract](../specs/forever-gamepad-enabled.md). **VERIFIED (Retail generated docs):** the signatures and return shapes. **INFERRED (simulator mapping):** with no device input, `GetAllDeviceIDs` returns an empty table, `GetDeviceRawState` returns nil, and `IsEnabled` reads the existing CVar; no physical-device model was added.
 
+## [2026-11-19] implementation | Supertracked item text
+
+Updated the [SuperTrack system](../systems/super-track-state.md#supertracked-item-text) and [contract](../specs/super-track-state.md). **VERIFIED (Retail declaration):** `GetSuperTrackedItemName` may return no values; a present result contains two strings. **INFERRED (simulator mapping):** the empty item-text input returns no values. Its native writer remains UNKNOWN.
+
 ## [2026-11-18] implementation | Sliced mask textures
 
 The [rendering pipeline](systems/rendering-pipeline.md#sliced-mask-textures) records **INFERRED (ordinary texture slice semantics):** a MaskTexture with slice margins keeps its margins and stretches its centre; no native MaskTexture slice evidence was found. **VERIFIED (simulator unit tests):** quads split at slice lines, corner and centre UVs match the expected mapping, texture requests move with the split quads, and no-centre masks use whole-stretch behavior. **INFERRED (consumer code):** EllesmereUI's rounded tooltip corners depend on the kept margins. Masks larger than their region (native corner shrinking) remain unmodelled.
