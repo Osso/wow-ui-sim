@@ -21,6 +21,30 @@ fn shared_xml_base_toc() -> PathBuf {
     shared_xml_base_dir().join("Blizzard_SharedXMLBase.toc")
 }
 
+#[cfg(feature = "client-retail")]
+#[test]
+fn retail_shared_xml_base_defines_mixin_factory_before_addon_performance_uses_it() {
+    use crate::common::blizzard_addon_harness::{
+        load_blizzard_addon_closure_into_env, new_blizzard_addon_env,
+    };
+
+    let ui = blizzard_ui_dir();
+    let env = new_blizzard_addon_env(&ui);
+    let present: bool = env
+        .eval("return type(CreateAndInitFromMixin) == 'function'")
+        .expect("query mixin factory before addons");
+    assert!(!present, "Retail must not install a bootstrap fallback");
+    let loaded =
+        load_blizzard_addon_closure_into_env(&env, &ui, &["Blizzard_AddOnPerformance"], &[]);
+    let shared = loaded.iter().position(|name| name == "Blizzard_SharedXMLBase");
+    let consumer = loaded.iter().position(|name| name == "Blizzard_AddOnPerformance");
+    assert!(shared.zip(consumer).is_some_and(|(shared, consumer)| shared < consumer));
+    let initialized: bool = env
+        .eval("return type(AddOnPerformance) == 'table'")
+        .expect("query AddOnPerformance after loading its real consumer");
+    assert!(initialized, "AddOnPerformance must initialize through the Lua factory");
+}
+
 const FOUNDATION_MIXINS: &[&str] = &[
     "ColorMixin",
     "ColorSwatchMixin",
