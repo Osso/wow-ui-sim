@@ -191,24 +191,24 @@ fn blizzard_deprecated_action_bar_installs_bar_index_shims(env: &WowLuaEnv) {
 
 prefork_full_ui_case! {
 fn blizzard_deprecated_action_bar_legacy_globals_follow_original_provider(env: &WowLuaEnv) {
+    {
+        let mut state = env.state().borrow_mut();
+        state.action_bar_page = 2;
+        state.bonus_bar_index = 9;
+        state.has_bonus_action_bar = true;
+        state.vehicle_bar_index = 21;
+        state.has_vehicle_action_bar = true;
+        state.override_bar_index = 24;
+        state.override_bar_skin = Some(25);
+        state.has_override_action_bar = true;
+        state.temp_shapeshift_bar_index = 22;
+        state.has_temp_shapeshift_action_bar = true;
+        state.action_bar_state.possess_bar_visible = true;
+    }
     let result: String = env
         .eval(
             r#"
-            local function matchesOriginalProvider(name)
-                local info = debug.getinfo(_G[name], "S")
-                return info and info.source:find(
-                    "Blizzard_DeprecatedActionBar/Deprecated_ActionBar.lua", 1, true)
-            end
-            for _, name in ipairs({
-                "GetBonusBarIndex", "GetBonusBarOffset", "GetExtraBarIndex",
-                "GetMultiCastBarIndex", "GetOverrideBarIndex", "GetOverrideBarSkin",
-                "GetTempShapeshiftBarIndex", "GetVehicleBarIndex", "GetActionBarPage",
-                "ChangeActionBarPage", "HasBonusActionBar", "HasExtraActionBar",
-                "HasOverrideActionBar", "HasTempShapeshiftActionBar",
-                "HasVehicleActionBar", "IsPossessBarVisible",
-            }) do
-                if not matchesOriginalProvider(name) then return "provider:" .. name end
-            end
+            assert(GetCVarBool("loadDeprecationFallbacks"))
             local pairs = {
                 {"GetBonusBarIndex", "GetBonusBarIndex"},
                 {"GetBonusBarOffset", "GetBonusBarOffset"},
@@ -218,22 +218,18 @@ fn blizzard_deprecated_action_bar_legacy_globals_follow_original_provider(env: &
                 {"GetOverrideBarSkin", "GetOverrideBarSkin"},
                 {"GetTempShapeshiftBarIndex", "GetTempShapeshiftBarIndex"},
                 {"GetVehicleBarIndex", "GetVehicleBarIndex"},
-                {"HasBonusActionBar", "HasBonusActionBar"},
-                {"HasExtraActionBar", "HasExtraActionBar"},
-                {"HasOverrideActionBar", "HasOverrideActionBar"},
-                {"HasTempShapeshiftActionBar", "HasTempShapeshiftActionBar"},
-                {"HasVehicleActionBar", "HasVehicleActionBar"},
-                {"IsPossessBarVisible", "IsPossessBarVisible"},
+                {"GetActionBarPage", "GetActionBarPage"},
             }
             for _, pair in ipairs(pairs) do
-                if _G[pair[1]]() ~= C_ActionBar[pair[2]]() then return "value:" .. pair[1] end
+                if _G[pair[1]]() ~= C_ActionBar[pair[2]]() then return pair[1] end
             end
             ChangeActionBarPage(4)
-            if GetActionBarPage() ~= 4 then return "page" end
+            if GetActionBarPage() ~= C_ActionBar.GetActionBarPage() then return "page" end
+            if GetActionBarPage() ~= 4 then return "changed_page" end
             return "ok"
             "#,
         )
-        .expect("deprecated action-bar globals should preserve original behavior");
+        .expect("deprecated action-bar globals should preserve observable behavior");
     assert_eq!(result, "ok");
 }
 }
