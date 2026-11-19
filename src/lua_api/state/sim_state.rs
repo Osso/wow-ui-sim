@@ -596,6 +596,8 @@ pub struct SimState {
     pub next_report_token: i64,
     pub party_members: Vec<PartyMember>,
     pub party_group_active: bool,
+    /// INFERRED group-kind input; None keeps the existing roster-size heuristic.
+    pub party_is_raid: Option<bool>,
     /// INFERRED (simulator mapping): owner roster inputs are empty until supplied.
     pub home_subgroup_roster: Option<SubgroupOwnerRoster>,
     pub instance_subgroup_roster: Option<SubgroupOwnerRoster>,

@@ -14,8 +14,7 @@ pub(crate) fn parse_raid_index(unit: &str) -> Option<usize> {
 }
 
 pub(crate) fn is_raid_group(sim: &SimState) -> bool {
-    // The simulator represents a raid with six or more other group members.
-    sim.party_group_active && sim.party_members.len() >= 6
+    sim.party_group_active && sim.party_is_raid.unwrap_or(sim.party_members.len() >= 6)
 }
 
 pub(crate) fn active_group_member_index(sim: &SimState, unit: &str) -> Option<usize> {
