@@ -52,7 +52,8 @@ impl CVarStorage {
     }
 
     fn with_path(path: PathBuf) -> Self {
-        let (defaults, original_names) = parse_default_cvars();
+        let (mut defaults, mut original_names) = parse_default_cvars();
+        insert_social_ui_cvar(&mut defaults, &mut original_names);
         let overrides = load_overrides(&path);
         Self {
             defaults,
@@ -344,20 +345,27 @@ fn server_mirrored_store_defaults() -> HashMap<String, String> {
     defaults
 }
 
-fn parse_default_cvars() -> (HashMap<String, String>, HashMap<String, String>) {
-    let (mut defaults, mut original_names) = parse_cvar_yaml(include_str!("cvars.yaml"));
-    insert_collected_journal_cvar(&mut defaults, &mut original_names);
-    if matches!(
+fn insert_social_ui_cvar(
+    defaults: &mut HashMap<String, String>,
+    original_names: &mut HashMap<String, String>,
+) {
+    if !matches!(
         crate::client_profile::ACTIVE,
         crate::client_profile::ClientProfile::Retail
             | crate::client_profile::ClientProfile::WowForever
     ) {
-        defaults.insert("socialuienabledclient".into(), "0".into());
-        original_names.insert(
-            "socialuienabledclient".into(),
-            "socialUIEnabledClient".into(),
-        );
+        return;
     }
+    defaults.insert("socialuienabledclient".into(), "0".into());
+    original_names.insert(
+        "socialuienabledclient".into(),
+        "socialUIEnabledClient".into(),
+    );
+}
+
+fn parse_default_cvars() -> (HashMap<String, String>, HashMap<String, String>) {
+    let (mut defaults, mut original_names) = parse_cvar_yaml(include_str!("cvars.yaml"));
+    insert_collected_journal_cvar(&mut defaults, &mut original_names);
     // R47: real registered local CVar, with distinct PTR/Forever declarations.
     let preset_default = match crate::client_profile::ACTIVE {
         crate::client_profile::ClientProfile::Ptr => Some("1"),
