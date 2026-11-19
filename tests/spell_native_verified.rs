@@ -311,8 +311,44 @@ fn cast_count_mask2_without_qualifying_property_keeps_sum_then_divide_in_cooldow
     assert_mask2_cached_counts(&env, "{{19750, 6}}");
 }
 
-#[test]
-fn ranged_auto_attack_spell_consumer_uses_the_shared_identifier() {
+const RANGED_AUTO_ATTACK_STATUS_LUA: &str = r#"
+local itemType = Enum.SpellBookItemType.Spell
+local function status(spellID)
+    return SpellSearchUtil.GetActionbarStatusForSpellBookItemInfo({
+        itemType = itemType,
+        isPassive = false,
+        isOffSpec = false,
+        spellID = spellID,
+        actionID = spellID,
+    })
+end
+local statuses = ActionButtonUtil.ActionBarActionStatus
+assert(status(31337) == statuses.NotMissing,
+    'matching spell status=' .. tostring(status(31337)))
+assert(status(31338) == statuses.MissingFromAllBars,
+    'different spell status=' .. tostring(status(31338)))
+local function actionStatus(itemType, actionID)
+    return SpellSearchUtil.GetActionbarStatusForSpellBookItemInfo({
+        itemType = itemType,
+        isPassive = false,
+        isOffSpec = false,
+        actionID = actionID,
+    })
+end
+assert(actionStatus(Enum.SpellBookItemType.PetAction, 202)
+    == statuses.MissingFromAllBars, 'missing pet action status')
+assert(actionStatus(Enum.SpellBookItemType.Flyout, 303)
+    == statuses.MissingFromAllBars, 'missing flyout status')
+assert(C_Spell.IsRangedAutoAttackSpell(31337) == true)
+assert(C_Spell.IsRangedAutoAttackSpell(31338) == false)
+"#;
+
+const RANGED_AUTO_ATTACK_INITIAL_STATE_LUA: &str = r#"
+assert(C_Spell.IsRangedAutoAttackSpell(0) == true,
+    'the verified initial shared identifier is zero')
+"#;
+
+fn assert_spell_search_startup_selection() {
     let ui_dir = blizzard_ui_dir();
     let search_toc =
         TocFile::from_file(&ui_dir.join("Blizzard_SpellSearch/Blizzard_SpellSearch.toc"))
@@ -328,57 +364,50 @@ fn ranged_auto_attack_spell_consumer_uses_the_shared_identifier() {
             .iter()
             .any(|dependency| dependency == "Blizzard_SpellSearch")
     );
-    let startup_addons = discover_blizzard_startup_addons_for_screen(&ui_dir, ScreenKind::Game);
+    let startup = discover_blizzard_startup_addons_for_screen(&ui_dir, ScreenKind::Game);
     for name in ["Blizzard_SharedTalentUI", "Blizzard_SpellSearch"] {
-        assert!(startup_addons.iter().any(|addon| addon.name == name));
+        assert!(startup.iter().any(|addon| addon.name == name));
     }
+}
 
+fn load_ranged_spell_search_consumer() -> WowLuaEnv {
     let env = load_selected_consumers(
         &["Blizzard_SharedTalentUI", "Blizzard_ActionBar"],
         "SpellSearchUtil.GetActionbarStatusForSpellBookItemInfo",
         "Blizzard_SpellSearch/Blizzard_SpellSearchUtil.lua",
     );
     assert_eq!(env.state().borrow().ranged_auto_attack_spell_id, 0);
-    let search_loaded: bool = env
+    let loaded: bool = env
         .eval("return C_AddOns.IsAddOnLoaded('Blizzard_SpellSearch')")
         .expect("SpellSearch is the selected SharedTalentUI dependency");
-    assert!(search_loaded);
-    {
-        let mut state = env.state().borrow_mut();
-        state.action_bars.clear();
-        state.ranged_auto_attack_spell_id = 31_337;
-    }
-    env.exec(
-        r#"
-        local itemType = Enum.SpellBookItemType.Spell
-        local function status(spellID)
-            return SpellSearchUtil.GetActionbarStatusForSpellBookItemInfo({
-                itemType = itemType,
-                isPassive = false,
-                isOffSpec = false,
-                spellID = spellID,
-                actionID = spellID,
-            })
-        end
-        local statuses = ActionButtonUtil.ActionBarActionStatus
-        assert(status(31337) == statuses.NotMissing,
-            'matching spell status=' .. tostring(status(31337)))
-        assert(status(31338) == statuses.MissingFromAllBars,
-            'different spell status=' .. tostring(status(31338)))
-        assert(C_Spell.IsRangedAutoAttackSpell(31337) == true)
-        assert(C_Spell.IsRangedAutoAttackSpell(31338) == false)
-        "#,
-    )
-    .expect("the original SpellSearch consumer must exempt only the shared ranged spell ID");
+    assert!(loaded);
+    env
+}
 
+fn seed_ranged_auto_attack_spell(env: &WowLuaEnv) {
+    let mut state = env.state().borrow_mut();
+    state.action_bars.clear();
+    state.ranged_auto_attack_spell_id = 31_337;
+}
+
+fn assert_ranged_auto_attack_statuses(env: &WowLuaEnv) {
+    env.exec(RANGED_AUTO_ATTACK_STATUS_LUA)
+        .expect("SpellSearch must exempt only the shared ranged spell ID");
+}
+
+fn assert_initial_ranged_auto_attack_state(env: &WowLuaEnv) {
     env.state().borrow_mut().ranged_auto_attack_spell_id = 0;
-    env.exec(
-        r#"
-        assert(C_Spell.IsRangedAutoAttackSpell(0) == true,
-            'the verified initial shared identifier is zero')
-        "#,
-    )
-    .expect("identifier zero matches the verified initial zero value");
+    env.exec(RANGED_AUTO_ATTACK_INITIAL_STATE_LUA)
+        .expect("identifier zero matches the verified initial zero value");
+}
+
+#[test]
+fn ranged_auto_attack_spell_consumer_uses_the_shared_identifier() {
+    assert_spell_search_startup_selection();
+    let env = load_ranged_spell_search_consumer();
+    seed_ranged_auto_attack_spell(&env);
+    assert_ranged_auto_attack_statuses(&env);
+    assert_initial_ranged_auto_attack_state(&env);
 }
 
 #[test]

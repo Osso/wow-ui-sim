@@ -6,8 +6,14 @@
     feature = "client-anniversary"
 ))]
 
+#[cfg(feature = "client-wowforever")]
+use crate::common::blizzard_addon_harness::{blizzard_ui_dir, build_blizzard_addon_closure_env};
 use sha2::{Digest, Sha256};
+#[cfg(feature = "client-wowforever")]
+use wow_ui_sim::loader::{discover_blizzard_addons_for_screen, load_addon};
 use wow_ui_sim::lua_api::WowLuaEnv;
+#[cfg(feature = "client-wowforever")]
+use wow_ui_sim::screen::ScreenKind;
 
 fn load_original(env: &WowLuaEnv, name: &str) {
     let path = wow_ui_sim::client_profile::blizzard_ui_addons_dir().join(name);
@@ -40,6 +46,85 @@ fn assert_no_errors(env: &WowLuaEnv) {
         "{:?}",
         env.state().borrow().lua_errors
     );
+}
+
+#[cfg(feature = "client-wowforever")]
+const LEGACY_ACTION_BAR_GLOBALS_MATCH_STATE: &str = r#"
+assert(GetCVarBool("loadDeprecationFallbacks"))
+local globals = {
+    "GetBonusBarIndex", "GetBonusBarOffset", "GetExtraBarIndex",
+    "GetMultiCastBarIndex", "GetOverrideBarIndex", "GetOverrideBarSkin",
+    "GetTempShapeshiftBarIndex", "GetVehicleBarIndex", "GetActionBarPage",
+}
+for _, name in ipairs(globals) do
+    assert(_G[name]() == C_ActionBar[name](), name)
+end
+ChangeActionBarPage(4)
+assert(GetActionBarPage() == C_ActionBar.GetActionBarPage())
+assert(GetActionBarPage() == 4)
+"#;
+
+#[cfg(feature = "client-wowforever")]
+fn seed_non_default_action_bar_state(env: &WowLuaEnv) {
+    let mut state = env.state().borrow_mut();
+    state.action_bar_page = 2;
+    state.bonus_bar_index = 9;
+    state.has_bonus_action_bar = true;
+    state.vehicle_bar_index = 21;
+    state.has_vehicle_action_bar = true;
+    state.override_bar_index = 24;
+    state.override_bar_skin = Some(25);
+    state.has_override_action_bar = true;
+    state.temp_shapeshift_bar_index = 22;
+    state.has_temp_shapeshift_action_bar = true;
+    state.action_bar_state.possess_bar_visible = true;
+}
+
+#[cfg(feature = "client-wowforever")]
+#[test]
+fn forever_deprecated_action_bar_globals_follow_non_default_state() {
+    let env = consumer_env();
+    let addon_dir = wow_ui_sim::client_profile::blizzard_ui_addons_dir();
+    let addon = discover_blizzard_addons_for_screen(&addon_dir, ScreenKind::Game)
+        .into_iter()
+        .find(|(name, _)| name == "Blizzard_DeprecatedActionBar")
+        .expect("DeprecatedActionBar must be selected for the Game screen");
+    env.state().borrow_mut().addon_base_paths = vec![addon_dir];
+    load_addon(&env.loader_env(), &addon.1).expect("load selected DeprecatedActionBar provider");
+
+    seed_non_default_action_bar_state(&env);
+    env.exec(LEGACY_ACTION_BAR_GLOBALS_MATCH_STATE)
+        .expect("legacy globals must follow non-default C_ActionBar state");
+}
+
+#[cfg(feature = "client-wowforever")]
+const ACTION_BAR_STATUS_CONSUMER_LUA: &str = r#"
+local source = debug.getinfo(SpellSearchUtil.GetActionbarStatusForSpellBookItemInfo, "S").source
+assert(source:find("Blizzard_SpellSearch/Blizzard_SpellSearchUtil.lua", 1, true))
+C_PetInfo._state.petActionsByID = { [202] = { isPassive = false } }
+local status = ActionButtonUtil.ActionBarActionStatus
+local function query(itemType, id)
+    return SpellSearchUtil.GetActionbarStatusForSpellBookItemInfo({
+        itemType = itemType,
+        actionID = id,
+        isPassive = false,
+        isOffSpec = false,
+    })
+end
+assert(query(Enum.SpellBookItemType.PetAction, 202) == status.MissingFromAllBars)
+assert(query(Enum.SpellBookItemType.Flyout, 303) == status.MissingFromAllBars)
+"#;
+
+#[cfg(feature = "client-wowforever")]
+#[test]
+fn forever_spell_search_uses_action_bar_status_providers() {
+    let ui = blizzard_ui_dir();
+    let roots = ["Blizzard_SharedTalentUI", "Blizzard_ActionBar"];
+    let (env, loaded) = build_blizzard_addon_closure_env(&ui, &roots, &[]);
+    assert!(loaded.iter().any(|addon| addon == "Blizzard_SpellSearch"));
+    env.state().borrow_mut().action_bars.clear();
+    env.exec(ACTION_BAR_STATUS_CONSUMER_LUA)
+        .expect("original SpellSearch consumer must receive real action-bar statuses");
 }
 
 #[test]

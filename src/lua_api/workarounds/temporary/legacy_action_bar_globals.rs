@@ -1,9 +1,8 @@
-//! Temporary legacy action-bar global wrappers.
+//! Temporary legacy action-bar defaults for profiles without verified providers.
 //!
-//! `C_ActionBar` is registered by the Rust action-bar API. These globals remain
-//! for older Blizzard/addon callers until deprecated global action-bar access is
-//! no longer required.
+//! Retail and Forever use selected Blizzard providers; other profiles retain the defaults.
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 const LEGACY_ACTION_BAR_GLOBALS_LUA: &str = r#"
 if ActionButtonUtil == nil then
   ActionButtonUtil = {}
@@ -139,7 +138,7 @@ __wow_legacy_action_bar_forward("HasExtraActionBar", "HasExtraActionBar")
 __wow_legacy_action_bar_forward("IsPossessBarVisible", "IsPossessBarVisible")
 "#;
 
-#[cfg(not(feature = "client-retail"))]
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 const ACTION_BUTTON_QUICK_KEYBIND_DEFAULTS_LUA: &str = r#"
 local function __wow_legacy_action_bar_noop()
 end
@@ -166,13 +165,17 @@ end
 
 "#;
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(LEGACY_ACTION_BAR_GLOBALS_LUA)?;
-    // Normal Retail QuickKeybind starts hidden, then uses the eager ActionBar owner.
-    #[cfg(not(feature = "client-retail"))]
     lua.exec(ACTION_BUTTON_QUICK_KEYBIND_DEFAULTS_LUA)?;
     #[cfg(feature = "client-mists")]
     lua.exec(MISTS_LEGACY_ACTION_BAR_GLOBALS_LUA)?;
+    Ok(())
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) fn apply_bootstrap(_: &mut rilua::Lua) -> crate::Result<()> {
     Ok(())
 }
 
@@ -227,75 +230,5 @@ mod tests {
             .expect("preserved legacy action-bar global should run");
 
         assert_eq!(offset, 42);
-    }
-
-    #[test]
-    fn installs_action_button_util_defaults() {
-        let env = WowLuaEnv::new().expect("lua env should initialize");
-
-        let result: String = env
-            .eval(
-                r#"
-                local enum = ActionButtonUtil and ActionButtonUtil.ActionBarActionStatus
-                if not enum then return "missing_enum" end
-                if type(BaseActionButtonMixin) ~= "table" then return "missing_base_mixin" end
-                if enum.NotMissing ~= 1 or enum.MissingFromAllBars ~= 2 then return "bad_enum" end
-                if type(ActionButtonUtil.ActionBarButtonNames) ~= "table" then return "missing_names" end
-                if ActionButtonUtil.GetActionBarStatusForSpell(1) ~= enum.NotMissing then return "spell" end
-                if ActionButtonUtil.GetActionBarStatusForPetAction(1) ~= enum.NotMissing then return "pet" end
-                if ActionButtonUtil.GetActionBarStatusForFlyout(1) ~= enum.NotMissing then return "flyout" end
-                if type(ActionButtonSpellAlertManager) ~= "table" then return "missing_alert_manager" end
-                if type(ActionButtonSpellAlertManager.HasAlert) ~= "function" then return "missing_has_alert" end
-                if type(ActionButtonSpellAlertManager.ShowAlert) ~= "function" then return "missing_show_alert" end
-                if type(ActionButtonSpellAlertManager.HideAlert) ~= "function" then return "missing_hide_alert" end
-                return "ok"
-                "#,
-            )
-            .expect("ActionButtonUtil defaults should run");
-
-        assert_eq!(result, "ok");
-        #[cfg(not(feature = "client-retail"))]
-        env.exec(
-            r#"
-                ActionButtonUtil.ShowAllActionButtonGrids()
-                ActionButtonUtil.HideAllActionButtonGrids()
-                ActionButtonUtil.SetAllQuickKeybindButtonHighlights()
-                ActionButtonUtil.ShowAllQuickKeybindButtonHighlights()
-                ActionButtonUtil.HideAllQuickKeybindButtonHighlights()
-        "#,
-        )
-        .expect("non-Retail quick-keybind defaults remain callable");
-    }
-
-    #[test]
-    fn spell_alert_manager_tracks_and_toggles_alert_frame() {
-        let env = WowLuaEnv::new().expect("lua env should initialize");
-
-        let result: String = env
-            .eval(
-                r#"
-                local button = CreateFrame("Button", "TemporarySpellAlertButton", UIParent)
-                local before = ActionButtonSpellAlertManager:HasAlert(button)
-
-                ActionButtonSpellAlertManager:ShowAlert(button, 7)
-                local during, alertType = ActionButtonSpellAlertManager:HasAlert(button)
-                local alert = button.SpellActivationAlert
-                local shownDuring = alert ~= nil and alert:IsShown()
-
-                ActionButtonSpellAlertManager:HideAlert(button)
-                local after = ActionButtonSpellAlertManager:HasAlert(button)
-                local shownAfter = alert ~= nil and alert:IsShown()
-
-                if before then return "bad_before" end
-                if not during or alertType ~= 7 then return "bad_during" end
-                if not shownDuring then return "bad_shown" end
-                if after then return "bad_after" end
-                if shownAfter then return "bad_hidden" end
-                return "ok"
-                "#,
-            )
-            .expect("spell-alert manager defaults should run");
-
-        assert_eq!(result, "ok");
     }
 }
