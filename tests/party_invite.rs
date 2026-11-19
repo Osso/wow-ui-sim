@@ -11,7 +11,7 @@ fn c_party_info_invite_unit_keeps_invitation_server_mediated() {
         sim.party_is_raid = Some(false);
     }
     env.exec(
-        r#"
+        r##"
         local observedEvents = {}
         local listener = CreateFrame("Frame")
         listener:RegisterEvent("GROUP_ROSTER_UPDATE")
@@ -27,7 +27,7 @@ fn c_party_info_invite_unit_keeps_invitation_server_mediated() {
         assert(not pcall(C_PartyInfo.InviteUnit))
         assert(#observedEvents == 0)
         assert(popupCalls == 0)
-        "#,
+        "##,
     )
     .expect("documented invite call should not mutate local group state");
 
