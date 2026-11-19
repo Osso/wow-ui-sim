@@ -597,7 +597,7 @@ fn append_slotted_keystone_rows(
     input: &SlottedKeystoneTooltipInput,
     modifiers: &[(u32, u32)],
 ) -> LuaResult<()> {
-    let Some(plan) = build_slotted_keystone_plan(state, item_id, guid, input, modifiers)? else {
+    let Some(plan) = build_slotted_keystone_plan(state, input, modifiers)? else {
         return Ok(());
     };
     let Some(normal_color) = named_color(state, "NORMAL_FONT_COLOR") else {
@@ -610,12 +610,10 @@ fn append_slotted_keystone_rows(
 
 fn build_slotted_keystone_plan(
     state: &mut LuaState,
-    item_id: u32,
-    guid: &str,
     input: &SlottedKeystoneTooltipInput,
     modifiers: &[(u32, u32)],
 ) -> LuaResult<Option<SlottedKeystoneTooltipPlan>> {
-    if !slotted_keystone_input_matches(input, item_id, guid) {
+    if !slotted_keystone_input_matches(input) {
         return Ok(None);
     }
     let Some(title) = selected_keystone_title(state, input, modifiers)? else {
@@ -628,16 +626,9 @@ fn build_slotted_keystone_plan(
     build_slotted_keystone_plan_tail(state, title, power_level, input, level, modifiers)
 }
 
-fn slotted_keystone_input_matches(
-    input: &SlottedKeystoneTooltipInput,
-    item_id: u32,
-    guid: &str,
-) -> bool {
-    let selected_item_matches =
-        input.item_id == Some(item_id) && input.item_guid.as_deref() == Some(guid);
-    let keystone_type_matches = input.item_class_id == Some(KEYSTONE_ITEM_CLASS_ID)
-        && input.item_subclass_id == Some(KEYSTONE_ITEM_SUBCLASS_ID);
-    selected_item_matches && keystone_type_matches
+fn slotted_keystone_input_matches(input: &SlottedKeystoneTooltipInput) -> bool {
+    input.item_class_id == Some(KEYSTONE_ITEM_CLASS_ID)
+        && input.item_subclass_id == Some(KEYSTONE_ITEM_SUBCLASS_ID)
 }
 
 fn selected_keystone_title(
