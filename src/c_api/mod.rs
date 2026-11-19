@@ -290,6 +290,8 @@ pub mod c_quest_offer;
 mod c_scrapping_machine;
 pub mod c_shared_character_services;
 pub mod c_super_track;
+#[cfg(feature = "client-retail")]
+pub mod c_talking_head;
 pub(crate) mod challenge_run;
 pub mod container_purchase;
 mod container_purchase_args;

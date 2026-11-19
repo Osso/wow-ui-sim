@@ -15,6 +15,9 @@ pub struct SimState {
     /// Missing key = no row; None = no summary ref. No native data is fabricated.
     #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
     pub cinematic_summaries: HashMap<u32, Option<String>>,
+    /// INFERRED host input for Retail talking-head consumers; native fields remain UNKNOWN.
+    #[cfg(feature = "client-retail")]
+    pub talking_head: crate::c_api::c_talking_head::TalkingHeadState,
     /// Explicit empty-default R88q host inputs; no automatic server records.
     pub store_glue: crate::c_api::store_glue_model::StoreGlueState,
     pub hyperlink_tooltip: crate::c_api::c_tooltip_info_hyperlink::inputs::HyperlinkTooltipInputs,
