@@ -172,9 +172,11 @@ fn retail_full_ui_tooltip_color_measurement(env: &WowLuaEnv) {
             for _, name in ipairs(names) do
                 local color = _G[name]
                 if color then
-                    rows[#rows + 1] = name .. "=" .. table.concat({
-                        tostring(color.r), tostring(color.g), tostring(color.b), tostring(color.a)
-                    }, ",")
+                    local indexed = {tostring(color.r), tostring(color.g), tostring(color.b), tostring(color.a)}
+                    local raw = {tostring(rawget(color, "r")), tostring(rawget(color, "g")),
+                        tostring(rawget(color, "b")), tostring(rawget(color, "a"))}
+                    rows[#rows + 1] = name .. "=" .. table.concat(indexed, ",")
+                        .. " raw=" .. table.concat(raw, ",")
                 else
                     rows[#rows + 1] = name .. "=<nil>"
                 end
