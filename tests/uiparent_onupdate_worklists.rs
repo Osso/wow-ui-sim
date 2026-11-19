@@ -204,3 +204,31 @@ fn animated_shine_onupdate_still_updates_active_shines() {
         env.exec("AnimatedShineProbe:Stop()").unwrap();
     }
 }
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn selected_floating_chat_onupdate_preserves_original_consumer() {
+    test_timeout! {
+        let env = load_settled_game_ui();
+        env.exec(r#"
+            local callback = assert(EventRegistry.onUpdateCallbacksByOwner[FloatingChatFrameMixin])
+            local savedFrames, savedMoving = CHAT_FRAMES, MOVING_CHATFRAME
+            CHAT_FRAMES = {}
+            callback(FloatingChatFrameMixin, 0.125)
+            local frame, tab = ChatFrame1, ChatFrame1Tab
+            local savedDocked = frame.isDocked
+            frame:Show()
+            CHAT_FRAMES, MOVING_CHATFRAME = { "ChatFrame1" }, frame
+            for _, docked in ipairs({ false, true }) do
+                frame.isDocked, frame.hasBeenFaded, frame.mouseOutTime = docked, false, 12
+                tab:SetAlpha(0)
+                callback(FloatingChatFrameMixin, 0.125)
+                for tick = 1, 10 do UIFrameFade_OnUpdate(frame, 0.05) end
+                assert(frame.mouseOutTime == 0, "moving chat must reset fade timer")
+                assert(tab:GetAlpha() > 0, "original chat callback must fade in its tab")
+            end
+            frame.isDocked = savedDocked
+            CHAT_FRAMES, MOVING_CHATFRAME = savedFrames, savedMoving
+        "#).expect("selected original FloatingChatFrame OnUpdate consumer must run");
+    }
+}
