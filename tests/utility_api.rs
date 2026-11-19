@@ -413,27 +413,6 @@ fn test_tindexof_not_found() {
 }
 
 // ============================================================================
-// tFilter
-// ============================================================================
-
-#[test]
-fn test_tfilter_removes_matching() {
-    let env = env();
-    let count: i32 = env
-        .eval(
-            r#"
-            local t = {1, 2, 3, 4, 5}
-            tFilter(t, function(v) return v > 3 end)
-            local n = 0
-            for _ in pairs(t) do n = n + 1 end
-            return n
-            "#,
-        )
-        .unwrap();
-    assert_eq!(count, 2); // only 4 and 5 remain
-}
-
-// ============================================================================
 // CopyTable
 // ============================================================================
 
@@ -469,43 +448,6 @@ fn test_copytable_deep() {
         )
         .unwrap();
     assert!(independent);
-}
-
-// ============================================================================
-// MergeTable
-// ============================================================================
-
-#[test]
-fn test_mergetable() {
-    let env = env();
-    let (a, b): (i32, i32) = env
-        .eval(
-            r#"
-            local dest = {a = 1}
-            local src = {b = 2}
-            MergeTable(dest, src)
-            return dest.a, dest.b
-            "#,
-        )
-        .unwrap();
-    assert_eq!(a, 1);
-    assert_eq!(b, 2);
-}
-
-#[test]
-fn test_mergetable_overwrites() {
-    let env = env();
-    let val: i32 = env
-        .eval(
-            r#"
-            local dest = {a = 1}
-            local src = {a = 99}
-            MergeTable(dest, src)
-            return dest.a
-            "#,
-        )
-        .unwrap();
-    assert_eq!(val, 99);
 }
 
 // ============================================================================

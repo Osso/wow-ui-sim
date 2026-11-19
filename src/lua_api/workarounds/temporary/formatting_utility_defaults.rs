@@ -241,8 +241,10 @@ mod tests {
                 if CalculateStringEditDistance("kitten", "sitting") ~= 3 then return "edit_distance" end
                 local split = strsplittable(",", "a,b")
                 if split[1] ~= "a" or split[2] ~= "b" then return "strsplittable" end
-                local filtered = tFilter({ 1, 2, 3, 4 }, function(value) return value % 2 == 0 end)
-                if #filtered ~= 2 or filtered[1] ~= 2 or filtered[2] ~= 4 then return "tfilter" end
+                local input = { 1, 2, 3, 4 }
+                local filtered = tFilter(input, function(value) return value % 2 == 0 end)
+                if filtered == input or #filtered ~= 2 or filtered[1] ~= 2 or filtered[2] ~= 4 then return "tfilter" end
+                if #input ~= 4 or input[1] ~= 1 or input[4] ~= 4 then return "tfilter_input" end
                 local firstMapped, secondMapped = mapvalues(function(value) return value * 2 end, 2, 3)
                 if firstMapped ~= 4 or secondMapped ~= 6 then return "mapvalues" end
                 if not rawequal(string.split, strsplit) then
@@ -271,6 +273,8 @@ mod tests {
             let mut lua = env.lua.borrow_mut();
             super::apply_bootstrap(&mut lua).expect("formatting defaults should reapply");
         }
+        #[cfg(not(feature = "client-wrath"))]
+        load_cached_table_util(&env);
         let result: String = env
             .eval(FORMATTING_DEFAULTS_PROBE)
             .expect("formatting utility defaults probe should run");
@@ -279,6 +283,15 @@ mod tests {
             assert_retail_split_aliases(&env);
         }
         assert_active_profile_formatter(&env);
+    }
+
+    #[cfg(not(feature = "client-wrath"))]
+    fn load_cached_table_util(env: &WowLuaEnv) {
+        let ui = crate::blizzard_ui_sync::default_cache_addons_path().expect("Blizzard UI cache");
+        let source = std::fs::read_to_string(ui.join("Blizzard_SharedXMLBase/TableUtil.lua"))
+            .expect("cached Blizzard TableUtil source should exist");
+        env.exec(&source)
+            .expect("cached Blizzard TableUtil source should execute");
     }
 
     fn assert_retail_split_aliases(env: &WowLuaEnv) {

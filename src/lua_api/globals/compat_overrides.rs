@@ -62,6 +62,23 @@ if strsplittable == nil then
   end
 end
 
+if string ~= nil and string.split == nil then
+  function string.split(self, delimiter, limit)
+    if type(self) == "string" and type(delimiter) == "string" then
+      local inputIsEmpty = #delimiter == 0
+      local inputIsLonger = #self <= 4 and #delimiter > #self
+      local receiverLooksLikeDelimiter = #self <= 4 and self:match("^%W+$") ~= nil
+      if inputIsEmpty or inputIsLonger or receiverLooksLikeDelimiter then
+        return strsplit(self, delimiter, limit)
+      end
+    end
+    return strsplit(delimiter, self, limit)
+  end
+end
+
+"#;
+
+const WRATH_TABLE_ALIASES_LUA: &str = r#"
 if MergeTable == nil then
   function MergeTable(dest, src)
     if type(dest) ~= "table" or type(src) ~= "table" then
@@ -95,21 +112,6 @@ if tFilter == nil then
     return t
   end
 end
-
-if string ~= nil and string.split == nil then
-  function string.split(self, delimiter, limit)
-    if type(self) == "string" and type(delimiter) == "string" then
-      local inputIsEmpty = #delimiter == 0
-      local inputIsLonger = #self <= 4 and #delimiter > #self
-      local receiverLooksLikeDelimiter = #self <= 4 and self:match("^%W+$") ~= nil
-      if inputIsEmpty or inputIsLonger or receiverLooksLikeDelimiter then
-        return strsplit(self, delimiter, limit)
-      end
-    end
-    return strsplit(delimiter, self, limit)
-  end
-end
-
 "#;
 
 /// Install `print` / `A_Print` / `next` / `ipairs` overrides on the rilua
@@ -169,6 +171,15 @@ fn dumpobject(state: &mut LuaState) -> LuaResult<u32> {
 fn install_legacy_aliases(lua: &mut rilua::Lua) -> LuaResult<()> {
     lua.exec(LEGACY_ALIAS_LUA)
         .map_err(|e| runtime_error(format!("legacy alias install: {e}")))?;
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Wrath {
+        install_wrath_table_aliases(lua)?;
+    }
+    Ok(())
+}
+
+fn install_wrath_table_aliases(lua: &mut rilua::Lua) -> LuaResult<()> {
+    lua.exec(WRATH_TABLE_ALIASES_LUA)
+        .map_err(|e| runtime_error(format!("Wrath table alias install: {e}")))?;
     Ok(())
 }
 
