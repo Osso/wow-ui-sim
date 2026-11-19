@@ -582,10 +582,24 @@ fn test_spell_get_spell_name() {
 #[test]
 fn test_retail_spell_name_overrides_match_db2_rows() {
     let env = env();
-    let names: (String, String) = env
-        .eval("return C_Spell.GetSpellName(275825), C_Spell.GetSpellName(182108)")
+    let all_names_match: bool = env
+        .eval(
+            r#"
+            return C_Spell.GetSpellName(182108) == "Artillery"
+                and C_Spell.GetSpellName(251095) == "Purple Path"
+                and C_Spell.GetSpellName(251097) == "Orange Path"
+                and C_Spell.GetSpellName(275825) == "Heart of Azeroth"
+                and C_Spell.GetSpellName(321076) == "Kyrian"
+                and C_Spell.GetSpellName(321077) == "Night Fae"
+                and C_Spell.GetSpellName(321078) == "Necrolord"
+                and C_Spell.GetSpellName(321079) == "Venthyr"
+            "#,
+        )
         .unwrap();
-    assert_eq!(names, ("Heart of Azeroth".into(), "Artillery".into()));
+    assert!(
+        all_names_match,
+        "spell names must match the pinned DB2 rows"
+    );
 }
 
 #[test]
