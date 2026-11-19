@@ -24,6 +24,15 @@ tooltip_selection_getters_fixture! {
                 GameTooltip:SetEnhancedConduit(conduit_id, rank)
                 local info = GameTooltip:GetPrimaryTooltipInfo()
                 local data = GameTooltip:GetPrimaryTooltipData()
+                local direct = C_TooltipInfo.GetEnhancedConduit(conduit_id, rank)
+                assert(direct and direct.lines[3].type == 0,
+                    'C_TooltipInfo returns a plain enhanced-colour row')
+                local directColor = direct.lines[3].leftColor
+                local enhancedColor = SOULBIND_CONDUIT_ENHANCED_COLOR
+                assert(math.abs(directColor.r - enhancedColor.r) < 1e-6
+                    and math.abs(directColor.g - enhancedColor.g) < 1e-6
+                    and math.abs(directColor.b - enhancedColor.b) < 1e-6,
+                    'C_TooltipInfo row carries the modeled enhanced GlobalColor')
                 assert(info and info.getterName == 'GetEnhancedConduit',
                     'enhanced-conduit accessor missing')
                 assert(data and data.type == Enum.TooltipDataType.EnhancedConduit)
@@ -47,6 +56,11 @@ tooltip_selection_getters_fixture! {
                 assert(lines[2].type == 0 and lines[2].leftText ~= '', 'conduit type label')
                 assert(lines[3].type == 0 and lines[3].leftText == SOULBIND_CONDUIT_ENHANCED,
                     'enhanced label: ' .. dump())
+                local enhanced = SOULBIND_CONDUIT_ENHANCED_COLOR
+                assert(math.abs(lines[3].leftColor.r - enhanced.r) < 1e-6
+                    and math.abs(lines[3].leftColor.g - enhanced.g) < 1e-6
+                    and math.abs(lines[3].leftColor.b - enhanced.b) < 1e-6,
+                    'enhanced label uses its modeled GlobalColor')
                 assert(lines[4].type == 31 and lines[4].itemLevel == item_level,
                     'item level uses the original rank: ' .. dump())
                 assert(lines[5].type == 20 and lines[5].leftText == ITEM_SOULBOUND)
