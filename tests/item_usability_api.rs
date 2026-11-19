@@ -46,3 +46,30 @@ fn item_usability_checks_ownership_eligibility_and_spell_power() {
     env.state().borrow_mut().player.power = 20;
     env.exec("local a,b=C_Item.IsUsableItem(1434); assert(not a and b); assert(select('#', C_Item.IsUsableItem(1434)) == 2)").unwrap();
 }
+
+#[test]
+fn item_usability_defaults_unsupplied_eligibility_to_accepted() {
+    let env = WowLuaEnv::new().unwrap();
+    {
+        let mut sim = env.state().borrow_mut();
+        sim.bag_items.insert(
+            (0, 1),
+            BagItem {
+                item_id: 1434,
+                stack_count: 1,
+                hyperlink: None,
+                durability: None,
+                applied_transmog: None,
+                owned_identity: None,
+            },
+        );
+        sim.player.power_type = 0;
+        sim.player.power = 100;
+    }
+    let sufficient: (bool, bool) = env.eval("return C_Item.IsUsableItem(1434)").unwrap();
+    assert_eq!(sufficient, (true, false));
+
+    env.state().borrow_mut().player.power = 0;
+    let insufficient: (bool, bool) = env.eval("return C_Item.IsUsableItem(1434)").unwrap();
+    assert_eq!(insufficient, (false, true));
+}
