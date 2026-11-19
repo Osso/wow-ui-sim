@@ -4,8 +4,9 @@ use super::super::real::unit_secret_predicates::{
 use super::super::unit_api::{active_group_member_index, is_raid_group};
 use super::{is_friendly_unit, visible_party_member};
 use crate::lua_api::game_data::RACE_DATA;
-use crate::lua_api::methods::{borrow_state, create_string};
-use crate::lua_bridge::FromStack;
+use crate::lua_api::methods::{borrow_state, create_string, val_to_string};
+use crate::lua_api::state::{SimState, SubgroupOwnerRoster};
+use crate::lua_bridge::{FromStack, stack_val};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 
@@ -40,6 +41,69 @@ pub(super) fn unit_in_raid(state: &mut LuaState) -> LuaResult<u32> {
     };
     state.push(Val::Bool(in_raid));
     finish_identity_restricted(state, &[&unit], 1)
+}
+
+/// VERIFIED R88bb Retail 70688 owner/slot behavior.
+/// INFERRED (R88bb Retail 70688 semantics applied to Forever/Mists).
+/// Applying these semantics to PTR/Era/Anniversary is also INFERRED from cache references.
+pub(super) fn unit_in_subgroup(state: &mut LuaState) -> LuaResult<u32> {
+    let unit = read_subgroup_unit(state)?;
+    let owner_index = read_subgroup_index(state)?;
+    let identity = {
+        let sim = borrow_state(state)?;
+        super::super::unit_misc::existing_guid_for_unit(&sim, &unit).unwrap_or_default()
+    };
+    let in_subgroup = {
+        let sim = borrow_state(state)?;
+        select_subgroup_owner(&sim, owner_index)
+            .is_some_and(|roster| subgroup_contains(roster, &identity))
+    };
+    state.push(Val::Bool(in_subgroup));
+    finish_identity_restricted(state, &[&unit], 1)
+}
+
+fn read_subgroup_unit(state: &LuaState) -> LuaResult<String> {
+    match stack_val(state, 1) {
+        Val::Nil => Ok(String::new()),
+        Val::Str(_) => val_to_string(state, stack_val(state, 1)).ok_or_else(subgroup_usage_error),
+        Val::Num(number) => Ok(number.to_string()),
+        _ => Err(subgroup_usage_error()),
+    }
+}
+
+fn read_subgroup_index(state: &LuaState) -> LuaResult<Option<i64>> {
+    match stack_val(state, 2) {
+        Val::Nil => Ok(None),
+        Val::Num(number) if number.is_finite() && (0.0..=u32::MAX as f64).contains(&number) => {
+            Ok(Some((number - 1.0).trunc() as i64))
+        }
+        _ => Err(subgroup_usage_error()),
+    }
+}
+
+fn subgroup_usage_error() -> rilua::LuaError {
+    rilua::runtime_error("Usage: UnitInSubgroup(unit [, partyIndex])")
+}
+
+fn select_subgroup_owner(sim: &SimState, index: Option<i64>) -> Option<&SubgroupOwnerRoster> {
+    match index {
+        None => sim
+            .instance_subgroup_roster
+            .as_ref()
+            .or(sim.home_subgroup_roster.as_ref()),
+        Some(0) => sim.home_subgroup_roster.as_ref(),
+        Some(1) => sim.instance_subgroup_roster.as_ref(),
+        _ => None,
+    }
+}
+
+fn subgroup_contains(roster: &SubgroupOwnerRoster, identity: &str) -> bool {
+    roster
+        .members
+        .iter()
+        .filter(|member| member.subgroup == roster.player_subgroup)
+        .take(4)
+        .any(|member| member.identity.as_deref() == Some(identity))
 }
 
 pub(super) fn unit_player_or_pet_in_party(state: &mut LuaState) -> LuaResult<u32> {
