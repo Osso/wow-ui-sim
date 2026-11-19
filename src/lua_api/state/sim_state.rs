@@ -243,6 +243,7 @@ pub struct SimState {
     pub screen_height: f32,
     pub physical_screen_width: f32,
     pub physical_screen_height: f32,
+    pub(crate) display_scale_inputs: (f64, f64, f64),
     pub screen_kind: ScreenKind,
     pub in_character_create: bool,
     pub glue_login: crate::c_api::c_login::LoginState,

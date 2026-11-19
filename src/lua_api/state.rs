@@ -238,6 +238,8 @@ macro_rules! build_empty_sim_state {
             screen_height: $runtime.screen_height,
             physical_screen_width: $runtime.screen_width,
             physical_screen_height: $runtime.screen_height,
+            // INFERRED (simulator mapping): preserve neutral legacy startup inputs.
+            display_scale_inputs: (1.0, 0.5, 1.0),
             screen_kind: $runtime.screen_kind,
             in_character_create: false,
             glue_login: Default::default(),

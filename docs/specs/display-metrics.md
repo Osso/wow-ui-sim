@@ -15,6 +15,21 @@ The simulator distinguishes physical display pixels from its base layout canvas.
 - [x] Reproduce selected frames from the captured physical `3440×1440` display, effective scale `0.8`, and raw saved `Ultrawide` EditMode cache through normal Blizzard startup, without assigning measured outputs. Simulator startup repairs must not replace Blizzard-owned ObjectiveTracker anchors or height in either default or custom layouts.
 - [x] Remove every ObjectiveTracker anchor/height repair from post-event layout and startup. Native Blizzard/EditMode layout owns tracker geometry for both default and custom layouts.
 
+### Display scale inputs
+
+- VERIFIED (Blizzard Lua): `Blizzard_SharedXMLBase/FrameUtil.lua` uses
+  `GetDefaultScale()` in `ApplyDefaultScale`, clamps it to optional caller
+  bounds, and applies it with `SetScale`. The original
+  `Blizzard_SettingsDefinitions_Shared/Graphics.lua` uses the minimum and
+  maximum render-scale getters as slider bounds.
+- INFERRED (simulator mapping): `set_display_scale_inputs(default, min, max)`
+  supplies these values explicitly, independently of physical pixels, render
+  resolution, and UIParent scale. Inputs must be finite and positive, and
+  render-scale bounds must be ordered. The simulator retains its earlier
+  neutral startup inputs (1.0, 0.5, 1.0), not claimed as Blizzard defaults.
+- UNKNOWN: native calculation, defaults, initialization, and profile-specific
+  rules for all three getters. No display-geometry formula is inferred.
+
 ## How it works
 
 - [Layout system](../layout-system.md)
