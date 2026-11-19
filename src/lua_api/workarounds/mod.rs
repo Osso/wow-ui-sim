@@ -127,8 +127,8 @@ const POST_LOAD_WORKAROUNDS: &[WorkaroundStep] = &[
         label: "patch_game_time_defaults",
         apply: patch_game_time_defaults,
     },
-    // SharedTooltipArtTemplate owns both Retail tooltip children.
-    #[cfg(not(feature = "client-retail"))]
+    // SharedTooltipArtTemplate owns the Game and Glue children on Retail and Forever.
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     WorkaroundStep {
         label: "patch_tooltip_nineslice_surface",
         apply: patch_tooltip_nineslice_surface,
