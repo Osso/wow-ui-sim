@@ -409,7 +409,10 @@ macro_rules! build_empty_sim_state {
             is_active_battlefield: false,
             spell_trade_skill_links: HashMap::new(),
             spell_id_aliases: HashMap::new(),
-            #[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+            #[cfg(any(
+                all(feature = "client-retail", feature = "retail-12-1-5"),
+                feature = "client-wowforever"
+            ))]
             spell_passive_attribute_masks: HashMap::new(),
             spell_tooltip_inputs: HashMap::new(),
             recipe_rank_tooltip_cache: Default::default(),
