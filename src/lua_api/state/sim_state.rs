@@ -485,7 +485,7 @@ pub struct SimState {
     pub spell_tooltip_cost_contexts:
         HashMap<u32, crate::c_api::spell_tooltip_cost::SpellTooltipCostContext>,
     /// Host-declared Maw power atlas/link strings by resolved spell ID; empty by default.
-    #[cfg(feature = "retail-12-0-5")]
+    #[cfg(feature = "maw-power-model")]
     pub maw_powers: crate::c_api::c_spell_maw_powers::MawPowers,
     /// Explicit host active-delve state, independent of undeclared query arguments.
     pub has_active_delve: bool,

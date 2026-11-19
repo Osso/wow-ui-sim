@@ -21,32 +21,34 @@ pub struct MawPowers {
 
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     let namespace = super::ensure_namespace(state, "C_Spell")?;
-    #[cfg(not(feature = "retail-12-0-7"))]
+    #[cfg(not(feature = "maw-power-rarity-info"))]
     table_set_rust_fn_static(
         state,
         namespace,
         "GetMawPowerBorderAtlasBySpellID",
         get_maw_power_border_atlas_by_spell_id,
     )?;
-    // Keep ordinary namespace lookup from fabricating the member retired in 12.0.7.
-    #[cfg(feature = "retail-12-0-7")]
+    // Suppress synthetic lookup until the original deprecation addon adds its wrapper.
+    #[cfg(feature = "maw-power-rarity-info")]
     super::mark_namespace_keys_removed(state, namespace, &["GetMawPowerBorderAtlasBySpellID"]);
-    #[cfg(feature = "retail-12-0-7")]
+    #[cfg(feature = "maw-power-rarity-info")]
     table_set_rust_fn_static(
         state,
         namespace,
         "GetMawPowerRarityInfoBySpellID",
         get_maw_power_rarity_info_by_spell_id,
     )?;
+    #[cfg(feature = "retail-12-0-5")]
     table_set_rust_fn_static(
         state,
         namespace,
         "GetMawPowerLinkBySpellID",
         get_maw_power_link_by_spell_id,
-    )
+    )?;
+    Ok(())
 }
 
-#[cfg(not(feature = "retail-12-0-7"))]
+#[cfg(not(feature = "maw-power-rarity-info"))]
 fn get_maw_power_border_atlas_by_spell_id(state: &mut LuaState) -> LuaResult<u32> {
     let atlas = match super::c_spell::read_public_spell_identifier_at(
         state,
@@ -68,7 +70,7 @@ fn get_maw_power_border_atlas_by_spell_id(state: &mut LuaState) -> LuaResult<u32
 
 /// INFERRED: a spell needs both a rarity ID and a border atlas; either miss returns
 /// nothing (MayReturnNothing with two nonnil returns).
-#[cfg(feature = "retail-12-0-7")]
+#[cfg(feature = "maw-power-rarity-info")]
 fn get_maw_power_rarity_info_by_spell_id(state: &mut LuaState) -> LuaResult<u32> {
     let info = match super::c_spell::read_public_spell_identifier_at(
         state,
@@ -95,6 +97,7 @@ fn get_maw_power_rarity_info_by_spell_id(state: &mut LuaState) -> LuaResult<u32>
     Ok(2)
 }
 
+#[cfg(feature = "retail-12-0-5")]
 fn get_maw_power_link_by_spell_id(state: &mut LuaState) -> LuaResult<u32> {
     let link = match super::c_spell::read_public_spell_identifier_at(
         state,

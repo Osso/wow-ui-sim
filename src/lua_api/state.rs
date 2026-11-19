@@ -415,7 +415,7 @@ macro_rules! build_empty_sim_state {
             recipe_rank_tooltip_cache: Default::default(),
             aura_tooltip_inputs: HashMap::new(),
             spell_tooltip_cost_contexts: HashMap::new(),
-            #[cfg(feature = "retail-12-0-5")]
+            #[cfg(feature = "maw-power-model")]
             maw_powers: Default::default(),
             has_active_delve: false,
             has_active_lair: false,
