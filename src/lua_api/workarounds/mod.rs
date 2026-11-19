@@ -452,7 +452,6 @@ fn apply_feature_temporary_namespace_bootstrap(lua: &mut rilua::Lua) -> crate::R
 
 fn apply_feature_tool_defaults(lua: &mut rilua::Lua) -> crate::Result<()> {
     temporary::assisted_combat_manager_defaults::apply_bootstrap(lua)?;
-    temporary::base_nine_slice_dialog_defaults::apply_bootstrap(lua)?;
     temporary::callback_registry_defaults::apply_bootstrap(lua)?;
     temporary::macro_defaults::apply_bootstrap(lua)?;
     temporary::navigation_defaults::apply_bootstrap(lua)?;

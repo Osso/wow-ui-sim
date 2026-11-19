@@ -611,3 +611,24 @@ fn glue_announcement_dialog_named_frame_materializes_on_glue() {
     );
 }
 }
+
+post_wrath_ui_fixture! {
+#[test]
+fn glue_announcement_dialog_delegates_underlay_and_close_behavior() {
+    let env = load_full_ui_for(ScreenKind::Login);
+    let result: (bool, bool, bool, bool) = env
+        .eval(r#"
+            local dialog = GlueAnnouncementDialog
+            dialog.showUnderlay = true
+            dialog:Show()
+            local underlay = dialog.Underlay
+            local underlay_shown = underlay:IsShown()
+            local underlay_level = underlay:GetFrameLevel() == dialog:GetFrameLevel() - 1
+            local underlay_anchors = underlay:GetNumPoints() == 2
+            dialog:OnCloseClick()
+            return underlay_shown, underlay_level, underlay_anchors, not dialog:IsShown()
+        "#)
+        .expect("original dialog methods should apply their visible effects");
+    assert_eq!(result, (true, true, true, true));
+}
+}
