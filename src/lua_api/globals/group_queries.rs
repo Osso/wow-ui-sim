@@ -149,6 +149,7 @@ fn register_unit_reaction_relationships(state: &mut LuaState) {
 fn register_unit_membership_relationships(state: &mut LuaState) {
     set_global(state, "UnitInParty", relationships::unit_in_party);
     set_global(state, "UnitInRaid", relationships::unit_in_raid);
+    register_unit_subgroup_if_supported(state);
     set_global(
         state,
         "UnitPlayerOrPetInParty",
@@ -169,6 +170,21 @@ fn register_unit_membership_relationships(state: &mut LuaState) {
         "UnitInOtherParty",
         relationships::unit_in_other_party,
     );
+}
+
+fn register_unit_subgroup_if_supported(state: &mut LuaState) {
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::Ptr
+            | crate::client_profile::ClientProfile::Mists
+            | crate::client_profile::ClientProfile::Era
+            | crate::client_profile::ClientProfile::Anniversary
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
+        // INFERRED (consumer-required publication; API documentation lists it).
+        set_global(state, "UnitInSubgroup", relationships::unit_in_subgroup);
+    }
 }
 
 fn register_unit_group_roles(state: &mut LuaState) {

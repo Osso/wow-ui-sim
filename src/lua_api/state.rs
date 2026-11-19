@@ -483,6 +483,8 @@ macro_rules! build_empty_sim_state {
             next_report_token: $runtime.next_report_token,
             party_members: $collections.party_members,
             party_group_active: $runtime.party_group_active,
+            home_subgroup_roster: None,
+            instance_subgroup_roster: None,
             group_member_counts: GroupMemberCountsState::default(),
             #[cfg(all(
                 feature = "retail-12-0-5",
@@ -1052,7 +1054,8 @@ pub use super::game_data::AuraInfo;
 pub use super::game_data::SpellCooldownState;
 pub use super::game_data::{
     CLASS_LABELS, CastTargetSnapshot, CastingState, EmpowerTiming, PartyMember, RACE_DATA,
-    ROT_DAMAGE_LEVELS, TargetInfo, XP_LEVELS, tick_party_health,
+    ROT_DAMAGE_LEVELS, SubgroupMemberRecord, SubgroupOwnerRoster, TargetInfo, XP_LEVELS,
+    tick_party_health,
 };
 use super::game_data::{
     default_action_bars, default_allied_races, default_major_faction_renown_levels,

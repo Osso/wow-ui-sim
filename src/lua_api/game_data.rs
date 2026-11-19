@@ -77,6 +77,21 @@ pub struct PartyMember {
     pub debuffs: Vec<AuraInfo>,
 }
 
+/// One host-supplied identity and subgroup in a group-owner roster.
+#[derive(Debug, Clone, Default)]
+pub struct SubgroupMemberRecord {
+    /// INFERRED (simulator mapping): `None` represents an empty roster slot.
+    pub identity: Option<String>,
+    pub subgroup: u32,
+}
+
+/// INFERRED (simulator mapping): explicit owner roster input for UnitInSubgroup.
+#[derive(Debug, Clone, Default)]
+pub struct SubgroupOwnerRoster {
+    pub player_subgroup: u32,
+    pub members: Vec<SubgroupMemberRecord>,
+}
+
 /// A simulated aura (buff or debuff).
 #[derive(Debug, Clone)]
 pub struct AuraInfo {
