@@ -189,48 +189,48 @@ fn blizzard_deprecated_action_bar_installs_bar_index_shims(env: &WowLuaEnv) {
 }
 }
 
-prefork_full_ui_case! {
-fn blizzard_deprecated_action_bar_legacy_globals_follow_original_provider(env: &WowLuaEnv) {
-    {
-        let mut state = env.state().borrow_mut();
-        state.action_bar_page = 2;
-        state.bonus_bar_index = 9;
-        state.has_bonus_action_bar = true;
-        state.vehicle_bar_index = 21;
-        state.has_vehicle_action_bar = true;
-        state.override_bar_index = 24;
-        state.override_bar_skin = Some(25);
-        state.has_override_action_bar = true;
-        state.temp_shapeshift_bar_index = 22;
-        state.has_temp_shapeshift_action_bar = true;
-        state.action_bar_state.possess_bar_visible = true;
-    }
+const LEGACY_BAR_GLOBALS_MATCH_STATE_LUA: &str = r#"
+assert(GetCVarBool("loadDeprecationFallbacks"))
+local globals = {
+    "GetBonusBarIndex", "GetBonusBarOffset", "GetExtraBarIndex",
+    "GetMultiCastBarIndex", "GetOverrideBarIndex", "GetOverrideBarSkin",
+    "GetTempShapeshiftBarIndex", "GetVehicleBarIndex", "GetActionBarPage",
+}
+for _, name in ipairs(globals) do
+    if _G[name]() ~= C_ActionBar[name]() then return name end
+end
+ChangeActionBarPage(4)
+if GetActionBarPage() ~= C_ActionBar.GetActionBarPage() then return "page" end
+if GetActionBarPage() ~= 4 then return "changed_page" end
+return "ok"
+"#;
+
+fn seed_non_default_action_bar_state(env: &WowLuaEnv) {
+    let mut state = env.state().borrow_mut();
+    state.action_bar_page = 2;
+    state.bonus_bar_index = 9;
+    state.has_bonus_action_bar = true;
+    state.vehicle_bar_index = 21;
+    state.has_vehicle_action_bar = true;
+    state.override_bar_index = 24;
+    state.override_bar_skin = Some(25);
+    state.has_override_action_bar = true;
+    state.temp_shapeshift_bar_index = 22;
+    state.has_temp_shapeshift_action_bar = true;
+    state.action_bar_state.possess_bar_visible = true;
+}
+
+fn assert_legacy_bar_globals_match_state(env: &WowLuaEnv) {
     let result: String = env
-        .eval(
-            r#"
-            assert(GetCVarBool("loadDeprecationFallbacks"))
-            local pairs = {
-                {"GetBonusBarIndex", "GetBonusBarIndex"},
-                {"GetBonusBarOffset", "GetBonusBarOffset"},
-                {"GetExtraBarIndex", "GetExtraBarIndex"},
-                {"GetMultiCastBarIndex", "GetMultiCastBarIndex"},
-                {"GetOverrideBarIndex", "GetOverrideBarIndex"},
-                {"GetOverrideBarSkin", "GetOverrideBarSkin"},
-                {"GetTempShapeshiftBarIndex", "GetTempShapeshiftBarIndex"},
-                {"GetVehicleBarIndex", "GetVehicleBarIndex"},
-                {"GetActionBarPage", "GetActionBarPage"},
-            }
-            for _, pair in ipairs(pairs) do
-                if _G[pair[1]]() ~= C_ActionBar[pair[2]]() then return pair[1] end
-            end
-            ChangeActionBarPage(4)
-            if GetActionBarPage() ~= C_ActionBar.GetActionBarPage() then return "page" end
-            if GetActionBarPage() ~= 4 then return "changed_page" end
-            return "ok"
-            "#,
-        )
+        .eval(LEGACY_BAR_GLOBALS_MATCH_STATE_LUA)
         .expect("deprecated action-bar globals should preserve observable behavior");
     assert_eq!(result, "ok");
+}
+
+prefork_full_ui_case! {
+fn blizzard_deprecated_action_bar_legacy_globals_follow_original_provider(env: &WowLuaEnv) {
+    seed_non_default_action_bar_state(env);
+    assert_legacy_bar_globals_match_state(env);
 }
 }
 
