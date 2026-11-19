@@ -1,4 +1,4 @@
-#![cfg(any(feature = "client-retail", feature = "client-wowforever"))
+#![cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 
 use crate::common::blizzard_addon_harness::with_blizzard_addon_closure;
 use wow_ui_sim::client_profile::{self, ClientProfile};
