@@ -1033,7 +1033,7 @@ fn assert_resilient_keystone_consumer_rows() {
     capture_keystone_hover_rows(&env, 180_653, &guid);
     assert_exact_keystone_row_sequence(
         &env,
-        "Map: Floor Map\\nKeystone Power 7\\nResilient 5\\nModifier heading\\n  Fortified\\n  Raging",
+        "Map: Floor Map\nKeystone Power 7\nResilient 5\nModifier heading\n  Fortified\n  Raging",
     );
 }
 
@@ -1049,7 +1049,7 @@ fn assert_plain_keystone_consumer_rows() {
         vec![(17, 961), (18, 8)],
     );
     capture_keystone_hover_rows(&env, 158_923, &guid);
-    assert_exact_keystone_row_sequence(&env, "Map: Beta\\nKeystone Power 8");
+    assert_exact_keystone_row_sequence(&env, "Map: Beta\nKeystone Power 8");
 }
 
 #[test]
