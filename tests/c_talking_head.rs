@@ -54,7 +54,6 @@ fn retail_talking_head_apis_project_explicit_host_inputs() {
     assert!(empty_results);
     env.state().borrow_mut().talking_head.current_line = Some(sample_line());
     let result: String = env.eval(API_CONTRACT).unwrap();
-        .unwrap();
     assert_eq!(result, "ok");
 }
 

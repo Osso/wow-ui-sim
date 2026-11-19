@@ -37,12 +37,6 @@ pub struct TalkingHeadState {
     pub ignored: bool,
 }
 
-impl TalkingHeadState {
-    fn line(&self) -> Option<TalkingHeadLine> {
-        self.current_line.clone()
-    }
-}
-
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     let namespace = ensure_namespace(state, "C_TalkingHead")?;
     table_set_rust_fn_static(
@@ -107,7 +101,7 @@ fn is_current_talking_head_ignored(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn get_current_line_info(state: &mut LuaState) -> LuaResult<u32> {
-    let Some(line) = borrow_state(state)?.talking_head.line() else {
+    let Some(line) = borrow_state(state)?.talking_head.current_line.clone() else {
         return Ok(0);
     };
     push_line_info(state, &line);
@@ -128,7 +122,7 @@ fn push_line_info(state: &mut LuaState, line: &TalkingHeadLine) {
 }
 
 fn get_current_line_animation_info(state: &mut LuaState) -> LuaResult<u32> {
-    let Some(line) = borrow_state(state)?.talking_head.line() else {
+    let Some(line) = borrow_state(state)?.talking_head.current_line.clone() else {
         return Ok(0);
     };
     push_optional_number(state, line.animation.animation_kit);
