@@ -75,7 +75,10 @@ fn assert_birth_animation_playing(env: &WowLuaEnv) {
         )
         .expect("spell-alert birth probe must run cleanly");
     assert!(has_alert, "ShowAlert must mark the button active");
-    assert!(is_default_type, "ShowAlert must use the original default alert type");
+    assert!(
+        is_default_type,
+        "ShowAlert must use the original default alert type"
+    );
     assert!(start_playing, "ShowAlert must play ProcStartAnim");
     assert!(
         !loop_playing,
@@ -114,7 +117,10 @@ fn assert_alert_frame_is_reused(env: &WowLuaEnv) {
             "#,
         )
         .expect("spell-alert reuse probe must run cleanly");
-    assert!(reused, "ShowAlert must reuse and show the original alert frame");
+    assert!(
+        reused,
+        "ShowAlert must reuse and show the original alert frame"
+    );
 }
 
 fn assert_alert_animations_stopped(env: &WowLuaEnv) {
