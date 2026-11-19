@@ -1,7 +1,28 @@
+use wow_ui_sim::loader::{discover_blizzard_addons_for_screen, load_addon};
 use wow_ui_sim::lua_api::WowLuaEnv;
+use wow_ui_sim::paths::default_blizzard_ui_addons_path;
+use wow_ui_sim::screen::ScreenKind;
+use wow_ui_sim::startup::fire_startup_events_for_screen;
 
-prefork_full_ui_case! {
-fn dropdown_cached_templates_preserve_original_mixin_behavior(env: &WowLuaEnv) {
+fn load_game_ui() -> WowLuaEnv {
+    let env = WowLuaEnv::new().expect("Lua environment should initialize");
+    env.set_screen_size(1024.0, 768.0);
+    env.set_screen_mode(ScreenKind::Game);
+    let ui = default_blizzard_ui_addons_path().expect("Blizzard UI cache should be synced");
+    env.state().borrow_mut().addon_base_paths = vec![ui.clone()];
+    wow_ui_sim::xml::register_intrinsic_templates();
+    for (name, toc_path) in discover_blizzard_addons_for_screen(&ui, ScreenKind::Game) {
+        load_addon(&env.loader_env(), &toc_path)
+            .unwrap_or_else(|error| panic!("[load {name}] FAILED: {error}"));
+    }
+    env.apply_post_load_workarounds();
+    fire_startup_events_for_screen(&env, ScreenKind::Game);
+    env
+}
+
+#[test]
+fn dropdown_cached_templates_preserve_original_mixin_behavior() {
+    let env = load_game_ui();
     env.exec(r#"
         local selection = CreateFrame("DropdownButton", nil, UIParent, "WowStyle1DropdownTemplate")
         selection:SetSelectionText(function() return "selected" end)
@@ -20,5 +41,4 @@ fn dropdown_cached_templates_preserve_original_mixin_behavior(env: &WowLuaEnv) {
         arrow:OnButtonStateChanged()
         assert(arrow.Arrow:GetAtlas() == "common-dropdown-a-button")
     "#).expect("cached dropdown templates should preserve observable mixin behavior");
-}
 }
