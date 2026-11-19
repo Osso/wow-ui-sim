@@ -107,12 +107,11 @@ local function query(itemType, id)
     return SpellSearchUtil.GetActionbarStatusForSpellBookItemInfo({
         itemType = itemType,
         actionID = id,
-        spellID = id,
         isPassive = false,
         isOffSpec = false,
     })
 end
-assert(query(Enum.SpellBookItemType.Spell, 31338) == status.MissingFromAllBars)
+assert(SpellSearchUtil.GetActionbarStatusForSpell(31338) == status.MissingFromAllBars)
 assert(query(Enum.SpellBookItemType.PetAction, 202) == status.MissingFromAllBars)
 assert(query(Enum.SpellBookItemType.Flyout, 303) == status.MissingFromAllBars)
 "#;
