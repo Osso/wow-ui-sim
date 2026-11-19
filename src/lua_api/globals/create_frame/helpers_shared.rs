@@ -523,7 +523,7 @@ fn should_preserve_existing_frame_name(
     if !secure_mode {
         return Ok(false);
     }
-    public_name_destination_is_occupied(state, name)
+    Ok(public_name_destination_is_occupied(state, name))
 }
 
 fn existing_frame_name_state(
