@@ -429,8 +429,13 @@ fn get_owned_keystone_map_id_maps_owned_challenge_id() {
     }
     let (count, map_id): (i32, i32) = env
         .eval(
-            "return select('#', C_MythicPlus.GetOwnedKeystoneMapID()), \\
-             C_MythicPlus.GetOwnedKeystoneMapID()",
+            r#"
+            local function count_returns(...)
+                return select('#', ...)
+            end
+            local count = count_returns(C_MythicPlus.GetOwnedKeystoneMapID())
+            return count, C_MythicPlus.GetOwnedKeystoneMapID()
+            "#,
         )
         .unwrap();
     assert_eq!(count, 1, "an owned keystone publishes one map ID");
