@@ -724,8 +724,12 @@ click_binding_ui_fixture! {
 fn create_frame_replaces_builtin_game_tooltip_placeholder() {
     test_timeout! {
         let env = WowLuaEnv::new().unwrap();
-        let placeholder_id = env.state().borrow().widgets.get_id_by_name("GameTooltip").unwrap();
-        assert!(env.state().borrow().widgets.get(placeholder_id).unwrap().is_simulator_placeholder);
+        let placeholder_id = {
+            let state = env.state().borrow();
+            let id = state.widgets.get_id_by_name("GameTooltip").unwrap();
+            assert!(state.widgets.get(id).unwrap().is_simulator_placeholder);
+            id
+        };
         env.exec("CreateFrame('GameTooltip', 'GameTooltip', UIParent)").unwrap();
         let registry_id = env.state().borrow().widgets.get_id_by_name("GameTooltip").unwrap();
         assert_ne!(placeholder_id, registry_id);
