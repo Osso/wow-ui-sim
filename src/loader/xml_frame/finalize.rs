@@ -310,7 +310,7 @@ fn create_scroll_child_element(
     else {
         return Ok(None);
     };
-    let child_id = create_frame_from_xml_with_parent_id(
+    let child = create_frame_from_xml_with_parent_id(
         env,
         child_frame,
         child_type,
@@ -320,7 +320,7 @@ fn create_scroll_child_element(
         intrinsic,
         timing,
     )?;
-    let Some(child_id) = child_id else {
+    let Some((child_id, _child_name)) = child else {
         return Ok(None);
     };
     if let Some(parent_key) = &child_frame.parent_key {
@@ -343,7 +343,7 @@ fn create_single_child_frame(
     else {
         return Ok(());
     };
-    let child_id = create_frame_from_xml_with_parent_id(
+    let child = create_frame_from_xml_with_parent_id(
         env,
         child_frame,
         child_type,
@@ -353,7 +353,7 @@ fn create_single_child_frame(
         intrinsic,
         timing,
     )?;
-    if let (Some(child_id), Some(parent_key)) = (child_id, &child_frame.parent_key) {
+    if let (Some((child_id, _child_name)), Some(parent_key)) = (child, &child_frame.parent_key) {
         assign_parent_key(env, parent_id, parent_key, child_id);
     }
     Ok(())

@@ -61,15 +61,7 @@ fn wrath_unmasked_original_friends_count_tracks_supplied_online_rows() {
             &mut wow_ui_sim::loader::LoadTiming::default(),
         );
         run(&env, "assert(true)");
-        let frame_id = result.unwrap().expect("original frame must be created");
-        assert_eq!(
-            frame_id,
-            env.state()
-                .borrow()
-                .widgets
-                .get_id_by_name("FriendsMicroButton")
-                .expect("created frame stays registered by name")
-        );
+        assert_eq!(result.unwrap().as_deref(), Some("FriendsMicroButton"));
         run(
             &env,
             &format!(

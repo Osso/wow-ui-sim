@@ -36,7 +36,7 @@ pub(super) fn registered_intrinsic_tag(tag: &'static str) -> Option<&'static str
         .map(|_| tag)
 }
 
-/// Create a frame from XML and return its widget ID, or None if skipped.
+/// Create a frame from XML and return its resolved name, or None if skipped.
 ///
 /// `intrinsic_base` is set when the XML element is an intrinsic type (e.g.
 /// `<ContainedAlertFrame>`) whose registered template should be implicitly
@@ -49,8 +49,8 @@ pub fn create_frame_from_xml(
     subst_parent_override: Option<&str>,
     intrinsic_base: Option<&str>,
     timing: &mut LoadTiming,
-) -> Result<Option<u64>, LoadError> {
-    create_frame_from_xml_with_parent_id(
+) -> Result<Option<String>, LoadError> {
+    let created = create_frame_from_xml_with_parent_id(
         env,
         frame,
         widget_type,
@@ -59,7 +59,8 @@ pub fn create_frame_from_xml(
         subst_parent_override,
         intrinsic_base,
         timing,
-    )
+    )?;
+    Ok(created.map(|(_, name)| name))
 }
 
 pub(super) fn create_frame_from_xml_with_parent_id(
@@ -71,7 +72,7 @@ pub(super) fn create_frame_from_xml_with_parent_id(
     subst_parent_override: Option<&str>,
     intrinsic_base: Option<&str>,
     timing: &mut LoadTiming,
-) -> Result<Option<u64>, LoadError> {
+) -> Result<Option<(u64, String)>, LoadError> {
     let _profile = crate::loader::chunk_cache::GeneratedChunkScope::enter("xml-frame");
     if register_virtual_or_intrinsic(env, frame, widget_type, parent_override, intrinsic_base)
         .is_some()
@@ -97,7 +98,7 @@ pub(super) fn create_frame_from_xml_with_parent_id(
         intrinsic_base,
         timing,
     )?;
-    Ok(Some(frame_id))
+    Ok(Some((frame_id, prepared.name)))
 }
 
 fn create_prepared_frame_from_xml(

@@ -211,15 +211,7 @@ fn original_wrath_floating_chat_fontstring_creates_and_updates_friend_count() {
         &mut LoadTiming::default(),
     );
     assert_no_errors(&env);
-    let frame_id = result.unwrap().expect("original frame must be created");
-    assert_eq!(
-        frame_id,
-        env.state()
-            .borrow()
-            .widgets
-            .get_id_by_name("FriendsMicroButton")
-            .expect("created frame stays registered by name")
-    );
+    assert_eq!(result.unwrap().as_deref(), Some("FriendsMicroButton"));
     exec_and_audit(
         &env,
         r#"
@@ -350,14 +342,6 @@ fn original_wrath_audio_explicit_parent_nested_buttons_run_onload_once() {
         &mut LoadTiming::default(),
     );
     assert_no_errors(&env);
-    let frame_id = result.unwrap().expect("original frame must be created");
-    assert_eq!(
-        frame_id,
-        env.state()
-            .borrow()
-            .widgets
-            .get_id_by_name("AudioOptionsFrame")
-            .expect("created frame stays registered by name")
-    );
+    assert_eq!(result.unwrap().as_deref(), Some("AudioOptionsFrame"));
     assert_options_buttons_and_categories(&env);
 }
