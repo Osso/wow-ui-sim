@@ -85,7 +85,7 @@ fn assert_pool_collection_behavior(env: &WowLuaEnv) {
         r#"
         local collection = CreateFramePoolCollection()
         local newResets, releaseResets = 0, 0
-        local pool = collection:CreatePool("Frame", UIParent, nil, function(_, frame, isNew)
+        local pool = collection:CreatePool("Frame", UIParent, "", function(_, frame, isNew)
             if isNew then
                 newResets = newResets + 1
             else
