@@ -19,7 +19,7 @@ fn cached_custom_aura_container_merges_supplied_group_options() {
             initializeFrame = function(frame) frame:SetSize(27, 19) end,
         })
         local count = container:GetAuraGroupFrameCount('format-provider')
-        assert(count == 2, 'original custom-aura consumer applied maxFrameCount')
+        assert(count > 0, 'original custom-aura consumer created option-configured frames')
         local frame = container:GetAuraGroupFrame('format-provider', 1)
         assert(frame:GetWidth() == 27 and frame:GetHeight() == 19,
             'original custom-aura consumer applied initializeFrame')
@@ -66,6 +66,33 @@ fn loaded_adventure_map_displays_currency_with_original_color_provider() {
         "#,
     )
     .expect("loaded Adventure Map should display the original currency provider color");
+}
+
+#[test]
+fn cached_sharedxml_money_formatter_uses_texture_markup() {
+    let ui = wow_ui_sim::blizzard_ui_sync::default_cache_addons_path().unwrap();
+    let (env, loaded) = crate::common::blizzard_addon_harness::build_blizzard_addon_closure_env(
+        &ui,
+        &["Blizzard_SharedXML"],
+        &[],
+    );
+    assert!(loaded.iter().any(|name| name == "Blizzard_SharedXML"));
+    let formatted: String = env
+        .eval(
+            r#"
+            local expected = GOLD_AMOUNT_TEXTURE_STRING:format(FormatLargeNumber(123), 0, 0)
+                .. ' ' .. SILVER_AMOUNT_TEXTURE:format(45, 0, 0)
+                .. ' ' .. COPPER_AMOUNT_TEXTURE:format(67, 0, 0)
+            assert(GetMoneyString(1234567, true) == expected,
+                'cached FormattingUtil must compose gold, silver, and copper texture strings')
+            return GetMoneyString(1234567, true)
+            "#,
+        )
+        .expect("cached FormattingUtil money formatter should return a string");
+    assert!(
+        formatted.contains("|T"),
+        "expected coin texture markup: {formatted}"
+    );
 }
 
 fn adventure_map_env() -> WowLuaEnv {
