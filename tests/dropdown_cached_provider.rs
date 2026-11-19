@@ -25,20 +25,22 @@ fn dropdown_cached_templates_preserve_original_mixin_behavior() {
     let env = load_game_ui();
     env.exec(r#"
         local selection = CreateFrame("DropdownButton", nil, UIParent, "WowStyle1DropdownTemplate")
-        selection:SetSelectionText(function() return "selected" end)
-        selection:UpdateToMenuSelections(nil, {})
+        selection:UpdateToMenuSelections(nil, {
+            { text = "selected", IsSelectionIgnored = function() return false end },
+        })
         assert(selection.Text:GetText() == "selected")
 
         local filter = CreateFrame("DropdownButton", nil, UIParent, "WowStyle1FilterDropdownTemplate")
         filter:SetIsDefaultCallback(function() return false end)
-        filter:ValidateResetState()
+        filter:RegisterMenu(MenuUtil.CreateRootMenuDescription())
         assert(filter.ResetButton:IsShown())
         filter:SetIsDefaultCallback(function() return true end)
-        filter:ValidateResetState()
+        filter:OnMenuAssigned()
         assert(not filter.ResetButton:IsShown())
 
         local arrow = CreateFrame("DropdownButton", nil, UIParent, "WowStyle1ArrowDropdownTemplate")
+        arrow:SetEnabled(false)
         arrow:OnButtonStateChanged()
-        assert(arrow.Arrow:GetAtlas() == "common-dropdown-a-button")
+        assert(arrow.Arrow:GetAtlas() == "common-dropdown-a-button-disabled")
     "#).expect("cached dropdown templates should preserve observable mixin behavior");
 }
