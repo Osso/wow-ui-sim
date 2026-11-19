@@ -40,6 +40,13 @@ end
 
 These cached sources establish contract context only; no vendor/cache files are modified and no legacy global is added.
 
+## Forever 1.60.1.70707 publication
+
+- **VERIFIED (pinned documentation):** `Blizzard_APIDocumentationGenerated/SpellDocumentation.lua:189–203` declares the rarity API with a nonnil spell identifier and two nonnil results on a hit. The old border-atlas query is supplied by the deprecated Lua wrapper, not declared as a native member.
+- **VERIFIED (selected UI):** `Blizzard_MawBuffs.toc` eagerly loads its XML and original `MawBuffMixin:SetBuffInfo`, which reads rarity at `Blizzard_MawBuffs.lua:253`. The deprecated wrapper forwards to the same API and returns its atlas.
+- **INFERRED (simulator contract):** Forever uses the existing Retail 12.0.7 host model. Both a rarity ID and an atlas are required; a miss returns zero values. That is not native miss-arity or security verification. This change does not add Forever's link query or change older profiles.
+- `tests/forever_maw_rarity.rs` exercises the original frame with two distinct host records, checks atlas selection and the returned pair, and verifies that the deprecated border wrapper is Lua-owned after startup and absent at bootstrap.
+
 ## What it must do
 
 ### Explicit host inputs and results
@@ -94,5 +101,5 @@ Main accepts an independent GPT-6.1-sol review: **ACCEPT WITH QUALIFICATIONS** (
 
 - Native secret `AllowedWhenTainted` permissions: deliberately unmodeled; conservative rejection is not parity.
 - Maw-power acquisition, rarity calculation, production atlas/link catalogs, generic spell links, legacy global registration, Blizzard UI rendering or cached source changes.
-- Older profiles: provider and state field are gated to `retail-12-0-5`; the pre-existing guarded border shim still serves them.
+- Older profiles other than Forever: the pre-existing guarded border shim and model availability are unchanged.
 - Native error wording, extra-argument behavior and native output-security policy: unverified.

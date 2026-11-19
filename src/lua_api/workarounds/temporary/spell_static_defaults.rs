@@ -32,7 +32,7 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     )?;
     lua.call_function(
         &bootstrap,
-        &[rilua::Val::Bool(!cfg!(feature = "retail-12-0-7"))],
+        &[rilua::Val::Bool(!cfg!(feature = "maw-power-rarity-info"))],
     )?;
     Ok(())
 }
@@ -45,7 +45,7 @@ mod tests {
     fn installs_spell_static_defaults() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
 
-        #[cfg(not(feature = "retail-12-0-7"))]
+        #[cfg(not(feature = "maw-power-rarity-info"))]
         let (override_id, maw_atlas_is_nil, charge_is_nil): (i64, bool, bool) = env
             .eval(
                 r#"
@@ -57,14 +57,14 @@ mod tests {
             )
             .expect("spell static defaults should be callable");
 
-        #[cfg(not(feature = "retail-12-0-7"))]
+        #[cfg(not(feature = "maw-power-rarity-info"))]
         {
             // Retail 12.1.5 VERIFIED: no resolver context returns the input spell ID.
             assert_eq!(override_id, 116);
             assert!(maw_atlas_is_nil);
             assert!(charge_is_nil);
         }
-        #[cfg(feature = "retail-12-0-7")]
+        #[cfg(feature = "maw-power-rarity-info")]
         env.exec(
             r#"
             assert(C_Spell.GetOverrideSpell(116) == 116)
