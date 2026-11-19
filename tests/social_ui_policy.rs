@@ -34,6 +34,10 @@ fn setup() -> WowLuaEnv {
     "#
     ))
     .unwrap();
+    if let Ok(path) = std::env::var("WOW_SIM_SOCIAL_POLICY_OVERLAY") {
+        env.exec(&std::fs::read_to_string(path).expect("read Social UI test overlay"))
+            .unwrap();
+    }
     env
 }
 
@@ -60,11 +64,11 @@ fn install_social_status_listener(env: &WowLuaEnv) {
 fn assert_enabled_friends_consumer(env: &WowLuaEnv) {
     env.exec(
         r#"
-        assert(C_SocialUI.IsSystemEnabled() == true)
-        assert(socialStatusUpdates == 1 and socialEnabledOnUpdate == true)
         QuickJoinFrame:Hide()
         FriendsFrame_ShowSubFrame("QuickJoinFrame")
         assert(not QuickJoinFrame:IsShown(), "FriendsFrame must block Quick Join when enabled")
+        assert(C_SocialUI.IsSystemEnabled() == true)
+        assert(socialStatusUpdates == 1 and socialEnabledOnUpdate == true)
         "#,
     )
     .unwrap();
