@@ -31,24 +31,22 @@ fn debug_edit_mode_system_frame_count(env: &WowLuaEnv) {
 fn install_debug_edit_mode_anchor_trace(env: &WowLuaEnv) {
     env.exec(
         r#"
-        local registered = EditModeManagerFrame.registeredSystemFrames
-        local runRange = secureexecuterange
-        secureexecuterange = function(frames, callback, ...)
-            if frames ~= registered then
-                return runRange(frames, callback, ...)
-            end
-            local function trace_anchor(index, frame, ...)
-                local info = frame.systemInfo and frame.systemInfo.anchorInfo
-                local target = info and info.relativeTo
-                if type(target) == "table" and target.GetName then
-                    target = target:GetName()
+        local methods = { "IsInDefaultPosition", "ClearAllPoints", "SetPoint" }
+        for index, frame in ipairs(EditModeManagerFrame.registeredSystemFrames) do
+            local frameName = frame:GetName()
+            for _, methodName in ipairs(methods) do
+                local original = frame[methodName]
+                if original then
+                    local originalMethod = original
+                    local systemIndex = index
+                    local systemName = frameName
+                    local currentMethod = methodName
+                    frame[methodName] = function(self, ...)
+                        print("anchor method", systemIndex, systemName, currentMethod)
+                        return originalMethod(self, ...)
+                    end
                 end
-                print("anchor before", index, frame:GetName(), info and info.point, target)
-                local result = callback(index, frame, ...)
-                print("anchor after", index, frame:GetName())
-                return result
             end
-            return runRange(frames, trace_anchor, ...)
         end
         "#,
     )
