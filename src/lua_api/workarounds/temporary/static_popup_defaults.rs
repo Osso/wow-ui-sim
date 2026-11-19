@@ -22,9 +22,14 @@ if StaticPopup_AddShowCondition == nil then
 end
 "#;
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
-    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     lua.exec(STATIC_POPUP_DEFAULTS_LUA)?;
+    Ok(())
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) fn apply_bootstrap(_lua: &mut rilua::Lua) -> crate::Result<()> {
     Ok(())
 }
 
