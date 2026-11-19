@@ -18,6 +18,7 @@
 
 mod audit_api;
 mod csv_util;
+#[path = "../../../crates/sim-data-profile/data/gen_area_table.rs"]
 mod gen_area_table;
 mod gen_atlas;
 mod gen_currencies;
@@ -29,6 +30,7 @@ mod gen_manifest;
 mod gen_map_art;
 mod gen_patch_api_docs;
 mod gen_quest_poi;
+#[path = "../../../crates/sim-data/data/gen_spell_names.rs"]
 mod gen_spell_names;
 mod gen_spells;
 mod gen_spells_power;

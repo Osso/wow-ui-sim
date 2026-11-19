@@ -67,6 +67,7 @@ pub mod ui_map_assignments;
 #[path = "../data/area_table_retail.rs"]
 pub mod area_table_retail;
 
+#[cfg(feature = "profile-retail")]
 #[path = "../data/area_names_retail.rs"]
 pub mod area_names_retail;
 

@@ -22,6 +22,12 @@
     "selected_rows": 10046,
     "selected_csv_sha256": "c6b5c754f21f8cff53bed423957c8ddff0866258adeb70aac6ea3b7d6219271b"
   },
+  "generated_index": {
+    "file": "area_names_retail.bin",
+    "format": "u32le row count; sorted u32le ID/u32le name offset pairs; NUL-terminated UTF-8 name blob",
+    "bytes": 245983,
+    "sha256": "3b37c025741150eea6949e938ac20d2bca464d22e5796171fa6eb9fc0dacfe14"
+  },
   "lookup": "All non-empty AreaName_lang rows; sorted by ID. Missing IDs remain absent.",
   "named_rows": 10046
 }

@@ -23,5 +23,11 @@
     "usable_name_rows": 416204
   },
   "unreadable_encrypted_chunks": 18,
+  "generated_index": {
+    "file": "spell_names_retail.bin",
+    "format": "u32le row count; sorted u32le ID/u32le name offset pairs; NUL-terminated UTF-8 name blob",
+    "bytes": 11066429,
+    "sha256": "5cb3bf878f5179c5631d8348aa925df1359957e60b81802cf691a480cfd0d34b"
+  },
   "lookup": "All exported non-empty Name_lang rows; sorted by ID. Empty or unreadable names are omitted, so GetSpellName preserves its no-value result for misses."
 }

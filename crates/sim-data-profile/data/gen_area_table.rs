@@ -11,6 +11,51 @@ const AREA_TABLE_CSV: &str = "data/db2/retail-12.1.5.70783/AreaTable.csv";
 const AREA_TABLE_OUTPUT: &str = "crates/sim-data-profile/data/area_table_retail.rs";
 const AREA_NAMES_CSV: &str = "data/db2/retail-12.1.5.70783/AreaNames.csv";
 const AREA_NAMES_OUTPUT: &str = "crates/sim-data-profile/data/area_names_retail.rs";
+const AREA_NAMES_BINARY_OUTPUT: &str = "crates/sim-data-profile/data/area_names_retail.bin";
+const AREA_NAMES_MODULE: &str = r#"//! Generated Retail AreaTable name index; see `area_names_retail.provenance.json`.
+//! VERIFIED (DB2 12.1.5.70783); names are looked up lazily from the data file.
+
+const AREA_NAME_DATA: &[u8] = include_bytes!("area_names_retail.bin");
+const HEADER_BYTES: usize = 4;
+const ENTRY_BYTES: usize = 8;
+
+pub fn get_area_name(id: u32) -> Option<&'static str> {
+    let count = read_u32(0)? as usize;
+    let names_start = HEADER_BYTES.checked_add(count.checked_mul(ENTRY_BYTES)?)?;
+    if names_start > AREA_NAME_DATA.len() {
+        return None;
+    }
+    let mut low = 0;
+    let mut high = count;
+    while low < high {
+        let middle = low + (high - low) / 2;
+        let entry = HEADER_BYTES + middle * ENTRY_BYTES;
+        if read_u32(entry)? < id {
+            low = middle + 1;
+        } else {
+            high = middle;
+        }
+    }
+    if low == count {
+        return None;
+    }
+    let entry = HEADER_BYTES + low * ENTRY_BYTES;
+    if read_u32(entry)? != id {
+        return None;
+    }
+    let name_offset = read_u32(entry + 4)? as usize;
+    let name_start = names_start.checked_add(name_offset)?;
+    let name_data = AREA_NAME_DATA.get(name_start..)?;
+    let name_end = name_data.iter().position(|byte| *byte == 0)?;
+    std::str::from_utf8(&name_data[..name_end]).ok()
+}
+
+fn read_u32(offset: usize) -> Option<u32> {
+    let end = offset.checked_add(4)?;
+    let bytes = AREA_NAME_DATA.get(offset..end)?;
+    Some(u32::from_le_bytes(bytes.try_into().ok()?))
+}
+"#;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 struct AreaTableRow {
@@ -46,7 +91,7 @@ pub fn run() -> Result<(), Box<dyn std::error::Error>> {
         rows.len(),
         names.len()
     );
-    println!("Outputs: {AREA_TABLE_OUTPUT}, {AREA_NAMES_OUTPUT}");
+    println!("Outputs: {AREA_TABLE_OUTPUT}, {AREA_NAMES_OUTPUT}, {AREA_NAMES_BINARY_OUTPUT}");
     Ok(())
 }
 
@@ -116,21 +161,29 @@ fn parse_area_name(columns: &AreaNameColumns, record: &str) -> Result<AreaNameRo
 }
 
 fn write_area_names(out: &mut File, rows: &[AreaNameRow]) -> std::io::Result<()> {
-    writeln!(
-        out,
-        "//! Generated from pinned AreaTable DB2 rows; see AreaName.provenance.json."
-    )?;
-    writeln!(out, "//! VERIFIED (DB2 12.1.5.70783).")?;
-    writeln!(out, "pub static AREA_NAMES_RETAIL: &[(u32, &str)] = &[")?;
+    let data = encode_area_names(rows)?;
+    std::fs::write(AREA_NAMES_BINARY_OUTPUT, data)?;
+    out.write_all(AREA_NAMES_MODULE.as_bytes())
+}
+
+fn encode_area_names(rows: &[AreaNameRow]) -> std::io::Result<Vec<u8>> {
+    let count = u32::try_from(rows.len())
+        .map_err(|error| std::io::Error::new(std::io::ErrorKind::InvalidData, error))?;
+    let mut index = Vec::with_capacity(rows.len() * 8);
+    let mut names = Vec::new();
     for row in rows {
-        writeln!(
-            out,
-            "    ({}, \"{}\"),",
-            row.id,
-            super::csv_util::escape_str(&row.name)
-        )?;
+        let offset = u32::try_from(names.len())
+            .map_err(|error| std::io::Error::new(std::io::ErrorKind::InvalidData, error))?;
+        index.extend_from_slice(&row.id.to_le_bytes());
+        index.extend_from_slice(&offset.to_le_bytes());
+        names.extend_from_slice(row.name.as_bytes());
+        names.push(0);
     }
-    writeln!(out, "];")
+    let mut data = Vec::with_capacity(4 + index.len() + names.len());
+    data.extend_from_slice(&count.to_le_bytes());
+    data.extend(index);
+    data.extend(names);
+    Ok(data)
 }
 
 fn find_columns(header: &str) -> Result<Columns, String> {

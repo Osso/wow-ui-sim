@@ -18,7 +18,6 @@ end
 local __wow_map_area_names = {
   [1] = "Dun Morogh",
   [2248] = "The Isle of Dorn",
-  __RETAIL_AREA_NAMES__
 }
 
 local function __wow_map_layer_dimensions(mapID)
@@ -184,11 +183,13 @@ C_Map.GetFallbackWorldMapID = function()
   return 2248
 end
 
-C_Map.GetAreaInfo = function(areaID)
-  if areaID == nil then
-    return nil
+if retainUiMapPointFallback then
+  C_Map.GetAreaInfo = function(areaID)
+    if areaID == nil then
+      return nil
+    end
+    return __wow_map_area_names[areaID]
   end
-  return __wow_map_area_names[areaID]
 end
 
 C_Map.GetMapWorldSize = function(mapID)
@@ -392,39 +393,10 @@ end
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     let retain_fallback =
         crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail;
-    let area_names = generated_area_names();
-    let source = MAP_RUNTIME_STATE_LUA.replace("__RETAIL_AREA_NAMES__", &area_names);
     lua.exec(&format!(
-        "local retainUiMapPointFallback = {retain_fallback}\n{source}"
+        "local retainUiMapPointFallback = {retain_fallback}\n{MAP_RUNTIME_STATE_LUA}"
     ))?;
     Ok(())
-}
-
-fn generated_area_names() -> String {
-    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail {
-        return String::new();
-    }
-    sim_data_profile::area_names_retail::AREA_NAMES_RETAIL
-        .iter()
-        .map(|(id, name)| format!("[{id}] = {},", lua_string(name)))
-        .collect::<Vec<_>>()
-        .join("\n")
-}
-
-fn lua_string(value: &str) -> String {
-    let mut result = String::from("\"");
-    for character in value.chars() {
-        match character {
-            '\\' => result.push_str("\\\\"),
-            '\"' => result.push_str("\\\""),
-            '\n' => result.push_str("\\n"),
-            '\r' => result.push_str("\\r"),
-            '\t' => result.push_str("\\t"),
-            character => result.push(character),
-        }
-    }
-    result.push('\"');
-    result
 }
 
 #[cfg(test)]
@@ -448,6 +420,10 @@ mod tests {
                 "Stoktron Brewery".into()
             )
         );
+        let unknown_area_is_nil: bool = env
+            .eval("return C_Map.GetAreaInfo(999999) == nil and C_Map.GetAreaInfo(nil) == nil")
+            .expect("unknown or absent areas should remain nil");
+        assert!(unknown_area_is_nil);
     }
 
     #[test]
