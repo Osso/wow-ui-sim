@@ -21,6 +21,72 @@ fn shared_xml_base_toc() -> PathBuf {
     shared_xml_base_dir().join("Blizzard_SharedXMLBase.toc")
 }
 
+#[cfg(feature = "client-wowforever")]
+fn forever_shared_xml_base_env() -> WowLuaEnv {
+    use crate::common::blizzard_addon_harness::{
+        load_blizzard_addon_closure_into_env, new_blizzard_addon_env,
+    };
+
+    let ui = blizzard_ui_dir();
+    let env = new_blizzard_addon_env(&ui);
+    let loaded = load_blizzard_addon_closure_into_env(&env, &ui, &["Blizzard_SharedXMLBase"], &[]);
+    assert!(loaded.iter().any(|name| name == "Blizzard_SharedXMLBase"));
+    env
+}
+
+#[cfg(feature = "client-wowforever")]
+#[test]
+fn forever_shared_xml_base_anchor_applies_original_point_and_offsets() {
+    let env = forever_shared_xml_base_env();
+    let matches: bool = env
+        .eval(
+            r#"
+            local frame = CreateFrame("Frame", nil, UIParent)
+            local anchor = AnchorUtil.CreateAnchor("BOTTOMLEFT", UIParent, "TOPRIGHT", 17, -9)
+            anchor:SetPoint(frame, true)
+            local point, parent, relativePoint, x, y = frame:GetPoint(1)
+            return point == "BOTTOMLEFT" and parent == UIParent
+                and relativePoint == "TOPRIGHT" and x == 17 and y == -9
+            "#,
+        )
+        .expect("original AnchorUtil must apply the anchor");
+    assert!(matches, "the frame must receive all five original anchor values");
+}
+
+#[cfg(feature = "client-wowforever")]
+#[test]
+fn forever_shared_xml_base_provides_original_utility_contracts() {
+    let env = forever_shared_xml_base_env();
+    env.exec(
+        r#"
+        local anchor = CreateAnchor("TOPLEFT", UIParent, nil, 10, -20)
+        assert(anchor.point == "TOPLEFT" and anchor.relativePoint == "TOPLEFT")
+        assert(GetFinalNameFromTextureKit("%s-topper", "ardenweald") == "ardenweald-topper")
+        assert(GetFinalNameFromTextureKit("%s_topper", "") == "_topper")
+        local keys = CopyValuesAsKeys({ "a", "b" })
+        assert(keys.a == "a" and keys.b == "b")
+        assert(type(TextureKitConstants) == "table")
+        assert(TextureKitConstants.SetVisibility == true and TextureKitConstants.DoNotSetVisibility == false)
+        assert(TextureKitConstants.UseAtlasSize == true and TextureKitConstants.IgnoreAtlasSize == false)
+        assert(TextureKitConstants.AddressModeClamp == 1 and TextureKitConstants.AddressModeWrap == 2)
+        assert(TextureKitConstants.AddressModeAllowAssetToDetermine == 3)
+        local enum = EnumUtil.MakeEnum("Foo", "Bar")
+        assert(enum.Foo == 1 and enum.Bar == 2)
+        local counter = CreateCounter()
+        assert(counter() == 1 and counter() == 2)
+        local store = {}
+        local entry, created = GetOrCreateTableEntry(store, "entry")
+        entry.value = 9
+        local same, recreated = GetOrCreateTableEntry(store, "entry")
+        assert(created and not recreated and same.value == 9)
+        local closure = GenerateClosure(function(a, b, c) return a .. b .. c end, "a", "b")
+        assert(closure("c") == "abc")
+        assert(GetMicroIconForRole("TANK") == "UI-LFG-RoleIcon-Tank-Micro-GroupFinder")
+        "#,
+    )
+    .expect("pinned Blizzard_SharedXMLBase must supply the original utilities");
+}
+
 #[cfg(feature = "client-retail")]
 #[test]
 fn retail_shared_xml_base_defines_mixin_factory_before_addon_performance_uses_it() {
