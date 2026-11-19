@@ -1,9 +1,9 @@
 //! Temporary StaticPopup compatibility defaults.
 //!
-//! Blizzard's StaticPopup addons replace these with real dialog behavior when
-//! loaded. Until every startup path loads that owner first, keep the inert
-//! global fallbacks explicit in the workaround layer.
+//! Blizzard's Retail and Forever StaticPopup providers load before their consumers.
+//! Keep the inert fallbacks only for Mists and Wrath, whose provider order is not covered.
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 const STATIC_POPUP_DEFAULTS_LUA: &str = r#"
 if StaticPopup_Hide == nil then
     function StaticPopup_Hide(_which, _data)
@@ -16,21 +16,20 @@ if StaticPopup_Show == nil then
     end
 end
 
-"#;
-
-#[cfg(not(feature = "client-retail"))]
-const STATIC_POPUP_CONDITION_DEFAULT_LUA: &str = r#"
 if StaticPopup_AddShowCondition == nil then
     function StaticPopup_AddShowCondition()
     end
 end
 "#;
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(STATIC_POPUP_DEFAULTS_LUA)?;
-    // Retail's Both-screen StaticPopup owner loads before GameDialog registers its condition.
-    #[cfg(not(feature = "client-retail"))]
-    lua.exec(STATIC_POPUP_CONDITION_DEFAULT_LUA)?;
+    Ok(())
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) fn apply_bootstrap(_lua: &mut rilua::Lua) -> crate::Result<()> {
     Ok(())
 }
 
@@ -39,6 +38,7 @@ mod tests {
     use crate::lua_api::WowLuaEnv;
 
     #[test]
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     fn installs_inert_static_popup_defaults() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
 

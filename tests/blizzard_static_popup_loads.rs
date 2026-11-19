@@ -857,6 +857,24 @@ fn show_helper_globals_are_functions() {
 }
 
 #[test]
+#[cfg(feature = "client-wowforever")]
+fn wowforever_static_popup_original_provider_shows_and_hides_dialog() {
+    let env = load_full_ui_for(ScreenKind::Game);
+
+    env.exec(
+        r#"
+        local popup = StaticPopup_Show("CONFIRM_DELETE_EQUIPMENT_SET", "fixture")
+        assert(popup and popup:IsShown())
+        assert(StaticPopup_Visible("CONFIRM_DELETE_EQUIPMENT_SET"))
+        assert(_G[popup:GetName() .. "Text"]:GetText() ~= "")
+        StaticPopup_Hide("CONFIRM_DELETE_EQUIPMENT_SET")
+        assert(not popup:IsShown())
+    "#,
+    )
+    .expect("cached Forever StaticPopup provider shows and hides a dialog");
+}
+
+#[test]
 #[cfg(all(feature = "client-retail", feature = "optional-tests"))]
 fn retail_static_popup_original_death_condition_survives_startup() {
     use wow_ui_sim::loader::{
