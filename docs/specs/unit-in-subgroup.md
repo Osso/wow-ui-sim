@@ -10,6 +10,8 @@
 - [x] Accept a string or number unit argument and apply the documented index conversion and error behavior. (VERIFIED, `pr46-49-decomp-answers.md` §R88bb)
 - [x] Publish on Retail, PTR, Mists, Era, Anniversary, and Forever. (INFERRED (consumer-required publication; API documentation lists it); cached Mainline consumers in PTR/Forever and Classic consumers in Mists/Era/Anniversary.)
 - [x] Represent HOME and INSTANCE rosters as explicit host inputs, empty by default. (INFERRED: simulator mapping required because the existing roster model has no owner/subgroup inputs; `pr46-49-decomp-answers.md` §R88bb)
+- [x] Apply Retail 70688 owner/slot semantics to Forever and Mists. (INFERRED (R88bb Retail 70688 semantics applied to Forever/Mists).)
+- [x] Apply the same semantics to PTR, Era, and Anniversary. (INFERRED: cached API references support publication, but do not verify native semantic parity.)
 
 ## How it works
 
@@ -34,4 +36,4 @@ None.
 
 ## Out of scope
 
-- Native behavior outside Retail remains unverified; non-Retail semantic parity is documented as inferred separately.
+- Native behavior is VERIFIED only for Retail; non-Retail semantic parity remains INFERRED.

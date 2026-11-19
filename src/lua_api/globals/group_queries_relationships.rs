@@ -43,7 +43,9 @@ pub(super) fn unit_in_raid(state: &mut LuaState) -> LuaResult<u32> {
     finish_identity_restricted(state, &[&unit], 1)
 }
 
-/// VERIFIED R88bb: classify a full unit identity in the selected owner subgroup.
+/// VERIFIED R88bb Retail 70688 owner/slot behavior.
+/// INFERRED (R88bb Retail 70688 semantics applied to Forever/Mists).
+/// Applying these semantics to PTR/Era/Anniversary is also INFERRED from cache references.
 pub(super) fn unit_in_subgroup(state: &mut LuaState) -> LuaResult<u32> {
     let unit = read_subgroup_unit(state)?;
     let owner_index = read_subgroup_index(state)?;
