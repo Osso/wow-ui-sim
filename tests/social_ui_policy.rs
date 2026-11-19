@@ -61,12 +61,17 @@ fn install_social_status_listener(env: &WowLuaEnv) {
     .unwrap();
 }
 
-fn assert_enabled_friends_consumer(env: &WowLuaEnv) {
+fn assert_retail_enabled_friends_consumer(env: &WowLuaEnv) {
     env.exec(
         r#"
-        QuickJoinFrame:Hide()
-        FriendsFrame_ShowSubFrame("QuickJoinFrame")
-        assert(not QuickJoinFrame:IsShown(), "FriendsFrame must block Quick Join when enabled")
+        FriendsListFrame:Hide()
+        FriendsFrame_ShowSubFrame("FriendsListFrame")
+        assert(not FriendsListFrame:IsShown(), "friends list is unavailable when enabled")
+        FriendsListFrame:Show()
+        WhoFrame:Hide()
+        FriendsFrame_ShowSubFrame("WhoFrame")
+        assert(WhoFrame:IsShown(), "Who remains allowed when enabled")
+        assert(not FriendsListFrame:IsShown(), "non-selected friends frame is hidden")
         assert(C_SocialUI.IsSystemEnabled() == true)
         assert(socialStatusUpdates == 1 and socialEnabledOnUpdate == true)
         "#,
@@ -74,16 +79,72 @@ fn assert_enabled_friends_consumer(env: &WowLuaEnv) {
     .unwrap();
 }
 
-fn assert_disabled_friends_consumer(env: &WowLuaEnv) {
+// Camelot has no WhoFrame entry; its enabled FriendsFrame option is FriendsListFrame.
+fn assert_forever_enabled_friends_consumer(env: &WowLuaEnv) {
     env.exec(
         r#"
-        assert(C_SocialUI.IsSystemEnabled() == false)
-        assert(socialStatusUpdates == 2 and socialEnabledOnUpdate == false)
+        FriendsListFrame:Hide()
+        FriendsFrame_ShowSubFrame("FriendsListFrame")
+        assert(FriendsListFrame:IsShown(), "Camelot keeps FriendsListFrame allowed")
+        QuickJoinFrame:Hide()
         FriendsFrame_ShowSubFrame("QuickJoinFrame")
-        assert(QuickJoinFrame:IsShown(), "FriendsFrame must allow Quick Join when disabled")
+        assert(not QuickJoinFrame:IsShown(), "Camelot blocks Quick Join when enabled")
+        assert(not FriendsListFrame:IsShown(), "Camelot hides the unselected friends frame")
+        assert(C_SocialUI.IsSystemEnabled() == true)
+        assert(socialStatusUpdates == 1 and socialEnabledOnUpdate == true)
         "#,
     )
     .unwrap();
+}
+
+fn assert_enabled_friends_consumer(env: &WowLuaEnv) {
+    if wow_ui_sim::client_profile::ACTIVE == wow_ui_sim::client_profile::ClientProfile::Retail {
+        assert_retail_enabled_friends_consumer(env);
+    } else {
+        assert_forever_enabled_friends_consumer(env);
+    }
+}
+
+fn assert_retail_disabled_friends_consumer(env: &WowLuaEnv) {
+    env.exec(
+        r#"
+        FriendsListFrame:Hide()
+        FriendsFrame_ShowSubFrame("FriendsListFrame")
+        assert(FriendsListFrame:IsShown(), "friends list is shown when disabled")
+        WhoFrame:Hide()
+        FriendsFrame_ShowSubFrame("WhoFrame")
+        assert(WhoFrame:IsShown(), "Who remains allowed when disabled")
+        assert(not FriendsListFrame:IsShown(), "non-selected friends frame is hidden")
+        assert(C_SocialUI.IsSystemEnabled() == false)
+        assert(socialStatusUpdates == 2 and socialEnabledOnUpdate == false)
+        "#,
+    )
+    .unwrap();
+}
+
+fn assert_forever_disabled_friends_consumer(env: &WowLuaEnv) {
+    env.exec(
+        r#"
+        FriendsListFrame:Hide()
+        FriendsFrame_ShowSubFrame("FriendsListFrame")
+        assert(FriendsListFrame:IsShown(), "Camelot shows FriendsListFrame when disabled")
+        QuickJoinFrame:Hide()
+        FriendsFrame_ShowSubFrame("QuickJoinFrame")
+        assert(QuickJoinFrame:IsShown(), "Camelot allows Quick Join when disabled")
+        assert(not FriendsListFrame:IsShown(), "non-selected Camelot friends frame is hidden")
+        assert(C_SocialUI.IsSystemEnabled() == false)
+        assert(socialStatusUpdates == 2 and socialEnabledOnUpdate == false)
+        "#,
+    )
+    .unwrap();
+}
+
+fn assert_disabled_friends_consumer(env: &WowLuaEnv) {
+    if wow_ui_sim::client_profile::ACTIVE == wow_ui_sim::client_profile::ClientProfile::Retail {
+        assert_retail_disabled_friends_consumer(env);
+    } else {
+        assert_forever_disabled_friends_consumer(env);
+    }
 }
 
 #[test]

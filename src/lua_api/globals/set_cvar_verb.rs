@@ -77,25 +77,12 @@ fn set_cvar(state: &mut LuaState) -> LuaResult<u32> {
         return Ok(1);
     }
     require_cvar_write_access(state, &name)?;
-    let value = value_to_string(state, 2);
-
-    if is_ui_scale_cvar(&name) {
-        if let Some(scale) = requested_ui_parent_scale(state, &name, &value)? {
-            apply_ui_parent_scale(state, scale)?;
-        }
-        dispatch_event_now(state, "DISPLAY_SIZE_CHANGED", &[])?;
-        dispatch_event_now(state, "UI_SCALE_CHANGED", &[])?;
-    }
-
+    let value = prepare_cvar_value(state, &name)?;
     #[cfg(feature = "client-wowforever")]
     let override_change = gamepad_override_change(state, &name, &value)?;
     let accepted = borrow_state_mut(state)?.cvars.set(&name, &value);
     if accepted {
-        crate::c_api::game_mode_display::cvar_set_callback(state, &name)?;
-        crate::c_api::restricted_actions::update_forced_cvar(state, &name)?;
-        let name_arg = create_string(state, &name);
-        let value_arg = create_string(state, &value);
-        dispatch_event_now(state, "CVAR_UPDATE", &[name_arg, value_arg])?;
+        dispatch_cvar_update(state, &name, &value)?;
         #[cfg(feature = "client-wowforever")]
         if let Some((event, old, new)) = override_change {
             dispatch_event_now(state, event, &[Val::Num(old), Val::Num(new)])?;
@@ -103,6 +90,26 @@ fn set_cvar(state: &mut LuaState) -> LuaResult<u32> {
     }
     state.push(Val::Bool(accepted));
     Ok(1)
+}
+
+fn prepare_cvar_value(state: &mut LuaState, name: &str) -> LuaResult<String> {
+    let value = value_to_string(state, 2);
+    if is_ui_scale_cvar(name) {
+        if let Some(scale) = requested_ui_parent_scale(state, name, &value)? {
+            apply_ui_parent_scale(state, scale)?;
+        }
+        dispatch_event_now(state, "DISPLAY_SIZE_CHANGED", &[])?;
+        dispatch_event_now(state, "UI_SCALE_CHANGED", &[])?;
+    }
+    Ok(value)
+}
+
+fn dispatch_cvar_update(state: &mut LuaState, name: &str, value: &str) -> LuaResult<()> {
+    crate::c_api::game_mode_display::cvar_set_callback(state, name)?;
+    crate::c_api::restricted_actions::update_forced_cvar(state, name)?;
+    let name_arg = create_string(state, name);
+    let value_arg = create_string(state, value);
+    dispatch_event_now(state, "CVAR_UPDATE", &[name_arg, value_arg])
 }
 
 #[cfg(feature = "client-wowforever")]
