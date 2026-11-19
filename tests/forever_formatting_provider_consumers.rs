@@ -53,7 +53,13 @@ fn cached_custom_aura_container_merges_supplied_group_options() {
         r#"
         local count = container:GetAuraGroupFrameCount('format-provider')
         assert(count > 0, 'original custom-aura consumer created option-configured frames')
-        assert(count <= 2, 'supplied maxFrameCount overwrites the original unbounded default')
+        local shown = 0
+        for index = 1, count do
+            local isShown = container:GetAuraGroupFrame('format-provider', index):IsShown()
+            if issecretvalue(isShown) then isShown = secretunwrap(isShown) end
+            if isShown then shown = shown + 1 end
+        end
+        assert(shown == 2, 'supplied maxFrameCount overwrites the original unbounded default')
         local frame = container:GetAuraGroupFrame('format-provider', 1)
         assert(frame:GetWidth() == 27 and frame:GetHeight() == 19,
             'original custom-aura consumer applied initializeFrame')
