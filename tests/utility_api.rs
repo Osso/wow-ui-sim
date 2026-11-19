@@ -607,8 +607,19 @@ fn test_can_hearth_and_resurrect_from_area_tracks_player_state() {
 #[test]
 fn test_strlen_alias() {
     let env = env();
+    #[cfg(not(feature = "client-wrath"))]
+    load_cached_compat(&env);
     let len: i32 = env.eval("return strlen('hello')").unwrap();
     assert_eq!(len, 5);
+}
+
+#[cfg(not(feature = "client-wrath"))]
+fn load_cached_compat(env: &WowLuaEnv) {
+    let ui = wow_ui_sim::blizzard_ui_sync::default_cache_addons_path().unwrap();
+    let path = ui.join("Blizzard_SharedXMLBase/Compat.lua");
+    let source = std::fs::read_to_string(&path)
+        .expect(&format!("cached Compat.lua is missing or unreadable: {}", path.display()));
+    env.exec(&source).unwrap();
 }
 
 #[test]
