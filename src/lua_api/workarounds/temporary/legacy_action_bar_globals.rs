@@ -1,8 +1,8 @@
-//! Temporary action-bar fallbacks for Mists and Wrath.
+//! Temporary legacy action-bar defaults for profiles without verified providers.
 //!
-//! Retail and Forever use selected Blizzard providers; these profiles retain the fallbacks.
+//! Retail and Forever use selected Blizzard providers; other profiles retain the defaults.
 
-#[cfg(any(feature = "client-mists", feature = "client-wrath"))]
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 const LEGACY_ACTION_BAR_GLOBALS_LUA: &str = r#"
 if ActionButtonUtil == nil then
   ActionButtonUtil = {}
@@ -138,7 +138,7 @@ __wow_legacy_action_bar_forward("HasExtraActionBar", "HasExtraActionBar")
 __wow_legacy_action_bar_forward("IsPossessBarVisible", "IsPossessBarVisible")
 "#;
 
-#[cfg(any(feature = "client-mists", feature = "client-wrath"))]
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 const ACTION_BUTTON_QUICK_KEYBIND_DEFAULTS_LUA: &str = r#"
 local function __wow_legacy_action_bar_noop()
 end
@@ -165,7 +165,7 @@ end
 
 "#;
 
-#[cfg(any(feature = "client-mists", feature = "client-wrath"))]
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(LEGACY_ACTION_BAR_GLOBALS_LUA)?;
     lua.exec(ACTION_BUTTON_QUICK_KEYBIND_DEFAULTS_LUA)?;
@@ -174,7 +174,7 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     Ok(())
 }
 
-#[cfg(not(any(feature = "client-mists", feature = "client-wrath")))]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub(crate) fn apply_bootstrap(_: &mut rilua::Lua) -> crate::Result<()> {
     Ok(())
 }
