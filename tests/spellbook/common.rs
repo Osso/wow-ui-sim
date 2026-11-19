@@ -14,6 +14,16 @@ pub fn blizzard_ui_dir() -> PathBuf {
     )))
 }
 
+fn debug_edit_mode_system_frame_count(env: &WowLuaEnv) {
+    if std::env::var_os("WOW_SIM_DEBUG_EDIT_MODE_FRAME_COUNT").is_none() {
+        return;
+    }
+    let count: f64 = env
+        .eval("return #EditModeManagerFrame.registeredSystemFrames")
+        .unwrap();
+    eprintln!("EditModeManagerFrame.registeredSystemFrames={count}");
+}
+
 pub fn setup_full_ui() -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("Failed to create Lua environment");
     env.set_screen_size(1024.0, 768.0);
@@ -32,6 +42,7 @@ pub fn setup_full_ui() -> WowLuaEnv {
         }
     }
     crate::common::load_click_binding_bootstrap(&env, &ui);
+    debug_edit_mode_system_frame_count(&env);
     env.apply_post_load_workarounds();
     fire_startup_sequence(&env);
     env
