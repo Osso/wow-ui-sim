@@ -7,6 +7,13 @@
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 #[test]
+fn get_super_tracked_item_name_returns_no_values_without_item() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec("assert(select('#', C_SuperTrack.GetSuperTrackedItemName()) == 0)")
+        .unwrap();
+}
+
+#[test]
 fn super_track_targets_round_trip_and_clear() {
     let env = WowLuaEnv::new().unwrap();
     env.exec(
