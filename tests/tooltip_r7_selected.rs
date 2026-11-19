@@ -296,14 +296,8 @@ fn keystone_hover_fixture(slot: u32, item_id: u32) -> (WowLuaEnv, String) {
     (env, guid)
 }
 
-fn slotted_tooltip_input(item_id: u32, guid: &str) -> SlottedKeystoneTooltipInput {
-    SlottedKeystoneTooltipInput {
-        item_id: Some(item_id),
-        item_guid: Some(guid.to_string()),
-        item_class_id: Some(5),
-        item_subclass_id: Some(1),
-        ..Default::default()
-    }
+fn slotted_tooltip_input(_item_id: u32, _guid: &str) -> SlottedKeystoneTooltipInput {
+    SlottedKeystoneTooltipInput::default()
 }
 
 fn set_slotted_tooltip_input(
@@ -312,7 +306,12 @@ fn set_slotted_tooltip_input(
     input: SlottedKeystoneTooltipInput,
     modifiers: Vec<(u32, u32)>,
 ) {
-    let item_id = input.item_id.expect("selected tooltip input item id");
+    let item_id = env
+        .state()
+        .borrow()
+        .keystone
+        .selected_item_id
+        .expect("selected keystone item id");
     let mut sim = env.state().borrow_mut();
     sim.keystone
         .item_modifiers
@@ -324,11 +323,9 @@ fn set_keystone_context_without_item_identity(
     env: &WowLuaEnv,
     slot: u32,
     item_id: u32,
-    mut input: SlottedKeystoneTooltipInput,
+    input: SlottedKeystoneTooltipInput,
     modifiers: Vec<(u32, u32)>,
 ) {
-    input.item_id = None;
-    input.item_guid = None;
     let mut sim = env.state().borrow_mut();
     let location = KeystoneLocation::Bag(0, slot as i32);
     sim.keystone.item_modifiers.insert(location, (item_id, modifiers));
@@ -1199,14 +1196,21 @@ fn challenges_ui_hover_omits_heading_for_all_zero_affix_ids() {
     assert_keystone_hover_rows(&env, item_id, &guid, &expected);
 }
 
+fn set_keystone_item_class(env: &WowLuaEnv, item_id: u32, class_id: u8, subclass_id: u8) {
+    let mut sim = env.state().borrow_mut();
+    let mut item = sim.item_info(item_id).expect("known keystone item").clone();
+    item.item_class = Some(class_id);
+    item.item_subclass = Some(subclass_id);
+    sim.item_overrides.insert(item_id, item);
+}
+
 #[test]
 fn challenges_ui_hover_skips_rows_for_non_keystone_item_class_or_subclass() {
     let (env, guid) = keystone_hover_fixture(3, 180_653);
     let item_id = 180_653;
     for (class_id, subclass_id) in [(4, 1), (5, 0)] {
+        set_keystone_item_class(&env, item_id, class_id, subclass_id);
         let mut input = slotted_tooltip_input(item_id, &guid);
-        input.item_class_id = Some(class_id);
-        input.item_subclass_id = Some(subclass_id);
         input
             .map_names
             .insert(990, Some("Rejected Map".to_string()));

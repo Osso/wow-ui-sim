@@ -85,14 +85,10 @@ pub struct ItemInteractionTooltipLine {
     pub wrap: bool,
 }
 
-/// UNKNOWN (R88z): native keystone detail records and player-condition results
-/// are not loaded here. The host must supply them; no values are seeded.
+/// INFERRED (R88z.z1 simulator mapping): empty-default lookups not represented
+/// by selected-keystone state or the item model.
 #[derive(Clone, Debug, Default)]
 pub struct SlottedKeystoneTooltipInput {
-    pub item_id: Option<u32>,
-    pub item_guid: Option<String>,
-    pub item_class_id: Option<u32>,
-    pub item_subclass_id: Option<u32>,
     pub associated_player_guid: Option<String>,
     pub active_player_guid: Option<String>,
     pub display_season_id: Option<u32>,
@@ -524,8 +520,8 @@ fn get_slotted_keystone(state: &mut LuaState) -> LuaResult<u32> {
     let Some((item_id, item)) = selected_keystone_item(state, &guid, selected_item_id) else {
         return no_values();
     };
-    let tooltip = tooltip_for_item_context(state, item_id, Some(item));
-    append_selected_keystone_rows(state, tooltip, item_id, item.quality, &guid, input)?;
+    let tooltip = tooltip_for_item_context(state, item_id, Some(&item));
+    append_selected_keystone_rows(state, tooltip, item_id, &item, input)?;
     let guid = create_string(state, &guid);
     table_set(state, tooltip, "guid", guid);
     state.push(tooltip);
@@ -550,26 +546,20 @@ fn append_selected_keystone_rows(
     state: &mut LuaState,
     tooltip: Val,
     item_id: u32,
-    item_quality: u8,
-    guid: &str,
+    item: &ItemInfo,
     input: Option<SlottedKeystoneTooltipInput>,
 ) -> LuaResult<()> {
     let Some(input) = input else {
         return Ok(());
     };
+    if !slotted_keystone_item_matches(item) {
+        return Ok(());
+    }
     let modifiers = selected_keystone_modifiers(state, item_id)?;
     let saved_top = state.top;
     state.push(tooltip);
     // INFERRED (R88z): append after common item rows; only keystone-row order is proved.
-    let result = append_slotted_keystone_rows(
-        state,
-        tooltip,
-        item_id,
-        item_quality,
-        guid,
-        &input,
-        &modifiers,
-    );
+    let result = append_slotted_keystone_rows(state, tooltip, item.quality, &input, &modifiers);
     state.top = saved_top;
     result
 }
@@ -591,9 +581,7 @@ fn selected_keystone_modifiers(state: &LuaState, item_id: u32) -> LuaResult<Vec<
 fn append_slotted_keystone_rows(
     state: &mut LuaState,
     tooltip: Val,
-    item_id: u32,
     item_quality: u8,
-    guid: &str,
     input: &SlottedKeystoneTooltipInput,
     modifiers: &[(u32, u32)],
 ) -> LuaResult<()> {
@@ -613,9 +601,6 @@ fn build_slotted_keystone_plan(
     input: &SlottedKeystoneTooltipInput,
     modifiers: &[(u32, u32)],
 ) -> LuaResult<Option<SlottedKeystoneTooltipPlan>> {
-    if !slotted_keystone_input_matches(input) {
-        return Ok(None);
-    }
     let Some(title) = selected_keystone_title(state, input, modifiers)? else {
         return Ok(None);
     };
@@ -626,9 +611,10 @@ fn build_slotted_keystone_plan(
     build_slotted_keystone_plan_tail(state, title, power_level, input, level, modifiers)
 }
 
-fn slotted_keystone_input_matches(input: &SlottedKeystoneTooltipInput) -> bool {
-    input.item_class_id == Some(KEYSTONE_ITEM_CLASS_ID)
-        && input.item_subclass_id == Some(KEYSTONE_ITEM_SUBCLASS_ID)
+fn slotted_keystone_item_matches(item: &ItemInfo) -> bool {
+    // INFERRED (R88z.z1): ItemInfo.item_class/item_subclass map to native class selectors.
+    item.item_class == Some(KEYSTONE_ITEM_CLASS_ID as u8)
+        && item.item_subclass == Some(KEYSTONE_ITEM_SUBCLASS_ID as u8)
 }
 
 fn selected_keystone_title(
@@ -845,15 +831,17 @@ fn selected_keystone_item(
     state: &LuaState,
     guid: &str,
     selected_item_id: Option<u32>,
-) -> Option<(u32, &'static ItemInfo)> {
+) -> Option<(u32, ItemInfo)> {
     let Some(item_id) = selected_item_id else {
-        return item_for_owned_guid(state, guid);
+        let (item_id, item) = item_for_owned_guid(state, guid)?;
+        return Some((item_id, item.clone()));
     };
     let (_, _, guid_item_id) = crate::c_api::item_spell::parse_item_guid(guid)?;
     if guid_item_id != item_id {
         return None;
     }
-    items::get_item(item_id).map(|item| (item_id, item))
+    let item = borrow_state(state).ok()?.item_info(item_id)?.clone();
+    Some((item_id, item))
 }
 
 fn quest_cache_lookup_for_index(state: &LuaState, quest_index: i32) -> Option<(i32, bool)> {
