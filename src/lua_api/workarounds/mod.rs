@@ -127,12 +127,7 @@ const POST_LOAD_WORKAROUNDS: &[WorkaroundStep] = &[
         label: "patch_game_time_defaults",
         apply: patch_game_time_defaults,
     },
-    // Mists tooltips inherit TooltipBackdropTemplate; older profiles need NineSlice repair.
-    #[cfg(not(any(
-        feature = "client-retail",
-        feature = "client-wowforever",
-        feature = "client-mists"
-    )))]
+    // The repair helper skips profiles whose tooltip templates provide NineSlice.
     WorkaroundStep {
         label: "patch_tooltip_nineslice_surface",
         apply: patch_tooltip_nineslice_surface,
