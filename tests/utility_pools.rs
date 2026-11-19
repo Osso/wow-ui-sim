@@ -97,13 +97,13 @@ fn assert_pool_collection_behavior(env: &WowLuaEnv) {
         local frame = collection:Acquire("")
         assert(frame ~= nil)
         assert(pool:IsActive(frame))
-        assert(collection:IsActive(frame))
+        assert(collection:GetNumActive() == 1)
 
         collection:Release(frame)
 
         TEST_COLLECTION_NEW_RESETS = newResets
         TEST_COLLECTION_RELEASE_RESETS = releaseResets
-        TEST_COLLECTION_ACTIVE = collection:IsActive(frame)
+        TEST_COLLECTION_ACTIVE = pool:IsActive(frame)
         TEST_COLLECTION_RESET = frame.collectionReset
         TEST_COLLECTION_ENUM_EMPTY = collection:EnumerateActive()() == nil
         "#,
