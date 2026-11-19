@@ -29,7 +29,7 @@ const CACHED_POOL_CONSTRUCTORS_PROBE: &str = r#"
     assert(texture and fontString)
 
     local collection = CreateFramePoolCollection()
-    local collectedPool = collection:CreatePool("Frame", UIParent, nil)
+    local collectedPool = collection:CreatePool("Frame", UIParent, "")
     local collected = collectedPool:Acquire()
     assert(collected and collection:IsActive(collected))
     collection:ReleaseAll()
