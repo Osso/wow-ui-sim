@@ -31,9 +31,9 @@ const CACHED_POOL_CONSTRUCTORS_PROBE: &str = r#"
     local collection = CreateFramePoolCollection()
     local collectedPool = collection:CreatePool("Frame", UIParent, "")
     local collected = collectedPool:Acquire()
-    assert(collected and collection:IsActive(collected))
+    assert(collected and collectedPool:IsActive(collected) and collection:GetNumActive() == 1)
     collection:ReleaseAll()
-    assert(not collection:IsActive(collected) and collection:GetNumActive() == 0)
+    assert(not collectedPool:IsActive(collected) and collection:GetNumActive() == 0)
 
     CreateTemplateInfoCache = function()
         return { GetTemplateInfo = function() return nil end }
