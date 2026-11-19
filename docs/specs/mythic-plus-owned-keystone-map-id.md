@@ -24,6 +24,11 @@ declaration and get the same treatment.
       publishes the integer `0`.
 - [ ] With the context absent — no player, or a player that owns no qualifying
       entry — the getter publishes **nothing** (zero results), not `0`.
+- [ ] `GetOwnedKeystoneMapID()` returns nothing without an owned keystone. With
+      one, it maps the owned `challenge_map_id` through the generated
+      `MapChallengeMode` table and returns that row's `MapID`; a missing row
+      returns nothing. This mapping is **INFERRED (best-guess, pending R88bp)**;
+      the table data is **VERIFIED** from MapChallengeMode build 12.1.5.70391.
 - [ ] Publication is every profile with a pinned declaration: Retail, PTR,
       Forever, Mists, Era and Anniversary. Wrath pins no generated documentation.
 
@@ -79,16 +84,28 @@ consumer and asserts the wall-of-text state.
 `GetOwnedKeystoneChallengeMapID` has **no** consumer in the pinned Blizzard
 addons; only its declaration exists.
 
-`GetOwnedKeystoneMapID` is unchanged: its publication was not reconstructed.
+`GetOwnedKeystoneMapID` has no pinned Blizzard-addon consumer. Its declaration
+allows no return or one number (`MythicPlusInfoDocumentation.lua:96-103`). The
+simulator maps the owned challenge-mode ID through
+`sim_data::map_challenge_modes::MAPS`. The mapping from an owned key to the
+MapChallengeMode row's `MapID` is **INFERRED (best-guess, pending R88bp)**; the
+table rows are **VERIFIED** from MapChallengeMode build 12.1.5.70391. If the
+context is absent or the row is missing, the simulator returns nothing
+(**INFERRED (simulator mapping)** for the absent-data default).
 
 ## Declarations
 
-`MythicPlusInfoDocumentation.lua`, both functions with
-`MayReturnNothing = true`: Retail and PTR `76-94`, WowForever `76-94`,
-Mists/Era/Anniversary `75-93`.
+`MythicPlusInfoDocumentation.lua`: `GetOwnedKeystoneChallengeMapID` and
+`GetOwnedKeystoneLevel` with `MayReturnNothing = true` at Retail/PTR/Forever
+`76-94` and Mists/Era/Anniversary `75-93`; `GetOwnedKeystoneMapID` with
+`MayReturnNothing = true` and one numeric `mapID` at Retail `96-103` (same
+pinned declaration across the documented profiles).
 
 ## Not proved
 
+- [ ] Whether the client uses this exact MapChallengeMode lookup for
+      `GetOwnedKeystoneMapID` remains unknown pending R88bp; current simulator
+      mapping is an inferred best guess.
 - [ ] The value actually carried by a found field (inferred, not proved).
 - [ ] The publication bridge itself was only partially admitted in the
       reconstruction.
@@ -96,17 +113,17 @@ Mists/Era/Anniversary `75-93`.
 
 ## Implementation inventory
 
-- `src/c_api/c_mythic_plus.rs` —
-  `get_owned_keystone_level`, `get_owned_keystone_challenge_map_id`.
+- `src/c_api/c_mythic_plus.rs` — `get_owned_keystone_level`,
+  `get_owned_keystone_challenge_map_id`, `get_owned_keystone_map_id`.
 - `src/lua_api/state_types/mythic_plus_scenario.rs` — `OwnedKeystone`,
   `MythicPlusState::owned_keystone`.
 - `src/lua_api/state.rs` — re-exports `OwnedKeystone` for tests and callers.
 
 ## Tests asserting this spec
 
-`tests/c_mythic_plus_probes.rs`: absent context publishes nothing for both
-getters, present context with a zero field publishes `0`, and a supplied context
-publishes its level and map ID.
+`tests/c_mythic_plus_probes.rs`: existing level/challenge-map getter cases, plus
+`GetOwnedKeystoneMapID` with no key (nothing), challenge ID 499 (map ID 2649),
+and an unmapped challenge ID (nothing).
 
 `tests/blizzard_challenges_ui_loads.rs`:
 `challenges_weekly_chest_reads_the_owned_keystone_context` runs the original
