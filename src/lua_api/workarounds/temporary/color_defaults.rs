@@ -249,6 +249,10 @@ mod tests {
                 if color:GenerateHexColor() ~= "ff3f7fbf" then return "hex" end
                 if color:GenerateHexColorNoAlpha() ~= "4080BF" then return "hex_no_alpha" end
                 if color:WrapTextInColorCode("Ready") ~= "|cff3f7fbfReady|r" then return "color_wrap" end
+                local defaultColor = CreateColor()
+                local defaultR, defaultG, defaultB, defaultA = defaultColor:GetRGBA()
+                if defaultR ~= nil or defaultG ~= nil or defaultB ~= nil then return "rgb_defaults" end
+                if defaultA ~= 1 then return "alpha_default" end
                 return "ok"
                 "#,
             )
