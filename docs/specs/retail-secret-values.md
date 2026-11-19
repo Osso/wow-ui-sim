@@ -34,7 +34,7 @@ Retail 12.1+ exposes variadic `secretwrap`/`secretunwrap` to unchanged Blizzard 
 
 ## Known gaps
 
-- [ ] **Residual (verified simulator source path; mismatch with R88ae.4 inferred):** Retail `CallMethod` can pass tainted strings to `__sim_mark_secret_value`, which records strings by identity; the legacy registry can then make those strings secret without a native per-value marker. This predates the CreateSecureMap correction, is out of scope here, and has a separate task.
+- [ ] **Historical Retail configuration (UNKNOWN):** without `retail-12-0-5`, `unit_misc::identity_output` still marks party-name strings through the registry, but the Retail secret-value lookup no longer reads that registry. Party-name secrecy is therefore unmodelled in that configuration; tracked as lt-49cd. This is a simulator-source observation, not native-behavior proof.
 - [ ] Native global secret-marking disable state is not modeled; this simulator returns secret wrappers for all `secretwrap` calls.
 - [x] R12 regressions, manifest validation, and requested profile gates pass; five Forever duration-filter failures also fail on master `75038d409`.
 
