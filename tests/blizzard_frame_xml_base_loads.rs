@@ -25,6 +25,20 @@ fn assert_standard_highlight_color(env: &WowLuaEnv) {
     assert_eq!(green, 0.93);
 }
 
+fn assert_impossible_quest_color(env: &WowLuaEnv) {
+    let impossible_color: (f64, f64, f64) = env
+        .eval("local c = QuestDifficultyColors['impossible']; return c.r, c.g, c.b")
+        .expect("Impossible color probe should succeed");
+    let red = (impossible_color.0 - 1.00).abs() < 1e-6;
+    let green_low = (impossible_color.1 - 0.10).abs() < 1e-6;
+    let blue_low = (impossible_color.2 - 0.10).abs() < 1e-6;
+    assert!(
+        red && green_low && blue_low,
+        "QuestDifficultyColors.impossible should be {{r=1.00, g=0.10, b=0.10}}; got {:?}",
+        impossible_color
+    );
+}
+
 fn load_full_game_ui() -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("Failed to create Lua environment");
     env.set_screen_size(1024.0, 768.0);
@@ -413,22 +427,7 @@ fn blizzard_frame_xml_base_publishes_quest_difficulty_color_table(env: &WowLuaEn
          {{r,g,b,font}} entries. Every quest-log title color binding reads from these"
     );
 
-    let impossible_color: (f64, f64, f64) = env
-        .eval(
-            "local c = QuestDifficultyColors['impossible']; \
-             return c.r, c.g, c.b",
-        )
-        .expect("Impossible color probe should succeed");
-    let red = (impossible_color.0 - 1.00).abs() < 1e-6;
-    let green_low = (impossible_color.1 - 0.10).abs() < 1e-6;
-    let blue_low = (impossible_color.2 - 0.10).abs() < 1e-6;
-    assert!(
-        red && green_low && blue_low,
-        "QuestDifficultyColors.impossible == {{r=1.00, g=0.10, b=0.10}} (Constants.lua:211) — \
-         got {:?}",
-        impossible_color
-    );
-
+    assert_impossible_quest_color(env);
     assert_standard_highlight_color(env);
 }
 }

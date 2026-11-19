@@ -1,6 +1,5 @@
 #[cfg(feature = "client-wowforever")]
-#[test]
-fn forever_cached_quest_difficulty_provider_drives_original_consumer() {
+fn read_forever_cached_quest_colors() -> (bool, (f64, bool, bool, f64)) {
     use crate::common::blizzard_addon_harness::{
         blizzard_ui_dir, build_blizzard_addon_closure_env,
     };
@@ -10,16 +9,14 @@ fn forever_cached_quest_difficulty_provider_drives_original_consumer() {
         &["Blizzard_FrameXMLBase", "Blizzard_FrameXMLUtil"],
         &[],
     );
-    let colors_at = loaded
+    let provider_at = loaded
         .iter()
-        .position(|name| name == "Blizzard_FrameXMLBase")
-        .expect("cached constants provider should load");
+        .position(|name| name == "Blizzard_FrameXMLBase");
     let consumer_at = loaded
         .iter()
-        .position(|name| name == "Blizzard_FrameXMLUtil")
-        .expect("cached difficulty consumer should load");
-    assert!(colors_at < consumer_at);
-
+        .position(|name| name == "Blizzard_FrameXMLUtil");
+    let ordered = provider_at.expect("cached constants provider should load")
+        < consumer_at.expect("cached difficulty consumer should load");
     let observed: (f64, bool, bool, f64) = env
         .eval(
             r#"
@@ -32,5 +29,13 @@ fn forever_cached_quest_difficulty_provider_drives_original_consumer() {
             "#,
         )
         .expect("cached difficulty consumer should return source colors");
+    (ordered, observed)
+}
+
+#[cfg(feature = "client-wowforever")]
+#[test]
+fn forever_cached_quest_difficulty_provider_drives_original_consumer() {
+    let (provider_precedes_consumer, observed) = read_forever_cached_quest_colors();
+    assert!(provider_precedes_consumer);
     assert_eq!(observed, (0.10, true, true, 0.93));
 }
