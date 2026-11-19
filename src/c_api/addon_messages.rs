@@ -20,23 +20,23 @@ use rilua::{LuaResult, Val};
 const SUCCESS: u32 = 0;
 const INVALID_PREFIX: u32 = 1;
 const INVALID_MESSAGE: u32 = 2;
-#[cfg(feature = "client-wowforever")]
+#[cfg(any(feature = "client-wowforever", feature = "retail-12-0-0"))]
 const INVALID_CHAT_TYPE: u32 = 4;
-#[cfg(feature = "client-wowforever")]
+#[cfg(any(feature = "client-wowforever", feature = "retail-12-0-0"))]
 const NOT_IN_GROUP: u32 = 5;
-#[cfg(feature = "client-wowforever")]
+#[cfg(any(feature = "client-wowforever", feature = "retail-12-0-0"))]
 const TARGET_REQUIRED: u32 = 6;
 const GENERAL_ERROR: u32 = 9;
-#[cfg(feature = "client-wowforever")]
+#[cfg(any(feature = "client-wowforever", feature = "retail-12-0-0"))]
 const NOT_IN_GUILD: u32 = 10;
 #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
 const TARGET_OFFLINE: u32 = 12;
 const PREFIX_BYTE_LIMIT: usize = 16;
-#[cfg(feature = "client-wowforever")]
+#[cfg(any(feature = "client-wowforever", feature = "retail-12-0-0"))]
 const CHAT_BYTE_LIMIT: usize = 255;
 #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
 const BNET_BYTE_LIMIT: usize = 4078;
-#[cfg(feature = "client-wowforever")]
+#[cfg(any(feature = "client-wowforever", feature = "retail-12-0-0"))]
 const RAID_ROSTER_MINIMUM: usize = 6;
 
 #[cfg(feature = "client-wowforever")]
@@ -145,6 +145,12 @@ pub(super) fn send_game_data(state: &mut LuaState) -> LuaResult<u32> {
     push_result(state, result)
 }
 
+#[cfg(feature = "retail-12-0-0")]
+pub(super) fn register_retail_chat(state: &mut LuaState) -> LuaResult<()> {
+    let table = ensure_namespace(state, "C_ChatInfo")?;
+    table_set_rust_fn_static(state, table, "SendAddonMessage", send_retail_addon_message)
+}
+
 #[cfg(feature = "client-wowforever")]
 fn send_addon_message(state: &mut LuaState) -> LuaResult<u32> {
     send_chat(state, "addon")
@@ -216,7 +222,56 @@ fn validate_payload(prefix: &str, message: &str, limit: usize) -> u32 {
     }
 }
 
-#[cfg(feature = "client-wowforever")]
+#[cfg(feature = "retail-12-0-0")]
+fn send_retail_addon_message(state: &mut LuaState) -> LuaResult<u32> {
+    const FUNCTION: &str = "C_ChatInfo.SendAddonMessage";
+    const USAGE: &str = "Usage: local result = C_ChatInfo.SendAddonMessage(params)";
+    let prefix = read_retail_string(state, 1, FUNCTION, USAGE)?;
+    let message = read_retail_string(state, 2, FUNCTION, USAGE)?;
+    let channel = read_retail_optional_string(state, 3, "PARTY", FUNCTION, USAGE)?;
+    let target = read_retail_optional_string(state, 4, "", FUNCTION, USAGE)?;
+    let result = {
+        let sim = borrow_state(state)?;
+        validate_chat(&sim, &prefix, &message, &channel, &target)
+    };
+    if result == SUCCESS {
+        append_record(state, "addon", prefix, message, channel, target)?;
+    }
+    push_result(state, result)
+}
+
+#[cfg(feature = "retail-12-0-0")]
+fn read_retail_string(
+    state: &LuaState,
+    index: i32,
+    function: &str,
+    usage: &str,
+) -> LuaResult<String> {
+    let value = stack_val(state, index);
+    if rilua::table_security::is_secret_value(state, value) {
+        let reason = format!("{usage}. Secret values are not allowed for this argument.");
+        return Err(super::helpers::bad_argument(index, function, &reason));
+    }
+    let bytes = super::helpers::read_untainted_string_argument(state, index, function, usage)?;
+    String::from_utf8(bytes).map_err(|_| super::helpers::bad_argument(index, function, usage))
+}
+
+#[cfg(feature = "retail-12-0-0")]
+fn read_retail_optional_string(
+    state: &LuaState,
+    index: i32,
+    default: &str,
+    function: &str,
+    usage: &str,
+) -> LuaResult<String> {
+    if matches!(stack_val(state, index), Val::Nil) {
+        Ok(default.to_owned())
+    } else {
+        read_retail_string(state, index, function, usage)
+    }
+}
+
+#[cfg(any(feature = "client-wowforever", feature = "retail-12-0-0"))]
 fn validate_chat(sim: &SimState, prefix: &str, message: &str, channel: &str, target: &str) -> u32 {
     let result = validate_payload(prefix, message, CHAT_BYTE_LIMIT);
     if result != SUCCESS {

@@ -117,6 +117,8 @@ fn register_interaction_combat(state: &mut LuaState) -> LuaResult<()> {
     register_retirement_successors(state)?;
     #[cfg(feature = "client-wowforever")]
     super::addon_messages::register_chat(state)?;
+    #[cfg(feature = "retail-12-0-0")]
+    super::addon_messages::register_retail_chat(state)?;
     #[cfg(feature = "client-wowforever")]
     super::c_combat_log::register_publication(state)?;
     #[cfg(feature = "retail-12-0-0")]
