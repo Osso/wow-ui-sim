@@ -8,7 +8,7 @@ fn retail_chat_info_send_addon_message_supports_dandersframes_call_shape() {
     env.state().borrow_mut().party_group_active = true;
     let result: String = env
         .eval(
-            r#"
+            r##"
             assert(type(C_ChatInfo.SendAddonMessage) == "function")
             assert(select("#", C_ChatInfo.SendAddonMessage("DANDERSFRAMES", "H", "PARTY")) == 1)
             assert(C_ChatInfo.SendAddonMessage("DANDERSFRAMES", "H", "PARTY") == Enum.SendAddonMessageResult.Success)
@@ -16,7 +16,7 @@ fn retail_chat_info_send_addon_message_supports_dandersframes_call_shape() {
             assert(not pcall(C_ChatInfo.SendAddonMessage, "DANDERSFRAMES", "H", true))
             assert(not pcall(C_ChatInfo.SendAddonMessage, "DANDERSFRAMES"))
             return "ok"
-            "#,
+            "##,
         )
         .unwrap();
     assert_eq!(result, "ok");
