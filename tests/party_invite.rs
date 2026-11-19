@@ -10,7 +10,7 @@ fn c_party_info_invite_unit_keeps_invitation_server_mediated() {
         sim.party_group_active = true;
         sim.party_is_raid = Some(false);
         sim.party_members.len()
-    }
+    };
     env.exec(
         r##"
         local observedEvents = {}
