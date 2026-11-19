@@ -343,6 +343,30 @@ prefork_full_ui_case! {
 }
 
 prefork_full_ui_case! {
+    fn perks_model_scene_control_button_uses_original_on_load_behavior(env: &WowLuaEnv) {
+        load_perks_program_after_fork(env);
+
+        let sets_icon_atlas: bool = env
+            .eval(
+                r#"
+                local atlas
+                local button = {
+                    iconAtlas = "perks-clock",
+                    Icon = { SetAtlas = function(_, value) atlas = value end },
+                }
+                PerksModelSceneControlButtonMixin.OnLoad(button)
+                return atlas == "perks-clock"
+                "#,
+            )
+            .expect("original Perks mixin OnLoad should run");
+        assert!(
+            sets_icon_atlas,
+            "the cached Perks provider's OnLoad should set Icon to iconAtlas"
+        );
+    }
+}
+
+prefork_full_ui_case! {
     fn blizzard_perks_program_is_addon_loaded_after_explicit_load(env: &WowLuaEnv) {
     load_perks_program_after_fork(env);
 

@@ -114,10 +114,10 @@ pub struct AddonContext<'a> {
    - Do not substitute same-named files from a repository-local addon directory
    - Load `.lua` via `load_lua_file()`
    - Load `.xml` via `load_xml_file()`
-   - Apply C++ mixin stubs after each `.lua` file
+   - Apply mixin workarounds after each `.lua` file
 5. Return accumulated results and warnings
 
-**C++ Mixin Stubs** (lines 126-152): After each `.lua` file, injects empty stubs for C++-only mixins (`ModelSceneControlButtonMixin.OnLoad`, etc.) and guards `PetActionBarMixin.Update`.
+**Mixin workarounds**: After each `.lua` file, installs the inferred native `ModelSceneControlButtonMixin.OnLoad` no-op only when absent and guards `PetActionBarMixin.Update` when its action-button list is empty. `PerksModelSceneControlButtonMixin.OnLoad` comes from `Blizzard_PerksProgramElements.lua` before its XML consumer loads.
 
 ---
 

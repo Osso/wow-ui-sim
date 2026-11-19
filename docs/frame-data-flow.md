@@ -203,18 +203,11 @@ Source: `src/loader/xml_frame.rs:13-71`
 
 ## Known Patterns and Pitfalls
 
-### C++ Engine Mixin Stubs
+### Mixin Workarounds
 
-Some Lua mixins (`ModelSceneControlButtonMixin = {}`) are intentionally empty tables where the C++ engine provides methods like OnLoad. The simulator patches these after each .lua file load:
+`ModelSceneControlButtonMixin` has no Lua `OnLoad` definition, but its derived mixins call that method. The simulator installs an inferred no-op after each loaded Lua file when the method is absent. In contrast, `PerksModelSceneControlButtonMixin.OnLoad` is defined by the cached `Blizzard_PerksProgramElements.lua` provider before its XML consumer. The same post-file workaround also guards `PetActionBarMixin.Update` when no action buttons exist.
 
-```rust
-fn apply_cpp_mixin_stubs(env: &WowLuaEnv) {
-    // ModelSceneControlButtonMixin.OnLoad = function() end
-    // PerksModelSceneControlButtonMixin.OnLoad = function() end
-}
-```
-
-Source: `src/loader/addon.rs:126-144`
+Source: `src/lua_api/workarounds/temporary/cpp_mixin_stubs.rs`
 
 ### EditModeSystemMixin "Base" Aliases
 
