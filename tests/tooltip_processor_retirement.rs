@@ -1,3 +1,5 @@
+//! PRESERVATION: The original handler wins after a full UI load. Forever has
+//! the GameTooltip callback consumer; Mists only checks that the handler loads.
 #![cfg(any(feature = "client-wowforever", feature = "client-mists"))]
 
 #[path = "tooltip_full_env_helpers.rs"]
