@@ -293,13 +293,6 @@ fn timer_handle_cancel(state: &mut LuaState) -> LuaResult<u32> {
 
 // ── Shared timer helpers ─────────────────────────────────────────────────────
 
-/// `C_Timer.NewTimerID()` — hand out a fresh opaque timer id.
-fn timer_new_timer_id(state: &mut LuaState) -> LuaResult<u32> {
-    let id = next_timer_id(state)?;
-    state.push(Val::Num(id as f64));
-    Ok(1)
-}
-
 /// Parse and validate the seconds argument (stack index 1) for `NewTicker`/`NewTimer`.
 fn parse_validated_seconds(state: &LuaState, fn_name: &str) -> LuaResult<f64> {
     match stack_val(state, 1) {
@@ -440,13 +433,6 @@ fn register_c_timer(lua: &mut rilua::Lua) -> LuaResult<()> {
 
 fn register_c_timer_functions(state: &mut LuaState, retail: bool) -> LuaResult<()> {
     register_c_timer_member(state, retail, "After", timer_after)?;
-    // UNKNOWN: NewTimerID has no verified registration flags. Evidence: pr46-49-decomp-answers.md, sections R88n.9.
-    crate::c_api::register_unknown_namespace_function(
-        state,
-        "C_Timer",
-        "NewTimerID",
-        timer_new_timer_id,
-    )?;
     register_c_timer_member(state, retail, "NewTicker", timer_new_ticker)?;
     register_c_timer_member(state, retail, "NewTimer", timer_new_timer)
 }
