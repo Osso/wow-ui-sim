@@ -23,6 +23,6 @@ fn retail_chat_info_send_addon_message_supports_dandersframes_call_shape() {
     let records = env.state().borrow();
     assert_eq!(records.message_log.len(), 3);
     assert_eq!(records.message_log[0].channel, "PARTY");
-    assert_eq!(records.message_log[1].prefix, "123");
-    assert_eq!(records.message_log[1].message, "456");
+    assert_eq!(records.message_log[2].prefix, "123");
+    assert_eq!(records.message_log[2].message, "456");
 }
