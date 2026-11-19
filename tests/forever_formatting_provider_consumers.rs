@@ -5,7 +5,12 @@ use wow_ui_sim::lua_api::{WowLuaEnv, state::QuestRewardCurrency};
 
 #[test]
 fn cached_custom_aura_container_merges_supplied_group_options() {
-    let env = crate::common::aura_container_harness::load_env();
+    let ui = wow_ui_sim::blizzard_ui_sync::default_cache_addons_path().unwrap();
+    let (env, _) = crate::common::blizzard_addon_harness::build_blizzard_addon_closure_env(
+        &ui,
+        &["Blizzard_AuraContainer"],
+        &[],
+    );
     env.exec(
         r#"
         local container = CreateFrame('ManagedAuraContainer', nil, UIParent, 'CustomAuraContainerTemplate')
@@ -64,11 +69,8 @@ fn loaded_adventure_map_displays_currency_with_original_color_provider() {
 }
 
 fn adventure_map_env() -> WowLuaEnv {
-    let env = crate::common::blizzard_addon_harness::with_blizzard_addon_smoke_shape(
-        &[],
-        &[],
-        |env, _| env.clone(),
-    );
+    let ui = wow_ui_sim::blizzard_ui_sync::default_cache_addons_path().unwrap();
+    let env = crate::common::blizzard_addon_harness::new_blizzard_addon_env(&ui);
     env.state().borrow_mut().selected_quest_log_id = Some(80000);
     env.state()
         .borrow_mut()
