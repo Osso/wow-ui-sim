@@ -14,6 +14,17 @@ fn get_super_tracked_item_name_returns_no_values_without_item() {
 }
 
 #[test]
+fn super_tracked_item_name_projects_supplied_text() {
+    let env = WowLuaEnv::new().unwrap();
+    env.state().borrow_mut().super_track.item_name =
+        Some(("Objective pin".into(), "Follow the path".into()));
+    let actual: (String, String) = env
+        .eval("return C_SuperTrack.GetSuperTrackedItemName()")
+        .unwrap();
+    assert_eq!(actual, ("Objective pin".into(), "Follow the path".into()));
+}
+
+#[test]
 fn super_track_targets_round_trip_and_clear() {
     let env = WowLuaEnv::new().unwrap();
     env.exec(
