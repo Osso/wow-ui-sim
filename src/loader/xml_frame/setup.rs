@@ -36,35 +36,29 @@ pub(super) fn setup_frame(
     env: &LoaderEnv<'_>,
     timing: &mut LoadTiming,
     setup: SetupFrame<'_>,
-) -> Result<(), LoadError> {
+) -> Result<u64, LoadError> {
     let setup_start = Instant::now();
     let exec_start = Instant::now();
-    if let Err(error) = exec_create_frame_code(env, &setup) {
-        return env.with_state(|state| {
-            if let LoadError::Lua(message) = &error {
-                crate::lua_api::script_helpers::call_error_handler_state(state, message);
-            }
-            Err(error)
-        });
-    }
+    let frame_id = match exec_create_frame_code(env, &setup) {
+        Ok(frame_id) => frame_id,
+        Err(error) => {
+            return env.with_state(|state| {
+                if let LoadError::Lua(message) = &error {
+                    crate::lua_api::script_helpers::call_error_handler_state(state, message);
+                }
+                Err(error)
+            });
+        }
+    };
     timing.frame_exec_lua_time += exec_start.elapsed();
     let props_start = Instant::now();
-    let frame_id = created_frame_id(env, setup.name)?;
     ensure_parent_refs_registered(env, &setup, frame_id)?;
     apply_xml_properties_direct(env, frame_id, setup.frame, setup.inherits, setup.parent)?;
     apply_intrinsic_property(env, setup.intrinsic_base, frame_id);
     timing.frame_apply_props_time += props_start.elapsed();
     timing.xml_frame_setup_time += setup_start.elapsed();
     timing.frame_count += 1;
-    Ok(())
-}
-
-pub(super) fn created_frame_id(env: &LoaderEnv<'_>, name: &str) -> Result<u64, LoadError> {
-    env.state()
-        .borrow()
-        .widgets
-        .get_id_by_name(name)
-        .ok_or_else(|| LoadError::Lua(format!("Failed to locate created frame {name}")))
+    Ok(frame_id)
 }
 
 fn ensure_parent_refs_registered(
@@ -128,7 +122,7 @@ fn parent_array_contains_child(
 }
 
 /// Scope creation flags to the XML-owned instance, not its callbacks.
-fn exec_create_frame_code(env: &LoaderEnv<'_>, setup: &SetupFrame<'_>) -> Result<(), LoadError> {
+fn exec_create_frame_code(env: &LoaderEnv<'_>, setup: &SetupFrame<'_>) -> Result<u64, LoadError> {
     let fast = can_fast_create_frame(setup);
     let previous = {
         let mut state = env.state().borrow_mut();
@@ -145,8 +139,7 @@ fn exec_create_frame_code(env: &LoaderEnv<'_>, setup: &SetupFrame<'_>) -> Result
     let exec_result = if fast {
         fast_create_frame(env, setup)
     } else {
-        env.exec(setup.lua_code)
-            .map_err(|e| LoadError::Lua(format!("Failed to create frame {}: {}", setup.name, e)))
+        execute_frame_creation_lua(env, setup)
     };
     {
         let mut state = env.state().borrow_mut();
@@ -226,7 +219,33 @@ fn fast_create_script_miss_body(
         .and_then(crate::lua_api::globals::create_frame::first_fast_install_miss)
 }
 
-fn fast_create_frame(env: &LoaderEnv<'_>, setup: &SetupFrame<'_>) -> Result<(), LoadError> {
+fn execute_frame_creation_lua(
+    env: &LoaderEnv<'_>,
+    setup: &SetupFrame<'_>,
+) -> Result<u64, LoadError> {
+    let mut source = setup.lua_code.to_string();
+    source.push_str("\nreturn frame");
+    let results = env.exec_with_result(&source).map_err(|error| {
+        LoadError::Lua(format!("Failed to create frame {}: {error}", setup.name))
+    })?;
+    let Some(frame) = results.into_iter().next() else {
+        return Err(LoadError::Lua(format!(
+            "CreateFrame returned no frame for XML frame {}",
+            setup.name
+        )));
+    };
+    env.with_state(|state| {
+        crate::lua_api::methods::extract_frame_id(state, frame).ok_or_else(|| {
+            crate::Error::Other(format!(
+                "CreateFrame returned no frame identity for {}",
+                setup.name
+            ))
+        })
+    })
+    .map_err(|error| LoadError::Lua(error.to_string()))
+}
+
+fn fast_create_frame(env: &LoaderEnv<'_>, setup: &SetupFrame<'_>) -> Result<u64, LoadError> {
     env.with_state(|state| {
         let widget_type = fast_create_widget_type(setup.widget_type)?;
         let parent_id = fast_create_parent_id(state, setup.parent)?;
@@ -237,7 +256,7 @@ fn fast_create_frame(env: &LoaderEnv<'_>, setup: &SetupFrame<'_>) -> Result<(), 
         attach_fast_frame_to_parent(state, setup, parent_id, frame_id)?;
         apply_fast_frame_mixins_and_scripts(state, setup, frame_id)?;
 
-        Ok::<(), crate::Error>(())
+        Ok::<u64, crate::Error>(frame_id)
     })
     .map_err(|error| LoadError::Lua(format!("Failed to create frame {}: {}", setup.name, error)))
 }

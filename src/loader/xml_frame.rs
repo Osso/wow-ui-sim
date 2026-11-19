@@ -11,7 +11,7 @@ use crate::loader::xml_frame_codegen::build_frame_lua_code;
 
 use finalize::finalize_frame;
 use preparation::{PreparedFrameCreation, prepare_frame_creation, register_virtual_or_intrinsic};
-use setup::{SetupFrame, created_frame_id, setup_frame};
+use setup::{SetupFrame, setup_frame};
 
 #[cfg(test)]
 pub(crate) use finalize::frame_element_to_type;
@@ -66,8 +66,8 @@ pub fn create_frame_from_xml(
     ) else {
         return Ok(None);
     };
-    build_and_setup_frame(env, timing, frame, widget_type, &prepared, intrinsic_base)?;
-    let frame_id = created_frame_id(env, &prepared.name)?;
+    let frame_id =
+        build_and_setup_frame(env, timing, frame, widget_type, &prepared, intrinsic_base)?;
     finalize_frame(
         env,
         frame,
@@ -96,7 +96,7 @@ fn build_and_setup_frame(
     widget_type: &str,
     prepared: &PreparedFrameCreation,
     intrinsic_base: Option<&str>,
-) -> Result<(), LoadError> {
+) -> Result<u64, LoadError> {
     let build_start = Instant::now();
     let lua_code = build_prepared_frame_lua(env, frame, widget_type, prepared);
     timing.frame_code_build_time += build_start.elapsed();
