@@ -49,9 +49,9 @@ fn item_usability_checks_ownership_eligibility_and_spell_power() {
 
 #[test]
 fn request_load_item_data_is_noop_without_request_model() {
-    let ui = crate::common::blizzard_addon_closure::blizzard_ui_dir();
-    let env = crate::common::blizzard_addon_closure::new_blizzard_addon_env(&ui);
-    let loaded = crate::common::blizzard_addon_closure::load_blizzard_addon_closure_into_env(
+    let ui = crate::common::blizzard_addon_harness::blizzard_ui_dir();
+    let env = crate::common::blizzard_addon_harness::new_blizzard_addon_env(&ui);
+    let loaded = crate::common::blizzard_addon_harness::load_blizzard_addon_closure_into_env(
         &env,
         &ui,
         &["Blizzard_ObjectAPI"],
