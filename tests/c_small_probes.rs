@@ -1,4 +1,4 @@
-//! Tests for C_Timer.NewTimerID, C_System.GetFrameStack, and
+//! Tests for C_Timer profile compatibility, C_System.GetFrameStack, and
 //! C_AddOnProfiler.CheckForPerformanceMessage.
 
 use wow_ui_sim::lua_api::state::AddonRuntimeMetrics;
@@ -8,30 +8,27 @@ fn env() -> WowLuaEnv {
     WowLuaEnv::new().expect("Failed to create Lua environment")
 }
 
-// ── C_Timer.NewTimerID ────────────────────────────────────────────────────────
+// ── C_Timer.NewTimerID profile compatibility ──────────────────────────────────
 
+#[cfg(feature = "client-retail")]
 #[test]
-fn new_timer_id_returns_number() {
+fn retail_does_not_publish_new_timer_id() {
     let env = env();
-    let ty: String = env.eval("return type(C_Timer.NewTimerID())").unwrap();
-    assert_eq!(ty, "number");
+    let absent: bool = env.eval("return C_Timer.NewTimerID == nil").unwrap();
+    assert!(absent, "Retail has no native C_Timer.NewTimerID entry");
 }
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
-fn new_timer_id_returns_monotonically_increasing_ids() {
+fn non_retail_preserves_new_timer_id() {
     let env = env();
-    let (id1, id2, id3): (f64, f64, f64) = env
-        .eval(
-            r#"
-            local a = C_Timer.NewTimerID()
-            local b = C_Timer.NewTimerID()
-            local c = C_Timer.NewTimerID()
-            return a, b, c
-            "#,
-        )
+    let present: bool = env
+        .eval("return type(C_Timer.NewTimerID) == 'function'")
         .unwrap();
-    assert!(id1 < id2, "id1={id1} should be less than id2={id2}");
-    assert!(id2 < id3, "id2={id2} should be less than id3={id3}");
+    assert!(
+        present,
+        "non-Retail profiles retain NewTimerID as preservation"
+    );
 }
 
 // ── C_System.GetFrameStack ────────────────────────────────────────────────────

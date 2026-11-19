@@ -421,6 +421,21 @@ mod tests {
         }
         "#;
     #[cfg(feature = "client-retail")]
+    const C_TIMER_NATIVE_PUBLICATION_PROBE: &str = r#"
+        local public = rawget(_G, "C_Timer")
+        local secure = rawget(__secureenv, "C_Timer")
+        local names = { "After", "NewTicker", "NewTimer" }
+        for _, name in ipairs(names) do
+            local ordinary = rawget(public, name)
+            local protected = rawget(secure, name)
+            if type(ordinary) ~= "function" or type(protected) ~= "function"
+                or rawequal(ordinary, protected) then
+                return false
+            end
+        end
+        return true
+        "#;
+    #[cfg(feature = "client-retail")]
     const C_TIMER_FLAG3_PROBE: &str = r#"
         local public = rawget(_G, "C_Timer")
         local secure = rawget(__secureenv, "C_Timer")
@@ -566,23 +581,12 @@ mod tests {
 
     #[cfg(feature = "client-retail")]
     #[test]
-    fn retail_unknown_c_timer_new_timer_id_is_published_to_both_namespaces() {
+    fn retail_c_timer_apis_publish_to_ordinary_and_secure_environments() {
         let env = WowLuaEnv::new().expect("lua env");
-        let published_to_both: bool = env
-            .eval(
-                r#"
-                local public = rawget(_G, "C_Timer")
-                local secure = rawget(__secureenv, "C_Timer")
-                if type(public) ~= "table" or type(secure) ~= "table" then
-                    return false
-                end
-                return type(rawget(public, "NewTimerID")) == "function"
-                    and type(rawget(secure, "NewTimerID")) == "function"
-                "#,
-            )
-            .expect("unknown C_Timer namespace probe");
-
-        assert!(published_to_both);
+        let published: bool = env
+            .eval(C_TIMER_NATIVE_PUBLICATION_PROBE)
+            .expect("query native C_Timer publications");
+        assert!(published, "Retail C_Timer APIs must use flag-3 publication");
     }
 
     fn register_namespace_values_without_secure_env(lua: &mut rilua::Lua) {
