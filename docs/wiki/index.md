@@ -4,7 +4,7 @@
 
 ## [2026-11-19] design | Compact Retail name indexes
 
-[Generated data crate boundary](design/generated-data-crates.md#retail-db2-name-indexes) records the 11.31 MB combined compact name indexes, pinned provenance, 29.05 s vs 27.43 s warm compile comparison, and 45 ns repeated lookup result.
+[Generated data crate boundary](design/generated-data-crates.md#retail-db2-name-indexes) records the 11.31 MB combined compact name indexes, pinned provenance, 29.05 s vs 27.43 s warm compile comparison, and 44 ns repeated lookup result.
 
 ## [2026-11-18] correction | Retail SellPrice gates
 

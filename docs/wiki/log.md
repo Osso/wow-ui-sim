@@ -4,7 +4,7 @@ Added [the investigation](../investigations/retail-allthethings-name-lookups.md)
 
 ## [2026-11-19] design | Compact Retail name indexes
 
-Updated [the generated-data design](../design/generated-data-crates.md#retail-db2-name-indexes) with compact binary format, pinned provenance, data sizes, warm compile comparison, and steady lookup timing.
+Updated [the generated-data design](../design/generated-data-crates.md#retail-db2-name-indexes) with compact binary format, pinned provenance, data sizes, warm compile comparison, and 44 ns steady lookup timing.
 
 ## [2026-11-18] implementation | Sliced mask textures
 

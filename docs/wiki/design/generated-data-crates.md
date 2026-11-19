@@ -51,9 +51,9 @@ metadata semantics and reproducible generation options.
 `4fb6237635a` took 27.43 seconds. Both runs reused `sim-data` and
 `sim-data-profile`; they rebuilt only the root and its dynamic library. The first
 binary-index build took 154 Cargo seconds while compiling cold dependents; it is
-not a warm comparison. The binary lookup test measured 25,939 ns for the first
-call in a warmed run and 45 ns/call for calls 2–1000; an earlier colder first
-call measured 954,208 ns.
+not a warm comparison. The binary lookup test measured 34,075 ns for the first
+call and 44 ns/call for calls 2–1000; an earlier first-call sample measured
+954,208 ns.
 
 ## Proof status
 

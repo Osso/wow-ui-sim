@@ -22,7 +22,7 @@
 
 ### Lookup performance
 
-**VERIFIED (slot-3 `sim-data` unit test):** the first lookup measured 25,939 ns in a warmed run; lookups 2–1000 averaged 45 ns each. An earlier first-call sample measured 954,208 ns. The binary index uses binary search, returns a static name slice, and does not decode or allocate the full catalog at startup. Each hit scans and UTF-8-validates only the selected name.
+**VERIFIED (slot-3 exact `sim-data` unit test):** the first lookup measured 34,075 ns; lookups 2–1000 averaged 44 ns each. An earlier first-call sample measured 954,208 ns. The binary index uses binary search, returns a static name slice, and does not decode or allocate the full catalog at startup. Each hit scans and UTF-8-validates only the selected name.
 
 **VERIFIED (slot-3 warm Forever `--no-run` rebuild):** after touching only `src/lib.rs`, the branch took 29.05 Cargo seconds and base `4fb6237635a` took 27.43 seconds. Both runs reused `sim-data` and `sim-data-profile`; only the root crate and dynamic library rebuilt. The 154-second earlier run rebuilt cold dependencies and is not the warm comparison.
 
