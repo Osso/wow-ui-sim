@@ -15,22 +15,13 @@
     "sha256": "5f3cbcdf957152668d5e033c1c4ff79a7b436e2e45b8521270ca7e64cc028629"
   },
   "export": {
+    "csv": "SpellName.csv",
     "rows": 416213,
     "unreadable_records": 101,
-    "full_csv_sha256": "60a20a27fd16cd1611ac255cdf9ff716e04a8e9fb76c1b7fea4f522ef17d34ef",
-    "selected_csv": "SpellNames.csv",
-    "selected_rows": 8,
-    "selected_csv_sha256": "b6265be0e9d122611bc5443f19047f9c4934e1769478f75fd04a0acb3be463f8"
+    "empty_names": 9,
+    "csv_sha256": "60a20a27fd16cd1611ac255cdf9ff716e04a8e9fb76c1b7fea4f522ef17d34ef",
+    "usable_name_rows": 416204
   },
   "unreadable_encrypted_chunks": 18,
-  "target_rows": [
-    {"id": 182108, "name": "Artillery"},
-    {"id": 251095, "name": "Purple Path"},
-    {"id": 251097, "name": "Orange Path"},
-    {"id": 275825, "name": "Heart of Azeroth"},
-    {"id": 321076, "name": "Kyrian"},
-    {"id": 321077, "name": "Night Fae"},
-    {"id": 321078, "name": "Necrolord"},
-    {"id": 321079, "name": "Venthyr"}
-  ]
+  "lookup": "All exported non-empty Name_lang rows; sorted by ID. Empty or unreadable names are omitted, so GetSpellName preserves its no-value result for misses."
 }

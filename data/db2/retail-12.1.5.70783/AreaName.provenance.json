@@ -19,12 +19,9 @@
     "unreadable_records": 0,
     "full_csv_sha256": "63da94212becb722f1914b3777fa2b6e563c5cb540d64e32c138ad4b7f95fc2e",
     "selected_csv": "AreaNames.csv",
-    "selected_rows": 3,
-    "selected_csv_sha256": "d7d8327b03a51c17eb8af616bd8b479cfebd96f806d090a8fc7969bc6b1f2f7e"
+    "selected_rows": 10046,
+    "selected_csv_sha256": "c6b5c754f21f8cff53bed423957c8ddff0866258adeb70aac6ea3b7d6219271b"
   },
-  "target_rows": [
-    {"id": 7288, "area_name": "Smuggler's Den"},
-    {"id": 7290, "area_name": "Hearthfire Tavern"},
-    {"id": 7291, "area_name": "Stoktron Brewery"}
-  ]
+  "lookup": "All non-empty AreaName_lang rows; sorted by ID. Missing IDs remain absent.",
+  "named_rows": 10046
 }

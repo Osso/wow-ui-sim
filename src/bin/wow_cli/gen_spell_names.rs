@@ -1,11 +1,11 @@
-//! Generate the small Retail name-only spell supplement from a pinned DB2 export.
+//! Generate the Retail spell-name lookup from a pinned DB2 export.
 
 use super::csv_util::{escape_str, parse_csv_line, read_csv_records};
 use std::fs::File;
 use std::io::{BufReader, Write};
 use std::path::Path;
 
-const INPUT: &str = "data/db2/retail-12.1.5.70783/SpellNames.csv";
+const INPUT: &str = "data/db2/retail-12.1.5.70783/SpellName.csv";
 const OUTPUT: &str = "crates/sim-data/data/spell_name_overrides_retail.rs";
 
 struct SpellName {
@@ -29,7 +29,7 @@ pub fn run() -> Result<(), Box<dyn std::error::Error>> {
 
 fn load_names(path: &Path) -> Result<Vec<SpellName>, Box<dyn std::error::Error>> {
     let records = read_csv_records(BufReader::new(File::open(path)?))?;
-    let header = records.first().ok_or("SpellNames.csv has no header")?;
+    let header = records.first().ok_or("SpellName.csv has no header")?;
     let columns = find_columns(header)?;
     let mut rows = records
         .iter()
@@ -38,8 +38,9 @@ fn load_names(path: &Path) -> Result<Vec<SpellName>, Box<dyn std::error::Error>>
         .collect::<Result<Vec<_>, _>>()?;
     rows.sort_unstable_by_key(|row| row.id);
     if rows.windows(2).any(|pair| pair[0].id == pair[1].id) {
-        return Err("SpellNames.csv has duplicate IDs".into());
+        return Err("SpellName.csv has duplicate IDs".into());
     }
+    rows.retain(|row| !row.name.is_empty());
     Ok(rows)
 }
 
@@ -49,7 +50,7 @@ fn find_columns(header: &str) -> Result<Columns, String> {
         fields
             .iter()
             .position(|field| field == name)
-            .ok_or_else(|| format!("SpellNames.csv has no {name} column"))
+            .ok_or_else(|| format!("SpellName.csv has no {name} column"))
     };
     Ok(Columns {
         id: find("ID")?,
@@ -61,15 +62,12 @@ fn parse_row(columns: &Columns, record: &str) -> Result<SpellName, String> {
     let fields = parse_csv_line(record);
     let id = fields
         .get(columns.id)
-        .ok_or("SpellNames.csv row has no ID")?
+        .ok_or("SpellName.csv row has no ID")?
         .parse()
-        .map_err(|_| "SpellNames.csv row has an invalid ID")?;
+        .map_err(|_| "SpellName.csv row has an invalid ID")?;
     let name = fields
         .get(columns.name)
-        .ok_or("SpellNames.csv row has no Name_lang")?;
-    if name.is_empty() {
-        return Err(format!("SpellNames.csv has an empty name for ID {id}"));
-    }
+        .ok_or("SpellName.csv row has no Name_lang")?;
     Ok(SpellName {
         id,
         name: name.clone(),
@@ -82,6 +80,7 @@ fn write_generated(output: &mut File, rows: &[SpellName]) -> std::io::Result<()>
         "//! Generated from pinned SpellName DB2 rows; see SpellName.provenance.json."
     )?;
     writeln!(output, "//! VERIFIED (DB2 12.1.5.70783).")?;
+    writeln!(output, "#[rustfmt::skip]")?;
     writeln!(
         output,
         "pub static SPELL_NAME_OVERRIDES_RETAIL: &[(u32, &str)] = &["
@@ -89,5 +88,14 @@ fn write_generated(output: &mut File, rows: &[SpellName]) -> std::io::Result<()>
     for row in rows {
         writeln!(output, "    ({}, \"{}\"),", row.id, escape_str(&row.name))?;
     }
-    writeln!(output, "];\n")
+    writeln!(output, "];")?;
+    writeln!(
+        output,
+        "pub fn get_spell_name(id: u32) -> Option<&'static str> {{"
+    )?;
+    writeln!(output, "    let index = SPELL_NAME_OVERRIDES_RETAIL")?;
+    writeln!(output, "        .binary_search_by_key(&id, |row| row.0)")?;
+    writeln!(output, "        .ok()?;")?;
+    writeln!(output, "    Some(SPELL_NAME_OVERRIDES_RETAIL[index].1)")?;
+    writeln!(output, "}}")
 }

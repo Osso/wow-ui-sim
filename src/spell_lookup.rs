@@ -123,9 +123,7 @@ pub fn get_spell_name(id: u32) -> Option<&'static str> {
     if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail {
         return None;
     }
-    sim_data::spell_name_overrides_retail::SPELL_NAME_OVERRIDES_RETAIL
-        .iter()
-        .find_map(|(spell_id, name)| (*spell_id == id).then_some(*name))
+    sim_data::spell_name_overrides_retail::get_spell_name(id)
 }
 
 #[cfg(test)]
