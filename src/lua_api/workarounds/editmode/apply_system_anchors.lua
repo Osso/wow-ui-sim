@@ -18,22 +18,8 @@
             end
             return runSecureExecuteRange(frames, callback, ...)
         end
-        local runSecureExecuteRange = secureexecuterange
-        secureexecuterange = function(frames, callback, ...)
-            if frames ~= emm.registeredSystemFrames then
-                return runSecureExecuteRange(frames, callback, ...)
-            end
-            local function trace_system_anchor(index, systemFrame, ...)
-                print("system anchor before", index, systemFrame:GetName())
-                local result = callback(index, systemFrame, ...)
-                print("system anchor after", index, systemFrame:GetName())
-                return result
-            end
-            return runSecureExecuteRange(frames, trace_system_anchor, ...)
-        end
-        print("before InitSystemAnchors")
+        print("before InitSystemAnchors", #emm.registeredSystemFrames)
         emm:InitSystemAnchors()
-        secureexecuterange = runSecureExecuteRange
         print("after InitSystemAnchors")
         secureexecuterange = runSecureExecuteRange
 
