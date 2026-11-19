@@ -117,6 +117,20 @@ impl WowLuaEnv {
         install_screen_size_globals(self);
     }
 
+    /// Set the host default frame scale and minimum/maximum render scales.
+    pub fn set_display_scale_inputs(&self, default: f64, min: f64, max: f64) -> Result<()> {
+        if ![default, min, max].into_iter().all(|value| value.is_finite() && value > 0.0)
+            || min > max
+        {
+            return Err(crate::Error::Other(
+                "display scale inputs must be finite, positive, and have ordered render bounds"
+                    .into(),
+            ));
+        }
+        self.state.borrow_mut().display_scale_inputs = (default, min, max);
+        Ok(())
+    }
+
     /// Set an explicit one-to-one layout canvas and physical output size.
     pub fn set_screen_size(&self, width: f32, height: f32) {
         self.apply_screen_dimensions((width, height), (width, height));
