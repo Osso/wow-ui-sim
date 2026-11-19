@@ -79,6 +79,13 @@ end
 "#;
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
+    use crate::client_profile::{ACTIVE, ClientProfile};
+    // VERIFIED: selected ChatFrameBase Mainline Lua owns this update function.
+    // Its registered callback executes after the provider finishes loading.
+    if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever) {
+        return Ok(());
+    }
+    // INFERRED: retain compatibility on profiles without audited provider timing.
     lua.exec(FCF_ONUPDATE_DEFAULT_LUA)?;
     Ok(())
 }
@@ -91,6 +98,7 @@ pub(crate) fn patch(env: &WowLuaEnv) {
 mod tests {
     use super::*;
 
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     #[test]
     fn installs_fcf_onupdate_default() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
