@@ -153,13 +153,14 @@ fn action_macro_tooltip_slot_mutations_clear_old_associations() {
     .unwrap();
 }
 
-#[cfg(all(feature = "profile-retail", not(feature = "retail-12-1-5")))]
-#[test]
-fn action_macro_tooltip_query_absent_on_retail() {
-    let env = WowLuaEnv::new().unwrap();
-    env.exec("assert(C_ActionBar.IsMacroActionWithShowTooltip == nil)")
-        .unwrap();
-    wow_ui_sim::ptr::compat_bootstrap::apply_post_load(&env);
-    env.exec("assert(C_ActionBar.IsMacroActionWithShowTooltip == nil)")
-        .unwrap();
+retail_12_1_0_ptr_bootstrap_fixture! {
+    #[test]
+    fn action_macro_tooltip_query_absent_on_retail() {
+        let env = WowLuaEnv::new().unwrap();
+        env.exec("assert(C_ActionBar.IsMacroActionWithShowTooltip == nil)")
+            .unwrap();
+        wow_ui_sim::ptr::compat_bootstrap::apply_post_load(&env);
+        env.exec("assert(C_ActionBar.IsMacroActionWithShowTooltip == nil)")
+            .unwrap();
+    }
 }
