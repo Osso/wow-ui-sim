@@ -27,9 +27,88 @@ fn debug_edit_mode_system_frame_count(env: &WowLuaEnv) {
         )
         .unwrap();
     eprintln!("EditModeManagerFrame.registeredSystemFrames={counts}");
+    if mode == "divergences" {
+        debug_registry_global_divergences(env);
+    }
     if mode == "wrap" {
         install_debug_edit_mode_anchor_trace(env);
     }
+}
+
+fn debug_registry_global_divergences(env: &WowLuaEnv) {
+    let (duplicates, registry_ids) = collect_duplicate_frame_names(env);
+    let differences = env
+        .loader_env()
+        .with_state(|lua| first_registry_divergences(lua, duplicates, &registry_ids))
+        .expect("Lua state is available");
+    for (name, registry_id, previous_latest_id) in differences {
+        eprintln!(
+            "registry divergence candidate: {name} registry={registry_id} previous-latest={previous_latest_id}"
+        );
+    }
+}
+
+fn collect_duplicate_frame_names(
+    env: &WowLuaEnv,
+) -> (
+    std::collections::BTreeMap<String, Vec<u64>>,
+    std::collections::BTreeMap<String, u64>,
+) {
+    let state = env.state().borrow();
+    let mut duplicates = std::collections::BTreeMap::new();
+    for id in state.widgets.iter_ids() {
+        if let Some(name) = state.widgets.get(id).and_then(|frame| frame.name.as_ref()) {
+            duplicates
+                .entry(name.clone())
+                .or_insert_with(Vec::new)
+                .push(id);
+        }
+    }
+    let registry_ids = state
+        .widgets
+        .named_frames()
+        .map(|(id, name)| (name.clone(), id))
+        .collect();
+    (duplicates, registry_ids)
+}
+
+fn first_registry_divergences(
+    lua: &mut rilua::vm::state::LuaState,
+    duplicates: std::collections::BTreeMap<String, Vec<u64>>,
+    registry_ids: &std::collections::BTreeMap<String, u64>,
+) -> Vec<(String, u64, u64)> {
+    duplicates
+        .into_iter()
+        .filter_map(|(name, mut ids)| {
+            if ids.len() < 2 {
+                return None;
+            }
+            ids.sort_unstable();
+            let global_id = lua_global_frame_id(lua, &name)?;
+            let previous_latest_id = *ids.last()?;
+            let registry_id = *registry_ids.get(&name)?;
+            (registry_id == global_id && registry_id != previous_latest_id).then_some((
+                name,
+                registry_id,
+                previous_latest_id,
+            ))
+        })
+        .take(20)
+        .collect()
+}
+
+fn lua_global_frame_id(lua: &mut rilua::vm::state::LuaState, name: &str) -> Option<u64> {
+    let key = lua.gc.intern_string(name.as_bytes());
+    let global = lua
+        .gc
+        .tables
+        .get(lua.global)?
+        .get_str(key, &lua.gc.string_arena);
+    let rilua::Val::Table(reference) = global else {
+        return None;
+    };
+    let (index, generation) = lua.gc.tables.get(reference)?.backing()?;
+    Some((u64::from(generation) << 32) | u64::from(index))
 }
 
 fn install_debug_edit_mode_anchor_trace(env: &WowLuaEnv) {
