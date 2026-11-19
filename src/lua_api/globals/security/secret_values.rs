@@ -1,8 +1,9 @@
 //! Secret-value tracking and scrub helpers.
 //!
-//! Tracks which Lua values are "secret" via a registry table keyed by string
-//! identity. Used by `issecretvalue` / `canaccess*` fallbacks and by C-side
-//! Rust code that wants to mark unit-name strings as tainted.
+//! Retail and Forever inspect authentic VM secret wrappers only (VERIFIED for
+//! Retail 12.1.5.70688 by R88ae.4: `issecretvalue` reads the value-slot marker;
+//! the wrapper mapping is INFERRED simulator mapping). Other profiles retain the
+//! legacy string-identity registry and closure-source fallbacks (UNKNOWN native).
 
 #[cfg(feature = "retail-12-1-0")]
 use rilua::LuaApiMut;
@@ -153,17 +154,16 @@ pub(super) fn value_is_secret(
 /// every released frame, plus SecureMap/SecureStack assertions on every
 /// reclaim).
 pub(super) fn value_is_secret_shallow(state: &mut LuaState, value: Val) -> bool {
-    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever {
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
         return is_secret_value(state, value);
     }
     if is_secret_value(state, value) || value_has_secret_marker(state, value) {
         return true;
     }
-    // Retail closure-source taint alone is not a secret marker.
-    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
-        return false;
-    }
-
     match value {
         Val::Function(func_ref) => function_is_secret(state, func_ref),
         _ => false,

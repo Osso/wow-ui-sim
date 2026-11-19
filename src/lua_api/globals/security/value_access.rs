@@ -131,7 +131,8 @@ fn set_slot_taint(
 
 /// `issecretvalue(v)` checks the value's secret marker. On Retail, a
 /// `loadstring` function's closure-source taint alone is not secret.
-/// The legacy string-identity registry remains a separate simulator path.
+/// Historical Retail without `retail-12-0-5` still writes identity markers to
+/// the legacy registry, but this lookup does not read them. That behavior is UNKNOWN.
 fn issecretvalue_fallback(state: &mut LuaState) -> LuaResult<u32> {
     let value = first_argument(state);
     let secret = value_is_secret_shallow(state, value);
