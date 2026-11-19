@@ -53,7 +53,7 @@ fn request_load_item_data_is_noop_without_request_model() {
     env.exec(
         r#"
         local location = ItemLocation:CreateFromEquipmentSlot(1)
-        assert(select("#", C_Item.RequestLoadItemData(location)) == 0)
+        assert(select('#', C_Item.RequestLoadItemData(location)) == 0)
         "#,
     )
     .unwrap();
