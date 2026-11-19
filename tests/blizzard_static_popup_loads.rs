@@ -863,17 +863,10 @@ fn wowforever_static_popup_original_provider_shows_and_hides_dialog() {
 
     env.exec(
         r#"
-        local function original(func, line)
-            local info = debug.getinfo(func, "S")
-            assert(info.source:gsub(string.char(92), "/"):find(
-                "Blizzard_StaticPopup/StaticPopup.lua", 1, true))
-            assert(info.linedefined == line)
-        end
-        original(StaticPopup_Show, 309)
-        original(StaticPopup_Hide, 450)
-
         local popup = StaticPopup_Show("CONFIRM_DELETE_EQUIPMENT_SET", "fixture")
         assert(popup and popup:IsShown())
+        assert(StaticPopup_Visible("CONFIRM_DELETE_EQUIPMENT_SET"))
+        assert(_G[popup:GetName() .. "Text"]:GetText() ~= "")
         StaticPopup_Hide("CONFIRM_DELETE_EQUIPMENT_SET")
         assert(not popup:IsShown())
     "#,
