@@ -396,6 +396,7 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
 mod tests {
     use crate::lua_api::WowLuaEnv;
 
+    #[cfg(feature = "client-wrath")]
     const LEGACY_POOL_CONSTRUCTORS_PROBE: &str = r#"
                 if type(CreateFramePool) ~= "function" then return "frame_pool" end
                 if type(CreateTexturePool) ~= "function" then return "texture_pool" end
