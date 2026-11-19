@@ -97,22 +97,22 @@ fn original_friends_subframes_follow_native_social_cvar() {
 fn social_system_enabled_has_one_boolean_and_ignores_arguments() {
     let env = WowLuaEnv::new().unwrap();
     env.exec(
-        r#"
+        r##"
         assert(select("#", C_SocialUI.IsSystemEnabled()) == 1)
         assert(type(C_SocialUI.IsSystemEnabled()) == "boolean")
         assert(C_SocialUI.IsSystemEnabled() == false)
         assert(C_SocialUI.IsSystemEnabled(99) == false)
         assert(C_SocialUI.IsSystemEnabled(nil, {}, "unknown") == false)
-        "#,
+        "##,
     )
     .unwrap();
     assert!(env.set_native_cvar("socialUIEnabledClient", "2").unwrap());
     env.exec(
-        r#"
+        r##"
         assert(C_SocialUI.IsSystemEnabled() == true)
         assert(C_SocialUI.IsSystemEnabled(99) == true)
         assert(C_SocialUI.IsSystemEnabled(nil, {}, "unknown") == true)
-        "#,
+        "##,
     )
     .unwrap();
 }
