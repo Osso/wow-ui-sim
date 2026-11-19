@@ -296,14 +296,8 @@ fn keystone_hover_fixture(slot: u32, item_id: u32) -> (WowLuaEnv, String) {
     (env, guid)
 }
 
-fn slotted_tooltip_input(item_id: u32, guid: &str) -> SlottedKeystoneTooltipInput {
-    SlottedKeystoneTooltipInput {
-        item_id: Some(item_id),
-        item_guid: Some(guid.to_string()),
-        item_class_id: Some(5),
-        item_subclass_id: Some(1),
-        ..Default::default()
-    }
+fn slotted_tooltip_input(_item_id: u32, _guid: &str) -> SlottedKeystoneTooltipInput {
+    SlottedKeystoneTooltipInput::default()
 }
 
 fn set_slotted_tooltip_input(
@@ -312,13 +306,53 @@ fn set_slotted_tooltip_input(
     input: SlottedKeystoneTooltipInput,
     modifiers: Vec<(u32, u32)>,
 ) {
-    let item_id = input.item_id.expect("selected tooltip input item id");
+    let item_id = env
+        .state()
+        .borrow()
+        .keystone
+        .selected_item_id
+        .expect("selected keystone item id");
     let mut sim = env.state().borrow_mut();
-    sim.keystone.item_modifiers.insert(
-        KeystoneLocation::Bag(0, slot as i32),
-        (item_id, modifiers),
-    );
+    sim.keystone
+        .item_modifiers
+        .insert(KeystoneLocation::Bag(0, slot as i32), (item_id, modifiers));
     sim.keystone.slotted_tooltip_input = Some(input);
+}
+
+fn set_keystone_context_without_item_identity(
+    env: &WowLuaEnv,
+    slot: u32,
+    item_id: u32,
+    input: SlottedKeystoneTooltipInput,
+    modifiers: Vec<(u32, u32)>,
+) {
+    let mut sim = env.state().borrow_mut();
+    let location = KeystoneLocation::Bag(0, slot as i32);
+    sim.keystone.item_modifiers.insert(location, (item_id, modifiers));
+    sim.keystone.slotted_tooltip_input = Some(input);
+}
+
+fn assert_exact_keystone_row_sequence(env: &WowLuaEnv, expected: &str) {
+    env.exec(&format!("R7ExpectedKeystoneRowSequence = {expected:?}"))
+        .unwrap();
+    env.exec(
+        r##"
+        local rows = {}
+        for _, line in ipairs(GameTooltip:GetPrimaryTooltipData().lines) do
+            local text = line.leftText or ""
+            if text:match("^Map: ") or text:match("^Weekly Keystone")
+                or text:match("^Keystone Power ") or text:match("^Resilient ")
+                or text == "Modifier heading" or text:sub(1, 2) == "  " then
+                rows[#rows + 1] = text
+            end
+        end
+        local actual = table.concat(rows, "\n")
+        assert(actual == R7ExpectedKeystoneRowSequence,
+            "exact slotted-keystone row sequence: expected ["
+                .. R7ExpectedKeystoneRowSequence .. "] got [" .. actual .. "]")
+    "##,
+    )
+    .unwrap();
 }
 
 fn keystone_expected(
@@ -330,16 +364,17 @@ fn keystone_expected(
 ) -> String {
     let resilient = resilient.map_or_else(|| "false".to_string(), |text| format!("{text:?}"));
     let heading = heading.then_some("\"Modifier heading\"").unwrap_or("false");
-    let affixes = affixes.iter().map(|text| format!("{text:?}")).collect::<Vec<_>>().join(", ");
-    format!("{{ title = {title:?}, power = {power:?}, resilient = {resilient}, heading = {heading}, affixes = {{{affixes}}} }}")
+    let affixes = affixes
+        .iter()
+        .map(|text| format!("{text:?}"))
+        .collect::<Vec<_>>()
+        .join(", ");
+    format!(
+        "{{ title = {title:?}, power = {power:?}, resilient = {resilient}, heading = {heading}, affixes = {{{affixes}}} }}"
+    )
 }
 
-fn assert_keystone_hover_rows(
-    env: &WowLuaEnv,
-    item_id: u32,
-    guid: &str,
-    expected: &str,
-) {
+fn assert_keystone_hover_rows(env: &WowLuaEnv, item_id: u32, guid: &str, expected: &str) {
     env.exec(&format!(
         "R7ExpectedKeystoneItemID = {item_id}; R7ExpectedKeystoneGUID = {guid:?}; R7ExpectedKeystoneRows = {expected}"
     ))
@@ -349,8 +384,10 @@ fn assert_keystone_hover_rows(
 }
 
 fn capture_keystone_hover_rows(env: &WowLuaEnv, item_id: u32, guid: &str) -> String {
-    env.exec(&format!("R7ExpectedKeystoneItemID = {item_id}; R7ExpectedKeystoneGUID = {guid:?}"))
-        .unwrap();
+    env.exec(&format!(
+        "R7ExpectedKeystoneItemID = {item_id}; R7ExpectedKeystoneGUID = {guid:?}"
+    ))
+    .unwrap();
     env.eval(CAPTURE_KEYSTONE_HOVER_ROWS)
         .expect("capture rows after original ChallengesUI hover")
 }
@@ -418,11 +455,13 @@ fn resilient_tooltip_input(
     input.display_season_id = Some(season);
     input.key_floors = floors
         .iter()
-        .map(|(display_season, key_floor, condition)| SlottedKeystoneKeyFloor {
-            display_season_id: *display_season,
-            key_floor: *key_floor,
-            player_condition_id: *condition,
-        })
+        .map(
+            |(display_season, key_floor, condition)| SlottedKeystoneKeyFloor {
+                display_season_id: *display_season,
+                key_floor: *key_floor,
+                player_condition_id: *condition,
+            },
+        )
         .collect();
     input.player_condition_results = passing_conditions.iter().map(|id| (*id, true)).collect();
     input
@@ -949,10 +988,9 @@ fn challenges_ui_hover_uses_public_keystone_selection() {
 
 #[test]
 fn challenges_ui_hover_projects_two_keystone_map_and_power_values() {
-    for (slot, item_id, map_id, map_name, level) in [
-        (3, 180_653, 960, "Alpha", 3),
-        (4, 158_923, 961, "Beta", 8),
-    ] {
+    for (slot, item_id, map_id, map_name, level) in
+        [(3, 180_653, 960, "Alpha", 3), (4, 158_923, 961, "Beta", 8)]
+    {
         let (env, guid) = keystone_hover_fixture(slot, item_id);
         let mut input = slotted_tooltip_input(item_id, &guid);
         input.map_names.insert(map_id, Some(map_name.to_string()));
@@ -972,6 +1010,52 @@ fn challenges_ui_hover_projects_two_keystone_map_and_power_values() {
         let expected = keystone_expected(&title, &power, None, false, &[]);
         assert_keystone_hover_rows(&env, item_id, &guid, &expected);
     }
+}
+
+fn assert_resilient_keystone_consumer_rows() {
+    let (env, guid) = keystone_hover_fixture(3, 180_653);
+    let mut input = resilient_tooltip_input(
+        180_653,
+        &guid,
+        7,
+        &[(7, 1, 70), (7, 5, 71), (7, 8, 72)],
+        &[70, 71, 72],
+    );
+    input.affix_names.insert(101, Some("Fortified".to_string()));
+    input.affix_names.insert(102, Some("Raging".to_string()));
+    set_keystone_context_without_item_identity(
+        &env,
+        3,
+        180_653,
+        input,
+        vec![(17, 971), (18, 7), (19, 101), (21, 102)],
+    );
+    capture_keystone_hover_rows(&env, 180_653, &guid);
+    assert_exact_keystone_row_sequence(
+        &env,
+        "Map: Floor Map\nKeystone Power 7\nResilient 5\nModifier heading\n  Fortified\n  Raging",
+    );
+}
+
+fn assert_plain_keystone_consumer_rows() {
+    let (env, guid) = keystone_hover_fixture(4, 158_923);
+    let mut input = slotted_tooltip_input(158_923, &guid);
+    input.map_names.insert(961, Some("Beta".to_string()));
+    set_keystone_context_without_item_identity(
+        &env,
+        4,
+        158_923,
+        input,
+        vec![(17, 961), (18, 8)],
+    );
+    capture_keystone_hover_rows(&env, 158_923, &guid);
+    assert_exact_keystone_row_sequence(&env, "Map: Beta\nKeystone Power 8");
+}
+
+#[test]
+fn challenges_ui_hover_derives_slotted_keystone_rows_from_item_state() {
+    assert_resilient_keystone_consumer_rows();
+    assert_plain_keystone_consumer_rows();
 }
 
 #[test]
@@ -995,14 +1079,38 @@ fn challenges_ui_hover_uses_generic_and_empty_map_titles() {
 fn challenges_ui_hover_selects_resilient_level_from_season_floors() {
     let (env, guid) = keystone_hover_fixture(3, 180_653);
     let item_id = 180_653;
-    let mut first = resilient_tooltip_input(item_id, &guid, 7, &[(7, 1, 70), (7, 5, 71), (7, 8, 72)], &[70, 71, 72]);
+    let mut first = resilient_tooltip_input(
+        item_id,
+        &guid,
+        7,
+        &[(7, 1, 70), (7, 5, 71), (7, 8, 72)],
+        &[70, 71, 72],
+    );
     set_slotted_tooltip_input(&env, 3, first.clone(), vec![(17, 971), (18, 7)]);
-    let expected = keystone_expected("Map: Floor Map", "Keystone Power 7", Some("Resilient 5"), false, &[]);
+    let expected = keystone_expected(
+        "Map: Floor Map",
+        "Keystone Power 7",
+        Some("Resilient 5"),
+        false,
+        &[],
+    );
     assert_keystone_hover_rows(&env, item_id, &guid, &expected);
 
-    first = resilient_tooltip_input(item_id, &guid, 8, &[(8, 2, 80), (8, 6, 81), (8, 9, 82)], &[80, 81, 82]);
+    first = resilient_tooltip_input(
+        item_id,
+        &guid,
+        8,
+        &[(8, 2, 80), (8, 6, 81), (8, 9, 82)],
+        &[80, 81, 82],
+    );
     set_slotted_tooltip_input(&env, 3, first.clone(), vec![(17, 971), (18, 8)]);
-    let expected = keystone_expected("Map: Floor Map", "Keystone Power 8", Some("Resilient 6"), false, &[]);
+    let expected = keystone_expected(
+        "Map: Floor Map",
+        "Keystone Power 8",
+        Some("Resilient 6"),
+        false,
+        &[],
+    );
     assert_keystone_hover_rows(&env, item_id, &guid, &expected);
 
     first.associated_player_guid = Some("Player-2".to_string());
@@ -1053,7 +1161,9 @@ fn challenges_ui_hover_omits_missing_affix_records() {
     let item_id = 180_653;
     let mut input = slotted_tooltip_input(item_id, &guid);
     input.map_names.insert(981, Some("Second Map".to_string()));
-    input.affix_names.insert(201, Some("Tyrannical".to_string()));
+    input
+        .affix_names
+        .insert(201, Some("Tyrannical".to_string()));
     input.affix_names.insert(202, None);
     input.affix_names.insert(203, Some("Quaking".to_string()));
     set_slotted_tooltip_input(
@@ -1088,16 +1198,27 @@ fn challenges_ui_hover_omits_heading_for_all_zero_affix_ids() {
     assert_keystone_hover_rows(&env, item_id, &guid, &expected);
 }
 
+fn set_keystone_item_class(env: &WowLuaEnv, item_id: u32, class_id: u8, subclass_id: u8) {
+    let mut sim = env.state().borrow_mut();
+    let mut item = sim.item_info(item_id).expect("known keystone item").clone();
+    item.item_class = Some(class_id);
+    item.item_subclass = Some(subclass_id);
+    sim.item_overrides.insert(item_id, item);
+}
+
 #[test]
 fn challenges_ui_hover_skips_rows_for_non_keystone_item_class_or_subclass() {
     let (env, guid) = keystone_hover_fixture(3, 180_653);
     let item_id = 180_653;
     for (class_id, subclass_id) in [(4, 1), (5, 0)] {
+        set_keystone_item_class(&env, item_id, class_id, subclass_id);
         let mut input = slotted_tooltip_input(item_id, &guid);
-        input.item_class_id = Some(class_id);
-        input.item_subclass_id = Some(subclass_id);
-        input.map_names.insert(990, Some("Rejected Map".to_string()));
-        input.affix_names.insert(301, Some("Rejected Affix".to_string()));
+        input
+            .map_names
+            .insert(990, Some("Rejected Map".to_string()));
+        input
+            .affix_names
+            .insert(301, Some("Rejected Affix".to_string()));
         set_slotted_tooltip_input(&env, 3, input, vec![(17, 990), (18, 7), (19, 301)]);
         assert_no_keystone_title_or_affixes(&env, item_id, &guid);
     }
@@ -1109,60 +1230,88 @@ fn challenges_ui_hover_selects_map_titles_from_modifier_17() {
     let mut first = keystone_map_input(180_653, &guid, 960, Some("First Map"));
     first.map_names.insert(1960, Some("Wrong Map".to_string()));
     let first_rows = set_and_capture_keystone_rows(
-        &env, 3, 180_653, &guid, first, vec![(17, 960), (17, 1960), (18, 3)],
+        &env,
+        3,
+        180_653,
+        &guid,
+        first,
+        vec![(17, 960), (17, 1960), (18, 3)],
     );
     let second = keystone_map_input(180_653, &guid, 961, Some("Second Map"));
-    let second_rows = set_and_capture_keystone_rows(
-        &env, 3, 180_653, &guid, second, vec![(17, 961), (18, 8)],
-    );
+    let second_rows =
+        set_and_capture_keystone_rows(&env, 3, 180_653, &guid, second, vec![(17, 961), (18, 8)]);
     let missing = keystone_map_input(180_653, &guid, 962, None);
-    let missing_rows = set_and_capture_keystone_rows(
-        &env, 3, 180_653, &guid, missing, vec![(17, 962), (18, 1)],
+    let missing_rows =
+        set_and_capture_keystone_rows(&env, 3, 180_653, &guid, missing, vec![(17, 962), (18, 1)]);
+    assert!(
+        keystone_row(&first_rows, "Map: First Map").is_some(),
+        "map-title selector input 1"
     );
-    assert!(keystone_row(&first_rows, "Map: First Map").is_some(), "map-title selector input 1");
-    assert!(keystone_row(&second_rows, "Map: Second Map").is_some(), "map-title selector input 2");
-    assert!(keystone_row(&missing_rows, "Weekly Keystone").is_some(), "map-record miss fallback");
+    assert!(
+        keystone_row(&second_rows, "Map: Second Map").is_some(),
+        "map-title selector input 2"
+    );
+    assert!(
+        keystone_row(&missing_rows, "Weekly Keystone").is_some(),
+        "map-record miss fallback"
+    );
 }
 
 #[test]
 fn challenges_ui_hover_selects_generic_and_empty_map_titles() {
     let (env, guid) = keystone_hover_fixture(3, 180_653);
     let missing = keystone_map_input(180_653, &guid, 963, None);
-    let generic_rows = set_and_capture_keystone_rows(
-        &env, 3, 180_653, &guid, missing, vec![(17, 963), (18, 3)],
-    );
+    let generic_rows =
+        set_and_capture_keystone_rows(&env, 3, 180_653, &guid, missing, vec![(17, 963), (18, 3)]);
     let empty = keystone_map_input(180_653, &guid, 964, Some(""));
-    let empty_rows = set_and_capture_keystone_rows(
-        &env, 3, 180_653, &guid, empty, vec![(17, 964), (18, 4)],
-    );
+    let empty_rows =
+        set_and_capture_keystone_rows(&env, 3, 180_653, &guid, empty, vec![(17, 964), (18, 4)]);
     clear_keystone_tooltip_input(&env);
     let absent_rows = capture_keystone_hover_rows(&env, 180_653, &guid);
-    assert!(keystone_row(&generic_rows, "Weekly Keystone").is_some(), "generic-title selector");
-    assert!(keystone_row(&empty_rows, "Map: ").is_some(), "found empty map name is not a miss");
-    assert!(keystone_row(&absent_rows, "Weekly Keystone").is_none(), "empty input stays neutral");
+    assert!(
+        keystone_row(&generic_rows, "Weekly Keystone").is_some(),
+        "generic-title selector"
+    );
+    assert!(
+        keystone_row(&empty_rows, "Map: ").is_some(),
+        "found empty map name is not a miss"
+    );
+    assert!(
+        keystone_row(&absent_rows, "Weekly Keystone").is_none(),
+        "empty input stays neutral"
+    );
 }
 
 #[test]
 fn challenges_ui_hover_selects_power_from_modifier_18() {
     let (env, guid) = keystone_hover_fixture(3, 180_653);
     let first = keystone_map_input(180_653, &guid, 965, Some("Power Map"));
-    let first_rows = set_and_capture_keystone_rows(
-        &env, 3, 180_653, &guid, first, vec![(17, 965), (18, 3)],
-    );
+    let first_rows =
+        set_and_capture_keystone_rows(&env, 3, 180_653, &guid, first, vec![(17, 965), (18, 3)]);
     let second = keystone_map_input(180_653, &guid, 965, Some("Power Map"));
-    let second_rows = set_and_capture_keystone_rows(
-        &env, 3, 180_653, &guid, second, vec![(17, 965), (18, 8)],
-    );
+    let second_rows =
+        set_and_capture_keystone_rows(&env, 3, 180_653, &guid, second, vec![(17, 965), (18, 8)]);
     let missing_level = keystone_map_input(180_653, &guid, 965, Some("Power Map"));
-    let zero_rows = set_and_capture_keystone_rows(
-        &env, 3, 180_653, &guid, missing_level, vec![(17, 965)],
-    );
+    let zero_rows =
+        set_and_capture_keystone_rows(&env, 3, 180_653, &guid, missing_level, vec![(17, 965)]);
     clear_keystone_tooltip_input(&env);
     let absent_rows = capture_keystone_hover_rows(&env, 180_653, &guid);
-    assert!(keystone_row(&first_rows, "Keystone Power 3").is_some(), "power selector input 1");
-    assert!(keystone_row(&second_rows, "Keystone Power 8").is_some(), "power selector input 2");
-    assert!(keystone_row(&zero_rows, "Keystone Power 0").is_some(), "missing modifier 18 uses zero");
-    assert!(keystone_row(&absent_rows, "Keystone Power 0").is_none(), "empty input has no power row");
+    assert!(
+        keystone_row(&first_rows, "Keystone Power 3").is_some(),
+        "power selector input 1"
+    );
+    assert!(
+        keystone_row(&second_rows, "Keystone Power 8").is_some(),
+        "power selector input 2"
+    );
+    assert!(
+        keystone_row(&zero_rows, "Keystone Power 0").is_some(),
+        "missing modifier 18 uses zero"
+    );
+    assert!(
+        keystone_row(&absent_rows, "Keystone Power 0").is_none(),
+        "empty input has no power row"
+    );
 }
 
 #[test]
@@ -1170,20 +1319,26 @@ fn challenges_ui_hover_selects_resilient_floor_by_display_season() {
     let (env, guid) = keystone_hover_fixture(3, 180_653);
     let floors = [(7, 3, 70), (7, 5, 71), (8, 6, 80)];
     let first = resilient_tooltip_input(180_653, &guid, 7, &floors, &[70, 71, 80]);
-    let season_seven = set_and_capture_keystone_rows(
-        &env, 3, 180_653, &guid, first, vec![(17, 971), (18, 8)],
-    );
+    let season_seven =
+        set_and_capture_keystone_rows(&env, 3, 180_653, &guid, first, vec![(17, 971), (18, 8)]);
     let second = resilient_tooltip_input(180_653, &guid, 8, &floors, &[70, 71, 80]);
-    let season_eight = set_and_capture_keystone_rows(
-        &env, 3, 180_653, &guid, second, vec![(17, 971), (18, 8)],
-    );
+    let season_eight =
+        set_and_capture_keystone_rows(&env, 3, 180_653, &guid, second, vec![(17, 971), (18, 8)]);
     let absent = resilient_tooltip_input(180_653, &guid, 9, &floors, &[70, 71, 80]);
-    let season_missing = set_and_capture_keystone_rows(
-        &env, 3, 180_653, &guid, absent, vec![(17, 971), (18, 8)],
+    let season_missing =
+        set_and_capture_keystone_rows(&env, 3, 180_653, &guid, absent, vec![(17, 971), (18, 8)]);
+    assert!(
+        keystone_row(&season_seven, "Resilient 5").is_some(),
+        "season selector input 1"
     );
-    assert!(keystone_row(&season_seven, "Resilient 5").is_some(), "season selector input 1");
-    assert!(keystone_row(&season_eight, "Resilient 6").is_some(), "season selector input 2");
-    assert!(keystone_row(&season_missing, "Resilient 6").is_none(), "unmatched display season is absent");
+    assert!(
+        keystone_row(&season_eight, "Resilient 6").is_some(),
+        "season selector input 2"
+    );
+    assert!(
+        keystone_row(&season_missing, "Resilient 6").is_none(),
+        "unmatched display season is absent"
+    );
 }
 
 #[test]
@@ -1191,19 +1346,43 @@ fn challenges_ui_hover_selects_modifier_heading_from_nonzero_slots() {
     let (env, guid) = keystone_hover_fixture(3, 180_653);
     let first = keystone_map_input(180_653, &guid, 980, Some("Heading Map"));
     let first_rows = set_and_capture_keystone_rows(
-        &env, 3, 180_653, &guid, first, vec![(17, 980), (18, 1), (19, 101)],
+        &env,
+        3,
+        180_653,
+        &guid,
+        first,
+        vec![(17, 980), (18, 1), (19, 101)],
     );
     let second = keystone_map_input(180_653, &guid, 980, Some("Heading Map"));
     let second_rows = set_and_capture_keystone_rows(
-        &env, 3, 180_653, &guid, second, vec![(17, 980), (18, 1), (22, 202)],
+        &env,
+        3,
+        180_653,
+        &guid,
+        second,
+        vec![(17, 980), (18, 1), (22, 202)],
     );
     let zero = keystone_map_input(180_653, &guid, 980, Some("Heading Map"));
     let zero_rows = set_and_capture_keystone_rows(
-        &env, 3, 180_653, &guid, zero, vec![(17, 980), (18, 1), (19, 0), (20, 0), (21, 0), (22, 0)],
+        &env,
+        3,
+        180_653,
+        &guid,
+        zero,
+        vec![(17, 980), (18, 1), (19, 0), (20, 0), (21, 0), (22, 0)],
     );
-    assert!(keystone_row(&first_rows, "Modifier heading").is_some(), "heading selector input 1");
-    assert!(keystone_row(&second_rows, "Modifier heading").is_some(), "heading selector input 2");
-    assert!(keystone_row(&zero_rows, "Modifier heading").is_none(), "all-zero selector has no heading");
+    assert!(
+        keystone_row(&first_rows, "Modifier heading").is_some(),
+        "heading selector input 1"
+    );
+    assert!(
+        keystone_row(&second_rows, "Modifier heading").is_some(),
+        "heading selector input 2"
+    );
+    assert!(
+        keystone_row(&zero_rows, "Modifier heading").is_none(),
+        "all-zero selector has no heading"
+    );
 }
 
 #[test]
@@ -1213,22 +1392,50 @@ fn challenges_ui_hover_selects_affix_names_in_modifier_order() {
     first.affix_names.insert(101, Some("Fortified".to_string()));
     first.affix_names.insert(102, Some("Raging".to_string()));
     let first_rows = set_and_capture_keystone_rows(
-        &env, 3, 180_653, &guid, first, vec![(17, 981), (18, 2), (19, 101), (20, 102)],
+        &env,
+        3,
+        180_653,
+        &guid,
+        first,
+        vec![(17, 981), (18, 2), (19, 101), (20, 102)],
     );
     let mut second = keystone_map_input(180_653, &guid, 982, Some("Affix Map B"));
-    second.affix_names.insert(201, Some("Tyrannical".to_string()));
+    second
+        .affix_names
+        .insert(201, Some("Tyrannical".to_string()));
     second.affix_names.insert(202, Some("Quaking".to_string()));
     let second_rows = set_and_capture_keystone_rows(
-        &env, 3, 180_653, &guid, second, vec![(17, 982), (18, 3), (19, 202), (20, 201), (21, 202)],
+        &env,
+        3,
+        180_653,
+        &guid,
+        second,
+        vec![(17, 982), (18, 3), (19, 202), (20, 201), (21, 202)],
     );
     let mut missing = keystone_map_input(180_653, &guid, 983, Some("Affix Map C"));
     missing.affix_names.insert(301, None);
     let missing_rows = set_and_capture_keystone_rows(
-        &env, 3, 180_653, &guid, missing, vec![(17, 983), (18, 4), (19, 301), (20, 302)],
+        &env,
+        3,
+        180_653,
+        &guid,
+        missing,
+        vec![(17, 983), (18, 4), (19, 301), (20, 302)],
     );
-    assert_eq!(keystone_affix_texts(&first_rows), vec!["  Fortified", "  Raging"], "affix names input 1");
-    assert_eq!(keystone_affix_texts(&second_rows), vec!["  Quaking", "  Tyrannical", "  Quaking"], "affix names input 2");
-    assert!(keystone_affix_texts(&missing_rows).is_empty(), "missing affix records have no names");
+    assert_eq!(
+        keystone_affix_texts(&first_rows),
+        vec!["  Fortified", "  Raging"],
+        "affix names input 1"
+    );
+    assert_eq!(
+        keystone_affix_texts(&second_rows),
+        vec!["  Quaking", "  Tyrannical", "  Quaking"],
+        "affix names input 2"
+    );
+    assert!(
+        keystone_affix_texts(&missing_rows).is_empty(),
+        "missing affix records have no names"
+    );
 }
 
 fn capture_selected_keystone_quality_titles() -> (String, String) {
@@ -1236,12 +1443,22 @@ fn capture_selected_keystone_quality_titles() -> (String, String) {
     let (env_four, guid_four) = keystone_hover_fixture(3, 180_653);
     let input_four = keystone_map_input(180_653, &guid_four, 984, Some("Quality Map"));
     let rows_four = set_and_capture_keystone_rows(
-        &env_four, 3, 180_653, &guid_four, input_four, vec![(17, 984), (18, 3)],
+        &env_four,
+        3,
+        180_653,
+        &guid_four,
+        input_four,
+        vec![(17, 984), (18, 3)],
     );
     let (env_seven, guid_seven) = keystone_hover_fixture(4, 168_195);
     let input_seven = keystone_map_input(168_195, &guid_seven, 984, Some("Quality Map"));
     let rows_seven = set_and_capture_keystone_rows(
-        &env_seven, 4, 168_195, &guid_seven, input_seven, vec![(17, 984), (18, 3)],
+        &env_seven,
+        4,
+        168_195,
+        &guid_seven,
+        input_seven,
+        vec![(17, 984), (18, 3)],
     );
     let title_four = keystone_row(&rows_four, "Map: Quality Map")
         .expect("quality 4 title")
@@ -1257,9 +1474,20 @@ fn challenges_ui_hover_preserves_selected_item_quality() {
     let (title_four, title_seven) = capture_selected_keystone_quality_titles();
     let (env_absent, guid_absent) = keystone_hover_fixture(5, 180_653);
     let rows_absent = capture_keystone_hover_rows(&env_absent, 180_653, &guid_absent);
-    assert_eq!(title_four.split('\t').nth(2), Some("4"), "title quality selector input 1");
-    assert_eq!(title_seven.split('\t').nth(2), Some("7"), "title quality selector input 2");
-    assert!(keystone_row(&rows_absent, "Map: Quality Map").is_none(), "empty input has no quality row");
+    assert_eq!(
+        title_four.split('\t').nth(2),
+        Some("4"),
+        "title quality selector input 1"
+    );
+    assert_eq!(
+        title_seven.split('\t').nth(2),
+        Some("7"),
+        "title quality selector input 2"
+    );
+    assert!(
+        keystone_row(&rows_absent, "Map: Quality Map").is_none(),
+        "empty input has no quality row"
+    );
 }
 
 // INFERRED: the simulator's current item-quality mapping distinguishes these values.
@@ -1277,18 +1505,30 @@ fn challenges_ui_hover_infers_quality_color_discrimination() {
 fn challenges_ui_hover_uses_zero_map_key_when_modifier_17_is_absent() {
     let (env, guid) = keystone_hover_fixture(3, 180_653);
     let mut supplied = slotted_tooltip_input(180_653, &guid);
-    supplied.map_names.insert(0, Some("Key Zero Map".to_string()));
-    let supplied_rows = set_and_capture_keystone_rows(
-        &env, 3, 180_653, &guid, supplied, vec![(18, 3)],
-    );
+    supplied
+        .map_names
+        .insert(0, Some("Key Zero Map".to_string()));
+    let supplied_rows =
+        set_and_capture_keystone_rows(&env, 3, 180_653, &guid, supplied, vec![(18, 3)]);
     let unsupplied = slotted_tooltip_input(180_653, &guid);
-    let unsupplied_rows = set_and_capture_keystone_rows(
-        &env, 3, 180_653, &guid, unsupplied, vec![(18, 4)],
+    let unsupplied_rows =
+        set_and_capture_keystone_rows(&env, 3, 180_653, &guid, unsupplied, vec![(18, 4)]);
+    assert!(
+        keystone_row(&supplied_rows, "Map: Key Zero Map").is_some(),
+        "missing modifier 17 reads key zero"
     );
-    assert!(keystone_row(&supplied_rows, "Map: Key Zero Map").is_some(), "missing modifier 17 reads key zero");
-    assert!(keystone_row(&supplied_rows, "Keystone Power 3").is_some(), "missing modifier 17 keeps power row");
-    assert!(keystone_row(&unsupplied_rows, "Weekly Keystone").is_none(), "unsupplied key zero remains neutral");
-    assert!(keystone_row(&unsupplied_rows, "Keystone Power 4").is_none(), "unsupplied key zero blocks detail rows");
+    assert!(
+        keystone_row(&supplied_rows, "Keystone Power 3").is_some(),
+        "missing modifier 17 keeps power row"
+    );
+    assert!(
+        keystone_row(&unsupplied_rows, "Weekly Keystone").is_none(),
+        "unsupplied key zero remains neutral"
+    );
+    assert!(
+        keystone_row(&unsupplied_rows, "Keystone Power 4").is_none(),
+        "unsupplied key zero blocks detail rows"
+    );
 }
 
 #[test]
@@ -1296,11 +1536,15 @@ fn challenges_ui_hover_uses_generic_title_for_confirmed_missing_zero_map_without
     let (env, guid) = keystone_hover_fixture(3, 180_653);
     let mut input = slotted_tooltip_input(180_653, &guid);
     input.map_names.insert(0, None);
-    let rows = set_and_capture_keystone_rows(
-        &env, 3, 180_653, &guid, input, vec![(18, 4)],
+    let rows = set_and_capture_keystone_rows(&env, 3, 180_653, &guid, input, vec![(18, 4)]);
+    assert!(
+        keystone_row(&rows, "Weekly Keystone").is_some(),
+        "missing modifier 17 and confirmed key-zero miss use generic title"
     );
-    assert!(keystone_row(&rows, "Weekly Keystone").is_some(), "missing modifier 17 and confirmed key-zero miss use generic title");
-    assert!(keystone_row(&rows, "Keystone Power 4").is_some(), "confirmed key-zero miss keeps power row");
+    assert!(
+        keystone_row(&rows, "Keystone Power 4").is_some(),
+        "confirmed key-zero miss keeps power row"
+    );
 }
 
 // SUPPLEMENTARY, INFERRED: a test-defined event callback observes the public API, not an original consumer.

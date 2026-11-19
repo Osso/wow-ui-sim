@@ -640,9 +640,11 @@ fn lua_errors_reports_enabled_addon_with_missing_required_dependency() {
     let env = WowLuaEnv::new().expect("create Lua env");
     let mut saved_vars = None;
     let mut stats = LoadStats::default();
-
     load_discovered_addons(&env, &addons, &mut saved_vars, None, &mut stats);
+    assert_missing_required_dependency_results(&env);
+}
 
+fn assert_missing_required_dependency_results(env: &WowLuaEnv) {
     let state = env.state().borrow();
     assert_eq!(state.lua_errors.len(), 1);
     assert_eq!(
@@ -661,7 +663,7 @@ fn lua_errors_reports_enabled_addon_with_missing_required_dependency() {
             .iter()
             .find(|addon| addon.folder_name == "DependentAddon")
             .expect("registered dependent addon")
-            .loaded,
+            .is_loaded(),
         "addon with a missing required dependency should not load"
     );
     drop(state);
@@ -674,39 +676,60 @@ fn lua_errors_reports_enabled_addon_with_missing_required_dependency() {
 #[test]
 fn load_summary_counts_file_event_and_nested_lua_failures_once_per_addon() {
     let temp = tempfile::tempdir().unwrap();
-    write_addon_with_lua(temp.path(), "Healthy", "", "healthyLoaded = true");
-    write_addon_with_lua(temp.path(), "FileBroken", "", "error('file failure')");
-    write_addon_with_lua(
-        temp.path(),
-        "EventBroken",
-        "",
-        "local f = CreateFrame('Frame'); f:RegisterEvent('ADDON_LOADED'); f:SetScript('OnEvent', function(_, _, name) if name == 'EventBroken' or name == 'NestedCaller' then error('event failure') end end)",
-    );
-    write_addon_with_lua(
-        temp.path(),
-        "NestedChild",
-        "## LoadOnDemand: 1\n",
-        "error('nested failure')",
-    );
-    write_addon_with_lua(
-        temp.path(),
-        "NestedCaller",
-        "",
-        "assert(C_AddOns.LoadAddOn('NestedChild'))",
-    );
-    write_addon_with_lua(
-        temp.path(),
-        "MissingDependency",
-        "## Dependencies: Absent\n",
-        "error('must not execute')",
-    );
+    write_load_summary_test_addons(temp.path());
     let addons = scan_addons(&TocCache::default(), temp.path(), &[], ScreenKind::Game);
     let env = WowLuaEnv::new().unwrap();
     env.state().borrow_mut().addon_base_paths = vec![temp.path().to_path_buf()];
     let mut stats = LoadStats::default();
     let startup_count = load_discovered_addons(&env, &addons, &mut None, None, &mut stats);
-
     let state = env.state().borrow();
+    assert_load_summary_error_records(&state);
+    assert_load_summary_addon_states(&state);
+    assert_load_summary_counts(startup_count, stats);
+}
+
+fn write_load_summary_test_addons(root: &Path) {
+    write_load_summary_file_errors(root);
+    write_load_summary_event_error(root);
+    write_load_summary_nested_errors(root);
+}
+
+fn write_load_summary_file_errors(root: &Path) {
+    write_addon_with_lua(root, "Healthy", "", "healthyLoaded = true");
+    write_addon_with_lua(root, "FileBroken", "", "error('file failure')");
+}
+
+fn write_load_summary_event_error(root: &Path) {
+    write_addon_with_lua(
+        root,
+        "EventBroken",
+        "",
+        "local f = CreateFrame('Frame'); f:RegisterEvent('ADDON_LOADED'); f:SetScript('OnEvent', function(_, _, name) if name == 'EventBroken' or name == 'NestedCaller' then error('event failure') end end)",
+    );
+}
+
+fn write_load_summary_nested_errors(root: &Path) {
+    write_addon_with_lua(
+        root,
+        "NestedChild",
+        "## LoadOnDemand: 1\n",
+        "error('nested failure')",
+    );
+    write_addon_with_lua(
+        root,
+        "NestedCaller",
+        "",
+        "assert(C_AddOns.LoadAddOn('NestedChild'))",
+    );
+    write_addon_with_lua(
+        root,
+        "MissingDependency",
+        "## Dependencies: Absent\n",
+        "error('must not execute')",
+    );
+}
+
+fn assert_load_summary_error_records(state: &wow_ui_sim::lua_api::SimState) {
     let recorded: HashSet<_> = state
         .lua_error_records
         .iter()
@@ -728,6 +751,9 @@ fn load_summary_counts_file_event_and_nested_lua_failures_once_per_addon() {
             .all(|record| record.addon_name.as_deref() == Some("EventBroken")),
         "callbacks during another addon's load must retain their own owner: {event_errors:?}"
     );
+}
+
+fn assert_load_summary_addon_states(state: &wow_ui_sim::lua_api::SimState) {
     for name in [
         "Healthy",
         "FileBroken",
@@ -739,7 +765,7 @@ fn load_summary_counts_file_event_and_nested_lua_failures_once_per_addon() {
             state
                 .addons
                 .iter()
-                .any(|addon| addon.folder_name == name && addon.loaded),
+                .any(|addon| addon.folder_name == name && addon.is_loaded()),
             "loaded state must be preserved for {name}"
         );
     }
@@ -749,8 +775,11 @@ fn load_summary_counts_file_event_and_nested_lua_failures_once_per_addon() {
             .iter()
             .find(|addon| addon.folder_name == "MissingDependency")
             .unwrap()
-            .loaded
+            .is_loaded()
     );
+}
+
+fn assert_load_summary_counts(startup_count: usize, stats: LoadStats) {
     assert_eq!(stats.success_count, 4);
     assert_eq!(
         stats.fail_count, 4,

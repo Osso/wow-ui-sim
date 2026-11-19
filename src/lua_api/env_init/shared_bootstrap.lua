@@ -1,5 +1,6 @@
 local projectForbiddenDelegateArguments, retiredPortraitGlobal,
-  callPrivateProjectionFactory, retireGlueOwnerDefaults, retireGlueStateDefaults = ...
+  callPrivateProjectionFactory, retireGlueOwnerDefaults, retireGlueStateDefaults,
+  retireCreateAndInitFromMixinFallback = ...
 
 local function __wow_public_global_path(path)
   local first, rest = string.match(path, "^([^.]+)%.?(.*)$")
@@ -92,7 +93,7 @@ if CreateFromMixins == nil then
   end
 end
 
-if CreateAndInitFromMixin == nil then
+if CreateAndInitFromMixin == nil and not retireCreateAndInitFromMixinFallback then
   function CreateAndInitFromMixin(mixin, ...)
     local object = CreateFromMixins(mixin)
     if object.Init then
@@ -173,7 +174,8 @@ local function __wow_project_inbound_results(project, ...)
   return unpack(results, 1, count)
 end
 
-function GetForbiddenObjectTable(object)
+-- Keep an internal closure because R88y flag 6 publishes the global secure-only. Evidence: pr46-49-decomp-answers.md, sections R88y.
+local function getForbiddenObjectTable(object)
   local public = type(object) == "table" and rawget(object, "__wowPublicObject")
   if public and __wow_forbidden_object_tables[public] == object then
     return object
@@ -188,10 +190,11 @@ function GetForbiddenObjectTable(object)
   end
   return forbidden
 end
+GetForbiddenObjectTable = getForbiddenObjectTable
 
 local function __wow_xml_object_partition(object, partition)
   if partition == "forbidden" or partition == "secure" then
-    return GetForbiddenObjectTable(object)
+    return getForbiddenObjectTable(object)
   end
   return object
 end
@@ -203,7 +206,7 @@ end
 
 function __wow_xml_set_key_value(object, key, value)
   if __wow_xml_object_uses_forbidden_table(object) then
-    rawset(GetForbiddenObjectTable(object), key, value)
+    rawset(getForbiddenObjectTable(object), key, value)
   else
     __wow_public_set(object, key, value)
   end
@@ -214,7 +217,7 @@ local function __wow_resolve_forbidden_xml_method(object, methodName)
     return nil, nil
   end
 
-  local forbidden = GetForbiddenObjectTable(object)
+  local forbidden = getForbiddenObjectTable(object)
   local method = rawget(forbidden, methodName)
   if type(method) == "function" then
     return method, forbidden

@@ -65,7 +65,7 @@ fn panel_addons_initialize_target_frame_private_aura_groups() {
             local aura = TargetFrame and TargetFrame.TargetFrameContent
                 and TargetFrame.TargetFrameContent.TargetFrameContentContextual
                 and TargetFrame.TargetFrameContent.TargetFrameContentContextual.Auras
-            local private = aura and GetForbiddenObjectTable(aura)
+            local private = aura and (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(aura)
             return C_AddOns.IsAddOnLoaded("Blizzard_AuraContainer"),
                 type(AuraContainerUtil),
                 type(secure and secure.AuraContainerUtil),

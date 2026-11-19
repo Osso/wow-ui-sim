@@ -6,6 +6,8 @@
 use crate::common;
 
 use std::path::{Path, PathBuf};
+#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+use wow_ui_sim::c_api::performance_bar::{PerformanceProtocolTypes, ProtocolCode};
 use wow_ui_sim::loader::{find_toc_file, load_addon};
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::paths::default_blizzard_ui_addons_path;
@@ -882,6 +884,103 @@ fn main_menu_performance_bar_uses_seeded_network_stats() {
         result, "ok",
         "Main menu performance bar should use seeded latency values and stay green for low latency: {result}"
     );
+}
+
+#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+fn load_performance_bar_tooltip(env: &WowLuaEnv) {
+    env.exec(
+        r#"
+        local loaded, reason = C_AddOns.LoadAddOn("Blizzard_PerformanceBar")
+        assert(loaded, "load original PerformanceBar.lua: " .. tostring(reason))
+        assert(type(MainMenuBarPerformanceBarFrame_OnEnter) == "function",
+            "original performance tooltip handler must be loaded")
+        A_Admin.SetNetStats(128, 256, 47, 89)
+        "#,
+    )
+    .expect("original PerformanceBar tooltip should load");
+}
+
+#[cfg(not(all(feature = "client-retail", feature = "retail-12-1-5")))]
+#[test]
+fn performance_bar_fallbacks_preserve_other_profile_values() {
+    let env = WowLuaEnv::new().expect("lua env should initialize");
+    env.exec("A_Admin.SetNetStats(128, 256, 47, 89)")
+        .expect("seed network stats");
+    let values: (f64, f64, f64) = env
+        .eval("return GetAvailableBandwidth(), GetProtocolTypes()")
+        .expect("legacy fallback getters should return values");
+    assert_eq!(values, (256.0, 1.0, 1.0));
+}
+
+#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+const PERFORMANCE_BAR_TOOLTIP_ASSERTIONS: &str = r#"
+    local function capture_results(...)
+        return select('#', ...), ...
+    end
+    local function has_tooltip_line(expected)
+        for index = 1, GameTooltip:NumLines() do
+            local line = _G["GameTooltipTextLeft" .. index]
+            if line and line:GetText() == expected then return true end
+        end
+        return false
+    end
+    GameTooltip:Hide()
+    MainMenuBarPerformanceBarFrame_OnEnter(MainMenuMicroButton.MainMenuBarPerformanceBar)
+    local labels = { [0] = UNKNOWN, "TCP", "UDP" }
+    local protocol = string.format(MAINMENUBAR_COMMUNICATION_PROTOCOL_LABEL,
+        labels[__expected_protocol_home], labels[__expected_protocol_world])
+    local bandwidth = string.format(MAINMENUBAR_BANDWIDTH_LABEL, 0)
+    assert(has_tooltip_line(protocol), "original tooltip protocol row: " .. protocol)
+    assert(has_tooltip_line(bandwidth), "original tooltip bandwidth row must show zero")
+    local count, home, world = capture_results(GetProtocolTypes())
+    assert(count == 2 and type(home) == "number" and type(world) == "number"
+        and home == __expected_protocol_home and world == __expected_protocol_world,
+        "GetProtocolTypes must return exactly the supplied numeric pair")
+    local bandwidth_count, available = capture_results(GetAvailableBandwidth())
+    assert(bandwidth_count == 1 and type(available) == "number" and available == 0,
+        "GetAvailableBandwidth must return exactly one numeric zero")
+    return "ok"
+    "#;
+
+#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+fn assert_performance_bar_tooltip_consumer(env: &WowLuaEnv) {
+    let result: String = env
+        .eval(PERFORMANCE_BAR_TOOLTIP_ASSERTIONS)
+        .expect("original PerformanceBar tooltip should consume supplied native values");
+    assert_eq!(result, "ok");
+}
+
+#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+fn check_performance_bar_tooltip(env: &WowLuaEnv, input: Option<PerformanceProtocolTypes>) {
+    env.state().borrow_mut().performance_bar_protocol_types = input;
+    let (home, world) = input.map_or((0, 0), |pair| (pair.home.value(), pair.world.value()));
+    env.exec(&format!(
+        "__expected_protocol_home = {home}; __expected_protocol_world = {world}"
+    ))
+    .expect("set expected protocol codes");
+    assert_performance_bar_tooltip_consumer(env);
+}
+
+#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+#[test]
+fn performance_bar_tooltip_uses_supplied_protocols_and_zero_bandwidth() {
+    let env = setup_env();
+    load_performance_bar_tooltip(&env);
+    check_performance_bar_tooltip(
+        &env,
+        Some(PerformanceProtocolTypes {
+            home: ProtocolCode::One,
+            world: ProtocolCode::Two,
+        }),
+    );
+    check_performance_bar_tooltip(
+        &env,
+        Some(PerformanceProtocolTypes {
+            home: ProtocolCode::Two,
+            world: ProtocolCode::One,
+        }),
+    );
+    check_performance_bar_tooltip(&env, None);
 }
 
 fn load_micro_menu_fixture_addons(env: &WowLuaEnv) {

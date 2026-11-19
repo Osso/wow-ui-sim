@@ -1,15 +1,20 @@
 //! Documented numeric publication; no downstream domain behavior implied.
 
 use crate::client_profile::{ACTIVE, ClientProfile};
-use crate::lua_api::methods::{table_get, table_set};
+use crate::lua_api::methods::table_get;
 use rilua::Val;
 use rilua::vm::state::LuaState;
 
+fn set_enum_member(state: &mut LuaState, table: Val, name: &str, value: Val) {
+    super::set_namespace_member(state, table, name, value)
+        .expect("Enum group must have a secure registration peer");
+}
+
 pub(crate) fn register(state: &mut LuaState) {
-    let enums = super::ensure_global_table(state, "Enum");
+    let enums = super::ensure_enum_table(state);
     for &(name, member, value) in ADDITIONS {
         let values = table_get(state, enums, name);
-        table_set(state, values, member, Val::Num(f64::from(value)));
+        set_enum_member(state, values, member, Val::Num(f64::from(value)));
         publish_metadata(state, enums, name, values);
     }
     #[cfg(feature = "client-retail")]
@@ -20,7 +25,7 @@ pub(crate) fn register(state: &mut LuaState) {
 }
 
 pub(crate) fn refresh_metadata(state: &mut LuaState) {
-    let enums = super::ensure_global_table(state, "Enum");
+    let enums = super::ensure_enum_table(state);
     for &(name, _, _) in ADDITIONS {
         let values = table_get(state, enums, name);
         publish_metadata(state, enums, name, values);
@@ -40,12 +45,12 @@ pub(crate) fn refresh_metadata(state: &mut LuaState) {
 fn publish_current_retail(state: &mut LuaState, enums: Val) {
     for &(name, member) in CURRENT_RETAIL_REMOVALS {
         let values = table_get(state, enums, name);
-        table_set(state, values, member, Val::Nil);
+        set_enum_member(state, values, member, Val::Nil);
     }
     for &(name, members) in CURRENT_RETAIL_VALUES {
         let values = table_get(state, enums, name);
         for &(member, value) in members {
-            table_set(state, values, member, Val::Num(f64::from(value)));
+            set_enum_member(state, values, member, Val::Num(f64::from(value)));
         }
         publish_metadata(state, enums, name, values);
     }
@@ -55,8 +60,8 @@ fn publish_ptr_loot_method_styles(state: &mut LuaState, enums: Val) {
     const MAINLINE_STYLE: i32 = 0;
 
     let values = table_get(state, enums, "LootMethodStyles");
-    table_set(state, values, "PersonalOnly", Val::Nil);
-    table_set(
+    set_enum_member(state, values, "PersonalOnly", Val::Nil);
+    set_enum_member(
         state,
         values,
         "Mainline",
@@ -79,9 +84,9 @@ fn publish_metadata(state: &mut LuaState, enums: Val, name: &str, values: Val) {
         |(count, min, max), value| (count + 1, min.min(value), max.max(value)),
     );
     let metadata = table_get(state, enums, &format!("{name}Meta"));
-    table_set(state, metadata, "NumValues", Val::Num(f64::from(count)));
-    table_set(state, metadata, "MinValue", Val::Num(min));
-    table_set(state, metadata, "MaxValue", Val::Num(max));
+    set_enum_member(state, metadata, "NumValues", Val::Num(f64::from(count)));
+    set_enum_member(state, metadata, "MinValue", Val::Num(min));
+    set_enum_member(state, metadata, "MaxValue", Val::Num(max));
 }
 
 // Previously published under the cumulative retail-12-0-5 feature, including PTR

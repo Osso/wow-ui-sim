@@ -73,8 +73,8 @@ fn blizzard_target_player_aura_updates_keep_count_region() {
                 assert(button, 'target aura button missing')
                 local count = button.Count
                 button.AddonField = 'public-only'
-                return count ~= nil and GetForbiddenObjectTable(button).Count == count,
-                    GetForbiddenObjectTable(button).AddonField == nil
+                return count ~= nil and (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(button).Count == count,
+                    (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(button).AddonField == nil
             "#).expect("inspect target aura partitions");
             assert!(has_count, "target aura private mixin cannot access Count");
             assert!(public_field_stays_public, "ordinary Lua fields leaked into private partition");

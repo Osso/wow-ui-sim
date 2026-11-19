@@ -46,6 +46,11 @@ pub struct SimState {
     pub last_gamepad_input_timestamp: Option<u32>,
     /// INFERRED host byte projection, independent of CVars and GPU detection.
     pub video_capability_bytes: crate::c_api::video_capabilities::VideoCapabilityBytes,
+    /// UNKNOWN live protocol values. INFERRED (simulator mapping): None means
+    /// no host pair is supplied.
+    #[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+    pub performance_bar_protocol_types:
+        Option<crate::c_api::performance_bar::PerformanceProtocolTypes>,
     /// Explicit mapped-stick input; None means no configured snapshot, not device absence.
     #[cfg(any(feature = "client-wowforever", feature = "client-ptr"))]
     pub gamepad_mapped_sticks: Option<crate::c_api::c_game_pad::MappedStickSnapshot>,
@@ -58,6 +63,8 @@ pub struct SimState {
     pub summon_friend_cooldown: crate::c_api::c_recruit_a_friend::SummonFriendCooldown,
     pub raf_versions: Vec<crate::c_api::c_recruit_a_friend::RafVersionInfo>,
     pub widgets: WidgetRegistry,
+    /// Shared suffix exclusions used by AddSourceLocationExclude and CreateTexture.
+    pub(crate) source_location_exclusions: Vec<Vec<u8>>,
     #[cfg(feature = "retail-12-1-5")]
     pub(crate) weather: crate::c_api::c_weather::WeatherState,
     #[cfg(feature = "retail-12-1-0")]
@@ -162,6 +169,8 @@ pub struct SimState {
     #[cfg(feature = "client-wrath")]
     pub who_routing: crate::c_api::who_routing::WhoRouting,
     pub tooltips: HashMap<u64, TooltipData>,
+    /// Host-only call inputs for the simulator's q4 inset access test seam.
+    pub clamp_inset_access_input: crate::widget::ClampInsetAccessInput,
     /// Explicit host-supplied item metadata, taking precedence over the generated catalog.
     pub item_overrides: HashMap<u32, crate::items::ItemInfo>,
     /// UNKNOWN live R88l.1 condition outcomes; absent inputs select no color override.
@@ -184,6 +193,13 @@ pub struct SimState {
     pub item_tooltip_levels: HashMap<crate::c_api::ItemTooltipContext, u16>,
     /// R80 final item-mod amounts and metadata, keyed by item ID and resolved level.
     pub item_tooltip_inputs: HashMap<(u32, u16), crate::c_api::item_tooltip::ItemTooltipInput>,
+    /// INFERRED (simulator mapping): explicit calculated unit prices keyed by item ID and working level.
+    /// Empty by default; unknown price calculations do not produce a row.
+    pub item_tooltip_sell_price_unit_prices: HashMap<(u32, u16), u32>,
+    /// INFERRED (simulator mapping): explicit Retail bag-item status snapshots for R88aw.
+    /// Empty by default; no status input does not imply an unsuppressed row.
+    pub bag_item_tooltip_sell_price_statuses:
+        HashMap<(i32, i32), crate::c_api::item_tooltip::SellPriceStatusInput>,
     /// UNKNOWN Retail SellPrice inputs: item ID to (current, prepared maximum) quantity.
     /// Empty by default; these values are not derived from Stackable.
     pub item_tooltip_sell_price_quantities: HashMap<u32, (u32, u32)>,
@@ -577,6 +593,9 @@ pub struct SimState {
     pub next_report_token: i64,
     pub party_members: Vec<PartyMember>,
     pub party_group_active: bool,
+    /// INFERRED (simulator mapping): owner roster inputs are empty until supplied.
+    pub home_subgroup_roster: Option<SubgroupOwnerRoster>,
+    pub instance_subgroup_roster: Option<SubgroupOwnerRoster>,
     /// Retail PartyInfo roster input used by `GetGroupMemberCounts`.
     pub group_member_counts: GroupMemberCountsState,
     /// INFERRED: host-owned identity classification; no automatic context inference.
@@ -688,6 +707,9 @@ pub struct SimState {
     pub ranged_auto_attack_spell_id: u32,
     /// Host null override; None uses the INFERRED active-player context.
     pub spell_cast_context_is_null: Option<bool>,
+    /// UNKNOWN native value; INFERRED mapping: None means no metadata-source input.
+    #[cfg(feature = "retail-12-1-5")]
+    pub spell_identifier_metadata_source: Option<i32>,
     /// Explicit simulator input for older C_Spell and spellbook count queries.
     #[cfg(feature = "retail-12-0-0")]
     pub spell_cast_counts: HashMap<u32, u32>,
@@ -726,6 +748,7 @@ pub struct SimState {
     pub r88s_inventory_inputs: crate::c_api::item_location::R88sInventoryInputs,
     pub loading_addon_index: Option<u16>,
     pub loading_addon_stack: Vec<u16>,
+    pub loading_addon_secure_env: Option<bool>,
     pub executing_addon_index: Option<u16>,
     pub loading_nil_symbol_environment: Option<NilSymbolEnvironment>,
     pub loading_forbidden: bool,
@@ -1256,6 +1279,8 @@ pub struct SimState {
     pub save_failed_addons: bool,
     /// Explicit host-supplied cinematic playback state; no playback engine implied.
     pub cinematic_active: bool,
+    #[cfg(feature = "client-mists")]
+    pub movie_playback: MoviePlaybackState,
     /// World entry is distinct from IsLoggedIn; supplied/transitioned by the owner.
     pub in_world: bool,
     /// Wrath reload's temporary protected-action phase, not the player's combat bit.

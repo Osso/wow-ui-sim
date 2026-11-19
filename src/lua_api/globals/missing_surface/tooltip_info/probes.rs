@@ -3,8 +3,8 @@ use super::super::{
     TOOLTIP_TYPE_UNIT_AURA,
 };
 use super::builders::{
-    empty_tooltip, pet_action_spell_id, push_plain_line, push_tooltip_line, stamp_data_instance,
-    tooltip_for_item_id,
+    RetailSellPriceRequest, empty_tooltip, pet_action_spell_id, push_plain_line, push_tooltip_line,
+    stamp_data_instance, tooltip_for_item_id, tooltip_for_item_id_with_request,
 };
 use super::sources::{
     inbox_attachment_item_id, merchant_item_id, parse_spell_source, recipe_output_item,
@@ -199,8 +199,9 @@ pub(super) fn c_tooltip_get_trade_target_item(state: &mut LuaState) -> LuaResult
 
 pub(super) fn c_tooltip_get_merchant_item(state: &mut LuaState) -> LuaResult<u32> {
     let slot = i32::from_stack(state, 1)?;
+    let request = RetailSellPriceRequest::without_instance(true);
     let tooltip = merchant_item_id(state, slot)
-        .map(|item_id| tooltip_for_item_id(state, item_id))
+        .map(|item_id| tooltip_for_item_id_with_request(state, item_id, request))
         .unwrap_or_else(|| empty_tooltip(state, TOOLTIP_TYPE_ITEM));
     state.push(tooltip);
     Ok(1)

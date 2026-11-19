@@ -1,9 +1,9 @@
 //! End-to-end fenv isolation tests for secureenv.
 //!
-//! Secureenv is a shallow copy of `_G` retargeted onto the function
-//! environment of chunks marked `[LoadIntoEnvironment secure]`. Writes
-//! from secure code to env-level bindings must stay in secureenv — they
-//! must not replicate to `_G`, because `_G` is what insecure addons see.
+//! Secureenv is a shared table seeded from the fixed 39-name base and used
+//! as the function environment of chunks marked `[LoadIntoEnvironment
+//! secure]`. Table-valued base globals are shallow-copied into separate root
+//! tables; later writes stay in the environment where they occur.
 //! These tests exercise the property via the real load path (`mark_secure`
 //! → `call_function`).
 //!
@@ -19,6 +19,7 @@ fn env() -> WowLuaEnv {
     WowLuaEnv::new().expect("Failed to create Lua environment")
 }
 
+#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
 #[test]
 fn toc_multiannotations_load_files_in_order_with_secure_environment() {
     let env = env();
@@ -27,8 +28,10 @@ fn toc_multiannotations_load_files_in_order_with_secure_environment() {
     std::fs::write(
         &toc,
         "## Title: AnnotationProbe\n\
+         ## UseSecureEnvironment: 1\n\
          Before.lua\n\
          Secure.lua\t\t[Bootstrap] [LoadIntoEnvironment secure]\n\
+         Secure.xml\n\
          After.lua\n",
     )
     .unwrap();
@@ -40,19 +43,496 @@ fn toc_multiannotations_load_files_in_order_with_secure_environment() {
     std::fs::write(
         root.path().join("Secure.lua"),
         "local _, addon = ...; assert(addon.order[1] == 'before'); \
-         addon.order[#addon.order+1] = 'secure'; annotationSecureValue = 37",
+         assert(debug == nil and coroutine == nil, 'secure files use the fixed environment'); \
+         addon.order[#addon.order+1] = 'secure'; annotationSecureValue = 37; \
+         annotationSecureBaseOnly = true",
+    )
+    .unwrap();
+    std::fs::write(
+        root.path().join("Secure.xml"),
+        "<Ui>\n\
+         <Script file=\"SecureXmlScript.lua\"/>\n\
+         <Script>assert(debug == nil and coroutine == nil, 'secure XML uses the fixed environment'); annotationSecureXmlInlineRead = true</Script>\n\
+         <Frame name=\"AnnotationProbeFrame\">\n\
+         <Size x=\"20\" y=\"20\"/>\n\
+         </Frame>\n\
+         </Ui>",
+    )
+    .unwrap();
+    std::fs::write(
+        root.path().join("SecureXmlScript.lua"),
+        "assert(debug == nil and coroutine == nil, 'secure XML uses the fixed environment'); annotationSecureXmlFileRead = true",
     )
     .unwrap();
     std::fs::write(
         root.path().join("After.lua"),
         "local _, addon = ...; assert(table.concat(addon.order, ',') == 'before,secure'); \
-         assert(rawget(_G, 'annotationSecureValue') == nil); \
-         assert(__secureenv.annotationSecureValue == 37); annotationLoadComplete = true",
+         assert(debug == nil and coroutine == nil, 'secure files use the fixed environment'); \
+         annotationLoadComplete = true",
     )
     .unwrap();
+
+    let snapshot_names_start_private: bool = env
+        .eval(
+            r#"
+                return type(rawget(_G, 'debug')) == 'table'
+                    and rawget(_G, 'coroutine') ~= nil
+                    and rawget(__secureenv, 'debug') == nil
+                    and rawget(__secureenv, 'coroutine') == nil
+            "#,
+        )
+        .unwrap();
+    assert!(snapshot_names_start_private);
+
     let result = wow_ui_sim::loader::load_addon(&env.loader_env(), &toc).unwrap();
     assert!(result.warnings.is_empty(), "{:?}", result.warnings);
-    env.exec("assert(annotationLoadComplete == true)").unwrap();
+    let lua_errors = env.state().borrow().lua_errors.clone();
+    assert!(lua_errors.is_empty(), "{:?}", lua_errors);
+
+    let secure_file_results: (bool, bool, bool, bool, bool, bool, bool, bool, bool) = env
+        .eval(
+            r#"
+                return rawget(__secureenv, 'annotationSecureValue') == 37,
+                    rawget(__secureenv, 'annotationSecureBaseOnly') == true,
+                    rawget(__secureenv, 'annotationLoadComplete') == true,
+                    rawget(__secureenv, 'annotationSecureXmlInlineRead') == true,
+                    rawget(__secureenv, 'annotationSecureXmlFileRead') == true,
+                    rawget(_G, 'annotationSecureValue') == nil,
+                    rawget(_G, 'annotationSecureBaseOnly') == nil,
+                    rawget(__secureenv, 'debug') == nil,
+                    rawget(__secureenv, 'coroutine') == nil
+            "#,
+        )
+        .unwrap();
+    assert_eq!(
+        secure_file_results,
+        (true, true, true, true, true, true, true, true, true)
+    );
+}
+
+#[test]
+fn secure_scoped_modifier_onload_resolves_secure_mixin() {
+    let env = env();
+    let root = tempfile::tempdir().unwrap();
+    let toc = root.path().join("SecureMixinProbe.toc");
+    std::fs::write(
+        &toc,
+        "## Title: SecureMixinProbe\n\
+         ## UseSecureEnvironment: 1\n\
+         Mixin.lua\n\
+         Mixin.xml\n",
+    )
+    .unwrap();
+    std::fs::write(
+        root.path().join("Mixin.lua"),
+        "SecureMixinProbe = { OnLoad = function() secureMixinProbeOnLoad = true end }",
+    )
+    .unwrap();
+    std::fs::write(
+        root.path().join("Mixin.xml"),
+        "<Ui><ScopedModifier forbidden=\"true\" hideFromGlobalEnv=\"true\">\
+         <Frame name=\"SecureMixinProbeFrame\" mixin=\"SecureMixinProbe\">\
+         <Scripts><OnLoad method=\"OnLoad\"/></Scripts>\
+         </Frame></ScopedModifier></Ui>",
+    )
+    .unwrap();
+
+    let result = wow_ui_sim::loader::load_addon(&env.loader_env(), &toc).unwrap();
+    assert!(result.warnings.is_empty(), "{:?}", result.warnings);
+    let observed: (bool, bool) = env
+        .eval(
+            "return rawget(__secureenv, 'secureMixinProbeOnLoad') == true, \
+             rawget(_G, 'secureMixinProbeOnLoad') == nil",
+        )
+        .unwrap();
+    assert_eq!(observed, (true, true));
+    assert!(env.state().borrow().lua_errors.is_empty());
+}
+
+#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+#[test]
+fn create_texture_source_location_skips_excluded_callsite() {
+    let env = env();
+    env.exec("sourceLocationProbeResults = {}").unwrap();
+    let root = tempfile::tempdir().unwrap();
+    let addon_dir = root.path().join("SourceLocationProbe");
+    std::fs::create_dir_all(&addon_dir).unwrap();
+    let toc = addon_dir.join("SourceLocationProbe.toc");
+    std::fs::write(
+        &toc,
+        "## Title: SourceLocationProbe\nSourceLocationProbe.lua\n",
+    )
+    .unwrap();
+    std::fs::write(
+        addon_dir.join("SourceLocationProbe.lua"),
+        r##"
+local first = UIParent:CreateTexture()
+local firstLocation = first:GetSourceLocation()
+local secureAddSource = rawget(__secureenv, "AddSourceLocationExclude")
+local returnCount = select("#", secureAddSource("SourceLocationProbe.lua"))
+local firstAfterExclusion = first:GetSourceLocation()
+local excluded = UIParent:CreateTexture()
+local excludedLocation = excluded:GetSourceLocation()
+sourceLocationProbeResults.first = firstLocation
+sourceLocationProbeResults.firstAfterExclusion = firstAfterExclusion
+sourceLocationProbeResults.returnCount = returnCount
+sourceLocationProbeResults.excluded = excludedLocation
+"##,
+    )
+    .unwrap();
+
+    let result = wow_ui_sim::loader::load_addon(&env.loader_env(), &toc).unwrap();
+    assert!(result.warnings.is_empty(), "{:?}", result.warnings);
+    assert!(
+        result.lua_files > 0,
+        "the source probe Lua file must execute"
+    );
+    let addon_loaded: bool = env
+        .eval("return C_AddOns.IsAddOnLoaded('SourceLocationProbe')")
+        .unwrap();
+    assert!(addon_loaded, "the source-location probe addon must load");
+    let lua_errors = env.state().borrow().lua_errors.clone();
+    assert!(lua_errors.is_empty(), "probe Lua errors: {lua_errors:?}");
+
+    let (first, first_after_exclusion, return_count, excluded): (
+        Option<String>,
+        Option<String>,
+        Option<i32>,
+        Option<String>,
+    ) = env
+        .eval(
+            "return sourceLocationProbeResults.first, sourceLocationProbeResults.firstAfterExclusion, sourceLocationProbeResults.returnCount, sourceLocationProbeResults.excluded",
+        )
+        .unwrap();
+    assert!(
+        first
+            .as_deref()
+            .is_some_and(|location| location.ends_with("SourceLocationProbe.lua:2")),
+        "CreateTexture must capture its Lua file and line: {first:?}"
+    );
+    assert_eq!(
+        first_after_exclusion, first,
+        "stored locations do not rescan"
+    );
+    assert_eq!(
+        return_count,
+        Some(0),
+        "AddSourceLocationExclude returns no values"
+    );
+    assert!(
+        excluded
+            .as_deref()
+            .is_some_and(|location| location.starts_with("UnknownFile:")),
+        "an excluded callsite without another file source uses UnknownFile: {excluded:?}"
+    );
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn secure_addon_loads_nonsecure_dependency_in_ordinary_then_secure_environment() {
+    let env = env();
+    let root = tempfile::tempdir().unwrap();
+    let dependency_dir = root.path().join("DependencyProbe");
+    let consumer_dir = root.path().join("SecureConsumerProbe");
+    std::fs::create_dir_all(&dependency_dir).unwrap();
+    std::fs::create_dir_all(&consumer_dir).unwrap();
+    env.exec(
+        r#"
+        local trace = {}
+        rawset(_G, "r88tSecureDependencyTrace", trace)
+        rawset(__secureenv, "r88tSecureDependencyTrace", trace)
+        rawset(_G, "r88tSecureEnvironment", __secureenv)
+        rawset(__secureenv, "r88tSecureEnvironment", __secureenv)
+        "#,
+    )
+    .unwrap();
+    std::fs::write(
+        dependency_dir.join("DependencyProbe.toc"),
+        "## Title: DependencyProbe\nDependency.lua\n",
+    )
+    .unwrap();
+    std::fs::write(
+        dependency_dir.join("Dependency.lua"),
+        "local mode = getfenv(1) == r88tSecureEnvironment and 'secure' or 'ordinary'; \
+         table.insert(r88tSecureDependencyTrace, 'dependency:' .. mode); \
+         dependencyLoadCount = (dependencyLoadCount or 0) + 1; \
+         dependencyToken = 'secure-visible'; \
+         function getDependencyToken() return dependencyToken end",
+    )
+    .unwrap();
+    let consumer_toc = consumer_dir.join("SecureConsumerProbe.toc");
+    std::fs::write(
+        &consumer_toc,
+        "## Title: SecureConsumerProbe\n\
+         ## UseSecureEnvironment: 1\n\
+         ## Dependencies: DependencyProbe\n\
+         Consumer.lua\n",
+    )
+    .unwrap();
+    std::fs::write(
+        consumer_dir.join("Consumer.lua"),
+        "assert(rawget(_G, 'debug') == nil); \
+         assert(rawget(_G, 'coroutine') == nil); \
+         assert(getfenv(getDependencyToken) == _G); \
+         assert(getDependencyToken() == 'secure-visible'); \
+         table.insert(r88tSecureDependencyTrace, 'consumer:secure'); \
+         secureConsumerRunCount = (secureConsumerRunCount or 0) + 1; \
+         secureConsumerSawDependency = true",
+    )
+    .unwrap();
+
+    let result = wow_ui_sim::loader::load_addon(&env.loader_env(), &consumer_toc).unwrap();
+    assert!(result.warnings.is_empty(), "{:?}", result.warnings);
+    let trace: String = env
+        .eval("return table.concat(r88tSecureDependencyTrace, ',')")
+        .unwrap();
+    let ordinary_request = trace
+        .find("dependency:ordinary")
+        .expect("ordinary dependency request should execute its file");
+    let secure_request = trace
+        .find("dependency:secure")
+        .expect("secure dependency request should execute its file");
+    let consumer = trace
+        .find("consumer:secure")
+        .expect("secure consumer file should execute after its dependency");
+    assert!(
+        ordinary_request < secure_request && secure_request < consumer,
+        "ordinary request, secure request, and consumer must stay ordered: {trace}"
+    );
+    let observed: (i32, i32, i32, bool, bool, bool, bool) = env
+        .eval(
+            r#"
+                return rawget(_G, 'dependencyLoadCount') or 0,
+                    rawget(__secureenv, 'dependencyLoadCount') or 0,
+                    rawget(__secureenv, 'secureConsumerRunCount') or 0,
+                    rawget(_G, 'dependencyToken') == 'secure-visible',
+                    rawget(__secureenv, 'dependencyToken') == 'secure-visible',
+                    rawget(__secureenv, 'secureConsumerSawDependency') == true,
+                    C_AddOns.IsAddOnLoaded('SecureConsumerProbe') == true
+            "#,
+        )
+        .unwrap();
+    // R88t marks the initial default-file execution count as INFERRED. Evidence: pr46-49-decomp-answers.md, sections R88t.
+    let (
+        ordinary_count,
+        secure_count,
+        consumer_count,
+        ordinary_token,
+        secure_token,
+        consumer_saw_dependency,
+        consumer_loaded,
+    ) = observed;
+    assert!(ordinary_count > 0 && secure_count > 0 && consumer_count > 0);
+    assert_eq!(
+        (
+            ordinary_token,
+            secure_token,
+            consumer_saw_dependency,
+            consumer_loaded,
+        ),
+        (true, true, true, true)
+    );
+
+    {
+        let state = env.state().borrow();
+        let dependency = state
+            .addons
+            .iter()
+            .find(|addon| addon.folder_name == "DependencyProbe")
+            .expect("dependency load state");
+        assert!(dependency.loaded);
+        assert!(dependency.secure_loaded);
+        let consumer = state
+            .addons
+            .iter()
+            .find(|addon| addon.folder_name == "SecureConsumerProbe")
+            .expect("consumer load state");
+        assert!(!consumer.loaded);
+        assert!(consumer.secure_loaded);
+    }
+
+    let counts_before: (i32, i32, i32) = (ordinary_count, secure_count, consumer_count);
+    wow_ui_sim::loader::load_addon(&env.loader_env(), &consumer_toc).unwrap();
+    let counts_after: (i32, i32, i32) = env
+        .eval(
+            "return rawget(_G, 'dependencyLoadCount'), \
+             rawget(__secureenv, 'dependencyLoadCount'), \
+             rawget(__secureenv, 'secureConsumerRunCount')",
+        )
+        .unwrap();
+    assert_eq!(counts_after, counts_before);
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn secure_dependency_runs_after_ordinary_file_error() {
+    let env = env();
+    let root = tempfile::tempdir().unwrap();
+    let dependency_dir = root.path().join("Ac4DependencyProbe");
+    let consumer_dir = root.path().join("Ac4SecureConsumer");
+    std::fs::create_dir_all(&dependency_dir).unwrap();
+    std::fs::create_dir_all(&consumer_dir).unwrap();
+    env.exec(
+        r#"
+        local trace = {}
+        rawset(_G, "ac4DependencyTrace", trace)
+        rawset(__secureenv, "ac4DependencyTrace", trace)
+        rawset(_G, "ac4SecureEnvironment", __secureenv)
+        rawset(__secureenv, "ac4SecureEnvironment", __secureenv)
+        "#,
+    )
+    .unwrap();
+    std::fs::write(
+        dependency_dir.join("Ac4DependencyProbe.toc"),
+        "## Title: Ac4DependencyProbe\nDependency.lua\n",
+    )
+    .unwrap();
+    std::fs::write(
+        dependency_dir.join("Dependency.lua"),
+        r#"
+        local secure = getfenv(1) == ac4SecureEnvironment
+        table.insert(ac4DependencyTrace, secure and "dependency:secure" or "dependency:ordinary")
+        if secure then
+            ac4SecureDependencyRan = true
+        else
+            ac4OrdinaryDependencyFailed = true
+            error("ac4 ordinary dependency file failed")
+        end
+        "#,
+    )
+    .unwrap();
+    let consumer_toc = consumer_dir.join("Ac4SecureConsumer.toc");
+    std::fs::write(
+        &consumer_toc,
+        "## Title: Ac4SecureConsumer\n\
+         ## UseSecureEnvironment: 1\n\
+         ## Dependencies: Ac4DependencyProbe\n\
+         Consumer.lua\n",
+    )
+    .unwrap();
+    std::fs::write(
+        consumer_dir.join("Consumer.lua"),
+        r#"
+        assert(ac4SecureDependencyRan == true)
+        table.insert(ac4DependencyTrace, "consumer:secure")
+        ac4SecureConsumerRan = true
+        "#,
+    )
+    .unwrap();
+
+    let result = wow_ui_sim::loader::load_addon(&env.loader_env(), &consumer_toc)
+        .expect("ordinary file error must not prevent the secure dependency request");
+    assert!(
+        result
+            .warnings
+            .iter()
+            .any(|warning| warning.contains("ac4 ordinary dependency file failed")),
+        "the ordinary dependency pass must record its file error: {:?}",
+        result.warnings
+    );
+
+    let observed: (String, bool, bool, bool, bool, bool) = env
+        .eval(
+            r#"
+            return table.concat(ac4DependencyTrace, ","),
+                rawget(_G, "ac4OrdinaryDependencyFailed") == true,
+                rawget(__secureenv, "ac4OrdinaryDependencyFailed") == nil,
+                rawget(__secureenv, "ac4SecureDependencyRan") == true,
+                rawget(__secureenv, "ac4SecureConsumerRan") == true,
+                C_AddOns.IsAddOnLoaded("Ac4SecureConsumer") == true
+            "#,
+        )
+        .unwrap();
+    assert_eq!(
+        observed,
+        (
+            "dependency:ordinary,dependency:secure,consumer:secure".into(),
+            true,
+            true,
+            true,
+            true,
+            true
+        )
+    );
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn secure_dependencies_load_optional_before_required_before_consumer() {
+    let env = env();
+    let root = tempfile::tempdir().unwrap();
+    let optional_dir = root.path().join("OptionalOrderProbe");
+    let required_dir = root.path().join("RequiredOrderProbe");
+    let consumer_dir = root.path().join("SecureOrderConsumer");
+    std::fs::create_dir_all(&optional_dir).unwrap();
+    std::fs::create_dir_all(&required_dir).unwrap();
+    std::fs::create_dir_all(&consumer_dir).unwrap();
+    env.exec(
+        r#"
+        local trace = {}
+        rawset(_G, "r88tSecureDependencyOrderTrace", trace)
+        rawset(__secureenv, "r88tSecureDependencyOrderTrace", trace)
+        rawset(_G, "r88tSecureEnvironment", __secureenv)
+        rawset(__secureenv, "r88tSecureEnvironment", __secureenv)
+        "#,
+    )
+    .unwrap();
+
+    std::fs::write(
+        optional_dir.join("OptionalOrderProbe.toc"),
+        "## Title: OptionalOrderProbe\nOptional.lua\n",
+    )
+    .unwrap();
+    std::fs::write(
+        optional_dir.join("Optional.lua"),
+        "local mode = getfenv(1) == r88tSecureEnvironment and 'secure' or 'ordinary'; \
+         table.insert(r88tSecureDependencyOrderTrace, 'optional:' .. mode)",
+    )
+    .unwrap();
+    std::fs::write(
+        required_dir.join("RequiredOrderProbe.toc"),
+        "## Title: RequiredOrderProbe\nRequired.lua\n",
+    )
+    .unwrap();
+    std::fs::write(
+        required_dir.join("Required.lua"),
+        "local mode = getfenv(1) == r88tSecureEnvironment and 'secure' or 'ordinary'; \
+         table.insert(r88tSecureDependencyOrderTrace, 'required:' .. mode)",
+    )
+    .unwrap();
+    let consumer_toc = consumer_dir.join("SecureOrderConsumer.toc");
+    std::fs::write(
+        &consumer_toc,
+        "## Title: SecureOrderConsumer\n\
+         ## UseSecureEnvironment: 1\n\
+         ## OptionalDeps: OptionalOrderProbe\n\
+         ## Dependencies: RequiredOrderProbe\n\
+         Consumer.lua\n",
+    )
+    .unwrap();
+    std::fs::write(
+        consumer_dir.join("Consumer.lua"),
+        "local mode = getfenv(1) == r88tSecureEnvironment and 'secure' or 'ordinary'; \
+         table.insert(r88tSecureDependencyOrderTrace, 'consumer:' .. mode)",
+    )
+    .unwrap();
+
+    let _ = wow_ui_sim::loader::load_addon(&env.loader_env(), &consumer_toc);
+    let trace: String = env
+        .eval("return table.concat(r88tSecureDependencyOrderTrace, ',')")
+        .unwrap();
+    let optional_ordinary = trace.find("optional:ordinary").unwrap();
+    let optional_secure = trace.find("optional:secure").unwrap();
+    let required_ordinary = trace.find("required:ordinary").unwrap();
+    let required_secure = trace.find("required:secure").unwrap();
+    let consumer_secure = trace.find("consumer:secure").unwrap();
+    assert!(
+        optional_ordinary < optional_secure
+            && optional_secure < required_ordinary
+            && required_ordinary < required_secure
+            && required_secure < consumer_secure,
+        "optional and required dependency requests must precede the secure consumer: {trace}"
+    );
 }
 
 #[test]
@@ -228,6 +708,7 @@ fn exec_maybe_secure_false_matches_exec() {
     assert_eq!(on_g, "plain");
 }
 
+#[cfg(not(all(feature = "client-retail", feature = "retail-12-1-5")))]
 #[test]
 fn shared_table_mutation_propagates_both_ways() {
     let env = env();
@@ -267,6 +748,38 @@ fn shared_table_mutation_propagates_both_ways() {
         from_g, "from-secure",
         "mutations to a table still shared after initialization should be visible from _G"
     );
+}
+
+#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+#[test]
+fn secure_base_library_mutations_stay_in_separate_tables() {
+    let env = env();
+
+    env.exec_rilua_secure(
+        r#"
+            rawset(math, "__secureenv_table_probe", "secure")
+        "#,
+    )
+    .unwrap();
+
+    let public_value_type: String = env
+        .eval("return type(rawget(math, '__secureenv_table_probe'))")
+        .unwrap();
+    assert_eq!(public_value_type, "nil");
+
+    env.exec("rawset(math, '__secureenv_table_probe', 'global')")
+        .unwrap();
+    let (secure_value, public_value): (String, String) = env
+        .eval(
+            r#"
+            return rawget(rawget(__secureenv, "math"), "__secureenv_table_probe"),
+                   rawget(rawget(_G, "math"), "__secureenv_table_probe")
+            "#,
+        )
+        .unwrap();
+
+    assert_eq!(secure_value, "secure");
+    assert_eq!(public_value, "global");
 }
 
 /// Read a global through a function whose fenv is secureenv, mirroring how
@@ -366,6 +879,7 @@ fn secure_write_severs_the_link_to_global_env() {
     assert_eq!(g_value, 11.0, "_G keeps its own independent value");
 }
 
+#[cfg(not(all(feature = "client-retail", feature = "retail-12-1-5")))]
 #[test]
 fn global_copied_at_creation_is_frozen_against_later_g_rebind() {
     // A primitive global present at secureenv creation was copied
@@ -421,6 +935,44 @@ fn global_copied_at_creation_is_frozen_against_later_g_rebind() {
 }
 
 #[test]
+fn copied_base_function_is_frozen_against_later_g_rebind() {
+    let env = env();
+
+    let initially_copied: bool = env
+        .eval(
+            "return type(rawget(__secureenv, 'geterrorhandler')) == 'function' \
+             and rawget(__secureenv, 'geterrorhandler') == rawget(_G, 'geterrorhandler')",
+        )
+        .unwrap();
+    assert!(
+        initially_copied,
+        "geterrorhandler is part of the fixed secure base"
+    );
+
+    env.exec("rawset(_G, 'geterrorhandler', '__global_rebound__')")
+        .unwrap();
+    let (secure_type, public_type, secure_kept_copy): (String, String, bool) = env
+        .eval(
+            r#"
+            local result
+            local probe = function() result = geterrorhandler end
+            debug.setfenv(probe, __secureenv)
+            probe()
+            return type(result), type(rawget(_G, "geterrorhandler")),
+                   result == rawget(__secureenv, "geterrorhandler")
+            "#,
+        )
+        .unwrap();
+
+    assert_eq!(secure_type, "function");
+    assert_eq!(public_type, "string");
+    assert!(
+        secure_kept_copy,
+        "secureenv must keep its initial function value"
+    );
+}
+
+#[test]
 fn secureenv_does_not_read_late_table_from_global_env() {
     let env = env();
 
@@ -442,4 +994,598 @@ fn secureenv_does_not_read_late_table_from_global_env() {
         .unwrap();
 
     assert_eq!(table_type, "nil");
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn get_frame_metatable_is_present_in_both_environments() {
+    let env = env();
+
+    let result: (bool, bool) = env
+        .eval(
+            r#"
+            return type(rawget(_G, "GetFrameMetatable")) == "function",
+                   type(rawget(__secureenv, "GetFrameMetatable")) == "function"
+            "#,
+        )
+        .unwrap();
+
+    assert_eq!(result, (true, true));
+}
+
+#[cfg(all(
+    feature = "client-retail",
+    feature = "retail-12-1-5",
+    feature = "timed-signal-maps"
+))]
+#[test]
+fn retail_r88n11b_timed_signal_map_has_distinct_working_handlers() {
+    let env = env();
+
+    let works: bool = env
+        .eval(
+            r#"
+            local public = rawget(_G, "C_Timer")
+            local secure = rawget(__secureenv, "C_Timer")
+            local publicFactory = type(public) == "table" and rawget(public, "NewTimedSignalMap")
+            local secureFactory = type(secure) == "table" and rawget(secure, "NewTimedSignalMap")
+            if type(publicFactory) ~= "function" or type(secureFactory) ~= "function" then
+                return false
+            end
+            if rawequal(publicFactory, secureFactory) or rawequal(public, secure) then
+                return false
+            end
+            local publicMap = publicFactory(function() end)
+            local secureMap = secureFactory(function() end)
+            return type(publicMap) == "userdata" and type(secureMap) == "userdata"
+            "#,
+        )
+        .expect("R88n.11b NewTimedSignalMap publication should be observable");
+
+    assert!(works);
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn retail_c_timer_dual_members_are_registered_in_both_namespace_tables() {
+    let env = env();
+
+    let result: Vec<bool> = env
+        .eval(
+            r#"
+            local public = rawget(_G, "C_Timer")
+            local secure = rawget(__secureenv, "C_Timer")
+            local function hasFunction(table, member)
+                return type(table) == "table" and type(rawget(table, member)) == "function"
+            end
+            return {
+                hasFunction(public, "After"), hasFunction(secure, "After"),
+                hasFunction(public, "NewTicker"), hasFunction(secure, "NewTicker"),
+                hasFunction(public, "NewTimer"), hasFunction(secure, "NewTimer"),
+                public ~= secure,
+            }
+            "#,
+        )
+        .unwrap();
+
+    assert_eq!(result, vec![true, true, true, true, true, true, true]);
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn retail_r88ac_verified_game_numbers_are_published_to_secureenv() {
+    let env = env();
+    let names = wow_ui_sim::lua_api::globals::strings::string_data::GAME_ERROR_STRINGS
+        .iter()
+        .map(|(name, _)| format!("\"{name}\""))
+        .collect::<Vec<_>>()
+        .join(",");
+    let lua = format!(
+        r#"
+        for _, name in ipairs({{{names}}}) do
+            local ordinary = rawget(_G, name)
+            assert(type(ordinary) == "number", name .. " ordinary global missing")
+            assert(rawget(__secureenv, name) == ordinary, name .. " secure value differs")
+        end
+        "#,
+        names = names,
+    );
+    env.exec(&lua)
+        .expect("verified Game LE_GAME numbers should be present in secureenv");
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn retail_native_constants_and_enum_tables_are_separate() {
+    let env = env();
+
+    env.exec(
+        r#"
+        local publicConstants = rawget(_G, "Constants")
+        local secureConstants = rawget(__secureenv, "Constants")
+        assert(type(publicConstants) == "table")
+        assert(type(secureConstants) == "table")
+        assert(not rawequal(publicConstants, secureConstants))
+
+        local publicRoles = rawget(publicConstants, "LFG_ROLEConstants")
+        local secureRoles = rawget(secureConstants, "LFG_ROLEConstants")
+        assert(type(publicRoles) == "table")
+        assert(type(secureRoles) == "table")
+        assert(not rawequal(publicRoles, secureRoles))
+        assert(rawget(publicRoles, "LFG_ROLE_ANY") == 3)
+        assert(rawget(secureRoles, "LFG_ROLE_ANY") == 3)
+        assert(rawget(publicRoles, "LFG_ROLE_NO_ROLE") == -1)
+        assert(rawget(secureRoles, "LFG_ROLE_NO_ROLE") == -1)
+
+        local publicEnum = rawget(_G, "Enum")
+        local secureEnum = rawget(__secureenv, "Enum")
+        assert(type(publicEnum) == "table")
+        assert(type(secureEnum) == "table")
+        assert(not rawequal(publicEnum, secureEnum))
+
+        local publicPingStates = rawget(publicEnum, "PingSetTargetState")
+        local securePingStates = rawget(secureEnum, "PingSetTargetState")
+        assert(type(publicPingStates) == "table")
+        assert(type(securePingStates) == "table")
+        assert(not rawequal(publicPingStates, securePingStates))
+        assert(rawget(publicPingStates, "Ok") == 0)
+        assert(rawget(securePingStates, "Ok") == 0)
+        "#,
+    )
+    .expect("native Constants and Enum installers must create separate tables");
+}
+
+#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+#[test]
+fn retail_r88n11b_global_functions_share_values_with_secure_environment() {
+    const GLOBALS: [&str; 15] = [
+        "securecallmethod",
+        "issecretvalue",
+        "canaccessvalue",
+        "canaccessallvalues",
+        "canaccesstable",
+        "scrub",
+        "scrubsecretvalues",
+        "secretunwrap",
+        "canaccesssecrets",
+        "hasanysecretvalues",
+        "dropsecretaccess",
+        "issecrettable",
+        "CreateSecureDelegate",
+        "securecopy",
+        "secretwrap",
+    ];
+    let names = GLOBALS
+        .iter()
+        .map(|name| format!("{name:?}"))
+        .collect::<Vec<_>>()
+        .join(", ");
+    let failures: Vec<String> = env()
+        .eval(&format!(
+            r#"
+                local names = {{ {names} }}
+                local failures = {{}}
+                for _, name in ipairs(names) do
+                    local public = rawget(_G, name)
+                    local secure = rawget(__secureenv, name)
+                    if type(public) ~= "function" then
+                        failures[#failures + 1] = name .. ": ordinary function missing"
+                    elseif not rawequal(public, secure) then
+                        failures[#failures + 1] = name .. ": secure value differs"
+                    end
+                end
+                table.sort(failures)
+                return failures
+            "#
+        ))
+        .expect("R88n.11b global publication should be observable");
+
+    assert!(
+        failures.is_empty(),
+        "verified flag-7 globals must share one function value: {failures:?}"
+    );
+}
+
+#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+#[test]
+fn retail_r88n11b_members_publish_distinct_flag3_functions() {
+    const MEMBERS: [(&str, &str); 37] = [
+        ("C_ClassColor", "GetClassColor"),
+        ("C_ColorUtil", "ConvertHSLToHSV"),
+        ("C_ColorUtil", "ConvertHSVToHSL"),
+        ("C_ColorUtil", "ConvertHSVToRGB"),
+        ("C_ColorUtil", "ConvertRGBToHSV"),
+        ("C_ColorUtil", "GenerateTextColorCode"),
+        ("C_ColorUtil", "WrapTextInColor"),
+        ("C_ColorUtil", "WrapTextInColorCode"),
+        ("C_CurveUtil", "CreateColorCurve"),
+        ("C_CurveUtil", "CreateCurve"),
+        ("C_CurveUtil", "EvaluateColorFromBoolean"),
+        ("C_CurveUtil", "EvaluateColorValueFromBoolean"),
+        ("C_CurveUtil", "EvaluateGameCurve"),
+        ("C_FunctionContainers", "CreateCallback"),
+        ("C_GameRules", "AutoConnectToGameModeRealm"),
+        ("C_GameRules", "DoesGameModeHavePromo"),
+        ("C_GameRules", "GetActiveGameMode"),
+        ("C_GameRules", "GetCurrentEventRealmQueues"),
+        ("C_GameRules", "GetCurrentGameModeDisplayInfo"),
+        ("C_GameRules", "GetCurrentGameModeRecordID"),
+        ("C_GameRules", "GetDisplayedGameModeRecordIDAtIndex"),
+        ("C_GameRules", "GetGameModeDisplayInfoByRecordID"),
+        ("C_GameRules", "GetGameModeGlueScreenName"),
+        ("C_GameRules", "GetGameModePromoGlobalString"),
+        ("C_GameRules", "GetGameRuleAsFloat"),
+        ("C_GameRules", "GetGameRuleAsFrameStrata"),
+        ("C_GameRules", "GetNumDisplayedGameModes"),
+        ("C_GameRules", "IsCharacterlessLoginActive"),
+        ("C_GameRules", "IsClassAllowedForGameMode"),
+        ("C_GameRules", "IsGameModeEnabled"),
+        ("C_GameRules", "IsGameRuleActive"),
+        ("C_GameRules", "IsMultiActionBarVisibilityForced"),
+        ("C_GameRules", "IsPersonalResourceDisplayEnabled"),
+        ("C_GameRules", "IsPlunderstorm"),
+        ("C_GameRules", "IsStandard"),
+        ("C_GameRules", "IsWoWHack"),
+        ("C_ScriptedAnimations", "GetAllScriptedAnimationEffects"),
+    ];
+    let entries = MEMBERS
+        .iter()
+        .map(|(namespace, member)| format!("{{{namespace:?}, {member:?}}}"))
+        .collect::<Vec<_>>()
+        .join(", ");
+    let env = env();
+    let (present, namespaces, missing, failures): (i64, i64, Vec<String>, Vec<String>) = env
+        .eval(&format!(
+            r#"
+                local entries = {{ {entries} }}
+                local present, seen, missing, failures = 0, {{}}, {{}}, {{}}
+                for _, entry in ipairs(entries) do
+                    local namespace, member = entry[1], entry[2]
+                    local public = rawget(_G, namespace)
+                    local secure = rawget(__secureenv, namespace)
+                    if type(public) ~= "table" then
+                        failures[#failures + 1] = namespace .. ": ordinary namespace missing"
+                    elseif type(secure) ~= "table" then
+                        failures[#failures + 1] = namespace .. ": secure namespace missing"
+                    elseif rawequal(public, secure) then
+                        failures[#failures + 1] = namespace .. ": namespace tables are shared"
+                    else
+                        seen[namespace] = true
+                        local publicValue = rawget(public, member)
+                        local secureValue = rawget(secure, member)
+                        if publicValue == nil then
+                            missing[#missing + 1] = namespace .. "." .. member
+                            if secureValue ~= nil then
+                                failures[#failures + 1] = namespace .. "." .. member .. ": secure-only value"
+                            end
+                        elseif type(publicValue) ~= "function" then
+                            failures[#failures + 1] = namespace .. "." .. member .. ": ordinary value is not a function"
+                        elseif type(secureValue) ~= "function" then
+                            failures[#failures + 1] = namespace .. "." .. member .. ": secure value is not a function"
+                        elseif rawequal(publicValue, secureValue) then
+                            failures[#failures + 1] = namespace .. "." .. member .. ": flag-3 closures share identity"
+                        else
+                            present = present + 1
+                        end
+                    end
+                end
+                local namespaceCount = 0
+                for _ in pairs(seen) do namespaceCount = namespaceCount + 1 end
+                table.sort(missing)
+                table.sort(failures)
+                return present, namespaceCount, missing, failures
+            "#
+        ))
+        .expect("R88n.11b namespace publication should be observable");
+
+    assert_eq!(
+        namespaces, 6,
+        "all verified namespace roots must be separate"
+    );
+    assert_eq!(present, 31, "expected all modeled members to publish");
+    assert_eq!(
+        missing,
+        vec![
+            "C_CurveUtil.EvaluateGameCurve".to_string(),
+            "C_GameRules.AutoConnectToGameModeRealm".to_string(),
+            "C_GameRules.GetCurrentGameModeRecordID".to_string(),
+            "C_GameRules.GetGameModePromoGlobalString".to_string(),
+            "C_GameRules.IsCharacterlessLoginActive".to_string(),
+            "C_GameRules.IsClassAllowedForGameMode".to_string(),
+        ],
+        "only the six unimplemented simulator members should remain absent"
+    );
+    assert_eq!(present + missing.len() as i64, 37);
+    assert!(
+        failures.is_empty(),
+        "invalid secure publications: {failures:?}"
+    );
+    let (public_r, public_g, public_b, secure_r, secure_g, secure_b): (
+        f64,
+        f64,
+        f64,
+        f64,
+        f64,
+        f64,
+    ) = env
+        .eval(
+            r#"
+            local public = rawget(rawget(_G, "C_ColorUtil"), "ConvertHSVToRGB")
+            local secure = rawget(rawget(__secureenv, "C_ColorUtil"), "ConvertHSVToRGB")
+            local public_r, public_g, public_b = public(0, 1, 1)
+            local secure_r, secure_g, secure_b = secure(0, 1, 1)
+            return public_r, public_g, public_b, secure_r, secure_g, secure_b
+            "#,
+        )
+        .expect("R88g.3.q3 Lua-produced flag-3 function should remain equivalent");
+    assert_eq!(
+        (public_r, public_g, public_b),
+        (secure_r, secure_g, secure_b),
+        "the separate secure flag-3 closure must preserve the Lua producer's result"
+    );
+}
+
+#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+#[test]
+fn retail_r88n11b_private_aura_members_are_secure_only() {
+    const MEMBERS: [&str; 13] = [
+        "AddPrivateAuraUpdateCallback",
+        "AnchorPrivateAura",
+        "GetAllPrivateAuraInstanceIDs",
+        "GetAllPrivateAuras",
+        "GetAuraDataByAuraInstanceIDPrivate",
+        "GetPrivateAuraAnchors",
+        "GetPrivateAuraCasterGUID",
+        "IsPrivateAuraFilteredOutByInstanceID",
+        "RemovePrivateAuraUpdateCallback",
+        "SetPrivateAuraAnchorAddedCallback",
+        "SetPrivateAuraAnchorRemovedCallback",
+        "SetPrivateRaidBossMessageCallback",
+        "SetPrivateWarningTextFrame",
+    ];
+    let members = MEMBERS
+        .iter()
+        .map(|member| format!("{member:?}"))
+        .collect::<Vec<_>>()
+        .join(", ");
+    let (present, missing, failures, roots_are_separate): (i64, Vec<String>, Vec<String>, bool) =
+        env()
+            .eval(&format!(
+                r#"
+                local public = rawget(_G, "C_UnitAurasPrivate")
+                local secure = rawget(__secureenv, "C_UnitAurasPrivate")
+                local failures, missing = {{}}, {{}}
+                if type(public) ~= "table" then
+                    failures[#failures + 1] = "ordinary namespace missing"
+                end
+                if type(secure) ~= "table" then
+                    failures[#failures + 1] = "secure namespace missing"
+                end
+                if #failures > 0 then
+                    return 0, missing, failures, false
+                end
+                local rootsAreSeparate = not rawequal(public, secure)
+                if not rootsAreSeparate then
+                    failures[#failures + 1] = "namespace tables are shared"
+                end
+                local present = 0
+                for _, member in ipairs({{{members}}}) do
+                    local publicValue = rawget(public, member)
+                    local secureValue = rawget(secure, member)
+                    if type(secureValue) == "function" then
+                        present = present + 1
+                        if publicValue ~= nil then
+                            failures[#failures + 1] = member .. ": ordinary value is present"
+                        end
+                    elseif publicValue == nil and secureValue == nil then
+                        missing[#missing + 1] = "C_UnitAurasPrivate." .. member
+                    else
+                        failures[#failures + 1] = member .. ": member is not secure-only"
+                    end
+                end
+                table.sort(missing)
+                table.sort(failures)
+                return present, missing, failures, rootsAreSeparate
+            "#
+            ))
+            .expect("R88n.11b flag-2 publication should be observable");
+
+    assert!(
+        roots_are_separate,
+        "private aura namespaces must remain separate"
+    );
+    assert_eq!(
+        present, 12,
+        "all modeled flag-2 members must be secure-only"
+    );
+    assert_eq!(
+        missing,
+        vec!["C_UnitAurasPrivate.AnchorPrivateAura".to_string()],
+        "the unimplemented member must remain absent"
+    );
+    assert_eq!(present + missing.len() as i64, MEMBERS.len() as i64);
+    assert!(
+        failures.is_empty(),
+        "invalid secure-only members: {failures:?}"
+    );
+}
+
+#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+#[test]
+fn retail_r88n11b_c_texture_members_publish_distinct_flag3_functions() {
+    const MEMBERS: [&str; 11] = [
+        "ClearTitleIconTexture",
+        "GetAtlasElementID",
+        "GetAtlasElements",
+        "GetAtlasExists",
+        "GetAtlasID",
+        "GetAtlasInfo",
+        "GetFilenameFromFileDataID",
+        "GetTitleIconTexture",
+        "IsTitleIconTextureReady",
+        "SetTitleIconTexture",
+        "SetURLTexture",
+    ];
+    let members = MEMBERS
+        .iter()
+        .map(|member| format!("{member:?}"))
+        .collect::<Vec<_>>()
+        .join(", ");
+    let env = env();
+    let (present, missing, failures, roots_are_separate): (i64, Vec<String>, Vec<String>, bool) =
+        env.eval(&format!(
+            r#"
+                local public = rawget(_G, "C_Texture")
+                local secure = rawget(__secureenv, "C_Texture")
+                local failures, missing = {{}}, {{}}
+                if type(public) ~= "table" then
+                    failures[#failures + 1] = "ordinary namespace missing"
+                end
+                if type(secure) ~= "table" then
+                    failures[#failures + 1] = "secure namespace missing"
+                end
+                if #failures > 0 then
+                    return 0, missing, failures, false
+                end
+                local rootsAreSeparate = not rawequal(public, secure)
+                if not rootsAreSeparate then
+                    failures[#failures + 1] = "namespace tables are shared"
+                end
+                local present = 0
+                for _, member in ipairs({{{members}}}) do
+                    local publicValue = rawget(public, member)
+                    local secureValue = rawget(secure, member)
+                    if publicValue == nil and secureValue == nil then
+                        missing[#missing + 1] = "C_Texture." .. member
+                    elseif type(publicValue) ~= "function" then
+                        failures[#failures + 1] = member .. ": ordinary value is not a function"
+                    elseif type(secureValue) ~= "function" then
+                        failures[#failures + 1] = member .. ": secure value is not a function"
+                    elseif rawequal(publicValue, secureValue) then
+                        failures[#failures + 1] = member .. ": flag-3 closures share identity"
+                    else
+                        present = present + 1
+                    end
+                end
+                table.sort(missing)
+                table.sort(failures)
+                return present, missing, failures, rootsAreSeparate
+            "#
+        ))
+        .expect("R88n.11b C_Texture publication should be observable");
+
+    assert!(
+        roots_are_separate,
+        "C_Texture namespaces must remain separate"
+    );
+    assert_eq!(present, 3, "publish existing flag-3 functions only");
+    assert_eq!(
+        missing,
+        vec![
+            "C_Texture.ClearTitleIconTexture".to_string(),
+            "C_Texture.GetAtlasElementID".to_string(),
+            "C_Texture.GetAtlasElements".to_string(),
+            "C_Texture.GetAtlasID".to_string(),
+            "C_Texture.GetTitleIconTexture".to_string(),
+            "C_Texture.IsTitleIconTextureReady".to_string(),
+            "C_Texture.SetTitleIconTexture".to_string(),
+            "C_Texture.SetURLTexture".to_string(),
+        ],
+        "unimplemented members must remain absent"
+    );
+    assert_eq!(present + missing.len() as i64, MEMBERS.len() as i64);
+    assert!(
+        failures.is_empty(),
+        "invalid C_Texture routes: {failures:?}"
+    );
+    let (ordinary_exists, secure_exists): (bool, bool) = env
+        .eval(
+            r#"
+            local ordinary = rawget(_G, "C_Texture")
+            local secure = rawget(__secureenv, "C_Texture")
+            return ordinary.GetAtlasExists("UI-Frame-InnerTopLeft"),
+                secure.GetAtlasExists("UI-Frame-InnerTopLeft")
+            "#,
+        )
+        .expect("R88g.3.q3 C_Texture route should preserve GetAtlasExists results");
+    assert!(
+        ordinary_exists,
+        "the atlas producer must return a real result"
+    );
+    assert_eq!(
+        ordinary_exists, secure_exists,
+        "separate flag-3 C_Texture closures must return equivalent results"
+    );
+}
+
+#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+mod flag3_taint_tests {
+    use super::env;
+    use wow_ui_sim::lua_api::WowLuaEnv;
+    use wow_ui_sim::screen::ScreenKind;
+
+    fn install_probe(env: &WowLuaEnv, taint: Option<&str>) {
+        let stamp = taint
+            .map(|name| format!("debug.setobjecttaint(probe, {name:?})"))
+            .unwrap_or_default();
+        let code = format!(
+            r#"
+                local probe = function()
+                    return issecure(), debug.getstacktaint()
+                end
+                {stamp}
+                rawset(rawget(_G, "C_ColorUtil"), "ConvertHSVToRGB", probe)
+            "#
+        );
+        env.exec(&code).expect("install Lua flag-3 probe");
+        env.set_screen_mode(ScreenKind::CharacterSelect);
+        env.set_screen_mode(ScreenKind::Game);
+    }
+
+    fn probe_call_outcomes(
+        env: &WowLuaEnv,
+    ) -> (
+        bool,
+        Option<String>,
+        bool,
+        Option<String>,
+        bool,
+        Option<String>,
+    ) {
+        env.eval(
+            r#"
+            local ordinary = rawget(rawget(_G, "C_ColorUtil"), "ConvertHSVToRGB")
+            local secure = rawget(rawget(__secureenv, "C_ColorUtil"), "ConvertHSVToRGB")
+            local ordinarySecure, ordinaryTaint = ordinary()
+            local secureSecure, secureTaint = secure()
+            return ordinarySecure, ordinaryTaint, secureSecure, secureTaint,
+                issecure(), debug.getstacktaint()
+            "#,
+        )
+        .expect("call ordinary and secure probe functions")
+    }
+
+    #[test]
+    fn flag3_lua_clones_preserve_taint_stamps_and_call_behavior() {
+        let env = env();
+
+        install_probe(&env, None);
+        assert_eq!(
+            probe_call_outcomes(&env),
+            (true, None, true, None, true, None)
+        );
+
+        install_probe(&env, Some("Flag3ProbeAddon"));
+        assert_eq!(
+            probe_call_outcomes(&env),
+            (
+                false,
+                Some("Flag3ProbeAddon".into()),
+                false,
+                Some("Flag3ProbeAddon".into()),
+                true,
+                None
+            )
+        );
+    }
 }

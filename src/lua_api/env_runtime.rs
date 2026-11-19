@@ -37,6 +37,12 @@ fn next_timer_or_signal_delay(
     timer_delay
 }
 
+fn publish_r88y_after_screen_registration(env: &WowLuaEnv, screen_kind: ScreenKind) {
+    let mut lua = env.lua.borrow_mut();
+    crate::c_api::publish_verified_secure_namespace_members(lua.state_mut(), screen_kind)
+        .expect("R88y publication should follow screen-specific registration");
+}
+
 const EDIT_MODE_LAYOUTS_INFO_LUA: &str = r#"
     local source = (EditModeManagerFrame and EditModeManagerFrame.layoutInfo) or C_EditMode.GetLayouts()
     if type(source) ~= "table" then
@@ -171,6 +177,11 @@ impl WowLuaEnv {
     /// Select which UI surface should be loaded.
     pub fn set_screen_mode(&self, screen_kind: ScreenKind) {
         self.state.borrow_mut().set_screen_kind(screen_kind);
+        self.update_screen_mode_workarounds(screen_kind);
+        self.update_screen_mode_registrations(screen_kind);
+    }
+
+    fn update_screen_mode_workarounds(&self, screen_kind: ScreenKind) {
         crate::lua_api::workarounds::update_adventureguide_for_screen(
             &mut self.lua.borrow_mut(),
             screen_kind,
@@ -186,12 +197,20 @@ impl WowLuaEnv {
             screen_kind,
         )
         .expect("queued-upgrade registration should follow screen mode");
+    }
+
+    fn update_screen_mode_registrations(&self, screen_kind: ScreenKind) {
         {
             let mut lua = self.lua.borrow_mut();
             crate::c_api::update_screen_registration(lua.state_mut())
                 .expect("screen-specific C_* registration should succeed");
         }
         install_screen_mode_globals(self, screen_kind);
+        self.update_screen_specific_registrations(screen_kind);
+        publish_r88y_after_screen_registration(self, screen_kind);
+    }
+
+    fn update_screen_specific_registrations(&self, screen_kind: ScreenKind) {
         crate::c_api::c_character_creation::update_screen_registration(self, screen_kind);
         #[cfg(feature = "client-wowforever")]
         crate::lua_api::globals::real::name_reservation::update_screen_registration(
@@ -511,6 +530,9 @@ fn install_screen_mode_globals(env: &WowLuaEnv, screen_kind: ScreenKind) {
     );
     #[cfg(feature = "client-ptr")]
     register_ptr_screen_queries(env);
+    #[cfg(feature = "client-mists")]
+    super::globals::real::mouse_probes::update_screen_registration(env, screen_kind.is_glue())
+        .expect("Mists cursor visibility globals should follow Glue screen mode");
     #[cfg(any(feature = "client-ptr", feature = "client-wowforever"))]
     let _ = super::globals::real::glue_feature_status::register_all(&mut env.lua.borrow_mut());
     let is_glue = if screen_kind.is_glue() {

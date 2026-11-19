@@ -6,21 +6,41 @@
 use crate::common;
 use rilua::LuaApiMut;
 use wow_ui_sim::lua_api::WowLuaEnv;
+use wow_ui_sim::lua_api::state::{BagItem, SimState};
+
+fn seed_retail_spell_count_fixture(sim: &mut SimState, restricted: bool) {
+    sim.spell_cast_counts.clear();
+    // VERIFIED — Retail 12.1.5 reads the reagent pair and inventory, not this legacy map.
+    sim.spell_cast_counts.insert(19750, 99);
+    sim.spell_reagent_pairs.clear();
+    sim.spell_reagent_pairs.insert(19750, vec![(900_001, 1)]);
+    sim.spell_max_cumulative_aura_applications.clear();
+    sim.spell_max_cumulative_aura_applications.insert(19750, 7);
+    sim.known_spells.clear();
+    sim.known_spells.insert(19750);
+    sim.spell_charges.clear();
+    sim.bag_items.clear();
+    sim.bag_items.insert(
+        (0, 1),
+        BagItem {
+            owned_identity: None,
+            item_id: 900_001,
+            stack_count: 3,
+            hyperlink: None,
+            durability: None,
+            applied_transmog: None,
+        },
+    );
+    sim.spell_id_aliases.clear();
+    sim.cooldowns_restricted = restricted;
+    sim.restricted_actions[0] = if restricted { 2 } else { 0 };
+}
 
 fn fixture(restricted: bool) -> WowLuaEnv {
     let env = WowLuaEnv::new().unwrap();
     {
         let mut sim = env.state().borrow_mut();
-        sim.spell_cast_counts.clear();
-        sim.spell_max_cumulative_aura_applications.clear();
-        sim.spell_cast_counts.insert(19750, 3);
-        sim.spell_max_cumulative_aura_applications.insert(19750, 7);
-        sim.known_spells.clear();
-        sim.known_spells.insert(19750);
-        sim.spell_charges.clear();
-        sim.spell_id_aliases.clear();
-        sim.cooldowns_restricted = restricted;
-        sim.restricted_actions[0] = if restricted { 2 } else { 0 };
+        seed_retail_spell_count_fixture(&mut sim, restricted);
     }
     let loader = env.loader_env();
     let mut lua = loader.rilua_mut();
@@ -134,7 +154,7 @@ fn original_viewer_count_uses_configured_three() {
         "#
         ))
         .expect("original viewer caches configured cast count");
-        assert_eq!(env.state().borrow().spell_cast_counts[&19750], 3);
+        assert_eq!(env.state().borrow().spell_cast_counts[&19750], 99);
         assert!(env.state().borrow().spell_charges.is_empty());
         assert_count_facts(&env);
     }
@@ -171,7 +191,10 @@ fn original_viewer_colors_known_spell_usable() {
 fn assert_count_facts(env: &WowLuaEnv) {
     let sim = env.state().borrow();
     assert_eq!(sim.spell_cast_counts.len(), 1);
-    assert_eq!(sim.spell_cast_counts[&19750], 3);
+    assert_eq!(sim.spell_cast_counts[&19750], 99);
+    assert_eq!(sim.spell_reagent_pairs[&19750], vec![(900_001, 1)]);
+    assert_eq!(sim.bag_items[&(0, 1)].item_id, 900_001);
+    assert_eq!(sim.bag_items[&(0, 1)].stack_count, 3);
     assert_eq!(sim.spell_max_cumulative_aura_applications.len(), 1);
     assert_eq!(sim.spell_max_cumulative_aura_applications[&19750], 7);
     assert_eq!(sim.known_spells.len(), 1);
@@ -180,52 +203,122 @@ fn assert_count_facts(env: &WowLuaEnv) {
     assert!(sim.spell_id_aliases.is_empty());
 }
 
-fn assert_scalar_selector_contract(api: &str, expected: u32) {
+const SCALAR_SELECTOR_CONTRACT: &str = r#"
+local getter = C_Spell['@API@']
+local expected = @EXPECTED@
+local restricted = @RESTRICTED@
+local negativeExpected = @NEGATIVE@
+local fractionalExpected = @FRACTIONAL@
+local function probe(expectedTaint)
+    local before = debug.getstacktaint()
+    assert(before == expectedTaint, 'explicit caller context')
+    for _, id in ipairs({19750, Selector, 900002, Missing}) do
+        assert(select('#', getter(id)) == 1, 'selector return arity')
+        assert(issecretvalue(getter(id)) == restricted, 'selector output secrecy')
+    end
+    if not restricted or not before then
+        assert(secretunwrap(getter(19750)) == expected, 'public selector quantity')
+        assert(secretunwrap(getter(Selector)) == expected, 'secret selector quantity')
+        assert(secretunwrap(getter(900002)) == 0, 'public selector miss')
+        assert(secretunwrap(getter(Missing)) == 0, 'secret selector miss')
+    end
+    for _, id in ipairs({-1, Invalid}) do
+        if negativeExpected == nil then
+            assert(not pcall(getter, id), 'negative selector must be rejected')
+        else
+            local ok, value = pcall(getter, id)
+            assert(ok, 'negative selector should be accepted')
+            assert(select('#', getter(id)) == 1, 'negative selector return arity')
+            assert(issecretvalue(value) == restricted, 'negative selector secrecy')
+            if not restricted or not before then
+                assert(secretunwrap(value) == negativeExpected, 'negative selector miss')
+            end
+        end
+    end
+    for index, id in ipairs({{}, SecretText}) do
+        assert(not pcall(getter, id), 'invalid selector control ' .. index)
+    end
+    for _, id in ipairs({19750.5, Fraction}) do
+        if fractionalExpected == nil then
+            assert(not pcall(getter, id), 'fractional selector must be rejected')
+        else
+            local value = getter(id)
+            assert(select('#', getter(id)) == 1, 'fractional selector return arity')
+            assert(issecretvalue(value) == restricted, 'fractional selector secrecy')
+            if not restricted or not before then
+                assert(secretunwrap(value) == fractionalExpected, 'fractional selector quantity')
+            end
+        end
+    end
+    assert(
+        issecretvalue(Selector) and debug.getstacktaint() == before,
+        'selector secrecy and caller taint should be preserved'
+    )
+    if before then
+        assert(not canaccessvalue(Selector), 'tainted caller cannot access selector')
+        assert(
+            not pcall(function() return Selector + 0 end),
+            'tainted caller cannot use selector arithmetic'
+        )
+    end
+end
+probe(nil)
+debug.setobjecttaint(probe, 'P4Probe')
+probe('P4Probe')
+"#;
+
+fn format_scalar_selector_contract(
+    api: &str,
+    expected: u32,
+    restricted: bool,
+    negative_expected: Option<u32>,
+    fractional_expected: Option<u32>,
+) -> String {
+    let expected = expected.to_string();
+    let restricted = restricted.to_string();
+    let negative_expected =
+        negative_expected.map_or_else(|| "nil".to_owned(), |value| value.to_string());
+    let fractional_expected =
+        fractional_expected.map_or_else(|| "nil".to_owned(), |value| value.to_string());
+    SCALAR_SELECTOR_CONTRACT
+        .replace("@API@", api)
+        .replace("@EXPECTED@", &expected)
+        .replace("@RESTRICTED@", &restricted)
+        .replace("@NEGATIVE@", &negative_expected)
+        .replace("@FRACTIONAL@", &fractional_expected)
+}
+
+fn assert_scalar_selector_contract(
+    api: &str,
+    expected: u32,
+    negative_expected: Option<u32>,
+    fractional_expected: Option<u32>,
+) {
     for restricted in [false, true] {
         let env = fixture(restricted);
-        env.exec(&format!(
-            r#"
-            local getter = C_Spell['{api}']
-            local function probe(expectedTaint)
-                local before = debug.getstacktaint()
-                assert(before == expectedTaint, 'explicit caller context')
-                for _,id in ipairs({{19750,Selector,900002,Missing}}) do
-                    assert(select('#',getter(id)) == 1)
-                    assert(issecretvalue(getter(id)) == {restricted})
-                end
-                if not {restricted} or not before then
-                    assert(secretunwrap(getter(19750)) == {expected}, 'public selector quantity')
-                    assert(secretunwrap(getter(Selector)) == {expected}, 'secret selector quantity')
-                    assert(secretunwrap(getter(900002)) == 0, 'public selector miss')
-                    assert(secretunwrap(getter(Missing)) == 0, 'secret selector miss')
-                end
-                for _,id in ipairs({{-1,Invalid,19750.5,Fraction,{{}},SecretText}}) do
-                    assert(not pcall(getter,id))
-                end
-                assert(issecretvalue(Selector) and debug.getstacktaint() == before)
-                if before then
-                    assert(not canaccessvalue(Selector))
-                    assert(not pcall(function() return Selector + 0 end))
-                end
-            end
-            probe(nil)
-            debug.setobjecttaint(probe,'P4Probe')
-            probe('P4Probe')
-        "#
-        ))
-        .expect("one scalar with configured quantity, own restriction and unchanged strict domain");
+        let script = format_scalar_selector_contract(
+            api,
+            expected,
+            restricted,
+            negative_expected,
+            fractional_expected,
+        );
+        env.exec(&script)
+            .expect("scalar selector arity, restriction, miss, and invalid-value contract");
         assert_count_facts(&env);
     }
 }
 
 #[test]
 fn cast_count_selector_arity_restrictions_misses_and_invalid_controls() {
-    assert_scalar_selector_contract("GetSpellCastCount", 3);
+    // INFERRED for 12.1.5.70783: ordinary and empty-source secret -1 selectors miss as one zero.
+    // See pr46-49-decomp-answers.md §§R88k.4, R88m.2, R88f.A.24, R88r.r1.
+    assert_scalar_selector_contract("GetSpellCastCount", 3, Some(0), Some(3));
 }
 
 #[test]
 fn maximum_aura_selector_arity_restrictions_misses_and_invalid_controls() {
-    assert_scalar_selector_contract("GetSpellMaxCumulativeAuraApplications", 7);
+    assert_scalar_selector_contract("GetSpellMaxCumulativeAuraApplications", 7, None, None);
 }
 
 #[test]
@@ -306,7 +399,7 @@ fn count_and_aura_output_restrictions_transition_independently_for_secret_select
         let sim = env.state().borrow();
         assert_eq!(sim.cooldowns_restricted, count_restricted);
         assert_eq!(sim.restricted_actions[0] == 2, aura_restricted);
-        assert_eq!(sim.spell_cast_counts[&19750], 3);
+        assert_eq!(sim.spell_cast_counts[&19750], 99);
         assert_eq!(sim.spell_max_cumulative_aura_applications[&19750], 7);
     }
 }

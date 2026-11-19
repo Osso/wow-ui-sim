@@ -35,7 +35,7 @@ function ForeverForbiddenConsumers.aura_shell()
     assert(ForbiddenConsumerAuraButton:HasAnyForbiddenAspects())
     local mask = ForbiddenConsumerAuraButton:GetForbiddenAspects()
     assert(bit.band(mask, Enum.ForbiddenAspect.UntrustedScriptExecution) ~= 0)
-    local private = GetForbiddenObjectTable(ForbiddenConsumerAura)
+    local private = (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(ForbiddenConsumerAura)
     private:MarkClean(private.dirtyFlags:GetFlags())
     ForbiddenConsumerDirtyCalls = 0
     private:SetDirtyPhases({{flag=1, handler=function()

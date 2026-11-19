@@ -165,17 +165,6 @@ C_ColorUtil = __wow_color_merge_namespace(C_ColorUtil, {
   end,
 })
 
--- Preserve the master pre-secure namespace; Retail replaces the ordinary table
--- after create_secure_environment snapshots these two members.
-C_ColorOverrides = __wow_color_merge_namespace(C_ColorOverrides, {
-  GetColorOverrideInfo = function(_overrideType)
-    return nil
-  end,
-  GetColorForQuality = function(_quality)
-    return CreateColor(1, 1, 1, 1)
-  end,
-})
-
 C_PvP = __wow_color_merge_namespace(C_PvP, {
   IsInBrawl = function()
     return false
@@ -189,7 +178,7 @@ C_PvP = __wow_color_merge_namespace(C_PvP, {
 })
 "#;
 
-const NON_RETAIL_UI_COLOR_DEFAULTS_LUA: &str = r#"
+const NON_RETAIL_COLOR_DEFAULTS_LUA: &str = r#"
 local namespace = type(C_UIColor) == "table" and C_UIColor or {}
 if rawget(namespace, "GetColors") == nil then
   namespace.GetColors = function()
@@ -205,12 +194,25 @@ if rawget(namespace, "GetColors") == nil then
   end
 end
 C_UIColor = namespace
+
+local colorOverrides = type(C_ColorOverrides) == "table" and C_ColorOverrides or {}
+if rawget(colorOverrides, "GetColorOverrideInfo") == nil then
+  colorOverrides.GetColorOverrideInfo = function(_overrideType)
+    return nil
+  end
+end
+if rawget(colorOverrides, "GetColorForQuality") == nil then
+  colorOverrides.GetColorForQuality = function(_quality)
+    return CreateColor(1, 1, 1, 1)
+  end
+end
+C_ColorOverrides = colorOverrides
 "#;
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(COLOR_DEFAULTS_LUA)?;
     if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail {
-        lua.exec(NON_RETAIL_UI_COLOR_DEFAULTS_LUA)?;
+        lua.exec(NON_RETAIL_COLOR_DEFAULTS_LUA)?;
     }
     Ok(())
 }
@@ -247,7 +249,7 @@ mod tests {
     }
 
     #[test]
-    fn nonretail_uicolor_fallback_keeps_its_existing_rows() {
+    fn nonretail_color_defaults_keep_their_existing_rows() {
         if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
             return;
         }
@@ -265,6 +267,8 @@ mod tests {
                     and found.PLAYER_FACTION_COLOR_ALLIANCE
                     and found.NORMAL_FONT_COLOR
                     and found.TRADESKILL_EXPERIENCE_COLOR
+                    and type(rawget(C_ColorOverrides, "GetColorOverrideInfo")) == "function"
+                    and type(rawget(C_ColorOverrides, "GetColorForQuality")) == "function"
                 "#,
             )
             .expect("non-Retail color fallback probe should run");

@@ -25,8 +25,43 @@ This spec defines startup phase order and dependency handling in `src/loader/` a
 
 ### Runtime loading
 
+- [ ] Secure-mode addon and dependency files must resolve global reads through the shared `__secureenv` by default. Ordinary-only globals such as `debug` and `coroutine` stay unavailable there, and per-file environment annotations remain effective.
+- [ ] Keep the temporary private snapshot only for explicit `SecureReplay` and generated XML loader paths in this cycle. After the original fallback-disabled PrivateAuras consumer passes, remove that bridge in its own commit; inherited-only values must not enter `__secureenv`.
+- [ ] SIMULATOR POLICY: generated XML chunks in secure mode read live shared-secure publications first. Names absent from `__secureenv` retain their existing private-snapshot result; the read fallback does not publish ordinary-only values into `__secureenv`.
+### R88y verified secure publication Evidence: pr46-49-decomp-answers.md, sections R88y.
+
+- [ ] VERIFIED — Retail 12.1.5.70688 R88y.y1: use only the 6,554 VERIFIED rows from the pinned 6,763-row CSV (`3a8922d84756171f666fe79b61068d3344ce2db866250dede1de384fa9878f82`). Apply flags 1/2/3/6/7 to existing simulator functions only; keep absent implementations absent and exclude 209 INFERRED rows. Secure membership must match the row's Game/Glue/both context for the active screen and a flag with a secure destination. Remove secure members when the context excludes the active screen. If the context includes the screen, ordinary `_G` cleanup must not remove an existing secure copy. Reconcile after bootstrap and screen registration. The additional actions for flags 6 and 7 remain UNKNOWN. Evidence: pr46-49-decomp-answers.md, sections R88y.y1.
+- [ ] VERIFIED — Retail 12.1.5.70688, R88 series decomp line 13165: each implemented flag-3 native C function has distinct ordinary and secure function objects, with the same handler and no captured values. **UNVERIFIED:** identity after later script replacement or deliberate aliasing. Evidence: pr46-49-decomp-answers.md, sections R88g.3.q3.
+- [x] SIMULATOR POLICY (Retail 12.1.5, R88n.11b; `tests/secureenv_isolation.rs` at `0710907`): for the 37 listed namespace members, keep the six with no ordinary producer absent; for the other 31, ordinary and secure environments hold distinct functions. For the 11 listed `C_Texture` members, keep the eight with no ordinary producer absent; for the other three, ordinary and secure environments hold distinct functions. `C_ColorUtil.ConvertHSVToRGB` and `C_Texture.GetAtlasExists` return equal results from both environments. Do not synthesize missing producers. Evidence: pr46-49-decomp-answers.md, sections R88n.11b.
+- [x] SIMULATOR POLICY (Retail 12.1.5, R88y; `secureenv_isolation::flag3_taint_tests::flag3_lua_clones_preserve_taint_stamps_and_call_behavior` at `f68ef3fbc`): preserve a source Lua closure's taint on its distinct secure clone; an unstamped source must remain secure. Direct calls through both destinations must return matching `issecure()` and `debug.getstacktaint()` results, then restore the untainted caller state. Evidence: pr46-49-decomp-answers.md, sections R88y.
+- [ ] VERIFIED — Retail 12.1.5.70688 R88y.y2: install `string.concat`, `string.split`, and `string.join` from the existing `strconcat`, `strsplit`, and `strjoin` handlers before secure table-copy construction. Function values in the shallow-copied standard-library tables retain their shared identity. Keep `fastrandom` on the existing base `math.random` handler and out of the secure base; leave the simulator's current `math.random` handler unchanged and do not assert random outputs. Keep `table.join` absent. Evidence: pr46-49-decomp-answers.md, sections R88y.y2.
+- [ ] SIMULATOR POLICY — Retail 12.1.5: after bootstrap, the ordinary and secure `string` library tables preserve the verified alias identities. A simulator-only colon-split compatibility method must not replace Retail `string.split`; keep that helper on profiles without this R88y evidence. Evidence: pr46-49-decomp-answers.md, sections R88y.
+- [ ] VERIFIED — Retail 12.1.5.70688 R88y.y3: on successful `SwapToGlobalEnvironment`, change the caller function environment to ordinary `_G` and return zero values. Preserve the conditional XML `addToSecureEnv` named-frame route. Do not add blanket global copying; `securecopy` behavior and frame-callback access remain UNKNOWN. Evidence: pr46-49-decomp-answers.md, sections R88y.y3.
 - [x] `C_AddOns.LoadAddOn` must attempt optional dependencies before required dependencies.
 - [x] An optional dependency failure must not stop the requested addon from loading.
+
+### R88t secure dependency and named publication routes Evidence: pr46-49-decomp-answers.md, sections R88t.
+
+- [x] VERIFIED (Retail 12.1.5.70688, R88t): ordinary and secure addon loaded states are separate. A secure request passes its effective mode to dependencies, including dependencies without their own secure directive; optional dependencies load before required dependencies, and dependencies load before the current addon's files. Evidence: pr46-49-decomp-answers.md, sections R88t.
+- [x] VERIFIED (Retail 12.1.5.70688, R88t): for a dependency with no secure directive and no ordinary loaded state, the loader requests ordinary mode and then secure mode. If a mode is already loaded, the request can return without running its files again. Evidence: pr46-49-decomp-answers.md, sections R88t.
+- [ ] VERIFIED (Retail 12.1.5.70688, R88ac.ac4): a failed ordinary dependency request does not suppress the following secure request. Evidence: pr46-49-decomp-answers.md, sections R88ac.ac4.
+- [x] VERIFIED (Retail 12.1.5.70688, R88t): flag 3 publishes `AddSourceLocationExclude` and `table.count` into both environments with separate function objects; the ordinary and secure table libraries are separate. Evidence: pr46-49-decomp-answers.md, sections R88t.
+- [x] VERIFIED (Retail 12.1.5.70688, R88v.v4; `secureenv_isolation::create_texture_source_location_skips_excluded_callsite`): calling the secure `AddSourceLocationExclude` object with a string returns zero values and changes the source selected by ordinary `CreateTexture`. The first template-free texture returns its saved file and line after the exclusion list changes; excluding the only file frame makes the next texture return an `UnknownFile:` location. Evidence: pr46-49-decomp-answers.md, sections R88v.v4.
+- [ ] VERIFIED (Retail 12.1.5.70688, R88v.v4): number arguments convert to text; input text stops at NUL; empty input adds nothing; duplicates are retained; secret denial and stack-overflow errors use the verified forms. Evidence: pr46-49-decomp-answers.md, sections R88v.v4.
+- [ ] VERIFIED (Retail 12.1.5.70688, R88v.v4): source matching is case-sensitive and uses a file-text suffix; positive lines wrap modulo 65,536 and non-positive lines become zero. Evidence: pr46-49-decomp-answers.md, sections R88v.v4.
+- [ ] VERIFIED (Retail 12.1.5.70688, R88y): publish the six implemented `C_ColorOverrides` members to both environments according to their VERIFIED flag-3 rows. Do not publish unimplemented members. Each ordinary/secure handler pair is distinct and callable against the shared override state. Evidence: pr46-49-decomp-answers.md, sections R88y.
+- [x] VERIFIED (Retail 12.1.5.70688, R88t.t2): constant registration publishes separate `Constants` and `AccountStoreConsts` tables without a member flag. The four verified AccountStore values are 1, 3, 3139, and 2814 for their named members. Evidence: pr46-49-decomp-answers.md, sections R88t.t2.
+- [ ] VERIFIED (Retail 12.1.5.70688, R88t.t2): publish the native `Constants.InventoryConstants` table to secureenv without a per-member flag; the secure consumer must read `NumBagSlots = 4` and `NumReagentBagSlots = 1`. SIMULATOR POLICY: keep missing and compatibility constants ordinary-only unless native publication is established. Evidence: pr46-49-decomp-answers.md, sections R88t.t2.
+- [x] VERIFIED (Retail 12.1.5.70688, R88t): when ordinary and secure `UIParent` names are empty, both receive the same frame-table object through the Retail named-frame policy. Evidence: pr46-49-decomp-answers.md, sections R88t.
+- [ ] VERIFIED (Retail 12.1.5.70688, R88t): the Retail UIParent bootstrap uses named-frame policy flag 32 and each destination preserves an existing non-nil name. Evidence: pr46-49-decomp-answers.md, sections R88t.
+- [ ] SIMULATOR POLICY (Retail 12.1.5; native R88an): during secure-file mode, publish an eligible named XML object into `__secureenv` only when vacant. If ordinary publication is also enabled, publish the same object into `_G` only when vacant. Preserve non-nil names; do not copy ordinary globals. Keep the explicit `addToSecureEnv` route unchanged. `LoadIntoEnvironment` selects a file mode and does not change the dependency request mode. Evidence: pr46-49-decomp-answers.md, sections R88an.
+
+### R88ac GlobalStrings secure publication Evidence: pr46-49-decomp-answers.md, sections R88ac.
+
+- [ ] VERIFIED (Retail 12.1.5.70688, R88ac.ac2): each GlobalStrings record whose preparation succeeds and whose Flags contain all bits in the active mask writes its name and value to ordinary `_G` and the separately referenced shared secure table. Game uses mask 1; Glue uses mask 2. Evidence: pr46-49-decomp-answers.md, sections R88ac.ac2.
+- [ ] INFERRED simulator policy (R88ac.ac2): the committed Retail GlobalStrings PHF map stores no Flags, so Retail mirrors every map row that the existing registration writes to `_G`. Exact per-row Game/Glue filtering is not modeled; `RAID_TARGET_1` membership remains INFERRED. Evidence: pr46-49-decomp-answers.md, sections R88ac.ac2.
+- [ ] VERIFIED (Retail 12.1.5.70688, R88ac.ac3; supplement SHA-256 `107dad291c11c9a80949d7063e02d849bb394155663870db0631c96c54d9659b`): mirror the same existing simulator value to secureenv for `LE_GAME_*` numeric globals whose names occur in the Game/flag-3 CSV. Do not create missing constants. Evidence: pr46-49-decomp-answers.md, sections R88ac.ac3.
+- [ ] INFERRED simulator policy (R88ac.ac3): mirror other already-modeled Retail integer constants to secureenv. Native evidence identifies a 335-name shared numeric route, but the supplement has no per-name inventory for this set; do not infer membership or add constants. Evidence: pr46-49-decomp-answers.md, sections R88ac.ac3.
 
 ### `LoadWith` followers
 
@@ -44,6 +79,7 @@ This spec defines startup phase order and dependency handling in `src/loader/` a
 
 - [Addon loading pipeline](../addon-loading-pipeline.md)
 - [Addon-loading system](../wiki/systems/addon-loading.md#blizzard-addon-load-order)
+- [Taint system](../wiki/systems/taint-system.md#dual-lua-environment) — secure environment publication and shallow library copies.
 
 ## Implementation inventory
 
@@ -54,6 +90,24 @@ This spec defines startup phase order and dependency handling in `src/loader/` a
 - `src/bin/wow_sim/addon_loading.rs` — registers packaged follower declarations before Blizzard startup, registers third-party declarations, and skips startup roots already loaded by followers.
 - `src/c_api/c_addons.rs` — exposes startup follower processing through the runtime loader.
 - `src/c_api/c_addons_runtime.rs` — resolves runtime dependencies and submits `LoadWith` followers.
+- `src/c_api/helpers.rs`, `src/c_api/secure_publication.rs`, and generated `src/c_api/secure_publication_data.rs` — route implemented members through verified R88y flags; the source CSV and generator are `data/secure-publication/retail-12-1-5-70688.csv` and `tools/gen_r88y_secure_publication.py`. Evidence: pr46-49-decomp-answers.md, sections R88y.y1.
+- `src/loader/addon.rs` — orders ordinary and secure dependency requests.
+- `src/loader/lua_file.rs`, `src/loader/xml_file.rs`, `src/lua_api/loader_env.rs`, `src/lua_api/globals/security/secure_env.rs` — execute secure files through the shared table and retain private replay only for selected replay paths and generated XML loader chunks.
+- `src/lua_api/workarounds/temporary/secure_legacy_unit_globals.rs`, `src/lua_api/workarounds/mod.rs`, `src/lua_api/env_init/mod.rs` — apply the profile-tagged source-derived Unit-global compatibility copy at the former snapshot boundary.
+- `src/lua_api/env_init/enums.rs` — registers `Enum` values and the Retail `Constants.*` secure-table publication path.
+- `src/lua_api/globals/strings/mod.rs` — registers PHF GlobalStrings rows and integer constants; applies the inferred string and non-`LE_GAME_*` integer mirrors, plus the CSV-listed `LE_GAME_*` route.
+- `src/lua_api/env_init/mod.rs`, `src/lua_api/env_runtime.rs` — install pre-copy library aliases and rerun verified publication after screen-specific registrations. Evidence: pr46-49-decomp-answers.md, sections R88y.y1, R88y.y2, R88g.3.q3.
+- `src/lua_api/globals/real/math_extensions.rs`, `src/lua_api/globals/real/string_extensions.rs`, and `src/lua_api/globals/real/table_extensions.rs` — register implemented library extensions; R88y publication routes their verified flags. The Retail secure `table.count` handler retains the separately verified R88t identity. Evidence: pr46-49-decomp-answers.md, sections R88y.y2, R88t.t2.
+- `src/lua_api/workarounds/temporary/formatting_utility_defaults.rs` — applies the colon-split compatibility method outside Retail 12.1.5.
+- `src/lua_api/globals/security/environment.rs`, `src/loader/tests/inline_script.rs` — implement and test the verified SwapToGlobalEnvironment and XML addToSecureEnv routes. Evidence: pr46-49-decomp-answers.md, sections R88y.y3, R88g.3.q2, R88an.an2-an3.
+- `src/lua_api/globals/create_frame/mod.rs` — publishes the built-in `UIParent` name to secureenv.
+- `src/lua_api/globals/create_frame/helpers_shared.rs` and `src/lua_api/frame/methods/button_anchor_hierarchy/shared.rs` — publish named frame and child-region objects to vacant Retail secure destinations.
+- `src/lua_api/globals/security/secure_env.rs` — writes secure names only when the shared destination is vacant.
+- `src/lua_api/env_init/shared_bootstrap.lua` — retains the private `GetForbiddenObjectTable` closure while the verified flag-6 global is secure-only. Evidence: pr46-49-decomp-answers.md, sections R88y.y1.
+- `src/lua_api/globals/real/source_location.rs` — registers AddSourceLocationExclude and selects a caller file/line from existing Lua call frames.
+- `src/lua_api/frame/methods/button_anchor_hierarchy/hierarchy.rs`, `src/lua_api/frame/methods/core_state/region.rs` — save and return texture source locations.
+- `src/lua_api/state/sim_state.rs`, `src/widget/frame.rs`, `src/widget/frame_defaults.rs`, `src/widget/frame_size.rs` — hold shared exclusions and per-texture source metadata.
+- `src/lua_api/workarounds/temporary/debug_environment_defaults.rs`, `src/lua_api/workarounds/temporary/color_defaults.rs` — publish only existing temporary handlers under the verified names. Evidence: pr46-49-decomp-answers.md, sections R88y.y1, R88n.9.
 - `src/lua_api/state/sim_state.rs` — holds ordered registered follower declarations and the resolved target-to-follower index.
 - `src/lua_api/state.rs` — initializes the registration vector and follower index.
 - `src/lua_api/state/ui_reload.rs` — clears the follower index on UI reload.
@@ -63,10 +117,31 @@ This spec defines startup phase order and dependency handling in `src/loader/` a
 - `src/loader/tests/screen_selection.rs`
 - `tests/addon_runtime_dependencies.rs`
 - `src/c_api/c_addons_runtime_tests.rs`
+- `tests/secureenv_isolation.rs` — separate loaded states, dependency request order/failure continuation, verified Retail `LE_GAME_*` secure values, and the one-file source-location consumer. Evidence: pr46-49-decomp-answers.md, sections R88ac.ac3, R88v.v4.
+- `tests/blizzard_auto_complete_onload.rs` — Retail secure AutoComplete dependency publication and preservation of occupied secure names.
+- `tests/blizzard_frame_xml_loads.rs` — the original `UIErrorsFrame` consumes a modeled Retail `LE_GAME_*` numeric value.
+- `tests/blizzard_communities_secure_loads.rs` — verifies `CommunitiesCreateDialog.DescriptionFrame` `InputScrollFrame` setup and that `debug` stays out of `__secureenv`.
+- `tests/blizzard_private_auras_ui_loads.rs` — the original FrameFactory/Pools, AccountUtil, ColorManager, GameRulesUtil, RaidWarning XML, and PrivateAurasTooltip consumers.
+- `src/c_api/secure_publication.rs` — verified-only R88y routing, absent implementations, and late flag-3 registration after screen changes. Evidence: pr46-49-decomp-answers.md, sections R88y.y1.
+- `src/c_api/helpers.rs` and `src/lua_api/globals/security/secure_env.rs` — separate flag-3 C-function objects; the latter also tests pre-copy library aliases and shallow-copy identity.
+- `src/c_api/c_color_overrides.rs` and `tests/secureenv_isolation.rs` — six `C_ColorOverrides` handlers and `C_Timer.NewTimedSignalMap` publication.
+- `src/lua_api/workarounds/temporary/formatting_utility_defaults.rs` — verifies defaults reapplication preserves Retail `string.split` identity.
+- `src/lua_api/workarounds/temporary/secure_legacy_unit_globals.rs::tests` — checks profile-tagged Unit registrations in ordinary `_G`; it does not assert secureenv membership or native publication.
+- `src/lua_api/globals/security/environment.rs` — successful `SwapToGlobalEnvironment` changes caller environment and returns zero values.
+- `src/lua_api/globals/real/table_extensions.rs` — separate ordinary/secure `table.count` handlers.
+- `src/loader/tests/inline_script.rs` — conditional XML `addToSecureEnv` named-frame publication.
 
 ## Known gaps (current cycle)
 
 - [ ] UNKNOWN: PTR 12.1.7.70668 does not establish whether declaration parsing feeds the child-list resolver. The simulator applies the inferred resolver model; PTR tests do not assert parser linkage or duplicate suppression.
+- [ ] VERIFIED (R88t, native) but untested in the simulator: an ordinary dependency-request failure must not suppress the following secure request. No evidence-backed input currently makes only the ordinary request fail; a Lua file diagnostic is not proof of that request failure. Evidence: pr46-49-decomp-answers.md, sections R88t.
+- [ ] INFERRED (R88t): when neither mode was loaded and both default file paths complete, each default path executes in its requested environment. Do not claim this exact per-environment count as native parity. Evidence: pr46-49-decomp-answers.md, sections R88t.
+- [ ] UNKNOWN: the native cleanup caller for the shared exclusion list is not established; the simulator retains entries for the lifetime of `SimState`. The two-file caller/wrapper comparison remains INFERRED and is not asserted.
+- [ ] rilua exposes no per-argument secret mode and no fallible stack reservation; AddSourceLocationExclude therefore does not reproduce the verified mode-zero secret error or stack-overflow path. Evidence: pr46-49-decomp-answers.md, sections R88v.v4.
+- [ ] The source test invokes the secure function object from an ordinary add-on and observes the effect through ordinary `CreateTexture`; it does not invoke the ordinary function object from secure add-on code.
+- [ ] SOURCE-DERIVED (VERIFIED simulator source at master `725fb6e3a`): the compatibility table records the 173-name union of Unit-prefixed global functions registered before the former snapshot across all seven client profiles. Each name records its registered profiles, compatibility-copy profiles, and registrar file:line. Copy only for the active compatibility profile, and only when `_G` holds a function; skip absent names. The six VERIFIED R88y Unit rows are excluded from compatibility copying on Retail, where that publisher runs, and retained on profiles without that publisher. The profile guard checks `_G` registration only; it does not assert secureenv membership. Native secure publication remains UNKNOWN (R88ac.ac1, R88af.1/.2). Evidence: pr46-49-decomp-answers.md, sections R88y, R88ac.ac1, R88af.1.
+- [ ] UNKNOWN: native transitive copying of other ordinary globals into secureenv. The simulator preserves only the named Unit compatibility set; the direct dependency helper does not add a blanket-copy route.
+- [ ] The original `TooltipDataProcessor` identity and its published secure-table provenance remain deferred to `lt-635e`; this lane verifies that the PrivateAurasTooltip consumer runs without errors.
 - [ ] UNKNOWN: PTR phase and demand fields are not mapped to cached TOC directives, and native live-list membership and sort direction are not established.
 - [ ] UNKNOWN: Native `LoadWith` behavior on Mists, Era, Anniversary, and Wrath. The simulator keeps their previous dispatch path.
 - [ ] INFERRED: a registered phase-three user addon may load early during an earlier target's follower loop. The resolver has no phase filter; tests do not assert this inference.
@@ -79,3 +154,4 @@ This spec defines startup phase order and dependency handling in `src/loader/` a
 
 - Modeling mode-one dependency-chain-only traversal.
 - Asserting the inferred association between user AddOns-directory inputs and native phase three.
+- Adding a blanket ordinary-to-secure copy; transitive publication remains UNKNOWN.

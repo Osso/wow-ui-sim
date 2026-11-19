@@ -805,21 +805,6 @@ fn minimap_tracking_defaults_are_not_c_api_temporary_shims() {
 }
 
 #[test]
-fn trade_info_defaults_are_not_c_api_temporary_shims() {
-    let temporary_shims = c_api_temporary_shims_source();
-    let c_api = include_str!("../src/c_api/mod.rs");
-
-    assert!(
-        !temporary_shims.contains("c_trade_info"),
-        "unmodeled C_TradeInfo warning/no-op defaults belong in lua_api::workarounds::temporary"
-    );
-    assert!(
-        !c_api.contains("c_trade_info"),
-        "C_TradeInfo warning/no-op defaults should not be wired through c_api registration"
-    );
-}
-
-#[test]
 fn gossip_poi_defaults_are_not_c_api_temporary_shims() {
     let temporary_shims = c_api_temporary_shims_source();
     let registration = include_str!("../src/c_api/registration.rs");

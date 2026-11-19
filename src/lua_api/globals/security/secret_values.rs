@@ -1,8 +1,9 @@
 //! Secret-value tracking and scrub helpers.
 //!
-//! Tracks which Lua values are "secret" via a registry table keyed by string
-//! identity. Used by `issecretvalue` / `canaccess*` fallbacks and by C-side
-//! Rust code that wants to mark unit-name strings as tainted.
+//! Retail and Forever inspect authentic VM secret wrappers only (VERIFIED for
+//! Retail 12.1.5.70688 by R88ae.4: `issecretvalue` reads the value-slot marker;
+//! the wrapper mapping is INFERRED simulator mapping). Other profiles retain the
+//! legacy string-identity registry and closure-source fallbacks (UNKNOWN native).
 
 #[cfg(feature = "retail-12-1-0")]
 use rilua::LuaApiMut;
@@ -29,8 +30,13 @@ pub(super) fn register_scrub_fallbacks(lua: &mut rilua::Lua) -> LuaResult<()> {
 
 #[cfg(feature = "retail-12-1-0")]
 pub(crate) fn register_retail_secret_values(lua: &mut rilua::Lua) -> LuaResult<()> {
-    LuaApiMut::register_function(lua, "secretwrap", secretwrap_native)?;
-    LuaApiMut::register_function(lua, "secretunwrap", secretunwrap_native)?;
+    if crate::client_profile::is_active_retail_12_1_5() {
+        crate::c_api::register_global_function_from_r88y(lua, "secretwrap", secretwrap_native)?;
+        crate::c_api::register_global_function_from_r88y(lua, "secretunwrap", secretunwrap_native)?;
+    } else {
+        LuaApiMut::register_function(lua, "secretwrap", secretwrap_native)?;
+        LuaApiMut::register_function(lua, "secretunwrap", secretunwrap_native)?;
+    }
     if crate::client_profile::ACTIVE.uses_secret_values() {
         LuaApiMut::register_function(lua, "securecallfunction", securecallfunction_source)?;
     }
@@ -148,17 +154,16 @@ pub(super) fn value_is_secret(
 /// every released frame, plus SecureMap/SecureStack assertions on every
 /// reclaim).
 pub(super) fn value_is_secret_shallow(state: &mut LuaState, value: Val) -> bool {
-    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever {
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
         return is_secret_value(state, value);
     }
     if is_secret_value(state, value) || value_has_secret_marker(state, value) {
         return true;
     }
-    // Retail closure-source taint alone is not a secret marker.
-    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
-        return false;
-    }
-
     match value {
         Val::Function(func_ref) => function_is_secret(state, func_ref),
         _ => false,

@@ -60,7 +60,10 @@ if GetMovieDownloadProgress == nil then
 end
 
 MAINMENUBAR_COMMUNICATION_PROTOCOL_LABEL = MAINMENUBAR_COMMUNICATION_PROTOCOL_LABEL or "Protocol: %s (home) %s (world)"
+"#;
 
+#[cfg(not(all(feature = "client-retail", feature = "retail-12-1-5")))]
+const PROTOCOL_TYPES_DEFAULT_LUA: &str = r#"
 if GetProtocolTypes == nil then
   function GetProtocolTypes()
     return 1, 1
@@ -92,6 +95,8 @@ end
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(PERFORMANCE_METRIC_DEFAULTS_LUA)?;
+    #[cfg(not(all(feature = "client-retail", feature = "retail-12-1-5")))]
+    lua.exec(PROTOCOL_TYPES_DEFAULT_LUA)?;
     #[cfg(not(feature = "retail-12-0-7"))]
     lua.exec(LEGACY_PROFILING_DEFAULTS_LUA)?;
     Ok(())
@@ -101,6 +106,29 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
 mod tests {
     use crate::lua_api::WowLuaEnv;
 
+    const PERFORMANCE_METRIC_DEFAULTS_PROBE_LUA: &str = r#"
+        if GetFramerate() ~= 60 then return "framerate" end
+        if UpdateAddOnMemoryUsage() ~= 0 then return "update_memory" end
+        if UpdateAddOnCPUUsage() ~= 0 then return "update_cpu" end
+        if ResetCPUUsage() ~= 0 then return "reset_cpu" end
+        if GetAddOnMemoryUsage("missing") ~= 0 then return "addon_memory" end
+        if GetAddOnCPUUsage("missing") ~= 0 then return "addon_cpu" end
+        local frame, children = GetFrameCPUUsage(UIParent, true)
+        if frame ~= 0 or children ~= 0 then return "frame_cpu" end
+        if GetEventCPUUsage("PLAYER_LOGIN") ~= 0 then return "event_cpu" end
+        local fnUsage, fnSubroutines = GetFunctionCPUUsage(function() end, true)
+        if fnUsage ~= 0 or fnSubroutines ~= 0 then return "function_cpu" end
+        local scriptUsage, scriptChildren = GetScriptCPUUsage(UIParent, "OnShow", true)
+        if scriptUsage ~= 0 or select('#', GetScriptCPUUsage(UIParent, "OnShow", true)) ~= ExpectedScriptArity then return "script_cpu" end
+        if GetDownloadedPercentage() ~= 1 then return "downloaded" end
+        local inProgress, downloaded, total = GetMovieDownloadProgress(1)
+        if inProgress or downloaded ~= 0 or total ~= 0 then return "movie_download" end
+        local protocolHome, protocolWorld = GetProtocolTypes()
+        if protocolHome ~= ExpectedProtocolType or protocolWorld ~= ExpectedProtocolType then return "protocol_types" end
+        if type(MAINMENUBAR_COMMUNICATION_PROTOCOL_LABEL) ~= "string" then return "protocol_label" end
+        return "ok"
+        "#;
+
     #[test]
     fn installs_performance_metric_defaults() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
@@ -109,36 +137,18 @@ mod tests {
         } else {
             2
         };
-        env.exec(&format!("ExpectedScriptArity = {script_arity}"))
-            .expect("set profile-specific script metric arity");
-
+        let protocol_type = if cfg!(all(feature = "client-retail", feature = "retail-12-1-5")) {
+            0
+        } else {
+            1
+        };
+        env.exec(&format!(
+            "ExpectedScriptArity = {script_arity}; ExpectedProtocolType = {protocol_type}"
+        ))
+        .expect("set profile-specific script metric arity");
         let result: String = env
-            .eval(
-                r#"
-                if GetFramerate() ~= 60 then return "framerate" end
-                if UpdateAddOnMemoryUsage() ~= 0 then return "update_memory" end
-                if UpdateAddOnCPUUsage() ~= 0 then return "update_cpu" end
-                if ResetCPUUsage() ~= 0 then return "reset_cpu" end
-                if GetAddOnMemoryUsage("missing") ~= 0 then return "addon_memory" end
-                if GetAddOnCPUUsage("missing") ~= 0 then return "addon_cpu" end
-                local frame, children = GetFrameCPUUsage(UIParent, true)
-                if frame ~= 0 or children ~= 0 then return "frame_cpu" end
-                if GetEventCPUUsage("PLAYER_LOGIN") ~= 0 then return "event_cpu" end
-                local fnUsage, fnSubroutines = GetFunctionCPUUsage(function() end, true)
-                if fnUsage ~= 0 or fnSubroutines ~= 0 then return "function_cpu" end
-                local scriptUsage, scriptChildren = GetScriptCPUUsage(UIParent, "OnShow", true)
-                if scriptUsage ~= 0 or select('#', GetScriptCPUUsage(UIParent, "OnShow", true)) ~= ExpectedScriptArity then return "script_cpu" end
-                if GetDownloadedPercentage() ~= 1 then return "downloaded" end
-                local inProgress, downloaded, total = GetMovieDownloadProgress(1)
-                if inProgress or downloaded ~= 0 or total ~= 0 then return "movie_download" end
-                local protocolHome, protocolWorld = GetProtocolTypes()
-                if protocolHome ~= 1 or protocolWorld ~= 1 then return "protocol_types" end
-                if type(MAINMENUBAR_COMMUNICATION_PROTOCOL_LABEL) ~= "string" then return "protocol_label" end
-                return "ok"
-                "#,
-            )
+            .eval(PERFORMANCE_METRIC_DEFAULTS_PROBE_LUA)
             .expect("performance metric defaults probe should run");
-
         assert_eq!(result, "ok");
     }
 }

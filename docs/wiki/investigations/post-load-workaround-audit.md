@@ -33,6 +33,14 @@ consumer evidence. The test and XML `parentArray` root-cause fix are recorded in
 Authentication parenting, secure/public binding and Submit behavior are outside
 this retirement.
 
+### Retail R88y string.split alias collision Evidence: pr46-49-decomp-answers.md, sections R88y.
+
+**VERIFIED (Retail 12.1.5.70688, R88y.y2):** `string.split` aliases the `strsplit` handler before secure-table construction. Evidence: pr46-49-decomp-answers.md, sections R88y.y2.
+
+**VERIFIED (simulator RED at source `f3564d89a`):** after startup, ordinary `string.split` did not share identity with `strsplit`, while `__secureenv.string.split` did. The temporary formatting-default script wrote a `split` method into the string metatable's `__index` table after the secure copy. Evidence: pr46-49-decomp-answers.md, sections R88y.y2.
+
+**VERIFIED (simulator source and Retail tests at `8f12a1a21`):** Retail skips this compatibility method, and both ordinary and secure aliases retain `strsplit` identity after startup and defaults reapplication. **VERIFIED (simulator source only):** other profiles still execute the existing compatibility path; no non-Retail runtime result is claimed. Evidence: pr46-49-decomp-answers.md, sections R88y.y2.
+
 ### Store Glue VAS fallback replacement
 
 [R88q Store Glue state](../../specs/store-glue-r88q.md) replaces the five guessed
@@ -86,6 +94,9 @@ runtime subsystem instead of by one visible addon symptom:
 - [loader/addon.rs](../../../src/loader/addon.rs) — per-addon post-load hook table
 - [workarounds/mod.rs](../../../src/lua_api/workarounds/mod.rs) — runtime addon-surface dispatch and bootstrap hooks
 - [workarounds/temporary](../../../src/lua_api/workarounds/temporary) — isolated temporary workaround implementations and tests
+- [formatting_utility_defaults.rs](../../../src/lua_api/workarounds/temporary/formatting_utility_defaults.rs) — profile-scoped colon-split compatibility and Retail alias preservation
+- [secure_env.rs](../../../src/lua_api/globals/security/secure_env.rs) — secure-library copy and string alias identity tests
+- [env_init/mod.rs](../../../src/lua_api/env_init/mod.rs) — library alias initialization before secure-table construction
 - [strings/mod.rs](../../../src/lua_api/globals/strings/mod.rs) — replace versus preserve UI-string registration policies
 - [environment_cleanup_restore.rs](../../../src/lua_api/workarounds/temporary/environment_cleanup_restore.rs) — post-cleanup restore ordering and regression coverage
 - [gamepad_cursor_control_defaults.rs](../../../src/lua_api/workarounds/temporary/gamepad_cursor_control_defaults.rs) — guarded gamepad cursor-control defaults restored after cleanup

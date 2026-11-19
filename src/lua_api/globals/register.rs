@@ -50,6 +50,17 @@ pub fn register_globals(lua: &mut rilua::Lua, _state: Rc<RefCell<SimState>>) -> 
 
 fn register_bootstrap_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
     prewarm_hot_literal_registry(lua);
+    register_bootstrap_time_globals(lua)?;
+    register_bootstrap_runtime_globals(lua)?;
+    #[cfg(feature = "retail-12-0-5")]
+    register_bootstrap_unit_aura_apis(lua)?;
+    register_bootstrap_shared_apis(lua)?;
+    #[cfg(feature = "client-mists")]
+    super::real::mists_cinematic::register_all(lua)?;
+    Ok(())
+}
+
+fn register_bootstrap_time_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
     LuaApiMut::register_function(lua, "GetTime", get_time)?;
     LuaApiMut::register_function(lua, "GetTimePreciseSec", get_time)?;
     #[cfg(feature = "client-retail")]
@@ -62,15 +73,24 @@ fn register_bootstrap_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
         get_legacy_raid_difficulty_id,
     )?;
     LuaApiMut::register_function(lua, "GetTickTime", get_tick_time)?;
+    Ok(())
+}
+
+fn register_bootstrap_runtime_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
     super::strings::register_all_ui_strings(lua)?;
     super::security::register_all(lua)?;
+    super::real::source_location::register_all(lua)?;
     super::keybindings::register_all(lua)?;
     super::permanent_shims::register_all(lua.state_mut());
     super::action_bar_api::register_all(lua)?;
     LuaApiMut::register_function(lua, "UpdateUIParentPosition", update_ui_parent_position)?;
-    // Must run after stubs so the fixture aura data overrides the
-    // stub_nil registrations for C_UnitAuras.GetAuraSlots & friends.
+    // Must run after stubs so fixture aura data overrides stub_nil registrations.
     super::auras::register_all(lua.state_mut());
+    Ok(())
+}
+
+#[cfg(feature = "retail-12-0-5")]
+fn register_bootstrap_unit_aura_apis(lua: &mut rilua::Lua) -> crate::Result<()> {
     #[cfg(feature = "retail-12-0-5")]
     crate::c_api::c_unit_aura_index_queries::register(lua.state_mut())?;
     #[cfg(feature = "retail-12-0-5")]
@@ -85,8 +105,11 @@ fn register_bootstrap_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
     crate::c_api::c_unit_aura_spell_queries::register(lua.state_mut())?;
     #[cfg(feature = "retail-12-0-5")]
     crate::c_api::c_unit_aura_cooldown_spells::register(lua.state_mut())?;
-    // Forever 1.60.1 VoiceChatDocumentation declares SpeakText/StopSpeakingText
-    // with the same five arguments as the retail slice.
+    Ok(())
+}
+
+fn register_bootstrap_shared_apis(lua: &mut rilua::Lua) -> crate::Result<()> {
+    // Forever 1.60.1 VoiceChatDocumentation declares these with the retail signature.
     #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
     crate::c_api::c_voice_chat_speak::register(lua.state_mut())?;
     crate::c_api::c_achievement_telemetry::register(lua.state_mut())?;
@@ -406,7 +429,9 @@ fn register_social_state_probes(lua: &mut rilua::Lua) -> crate::Result<()> {
 
 fn register_compat_and_admin(lua: &mut rilua::Lua) -> crate::Result<()> {
     super::compat_overrides::register_all(lua)?;
-    super::real::bit_library::register_all(lua)?;
+    if !crate::client_profile::is_active_retail_12_1_5() {
+        super::real::bit_library::register_all(lua)?;
+    }
     super::bank_storage_verbs::register_guild_tabard_files(lua)?;
     #[cfg(any(feature = "client-mists", feature = "client-wrath"))]
     super::auction_verbs::register_all(lua)?;

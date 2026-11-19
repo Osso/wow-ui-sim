@@ -14,6 +14,8 @@ use crate::common;
 use common::panel_fixtures::{blizzard_ui_dir, setup_env};
 use wow_ui_sim::c_api::c_damage_meter::*;
 use wow_ui_sim::loader::load_addon;
+#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+use wow_ui_sim::lua_api::WowLuaEnv;
 
 #[test]
 fn show_macro_frame_loads_and_populates_selector() {
@@ -661,60 +663,110 @@ fn settings_open_to_interface_category_opens_settings_panel() {
     }
 }
 
-#[cfg(feature = "optional-tests")]
+#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+const PROFESSIONS_SPECIALIZATION_TREE_LUA: &str = r#"
+    if not ProfessionsFrame or not ProfessionsFrame.SpecPage or not Professions then
+        return "professions_spec_page_missing"
+    end
+
+    local professionInfo = Professions.GetProfessionInfo()
+    if not professionInfo or professionInfo.professionID ~= 164 then
+        return "profession_info=" .. tostring(professionInfo and professionInfo.professionID)
+    end
+
+    ProfessionsFrame.SpecPage:Refresh(professionInfo)
+
+    local selectedTab = ProfessionsFrame.SpecPage.selectedTab
+    if not selectedTab then
+        return "selected_spec_tab_missing"
+    end
+    if not selectedTab.tabInfo or not selectedTab.tabInfo.rootNodeID then
+        return "selected_tab_root_missing"
+    end
+
+    local rootNodeID = selectedTab.tabInfo.rootNodeID
+    if ProfessionsFrame.SpecPage:GetTalentTreeID() ~= selectedTab.traitTreeID then
+        return "talent_tree_id=" .. tostring(ProfessionsFrame.SpecPage:GetTalentTreeID())
+    end
+    if not ProfessionsFrame.SpecPage:IsTreeDirty() then
+        return "tree_not_marked_dirty"
+    end
+
+    ProfessionsFrame.SpecPage:LoadTalentTreeInternal()
+    local buttonsParent = ProfessionsFrame.SpecPage.ButtonsParent
+    if not buttonsParent then
+        return "talent_buttons_parent_missing"
+    end
+    local nodes = {}
+    for _, button in ipairs({ buttonsParent:GetChildren() }) do
+        local nodeID = button:GetNodeID()
+        if nodeID then
+            nodes[nodeID] = true
+        end
+    end
+    for _, nodeID in ipairs({ rootNodeID, 2001, 2002, 3001 }) do
+        if not nodes[nodeID] then
+            return "missing_talent_node=" .. tostring(nodeID)
+        end
+    end
+
+    return "ok"
+"#;
+
+#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+fn seed_professions_specialization_paths(env: &WowLuaEnv) {
+    let mut sim = env.state().borrow_mut();
+    // INFERRED (simulator mapping): the temporary config query supplies config 1.
+    sim.profession_spec_inputs.trait_config_ids.insert(1);
+    sim.profession_spec_inputs
+        .path_group_ids
+        .extend([(1001, 10), (2001, 20)]);
+    sim.profession_spec_inputs
+        .group_node_ids
+        .extend([(10, vec![2001, 2002]), (20, vec![3001])]);
+}
+
+#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+fn load_professions_specialization_addons(env: &WowLuaEnv) {
+    let ui = blizzard_ui_dir();
+    for (name, toc) in [
+        ("Blizzard_FrameXMLUtil", "Blizzard_FrameXMLUtil.toc"),
+        (
+            "Blizzard_ProfessionsTemplates",
+            "Blizzard_ProfessionsTemplates.toc",
+        ),
+        ("Blizzard_SpellSearch", "Blizzard_SpellSearch.toc"),
+        ("Blizzard_SharedTalentUI", "Blizzard_SharedTalentUI.toc"),
+        ("Blizzard_Professions", "Blizzard_Professions.toc"),
+    ] {
+        let toc_path = ui.join(name).join(toc);
+        if let Err(error) = load_addon(&env.loader_env(), &toc_path) {
+            panic!("failed to load {name}: {error}");
+        }
+    }
+}
+
+#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+fn assert_professions_specialization_tree_populated(env: &WowLuaEnv) {
+    let result: String = env.eval(PROFESSIONS_SPECIALIZATION_TREE_LUA).unwrap();
+    assert_eq!(
+        result, "ok",
+        "ProfessionsFrame should show a populated specialization tab: {result}"
+    );
+}
+
+#[cfg(all(
+    feature = "optional-tests",
+    feature = "client-retail",
+    feature = "retail-12-1-5"
+))]
 #[test]
 fn professions_frame_loads_and_populates_specialization_tab() {
     test_timeout! {
         let env = setup_env();
-        let ui = blizzard_ui_dir();
-        for (name, toc) in [
-            ("Blizzard_FrameXMLUtil", "Blizzard_FrameXMLUtil.toc"),
-            ("Blizzard_ProfessionsTemplates", "Blizzard_ProfessionsTemplates.toc"),
-            ("Blizzard_SpellSearch", "Blizzard_SpellSearch.toc"),
-            ("Blizzard_SharedTalentUI", "Blizzard_SharedTalentUI.toc"),
-            ("Blizzard_Professions", "Blizzard_Professions.toc"),
-        ] {
-            let toc_path = ui.join(name).join(toc);
-            if let Err(error) = load_addon(&env.loader_env(), &toc_path) {
-                panic!("failed to load {name}: {error}");
-            }
-        }
-        let result: String = env.eval(r#"
-            if not ProfessionsFrame or not ProfessionsFrame.SpecPage or not Professions then
-                return "professions_spec_page_missing"
-            end
-
-            local professionInfo = Professions.GetProfessionInfo()
-            if not professionInfo or professionInfo.professionID ~= 164 then
-                return "profession_info=" .. tostring(professionInfo and professionInfo.professionID)
-            end
-
-            ProfessionsFrame.SpecPage:Refresh(professionInfo)
-
-            local selectedTab = ProfessionsFrame.SpecPage.selectedTab
-            if not selectedTab then
-                return "selected_spec_tab_missing"
-            end
-            if not selectedTab.tabInfo or not selectedTab.tabInfo.rootNodeID then
-                return "selected_tab_root_missing"
-            end
-
-            local rootNodeID = selectedTab.tabInfo.rootNodeID
-            if ProfessionsFrame.SpecPage:GetTalentTreeID() ~= selectedTab.traitTreeID then
-                return "talent_tree_id=" .. tostring(ProfessionsFrame.SpecPage:GetTalentTreeID())
-            end
-            local children = C_ProfSpecs.GetChildrenForPath(rootNodeID)
-            if #children == 0 then
-                return "root_children=0"
-            end
-
-            if not ProfessionsFrame.SpecPage:IsTreeDirty() then
-                return "tree_not_marked_dirty"
-            end
-
-            return "ok"
-        "#).unwrap();
-        assert_eq!(result, "ok", "ProfessionsFrame should show a populated specialization tab: {result}");
+        seed_professions_specialization_paths(&env);
+        load_professions_specialization_addons(&env);
+        assert_professions_specialization_tree_populated(&env);
     }
 }
 

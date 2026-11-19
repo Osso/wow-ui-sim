@@ -22,6 +22,43 @@ pub struct WrathUnitTapState {
     pub by_all_threat_list: bool,
 }
 
+/// One Mists cinematic record, keyed by cinematic type.
+#[cfg(feature = "client-mists")]
+#[derive(Clone, Debug)]
+pub struct CinematicRecord {
+    pub movie_type: i32,
+    pub movie_id: i32,
+    pub can_cancel: bool,
+    pub started_at: Instant,
+    pub active: bool,
+}
+
+/// One recorded CinematicFinished result.
+#[cfg(feature = "client-mists")]
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct CinematicFinishRecord {
+    pub movie_type: i32,
+    pub elapsed: std::time::Duration,
+    pub user_canceled: bool,
+    pub did_error: bool,
+}
+
+/// Empty-default Mists movie inputs and cinematic state.
+#[cfg(feature = "client-mists")]
+#[derive(Debug, Default)]
+pub struct MoviePlaybackState {
+    /// UNKNOWN native playback outcome; absent movie IDs have no supplied result.
+    pub start_results: HashMap<u32, u32>,
+    /// UNKNOWN game-movie flag; no verified setter in this scope, so it starts unset.
+    pub(crate) game_movie_flag_set: bool,
+    pub manager_movie_id: Option<i32>,
+    pub cinematic_records: HashMap<i32, CinematicRecord>,
+    pub last_cinematic_finish: Option<CinematicFinishRecord>,
+    pub(crate) active_handles: HashSet<u64>,
+    pub(crate) pending_finishes: VecDeque<u64>,
+    pub(crate) dispatching_finish: bool,
+}
+
 macro_rules! build_empty_sim_state {
     ($collections:ident, $runtime:ident, $session_wtf_path:ident) => {{
         let cvars = CVarStorage::with_session_wtf_path(&$session_wtf_path);
@@ -37,6 +74,7 @@ macro_rules! build_empty_sim_state {
                 $runtime.screen_width,
                 $runtime.screen_height,
             ),
+            source_location_exclusions: Vec::new(),
             events: EventQueue::default(),
             private_aura_anchors: crate::c_api::private_aura_anchors::PrivateAuraAnchors::default(),
             #[cfg(all(
@@ -52,6 +90,8 @@ macro_rules! build_empty_sim_state {
             #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
             last_gamepad_input_timestamp: None,
             video_capability_bytes: Default::default(),
+            #[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+            performance_bar_protocol_types: None,
             #[cfg(any(feature = "client-wowforever", feature = "client-ptr"))]
             gamepad_mapped_sticks: None,
             #[cfg(any(feature = "client-wowforever", feature = "client-ptr"))]
@@ -66,6 +106,8 @@ macro_rules! build_empty_sim_state {
             addon_initialization_failures: HashMap::new(),
             save_failed_addons: false,
             cinematic_active: false,
+            #[cfg(feature = "client-mists")]
+            movie_playback: Default::default(),
             in_world: false,
             reload_allows_protected_actions: false,
             account_cvar_chunks_ready: [true; 2],
@@ -146,6 +188,7 @@ macro_rules! build_empty_sim_state {
             party_countdown_request: None,
             quest_portrait_state: None,
             tooltips: $collections.tooltips,
+            clamp_inset_access_input: Default::default(),
             item_overrides: ::std::collections::HashMap::new(),
             item_level_color_condition_23: None,
             item_level_color_condition_24: None,
@@ -160,6 +203,8 @@ macro_rules! build_empty_sim_state {
             #[cfg(feature = "retail-12-0-5")]
             item_tooltip_levels: ::std::collections::HashMap::new(),
             item_tooltip_inputs: ::std::collections::HashMap::new(),
+            item_tooltip_sell_price_unit_prices: ::std::collections::HashMap::new(),
+            bag_item_tooltip_sell_price_statuses: ::std::collections::HashMap::new(),
             item_tooltip_sell_price_quantities: ::std::collections::HashMap::new(),
             blocked_auras_by_unit: $collections.blocked_auras_by_unit,
             #[cfg(feature = "client-wowforever")]
@@ -438,6 +483,8 @@ macro_rules! build_empty_sim_state {
             next_report_token: $runtime.next_report_token,
             party_members: $collections.party_members,
             party_group_active: $runtime.party_group_active,
+            home_subgroup_roster: None,
+            instance_subgroup_roster: None,
             group_member_counts: GroupMemberCountsState::default(),
             #[cfg(all(
                 feature = "retail-12-0-5",
@@ -537,6 +584,8 @@ macro_rules! build_empty_sim_state {
             spell_charges: ::std::collections::HashMap::new(),
             ranged_auto_attack_spell_id: 0,
             spell_cast_context_is_null: None,
+            #[cfg(feature = "retail-12-1-5")]
+            spell_identifier_metadata_source: None,
             #[cfg(feature = "retail-12-0-0")]
             spell_cast_counts: ::std::collections::HashMap::new(),
             #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
@@ -561,6 +610,7 @@ macro_rules! build_empty_sim_state {
             r88s_inventory_inputs: Default::default(),
             loading_addon_index: $runtime.loading_addon_index,
             loading_addon_stack: $runtime.loading_addon_stack,
+            loading_addon_secure_env: $runtime.loading_addon_secure_env,
             executing_addon_index: $runtime.executing_addon_index,
             loading_nil_symbol_environment: None,
             xml_load_addon_depth: $runtime.xml_load_addon_depth,
@@ -1004,7 +1054,8 @@ pub use super::game_data::AuraInfo;
 pub use super::game_data::SpellCooldownState;
 pub use super::game_data::{
     CLASS_LABELS, CastTargetSnapshot, CastingState, EmpowerTiming, PartyMember, RACE_DATA,
-    ROT_DAMAGE_LEVELS, TargetInfo, XP_LEVELS, tick_party_health,
+    ROT_DAMAGE_LEVELS, SubgroupMemberRecord, SubgroupOwnerRoster, TargetInfo, XP_LEVELS,
+    tick_party_health,
 };
 use super::game_data::{
     default_action_bars, default_allied_races, default_major_faction_renown_levels,
@@ -1162,6 +1213,7 @@ struct EmptyRuntimeState {
     cursor_item: Option<CursorInfo>,
     loading_addon_index: Option<u16>,
     loading_addon_stack: Vec<u16>,
+    loading_addon_secure_env: Option<bool>,
     executing_addon_index: Option<u16>,
     xml_load_addon_depth: u32,
     loading_forbidden: bool,
@@ -1229,6 +1281,7 @@ macro_rules! build_empty_runtime_state {
             cursor_item: None,
             loading_addon_index: None,
             loading_addon_stack: Vec::new(),
+            loading_addon_secure_env: None,
             executing_addon_index: None,
             xml_load_addon_depth: 0,
             loading_forbidden: false,

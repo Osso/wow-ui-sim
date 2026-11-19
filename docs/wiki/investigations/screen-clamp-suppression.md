@@ -1,5 +1,7 @@
 # R88n.5r-q1/q2 pre-edit gap table
 Base 5401e68f89e49e1fe847b9ff0aaedaf6068cfed0, dot/clamp-suppression-r88n5r.
+The historical VERIFIED column cites the native handoff
+`pr46-49-decomp-answers.md`, sections R88n.5r-q1/q2.
 
 | VERIFIED fact | Existing source | Status / bounded finding |
 |---|---|---|
@@ -37,7 +39,8 @@ Historical pre-edit questions (answered by q3; implementation deferred #1169):
 The model now has a dedicated per-region bit and explicit Boolean writer,
 effective clamp reads and compare-before-write, set-backed queued dependent
 geometry updates. The identified anchor clear routes and distinct propagation-state
-predicate are VERIFIED by q3; implementation is deferred by agreement (#1169),
+predicate are VERIFIED by `pr46-49-decomp-answers.md`, R88n.5r-q3.1; at this stage
+implementation was deferred by agreement (#1169),
 not wired directly to the suppression bit. Generic construction clears
 the bit. Retail overflow uses ordered later-edge precedence; other profile
 behavior is unchanged. Required ordinary setter argument/return contracts are
@@ -50,15 +53,15 @@ Retail GameTooltip helper source is checked; the new oversize selector feeds two
 different widths and checks exact right/top pinning, unchanged size and unequal
 outputs, rejecting a constant/no-op clamp. No test execution is claimed here.
 
-Native q3 answers (#1168) now VERIFY propagation, conversion/rounding and
-notification/policy behavior. Simulator implementation is deferred by agreement
-(#1169), not UNKNOWN native behavior. This bounded candidate retains neutral
-producer/notification seams. Public-unit numerical equivalence, loaded-owner
-state, exhaustive writer census and final renderer snapping remain unproved.
+The native handoff `pr46-49-decomp-answers.md`, R88n.5r-q3.1–q3.3
+(#1168), verifies propagation, conversion/rounding and notification/policy behavior. These producers were deferred in the q1/q2 merge
+by #1169 and implemented in the q3 follow-up below.
 
 ## Sources
 
-- lt-5c7c native comment1105, R88n.5r-q1/q2; #1168 q3 and #1169 deferral.
+- `pr46-49-decomp-answers.md` (untracked native handoff), R88n.5r-q1/q2
+  (lt-5c7c #1105), R88n.5r-q3 (#1168; lt-883d #1176), and
+  R88n.5r-q4 (lt-883d #1192). #1169 records the original deferral.
 - [[layout-system]] and [layout reference](../../layout-system.md).
 
 Review clarification: requesting propagation clear is not proof of an unconditional
@@ -74,3 +77,71 @@ to scanning numeric `/proc` entries and matching the PPID in `stat` (field 4,
 the second token after the final `)`). The fast path, deadline, child count,
 and full conformance admission remain unchanged. This is a test-harness
 portability fix, not tooltip behavior or native clamp evidence.
+
+
+## q3 follow-up (lt-883d, Retail only)
+
+The q3 native answer is in `pr46-49-decomp-answers.md`, R88n.5r-q3
+(lt-883d #1176), scoped to Retail
+12.1.5.70688. #1181 documents the remaining q4 evidence gaps. See
+[layout reference](../../layout-system.md#screen-clamping) for the current
+public contract, exact f32 unit operations, comparison and queue rules.
+
+- **VERIFIED** (`pr46-49-decomp-answers.md`, R88n.5r-q3.1): anchor dependencies inherit propagation; changed
+  unguarded nodes write state first, visit their ordered dependents, and then
+  call the verified suppression writer. The false/guarded shared coordinate root
+  is represented as a geometry target, separate from UIParent. Accepted
+  StartMoving and ordinary active-target settlement request that root's state.
+- **VERIFIED** (`pr46-49-decomp-answers.md`, R88n.5r-q3.2): native-unit inset stores and public getters use
+  distinct f32 conversion order; rounding touches displacement and explicit
+  dimensions before correction, not resolved target edges or derived spans.
+  No renderer snapping is claimed. This model bridges existing public-unit
+  displacements/dimensions through that helper rather than changing all
+  unrelated geometry storage.
+- **VERIFIED** (`pr46-49-decomp-answers.md`, R88n.5r-q3.3): the inset pre-store notification is separate from
+  rectangle dirtiness and follows its saved-access, prevention and prior-mark
+  predicates. The distinct geometry callback runs before its dependents.
+  The restricted-region policy rejects changed true and raises the diagnostic
+  rather than yielding a nil or successful no-op. Retail's old generic
+  protected/combat gate for this setter is contradicted and removed; other
+  profiles and general script-object access behavior are unchanged.
+- **INFERRED simulator representations / UNKNOWN native origins:** the
+  interim q3 rounding scale guard was positivity; q4 supersedes it below;
+  movement special contexts, saved access, ancestor eligibility/gate and first
+  boundary marker, and restricted-region state are separate explicit host
+  inputs, neutral by default. The constructor does not establish any loaded
+  owner's or UIParent's propagation. StartSizing is outside this change.
+- **Conditional original proof:** the selected Retail GameTooltip helper
+  drives cursor and right owners, followed by ClearAllPoints and a point to
+  UIParent, with supplied true and false targets. The all-false sequence is
+  **INFERRED** and conditional on the fixture. Movement, API, guard/equal
+  return, rounding and independent notification tests exercise the other
+  bounded behavior without modifying Blizzard Lua.
+
+
+## q4 clarification (#1192)
+
+This follow-up replaces q3's interim scale, restricted-region,
+movement-context and saved-access inputs without widening the task.
+
+- **VERIFIED** (`pr46-49-decomp-answers.md`, R88n.5r-q4): the rounding
+  threshold is strict f32 epsilon, and inset tracking samples before
+  restoration. The simulator implements the read sequence with a call-local
+  test seam (no live VM changes): initialize, save/clear, accept four
+  dimension reads, sample, then restore. A taint label does not supply the
+  simulated input mark.
+- **VERIFIED** (`pr46-49-decomp-answers.md`, R88n.5r-q4.3): the receiving
+  Frame participates in the search for the first notification boundary.
+  Eligibility, the auxiliary gate, the boundary flag and the parent
+  notification byte remain distinct.
+- **VERIFIED** (`pr46-49-decomp-answers.md`, R88n.5r-q4.5): the Frame
+  carrier restriction reads geometry propagation. The simulator uses
+  existing SetWindow and parent assignment for the stored Window-presence
+  projection; no new public method or native constructor is introduced.
+
+**Scope exclusion (R88n.5r-q4.5):** the constructor producers
+`CGNamePlateFrame`, `CGPingPinFrame`, `HousingLayoutPinFrame` and
+`HousingFixturePointFrame` are not represented because the simulator does
+not model those native frame types. The constructor follow-up is outside
+lt-883d. StartSizing and complete unobserved writer inventories also remain
+outside this task.

@@ -170,12 +170,21 @@ fn add_system_message_with_no_args_records_empty_string() {
 
 #[test]
 fn add_system_message_does_not_clobber_other_chat_frame_util_entries() {
-    let env = env();
+    // VERIFIED — Blizzard_ChatFrameBase.toc loads Shared/ChatFrameFilters.lua.
+    let env = crate::common::panel_fixtures::setup_env();
+    let process_kind: String = env
+        .eval("return type(ChatFrameUtil.ProcessMessageEventFilters)")
+        .unwrap();
+    assert_eq!(process_kind, "function");
+
+    env.exec("ChatFrameUtil.AddSystemMessage('entry preservation')")
+        .unwrap();
+
     let process_kind: String = env
         .eval("return type(ChatFrameUtil.ProcessMessageEventFilters)")
         .unwrap();
     assert_eq!(
         process_kind, "function",
-        "bootstrap-defined ChatFrameUtil entries must survive Rust install"
+        "AddSystemMessage must preserve the original chat filter function"
     );
 }

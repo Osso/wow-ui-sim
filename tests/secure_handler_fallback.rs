@@ -170,6 +170,8 @@ fn execute_restricted_environment_allows_table_maxn_for_click_cast_loops() {
 }
 
 classic_secret_values_fixture! {
+// R88ae.4 supersedes this legacy registry expectation on Retail only.
+#[cfg(not(feature = "profile-retail"))]
 #[test]
 fn execute_callmethod_propagates_tainted_args_to_insecure_method() {
     let env = env();
