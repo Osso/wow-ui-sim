@@ -28,8 +28,7 @@ fn write_frame_addon(
     addon.join(format!("{name}.toc"))
 }
 
-#[test]
-fn duplicate_named_secure_xml_frame_uses_its_createframe_identity() {
+fn load_duplicate_frame_fixture() -> (tempfile::TempDir, WowLuaEnv) {
     let root = tempfile::tempdir().unwrap();
     let ordinary_toc = write_frame_addon(
         root.path(),
@@ -49,22 +48,22 @@ fn duplicate_named_secure_xml_frame_uses_its_createframe_identity() {
     );
     let env = WowLuaEnv::new().expect("create XML identity fixture");
     env.state().borrow_mut().addon_base_paths = vec![root.path().to_path_buf()];
+    assert_addon_loaded_without_warnings(&env, &ordinary_toc, "load ordinary XML frame");
+    assert_addon_loaded_without_warnings(&env, &secure_toc, "load secure duplicate XML frame");
+    (root, env)
+}
 
-    let ordinary_result =
-        load_addon(&env.loader_env(), &ordinary_toc).expect("load ordinary XML frame");
+fn assert_addon_loaded_without_warnings(env: &WowLuaEnv, toc: &Path, context: &str) {
+    let result = load_addon(&env.loader_env(), toc).expect(context);
     assert!(
-        ordinary_result.warnings.is_empty(),
-        "{:?}",
-        ordinary_result.warnings
+        result.warnings.is_empty(),
+        "{}: {:?}",
+        context,
+        result.warnings
     );
-    let secure_result =
-        load_addon(&env.loader_env(), &secure_toc).expect("load secure duplicate XML frame");
-    assert!(
-        secure_result.warnings.is_empty(),
-        "{:?}",
-        secure_result.warnings
-    );
+}
 
+fn assert_duplicate_xml_frames_keep_identity_and_properties(env: &WowLuaEnv) {
     let (distinct, first_width, first_height, second_width, second_height): (bool, f64, f64, f64, f64) = env
         .eval(
             "local first = FirstXmlOnLoadSelf; local second = rawget(__secureenv, 'SecondXmlOnLoadSelf'); \
@@ -77,4 +76,10 @@ fn duplicate_named_secure_xml_frame_uses_its_createframe_identity() {
     );
     assert_eq!((first_width, first_height), (31.0, 41.0));
     assert_eq!((second_width, second_height), (73.0, 79.0));
+}
+
+#[test]
+fn duplicate_named_secure_xml_frame_uses_its_createframe_identity() {
+    let (_root, env) = load_duplicate_frame_fixture();
+    assert_duplicate_xml_frames_keep_identity_and_properties(&env);
 }
