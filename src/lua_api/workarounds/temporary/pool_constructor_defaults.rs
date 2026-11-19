@@ -108,7 +108,10 @@ end
 if PartyFrame ~= nil and PartyFrame.PartyMemberFramePool == nil then
   PartyFrame.PartyMemberFramePool = PartyMemberFramePool
 end
+"#;
 
+// INFERRED: Wrath's cached UI has no SharedXMLBase Pools.lua provider.
+const LEGACY_POOL_CONSTRUCTOR_DEFAULTS_LUA: &str = r#"
 local function __wow_make_region_pool(acquire_region)
   return function(parent, layer, subLevel, template, resetter)
     local pool = {
@@ -378,7 +381,14 @@ end
 "#;
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
-    lua.exec(POOL_CONSTRUCTOR_DEFAULTS_LUA)?;
+    // CreateFramePool seeds PartyMemberFramePool before Blizzard addons load.
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Wrath {
+        let defaults =
+            format!("{POOL_CONSTRUCTOR_DEFAULTS_LUA}{LEGACY_POOL_CONSTRUCTOR_DEFAULTS_LUA}");
+        lua.exec(&defaults)?;
+    } else {
+        lua.exec(POOL_CONSTRUCTOR_DEFAULTS_LUA)?;
+    }
     Ok(())
 }
 
@@ -386,13 +396,7 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
 mod tests {
     use crate::lua_api::WowLuaEnv;
 
-    #[test]
-    fn installs_pool_constructor_defaults() {
-        let env = WowLuaEnv::new().expect("lua env should initialize");
-
-        let result: String = env
-            .eval(
-                r#"
+    const LEGACY_POOL_CONSTRUCTORS_PROBE: &str = r#"
                 if type(CreateFramePool) ~= "function" then return "frame_pool" end
                 if type(CreateTexturePool) ~= "function" then return "texture_pool" end
                 if type(CreateFontStringPool) ~= "function" then return "font_string_pool" end
@@ -427,8 +431,32 @@ mod tests {
                 factory:ReleaseAll()
                 if factory:GetNumActive() ~= 0 then return "factory_release" end
                 return "ok"
+            "#;
+
+    #[test]
+    fn installs_early_party_member_pool_seed() {
+        let env = WowLuaEnv::new().expect("lua env should initialize");
+        let result: String = env
+            .eval(
+                r#"
+                if type(CreateFramePool) ~= "function" then return "frame_pool" end
+                if type(PartyMemberFramePool) ~= "table" then return "party_pool" end
+                if PartyMemberFramePool:GetNumActive() ~= 0 then return "party_pool_active" end
+                if PartyFrame ~= nil and PartyFrame.PartyMemberFramePool ~= PartyMemberFramePool then return "party_frame_pool" end
+                return "ok"
                 "#,
             )
+            .expect("early pool seed probe should run");
+        assert_eq!(result, "ok");
+    }
+
+    #[cfg(feature = "client-wrath")]
+    #[test]
+    fn installs_legacy_pool_constructor_defaults_without_provider() {
+        let env = WowLuaEnv::new().expect("lua env should initialize");
+
+        let result: String = env
+            .eval(LEGACY_POOL_CONSTRUCTORS_PROBE)
             .expect("pool constructor probe should run");
 
         assert_eq!(result, "ok");
