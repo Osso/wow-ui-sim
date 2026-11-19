@@ -966,12 +966,20 @@ fn party_fixture_is_secret() -> bool {
         && profile != wow_ui_sim::client_profile::ClientProfile::WowForever
 }
 
+// UNKNOWN (pre-12.0.5 Retail): party identity secrecy unverified; pending decomp R88bi
+fn party_identity_secrecy_is_verified() -> bool {
+    !cfg!(all(feature = "profile-retail", not(feature = "retail-12-0-5")))
+}
+
 #[test]
 fn test_party_roster_name_is_secret_value() {
     let env = create_explicit_secret_party_env();
     let (secret, accessible): (bool, bool) = env
         .eval("local name = UnitName('party1'); return issecretvalue(name), canaccessvalue(name)")
         .unwrap();
+    if !party_identity_secrecy_is_verified() {
+        return;
+    }
     let expected_secret = party_fixture_is_secret();
     assert_eq!(secret, expected_secret, "party roster identity secrecy");
     assert_eq!(accessible, !expected_secret, "party roster identity access");
@@ -988,6 +996,9 @@ fn test_party_full_name_marks_name_and_realm_secret() {
             "#,
         )
         .unwrap();
+    if !party_identity_secrecy_is_verified() {
+        return;
+    }
     let expected_secret = party_fixture_is_secret();
     assert_eq!(name_secret, expected_secret, "party full-name secrecy");
     // WM91: the same-realm Forever payload is UNKNOWN; do not choose nil or text here.
@@ -1003,6 +1014,9 @@ fn test_table_containing_party_identity_is_not_accessible() {
     let accessible: bool = env
         .eval("local t = { name = UnitName('party1') }; return canaccesstable(t)")
         .unwrap();
+    if !party_identity_secrecy_is_verified() {
+        return;
+    }
     assert_eq!(
         accessible,
         !party_fixture_is_secret(),
