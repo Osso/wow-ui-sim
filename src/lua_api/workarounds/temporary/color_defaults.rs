@@ -5,9 +5,9 @@
 const COLOR_DEFAULTS_LUA: &str = r#"
 local function __wow_make_color(r, g, b, a)
   local color = {
-    r = r or 1,
-    g = g or 1,
-    b = b or 1,
+    r = r,
+    g = g,
+    b = b,
     a = a or 1,
   }
 
@@ -32,7 +32,7 @@ local function __wow_make_color(r, g, b, a)
   end
 
   function color:GenerateHexColor()
-    return string.format("FF%02X%02X%02X", math.floor(self.r * 255), math.floor(self.g * 255), math.floor(self.b * 255))
+    return C_ColorUtil.GenerateTextColorCode(self)
   end
 
   function color:GenerateHexColorNoAlpha()
@@ -50,6 +50,8 @@ local function __wow_make_color(r, g, b, a)
   return color
 end
 
+-- INFERRED: early bootstrap callers use CreateColor before SharedXMLBase/Color.lua loads.
+-- Wrath has no cached SharedXMLBase/Color.lua provider.
 if CreateColor == nil then
   function CreateColor(r, g, b, a)
     return __wow_make_color(r, g, b, a)
@@ -66,19 +68,6 @@ local function __wow_color_merge_namespace(existing, defaults)
   return namespace
 end
 
-QuestDifficultyColors = QuestDifficultyColors or {}
-QuestDifficultyColors.trivial = QuestDifficultyColors.trivial or { r = 0.50, g = 0.50, b = 0.50 }
-QuestDifficultyColors.standard = QuestDifficultyColors.standard or { r = 0.25, g = 0.75, b = 0.25 }
-QuestDifficultyColors.difficult = QuestDifficultyColors.difficult or { r = 1.00, g = 1.00, b = 0.00 }
-QuestDifficultyColors.verydifficult = QuestDifficultyColors.verydifficult or { r = 1.00, g = 0.50, b = 0.25 }
-QuestDifficultyColors.impossible = QuestDifficultyColors.impossible or { r = 1.00, g = 0.10, b = 0.10 }
-
-QuestDifficultyHighlightColors = QuestDifficultyHighlightColors or {}
-QuestDifficultyHighlightColors.trivial = QuestDifficultyHighlightColors.trivial or { r = 0.70, g = 0.70, b = 0.70 }
-QuestDifficultyHighlightColors.standard = QuestDifficultyHighlightColors.standard or { r = 0.50, g = 1.00, b = 0.50 }
-QuestDifficultyHighlightColors.difficult = QuestDifficultyHighlightColors.difficult or { r = 1.00, g = 1.00, b = 0.50 }
-QuestDifficultyHighlightColors.verydifficult = QuestDifficultyHighlightColors.verydifficult or { r = 1.00, g = 0.75, b = 0.50 }
-QuestDifficultyHighlightColors.impossible = QuestDifficultyHighlightColors.impossible or { r = 1.00, g = 0.40, b = 0.40 }
 
 local function __wow_clamp_normalized(value)
   local number = tonumber(value) or 0
@@ -90,6 +79,7 @@ local function __wow_normalize_hue(value)
   return (hue % 1 + 1) % 1
 end
 
+-- These are C_ColorUtil fields; cached Color.lua exposes same-spelled globals.
 C_ColorUtil = __wow_color_merge_namespace(C_ColorUtil, {
   ConvertHSLToHSV = function(h, s, l)
     local hue = __wow_normalize_hue(h)
@@ -178,6 +168,24 @@ C_PvP = __wow_color_merge_namespace(C_PvP, {
 })
 "#;
 
+// INFERRED: Wrath has no cached FrameXMLBase constants provider.
+const WRATH_QUEST_DIFFICULTY_DEFAULTS_LUA: &str = r#"
+QuestDifficultyColors = {
+  trivial = { r = 0.50, g = 0.50, b = 0.50 },
+  standard = { r = 0.25, g = 0.75, b = 0.25 },
+  difficult = { r = 1.00, g = 1.00, b = 0.00 },
+  verydifficult = { r = 1.00, g = 0.50, b = 0.25 },
+  impossible = { r = 1.00, g = 0.10, b = 0.10 },
+}
+QuestDifficultyHighlightColors = {
+  trivial = { r = 0.70, g = 0.70, b = 0.70 },
+  standard = { r = 0.43, g = 0.93, b = 0.43 },
+  difficult = { r = 1.00, g = 1.00, b = 0.10 },
+  verydifficult = { r = 1.00, g = 0.75, b = 0.44 },
+  impossible = { r = 1.00, g = 0.40, b = 0.40 },
+}
+"#;
+
 const NON_RETAIL_COLOR_DEFAULTS_LUA: &str = r#"
 local namespace = type(C_UIColor) == "table" and C_UIColor or {}
 if rawget(namespace, "GetColors") == nil then
@@ -211,6 +219,9 @@ C_ColorOverrides = colorOverrides
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(COLOR_DEFAULTS_LUA)?;
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Wrath {
+        lua.exec(WRATH_QUEST_DIFFICULTY_DEFAULTS_LUA)?;
+    }
     if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail {
         lua.exec(NON_RETAIL_COLOR_DEFAULTS_LUA)?;
     }
@@ -235,11 +246,13 @@ mod tests {
                 if r ~= 0.25 or g ~= 0.5 or b ~= 0.75 or a ~= 0.8 then return "rgba" end
                 local rb, gb, bb, ab = color:GetRGBAAsBytes()
                 if rb ~= 64 or gb ~= 128 or bb ~= 191 or ab ~= 204 then return "bytes" end
-                if color:GenerateHexColor() ~= "FF3F7FBF" then return "hex" end
+                if color:GenerateHexColor() ~= "ff3f7fbf" then return "hex" end
                 if color:GenerateHexColorNoAlpha() ~= "4080BF" then return "hex_no_alpha" end
-                if color:WrapTextInColorCode("Ready") ~= "|cFF3F7FBFReady|r" then return "color_wrap" end
-                if QuestDifficultyColors.impossible.g ~= 0.10 then return "quest" end
-                if QuestDifficultyHighlightColors.standard.g ~= 1.00 then return "highlight" end
+                if color:WrapTextInColorCode("Ready") ~= "|cff3f7fbfReady|r" then return "color_wrap" end
+                local defaultColor = CreateColor()
+                local defaultR, defaultG, defaultB, defaultA = defaultColor:GetRGBA()
+                if defaultR ~= nil or defaultG ~= nil or defaultB ~= nil then return "rgb_defaults" end
+                if defaultA ~= 1 then return "alpha_default" end
                 return "ok"
                 "#,
             )

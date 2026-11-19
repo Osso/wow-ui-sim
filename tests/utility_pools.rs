@@ -1,5 +1,51 @@
 use wow_ui_sim::lua_api::WowLuaEnv;
 
+fn pool_test_env() -> WowLuaEnv {
+    if wow_ui_sim::client_profile::ACTIVE == wow_ui_sim::client_profile::ClientProfile::Wrath {
+        WowLuaEnv::new().expect("Lua environment should initialize")
+    } else {
+        crate::common::env_with_shared_xml()
+    }
+}
+
+const CACHED_POOL_CONSTRUCTORS_PROBE: &str = r#"
+    for _, name in ipairs({"CreateFramePool", "CreateTexturePool", "CreateFontStringPool", "CreateFramePoolCollection", "CreateFrameFactory"}) do
+        assert(type(_G[name]) == "function", name .. " must come from the cached provider")
+    end
+
+    local resetCalls = 0
+    local pool = CreateFramePool("Frame", UIParent, nil, function(_, _, isNew)
+        resetCalls = resetCalls + (isNew and 1 or 10)
+    end)
+    local first, isNew = pool:Acquire()
+    assert(first and isNew and pool:IsActive(first) and pool:DoesObjectBelongToPool(first))
+    pool:Release(first)
+    assert(not pool:IsActive(first) and resetCalls == 11)
+    local reused, reusedIsNew = pool:Acquire()
+    assert(reused == first and not reusedIsNew and pool:IsActive(reused))
+
+    local texture = CreateTexturePool(UIParent, "ARTWORK"):Acquire()
+    local fontString = CreateFontStringPool(UIParent, "ARTWORK"):Acquire()
+    assert(texture and fontString)
+
+    local collection = CreateFramePoolCollection()
+    local collectedPool = collection:CreatePool("Frame", UIParent, "")
+    local collected = collectedPool:Acquire()
+    assert(collected and collectedPool:IsActive(collected) and collection:GetNumActive() == 1)
+    collection:ReleaseAll()
+    assert(not collectedPool:IsActive(collected) and collection:GetNumActive() == 0)
+
+    CreateTemplateInfoCache = function()
+        return { GetTemplateInfo = function() return nil end }
+    end
+    local factory = CreateFrameFactory()
+    local factoryFrame = factory:Create(UIParent, "Frame")
+    assert(factoryFrame and factory:GetNumActive() == 1)
+    factory:ReleaseAll()
+    assert(factory:GetNumActive() == 0)
+    return "ok"
+"#;
+
 // VERIFIED — Blizzard_SharedXMLBase/Pools.lua:65,102,136 resets new and released objects.
 fn assert_pool_release_all_behavior(env: &WowLuaEnv) {
     env.exec(
@@ -39,7 +85,7 @@ fn assert_pool_collection_behavior(env: &WowLuaEnv) {
         r#"
         local collection = CreateFramePoolCollection()
         local newResets, releaseResets = 0, 0
-        local pool = collection:CreatePool("Frame", UIParent, nil, function(_, frame, isNew)
+        local pool = collection:CreatePool("Frame", UIParent, "", function(_, frame, isNew)
             if isNew then
                 newResets = newResets + 1
             else
@@ -48,16 +94,16 @@ fn assert_pool_collection_behavior(env: &WowLuaEnv) {
             frame.collectionReset = true
         end)
 
-        local frame = collection:Acquire(nil)
+        local frame = collection:Acquire("")
         assert(frame ~= nil)
         assert(pool:IsActive(frame))
-        assert(collection:IsActive(frame))
+        assert(collection:GetNumActive() == 1)
 
         collection:Release(frame)
 
         TEST_COLLECTION_NEW_RESETS = newResets
         TEST_COLLECTION_RELEASE_RESETS = releaseResets
-        TEST_COLLECTION_ACTIVE = collection:IsActive(frame)
+        TEST_COLLECTION_ACTIVE = pool:IsActive(frame)
         TEST_COLLECTION_RESET = frame.collectionReset
         TEST_COLLECTION_ENUM_EMPTY = collection:EnumerateActive()() == nil
         "#,
@@ -67,7 +113,7 @@ fn assert_pool_collection_behavior(env: &WowLuaEnv) {
 
 #[test]
 fn create_frame_pool_supports_release_all_and_reset_callback() {
-    let env = WowLuaEnv::new().unwrap();
+    let env = pool_test_env();
     assert_pool_release_all_behavior(&env);
 
     let resets: (i32, i32) = env
@@ -89,7 +135,7 @@ fn create_frame_pool_supports_release_all_and_reset_callback() {
 
 #[test]
 fn create_frame_pool_collection_can_create_and_release_by_template() {
-    let env = WowLuaEnv::new().unwrap();
+    let env = pool_test_env();
     assert_pool_collection_behavior(&env);
 
     let resets: (i32, i32) = env
@@ -103,6 +149,16 @@ fn create_frame_pool_collection_can_create_and_release_by_template() {
     assert!(!active);
     assert!(reset);
     assert!(enum_empty);
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn cached_pool_constructors_preserve_original_behavior() {
+    let env = crate::common::env_with_shared_xml();
+    let result: String = env
+        .eval(CACHED_POOL_CONSTRUCTORS_PROBE)
+        .expect("cached pool provider behavior probe should run");
+    assert_eq!(result, "ok");
 }
 
 #[cfg(all(feature = "optional-tests", feature = "client-retail"))]
