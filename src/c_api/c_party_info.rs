@@ -49,11 +49,21 @@ fn convert_to_raid(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
+/// INFERRED (simulator mapping): the invite is server-mediated, so local membership changes only on acceptance.
+/// Events, confirmation and taint behavior are UNKNOWN pending R88bl.
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn invite_unit(state: &mut LuaState) -> LuaResult<u32> {
+    let _target_name = String::from_stack(state, 1)?;
+    Ok(0)
+}
+
 pub(crate) fn register_c_party_info_surface(state: &mut LuaState) -> LuaResult<()> {
     let table_ref = ensure_namespace(state, "C_PartyInfo")?;
     register_group_membership_probes(state, table_ref)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     table_set_rust_fn_static(state, table_ref, "ConvertToRaid", convert_to_raid)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    table_set_rust_fn_static(state, table_ref, "InviteUnit", invite_unit)?;
     if matches!(
         crate::client_profile::ACTIVE,
         crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
