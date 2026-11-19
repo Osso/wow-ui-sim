@@ -10,9 +10,20 @@ fn menu_util_hook_tooltip_uses_blizzard_provider() {
         assert(type(MenuUtil.HookTooltipScripts) == "function")
         local alternate = CreateFrame("Frame", "TopLevelParentProbe", UIParent)
         alternate:Show()
+        local alternateEventFired = false
+        local originalTriggerEvent = EventRegistry.TriggerEvent
+        EventRegistry.TriggerEvent = function(_, eventName)
+            if eventName == "UI.AlternateTopLevelParentChanged" then
+                alternateEventFired = true
+            end
+        end
         SetAlternateTopLevelParent(alternate)
+        EventRegistry.TriggerEvent = originalTriggerEvent
+        assert(alternateEventFired, "FrameUtil must publish alternate-parent changes")
         assert(GetAppropriateTopLevelParent() == alternate,
             "FrameUtil must return the alternate top-level parent")
+        assert(GetAppropriateTopLevelParent(alternate) == UIParent,
+            "FrameUtil must honor the excluded alternate parent")
         local child = CreateFrame("Frame", "TopLevelParentChildProbe", UIParent)
         SetAppropriateTopLevelParent(child)
         assert(child:GetParent() == alternate,
