@@ -2,6 +2,7 @@
 //! No arguments; one non-nil Boolean. The native CVar callback publishes the status event.
 //! INFERRED: the image's feature-policy byte is represented by the constant below.
 
+use crate::lua_api::globals::state_backed_queries::dispatch_event_now;
 use crate::lua_api::methods::borrow_state;
 use crate::lua_bridge::table_set_rust_fn_static;
 use rilua::vm::state::LuaState;
@@ -20,7 +21,7 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
 }
 
 pub(crate) fn cvar_set_callback(state: &mut LuaState) -> LuaResult<()> {
-    crate::event::dispatch_event_now(state, "SOCIAL_UI_SYSTEM_STATUS_UPDATED", &[])
+    dispatch_event_now(state, "SOCIAL_UI_SYSTEM_STATUS_UPDATED", &[])
 }
 
 fn is_system_enabled(state: &mut LuaState) -> LuaResult<u32> {
