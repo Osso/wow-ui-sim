@@ -67,41 +67,6 @@ if strsplittable == nil then
   end
 end
 
-if MergeTable == nil then
-  function MergeTable(dest, src)
-    if type(dest) ~= "table" or type(src) ~= "table" then
-      return dest
-    end
-    for key, value in pairs(src) do
-      dest[key] = value
-    end
-    return dest
-  end
-end
-
-if tFilter == nil then
-  function tFilter(t, predicate)
-    if type(t) ~= "table" or type(predicate) ~= "function" then
-      return t
-    end
-    local out = 1
-    local len = #t
-    for i = 1, len do
-      local value = t[i]
-      if value ~= nil and predicate(value, i, t) then
-        if out ~= i then
-          t[out] = value
-        end
-        out = out + 1
-      end
-    end
-    for i = out, len do
-      t[i] = nil
-    end
-    return t
-  end
-end
-
 if mapvalues == nil then
   function mapvalues(fn, ...)
     local count = select("#", ...)
@@ -118,20 +83,6 @@ if mapvalues == nil then
   end
 end
 
-if tAppendAll == nil then
-  function tAppendAll(tbl, addedArray)
-    if type(tbl) ~= "table" or type(addedArray) ~= "table" then
-      return tbl
-    end
-
-    for _, value in ipairs(addedArray) do
-      table.insert(tbl, value)
-    end
-
-    return tbl
-  end
-end
-
 if GetScreenDPIScale == nil then
   function GetScreenDPIScale()
     return 1
@@ -145,20 +96,6 @@ if difftime == nil then
     function difftime(time1, time0)
       return (time1 or 0) - (time0 or 0)
     end
-  end
-end
-
-if FindInTableIf == nil then
-  function FindInTableIf(tbl, predicate)
-    if type(tbl) ~= "table" or type(predicate) ~= "function" then
-      return nil
-    end
-    for index, value in ipairs(tbl) do
-      if predicate(value, index) then
-        return index, value
-      end
-    end
-    return nil
   end
 end
 
@@ -194,49 +131,6 @@ end
 if string.K_AddDefaultValueText == nil then
   string.K_AddDefaultValueText = function(self)
     return tostring(self or "")
-  end
-end
-
-if GetMoneyString == nil then
-  local function __wow_separate_thousands(n)
-    local digits = tostring(n)
-    if #digits <= 3 then
-      return digits
-    end
-    local out = digits:sub(-3)
-    local i = #digits - 3
-    while i > 0 do
-      local chunk_start = math.max(1, i - 2)
-      out = digits:sub(chunk_start, i) .. "," .. out
-      i = chunk_start - 1
-    end
-    return out
-  end
-
-  function GetMoneyString(money, separateThousands)
-    money = math.floor(tonumber(money) or 0)
-    if money < 0 then money = 0 end
-    local gold = math.floor(money / 10000)
-    local silver = math.floor((money - gold * 10000) / 100)
-    local copper = money % 100
-    local gold_text = separateThousands and __wow_separate_thousands(gold) or tostring(gold)
-    local parts = {}
-    if gold > 0 then parts[#parts + 1] = gold_text .. "g" end
-    if silver > 0 then parts[#parts + 1] = silver .. "s" end
-    if copper > 0 or #parts == 0 then parts[#parts + 1] = copper .. "c" end
-    return table.concat(parts, " ")
-  end
-end
-
-if GetColorForCurrencyReward == nil then
-  function GetColorForCurrencyReward(_currencyID, _rewardQuantity, defaultColor)
-    if defaultColor ~= nil then
-      return defaultColor
-    end
-    if HIGHLIGHT_FONT_COLOR ~= nil then
-      return HIGHLIGHT_FONT_COLOR
-    end
-    return CreateColor(1, 1, 1, 1)
   end
 end
 
@@ -347,8 +241,6 @@ mod tests {
                 if CalculateStringEditDistance("kitten", "sitting") ~= 3 then return "edit_distance" end
                 local split = strsplittable(",", "a,b")
                 if split[1] ~= "a" or split[2] ~= "b" then return "strsplittable" end
-                local merged = MergeTable({ a = 1 }, { b = 2 })
-                if merged.a ~= 1 or merged.b ~= 2 then return "merge_table" end
                 local filtered = tFilter({ 1, 2, 3, 4 }, function(value) return value % 2 == 0 end)
                 if #filtered ~= 2 or filtered[1] ~= 2 or filtered[2] ~= 4 then return "tfilter" end
                 local firstMapped, secondMapped = mapvalues(function(value) return value * 2 end, 2, 3)
@@ -357,17 +249,11 @@ mod tests {
                     local first, second = ("a,b,c"):split(",")
                     if first ~= "a" or second ~= "b" then return "split_method" end
                 end
-                local appended = tAppendAll({ "a" }, { "b", "c" })
-                if #appended ~= 3 or appended[2] ~= "b" or appended[3] ~= "c" then return "append" end
                 if GetScreenDPIScale() ~= 1 then return "dpi" end
                 if difftime(10, 3) ~= 7 then return "difftime" end
-                local index, value = FindInTableIf({ "a", "b", "c" }, function(v) return v == "b" end)
-                if index ~= 2 or value ~= "b" then return "find" end
                 if ("label"):SetColorOrange():sub(1, 2) ~= "|c" then return "orange" end
                 if ("Hello {name}"):K_ReplaceVars({ name = "Sim" }) ~= "Hello Sim" then return "replace" end
                 if ("Plain"):K_AddDefaultValueText() ~= "Plain" then return "default_text" end
-                if GetMoneyString(1234567, true) ~= "123g 45s 67c" then return "money" end
-                if type(GetColorForCurrencyReward(1, 1).GetRGB) ~= "function" then return "currency_color" end
                 ConsoleSetFontHeight(18)
                 if ConsoleGetFontHeight() ~= 18 then return "console_font" end
                 if type(ConsoleGetColorFromType(0).GetRGB) ~= "function" then return "console_color" end
