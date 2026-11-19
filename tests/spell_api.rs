@@ -578,6 +578,16 @@ fn test_spell_get_spell_name() {
     assert_eq!(name, "Charge");
 }
 
+#[cfg(feature = "client-retail")]
+#[test]
+fn test_retail_spell_name_overrides_match_db2_rows() {
+    let env = env();
+    let names: (String, String) = env
+        .eval("return C_Spell.GetSpellName(275825), C_Spell.GetSpellName(182108)")
+        .unwrap();
+    assert_eq!(names, ("Heart of Azeroth".into(), "Artillery".into()));
+}
+
 #[test]
 fn test_spell_get_spell_name_unknown() {
     let env = env();

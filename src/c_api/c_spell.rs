@@ -649,10 +649,10 @@ fn get_spell_name(state: &mut LuaState) -> LuaResult<u32> {
     let spell_id = read_modeled_u32_spell_id(state)?;
     // Retail SpellDocumentation.lua:477-490 and Forever :518-531 declare
     // MayReturnNothing for missing spells.
-    let Some(spell) = spells::get_spell(spell_id) else {
+    let Some(name) = spells::get_spell_name(spell_id) else {
         return Ok(0);
     };
-    let name_string = create_string_static(state, spell.name);
+    let name_string = create_string_static(state, name);
     state.push(name_string);
     Ok(1)
 }

@@ -1,0 +1,30 @@
+{
+  "product": "wow",
+  "build": "12.1.5.70783",
+  "build_key": "bc493ecb2898766c0f8947a99b4b3d65",
+  "verification": "VERIFIED (DB2 12.1.5.70783)",
+  "source": "Local CASC extraction with wow-cli casc extract-fdid; CSV export with game-engine/scripts/export_db2_csv.py",
+  "file_data_id": 1990283,
+  "community_listfile_entry": "1990283;dbfilesclient/spellname.db2",
+  "community_listfile_sha256": "486bb1d1c5a87cc136c7824857a391ab0b07c6f50bbc724e104fc5f18e320741",
+  "db2_sha256": "e2c49984a4b6e17ab1ec84c3525c4ac7ff6fed5135a9f997f441ad4f0539f012",
+  "layout": "782EE721",
+  "dbd": {
+    "source": "WoWDBDefs revision d6f50d4f351193e84226aa62a36faa0f58528afa",
+    "path": "definitions/SpellName.dbd",
+    "sha256": "5f3cbcdf957152668d5e033c1c4ff79a7b436e2e45b8521270ca7e64cc028629"
+  },
+  "export": {
+    "rows": 416213,
+    "unreadable_records": 101,
+    "full_csv_sha256": "60a20a27fd16cd1611ac255cdf9ff716e04a8e9fb76c1b7fea4f522ef17d34ef",
+    "selected_csv": "SpellNames.csv",
+    "selected_rows": 2,
+    "selected_csv_sha256": "df105ed6145404a65cc7bed7dd57bf0df1cb68769b86aad587ec672b35d4e0fb"
+  },
+  "unreadable_encrypted_chunks": 18,
+  "target_rows": [
+    {"id": 182108, "name": "Artillery"},
+    {"id": 275825, "name": "Heart of Azeroth"}
+  ]
+}
