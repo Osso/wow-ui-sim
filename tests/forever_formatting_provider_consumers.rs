@@ -47,8 +47,7 @@ fn cached_custom_aura_container_merges_supplied_group_options() {
         "#,
     )
     .unwrap();
-    env.fire_unit_aura_full_update("player").unwrap();
-    env.fire_on_update(0.016).unwrap();
+    refresh_player_auras(&env);
     env.exec(
         r#"
         local count = container:GetAuraGroupFrameCount('format-provider')
@@ -77,6 +76,11 @@ fn custom_aura_container_env() -> WowLuaEnv {
     );
     seed_three_auras(&env);
     env
+}
+
+fn refresh_player_auras(env: &WowLuaEnv) {
+    env.fire_unit_aura_full_update("player").unwrap();
+    env.fire_on_update(0.016).unwrap();
 }
 
 fn seed_three_auras(env: &WowLuaEnv) {
