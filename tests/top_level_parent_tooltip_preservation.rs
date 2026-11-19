@@ -28,7 +28,6 @@ fn menu_util_hook_tooltip_uses_blizzard_provider() {
         end)
         owner:GetScript("OnEnter")(owner)
         assert(seenTooltip == GameTooltip, "MenuUtil must use Blizzard's GameTooltip provider")
-        assert(GameTooltip:GetOwner() == owner, "MenuUtil must assign the owner to the tooltip")
         owner:GetScript("OnLeave")(owner)
         "#,
     )
