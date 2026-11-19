@@ -1,7 +1,7 @@
 //! Forever outbound intent records. Acceptance is local simulator policy, not
 //! network delivery or native throttling. See docs/specs/addon-messages.md.
 
-#[cfg(feature = "client-wowforever")]
+#[cfg(any(feature = "client-wowforever", feature = "retail-12-0-0"))]
 use super::ensure_namespace;
 use crate::lua_api::SimState;
 use crate::lua_api::methods::{borrow_state, borrow_state_mut};
