@@ -18,6 +18,13 @@ fn frame_xml_base_toc() -> PathBuf {
         .expect("Blizzard_FrameXMLBase TOC for active profile")
 }
 
+fn assert_standard_highlight_color(env: &WowLuaEnv) {
+    let green: f64 = env
+        .eval("return QuestDifficultyHighlightColors['standard'].g")
+        .expect("standard highlight color probe should succeed");
+    assert_eq!(green, 0.93);
+}
+
 fn load_full_game_ui() -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("Failed to create Lua environment");
     env.set_screen_size(1024.0, 768.0);
@@ -95,7 +102,10 @@ fn blizzard_frame_xml_base_mainline_toc_is_eager_with_two_deps_and_allow_load_ga
         None,
         "Blizzard_FrameXMLBase omits DefaultState in the current Retail TOC"
     );
-    assert!(toc.default_enabled(), "Absent DefaultState defaults to enabled");
+    assert!(
+        toc.default_enabled(),
+        "Absent DefaultState defaults to enabled"
+    );
     assert_eq!(
         toc.metadata.get("AllowLoad"),
         None,
@@ -418,6 +428,8 @@ fn blizzard_frame_xml_base_publishes_quest_difficulty_color_table(env: &WowLuaEn
          got {:?}",
         impossible_color
     );
+
+    assert_standard_highlight_color(env);
 }
 }
 
