@@ -39,8 +39,16 @@ pub(super) fn patch_lfg_lock_list(env: &crate::lua_api::WowLuaEnv) {
     temporary::lfg_lock_list::patch(env);
 }
 
-#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(super) fn patch_tooltip_nineslice_surface(env: &crate::lua_api::WowLuaEnv) {
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::Mists
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
+        return;
+    }
+
     temporary::tooltip_nineslice_surface::patch(env);
 }
 
