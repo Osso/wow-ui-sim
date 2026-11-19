@@ -346,8 +346,10 @@ fn assert_exact_keystone_row_sequence(env: &WowLuaEnv, expected: &str) {
                 rows[#rows + 1] = text
             end
         end
-        assert(table.concat(rows, "\n") == R7ExpectedKeystoneRowSequence,
-            "exact slotted-keystone row sequence")
+        local actual = table.concat(rows, "\n")
+        assert(actual == R7ExpectedKeystoneRowSequence,
+            "exact slotted-keystone row sequence: expected ["
+                .. R7ExpectedKeystoneRowSequence .. "] got [" .. actual .. "]")
     "##,
     )
     .unwrap();
