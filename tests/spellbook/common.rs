@@ -163,6 +163,24 @@ fn debug_skip_edit_mode_anchor_resets(env: &WowLuaEnv) {
     eprintln!("skipped InitSystemAnchors for first {limit} system frames");
 }
 
+fn debug_skip_edit_mode_system_methods(env: &WowLuaEnv) {
+    let Ok(limit) = std::env::var("WOW_SIM_DEBUG_SKIP_EDIT_MODE_METHOD_PREFIX") else {
+        return;
+    };
+    let Ok(limit) = limit.parse::<usize>() else {
+        return;
+    };
+    let script = format!(
+        "for index, frame in ipairs(EditModeManagerFrame.registeredSystemFrames) do \
+         if index <= {limit} then \
+         frame.UpdateSystem = function() end; \
+         frame.ApplySystemAnchor = function() end end end"
+    );
+    env.exec(&script)
+        .expect("EditMode system method skip probe must install");
+    eprintln!("skipped UpdateSystem and ApplySystemAnchor for first {limit} frames");
+}
+
 fn install_debug_edit_mode_anchor_trace(env: &WowLuaEnv) {
     env.exec(
         r#"
@@ -196,6 +214,7 @@ pub fn setup_full_ui() -> WowLuaEnv {
     crate::common::load_click_binding_bootstrap(&env, &ui);
     debug_edit_mode_system_frame_count(&env);
     debug_skip_edit_mode_anchor_resets(&env);
+    debug_skip_edit_mode_system_methods(&env);
     env.apply_post_load_workarounds();
     fire_startup_sequence(&env);
     env
