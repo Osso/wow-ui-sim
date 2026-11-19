@@ -194,11 +194,11 @@ const LUA_SOURCE_PATCHES: &[LuaSourcePatch] = &[
             },
             LuaSourcePatchOp::Replace {
                 from: "UIFrameFadeIn(object, CHAT_FRAME_FADE_TIME, object:GetAlpha(), max(chatFrame.oldAlpha, DEFAULT_CHATFRAME_ALPHA));",
-                to: "UIFrameFadeIn(object, CHAT_FRAME_FADE_TIME, object:GetAlpha(), max(chatFrame.oldAlpha or DEFAULT_CHATFRAME_ALPHA, DEFAULT_CHATFRAME_ALPHA));",
+                to: "UIFrameFadeIn(object, CHAT_FRAME_FADE_TIME, object:GetAlpha(), math.max(chatFrame.oldAlpha or DEFAULT_CHATFRAME_ALPHA, DEFAULT_CHATFRAME_ALPHA));",
             },
             LuaSourcePatchOp::Replace {
                 from: "UIFrameFadeOut(object, CHAT_FRAME_FADE_OUT_TIME, max(object:GetAlpha(), chatFrame.oldAlpha), chatFrame.oldAlpha);",
-                to: "UIFrameFadeOut(object, CHAT_FRAME_FADE_OUT_TIME, max(object:GetAlpha() or 0, chatFrame.oldAlpha or DEFAULT_CHATFRAME_ALPHA), chatFrame.oldAlpha or DEFAULT_CHATFRAME_ALPHA);",
+                to: "UIFrameFadeOut(object, CHAT_FRAME_FADE_OUT_TIME, math.max(object:GetAlpha() or 0, chatFrame.oldAlpha or DEFAULT_CHATFRAME_ALPHA), chatFrame.oldAlpha or DEFAULT_CHATFRAME_ALPHA);",
             },
             LuaSourcePatchOp::Replace {
                 from: "self:GetFontString():SetTextColor(colorTable.r, colorTable.g, colorTable.b);",
@@ -238,15 +238,15 @@ const LUA_SOURCE_PATCHES: &[LuaSourcePatch] = &[
         operations: &[
             LuaSourcePatchOp::Replace {
                 from: "cooldown = max(currentCooldown, currentLockdown);",
-                to: "cooldown = max(currentCooldown or 0, currentLockdown or 0);",
+                to: "cooldown = math.max(currentCooldown or 0, currentLockdown or 0);",
             },
             LuaSourcePatchOp::Replace {
                 from: "self.XPBar:SetWidth(max((xp / max(maxXp,1)) * self.xpBarWidth, 1));",
-                to: "self.XPBar:SetWidth(max(((xp or 0) / max(maxXp or 1,1)) * self.xpBarWidth, 1));",
+                to: "self.XPBar:SetWidth(math.max(((xp or 0) / math.max(maxXp or 1,1)) * self.xpBarWidth, 1));",
             },
             LuaSourcePatchOp::Replace {
                 from: "self.ActualHealthBar:SetWidth((health / max(maxHealth,1)) * self.healthBarWidth);",
-                to: "self.ActualHealthBar:SetWidth(((health or 0) / max(maxHealth or 1,1)) * self.healthBarWidth);",
+                to: "self.ActualHealthBar:SetWidth(((health or 0) / math.max(maxHealth or 1,1)) * self.healthBarWidth);",
             },
         ],
     },
@@ -315,6 +315,43 @@ mod tests {
             r"@Interface\AddOns\Blizzard_PetBattleUI\Blizzard_PetBattleUI.lua",
         );
         assert!(patch.is_some());
+    }
+
+    const MATH_MAX_PATCH_CASES: [(&str, &str, &str); 5] = [
+        (
+            "@/FloatingChatFrame.lua",
+            "UIFrameFadeIn(object, CHAT_FRAME_FADE_TIME, object:GetAlpha(), max(chatFrame.oldAlpha, DEFAULT_CHATFRAME_ALPHA));",
+            "math.max(chatFrame.oldAlpha or DEFAULT_CHATFRAME_ALPHA, DEFAULT_CHATFRAME_ALPHA)",
+        ),
+        (
+            "@/FloatingChatFrame.lua",
+            "UIFrameFadeOut(object, CHAT_FRAME_FADE_OUT_TIME, max(object:GetAlpha(), chatFrame.oldAlpha), chatFrame.oldAlpha);",
+            "math.max(object:GetAlpha() or 0, chatFrame.oldAlpha or DEFAULT_CHATFRAME_ALPHA)",
+        ),
+        (
+            "@/Blizzard_PetBattleUI.lua",
+            "cooldown = max(currentCooldown, currentLockdown);",
+            "cooldown = math.max(currentCooldown or 0, currentLockdown or 0);",
+        ),
+        (
+            "@/Blizzard_PetBattleUI.lua",
+            "self.XPBar:SetWidth(max((xp / max(maxXp,1)) * self.xpBarWidth, 1));",
+            "math.max(((xp or 0) / math.max(maxXp or 1,1)) * self.xpBarWidth, 1)",
+        ),
+        (
+            "@/Blizzard_PetBattleUI.lua",
+            "self.ActualHealthBar:SetWidth((health / max(maxHealth,1)) * self.healthBarWidth);",
+            "self.ActualHealthBar:SetWidth(((health or 0) / math.max(maxHealth or 1,1)) * self.healthBarWidth);",
+        ),
+    ];
+
+    #[test]
+    fn source_patches_qualify_math_max_calls() {
+        for (chunk, source, expected) in MATH_MAX_PATCH_CASES {
+            let patched = patch_lua_source(source.as_bytes(), chunk);
+            let patched = std::str::from_utf8(&patched).expect("patched Lua should be UTF-8");
+            assert!(patched.contains(expected), "{chunk} did not use math.max");
+        }
     }
 
     #[test]
