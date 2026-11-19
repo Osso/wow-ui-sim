@@ -261,10 +261,11 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(SOCIAL_SETTINGS_DEFAULTS_LUA)?;
     #[cfg(not(all(feature = "profile-retail", feature = "retail-12-1-5")))]
     lua.exec(CINEMATIC_SUMMARY_DEFAULT_LUA)?;
-    #[cfg(not(all(feature = "profile-retail", feature = "retail-12-1-5")))]
-    if cfg!(feature = "retail-12-1-0")
-        || crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever
-    {
+    #[cfg(not(any(
+        all(feature = "profile-retail", feature = "retail-12-1-5"),
+        feature = "client-wowforever"
+    )))]
+    if cfg!(feature = "retail-12-1-0") {
         lua.exec(SOCIAL_UI_DEFAULTS_LUA)?;
     }
     Ok(())
