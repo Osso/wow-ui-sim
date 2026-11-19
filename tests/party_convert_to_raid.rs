@@ -49,19 +49,19 @@ fn original_unit_popup_convert_to_raid_updates_group_readers() {
             sim.party_is_raid = Some(false);
         }
         env.exec(
-            r#"
+            r##"
             assert(not IsInRaid())
             assert(select("#", C_PartyInfo.ConvertToRaid()) == 0)
             assert(IsInRaid())
-            "#,
+            "##,
         )
         .expect("documented conversion call should update raid state");
         env.state().borrow_mut().party_is_raid = Some(false);
         env.exec(
-            r#"
+            r##"
             UnitPopupConvertToRaidButtonMixin:OnClick({})
             assert(IsInRaid() and UnitInRaid("party1"))
-            "#,
+            "##,
         )
         .expect("selected Blizzard UnitPopup consumer should convert the active group");
     });
