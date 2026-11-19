@@ -6,12 +6,12 @@ use crate::lua_api::LoaderEnv;
 
 use crate::loader::LoadTiming;
 use crate::loader::error::LoadError;
-use crate::loader::helpers::{lua_frame_ref_by_id, lua_global_ref};
+use crate::loader::helpers::lua_frame_ref_by_id;
 use crate::loader::xml_frame_codegen::build_frame_lua_code;
 
 use finalize::finalize_frame;
 use preparation::{PreparedFrameCreation, prepare_frame_creation, register_virtual_or_intrinsic};
-use setup::{SetupFrame, created_frame_id, setup_frame};
+use setup::{SetupFrame, setup_frame};
 
 #[cfg(test)]
 pub(crate) use finalize::frame_element_to_type;
@@ -36,8 +36,7 @@ pub(super) fn registered_intrinsic_tag(tag: &'static str) -> Option<&'static str
         .map(|_| tag)
 }
 
-/// Create a frame from XML definition.
-/// Returns the name of the created frame (or None if skipped).
+/// Create a frame from XML and return its resolved name, or None if skipped.
 ///
 /// `intrinsic_base` is set when the XML element is an intrinsic type (e.g.
 /// `<ContainedAlertFrame>`) whose registered template should be implicitly
@@ -51,11 +50,34 @@ pub fn create_frame_from_xml(
     intrinsic_base: Option<&str>,
     timing: &mut LoadTiming,
 ) -> Result<Option<String>, LoadError> {
+    let created = create_frame_from_xml_with_parent_id(
+        env,
+        frame,
+        widget_type,
+        parent_override,
+        None,
+        subst_parent_override,
+        intrinsic_base,
+        timing,
+    )?;
+    Ok(created.map(|(_, name)| name))
+}
+
+pub(super) fn create_frame_from_xml_with_parent_id(
+    env: &LoaderEnv<'_>,
+    frame: &crate::xml::FrameXml,
+    widget_type: &str,
+    parent_override: Option<&str>,
+    parent_id_override: Option<u64>,
+    subst_parent_override: Option<&str>,
+    intrinsic_base: Option<&str>,
+    timing: &mut LoadTiming,
+) -> Result<Option<(u64, String)>, LoadError> {
     let _profile = crate::loader::chunk_cache::GeneratedChunkScope::enter("xml-frame");
-    if let Some(early) =
-        register_virtual_or_intrinsic(env, frame, widget_type, parent_override, intrinsic_base)
+    if register_virtual_or_intrinsic(env, frame, widget_type, parent_override, intrinsic_base)
+        .is_some()
     {
-        return Ok(early);
+        return Ok(None);
     }
     let Some(prepared) = prepare_frame_creation(
         env,
@@ -66,8 +88,45 @@ pub fn create_frame_from_xml(
     ) else {
         return Ok(None);
     };
-    build_and_setup_frame(env, timing, frame, widget_type, &prepared, intrinsic_base)?;
-    let frame_id = created_frame_id(env, &prepared.name)?;
+    let frame_id = create_prepared_frame_from_xml(
+        env,
+        frame,
+        widget_type,
+        parent_override,
+        parent_id_override,
+        &prepared,
+        intrinsic_base,
+        timing,
+    )?;
+    Ok(Some((frame_id, prepared.name)))
+}
+
+fn create_prepared_frame_from_xml(
+    env: &LoaderEnv<'_>,
+    frame: &crate::xml::FrameXml,
+    widget_type: &str,
+    parent_override: Option<&str>,
+    parent_id_override: Option<u64>,
+    prepared: &PreparedFrameCreation,
+    intrinsic_base: Option<&str>,
+    timing: &mut LoadTiming,
+) -> Result<u64, LoadError> {
+    let parent_id = resolve_xml_parent_id(
+        env,
+        frame,
+        parent_override,
+        parent_id_override,
+        &prepared.parent,
+    )?;
+    let frame_id = build_and_setup_frame(
+        env,
+        timing,
+        frame,
+        widget_type,
+        prepared,
+        parent_id,
+        intrinsic_base,
+    )?;
     finalize_frame(
         env,
         frame,
@@ -77,7 +136,25 @@ pub fn create_frame_from_xml(
         &prepared.inherits,
         timing,
     )?;
-    Ok(Some(prepared.name))
+    Ok(frame_id)
+}
+
+fn resolve_xml_parent_id(
+    env: &LoaderEnv<'_>,
+    frame: &crate::xml::FrameXml,
+    parent_override: Option<&str>,
+    parent_id_override: Option<u64>,
+    parent_name: &str,
+) -> Result<u64, LoadError> {
+    let inherited_parent_id = if frame.parent.is_none() && parent_override.is_some() {
+        parent_id_override
+    } else {
+        None
+    };
+    let named_parent_id = env.state().borrow().widgets.get_id_by_name(parent_name);
+    inherited_parent_id
+        .or(named_parent_id)
+        .ok_or_else(|| LoadError::Lua(format!("Failed to locate XML parent frame {parent_name}")))
 }
 
 pub fn fast_create_frame_profile_report() -> Option<String> {
@@ -95,10 +172,11 @@ fn build_and_setup_frame(
     frame: &crate::xml::FrameXml,
     widget_type: &str,
     prepared: &PreparedFrameCreation,
+    parent_id: u64,
     intrinsic_base: Option<&str>,
-) -> Result<(), LoadError> {
+) -> Result<u64, LoadError> {
     let build_start = Instant::now();
-    let lua_code = build_prepared_frame_lua(env, frame, widget_type, prepared);
+    let lua_code = build_prepared_frame_lua(frame, widget_type, prepared, parent_id);
     timing.frame_code_build_time += build_start.elapsed();
 
     setup_frame(
@@ -113,18 +191,19 @@ fn build_and_setup_frame(
             frame,
             inherits: &prepared.inherits,
             parent: &prepared.parent,
+            parent_id,
             intrinsic_base,
         },
     )
 }
 
 fn build_prepared_frame_lua(
-    env: &LoaderEnv<'_>,
     frame: &crate::xml::FrameXml,
     widget_type: &str,
     prepared: &PreparedFrameCreation,
+    parent_id: u64,
 ) -> String {
-    let parent_ref_expr = parent_ref_expr(env, &prepared.parent);
+    let parent_ref_expr = lua_frame_ref_by_id(parent_id);
     build_frame_lua_code(
         widget_type,
         &prepared.name,
@@ -134,17 +213,4 @@ fn build_prepared_frame_lua(
         &prepared.parent,
         &parent_ref_expr,
     )
-}
-
-fn parent_ref_expr(env: &LoaderEnv<'_>, parent_name: &str) -> String {
-    if parent_name == "UIParent" {
-        return lua_global_ref(parent_name);
-    }
-
-    env.state()
-        .borrow()
-        .widgets
-        .get_id_by_name(parent_name)
-        .map(lua_frame_ref_by_id)
-        .unwrap_or_else(|| lua_global_ref(parent_name))
 }

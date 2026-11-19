@@ -20,6 +20,7 @@ pub(super) struct SetupFrame<'a> {
     pub(super) frame: &'a crate::xml::FrameXml,
     pub(super) inherits: &'a str,
     pub(super) parent: &'a str,
+    pub(super) parent_id: u64,
     pub(super) intrinsic_base: Option<&'a str>,
 }
 
@@ -36,35 +37,29 @@ pub(super) fn setup_frame(
     env: &LoaderEnv<'_>,
     timing: &mut LoadTiming,
     setup: SetupFrame<'_>,
-) -> Result<(), LoadError> {
+) -> Result<u64, LoadError> {
     let setup_start = Instant::now();
     let exec_start = Instant::now();
-    if let Err(error) = exec_create_frame_code(env, &setup) {
-        return env.with_state(|state| {
-            if let LoadError::Lua(message) = &error {
-                crate::lua_api::script_helpers::call_error_handler_state(state, message);
-            }
-            Err(error)
-        });
-    }
+    let frame_id = match exec_create_frame_code(env, &setup) {
+        Ok(frame_id) => frame_id,
+        Err(error) => {
+            return env.with_state(|state| {
+                if let LoadError::Lua(message) = &error {
+                    crate::lua_api::script_helpers::call_error_handler_state(state, message);
+                }
+                Err(error)
+            });
+        }
+    };
     timing.frame_exec_lua_time += exec_start.elapsed();
     let props_start = Instant::now();
-    let frame_id = created_frame_id(env, setup.name)?;
     ensure_parent_refs_registered(env, &setup, frame_id)?;
     apply_xml_properties_direct(env, frame_id, setup.frame, setup.inherits, setup.parent)?;
     apply_intrinsic_property(env, setup.intrinsic_base, frame_id);
     timing.frame_apply_props_time += props_start.elapsed();
     timing.xml_frame_setup_time += setup_start.elapsed();
     timing.frame_count += 1;
-    Ok(())
-}
-
-pub(super) fn created_frame_id(env: &LoaderEnv<'_>, name: &str) -> Result<u64, LoadError> {
-    env.state()
-        .borrow()
-        .widgets
-        .get_id_by_name(name)
-        .ok_or_else(|| LoadError::Lua(format!("Failed to locate created frame {name}")))
+    Ok(frame_id)
 }
 
 fn ensure_parent_refs_registered(
@@ -72,36 +67,36 @@ fn ensure_parent_refs_registered(
     setup: &SetupFrame<'_>,
     frame_id: u64,
 ) -> Result<(), LoadError> {
-    let parent_key = setup.frame.parent_key.as_deref();
-    let parent_array = setup.frame.parent_array.as_deref();
-    if parent_key.is_none() && parent_array.is_none() {
+    if setup.frame.parent_key.is_none() && setup.frame.parent_array.is_none() {
         return Ok(());
     }
+    env.with_state(|state| register_parent_references_state(state, setup, frame_id))
+        .map_err(|error| LoadError::Lua(error.to_string()))
+}
 
-    env.with_state(|state| {
-        let parent_id = crate::lua_api::methods::borrow_state(state)?
-            .widgets
-            .get_id_by_name(setup.parent)
-            .ok_or_else(|| crate::Error::Other(format!("missing parent '{}'", setup.parent)))?;
-        if let Some(parent_key) = parent_key {
-            crate::lua_api::globals::template::assign_parent_key(
-                state, parent_id, parent_key, frame_id,
-            )
-            .map_err(|error| crate::Error::Other(error.to_string()))?;
-        }
-        if let Some(parent_array) = parent_array
-            && !parent_array_contains_child(state, parent_id, parent_array, frame_id)?
-        {
-            crate::lua_api::globals::create_frame::append_parent_array_entry(
-                state,
-                parent_id,
-                parent_array,
-                frame_id,
-            );
-        }
-        Ok::<(), crate::Error>(())
-    })
-    .map_err(|error| LoadError::Lua(error.to_string()))
+fn register_parent_references_state(
+    state: &mut rilua::vm::state::LuaState,
+    setup: &SetupFrame<'_>,
+    frame_id: u64,
+) -> Result<(), crate::Error> {
+    let parent_id = setup.parent_id;
+    if let Some(parent_key) = setup.frame.parent_key.as_deref() {
+        crate::lua_api::globals::template::assign_parent_key(
+            state, parent_id, parent_key, frame_id,
+        )
+        .map_err(|error| crate::Error::Other(error.to_string()))?;
+    }
+    if let Some(parent_array) = setup.frame.parent_array.as_deref()
+        && !parent_array_contains_child(state, parent_id, parent_array, frame_id)?
+    {
+        crate::lua_api::globals::create_frame::append_parent_array_entry(
+            state,
+            parent_id,
+            parent_array,
+            frame_id,
+        );
+    }
+    Ok(())
 }
 
 fn parent_array_contains_child(
@@ -128,7 +123,7 @@ fn parent_array_contains_child(
 }
 
 /// Scope creation flags to the XML-owned instance, not its callbacks.
-fn exec_create_frame_code(env: &LoaderEnv<'_>, setup: &SetupFrame<'_>) -> Result<(), LoadError> {
+fn exec_create_frame_code(env: &LoaderEnv<'_>, setup: &SetupFrame<'_>) -> Result<u64, LoadError> {
     let fast = can_fast_create_frame(setup);
     let previous = {
         let mut state = env.state().borrow_mut();
@@ -145,8 +140,7 @@ fn exec_create_frame_code(env: &LoaderEnv<'_>, setup: &SetupFrame<'_>) -> Result
     let exec_result = if fast {
         fast_create_frame(env, setup)
     } else {
-        env.exec(setup.lua_code)
-            .map_err(|e| LoadError::Lua(format!("Failed to create frame {}: {}", setup.name, e)))
+        execute_frame_creation_lua(env, setup)
     };
     {
         let mut state = env.state().borrow_mut();
@@ -226,10 +220,36 @@ fn fast_create_script_miss_body(
         .and_then(crate::lua_api::globals::create_frame::first_fast_install_miss)
 }
 
-fn fast_create_frame(env: &LoaderEnv<'_>, setup: &SetupFrame<'_>) -> Result<(), LoadError> {
+fn execute_frame_creation_lua(
+    env: &LoaderEnv<'_>,
+    setup: &SetupFrame<'_>,
+) -> Result<u64, LoadError> {
+    let mut source = setup.lua_code.to_string();
+    source.push_str("\nreturn frame");
+    let results = env.exec_with_result(&source).map_err(|error| {
+        LoadError::Lua(format!("Failed to create frame {}: {error}", setup.name))
+    })?;
+    let Some(frame) = results.into_iter().next() else {
+        return Err(LoadError::Lua(format!(
+            "CreateFrame returned no frame for XML frame {}",
+            setup.name
+        )));
+    };
+    env.with_state(|state| {
+        crate::lua_api::methods::extract_frame_id(state, frame).ok_or_else(|| {
+            crate::Error::Other(format!(
+                "CreateFrame returned no frame identity for {}",
+                setup.name
+            ))
+        })
+    })
+    .map_err(|error| LoadError::Lua(error.to_string()))
+}
+
+fn fast_create_frame(env: &LoaderEnv<'_>, setup: &SetupFrame<'_>) -> Result<u64, LoadError> {
     env.with_state(|state| {
         let widget_type = fast_create_widget_type(setup.widget_type)?;
-        let parent_id = fast_create_parent_id(state, setup.parent)?;
+        let parent_id = setup.parent_id;
         let frame_id = create_fast_frame_instance(state, setup, widget_type, parent_id)?;
         crate::lua_api::globals::create_frame::clear_xml_creation_context(state)?;
 
@@ -237,7 +257,7 @@ fn fast_create_frame(env: &LoaderEnv<'_>, setup: &SetupFrame<'_>) -> Result<(), 
         attach_fast_frame_to_parent(state, setup, parent_id, frame_id)?;
         apply_fast_frame_mixins_and_scripts(state, setup, frame_id)?;
 
-        Ok::<(), crate::Error>(())
+        Ok::<u64, crate::Error>(frame_id)
     })
     .map_err(|error| LoadError::Lua(format!("Failed to create frame {}: {}", setup.name, error)))
 }
@@ -245,16 +265,6 @@ fn fast_create_frame(env: &LoaderEnv<'_>, setup: &SetupFrame<'_>) -> Result<(), 
 fn fast_create_widget_type(widget_type: &str) -> Result<crate::widget::WidgetType, crate::Error> {
     crate::widget::WidgetType::from_str(widget_type)
         .ok_or_else(|| crate::Error::Other(format!("unknown widget type '{}'", widget_type)))
-}
-
-fn fast_create_parent_id(
-    state: &mut rilua::vm::state::LuaState,
-    parent: &str,
-) -> Result<u64, crate::Error> {
-    crate::lua_api::methods::borrow_state(state)?
-        .widgets
-        .get_id_by_name(parent)
-        .ok_or_else(|| crate::Error::Other(format!("missing parent '{}'", parent)))
 }
 
 fn create_fast_frame_instance(

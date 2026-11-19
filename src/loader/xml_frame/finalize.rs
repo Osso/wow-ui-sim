@@ -15,7 +15,7 @@ use crate::loader::xml_frame_extras::{
 use crate::loader::xml_lifecycle::{LifecycleScripts, fire_lifecycle_scripts};
 use crate::lua_api::LoaderEnv;
 
-use super::create_frame_from_xml;
+use super::create_frame_from_xml_with_parent_id;
 
 /// Create children, layers, animations, and fire lifecycle scripts with timing.
 pub(super) fn finalize_frame(
@@ -48,7 +48,7 @@ fn create_children_and_finalize(
     let layer_start = Instant::now();
     create_layer_children(env, frame, frame_id, name, subst_parent, inherits, timing)?;
     timing.frame_layer_children_time += layer_start.elapsed();
-    create_child_frames(env, frame, name, subst_parent, inherits, timing)?;
+    create_child_frames(env, frame, frame_id, name, subst_parent, inherits, timing)?;
     let anim_start = Instant::now();
     apply_animation_groups(env, frame, frame_id, inherits)?;
     timing.frame_anim_time += anim_start.elapsed();
@@ -234,18 +234,32 @@ pub(crate) fn frame_element_to_type<'a>(
 fn create_child_frames(
     env: &LoaderEnv<'_>,
     frame: &crate::xml::FrameXml,
-    name: &str,
+    parent_id: u64,
+    parent_name: &str,
     subst_parent: &str,
     _inherits: &str,
     timing: &mut LoadTiming,
 ) -> Result<(), LoadError> {
     frame.try_for_each_frame_element(|child_frame, child_tag| {
-        create_single_child_frame(env, child_frame, child_tag, name, subst_parent, timing)
+        create_single_child_frame(
+            env,
+            child_frame,
+            child_tag,
+            parent_id,
+            parent_name,
+            subst_parent,
+            timing,
+        )
     })?;
-    // ScrollChild children are parented to the ScrollFrame just like regular children,
-    // but the first ScrollChild element also becomes the ScrollFrame's scroll child.
     if let Some(scroll_child) = frame.scroll_child() {
-        create_scroll_child_elements(env, &scroll_child.children, name, subst_parent, timing)?;
+        create_scroll_child_elements(
+            env,
+            &scroll_child.children,
+            parent_id,
+            parent_name,
+            subst_parent,
+            timing,
+        )?;
     }
     Ok(())
 }
@@ -253,44 +267,66 @@ fn create_child_frames(
 fn create_scroll_child_elements(
     env: &LoaderEnv<'_>,
     elements: &[crate::xml::FrameElement],
+    parent_id: u64,
     parent_name: &str,
     subst_parent: &str,
     timing: &mut LoadTiming,
 ) -> Result<(), LoadError> {
     let mut registered_scroll_child = false;
-    for child in elements {
-        let Some((child_frame, child_tag)) = child.as_frame_data() else {
+    for element in elements {
+        let Some((child_frame, child_tag)) = element.as_frame_data() else {
             continue;
         };
-        let (child_frame, child_type, intrinsic) =
-            match frame_element_to_type(child_frame, child_tag) {
-                Some(triple) => triple,
-                None => continue,
-            };
-        let child_name = create_frame_from_xml(
+        let child_id = create_scroll_child_element(
             env,
             child_frame,
-            child_type,
-            Some(parent_name),
-            Some(subst_parent),
-            intrinsic,
+            child_tag,
+            parent_id,
+            parent_name,
+            subst_parent,
             timing,
         )?;
-
-        if let (Some(actual_child_name), Some(parent_key)) =
-            (child_name.as_deref(), &child_frame.parent_key)
-        {
-            assign_parent_key(env, parent_name, parent_key, actual_child_name);
-        }
-
+        let Some(child_id) = child_id else {
+            continue;
+        };
         if !registered_scroll_child {
-            if let Some(actual_child_name) = child_name.as_deref() {
-                register_scroll_child(env, parent_name, actual_child_name);
-                registered_scroll_child = true;
-            }
+            register_scroll_child(env, parent_id, child_id);
+            registered_scroll_child = true;
         }
     }
     Ok(())
+}
+
+fn create_scroll_child_element(
+    env: &LoaderEnv<'_>,
+    child_frame: &crate::xml::FrameXml,
+    child_tag: &'static str,
+    parent_id: u64,
+    parent_name: &str,
+    subst_parent: &str,
+    timing: &mut LoadTiming,
+) -> Result<Option<u64>, LoadError> {
+    let Some((child_frame, child_type, intrinsic)) = frame_element_to_type(child_frame, child_tag)
+    else {
+        return Ok(None);
+    };
+    let child = create_frame_from_xml_with_parent_id(
+        env,
+        child_frame,
+        child_type,
+        Some(parent_name),
+        Some(parent_id),
+        Some(subst_parent),
+        intrinsic,
+        timing,
+    )?;
+    let Some((child_id, _child_name)) = child else {
+        return Ok(None);
+    };
+    if let Some(parent_key) = &child_frame.parent_key {
+        assign_parent_key(env, parent_id, parent_key, child_id);
+    }
+    Ok(Some(child_id))
 }
 
 /// Create a single child frame from a FrameElement and assign parentKey.
@@ -298,41 +334,32 @@ fn create_single_child_frame(
     env: &LoaderEnv<'_>,
     child_frame: &crate::xml::FrameXml,
     child_tag: &'static str,
+    parent_id: u64,
     parent_name: &str,
     subst_parent: &str,
     timing: &mut LoadTiming,
 ) -> Result<(), LoadError> {
-    let (child_frame, child_type, intrinsic) = match frame_element_to_type(child_frame, child_tag) {
-        Some(triple) => triple,
-        None => return Ok(()),
+    let Some((child_frame, child_type, intrinsic)) = frame_element_to_type(child_frame, child_tag)
+    else {
+        return Ok(());
     };
-    let child_name = create_frame_from_xml(
+    let child = create_frame_from_xml_with_parent_id(
         env,
         child_frame,
         child_type,
         Some(parent_name),
+        Some(parent_id),
         Some(subst_parent),
         intrinsic,
         timing,
     )?;
-    if let (Some(actual_child_name), Some(parent_key)) = (child_name, &child_frame.parent_key) {
-        assign_parent_key(env, parent_name, parent_key, actual_child_name.as_str());
+    if let (Some((child_id, _child_name)), Some(parent_key)) = (child, &child_frame.parent_key) {
+        assign_parent_key(env, parent_id, parent_key, child_id);
     }
     Ok(())
 }
 
-fn assign_parent_key(env: &LoaderEnv<'_>, parent_name: &str, parent_key: &str, child_name: &str) {
-    let ids = {
-        let state = env.state().borrow();
-        (
-            state.widgets.get_id_by_name(parent_name),
-            state.widgets.get_id_by_name(child_name),
-        )
-    };
-    let (Some(parent_id), Some(child_id)) = ids else {
-        return;
-    };
-
+fn assign_parent_key(env: &LoaderEnv<'_>, parent_id: u64, parent_key: &str, child_id: u64) {
     let _ = env.with_state(|state| {
         let _ = crate::lua_api::globals::template::assign_parent_key(
             state, parent_id, parent_key, child_id,
@@ -341,14 +368,8 @@ fn assign_parent_key(env: &LoaderEnv<'_>, parent_name: &str, parent_key: &str, c
     });
 }
 
-fn register_scroll_child(env: &LoaderEnv<'_>, parent_name: &str, child_name: &str) {
+fn register_scroll_child(env: &LoaderEnv<'_>, parent_id: u64, child_id: u64) {
     let mut state = env.state().borrow_mut();
-    let Some(parent_id) = state.widgets.get_id_by_name(parent_name) else {
-        return;
-    };
-    let Some(child_id) = state.widgets.get_id_by_name(child_name) else {
-        return;
-    };
     crate::lua_api::frame::methods::widget_scroll::assign_scroll_child(
         &mut state, parent_id, child_id, false,
     );

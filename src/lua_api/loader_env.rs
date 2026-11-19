@@ -4,7 +4,7 @@ use super::env::WowLuaEnv;
 use super::globals::security::mark_secure_replay_state;
 use super::methods::create_string;
 use crate::Result;
-use crate::lua_api::methods::create_table;
+use crate::lua_api::methods::{call_function_state_multi, create_table};
 use crate::lua_api::script_helpers::call_error_handler_state;
 use crate::lua_bridge::table_set_rust_fn_static;
 use rilua::Val;
@@ -132,6 +132,10 @@ impl<'a> LoaderEnv<'a> {
         self.exec_chunk(code, true, &[])
     }
 
+    pub(crate) fn exec_with_result(&self, code: &str) -> Result<Vec<Val>> {
+        self.exec_chunk_with_result(code, true, &[])
+    }
+
     pub fn exec_public(&self, code: &str) -> Result<()> {
         self.exec_chunk(code, false, &[])
     }
@@ -162,8 +166,28 @@ impl<'a> LoaderEnv<'a> {
                 Val::Function(func.gc_ref()),
                 &args,
             )
-            .map_err(crate::Error::Other)?;
-            Ok(())
+            .map_err(crate::Error::Other)
+        })
+    }
+
+    fn exec_chunk_with_result(
+        &self,
+        code: &str,
+        use_loading_environment: bool,
+        args: &[GeneratedChunkArg],
+    ) -> Result<Vec<Val>> {
+        self.with_state(|state| {
+            let func = Self::load_dynamic_chunk_without_slots(state, code, "loader-exec")?;
+            if use_loading_environment {
+                self.apply_generated_chunk_environment(state, &func)?;
+            }
+            let args = if args.is_empty() {
+                Vec::new()
+            } else {
+                vec![create_generated_args_table(state, args)?]
+            };
+            call_function_state_multi(state, Val::Function(func.gc_ref()), &args)
+                .map_err(|error| crate::Error::Other(error.to_string()))
         })
     }
 
