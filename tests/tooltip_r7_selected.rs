@@ -320,6 +320,44 @@ fn set_slotted_tooltip_input(
     sim.keystone.slotted_tooltip_input = Some(input);
 }
 
+fn set_keystone_context_without_item_identity(
+    env: &WowLuaEnv,
+    slot: u32,
+    item_id: u32,
+    mut input: SlottedKeystoneTooltipInput,
+    modifiers: Vec<(u32, u32)>,
+) {
+    input.item_id = None;
+    input.item_guid = None;
+    input.item_class_id = None;
+    input.item_subclass_id = None;
+    let mut sim = env.state().borrow_mut();
+    let location = KeystoneLocation::Bag(0, slot as i32);
+    sim.keystone.item_modifiers.insert(location, (item_id, modifiers));
+    sim.keystone.slotted_tooltip_input = Some(input);
+}
+
+fn assert_exact_keystone_row_sequence(env: &WowLuaEnv, expected: &str) {
+    env.exec(&format!("R7ExpectedKeystoneRowSequence = {expected:?}"))
+        .unwrap();
+    env.exec(
+        r##"
+        local rows = {}
+        for _, line in ipairs(GameTooltip:GetPrimaryTooltipData().lines) do
+            local text = line.leftText or ""
+            if text:match("^Map: ") or text:match("^Weekly Keystone")
+                or text:match("^Keystone Power ") or text:match("^Resilient ")
+                or text == "Modifier heading" or text:sub(1, 2) == "  " then
+                rows[#rows + 1] = text
+            end
+        end
+        assert(table.concat(rows, "\n") == R7ExpectedKeystoneRowSequence,
+            "exact slotted-keystone row sequence")
+    "##,
+    )
+    .unwrap();
+}
+
 fn keystone_expected(
     title: &str,
     power: &str,
@@ -975,6 +1013,52 @@ fn challenges_ui_hover_projects_two_keystone_map_and_power_values() {
         let expected = keystone_expected(&title, &power, None, false, &[]);
         assert_keystone_hover_rows(&env, item_id, &guid, &expected);
     }
+}
+
+fn assert_resilient_keystone_consumer_rows() {
+    let (env, guid) = keystone_hover_fixture(3, 180_653);
+    let mut input = resilient_tooltip_input(
+        180_653,
+        &guid,
+        7,
+        &[(7, 1, 70), (7, 5, 71), (7, 8, 72)],
+        &[70, 71, 72],
+    );
+    input.affix_names.insert(101, Some("Fortified".to_string()));
+    input.affix_names.insert(102, Some("Raging".to_string()));
+    set_keystone_context_without_item_identity(
+        &env,
+        3,
+        180_653,
+        input,
+        vec![(17, 971), (18, 7), (19, 101), (21, 102)],
+    );
+    capture_keystone_hover_rows(&env, 180_653, &guid);
+    assert_exact_keystone_row_sequence(
+        &env,
+        "Map: Floor Map\\nKeystone Power 7\\nResilient 5\\nModifier heading\\n  Fortified\\n  Raging",
+    );
+}
+
+fn assert_plain_keystone_consumer_rows() {
+    let (env, guid) = keystone_hover_fixture(4, 158_923);
+    let mut input = SlottedKeystoneTooltipInput::default();
+    input.map_names.insert(961, Some("Beta".to_string()));
+    set_keystone_context_without_item_identity(
+        &env,
+        4,
+        158_923,
+        input,
+        vec![(17, 961), (18, 8)],
+    );
+    capture_keystone_hover_rows(&env, 158_923, &guid);
+    assert_exact_keystone_row_sequence(&env, "Map: Beta\\nKeystone Power 8");
+}
+
+#[test]
+fn challenges_ui_hover_derives_slotted_keystone_rows_from_item_state() {
+    assert_resilient_keystone_consumer_rows();
+    assert_plain_keystone_consumer_rows();
 }
 
 #[test]
