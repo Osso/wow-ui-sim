@@ -1,16 +1,17 @@
-# Forever gamepad-enabled capability
+# Retail and Forever gamepad queries
 
-Forever `C_GamePad.IsEnabled()` projects the explicit `GamePadEnable` CVar stored by the simulator. The producer lives in `src/c_api/c_game_pad.rs`. [System notes](../wiki/systems/gamepad-mapped-state.md) describe the separate mapped-stick model and this capability's evidence boundary.
+`src/c_api/c_game_pad.rs` publishes a bounded Retail device-query surface and the existing Forever `C_GamePad.IsEnabled()` capability. [System notes](../wiki/systems/gamepad-mapped-state.md) describe the separate mapped-stick model and the evidence boundary.
 
 ## What it must do
 
-- [x] Publish only on Forever; return one ordinary boolean with no arguments, as declared by Forever 1.60.1.70532 `Blizzard_APIDocumentationGenerated/GamePadDocumentation.lua:222-229`.
-- [x] Read the existing stored `GamePadEnable` CVar (`"1"` means enabled). Its existing default `"0"` means disabled in the simulator. This state projection is an explicit simulator policy, not proof of native CVar/device equivalence or native hardware detection.
-- [x] Preserve independence from `SimState.gamepad_mapped_sticks`: enabled with no snapshot and disabled with nonzero sticks must both work; replacement and clearing must not change the capability.
-- [x] Select the original Game-screen restricted addon and its secure `RestrictedEnvironment.lua`; authenticate the original scrubber and forwarding function, then observe disabled/enabled/disabled through `CallRestrictedClosure` and `IsGamePadEnabled`.
-- [x] Preserve Retail and PTR raw publication: this lane must not add `C_GamePad.IsEnabled` to either profile, even when their stored CVar changes.
+- [x] Forever `C_GamePad.IsEnabled()` returns one boolean from the stored `GamePadEnable` CVar, as declared by Forever 1.60.1.70532 `Blizzard_APIDocumentationGenerated/GamePadDocumentation.lua:222-229`.
+- [x] Retail `GetAllDeviceIDs()` returns a non-nil table and `GetDeviceRawState(deviceID)` returns a nilable raw-state record, as declared by `GamePadDocumentation.lua:126-131,174-185`. **INFERRED (simulator mapping):** without physical-device input, the table is empty and raw state is nil.
+- [x] Retail `IsEnabled()` returns one boolean, as declared by `GamePadDocumentation.lua:213-219`. **INFERRED (simulator mapping):** it reads the existing `GamePadEnable` CVar.
+- [x] `GamePadEnable` value `"1"` means enabled; its existing default `"0"` means disabled in the simulator. This is a state projection, not proof of native CVar/device equivalence or hardware detection.
+- [x] Keep the bounded mapped-stick and hover-policy queries on PTR and Forever. Retail device queries do not read `SimState.gamepad_mapped_sticks`.
+- [x] Forever's original Game-screen restricted-addon wrapper observes disabled/enabled/disabled through `CallRestrictedClosure` and `IsGamePadEnabled`.
 
-The supplied-state policy follows the explicit October 2026 decision to reuse an existing `GamePadEnable` CVar if present. `src/cvars.yaml` already declares default `"0"`. The pinned Forever Lua wrapper calls `C_GamePad.IsEnabled`; it does not establish the CVar relationship or a native default. No automatic device detection, stick inference, or separate capability flag is introduced.
+The Retail generated `GamePadDocumentation.lua` declares these members. The simulator has no physical-device input, so Retail exposes only the empty device list and nil raw-state result; connection, disconnection and device events are not modeled.
 
 ## How it works
 
@@ -19,18 +20,18 @@ The supplied-state policy follows the explicit October 2026 decision to reuse an
 
 ## Implementation inventory
 
-- `src/c_api/c_game_pad.rs` — bounded Forever namespace and capability projection.
-- `src/c_api/mod.rs`, `src/c_api/registration.rs` — existing Forever feature publication boundary.
+- `src/c_api/c_game_pad.rs` — Retail empty device queries and the bounded PTR/Forever projections.
+- `src/c_api/mod.rs`, `src/c_api/registration.rs` — profile publication boundaries.
 - `src/cvars.yaml`, `src/cvars.rs` — existing default and stored boolean input; unchanged by this lane.
 
 ## Tests asserting this spec
 
-`tests/forever_gamepad_enabled.rs` contains one original restricted-wrapper transition selector for Forever and one raw publication negative selector executed separately on Retail and PTR. The Forever original-wrapper selector has executed RED at `00e3c265a` and GREEN at `5efd665d9` with identical test bytes. Retail/PTR exact raw-publication controls also pass.
+`tests/forever_gamepad_enabled.rs` covers the original Forever restricted wrapper. `tests/retail_dialogue_ui_gamepad_surface.rs` checks the Retail API boundary used by DialogueUI.
 
-## Known gaps (current cycle)
+## Known gaps
 
-- [x] Original-consumer RED/GREEN and profile controls pass; stock maps are unchanged (Forever 26/26, Retail 16/18, PTR 296/410 keys/occurrences). All-target checks pass on all three profiles; Retail has zero warnings, PTR/Forever retain only the three approved pre-existing fast-handler dead-code warnings.
+- Native enablement rules and hardware detection remain UNKNOWN. Retail has no simulated device input; the empty-device result is a simulator default, not a native hardware claim.
 
 ## Out of scope
 
-Native enablement detection/default, hardware and hotplug lifecycle, device enumeration, enablement events, temporary-CVar behavior, the deferred Gamepad SetTempCVar test, module import initialization, and promotion to other profiles. Native evidence must settle these separately.
+Native enablement rules/default, physical-device discovery and hotplug lifecycle, enablement events, temporary-CVar behavior, the deferred Gamepad SetTempCVar test and module-import initialization remain out of scope. PTR `IsEnabled()` remains unpublished.

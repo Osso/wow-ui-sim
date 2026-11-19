@@ -1,3 +1,7 @@
+## [2026-11-19] implementation | Retail gamepad addon queries
+
+[Gamepad system](systems/gamepad-mapped-state.md#retail-device-queries) records the Retail `C_GamePad` members used by DialogueUI. **VERIFIED (Retail generated docs):** signatures and output shapes; **INFERRED (simulator mapping):** no device input yields an empty ID list and nil raw state, while `IsEnabled` reads the existing CVar.
+
 ## [2026-11-18] correction | Retail SellPrice gates
 
 [Tooltip data](systems/lua-api.md#retail-sellprice-line-r88pp1) now records the R88aw request, instance-status, item-flag and preview rules. **INFERRED (simulator mapping):** generated catalog metadata drives known flags; explicit empty-default inputs remain only for bag status and calculated prices.
