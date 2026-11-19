@@ -96,13 +96,14 @@ fn intl_currency_metadata_rejects_malformed_inputs_without_state_changes() {
     .unwrap();
 }
 
-#[cfg(all(feature = "profile-retail", not(feature = "retail-12-1-5")))]
-#[test]
-fn intl_currency_metadata_preserves_retail_absence() {
-    let env = WowLuaEnv::new().unwrap();
-    for _ in 0..2 {
-        env.exec("assert(C_Intl == nil); assert(LuaLocaleContext == nil)")
-            .unwrap();
-        wow_ui_sim::ptr::compat_bootstrap::apply_post_load(&env);
+retail_12_1_0_ptr_bootstrap_fixture! {
+    #[test]
+    fn intl_currency_metadata_preserves_retail_absence() {
+        let env = WowLuaEnv::new().unwrap();
+        for _ in 0..2 {
+            env.exec("assert(C_Intl == nil); assert(LuaLocaleContext == nil)")
+                .unwrap();
+            wow_ui_sim::ptr::compat_bootstrap::apply_post_load(&env);
+        }
     }
 }

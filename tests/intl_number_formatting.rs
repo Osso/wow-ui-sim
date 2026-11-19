@@ -85,13 +85,14 @@ fn intl_numbers_reject_invalid_arguments_and_incomplete_parses() {
     .unwrap();
 }
 
-#[cfg(all(feature = "profile-retail", not(feature = "retail-12-1-5")))]
-#[test]
-fn intl_numbers_preserves_retail_namespace_absence() {
-    let env = WowLuaEnv::new().unwrap();
-    for _ in 0..2 {
-        env.exec("assert(C_Intl == nil); assert(CurrencyParseResult == nil)")
-            .unwrap();
-        wow_ui_sim::ptr::compat_bootstrap::apply_post_load(&env);
+retail_12_1_0_ptr_bootstrap_fixture! {
+    #[test]
+    fn intl_numbers_preserves_retail_namespace_absence() {
+        let env = WowLuaEnv::new().unwrap();
+        for _ in 0..2 {
+            env.exec("assert(C_Intl == nil); assert(CurrencyParseResult == nil)")
+                .unwrap();
+            wow_ui_sim::ptr::compat_bootstrap::apply_post_load(&env);
+        }
     }
 }

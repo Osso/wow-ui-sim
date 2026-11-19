@@ -118,7 +118,7 @@ fn secret_spell_identifier_fails_metadata_gate(state: &LuaState, value: Val) -> 
         && matches!(value, Val::Num(number) if number <= 1.0))
 }
 
-#[cfg(not(feature = "retail-12-1-5"))]
+#[cfg(all(feature = "client-wowforever", not(feature = "retail-12-1-5")))]
 fn secret_spell_identifier_fails_metadata_gate(_state: &LuaState, _value: Val) -> LuaResult<bool> {
     Ok(false)
 }

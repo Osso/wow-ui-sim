@@ -407,15 +407,12 @@ mod tests {
         assert_unit_in_subgroup_publication(&env);
     }
 
-    #[cfg(any(
-        feature = "client-retail",
-        feature = "client-ptr",
-        feature = "client-mists",
-        feature = "client-era",
-        feature = "client-anniversary",
-        feature = "client-wowforever"
-    ))]
     fn assert_unit_in_subgroup_publication(env: &WowLuaEnv) {
+        if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Wrath {
+            env.exec("assert(UnitInSubgroup == nil)")
+                .expect("Wrath does not publish UnitInSubgroup");
+            return;
+        }
         env.exec(
             r#"
             assert(type(UnitInSubgroup) == "function")
@@ -424,11 +421,5 @@ mod tests {
             "#,
         )
         .expect("profile publishes UnitInSubgroup with one false result and no owner");
-    }
-
-    #[cfg(feature = "client-wrath")]
-    fn assert_unit_in_subgroup_publication(env: &WowLuaEnv) {
-        env.exec("assert(UnitInSubgroup == nil)")
-            .expect("Wrath does not publish UnitInSubgroup");
     }
 }

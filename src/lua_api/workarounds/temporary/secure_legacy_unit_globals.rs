@@ -1143,7 +1143,18 @@ pub(crate) fn copy_legacy_unit_globals_to_secureenv(lua: &mut rilua::Lua) -> Lua
     Ok(())
 }
 
-#[cfg(test)]
+#[cfg(all(
+    test,
+    any(
+        feature = "client-retail",
+        feature = "client-ptr",
+        feature = "client-wrath",
+        feature = "client-mists",
+        feature = "client-era",
+        feature = "client-anniversary",
+        feature = "client-wowforever"
+    )
+))]
 mod tests {
     use super::{ClientProfile, MASTER_SNAPSHOT_UNIT_GLOBALS};
     use crate::lua_api::WowLuaEnv;

@@ -83,11 +83,12 @@ fn intl_dates_reject_invalid_arguments_without_zone_fallback() {
     "#).unwrap();
 }
 
-#[cfg(all(feature = "profile-retail", not(feature = "retail-12-1-5")))]
-#[test]
-fn intl_dates_preserve_retail_absence() {
-    let env = WowLuaEnv::new().unwrap();
-    env.exec("assert(C_Intl == nil)").unwrap();
-    wow_ui_sim::ptr::compat_bootstrap::apply_post_load(&env);
-    env.exec("assert(C_Intl == nil)").unwrap();
+retail_12_1_0_ptr_bootstrap_fixture! {
+    #[test]
+    fn intl_dates_preserve_retail_absence() {
+        let env = WowLuaEnv::new().unwrap();
+        env.exec("assert(C_Intl == nil)").unwrap();
+        wow_ui_sim::ptr::compat_bootstrap::apply_post_load(&env);
+        env.exec("assert(C_Intl == nil)").unwrap();
+    }
 }

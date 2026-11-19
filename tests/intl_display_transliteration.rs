@@ -76,13 +76,14 @@ fn intl_display_transliteration_rejects_invalid_input_without_poisoning_calls() 
     .unwrap();
 }
 
-#[cfg(all(feature = "profile-retail", not(feature = "retail-12-1-5")))]
-#[test]
-fn intl_display_transliteration_preserves_retail_absence() {
-    let env = WowLuaEnv::new().unwrap();
-    for _ in 0..2 {
-        env.exec("assert(C_Intl == nil); assert(LuaLocaleContext == nil)")
-            .unwrap();
-        wow_ui_sim::ptr::compat_bootstrap::apply_post_load(&env);
+retail_12_1_0_ptr_bootstrap_fixture! {
+    #[test]
+    fn intl_display_transliteration_preserves_retail_absence() {
+        let env = WowLuaEnv::new().unwrap();
+        for _ in 0..2 {
+            env.exec("assert(C_Intl == nil); assert(LuaLocaleContext == nil)")
+                .unwrap();
+            wow_ui_sim::ptr::compat_bootstrap::apply_post_load(&env);
+        }
     }
 }

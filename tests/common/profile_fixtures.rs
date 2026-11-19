@@ -815,3 +815,17 @@ macro_rules! classic_secur_residue_set_forbidden_restriction_fixture {
         )*
     };
 }
+
+/// These Retail absence probes exercise the PTR compatibility bootstrap, which
+/// is available starting at the 12.1.0 API epoch.
+#[macro_export]
+macro_rules! retail_12_1_0_ptr_bootstrap_fixture {
+    ($item:item) => {
+        #[cfg(all(
+            feature = "profile-retail",
+            feature = "retail-12-1-0",
+            not(feature = "retail-12-1-5")
+        ))]
+        $item
+    };
+}

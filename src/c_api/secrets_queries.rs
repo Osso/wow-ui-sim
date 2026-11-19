@@ -113,6 +113,7 @@ fn read_spell(state: &LuaState, position: i32) -> LuaResult<Option<u32>> {
     Ok(c_spell::numeric_spell_id_value(state, value))
 }
 
+#[cfg(feature = "retail-12-0-5")]
 fn require_unit(state: &LuaState, position: i32) -> LuaResult<()> {
     let value = unwrap_secret(state, stack_val(state, position))?;
     if !matches!(value, Val::Str(_)) {
