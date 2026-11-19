@@ -724,16 +724,8 @@ fn process_frame_element(
     };
 
     let _addon_table_guard = LoadingAddonTableGuard::install(env, ctx.table);
-    let created = create_frame_from_xml(
-        env,
-        frame_xml,
-        widget_type,
-        None,
-        None,
-        None,
-        intrinsic,
-        timing,
-    )?;
+    let created =
+        create_frame_from_xml(env, frame_xml, widget_type, None, None, intrinsic, timing)?;
     Ok(created.is_some())
 }
 
