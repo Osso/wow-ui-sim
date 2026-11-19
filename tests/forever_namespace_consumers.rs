@@ -99,6 +99,8 @@ fn forever_deprecated_action_bar_globals_follow_non_default_state() {
 
 #[cfg(feature = "client-wowforever")]
 const ACTION_BAR_STATUS_CONSUMER_LUA: &str = r#"
+-- Forever lacks this C_Spell query; supply the non-passive input for this consumer probe.
+C_Spell.IsSpellPassive = function() return false end
 local source = debug.getinfo(SpellSearchUtil.GetActionbarStatusForSpellBookItemInfo, "S").source
 assert(source:find("Blizzard_SpellSearch/Blizzard_SpellSearchUtil.lua", 1, true))
 C_PetInfo._state.petActionsByID = { [202] = { isPassive = false } }
