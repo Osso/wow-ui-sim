@@ -30,6 +30,14 @@ use rilua::{LuaResult, Val};
 
 pub(crate) fn register_c_major_factions_surface(state: &mut LuaState) -> LuaResult<()> {
     let ns = ensure_namespace(state, "C_MajorFactions")?;
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+        table_set_rust_fn_static(
+            state,
+            ns,
+            "GetMajorFactionRenownInfo",
+            get_major_faction_renown_info,
+        )?;
+    }
     table_set_rust_fn_static(state, ns, "GetMajorFactionData", get_major_faction_data)?;
     table_set_rust_fn_static(state, ns, "GetRenownLevels", get_renown_levels)?;
     table_set_rust_fn_static(
@@ -69,6 +77,51 @@ fn has_maximum_renown(state: &mut LuaState) -> LuaResult<u32> {
     let capped = renown_progress(state)?.is_some_and(|(level, max)| level >= max);
     state.push(Val::Bool(capped));
     Ok(1)
+}
+
+fn get_major_faction_renown_info(state: &mut LuaState) -> LuaResult<u32> {
+    let info = match i64::from_stack(state, 1) {
+        Ok(faction_id) => read_major_faction_renown_info(state, faction_id)?,
+        Err(_) => None,
+    };
+    let Some(info) = info else {
+        // INFERRED (simulator mapping): unknown IDs match GetMajorFactionData.
+        state.push(Val::Nil);
+        return Ok(1);
+    };
+    let value = build_major_faction_renown_info(state, info);
+    state.push(value);
+    Ok(1)
+}
+
+fn read_major_faction_renown_info(
+    state: &LuaState,
+    faction_id: i64,
+) -> LuaResult<Option<(i32, i32, i32)>> {
+    Ok(borrow_state(state)?
+        .major_factions
+        .get(&faction_id)
+        .map(|data| {
+            (
+                data.renown_level,
+                data.renown_reputation_earned,
+                data.renown_level_threshold,
+            )
+        }))
+}
+
+fn build_major_faction_renown_info(
+    state: &mut LuaState,
+    (level, earned, threshold): (i32, i32, i32),
+) -> Val {
+    create_table_with_fields(
+        state,
+        &[
+            ("renownLevel", number(i64::from(level))),
+            ("renownReputationEarned", number(i64::from(earned))),
+            ("renownLevelThreshold", number(i64::from(threshold))),
+        ],
+    )
 }
 
 fn get_major_faction_data(state: &mut LuaState) -> LuaResult<u32> {

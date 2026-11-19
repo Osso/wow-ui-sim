@@ -4,11 +4,15 @@ CF-2 models environment-owned tracked targets and quest-log-owned highlight rows
 
 ## Ownership and publication
 
-`SimState.super_track` holds `SuperTrackState { quest_id, quest_tracking, content, content_saved, content_tracking, map_pin, map_pin_saved, map_pin_tracking, vignette, vignette_tracking, user_waypoint, corpse }`. Quest/content/map-pin tracking flags are separate from saved IDs and selection presence. Content and map-pin saved type/ID pairs survive selection removal; their `Option` fields represent selection presence. Boolean defaults are simulator inputs, not native initial-state claims. `c_api::c_super_track` owns the registered endpoints. `QuestLogState.additional_highlights` holds supplied QuestAdditionalHighlights rows keyed by quest ID; no parallel quest log or fabricated row exists. `c_api::c_quest_log` projects the five fields in documented order.
+`SimState.super_track` holds `SuperTrackState { item_name, quest_id, quest_tracking, content, content_saved, content_tracking, map_pin, map_pin_saved, map_pin_tracking, vignette, vignette_tracking, user_waypoint, corpse }`. Quest/content/map-pin tracking flags are separate from saved IDs and selection presence. Content and map-pin saved type/ID pairs survive selection removal; their `Option` fields represent selection presence. Boolean defaults are simulator inputs, not native initial-state claims. `c_api::c_super_track` owns the registered endpoints. `QuestLogState.additional_highlights` holds supplied QuestAdditionalHighlights rows keyed by quest ID; no parallel quest log or fabricated row exists. `c_api::c_quest_log` projects the five fields in documented order.
 
 `c_api/mod.rs::supports_super_tracking` selects Retail/PTR/Forever once at runtime, alongside the existing C_QuestLog registration. Modeled target installers were removed from temporary defaults and world-service defaults. Only the unsupported highest-priority nil query remains temporary, with retirement tied to native priority modeling. It is not inferred priority behavior.
 
 Existing modeled mutators commit state, release the borrow, then dispatch SUPER_TRACKING_CHANGED as pre-existing simulator policy. The new user-waypoint setter dispatches no event. Native named-event effects remain UNKNOWN; ClearAllSuperTracked keeps its existing simulator dispatch. Per-category replacement, clear(quest setter 0), and clear-all are modeled without inventing cross-target exclusivity.
+
+## Supertracked item text
+
+Retail `SuperTrackManagerDocumentation.lua:43-51` declares `GetSuperTrackedItemName()` with `MayReturnNothing`; a present result contains two non-nil strings. **INFERRED (simulator mapping):** `SuperTrackState.item_name` is an optional supplied `(name, description)` pair, empty by default; absence returns zero values. The original WaypointUI consumer reads the pair. Its native selection rules and data writer remain UNKNOWN.
 
 ## User waypoint supertracking
 

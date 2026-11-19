@@ -18,11 +18,15 @@ The [comparison evidence](../investigations/forever-addon-comparison.md#mapped-s
 
 ## Explicit enabled capability
 
-[Enabled-capability contract](../../specs/forever-gamepad-enabled.md) separates `C_GamePad.IsEnabled` from the stick snapshot. The query reads `SimState.cvars.get_bool("GamePadEnable")`; the existing default is `"0"`, and an explicit stored `"1"` enables it. This CVar projection follows the user decision to reuse existing modeled CVar state. It is simulator policy, not native detection or proof of native CVar/device equivalence. The pinned Forever Lua has the wrapper but no direct GamePadEnable CVar read/write.
+[Gamepad query contract](../../specs/forever-gamepad-enabled.md) covers the Forever enabled capability and the Retail addon-compatibility queries. `C_GamePad.IsEnabled` reads `SimState.cvars.get_bool("GamePadEnable")`; the existing default is `"0"`, and an explicit stored `"1"` enables it. This is simulator policy, not native detection or proof of native CVar/device equivalence.
 
-Forever70532 `GamePadDocumentation.lua:222-229` declares no arguments and one non-nil bool. The existing Forever-only namespace registration publishes the query; Retail and PTR are not promoted. Mapped sticks, input-interface style and hover policy remain separate inputs.
+Forever 1.60.1.70532 `GamePadDocumentation.lua:222-229` declares `IsEnabled` with no arguments and one non-nil bool. Retail `GamePadDocumentation.lua:126-131,174-185,213-219` declares `GetAllDeviceIDs`, `GetDeviceRawState` and `IsEnabled`. **INFERRED (simulator mapping):** Retail has no physical-device input, so the first returns an empty table and the second nil; `IsEnabled` reads the existing CVar. PTR `IsEnabled` remains absent. Mapped sticks, input-interface style and hover policy remain separate inputs.
 
 `tests/forever_gamepad_enabled.rs` selects the original Game-screen restricted addon and verifies the wrapper file's secure TOC annotation. It obtains `IsGamePadEnabled` through original `CallRestrictedClosure`, verifies its source, secure environment, and inner `func` at `RestrictedEnvironment.lua:176`, then invokes the original restricted call across stored CVar `0/1/1/0/0` with absent/nonzero/cleared stick snapshots. Test-first `00e3c265a` fails at the original line177 nil `IsEnabled`; producer `5efd665d9` passes. Test bytes remain identical. Forever stock remains 26 keys/26 occurrences, zero additions/removals; this reached fixture gap was not a stock failure. Retail/PTR exact raw-publication controls pass. Their stock maps match master exactly: Retail 16 keys/18 occurrences, PTR 296/410, zero additions/removals/count changes. All-target checks including tools pass on Forever, Retail and PTR; Retail has zero warnings, the other two retain only the three approved pre-existing fast-handler dead-code warnings. Formatting passes. Native detection is still unknown, and startup is not clean.
+
+## Retail device queries
+
+Retail registers the declared `C_GamePad` namespace members used by DialogueUI. There is no simulated device store: **INFERRED (simulator mapping)** `GetAllDeviceIDs()` returns an empty table, `GetDeviceRawState(deviceID)` returns nil, and `IsEnabled()` uses the existing CVar. This does not model physical hardware or connection events; see the [query contract](../../specs/forever-gamepad-enabled.md).
 
 ## Bounded free-look-hover policy
 

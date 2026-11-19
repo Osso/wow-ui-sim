@@ -11,7 +11,7 @@ use super::{
 use rilua::LuaResult;
 use rilua::vm::state::LuaState;
 
-pub(crate) fn register_spell_and_widget_tables(state: &mut LuaState) -> LuaResult<()> {
+fn register_profile_spell_tables(state: &mut LuaState) -> LuaResult<()> {
     super::voice_provider_enum::register(state);
     if matches!(
         crate::client_profile::ACTIVE,
@@ -22,6 +22,20 @@ pub(crate) fn register_spell_and_widget_tables(state: &mut LuaState) -> LuaResul
     }
     #[cfg(feature = "client-wowforever")]
     super::c_gamepad_ui::register(state)?;
+    register_gamepad_tables(state)?;
+    #[cfg(feature = "client-wowforever")]
+    super::c_edit_mode::register(state)?;
+    #[cfg(any(feature = "client-wowforever", feature = "client-ptr"))]
+    super::gamepad_action_bar_constants::register(state);
+    #[cfg(feature = "client-wowforever")]
+    super::forever_finite_constants::register(state);
+    Ok(())
+}
+
+fn register_gamepad_tables(state: &mut LuaState) -> LuaResult<()> {
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+        super::c_game_pad_retail::register(state)?;
+    }
     #[cfg(any(feature = "client-wowforever", feature = "client-ptr"))]
     if matches!(
         crate::client_profile::ACTIVE,
@@ -30,12 +44,11 @@ pub(crate) fn register_spell_and_widget_tables(state: &mut LuaState) -> LuaResul
     ) {
         super::c_game_pad::register(state)?;
     }
-    #[cfg(feature = "client-wowforever")]
-    super::c_edit_mode::register(state)?;
-    #[cfg(any(feature = "client-wowforever", feature = "client-ptr"))]
-    super::gamepad_action_bar_constants::register(state);
-    #[cfg(feature = "client-wowforever")]
-    super::forever_finite_constants::register(state);
+    Ok(())
+}
+
+pub(crate) fn register_spell_and_widget_tables(state: &mut LuaState) -> LuaResult<()> {
+    register_profile_spell_tables(state)?;
     c_spell::register_c_spell_surface(state)?;
     // INFERRED: R88ah's 70631 behavior applies to the 70268 declarations and enum.
     #[cfg(feature = "client-mists")]

@@ -5,6 +5,7 @@ CF-2 supplies tracked targets through `src/c_api/c_super_track.rs` and per-quest
 ## What it must do
 
 - [ ] Register the modeled namespace on Retail, PTR and Forever beside C_QuestLog through one shared runtime profile predicate; preserve unrelated namespace members.
+- [x] **VERIFIED (Retail declaration):** `GetSuperTrackedItemName()` may return no values; when present, it returns non-nil name and description strings. **INFERRED (simulator mapping):** absent `SuperTrackState.item_name` returns no values, while a supplied pair returns both strings. Native target selection and the input writer remain UNKNOWN.
 - [x] **VERIFIED (Retail 12.1.5.70688; optional original-consumer test):** `SetSuperTrackedUserWaypoint` uses Lua truthiness and is a no-op when the stored flag already matches. A changed true value with a valid point clears the quest, content, map-pin, vignette and user-waypoint flags plus one unnamed flag, then sets user-waypoint tracking. It preserves corpse tracking and one unnamed flag. A changed false value or invalid point clears only user-waypoint tracking; the saved point stays unchanged. `IsSuperTrackingUserWaypoint`, `IsSuperTrackingCorpse`, and `IsSuperTrackingAnything` expose the modeled flags. `IsSuperTrackingAnything` includes user-waypoint tracking. `ClearAllSuperTracked` clears modeled flags and selections but preserves the saved waypoint. The implementation uses zero setter values, one getter boolean, and no event as neutral seams; the new setter dispatches no event.
 - [ ] The setter checks secret access before converting the required non-nil argument. Native return arity, the two getterless flags, and named-event effects remain UNKNOWN; see [system evidence bounds](../wiki/systems/super-track-state.md#user-waypoint-supertracking).
 - [x] **VERIFIED (Retail 12.1.5.70688, R88j.6; Retail behavior tests):** quest, content and map-pin tracking flags are separate from their saved selections. Changed quest ID zero clears only the quest flag; changed nonzero quest IDs set it and clear content/map-pin flags and selections. Setting content stores its pair even when the ID is zero, sets its flag, and clears quest/map-pin flags and selections. Clearing content removes presence and its flag but keeps the saved pair. Clearing a map pin removes its selection only when its flag is true. Clear-all clears modeled flags/selections while preserving the saved content/map-pin values. **INFERRED:** flags and selections agree from a consistent start. The native evidence does not prove a public sequence that creates a mismatch.
@@ -21,7 +22,7 @@ CF-2 supplies tracked targets through `src/c_api/c_super_track.rs` and per-quest
 
 ## Implementation inventory
 
-- `src/c_api/c_super_track.rs` — SuperTrackState and modeled getters/mutators.
+- `src/c_api/c_super_track.rs` — SuperTrackState, supplied item text and modeled getters/mutators.
 - `src/c_api/c_quest_log.rs` — QuestAdditionalHighlights supplied-row projection.
 - `src/c_api/mod.rs` — shared runtime Retail/PTR/Forever publication predicate.
 - `src/lua_api/state{,/sim_state}.rs` — environment-owned `super_track`, with absent selections and false simulator flag defaults.
@@ -32,7 +33,7 @@ CF-2 supplies tracked targets through `src/c_api/c_super_track.rs` and per-quest
 
 - `tests/cf2_supertrack_consumers.rs` — five original-consumer selectors, each with state transitions; original complete chunk loaded via selected TOC, no consumer/API replacements.
 - `tests/cf2_supertracking_restored.rs` — restored content shape and original listener-time cache transitions on Retail/PTR/Forever.
-- `tests/c_super_track_probes.rs` — public shapes after bootstrap, supplied map-pin/vignette state and empty highlight output for quests without a row.
+- `tests/c_super_track_probes.rs` — public shapes, including the empty and supplied item-name result, map-pin/vignette state and empty highlight output for quests without a row.
 - `tests/test_c_map_user_waypoint.rs` — optional Retail original-consumer flow, waypoint flag, corpse preservation, clear-all and aggregate queries.
 - Existing `tests/c_factory_m4_contracts.rs` absent-target assertions remain preservation, not producer RED.
 
