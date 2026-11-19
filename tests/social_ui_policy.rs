@@ -67,7 +67,6 @@ fn assert_retail_enabled_friends_consumer(env: &WowLuaEnv) {
         FriendsListFrame:Hide()
         FriendsFrame_ShowSubFrame("FriendsListFrame")
         assert(not FriendsListFrame:IsShown(), "friends list is unavailable when enabled")
-        FriendsListFrame:Show()
         WhoFrame:Hide()
         FriendsFrame_ShowSubFrame("WhoFrame")
         assert(WhoFrame:IsShown(), "Who remains allowed when enabled")
