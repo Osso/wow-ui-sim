@@ -1,8 +1,8 @@
-//! Temporary C++-backed mixin stubs for Blizzard Lua load ordering.
+//! Temporary simulator behavior for mixins whose native implementation is absent from Lua.
 //!
-//! WoW's engine supplies methods for some Lua mixin tables after Blizzard
-//! creates the tables. The simulator still fills these gaps from Lua after
-//! each loaded file so subsequent XML construction sees the expected methods.
+//! ModelSceneControlButtonMixin.OnLoad is inferred native behavior, and the
+//! PetActionBar update guard preserves simulator behavior for empty action bars.
+//! Apply after each loaded Lua file so later XML sees the required methods.
 
 use crate::lua_api::LoaderEnv;
 
@@ -10,11 +10,6 @@ const CPP_MIXIN_STUBS_LUA: &str = r#"
 local ModelSceneControlButtonMixin = rawget(_G, "ModelSceneControlButtonMixin")
 if ModelSceneControlButtonMixin and not ModelSceneControlButtonMixin.OnLoad then
     ModelSceneControlButtonMixin.OnLoad = function() end
-end
-
-local PerksModelSceneControlButtonMixin = rawget(_G, "PerksModelSceneControlButtonMixin")
-if PerksModelSceneControlButtonMixin and not PerksModelSceneControlButtonMixin.OnLoad then
-    PerksModelSceneControlButtonMixin.OnLoad = function() end
 end
 
 local PetActionBarMixin = rawget(_G, "PetActionBarMixin")
@@ -44,22 +39,16 @@ mod tests {
         env.exec(
             r#"
             ModelSceneControlButtonMixin = {}
-            PerksModelSceneControlButtonMixin = { OnLoad = function() return "existing" end }
             "#,
         )
         .expect("fixture should install");
 
         patch_after_lua_file(&env.loader_env()).expect("patch should apply");
 
-        let result: (String, String) = env
-            .eval(
-                r#"
-                return type(ModelSceneControlButtonMixin.OnLoad),
-                    PerksModelSceneControlButtonMixin.OnLoad()
-                "#,
-            )
-            .expect("patched mixins should be readable");
-        assert_eq!(result, ("function".to_string(), "existing".to_string()));
+        let model_scene_onload_is_callable: bool = env
+            .eval("return type(ModelSceneControlButtonMixin.OnLoad) == 'function'")
+            .expect("ModelSceneControlButtonMixin.OnLoad should be readable");
+        assert!(model_scene_onload_is_callable);
     }
 
     #[test]
