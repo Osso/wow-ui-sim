@@ -146,6 +146,32 @@ fn public_only_occupies_name(lua: &mut rilua::vm::state::LuaState, name: &str) -
     Some(matches!(secure_name, rilua::Val::Nil))
 }
 
+fn debug_restore_registry_name_latest(env: &WowLuaEnv) {
+    let Ok(name) = std::env::var("WOW_SIM_DEBUG_RESTORE_REGISTRY_NAME") else {
+        return;
+    };
+    let state = env.state().borrow();
+    let current_id = state.widgets.get_id_by_name(&name);
+    let latest_id = state
+        .widgets
+        .iter_ids()
+        .filter(|id| {
+            state
+                .widgets
+                .get(*id)
+                .is_some_and(|frame| frame.name.as_deref() == Some(name.as_str()))
+        })
+        .max();
+    drop(state);
+    if let Some(latest_id) = latest_id {
+        env.state()
+            .borrow_mut()
+            .widgets
+            .set_name(latest_id, name.clone());
+        eprintln!("restored registry binding {name}: {current_id:?} -> {latest_id}");
+    }
+}
+
 fn debug_keep_edit_mode_system_suffix(env: &WowLuaEnv) {
     let Ok(prefix) = std::env::var("WOW_SIM_DEBUG_EDIT_MODE_FRAME_PREFIX") else {
         return;
@@ -239,6 +265,7 @@ pub fn setup_full_ui() -> WowLuaEnv {
     }
     crate::common::load_click_binding_bootstrap(&env, &ui);
     debug_edit_mode_system_frame_count(&env);
+    debug_restore_registry_name_latest(&env);
     debug_keep_edit_mode_system_suffix(&env);
     debug_skip_edit_mode_anchor_resets(&env);
     debug_skip_edit_mode_system_methods(&env);
