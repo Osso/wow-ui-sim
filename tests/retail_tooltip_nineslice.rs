@@ -43,7 +43,7 @@ const TOOLTIP_NINESLICE_ASSERTIONS: &str = r#"
         local piece = assert(nineSlice[pieceName], pieceName)
         assert(piece:GetNumPoints() > 0, pieceName .. ' must use the tooltip layout')
         assert(piece:GetTexelSnappingBias() == 0, pieceName .. ' texel bias')
-        assert(not piece:GetSnapToPixelGrid(), pieceName .. ' pixel snapping')
+        assert(not piece:IsSnappingToPixelGrid(), pieceName .. ' pixel snapping')
     end
 "#;
 
