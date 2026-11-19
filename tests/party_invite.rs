@@ -5,10 +5,11 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 #[test]
 fn c_party_info_invite_unit_keeps_invitation_server_mediated() {
     let env = WowLuaEnv::new().unwrap();
-    {
+    let initial_roster_size = {
         let mut sim = env.state().borrow_mut();
         sim.party_group_active = true;
         sim.party_is_raid = Some(false);
+        sim.party_members.len()
     }
     env.exec(
         r##"
@@ -33,6 +34,6 @@ fn c_party_info_invite_unit_keeps_invitation_server_mediated() {
 
     let sim = env.state().borrow();
     assert!(sim.party_group_active);
-    assert!(sim.party_members.is_empty());
+    assert_eq!(sim.party_members.len(), initial_roster_size);
     assert_eq!(sim.party_is_raid, Some(false));
 }
