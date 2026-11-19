@@ -38,7 +38,7 @@ fn cached_custom_aura_container_merges_supplied_group_options() {
     let env = custom_aura_container_env();
     env.exec(
         r#"
-        local container = CreateFrame('ManagedAuraContainer', nil, UIParent, 'CustomAuraContainerTemplate')
+        container = CreateFrame('ManagedAuraContainer', nil, UIParent, 'CustomAuraContainerTemplate')
         container:SetUnit('player')
         container:AddAuraGroup('format-provider', 'HELPFUL', {
             maxFrameCount = 2,
