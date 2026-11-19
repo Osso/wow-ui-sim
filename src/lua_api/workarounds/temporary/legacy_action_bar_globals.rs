@@ -1,6 +1,6 @@
-//! Temporary legacy action-bar global wrappers for Wrath.
+//! Temporary action-bar fallbacks for Mists and Wrath.
 //!
-//! Verified Retail and Forever providers replace these defaults; Mists and Wrath keep them.
+//! Retail and Forever use selected Blizzard providers; these profiles retain the fallbacks.
 
 #[cfg(any(feature = "client-mists", feature = "client-wrath"))]
 const LEGACY_ACTION_BAR_GLOBALS_LUA: &str = r#"
