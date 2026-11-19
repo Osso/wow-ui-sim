@@ -153,6 +153,14 @@ fn debug_keep_edit_mode_system_suffix(env: &WowLuaEnv) {
     let Ok(prefix) = prefix.parse::<usize>() else {
         return;
     };
+    let names: String = env
+        .eval(
+            "local names = {}; for index, frame in ipairs(EditModeManagerFrame.registeredSystemFrames) do \
+             names[#names + 1] = tostring(index) .. ':' .. tostring(frame:GetName()) end; \
+             return table.concat(names, ',')",
+        )
+        .expect("EditMode system frame names must be readable");
+    eprintln!("EditMode registeredSystemFrames: {names}");
     let script = format!(
         "local frames = EditModeManagerFrame.registeredSystemFrames; \
          local kept = {{}}; \
