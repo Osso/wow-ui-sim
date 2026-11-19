@@ -11,9 +11,11 @@
 //! - `GetWeeklyChestRewardLevel()` — returns four zeros when no run done.
 //! - `GetOwnedKeystoneLevel()` — returns the level from the player's keystone
 //!   context, or nothing when that context is absent.
-//! - `GetOwnedKeystoneChallengeMapID()` — returns the map ID from the player's
-//!   keystone context, or nothing when that context is absent (Retail, PTR,
-//!   Forever).
+//! - `GetOwnedKeystoneChallengeMapID()` — returns the challenge map ID from
+//!   the player's keystone context, or nothing when that context is absent.
+//! - `GetOwnedKeystoneMapID()` — inferred lookup from the owned challenge-mode
+//!   ID through the generated MapChallengeMode table; returns nothing for no
+//!   key or an unmapped challenge ID.
 //! - `GetWeeklyBestForMap(mapChallengeModeID)` — returns
 //!   durationSec, level, completionDate=nil, fraction=0, affixIDs={},
 //!   members={}, or nothing if no data.
@@ -125,6 +127,13 @@ fn register_mythic_plus_probe_handlers(state: &mut LuaState, ns: GcRef<Table>) -
             ns,
             "GetOwnedKeystoneChallengeMapID",
             get_owned_keystone_challenge_map_id,
+        )?;
+        // MythicPlusInfoDocumentation.lua:96-103; Wrath pins no declaration.
+        table_set_rust_fn_static(
+            state,
+            ns,
+            "GetOwnedKeystoneMapID",
+            get_owned_keystone_map_id,
         )?;
     }
     #[cfg(not(feature = "retail-12-0-7"))]
@@ -385,6 +394,22 @@ fn get_owned_keystone_challenge_map_id(state: &mut LuaState) -> LuaResult<u32> {
         return Ok(0);
     };
     state.push(Val::Num(f64::from(keystone.challenge_map_id)));
+    Ok(1)
+}
+
+/// INFERRED (best-guess, pending R88bp); data VERIFIED MapChallengeMode 70391.
+fn get_owned_keystone_map_id(state: &mut LuaState) -> LuaResult<u32> {
+    let Some(keystone) = borrow_state(state)?.mythic_plus.owned_keystone else {
+        return Ok(0);
+    };
+    let Ok(challenge_id) = u32::try_from(keystone.challenge_map_id) else {
+        return Ok(0);
+    };
+    let maps = sim_data::map_challenge_modes::MAPS;
+    let Ok(index) = maps.binary_search_by_key(&challenge_id, |entry| entry.0) else {
+        return Ok(0);
+    };
+    state.push(Val::Num(f64::from(maps[index].1)));
     Ok(1)
 }
 

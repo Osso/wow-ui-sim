@@ -404,6 +404,61 @@ fn get_owned_keystone_challenge_map_id_returns_the_owned_key_map() {
     assert_eq!(level, 12);
 }
 
+// ── GetOwnedKeystoneMapID ─────────────────────────────────────────────────────
+
+#[cfg(not(feature = "client-wrath"))]
+#[test]
+fn get_owned_keystone_map_id_publishes_nothing_without_an_owned_key() {
+    let env = env();
+    let count: i32 = env
+        .eval("return select('#', C_MythicPlus.GetOwnedKeystoneMapID())")
+        .unwrap();
+    assert_eq!(count, 0, "no owned key publishes no map ID");
+}
+
+#[cfg(not(feature = "client-wrath"))]
+#[test]
+fn get_owned_keystone_map_id_maps_owned_challenge_id() {
+    let env = env();
+    {
+        let mut sim = env.state().borrow_mut();
+        sim.mythic_plus.owned_keystone = Some(OwnedKeystone {
+            level: 12,
+            challenge_map_id: 499,
+        });
+    }
+    let (count, map_id): (i32, i32) = env
+        .eval(
+            r#"
+            local function count_returns(...)
+                return select('#', ...)
+            end
+            local count = count_returns(C_MythicPlus.GetOwnedKeystoneMapID())
+            return count, C_MythicPlus.GetOwnedKeystoneMapID()
+            "#,
+        )
+        .unwrap();
+    assert_eq!(count, 1, "an owned keystone publishes one map ID");
+    assert_eq!(map_id, 2649, "challenge mode 499 maps to instance map 2649");
+}
+
+#[cfg(not(feature = "client-wrath"))]
+#[test]
+fn get_owned_keystone_map_id_publishes_nothing_for_unknown_challenge_id() {
+    let env = env();
+    {
+        let mut sim = env.state().borrow_mut();
+        sim.mythic_plus.owned_keystone = Some(OwnedKeystone {
+            level: 12,
+            challenge_map_id: 999_999,
+        });
+    }
+    let count: i32 = env
+        .eval("return select('#', C_MythicPlus.GetOwnedKeystoneMapID())")
+        .unwrap();
+    assert_eq!(count, 0, "an unmapped challenge ID publishes nothing");
+}
+
 // ── GetWeeklyBestForMap ───────────────────────────────────────────────────────
 
 #[test]
