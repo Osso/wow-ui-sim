@@ -25,16 +25,23 @@ pub fn setup_full_ui() -> WowLuaEnv {
         state.addon_base_paths = vec![ui.clone()];
     }
 
-    let addons = discover_blizzard_addons(&ui);
-    for (name, toc_path) in &addons {
-        if let Err(e) = load_addon(&env.loader_env(), toc_path) {
-            eprintln!("[load {name}] FAILED: {e}");
-        }
+    if cfg!(all(feature = "client-retail", feature = "retail-12-1-5")) {
+        crate::common::load_game_startup_inventory(&env);
+    } else {
+        load_legacy_spellbook_addons(&env, &ui);
     }
-    crate::common::load_click_binding_bootstrap(&env, &ui);
     env.apply_post_load_workarounds();
     fire_startup_sequence(&env);
     env
+}
+
+fn load_legacy_spellbook_addons(env: &WowLuaEnv, ui: &std::path::Path) {
+    for (name, toc_path) in discover_blizzard_addons(ui) {
+        if let Err(e) = load_addon(&env.loader_env(), &toc_path) {
+            eprintln!("[load {name}] FAILED: {e}");
+        }
+    }
+    crate::common::load_click_binding_bootstrap(env, ui);
 }
 
 /// Match exact run_screenshot sequence:
