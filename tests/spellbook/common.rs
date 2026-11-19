@@ -35,30 +35,11 @@ fn debug_edit_mode_system_frame_count(env: &WowLuaEnv) {
 fn install_debug_edit_mode_anchor_trace(env: &WowLuaEnv) {
     env.exec(
         r#"
-        local function trace_ranges(scope, environment, manager)
-            if type(environment) ~= "table" or not manager then
-                return
-            end
-            local runRange = environment.secureexecuterange
-            if type(runRange) ~= "function" then
-                return
-            end
-            environment.secureexecuterange = function(frames, callback, ...)
-                if frames ~= manager.registeredSystemFrames then
-                    return runRange(frames, callback, ...)
-                end
-                local function trace_anchor(index, frame, ...)
-                    local info = frame.systemInfo and frame.systemInfo.anchorInfo
-                    print("anchor before", scope, index, frame:GetName(), info and info.point)
-                    local result = callback(index, frame, ...)
-                    print("anchor after", scope, index, frame:GetName())
-                    return result
-                end
-                return runRange(frames, trace_anchor, ...)
-            end
+        local frames = EditModeManagerFrame.registeredSystemFrames
+        rawset(_G, "__wowEditModeFrameRegistry", frames)
+        if type(__secureenv) == "table" then
+            rawset(__secureenv, "__wowEditModeFrameRegistry", frames)
         end
-        trace_ranges("public", _G, EditModeManagerFrame)
-        trace_ranges("secure", __secureenv, __secureenv and __secureenv.EditModeManagerFrame)
         "#,
     )
     .unwrap();
