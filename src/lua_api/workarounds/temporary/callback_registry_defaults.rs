@@ -99,8 +99,11 @@ if type(CVarCallbackRegistry.SetCVarCachable) ~= "function" then
   end
 end
 
-function CVarCallbackRegistry:GetCVarValueBool(name)
-  return GetCVarBool(name) == true
+-- Keep the original provider after SharedXMLBase has loaded.
+if type(CVarCallbackRegistry.GetCVarValueBool) ~= "function" then
+  function CVarCallbackRegistry:GetCVarValueBool(name)
+    return GetCVarBool(name) == true
+  end
 end
 
 if type(CallbackRegistrantMixin) ~= "table" then
