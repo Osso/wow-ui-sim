@@ -37,6 +37,9 @@ pub(crate) fn register_spell_and_widget_tables(state: &mut LuaState) -> LuaResul
     #[cfg(feature = "client-wowforever")]
     super::forever_finite_constants::register(state);
     c_spell::register_c_spell_surface(state)?;
+    // INFERRED: R88ah's 70631 behavior applies to the 70268 declarations and enum.
+    #[cfg(feature = "client-mists")]
+    super::mists_r88ah::register_spell_visibility(state)?;
     #[cfg(feature = "retail-12-0-5")]
     super::c_mount_spell_lookup::register(state)?;
     #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
@@ -70,6 +73,10 @@ pub(crate) fn register_character_progression_tables(state: &mut LuaState) -> Lua
     super::c_pet_talent_tree::register(state)?;
     super::c_prof_specs_reminders::register(state)?;
     super::c_prof_specs_tab_state::register(state)?;
+    #[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+    super::c_prof_specs_get_children_for_path::register(state)?;
+    #[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+    super::c_prof_specs_path_queries::register(state)?;
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Ptr {
         super::c_player_info_name_policy::register(state)?;
     }
@@ -81,6 +88,7 @@ pub(crate) fn register_character_progression_tables(state: &mut LuaState) -> Lua
 }
 
 pub(crate) fn register_interaction_tables(state: &mut LuaState) -> LuaResult<()> {
+    super::combat_audio_spec_setting_enum::register(state);
     register_interaction_store_voice(state)?;
     register_interaction_combat(state)?;
     register_interaction_crafting(state)?;
@@ -117,6 +125,13 @@ fn register_interaction_combat(state: &mut LuaState) -> LuaResult<()> {
         super::c_limited_input::register(state)?;
     }
     super::combat_audio_enabled::register(state)?;
+    // INFERRED: R88ah's 70631 behavior applies to the 70268 Mists cache.
+    #[cfg(feature = "client-mists")]
+    super::mists_r88ah::register_combat_audio_alert(state)?;
+    // INFERRED: R88ai's 70631 spec-setting behavior applies to the 70268 Mists
+    // cache, whose declarations, enums and default constants match.
+    #[cfg(feature = "client-mists")]
+    super::mists_r88ai::register(state)?;
     #[cfg(feature = "retail-12-0-0")]
     super::c_combat_audio_alert::register(state)?;
     #[cfg(feature = "retail-12-0-0")]

@@ -408,24 +408,21 @@ pub(crate) fn build_cursor_anchor(
     screen_height: f32,
     scale: f32,
 ) -> Anchor {
-    if matches!(
-        crate::client_profile::ACTIVE,
-        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
-    ) {
-        let (point, x_offset, y_offset) = match anchor_type {
-            "ANCHOR_CURSOR_LEFT" => (AnchorPoint::BottomRight, x_offset, y_offset),
-            "ANCHOR_CURSOR_RIGHT" => (AnchorPoint::BottomLeft, x_offset, y_offset),
-            _ => (AnchorPoint::Bottom, 0.0, 0.0),
-        };
-        return Anchor {
-            point,
-            relative_to: None,
-            relative_to_id: None,
-            relative_point: AnchorPoint::BottomLeft,
-            x_offset: mx / scale + x_offset,
-            y_offset: (screen_height - my) / scale + y_offset,
-        };
+    if uses_modern_cursor_anchor() {
+        return build_modern_cursor_anchor(
+            mx,
+            my,
+            x_offset,
+            y_offset,
+            anchor_type,
+            screen_height,
+            scale,
+        );
     }
+    build_legacy_cursor_anchor(mx, my, x_offset, y_offset)
+}
+
+fn build_legacy_cursor_anchor(mx: f32, my: f32, x_offset: f32, y_offset: f32) -> Anchor {
     let cursor_y = if x_offset == 0.0 && y_offset == 0.0 {
         my + DEFAULT_CURSOR_Y_OFFSET
     } else {
@@ -438,5 +435,35 @@ pub(crate) fn build_cursor_anchor(
         relative_point: AnchorPoint::TopLeft,
         x_offset: mx + x_offset,
         y_offset: cursor_y,
+    }
+}
+
+fn uses_modern_cursor_anchor() -> bool {
+    use crate::client_profile::{ACTIVE, ClientProfile};
+    matches!(ACTIVE, ClientProfile::Retail | ClientProfile::Ptr)
+}
+
+fn build_modern_cursor_anchor(
+    mx: f32,
+    my: f32,
+    x_offset: f32,
+    y_offset: f32,
+    anchor_type: &str,
+    screen_height: f32,
+    scale: f32,
+) -> Anchor {
+    let (point, x_offset, y_offset) = match anchor_type {
+        "ANCHOR_CURSOR_LEFT" => (AnchorPoint::BottomRight, x_offset, y_offset),
+        "ANCHOR_CURSOR_RIGHT" => (AnchorPoint::BottomLeft, x_offset, y_offset),
+        _ => (AnchorPoint::Bottom, 0.0, 0.0),
+    };
+    Anchor {
+        point,
+        relative_to: None,
+        relative_to_id: crate::widget::clamp_geometry::uses_retail_clamp_producers()
+            .then_some(crate::widget::clamp_geometry::COORDINATE_ROOT),
+        relative_point: AnchorPoint::BottomLeft,
+        x_offset: mx / scale + x_offset,
+        y_offset: (screen_height - my) / scale + y_offset,
     }
 }

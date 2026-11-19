@@ -141,6 +141,10 @@ pub struct GameRulesState {
     pub rules: HashMap<String, GameRuleValue>,
     /// Native numeric rule values keyed by rule ID; no name/Enum mapping is implied.
     pub rules_by_id: HashMap<i32, i64>,
+    /// INFERRED (simulator mapping): host type tags for numeric-ID rules; tags override integer storage.
+    /// Native settings packet ingestion remains UNKNOWN (R88ap.3).
+    #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+    pub non_integer_rule_ids: std::collections::HashSet<i32>,
     /// Supplied PTR capabilities, not inferred native realm/account defaults.
     pub hardcore_active: bool,
     pub self_found_allowed: bool,
@@ -164,6 +168,8 @@ impl Default for GameRulesState {
             rule_set_marker: 0,
             rules: HashMap::new(),
             rules_by_id: HashMap::new(),
+            #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+            non_integer_rule_ids: Default::default(),
             hardcore_active: false,
             self_found_allowed: false,
             sd_hd_toggle_enabled: false,

@@ -1,5 +1,6 @@
--- Single publication-scoped exemption inventory; Retail/PTR/Wrath stay unchanged.
-local classicCombat, forever, vanilla, modeledStoreGlue = ...
+-- Single publication-scoped exemption inventory; modeled Store catalog registration is separate.
+local classicCombat, forever, vanilla, modeledStoreGlue, modeledStoreCatalog,
+  modeledStoreVas, retirePveFrameBridge, retireGlueOwnerDefaults = ...
 local strictNamespaces = {}
 if classicCombat then
   strictNamespaces.C_CombatText = true
@@ -437,6 +438,8 @@ if type(C_StoreSecure) == "table" then
 else
   C_StoreSecure = {}
 end
+-- Retail catalog, availability, currency and list methods use the c_api Store model.
+if not modeledStoreCatalog then
 C_StoreSecure.IsAvailable = function()
   return __wow_store_state.available == true
 end
@@ -481,6 +484,8 @@ C_StoreSecure.GetProductList = function()
   end
   return true
 end
+end
+if not modeledStoreCatalog then
 C_StoreSecure.GetProductGroupInfo = function(groupID)
   return __wow_store_state.productGroupInfo[groupID]
 end
@@ -493,6 +498,8 @@ end
 C_StoreSecure.GetProductInfo = function(productID)
   return __wow_store_state.productsByID[productID]
 end
+end
+if not modeledStoreVas then
 C_StoreSecure.GetWoWAccountGUIDFromName = function(accountName, isLocalAccount)
   if isLocalAccount then
     return __wow_store_state.localAccounts[accountName]
@@ -547,23 +554,29 @@ C_StoreSecure.GetVasServiceType = function(productID)
   local product = C_StoreSecure.GetProductInfo(productID)
   return product and product.sharedData and product.sharedData.vasServiceType or nil
 end
+end
+if not modeledStoreCatalog then
 C_StoreSecure.IsRegionLocked = function()
   return false
 end
 C_StoreSecure.GetLastProductListResponseError = function()
   return 0
 end
+end
 if not modeledStoreGlue then
   C_StoreSecure.GetVASErrors = function()
     return {}
   end
 end
+if not modeledStoreVas then
 C_StoreSecure.RequestRealmGuildMasterInfo = function(virtualRealmAddress)
   FireEvent("STORE_GUILD_MASTER_INFO_RECEIVED", virtualRealmAddress)
 end
 C_StoreSecure.RequestCharacterGuildFollowInfo = function(guid, _virtualRealmAddress)
   FireEvent("STORE_GUILD_FOLLOW_INFO_RECEIVED", guid, { transferredRealm = "Kalimdor" })
 end
+end
+if not modeledStoreVas then
 C_StoreSecure.OpenNydusLink = function(entryID)
   local entry = C_StoreSecure.GetEntryInfo(entryID)
   if entry then
@@ -614,12 +627,15 @@ if not modeledStoreGlue then
     end
   end
 end
+end
+if not modeledStoreCatalog then
 C_StoreSecure.RequestAllDynamicPriceInfo = __wow_noop
 C_StoreSecure.HasDynamicPriceData = function()
   return true
 end
 C_StoreSecure.IsDynamicBundle = function()
   return false
+end
 end
 
 local __wow_store_secure_state = {
@@ -873,6 +889,7 @@ end
 if rawget(C_StoreSecure, "_state") == nil then
   C_StoreSecure._state = __wow_store_secure_state
 end
+if not modeledStoreCatalog then
 if rawget(C_StoreSecure, "IsAvailable") == nil then
   function C_StoreSecure.IsAvailable() return __wow_store_secure_state.available end
 end
@@ -894,9 +911,11 @@ end
 if rawget(C_StoreSecure, "GetLastProductListResponseError") == nil then
   function C_StoreSecure.GetLastProductListResponseError() return __wow_store_secure_state.last_product_list_response_error end
 end
+end
 if rawget(C_StoreSecure, "GetVASErrors") == nil then
   function C_StoreSecure.GetVASErrors() return __wow_store_secure_state.vas_errors end
 end
+if not modeledStoreCatalog then
 if rawget(C_StoreSecure, "GetCurrencyInfo") == nil then
   function C_StoreSecure.GetCurrencyInfo()
     return {
@@ -913,6 +932,8 @@ if rawget(C_StoreSecure, "GetCurrencyInfo") == nil then
     }
   end
 end
+end
+if not modeledStoreCatalog then
 if rawget(C_StoreSecure, "GetProductGroupInfo") == nil then
   function C_StoreSecure.GetProductGroupInfo(groupID)
     for _, group in ipairs(__wow_store_product_groups) do
@@ -937,6 +958,8 @@ end
 if rawget(C_StoreSecure, "GetProductInfo") == nil then
   function C_StoreSecure.GetProductInfo(productID) return __wow_store_product(productID) end
 end
+end
+if not modeledStoreCatalog then
 if rawget(C_StoreSecure, "IsDynamicBundle") == nil then
   function C_StoreSecure.IsDynamicBundle(_productID) return false end
 end
@@ -946,6 +969,8 @@ end
 if rawget(C_StoreSecure, "RequestAllDynamicPriceInfo") == nil then
   function C_StoreSecure.RequestAllDynamicPriceInfo() return nil end
 end
+end
+if not modeledStoreCatalog then
 if rawget(C_StoreSecure, "GetProductList") == nil then
   function C_StoreSecure.GetProductList()
     __wow_store_secure_state.has_product_list = true
@@ -964,12 +989,14 @@ if rawget(C_StoreSecure, "GetPurchaseList") == nil then
     return nil
   end
 end
+end
 if rawget(C_StoreSecure, "GetDistributionList") == nil then
   function C_StoreSecure.GetDistributionList()
     __wow_store_secure_state.has_distribution_list = true
     return {}
   end
 end
+if not modeledStoreVas then
 function C_StoreSecure.GetFailureInfo()
   return __wow_store_secure_state.failure_code, __wow_store_secure_state.failure_reason
 end
@@ -1154,6 +1181,7 @@ if rawget(C_StoreSecure, "ClearPreGeneratedExternalTransactionID") == nil then
     __wow_store_secure_state.pre_generated_external_transaction_id = false
   end
 end
+end
 
 -- GetAvailableLocaleInfo is registered from Rust
 -- (src/lua_api/globals/real/locale_info.rs). Returns the 12-locale retail list
@@ -1249,7 +1277,7 @@ local function __wow_patch_map_canvas_scroll_container_methods()
   __wow_map_canvas_scroll_container_patched = true
 end
 
-if rawget(_G, "PVEFrame_ToggleFrame") == nil then
+if not retirePveFrameBridge and rawget(_G, "PVEFrame_ToggleFrame") == nil then
   function PVEFrame_ToggleFrame(...)
     local loadAddOn = C_AddOns and C_AddOns.LoadAddOn
     if type(loadAddOn) == "function" then
@@ -1405,7 +1433,7 @@ rawset(_G, "__wow_patch_fog_of_war_pin_methods", __wow_patch_fog_of_war_pin_meth
 
 AUTOCOMPLETE_LIST = AUTOCOMPLETE_LIST or {}
 AUTOCOMPLETE_LIST.ADDFRIEND = AUTOCOMPLETE_LIST.ADDFRIEND or {}
-if type(setprinthandler) ~= "function" then
+if not retireGlueOwnerDefaults and type(setprinthandler) ~= "function" then
   function setprinthandler() end
 end
 

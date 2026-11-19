@@ -8,6 +8,13 @@ pub(crate) struct RegisteredLoadWith {
 }
 
 pub struct SimState {
+    /// VERIFIED R88ap.1: zero initially and after CinematicFinished.
+    #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+    pub current_cinematic_id: u32,
+    /// INFERRED simulator source for Movie DB2 rows/summary refs (R88ap.1).
+    /// Missing key = no row; None = no summary ref. No native data is fabricated.
+    #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+    pub cinematic_summaries: HashMap<u32, Option<String>>,
     /// Explicit empty-default R88q host inputs; no automatic server records.
     pub store_glue: crate::c_api::store_glue_model::StoreGlueState,
     pub hyperlink_tooltip: crate::c_api::c_tooltip_info_hyperlink::inputs::HyperlinkTooltipInputs,
@@ -39,6 +46,11 @@ pub struct SimState {
     pub last_gamepad_input_timestamp: Option<u32>,
     /// INFERRED host byte projection, independent of CVars and GPU detection.
     pub video_capability_bytes: crate::c_api::video_capabilities::VideoCapabilityBytes,
+    /// UNKNOWN live protocol values. INFERRED (simulator mapping): None means
+    /// no host pair is supplied.
+    #[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+    pub performance_bar_protocol_types:
+        Option<crate::c_api::performance_bar::PerformanceProtocolTypes>,
     /// Explicit mapped-stick input; None means no configured snapshot, not device absence.
     #[cfg(any(feature = "client-wowforever", feature = "client-ptr"))]
     pub gamepad_mapped_sticks: Option<crate::c_api::c_game_pad::MappedStickSnapshot>,
@@ -51,6 +63,8 @@ pub struct SimState {
     pub summon_friend_cooldown: crate::c_api::c_recruit_a_friend::SummonFriendCooldown,
     pub raf_versions: Vec<crate::c_api::c_recruit_a_friend::RafVersionInfo>,
     pub widgets: WidgetRegistry,
+    /// Shared suffix exclusions used by AddSourceLocationExclude and CreateTexture.
+    pub(crate) source_location_exclusions: Vec<Vec<u8>>,
     #[cfg(feature = "retail-12-1-5")]
     pub(crate) weather: crate::c_api::c_weather::WeatherState,
     #[cfg(feature = "retail-12-1-0")]
@@ -79,6 +93,8 @@ pub struct SimState {
     pub(crate) registered_load_with: Vec<RegisteredLoadWith>,
     /// Lazily indexed target-to-follower map built from registered declarations.
     pub(crate) load_with_followers: Option<HashMap<String, Vec<String>>>,
+    /// TOC files parsed in this UI session; ReloadUI starts a new session.
+    pub(crate) toc_cache: std::rc::Rc<crate::toc::TocCache>,
     pub(crate) addon_message_prefixes: crate::c_api::addon_message_prefixes::AddonMessagePrefixes,
     pub addon_saved_enable_state: Option<AddonEnableSnapshot>,
     pub addon_saved_version_check_enabled: Option<bool>,
@@ -153,8 +169,13 @@ pub struct SimState {
     #[cfg(feature = "client-wrath")]
     pub who_routing: crate::c_api::who_routing::WhoRouting,
     pub tooltips: HashMap<u64, TooltipData>,
+    /// Host-only call inputs for the simulator's q4 inset access test seam.
+    pub clamp_inset_access_input: crate::widget::ClampInsetAccessInput,
     /// Explicit host-supplied item metadata, taking precedence over the generated catalog.
     pub item_overrides: HashMap<u32, crate::items::ItemInfo>,
+    /// UNKNOWN live R88l.1 condition outcomes; absent inputs select no color override.
+    pub item_level_color_condition_23: Option<bool>,
+    pub item_level_color_condition_24: Option<bool>,
     /// Explicit exact-link fixtures only; initially empty, no catalog producer.
     #[cfg(feature = "retail-12-0-0")]
     pub item_stats: crate::c_api::ItemStatsState,
@@ -172,6 +193,16 @@ pub struct SimState {
     pub item_tooltip_levels: HashMap<crate::c_api::ItemTooltipContext, u16>,
     /// R80 final item-mod amounts and metadata, keyed by item ID and resolved level.
     pub item_tooltip_inputs: HashMap<(u32, u16), crate::c_api::item_tooltip::ItemTooltipInput>,
+    /// INFERRED (simulator mapping): explicit calculated unit prices keyed by item ID and working level.
+    /// Empty by default; unknown price calculations do not produce a row.
+    pub item_tooltip_sell_price_unit_prices: HashMap<(u32, u16), u32>,
+    /// INFERRED (simulator mapping): explicit Retail bag-item status snapshots for R88aw.
+    /// Empty by default; no status input does not imply an unsuppressed row.
+    pub bag_item_tooltip_sell_price_statuses:
+        HashMap<(i32, i32), crate::c_api::item_tooltip::SellPriceStatusInput>,
+    /// UNKNOWN Retail SellPrice inputs: item ID to (current, prepared maximum) quantity.
+    /// Empty by default; these values are not derived from Stackable.
+    pub item_tooltip_sell_price_quantities: HashMap<u32, (u32, u32)>,
     pub blocked_auras_by_unit: HashMap<String, HashSet<i32>>,
     /// Explicit test scenario only; no combat or spell-secrecy inference.
     #[cfg(feature = "client-wowforever")]
@@ -212,15 +243,14 @@ pub struct SimState {
     pub screen_kind: ScreenKind,
     pub in_character_create: bool,
     pub glue_login: crate::c_api::c_login::LoginState,
+    pub glue_state: crate::lua_api::globals::real::glue_state::GlueHostState,
     #[cfg(any(feature = "client-ptr", feature = "client-wowforever"))]
     pub(crate) glue_feature_status:
         crate::lua_api::globals::real::glue_feature_status::GlueFeatureStatus,
     pub is_logged_in: bool,
     pub post_event_workarounds_applied: bool,
-    pub screen_first_displayed: bool,
-    pub saved_account_name: String,
-    pub saved_account_list: String,
-    pub uses_token: bool,
+    /// R88ad.8 native first-display state: 0, 1, then 2 before the event.
+    pub screen_first_display_state: u8,
     pub account_save_enabled: bool,
     pub account_save_in_progress: bool,
     pub account_locked_post_save: bool,
@@ -442,6 +472,9 @@ pub struct SimState {
     pub is_active_battlefield: bool,
     pub spell_trade_skill_links: HashMap<u32, String>,
     pub spell_id_aliases: HashMap<String, u32>,
+    /// UNKNOWN (R88i.14): host-supplied passive attribute masks; empty by default.
+    #[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+    pub spell_passive_attribute_masks: HashMap<u32, u32>,
     pub spell_tooltip_inputs: HashMap<u32, crate::c_api::spell_tooltip::SpellTooltipInput>,
     pub recipe_rank_tooltip_cache: crate::c_api::recipe_rank_tooltip::RecipeRankTooltipCache,
     pub aura_tooltip_inputs: HashMap<i32, crate::c_api::spell_tooltip::AuraTooltipInput>,
@@ -531,6 +564,12 @@ pub struct SimState {
     pub active_loss_of_control:
         HashMap<String, Vec<crate::c_api::c_loss_of_control::ActiveLossOfControlData>>,
     pub spell_flyouts: HashMap<u32, SpellFlyoutInfo>,
+    /// Host-supplied call-pet spell membership and slot-index candidates.
+    #[cfg(feature = "client-retail")]
+    pub call_pet_spell_indices: HashMap<u32, i32>,
+    /// Host-supplied current-player call-pet names indexed by slot; absent names stay absent.
+    #[cfg(feature = "client-retail")]
+    pub player_call_pet_names: Vec<Option<String>>,
     pub action_profession_quality: HashMap<i32, ProfessionQualityInfo>,
     pub addon_base_paths: Vec<PathBuf>,
     pub texture_manager: std::rc::Rc<std::cell::RefCell<crate::texture::TextureManager>>,
@@ -554,6 +593,9 @@ pub struct SimState {
     pub next_report_token: i64,
     pub party_members: Vec<PartyMember>,
     pub party_group_active: bool,
+    /// INFERRED (simulator mapping): owner roster inputs are empty until supplied.
+    pub home_subgroup_roster: Option<SubgroupOwnerRoster>,
+    pub instance_subgroup_roster: Option<SubgroupOwnerRoster>,
     /// Retail PartyInfo roster input used by `GetGroupMemberCounts`.
     pub group_member_counts: GroupMemberCountsState,
     /// INFERRED: host-owned identity classification; no automatic context inference.
@@ -615,6 +657,18 @@ pub struct SimState {
     pub totem_slots: Vec<Option<crate::lua_api::globals::real::totems::Totem>>,
     pub weapon_enchants: [Vec<crate::c_api::weapon_enchants::WeaponEnchant>; 3],
     pub sound_manager: Option<SoundManager>,
+    /// Mists alert-settings loaded state (R88ai); off makes `IsEnabled` false
+    /// and every spec setting read 0. UNKNOWN: audio-failure mapping and the
+    /// engine lifecycle that loads it; neutral on by default.
+    #[cfg(feature = "client-mists")]
+    pub mists_combat_audio_alert_state_gate: bool,
+    /// Mists in-memory combat-audio spec setting lists (R88ai).
+    #[cfg(feature = "client-mists")]
+    pub(crate) mists_combat_audio_spec_settings: crate::c_api::mists_r88ai::CombatAudioSpecSettings,
+    /// Host input: length of the voice list that bounds Voice spec settings.
+    /// UNKNOWN runtime data; empty by default.
+    #[cfg(feature = "client-mists")]
+    pub mists_combat_audio_voice_count: usize,
     pub last_sound_kit_requested: Option<u32>,
     /// Last formatted Wrath UI error requested by the modeled quest feedback path.
     #[cfg(feature = "client-wrath")]
@@ -653,6 +707,9 @@ pub struct SimState {
     pub ranged_auto_attack_spell_id: u32,
     /// Host null override; None uses the INFERRED active-player context.
     pub spell_cast_context_is_null: Option<bool>,
+    /// UNKNOWN native value; INFERRED mapping: None means no metadata-source input.
+    #[cfg(feature = "retail-12-1-5")]
+    pub spell_identifier_metadata_source: Option<i32>,
     /// Explicit simulator input for older C_Spell and spellbook count queries.
     #[cfg(feature = "retail-12-0-0")]
     pub spell_cast_counts: HashMap<u32, u32>,
@@ -691,6 +748,7 @@ pub struct SimState {
     pub r88s_inventory_inputs: crate::c_api::item_location::R88sInventoryInputs,
     pub loading_addon_index: Option<u16>,
     pub loading_addon_stack: Vec<u16>,
+    pub loading_addon_secure_env: Option<bool>,
     pub executing_addon_index: Option<u16>,
     pub loading_nil_symbol_environment: Option<NilSymbolEnvironment>,
     pub loading_forbidden: bool,
@@ -739,6 +797,13 @@ pub struct SimState {
     pub world: WorldState,
     pub encounter_policy: crate::c_api::c_instance_encounter::EncounterPolicy,
     pub bag_items: HashMap<(i32, i32), BagItem>,
+    /// UNKNOWN native branch acceptance; host inputs are empty by default.
+    #[cfg(feature = "client-retail")]
+    pub bag_battle_pet_tooltip_acceptance: HashMap<(i32, i32), bool>,
+    /// UNKNOWN upstream writer; explicit battle-pet snapshots are empty by default.
+    #[cfg(feature = "client-retail")]
+    pub bag_battle_pet_tooltip_snapshots:
+        HashMap<(i32, i32), crate::c_api::BattlePetTooltipSnapshot>,
     /// Explicit Retail bag repair quotes; UNKNOWN calculation/writers stay unmodeled.
     /// Empty by default; coordinates refer to the host-supplied bag snapshot.
     pub bag_item_repair_costs: HashMap<(i32, i32), i32>,
@@ -1007,6 +1072,9 @@ pub struct SimState {
     #[cfg(feature = "retail-12-0-0")]
     pub bnet_custom_message: String,
     pub social_friends: Vec<SocialFriend>,
+    /// UNKNOWN writers/events: explicit R88ap.6 policy input; absent is false.
+    #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+    pub social_system_policy_enabled: Option<bool>,
     pub social_restrictions: SocialRestrictionsState,
     pub restricted_actions: [u8; 6],
     pub restricted_actions_natural: [bool; 6],
@@ -1211,6 +1279,8 @@ pub struct SimState {
     pub save_failed_addons: bool,
     /// Explicit host-supplied cinematic playback state; no playback engine implied.
     pub cinematic_active: bool,
+    #[cfg(feature = "client-mists")]
+    pub movie_playback: MoviePlaybackState,
     /// World entry is distinct from IsLoggedIn; supplied/transitioned by the owner.
     pub in_world: bool,
     /// Wrath reload's temporary protected-action phase, not the player's combat bit.
@@ -1232,5 +1302,10 @@ impl SimState {
             .borrow_mut()
             .set_source_roots(&self.addon_base_paths);
         self.texture_manager.clone()
+    }
+
+    /// The TOC files parsed in this UI session.
+    pub fn toc_cache(&self) -> std::rc::Rc<crate::toc::TocCache> {
+        std::rc::Rc::clone(&self.toc_cache)
     }
 }

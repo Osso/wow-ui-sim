@@ -24,6 +24,18 @@ fn load_store_ui_tree() -> WowLuaEnv {
     env
 }
 
+#[cfg(feature = "client-retail")]
+fn load_store_ui_tree_with_catalog() -> WowLuaEnv {
+    let env = load_store_ui_tree();
+    publish_catalog_for_ui(&env);
+    env
+}
+
+#[cfg(feature = "client-retail")]
+fn publish_catalog_for_ui(env: &WowLuaEnv) {
+    crate::common::store_catalog_fixture::publish_featured_catalog(env);
+}
+
 fn load_store_addons(env: &WowLuaEnv) {
     let ui = blizzard_ui_dir();
     let addons = discover_blizzard_addon_closure_for_screen(
@@ -205,9 +217,10 @@ fn store_frame_action_attribute_shows_frame_after_minimal_store_load() {
 }
 
 post_wrath_ui_fixture! {
+#[cfg(feature = "client-retail")]
 #[test]
-fn store_catalog_exposes_fake_products_after_product_refresh() {
-    let env = load_store_ui_tree();
+fn store_catalog_exposes_supplied_products_after_product_refresh() {
+    let env = load_store_ui_tree_with_catalog();
     let (group_count, selected_category, product_count, first_name): (i32, i32, i32, String) = env
         .eval(
             r#"
@@ -227,7 +240,7 @@ fn store_catalog_exposes_fake_products_after_product_refresh() {
 
     assert!(
         group_count > 0,
-        "fake store catalog should expose at least one category"
+        "supplied store catalog should expose at least one category"
     );
     assert!(
         selected_category > 0,
@@ -235,19 +248,21 @@ fn store_catalog_exposes_fake_products_after_product_refresh() {
     );
     assert!(
         product_count > 0,
-        "selected category should expose at least one product"
+        "selected category should expose a supplied product"
     );
     assert_eq!(first_name, "Apprentice Rider Bundle");
 }
 }
 
+#[cfg(feature = "client-retail")]
 prefork_full_ui_case! {
 fn store_open_does_not_record_store_state_errors_or_connecting_notice(env: &WowLuaEnv) {
+    publish_catalog_for_ui(env);
     let notice: (bool, Option<String>, Option<String>) = env
         .eval(
             r#"
             StoreFrame:Show()
-            C_StoreSecure.GetProductList()
+            __secureenv.C_StoreSecure.GetProductList()
             return StoreFrame.Notice:IsShown(),
                 StoreFrame.Notice.Title:GetText(),
                 StoreFrame.Notice.Description:GetText()
@@ -269,9 +284,10 @@ fn store_open_does_not_record_store_state_errors_or_connecting_notice(env: &WowL
 }
 
 post_wrath_ui_fixture! {
+#[cfg(feature = "client-retail")]
 #[test]
 fn store_catalog_uses_blizzard_card_pool_instead_of_debug_card() {
-    let env = load_store_ui_tree();
+    let env = load_store_ui_tree_with_catalog();
     let first_card_name: Option<String> = env
         .eval(
             r#"
@@ -294,9 +310,10 @@ fn store_catalog_uses_blizzard_card_pool_instead_of_debug_card() {
 }
 
 post_wrath_ui_fixture! {
+#[cfg(feature = "client-retail")]
 #[test]
 fn store_catalog_card_geometry_stays_bounded() {
-    let env = load_store_ui_tree();
+    let env = load_store_ui_tree_with_catalog();
     let metrics: (f64, f64, f64, f64, f64, f64, f64, f64, f64, f64, f64, f64, String) = env
         .eval(
             r#"
@@ -392,9 +409,10 @@ fn store_catalog_card_geometry_stays_bounded() {
 }
 
 post_wrath_ui_fixture! {
+#[cfg(feature = "client-retail")]
 #[test]
 fn store_catalog_button_slice_geometry_stays_bounded() {
-    let env = load_store_ui_tree();
+    let env = load_store_ui_tree_with_catalog();
     let metrics: (f64, f64, f64, f64, f64, f64, f64, f64, f64, f64, f64, f64, String) = env
         .eval(
             r#"
@@ -470,13 +488,15 @@ fn store_notice_show_updates_cover(env: &WowLuaEnv) {
 }
 }
 
+#[cfg(feature = "client-retail")]
 prefork_full_ui_case! {
 fn store_product_card_buy_button_click_completes_without_store_upvalue_error(env: &WowLuaEnv) {
+    publish_catalog_for_ui(env);
     let result: (bool, Option<String>) = env
         .eval(
             r#"
             StoreFrame:Show()
-            C_StoreSecure.GetProductList()
+            __secureenv.C_StoreSecure.GetProductList()
             local button
             for activeCard in StoreFrame.productCardPoolCollection:EnumerateActive() do
                 if activeCard.BuyButton then

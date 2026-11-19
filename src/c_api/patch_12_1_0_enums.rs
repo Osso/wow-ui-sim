@@ -3,7 +3,7 @@
 //! Exact cached 12.1.0 values replace generic max+1 appends, which misplace
 //! flag bits and members inserted before existing ones.
 
-use crate::lua_api::methods::{table_get, table_set};
+use crate::lua_api::methods::table_get;
 use rilua::Val;
 use rilua::vm::state::LuaState;
 
@@ -15,7 +15,7 @@ type EnumDecl = (
 );
 
 pub(crate) fn register(state: &mut LuaState) {
-    let enums = super::ensure_global_table(state, "Enum");
+    let enums = super::ensure_enum_table(state);
     for decl in SHARED {
         publish(state, enums, decl);
     }
@@ -34,12 +34,16 @@ fn publish(state: &mut LuaState, enums: Val, &(name, members, (min, max, count))
         "Enum.{name} and its Meta must be initialized before 12.1.0 publication"
     );
     for &(member, value) in members {
-        table_set(state, values, member, Val::Num(f64::from(value)));
+        super::set_namespace_member(state, values, member, Val::Num(f64::from(value)))
+            .expect("Enum group must have a secure registration peer");
     }
     // Metadata is native publication; Blizzard Lua may add members it never counts.
-    table_set(state, metadata, "MinValue", Val::Num(f64::from(min)));
-    table_set(state, metadata, "MaxValue", Val::Num(f64::from(max)));
-    table_set(state, metadata, "NumValues", Val::Num(f64::from(count)));
+    super::set_namespace_member(state, metadata, "MinValue", Val::Num(f64::from(min)))
+        .expect("Enum metadata must have a secure registration peer");
+    super::set_namespace_member(state, metadata, "MaxValue", Val::Num(f64::from(max)))
+        .expect("Enum metadata must have a secure registration peer");
+    super::set_namespace_member(state, metadata, "NumValues", Val::Num(f64::from(count)))
+        .expect("Enum metadata must have a secure registration peer");
 }
 
 // Retail and PTR caches declare these identically.

@@ -670,6 +670,10 @@ pub fn register_all(lua: &mut rilua::Lua) -> rilua::LuaResult<()> {
         state,
     )?;
     crate::lua_api::globals::real::loot_specialization::register(state)?;
+    #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+    crate::lua_api::globals::real::set_role_button::register(state)?;
+    #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+    crate::lua_api::globals::real::cinematic_summary::register(state)?;
     crate::lua_api::globals::real::ui_widget_container::register_widget_container_mixin(state)?;
 
     Ok(())
@@ -679,6 +683,12 @@ fn register_system_tables(state: &mut LuaState) -> LuaResult<()> {
     table_util::register_table_util(state)?;
     c_addons::register_c_addons(state)?;
     c_addon_profiler::register_c_addon_profiler(state)?;
+    Ok(())
+}
+
+pub(crate) fn register_secure_environment_base_globals(lua: &mut rilua::Lua) -> LuaResult<()> {
+    LuaApiMut::register_function(lua, "strsplit", strsplit)?;
+    LuaApiMut::register_function(lua, "strjoin", strjoin)?;
     Ok(())
 }
 
@@ -693,8 +703,10 @@ fn register_utility_globals(lua: &mut rilua::Lua) -> LuaResult<()> {
     LuaApiMut::register_function(lua, "getglobal", getglobal)?;
     LuaApiMut::register_function(lua, "setglobal", setglobal)?;
     LuaApiMut::register_function(lua, "nop", nop)?;
-    LuaApiMut::register_function(lua, "strsplit", strsplit)?;
-    LuaApiMut::register_function(lua, "strjoin", strjoin)?;
+    if !crate::client_profile::is_active_retail_12_1_5() {
+        LuaApiMut::register_function(lua, "strsplit", strsplit)?;
+        LuaApiMut::register_function(lua, "strjoin", strjoin)?;
+    }
     Ok(())
 }
 
@@ -717,7 +729,12 @@ fn register_system_globals(lua: &mut rilua::Lua) -> LuaResult<()> {
     install_xpcall(lua)?;
     LuaApiMut::register_function(lua, "securecall", securecall)?;
     LuaApiMut::register_function(lua, "seterrorhandler", seterrorhandler)?;
-    LuaApiMut::register_function(lua, "geterrorhandler", geterrorhandler)?;
+    // VERIFIED (BASELINE-39): the name is in the secure base. UNKNOWN (R88k.7): flags are unproved. Evidence: pr46-49-decomp-answers.md, sections R88k.7.
+    crate::lua_api::globals::security::register_unknown_allowlist_function(
+        lua,
+        "geterrorhandler",
+        geterrorhandler,
+    )?;
     LuaApiMut::register_function(lua, "assertsafe", assertsafe)?;
     Ok(())
 }

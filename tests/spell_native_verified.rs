@@ -8,7 +8,10 @@
 
 use std::collections::HashMap;
 
+use crate::common::aura_container_harness::aura;
 use crate::common::blizzard_addon_harness::{blizzard_ui_dir, build_blizzard_addon_closure_env};
+use rilua::table_security::wrap_host_secret_number;
+use rilua::{LuaApiMut, Val};
 use wow_ui_sim::client_profile::{ACTIVE, ClientProfile};
 use wow_ui_sim::loader::discover_blizzard_startup_addons_for_screen;
 use wow_ui_sim::lua_api::{WowLuaEnv, state::BagItem};
@@ -55,6 +58,257 @@ fn add_bag_stack(env: &WowLuaEnv, slot: i32, item_id: u32, stack_count: i32) {
             applied_transmog: None,
         },
     );
+}
+
+fn publish_secret_number(env: &WowLuaEnv, name: &str, number: f64) {
+    let loader = env.loader_env();
+    let mut lua = loader.rilua_mut();
+    let value = wrap_host_secret_number(lua.state_mut(), number);
+    lua.state_mut().push(value);
+    lua.set_global_val(name, value).unwrap();
+    lua.state_mut().pop();
+}
+
+const R88R_ORDINARY_CONSUMER_PRESERVATION: &str = r#"
+        for _, case in ipairs({{19750, 7}, {642, 2}}) do
+            local item = {
+                GetSpellChargeInfo = function() return nil end,
+                GetSpellID = function() return case[1] end,
+                SetCachedChargeValues = function(self, count, shown)
+                    self.count, self.shown = count, shown
+                end,
+            }
+            CooldownViewerCooldownItemMixin.CacheChargeValues(item)
+            assert(item.count == case[2] and item.shown)
+        end
+        local absent = {
+            cooldownChargesCount = 11,
+            GetSpellChargeInfo = function() return nil end,
+            GetSpellID = function() return nil end,
+            SetCachedChargeValues = function(self, count, shown)
+                self.count, self.shown = count, shown
+            end,
+        }
+        CooldownViewerCooldownItemMixin.CacheChargeValues(absent)
+        assert(absent.count == 11 and not absent.shown)
+    "#;
+
+const R88R_SECRET_READER_OVERLAY: &str = r#"
+local castUsage = 'Usage: local castCount = C_Spell.GetSpellCastCount(spellIdentifier)'
+local displayUsage = 'Usage: local displayCount = C_Spell.GetSpellDisplayCount(spellIdentifier [, maxDisplayCount, replacementString])'
+local function expectUsage(call, usage)
+    local ok, err = pcall(call)
+    assert(not ok and tostring(err):find(usage, 1, true), tostring(err))
+end
+local function expectRange(call)
+    local ok, err = pcall(call)
+    assert(not ok and tostring(err):find('outside of expected range -2147483648 to 2147483647', 1, true), tostring(err))
+end
+expectUsage(function() C_Spell.GetSpellCastCount(R88RLowA) end, castUsage)
+expectUsage(function() C_Spell.GetSpellCastCount(R88RLowB) end, castUsage)
+assert(C_Spell.GetSpellCastCount(R88RHighA) == 7)
+assert(C_Spell.GetSpellCastCount(R88RHighB) == 2)
+expectUsage(function() C_Spell.GetSpellCastCount() end, castUsage)
+expectUsage(function() C_Spell.GetSpellDisplayCount(R88RLowA) end, displayUsage)
+assert(C_Spell.GetSpellDisplayCount(R88RHighA, R88RMaxOne, 'OVER') == 'OVER')
+for _, maximum in ipairs({R88RMaxOne, R88RMaxZero, R88RMaxMinusOne}) do
+    assert(C_Spell.GetSpellDisplayCount(R88RHighA, maximum, 'OVER') == 'OVER')
+end
+expectRange(function() C_Spell.GetSpellDisplayCount(R88RHighA, R88RMaxHigh) end)
+expectRange(function() C_Spell.GetSpellDisplayCount(R88RHighA, R88RMaxLow) end)
+assert(C_Spell.GetSpellDisplayCount(R88RHighA) == '7')
+"#;
+
+const R88R_AURA_SECRET_SELECTOR_CONSUMER: &str = r#"
+local usage = 'Usage: local castCount = C_Spell.GetSpellCastCount(spellIdentifier)'
+local function cache_aura_spell(spellID)
+    local data = C_UnitAuras.GetUnitAuraBySpellID('player', spellID)
+    assert(data and issecretvalue(data.spellId), 'aura records must publish secret spell IDs')
+    local item = Mixin({cooldownInfo = {spellID = spellID}}, CooldownViewerItemDataMixin)
+    item.GetSpellChargeInfo = function() return nil end
+    item.SetCachedChargeValues = function(self, count, shown)
+        self.count, self.shown = count, shown
+    end
+    -- Feed AuraData into the stored selector read by Blizzard's GetSpellID.
+    item.auraSpellID = data.spellId
+    assert(issecretvalue(item:GetSpellID()), 'GetSpellID must select the secret aura spell ID')
+    return item
+end
+for _, spellID in ipairs({0, 1}) do
+    local item = cache_aura_spell(spellID)
+    local ok, err = pcall(CooldownViewerCooldownItemMixin.CacheChargeValues, item)
+    assert(not ok and tostring(err):find(usage, 1, true), 'expected metadata Usage error, got ' .. tostring(err))
+end
+for _, case in ipairs({{343960, 7}, {343963, 2}}) do
+    local item = cache_aura_spell(case[1])
+    CooldownViewerCooldownItemMixin.CacheChargeValues(item)
+    assert(item.count == case[2] and item.shown, 'high secret aura selector count mismatch')
+end
+local absent = Mixin({cooldownChargesCount = 11}, CooldownViewerItemDataMixin)
+absent.GetSpellChargeInfo = function() return nil end
+absent.SetCachedChargeValues = function(self, count, shown)
+    self.count, self.shown = count, shown
+end
+CooldownViewerCooldownItemMixin.CacheChargeValues(absent)
+assert(absent.count == 11 and not absent.shown, 'missing selector must preserve the cached count')
+"#;
+
+const MASK2_CACHE_ASSERTIONS: &str = r#"
+    for _, case in ipairs(cases) do
+        local spellID, expected = case[1], case[2]
+        local item = {
+            GetSpellChargeInfo = function() return nil end,
+            GetSpellID = function() return spellID end,
+            SetCachedChargeValues = function(self, count, shown)
+                self.count, self.shown = count, shown
+            end,
+        }
+        CooldownViewerCooldownItemMixin.CacheChargeValues(item)
+        assert(item.count == expected,
+            'spell=' .. spellID .. ' count=' .. tostring(item.count) .. ', expected=' .. expected)
+        assert(item.shown == (expected > 0))
+    end
+"#;
+
+fn seed_mask2_reagent(
+    env: &WowLuaEnv,
+    spell_id: u32,
+    reagent_id: i32,
+    quantity: i32,
+    first_slot: i32,
+    candidates: &[(i64, i32)],
+) {
+    assert!(wow_ui_sim::spells::get_spell(spell_id).is_some());
+    let property_candidates = candidates
+        .iter()
+        .map(|&(signed_value, available_count)| {
+            wow_ui_sim::c_api::spell_reagent_inventory::SpellReagentPropertyCandidate {
+                signed_value,
+                available_count: i64::from(available_count),
+            }
+        })
+        .collect::<Vec<_>>();
+    {
+        let mut sim = env.state().borrow_mut();
+        sim.spell_cast_context_is_null = Some(false);
+        sim.spell_reagent_pairs
+            .insert(spell_id, vec![(reagent_id, quantity)]);
+        sim.spell_reagent_inventory
+            .metadata_masks
+            .insert(reagent_id, 2);
+        if !property_candidates.is_empty() {
+            sim.spell_reagent_inventory
+                .property_candidates
+                .insert(reagent_id, property_candidates);
+        }
+    }
+    for (offset, &(_, count)) in candidates.iter().enumerate() {
+        add_bag_stack(env, first_slot + offset as i32, reagent_id as u32, count);
+    }
+}
+
+fn assert_mask2_cached_counts(env: &WowLuaEnv, cases: &str) {
+    env.exec(&format!("local cases = {cases}\n{MASK2_CACHE_ASSERTIONS}"))
+        .expect("the original CooldownViewer must cache every expected reagent count");
+}
+
+fn seed_secret_aura_spell_counts(env: &WowLuaEnv) {
+    {
+        let mut state = env.state().borrow_mut();
+        state.player.buffs = vec![aura(0), aura(1), aura(343_960), aura(343_963)];
+        state.restricted_actions[0] = 2;
+        state.spell_identifier_metadata_source = Some(1);
+    }
+    seed_mask2_reagent(env, 343_960, 31_003, 1, 3, &[(1, 7)]);
+    seed_mask2_reagent(env, 343_963, 31_004, 1, 4, &[(1, 2)]);
+}
+
+#[test]
+fn r88r_secret_selector_and_display_maximum_readers() {
+    let env = WowLuaEnv::new().unwrap();
+    seed_mask2_reagent(&env, 19_750, 31_001, 1, 1, &[(1, 7)]);
+    seed_mask2_reagent(&env, 642, 31_002, 1, 2, &[(1, 2)]);
+    for (name, number) in [
+        ("R88RLowA", 0.5),
+        ("R88RLowB", 1.0),
+        ("R88RHighA", 19_750.5),
+        ("R88RHighB", 642.5),
+        ("R88RMaxOne", 1.0),
+        ("R88RMaxZero", 0.0),
+        ("R88RMaxMinusOne", -1.0),
+        ("R88RMaxHigh", 2_147_483_648.0),
+        ("R88RMaxLow", -2_147_483_649.0),
+    ] {
+        publish_secret_number(&env, name, number);
+    }
+    env.exec("assert(C_Spell.GetSpellCastCount(R88RLowB) == 0)")
+        .expect("empty metadata source skips the selector gate");
+    env.state().borrow_mut().spell_identifier_metadata_source = Some(0);
+    env.exec("assert(C_Spell.GetSpellCastCount(R88RLowB) == 0)")
+        .expect("zero metadata source skips the selector gate");
+    env.state().borrow_mut().spell_identifier_metadata_source = Some(1);
+    env.exec(R88R_SECRET_READER_OVERLAY)
+        .expect("R88r.r1 secret selector and maximum readers");
+}
+
+#[test]
+fn cast_count_consumers_preserve_ordinary_and_absent_inputs() {
+    let env = load_selected_consumers(
+        &["Blizzard_CooldownViewer"],
+        "CooldownViewerCooldownItemMixin.CacheChargeValues",
+        "Blizzard_CooldownViewer/CooldownViewer.lua",
+    );
+    seed_mask2_reagent(&env, 19_750, 31_001, 1, 1, &[(1, 7)]);
+    seed_mask2_reagent(&env, 642, 31_002, 1, 2, &[(1, 2)]);
+    env.exec(R88R_ORDINARY_CONSUMER_PRESERVATION).unwrap();
+}
+
+#[test]
+fn cast_count_aura_secret_selector_uses_cooldown_viewer_get_spell_id() {
+    let env = load_selected_consumers(
+        &["Blizzard_CooldownViewer"],
+        "CooldownViewerItemDataMixin.GetSpellID",
+        "Blizzard_CooldownViewer/CooldownViewerItemData.lua",
+    );
+    seed_secret_aura_spell_counts(&env);
+    env.exec(R88R_AURA_SECRET_SELECTOR_CONSUMER)
+        .expect("the original CooldownViewer must pass its secret aura spell IDs to cast counts");
+}
+
+#[test]
+fn cast_count_mask2_divides_candidate_counts_before_summing_in_cooldown_viewer() {
+    let env = load_selected_consumers(
+        &["Blizzard_CooldownViewer"],
+        "CooldownViewerCooldownItemMixin.CacheChargeValues",
+        "Blizzard_CooldownViewer/CooldownViewer.lua",
+    );
+    seed_mask2_reagent(&env, 19_750, 31_001, 3, 1, &[(2, 7), (-3, 11)]);
+    seed_mask2_reagent(&env, 642, 31_002, 4, 3, &[(-2, 5), (4, 15)]);
+    assert_mask2_cached_counts(&env, "{{19750, 5}, {642, 4}}");
+}
+
+#[test]
+fn cast_count_mask2_with_empty_candidates_keeps_sum_then_divide_in_cooldown_viewer() {
+    let env = load_selected_consumers(
+        &["Blizzard_CooldownViewer"],
+        "CooldownViewerCooldownItemMixin.CacheChargeValues",
+        "Blizzard_CooldownViewer/CooldownViewer.lua",
+    );
+    seed_mask2_reagent(&env, 19_750, 31_001, 3, 1, &[]);
+    add_bag_stack(&env, 1, 31_001, 7);
+    add_bag_stack(&env, 2, 31_001, 11);
+    assert_mask2_cached_counts(&env, "{{19750, 6}}");
+}
+
+#[test]
+fn cast_count_mask2_without_qualifying_property_keeps_sum_then_divide_in_cooldown_viewer() {
+    let env = load_selected_consumers(
+        &["Blizzard_CooldownViewer"],
+        "CooldownViewerCooldownItemMixin.CacheChargeValues",
+        "Blizzard_CooldownViewer/CooldownViewer.lua",
+    );
+    seed_mask2_reagent(&env, 19_750, 31_001, 3, 1, &[(1, 7), (-1, 11)]);
+    assert_mask2_cached_counts(&env, "{{19750, 6}}");
 }
 
 #[test]

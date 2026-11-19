@@ -1,7 +1,126 @@
+## [2026-11-18] correction | Retail SellPrice gates
+
+[Tooltip data](systems/lua-api.md#retail-sellprice-line-r88pp1) now records the R88aw request, instance-status, item-flag and preview rules. **INFERRED (simulator mapping):** generated catalog metadata drives known flags; explicit empty-default inputs remain only for bag status and calculated prices.
+
+## [2026-11-18] implementation | RegisterUnitEvent unit scan
+
+[Event system](systems/event-system.md#frame-registerunitevent-unit-scan-r88aj) links the [R88aj contract](../specs/register-unit-event-units.md): Mists boundary and original CastSequenceManager tests pass; native scan evidence is limited to Mists, Retail and Forever.
+
+## [2026-11-18] implementation | Retail role and friends settings
+
+The [social settings investigation](investigations/retail-social-settings.md) separates the verified R88ap.3–4 Boolean rules from inferred host type tags/settings bytes and unknown writers/events. Original UnitPopup and FriendsFrame consumers supply regression coverage.
+
+## [2026-11-18] implementation | Retail cinematic summary
+
+The [cinematic summary investigation](investigations/retail-cinematic-summary.md) separates the verified R88ap.1 ID lifecycle and nil/string contract from inferred host data and argument admission. The original MovieFrame dialog is the regression consumer.
+
+## [2026-11-18] implementation | Retail social-UI policy
+
+The [social-UI policy investigation](investigations/social-ui-policy.md) records the R88ap.6 one-Boolean contract, explicit empty-default host input, selected FriendsFrame consumer, and unknown writers/events. Other profiles retain their existing behavior.
+
+## [2026-11-17] system | Retail Guild faction group
+
+The [Guild faction group system page](systems/guild-faction-group.md) links the [contract](../specs/guild-faction-group.md). **VERIFIED (R88ap.2):** player-object absence returns zero values; otherwise race-linked faction flags follow 4→0, 2→1, 1→0, else -1, with no guild test. **VERIFIED (simulator source):** the raw per-race flag input is empty by default. **UNKNOWN:** raw Retail DB2 rows and native object-unavailable conditions. **INFERRED (DB2 export build 70448):** the contract records classification outputs as context only; the simulator does not seed them. **VERIFIED (Retail 12.1.5.70783 runtime):** the byte-identical GuildNews consumer test passes for Orc, Human, missing-row, and flag-order fixtures, while the constant-1 and faction-name overlays fail at its assertions.
+
+## [2026-11-18] investigation | Retail bag tracker fixture lifecycle
+
+The [panel fixture investigation](investigations/showuipanel-toggle-fixture-owners.md#retail-bag-tracker-lifecycle-lt-c0e6) records the missing per-addon completion event. Original TokenUI creates the bag tracker after `ADDON_LOADED`; assertions and vendor code remain unchanged.
+
+## [2026-11-17] verification | Mists Glue chat placeholder and movie flow
+
+The [Mists Glue intro movie login investigation](investigations/mists-glue-intro-movie-login.md) and [Glue login contract](../specs/glue-login-flow.md) record the synthetic `ChatFrame1` root cause and fix. **VERIFIED (Mists simulator source at `e9ec1c669`):** the loader already rejects both Game-only chat add-ons; a bootstrap placeholder caused the visible frame. **VERIFIED (Mists simulator at source `7158e98de`):** original login boot passes 1/1 with AccountLogin visible, edit-box focus passes 1/1, and `glue_login::mists_` passes 15/15, including the `(false, 2)` no-record result. **INFERRED (R88ar, 70631 applied to 70268):** the original Glue login has no ChatFrame1 from those Game-only add-ons.
+
+## [2026-11-17] investigation | Mists Glue intro movie login
+
+[Mists Glue intro movie login](investigations/mists-glue-intro-movie-login.md) records the selected 5.5.4.70268 GlueParent/MovieFrame path, R88ao native facts for 5.5.4.70631, the inferred no-record `(false, 2)` mapping, and the original-consumer RED.
+
+## [2026-11-17] verification | Retail PerformanceBar tooltip
+
+**VERIFIED (final source):** the original Retail 12.1.5.70783 tooltip test passes 1/1, both callable-wrong producer mutants fail at consumer assertions, and the PTR/Forever/Mists fallback tests pass 1/1 each. The five-profile all-targets no-run matrix has zero warnings; Wrath is compile-only. See the [query contract](../specs/performance-bar-queries.md) for hashes and UNKNOWNs.
+
+## [2026-11-17] system | Retail PerformanceBar network queries
+
+[PerformanceBar network queries](systems/performance-bar-queries.md) records the Retail 12.1.5 getters and preserved non-Retail fallbacks. **INFERRED (simulator mapping):** the typed endpoint input is empty by default. **INFERRED (70783 tooltip):** codes 1/2 display as TCP/UDP; live endpoint values remain UNKNOWN.
+
+## [2026-11-17] verification | Retail call-pet flyout results
+
+The [call-pet contract](../specs/call-pet-spell-info.md) and [Spellbook follow-ups](investigations/spellbook-r88m4-followups.md#retail-call-pet-flyout) record the original Retail ActionBar consumer and empty-default host inputs. **VERIFIED (Retail simulator):** named and unmapped spells stay visible, nameless entries hide, and the callable-wrong producer fails inside the consumer. **UNKNOWN:** same-build spell-ID rows and the runtime pet-info writer.
+
+## [2026-11-17] verification | Retail mask-2 original CooldownViewer consumer
+
+**VERIFIED (Retail 12.1.5.70783 simulator run):** the callable-wrong sum-then-divide RED failed at count 6 versus expected 5; the byte-identical original-consumer GREEN passed 3/3, including empty and ±1 candidate fallbacks. **UNKNOWN:** native property identity and decoding.
+
+## [2026-11-17] implementation | Retail mask-2 alternate reagent division
+
+**VERIFIED (Retail 12.1.5.70688, R88p.p3):** mask 2 selects per-item division only for qualifying signed values, then sums without a second division. The [spell-count investigation](investigations/spell-count-r88p.md) records the empty-default candidate seam; native property identity and decoding remain UNKNOWN.
+
+## [2026-11-17] verification | Mists GlueGameLogo current-mode consumer
+
+**VERIFIED (Mists 5.5.4.70268 simulator, target `0f35a8833`):** the original-GlueGameLogo test passes 1/1 with a one-nil default, numeric host input, and no-payload update. The runtime writer remains UNKNOWN.
+
+## [2026-11-17] implementation | Mists current-mode record from R88ak
+
+**VERIFIED (Mists Classic 5.5.4.70631):** the getter returns one numeric current-mode ID or one nil at -1. **UNKNOWN:** the runtime writer was not identified. **INFERRED (Mists 5.5.4.70268):** the selected GlueGameLogo consumer uses the CVar-backed simulator getter.
+
+## [2026-11-17] investigation | Master test fixture and profile triage
+
+Added the [investigation](investigations/master-test-fixture-triage.md). **VERIFIED (Retail 12.1.5.70783):** several exact master failures were incomplete original-consumer fixtures; **UNKNOWN (Mists 5.5.4.70268):** Glue game-mode return data remains pending R88ak.
+
+## [2026-11-17] investigation | Questie login coroutine bit library
+
+[Questie login coroutine bit library](investigations/questie-login-bit-library.md) records why Questie's Mists login thread (timer 12) spent about 98% of its sampled instructions in the simulator's Lua `bit` fallback, the native replacement with byte-identical results ([contract](../specs/bit-library.md)), the 13–22 s → 0.67–1.02 s timer-12 A/B, and the rilua taint costs left open.
+
+## [2026-11-17] investigation | TOC parsed once per UI session
+
+VERIFIED (source inventory, RED/GREEN, and Mists A/B): [Addon metadata lookup performance](investigations/addon-metadata-lookup-performance.md#repeated-toc-parsing-fixed-lt-498d) records the repeated parsing of the 57 MB QuestieDB TOC and its fix: a per-session TOC cache ([contract](../specs/toc-session-cache.md)) shared by discovery, enable state, registration, loading and the `C_AddOns` runtime. Mists Questie startup peak RSS drops by about 310 MiB.
+
+## [2026-11-17] system | Retail Glue host state (R88ad.7-10)
+
+[Retail Glue host state](systems/glue-host-state.md) records the saved-account CVars, connection snapshot, minimum-expansion writer, first-display state, login-background objects and Glue-audio request log behind the Retail R88ad producers, plus the profile scope of the retired bootstrap defaults.
+
+## [2026-11-17] investigation | Addon metadata lookup performance
+
+[Addon metadata lookup performance](investigations/addon-metadata-lookup-performance.md) records the per-call TOC key scan behind the Questie Mists startup timeout, the per-TOC case-insensitive index, preserved and changed duplicate-key semantics ([contract](../specs/addon-metadata-lookup.md)), same-host A/B timings, the +200 MiB peak RSS, and the repeated-TOC-parse hotspot left open.
+
+## [2026-11-16] revision | Retail StoreSecure consumer RED and notifications
+
+The [StoreSecure system page](systems/store-secure-catalog.md) and [RED proof record](investigations/consumer-selection-and-red-proof.md#retail-storesecure-callable-producer-red) record ColorMixin RGB construction, coalesced purchase updates, and seven callable wrong-producer RED cases through original Store consumers. **INFERRED:** the OnUpdate flush boundary is a simulator policy.
+
+## [2026-11-16] implementation | Retail StoreSecure catalog inputs
+
+[StoreSecure catalog contract](../specs/store-secure-catalog.md) and [system page](systems/store-secure-catalog.md) record the Retail 12.1.5.70688 R88ad.1/R88ad.2 catalog, availability, currency, list, and request behavior. **VERIFIED (simulator source):** Retail uses empty-default host inputs; Mists remains UNKNOWN and keeps its prior bootstrap path. **VERIFIED (pinned 12.1.5.70783 consumers):** StoreUI and CatalogShop remain the original read paths. The old seeded-group contract is historical and superseded.
+
+## [2026-11-17] fix | Retail flag-3 Lua closure taint
+
+[Taint system](systems/taint-system.md#dual-lua-environment) and the [load-phase contract](../specs/addon-load-phases.md#r88y-verified-secure-publication) record object-taint preservation on distinct Retail flag-3 Lua closure clones. **VERIFIED (simulator test at `f68ef3fbc`, 28/28):** stamped ordinary and secure calls return matching taint outcomes; unstamped calls stay secure. **VERIFIED (overlay RED):** without stamp copying, the secure-side call loses that taint; see the handoff report.
+
+## [2026-11-17] verification | Retail R88n.11b flag-3 function identity Evidence: pr46-49-decomp-answers.md, sections R88n.11b.
+
+[Taint system](systems/taint-system.md#dual-lua-environment) and the [load-phase contract](../specs/addon-load-phases.md#r88y-verified-secure-publication) record the 31 implemented namespace functions and 3 implemented `C_Texture` functions with distinct ordinary/secure objects; 14 unimplemented producers remain absent. **VERIFIED (simulator source at `0710907`):** Lua closure copies retain the prototype, captured upvalues, and function environment. **VERIFIED (simulator tests at `0710907`):** representative `C_ColorUtil.ConvertHSVToRGB` and `C_Texture.GetAtlasExists` results match across environments.
+
+## [2026-11-17] system | Secure environment profile scope (decision A)
+
+[Taint system](systems/taint-system.md#dual-lua-environment) and [add-on loading](systems/addon-loading.md) record that the strict 39-name secure environment, R88y publisher, secure-dependency pass, replay proxy and R88ag formatter apply only on Retail 12.1.5. Every other profile keeps master's `_G` snapshot, direct-secureenv replay, formatter and `GetFrameMetatable`; native publication there is UNKNOWN.
+
 ## [2026-11-16] investigation | Limited listfile reproducibility
 
 [Limited listfile reproducibility](investigations/limited-listfile-reproducibility.md) records the immutable source pin, effective input/output drift checks, unchanged 147,015-row artifact, and the unrecoverable historical PR33 rows and inferred input-drift cause.
 
+## [2026-11-16] system | Retail master Unit secure-environment route
+
+[Taint system](systems/taint-system.md#dual-lua-environment) and [add-on load-phase contract](../specs/addon-load-phases.md#r88ac-globalstrings-secure-publication) record the SOURCE-DERIVED 153-name simulator route and its UNKNOWN native publication boundary. **VERIFIED (master 725 control):** the prefork control passes and Retail Lua-errors returns `[]`; candidate consumer proof is pending.
+
+## [2026-11-15] correction | R88y flag-3 function identity Evidence: pr46-49-decomp-answers.md, sections R88y.
+
+[Taint system](systems/taint-system.md#dual-lua-environment) now distinguishes separate no-capture native C closures for verified flag-3 functions from shared function values in shallow-copied standard-library tables. Identity after later script replacement or deliberate aliasing remains UNVERIFIED.
+
+## [2026-11-15] system | Retail C_ColorOverrides R88y publication Evidence: pr46-49-decomp-answers.md, sections R88y.
+
+[Color overrides](systems/color-overrides.md) now records the six VERIFIED flag-3 rows and the generic simulator publication path. The old two-member test guarded the pre-R88y fallback period; the merged-head six-member runtime test remains pending.
+
+## [2026-11-15] system | Retail R88t dependencies and R88v source attribution Evidence: pr46-49-decomp-answers.md, sections R88t, R88v.
+
+[Addon load phases](../specs/addon-load-phases.md) records R88t request order and named publication plus R88v source attribution. The ordinary-request failure-independence clause is VERIFIED natively but untested; transitive copying remains UNKNOWN. **VERIFIED (simulator test at `adf8d25f9`):** the one-file AddSource consumer returns a saved `file:line`, preserves it after the exclusion list changes, and returns `UnknownFile` for a later texture from the excluded file. At that earlier handoff, the full C_ColorOverrides stateful model was deferred; the later R88y integration is recorded above. [Taint system](systems/taint-system.md#dual-lua-environment) records publication boundaries and current implementation.
 ## [2026-11-15] fix | Retail Blizzard UI cache provenance
 
 The [CASC asset cache](systems/casc-asset-cache.md#blizzard-ui-source-cache) and [CASC loading contract](../specs/casc-loading.md#pinned-blizzard-ui-source-cache) record exact Retail/PTR pin provenance checks, mismatch sync behavior, and unchanged selection for other profiles. **VERIFIED (source and synthetic temp-cache tests):** matching 70783 provenance is accepted; stale 70575 and missing provenance are rejected.
@@ -28,6 +147,14 @@ The [Round 7 getter contract](../specs/tooltip-r7-getters.md) and [Lua API](syst
 
 The [Round 7 getter contract](../specs/tooltip-r7-getters.md) and [Lua API](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) record R88z.z1. **VERIFIED (Retail 12.1.5.70688):** title, power, optional resilient level, modifier heading, and ordered affix-name rows, with their selectors, keys, colors, and quality field. **VERIFIED (simulator source):** a neutral empty-default host input supplies records and condition results; no native writer or catalog values are invented. **INFERRED:** rows append after common item lines and use the shared quality-color mapping; the native answer proves only relative keystone-row order. **VERIFIED (Retail integration test SHA `0b681a9c80e852303c60f30aa431344a8f88788c`):** eight exact-listed original-consumer cases passed at that earlier revision, including empty host input.
 
+## [2026-11-14] investigation | Retail secure tooltip color route
+
+[GlobalColor catalog](systems/global-color-catalog.md) and [taint system](systems/taint-system.md#dual-lua-environment) record the secure color path. **VERIFIED (merged simulator source at `a941395885655f56edfcc1f57cac3fa1f0c853c7`):** the generated catalog includes `TOOLTIP_DEFAULT_BACKGROUND_COLOR`, and `C_UIColor.GetColors` registers through the flag-3 namespace route. **VERIFIED (pre-merge simulator at `7f81a8853`):** the fallback-disabled PrivateAuras test was RED because the old temporary payload lacked this row. **UNVERIFIED at the merge SHA:** the fallback-disabled consumer test has not yet run against the merged catalog.
+
+## [2026-11-13] system | Secure environment and dependency replay
+
+[Taint system](systems/taint-system.md#dual-lua-environment) and [addon loading](systems/addon-loading.md#secure-dependency-replay-and-library-allowlist) record R88g/R88i and the fixed 39-name secure base. **VERIFIED (Retail simulator test, fallback cleared):** the original `TooltipDataProcessor`, `CopyTable`, and `GetFrameMetatable` reach secureenv; the next observed errors are `TextureUtil.lua:122` (`Constants` nil) and `PrivateAurasUI.lua:1398` (`TextureKitConstants` nil). R88i.1 verifies the native pair-list route for `GetFrameMetatable`; the Retail fallback remains until all cited consumers pass.
+
 ## [2026-11-15] revision | Recipe-rank cache and keystone tooltip boundaries
 
 [Round 7 getter contract](../specs/tooltip-r7-getters.md) and [Lua API](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) record R88n.4a cache insertion semantics and the modeled keystone selection/event/item-lookup path. **UNKNOWN:** whether recipe ranks use Azerite specialization wording; the exact question is recorded in the contract.
@@ -35,6 +162,8 @@ The [Round 7 getter contract](../specs/tooltip-r7-getters.md) and [Lua API](syst
 ## [2026-11-15] system | Retail C_ColorOverrides state
 
 **VERIFIED (R88v and revision-1 tests):** [Color overrides](systems/color-overrides.md) records the six-method Retail API, corrected original-consumer RED/GREEN, master secure-snapshot member set, and `playerColorOverrides` round-trip seams. **INFERRED:** the local GlobalColor projection, setting encoding, and event mapping. **UNKNOWN:** automatic save/load triggers and final storage.
+
+**VERIFIED (R88v and revision-1 tests):** [Color overrides](systems/color-overrides.md) records the six-method Retail API, corrected original-consumer RED/GREEN, and `playerColorOverrides` round-trip seams. **HISTORICAL (revision-1):** the secure member-set test covered two master snapshot names before R88y. **VERIFIED (R88y source at `5cd3cc29e`):** all six implemented members have VERIFIED flag-3 rows; current-head runtime proof is pending. **INFERRED:** the local GlobalColor projection, setting encoding, and event mapping. **UNKNOWN:** automatic save/load triggers and final storage. Evidence: pr46-49-decomp-answers.md, sections R88v, R88y.
 
 ## [2026-11-15] implementation | Retail Store Glue R88q
 
@@ -4478,13 +4607,14 @@ The sixteen retail 12.0.0 `Enum.EditModeDamageMeterSetting.*` and `Enum.EditMode
 | Page | Summary |
 |------|---------|
 | [[layout-system]] | AnchorPoint enum, single/multi-anchor resolution, coordinate systems, SetPoint, cycle detection, and Retail screen clamping with scaled frame insets and shared queued/synchronous resolution |
-| [[rendering-pipeline]] | QuadBatch (60-byte QuadVertex), five-tier RGBA GPU atlas plus glyph/BC1/BC3 bindings, WGSL shaders, mask resolution, presentation-only ScrollFrame geometry/clips with traversal-local offset reuse, strata/level sorting, monotonic top-level show segments, alpha propagation, hit testing, [bounded FontString smooth scaling](../specs/fontstring-smooth-scaling.md), inline `|T`/`|A` icons in text |
+| [[rendering-pipeline]] | QuadBatch (60-byte QuadVertex), five-tier RGBA GPU atlas plus glyph/BC1/BC3 bindings, WGSL shaders, mask resolution and inferred sliced-mask UV mapping, presentation-only ScrollFrame geometry/clips with traversal-local offset reuse, strata/level sorting, monotonic top-level show segments, alpha propagation, hit testing, [bounded FontString smooth scaling](../specs/fontstring-smooth-scaling.md), inline `|T`/`|A` icons in text |
 | [[widget-system]] | Frame struct (~140 fields), WidgetType enum (18 types), WidgetRegistry storage accounting, lazy boxed model-family state, verified bounded ColorSelect RGB/XML/unchanged-Retail-consumer proof, requested offsets, designated-child ownership, presentation-only ScrollFrame geometry, default children, button text rendering, three-slice pattern, and 3D no-op boundary |
 | [[simple-html]] | Frame-owned styles, shared block shaping/height/glyph hit regions, actual XML frame-name role application, and bounded original-consumer proof |
 | [[lua-api]] | WowLuaEnv, FrameHandle userdata, 300+ frame methods, model-family compatibility surface, texture fileDataID/path identity, C_* namespaces including the bounded C_ProfSpecs specialization fixture, timers, animation system |
 | [[event-system]] | EventQueue, 36+ script handler types, dispatch flow, OnUpdate tick, startup event sequence, XML script setup |
 | [[xml-template-system]] | XML parsing, template registry/inheritance, same-object engine-root reuse, inline scripts/events and bounded callback late-binding proof |
 | [[addon-loading]] | Native R13 screen dependency rules, R64 startup phases and `LoadManagers`, optional-before-required ordering, Retail/Forever `LoadWith` submission, Retail failure behavior, PTR eligibility unknown, mode-one unknowns, TOC parsing and Blizzard discovery, inline `[Bootstrap]` semantics, Lua diagnostics, secure replay, SavedVariables and startup sequence |
+| [[addon-loading]] | Native R13 screen dependency rules, R64 startup phases and `LoadManagers`, optional-before-required ordering, Retail/Forever `LoadWith` submission, Retail failure behavior, PTR eligibility unknown, mode-one unknowns, TOC parsing and Blizzard discovery, inline `[Bootstrap]` semantics, dependency secure replay and the separate shared-library allowlist, Lua diagnostics, SavedVariables and startup sequence |
 | [[addon-module-imports]] | Forever completed-module `require`; [import checkpoint](systems/addon-module-imports.md#forever-import-binding--2026-10-15): historical completed-table/missing-binding RED; current bounded binding/control execution observed, independent acceptance pending; reused simulator policy, native parity UNKNOWN |
 | [[server-snapshot-action-bars]] | Imports captured action bars and carried bags from local ServerSnapshot SavedVariables before Blizzard UI loading; source-matching 0.3.0 install, July 5 no-bag snapshot, final fixture-failure boundary, and pending fresh capture recorded |
 | [[client-profiles]] | Seven mutually-exclusive client profiles, including distinct Forever `16001` / `wow_classic_beta` / `wowforever` cache from source branch `forever`; `5e26960b6` routes its `[Family]` files to `Mainline` while retaining Camelot and annotation filters; [running report](../wowforever-1.60.1.md) separates the historical 422-record baseline from current proof |
@@ -4493,6 +4623,8 @@ The sixteen retail 12.0.0 `Enum.EditModeDamageMeterSetting.*` and `Enum.EditMode
 | [[texture-atlas]] | TextureManager (BLP/PNG/WebP), ~50K-entry compiled atlas database, five RGBA GPU tiers plus optional BC1/BC3 atlases, persistent live/shared-headless atlas contexts, nine-slice kit detection, UV remapping, recognized Button/CheckButton atlas-slot visibility propagation |
 | [[frame-data-flow]] | Parallel Lua/Rust systems, same-object engine-root XML configuration, addon-load ownership/cleanup, global tables (__frame_fields/__scripts), method lookup order, Mixin() application with early EditMode base aliases, event dispatch flow |
 | [[taint-system]] | Protected-frame gating, dual Lua environment (genv/secureenv), Elune-backed issecure/securecall, bounded per-environment click-binding interaction profile, Blizzard `issecure()` call-site matrix, SecureHandler fallback, state/attribute drivers |
+| [[taint-system]] | Protected-frame gating, fixed 39-name secure base plus the SOURCE-DERIVED 173-name Unit union across seven profiles (153 Retail compatibility copies), separate namespace registrars, Elune-backed issecure/securecall, bounded click-binding profile, SecureHandler fallback, and state/attribute drivers; strict model on Retail 12.1.5 only, master-equivalent `_G` snapshot on every other profile (decision A) |
+| [[color-overrides]] | Retail six-method C_ColorOverrides model, verified R88y flag-3 publication contract, explicit setting seams, and native/persistence evidence limits; merged-head secure member-set runtime proof pending |
 | [[casc-asset-cache]] | CASC cache layers, `.product.db` selected-product identity, measured timings, failure modes, and the 4,398-file Forever mapping/sync proof |
 | [[specialization-mastery-spells]] | Per-spec mastery spell IDs and class specialization ordering from ChrSpecialization.db2 |
 | [[duration-core]] | Lua table-proxy timing, three-formatter duration consumption, player cast/channel queries, manual clocks, Copy/Assign, curve evaluation, simulator policies and native/consumer bounds |
@@ -4526,6 +4658,7 @@ The sixteen retail 12.0.0 `Enum.EditModeDamageMeterSetting.*` and `Enum.EditMode
 | [[store-secure-pool-constructors]] | Retail Store blank/red cards came from `__secureenv.CreateFramePoolCollection` retaining the simulator fallback after `Blizzard_SharedXMLBase` replaced `_G` with Blizzard's proxy-backed constructor; secure replay of SharedXMLBase Lua now populates secureenv directly |
 | [[lua-owned-fallback-retirement]] | Inventory O: original utility, chat, journal, panel and startup-navigation ownership; bootstrap retirement and explicit native/deferred boundaries |
 | [[post-load-workaround-audit]] | Retail post-load workaround audit: duplicate loader hooks retired, remaining hooks classified with temporary rationale and retirement paths |
+| [[post-load-workaround-audit]] | VERIFIED: Retail post-load workaround audit retires duplicate hooks and traces the R88y `string.split` alias overwrite to a later formatting fallback |
 | [[action-button-icon-mask]] | Action-bar and active SpellBook icons vanish when black-RGB opaque masks are sampled as RGB; renderer now uses alpha for all mask coverage, proved with action-style, SpellBook, and CircleMask pixels |
 | [[action-bar-spell-icons]] | 4 bugs: SetDrawLayer no-op, draw order, sublevel ignored, textureSubLevel not parsed |
 | [[journeys-renown-card-text-anchor]] | Journeys renown card text invisible because a Layers region's `relativeKey="$parent.IconFrame"` anchor fell back to the parent (child Frames created after Layers); SetPoint now stores unresolved $parent keys for the finalize pass to resolve |
@@ -4540,6 +4673,7 @@ The sixteen retail 12.0.0 `Enum.EditModeDamageMeterSetting.*` and `Enum.EditMode
 | [[mount-journal-click-selection]] | Mount Journal mouse clicks never switched selection: the startup-XML fast path fused multi-arg `RegisterForClicks("LeftButtonUp", "RightButtonUp")` into one garbage registration string; `Button:Click()` bypasses registration so only the real GUI dispatch path (`headless-click-probe mounts`) could see it |
 | [[micro-menu-click-offset]] | Micro menu (LFD etc.) clicks dead: MicroMenu's quadrant-dependent anchor was computed before EditMode anchors and the real window size were applied, so the first press snapped the bar one QueueStatusButton slot and the down/up frames mismatched; fixed by replaying `InvokeOnAnyEditModeSystemAnchorChanged` after anchor apply and on `set_screen_size` |
 | [[mists-elvui-startup-compat]] | Mists ElvUI startup errors came from separate simulator surface gaps: trim aliases, MessageFrame-only methods visible on plain frames, AuraUtil tuple shape, unanchored Slider label fontstrings, physical-vs-UI screen-size globals, and chat hook globals |
+| [[mists-glue-intro-movie-login]] | **VERIFIED (Mists 5.5.4.70268 cache and simulator RED):** the selected first-display cinematic opens full-screen MovieFrame; MovieFrame OnShow reaches unpublished HideCursor, leaving AccountLogin hidden and its edit boxes unclickable |
 | [[mists-addon-panel-resume-error]] | Mists addon-panel matrix must resume from first unproven addon; rerunning passed rows from `AllTheThings` was the mistake, and `--start-at` / `.passed` markers guard against repeating it |
 | [[mists-heirloom-tooltip]] | Mists Collections heirloom buttons need `GameTooltip:SetHeirloomByItemID`, routed through `C_TooltipInfo.GetHeirloomByItemID`, so heirloom tooltip initialization does not throw |
 | [[mists-syndicator-baganator-startup]] | Mists full-profile startup errors in Syndicator and Baganator came from Classic/Mists item taxonomy labels plus TokenUI loading before a minimal CharacterFrame parent existed |
@@ -4563,6 +4697,8 @@ The sixteen retail 12.0.0 `Enum.EditModeDamageMeterSetting.*` and `Enum.EditMode
 | [[backpack-background-texture]] | Static Gethe XML explains the flat panel body but not current source completeness; exact 69977 `bagsitemslot2xc60` was MD5-verified and cached, while release-fixture GUI evidence reports a ready 16-slot Backpack but leaves five `Not found` texture paths under investigation |
 | [[talent-performance]] | Lazy `_G` lookup (431ms→263ms), rect-dirty stale cache causing infinite OnUpdate loop, shallow `issecretvalue` for pool releases (2159ms→2.6ms) |
 | [[character-select-performance]] | Lazy atlas crop stalls (fixed), first-resize relayout deduplication (partial) |
+| [[addon-metadata-lookup-performance]] | `GetAddOnMetadata` scanned every TOC key per call (QuestieDB Mists: 408,495); per-TOC case-insensitive index cuts reads from 892–2,408 µs to 0.47–1.62 µs and lets Mists startup with Questie complete; case-variant duplicates now resolve to the last line |
+| [[questie-login-bit-library]] | Questie's Mists login coroutine spent ~98% of sampled instructions in the Lua `bit` fallback (≥624,656 `bit.band` calls); native `bit` with byte-identical results cuts timer 12 from 13–22 s to 0.67–1.02 s |
 | [[class-talents-artifact]] | Gold blob ruled out as lossy WebP encoding artifact, not a live render bug |
 | [[class-talents-edge-lines]] | Class-talent connector lines disappeared because `IsRectValid()` did not resolve dirty anchored buttons and endpoint-positioned Line widgets under anchorless edge frames were filtered before quad emission |
 | [[class-talents-edge-frame-levels]] | Class-talent connector edges were rendering above node icons; edge-frame-level workaround now patches both mixin + live frame and re-levels active edges |
@@ -4632,6 +4768,7 @@ The sixteen retail 12.0.0 `Enum.EditModeDamageMeterSetting.*` and `Enum.EditMode
 | [[three-slice-button-tiling]] | Escape menu stripes began with inactive `HighlightTexture` children; `204f52235` additionally repairs early culling that contradicted late locked-slot allowance, with shared registry/live-hover deduplication and hidden-ancestor suppression |
 | [[dialog-background-dxt3-stripes]] | Escape-menu dialog background stripes came from treating DXT3 BLPs as BC3 on the raw compressed upload path; DXT3 now falls back to RGBA until BC2 atlas support exists |
 | [[addon-startup-settings-and-item-load]] | Addon startup failures can share roots in Settings canvas visibility, secure attribute delegate taint boundaries, and synthetic C_Item item-load behavior |
+| [[master-test-fixture-triage]] | **VERIFIED (Retail 12.1.5.70783):** panel/AddOnList/SecureTypes fixtures; **VERIFIED (R88ak, Mists 5.5.4.70631):** getter contract; **INFERRED (Mists 5.5.4.70268):** CVar-backed consumer wiring; runtime writer UNKNOWN. |
 - The bounded 12.0.0 simulator-compatibility slice classifies exactly seven removed globals `FindBaseSpellByID`, `FindFlyoutSlotBySpellID`, `FindSpellOverrideByID`, `GetBattlegroundInfo`, `PlaySound`, `SetPortraitToTexture`, and `strtrim` as best-effort/compat using the focused `patch-tests/patch_12_1/legacy_compat.rs::simulator_legacy_compat_globals_preserve_tested_behavior` proof at `abba2bd2a`; the claim is limited to tested wrapper forwarding, seeded battleground/unknown-ID behavior, numeric sound acceptance without audio fidelity, portrait masking, and default/custom trimming. SpellGetVisibilityInfo and the other unresolved simulator-published legacy globals remain open.
 
 The five retail 12.0.0 `Enum.EditModePersonalResourceDisplaySetting.*` and `Enum.EditModePersonalResourceDisplaySettingMeta.*` rows are best-effort/behavioral, bounded to startup exact namespace publication, Lua numeric type, and exact values (`HideHealthAndPower=0`, `OnlyShowInCombat=1`; metadata `MinValue=0`, `MaxValue=1`, `NumValues=2`). Focused proof is at `d302a414f6392978a1ccec9997cedf14345907bc`. Root cause: shared runtime used a later fifteen-member namespace with different names (`HideHealth`, `DeprecatedOnlyShowInCombat`, etc.) and metadata `0/14/15`; retail 12.0.0 epoch initialization replaces it with the exact two-member namespace and metadata `0/1/2`. Display behavior, persistence, consumers, transitions, and lifecycle remain unclaimed.
@@ -5021,3 +5158,7 @@ and choice-order boundaries. See the [spec](../specs/character-creation-submit.m
 - 2026-11-13: [Retail TransmogUtil location ownership](investigations/consumer-selection-and-red-proof.md#retail-transmogutil-location-ownership): original startup-cache/consumer preservation; best-item helper and native slot provenance remain separate.
 
 - 2026-11-13: [Retail container parentArray ownership](investigations/consumer-selection-and-red-proof.md#retail-container-parentarray-ownership): original six XML bags and repeated real enumerator membership preserve Retail-only scaffold removal.
+
+## [2026-11-17] system | Retail StoreSecure VAS
+
+The [VAS system page](systems/store-secure-vas.md) records the empty-default Retail VAS model, typed request state, response ordering, and original StoreUI/GlueXML call sites. **VERIFIED (R88al and tests):** `GetBnetTransferInfo` has a two-value result contract and reaches the original transfer purchase consumer. **UNKNOWN:** the initial native snapshot and context-dependent secret marking.

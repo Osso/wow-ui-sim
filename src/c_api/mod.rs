@@ -14,6 +14,8 @@ pub(crate) mod c_tooltip_info_artifact_power;
 pub(crate) mod c_tooltip_info_azerite_essence;
 pub(crate) mod c_tooltip_info_azerite_power;
 pub(crate) mod c_tooltip_info_bag_child;
+#[cfg(feature = "client-retail")]
+pub(crate) mod c_tooltip_info_battle_pet;
 pub(crate) mod c_tooltip_info_conduit;
 pub mod c_tooltip_info_currency;
 pub(crate) mod c_tooltip_info_enhanced_conduit;
@@ -25,6 +27,8 @@ pub(crate) mod c_tooltip_info_loot;
 #[cfg(any(feature = "retail-12-1-5", feature = "client-wowforever"))]
 pub(crate) mod c_tooltip_info_merchant_cost;
 pub(crate) mod experience_preset;
+#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+pub mod performance_bar;
 pub(crate) mod tooltip_azerite_catalog_data;
 #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 pub(crate) mod tooltip_info_retail_epoch_and_forever;
@@ -34,6 +38,8 @@ pub(crate) mod c_tooltip_info_possession;
 #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 pub(crate) mod c_tooltip_info_pvp_brawl;
 pub(crate) mod c_tooltip_info_round7;
+#[cfg(feature = "client-retail")]
+pub use c_tooltip_info_battle_pet::BattlePetTooltipSnapshot;
 pub use c_tooltip_info_round7::{
     ItemInteractionTooltipInput, ItemInteractionTooltipLine, SlottedKeystoneKeyFloor,
     SlottedKeystoneTooltipInput,
@@ -267,6 +273,10 @@ pub(crate) mod c_player_info_name_policy;
 pub mod c_player_interaction_manager;
 #[cfg(feature = "retail-12-0-0")]
 pub mod c_prey;
+#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+pub(crate) mod c_prof_specs_get_children_for_path;
+#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+pub(crate) mod c_prof_specs_path_queries;
 pub(crate) mod c_prof_specs_reminders;
 pub(crate) mod c_prof_specs_tab_state;
 pub mod c_pvp;
@@ -314,6 +324,8 @@ pub mod c_secrets;
 pub mod c_settings_util;
 pub mod c_social;
 mod c_social_restrictions;
+#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+mod c_social_ui;
 pub mod c_sound;
 pub mod c_spec;
 mod c_spectating_ui;
@@ -328,6 +340,8 @@ pub mod c_spell_diminish;
 pub mod c_stable_info;
 pub mod c_store_glue;
 mod c_store_secure;
+mod c_store_secure_catalog;
+mod c_store_secure_vas;
 pub mod c_string_util;
 mod c_string_util_decimal;
 pub mod c_summon_info;
@@ -352,11 +366,17 @@ pub(crate) mod c_trade_skill_first_craft;
 pub mod c_trade_skill_quality;
 mod c_trade_skill_source;
 #[cfg(feature = "client-mists")]
+pub(crate) mod mists_r88ah;
+#[cfg(feature = "client-mists")]
+pub(crate) mod mists_r88ai;
+#[cfg(feature = "client-mists")]
 pub(crate) mod mists_reputation_list;
 #[cfg(any(feature = "retail-12-1-5", feature = "client-wowforever"))]
 pub mod spell_reagent_inventory;
+pub mod store_catalog_model;
 pub mod store_glue_model;
 pub mod store_guid;
+pub mod store_vas_model;
 // The pinned classic TransmogItemsDocumentation.lua / TransmogOutfitInfoDocumentation.lua
 // declare these namespaces on Mists, Era and Anniversary, so the backing model
 // is compiled for those profiles together with the retail API epochs.
@@ -495,6 +515,7 @@ pub use c_ping_texture_kits::PingTextureKits;
 mod c_cvar_readiness;
 pub mod c_loss_of_control;
 mod combat_audio_enabled;
+pub(crate) mod combat_audio_spec_setting_enum;
 #[cfg(not(feature = "client-wrath"))]
 mod combat_audio_throttle;
 #[cfg(feature = "client-mists")]
@@ -544,7 +565,14 @@ mod voice_provider_enum;
 
 pub(crate) mod c_tts_settings;
 mod helpers;
+mod secure_publication;
+mod secure_publication_data;
 pub(crate) use helpers::parse_numeric_string;
+#[cfg(feature = "client-retail")]
+pub(crate) use helpers::{
+    bad_argument, read_untainted_signed32_argument, read_untainted_string_argument,
+    read_untainted_truthy_argument, read_untainted_value,
+};
 #[cfg(feature = "retail-12-0-0")]
 mod patch_retired_members;
 #[cfg(feature = "retail-12-0-0")]
@@ -554,14 +582,25 @@ pub(crate) use patch_retired_members::mark_retail_table_util_retirement;
 mod registration;
 pub(crate) mod restricted_actions;
 
+#[cfg(feature = "aura-instance-enumeration")]
+pub(crate) use helpers::ensure_paired_table_field;
 pub(crate) use helpers::{
-    ensure_global_table, ensure_namespace, global_val, mark_namespace_keys_removed, set_global_val,
+    ensure_enum_table, ensure_global_table, ensure_namespace, ensure_namespace_table_field,
+    ensure_secure_namespace, global_val, mark_namespace_keys_removed,
+    register_namespace_function_with_flags, register_namespace_value_with_flags,
+    register_namespace_values_with_flags, register_unknown_namespace_function, set_global_val,
+    set_namespace_member,
 };
 pub use permanent_shims::c_map_api;
 pub(crate) use registration::{
     register_character_progression_tables, register_interaction_tables, register_item_power_tables,
     register_map_environment_tables, register_map_prefix_tables, register_nameplate_tables,
     register_spell_and_widget_tables,
+};
+pub(crate) use secure_publication::{
+    prepare_verified_string_library_copy, publish_verified_secure_namespace_members,
+    register_global_function_from_r88y, register_global_function_if_missing_from_r88y,
+    register_namespace_function_from_r88y, verified_r88y_flag,
 };
 
 use rilua::LuaResult;
@@ -583,6 +622,8 @@ pub(crate) fn register_utility_bootstrap_tables(state: &mut LuaState) -> LuaResu
     c_cvar_info::register(state)?;
     c_engraving::register(state)?;
     c_social_restrictions::register(state)?;
+    #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+    c_social_ui::register(state)?;
     restricted_actions::register(state)?;
     c_loot_history::register_c_loot_history(state)?;
     c_date_and_time::register(state)?;

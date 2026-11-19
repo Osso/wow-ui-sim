@@ -1,6 +1,7 @@
 //! Standalone drag helper functions for mouse event handling.
 
 use crate::widget::AnchorPoint;
+use crate::widget::clamp_geometry::{COORDINATE_ROOT, uses_retail_clamp_producers};
 
 pub(super) fn frame_motion_scripts_allowed(frame: &crate::widget::Frame) -> bool {
     frame_enabled(frame) || frame.motion_scripts_while_disabled
@@ -32,15 +33,10 @@ pub(super) fn moving_drag_anchor_update(
 
     let rect = frame.layout_rect?;
     let scale = frame.effective_scale.max(1e-6);
-    let parent_id = frame.parent_id;
-    let (parent_x, parent_y) = parent_id
-        .and_then(|id| state.widgets.get(id).and_then(|parent| parent.layout_rect))
-        .map(|rect| (rect.x, rect.y))
-        .unwrap_or((0.0, 0.0));
-
+    let (parent_id, parent_x, parent_y) = moving_drag_origin(state, frame);
     let mut new_left = rect.x + dx;
     let mut new_top = rect.y + dy;
-    if frame.clamped_to_screen {
+    if frame.effective_screen_clamp() {
         new_left = clamp_axis_to_viewport(new_left, rect.width, screen_width);
         new_top = clamp_axis_to_viewport(new_top, rect.height, screen_height);
     }
@@ -49,6 +45,22 @@ pub(super) fn moving_drag_anchor_update(
         (new_left - parent_x) / scale,
         -(new_top - parent_y) / scale,
     ))
+}
+
+fn moving_drag_origin(
+    state: &crate::lua_api::SimState,
+    frame: &crate::widget::Frame,
+) -> (Option<u64>, f32, f32) {
+    let parent_id = if uses_retail_clamp_producers() {
+        Some(COORDINATE_ROOT as u64)
+    } else {
+        frame.parent_id
+    };
+    let (parent_x, parent_y) = parent_id
+        .and_then(|id| state.widgets.get(id).and_then(|parent| parent.layout_rect))
+        .map(|rect| (rect.x, rect.y))
+        .unwrap_or((0.0, 0.0));
+    (parent_id, parent_x, parent_y)
 }
 
 pub(super) fn active_motion_drag_frame(
@@ -83,11 +95,28 @@ pub(super) fn reanchor_moving_drag_frame(
     x_offset: f32,
     y_offset: f32,
 ) {
-    state.widgets.remove_all_anchor_dependents_for(drag_id);
-    if let Some(parent_id) = parent_id {
-        state.widgets.add_anchor_dependent(parent_id, drag_id);
+    if !uses_retail_clamp_producers() {
+        state.widgets.remove_all_anchor_dependents_for(drag_id);
+        if let Some(parent_id) = parent_id {
+            state.widgets.add_anchor_dependent(parent_id, drag_id);
+        }
     }
+    set_moving_drag_frame_anchor(state, drag_id, parent_id, x_offset, y_offset);
+    if uses_retail_clamp_producers() {
+        state
+            .widgets
+            .resolve_named_anchor_targets_for_frame(drag_id);
+    }
+    state.widgets.mark_rect_dirty(drag_id);
+}
 
+fn set_moving_drag_frame_anchor(
+    state: &mut crate::lua_api::SimState,
+    drag_id: u64,
+    parent_id: Option<u64>,
+    x_offset: f32,
+    y_offset: f32,
+) {
     if let Some(frame) = state.widgets.get_mut_visual(drag_id) {
         frame.clear_all_points();
         frame.set_point(
@@ -98,7 +127,6 @@ pub(super) fn reanchor_moving_drag_frame(
             y_offset,
         );
     }
-    state.widgets.mark_rect_dirty(drag_id);
 }
 
 /// Calculate new size for a frame being resized via StartSizing.

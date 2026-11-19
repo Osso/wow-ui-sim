@@ -9,6 +9,7 @@ pub mod action_bar_state;
 pub mod action_highlights;
 pub(crate) mod ambiguate;
 pub(crate) mod bank_reagents;
+pub(crate) mod bit_library;
 #[cfg(feature = "client-retail")]
 pub(crate) mod bnet_friend_index;
 #[cfg(feature = "retail-12-0-5")]
@@ -57,6 +58,7 @@ pub(crate) mod glue_save_character_order;
 pub(crate) mod glue_select_character;
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub(crate) mod glue_selection;
+pub mod glue_state;
 pub mod glyph_state;
 pub mod gossip_probes;
 pub(crate) mod group_role_counts;
@@ -100,6 +102,9 @@ pub mod merchant_item_link;
 #[cfg(feature = "client-wowforever")]
 pub mod merchant_repair;
 mod merchant_requirements;
+#[cfg(feature = "client-mists")]
+pub(crate) mod mists_cinematic;
+pub(crate) mod mixins;
 pub mod modifier_keys;
 pub mod mouse_probes;
 #[cfg(feature = "client-wowforever")]
@@ -142,6 +147,7 @@ pub mod session_exit;
 pub mod shapeshift;
 #[cfg(feature = "retail-12-0-7")]
 pub mod simulate_mouse;
+pub(crate) mod source_location;
 pub mod specialization_helpers;
 pub mod specialization_legacy;
 #[cfg(feature = "client-retail")]
@@ -222,3 +228,9 @@ pub mod xp_honor_rest;
 pub mod wrath_currency;
 
 pub mod inventory_candidates;
+
+#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+pub(crate) mod cinematic_summary;
+
+#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+pub(crate) mod set_role_button;

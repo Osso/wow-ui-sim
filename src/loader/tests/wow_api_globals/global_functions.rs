@@ -107,20 +107,22 @@ fn test_patch_12_1_global_security_helpers() {
 
 #[cfg(feature = "retail-12-1-0")]
 #[test]
-fn test_patch_12_1_load_addon_with_error_handling_delegates_to_uiparent() {
+fn test_patch_12_1_load_addon_with_error_handling_uses_vendor_owner() {
     let env = WowLuaEnv::new().unwrap();
+    let root = crate::paths::default_blizzard_ui_addons_path().unwrap();
+    let source = std::fs::read_to_string(root.join("Blizzard_SharedXML/AddOnUtil.lua")).unwrap();
+    // PRESERVATION: execute the original owner, not the retired PTR wrapper.
+    env.exec(&source).unwrap();
+    env.exec(
+        r#"
+        C_AddOns.LoadAddOn = function(name) return "loaded:" .. name end
+        UIParentLoadAddOn = function() error("retired wrapper called") end
+    "#,
+    )
+    .unwrap();
     let result: String = env
-        .eval(
-            r#"
-            local original = UIParentLoadAddOn
-            UIParentLoadAddOn = function(name) return "loaded:" .. name end
-            local value = LoadAddOnWithErrorHandling("Blizzard_EditMode")
-            UIParentLoadAddOn = original
-            return value
-            "#,
-        )
+        .eval("return LoadAddOnWithErrorHandling('Blizzard_EditMode')")
         .unwrap();
-
     assert_eq!(result, "loaded:Blizzard_EditMode");
 }
 

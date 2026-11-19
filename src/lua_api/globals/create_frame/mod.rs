@@ -40,6 +40,51 @@ pub fn create_frame(state: &mut LuaState) -> LuaResult<u32> {
     create_frame_from_args(state, args)
 }
 
+/// Retail native `GetFrameMetatable` handler. R88i.1 VERIFIES only its Evidence: pr46-49-decomp-answers.md, sections R88i.1.
+/// registration route (pair list, ordinary and secure tables). INFERRED: a
+/// missing argument creates a default frame when `CreateFrame` exists, then
+/// returns `getmetatable(frame)`; native argument and return semantics are UNKNOWN.
+fn get_frame_metatable(state: &mut LuaState) -> LuaResult<u32> {
+    let has_argument = state.top > state.base;
+    let argument = if has_argument {
+        stack_val(state, 1)
+    } else {
+        Val::Nil
+    };
+    let frame = match argument {
+        Val::Nil => create_default_frame(state)?,
+        frame => frame,
+    };
+    let metatable = match frame {
+        Val::Nil | Val::Bool(false) => Val::Nil,
+        frame => read_global_metatable(state, frame)?,
+    };
+    state.push(metatable);
+    Ok(1)
+}
+
+/// `CreateFrame("Frame")` through the current global, or nil when it is absent.
+fn create_default_frame(state: &mut LuaState) -> LuaResult<Val> {
+    let global = Val::Table(state.global);
+    let create = crate::lua_api::methods::table_get(state, global, "CreateFrame");
+    if matches!(create, Val::Nil) {
+        return Ok(Val::Nil);
+    }
+    let frame_type = crate::lua_api::methods::create_string(state, "Frame");
+    crate::lua_api::methods::call_function_state(state, create, &[frame_type])
+}
+
+/// Call the current global `getmetatable`, mapping a false result to nil.
+fn read_global_metatable(state: &mut LuaState, frame: Val) -> LuaResult<Val> {
+    let global = Val::Table(state.global);
+    let getmetatable = crate::lua_api::methods::table_get(state, global, "getmetatable");
+    let metatable = crate::lua_api::methods::call_function_state(state, getmetatable, &[frame])?;
+    Ok(match metatable {
+        Val::Bool(false) => Val::Nil,
+        metatable => metatable,
+    })
+}
+
 fn create_frame_from_args(state: &mut LuaState, mut args: CreateFrameArgs) -> LuaResult<u32> {
     ensure_untainted_creation_allowed(state, &args.frame_type)?;
     let (parent_id, parent_explicit) =
@@ -52,11 +97,7 @@ fn create_frame_from_args(state: &mut LuaState, mut args: CreateFrameArgs) -> Lu
     args.name = resolve_frame_name(state, args.name.take(), parent_id, parent_explicit)?;
     let fire_on_load = borrow_state(state)?.suppress_runtime_on_load_depth == 0;
     let frame_id = register_runtime_frame(state, args, parent_id, parent_explicit)?;
-    clear_xml_creation_context(state)?;
-    if let Some(flags) = initial_flags {
-        flags.apply(state, frame_id)?;
-    }
-    apply_runtime_frame_templates(
+    initialize_runtime_frame(
         state,
         frame_id,
         runtime_inherits.as_deref(),
@@ -64,9 +105,6 @@ fn create_frame_from_args(state: &mut LuaState, mut args: CreateFrameArgs) -> Lu
         template_initializer,
         initial_flags,
     )?;
-    if initial_flags.is_some() {
-        fire_options_initial_on_show(state, frame_id)?;
-    }
     let frame_val = frame_ref(state, frame_id)?;
     #[cfg(feature = "forbidden-aspects")]
     let frame_val = crate::lua_api::script_object_transfer::project_created_frame(
@@ -196,6 +234,32 @@ fn apply_runtime_frame_templates(
         initial_flags,
     )?;
     replay_runtime_template_parent_links(state, frame_id, runtime_inherits)
+}
+
+fn initialize_runtime_frame(
+    state: &mut LuaState,
+    frame_id: u64,
+    runtime_inherits: Option<&str>,
+    fire_on_load: bool,
+    template_initializer: Val,
+    initial_flags: Option<InitialFrameFlags>,
+) -> LuaResult<()> {
+    clear_xml_creation_context(state)?;
+    if let Some(flags) = initial_flags {
+        flags.apply(state, frame_id)?;
+    }
+    apply_runtime_frame_templates(
+        state,
+        frame_id,
+        runtime_inherits,
+        fire_on_load,
+        template_initializer,
+        initial_flags,
+    )?;
+    if initial_flags.is_some() {
+        fire_options_initial_on_show(state, frame_id)?;
+    }
+    Ok(())
 }
 
 fn parse_create_frame_args(state: &mut LuaState) -> LuaResult<CreateFrameArgs> {
@@ -342,7 +406,28 @@ pub fn register_global_frames(lua: &mut rilua::Lua) -> LuaResult<()> {
     };
     for (id, name) in named_frames {
         let frame_val = frame_ref(state, id)?;
-        set_global_raw(state, &name, frame_val);
+        if name == "UIParent" && crate::client_profile::is_active_retail_12_1_5() {
+            publish_retail_ui_parent_name(state, frame_val)?;
+        } else {
+            set_global_raw(state, &name, frame_val);
+        }
+    }
+    Ok(())
+}
+
+/// Publish the Retail bootstrap UIParent name through the secure named-frame route.
+/// R88t verifies creation-policy flag 32, same-object publication, and preservation of existing names. Evidence: pr46-49-decomp-answers.md, sections R88t.
+fn publish_retail_ui_parent_name(state: &mut LuaState, frame: Val) -> LuaResult<()> {
+    let global = Val::Table(state.global);
+    if crate::lua_api::methods::table_get(state, global, "UIParent").is_nil() {
+        set_global_raw(state, "UIParent", frame.clone());
+    }
+
+    let Val::Table(secureenv) = crate::lua_api::methods::registry_get(state, "__secureenv") else {
+        return Ok(());
+    };
+    if crate::lua_api::methods::table_get(state, Val::Table(secureenv), "UIParent").is_nil() {
+        crate::lua_api::globals::security::set_secure_env_key_state(state, "UIParent", frame)?;
     }
     Ok(())
 }
@@ -355,21 +440,42 @@ pub fn register_global_frames(lua: &mut rilua::Lua) -> LuaResult<()> {
 /// onto the rilua Lua state.
 pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
     super::loader_script_bindings::register_all(lua)?;
-    LuaApiMut::register_function(lua, "CreateFrame", create_frame)?;
+    register_frame_creation_globals(lua)?;
+    register_global_frame_queries(lua)?;
+    register_dropdown_globals(lua)
+}
+
+fn register_frame_creation_globals(lua: &mut rilua::Lua) -> LuaResult<()> {
+    // UNKNOWN (R88k.7): retained secure allowlist entry; native flags are not established. Evidence: pr46-49-decomp-answers.md, sections R88k.7.
+    super::security::register_unknown_allowlist_function(lua, "CreateFrame", create_frame)?;
+    if crate::client_profile::is_active_retail_12_1_5() {
+        // VERIFIED (R88i.1, R88k.7): Retail native pair-list registration has no per-name flag. Evidence: pr46-49-decomp-answers.md, sections R88i.1, R88k.7.
+        super::security::register_pair_list_function(
+            lua,
+            "GetFrameMetatable",
+            get_frame_metatable,
+        )?;
+    }
+    // Other profiles keep master's Lua helper from shared_bootstrap.lua (UNKNOWN natively).
     #[cfg(feature = "retail-12-1-5")]
     LuaApiMut::register_function(
         lua,
         "CreateFrameWithOptions",
         options::create_frame_with_options,
     )?;
-    LuaApiMut::register_function(lua, "CreateWindow", simple_window::create_window)?;
+    LuaApiMut::register_function(lua, "CreateWindow", simple_window::create_window)
+}
+
+fn register_global_frame_queries(lua: &mut rilua::Lua) -> LuaResult<()> {
     LuaApiMut::register_function(lua, "EnumerateFrames", enumerate_frames)?;
-    register_global_frames(lua)?;
+    register_global_frames(lua)
+}
+
+fn register_dropdown_globals(lua: &mut rilua::Lua) -> LuaResult<()> {
     dropdown_api::register_dropdown_constants(lua)?;
     dropdown_api::register_dropdown_mutators(lua)?;
     dropdown_api::register_dropdown_selections(lua)?;
-    dropdown_api::register_dropdown_queries(lua)?;
-    Ok(())
+    dropdown_api::register_dropdown_queries(lua)
 }
 
 // ---------------------------------------------------------------------------

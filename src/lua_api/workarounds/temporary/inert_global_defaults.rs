@@ -55,11 +55,6 @@ C_SocialRestrictions = C_SocialRestrictions or __wow_namespace()
 if rawget(C_SocialRestrictions, "IsChatDisabled") == nil then
     function C_SocialRestrictions.IsChatDisabled() return false end
 end
-if type(GetBuildInfo) == "function" and select(4, GetBuildInfo()) >= 120100 then
-    if rawget(C_SocialRestrictions, "IsFriendsDisabled") == nil then
-        function C_SocialRestrictions.IsFriendsDisabled() return false end
-    end
-end
 C_Commentator = C_Commentator or __wow_namespace()
 if rawget(C_Commentator, "IsSpectating") == nil then
     function C_Commentator.IsSpectating() return false end
@@ -68,12 +63,6 @@ if rawget(C_Commentator, "SendAddonMessage") == nil then
     function C_Commentator.SendAddonMessage(_prefix, _message, _channel)
         return Enum and Enum.SendAddonMessageResult and Enum.SendAddonMessageResult.Success or 0
     end
-end
--- No cinematic ever plays (InCinematic is a false stub), so there is no summary;
--- the documented result is a non-nil string. Replace with cinematic playback state.
-if type(GetBuildInfo) == "function" and select(4, GetBuildInfo()) >= 120005
-        and GetCurrentCinematicSummary == nil then
-    function GetCurrentCinematicSummary() return "" end
 end
 -- 12.0.5 logged variant; mirrors SendAddonMessage until commentator comms are modeled.
 if type(GetBuildInfo) == "function" and select(4, GetBuildInfo()) >= 120005
@@ -141,11 +130,6 @@ if WorldLootObjectExists == nil then
         return false
     end
 end
-if CanShowSetRoleButton == nil then
-    function CanShowSetRoleButton()
-        return false
-    end
-end
 
 if GetActiveLootRollIDs == nil then
     function GetActiveLootRollIDs()
@@ -164,11 +148,6 @@ if GetNumArenaOpponentSpecs == nil then
     end
 end
 
-if GetItemLevelColor == nil then
-    function GetItemLevelColor()
-        return 1, 1, 1
-    end
-end
 if ClearCursorHoveredItem == nil then
     function ClearCursorHoveredItem()
         return nil
@@ -184,15 +163,6 @@ if SetCursorHoveredItemTradeItem == nil then
         return nil
     end
 end
-if UnitInSubgroup == nil then
-    function UnitInSubgroup(unit)
-        if unit == nil or unit == "player" then
-            return false
-        end
-        return type(UnitInParty) == "function" and UnitInParty(unit) or false
-    end
-end
-
 if GetNumGuildPerks == nil then
     function GetNumGuildPerks()
         return 0
@@ -208,6 +178,10 @@ if GetGuildRenameRequired == nil then
         return false
     end
 end
+"#;
+
+#[cfg(not(all(feature = "client-retail", feature = "retail-12-1-5")))]
+const AVAILABLE_BANDWIDTH_DEFAULT_LUA: &str = r#"
 if GetAvailableBandwidth == nil then
     function GetAvailableBandwidth()
         local bandwidthIn, bandwidthOut = GetNetStats()
@@ -231,10 +205,35 @@ end
 
 // Missing social-UI service availability policy. Retire when its c_api producer
 // owns availability; ordinary friend-list state does not establish that policy.
+#[cfg(not(all(feature = "profile-retail", feature = "retail-12-1-5")))]
 const SOCIAL_UI_DEFAULTS_LUA: &str = r#"
 C_SocialUI = C_SocialUI or __wow_namespace()
 if rawget(C_SocialUI, "IsSystemEnabled") == nil then
     function C_SocialUI.IsSystemEnabled() return false end
+end
+"#;
+
+#[cfg(not(all(feature = "profile-retail", feature = "retail-12-1-5")))]
+const CINEMATIC_SUMMARY_DEFAULT_LUA: &str = r#"
+-- No cinematic ever plays (InCinematic is a false stub), so there is no summary;
+-- the documented result is a non-nil string. Replace with cinematic playback state.
+if type(GetBuildInfo) == "function" and select(4, GetBuildInfo()) >= 120005
+        and GetCurrentCinematicSummary == nil then
+    function GetCurrentCinematicSummary() return "" end
+end
+"#;
+
+#[cfg(not(all(feature = "profile-retail", feature = "retail-12-1-5")))]
+const SOCIAL_SETTINGS_DEFAULTS_LUA: &str = r#"
+if type(GetBuildInfo) == "function" and select(4, GetBuildInfo()) >= 120100 then
+    if rawget(C_SocialRestrictions, "IsFriendsDisabled") == nil then
+        function C_SocialRestrictions.IsFriendsDisabled() return false end
+    end
+end
+if CanShowSetRoleButton == nil then
+    function CanShowSetRoleButton()
+        return false
+    end
 end
 "#;
 
@@ -245,6 +244,13 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     )))]
     lua.exec(UNMODELED_SPELL_CONFIRMATION_QUERY_LUA)?;
     lua.exec(INERT_GLOBAL_DEFAULTS_LUA)?;
+    #[cfg(not(all(feature = "client-retail", feature = "retail-12-1-5")))]
+    lua.exec(AVAILABLE_BANDWIDTH_DEFAULT_LUA)?;
+    #[cfg(not(all(feature = "profile-retail", feature = "retail-12-1-5")))]
+    lua.exec(SOCIAL_SETTINGS_DEFAULTS_LUA)?;
+    #[cfg(not(all(feature = "profile-retail", feature = "retail-12-1-5")))]
+    lua.exec(CINEMATIC_SUMMARY_DEFAULT_LUA)?;
+    #[cfg(not(all(feature = "profile-retail", feature = "retail-12-1-5")))]
     if cfg!(feature = "retail-12-1-0")
         || crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever
     {
@@ -262,6 +268,16 @@ mod tests {
     // UnitPopupSharedButtonMixins.lua:1824,1854,1902 consumes the modeled globals.
     fn installs_region_social_and_group_defaults() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
+        let expected_guild_faction =
+            if cfg!(all(feature = "profile-retail", feature = "retail-12-1-5")) {
+                -1
+            } else {
+                1
+            };
+        env.exec(&format!(
+            "EXPECTED_GUILD_FACTION = {expected_guild_faction}"
+        ))
+        .expect("expected faction query result should be set");
 
         let result: String = env
             .eval(
@@ -301,7 +317,7 @@ mod tests {
                 if Ambiguate("Alyth-Realm", "short") ~= "Alyth" then return "ambiguate_short" end
                 if Ambiguate("Alyth-Realm", "none") ~= "Alyth-Realm" then return "ambiguate_none" end
                 if AreTalentsLocked() ~= false then return "talents_locked" end
-                if GetGuildFactionGroup() ~= 1 then return "guild_faction" end
+                if GetGuildFactionGroup() ~= EXPECTED_GUILD_FACTION then return "guild_faction" end
                 if WorldLootObjectExists("player") ~= false then return "world_loot_object" end
                 if CanShowSetRoleButton() ~= false then return "role_button" end
                 if #GetSpellConfirmationPromptsInfo() ~= 0 then return "spell_prompts" end
@@ -375,7 +391,6 @@ mod tests {
                 if type(BNGetNumFriendInvites) ~= "function" then return "missing_bnet_default" end
                 if WorldLootObjectExists("player") ~= true then return "overwrote_world_loot_object" end
                 if type(ClearCursorHoveredItem) ~= "function" then return "missing_cursor_hover_default" end
-                if UnitInSubgroup("player") ~= false then return "bad_player_subgroup_default" end
                 if GetNumGuildPerks() ~= 0 then return "bad_guild_perks_default" end
                 if GetNumArenaOpponentSpecs() ~= 3 then return "overwrote_arena_specs" end
                 if EVENT_TOAST_MANAGER_OFFSET_Y_OVERRIDE ~= false then return "toast_offset_overwrite" end
@@ -386,5 +401,31 @@ mod tests {
             .expect("preservation probe should run");
 
         assert_eq!(result, "ok");
+        assert_unit_in_subgroup_publication(&env);
+    }
+
+    #[cfg(any(
+        feature = "client-retail",
+        feature = "client-ptr",
+        feature = "client-mists",
+        feature = "client-era",
+        feature = "client-anniversary",
+        feature = "client-wowforever"
+    ))]
+    fn assert_unit_in_subgroup_publication(env: &WowLuaEnv) {
+        env.exec(
+            r#"
+            assert(type(UnitInSubgroup) == "function")
+            assert(select('#', UnitInSubgroup("player")) == 1)
+            assert(UnitInSubgroup("player") == false)
+            "#,
+        )
+        .expect("profile publishes UnitInSubgroup with one false result and no owner");
+    }
+
+    #[cfg(feature = "client-wrath")]
+    fn assert_unit_in_subgroup_publication(env: &WowLuaEnv) {
+        env.exec("assert(UnitInSubgroup == nil)")
+            .expect("Wrath does not publish UnitInSubgroup");
     }
 }

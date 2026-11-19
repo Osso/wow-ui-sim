@@ -3205,24 +3205,6 @@ if not Enum.CombatAudioAlertSayIfTargetedType then
   }
 end
 
-if not Enum.CombatAudioAlertSpecSetting then
-  Enum.CombatAudioAlertSpecSetting = {
-    Resource1Format = 1,
-    Resource1Percent = 0,
-    Resource2Format = 3,
-    Resource2Percent = 2,
-    SayIfTargeted = 4,
-  }
-end
-
-if not Enum.CombatAudioAlertSpecSettingMeta then
-  Enum.CombatAudioAlertSpecSettingMeta = {
-    MaxValue = 4,
-    MinValue = 0,
-    NumValues = 5,
-  }
-end
-
 if not Enum.CombatAudioAlertTargetCastFormatValues then
   Enum.CombatAudioAlertTargetCastFormatValues = {
     Cast = 5,

@@ -33,3 +33,31 @@ The exact test file is byte-identical at all six revisions (SHA256 `ba4d54935e66
 Coordinator lt-900e comment 1275 accepts the fixture-omission classification and original owner routes. The initial return-to-current compile after historical target use exposed stale historical dependencies and was discarded without runtime; a complete current-input mtime refresh preceded successful current receipts.
 
 Normal startup currently promotes AchievementUI to `Full` through `implicit_blizzard_startup_dependencies` (`loader/mod.rs:182`) and `collect_startup_prerequisites` (which pulls keys from the LoD pool). The explicit fixture closure (`loader/mod.rs:626–647`) uses only its roots and declared dependencies, not those implicit startup keys, so the owner was omitted. This is not evidence of a broken native bootstrap loader; the partial fixture needs only the real TOC bootstrap before lazy loading. A draft diagnostic wrongly assumed `BootstrapOnly`; observed startup kind was `Full`, and that new diagnostic was corrected without altering any original selector assertion.
+
+## See Also
+
+- [[master-test-fixture-triage]] — related false test-fixture failures and Mists profile gates.
+
+## Retail bag tracker lifecycle (lt-c0e6)
+
+**VERIFIED (Retail 12.1.5.70783, base aa1192ddc):** the unchanged
+`open_all_bags_opens_a_bag_frame` fails at `ContainerFrame.lua:2464` because
+`tokenFrame` is nil. Both original owners are already in the fixture closure.
+`Blizzard_UIPanels_Game_Mainline.toc` admits Game/mainline and includes
+`Mainline/ContainerFrame.lua`; its settings manager registers `ADDON_LOADED`
+at lines 2160–2170 and creates `BackpackTokenFrame` only for
+`Blizzard_TokenUI` at lines 2173–2178. The selected TokenUI TOC includes
+`Blizzard_TokenUI.xml`, whose line 269 defines `BackpackTokenFrameTemplate`.
+
+The partial fixture called low-level `load_addon` without dispatching each
+owner's completion event. It now dispatches `ADDON_LOADED` after each loaded
+owner, using the same argument helper as normal startup, before its existing
+`VARIABLES_LOADED` event. The original owner creates the tracker; no substitute
+frame, fallback, vendor edit or assertion change is needed. The unchanged bag
+test passed after restoring these events. This is fixture lifecycle preservation,
+not a new native-semantics claim.
+
+The current fixture already selects `Blizzard_Menu`, whose `DropdownButton.lua`
+defines `DropdownButtonMixin`. The baseline bag transcript does not contain the
+historical ClubFinder/DropdownButtonMixin error, so no speculative second fix is
+included. Other partial-fixture diagnostics remain outside this task.

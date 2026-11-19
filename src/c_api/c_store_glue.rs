@@ -10,7 +10,7 @@ use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
 use rilua::vm::{gc::arena::GcRef, state::LuaState, table::Table};
 use rilua::{LuaResult, Val, runtime_error};
 
-type Member = (&'static str, fn(&mut LuaState) -> LuaResult<u32>);
+pub(super) type Member = (&'static str, fn(&mut LuaState) -> LuaResult<u32>);
 const GLUE: &[Member] = &[
     ("GetVASPurchaseStateInfo", get_purchase),
     ("GetDisconnectOnLogout", get_disconnect),
@@ -43,7 +43,7 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     publish_namespace(state, "C_StoreGlue", GLUE)?;
     publish_namespace(state, "C_StoreSecure", SECURE)
 }
-fn publish_namespace(
+pub(super) fn publish_namespace(
     state: &mut LuaState,
     name: &'static str,
     members: &[Member],
@@ -79,9 +79,19 @@ fn pending_error(state: &LuaState, name: &str) -> LuaResult<()> {
     Ok(())
 }
 fn read_argument(state: &LuaState, name: &str, usage: &str) -> LuaResult<Val> {
-    let value = stack_val(state, 1);
+    read_argument_at(state, 1, name, usage, "C_StoreGlue")
+}
+
+pub(super) fn read_argument_at(
+    state: &LuaState,
+    index: i32,
+    name: &str,
+    usage: &str,
+    namespace: &str,
+) -> LuaResult<Val> {
+    let value = stack_val(state, index);
     if value == Val::Nil {
-        return Err(bad_argument(1, name, usage));
+        return Err(bad_argument(index, name, usage));
     }
     if !rilua::table_security::is_secret_value(state, value) {
         return Ok(value);
@@ -90,12 +100,12 @@ fn read_argument(state: &LuaState, name: &str, usage: &str) -> LuaResult<Val> {
     let reason = match mode {
         Some(0) => "Secret values are not allowed for this argument.",
         Some(1) => return rilua::table_security::unwrap_secret(state, value).map_err(|_| {
-            bad_argument(1, name, &format!("{usage}. Secret values are only allowed during untainted execution for this argument."))
+            bad_argument(index, name, &format!("{usage}. Secret values are only allowed during untainted execution for this argument."))
         }),
         Some(_) => "Unknown secret access mode.",
-        None => return Err(runtime_error("C_StoreGlue secret-access metadata is not modeled")),
+        None => return Err(runtime_error(format!("{namespace} secret-access metadata is not modeled"))),
     };
-    Err(bad_argument(1, name, &format!("{usage}. {reason}")))
+    Err(bad_argument(index, name, &format!("{usage}. {reason}")))
 }
 fn read_guid(state: &LuaState, name: &str, usage: &str) -> LuaResult<super::store_guid::Outcome> {
     let value = read_argument(state, name, usage)?;
@@ -185,7 +195,7 @@ fn set_ready(state: &mut LuaState) -> LuaResult<u32> {
     pending_error(state, "SetVASProductReady")?;
     Ok(0)
 }
-fn restricted_call(state: &mut LuaState) -> LuaResult<bool> {
+pub(super) fn restricted_call(state: &mut LuaState) -> LuaResult<bool> {
     use super::store_glue_model::RestrictedExecution;
     let metadata = borrow_state(state)?.store_glue.restricted_execution.clone();
     let Some(metadata) = metadata else {

@@ -10,7 +10,7 @@ mod layout_render_eligibility;
 mod layout_slider_thumb;
 
 use crate::LayoutRect;
-use crate::widget::{AnchorPoint, WidgetRegistry, WidgetType};
+use crate::widget::{Anchor, AnchorPoint, WidgetRegistry, WidgetType};
 use layout_line::resolve_line_frame_rect;
 pub use layout_render_eligibility::{frame_has_layout_anchor, frame_has_render_layout};
 pub(crate) use layout_slider_thumb::{has_sized_slider_thumb_binding, resolved_slider_thumb_rect};
@@ -237,8 +237,10 @@ fn resolve_anchor_target(
         relative_rect.height,
     );
     (
-        anchor_x + registry.round_layout_value(frame, anchor.x_offset) * frame.effective_scale,
-        anchor_y - registry.round_layout_value(frame, anchor.y_offset) * frame.effective_scale,
+        anchor_x
+            + registry.round_layout_displacement(frame, anchor.x_offset) * frame.effective_scale,
+        anchor_y
+            - registry.round_layout_displacement(frame, anchor.y_offset) * frame.effective_scale,
     )
 }
 
@@ -304,7 +306,7 @@ fn compute_rect_from_edges(
         edges.left_x,
         edges.right_x,
         edges.center_x,
-        registry.round_layout_value(frame, frame.width),
+        registry.round_layout_dimension(frame, frame.width),
         scale,
         parent_rect.x,
         parent_rect.width,
@@ -313,12 +315,16 @@ fn compute_rect_from_edges(
         edges.top_y,
         edges.bottom_y,
         edges.center_y,
-        registry.round_layout_value(frame, frame.height),
+        registry.round_layout_dimension(frame, frame.height),
         scale,
         parent_rect.y,
         parent_rect.height,
     );
 
+    rect_from_axis_layouts(horizontal, vertical)
+}
+
+fn rect_from_axis_layouts(horizontal: AxisLayout, vertical: AxisLayout) -> LayoutRect {
     LayoutRect {
         x: horizontal.position,
         y: vertical.position,
@@ -386,17 +392,13 @@ fn resolve_single_anchor(
     cache: &mut LayoutCache,
 ) -> LayoutRect {
     let anchor = &frame.anchors[0];
-    let width = registry.round_layout_value(frame, frame.width) * eff_scale;
-    let height = registry.round_layout_value(frame, frame.height) * eff_scale;
+    let width = registry.round_layout_dimension(frame, frame.width) * eff_scale;
+    let height = registry.round_layout_dimension(frame, frame.height) * eff_scale;
 
-    let relative_rect = if let Some(rel_id) = anchor.relative_to_id {
+    let relative_rect = anchor.relative_to_id.map_or(parent_rect, |rel_id| {
         compute_frame_rect_cached(registry, rel_id as u64, screen_width, screen_height, cache).rect
-    } else {
-        parent_rect
-    };
-
+    });
     let (target_x, target_y) = resolve_anchor_target(registry, frame, anchor, relative_rect);
-
     let (frame_x, frame_y) =
         frame_position_from_anchor(anchor.point, target_x, target_y, width, height);
 
@@ -425,14 +427,25 @@ pub fn compute_frame_rect_cached(
     // for the recursive leg, then the outer frame result overwrites it.
     cache.insert(id, missing_frame_layout());
 
-    let result = registry
-        .get(id)
-        .map(|frame| {
-            resolve_uncached_frame_layout(registry, id, frame, screen_width, screen_height, cache)
-        })
-        .unwrap_or_else(missing_frame_layout);
-
+    let result = if id == crate::widget::clamp_geometry::COORDINATE_ROOT as u64
+        && crate::widget::clamp_geometry::uses_retail_clamp_producers()
+    {
+        coordinate_root_layout(screen_width, screen_height)
+    } else if let Some(frame) = registry.get(id) {
+        resolve_uncached_frame_layout(registry, id, frame, screen_width, screen_height, cache)
+    } else {
+        missing_frame_layout()
+    };
     cache_layout_result(cache, id, result)
+}
+
+fn coordinate_root_layout(screen_width: f32, screen_height: f32) -> CachedFrameLayout {
+    CachedFrameLayout {
+        rect: full_screen_rect(screen_width, screen_height),
+        rect_valid: true,
+        anchor_invalidated: false,
+        eff_scale: 1.0,
+    }
 }
 
 fn resolve_uncached_frame_layout(
@@ -527,38 +540,62 @@ fn frame_rect_status(
         return (false, false);
     }
 
-    let mut has_geometry_source = false;
-    let mut rect_valid = true;
-    let mut anchor_invalidated = false;
+    let (has_geometry_source, targets_valid, anchor_invalidated) =
+        read_frame_anchor_target_status(registry, frame, cache);
+    let has_position = !has_single_anchor_without_size(frame);
+    let rect_valid = has_geometry_source && targets_valid && has_position;
+    (rect_valid, anchor_invalidated)
+}
 
+fn read_frame_anchor_target_status(
+    registry: &WidgetRegistry,
+    frame: &crate::widget::Frame,
+    cache: &LayoutCache,
+) -> (bool, bool, bool) {
+    let mut has_geometry_source = false;
+    let mut targets_valid = true;
+    let mut anchor_invalidated = false;
     if frame.anchors.is_empty() {
         if let Some(parent_id) = frame.parent_id {
             has_geometry_source = true;
-            (rect_valid, anchor_invalidated) =
+            (targets_valid, anchor_invalidated) =
                 cached_target_rect_status(registry, parent_id, cache);
         }
     } else {
         for anchor in &frame.anchors {
             has_geometry_source = true;
-            if anchor.relative_to_id.is_none() && anchor.relative_to.is_some() {
-                rect_valid = false;
-                continue;
-            }
-            let target_id = anchor
-                .relative_to_id
-                .map(|target_id| target_id as u64)
-                .or(frame.parent_id);
-            let Some(target_id) = target_id else {
-                continue;
-            };
             let (target_valid, target_invalidated) =
-                cached_target_rect_status(registry, target_id, cache);
-            rect_valid &= target_valid;
+                frame_anchor_target_rect_status(registry, frame, anchor, cache);
+            targets_valid &= target_valid;
             anchor_invalidated |= target_invalidated;
         }
     }
+    (has_geometry_source, targets_valid, anchor_invalidated)
+}
 
-    (has_geometry_source && rect_valid, anchor_invalidated)
+fn frame_anchor_target_rect_status(
+    registry: &WidgetRegistry,
+    frame: &crate::widget::Frame,
+    anchor: &Anchor,
+    cache: &LayoutCache,
+) -> (bool, bool) {
+    if anchor.relative_to_id.is_none() && anchor.relative_to.is_some() {
+        return (false, false);
+    }
+    let target_id = anchor
+        .relative_to_id
+        .map(|target_id| target_id as u64)
+        .or(frame.parent_id);
+    let Some(target_id) = target_id else {
+        return (true, false);
+    };
+    cached_target_rect_status(registry, target_id, cache)
+}
+
+fn has_single_anchor_without_size(frame: &crate::widget::Frame) -> bool {
+    // INFERRED for 12.1.5.70783 from verified 12.1.5.70688 R88az z3:
+    // one anchor with zero stored dimensions cannot produce a valid rectangle.
+    frame.anchors.len() == 1 && frame.width == 0.0 && frame.height == 0.0
 }
 
 fn cache_layout_result(
@@ -641,8 +678,8 @@ fn anchorless_rect(
     if let Some(rect) = layout_slider_thumb::slider_thumb_rect(registry, frame, parent_rect) {
         return rect;
     }
-    let width = registry.round_layout_value(frame, frame.width) * scale;
-    let height = registry.round_layout_value(frame, frame.height) * scale;
+    let width = registry.round_layout_dimension(frame, frame.width) * scale;
+    let height = registry.round_layout_dimension(frame, frame.height) * scale;
     if width == 0.0 && height == 0.0 && is_statusbar_bar_child(registry, frame) {
         return parent_rect;
     }
@@ -721,35 +758,62 @@ fn clamp_rect_to_screen(
     (left, right, top, bottom): (f32, f32, f32, f32),
     effective_scale: f32,
 ) {
+    use crate::widget::clamp_geometry::{inset_to_public, uses_retail_clamp_producers};
+
+    let [left, right, top, bottom] = [left, right, top, bottom].map(inset_to_public);
     let left_edge = -left * effective_scale;
     let right_edge = screen_w - right * effective_scale;
     let top_edge = top * effective_scale;
     let bottom_edge = screen_h + bottom * effective_scale;
 
-    if rect.width >= screen_w
-        && crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail
-    {
+    if uses_retail_clamp_producers() {
+        retail_clamp_rect(rect, left_edge, right_edge, top_edge, bottom_edge);
+    } else {
+        legacy_clamp_horizontal(rect, screen_w, left_edge, right_edge);
+        legacy_clamp_vertical(rect, screen_h, top_edge, bottom_edge);
+    }
+}
+
+fn retail_clamp_rect(rect: &mut LayoutRect, left: f32, right: f32, top: f32, bottom: f32) {
+    // Y grows downward, so the native bottom correction moves y up
+    // and the top correction moves y down.
+    if rect.x < left {
+        rect.x = left;
+    }
+    if rect.y + rect.height > bottom {
+        rect.y = bottom - rect.height;
+    }
+    if rect.x + rect.width > right {
+        rect.x = right - rect.width;
+    }
+    if rect.y < top {
+        rect.y = top;
+    }
+}
+
+fn legacy_clamp_horizontal(rect: &mut LayoutRect, width: f32, left: f32, right: f32) {
+    if rect.width >= width {
         rect.x = 0.0;
     } else {
-        if rect.x < left_edge {
-            rect.x = left_edge;
+        if rect.x < left {
+            rect.x = left;
         }
-        if rect.x + rect.width > right_edge {
-            rect.x = right_edge - rect.width;
+        if rect.x + rect.width > right {
+            rect.x = right - rect.width;
         }
     }
+}
 
-    if rect.height >= screen_h
-        && crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail
-    {
+fn legacy_clamp_vertical(rect: &mut LayoutRect, height: f32, top: f32, bottom: f32) {
+    if rect.height >= height {
         rect.y = 0.0;
     } else {
         // Native checks the bottom boundary before the top boundary.
-        if rect.y + rect.height > bottom_edge {
-            rect.y = bottom_edge - rect.height;
+        if rect.y + rect.height > bottom {
+            rect.y = bottom - rect.height;
         }
-        if rect.y < top_edge {
-            rect.y = top_edge;
+        if rect.y < top {
+            rect.y = top;
         }
     }
 }

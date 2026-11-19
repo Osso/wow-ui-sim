@@ -171,11 +171,7 @@ fn addon_metadata(addon: &crate::lua_api::AddonInfo, field: &str) -> Option<Stri
 }
 
 fn find_addon_metadata(addon: &crate::lua_api::AddonInfo, field: &str) -> Option<String> {
-    addon
-        .metadata
-        .iter()
-        .find(|(key, _)| key.eq_ignore_ascii_case(field))
-        .map(|(_, value)| value.clone())
+    addon.metadata.get_ignore_ascii_case(field).cloned()
 }
 
 fn push_addon_info(state: &mut LuaState, addon: &crate::lua_api::AddonInfo) -> u32 {
@@ -238,18 +234,19 @@ fn find_runtime_addon_toc_for_screen(
         return None;
     }
 
-    let bases = {
+    let (bases, tocs) = {
         let sim = borrow_state(state).ok()?;
-        if sim.addon_base_paths.is_empty() {
+        let bases = if sim.addon_base_paths.is_empty() {
             default_runtime_addon_bases()
         } else {
             sim.addon_base_paths.clone()
-        }
+        };
+        (bases, sim.toc_cache())
     };
     for base in bases {
         let addon_dir = base.join(addon_name);
         if let Some(toc_path) = crate::loader::find_toc_file(&addon_dir)
-            && runtime_toc_matches_profile_and_screen(&toc_path, screen)
+            && runtime_toc_matches_profile_and_screen(&tocs, &toc_path, screen)
         {
             return Some(toc_path);
         }
@@ -258,10 +255,11 @@ fn find_runtime_addon_toc_for_screen(
 }
 
 fn runtime_toc_matches_profile_and_screen(
+    tocs: &crate::toc::TocCache,
     toc_path: &Path,
     screen: Option<crate::screen::ScreenKind>,
 ) -> bool {
-    let Ok(toc) = crate::toc::TocFile::from_file(toc_path) else {
+    let Ok(toc) = tocs.get(toc_path) else {
         return false;
     };
     !toc.is_ptr_only()
@@ -336,7 +334,7 @@ fn c_addons_is_addon_loaded(state: &mut LuaState) -> LuaResult<u32> {
             .addons
             .iter()
             .find(|addon| addon.folder_name == addon_name)
-            .map(|addon| addon.loaded)
+            .map(|addon| addon.is_loaded())
             .unwrap_or(false);
         let loading = sim.is_addon_loading(&addon_name);
         (loaded || loading, loaded)
@@ -646,8 +644,9 @@ fn addon_request_state(state: &LuaState, addon_name: &str) -> (Option<bool>, boo
         .addons
         .iter()
         .find(|addon| addon.folder_name == addon_name);
-    let loaded_or_loading =
-        addon.is_some_and(|addon| addon.loaded) || sim.is_addon_loading(addon_name);
+    let loaded_or_loading = addon
+        .is_some_and(|addon| addon.is_loaded_in_environment(addon.use_secure_env))
+        || sim.is_addon_loading(addon_name);
     (addon.map(|addon| addon.enabled), loaded_or_loading)
 }
 
@@ -671,11 +670,13 @@ fn addon_has_wrong_active_interface(state: &LuaState, addon_name: &str) -> Resul
     let Some(toc_path) = find_runtime_addon_toc_ignoring_screen(state, addon_name) else {
         return Ok(false);
     };
-    let toc = crate::toc::TocFile::from_file(&toc_path)
+    let (tocs, screen) = {
+        let sim = borrow_state(state).map_err(|error| error.to_string())?;
+        (sim.toc_cache(), sim.screen_kind)
+    };
+    let toc = tocs
+        .get(&toc_path)
         .map_err(|error| format!("Cannot read addon TOC {}: {error}", toc_path.display()))?;
-    let screen = borrow_state(state)
-        .map_err(|error| error.to_string())?
-        .screen_kind;
     Ok(!toc.allows_screen(screen))
 }
 

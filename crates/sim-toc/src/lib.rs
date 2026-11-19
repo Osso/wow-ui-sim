@@ -5,6 +5,9 @@
 use std::collections::HashMap;
 use std::path::{Path, PathBuf};
 
+mod metadata;
+pub use metadata::TocMetadata;
+
 /// Composition-owned inputs and services; no client selection is compiled here.
 pub trait Selection: Clone + std::fmt::Debug {
     type Screen: Copy;
@@ -38,7 +41,7 @@ pub struct TocFile<P: Selection> {
     /// Addon name (from directory or Title metadata)
     pub name: String,
     /// Metadata key-value pairs (## Key: Value)
-    pub metadata: HashMap<String, String>,
+    pub metadata: TocMetadata,
     /// Files to load in order during normal addon loading (relative paths).
     pub files: Vec<PathBuf>,
     /// Files annotated with `[Bootstrap]`, aligned with `files`.
@@ -231,7 +234,7 @@ fn should_skip_metadata<P: Selection>(key: &str, rest: &str) -> bool {
 }
 
 fn insert_metadata_value(
-    metadata: &mut HashMap<String, String>,
+    metadata: &mut TocMetadata,
     key: &str,
     value: &str,
     required_dependency_lines: &mut Vec<DependencyLine>,
@@ -252,15 +255,9 @@ fn insert_metadata_value(
 
     let value = replace_template_vars(strip_annotations(value));
     if is_dependency_header {
-        metadata
-            .entry(key.to_string())
-            .and_modify(|existing| {
-                existing.push(',');
-                existing.push_str(&value);
-            })
-            .or_insert(value);
+        metadata.append_list_value(key, value);
     } else {
-        metadata.insert(key.to_string(), value);
+        metadata.insert(key, value);
     }
 }
 
@@ -270,7 +267,7 @@ fn insert_metadata_value(
 /// `@toc-version-*@` packager tokens — the `#@debug@` block in the TOC
 /// provides the real fallback version for source-form TOC files.
 fn insert_metadata<P: Selection>(
-    metadata: &mut HashMap<String, String>,
+    metadata: &mut TocMetadata,
     required_dependency_lines: &mut Vec<DependencyLine>,
     optional_dependency_lines: &mut Vec<DependencyLine>,
     allow_load_header_condition: &mut Option<String>,
@@ -426,7 +423,7 @@ impl<P: Selection> TocFile<P> {
     /// - `@project-version@` in any value: replaced with `dev`.
     pub fn parse(addon_dir: &Path, contents: &str) -> Self {
         let contents = contents.strip_prefix('\u{feff}').unwrap_or(contents);
-        let mut metadata = HashMap::new();
+        let mut metadata = TocMetadata::default();
         let mut required_dependency_lines = Vec::new();
         let mut optional_dependency_lines = Vec::new();
         let mut allow_load_header_condition = None;

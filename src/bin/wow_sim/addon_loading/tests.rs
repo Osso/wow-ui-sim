@@ -72,7 +72,7 @@ fn addon_load_failures_remain_diagnostic_without_persistence() {
             "UnreadableToc" => std::fs::write(&toc, [0xff]).unwrap(),
             _ => {}
         }
-        let addons = scan_addons(temp.path(), &[], ScreenKind::Game);
+        let addons = scan_addons(&TocCache::default(), temp.path(), &[], ScreenKind::Game);
         assert_eq!(
             addons.len(),
             1,
@@ -373,7 +373,7 @@ fn optional_nil_probes_and_disabled_addons_allow_finalization() {
         "## Dependencies: Blizzard_MissingDependency\n",
         "error('disabled files must not execute')",
     );
-    let addons = scan_addons(temp.path(), &[], ScreenKind::Game);
+    let addons = scan_addons(&TocCache::default(), temp.path(), &[], ScreenKind::Game);
     let mut env = WowLuaEnv::new().unwrap();
     let overrides = HashMap::from([("DisabledBroken".to_string(), false)]);
     let mut stats = LoadStats::default();
@@ -402,12 +402,22 @@ fn retail_third_party_game_type_headers_select_startup_addons() {
             "GameTypeProbeLoaded = true",
         );
         assert_eq!(
-            loadable_toc_path(&temp.path().join(name), ScreenKind::Game).is_some(),
+            loadable_toc_path(
+                &TocCache::default(),
+                &temp.path().join(name),
+                ScreenKind::Game
+            )
+            .is_some(),
             expected,
             "{name}"
         );
     }
-    let toc = loadable_toc_path(&temp.path().join("Bracketed"), ScreenKind::Game).unwrap();
+    let toc = loadable_toc_path(
+        &TocCache::default(),
+        &temp.path().join("Bracketed"),
+        ScreenKind::Game,
+    )
+    .unwrap();
     let env = WowLuaEnv::new().unwrap();
     wow_ui_sim::loader::load_addon(&env.loader_env(), &toc).unwrap();
     assert!(env.eval::<bool>("return GameTypeProbeLoaded").unwrap());
@@ -456,7 +466,7 @@ fn third_party_lod_metadata_precedes_startup_and_explicit_load_runs_once() {
         MetadataAddonCount = C_AddOns.GetNumAddOns()
         "#,
     );
-    let addons = scan_addons(temp.path(), &[], ScreenKind::Game);
+    let addons = scan_addons(&TocCache::default(), temp.path(), &[], ScreenKind::Game);
     let env = WowLuaEnv::new().unwrap();
     env.state().borrow_mut().addon_base_paths = vec![temp.path().to_path_buf()];
     let mut stats = LoadStats::default();
@@ -498,7 +508,7 @@ fn third_party_disabled_lod_metadata_retains_enable_state_and_dependencies() {
         "## LoadOnDemand: 1\n## Dependencies: AbsentLibrary\n",
         "error('disabled LoD files must not execute')",
     );
-    let addons = scan_addons(temp.path(), &[], ScreenKind::Game);
+    let addons = scan_addons(&TocCache::default(), temp.path(), &[], ScreenKind::Game);
     let env = WowLuaEnv::new().unwrap();
     env.state().borrow_mut().addon_base_paths = vec![temp.path().to_path_buf()];
     let overrides = HashMap::from([("DisabledLazyMetadata".to_string(), false)]);
@@ -550,8 +560,13 @@ fn third_party_lod_discovery_preserves_screen_game_and_interface_filters() {
     // R13 (pr46-49-decomp-answers.md): insecure TOCs ignore AllowLoad and
     // retain Game. Mapping ordinary third-party AddOns to this mode is INFERRED
     // (R64 Q1); game-type and interface-version filters still apply.
-    let game = scan_addons(temp.path(), &[], ScreenKind::Game);
-    let glue = scan_addons(temp.path(), &[], ScreenKind::CharacterSelect);
+    let game = scan_addons(&TocCache::default(), temp.path(), &[], ScreenKind::Game);
+    let glue = scan_addons(
+        &TocCache::default(),
+        temp.path(),
+        &[],
+        ScreenKind::CharacterSelect,
+    );
     assert_eq!(
         game.iter()
             .map(|(name, _)| name.as_str())
@@ -591,8 +606,8 @@ fn startup_bootstrap_runs_inline_without_full_load_or_event() {
     )
     .unwrap();
     write_addon_with_lua(temp.path(), "C", "", "table.insert(order, 'C')");
-    let mut addons = scan_addons(temp.path(), &[], ScreenKind::Game);
-    wow_ui_sim::loader::sort_addons_by_dependencies(&mut addons);
+    let mut addons = scan_addons(&TocCache::default(), temp.path(), &[], ScreenKind::Game);
+    wow_ui_sim::loader::sort_addons_by_dependencies_with_tocs(&TocCache::default(), &mut addons);
     let env = WowLuaEnv::new().unwrap();
     load_discovered_addons(&env, &addons, &mut None, None, &mut LoadStats::default());
     env.exec("assert(table.concat(order, ',') == 'A,B:bootstrap,C', table.concat(order, ',')); assert(duringLoaded and not duringFinished); local loaded, finished = C_AddOns.IsAddOnLoaded('B'); assert(not loaded and not finished); assert(not loadedEvents.B); assert(loadedEvents.C)").unwrap();
@@ -625,9 +640,11 @@ fn lua_errors_reports_enabled_addon_with_missing_required_dependency() {
     let env = WowLuaEnv::new().expect("create Lua env");
     let mut saved_vars = None;
     let mut stats = LoadStats::default();
-
     load_discovered_addons(&env, &addons, &mut saved_vars, None, &mut stats);
+    assert_missing_required_dependency_results(&env);
+}
 
+fn assert_missing_required_dependency_results(env: &WowLuaEnv) {
     let state = env.state().borrow();
     assert_eq!(state.lua_errors.len(), 1);
     assert_eq!(
@@ -646,7 +663,7 @@ fn lua_errors_reports_enabled_addon_with_missing_required_dependency() {
             .iter()
             .find(|addon| addon.folder_name == "DependentAddon")
             .expect("registered dependent addon")
-            .loaded,
+            .is_loaded(),
         "addon with a missing required dependency should not load"
     );
     drop(state);
@@ -659,39 +676,60 @@ fn lua_errors_reports_enabled_addon_with_missing_required_dependency() {
 #[test]
 fn load_summary_counts_file_event_and_nested_lua_failures_once_per_addon() {
     let temp = tempfile::tempdir().unwrap();
-    write_addon_with_lua(temp.path(), "Healthy", "", "healthyLoaded = true");
-    write_addon_with_lua(temp.path(), "FileBroken", "", "error('file failure')");
+    write_load_summary_test_addons(temp.path());
+    let addons = scan_addons(&TocCache::default(), temp.path(), &[], ScreenKind::Game);
+    let env = WowLuaEnv::new().unwrap();
+    env.state().borrow_mut().addon_base_paths = vec![temp.path().to_path_buf()];
+    let mut stats = LoadStats::default();
+    let startup_count = load_discovered_addons(&env, &addons, &mut None, None, &mut stats);
+    let state = env.state().borrow();
+    assert_load_summary_error_records(&state);
+    assert_load_summary_addon_states(&state);
+    assert_load_summary_counts(startup_count, stats);
+}
+
+fn write_load_summary_test_addons(root: &Path) {
+    write_load_summary_file_errors(root);
+    write_load_summary_event_error(root);
+    write_load_summary_nested_errors(root);
+}
+
+fn write_load_summary_file_errors(root: &Path) {
+    write_addon_with_lua(root, "Healthy", "", "healthyLoaded = true");
+    write_addon_with_lua(root, "FileBroken", "", "error('file failure')");
+}
+
+fn write_load_summary_event_error(root: &Path) {
     write_addon_with_lua(
-        temp.path(),
+        root,
         "EventBroken",
         "",
         "local f = CreateFrame('Frame'); f:RegisterEvent('ADDON_LOADED'); f:SetScript('OnEvent', function(_, _, name) if name == 'EventBroken' or name == 'NestedCaller' then error('event failure') end end)",
     );
+}
+
+fn write_load_summary_nested_errors(root: &Path) {
     write_addon_with_lua(
-        temp.path(),
+        root,
         "NestedChild",
         "## LoadOnDemand: 1\n",
         "error('nested failure')",
     );
     write_addon_with_lua(
-        temp.path(),
+        root,
         "NestedCaller",
         "",
         "assert(C_AddOns.LoadAddOn('NestedChild'))",
     );
     write_addon_with_lua(
-        temp.path(),
+        root,
         "MissingDependency",
         "## Dependencies: Absent\n",
         "error('must not execute')",
     );
-    let addons = scan_addons(temp.path(), &[], ScreenKind::Game);
-    let env = WowLuaEnv::new().unwrap();
-    env.state().borrow_mut().addon_base_paths = vec![temp.path().to_path_buf()];
-    let mut stats = LoadStats::default();
-    let startup_count = load_discovered_addons(&env, &addons, &mut None, None, &mut stats);
+}
 
-    let state = env.state().borrow();
+fn assert_load_summary_error_records(state: &wow_ui_sim::lua_api::SimState) {
     let recorded: HashSet<_> = state
         .lua_error_records
         .iter()
@@ -713,6 +751,9 @@ fn load_summary_counts_file_event_and_nested_lua_failures_once_per_addon() {
             .all(|record| record.addon_name.as_deref() == Some("EventBroken")),
         "callbacks during another addon's load must retain their own owner: {event_errors:?}"
     );
+}
+
+fn assert_load_summary_addon_states(state: &wow_ui_sim::lua_api::SimState) {
     for name in [
         "Healthy",
         "FileBroken",
@@ -724,7 +765,7 @@ fn load_summary_counts_file_event_and_nested_lua_failures_once_per_addon() {
             state
                 .addons
                 .iter()
-                .any(|addon| addon.folder_name == name && addon.loaded),
+                .any(|addon| addon.folder_name == name && addon.is_loaded()),
             "loaded state must be preserved for {name}"
         );
     }
@@ -734,8 +775,11 @@ fn load_summary_counts_file_event_and_nested_lua_failures_once_per_addon() {
             .iter()
             .find(|addon| addon.folder_name == "MissingDependency")
             .unwrap()
-            .loaded
+            .is_loaded()
     );
+}
+
+fn assert_load_summary_counts(startup_count: usize, stats: LoadStats) {
     assert_eq!(stats.success_count, 4);
     assert_eq!(
         stats.fail_count, 4,
@@ -814,7 +858,12 @@ fn scan_addon_paths_merges_roots_and_keeps_first_duplicate() {
     write_addon(&wow_root, "SharedAddon");
     write_addon(&wow_root, "WowOnly");
 
-    let addons = scan_addon_paths(&[sim_root.clone(), wow_root], &[], ScreenKind::Game);
+    let addons = scan_addon_paths(
+        &TocCache::default(),
+        &[sim_root.clone(), wow_root],
+        &[],
+        ScreenKind::Game,
+    );
     let names: Vec<_> = addons.iter().map(|(name, _)| name.as_str()).collect();
     let shared_toc = addons
         .iter()
@@ -842,7 +891,7 @@ fn scan_addons_skips_out_of_date_interfaces_by_default() {
     );
     write_addon_with_toc(temp.path(), "OldAddon", "## Interface: 120001\nmain.lua\n");
 
-    let addons = scan_addons(temp.path(), &[], ScreenKind::Game);
+    let addons = scan_addons(&TocCache::default(), temp.path(), &[], ScreenKind::Game);
     let names: Vec<_> = addons.iter().map(|(name, _)| name.as_str()).collect();
 
     assert_eq!(names, ["CurrentAddon"]);
@@ -854,7 +903,7 @@ fn scan_addons_accepts_mists_interface_version() {
     let temp = tempfile::tempdir().expect("tempdir");
     write_addon_with_toc(temp.path(), "ElvUI", "## Interface: 50504\nmain.lua\n");
 
-    let addons = scan_addons(temp.path(), &[], ScreenKind::Game);
+    let addons = scan_addons(&TocCache::default(), temp.path(), &[], ScreenKind::Game);
     let names: Vec<_> = addons.iter().map(|(name, _)| name.as_str()).collect();
 
     assert_eq!(names, ["ElvUI"]);

@@ -29,7 +29,7 @@
 - Whether every public `SetPoint()` call takes the lower-level change path described above.
 - Native parity for Forever 1.60.1.70707 and other client builds; this evidence covers Retail 12.1.5.70688 only.
 
-**VERIFIED (evidence provenance):** the source-backed labels above come from `~/.local/state/wow-ui-sim/handoff/pr46-49-decomp-answers.md`, sections L1, L1b, and L1c. This is static client-image analysis, not a live-client test.
+**VERIFIED (evidence provenance):** the source-backed labels above come from `pr46-49-decomp-answers.md` (untracked decomp handoff), sections L1, L1b, and L1c. This is static client-image analysis, not a live-client test.
 
 ## Simulator implementation and tests
 
@@ -43,7 +43,7 @@
 
 ## Sources
 
-- `~/.local/state/wow-ui-sim/handoff/pr46-49-decomp-answers.md` — native L1/L1b/L1c evidence for Retail 12.1.5.70688
+- `pr46-49-decomp-answers.md` (untracked decomp handoff) — native L1/L1b/L1c evidence for Retail 12.1.5.70688
 - [text.rs](../../../src/lua_api/frame/methods/text_attribute_event/text.rs) — simulator FontString width and height measurement
 - [anchors.rs](../../../src/lua_api/frame/methods/button_anchor_hierarchy/anchors.rs) — simulator `SetPoint()` handling
 - [helpers.rs](../../../src/lua_api/frame/methods/core_state/helpers.rs) — simulator `GetWidth()`/`GetHeight()` geometry reads

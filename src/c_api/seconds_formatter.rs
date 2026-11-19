@@ -23,13 +23,12 @@ fn publish_values(
     fields: &[(&'static str, f64)],
 ) -> LuaResult<()> {
     let enums = super::helpers::ensure_namespace(state, "Enum")?;
-    let values = create_table(state);
-    state.push(values);
+    let values = Val::Table(crate::c_api::ensure_namespace_table_field(
+        state, enums, name,
+    )?);
     for &(key, value) in fields {
-        table_set_static(state, values, key, Val::Num(value));
+        crate::c_api::set_namespace_member(state, values, key, Val::Num(value))?;
     }
-    table_set_static(state, Val::Table(enums), name, values);
-    state.pop();
     Ok(())
 }
 
@@ -39,13 +38,12 @@ fn publish_metadata(
     name: &'static str,
 ) -> LuaResult<()> {
     let namespace = super::helpers::ensure_namespace(state, namespace)?;
-    let metadata = create_table(state);
-    state.push(metadata);
+    let metadata = Val::Table(crate::c_api::ensure_namespace_table_field(
+        state, namespace, name,
+    )?);
     for (key, value) in [("MinValue", 0.0), ("MaxValue", 2.0), ("NumValues", 3.0)] {
-        table_set_static(state, metadata, key, Val::Num(value));
+        crate::c_api::set_namespace_member(state, metadata, key, Val::Num(value))?;
     }
-    table_set_static(state, Val::Table(namespace), name, metadata);
-    state.pop();
     Ok(())
 }
 
@@ -199,7 +197,60 @@ pub(crate) fn register(lua: &mut rilua::Lua) -> crate::Result<()> {
     let result = lua.call_function(&function, &arguments);
     lua.state_mut().top = saved_top;
     retain_host_dispatch(lua.state_mut(), &result?)?;
+    if crate::client_profile::is_active_retail_12_1_5() {
+        publish_retail_secure_factory(lua)?;
+    }
     Ok(())
+}
+
+fn publish_retail_secure_factory(lua: &mut rilua::Lua) -> crate::Result<()> {
+    // VERIFIED — native publication creates distinct function objects. Evidence: pr46-49-decomp-answers.md, section R88g.3.q3.
+    // This wrapper keeps one simulator configuration store without sharing identity.
+    if !matches!(
+        crate::lua_api::methods::registry_get(lua.state_mut(), "__secureenv"),
+        Val::Table(_)
+    ) {
+        return Ok(());
+    }
+
+    let secure_factory = create_retail_secure_factory(lua)?;
+    let secure_namespace = super::ensure_secure_namespace(lua.state_mut(), "C_StringUtil")?;
+    table_set_static(
+        lua.state_mut(),
+        Val::Table(secure_namespace),
+        "CreateSecondsFormatter",
+        secure_factory,
+    );
+    Ok(())
+}
+
+fn create_retail_secure_factory(lua: &mut rilua::Lua) -> crate::Result<Val> {
+    let namespace = LuaApiMut::get_global_val(lua, "C_StringUtil");
+    let factory = crate::lua_api::methods::table_get_static(
+        lua.state_mut(),
+        namespace,
+        "CreateSecondsFormatter",
+    );
+    let Val::Function(_) = factory else {
+        return Err(runtime_error(
+            "C_StringUtil.CreateSecondsFormatter must exist before secure publication",
+        )
+        .into());
+    };
+    create_secure_factory_wrapper(lua, factory)
+}
+
+fn create_secure_factory_wrapper(lua: &mut rilua::Lua, factory: Val) -> crate::Result<Val> {
+    const WRAPPER: &[u8] = b"local factory = ...\nreturn function(...) return factory(...) end";
+
+    let chunk = lua.load_bytes(WRAPPER, "@seconds-formatter-secure-factory")?;
+    let wrappers = lua.call_function(&chunk, &[factory])?;
+    let [secure_factory @ Val::Function(_)] = wrappers.as_slice() else {
+        return Err(
+            runtime_error("secure SecondsFormatter factory wrapper was not created").into(),
+        );
+    };
+    Ok(*secure_factory)
 }
 
 fn bootstrap_callbacks(state: &mut LuaState) -> [Val; 6] {

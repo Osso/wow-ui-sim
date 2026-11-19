@@ -16,7 +16,10 @@ pub mod blizzard_addon_manifest;
 mod event_helpers;
 pub mod game_menu_fixture;
 pub mod grouped_fixture;
+pub mod lua_error_assertions;
 pub mod panel_fixtures;
+#[cfg(feature = "client-retail")]
+pub mod store_catalog_fixture;
 #[cfg(target_os = "linux")]
 pub(crate) mod prefork_process;
 #[cfg(target_os = "linux")]
@@ -38,6 +41,17 @@ pub fn new_headless_cursor_env() -> WowLuaEnv {
     let fonts = wow_ui_sim::render::font::WowFontSystem::new_without_casc();
     env.set_font_system(std::rc::Rc::new(std::cell::RefCell::new(fonts)));
     env
+}
+
+/// Expose the active profile's private-aura API route to Lua behavior fixtures.
+pub fn install_private_aura_api_alias(env: &WowLuaEnv) {
+    let namespace = if wow_ui_sim::client_profile::is_active_retail_12_1_5() {
+        "__secureenv.C_UnitAurasPrivate"
+    } else {
+        "C_UnitAurasPrivate"
+    };
+    env.exec(&format!("SecurePrivateAuras = {namespace}"))
+        .expect("install private-aura API fixture alias");
 }
 
 /// Run a test closure with a per-call timeout.

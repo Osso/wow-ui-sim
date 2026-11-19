@@ -16,6 +16,26 @@ See the [source investigation](../wiki/investigations/compile-bin-lockwatch.md).
 - [Source investigation and proof boundary](../wiki/investigations/compile-bin-lockwatch.md)
 - [Native and full-suite workflow](../remote-builds.md)
 
+## Retail screen-clamp q3
+
+`autotests = false` disables Cargo's implicit test targets, not the
+`integration` target's module discovery. The test-harness build script discovers
+`tests/screen_clamp_q3.rs` once as an integration module. The optional-module
+list enables it only with `optional-tests`; the source also requires
+`client-retail`. Its eight ordinary tests run in the `integration` binary.
+The `prefork_full_ui_case!` marker separately registers the single original
+GameTooltip case for `prefork_full_ui`; it is not a libtest case. Do not add
+a second standalone target for the same source file.
+
+On Linux, enable `client-retail` and `optional-tests` and check the lists
+before interpreting GREEN or RED. Expect eight matches under `integration`
+and one under `prefork_full_ui`:
+
+```sh
+cargo test --no-default-features --features sound,gui,casc,client-retail,optional-tests --test integration -- screen_clamp_q3:: --list
+cargo test --no-default-features --features sound,gui,casc,client-retail,optional-tests --test prefork_full_ui -- --list screen_clamp_q3::
+```
+
 ## Implementation inventory
 
 - `Cargo.toml`: five utility target gates; dependency-free `tools` feature.

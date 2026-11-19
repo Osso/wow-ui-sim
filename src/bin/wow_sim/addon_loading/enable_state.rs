@@ -1,9 +1,10 @@
 use std::collections::HashMap;
 use std::path::{Path, PathBuf};
+use std::rc::Rc;
 
 use wow_ui_sim::addon_enable_state::{local_addons_txt_path, read_addon_enable_overrides};
 use wow_ui_sim::saved_variables::SavedVariablesManager;
-use wow_ui_sim::toc::TocFile;
+use wow_ui_sim::toc::{TocCache, TocFile};
 
 pub(super) fn addon_enabled(
     name: &str,
@@ -52,11 +53,12 @@ fn character_addon_enable_overrides(
 }
 
 pub(super) fn dependency_aware_enable_overrides(
+    tocs: &TocCache,
     addons: &[(String, PathBuf)],
     enable_overrides: Option<&HashMap<String, bool>>,
 ) -> Option<HashMap<String, bool>> {
     let overrides = enable_overrides?;
-    let addon_tocs = addon_toc_map(addons);
+    let addon_tocs = addon_toc_map(tocs, addons);
     let mut effective = overrides.clone();
 
     loop {
@@ -74,15 +76,15 @@ pub(super) fn dependency_aware_enable_overrides(
     }
 }
 
-fn addon_toc_map(addons: &[(String, PathBuf)]) -> HashMap<String, TocFile> {
+fn addon_toc_map(tocs: &TocCache, addons: &[(String, PathBuf)]) -> HashMap<String, Rc<TocFile>> {
     addons
         .iter()
-        .filter_map(|(name, path)| TocFile::from_file(path).ok().map(|toc| (name.clone(), toc)))
+        .filter_map(|(name, path)| tocs.get(path).ok().map(|toc| (name.clone(), toc)))
         .collect()
 }
 
 fn collect_new_dependency_enables(
-    addon_tocs: &HashMap<String, TocFile>,
+    addon_tocs: &HashMap<String, Rc<TocFile>>,
     character_overrides: &HashMap<String, bool>,
     effective: &HashMap<String, bool>,
 ) -> Vec<String> {
@@ -102,7 +104,7 @@ fn collect_new_dependency_enables(
 
 fn should_enable_dependency(
     dependency: &str,
-    addon_tocs: &HashMap<String, TocFile>,
+    addon_tocs: &HashMap<String, Rc<TocFile>>,
     character_overrides: &HashMap<String, bool>,
     effective: &HashMap<String, bool>,
 ) -> bool {
@@ -119,7 +121,7 @@ fn should_enable_dependency(
 }
 
 fn collect_new_dependency_disables(
-    addon_tocs: &HashMap<String, TocFile>,
+    addon_tocs: &HashMap<String, Rc<TocFile>>,
     effective: &HashMap<String, bool>,
 ) -> Vec<String> {
     let mut newly_disabled = Vec::new();
@@ -226,7 +228,7 @@ mod tests {
             addon_dir: None,
             title: "TestAddon".to_string(),
             notes: String::new(),
-            metadata: HashMap::new(),
+            metadata: wow_ui_sim::toc::TocMetadata::default(),
             load_with: Vec::new(),
             load_on_demand: false,
             default_enabled,
@@ -380,7 +382,8 @@ mod tests {
         let overrides = HashMap::from([("ParentAddon".to_string(), true)]);
 
         let effective =
-            dependency_aware_enable_overrides(&addons, Some(&overrides)).expect("effective map");
+            dependency_aware_enable_overrides(&TocCache::default(), &addons, Some(&overrides))
+                .expect("effective map");
 
         assert_eq!(effective.get("ParentAddon"), Some(&true));
         assert_eq!(effective.get("RequiredAddon"), Some(&true));
@@ -400,7 +403,8 @@ mod tests {
         let overrides = HashMap::from([("ParentAddon".to_string(), true)]);
 
         let effective =
-            dependency_aware_enable_overrides(&addons, Some(&overrides)).expect("effective map");
+            dependency_aware_enable_overrides(&TocCache::default(), &addons, Some(&overrides))
+                .expect("effective map");
 
         assert_eq!(effective.get("ParentAddon"), Some(&true));
         assert_eq!(effective.get("OptionalAddon"), None);
@@ -423,7 +427,8 @@ mod tests {
         ]);
 
         let effective =
-            dependency_aware_enable_overrides(&addons, Some(&overrides)).expect("effective map");
+            dependency_aware_enable_overrides(&TocCache::default(), &addons, Some(&overrides))
+                .expect("effective map");
 
         assert_eq!(effective.get("ParentAddon"), Some(&true));
         assert_eq!(effective.get("OptionalAddon"), Some(&false));
@@ -446,7 +451,8 @@ mod tests {
         ]);
 
         let effective =
-            dependency_aware_enable_overrides(&addons, Some(&overrides)).expect("effective map");
+            dependency_aware_enable_overrides(&TocCache::default(), &addons, Some(&overrides))
+                .expect("effective map");
 
         assert_eq!(effective.get("RequiredAddon"), Some(&false));
         assert_eq!(effective.get("PluginAddon"), Some(&false));
@@ -466,7 +472,8 @@ mod tests {
         let overrides = HashMap::from([("RequiredAddon".to_string(), false)]);
 
         let effective =
-            dependency_aware_enable_overrides(&addons, Some(&overrides)).expect("effective map");
+            dependency_aware_enable_overrides(&TocCache::default(), &addons, Some(&overrides))
+                .expect("effective map");
 
         assert_eq!(effective.get("RequiredAddon"), Some(&false));
         assert_eq!(effective.get("PluginAddon"), Some(&false));

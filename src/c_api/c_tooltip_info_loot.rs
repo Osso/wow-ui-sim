@@ -4,7 +4,7 @@
 use crate::c_api::tooltip_getter_args::one_based_index;
 use crate::lua_api::globals::currency_data;
 use crate::lua_api::globals::missing_surface::tooltip_info::{
-    tooltip_for_currency, tooltip_for_item_context,
+    tooltip_for_currency, tooltip_for_item_context, tooltip_for_item_context_with_sell_price,
 };
 use crate::lua_api::methods::borrow_state;
 use crate::lua_api::state::LootSlot;
@@ -46,7 +46,8 @@ fn get_loot_roll_item(state: &mut LuaState) -> LuaResult<u32> {
     let item = descriptor
         .resolve(player_level)
         .map_err(|error| rilua::runtime_error(format!("C_TooltipInfo.GetLootRollItem: {error}")))?;
-    let tooltip = tooltip_for_item_context(state, descriptor.item_id, item.as_ref());
+    let tooltip =
+        tooltip_for_item_context_with_sell_price(state, descriptor.item_id, item.as_ref());
     state.push(tooltip);
     Ok(1)
 }

@@ -19,12 +19,19 @@ pub(crate) fn init_shared_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     crate::lua_api::script_object_transfer::register_delegate_projection(lua)?;
     let bootstrap = lua.load_bytes(SHARED_BOOTSTRAP_LUA.as_bytes(), "@shared-bootstrap")?;
     let secure_projection = LuaApiMut::get_global_val(lua, "__wow_internal_projection_call");
+    let (_, retire_glue_owner_defaults) = glue_bootstrap_retirements();
     lua.call_function(
         &bootstrap,
         &[
             Val::Bool(cfg!(feature = "forbidden-aspects")),
             Val::Bool(cfg!(feature = "retail-12-0-0")),
             secure_projection,
+            Val::Bool(retire_glue_owner_defaults),
+            // R88ad.7-10 producers replace these defaults on Retail only.
+            Val::Bool(cfg!(feature = "client-retail")),
+            Val::Bool(
+                crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail,
+            ),
         ],
     )?;
     LuaApiMut::set_global_val(lua, "__wow_internal_projection_call", Val::Nil)?;
@@ -56,8 +63,9 @@ pub(crate) fn init_runtime_surface_bootstrap(lua: &mut rilua::Lua) -> crate::Res
     Ok(())
 }
 
-fn runtime_surface_arguments() -> [Val; 4] {
+fn runtime_surface_arguments() -> [Val; 8] {
     use crate::client_profile::{ACTIVE, ClientProfile};
+    let (retire_pve_frame_bridge, retire_glue_owner_defaults) = glue_bootstrap_retirements();
     let classic_combat = matches!(
         ACTIVE,
         ClientProfile::Mists
@@ -65,6 +73,9 @@ fn runtime_surface_arguments() -> [Val; 4] {
             | ClientProfile::Anniversary
             | ClientProfile::WowForever
     );
+    // Positional contract with runtime_surface_bootstrap.lua's destructuring:
+    // classicCombat, forever, vanilla, modeledStoreGlue, modeledStoreCatalog,
+    // modeledStoreVas, retirePveFrameBridge, retireGlueOwnerDefaults.
     [
         Val::Bool(classic_combat),
         Val::Bool(ACTIVE == ClientProfile::WowForever),
@@ -73,5 +84,26 @@ fn runtime_surface_arguments() -> [Val; 4] {
             ClientProfile::Era | ClientProfile::Anniversary
         )),
         Val::Bool(crate::c_api::c_store_glue::enabled()),
+        Val::Bool(ACTIVE == ClientProfile::Retail),
+        Val::Bool(ACTIVE == ClientProfile::Retail),
+        Val::Bool(retire_pve_frame_bridge),
+        Val::Bool(retire_glue_owner_defaults),
     ]
+}
+
+/// Retire only in tested Glue profiles; Forever keeps its Group Finder bridge.
+fn glue_bootstrap_retirements() -> (bool, bool) {
+    use crate::client_profile::{ACTIVE, ClientProfile};
+    let retire_pve_bridge = matches!(
+        ACTIVE,
+        ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::Mists
+    );
+    let retire_glue_defaults = matches!(
+        ACTIVE,
+        ClientProfile::Retail
+            | ClientProfile::Ptr
+            | ClientProfile::WowForever
+            | ClientProfile::Mists
+    );
+    (retire_pve_bridge, retire_glue_defaults)
 }

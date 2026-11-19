@@ -1,8 +1,8 @@
 //! XML file loading and element processing.
 
 use crate::lua_api::LoaderEnv;
-use crate::lua_api::globals::security::mark_secure_state;
-use crate::lua_api::methods::{create_string, registry_get, table_get_static, table_set_static};
+use crate::lua_api::globals::security::{mark_secure_state, secure_replay_env_table};
+use crate::lua_api::methods::{create_string, table_get_static, table_set_static};
 use crate::lua_api::script_helpers::call_error_handler_state;
 use crate::xml::{FrameXml, XmlElement, parse_xml_file};
 use rilua::{Function, LuaApiMut, Val};
@@ -378,8 +378,11 @@ fn scoped_script_env(env: &LoaderEnv<'_>, ctx: &AddonContext) -> Result<Val, Loa
             "ScopedModifier scriptsUseGivenEnv requires addon environment table".to_string(),
         ));
     };
+    if is_retail_secure_addon(ctx) {
+        return Ok(ctx.table);
+    }
     env.with_state(|state| {
-        let fallback = scoped_script_fallback_env(state, ctx.use_secure_env);
+        let fallback = scoped_script_fallback_env(state, ctx.use_secure_env)?;
         ensure_scoped_script_env_fallback(state, env_ref, fallback);
         Ok::<(), crate::Error>(())
     })
@@ -387,14 +390,20 @@ fn scoped_script_env(env: &LoaderEnv<'_>, ctx: &AddonContext) -> Result<Val, Loa
     Ok(ctx.table)
 }
 
-fn scoped_script_fallback_env(state: &mut rilua::vm::state::LuaState, use_secure_env: bool) -> Val {
+fn is_retail_secure_addon(ctx: &AddonContext<'_>) -> bool {
+    ctx.use_secure_env && crate::client_profile::is_active_retail_12_1_5()
+}
+
+fn scoped_script_fallback_env(
+    state: &mut rilua::vm::state::LuaState,
+    use_secure_env: bool,
+) -> crate::Result<Val> {
     if use_secure_env {
-        let secureenv = registry_get(state, "__secureenv");
-        if matches!(secureenv, Val::Table(_)) {
-            return secureenv;
-        }
+        return secure_replay_env_table(state)
+            .map(Val::Table)
+            .map_err(crate::Error::from);
     }
-    Val::Table(state.global)
+    Ok(Val::Table(state.global))
 }
 
 fn ensure_scoped_script_env_fallback(
@@ -475,19 +484,47 @@ fn run_inline_script(
     let func = compile_inline_script(env, inline, timing)?;
     let call_start = Instant::now();
     mark_inline_script_secure(env, ctx, &func)?;
-    apply_inline_script_scope(env, &func)?;
+    apply_inline_script_scope(env, ctx, &func)?;
     call_inline_script(env, ctx, &func)?;
     record_inline_script_call_timing(timing, call_start);
     Ok(())
 }
 
-fn apply_inline_script_scope(env: &LoaderEnv<'_>, func: &Function) -> Result<(), LoadError> {
+fn apply_inline_script_scope(
+    env: &LoaderEnv<'_>,
+    ctx: &AddonContext<'_>,
+    func: &Function,
+) -> Result<(), LoadError> {
     env.with_state(|state| {
-        crate::lua_api::loader_env::apply_loading_scoped_fenv_state(state, func).map_err(|e| {
-            call_error_handler_state(state, &e.to_string());
-            LoadError::Lua(e.to_string())
+        let result = (|| {
+            if uses_retail_secure_scoped_inline_env(state, ctx)? {
+                let secure_ref = crate::lua_api::globals::security::secure_env_table(state)
+                    .map_err(|error| LoadError::Lua(error.to_string()))?;
+                let secure_env = rilua::Table::from_gc_ref(secure_ref);
+                rilua::api::state_set_fenv(state, func, &secure_env)
+                    .map_err(|error| LoadError::Lua(error.to_string()))
+            } else {
+                crate::lua_api::loader_env::apply_loading_scoped_fenv_state(state, func)
+                    .map_err(|error| LoadError::Lua(error.to_string()))
+            }
+        })();
+        result.map_err(|error| {
+            call_error_handler_state(state, &error.to_string());
+            error
         })
     })
+}
+
+fn uses_retail_secure_scoped_inline_env(
+    state: &mut rilua::vm::state::LuaState,
+    ctx: &AddonContext<'_>,
+) -> Result<bool, LoadError> {
+    if !is_retail_secure_addon(ctx) {
+        return Ok(false);
+    }
+    crate::lua_api::methods::borrow_state(state)
+        .map(|sim| sim.loading_scoped_script_env.is_some())
+        .map_err(|error| LoadError::Lua(error.to_string()))
 }
 
 fn compile_inline_script(

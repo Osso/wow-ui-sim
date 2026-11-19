@@ -94,5 +94,13 @@ pub fn set_window(state: &mut LuaState) -> LuaResult<u32> {
     let window = stack_val(state, 2);
     let fields = get_or_create_frame_fields(state, id);
     table_set(state, fields, WINDOW_FIELD, window);
+    if crate::widget::clamp_geometry::uses_retail_clamp_producers()
+        && let Some(frame) = borrow_state_mut(state)?.widgets.get_mut(id)
+        && frame.has_frame_carrier()
+    {
+        // Existing simulated Window objects are tables. Store only their
+        // presence in geometry; ownership/identity stays with the Lua field.
+        frame.has_window_movement_context = matches!(window, Val::Table(_));
+    }
     Ok(0)
 }

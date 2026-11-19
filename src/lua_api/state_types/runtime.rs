@@ -1,6 +1,6 @@
 //! Runtime / profiler types: cursor state, per-addon metrics, error records.
 
-use std::collections::{HashMap, HashSet, VecDeque};
+use std::collections::{HashSet, VecDeque};
 
 /// What is currently held on the cursor (drag-and-drop state).
 #[derive(Debug, Clone)]
@@ -129,8 +129,10 @@ pub struct AddonInfo {
     pub notes: String,
     /// Whether the addon is currently enabled.
     pub enabled: bool,
-    /// Whether the addon was successfully loaded.
+    /// Whether the addon completed an ordinary-environment load.
     pub loaded: bool,
+    /// Whether the addon completed a secure-environment load.
+    pub secure_loaded: bool,
     /// Load on demand flag.
     pub load_on_demand: bool,
     /// Whether parsed addon XML contains named binding definitions.
@@ -149,12 +151,26 @@ pub struct AddonInfo {
     /// Surfaced to Lua via `C_AddOns.GetAddOnDependencies` as a variadic of strings.
     pub dependencies: Vec<String>,
     /// Raw TOC metadata exposed through `C_AddOns.GetAddOnMetadata`.
-    pub metadata: HashMap<String, String>,
+    pub metadata: crate::toc::TocMetadata,
     /// Factory default enabled state, derived from `## DefaultState: disabled`
     /// (`false` only when the TOC opts out; otherwise `true`). Surfaced via
     /// `C_AddOns.IsAddOnDefaultEnabled` and used by the addon list's
     /// reset-to-default action.
     pub default_enabled: bool,
+}
+
+impl AddonInfo {
+    pub fn is_loaded(&self) -> bool {
+        self.loaded || self.secure_loaded
+    }
+
+    pub fn is_loaded_in_environment(&self, secure: bool) -> bool {
+        if secure {
+            self.secure_loaded
+        } else {
+            self.loaded
+        }
+    }
 }
 
 impl Default for AddonInfo {
@@ -166,6 +182,7 @@ impl Default for AddonInfo {
             notes: String::new(),
             enabled: false,
             loaded: false,
+            secure_loaded: false,
             load_on_demand: false,
             contains_bindings: false,
             bootstrap_loaded: false,
@@ -174,7 +191,7 @@ impl Default for AddonInfo {
             load_time_secs: 0.0,
             runtime: AddonRuntimeMetrics::default(),
             dependencies: Vec::new(),
-            metadata: HashMap::new(),
+            metadata: crate::toc::TocMetadata::default(),
             default_enabled: true,
         }
     }

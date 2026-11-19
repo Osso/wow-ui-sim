@@ -51,7 +51,7 @@ fn patch_12_1_0_aura_groups_filter_limit_and_refresh_actual_frames() {
                 local frame = AuditGroups:GetAuraGroupFrame(key, index)
                 local expectedParent = AuditGroups:GetObjectTable()
                 if frame ~= frame:GetObjectTable() then
-                    expectedParent = GetForbiddenObjectTable(expectedParent)
+                    expectedParent = (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(expectedParent)
                 end
                 assert(frame:GetObjectType() == 'AuraButton' and frame:GetParent() == expectedParent)
                 local shown = frame:IsShown()

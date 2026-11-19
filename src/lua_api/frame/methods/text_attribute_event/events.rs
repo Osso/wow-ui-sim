@@ -31,8 +31,13 @@ pub(super) fn register_event(state: &mut LuaState) -> LuaResult<u32> {
     if newly_registered {
         rilua_hlist_register_individual(state, id, &event)?;
     }
+    let filter_cleared = borrow_state_mut(state)?
+        .widgets
+        .clear_unit_event_filter(id, &event);
     let restricted = crate::event::is_restricted_event(&event);
-    state.push(Val::Bool(newly_registered && !restricted));
+    state.push(Val::Bool(
+        (newly_registered || filter_cleared) && !restricted,
+    ));
     Ok(1)
 }
 fn insert_registered_event_checked(state: &mut LuaState, id: u64, event: &str) -> LuaResult<bool> {
@@ -49,33 +54,15 @@ pub(super) fn register_unit_event(state: &mut LuaState) -> LuaResult<u32> {
         return Ok(1);
     };
     ensure_registerable_event(state, id, &event)?;
-    let Some(unit) = val_to_string(state, stack_val(state, 3)) else {
-        state.push(Val::Bool(false));
-        return Ok(1);
-    };
-    let newly_registered = register_unit_event_filter(state, id, &event, &unit)?;
+    let units = super::unit_event::scan_unit_arguments(state);
+    let (newly_registered, changed) = borrow_state_mut(state)?
+        .widgets
+        .register_unit_event_listener(id, &event, units);
     if newly_registered {
         rilua_hlist_register_individual(state, id, &event)?;
     }
-    state.push(Val::Bool(newly_registered));
+    state.push(Val::Bool(changed));
     Ok(1)
-}
-fn register_unit_event_filter(
-    state: &mut LuaState,
-    id: u64,
-    event: &str,
-    unit: &str,
-) -> LuaResult<bool> {
-    if !super::unit_event::is_valid_unit_filter(unit) {
-        return Ok(borrow_state_mut(state)?
-            .widgets
-            .register_event_listener(id, event));
-    }
-    let second_unit = val_to_string(state, stack_val(state, 4))
-        .filter(|unit| super::unit_event::is_valid_unit_filter(unit));
-    Ok(borrow_state_mut(state)?
-        .widgets
-        .register_unit_event_listener(id, event, unit, second_unit.as_deref()))
 }
 
 pub(super) fn unregister_event(state: &mut LuaState) -> LuaResult<u32> {
@@ -154,7 +141,7 @@ pub(super) fn is_event_registered(state: &mut LuaState) -> LuaResult<u32> {
         .unwrap_or(false);
     let unit = frame
         .and_then(|frame| frame.registered_unit_events.get(&event))
-        .map(|(first, _)| first.clone());
+        .and_then(|units| units.first().cloned());
     drop(sim);
     state.push(Val::Bool(registered));
     super::unit_event::push_registered_unit(state, unit.as_deref());
@@ -243,12 +230,20 @@ pub(super) fn set_script(state: &mut LuaState) -> LuaResult<u32> {
     if matches!(handler, Val::Nil) {
         remove_rilua_script_binding(state, frame_id, &handler_name, ScriptBinding::Normal);
     } else {
-        if !matches!(handler, Val::Function(_)) {
+        let Val::Function(function_ref) = handler else {
             return Err(runtime_error(format!(
                 "SetScript: handler for '{handler_name}' must be a function or nil"
             )));
-        }
-        set_rilua_script(state, frame_id, &handler_name, handler);
+        };
+        let function = rilua::Function::from_gc_ref(function_ref);
+        crate::lua_api::loader_env::apply_loading_scoped_fenv_state(state, &function)
+            .map_err(|error| runtime_error(error.to_string()))?;
+        set_rilua_script(
+            state,
+            frame_id,
+            &handler_name,
+            Val::Function(function.gc_ref()),
+        );
         imply_mouse_enabled_for_mouse_handler(state, frame_id, &handler_name)?;
     }
     Ok(0)
@@ -359,8 +354,15 @@ fn script_supported_for_widget(
             return is_animation_script_handler(handler_name);
         }
     }
-    is_widget_agnostic_script_handler(handler_name)
+    supports_mists_movie_script(object_type_name, handler_name)
+        || is_widget_agnostic_script_handler(handler_name)
         || is_widget_specific_script_handler(widget_type, object_type_name, handler_name)
+}
+
+fn supports_mists_movie_script(object_type_name: Option<&str>, handler_name: &str) -> bool {
+    crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Mists
+        && object_type_name == Some("MovieFrame")
+        && handler_name == "OnMovieFinished"
 }
 
 fn is_animation_group_object_type(object_type_name: &str) -> bool {

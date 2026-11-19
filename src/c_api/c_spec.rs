@@ -3,6 +3,8 @@
 use crate::lua_api::game_data::CastingState;
 use crate::lua_api::globals::real::specialization_helpers::push_specialization_identity;
 use crate::lua_api::globals::spellbook_data;
+#[cfg(feature = "client-retail")]
+use crate::lua_api::methods::table_set;
 use crate::lua_api::methods::{borrow_state, borrow_state_mut, create_table};
 use crate::lua_api::workarounds::get_legacy_talent_info;
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
@@ -16,6 +18,22 @@ use super::helpers::ensure_namespace;
 #[cfg(feature = "client-retail")]
 use super::helpers::{read_untainted_signed32_argument, read_untainted_truthy_argument};
 
+#[cfg(feature = "client-retail")]
+#[derive(Debug, Clone, Default)]
+pub struct PvpTalentInfoRecord {
+    pub talent_id: i32,
+    pub name: String,
+    pub icon: u32,
+    pub selected: bool,
+    pub available: bool,
+    pub spell_id: u32,
+    pub unlocked: bool,
+    pub known: bool,
+    pub granted_by_aura: bool,
+    pub dependencies_unmet: bool,
+    pub dependencies_unmet_reason: Option<String>,
+}
+
 #[derive(Debug, Clone, Default)]
 pub struct PvpTalentState {
     pub can_use: bool,
@@ -25,6 +43,9 @@ pub struct PvpTalentState {
     /// Simulator-session lock set; native lifetime, persistence and event effects are unknown.
     #[cfg(feature = "client-retail")]
     pub locked_talent_ids: std::collections::HashSet<i32>,
+    /// Host-supplied `GetPvpTalentInfo` records; no records are seeded.
+    #[cfg(feature = "client-retail")]
+    pub info_by_id: std::collections::HashMap<i32, PvpTalentInfoRecord>,
 }
 
 type LuaTableRef = GcRef<Table>;
@@ -45,6 +66,8 @@ const C_SPECIALIZATION_INFO_METHODS: &[(&str, RustLuaFn)] = &[
     ),
     ("CanPlayerUseTalentUI", c_spec_can_player_use_talent_ui),
     ("GetActiveSpecGroup", c_spec_get_active_spec_group),
+    #[cfg(feature = "client-retail")]
+    ("GetPvpTalentInfo", get_pvp_talent_info),
     #[cfg(feature = "client-mists")]
     ("GetTalentInfo", c_spec_get_talent_info),
     ("GetSpellsDisplay", c_spec_get_spells_display),
@@ -65,6 +88,28 @@ pub fn register_c_specialization_info(state: &mut LuaState) -> LuaResult<()> {
     // the table with a fresh one.
     let t_ref = ensure_namespace(state, "C_SpecializationInfo")?;
     register_c_specialization_info_methods(state, t_ref)?;
+    register_c_specialization_info_profile_methods(state, t_ref)?;
+    Ok(())
+}
+
+fn register_c_specialization_info_profile_methods(
+    state: &mut LuaState,
+    t_ref: GcRef<Table>,
+) -> LuaResult<()> {
+    register_c_specialization_info_forever_methods(state, t_ref)?;
+    register_c_specialization_info_talent_info(state, t_ref)?;
+    register_c_specialization_info_retail_methods(state, t_ref)?;
+    register_c_specialization_info_class_ids(state, t_ref)?;
+    register_c_specialization_info_forever_pvp_methods(state, t_ref)?;
+    register_c_specialization_info_selection_methods(state, t_ref)?;
+    register_c_specialization_info_ptr_talent_point(state, t_ref)?;
+    Ok(())
+}
+
+fn register_c_specialization_info_forever_methods(
+    state: &mut LuaState,
+    t_ref: GcRef<Table>,
+) -> LuaResult<()> {
     // Forever 70707 SpecializationInfoDocumentation.lua:90-103; WM99.
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever {
         table_set_rust_fn_static(
@@ -74,6 +119,13 @@ pub fn register_c_specialization_info(state: &mut LuaState) -> LuaResult<()> {
             combat_config_for_spec_group,
         )?;
     }
+    Ok(())
+}
+
+fn register_c_specialization_info_talent_info(
+    state: &mut LuaState,
+    t_ref: GcRef<Table>,
+) -> LuaResult<()> {
     if matches!(
         crate::client_profile::ACTIVE,
         crate::client_profile::ClientProfile::Retail
@@ -87,32 +139,60 @@ pub fn register_c_specialization_info(state: &mut LuaState) -> LuaResult<()> {
             };
         table_set_rust_fn_static(state, t_ref, "GetTalentInfo", talent_info)?;
     }
+    Ok(())
+}
+
+fn register_c_specialization_info_retail_methods(
+    state: &mut LuaState,
+    t_ref: GcRef<Table>,
+) -> LuaResult<()> {
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
         #[cfg(feature = "client-retail")]
-        {
-            super::c_tooltip_info_pvp_talent::register_slot_info(state, t_ref)?;
-            table_set_rust_fn_static(
-                state,
-                t_ref,
-                "GetPvpTalentSlotUnlockLevel",
-                get_pvp_talent_slot_unlock_level,
-            )?;
-            table_set_rust_fn_static(
-                state,
-                t_ref,
-                "GetPvpTalentUnlockLevel",
-                get_pvp_talent_unlock_level,
-            )?;
-            table_set_rust_fn_static(state, t_ref, "IsPvpTalentLocked", is_pvp_talent_locked)?;
-            table_set_rust_fn_static(state, t_ref, "SetPvpTalentLocked", set_pvp_talent_locked)?;
-        }
-        table_set_rust_fn_static(
-            state,
-            t_ref,
-            "GetInspectSpecialization",
-            get_inspect_specialization,
-        )?;
+        register_c_specialization_info_retail_pvp_methods(state, t_ref)?;
+        register_c_specialization_info_retail_inspect_method(state, t_ref)?;
     }
+    Ok(())
+}
+
+#[cfg(feature = "client-retail")]
+fn register_c_specialization_info_retail_pvp_methods(
+    state: &mut LuaState,
+    t_ref: GcRef<Table>,
+) -> LuaResult<()> {
+    super::c_tooltip_info_pvp_talent::register_slot_info(state, t_ref)?;
+    table_set_rust_fn_static(
+        state,
+        t_ref,
+        "GetPvpTalentSlotUnlockLevel",
+        get_pvp_talent_slot_unlock_level,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        t_ref,
+        "GetPvpTalentUnlockLevel",
+        get_pvp_talent_unlock_level,
+    )?;
+    table_set_rust_fn_static(state, t_ref, "IsPvpTalentLocked", is_pvp_talent_locked)?;
+    table_set_rust_fn_static(state, t_ref, "SetPvpTalentLocked", set_pvp_talent_locked)?;
+    Ok(())
+}
+
+fn register_c_specialization_info_retail_inspect_method(
+    state: &mut LuaState,
+    t_ref: GcRef<Table>,
+) -> LuaResult<()> {
+    table_set_rust_fn_static(
+        state,
+        t_ref,
+        "GetInspectSpecialization",
+        get_inspect_specialization,
+    )
+}
+
+fn register_c_specialization_info_class_ids(
+    state: &mut LuaState,
+    t_ref: GcRef<Table>,
+) -> LuaResult<()> {
     if matches!(
         crate::client_profile::ACTIVE,
         crate::client_profile::ClientProfile::Ptr
@@ -120,6 +200,13 @@ pub fn register_c_specialization_info(state: &mut LuaState) -> LuaResult<()> {
     ) {
         table_set_rust_fn_static(state, t_ref, "GetAllClassIDs", c_spec_get_all_class_ids)?;
     }
+    Ok(())
+}
+
+fn register_c_specialization_info_forever_pvp_methods(
+    state: &mut LuaState,
+    t_ref: GcRef<Table>,
+) -> LuaResult<()> {
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever {
         table_set_rust_fn_static(
             state,
@@ -134,6 +221,13 @@ pub fn register_c_specialization_info(state: &mut LuaState) -> LuaResult<()> {
             pvp_talent_alert_status,
         )?;
     }
+    Ok(())
+}
+
+fn register_c_specialization_info_selection_methods(
+    state: &mut LuaState,
+    t_ref: GcRef<Table>,
+) -> LuaResult<()> {
     if matches!(
         crate::client_profile::ACTIVE,
         crate::client_profile::ClientProfile::Ptr
@@ -147,6 +241,13 @@ pub fn register_c_specialization_info(state: &mut LuaState) -> LuaResult<()> {
             c_spec_is_spec_selection_enabled,
         )?;
     }
+    Ok(())
+}
+
+fn register_c_specialization_info_ptr_talent_point(
+    state: &mut LuaState,
+    t_ref: GcRef<Table>,
+) -> LuaResult<()> {
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Ptr
         && !holds_rust_fn(state, t_ref, "HasPlayerEarnedATalentPoint")
     {
@@ -161,6 +262,9 @@ pub fn register_c_specialization_info(state: &mut LuaState) -> LuaResult<()> {
 }
 
 #[cfg(feature = "client-retail")]
+const GET_PVP_TALENT_INFO_USAGE: &str =
+    "Usage: local talentInfo = C_SpecializationInfo.GetPvpTalentInfo(talentID)";
+#[cfg(feature = "client-retail")]
 const GET_PVP_TALENT_SLOT_UNLOCK_LEVEL_USAGE: &str =
     "Usage: local requiredLevel = C_SpecializationInfo.GetPvpTalentSlotUnlockLevel(talentIndex)";
 #[cfg(feature = "client-retail")]
@@ -172,6 +276,54 @@ const IS_PVP_TALENT_LOCKED_USAGE: &str =
 #[cfg(feature = "client-retail")]
 const SET_PVP_TALENT_LOCKED_USAGE: &str =
     "Usage: C_SpecializationInfo.SetPvpTalentLocked(talentID, locked)";
+
+#[cfg(feature = "client-retail")]
+fn get_pvp_talent_info(state: &mut LuaState) -> LuaResult<u32> {
+    let talent_id = read_untainted_signed32_argument(
+        state,
+        1,
+        "C_SpecializationInfo.GetPvpTalentInfo",
+        GET_PVP_TALENT_INFO_USAGE,
+    )?;
+    let record = borrow_state(state)?
+        .pvp_talents
+        .info_by_id
+        .get(&talent_id)
+        .cloned();
+    let Some(record) = record else {
+        return Ok(0);
+    };
+    push_pvp_talent_info(state, &record);
+    Ok(1)
+}
+
+#[cfg(feature = "client-retail")]
+fn push_pvp_talent_info(state: &mut LuaState, record: &PvpTalentInfoRecord) {
+    let result = create_table(state);
+    state.push(result);
+    let name = Val::Str(state.gc.intern_string(record.name.as_bytes()));
+    let reason = record
+        .dependencies_unmet_reason
+        .as_ref()
+        .map_or(Val::Nil, |text| {
+            Val::Str(state.gc.intern_string(text.as_bytes()))
+        });
+    for (key, value) in [
+        ("talentID", Val::Num(f64::from(record.talent_id))),
+        ("name", name),
+        ("icon", Val::Num(f64::from(record.icon))),
+        ("selected", Val::Bool(record.selected)),
+        ("available", Val::Bool(record.available)),
+        ("spellID", Val::Num(f64::from(record.spell_id))),
+        ("unlocked", Val::Bool(record.unlocked)),
+        ("known", Val::Bool(record.known)),
+        ("grantedByAura", Val::Bool(record.granted_by_aura)),
+        ("dependenciesUnmet", Val::Bool(record.dependencies_unmet)),
+        ("dependenciesUnmetReason", reason),
+    ] {
+        table_set(state, result, key, value);
+    }
+}
 
 #[cfg(feature = "client-retail")]
 fn get_pvp_talent_slot_unlock_level(state: &mut LuaState) -> LuaResult<u32> {

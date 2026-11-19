@@ -17,8 +17,16 @@ fn blizzard_ui_dir() -> PathBuf {
 }
 
 fn load_blizzard_screen(screen: ScreenKind) -> common::LockedEnv {
+    load_blizzard_screen_with_setup(screen, |_| {})
+}
+
+fn load_blizzard_screen_with_setup(
+    screen: ScreenKind,
+    configure: impl FnOnce(&WowLuaEnv),
+) -> common::LockedEnv {
     common::lock_env(move || {
-        let env = WowLuaEnv::new().expect("Failed to create Lua environment");
+        let env = WowLuaEnv::new_for_screen(screen).expect("Failed to create Lua environment");
+        configure(&env);
         env.set_screen_size(1024.0, 768.0);
         env.set_screen_mode(screen);
 
@@ -34,6 +42,11 @@ fn load_blizzard_screen(screen: ScreenKind) -> common::LockedEnv {
         settle_headless_startup(&env);
         env
     })
+}
+
+#[cfg(feature = "client-mists")]
+fn new_mists_api_env() -> common::LockedEnv {
+    common::lock_env(|| WowLuaEnv::new().expect("Mists API environment should initialize"))
 }
 
 fn hit_test_like_gui(env: &WowLuaEnv, pos: Point) -> Option<u64> {
@@ -118,14 +131,70 @@ fn frame_center(env: &WowLuaEnv, frame_path: &str) -> Point {
     Point::new(rect.x + rect.width / 2.0, rect.y + rect.height / 2.0)
 }
 
+// VERIFIED (simulator): a default Mists Game environment keeps its placeholder.
+#[cfg(feature = "client-mists")]
+#[test]
+fn mists_game_bootstrap_keeps_synthetic_chat_frame() {
+    let env = new_mists_api_env();
+    let chat_frame_exists: bool = env
+        .eval("return type(ChatFrame1) == 'table'")
+        .expect("Mists Game ChatFrame1 presence should be queryable");
+    assert!(chat_frame_exists);
+}
+
+// VERIFIED (R88ao, Mists Classic 5.5.4.70631): display expansion level is 4.
+// INFERRED (R88ao, Mists Classic 5.5.4.70631 applied to cached
+// 5.5.4.70268): the level applies to its Glue consumer.
+#[cfg(feature = "client-mists")]
+#[test]
+fn mists_client_display_expansion_level_returns_four() {
+    test_timeout! {
+        let env = common::lock_env(|| WowLuaEnv::new().unwrap());
+        let level: i32 = env.eval("return GetClientDisplayExpansionLevel()").unwrap();
+        assert_eq!(level, 4, "R88ao verifies the Mists display expansion level");
+    }
+}
+
+// INFERRED (R88ao, Mists Classic 5.5.4.70631 applied to cached 5.5.4.70268):
+// startup opens MovieFrame; the absent-result pair (false, 2) takes the cached
+// failed-start close path.
+// UNKNOWN (R88ao, Mists Classic 5.5.4.70631): results for available records and
+// files depend on data and playback state.
+// INFERRED (R88ar, Mists Classic 5.5.4.70631 applied to cached 5.5.4.70268):
+// the Game-only chat TOCs are absent on Mists Glue.
 #[test]
 fn login_boot_hides_non_login_frontend_frames() {
     test_timeout! {
         let env = load_blizzard_screen(ScreenKind::Login);
 
-        let stubs_present: bool = env
-            .eval(
-                r#"
+        assert_glue_login_account_helpers_available(&env);
+
+        assert_glue_login_helper_errors_absent(&env);
+
+        assert_account_login_visible(&env);
+
+        #[cfg(feature = "client-mists")]
+        assert_mists_glue_chat_frame_absent(&env);
+
+        // R62: Retail AccountLogin chat visibility is UNKNOWN. Its unconditional
+        // shared definition must not be replaced or forced hidden. Other profiles
+        // retain their independently supported visibility assertion.
+        #[cfg(not(feature = "client-retail"))]
+        assert_login_chat_frame_hidden(&env);
+
+        // R62 / tracker107: Retail chat-role dock visibility has the same
+        // UNKNOWN native filtering/parent-visibility boundary as ChatFrame1.
+        #[cfg(not(feature = "client-retail"))]
+        assert_login_chat_dock_hidden(&env);
+
+        assert_character_customization_hidden(&env);
+    }
+}
+
+fn assert_glue_login_account_helpers_available(env: &WowLuaEnv) {
+    let stubs_present: bool = env
+        .eval(
+            r#"
                 return type(GetSavedAccountName) == "function"
                     and type(SetSavedAccountName) == "function"
                     and type(GetSavedAccountList) == "function"
@@ -133,67 +202,84 @@ fn login_boot_hides_non_login_frontend_frames() {
                     and type(WasScreenFirstDisplayed) == "function"
                     and type(C_Login.IsLoginReady) == "function"
                 "#,
-            )
-            .expect("glue login stubs should be callable");
-        assert!(stubs_present, "login boot should expose required glue account helpers");
+        )
+        .expect("glue login stubs should be callable");
+    assert!(stubs_present, "login boot should expose required glue account helpers");
+}
 
-        let missing_stub_errors: Vec<String> = env
-            .state()
-            .borrow()
-            .lua_errors
-            .iter()
-            .filter(|msg| {
-                msg.contains("GetSavedAccountName")
-                    || msg.contains("IsLoginReady")
-                    || msg.contains("WasScreenFirstDisplayed")
-            })
-            .cloned()
-            .collect();
-        assert!(
-            missing_stub_errors.is_empty(),
-            "login boot should not error on glue account helpers: {missing_stub_errors:#?}"
-        );
+fn assert_glue_login_helper_errors_absent(env: &WowLuaEnv) {
+    let missing_stub_errors: Vec<String> = env
+        .state()
+        .borrow()
+        .lua_errors
+        .iter()
+        .filter(|msg| {
+            msg.contains("GetSavedAccountName")
+                || msg.contains("IsLoginReady")
+                || msg.contains("WasScreenFirstDisplayed")
+        })
+        .cloned()
+        .collect();
+    assert!(
+        missing_stub_errors.is_empty(),
+        "login boot should not error on glue account helpers: {missing_stub_errors:#?}"
+    );
+}
 
-        let account_login_visible: bool = env
-            .eval("return AccountLogin ~= nil and AccountLogin:IsShown()")
-            .expect("AccountLogin visibility should be queryable");
-        assert!(account_login_visible, "login screen should show AccountLogin");
+fn assert_account_login_visible(env: &WowLuaEnv) {
+    let account_login_visible: bool = env
+        .eval("return AccountLogin ~= nil and AccountLogin:IsShown()")
+        .expect("AccountLogin visibility should be queryable");
+    assert!(account_login_visible, "login screen should show AccountLogin");
+}
 
-        // R62: Retail AccountLogin chat visibility is UNKNOWN. Its unconditional
-        // shared definition must not be replaced or forced hidden. Other profiles
-        // retain their independently supported visibility assertion.
-        #[cfg(not(feature = "client-retail"))]
-        {
-        let chat_frame_visible: bool = env
-            .eval("return ChatFrame1 ~= nil and ChatFrame1:IsShown()")
-            .expect("ChatFrame1 visibility should be queryable");
-        assert!(
-            !chat_frame_visible,
-            "plain login screen should not show the front-end chat frame"
-        );
-        }
+#[cfg(feature = "client-mists")]
+fn assert_mists_glue_chat_frame_absent(env: &WowLuaEnv) {
+    let chat_frame_exists: bool = env
+        .eval("return ChatFrame1 ~= nil")
+        .expect("ChatFrame1 presence should be queryable");
+    assert!(!chat_frame_exists, "Mists Glue must not create a chat placeholder");
+    let chat_addons_loaded: (bool, bool) = env
+        .eval(
+            r#"
+                    return C_AddOns.IsAddOnLoaded('Blizzard_ChatFrameBase'),
+                        C_AddOns.IsAddOnLoaded('Blizzard_ChatFrame')
+                    "#,
+        )
+        .expect("Mists chat addon load state should be queryable");
+    assert_eq!(chat_addons_loaded, (false, false));
+}
 
-        // R62 / tracker107: Retail chat-role dock visibility has the same
-        // UNKNOWN native filtering/parent-visibility boundary as ChatFrame1.
-        #[cfg(not(feature = "client-retail"))]
-        {
-        let chat_dock_visible: bool = env
-            .eval("return GeneralDockManager ~= nil and GeneralDockManager:IsShown()")
-            .expect("GeneralDockManager visibility should be queryable");
-        assert!(
-            !chat_dock_visible,
-            "plain login screen should not show the chat dock"
-        );
-        }
+#[cfg(not(feature = "client-retail"))]
+fn assert_login_chat_frame_hidden(env: &WowLuaEnv) {
+    let chat_frame_visible: bool = env
+        .eval("return ChatFrame1 ~= nil and ChatFrame1:IsShown()")
+        .expect("ChatFrame1 visibility should be queryable");
+    assert!(
+        !chat_frame_visible,
+        "plain login screen should not show the front-end chat frame"
+    );
+}
 
-        let char_customize_visible: bool = env
-            .eval("return CharCustomizeFrame ~= nil and CharCustomizeFrame:IsShown()")
-            .expect("CharCustomizeFrame visibility should be queryable");
-        assert!(
-            !char_customize_visible,
-            "plain login screen should not show character customization"
-        );
-    }
+#[cfg(not(feature = "client-retail"))]
+fn assert_login_chat_dock_hidden(env: &WowLuaEnv) {
+    let chat_dock_visible: bool = env
+        .eval("return GeneralDockManager ~= nil and GeneralDockManager:IsShown()")
+        .expect("GeneralDockManager visibility should be queryable");
+    assert!(
+        !chat_dock_visible,
+        "plain login screen should not show the chat dock"
+    );
+}
+
+fn assert_character_customization_hidden(env: &WowLuaEnv) {
+    let char_customize_visible: bool = env
+        .eval("return CharCustomizeFrame ~= nil and CharCustomizeFrame:IsShown()")
+        .expect("CharCustomizeFrame visibility should be queryable");
+    assert!(
+        !char_customize_visible,
+        "plain login screen should not show character customization"
+    );
 }
 
 #[test]
@@ -288,6 +374,11 @@ fn login_boot_keeps_settings_preview_panels_wired_to_settings_panel() {
     }
 }
 
+// INFERRED (R88ao, Mists Classic 5.5.4.70631 applied to cached 5.5.4.70268):
+// the absent-result pair (false, 2) follows the cached close path, so AccountLogin's
+// original hit targets are used.
+// UNKNOWN (R88ao, Mists Classic 5.5.4.70631): results for available records and
+// files depend on data and playback state.
 #[test]
 fn login_editboxes_gain_focus_when_clicking_their_visible_centers() {
     test_timeout! {
@@ -301,27 +392,352 @@ fn login_editboxes_gain_focus_when_clicking_their_visible_centers() {
         let password_hit = hit_test_like_gui(&env, password_center)
             .expect("password edit box center should hit some widget");
 
-        env.send_click(account_hit)
-            .expect("clicking the account edit box center should dispatch");
-        let account_has_focus: bool = env
-            .eval("return AccountLogin.UI.AccountEditBox:HasFocus()")
-            .expect("AccountEditBox focus should be queryable");
-        assert!(
-            account_has_focus,
-            "account edit box should gain focus when clicked; hit chain={:?}",
-            frame_chain(&env, account_hit)
-        );
+        click_account_editbox_and_assert_focus(&env, account_hit);
+        click_password_editbox_and_assert_focus(&env, password_hit);
+    }
+}
 
-        env.send_click(password_hit)
-            .expect("clicking the password edit box center should dispatch");
-        let password_has_focus: bool = env
-            .eval("return AccountLogin.UI.PasswordEditBox:HasFocus()")
-            .expect("PasswordEditBox focus should be queryable");
-        assert!(
-            password_has_focus,
-            "password edit box should gain focus when clicked; hit chain={:?}",
-            frame_chain(&env, password_hit)
-        );
+fn click_account_editbox_and_assert_focus(env: &WowLuaEnv, account_hit: u64) {
+    env.send_click(account_hit)
+        .expect("clicking the account edit box center should dispatch");
+    let account_has_focus: bool = env
+        .eval("return AccountLogin.UI.AccountEditBox:HasFocus()")
+        .expect("AccountEditBox focus should be queryable");
+    assert!(
+        account_has_focus,
+        "account edit box should gain focus when clicked; hit chain={:?}",
+        frame_chain(env, account_hit)
+    );
+}
+
+fn click_password_editbox_and_assert_focus(env: &WowLuaEnv, password_hit: u64) {
+    env.send_click(password_hit)
+        .expect("clicking the password edit box center should dispatch");
+    let password_has_focus: bool = env
+        .eval("return AccountLogin.UI.PasswordEditBox:HasFocus()")
+        .expect("PasswordEditBox focus should be queryable");
+    assert!(
+        password_has_focus,
+        "password edit box should gain focus when clicked; hit chain={:?}",
+        frame_chain(env, password_hit)
+    );
+}
+
+// INFERRED (R88am, Mists Classic 5.5.4.70631 applied to cached
+// 5.5.4.70268): the original consumer hides cached-login rows after a zero-return query.
+#[cfg(feature = "client-mists")]
+fn assert_mists_cached_login_rows_hidden(env: &WowLuaEnv) {
+    let row_visible: bool = env
+        .eval(
+            r#"
+            local container = AccountLogin.UI.CachedLoginFrameContainer
+            local row = CreateFrame("Frame", nil, container, "CachedLoginFrameTemplate")
+            container.Frames = { row }
+            row:Show()
+            CachedLoginFrameContainer_Update(container)
+            for _, cachedRow in ipairs(container.Frames) do
+                if cachedRow:IsShown() then return true end
+            end
+            return false
+        "#,
+        )
+        .expect("Classic cached-login consumer should hide rows without credentials");
+    assert!(!row_visible, "Classic Login must hide cached-account rows");
+}
+
+#[cfg(feature = "client-mists")]
+fn assert_mists_glue_api_scopes(env: &WowLuaEnv) {
+    let cursor_globals: bool = env
+        .eval("return type(HideCursor) == 'function' and type(ShowCursor) == 'function'")
+        .unwrap();
+    assert!(cursor_globals, "cursor visibility globals must be available in Glue");
+    let cinematic_started_available: bool = env
+        .eval("return type(CinematicStarted) == 'function'")
+        .unwrap();
+    assert!(cinematic_started_available, "CinematicStarted should be available in Glue");
+    let returns_none: bool = env
+        .eval("return select('#', HideCursor()) == 0 and select('#', ShowCursor()) == 0")
+        .unwrap();
+    assert!(returns_none, "cursor visibility globals must return no values");
+}
+
+#[cfg(feature = "client-mists")]
+fn assert_mists_game_api_scopes(env: &WowLuaEnv) {
+    let absent: bool = env
+        .eval("return C_Login.GetCachedCredentials == nil")
+        .unwrap();
+    assert!(absent, "GetCachedCredentials must be Glue-only");
+    let cursor_globals_absent: bool = env
+        .eval("return HideCursor == nil and ShowCursor == nil")
+        .unwrap();
+    assert!(cursor_globals_absent, "cursor visibility globals must be Glue-only");
+    let cinematic_started_available: bool = env
+        .eval("return type(CinematicStarted) == 'function'")
+        .unwrap();
+    assert!(cinematic_started_available, "CinematicStarted must be available in Game");
+}
+
+#[cfg(feature = "client-mists")]
+#[test]
+fn mists_classic_cached_login_consumer_hides_rows_and_checks_api_scopes() {
+    test_timeout! {
+        let env = load_blizzard_screen(ScreenKind::Login);
+        assert_mists_glue_api_scopes(&env);
+        assert_mists_cached_login_rows_hidden(&env);
+        env.set_screen_mode(ScreenKind::Game);
+        assert_mists_game_api_scopes(&env);
+    }
+}
+
+// VERIFIED (R88ao, Mists Classic 5.5.4.70631): StartMovie returns a Boolean and numeric code;
+// no accepted movie record returns code 2, "Missing Rec".
+// INFERRED (simulator mapping): no simulator Movie records take that native path.
+#[cfg(feature = "client-mists")]
+#[test]
+fn mists_movie_missing_record_returns_false_and_code() {
+    test_timeout! {
+        let env = load_blizzard_screen(ScreenKind::Login);
+        let result: (bool, i32) = env
+            .eval("return MovieFrame:StartMovie(999)")
+            .expect("an absent Movie record should return the Missing Rec pair");
+        assert_eq!(result, (false, 2));
+    }
+}
+
+#[cfg(feature = "client-mists")]
+#[test]
+fn mists_movie_start_returns_boolean_and_code() {
+    test_timeout! {
+        let env = load_blizzard_screen(ScreenKind::Login);
+        {
+            let mut state = env.state().borrow_mut();
+            for code in 0..=4 {
+                state.movie_playback.start_results.insert(115 + code, code);
+            }
+        }
+        env.exec(r#"
+            for code = 0, 4 do
+                local success, resultCode = MovieFrame:StartMovie(115 + code)
+                assert(type(success) == "boolean")
+                assert(type(resultCode) == "number")
+                assert(success == (code == 0))
+                assert(resultCode == code)
+            end
+        "#).expect("configured StartMovie outcomes should match the native return pair");
+    }
+}
+
+// VERIFIED (R88aq-b, Mists 5.5.4.70631): cinematic type values are stable.
+#[cfg(feature = "client-mists")]
+#[test]
+fn mists_cinematic_type_enum_matches_native_values() {
+    test_timeout! {
+        let env = new_mists_api_env();
+        let values: (i32, i32, i32, i32) = env.eval(
+            "return Enum.CinematicType.GlueMovie, Enum.CinematicType.GameMovie, Enum.CinematicType.GameClientScene, Enum.CinematicType.GameCinematicSequence",
+        ).expect("CinematicType values should be readable");
+        assert_eq!(values, (0, 1, 2, 3));
+    }
+}
+
+// VERIFIED (R88aq, Mists 5.5.4.70631): numeric strings truncate toward zero; Started returns no values.
+#[cfg(feature = "client-mists")]
+#[test]
+fn mists_cinematic_started_parses_arguments_and_returns_nothing() {
+    test_timeout! {
+        let env = new_mists_api_env();
+        let returns: i32 = env.eval(
+            "return select('#', CinematicStarted('2.9', '-9.7', false, 'ignored'))",
+        ).expect("CinematicStarted should accept numeric strings");
+        assert_eq!(returns, 0);
+        {
+            let state = env.state().borrow();
+            let record = &state.movie_playback.cinematic_records[&2];
+            assert_eq!((record.movie_type, record.movie_id), (2, -9));
+            assert!(!record.can_cancel);
+            assert!(record.active);
+            assert_eq!(state.movie_playback.manager_movie_id, Some(-9));
+        }
+        let hex_return: i32 = env
+            .eval("return select('#', CinematicStarted('0x3', '0xA'))")
+            .expect("Lua hexadecimal strings should convert to cinematic integers");
+        assert_eq!(hex_return, 0);
+        let state = env.state().borrow();
+        assert_eq!(state.movie_playback.cinematic_records[&3].movie_id, 10);
+        assert_eq!(state.movie_playback.manager_movie_id, Some(10));
+    }
+}
+
+#[cfg(feature = "client-mists")]
+#[test]
+fn mists_cinematic_started_defaults_cancel_and_skips_zero_id() {
+    test_timeout! {
+        let env = new_mists_api_env();
+        env.exec("CinematicStarted(0, 10); CinematicStarted(1, 20, nil); CinematicStarted(2, 30, false); CinematicStarted(3, 40, 0, 'extra'); CinematicStarted(3, 0, false)")
+            .expect("valid cinematic starts should update their records");
+        let state = env.state().borrow();
+        assert!(state.movie_playback.cinematic_records[&0].can_cancel);
+        assert!(state.movie_playback.cinematic_records[&1].can_cancel);
+        assert!(!state.movie_playback.cinematic_records[&2].can_cancel);
+        assert!(state.movie_playback.cinematic_records[&3].can_cancel);
+        assert!(state.movie_playback.cinematic_records[&3].active);
+        assert_eq!(state.movie_playback.cinematic_records[&3].movie_id, 40);
+        assert!(state.movie_playback.last_cinematic_finish.is_none());
+        assert_eq!(state.movie_playback.manager_movie_id, Some(40));
+    }
+}
+
+#[cfg(feature = "client-mists")]
+#[test]
+fn mists_cinematic_started_restarts_active_type_without_manager_id() {
+    test_timeout! {
+        let env = new_mists_api_env();
+        env.exec("CinematicStarted(2, 10, false); CinematicStarted(2, 11, true)")
+            .expect("restarting an active type should finish before starting again");
+        let state = env.state().borrow();
+        let record = &state.movie_playback.cinematic_records[&2];
+        assert_eq!(record.movie_id, 11);
+        assert!(record.can_cancel && record.active);
+        assert_eq!(state.movie_playback.manager_movie_id, None);
+        let finished = state.movie_playback.last_cinematic_finish.as_ref().unwrap();
+        assert_eq!(finished.movie_type, 2);
+        assert!(!finished.user_canceled && !finished.did_error);
+    }
+}
+
+#[cfg(feature = "client-mists")]
+#[test]
+fn mists_cinematic_started_rejects_invalid_arguments_and_ranges() {
+    test_timeout! {
+        let env = new_mists_api_env();
+        env.exec(r#"
+            local usage = "Usage: CinematicStarted(movieType, movieID [, canCancel])"
+            local invalid = {
+                function() CinematicStarted() end,
+                function() CinematicStarted(1) end,
+                function() CinematicStarted(nil, 1) end,
+                function() CinematicStarted(1, nil) end,
+                function() CinematicStarted("bad", 1) end,
+                function() CinematicStarted(1, "bad") end,
+                function() CinematicStarted(-1, 1) end,
+                function() CinematicStarted(4, 1) end,
+            }
+            for _, call in ipairs(invalid) do
+                local ok, err = pcall(call)
+                assert(not ok and string.find(tostring(err), usage, 1, true))
+            end
+            local okId, errId = pcall(CinematicStarted, 1, 2147483648)
+            assert(not okId and string.find(tostring(errId), "outside of expected range -2147483648 to 2147483647", 1, true))
+            local okLowId, errLowId = pcall(CinematicStarted, 1, -2147483649)
+            assert(not okLowId and string.find(tostring(errLowId), "outside of expected range -2147483648 to 2147483647", 1, true))
+            local okType, errType = pcall(CinematicStarted, 1e100, 1)
+            assert(not okType and string.find(tostring(errType), "integer overflow attempting to store", 1, true))
+        "#).expect("CinematicStarted should reject invalid inputs with native errors");
+    }
+}
+
+#[cfg(feature = "client-mists")]
+#[test]
+fn mists_cinematic_finished_inactive_type_still_clears_manager_id() {
+    test_timeout! {
+        let env = new_mists_api_env();
+        env.exec("CinematicStarted(2, 9, true); CinematicFinished(3)")
+            .expect("inactive type completion should still clear manager movie ID");
+        let state = env.state().borrow();
+        assert_eq!(state.movie_playback.manager_movie_id, None);
+        assert!(state.movie_playback.cinematic_records[&2].active);
+        assert!(state.movie_playback.last_cinematic_finish.is_none());
+    }
+}
+
+// VERIFIED (R88ao, Mists Classic 5.5.4.70631): an error return does not dispatch
+// OnMovieFinished; StopMovie can dispatch for the installed handle.
+#[cfg(feature = "client-mists")]
+#[test]
+fn mists_movie_failed_start_defers_finish_until_stop() {
+    test_timeout! {
+        let env = load_blizzard_screen(ScreenKind::Login);
+        env.state().borrow_mut().movie_playback.start_results.insert(115, 3);
+        env.exec(r#"
+            local finishCount = 0
+            MovieFrame:SetScript("OnMovieFinished", function() finishCount = finishCount + 1 end)
+            local success, resultCode = MovieFrame:StartMovie(115)
+            assert(not success and resultCode == 3)
+            assert(finishCount == 0)
+            MovieFrame:StopMovie()
+            assert(finishCount == 1)
+        "#).expect("StopMovie should dispatch only for the installed handle");
+    }
+}
+
+// INFERRED (R88ao, Mists Classic 5.5.4.70631 applied to cached 5.5.4.70268):
+// an explicit success result keeps MovieFrame open until its finish callback.
+#[cfg(feature = "client-mists")]
+#[test]
+fn mists_movie_success_consumes_stop_and_restores_login() {
+    test_timeout! {
+        let env = load_blizzard_screen_with_setup(ScreenKind::Login, |env| {
+            env.state().borrow_mut().movie_playback.start_results.insert(115, 0);
+        });
+        let shown: (bool, bool) = env.eval(
+            "return MovieFrame:IsShown(), AccountLogin:IsShown()",
+        ).expect("the successful movie should keep the secondary screen open");
+        assert_eq!(shown, (true, false));
+
+        env.exec("MovieFrame:StopMovie()")
+            .expect("StopMovie should dispatch the original finish callback");
+        let shown: (bool, bool) = env.eval(
+            "return MovieFrame:IsShown(), AccountLogin:IsShown()",
+        ).expect("the finished movie should close its secondary screen");
+        assert_eq!(shown, (false, true));
+        let state = env.state().borrow();
+        let finished = state.movie_playback.last_cinematic_finish.as_ref()
+            .expect("natural finish should record the active movie");
+        assert!(!finished.user_canceled && !finished.did_error);
+    }
+}
+
+#[cfg(feature = "client-mists")]
+#[test]
+fn mists_cinematic_finished_clears_matching_active_type() {
+    test_timeout! {
+        let env = load_blizzard_screen_with_setup(ScreenKind::Login, |env| {
+            env.state().borrow_mut().movie_playback.start_results.insert(115, 0);
+        });
+        env.exec("CinematicStarted(3, 42, true)")
+            .expect("CinematicStarted should create an active record");
+        {
+            let mut state = env.state().borrow_mut();
+            state.movie_playback.cinematic_records.get_mut(&3).unwrap().started_at =
+                std::time::Instant::now() - std::time::Duration::from_millis(10);
+        }
+        let returns: i32 = env
+            .eval("return select('#', CinematicFinished(3, true, true))")
+            .expect("CinematicFinished should record an active completion");
+        assert_eq!(returns, 0);
+        let movie_shown: bool = env
+            .eval("return MovieFrame:IsShown()")
+            .expect("MovieFrame visibility should remain queryable");
+        assert!(movie_shown, "CinematicFinished must not close MovieFrame");
+        let state = env.state().borrow();
+        assert_eq!(state.movie_playback.manager_movie_id, None);
+        assert!(!state.movie_playback.cinematic_records[&3].active);
+        let finished = state.movie_playback.last_cinematic_finish.as_ref()
+            .expect("active completion should be recorded");
+        assert_eq!(finished.movie_type, 3);
+        assert!(finished.elapsed >= std::time::Duration::from_millis(10));
+        assert_eq!((finished.user_canceled, finished.did_error), (true, true));
+    }
+}
+
+// VERIFIED (R88ao, Mists Classic 5.5.4.70631): StopMovie without a handle returns no values.
+#[cfg(feature = "client-mists")]
+#[test]
+fn mists_movie_stop_without_handle_returns_no_values() {
+    test_timeout! {
+        let env = load_blizzard_screen(ScreenKind::Login);
+        env.exec("assert(select('#', MovieFrame:StopMovie()) == 0)")
+            .expect("StopMovie without a handle should return no values");
     }
 }
 

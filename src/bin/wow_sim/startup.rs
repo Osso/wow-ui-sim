@@ -29,7 +29,8 @@ pub(super) fn init_and_load(
     screen: ScreenKind,
     session_wtf_path: std::path::PathBuf,
 ) -> InitResult {
-    let env = WowLuaEnv::with_session_wtf_path(session_wtf_path).expect("failed to create Lua env");
+    let env = WowLuaEnv::with_session_wtf_path_for_screen(session_wtf_path, screen)
+        .expect("failed to create Lua env");
     initialize_and_load_env(args, screen, env)
 }
 
@@ -268,7 +269,7 @@ mod tests {
             .iter()
             .find(|addon| addon.folder_name == "EnhanceQoLSharedMedia");
         let encountered = shared_media.is_some();
-        let loaded = shared_media.is_some_and(|addon| addon.loaded);
+        let loaded = shared_media.is_some_and(|addon| addon.is_loaded());
         eprintln!(
             "[trusted-budget-probe] phase=after_headless_settle owner=EnhanceQoLSharedMedia encountered={encountered} loaded={loaded}"
         );

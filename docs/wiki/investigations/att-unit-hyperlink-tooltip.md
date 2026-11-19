@@ -14,7 +14,7 @@ Typed hyperlink requests live under `src/c_api/c_tooltip_info_hyperlink/`. The o
 
 ## Sources
 
-- R82/R82b, `~/.local/state/wow-ui-sim/handoff/pr46-49-decomp-answers.md` — native routing and UNKNOWN boundaries.
+- R82/R82b, `pr46-49-decomp-answers.md` (untracked decomp handoff) — native routing and UNKNOWN boundaries.
 - [Hyperlink contract](../../specs/tooltip-hyperlink.md) — requirements and proof inventory.
 - [Tooltip identity spec](../../specs/tooltip-identity.md) — preserved direct/action identity contracts.
 

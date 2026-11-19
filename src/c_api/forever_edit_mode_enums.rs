@@ -1,13 +1,12 @@
 //! Finite Forever 1.60.1 Edit Mode enum additions from its generated API docs.
 
-use crate::lua_api::methods::{create_table, table_get, table_set};
 use rilua::Val;
 use rilua::vm::state::LuaState;
 
 type EnumFields = (&'static str, &'static [(&'static str, i32)]);
 
 pub(crate) fn register(state: &mut LuaState) {
-    let enums = super::helpers::ensure_global_table(state, "Enum");
+    let enums = super::helpers::ensure_enum_table(state);
     for &(name, fields) in ADDITIONS {
         publish_fields(state, enums, name, fields);
     }
@@ -20,16 +19,11 @@ pub(crate) fn register(state: &mut LuaState) {
 }
 
 fn publish_fields(state: &mut LuaState, enums: Val, name: &str, fields: &[(&str, i32)]) {
-    let values = match table_get(state, enums, name) {
-        value @ Val::Table(_) => value,
-        _ => {
-            let value = create_table(state);
-            table_set(state, enums, name, value);
-            value
-        }
-    };
+    let values = super::helpers::ensure_paired_table_field(state, enums, name)
+        .expect("Enum group must have a secure registration peer");
     for &(field, value) in fields {
-        table_set(state, values, field, Val::Num(f64::from(value)));
+        super::helpers::set_namespace_member(state, values, field, Val::Num(f64::from(value)))
+            .expect("Enum group must have a secure registration peer");
     }
 }
 

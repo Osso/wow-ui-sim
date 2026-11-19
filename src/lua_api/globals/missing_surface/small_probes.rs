@@ -2,9 +2,8 @@
 //!
 //! Migrates 2 entries off the namespace stub tables:
 //!
-//! - `C_Timer.NewTimerID()` — returns a fresh monotonically-increasing
-//!   opaque number using the same per-environment `next_timer_id()` counter
-//!   shared by `C_Timer.NewTimer` / `NewTicker`. Replaces the `stub_nil` stub.
+//! - `C_Timer.NewTimerID()` — non-Retail preservation surface. Retail has no
+//!   native entry for this name.
 //!
 //! - `C_System.GetFrameStack()` — returns an array of frames currently
 //!   under the mouse cursor. When `SimState.hovered_frame` is set the
@@ -23,8 +22,10 @@ use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 
 pub(super) fn register_small_probes_surface(state: &mut LuaState) -> LuaResult<()> {
-    let c_timer = ensure_namespace(state, "C_Timer")?;
-    table_set_rust_fn_static(state, c_timer, "NewTimerID", c_timer_new_timer_id)?;
+    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail {
+        let c_timer = ensure_namespace(state, "C_Timer")?;
+        table_set_rust_fn_static(state, c_timer, "NewTimerID", c_timer_new_timer_id)?;
+    }
 
     let c_system = ensure_namespace(state, "C_System")?;
     table_set_rust_fn_static(state, c_system, "GetFrameStack", c_system_get_frame_stack)?;
@@ -32,7 +33,7 @@ pub(super) fn register_small_probes_surface(state: &mut LuaState) -> LuaResult<(
     Ok(())
 }
 
-/// `C_Timer.NewTimerID()` — hand out a fresh opaque timer id.
+/// Non-Retail preservation for `C_Timer.NewTimerID()`.
 fn c_timer_new_timer_id(state: &mut LuaState) -> LuaResult<u32> {
     let id = next_timer_id(state)?;
     state.push(Val::Num(id as f64));

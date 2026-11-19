@@ -3,7 +3,10 @@ use crate::lua_api::globals::state_backed_queries::dispatch_event_now;
 use crate::lua_api::methods::{
     borrow_state, borrow_state_mut, create_string, create_table, table_set,
 };
+use crate::lua_bridge::table_set_rust_fn_static;
+use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
+use rilua::vm::table::Table;
 use rilua::{LuaResult, Val};
 use std::collections::HashMap;
 
@@ -36,12 +39,7 @@ impl GameModeDisplayState {
         if let Some(record) = self.temporary_override {
             return Ok(Some(record));
         }
-        let record = if cvars.get("currentGameMode").is_none() {
-            -1
-        } else {
-            cvars.cached_integer("currentGameMode").ok_or_else(|| rilua::runtime_error("currentGameMode: cached integer outside simulator coverage (native behavior unknown)"))?
-        };
-        Ok((record != -1).then_some(record))
+        read_current_game_mode_record(cvars)
     }
     fn selected_row(&self, cvars: &crate::cvars::CVarStorage) -> LuaResult<Option<&GameModeRow>> {
         Ok(self
@@ -49,6 +47,39 @@ impl GameModeDisplayState {
             .and_then(|record| self.rows.get(&record)))
     }
 }
+fn read_current_game_mode_record(cvars: &crate::cvars::CVarStorage) -> LuaResult<Option<i32>> {
+    let record = if cvars.get("currentGameMode").is_none() {
+        -1
+    } else {
+        cvars.cached_integer("currentGameMode").ok_or_else(|| {
+            rilua::runtime_error(
+                "currentGameMode: cached integer outside simulator coverage (native behavior unknown)",
+            )
+        })?
+    };
+    Ok((record != -1).then_some(record))
+}
+
+/// INFERRED (R88ak 5.5.4.70631 applied to Mists 5.5.4.70268): return the host
+/// currentGameMode CVar without the unsupported AutoConnectToGameModeRealm path.
+pub(crate) fn register_mists_current_record_id(
+    state: &mut LuaState,
+    namespace: GcRef<Table>,
+) -> LuaResult<()> {
+    table_set_rust_fn_static(
+        state,
+        namespace,
+        "GetCurrentGameModeRecordID",
+        current_record_id,
+    )
+}
+
+fn current_record_id(state: &mut LuaState) -> LuaResult<u32> {
+    let record = read_current_game_mode_record(&borrow_state(state)?.cvars)?;
+    state.push(record.map_or(Val::Nil, |record| Val::Num(f64::from(record))));
+    Ok(1)
+}
+
 pub(crate) fn modern_profile() -> bool {
     use crate::client_profile::{ACTIVE, ClientProfile};
     matches!(
@@ -57,13 +88,18 @@ pub(crate) fn modern_profile() -> bool {
     )
 }
 pub(crate) fn cvar_set_callback(state: &mut LuaState, name: &str) -> LuaResult<()> {
-    if modern_profile() && name.eq_ignore_ascii_case("currentGameMode") {
-        borrow_state_mut(state)?
-            .game_rules
-            .display
-            .clear_realm_list();
-        // Synchronous dispatch follows the simulator's existing CVar callback path;
-        // exact native timing relative to assignment/other events is UNKNOWN.
+    let current_game_mode = name.eq_ignore_ascii_case("currentGameMode");
+    let mists_profile =
+        crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Mists;
+    if current_game_mode && (modern_profile() || mists_profile) {
+        if modern_profile() {
+            borrow_state_mut(state)?
+                .game_rules
+                .display
+                .clear_realm_list();
+        }
+        // R88ak Mists applicability is INFERRED on the 5.5.4.70268 cache.
+        // Synchronous dispatch timing remains simulator policy.
         dispatch_event_now(state, "GAME_MODE_DISPLAY_INFO_UPDATED", &[])?;
     }
     Ok(())

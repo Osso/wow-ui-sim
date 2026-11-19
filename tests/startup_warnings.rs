@@ -545,7 +545,7 @@ fn test_secure_env_annotated_files_load_cleanly() {
                 auraMap[42] = "secure-map-value"
                 local targetAuras = TargetFrame.TargetFrameContent
                     .TargetFrameContentContextual.Auras
-                local forbiddenTargetAuras = GetForbiddenObjectTable(targetAuras)
+                local forbiddenTargetAuras = (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(targetAuras)
                 local auraButton = CreateFrame(
                     "AuraButton", nil, UIParent, "TargetFrameAuraButtonTemplate"
                 )

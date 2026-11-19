@@ -4,6 +4,8 @@
 # Tier 1: diagnostic/perf/audit/diff-coverage modules confirmed not to be a live contract.
 # See handoff/necessary-under-10/RECLASSIFY.md and docs/specs/necessary-suite-runtime.md.
 
+addon_metadata_lookup_perf
+bit_library_perf
 c_function_diff_coverage
 c_namespace_diff_coverage
 constants_diff_coverage
@@ -170,3 +172,6 @@ tooltip_minimum_width
 
 # Retail GlobalColor API and original Color.lua consumer regression.
 c_ui_color_globalcolor
+
+# lt-883d: Retail-only native clamps and original GameTooltip consumer.
+screen_clamp_q3

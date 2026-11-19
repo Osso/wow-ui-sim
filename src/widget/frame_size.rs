@@ -41,6 +41,7 @@ impl Frame {
     fn core_string_bytes(&self) -> usize {
         option_string_bytes(&self.object_type_name)
             + option_string_bytes(&self.name)
+            + option_string_bytes(&self.source_location)
             + option_string_bytes(&self.texture)
             + option_string_bytes(&self.text)
             + option_string_bytes(&self.font)
@@ -124,12 +125,14 @@ fn hash_map_string_u64_bytes(values: &HashMap<String, u64>) -> usize {
         + values.keys().map(String::capacity).sum::<usize>()
 }
 
-fn hash_map_unit_filter_bytes(values: &HashMap<String, (String, Option<String>)>) -> usize {
-    values.capacity() * std::mem::size_of::<(String, (String, Option<String>))>()
+fn hash_map_unit_filter_bytes(values: &HashMap<String, Vec<String>>) -> usize {
+    values.capacity() * std::mem::size_of::<(String, Vec<String>)>()
         + values
             .iter()
-            .map(|(event, (first, second))| {
-                event.capacity() + first.capacity() + option_string_bytes(second)
+            .map(|(event, units)| {
+                event.capacity()
+                    + units.capacity() * std::mem::size_of::<String>()
+                    + units.iter().map(String::capacity).sum::<usize>()
             })
             .sum::<usize>()
 }

@@ -59,9 +59,9 @@ fn blizzard_catalog_shop_shared_util_constants_table_is_populated(env: &WowLuaEn
 }
 
 prefork_full_ui_case! {
-fn blizzard_catalog_shop_shared_util_replays_helpers_into_secure_environment(env: &WowLuaEnv) {
+fn blizzard_catalog_shop_shared_util_secure_dependency_loads_helpers(env: &WowLuaEnv) {
 
-    let helpers_replayed: bool = env
+    let helpers_loaded_from_secure_dependency: bool = env
         .eval(
             "local secureUtil = rawget(__secureenv, 'CatalogShopUtil'); \
              return type(_G.CatalogShopUtil) == 'table' \
@@ -69,9 +69,9 @@ fn blizzard_catalog_shop_shared_util_replays_helpers_into_secure_environment(env
                 and type(secureUtil.GetPlayerActorLabelTag) == 'function' \
                 and type(secureUtil.CreateDefaultProductDisplayData) == 'function'",
         )
-        .expect("CatalogShopUtil secure replay query should succeed");
+        .expect("CatalogShopUtil secure dependency query should succeed");
     assert!(
-        helpers_replayed,
+        helpers_loaded_from_secure_dependency,
         "Blizzard_CatalogShopSharedUtil should publish CatalogShopUtil helpers in both _G and __secureenv"
     );
 }

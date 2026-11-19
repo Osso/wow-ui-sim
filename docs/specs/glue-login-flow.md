@@ -160,7 +160,9 @@ ANSWER **47** (R44-Q18, PTR70668 / Forever70707) resolves name reservation.
 It takes no arguments and returns one boolean from a feature-system status byte,
 independent of realm and character. Its verified initial value is false; an
 ordinary server-sent value is UNKNOWN. `GlueFeatureStatus` starts false and only
-`deliver_status` replaces it. The host action emits no-payload
+`deliver_status` replaces it. On Forever, delivery must also update the status
+byte read by `IsNameReservationOnly` before the second notification; the ordinary
+server-supplied value remains UNKNOWN. The host action emits no-payload
 `TIMERUNNING_SEASON_UPDATE`, writes the status, then emits no-payload
 `AVAILABLE_GAME_MODES_UPDATED`, preserving the supplied posting order. Host
 notifications dispatch synchronously; tests do not claim native callback latency
@@ -523,9 +525,9 @@ callback-producing API calls. The native setter path and Lua CVar setter both
 invoke this callback. Tests exercise original GameLogoDarkBackdrop Lua against
 supplied rows, CVar changes, and the host clear operation.
 
-UNKNOWN: full writer set, exact native callback timing/guards, loaded GameMode
-rows, first login snapshot, computed writes to the capability byte, and complete
-error lines. No row download or inferred nil-return arity assertion is added.
+UNKNOWN: the runtime writer for `currentGameMode`, exact native callback
+timing/guards, loaded GameMode rows, first login snapshot, computed writes to
+the capability byte, and complete error lines. No row download is added.
 
 Cached-integer overflow is an explicit unsupported simulator input diagnostic,
 not silently treated as no mode and not claimed as a native error contract.
@@ -835,3 +837,78 @@ The zero-return policy is inferred and is not asserted.
 
 - [ ] Native initial completion-state value, cancellation initialization/reset, and any indirect completion-state writers remain UNKNOWN.
 - [ ] The exact Retail 70688 Lua cache selection is UNKNOWN; the active local cache is 12.1.5.70783.
+
+## R88ak Mists current-mode record
+
+**VERIFIED (Mists Classic 5.5.4.70631):**
+`C_GameRules.GetCurrentGameModeRecordID` returns exactly one value. With no
+`AutoConnectToGameModeRealm` override, it returns the integer
+`currentGameMode`; -1 returns one nil. Native startup default is -1.
+`AutoConnectToGameModeRealm` stores a mode ID override. A `currentGameMode`
+update clears that override, then fires `GAME_MODE_DISPLAY_INFO_UPDATED` with
+no payload. The runtime writer for `currentGameMode` remains UNKNOWN.
+
+**INFERRED (Mists Classic 5.5.4.70268 from R88ak 5.5.4.70631):** the selected
+Classic `GlueGameLogo.lua` consumer uses the same getter contract. The simulator
+registers the getter for Mists and reads the existing `currentGameMode` CVar
+host input, whose empty default is -1. It does not publish
+`AutoConnectToGameModeRealm`, so the Mists getter does not use the modern
+simulator's temporary override. Accepted `SetCVar` updates dispatch the
+no-payload event through the simulator's existing synchronous path; timing is
+simulator policy. `tests/glue_character_select.rs` exercises the original
+Classic `GlueGameLogo` OnLoad and event consumer, without asserting display-row
+or native writer behavior.
+
+## R88am Mists Classic cached credentials
+
+**VERIFIED (Mists Classic 5.5.4.70631):** `C_Login.GetCachedCredentials` is a
+complete handler in the `C_Login` member table. It reads no arguments, performs
+no argument validation, has no Usage text or error path, and always returns
+zero Lua values. It reads no credential source, changes no state, and fires no
+event. It does not provide a backing credential field or writer.
+
+**INFERRED (Mists Classic 5.5.4.70268 from R88am 5.5.4.70631):** the simulator
+applies this zero-return contract to the selected Classic `AccountLogin.lua`
+consumer. The simulator publishes the member only while the selected screen is
+Glue, following the inferred Glue initialization path. Native Game availability
+and ordinary/secure publication classification remain UNKNOWN. The simulator
+adds no host credential input.
+
+- [x] **INFERRED (R88am applied to the 70268 cache):** the original consumer
+  hides cached-account rows for this zero-return producer. The test asserts the
+  hidden-row outcome, not direct API return arity.
+- [x] **INFERRED (simulator test):** `tests/glue_login.rs` loads the selected
+  Classic Login UI, seeds a visible cached-login row, invokes the original
+  `CachedLoginFrameContainer_Update`, and checks that no cached-account row is
+  shown. The test also checks the simulator's Glue-only publication choice.
+- [ ] **UNKNOWN (native):** Game availability and ordinary/secure publication
+  classification are not established by R88am.
+
+## Mists Classic Glue chat frame
+
+**INFERRED (R88ar, Mists Classic 5.5.4.70631 applied to cached 5.5.4.70268):**
+Glue rejects Game-only add-ons, including the cached `Blizzard_ChatFrameBase`
+and `Blizzard_ChatFrame` TOCs. The original Mists Glue login should not have
+`ChatFrame1` when these add-ons do not load. **UNVERIFIED (R88ar):** whether
+another Glue add-on can create `ChatFrame1` is not established.
+
+**VERIFIED (simulator source and Mists login run at `67d34fbc`):** the shared
+loader excludes those two Game-only add-ons on Glue, but the temporary chat
+window default still creates a synthetic `ChatFrame1` during environment
+bootstrap.
+
+The simulator must not create that synthetic frame on Mists Glue. It must not
+hide the frame as a substitute. Mists Game keeps its existing default frame. Retail Glue behavior remains
+unchanged; this Mists-specific rule does not establish Retail behavior.
+
+The login test must keep its existing `ChatFrame1`-not-shown assertion. It also
+checks that Mists Glue has no `ChatFrame1` and that the two Game-only chat
+add-ons are not loaded. A Mists Game test checks that the default placeholder
+remains.
+
+## Mists Classic MovieFrame start result
+
+- **VERIFIED (R88ao, Mists Classic 5.5.4.70631):** `StartMovie` returns a Boolean and a numeric code. Code 0 is success; if no candidate movie record is accepted, the result code is 2 (`Missing Rec`). The error return does not itself dispatch `OnMovieFinished`; a later stop can find the handle installed by the start routine.
+- **VERIFIED (Mists cache 5.5.4.70268):** `MovieFrame_PlayMovie` branches on `playSuccess`; a false result closes the secondary screen. It does not require nil return values or inspect the error code for this branch.
+- **INFERRED (simulator mapping):** with no simulator Movie DB2 records, an absent host outcome maps to `(false, 2)`. Explicit host outcomes remain available for success and codes 1–4. This mapping is not a claim about playback when real records or files are present.
+- **UNKNOWN (native offline playback):** outcomes for available records and files still depend on the records, files, and playback state.

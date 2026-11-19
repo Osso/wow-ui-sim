@@ -108,13 +108,15 @@ fn original_supertracking_pair_shape_restored() {
         .into_iter()
         .enumerate()
     {
-        let mut state = env.state().borrow_mut();
-        state.super_track.content = pair;
-        if let Some(pair) = pair {
-            state.super_track.content_saved = pair;
-        }
-        state.super_track.content_tracking = pair.is_some();
-        let errors_before = env.state().borrow().lua_errors.len();
+        let errors_before = {
+            let mut state = env.state().borrow_mut();
+            state.super_track.content = pair;
+            if let Some(pair) = pair {
+                state.super_track.content_saved = pair;
+            }
+            state.super_track.content_tracking = pair.is_some();
+            state.lua_errors.len()
+        };
         env.fire_event("SUPER_TRACKING_CHANGED").unwrap();
         assert_eq!(env.state().borrow().lua_errors.len(), errors_before);
         assert_listener_snapshot(&env, pair, index + 2);

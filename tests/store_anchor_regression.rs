@@ -69,9 +69,11 @@ fn store_right_inset_relative_key_resolves_to_left_inset() {
     );
 }
 
+#[cfg(feature = "client-retail")]
 #[test]
 fn store_cards_stay_within_store_frame_after_product_layout() {
     let env = load_store_ui_tree();
+    crate::common::store_catalog_fixture::publish_featured_catalog(&env);
     let metrics: (f64, f64, f64, f64, f64) = env
         .eval(
             r#"

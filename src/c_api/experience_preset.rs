@@ -3,7 +3,7 @@ use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::cvars::CVarStorage;
 use crate::lua_api::globals::set_cvar_verb::set_native_cvar;
 use crate::lua_api::globals::state_backed_queries::dispatch_event_now;
-use crate::lua_api::methods::{borrow_state_mut, create_table, table_set};
+use crate::lua_api::methods::borrow_state_mut;
 use crate::lua_bridge::{stack_val, table_set_rust_fn};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
@@ -24,11 +24,14 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     }
     let namespace = super::helpers::ensure_namespace(state, "C_GameRules")?;
     table_set_rust_fn(state, namespace, FUNCTION, set_preset)?;
-    let enums = super::helpers::ensure_global_table(state, "Enum");
-    let presets = create_table(state);
-    table_set(state, presets, "Classic", Val::Num(0.0));
-    table_set(state, presets, "Enhanced", Val::Num(1.0));
-    table_set(state, enums, "ForeverExperiencePreset", presets);
+    let enums = super::helpers::ensure_enum_table(state);
+    let presets =
+        super::helpers::ensure_paired_table_field(state, enums, "ForeverExperiencePreset")
+            .expect("Enum group must have a secure registration peer");
+    super::helpers::set_namespace_member(state, presets, "Classic", Val::Num(0.0))
+        .expect("Enum group must have a secure registration peer");
+    super::helpers::set_namespace_member(state, presets, "Enhanced", Val::Num(1.0))
+        .expect("Enum group must have a secure registration peer");
     Ok(())
 }
 

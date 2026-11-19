@@ -22,6 +22,43 @@ pub struct WrathUnitTapState {
     pub by_all_threat_list: bool,
 }
 
+/// One Mists cinematic record, keyed by cinematic type.
+#[cfg(feature = "client-mists")]
+#[derive(Clone, Debug)]
+pub struct CinematicRecord {
+    pub movie_type: i32,
+    pub movie_id: i32,
+    pub can_cancel: bool,
+    pub started_at: Instant,
+    pub active: bool,
+}
+
+/// One recorded CinematicFinished result.
+#[cfg(feature = "client-mists")]
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct CinematicFinishRecord {
+    pub movie_type: i32,
+    pub elapsed: std::time::Duration,
+    pub user_canceled: bool,
+    pub did_error: bool,
+}
+
+/// Empty-default Mists movie inputs and cinematic state.
+#[cfg(feature = "client-mists")]
+#[derive(Debug, Default)]
+pub struct MoviePlaybackState {
+    /// UNKNOWN native playback outcome; absent movie IDs have no supplied result.
+    pub start_results: HashMap<u32, u32>,
+    /// UNKNOWN game-movie flag; no verified setter in this scope, so it starts unset.
+    pub(crate) game_movie_flag_set: bool,
+    pub manager_movie_id: Option<i32>,
+    pub cinematic_records: HashMap<i32, CinematicRecord>,
+    pub last_cinematic_finish: Option<CinematicFinishRecord>,
+    pub(crate) active_handles: HashSet<u64>,
+    pub(crate) pending_finishes: VecDeque<u64>,
+    pub(crate) dispatching_finish: bool,
+}
+
 macro_rules! build_empty_sim_state {
     ($collections:ident, $runtime:ident, $session_wtf_path:ident) => {{
         let cvars = CVarStorage::with_session_wtf_path(&$session_wtf_path);
@@ -37,6 +74,7 @@ macro_rules! build_empty_sim_state {
                 $runtime.screen_width,
                 $runtime.screen_height,
             ),
+            source_location_exclusions: Vec::new(),
             events: EventQueue::default(),
             private_aura_anchors: crate::c_api::private_aura_anchors::PrivateAuraAnchors::default(),
             #[cfg(all(
@@ -52,6 +90,8 @@ macro_rules! build_empty_sim_state {
             #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
             last_gamepad_input_timestamp: None,
             video_capability_bytes: Default::default(),
+            #[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+            performance_bar_protocol_types: None,
             #[cfg(any(feature = "client-wowforever", feature = "client-ptr"))]
             gamepad_mapped_sticks: None,
             #[cfg(any(feature = "client-wowforever", feature = "client-ptr"))]
@@ -66,6 +106,8 @@ macro_rules! build_empty_sim_state {
             addon_initialization_failures: HashMap::new(),
             save_failed_addons: false,
             cinematic_active: false,
+            #[cfg(feature = "client-mists")]
+            movie_playback: Default::default(),
             in_world: false,
             reload_allows_protected_actions: false,
             account_cvar_chunks_ready: [true; 2],
@@ -109,6 +151,7 @@ macro_rules! build_empty_sim_state {
             addons: $collections.addons,
             registered_load_with: ::std::vec::Vec::new(),
             load_with_followers: None,
+            toc_cache: Default::default(),
             addon_saved_enable_state: None,
             addon_saved_version_check_enabled: None,
             system_chat_log: Vec::new(),
@@ -145,7 +188,10 @@ macro_rules! build_empty_sim_state {
             party_countdown_request: None,
             quest_portrait_state: None,
             tooltips: $collections.tooltips,
+            clamp_inset_access_input: Default::default(),
             item_overrides: ::std::collections::HashMap::new(),
+            item_level_color_condition_23: None,
+            item_level_color_condition_24: None,
             #[cfg(feature = "retail-12-0-0")]
             item_stats: crate::c_api::ItemStatsState::default(),
             #[cfg(feature = "retail-12-0-0")]
@@ -157,6 +203,9 @@ macro_rules! build_empty_sim_state {
             #[cfg(feature = "retail-12-0-5")]
             item_tooltip_levels: ::std::collections::HashMap::new(),
             item_tooltip_inputs: ::std::collections::HashMap::new(),
+            item_tooltip_sell_price_unit_prices: ::std::collections::HashMap::new(),
+            bag_item_tooltip_sell_price_statuses: ::std::collections::HashMap::new(),
+            item_tooltip_sell_price_quantities: ::std::collections::HashMap::new(),
             blocked_auras_by_unit: $collections.blocked_auras_by_unit,
             #[cfg(feature = "client-wowforever")]
             auras_secret_in_context: false,
@@ -190,14 +239,12 @@ macro_rules! build_empty_sim_state {
             screen_kind: $runtime.screen_kind,
             in_character_create: false,
             glue_login: Default::default(),
+            glue_state: Default::default(),
             #[cfg(any(feature = "client-ptr", feature = "client-wowforever"))]
             glue_feature_status: Default::default(),
             is_logged_in: $runtime.is_logged_in,
             post_event_workarounds_applied: false,
-            screen_first_displayed: $runtime.screen_first_displayed,
-            saved_account_name: $runtime.saved_account_name,
-            saved_account_list: $runtime.saved_account_list,
-            uses_token: $runtime.uses_token,
+            screen_first_display_state: $runtime.screen_first_display_state,
             account_save_enabled: $runtime.account_save_enabled,
             account_save_in_progress: $runtime.account_save_in_progress,
             account_locked_post_save: $runtime.account_locked_post_save,
@@ -358,6 +405,8 @@ macro_rules! build_empty_sim_state {
             is_active_battlefield: false,
             spell_trade_skill_links: HashMap::new(),
             spell_id_aliases: HashMap::new(),
+            #[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+            spell_passive_attribute_masks: HashMap::new(),
             spell_tooltip_inputs: HashMap::new(),
             recipe_rank_tooltip_cache: Default::default(),
             aura_tooltip_inputs: HashMap::new(),
@@ -408,6 +457,10 @@ macro_rules! build_empty_sim_state {
             spell_loss_of_control: HashMap::new(),
             active_loss_of_control: HashMap::new(),
             spell_flyouts: HashMap::new(),
+            #[cfg(feature = "client-retail")]
+            call_pet_spell_indices: HashMap::new(),
+            #[cfg(feature = "client-retail")]
+            player_call_pet_names: Vec::new(),
             action_profession_quality: HashMap::new(),
             addon_base_paths: $collections.addon_base_paths,
             texture_manager: Default::default(),
@@ -430,6 +483,8 @@ macro_rules! build_empty_sim_state {
             next_report_token: $runtime.next_report_token,
             party_members: $collections.party_members,
             party_group_active: $runtime.party_group_active,
+            home_subgroup_roster: None,
+            instance_subgroup_roster: None,
             group_member_counts: GroupMemberCountsState::default(),
             #[cfg(all(
                 feature = "retail-12-0-5",
@@ -457,6 +512,12 @@ macro_rules! build_empty_sim_state {
             enemy_pool: Vec::new(),
             unit_raid_target_icons: HashMap::new(),
             sound_manager: $runtime.sound_manager,
+            #[cfg(feature = "client-mists")]
+            mists_combat_audio_alert_state_gate: $runtime.mists_combat_audio_alert_state_gate,
+            #[cfg(feature = "client-mists")]
+            mists_combat_audio_spec_settings: Default::default(),
+            #[cfg(feature = "client-mists")]
+            mists_combat_audio_voice_count: 0,
             last_sound_kit_requested: $runtime.last_sound_kit_requested,
             #[cfg(feature = "client-wrath")]
             last_ui_error_message: None,
@@ -523,6 +584,8 @@ macro_rules! build_empty_sim_state {
             spell_charges: ::std::collections::HashMap::new(),
             ranged_auto_attack_spell_id: 0,
             spell_cast_context_is_null: None,
+            #[cfg(feature = "retail-12-1-5")]
+            spell_identifier_metadata_source: None,
             #[cfg(feature = "retail-12-0-0")]
             spell_cast_counts: ::std::collections::HashMap::new(),
             #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
@@ -547,6 +610,7 @@ macro_rules! build_empty_sim_state {
             r88s_inventory_inputs: Default::default(),
             loading_addon_index: $runtime.loading_addon_index,
             loading_addon_stack: $runtime.loading_addon_stack,
+            loading_addon_secure_env: $runtime.loading_addon_secure_env,
             executing_addon_index: $runtime.executing_addon_index,
             loading_nil_symbol_environment: None,
             xml_load_addon_depth: $runtime.xml_load_addon_depth,
@@ -591,6 +655,10 @@ macro_rules! build_empty_sim_state {
             world: super::state_types::seeded_world_state(),
             encounter_policy: Default::default(),
             bag_items: $collections.bag_items,
+            #[cfg(feature = "client-retail")]
+            bag_battle_pet_tooltip_acceptance: HashMap::new(),
+            #[cfg(feature = "client-retail")]
+            bag_battle_pet_tooltip_snapshots: HashMap::new(),
             bag_item_repair_costs: HashMap::new(),
             item_equip: crate::c_api::item_spell::item_equip::ItemEquipState::default(),
             container_item_quests: HashMap::new(),
@@ -797,6 +865,12 @@ macro_rules! build_empty_sim_state {
             bnet_custom_message: String::new(),
             social_friends: default_social_friends(),
             social_restrictions: SocialRestrictionsState::default(),
+            #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+            social_system_policy_enabled: None,
+            #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+            cinematic_summaries: HashMap::new(),
+            #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+            current_cinematic_id: 0,
             restricted_actions,
             restricted_actions_natural: [false; 6],
             restriction_chat_client_flag: false,
@@ -980,7 +1054,8 @@ pub use super::game_data::AuraInfo;
 pub use super::game_data::SpellCooldownState;
 pub use super::game_data::{
     CLASS_LABELS, CastTargetSnapshot, CastingState, EmpowerTiming, PartyMember, RACE_DATA,
-    ROT_DAMAGE_LEVELS, TargetInfo, XP_LEVELS, tick_party_health,
+    ROT_DAMAGE_LEVELS, SubgroupMemberRecord, SubgroupOwnerRoster, TargetInfo, XP_LEVELS,
+    tick_party_health,
 };
 use super::game_data::{
     default_action_bars, default_allied_races, default_major_faction_renown_levels,
@@ -1125,6 +1200,8 @@ struct EmptyRuntimeState {
     current_target: Option<TargetInfo>,
     current_focus: Option<TargetInfo>,
     sound_manager: Option<SoundManager>,
+    #[cfg(feature = "client-mists")]
+    mists_combat_audio_alert_state_gate: bool,
     last_sound_kit_requested: Option<u32>,
     last_sound_file_requested: Option<String>,
     last_stopped_sound_handle: Option<u32>,
@@ -1136,6 +1213,7 @@ struct EmptyRuntimeState {
     cursor_item: Option<CursorInfo>,
     loading_addon_index: Option<u16>,
     loading_addon_stack: Vec<u16>,
+    loading_addon_secure_env: Option<bool>,
     executing_addon_index: Option<u16>,
     xml_load_addon_depth: u32,
     loading_forbidden: bool,
@@ -1151,10 +1229,7 @@ struct EmptyRuntimeState {
     screen_height: f32,
     screen_kind: ScreenKind,
     is_logged_in: bool,
-    screen_first_displayed: bool,
-    saved_account_name: String,
-    saved_account_list: String,
-    uses_token: bool,
+    screen_first_display_state: u8,
     account_save_enabled: bool,
     account_save_in_progress: bool,
     account_locked_post_save: bool,
@@ -1193,6 +1268,8 @@ macro_rules! build_empty_runtime_state {
             current_target: None,
             current_focus: None,
             sound_manager: None,
+            #[cfg(feature = "client-mists")]
+            mists_combat_audio_alert_state_gate: true,
             last_sound_kit_requested: None,
             last_sound_file_requested: None,
             last_stopped_sound_handle: None,
@@ -1204,6 +1281,7 @@ macro_rules! build_empty_runtime_state {
             cursor_item: None,
             loading_addon_index: None,
             loading_addon_stack: Vec::new(),
+            loading_addon_secure_env: None,
             executing_addon_index: None,
             xml_load_addon_depth: 0,
             loading_forbidden: false,
@@ -1219,10 +1297,7 @@ macro_rules! build_empty_runtime_state {
             screen_height: $screen_height,
             screen_kind: ScreenKind::Game,
             is_logged_in: false,
-            screen_first_displayed: false,
-            saved_account_name: String::new(),
-            saved_account_list: String::new(),
-            uses_token: false,
+            screen_first_display_state: 0,
             account_save_enabled: false,
             account_save_in_progress: false,
             account_locked_post_save: false,
@@ -1380,7 +1455,8 @@ impl SimState {
             self.glue_login.ptr_connection =
                 crate::c_api::c_login::ptr_state::PtrConnectionState::for_screen(screen_kind);
         }
-        self.screen_first_displayed = false;
+        // Host policy: R88ad.8 leaves any reset of the native first-display state UNKNOWN.
+        self.screen_first_display_state = 0;
         if screen_kind.is_glue() {
             self.is_logged_in = false;
         }

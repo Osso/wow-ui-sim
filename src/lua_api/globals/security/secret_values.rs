@@ -28,8 +28,13 @@ pub(super) fn register_scrub_fallbacks(lua: &mut rilua::Lua) -> LuaResult<()> {
 
 #[cfg(feature = "retail-12-1-0")]
 pub(crate) fn register_retail_secret_values(lua: &mut rilua::Lua) -> LuaResult<()> {
-    LuaApiMut::register_function(lua, "secretwrap", secretwrap_native)?;
-    LuaApiMut::register_function(lua, "secretunwrap", secretunwrap_native)?;
+    if crate::client_profile::is_active_retail_12_1_5() {
+        crate::c_api::register_global_function_from_r88y(lua, "secretwrap", secretwrap_native)?;
+        crate::c_api::register_global_function_from_r88y(lua, "secretunwrap", secretunwrap_native)?;
+    } else {
+        LuaApiMut::register_function(lua, "secretwrap", secretwrap_native)?;
+        LuaApiMut::register_function(lua, "secretunwrap", secretunwrap_native)?;
+    }
     if crate::client_profile::ACTIVE.uses_secret_values() {
         LuaApiMut::register_function(lua, "securecallfunction", securecallfunction_source)?;
     }
