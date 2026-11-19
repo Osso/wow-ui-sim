@@ -312,7 +312,11 @@ fn register_enum_compatibility(lua: &mut rilua::Lua) -> crate::Result<()> {
     if ACTIVE_RETAIL_API_EPOCH == RetailApiEpoch::Retail12_0_0 {
         exec_source_in_both_environments(lua, RETAIL_12_0_0_ENUM_OVERRIDES_LUA)?;
     }
-    exec_source_in_both_environments(lua, COMPAT_ENUMS_LUA)
+    lua.exec(COMPAT_ENUMS_LUA)?;
+    if crate::client_profile::is_active_retail_12_1_5() {
+        exec_source_in_secure_environment(lua, COMPAT_ENUMS_LUA)?;
+    }
+    Ok(())
 }
 
 fn register_profile_enum_values(lua: &mut rilua::Lua) -> crate::Result<()> {
