@@ -203,9 +203,11 @@ if GetSpellConfirmationPromptsInfo == nil then
 end
 "#;
 
-// Missing social-UI service availability policy. Retire when its c_api producer
-// owns availability; ordinary friend-list state does not establish that policy.
-#[cfg(not(all(feature = "profile-retail", feature = "retail-12-1-5")))]
+// Profiles without the modeled native registration keep the inert compatibility value.
+#[cfg(not(any(
+    all(feature = "profile-retail", feature = "retail-12-1-5"),
+    feature = "client-wowforever"
+)))]
 const SOCIAL_UI_DEFAULTS_LUA: &str = r#"
 C_SocialUI = C_SocialUI or __wow_namespace()
 if rawget(C_SocialUI, "IsSystemEnabled") == nil then
@@ -250,10 +252,11 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(SOCIAL_SETTINGS_DEFAULTS_LUA)?;
     #[cfg(not(all(feature = "profile-retail", feature = "retail-12-1-5")))]
     lua.exec(CINEMATIC_SUMMARY_DEFAULT_LUA)?;
-    #[cfg(not(all(feature = "profile-retail", feature = "retail-12-1-5")))]
-    if cfg!(feature = "retail-12-1-0")
-        || crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever
-    {
+    #[cfg(not(any(
+        all(feature = "profile-retail", feature = "retail-12-1-5"),
+        feature = "client-wowforever"
+    )))]
+    if cfg!(feature = "retail-12-1-0") {
         lua.exec(SOCIAL_UI_DEFAULTS_LUA)?;
     }
     Ok(())

@@ -52,7 +52,8 @@ impl CVarStorage {
     }
 
     fn with_path(path: PathBuf) -> Self {
-        let (defaults, original_names) = parse_default_cvars();
+        let (mut defaults, mut original_names) = parse_default_cvars();
+        insert_social_ui_cvar(&mut defaults, &mut original_names);
         let overrides = load_overrides(&path);
         Self {
             defaults,
@@ -342,6 +343,24 @@ fn server_mirrored_store_defaults() -> HashMap<String, String> {
         defaults.insert("rewardsshopoverrideenabled".to_owned(), "0".to_owned());
     }
     defaults
+}
+
+fn insert_social_ui_cvar(
+    defaults: &mut HashMap<String, String>,
+    original_names: &mut HashMap<String, String>,
+) {
+    if !matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
+        return;
+    }
+    defaults.insert("socialuienabledclient".into(), "0".into());
+    original_names.insert(
+        "socialuienabledclient".into(),
+        "socialUIEnabledClient".into(),
+    );
 }
 
 fn parse_default_cvars() -> (HashMap<String, String>, HashMap<String, String>) {
