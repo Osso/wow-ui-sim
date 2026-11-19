@@ -141,7 +141,8 @@ fn push_optional_number(state: &mut LuaState, value: Option<f64>) {
 }
 
 fn push_string(state: &mut LuaState, value: &str) {
-    state.push(Val::Str(state.gc.intern_string(value.as_bytes())));
+    let string = state.gc.intern_string(value.as_bytes());
+    state.push(Val::Str(string));
 }
 
 fn push_optional_string(state: &mut LuaState, value: Option<&str>) {
