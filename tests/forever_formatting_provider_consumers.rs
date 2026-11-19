@@ -3,6 +3,36 @@
 
 use wow_ui_sim::lua_api::{WowLuaEnv, state::QuestRewardCurrency};
 
+const ADVENTURE_MAP_CURRENCY_PROBE: &str = r#"
+    local loaded, reason = C_AddOns.LoadAddOn('Blizzard_AdventureMap')
+    assert(loaded, 'Blizzard_AdventureMap must load: ' .. tostring(reason))
+    local provider = GetColorForCurrencyReward
+    local expected = { provider(1166, 5):GetRGB() }
+    local observed
+    GetColorForCurrencyReward = function(currencyID, quantity)
+        observed = { currencyID, quantity }
+        return provider(currencyID, quantity)
+    end
+    local dialog = {
+        questID = 80000,
+        rewardPool = { ReleaseAll = function() end, GetNumActive = function() return 1 end },
+        Rewards = {
+            Show = function() end,
+            SetHeight = function() end,
+            SetTexCoord = function() end,
+        },
+        RewardsHeader = { Show = function() end },
+        AddReward = function()
+            return { Count = { SetTextColor = function(_, r, g, b) displayed = {r, g, b} end } }
+        end,
+    }
+    AdventureMapQuestChoiceDialogMixin.RefreshRewards(dialog)
+    assert(observed[1] == 1166 and observed[2] == 5,
+        'original Adventure Map reward consumer called the currency color provider')
+    assert(displayed[1] == expected[1] and displayed[2] == expected[2] and displayed[3] == expected[3],
+        'original Adventure Map reward consumer displayed the provider RGB')
+"#;
+
 #[test]
 fn cached_custom_aura_container_merges_supplied_group_options() {
     let ui = wow_ui_sim::blizzard_ui_sync::default_cache_addons_path().unwrap();
@@ -30,42 +60,9 @@ fn cached_custom_aura_container_merges_supplied_group_options() {
 
 #[test]
 fn loaded_adventure_map_displays_currency_with_original_color_provider() {
-    let env = adventure_map_env();
-    env.exec(
-        r#"
-        local loaded, reason = C_AddOns.LoadAddOn('Blizzard_AdventureMap')
-        assert(loaded, 'Blizzard_AdventureMap must load: ' .. tostring(reason))
-        local provider = GetColorForCurrencyReward
-        local expected = { provider(1166, 5):GetRGB() }
-        local observed
-        GetColorForCurrencyReward = function(currencyID, quantity)
-            observed = { currencyID, quantity }
-            return provider(currencyID, quantity)
-        end
-        local dialog = {
-            questID = 80000,
-            rewardPool = {
-                ReleaseAll = function() end,
-                GetNumActive = function() return 1 end,
-            },
-            Rewards = {
-                Show = function() end,
-                SetHeight = function() end,
-                SetTexCoord = function() end,
-            },
-            RewardsHeader = { Show = function() end },
-            AddReward = function()
-                return { Count = { SetTextColor = function(_, r, g, b) displayed = {r, g, b} end } }
-            end,
-        }
-        AdventureMapQuestChoiceDialogMixin.RefreshRewards(dialog)
-        assert(observed[1] == 1166 and observed[2] == 5,
-            'original Adventure Map reward consumer called the currency color provider')
-        assert(displayed[1] == expected[1] and displayed[2] == expected[2] and displayed[3] == expected[3],
-            'original Adventure Map reward consumer displayed the provider RGB')
-        "#,
-    )
-    .expect("loaded Adventure Map should display the original currency provider color");
+    adventure_map_env()
+        .exec(ADVENTURE_MAP_CURRENCY_PROBE)
+        .expect("loaded Adventure Map should display the original currency provider color");
 }
 
 #[test]
