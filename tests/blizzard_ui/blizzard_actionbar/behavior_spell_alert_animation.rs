@@ -12,6 +12,7 @@ fn spell_alert_show_starts_birth_then_loop_and_hide_stops_both() {
     test_timeout! {
     with_blizzard_addon_startup_shape(&[ROOT], &[], |env, _loaded| {
         create_spell_alert_button(env);
+        assert_no_spell_alert(env);
 
         show_spell_alert(env);
         assert_birth_animation_playing(env);
@@ -21,6 +22,7 @@ fn spell_alert_show_starts_birth_then_loop_and_hide_stops_both() {
 
         hide_spell_alert(env);
         assert_alert_animations_stopped(env);
+        assert_alert_frame_is_reused(env);
     });
     }
 }
@@ -35,6 +37,13 @@ fn create_spell_alert_button(env: &WowLuaEnv) {
         "#,
     )
     .expect("spell-alert button fixture must run cleanly");
+}
+
+fn assert_no_spell_alert(env: &WowLuaEnv) {
+    let has_alert: bool = env
+        .eval("return ActionButtonSpellAlertManager:HasAlert(SpellAlertAnimButton)")
+        .expect("initial spell-alert state probe must run cleanly");
+    assert!(!has_alert, "a new button must not start with an alert");
 }
 
 fn show_spell_alert(env: &WowLuaEnv) {
@@ -53,17 +62,20 @@ fn hide_spell_alert(env: &WowLuaEnv) {
 }
 
 fn assert_birth_animation_playing(env: &WowLuaEnv) {
-    let (has_alert, start_playing, loop_playing): (bool, bool, bool) = env
+    let (has_alert, is_default_type, start_playing, loop_playing): (bool, bool, bool, bool) = env
         .eval(
             r#"
             local alert = SpellAlertAnimButton.SpellActivationAlert
-            return ActionButtonSpellAlertManager:HasAlert(SpellAlertAnimButton),
+            local hasAlert, alertType = ActionButtonSpellAlertManager:HasAlert(SpellAlertAnimButton)
+            return hasAlert,
+                alertType == ActionButtonSpellAlertManager.SpellAlertType.Default,
                 alert.ProcStartAnim:IsPlaying(),
                 alert.ProcLoop:IsPlaying()
             "#,
         )
         .expect("spell-alert birth probe must run cleanly");
     assert!(has_alert, "ShowAlert must mark the button active");
+    assert!(is_default_type, "ShowAlert must use the original default alert type");
     assert!(start_playing, "ShowAlert must play ProcStartAnim");
     assert!(
         !loop_playing,
@@ -88,6 +100,21 @@ fn assert_loop_animation_playing(env: &WowLuaEnv) {
         loop_playing,
         "ActionButtonSpellAlertMixin OnLoad must play ProcLoop after ProcStartAnim finishes"
     );
+}
+
+fn assert_alert_frame_is_reused(env: &WowLuaEnv) {
+    let reused: bool = env
+        .eval(
+            r#"
+            local alert = SpellAlertAnimButton.SpellActivationAlert
+            ActionButtonSpellAlertManager:ShowAlert(SpellAlertAnimButton)
+            return alert ~= nil
+                and SpellAlertAnimButton.SpellActivationAlert == alert
+                and alert:IsShown()
+            "#,
+        )
+        .expect("spell-alert reuse probe must run cleanly");
+    assert!(reused, "ShowAlert must reuse and show the original alert frame");
 }
 
 fn assert_alert_animations_stopped(env: &WowLuaEnv) {

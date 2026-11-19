@@ -190,6 +190,55 @@ fn blizzard_deprecated_action_bar_installs_bar_index_shims(env: &WowLuaEnv) {
 }
 
 prefork_full_ui_case! {
+fn blizzard_deprecated_action_bar_legacy_globals_follow_original_provider(env: &WowLuaEnv) {
+    let result: String = env
+        .eval(
+            r#"
+            local function matchesOriginalProvider(name)
+                local info = debug.getinfo(_G[name], "S")
+                return info and info.source:find(
+                    "Blizzard_DeprecatedActionBar/Deprecated_ActionBar.lua", 1, true)
+            end
+            for _, name in ipairs({
+                "GetBonusBarIndex", "GetBonusBarOffset", "GetExtraBarIndex",
+                "GetMultiCastBarIndex", "GetOverrideBarIndex", "GetOverrideBarSkin",
+                "GetTempShapeshiftBarIndex", "GetVehicleBarIndex", "GetActionBarPage",
+                "ChangeActionBarPage", "HasBonusActionBar", "HasExtraActionBar",
+                "HasOverrideActionBar", "HasTempShapeshiftActionBar",
+                "HasVehicleActionBar", "IsPossessBarVisible",
+            }) do
+                if not matchesOriginalProvider(name) then return "provider:" .. name end
+            end
+            local pairs = {
+                {"GetBonusBarIndex", "GetBonusBarIndex"},
+                {"GetBonusBarOffset", "GetBonusBarOffset"},
+                {"GetExtraBarIndex", "GetExtraBarIndex"},
+                {"GetMultiCastBarIndex", "GetMultiCastBarIndex"},
+                {"GetOverrideBarIndex", "GetOverrideBarIndex"},
+                {"GetOverrideBarSkin", "GetOverrideBarSkin"},
+                {"GetTempShapeshiftBarIndex", "GetTempShapeshiftBarIndex"},
+                {"GetVehicleBarIndex", "GetVehicleBarIndex"},
+                {"HasBonusActionBar", "HasBonusActionBar"},
+                {"HasExtraActionBar", "HasExtraActionBar"},
+                {"HasOverrideActionBar", "HasOverrideActionBar"},
+                {"HasTempShapeshiftActionBar", "HasTempShapeshiftActionBar"},
+                {"HasVehicleActionBar", "HasVehicleActionBar"},
+                {"IsPossessBarVisible", "IsPossessBarVisible"},
+            }
+            for _, pair in ipairs(pairs) do
+                if _G[pair[1]]() ~= C_ActionBar[pair[2]]() then return "value:" .. pair[1] end
+            end
+            ChangeActionBarPage(4)
+            if GetActionBarPage() ~= 4 then return "page" end
+            return "ok"
+            "#,
+        )
+        .expect("deprecated action-bar globals should preserve original behavior");
+    assert_eq!(result, "ok");
+}
+}
+
+prefork_full_ui_case! {
 fn blizzard_deprecated_action_bar_installs_bar_visibility_shims(env: &WowLuaEnv) {
 
     let installed: bool = env

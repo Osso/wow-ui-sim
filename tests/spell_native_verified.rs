@@ -365,6 +365,18 @@ fn ranged_auto_attack_spell_consumer_uses_the_shared_identifier() {
             'matching spell status=' .. tostring(status(31337)))
         assert(status(31338) == statuses.MissingFromAllBars,
             'different spell status=' .. tostring(status(31338)))
+        local function actionStatus(itemType, actionID)
+            return SpellSearchUtil.GetActionbarStatusForSpellBookItemInfo({
+                itemType = itemType,
+                isPassive = false,
+                isOffSpec = false,
+                actionID = actionID,
+            })
+        end
+        assert(actionStatus(Enum.SpellBookItemType.PetAction, 202)
+            == statuses.MissingFromAllBars, 'missing pet action status')
+        assert(actionStatus(Enum.SpellBookItemType.Flyout, 303)
+            == statuses.MissingFromAllBars, 'missing flyout status')
         assert(C_Spell.IsRangedAutoAttackSpell(31337) == true)
         assert(C_Spell.IsRangedAutoAttackSpell(31338) == false)
         "#,
