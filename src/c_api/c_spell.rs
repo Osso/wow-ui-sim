@@ -976,7 +976,7 @@ fn is_spell_passive(state: &mut LuaState) -> LuaResult<u32> {
         SPELL_PASSIVE_USAGE,
     )?;
     let is_passive = match spell_id {
-        Some(spell_id) if spell_id != 0 && SPELL_DB.contains_key(&spell_id) => borrow_state(state)?
+        Some(spell_id) if spell_id != 0 && spell_record_exists(spell_id) => borrow_state(state)?
             .spell_passive_attribute_masks
             .get(&spell_id)
             .is_some_and(|attributes| attributes & SPELL_PASSIVE_ATTRIBUTE_MASK != 0),
@@ -984,6 +984,19 @@ fn is_spell_passive(state: &mut LuaState) -> LuaResult<u32> {
     };
     state.push(Val::Bool(is_passive));
     Ok(1)
+}
+
+#[cfg(any(
+    all(feature = "client-retail", feature = "retail-12-1-5"),
+    feature = "client-wowforever"
+))]
+fn spell_record_exists(spell_id: u32) -> bool {
+    // Forever's selected records come from the profile-aware runtime catalog.
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever {
+        spells::get_spell(spell_id).is_some()
+    } else {
+        SPELL_DB.contains_key(&spell_id)
+    }
 }
 
 #[cfg(any(feature = "retail-12-1-5", feature = "client-wowforever"))]
