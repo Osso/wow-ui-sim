@@ -104,7 +104,13 @@ fn finish_frame_global_registration(
     preserve_existing_name_binding: bool,
     replaced_placeholder: Option<u64>,
 ) -> LuaResult<()> {
-    register_global_name(state, name, frame_id, preserve_existing_name_binding)?;
+    register_global_name(
+        state,
+        name,
+        frame_id,
+        preserve_existing_name_binding,
+        replaced_placeholder,
+    )?;
     if let (Some(name), Some(placeholder)) = (name, replaced_placeholder) {
         rebind_secure_env_placeholder(state, name, placeholder, frame_id)?;
     }
@@ -448,6 +454,7 @@ fn register_global_name(
     name: Option<&str>,
     frame_id: u64,
     preserve_existing_name_binding: bool,
+    replaced_placeholder: Option<u64>,
 ) -> LuaResult<()> {
     let Some(name) = name else {
         return Ok(());
@@ -465,9 +472,32 @@ fn register_global_name(
         )
     };
     if !hide_from_global_env {
-        publish_named_frame_to_global_env(state, name, frame_val, only_if_vacant)?;
+        if let Some(placeholder_id) = replaced_placeholder {
+            publish_global_replacement_if_placeholder(state, name, frame_val, placeholder_id)?;
+        } else {
+            publish_named_frame_to_global_env(state, name, frame_val, only_if_vacant)?;
+        }
     }
     publish_named_frame_to_secure_env(state, name, frame_val, add_to_secure_env, only_if_vacant)?;
+    Ok(())
+}
+
+fn publish_global_replacement_if_placeholder(
+    state: &mut LuaState,
+    name: &str,
+    frame_val: Val,
+    placeholder_id: u64,
+) -> LuaResult<()> {
+    let key = state.gc.intern_string(name.as_bytes());
+    let global = state.global;
+    let current = state.gc.tables.get(global).map_or(Val::Nil, |globals| {
+        globals.get_str(key, &state.gc.string_arena)
+    });
+    if matches!(current, Val::Nil)
+        || crate::lua_api::methods::extract_frame_id(state, current) == Some(placeholder_id)
+    {
+        publish_named_frame_to_global_env(state, name, frame_val, false)?;
+    }
     Ok(())
 }
 

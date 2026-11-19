@@ -694,10 +694,10 @@ fn spellbook_hover_shows_spell_tooltip() {
 }
 }
 
-fn lua_game_tooltip_id(env: &WowLuaEnv) -> u64 {
+fn lua_frame_id(env: &WowLuaEnv, name: &str) -> u64 {
     env.loader_env()
         .with_state(|state| {
-            let key = state.gc.intern_string(b"GameTooltip");
+            let key = state.gc.intern_string(name.as_bytes());
             let global = state.global;
             let value = state
                 .gc
@@ -706,17 +706,17 @@ fn lua_game_tooltip_id(env: &WowLuaEnv) -> u64 {
                 .expect("Lua globals table")
                 .get_str(key, &state.gc.string_arena);
             let rilua::Val::Table(frame_ref) = value else {
-                return Err("GameTooltip must be a Lua frame");
+                return Err("named global must be a Lua frame");
             };
             let (index, generation) = state
                 .gc
                 .tables
                 .get(frame_ref)
                 .and_then(|frame| frame.backing())
-                .ok_or("GameTooltip must have a frame identity")?;
+                .ok_or("named global must have a frame identity")?;
             Ok((u64::from(generation) << 32) | u64::from(index))
         })
-        .expect("GameTooltip lookup must succeed")
+        .expect("named global lookup must succeed")
 }
 
 click_binding_ui_fixture! {
@@ -725,7 +725,21 @@ fn game_tooltip_registry_name_matches_lua_global_after_ui_fixture() {
     test_timeout! {
         let env = setup_full_ui();
         let registry_id = env.state().borrow().widgets.get_id_by_name("GameTooltip").unwrap();
-        assert_eq!(registry_id, lua_game_tooltip_id(&env));
+        assert_eq!(registry_id, lua_frame_id(&env, "GameTooltip"));
+    }
+}
+}
+
+click_binding_ui_fixture! {
+#[test]
+fn item_ref_tooltip_placeholder_replacement_keeps_global_identity() {
+    test_timeout! {
+        let env = setup_full_ui();
+        let state = env.state().borrow();
+        let registry_id = state.widgets.get_id_by_name("ItemRefTooltip").unwrap();
+        assert!(!state.widgets.get(registry_id).unwrap().is_simulator_placeholder);
+        drop(state);
+        assert_eq!(registry_id, lua_frame_id(&env, "ItemRefTooltip"));
     }
 }
 }
