@@ -6,9 +6,13 @@
     feature = "client-anniversary"
 ))]
 
+#[cfg(feature = "client-wowforever")]
+use crate::common::blizzard_addon_harness::{blizzard_ui_dir, build_blizzard_addon_closure_env};
 use sha2::{Digest, Sha256};
+#[cfg(feature = "client-wowforever")]
 use wow_ui_sim::loader::{discover_blizzard_addons_for_screen, load_addon};
 use wow_ui_sim::lua_api::WowLuaEnv;
+#[cfg(feature = "client-wowforever")]
 use wow_ui_sim::screen::ScreenKind;
 
 fn load_original(env: &WowLuaEnv, name: &str) {
@@ -91,6 +95,38 @@ fn forever_deprecated_action_bar_globals_follow_non_default_state() {
     seed_non_default_action_bar_state(&env);
     env.exec(LEGACY_ACTION_BAR_GLOBALS_MATCH_STATE)
         .expect("legacy globals must follow non-default C_ActionBar state");
+}
+
+#[cfg(feature = "client-wowforever")]
+const ACTION_BAR_STATUS_CONSUMER_LUA: &str = r#"
+local source = debug.getinfo(SpellSearchUtil.GetActionbarStatusForSpellBookItemInfo, "S").source
+assert(source:find("Blizzard_SpellSearch/Blizzard_SpellSearchUtil.lua", 1, true))
+C_PetInfo._state.petActionsByID = { [202] = { isPassive = false } }
+local status = ActionButtonUtil.ActionBarActionStatus
+local function query(itemType, id)
+    return SpellSearchUtil.GetActionbarStatusForSpellBookItemInfo({
+        itemType = itemType,
+        actionID = id,
+        spellID = id,
+        isPassive = false,
+        isOffSpec = false,
+    })
+end
+assert(query(Enum.SpellBookItemType.Spell, 31338) == status.MissingFromAllBars)
+assert(query(Enum.SpellBookItemType.PetAction, 202) == status.MissingFromAllBars)
+assert(query(Enum.SpellBookItemType.Flyout, 303) == status.MissingFromAllBars)
+"#;
+
+#[cfg(feature = "client-wowforever")]
+#[test]
+fn forever_spell_search_uses_action_bar_status_providers() {
+    let ui = blizzard_ui_dir();
+    let roots = ["Blizzard_SharedTalentUI", "Blizzard_ActionBar"];
+    let (env, loaded) = build_blizzard_addon_closure_env(&ui, &roots, &[]);
+    assert!(loaded.iter().any(|addon| addon == "Blizzard_SpellSearch"));
+    env.state().borrow_mut().action_bars.clear();
+    env.exec(ACTION_BAR_STATUS_CONSUMER_LUA)
+        .expect("original SpellSearch consumer must receive real action-bar statuses");
 }
 
 #[test]
