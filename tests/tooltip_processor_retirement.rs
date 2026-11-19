@@ -3,6 +3,7 @@
 #[path = "tooltip_full_env_helpers.rs"]
 mod tooltip_full_env_helpers;
 
+#[cfg(feature = "client-wowforever")]
 #[test]
 fn tooltip_processor_post_call_runs_after_original_item_setter() {
     let env = tooltip_full_env_helpers::setup_full_env();
@@ -24,4 +25,18 @@ fn tooltip_processor_post_call_runs_after_original_item_setter() {
         "#,
     )
     .expect("original tooltip post-call must observe item data");
+}
+
+#[cfg(feature = "client-mists")]
+#[test]
+fn mists_loads_tooltip_processor_from_original_handler() {
+    let env = tooltip_full_env_helpers::setup_full_env();
+    let result: (String, String) = env
+        .eval(
+            "return TooltipDataProcessor.AllTypes, \
+             debug.getinfo(AddTooltipDataAccessor, 'S').source",
+        )
+        .expect("original Mists tooltip handler should load");
+    assert_eq!(result.0, "ALL");
+    assert!(result.1.contains("TooltipDataHandler.lua"), "{}", result.1);
 }

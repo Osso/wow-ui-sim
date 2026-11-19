@@ -4,9 +4,10 @@ The tooltip data processor registers callbacks for tooltip data that Blizzard’
 
 ## What it must do
 
-- [ ] **VERIFIED (Forever and Mists pinned UI cache):** Load `TooltipDataHandler.lua` from `Blizzard_SharedXMLGame` before code uses its processor. Forever’s TOC lists the file at line 9; Mists lists it at line 9 with `ExcludeLoadGameType vanilla`.
+- [ ] **VERIFIED (Forever and Mists pinned UI cache):** `Blizzard_SharedXMLGame.toc:9` loads `TooltipDataHandler.lua` on Forever and Mists; Mists excludes only `vanilla` at that line.
 - [ ] **VERIFIED (Forever and Mists pinned UI cache):** `TooltipDataHandler.lua:177-200` defines `TooltipDataProcessor.AllTypes` as `"ALL"` and implements `AddTooltipPostCall`; `:525` maps `GameTooltip:SetItemByID` to `C_TooltipInfo.GetItemByID`.
-- [ ] **VERIFIED (simulator integration test):** After the original handler loads, a post-call registered for item tooltips runs once when `GameTooltip:SetItemByID(6948)` populates item data.
+- [ ] **VERIFIED (Forever preservation test):** A registered item post-call runs once when the original `GameTooltip:SetItemByID(6948)` consumer populates item data.
+- [ ] **VERIFIED (Mists cache; non-applicable consumer path):** `Blizzard_GameTooltip.toc:4` selects `AllowLoadGameType: classic`, and `Blizzard_SharedXMLGame.toc:10` marks `TooltipDataRules.lua` mainline-only; therefore the Forever callback assertion does not apply to Mists.
 - [ ] **INFERRED (simulator mapping):** Wrath may need a profile-only compatibility shim if a selected Wrath consumer requires this surface; do not add one without a failing Wrath proof.
 
 ## How it works
