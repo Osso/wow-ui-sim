@@ -8,6 +8,9 @@ use crate::lua_bridge::table_set_rust_fn_static;
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 
+// INFERRED simulator mapping: the native feature-policy byte is fixed at one.
+const SOCIAL_UI_FEATURE_POLICY_ENABLED: bool = true;
+
 pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
     if !matches!(
         crate::client_profile::ACTIVE,
@@ -25,9 +28,11 @@ pub(crate) fn cvar_set_callback(state: &mut LuaState) -> LuaResult<()> {
 }
 
 fn is_system_enabled(state: &mut LuaState) -> LuaResult<u32> {
-    let cvar = borrow_state(state)?
+    let cvar_enabled = borrow_state(state)?
         .cvars
-        .cached_integer("socialUIEnabledClient");
-    state.push(Val::Bool(cvar.unwrap_or(0) != 0));
+        .cached_integer("socialUIEnabledClient")
+        .unwrap_or(0)
+        != 0;
+    state.push(Val::Bool(cvar_enabled && SOCIAL_UI_FEATURE_POLICY_ENABLED));
     Ok(1)
 }
