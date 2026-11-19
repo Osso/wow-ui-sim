@@ -6,6 +6,14 @@
 
 [SuperTrack system](systems/super-track-state.md#supertracked-item-text) links the [contract](../specs/super-track-state.md): **VERIFIED (Retail declaration):** the getter may return no values or two strings. **INFERRED (simulator mapping):** empty supplied text returns no values; no native item-selection writer is modeled.
 
+## [2026-11-19] investigation | Retail AllTheThings name lookups
+
+[Retail AllTheThings name lookups](investigations/retail-allthethings-name-lookups.md) records the full DB2 name indexes, exact warm lookup timings, and the residual PLAYER_LOGIN budget charge with zero spell/area lookups.
+
+## [2026-11-19] design | Compact Retail name indexes
+
+[Generated data crate boundary](design/generated-data-crates.md#retail-db2-name-indexes) records the 11.31 MB combined compact name indexes, pinned provenance, 29.05 s vs 27.43 s warm compile comparison, and 44 ns repeated lookup result.
+
 ## [2026-11-18] correction | Retail SellPrice gates
 
 [Tooltip data](systems/lua-api.md#retail-sellprice-line-r88pp1) now records the R88aw request, instance-status, item-flag and preview rules. **INFERRED (simulator mapping):** generated catalog metadata drives known flags; explicit empty-default inputs remain only for bag status and calculated prices.

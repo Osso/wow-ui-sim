@@ -97,6 +97,8 @@ const C_MAP_METHODS: &[(&str, RustLuaFn)] = &[
     ("GetMapArtLayers", c_map_get_map_art_layers),
     #[cfg(feature = "retail-12-1-0")]
     ("GetMapDisplayInfo", c_map_get_map_display_info),
+    #[cfg(feature = "profile-retail")]
+    ("GetAreaInfo", c_map_get_area_info),
     ("GetMapInfo", c_map_get_map_info),
     ("GetMapInfoAtPosition", c_map_get_map_info_at_position),
     ("GetMapRectOnMap", c_map_get_map_rect_on_map),
@@ -177,6 +179,39 @@ fn c_map_get_map_art_background_atlas(state: &mut LuaState) -> LuaResult<u32> {
     let atlas = create_string(state, DEFAULT_MAP_ART_BACKGROUND_ATLAS);
     state.push(atlas);
     Ok(1)
+}
+
+#[cfg(feature = "profile-retail")]
+fn c_map_get_area_info(state: &mut LuaState) -> LuaResult<u32> {
+    let Some(area_id) = read_optional_area_id(state)? else {
+        state.push(Val::Nil);
+        return Ok(1);
+    };
+    let name = u32::try_from(area_id)
+        .ok()
+        .and_then(sim_data_profile::area_names_retail::get_area_name);
+    let value = name.map_or(Val::Nil, |name| create_string(state, name));
+    state.push(value);
+    Ok(1)
+}
+
+#[cfg(feature = "profile-retail")]
+fn read_optional_area_id(state: &LuaState) -> LuaResult<Option<i32>> {
+    #[cfg(feature = "retail-12-1-0")]
+    let value = rilua::table_security::unwrap_secret(state, stack_val(state, 1))?;
+    #[cfg(not(feature = "retail-12-1-0"))]
+    let value = stack_val(state, 1);
+    if matches!(value, Val::Nil) {
+        return Ok(None);
+    }
+    #[cfg(feature = "retail-12-1-0")]
+    {
+        val_to_i32(value, 1).map(Some)
+    }
+    #[cfg(not(feature = "retail-12-1-0"))]
+    {
+        i32::from_stack(state, 1).map(Some)
+    }
 }
 
 fn read_scalar_map_id(state: &LuaState) -> LuaResult<i32> {

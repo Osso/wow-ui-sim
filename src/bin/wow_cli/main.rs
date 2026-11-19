@@ -18,6 +18,7 @@
 
 mod audit_api;
 mod csv_util;
+#[path = "../../../crates/sim-data-profile/data/gen_area_table.rs"]
 mod gen_area_table;
 mod gen_atlas;
 mod gen_currencies;
@@ -29,6 +30,8 @@ mod gen_manifest;
 mod gen_map_art;
 mod gen_patch_api_docs;
 mod gen_quest_poi;
+#[path = "../../../crates/sim-data/data/gen_spell_names.rs"]
+mod gen_spell_names;
 mod gen_spells;
 mod gen_spells_power;
 mod gen_teleport_selection;
@@ -273,6 +276,8 @@ enum GenerateTarget {
     PatchApiDocs(gen_patch_api_docs::Options),
     /// Generate crates/sim-data/data/spells.rs from SpellName/Spell/SpellMisc CSVs
     Spells(gen_spells::Options),
+    /// Generate the small Retail name-only spell supplement
+    SpellNames,
     /// Generate shared item data or profile-pinned full item effects
     Items(gen_items::Options),
     /// Generate crates/sim-data-profile/data/atlas.rs from UiTextureAtlas CSVs
@@ -402,6 +407,7 @@ fn run_generator(target: GenerateTarget) {
     let result = match target {
         GenerateTarget::PatchApiDocs(options) => gen_patch_api_docs::run(options),
         GenerateTarget::Spells(options) => gen_spells::run(options),
+        GenerateTarget::SpellNames => gen_spell_names::run(),
         GenerateTarget::Items(options) => gen_items::run(options),
         GenerateTarget::Atlas(options) => gen_atlas::run(options),
         GenerateTarget::Currencies => gen_currencies::run(),

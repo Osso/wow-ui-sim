@@ -38,6 +38,23 @@ only the resulting profile catalog participates in runtime lookup. See the
 [item-spell contract](../../specs/item-spell-query.md) for source pins, sparse
 metadata semantics and reproducible generation options.
 
+## Retail DB2 name indexes
+
+**VERIFIED (simulator source):** Retail `C_Spell.GetSpellName` consults the full readable `SpellName` export only when the normal spell catalog misses, and `C_Map.GetAreaInfo` uses the full `AreaName_lang` export. **VERIFIED (generator source):** `wow-cli generate spell-names` and `generate area-table` regenerate outputs stored beside their data crates with adjacent provenance.
+
+**VERIFIED (Retail 12.1.5.70783 provenance):** SpellName records `rows=416,213`, `usable_name_rows=416,204`, `unreadable_records=101`, and `empty_names=9` as separate export counts. AreaTable records 10,046 names and zero unreadable rows. **VERIFIED (committed artifacts):** the indexes are 11,066,429 bytes and 245,983 bytes (11,312,412 bytes total). Each file has a four-byte little-endian row count, sorted eight-byte `(ID, name offset)` entries, then a NUL-terminated UTF-8 name blob. **VERIFIED (simulator source):** runtime code searches the index with binary search, does not parse or allocate a decoded copy of the full catalog at startup, and scans/validates only the selected name before returning its static string slice.
+
+**VERIFIED (crate features and simulator source):** `sim-data` includes the spell index; `sim-data-profile` includes area names only with `profile-retail`; non-Retail `C_Map.GetAreaInfo` keeps its small Lua fallback. **VERIFIED (targeted Retail tests):** spell IDs 275825, 133137, and 251097 return names, unknown spell IDs preserve no-value behavior, area IDs 7288/7290/7291 return names, and absent area IDs return nil.
+
+**VERIFIED (slot-3 warm Forever `--no-run` rebuild):** after touching only
+`src/lib.rs`, branch `13aef4259` took 29.05 Cargo seconds and its base
+`4fb6237635a` took 27.43 seconds. Both runs reused `sim-data` and
+`sim-data-profile`; they rebuilt only the root and its dynamic library. The first
+binary-index build took 154 Cargo seconds while compiling cold dependents; it is
+not a warm comparison. The binary lookup test measured 34,075 ns for the first
+call and 44 ns/call for calls 2–1000; an earlier first-call sample measured
+954,208 ns.
+
 ## Proof status
 
 Measured on 2026-10-24 in one reused slot with `CARGO_INCREMENTAL=0`, `-j1`, identical toolchain/configuration, 9 GiB memory cap and no swap. These are single warm-dependency samples, not cold builds or a full profile matrix.
@@ -61,7 +78,10 @@ Data unit tests now belong to their owning packages; run `cargo test -p sim-data
 - [Contract](../../specs/generated-data-crates.md)
 - [Workspace manifest](../../../Cargo.toml)
 - [Root facade](../../../src/lib.rs)
+- [SpellName generator](../../../crates/sim-data/data/gen_spell_names.rs) and [provenance](../../../crates/sim-data/data/spell_names_retail.provenance.json)
+- [AreaTable generator](../../../crates/sim-data-profile/data/gen_area_table.rs) and [provenance](../../../crates/sim-data-profile/data/area_names_retail.provenance.json)
 
 ## See Also
 
 - [[client-profiles]] — runtime profile and epoch selection.
+- [[retail-allthethings-name-lookups]] — consumer errors, lookup evidence, and the remaining instruction-budget attribution.

@@ -1,0 +1,33 @@
+{
+  "product": "wow",
+  "build": "12.1.5.70783",
+  "build_key": "bc493ecb2898766c0f8947a99b4b3d65",
+  "verification": "VERIFIED (DB2 12.1.5.70783)",
+  "source": "Local CASC extraction with wow-cli casc extract-fdid; CSV export with game-engine/scripts/export_db2_csv.py",
+  "file_data_id": 1353545,
+  "community_listfile_entry": "1353545;dbfilesclient/areatable.db2",
+  "community_listfile_sha256": "486bb1d1c5a87cc136c7824857a391ab0b07c6f50bbc724e104fc5f18e320741",
+  "db2_sha256": "d1cddfaff8a19db88ef5328cc79922f20a1e3fa27bb239c1c916251edceb4948",
+  "layout": "5DB1A3FF",
+  "dbd": {
+    "source": "WoWDBDefs revision 86c0801007bbcb767f4bc275413d24bc6b2d486c",
+    "path": "definitions/AreaTable.dbd",
+    "sha256": "f2dd3e9a686d783dcc6d9cba7db1226efc401571e1a3c27da578847d54dd7ae8"
+  },
+  "export": {
+    "rows": 10046,
+    "unreadable_records": 0,
+    "full_csv_sha256": "63da94212becb722f1914b3777fa2b6e563c5cb540d64e32c138ad4b7f95fc2e",
+    "selected_csv": "AreaNames.csv",
+    "selected_rows": 10046,
+    "selected_csv_sha256": "c6b5c754f21f8cff53bed423957c8ddff0866258adeb70aac6ea3b7d6219271b"
+  },
+  "generated_index": {
+    "file": "area_names_retail.bin",
+    "format": "u32le row count; sorted u32le ID/u32le name offset pairs; NUL-terminated UTF-8 name blob",
+    "bytes": 245983,
+    "sha256": "3b37c025741150eea6949e938ac20d2bca464d22e5796171fa6eb9fc0dacfe14"
+  },
+  "lookup": "All non-empty AreaName_lang rows; sorted by ID. Missing IDs remain absent.",
+  "named_rows": 10046
+}

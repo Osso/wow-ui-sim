@@ -183,11 +183,13 @@ C_Map.GetFallbackWorldMapID = function()
   return 2248
 end
 
-C_Map.GetAreaInfo = function(areaID)
-  if areaID == nil then
-    return nil
+if retainUiMapPointFallback then
+  C_Map.GetAreaInfo = function(areaID)
+    if areaID == nil then
+      return nil
+    end
+    return __wow_map_area_names[areaID]
   end
-  return __wow_map_area_names[areaID]
 end
 
 C_Map.GetMapWorldSize = function(mapID)
@@ -400,6 +402,29 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
 #[cfg(test)]
 mod tests {
     use crate::lua_api::WowLuaEnv;
+
+    #[cfg(feature = "client-retail")]
+    #[test]
+    fn retail_area_names_match_db2_rows() {
+        let env = WowLuaEnv::new().expect("lua env should initialize");
+        let names: (String, String, String) = env
+            .eval(
+                "return C_Map.GetAreaInfo(7288), C_Map.GetAreaInfo(7290), C_Map.GetAreaInfo(7291)",
+            )
+            .expect("Retail AreaTable names should be available");
+        assert_eq!(
+            names,
+            (
+                "Smuggler's Den".into(),
+                "Hearthfire Tavern".into(),
+                "Stoktron Brewery".into()
+            )
+        );
+        let unknown_area_is_nil: bool = env
+            .eval("return C_Map.GetAreaInfo(999999) == nil and C_Map.GetAreaInfo(nil) == nil")
+            .expect("unknown or absent areas should remain nil");
+        assert!(unknown_area_is_nil);
+    }
 
     #[test]
     fn uimap_point_bootstrap_respects_profile_boundary() {
