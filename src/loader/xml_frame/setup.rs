@@ -20,6 +20,7 @@ pub(super) struct SetupFrame<'a> {
     pub(super) frame: &'a crate::xml::FrameXml,
     pub(super) inherits: &'a str,
     pub(super) parent: &'a str,
+    pub(super) parent_id: u64,
     pub(super) intrinsic_base: Option<&'a str>,
 }
 
@@ -66,36 +67,36 @@ fn ensure_parent_refs_registered(
     setup: &SetupFrame<'_>,
     frame_id: u64,
 ) -> Result<(), LoadError> {
-    let parent_key = setup.frame.parent_key.as_deref();
-    let parent_array = setup.frame.parent_array.as_deref();
-    if parent_key.is_none() && parent_array.is_none() {
+    if setup.frame.parent_key.is_none() && setup.frame.parent_array.is_none() {
         return Ok(());
     }
+    env.with_state(|state| register_parent_references_state(state, setup, frame_id))
+        .map_err(|error| LoadError::Lua(error.to_string()))
+}
 
-    env.with_state(|state| {
-        let parent_id = crate::lua_api::methods::borrow_state(state)?
-            .widgets
-            .get_id_by_name(setup.parent)
-            .ok_or_else(|| crate::Error::Other(format!("missing parent '{}'", setup.parent)))?;
-        if let Some(parent_key) = parent_key {
-            crate::lua_api::globals::template::assign_parent_key(
-                state, parent_id, parent_key, frame_id,
-            )
-            .map_err(|error| crate::Error::Other(error.to_string()))?;
-        }
-        if let Some(parent_array) = parent_array
-            && !parent_array_contains_child(state, parent_id, parent_array, frame_id)?
-        {
-            crate::lua_api::globals::create_frame::append_parent_array_entry(
-                state,
-                parent_id,
-                parent_array,
-                frame_id,
-            );
-        }
-        Ok::<(), crate::Error>(())
-    })
-    .map_err(|error| LoadError::Lua(error.to_string()))
+fn register_parent_references_state(
+    state: &mut rilua::vm::state::LuaState,
+    setup: &SetupFrame<'_>,
+    frame_id: u64,
+) -> Result<(), crate::Error> {
+    let parent_id = setup.parent_id;
+    if let Some(parent_key) = setup.frame.parent_key.as_deref() {
+        crate::lua_api::globals::template::assign_parent_key(
+            state, parent_id, parent_key, frame_id,
+        )
+        .map_err(|error| crate::Error::Other(error.to_string()))?;
+    }
+    if let Some(parent_array) = setup.frame.parent_array.as_deref()
+        && !parent_array_contains_child(state, parent_id, parent_array, frame_id)?
+    {
+        crate::lua_api::globals::create_frame::append_parent_array_entry(
+            state,
+            parent_id,
+            parent_array,
+            frame_id,
+        );
+    }
+    Ok(())
 }
 
 fn parent_array_contains_child(
@@ -248,7 +249,7 @@ fn execute_frame_creation_lua(
 fn fast_create_frame(env: &LoaderEnv<'_>, setup: &SetupFrame<'_>) -> Result<u64, LoadError> {
     env.with_state(|state| {
         let widget_type = fast_create_widget_type(setup.widget_type)?;
-        let parent_id = fast_create_parent_id(state, setup.parent)?;
+        let parent_id = setup.parent_id;
         let frame_id = create_fast_frame_instance(state, setup, widget_type, parent_id)?;
         crate::lua_api::globals::create_frame::clear_xml_creation_context(state)?;
 
@@ -264,16 +265,6 @@ fn fast_create_frame(env: &LoaderEnv<'_>, setup: &SetupFrame<'_>) -> Result<u64,
 fn fast_create_widget_type(widget_type: &str) -> Result<crate::widget::WidgetType, crate::Error> {
     crate::widget::WidgetType::from_str(widget_type)
         .ok_or_else(|| crate::Error::Other(format!("unknown widget type '{}'", widget_type)))
-}
-
-fn fast_create_parent_id(
-    state: &mut rilua::vm::state::LuaState,
-    parent: &str,
-) -> Result<u64, crate::Error> {
-    crate::lua_api::methods::borrow_state(state)?
-        .widgets
-        .get_id_by_name(parent)
-        .ok_or_else(|| crate::Error::Other(format!("missing parent '{}'", parent)))
 }
 
 fn create_fast_frame_instance(

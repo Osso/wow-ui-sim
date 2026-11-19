@@ -22,7 +22,7 @@ fn write_frame_addon(
     let toc = format!("## Interface: 120105\n## Title: {name}\n{secure_flag}Main.xml\n");
     std::fs::write(addon.join(format!("{name}.toc")), toc).unwrap();
     let xml = format!(
-        "<Ui><Frame name=\"XmlDuplicateIdentityFrame\" parent=\"UIParent\"><Size x=\"{width}\" y=\"{height}\"/><Scripts><OnLoad>{target} = self</OnLoad></Scripts></Frame></Ui>"
+        "<Ui><Frame name=\"XmlDuplicateIdentityFrame\" parent=\"UIParent\"><Size x=\"{width}\" y=\"{height}\"/><Frames><Frame parentKey=\"Display\"><Size x=\"{height}\" y=\"{width}\"/></Frame></Frames><Scripts><OnLoad>{target} = self</OnLoad></Scripts></Frame></Ui>"
     );
     std::fs::write(addon.join("Main.xml"), xml).unwrap();
     addon.join(format!("{name}.toc"))
@@ -76,6 +76,34 @@ fn assert_duplicate_xml_frames_keep_identity_and_properties(env: &WowLuaEnv) {
     );
     assert_eq!((first_width, first_height), (31.0, 41.0));
     assert_eq!((second_width, second_height), (73.0, 79.0));
+    assert_duplicate_xml_children_keep_parent_identity_and_properties(env);
+}
+
+fn assert_duplicate_xml_children_keep_parent_identity_and_properties(env: &WowLuaEnv) {
+    let (first_attached, second_attached, first_width, first_height, second_width, second_height): (
+        bool,
+        bool,
+        f64,
+        f64,
+        f64,
+        f64,
+    ) = env
+        .eval(
+            "local first = FirstXmlOnLoadSelf; local second = rawget(__secureenv, 'SecondXmlOnLoadSelf'); \
+             return rawequal(first.Display:GetParent(), first), rawequal(second.Display:GetParent(), second), \
+             first.Display:GetWidth(), first.Display:GetHeight(), second.Display:GetWidth(), second.Display:GetHeight()",
+        )
+        .expect("read each XML child and its parent");
+    assert!(
+        first_attached,
+        "ordinary XML child must use its created parent"
+    );
+    assert!(
+        second_attached,
+        "secure XML child must use its created parent"
+    );
+    assert_eq!((first_width, first_height), (41.0, 31.0));
+    assert_eq!((second_width, second_height), (79.0, 73.0));
 }
 
 #[test]
