@@ -391,7 +391,6 @@ mod tests {
                 if type(BNGetNumFriendInvites) ~= "function" then return "missing_bnet_default" end
                 if WorldLootObjectExists("player") ~= true then return "overwrote_world_loot_object" end
                 if type(ClearCursorHoveredItem) ~= "function" then return "missing_cursor_hover_default" end
-                if UnitInSubgroup("player") ~= false then return "bad_player_subgroup_default" end
                 if GetNumGuildPerks() ~= 0 then return "bad_guild_perks_default" end
                 if GetNumArenaOpponentSpecs() ~= 3 then return "overwrote_arena_specs" end
                 if EVENT_TOAST_MANAGER_OFFSET_Y_OVERRIDE ~= false then return "toast_offset_overwrite" end
@@ -402,5 +401,31 @@ mod tests {
             .expect("preservation probe should run");
 
         assert_eq!(result, "ok");
+        assert_unit_in_subgroup_publication(&env);
+    }
+
+    #[cfg(any(
+        feature = "client-retail",
+        feature = "client-ptr",
+        feature = "client-mists",
+        feature = "client-era",
+        feature = "client-anniversary",
+        feature = "client-wowforever"
+    ))]
+    fn assert_unit_in_subgroup_publication(env: &WowLuaEnv) {
+        env.exec(
+            r#"
+            assert(type(UnitInSubgroup) == "function")
+            assert(select('#', UnitInSubgroup("player")) == 1)
+            assert(UnitInSubgroup("player") == false)
+            "#,
+        )
+        .expect("profile publishes UnitInSubgroup with one false result and no owner");
+    }
+
+    #[cfg(feature = "client-wrath")]
+    fn assert_unit_in_subgroup_publication(env: &WowLuaEnv) {
+        env.exec("assert(UnitInSubgroup == nil)")
+            .expect("Wrath does not publish UnitInSubgroup");
     }
 }

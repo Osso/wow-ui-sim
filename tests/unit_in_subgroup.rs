@@ -1,11 +1,22 @@
-#![cfg(feature = "client-retail")]
+#![cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 
 use crate::common::blizzard_addon_harness::with_blizzard_addon_closure;
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::lua_api::state::{SubgroupMemberRecord, SubgroupOwnerRoster};
 
+#[cfg(feature = "client-retail")]
 #[test]
 fn unit_position_frame_uses_raid_appearance_without_subgroup_roster() {
+    assert_unit_position_frame_uses_raid_appearance_without_subgroup_roster();
+}
+
+#[cfg(feature = "client-wowforever")]
+#[test]
+fn wowforever_unit_position_frame_uses_raid_appearance_without_subgroup_roster() {
+    assert_unit_position_frame_uses_raid_appearance_without_subgroup_roster();
+}
+
+fn assert_unit_position_frame_uses_raid_appearance_without_subgroup_roster() {
     with_blizzard_addon_closure(&["Blizzard_UIPanels_Game"], &[], |env, loaded| {
         assert!(loaded.iter().any(|name| name == "Blizzard_UIPanels_Game"));
         prepare_party(&env, 1);

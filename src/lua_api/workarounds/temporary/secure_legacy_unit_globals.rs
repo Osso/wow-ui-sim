@@ -55,6 +55,14 @@ const RETAIL_PTR_FOREVER_PROFILES: &[ClientProfile] = &[
     ClientProfile::WowForever,
 ];
 const RETAIL_ONLY_PROFILE: &[ClientProfile] = &[ClientProfile::Retail];
+const UNIT_IN_SUBGROUP_PROFILES: &[ClientProfile] = &[
+    ClientProfile::Retail,
+    ClientProfile::Ptr,
+    ClientProfile::Mists,
+    ClientProfile::Era,
+    ClientProfile::Anniversary,
+    ClientProfile::WowForever,
+];
 const WRATH_MISTS_PROFILES: &[ClientProfile] = &[ClientProfile::Wrath, ClientProfile::Mists];
 const CLASSIC_PVP_PROFILES: &[ClientProfile] = &[
     ClientProfile::Wrath,
@@ -505,9 +513,9 @@ const MASTER_SNAPSHOT_UNIT_GLOBALS: &[MasterUnitGlobal] = &[
     ),
     unit_global(
         "UnitInSubgroup",
-        ALL_PROFILES,
-        ALL_PROFILES,
-        "src/lua_api/workarounds/temporary/inert_global_defaults.rs:188",
+        UNIT_IN_SUBGROUP_PROFILES,
+        UNIT_IN_SUBGROUP_PROFILES,
+        "src/lua_api/globals/group_queries.rs:153",
     ),
     unit_global(
         "UnitInVehicle",
