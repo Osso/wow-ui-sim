@@ -22,6 +22,23 @@ fn debug_edit_mode_system_frame_count(env: &WowLuaEnv) {
         .eval("return #EditModeManagerFrame.registeredSystemFrames")
         .unwrap();
     eprintln!("EditModeManagerFrame.registeredSystemFrames={count}");
+    env.exec(
+        r#"
+        local registered = EditModeManagerFrame.registeredSystemFrames
+        local runRange = secureexecuterange
+        secureexecuterange = function(frames, callback, ...)
+            if frames ~= registered then
+                return runRange(frames, callback, ...)
+            end
+            for index, frame in ipairs(frames) do
+                print("anchor before", index, frame:GetName())
+                callback(index, frame, ...)
+                print("anchor after", index, frame:GetName())
+            end
+        end
+        "#,
+    )
+    .unwrap();
 }
 
 pub fn setup_full_ui() -> WowLuaEnv {
