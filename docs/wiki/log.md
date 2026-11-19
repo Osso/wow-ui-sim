@@ -1,3 +1,11 @@
+## [2026-11-19] investigation | Retail AllTheThings name lookups
+
+Added [the investigation](../investigations/retail-allthethings-name-lookups.md). **VERIFIED (Retail 12.1.5.70783 DB2):** full readable SpellName and AreaTable name indexes remove the original ATT nil-name errors. **VERIFIED (slot-3 trace):** the residual PLAYER_LOGIN callback consumes 9,200,201 instructions and calls neither name lookup; three later ADDON_LOADED errors begin at the exhausted limit.
+
+## [2026-11-19] design | Compact Retail name indexes
+
+Updated [the generated-data design](../design/generated-data-crates.md#retail-db2-name-indexes) with compact binary format, pinned provenance, data sizes, warm compile comparison, and steady lookup timing.
+
 ## [2026-11-18] implementation | Sliced mask textures
 
 The [rendering pipeline](systems/rendering-pipeline.md#sliced-mask-textures) records **INFERRED (ordinary texture slice semantics):** a MaskTexture with slice margins keeps its margins and stretches its centre; no native MaskTexture slice evidence was found. **VERIFIED (simulator unit tests):** quads split at slice lines, corner and centre UVs match the expected mapping, texture requests move with the split quads, and no-centre masks use whole-stretch behavior. **INFERRED (consumer code):** EllesmereUI's rounded tooltip corners depend on the kept margins. Masks larger than their region (native corner shrinking) remain unmodelled.
