@@ -46,6 +46,27 @@ pub fn create_frame_from_xml(
     frame: &crate::xml::FrameXml,
     widget_type: &str,
     parent_override: Option<&str>,
+    subst_parent_override: Option<&str>,
+    intrinsic_base: Option<&str>,
+    timing: &mut LoadTiming,
+) -> Result<Option<u64>, LoadError> {
+    create_frame_from_xml_with_parent_id(
+        env,
+        frame,
+        widget_type,
+        parent_override,
+        None,
+        subst_parent_override,
+        intrinsic_base,
+        timing,
+    )
+}
+
+pub(super) fn create_frame_from_xml_with_parent_id(
+    env: &LoaderEnv<'_>,
+    frame: &crate::xml::FrameXml,
+    widget_type: &str,
+    parent_override: Option<&str>,
     parent_id_override: Option<u64>,
     subst_parent_override: Option<&str>,
     intrinsic_base: Option<&str>,

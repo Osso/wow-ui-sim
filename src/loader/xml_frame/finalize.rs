@@ -15,7 +15,7 @@ use crate::loader::xml_frame_extras::{
 use crate::loader::xml_lifecycle::{LifecycleScripts, fire_lifecycle_scripts};
 use crate::lua_api::LoaderEnv;
 
-use super::create_frame_from_xml;
+use super::create_frame_from_xml_with_parent_id;
 
 /// Create children, layers, animations, and fire lifecycle scripts with timing.
 pub(super) fn finalize_frame(
@@ -310,7 +310,7 @@ fn create_scroll_child_element(
     else {
         return Ok(None);
     };
-    let child_id = create_frame_from_xml(
+    let child_id = create_frame_from_xml_with_parent_id(
         env,
         child_frame,
         child_type,
@@ -343,7 +343,7 @@ fn create_single_child_frame(
     else {
         return Ok(());
     };
-    let child_id = create_frame_from_xml(
+    let child_id = create_frame_from_xml_with_parent_id(
         env,
         child_frame,
         child_type,
