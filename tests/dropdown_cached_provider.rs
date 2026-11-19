@@ -32,7 +32,7 @@ fn dropdown_cached_templates_preserve_original_mixin_behavior() {
 
         local filter = CreateFrame("DropdownButton", nil, UIParent, "WowStyle1FilterDropdownTemplate")
         filter:SetIsDefaultCallback(function() return false end)
-        filter:RegisterMenu(MenuUtil.CreateRootMenuDescription())
+        filter:RegisterMenu(filter:CreateDefaultRootMenuDescription())
         assert(filter.ResetButton:IsShown())
         filter:SetIsDefaultCallback(function() return true end)
         filter:OnMenuAssigned()
