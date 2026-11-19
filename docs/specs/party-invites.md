@@ -4,8 +4,8 @@
 
 ## What it must do
 
-- [ ] Publish `C_PartyInfo.InviteUnit` on Retail and Forever with one required `cstring` argument and no return values.
-- [ ] **INFERRED (simulator mapping):** do not change local group state, fire events, or show popups; group membership changes only after server acceptance.
+- [x] Publish `C_PartyInfo.InviteUnit` on Retail and Forever with one required `cstring` argument and no return values.
+- [x] **INFERRED (simulator mapping):** do not change local group state, fire events, or show popups; group membership changes only after server acceptance.
 - [ ] Native confirmation, event, and taint behavior remain UNKNOWN pending R88bl.
 
 ## How it works
