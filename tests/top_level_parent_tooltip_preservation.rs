@@ -1,13 +1,18 @@
 #[path = "tooltip_full_env_helpers.rs"]
 mod tooltip_full_env_helpers;
 
+use wow_ui_sim::lua_api::WowLuaEnv;
+
 #[test]
 fn menu_util_hook_tooltip_uses_blizzard_provider() {
     let env = tooltip_full_env_helpers::setup_full_env();
+    assert_original_top_level_parent_behavior(&env);
+    assert_menu_tooltip_uses_provider(&env);
+}
+
+fn assert_original_top_level_parent_behavior(env: &WowLuaEnv) {
     env.exec(
         r#"
-        assert(type(GetAppropriateTooltip) == "function")
-        assert(type(MenuUtil.HookTooltipScripts) == "function")
         local alternate = CreateFrame("Frame", "TopLevelParentProbe", UIParent)
         alternate:Show()
         local alternateEventFired = false
@@ -31,7 +36,16 @@ fn menu_util_hook_tooltip_uses_blizzard_provider() {
         ClearAlternateTopLevelParent()
         assert(GetAppropriateTopLevelParent() == UIParent,
             "FrameUtil must restore UIParent after clearing the alternate parent")
+        "#,
+    )
+    .expect("FrameUtil top-level parent behavior should use the original provider");
+}
 
+fn assert_menu_tooltip_uses_provider(env: &WowLuaEnv) {
+    env.exec(
+        r#"
+        assert(type(GetAppropriateTooltip) == "function")
+        assert(type(MenuUtil.HookTooltipScripts) == "function")
         local owner = CreateFrame("Frame", "TopLevelParentTooltipProbe", UIParent)
         local seenTooltip
         MenuUtil.HookTooltipScripts(owner, function(tooltip)
