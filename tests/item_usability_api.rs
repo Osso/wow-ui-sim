@@ -48,6 +48,18 @@ fn item_usability_checks_ownership_eligibility_and_spell_power() {
 }
 
 #[test]
+fn request_load_item_data_is_noop_without_request_model() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local location = ItemLocation:CreateFromEquipmentSlot(1)
+        assert(select("#", C_Item.RequestLoadItemData(location)) == 0)
+        "#,
+    )
+    .unwrap();
+}
+
+#[test]
 fn item_usability_defaults_unsupplied_eligibility_to_accepted() {
     let env = WowLuaEnv::new().unwrap();
     {
