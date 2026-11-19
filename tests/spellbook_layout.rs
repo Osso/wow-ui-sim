@@ -694,6 +694,34 @@ fn spellbook_hover_shows_spell_tooltip() {
 }
 }
 
+fn lua_game_tooltip_id(env: &WowLuaEnv) -> u64 {
+    env.loader_env()
+        .with_state(|state| {
+            let key = state.gc.intern_string(b"GameTooltip");
+            let global = state.global;
+            let value = state
+                .gc
+                .tables
+                .get(global)
+                .expect("Lua globals table")
+                .get_str(key, &state.gc.string_arena);
+            wow_ui_sim::lua_api::methods::extract_frame_id(state, value)
+                .ok_or("GameTooltip must be a Lua frame")
+        })
+        .expect("GameTooltip lookup must succeed")
+}
+
+click_binding_ui_fixture! {
+#[test]
+fn game_tooltip_registry_name_matches_lua_global_after_ui_fixture() {
+    test_timeout! {
+        let env = setup_full_ui();
+        let registry_id = env.state().borrow().widgets.get_id_by_name("GameTooltip").unwrap();
+        assert_eq!(registry_id, lua_game_tooltip_id(&env));
+    }
+}
+}
+
 click_binding_ui_fixture! {
 #[test]
 fn spellbook_hover_tooltip_is_sized_and_on_screen() {
