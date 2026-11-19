@@ -4,9 +4,9 @@ The tooltip data processor registers callbacks for tooltip data that Blizzard’
 
 ## What it must do
 
-- [ ] **VERIFIED (Forever and Mists pinned UI cache):** `Blizzard_SharedXMLGame.toc:9` loads `TooltipDataHandler.lua` on Forever and Mists; Mists excludes only `vanilla` at that line.
-- [ ] **VERIFIED (Forever and Mists pinned UI cache):** `TooltipDataHandler.lua:177-200` defines `TooltipDataProcessor.AllTypes` as `"ALL"` and implements `AddTooltipPostCall`; `:525` maps `GameTooltip:SetItemByID` to `C_TooltipInfo.GetItemByID`.
-- [ ] **VERIFIED (Forever preservation test):** A registered item post-call runs once when the original `GameTooltip:SetItemByID(6948)` consumer populates item data.
+- [x] **VERIFIED (Forever and Mists pinned UI cache and preservation tests):** `Blizzard_SharedXMLGame/Blizzard_SharedXMLGame.toc:9` loads `Tooltip/TooltipDataHandler.lua` on both profiles; Mists excludes only `vanilla` at that line.
+- [x] **VERIFIED (Forever and Mists pinned UI cache and preservation tests):** `Tooltip/TooltipDataHandler.lua:177-200` defines `TooltipDataProcessor.AllTypes` as `"ALL"` and implements `AddTooltipPostCall`; `:525` maps `GameTooltip:SetItemByID` to `C_TooltipInfo.GetItemByID`.
+- [x] **VERIFIED (Forever preservation test before and after fallback deletion):** A registered item post-call runs once when the original `GameTooltip:SetItemByID(6948)` consumer populates item data.
 - [ ] **INFERRED (simulator mapping):** A partial environment without `Blizzard_SharedXMLGame` does not receive these globals from this workaround; their availability follows the loaded Blizzard files.
 - [ ] **UNKNOWN (Wrath):** The compile-only gate does not establish runtime consumer behavior; no Wrath shim is retained without a failing consumer proof.
 
@@ -27,9 +27,9 @@ The tooltip data processor registers callbacks for tooltip data that Blizzard’
 
 ## Known gaps (current cycle)
 
-- [ ] **VERIFIED (Mists pinned UI cache):** The callback-dispatch test does not apply on Mists. `Blizzard_GameTooltip.toc:4` selects `AllowLoadGameType: classic`, and `Blizzard_SharedXMLGame.toc:10` marks `TooltipDataRules.lua` mainline-only.
 - [ ] **UNKNOWN (Wrath):** This lane compiles Wrath but does not run its UI; runtime consumer behavior remains unverified.
 
 ## Out of scope
 
+- **VERIFIED (Mists pinned UI cache):** Callback-dispatch testing does not apply to Mists: `Blizzard_GameTooltip/Blizzard_GameTooltip_Classic.toc:4` selects `AllowLoadGameType: classic`, and `Blizzard_SharedXMLGame/Blizzard_SharedXMLGame.toc:10` marks `TooltipDataRules.lua` mainline-only.
 - Modeling TooltipDataProcessor behavior for profiles whose selected Blizzard UI does not load `TooltipDataHandler.lua`.
