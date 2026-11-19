@@ -552,7 +552,9 @@ pub use tooltip_item_context::ItemTooltipContext;
 pub mod weapon_enchants;
 pub mod world_loot_object;
 
+#[cfg(any(feature = "client-wowforever", feature = "client-ptr"))]
 pub mod c_game_pad;
+pub(crate) mod c_game_pad_retail;
 #[cfg(feature = "client-wowforever")]
 mod c_gamepad_ui;
 #[cfg(feature = "client-wowforever")]

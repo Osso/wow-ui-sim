@@ -1,15 +1,10 @@
-//! Retail device-query defaults and bounded PTR/Forever gamepad policies.
+//! Bounded Forever gamepad capability, mapped sticks and free-look-hover policy.
 
-use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::methods::{borrow_state, borrow_state_mut, create_table, table_set_static};
 use crate::lua_api::script_helpers::fire_named_event_state;
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
-use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
-use rilua::vm::table::Table;
 use rilua::{LuaResult, Val, runtime_error};
-
-type GamePadNamespace = GcRef<Table>;
 
 /// Simulator input for one named stick. Coordinates are model inputs only;
 /// publishing their Euclidean length is inferred policy, not native verification.
@@ -29,32 +24,6 @@ pub struct MappedStickSnapshot {
 
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     let namespace = super::ensure_namespace(state, "C_GamePad")?;
-    if ACTIVE == ClientProfile::Retail {
-        register_retail_device_queries(state, namespace)?;
-    }
-    if matches!(ACTIVE, ClientProfile::Ptr | ClientProfile::WowForever) {
-        register_mapped_state_queries(state, namespace)?;
-        register_hover_policy_queries(state, namespace)?;
-    }
-    if ACTIVE == ClientProfile::WowForever {
-        table_set_rust_fn_static(state, namespace, "IsEnabled", is_enabled)?;
-    }
-    Ok(())
-}
-
-fn register_retail_device_queries(
-    state: &mut LuaState,
-    namespace: GamePadNamespace,
-) -> LuaResult<()> {
-    table_set_rust_fn_static(state, namespace, "GetAllDeviceIDs", get_all_device_ids)?;
-    table_set_rust_fn_static(state, namespace, "GetDeviceRawState", get_device_raw_state)?;
-    table_set_rust_fn_static(state, namespace, "IsEnabled", is_enabled)
-}
-
-fn register_mapped_state_queries(
-    state: &mut LuaState,
-    namespace: GamePadNamespace,
-) -> LuaResult<()> {
     table_set_rust_fn_static(
         state,
         namespace,
@@ -66,13 +35,10 @@ fn register_mapped_state_queries(
         namespace,
         "StickIndexToConfigName",
         stick_index_to_config_name,
-    )
-}
-
-fn register_hover_policy_queries(
-    state: &mut LuaState,
-    namespace: GamePadNamespace,
-) -> LuaResult<()> {
+    )?;
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever {
+        table_set_rust_fn_static(state, namespace, "IsEnabled", is_enabled)?;
+    }
     table_set_rust_fn_static(
         state,
         namespace,
@@ -87,21 +53,9 @@ fn register_hover_policy_queries(
     )
 }
 
-fn get_all_device_ids(state: &mut LuaState) -> LuaResult<u32> {
-    // INFERRED (simulator mapping): no physical-device input means an empty list.
-    let device_ids = create_table(state);
-    state.push(device_ids);
-    Ok(1)
-}
-
-fn get_device_raw_state(state: &mut LuaState) -> LuaResult<u32> {
-    // INFERRED (simulator mapping): no supplied device means no raw state.
-    state.push(Val::Nil);
-    Ok(1)
-}
-
 fn is_enabled(state: &mut LuaState) -> LuaResult<u32> {
-    // INFERRED (simulator mapping): project the existing CVar, not hardware state.
+    // Explicit supplied capability, independent of mapped sticks. Projecting the
+    // existing GamePadEnable CVar is simulator policy, not native detection.
     let enabled = borrow_state(state)?.cvars.get_bool("GamePadEnable");
     state.push(Val::Bool(enabled));
     Ok(1)

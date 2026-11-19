@@ -22,20 +22,28 @@ fn register_profile_spell_tables(state: &mut LuaState) -> LuaResult<()> {
     }
     #[cfg(feature = "client-wowforever")]
     super::c_gamepad_ui::register(state)?;
-    if matches!(
-        crate::client_profile::ACTIVE,
-        crate::client_profile::ClientProfile::Retail
-            | crate::client_profile::ClientProfile::Ptr
-            | crate::client_profile::ClientProfile::WowForever
-    ) {
-        super::c_game_pad::register(state)?;
-    }
+    register_gamepad_tables(state)?;
     #[cfg(feature = "client-wowforever")]
     super::c_edit_mode::register(state)?;
     #[cfg(any(feature = "client-wowforever", feature = "client-ptr"))]
     super::gamepad_action_bar_constants::register(state);
     #[cfg(feature = "client-wowforever")]
     super::forever_finite_constants::register(state);
+    Ok(())
+}
+
+fn register_gamepad_tables(state: &mut LuaState) -> LuaResult<()> {
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+        super::c_game_pad_retail::register(state)?;
+    }
+    #[cfg(any(feature = "client-wowforever", feature = "client-ptr"))]
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Ptr
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
+        super::c_game_pad::register(state)?;
+    }
     Ok(())
 }
 

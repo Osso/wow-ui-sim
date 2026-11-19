@@ -1,6 +1,6 @@
 # Retail and Forever gamepad queries
 
-`src/c_api/c_game_pad.rs` publishes a bounded Retail device-query surface and the existing Forever `C_GamePad.IsEnabled()` capability. [System notes](../wiki/systems/gamepad-mapped-state.md) describe the separate mapped-stick model and the evidence boundary.
+`src/c_api/c_game_pad_retail.rs` publishes the bounded Retail device-query surface. `src/c_api/c_game_pad.rs` retains the PTR/Forever mapped-state and hover policies plus the Forever `C_GamePad.IsEnabled()` capability. [System notes](../wiki/systems/gamepad-mapped-state.md) describe the separate models and evidence boundaries.
 
 ## What it must do
 
@@ -20,7 +20,8 @@ The Retail generated `GamePadDocumentation.lua` declares these members. The simu
 
 ## Implementation inventory
 
-- `src/c_api/c_game_pad.rs` — Retail empty device queries and the bounded PTR/Forever projections.
+- `src/c_api/c_game_pad_retail.rs` — Retail empty device queries and CVar-backed enabled query.
+- `src/c_api/c_game_pad.rs` — bounded PTR/Forever mapped-state and hover projections.
 - `src/c_api/mod.rs`, `src/c_api/registration.rs` — profile publication boundaries.
 - `src/cvars.yaml`, `src/cvars.rs` — existing default and stored boolean input; unchanged by this lane.
 
