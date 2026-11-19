@@ -119,7 +119,9 @@ impl WowLuaEnv {
 
     /// Set the host default frame scale and minimum/maximum render scales.
     pub fn set_display_scale_inputs(&self, default: f64, min: f64, max: f64) -> Result<()> {
-        if ![default, min, max].into_iter().all(|value| value.is_finite() && value > 0.0)
+        if ![default, min, max]
+            .into_iter()
+            .all(|value| value.is_finite() && value > 0.0)
             || min > max
         {
             return Err(crate::Error::Other(

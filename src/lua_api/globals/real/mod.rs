@@ -20,6 +20,7 @@ pub mod combo_points;
 pub mod container_legacy;
 pub mod cursor_model;
 pub(crate) mod cursor_presentation;
+pub(crate) mod display_scale;
 #[cfg(feature = "retail-12-0-0")]
 pub mod event_callbacks;
 #[cfg(feature = "client-wowforever")]

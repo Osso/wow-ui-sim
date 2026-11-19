@@ -400,7 +400,6 @@ fn apply_dispatcher_and_date_defaults(lua: &mut rilua::Lua) -> crate::Result<()>
 }
 
 fn apply_format_and_game_defaults(lua: &mut rilua::Lua) -> crate::Result<()> {
-    temporary::display_scale_defaults::apply_bootstrap(lua)?;
     temporary::dropdown_list_defaults::apply_bootstrap(lua)?;
     temporary::formatting_utility_defaults::apply_bootstrap(lua)?;
     temporary::game_time_calendar_invites::apply_bootstrap(lua)?;

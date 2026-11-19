@@ -126,6 +126,7 @@ fn initialize_secure_environment_core(lua: &mut rilua::Lua) -> crate::Result<()>
 fn register_runtime_surface_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     trace_debug_getter_values(lua, "before_runtime_bootstrap");
     bootstrap::init_runtime_surface_bootstrap(lua)?;
+    super::globals::real::display_scale::register(lua)?;
     trace_debug_getter_values(lua, "after_runtime_bootstrap");
     #[cfg(feature = "retail-12-1-0")]
     super::globals::security::register_retail_secret_values(lua)?;

@@ -14,9 +14,13 @@ fn original_apply_default_scale_reads_host_display_input() {
     );
     env.set_display_scale_inputs(0.75, 0.625, 1.25).unwrap();
     let scale: f64 = env
-        .eval("local frame = CreateFrame('Frame'); ApplyDefaultScale(frame); return frame:GetScale()")
+        .eval(
+            "local frame = CreateFrame('Frame'); ApplyDefaultScale(frame); return frame:GetScale()",
+        )
         .unwrap();
     assert_eq!(scale, 0.75, "original ApplyDefaultScale ignored host input");
-    let bounds: (f64, f64) = env.eval("return GetMinRenderScale(), GetMaxRenderScale()").unwrap();
+    let bounds: (f64, f64) = env
+        .eval("return GetMinRenderScale(), GetMaxRenderScale()")
+        .unwrap();
     assert_eq!(bounds, (0.625, 1.25));
 }
