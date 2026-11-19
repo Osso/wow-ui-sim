@@ -10,14 +10,15 @@ lookup; R88ae.4 directly verifies only `issecretvalue`.
 RED proof is simulator-surface proof: `Frame:CallMethod` is simulator-only,
 not Blizzard's `HANDLE:CallMethod`.
 
-- Retail CallMethod preserves caller taint and dispatch/argument validation but
+- INFERRED (simulator mapping of R88ae.4): Retail CallMethod preserves caller taint and dispatch/argument validation but
   never marks ordinary strings secret. It returns the method's values directly.
-- Retail's `Frame:CallMethod` implementation does not call the private
+- INFERRED (simulator mapping of R88ae.4): Retail's `Frame:CallMethod` implementation does not call the private
   `__sim_mark_secret_value` bridge.
-- Retail shallow secrecy reads authentic VM secret wrappers only. Evidenced
+- VERIFIED (R88ae.4, marker predicate) / INFERRED (simulator mapping to VM
+  wrappers): Retail shallow secrecy reads authentic VM secret wrappers only. Evidenced
   host-produced secret unit identities remain wrappers; their tests are unchanged.
-- Other profiles retain their existing CallMethod and secrecy behavior. This
-  evidence does not establish their native behavior.
+- UNKNOWN (native): other profiles retain their existing CallMethod and secrecy
+  behavior. This evidence does not establish their native behavior.
 
 ## Pre-change dependency audit
 

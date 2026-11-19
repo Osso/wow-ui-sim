@@ -1,7 +1,9 @@
 //! Secret-value tracking and scrub helpers.
 //!
-//! Retail and Forever inspect authentic VM secret wrappers only. Other profiles
-//! retain the legacy string-identity registry and closure-source fallbacks.
+//! Retail and Forever inspect authentic VM secret wrappers only (VERIFIED for
+//! Retail 12.1.5.70688 by R88ae.4: `issecretvalue` reads the value-slot marker;
+//! the wrapper mapping is INFERRED simulator mapping). Other profiles retain the
+//! legacy string-identity registry and closure-source fallbacks (UNKNOWN native).
 
 #[cfg(feature = "retail-12-1-0")]
 use rilua::LuaApiMut;
