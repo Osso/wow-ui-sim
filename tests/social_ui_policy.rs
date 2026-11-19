@@ -62,10 +62,9 @@ fn assert_enabled_friends_consumer(env: &WowLuaEnv) {
         r#"
         assert(C_SocialUI.IsSystemEnabled() == true)
         assert(socialStatusUpdates == 1 and socialEnabledOnUpdate == true)
-        FriendsListFrame:Hide()
-        FriendsFrame_ShowSubFrame("WhoFrame")
-        assert(not FriendsListFrame:IsShown(), "FriendsFrame must use native enabled state")
-        assert(WhoFrame:IsShown(), "FriendsFrame must retain Who when enabled")
+        QuickJoinFrame:Hide()
+        FriendsFrame_ShowSubFrame("QuickJoinFrame")
+        assert(not QuickJoinFrame:IsShown(), "FriendsFrame must block Quick Join when enabled")
         "#,
     )
     .unwrap();
@@ -76,8 +75,8 @@ fn assert_disabled_friends_consumer(env: &WowLuaEnv) {
         r#"
         assert(C_SocialUI.IsSystemEnabled() == false)
         assert(socialStatusUpdates == 2 and socialEnabledOnUpdate == false)
-        FriendsFrame_ShowSubFrame("FriendsListFrame")
-        assert(FriendsListFrame:IsShown(), "FriendsFrame must restore friends when disabled")
+        FriendsFrame_ShowSubFrame("QuickJoinFrame")
+        assert(QuickJoinFrame:IsShown(), "FriendsFrame must allow Quick Join when disabled")
         "#,
     )
     .unwrap();
