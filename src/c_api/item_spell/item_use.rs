@@ -73,30 +73,31 @@ pub(super) fn is_usable_item(state: &mut LuaState) -> LuaResult<u32> {
         let sim = borrow_state(state)?;
         sim.player.present && item != 0 && owns_item(&sim, item)
     };
-    let (usable, insufficient) = if owned {
-        match super::item_effects::selected_item_spell(state, item)? {
-            Some((spell, _)) => {
-                let sim = borrow_state(state)?;
-                let eligible = sim
-                    .item_use_eligibility
-                    .get(&(item, spell))
-                    .copied()
-                    .ok_or_else(|| {
-                        runtime_error("C_Item.IsUsableItem: eligibility has not been supplied")
-                    })?;
-                if eligible {
-                    let enough = resources_sufficient(&sim, spell);
-                    (enough, !enough)
-                } else {
-                    (false, false)
-                }
-            }
-            None => (false, false),
-        }
+    let result = if owned {
+        usability_for_owned_item(state, item)?
     } else {
         (false, false)
     };
-    state.push(Val::Bool(usable));
-    state.push(Val::Bool(insufficient));
+    state.push(Val::Bool(result.0));
+    state.push(Val::Bool(result.1));
     Ok(2)
+}
+
+fn usability_for_owned_item(state: &mut LuaState, item: u32) -> LuaResult<(bool, bool)> {
+    let Some((spell, _)) = super::item_effects::selected_item_spell(state, item)? else {
+        return Ok((false, false));
+    };
+    let sim = borrow_state(state)?;
+    let eligible = sim
+        .item_use_eligibility
+        .get(&(item, spell))
+        .copied()
+        .unwrap_or(true);
+    if !eligible {
+        return Ok((false, false));
+    }
+    // INFERRED (best-guess in-game behaviour): absent eligibility is accepted;
+    // native level, class and combat rules remain UNKNOWN pending decomp.
+    let enough = resources_sufficient(&sim, spell);
+    Ok((enough, !enough))
 }
