@@ -233,126 +233,124 @@ fn register_c_item_inventory_queries(
     table_ref: GcRef<Table>,
 ) -> LuaResult<()> {
     if ACTIVE == ClientProfile::Retail {
+        register_c_item_retail_inventory_queries(state, table_ref)?;
+    }
+    register_c_item_general_inventory_queries(state, table_ref)
+}
+
+fn register_c_item_retail_inventory_queries(
+    state: &mut LuaState,
+    table_ref: GcRef<Table>,
+) -> LuaResult<()> {
+    register_c_item_retail_inventory_query_group_one(state, table_ref)?;
+    register_c_item_retail_inventory_query_group_two(state, table_ref)?;
+    register_c_item_retail_inventory_query_group_three(state, table_ref)?;
+    register_c_item_retail_inventory_query_group_four(state, table_ref)
+}
+
+fn register_c_item_retail_inventory_query_group_one(
+    state: &mut LuaState,
+    table_ref: GcRef<Table>,
+) -> LuaResult<()> {
+    register_c_item_methods(
+        state,
+        table_ref,
+        &[
+            ("IsItemKeystoneByID", is_item_keystone_by_id),
+            ("GetItemGem", super::item_gem::get_item_gem),
+            (
+                "IsEquippedItemType",
+                super::item_type::is_equipped_item_type,
+            ),
+            ("GetItemFamily", c_item_get_item_family),
+            ("GetItemChildInfo", super::item_child::get_item_child_info),
+            ("GetItemCreationContext", c_item_creation_context),
+            (
+                "IsAnimaItemByID",
+                super::item_classifiers::is_anima_item_by_id,
+            ),
+            (
+                "IsArtifactPowerItem",
+                super::item_classifiers::is_artifact_power_item,
+            ),
+        ],
+    )
+}
+
+fn register_c_item_retail_inventory_query_group_two(
+    state: &mut LuaState,
+    table_ref: GcRef<Table>,
+) -> LuaResult<()> {
+    register_c_item_methods(
+        state,
+        table_ref,
+        &[
+            ("ItemHasRange", super::item_range::item_has_range),
+            (
+                "DoesItemContainSpec",
+                super::item_spec::does_item_contain_spec,
+            ),
+            ("GetItemSpecInfo", super::item_spec::get_item_spec_info),
+            ("IsLocked", super::item_equip::is_locked),
+            ("EquipItemByName", super::item_equip::equip_item_by_name),
+            ("IsUsableItem", super::item_use::is_usable_item),
+            ("PickupItem", super::item_pickup::pickup_item),
+            ("GetItemSetInfo", super::item_set::get_item_set_info),
+        ],
+    )
+}
+
+fn register_c_item_retail_inventory_query_group_three(
+    state: &mut LuaState,
+    table_ref: GcRef<Table>,
+) -> LuaResult<()> {
+    table_set_rust_fn_static(
+        state,
+        table_ref,
+        "GetItemUniqueness",
+        super::item_uniqueness::get_item_uniqueness,
+    )?;
+    // ItemDocumentation.lua:80, :84, :88, :199, :209 and :1703.
+    for name in ["ConfirmBindOnUse", "ConfirmNoRefundOnUse", "ConfirmOnUse"] {
         table_set_rust_fn_static(
             state,
             table_ref,
-            "IsItemKeystoneByID",
-            is_item_keystone_by_id,
-        )?;
-        table_set_rust_fn_static(
-            state,
-            table_ref,
-            "GetItemGem",
-            super::item_gem::get_item_gem,
-        )?;
-        table_set_rust_fn_static(
-            state,
-            table_ref,
-            "IsEquippedItemType",
-            super::item_type::is_equipped_item_type,
-        )?;
-        table_set_rust_fn_static(state, table_ref, "GetItemFamily", c_item_get_item_family)?;
-        table_set_rust_fn_static(
-            state,
-            table_ref,
-            "GetItemChildInfo",
-            super::item_child::get_item_child_info,
-        )?;
-        table_set_rust_fn_static(
-            state,
-            table_ref,
-            "GetItemCreationContext",
-            c_item_creation_context,
-        )?;
-        table_set_rust_fn_static(
-            state,
-            table_ref,
-            "IsAnimaItemByID",
-            super::item_classifiers::is_anima_item_by_id,
-        )?;
-        table_set_rust_fn_static(
-            state,
-            table_ref,
-            "IsArtifactPowerItem",
-            super::item_classifiers::is_artifact_power_item,
-        )?;
-        table_set_rust_fn_static(
-            state,
-            table_ref,
-            "ItemHasRange",
-            super::item_range::item_has_range,
-        )?;
-        table_set_rust_fn_static(
-            state,
-            table_ref,
-            "DoesItemContainSpec",
-            super::item_spec::does_item_contain_spec,
-        )?;
-        table_set_rust_fn_static(
-            state,
-            table_ref,
-            "GetItemSpecInfo",
-            super::item_spec::get_item_spec_info,
-        )?;
-        table_set_rust_fn_static(state, table_ref, "IsLocked", super::item_equip::is_locked)?;
-        table_set_rust_fn_static(
-            state,
-            table_ref,
-            "EquipItemByName",
-            super::item_equip::equip_item_by_name,
-        )?;
-        table_set_rust_fn_static(
-            state,
-            table_ref,
-            "IsUsableItem",
-            super::item_use::is_usable_item,
-        )?;
-        table_set_rust_fn_static(
-            state,
-            table_ref,
-            "PickupItem",
-            super::item_pickup::pickup_item,
-        )?;
-        table_set_rust_fn_static(
-            state,
-            table_ref,
-            "GetItemSetInfo",
-            super::item_set::get_item_set_info,
-        )?;
-        table_set_rust_fn_static(
-            state,
-            table_ref,
-            "GetItemUniqueness",
-            super::item_uniqueness::get_item_uniqueness,
-        )?;
-        // ItemDocumentation.lua:80, :84, :88, :199, :209 and :1703.
-        for name in ["ConfirmBindOnUse", "ConfirmNoRefundOnUse", "ConfirmOnUse"] {
-            table_set_rust_fn_static(
-                state,
-                table_ref,
-                name,
-                super::item_use_confirm::confirm_on_use,
-            )?;
-        }
-        table_set_rust_fn_static(
-            state,
-            table_ref,
-            "EndBoundTradeable",
-            super::item_use_confirm::end_bound_tradeable,
-        )?;
-        table_set_rust_fn_static(
-            state,
-            table_ref,
-            "UseItemByName",
-            super::item_use_by_name::use_item_by_name,
-        )?;
-        table_set_rust_fn_static(
-            state,
-            table_ref,
-            "DropItemOnUnit",
-            super::item_drop_on_unit::drop_item_on_unit,
+            name,
+            super::item_use_confirm::confirm_on_use,
         )?;
     }
+    Ok(())
+}
+
+fn register_c_item_retail_inventory_query_group_four(
+    state: &mut LuaState,
+    table_ref: GcRef<Table>,
+) -> LuaResult<()> {
+    table_set_rust_fn_static(
+        state,
+        table_ref,
+        "EndBoundTradeable",
+        super::item_use_confirm::end_bound_tradeable,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        table_ref,
+        "UseItemByName",
+        super::item_use_by_name::use_item_by_name,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        table_ref,
+        "DropItemOnUnit",
+        super::item_drop_on_unit::drop_item_on_unit,
+    )?;
+    Ok(())
+}
+
+fn register_c_item_general_inventory_queries(
+    state: &mut LuaState,
+    table_ref: GcRef<Table>,
+) -> LuaResult<()> {
     register_c_item_methods(
         state,
         table_ref,
