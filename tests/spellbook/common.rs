@@ -146,6 +146,23 @@ fn public_only_occupies_name(lua: &mut rilua::vm::state::LuaState, name: &str) -
     Some(matches!(secure_name, rilua::Val::Nil))
 }
 
+fn debug_skip_edit_mode_anchor_resets(env: &WowLuaEnv) {
+    let Ok(limit) = std::env::var("WOW_SIM_DEBUG_SKIP_EDIT_MODE_FRAME_PREFIX") else {
+        return;
+    };
+    let Ok(limit) = limit.parse::<usize>() else {
+        return;
+    };
+    let script = format!(
+        "for index, frame in ipairs(EditModeManagerFrame.registeredSystemFrames) do \
+         if index <= {limit} then frame.isBottomManagedFrame = true; \
+         frame.IsInDefaultPosition = function() return true end end end"
+    );
+    env.exec(&script)
+        .expect("EditMode anchor skip probe must install");
+    eprintln!("skipped InitSystemAnchors for first {limit} system frames");
+}
+
 fn install_debug_edit_mode_anchor_trace(env: &WowLuaEnv) {
     env.exec(
         r#"
@@ -178,6 +195,7 @@ pub fn setup_full_ui() -> WowLuaEnv {
     }
     crate::common::load_click_binding_bootstrap(&env, &ui);
     debug_edit_mode_system_frame_count(&env);
+    debug_skip_edit_mode_anchor_resets(&env);
     env.apply_post_load_workarounds();
     fire_startup_sequence(&env);
     env
