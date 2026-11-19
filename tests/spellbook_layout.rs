@@ -705,8 +705,16 @@ fn lua_game_tooltip_id(env: &WowLuaEnv) -> u64 {
                 .get(global)
                 .expect("Lua globals table")
                 .get_str(key, &state.gc.string_arena);
-            wow_ui_sim::lua_api::methods::extract_frame_id(state, value)
-                .ok_or("GameTooltip must be a Lua frame")
+            let rilua::Val::Table(frame_ref) = value else {
+                return Err("GameTooltip must be a Lua frame");
+            };
+            let (index, generation) = state
+                .gc
+                .tables
+                .get(frame_ref)
+                .and_then(|frame| frame.backing())
+                .ok_or("GameTooltip must have a frame identity")?;
+            Ok((u64::from(generation) << 32) | u64::from(index))
         })
         .expect("GameTooltip lookup must succeed")
 }
