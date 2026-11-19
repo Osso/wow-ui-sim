@@ -459,7 +459,7 @@ fn register_global_name(
     let Some(name) = name else {
         return Ok(());
     };
-    if preserve_existing_name_binding {
+    if preserve_existing_name_binding && matches!(name, "UIParent" | "WorldFrame") {
         return Ok(());
     }
     let frame_val = frame_ref(state, frame_id)?;
@@ -471,7 +471,7 @@ fn register_global_name(
             is_retail_secure_named_object_publication(&sim),
         )
     };
-    if !hide_from_global_env {
+    if !hide_from_global_env && !preserve_existing_name_binding {
         if let Some(placeholder_id) = replaced_placeholder {
             publish_global_replacement_if_placeholder(state, name, frame_val, placeholder_id)?;
         } else {
@@ -501,8 +501,7 @@ fn publish_global_replacement_if_placeholder(
     Ok(())
 }
 
-/// INFERRED (consistent with R88an): keep the widget name index aligned when Evidence: pr46-49-decomp-answers.md, sections R88an.
-/// secure-mode publication cannot update either occupied environment name.
+/// INFERRED (simulator mapping from R88t.t1/t2): preserve the widget-name index when secure publication keeps an occupied public name.
 fn should_preserve_existing_frame_name(
     state: &mut LuaState,
     name: &Option<String>,
@@ -524,7 +523,7 @@ fn should_preserve_existing_frame_name(
     if !secure_mode {
         return Ok(false);
     }
-    secure_name_destinations_are_occupied(state, name)
+    public_name_destination_is_occupied(state, name)
 }
 
 fn existing_frame_name_state(
@@ -543,7 +542,7 @@ fn existing_frame_name_state(
     ))
 }
 
-fn secure_name_destinations_are_occupied(state: &mut LuaState, name: &str) -> LuaResult<bool> {
+fn public_name_destination_is_occupied(state: &mut LuaState, name: &str) -> bool {
     let key = state.gc.intern_string(name.as_bytes());
     let global_value = state
         .gc
@@ -552,16 +551,7 @@ fn secure_name_destinations_are_occupied(state: &mut LuaState, name: &str) -> Lu
         .map_or(Val::Nil, |global| {
             global.get_str(key, &state.gc.string_arena)
         });
-    if matches!(global_value, Val::Nil) {
-        return Ok(false);
-    }
-    let secureenv = crate::lua_api::globals::security::secure_env_table(state)?;
-    let secure_value = state
-        .gc
-        .tables
-        .get(secureenv)
-        .map_or(Val::Nil, |table| table.get_str(key, &state.gc.string_arena));
-    Ok(!matches!(secure_value, Val::Nil))
+    !matches!(global_value, Val::Nil)
 }
 
 pub(crate) fn apply_parent_sub(name: &str, parent_id: Option<u64>, state: &SimState) -> String {

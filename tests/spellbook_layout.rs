@@ -721,6 +721,21 @@ fn lua_frame_id(env: &WowLuaEnv, name: &str) -> u64 {
 
 click_binding_ui_fixture! {
 #[test]
+fn create_frame_replaces_builtin_game_tooltip_placeholder() {
+    test_timeout! {
+        let env = WowLuaEnv::new().unwrap();
+        let placeholder_id = env.state().borrow().widgets.get_id_by_name("GameTooltip").unwrap();
+        assert!(env.state().borrow().widgets.get(placeholder_id).unwrap().is_simulator_placeholder);
+        env.exec("CreateFrame('GameTooltip', 'GameTooltip', UIParent)").unwrap();
+        let registry_id = env.state().borrow().widgets.get_id_by_name("GameTooltip").unwrap();
+        assert_ne!(placeholder_id, registry_id);
+        assert_eq!(registry_id, lua_frame_id(&env, "GameTooltip"));
+    }
+}
+}
+
+click_binding_ui_fixture! {
+#[test]
 fn game_tooltip_registry_name_matches_lua_global_after_ui_fixture() {
     test_timeout! {
         let env = setup_full_ui();
