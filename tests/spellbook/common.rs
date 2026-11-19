@@ -198,6 +198,25 @@ fn debug_keep_edit_mode_system_suffix(env: &WowLuaEnv) {
     eprintln!("skipped first {prefix} of EditMode system frames");
 }
 
+fn debug_remove_edit_mode_system_index(env: &WowLuaEnv) {
+    let Ok(index) = std::env::var("WOW_SIM_DEBUG_REMOVE_EDIT_MODE_SYSTEM_INDEX") else {
+        return;
+    };
+    let Ok(index) = index.parse::<usize>() else {
+        return;
+    };
+    let script = format!(
+        "local frames = EditModeManagerFrame.registeredSystemFrames; \
+         local kept = {{}}; \
+         for current, frame in ipairs(frames) do \
+         if current ~= {index} then kept[#kept + 1] = frame end end; \
+         rawset(EditModeManagerFrame, 'registeredSystemFrames', kept)"
+    );
+    env.exec(&script)
+        .expect("EditMode system frame removal probe must install");
+    eprintln!("removed EditMode system frame index {index}");
+}
+
 fn debug_skip_edit_mode_anchor_resets(env: &WowLuaEnv) {
     let Ok(limit) = std::env::var("WOW_SIM_DEBUG_SKIP_EDIT_MODE_FRAME_PREFIX") else {
         return;
@@ -267,6 +286,7 @@ pub fn setup_full_ui() -> WowLuaEnv {
     debug_edit_mode_system_frame_count(&env);
     debug_restore_registry_name_latest(&env);
     debug_keep_edit_mode_system_suffix(&env);
+    debug_remove_edit_mode_system_index(&env);
     debug_skip_edit_mode_anchor_resets(&env);
     debug_skip_edit_mode_system_methods(&env);
     env.apply_post_load_workarounds();
