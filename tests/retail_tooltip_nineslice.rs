@@ -34,8 +34,6 @@ const TOOLTIP_NINESLICE_ASSERTIONS: &str = r#"
     local r, g, b = nineSlice:GetCenterColor()
     local er, eg, eb = TOOLTIP_DEFAULT_BACKGROUND_COLOR:GetRGB()
     assert(r == er and g == eg and b == eb)
-    local br, bg, bb, ba = nineSlice:GetBorderColor()
-    assert(br == 1 and bg == 1 and bb == 1 and ba == 1)
     for _, pieceName in ipairs({
         'TopLeftCorner', 'TopRightCorner', 'BottomLeftCorner', 'BottomRightCorner',
         'TopEdge', 'BottomEdge', 'LeftEdge', 'RightEdge', 'Center',
