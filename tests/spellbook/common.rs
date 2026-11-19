@@ -146,6 +146,24 @@ fn public_only_occupies_name(lua: &mut rilua::vm::state::LuaState, name: &str) -
     Some(matches!(secure_name, rilua::Val::Nil))
 }
 
+fn debug_keep_edit_mode_system_suffix(env: &WowLuaEnv) {
+    let Ok(prefix) = std::env::var("WOW_SIM_DEBUG_EDIT_MODE_FRAME_PREFIX") else {
+        return;
+    };
+    let Ok(prefix) = prefix.parse::<usize>() else {
+        return;
+    };
+    let script = format!(
+        "local frames = EditModeManagerFrame.registeredSystemFrames; \
+         local kept = {{}}; \
+         for index = {prefix} + 1, #frames do kept[#kept + 1] = frames[index] end; \
+         rawset(EditModeManagerFrame, 'registeredSystemFrames', kept)"
+    );
+    env.exec(&script)
+        .expect("EditMode system frame suffix probe must install");
+    eprintln!("skipped first {prefix} of EditMode system frames");
+}
+
 fn debug_skip_edit_mode_anchor_resets(env: &WowLuaEnv) {
     let Ok(limit) = std::env::var("WOW_SIM_DEBUG_SKIP_EDIT_MODE_FRAME_PREFIX") else {
         return;
@@ -213,6 +231,7 @@ pub fn setup_full_ui() -> WowLuaEnv {
     }
     crate::common::load_click_binding_bootstrap(&env, &ui);
     debug_edit_mode_system_frame_count(&env);
+    debug_keep_edit_mode_system_suffix(&env);
     debug_skip_edit_mode_anchor_resets(&env);
     debug_skip_edit_mode_system_methods(&env);
     env.apply_post_load_workarounds();
