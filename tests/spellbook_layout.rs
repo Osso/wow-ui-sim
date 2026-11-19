@@ -725,7 +725,19 @@ fn game_tooltip_registry_name_matches_lua_global_after_ui_fixture() {
     test_timeout! {
         let env = setup_full_ui();
         let registry_id = env.state().borrow().widgets.get_id_by_name("GameTooltip").unwrap();
-        assert_eq!(registry_id, lua_frame_id(&env, "GameTooltip"));
+        let global_id = lua_frame_id(&env, "GameTooltip");
+        let state = env.state().borrow();
+        let registry_frame = state.widgets.get(registry_id).unwrap();
+        let global_frame = state.widgets.get(global_id).unwrap();
+        assert_eq!(
+            registry_id,
+            global_id,
+            "registry placeholder={} owner={:?}; global placeholder={} owner={:?}",
+            registry_frame.is_simulator_placeholder,
+            registry_frame.owner_addon,
+            global_frame.is_simulator_placeholder,
+            global_frame.owner_addon
+        );
     }
 }
 }
