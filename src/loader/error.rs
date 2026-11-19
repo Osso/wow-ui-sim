@@ -32,6 +32,8 @@ pub enum LoadError {
     WrongActiveInterface,
     /// A required dependency is not valid on the active UI screen.
     DepWrongActiveInterface(String),
+    /// A required dependency is not valid for the active game type.
+    DepWrongGameType(String),
 }
 
 impl LoadError {
@@ -71,6 +73,7 @@ impl std::fmt::Display for LoadError {
             LoadError::DepDisabled(_) => write!(f, "DEP_DISABLED"),
             LoadError::WrongActiveInterface => write!(f, "WRONG_ACTIVE_INTERFACE"),
             LoadError::DepWrongActiveInterface(_) => write!(f, "DEP_WRONG_ACTIVE_INTERFACE"),
+            LoadError::DepWrongGameType(_) => write!(f, "DEP_WRONG_GAME_TYPE"),
         }
     }
 }

@@ -5,6 +5,12 @@ Retail selects standard game type for addon loading. The pinned retail `Blizzard
 ## What it must do
 
 - [x] Exclude these addons from standard Retail Game-screen discovery.
+- [x] Apply the same game-type eligibility to secure addon dependencies.
+
+**VERIFIED (Retail 12.1.5.70783 cache):** `Blizzard_StoreUI/Blizzard_StoreUI.toc:9-10`
+requests optional `Blizzard_Plunderstorm` during secure loading. Its dependency's
+TOC restricts it to Plunderstorm, and `GameModeConstants.lua:40` disables frame
+toggles. Standard Retail must not execute those mode constants in either environment.
 
 ## How it works
 
