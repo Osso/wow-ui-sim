@@ -517,14 +517,6 @@ pub(crate) fn format_global_pair(
         .ok_or_else(|| rilua::runtime_error(format!("localized formatter did not return {key}")))
 }
 
-/// Restore a plain line type that the shared value-based remap rewrote. The
-/// remap compares a type-0 row's colour against the named `ERROR_COLOR` and
-/// `DISABLED_FONT_COLOR` entries, which both resolve white while the colour
-/// table is a placeholder, so a verified white type-0 row would become 41.
-pub(crate) fn restore_plain_line_type(state: &mut LuaState, line: Val) {
-    crate::lua_api::methods::table_set(state, line, "type", Val::Num(0.0));
-}
-
 /// Format a pinned global string with one text argument.
 
 pub(crate) fn format_global_text(

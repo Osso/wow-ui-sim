@@ -16,19 +16,15 @@
 //!   true; the active record rejects a false server permission before any row;
 //! - no queue row, short-description row or separator is emitted.
 //!
-//! EMULATED: WM107 leaves the exact localized ends-in text and the loaded
-//! GlobalColor values UNKNOWN. The ends-in text reuses the simulator's existing
-//! localized duration formatter, and every colour uses the named colour seam
-//! with the established simulator fallbacks (`HIGHLIGHT_FONT_COLOR` white,
-//! `NORMAL_FONT_COLOR` gold, and the measured 0.5019608 gray for the trivial /
-//! disabled colour).
+//! EMULATED: WM107 leaves the exact localized ends-in text UNKNOWN. The text
+//! reuses the simulator's duration formatter. Colors use named globals;
+//! profile defaults remain for environments that do not load Retail GlobalColor.
 
 use crate::c_api::c_pvp::PvpBrawlInfo;
 use crate::c_api::c_tooltip_info_totem::format_remaining_time;
 use crate::c_api::tooltip_getter_args::optional_bool;
 use crate::lua_api::globals::missing_surface::tooltip_info::{
     append_line, compose_tooltip, format_global_text, global_text, named_color,
-    restore_plain_line_type,
 };
 use crate::lua_api::methods::borrow_state;
 use crate::lua_bridge::table_set_rust_fn_static;
@@ -43,7 +39,7 @@ const LINE_TYPE_BLANK: f64 = 1.0;
 /// WM107: the shared line constructor re-types the ends-in row by colour value.
 const LINE_TYPE_DISABLED: f64 = 42.0;
 const BLANK_TEXT: &str = " ";
-/// WM107 measured values; the named-colour seam is preferred when it resolves.
+/// WM107 values used when a named color is unavailable.
 const HIGHLIGHT_FALLBACK: (f64, f64, f64) = (1.0, 1.0, 1.0);
 const NORMAL_FALLBACK: (f64, f64, f64) = (1.0, 0.82, 0.0);
 /// WM107: `TRIVIAL_DIFFICULTY_COLOR` equals `DISABLED_FONT_COLOR`.
@@ -73,14 +69,13 @@ fn get_pvp_brawl(state: &mut LuaState) -> LuaResult<u32> {
     let normal = named_color(state, "NORMAL_FONT_COLOR").unwrap_or(NORMAL_FALLBACK);
     let disabled = named_color(state, "DISABLED_FONT_COLOR").unwrap_or(DISABLED_FALLBACK);
     let tooltip = compose_tooltip(state, TOOLTIP_TYPE_PVP_BRAWL, None);
-    let name_line = append_line(
+    append_line(
         state,
         tooltip,
         LINE_TYPE_PLAIN,
         &rows.record.name,
         Some(highlight),
     );
-    restore_plain_line_type(state, name_line);
     if let Some(remaining) = rows.remaining {
         let text = ends_in_text(state, remaining)?;
         append_line(state, tooltip, LINE_TYPE_DISABLED, &text, Some(disabled));
@@ -88,15 +83,13 @@ fn get_pvp_brawl(state: &mut LuaState) -> LuaResult<u32> {
     if !rows.record.map_names.is_empty() {
         append_blank(state, tooltip, normal);
         let heading = map_heading(state, &rows.record)?;
-        let heading_line = append_line(state, tooltip, LINE_TYPE_PLAIN, &heading, Some(highlight));
-        restore_plain_line_type(state, heading_line);
+        append_line(state, tooltip, LINE_TYPE_PLAIN, &heading, Some(highlight));
         append_map_rows(state, tooltip, &rows.record, normal)?;
     }
     if !rows.record.long_description.is_empty() {
         append_blank(state, tooltip, normal);
         let rules = required_global_text(state, "BRAWL_TOOLTIP_RULES")?;
-        let rules_line = append_line(state, tooltip, LINE_TYPE_PLAIN, &rules, Some(highlight));
-        restore_plain_line_type(state, rules_line);
+        append_line(state, tooltip, LINE_TYPE_PLAIN, &rules, Some(highlight));
         append_line(
             state,
             tooltip,

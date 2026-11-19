@@ -5,7 +5,6 @@ use std::collections::HashMap;
 use crate::c_api::tooltip_getter_args::one_based_index;
 use crate::lua_api::globals::missing_surface::tooltip_info::{
     append_line, compose_tooltip, global_text, item_quality_color, named_color,
-    restore_plain_line_type,
 };
 use crate::lua_api::methods::{
     borrow_state, call_function_state, create_string, table_get, table_set, val_to_string,
@@ -172,7 +171,6 @@ fn append_plain_currency_line(
     color: (f64, f64, f64),
 ) -> Val {
     let line = append_line(state, tooltip, LINE_TYPE_PLAIN, text, Some(color));
-    restore_plain_line_type(state, line);
     line
 }
 

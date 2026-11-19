@@ -5,8 +5,8 @@ pub mod inputs;
 pub mod parse;
 
 use crate::lua_api::globals::missing_surface::tooltip_info::{
-    append_line, compose_tooltip, restore_plain_line_type, tooltip_for_currency,
-    tooltip_for_item_hyperlink, tooltip_for_link_spell,
+    append_line, compose_tooltip, tooltip_for_currency, tooltip_for_item_hyperlink,
+    tooltip_for_link_spell,
 };
 use crate::lua_api::methods::borrow_state;
 use crate::lua_bridge::FromStack;
@@ -129,17 +129,6 @@ fn non_retail_currency_hyperlink_tooltip(
         return Ok(None);
     };
     let tooltip = tooltip_for_currency(state, currency, Some(quantity));
-    // R82 Q3 currency title is type 0, not a spell-name line.
-    let lines = crate::lua_api::methods::table_get(state, tooltip, "lines");
-    if let Val::Table(lines) = lines {
-        let line = state
-            .gc
-            .tables
-            .get(lines)
-            .map(|lines| lines.get_int(1))
-            .unwrap_or(Val::Nil);
-        restore_plain_line_type(state, line);
-    }
     Ok(Some(tooltip))
 }
 
@@ -154,8 +143,7 @@ fn quest_hyperlink_tooltip(state: &mut LuaState, id: u32) -> LuaResult<Option<Va
         return Ok(None);
     };
     let tooltip = compose_tooltip(state, 23.0, (id != 0).then_some(f64::from(id)));
-    let line = append_line(state, tooltip, 0.0, &title, None);
-    restore_plain_line_type(state, line);
+    append_line(state, tooltip, 0.0, &title, None);
     Ok(Some(tooltip))
 }
 
@@ -177,11 +165,9 @@ fn essence_hyperlink_tooltip(state: &mut LuaState, id: u32, rank: u32) -> LuaRes
         return Ok(None);
     };
     let tooltip = compose_tooltip(state, 8.0, Some(f64::from(id)));
-    let line = append_line(state, tooltip, 0.0, &input.main_heading, None);
-    restore_plain_line_type(state, line);
+    append_line(state, tooltip, 0.0, &input.main_heading, None);
     append_spell_lines(state, tooltip, input.main_spell_id);
-    let line = append_line(state, tooltip, 0.0, &input.passive_heading, None);
-    restore_plain_line_type(state, line);
+    append_line(state, tooltip, 0.0, &input.passive_heading, None);
     append_spell_lines(state, tooltip, input.passive_spell_id);
     Ok(Some(tooltip))
 }

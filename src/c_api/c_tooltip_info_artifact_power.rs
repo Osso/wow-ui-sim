@@ -31,14 +31,13 @@
 //! - the published `data.type` is not recorded by WM94/WM108. The simulator
 //!   publishes 1 (`Enum.TooltipDataType.Spell`) because the composition is a name
 //!   plus spell text; replace it when native evidence lands.
-//! - the rank row's line type is not recorded either; the producer owns a plain
-//!   row and restores that type after the shared colour remap.
+//! - the rank row's native line type is UNKNOWN; the producer starts it as
+//!   plain, then the shared builder applies its modeled named-color remap.
 
 use crate::c_api::tooltip_getter_args::signed;
 use crate::c_api::tooltip_power_catalog_data::{ARTIFACT_POWER_RANKS, ARTIFACT_POWERS};
 use crate::lua_api::globals::missing_surface::tooltip_info::{
-    append_line, compose_tooltip, format_global_pair, named_color, restore_plain_line_type,
-    spell_description_text,
+    append_line, compose_tooltip, format_global_pair, named_color, spell_description_text,
 };
 use crate::lua_api::methods::borrow_state;
 use crate::lua_bridge::table_set_rust_fn_static;
@@ -93,8 +92,7 @@ fn get_artifact_power_by_id(state: &mut LuaState) -> LuaResult<u32> {
             maximum as f64,
         )?;
         let colour = rank_row_color(state, power.flags, stored.bonus_ranks);
-        let line = append_line(state, tooltip, LINE_TYPE_PLAIN, &text, colour);
-        restore_plain_line_type(state, line);
+        append_line(state, tooltip, LINE_TYPE_PLAIN, &text, colour);
         append_line(state, tooltip, LINE_TYPE_BLANK, BLANK_TEXT, None);
     }
     let description = spell_description_text(state, spell_id);

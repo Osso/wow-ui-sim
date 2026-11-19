@@ -160,6 +160,36 @@ fn retail_c_uicolor_get_colors_matches_the_deduplicated_catalog() {
 }
 
 prefork_full_ui_case! {
+fn retail_full_ui_tooltip_color_measurement(env: &WowLuaEnv) {
+    let values: String = env
+        .eval(
+            r#"
+            local names = {"ERROR_COLOR", "DISABLED_FONT_COLOR", "SOULBIND_CONDUIT_ENHANCED_COLOR",
+                "TRIVIAL_DIFFICULTY_COLOR", "HIGHLIGHT_FONT_COLOR", "NORMAL_FONT_COLOR",
+                "GREEN_FONT_COLOR", "FRIENDLY_STATUS_COLOR", "INCREASE_STAT_COLOR",
+                "ITEM_ARTIFACT_COLOR"}
+            local rows = {}
+            for _, name in ipairs(names) do
+                local color = _G[name]
+                if color then
+                    local indexed = {tostring(color.r), tostring(color.g), tostring(color.b), tostring(color.a)}
+                    local raw = {tostring(rawget(color, "r")), tostring(rawget(color, "g")),
+                        tostring(rawget(color, "b")), tostring(rawget(color, "a"))}
+                    rows[#rows + 1] = name .. "=" .. table.concat(indexed, ",")
+                        .. " raw=" .. table.concat(raw, ",")
+                else
+                    rows[#rows + 1] = name .. "=<nil>"
+                end
+            end
+            return table.concat(rows, "\n")
+            "#,
+        )
+        .expect("Retail full-UI tooltip colors should be readable");
+    println!("Retail tooltip color measurement:\n{values}");
+}
+}
+
+prefork_full_ui_case! {
 fn retail_color_lua_publishes_catalog_globals_and_codes_in_both_environments(env: &WowLuaEnv) {
     let global_types: (String, String) = env
         .eval("return type(_G.ZULJARRA_MAJOR_FACTION_COLOR), type(_G.ZULJARRA_MAJOR_FACTION_COLOR_CODE)")

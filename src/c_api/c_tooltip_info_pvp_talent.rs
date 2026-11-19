@@ -14,7 +14,6 @@ use crate::lua_api::globals::missing_surface::tooltip_info::tooltip_for_spell;
 #[cfg(feature = "client-retail")]
 use crate::lua_api::globals::missing_surface::tooltip_info::{
     append_line, format_global_numeric, format_global_text, global_text, named_color,
-    restore_plain_line_type,
 };
 use crate::lua_api::methods::borrow_state;
 #[cfg(feature = "client-retail")]
@@ -606,7 +605,6 @@ fn append_colored_text_line(
 ) {
     let color = named_color(state, color_key);
     let line = append_line(state, tooltip, PLAIN_LINE_TYPE, text, color);
-    restore_plain_line_type(state, line);
     if wrap {
         table_set(state, line, "wrapText", Val::Bool(true));
     }
