@@ -11,11 +11,12 @@ fn retail_classic_expansion_at_most_supports_lib_dual_spec_branch() {
             assert(type(ClassicExpansionAtMost) == "function")
             local level = GetClassicExpansionLevel()
             local threshold = LE_EXPANSION_SHADOWLANDS
-            local description = ClassicExpansionAtMost(threshold) and function(info)
+            local isAtMost = ClassicExpansionAtMost(threshold)
+            local description = isAtMost and function(info)
                 return info
             end
-            assert(type(description) == "function")
-            return ClassicExpansionAtMost(threshold) == (level <= threshold)
+            assert(type(description) == (isAtMost and "function" or "boolean"))
+            return isAtMost == (level <= threshold)
             "#,
         )
         .unwrap();
