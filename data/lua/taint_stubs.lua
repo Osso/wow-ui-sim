@@ -52,11 +52,8 @@ end
 -- Execute a function for each key in a table with clean taint
 function secureexecuterange(tbl, func, ...)
     if type(tbl) ~= "table" then return end
-    local trace = rawget(_G, "__wowEditModeFrameRegistry") == tbl
     for k, v in pairs(tbl) do
-        if trace then print("anchor callback before", k, v:GetName()) end
         securecallfunction(func, k, v, ...)
-        if trace then print("anchor callback after", k, v:GetName()) end
     end
 end
 

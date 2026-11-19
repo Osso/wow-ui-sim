@@ -5,23 +5,7 @@
         emm.layoutApplyInProgress = true
         -- Match UpdateLayoutInfo: dependent callbacks can read another system's
         -- geometry before that system receives its saved anchor in this pass.
-        local runSecureExecuteRange = secureexecuterange
-        secureexecuterange = function(frames, callback, ...)
-            if frames == emm.registeredSystemFrames then
-                local runCallback = callback
-                callback = function(index, systemFrame, ...)
-                    print("InitSystemAnchors before", index, systemFrame:GetName())
-                    local result = runCallback(index, systemFrame, ...)
-                    print("InitSystemAnchors after", index, systemFrame:GetName())
-                    return result
-                end
-            end
-            return runSecureExecuteRange(frames, callback, ...)
-        end
-        print("before InitSystemAnchors", #emm.registeredSystemFrames)
         emm:InitSystemAnchors()
-        print("after InitSystemAnchors")
-        secureexecuterange = runSecureExecuteRange
 
         local function system_frame_name(systemFrame)
             if not systemFrame then
