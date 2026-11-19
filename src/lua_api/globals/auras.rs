@@ -247,7 +247,7 @@ fn aura_matches_filter(aura: &AuraInfo, filter: AuraFilter) -> bool {
     }
 }
 
-#[cfg(feature = "aura-instance-enumeration")]
+#[cfg(any(feature = "retail-12-0-5", feature = "aura-containers"))]
 pub(crate) fn aura_matches_filter_string(
     aura: &AuraInfo,
     filter: &str,
