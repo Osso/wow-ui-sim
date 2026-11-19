@@ -64,16 +64,6 @@ if rawget(UIFrameManager, "RegisterFrameForFrameType") == nil then
         frame:UpdateFrameState(C_FrameManager.GetFrameVisibilityState(frameType))
     end
 end
-if rawget(UIFrameManager_ManagedFrameMixin, "OnLoad") == nil then
-    function UIFrameManager_ManagedFrameMixin:OnLoad()
-        UIFrameManager:RegisterFrameForFrameType(self, self.frameType)
-    end
-end
-if rawget(UIFrameManager_ManagedFrameMixin, "UpdateFrameState") == nil then
-    function UIFrameManager_ManagedFrameMixin:UpdateFrameState(show)
-        self:SetShown(show)
-    end
-end
 "#;
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {

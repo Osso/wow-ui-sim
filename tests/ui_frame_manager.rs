@@ -1,7 +1,14 @@
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 fn env() -> WowLuaEnv {
-    WowLuaEnv::new().expect("Failed to create Lua environment")
+    let env = WowLuaEnv::new().expect("Failed to create Lua environment");
+    let addons_dir = wow_ui_sim::paths::default_blizzard_ui_addons_path()
+        .expect("Blizzard UI cache should be available");
+    env.state().borrow_mut().addon_base_paths = vec![addons_dir.clone()];
+    let toc = addons_dir.join("Blizzard_UIFrameManager/Blizzard_UIFrameManager.toc");
+    wow_ui_sim::loader::load_addon(&env.loader_env(), &toc)
+        .expect("original Blizzard_UIFrameManager addon should load");
+    env
 }
 
 #[test]
