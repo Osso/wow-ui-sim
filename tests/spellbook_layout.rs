@@ -718,12 +718,27 @@ fn spellbook_hover_tooltip_is_sized_and_on_screen() {
 }
 }
 
+click_binding_ui_fixture! {
 fn active_spellbook_tooltip_id(env: &WowLuaEnv) -> u64 {
-    // The ordinary Lua hover addresses this frame, not whichever secure or
-    // ordinary frame was last indexed by the shared registry name.
-    let tooltip = env.get_rilua_global("GameTooltip");
-    wow_ui_sim::lua_api::methods::extract_frame_id(&env.rilua(), tooltip)
-        .expect("GameTooltip should be a native frame")
+    use rilua::{LuaApi, vm::value::Val};
+
+    // The hover uses the ordinary Lua global. The shared widget name index
+    // can point to a different instance published in a separate environment.
+    let Val::Table(tooltip) = env.get_rilua_global("GameTooltip") else {
+        panic!("GameTooltip should be a native frame");
+    };
+    let lua = env.rilua();
+    let (low, high) = lua
+        .state()
+        .gc
+        .tables
+        .get(tooltip)
+        .and_then(|table| table.backing())
+        .expect("GameTooltip should have native widget identity");
+    let id = u64::from(low) | (u64::from(high) << 32);
+    let registered = env.state().borrow().widgets.get_id_by_name("GameTooltip");
+    eprintln!("GameTooltip Lua widget={id}, registry name widget={registered:?}");
+    id
 }
 
 fn assert_hover_tooltip_geometry(env: &WowLuaEnv, tooltip_id: u64) {
@@ -777,6 +792,8 @@ fn assert_hover_tooltip_quads(
         batch.vertices.len() > 100,
         "Quad batch should include tooltip geometry after spellbook hover"
     );
+}
+
 }
 
 #[test]
