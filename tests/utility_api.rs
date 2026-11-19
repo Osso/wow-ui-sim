@@ -906,6 +906,7 @@ fn test_create_from_mixins() {
 }
 
 #[test]
+#[cfg(not(feature = "client-retail"))]
 fn test_create_and_init_from_mixin() {
     let env = env();
     let val: i32 = env

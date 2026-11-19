@@ -93,8 +93,8 @@ static NAMESPACE_NIL_STUBS: &[NsStub] = &[
     // c_api/c_summon_info.rs, not stubs.
     // C_System.GetFrameStack is backed by SimState.hovered_frame in
     // missing_surface/small_probes.rs, not a stub.
-    // C_Timer.NewTimerID is backed by next_timer_id() in
-    // missing_surface/small_probes.rs, not a stub.
+    // C_Timer.NewTimerID is retained only as a non-Retail preservation in
+    // missing_surface/small_probes.rs.
     // C_TooltipInfo: all Get* variants are now real implementations in
     // missing_surface/tooltip_info.rs; no stubs needed here.
     // C_TradeSkillUI

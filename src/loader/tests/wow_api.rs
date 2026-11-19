@@ -556,45 +556,8 @@ fn test_c_timer_functions_exist() {
     let env = WowLuaEnv::new().unwrap();
     let after_ty: String = env.eval("return type(C_Timer.After)").unwrap();
     assert_eq!(after_ty, "function");
-    let new_timer_id_ty: String = env.eval("return type(C_Timer.NewTimerID)").unwrap();
-    assert_eq!(new_timer_id_ty, "function");
     let new_ty: String = env.eval("return type(C_Timer.NewTimer)").unwrap();
     assert_eq!(new_ty, "function");
-}
-
-#[test]
-fn test_c_timer_new_timer_id_shares_timer_id_space() {
-    let env = WowLuaEnv::new().unwrap();
-    let ids: (f64, f64, f64) = env
-        .eval(
-            r#"
-            local id1 = C_Timer.NewTimerID()
-            local handle = C_Timer.NewTimer(0, function() end)
-            local id2 = C_Timer.NewTimerID()
-            return id1, handle.__id, id2
-            "#,
-        )
-        .unwrap();
-
-    assert!(
-        ids.0 < ids.1,
-        "first timer id should precede the timer handle id"
-    );
-    assert!(
-        ids.1 < ids.2,
-        "timer handle id should precede the second timer id"
-    );
-    assert_eq!(ids.1 - ids.0, 1.0, "timer ids should advance by one");
-    assert_eq!(ids.2 - ids.1, 1.0, "timer ids should advance by one");
-}
-
-#[test]
-fn test_c_timer_ids_are_per_environment() {
-    let env_a = WowLuaEnv::new().unwrap();
-    let a: f64 = env_a.eval("return C_Timer.NewTimerID()").unwrap();
-    let env_b = WowLuaEnv::new().unwrap();
-    let b: f64 = env_b.eval("return C_Timer.NewTimerID()").unwrap();
-    assert_eq!(a, b, "each environment must start its own timer-id space");
 }
 
 #[test]

@@ -29,6 +29,9 @@ pub(crate) fn init_shared_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
             Val::Bool(retire_glue_owner_defaults),
             // R88ad.7-10 producers replace these defaults on Retail only.
             Val::Bool(cfg!(feature = "client-retail")),
+            Val::Bool(
+                crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail,
+            ),
         ],
     )?;
     LuaApiMut::set_global_val(lua, "__wow_internal_projection_call", Val::Nil)?;
