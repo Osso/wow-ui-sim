@@ -148,11 +148,15 @@ end
 
 "#;
 
+#[cfg(feature = "client-wrath")]
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
-    #[cfg(feature = "client-wrath")]
     lua.exec(LEGACY_ACTION_BAR_GLOBALS_LUA)?;
-    #[cfg(feature = "client-wrath")]
     lua.exec(ACTION_BUTTON_QUICK_KEYBIND_DEFAULTS_LUA)?;
+    Ok(())
+}
+
+#[cfg(not(feature = "client-wrath"))]
+pub(crate) fn apply_bootstrap(_: &mut rilua::Lua) -> crate::Result<()> {
     Ok(())
 }
 
