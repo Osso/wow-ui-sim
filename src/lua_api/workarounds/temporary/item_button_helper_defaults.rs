@@ -1,8 +1,8 @@
 //! Temporary item-button helper defaults for minimal startup modes.
 //!
-//! Blizzard_ItemButton owns the real global helpers in full UI loads. These
-//! defaults keep no-addon/minimal surfaces callable without leaving the
-//! fallback in the generic runtime bootstrap.
+//! The original Blizzard_ItemButton owns the helper globals on Retail and
+//! Forever. Other profiles keep their existing defaults until audited.
+//! The independent CreateFrame wrapper is intentionally unchanged.
 
 const ITEM_BUTTON_FRAME_SURFACE_LUA: &str = r#"
 local function ensure_item_button_surface(button)
@@ -68,7 +68,7 @@ end
 
 "#;
 
-#[cfg(not(feature = "client-retail"))]
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 const ITEM_BUTTON_HELPER_DEFAULTS_LUA: &str = r#"
 if SetItemButtonTexture == nil then
     function SetItemButtonTexture(button, texture)
@@ -130,8 +130,8 @@ end
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(ITEM_BUTTON_FRAME_SURFACE_LUA)?;
-    // The selected Retail Mainline ItemButton Lua supplies these globals.
-    #[cfg(not(feature = "client-retail"))]
+    // Retail and Forever load these globals from the original Mainline ItemButton Lua.
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     lua.exec(ITEM_BUTTON_HELPER_DEFAULTS_LUA)?;
     Ok(())
 }
@@ -146,7 +146,7 @@ mod tests {
     }
 
     #[test]
-    #[cfg(not(feature = "client-retail"))]
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     fn installs_item_button_helper_defaults() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
 
@@ -172,7 +172,7 @@ mod tests {
         );
     }
 
-    #[cfg(not(feature = "client-retail"))]
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     modern_engine_namespace_fixture! {
     fn assert_close(actual: f64, expected: f64) {
         assert!(
