@@ -296,14 +296,8 @@ fn keystone_hover_fixture(slot: u32, item_id: u32) -> (WowLuaEnv, String) {
     (env, guid)
 }
 
-fn slotted_tooltip_input(item_id: u32, guid: &str) -> SlottedKeystoneTooltipInput {
-    SlottedKeystoneTooltipInput {
-        item_id: Some(item_id),
-        item_guid: Some(guid.to_string()),
-        item_class_id: Some(5),
-        item_subclass_id: Some(1),
-        ..Default::default()
-    }
+fn slotted_tooltip_input(_item_id: u32, _guid: &str) -> SlottedKeystoneTooltipInput {
+    SlottedKeystoneTooltipInput::default()
 }
 
 fn set_slotted_tooltip_input(
@@ -312,12 +306,53 @@ fn set_slotted_tooltip_input(
     input: SlottedKeystoneTooltipInput,
     modifiers: Vec<(u32, u32)>,
 ) {
-    let item_id = input.item_id.expect("selected tooltip input item id");
+    let item_id = env
+        .state()
+        .borrow()
+        .keystone
+        .selected_item_id
+        .expect("selected keystone item id");
     let mut sim = env.state().borrow_mut();
     sim.keystone
         .item_modifiers
         .insert(KeystoneLocation::Bag(0, slot as i32), (item_id, modifiers));
     sim.keystone.slotted_tooltip_input = Some(input);
+}
+
+fn set_keystone_context_without_item_identity(
+    env: &WowLuaEnv,
+    slot: u32,
+    item_id: u32,
+    input: SlottedKeystoneTooltipInput,
+    modifiers: Vec<(u32, u32)>,
+) {
+    let mut sim = env.state().borrow_mut();
+    let location = KeystoneLocation::Bag(0, slot as i32);
+    sim.keystone.item_modifiers.insert(location, (item_id, modifiers));
+    sim.keystone.slotted_tooltip_input = Some(input);
+}
+
+fn assert_exact_keystone_row_sequence(env: &WowLuaEnv, expected: &str) {
+    env.exec(&format!("R7ExpectedKeystoneRowSequence = {expected:?}"))
+        .unwrap();
+    env.exec(
+        r##"
+        local rows = {}
+        for _, line in ipairs(GameTooltip:GetPrimaryTooltipData().lines) do
+            local text = line.leftText or ""
+            if text:match("^Map: ") or text:match("^Weekly Keystone")
+                or text:match("^Keystone Power ") or text:match("^Resilient ")
+                or text == "Modifier heading" or text:sub(1, 2) == "  " then
+                rows[#rows + 1] = text
+            end
+        end
+        local actual = table.concat(rows, "\n")
+        assert(actual == R7ExpectedKeystoneRowSequence,
+            "exact slotted-keystone row sequence: expected ["
+                .. R7ExpectedKeystoneRowSequence .. "] got [" .. actual .. "]")
+    "##,
+    )
+    .unwrap();
 }
 
 fn keystone_expected(
@@ -977,6 +1012,52 @@ fn challenges_ui_hover_projects_two_keystone_map_and_power_values() {
     }
 }
 
+fn assert_resilient_keystone_consumer_rows() {
+    let (env, guid) = keystone_hover_fixture(3, 180_653);
+    let mut input = resilient_tooltip_input(
+        180_653,
+        &guid,
+        7,
+        &[(7, 1, 70), (7, 5, 71), (7, 8, 72)],
+        &[70, 71, 72],
+    );
+    input.affix_names.insert(101, Some("Fortified".to_string()));
+    input.affix_names.insert(102, Some("Raging".to_string()));
+    set_keystone_context_without_item_identity(
+        &env,
+        3,
+        180_653,
+        input,
+        vec![(17, 971), (18, 7), (19, 101), (21, 102)],
+    );
+    capture_keystone_hover_rows(&env, 180_653, &guid);
+    assert_exact_keystone_row_sequence(
+        &env,
+        "Map: Floor Map\nKeystone Power 7\nResilient 5\nModifier heading\n  Fortified\n  Raging",
+    );
+}
+
+fn assert_plain_keystone_consumer_rows() {
+    let (env, guid) = keystone_hover_fixture(4, 158_923);
+    let mut input = slotted_tooltip_input(158_923, &guid);
+    input.map_names.insert(961, Some("Beta".to_string()));
+    set_keystone_context_without_item_identity(
+        &env,
+        4,
+        158_923,
+        input,
+        vec![(17, 961), (18, 8)],
+    );
+    capture_keystone_hover_rows(&env, 158_923, &guid);
+    assert_exact_keystone_row_sequence(&env, "Map: Beta\nKeystone Power 8");
+}
+
+#[test]
+fn challenges_ui_hover_derives_slotted_keystone_rows_from_item_state() {
+    assert_resilient_keystone_consumer_rows();
+    assert_plain_keystone_consumer_rows();
+}
+
 #[test]
 fn challenges_ui_hover_uses_generic_and_empty_map_titles() {
     let (env, guid) = keystone_hover_fixture(3, 180_653);
@@ -1117,14 +1198,21 @@ fn challenges_ui_hover_omits_heading_for_all_zero_affix_ids() {
     assert_keystone_hover_rows(&env, item_id, &guid, &expected);
 }
 
+fn set_keystone_item_class(env: &WowLuaEnv, item_id: u32, class_id: u8, subclass_id: u8) {
+    let mut sim = env.state().borrow_mut();
+    let mut item = sim.item_info(item_id).expect("known keystone item").clone();
+    item.item_class = Some(class_id);
+    item.item_subclass = Some(subclass_id);
+    sim.item_overrides.insert(item_id, item);
+}
+
 #[test]
 fn challenges_ui_hover_skips_rows_for_non_keystone_item_class_or_subclass() {
     let (env, guid) = keystone_hover_fixture(3, 180_653);
     let item_id = 180_653;
     for (class_id, subclass_id) in [(4, 1), (5, 0)] {
+        set_keystone_item_class(&env, item_id, class_id, subclass_id);
         let mut input = slotted_tooltip_input(item_id, &guid);
-        input.item_class_id = Some(class_id);
-        input.item_subclass_id = Some(subclass_id);
         input
             .map_names
             .insert(990, Some("Rejected Map".to_string()));
