@@ -75,6 +75,7 @@ fn original_blizzard_talking_head_and_splash_consumers_use_the_model() {
                 r#"
                 TalkingHeadFrameMixin:OnEvent(TalkingHeadFrame, "TALKINGHEAD_REQUESTED")
                 TalkingHeadFrameModelMixin:SetupAnimations(TalkingHeadFrame.MainFrame.Model)
+                C_SplashScreen = C_SplashScreen or { AcknowledgeSplash = function() end }
                 SplashFrameMixin:OnShow(SplashFrame)
                 assert(C_TalkingHead.GetConversationsDeferred())
                 SplashFrameMixin:OnHide(SplashFrame)
