@@ -49,7 +49,15 @@ fn item_usability_checks_ownership_eligibility_and_spell_power() {
 
 #[test]
 fn request_load_item_data_is_noop_without_request_model() {
-    let env = WowLuaEnv::new().unwrap();
+    let ui = crate::common::blizzard_addon_closure::blizzard_ui_dir();
+    let env = crate::common::blizzard_addon_closure::new_blizzard_addon_env(&ui);
+    let loaded = crate::common::blizzard_addon_closure::load_blizzard_addon_closure_into_env(
+        &env,
+        &ui,
+        &["Blizzard_ObjectAPI"],
+        &[],
+    );
+    assert!(loaded.iter().any(|name| name == "Blizzard_ObjectAPI"));
     env.exec(
         r#"
         local location = ItemLocation:CreateFromEquipmentSlot(1)
