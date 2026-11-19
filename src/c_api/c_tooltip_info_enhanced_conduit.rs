@@ -14,12 +14,7 @@
 //!   row must exist; the original clamped rank selects quality and item level;
 //! - row composition is the `GetConduit` block plus the `SOULBIND_CONDUIT_ENHANCED`
 //!   label, and the description's highlight-colour tokens become enhanced-colour
-//!   tokens.
-//!
-//! EMULATED seam: the enhanced colour resolves through the simulator's named
-//! colour surface. The pinned evidence does not record the `GlobalColor` value,
-//! so the token rewrite is a no-op whenever that surface publishes the
-//! placeholder white. Retire the seam when the colour table is modelled.
+//!   tokens using the Retail `GlobalColor` catalog.
 
 use crate::c_api::tooltip_getter_args::signed;
 use crate::c_api::tooltip_power_catalog_data::{
@@ -27,7 +22,7 @@ use crate::c_api::tooltip_power_catalog_data::{
 };
 use crate::lua_api::globals::missing_surface::tooltip_info::{
     append_line, compose_tooltip, format_global_numeric, global_text, item_quality_color,
-    named_color, restore_plain_line_type, spell_description_text,
+    named_color, spell_description_text,
 };
 use crate::lua_api::methods::table_set;
 use crate::lua_bridge::table_set_rust_fn_static;
@@ -83,11 +78,7 @@ fn get_enhanced_conduit(state: &mut LuaState) -> LuaResult<u32> {
     let enhanced = enhanced_color(state);
     let enhanced_label =
         global_text(state, "SOULBIND_CONDUIT_ENHANCED").unwrap_or_else(|| "Enhanced".to_string());
-    let enhanced_line = append_line(state, tooltip, LINE_TYPE_PLAIN, &enhanced_label, enhanced);
-    // The enhanced colour resolves white through the placeholder colour surface,
-    // so the shared value-based remap re-types the row; WM94 §5 keeps this label a
-    // plain row, so restore it. Retire with a modelled GlobalColor table.
-    restore_plain_line_type(state, enhanced_line);
+    append_line(state, tooltip, LINE_TYPE_PLAIN, &enhanced_label, enhanced);
     let level_text = format_global_numeric(state, "ITEM_LEVEL", f64::from(item_level))?;
     let level_line = append_line(state, tooltip, LINE_TYPE_ITEM_LEVEL, &level_text, None);
     table_set(

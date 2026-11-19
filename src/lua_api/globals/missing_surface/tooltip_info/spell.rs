@@ -16,9 +16,7 @@ const SPELL_TOOLTIP_WORD_WRAP_MIN_WIDTH: f64 = 240.0;
 
 fn push_highlight_spell_line(state: &mut LuaState, lines: Val, index: i64, text: &str) -> Val {
     let color = spell_color_from_global(state, b"HIGHLIGHT_FONT_COLOR", (1.0, 1.0, 1.0));
-    let line = push_tooltip_line(state, lines, index, 0.0, text, Some(color), false);
-    super::restore_plain_line_type(state, line);
-    line
+    push_tooltip_line(state, lines, index, 0.0, text, Some(color), false)
 }
 
 fn push_spell_name_line(state: &mut LuaState, lines: Val, index: i64, text: &str) {
@@ -125,8 +123,7 @@ fn push_replacement_spell_line(
     };
     let text = super::format_global_text(state, "REPLACES_SPELL", replaced.name)?;
     let color = spell_color_from_global(state, b"NORMAL_FONT_COLOR", (1.0, 0.82, 0.0));
-    let line = push_tooltip_line(state, lines, index, 0.0, &text, Some(color), false);
-    super::restore_plain_line_type(state, line);
+    push_tooltip_line(state, lines, index, 0.0, &text, Some(color), false);
     Ok(index + 1)
 }
 
@@ -144,8 +141,7 @@ fn push_azerite_annotation_line(
         return index;
     };
     let color = spell_color_from_global(state, b"AZERITE_ESSENCE_COLOR", (1.0, 0.82, 0.0));
-    let line = push_tooltip_line(state, lines, index, 0.0, text, Some(color), false);
-    super::restore_plain_line_type(state, line);
+    push_tooltip_line(state, lines, index, 0.0, text, Some(color), false);
     index + 1
 }
 

@@ -37,8 +37,7 @@
 use crate::c_api::tooltip_getter_args::signed;
 use crate::c_api::tooltip_power_catalog_data::{ARTIFACT_POWER_RANKS, ARTIFACT_POWERS};
 use crate::lua_api::globals::missing_surface::tooltip_info::{
-    append_line, compose_tooltip, format_global_pair, named_color, restore_plain_line_type,
-    spell_description_text,
+    append_line, compose_tooltip, format_global_pair, named_color, spell_description_text,
 };
 use crate::lua_api::methods::borrow_state;
 use crate::lua_bridge::table_set_rust_fn_static;
@@ -93,8 +92,7 @@ fn get_artifact_power_by_id(state: &mut LuaState) -> LuaResult<u32> {
             maximum as f64,
         )?;
         let colour = rank_row_color(state, power.flags, stored.bonus_ranks);
-        let line = append_line(state, tooltip, LINE_TYPE_PLAIN, &text, colour);
-        restore_plain_line_type(state, line);
+        append_line(state, tooltip, LINE_TYPE_PLAIN, &text, colour);
         append_line(state, tooltip, LINE_TYPE_BLANK, BLANK_TEXT, None);
     }
     let description = spell_description_text(state, spell_id);

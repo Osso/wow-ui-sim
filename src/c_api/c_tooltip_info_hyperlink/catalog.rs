@@ -5,7 +5,7 @@ use crate::c_api::tooltip_power_catalog_data::{
 };
 use crate::lua_api::globals::missing_surface::tooltip_info::{
     append_line, compose_tooltip, format_global_numeric, format_global_pair, global_text,
-    item_quality_color, named_color, restore_plain_line_type, spell_description_text,
+    item_quality_color, named_color, spell_description_text,
 };
 use crate::lua_api::methods::{borrow_state, table_set};
 use rilua::{LuaResult, Val, vm::state::LuaState};
@@ -42,8 +42,7 @@ pub(super) fn artifact(
     table_set(state, tooltip, "type", Val::Nil);
     let highlight = named_color(state, "HIGHLIGHT_FONT_COLOR");
     if let Some(spell) = crate::spells::get_spell(spell_id) {
-        let line = append_line(state, tooltip, 0.0, spell.name, highlight);
-        restore_plain_line_type(state, line);
+        append_line(state, tooltip, 0.0, spell.name, highlight);
     }
     if flags & (64 | 4) == 0 {
         let text = format_global_pair(
@@ -57,8 +56,7 @@ pub(super) fn artifact(
         } else {
             highlight
         };
-        let line = append_line(state, tooltip, 0.0, &text, colour);
-        restore_plain_line_type(state, line);
+        append_line(state, tooltip, 0.0, &text, colour);
         append_line(state, tooltip, 1.0, " ", None);
     }
     append_description(state, tooltip, spell_id);
@@ -91,14 +89,13 @@ pub(super) fn conduit(state: &mut LuaState, id: u32, rank: i32) -> LuaResult<Opt
         else {
             return Ok(None);
         };
-        let line = append_line(
+        append_line(
             state,
             tooltip,
             0.0,
             spell.name,
             Some(item_quality_color(quality)),
         );
-        restore_plain_line_type(state, line);
         let key = match conduit_type {
             0 => "CONDUIT_TYPE_FINESSE",
             1 => "CONDUIT_TYPE_POTENCY",
@@ -106,8 +103,7 @@ pub(super) fn conduit(state: &mut LuaState, id: u32, rank: i32) -> LuaResult<Opt
             _ => return Ok(None),
         };
         if let Some(label) = global_text(state, key) {
-            let line = append_line(state, tooltip, 0.0, &label, None);
-            restore_plain_line_type(state, line);
+            append_line(state, tooltip, 0.0, &label, None);
         }
         let text = format_global_numeric(state, "ITEM_LEVEL", f64::from(level))?;
         let line = append_line(state, tooltip, 31.0, &text, None);

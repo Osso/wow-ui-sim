@@ -8,7 +8,7 @@ use crate::items::{self, ItemInfo};
 use crate::lua_api::globals::missing_surface::tooltip_info::{
     append_line, build_item_interaction_cleansing_tooltip, build_quest_party_progress_tooltip,
     build_unresolved_conversion_item_tooltip, format_global_text, global_text, item_quality_color,
-    named_color, restore_plain_line_type, tooltip_for_item_context, tooltip_for_spell,
+    named_color, tooltip_for_item_context, tooltip_for_spell,
 };
 use crate::lua_api::methods::{
     borrow_state, borrow_state_mut, call_function_state, create_string, create_table, table_set,
@@ -814,7 +814,6 @@ fn append_keystone_row(
     quality: Option<u8>,
 ) {
     let line = append_line(state, tooltip, 0.0, text, Some(color));
-    restore_plain_line_type(state, line);
     if let Some(quality) = quality {
         table_set(state, line, "quality", Val::Num(f64::from(quality)));
     }
