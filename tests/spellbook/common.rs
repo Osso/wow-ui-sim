@@ -30,24 +30,44 @@ fn debug_edit_mode_system_frame_count(env: &WowLuaEnv) {
     if mode == "divergences" {
         debug_registry_global_divergences(env);
     }
+    if mode == "rollback" {
+        rollback_registry_global_divergences(env);
+    }
     if mode == "wrap" {
         install_debug_edit_mode_anchor_trace(env);
     }
 }
 
 fn debug_registry_global_divergences(env: &WowLuaEnv) {
-    let (duplicates, registry_ids) = collect_duplicate_frame_names(env);
-    let differences = env
-        .loader_env()
-        .with_state(|lua| {
-            Ok::<_, String>(first_registry_divergences(lua, duplicates, &registry_ids))
-        })
-        .expect("Lua state is available");
-    for (name, registry_id, previous_latest_id) in differences {
+    for (name, registry_id, previous_latest_id) in collect_registry_global_divergences(env)
+        .into_iter()
+        .take(20)
+    {
         eprintln!(
             "registry divergence candidate: {name} registry={registry_id} previous-latest={previous_latest_id}"
         );
     }
+}
+
+fn rollback_registry_global_divergences(env: &WowLuaEnv) {
+    let differences = collect_registry_global_divergences(env);
+    let mut state = env.state().borrow_mut();
+    for (name, _, previous_latest_id) in &differences {
+        state.widgets.set_name(*previous_latest_id, name.clone());
+    }
+    eprintln!(
+        "temporarily restored {} duplicate-name bindings",
+        differences.len()
+    );
+}
+
+fn collect_registry_global_divergences(env: &WowLuaEnv) -> Vec<(String, u64, u64)> {
+    let (duplicates, registry_ids) = collect_duplicate_frame_names(env);
+    env.loader_env()
+        .with_state(|lua| {
+            Ok::<_, String>(first_registry_divergences(lua, duplicates, &registry_ids))
+        })
+        .expect("Lua state is available")
 }
 
 fn collect_duplicate_frame_names(
@@ -95,7 +115,6 @@ fn first_registry_divergences(
                 previous_latest_id,
             ))
         })
-        .take(20)
         .collect()
 }
 
