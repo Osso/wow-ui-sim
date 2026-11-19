@@ -242,7 +242,7 @@ mod tests {
                 local split = strsplittable(",", "a,b")
                 if split[1] ~= "a" or split[2] ~= "b" then return "strsplittable" end
                 local input = { 1, 2, 3, 4 }
-                local filtered = tFilter(input, function(value) return value % 2 == 0 end)
+                local filtered = tFilter(input, function(value) return value % 2 == 0 end, true)
                 if filtered == input or #filtered ~= 2 or filtered[1] ~= 2 or filtered[2] ~= 4 then return "tfilter" end
                 if #input ~= 4 or input[1] ~= 1 or input[4] ~= 4 then return "tfilter_input" end
                 local firstMapped, secondMapped = mapvalues(function(value) return value * 2 end, 2, 3)
