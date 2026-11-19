@@ -48,6 +48,29 @@ end
 "#;
 
 const LEGACY_ALIAS_LUA: &str = r#"
+if strsplittable == nil then
+  function strsplittable(delimiter, input, limit)
+    return { strsplit(delimiter, input, limit) }
+  end
+end
+
+if string ~= nil and string.split == nil then
+  function string.split(self, delimiter, limit)
+    if type(self) == "string" and type(delimiter) == "string" then
+      local inputIsEmpty = #delimiter == 0
+      local inputIsLonger = #self <= 4 and #delimiter > #self
+      local receiverLooksLikeDelimiter = #self <= 4 and self:match("^%W+$") ~= nil
+      if inputIsEmpty or inputIsLonger or receiverLooksLikeDelimiter then
+        return strsplit(self, delimiter, limit)
+      end
+    end
+    return strsplit(delimiter, self, limit)
+  end
+end
+
+"#;
+
+const WRATH_COMPAT_ALIASES_LUA: &str = r#"
 if abs == nil and math ~= nil then abs = math.abs end
 if ceil == nil and math ~= nil then ceil = math.ceil end
 if floor == nil and math ~= nil then floor = math.floor end
@@ -55,12 +78,6 @@ if max == nil and math ~= nil then max = math.max end
 if min == nil and math ~= nil then min = math.min end
 if strlen == nil and string ~= nil then strlen = string.len end
 if sort == nil and table ~= nil then sort = table.sort end
-
-if strsplittable == nil then
-  function strsplittable(delimiter, input, limit)
-    return { strsplit(delimiter, input, limit) }
-  end
-end
 
 if MergeTable == nil then
   function MergeTable(dest, src)
@@ -95,21 +112,6 @@ if tFilter == nil then
     return t
   end
 end
-
-if string ~= nil and string.split == nil then
-  function string.split(self, delimiter, limit)
-    if type(self) == "string" and type(delimiter) == "string" then
-      local inputIsEmpty = #delimiter == 0
-      local inputIsLonger = #self <= 4 and #delimiter > #self
-      local receiverLooksLikeDelimiter = #self <= 4 and self:match("^%W+$") ~= nil
-      if inputIsEmpty or inputIsLonger or receiverLooksLikeDelimiter then
-        return strsplit(self, delimiter, limit)
-      end
-    end
-    return strsplit(delimiter, self, limit)
-  end
-end
-
 "#;
 
 /// Install `print` / `A_Print` / `next` / `ipairs` overrides on the rilua
@@ -169,6 +171,15 @@ fn dumpobject(state: &mut LuaState) -> LuaResult<u32> {
 fn install_legacy_aliases(lua: &mut rilua::Lua) -> LuaResult<()> {
     lua.exec(LEGACY_ALIAS_LUA)
         .map_err(|e| runtime_error(format!("legacy alias install: {e}")))?;
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Wrath {
+        install_wrath_compat_aliases(lua)?;
+    }
+    Ok(())
+}
+
+fn install_wrath_compat_aliases(lua: &mut rilua::Lua) -> LuaResult<()> {
+    lua.exec(WRATH_COMPAT_ALIASES_LUA)
+        .map_err(|e| runtime_error(format!("Wrath compatibility alias install: {e}")))?;
     Ok(())
 }
 
@@ -462,8 +473,23 @@ mod tests {
     use crate::lua_api::WowLuaEnv;
 
     #[test]
-    fn installs_legacy_math_and_table_aliases() {
+    fn math_and_table_aliases_match_profile_provider() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
+        #[cfg(not(feature = "client-wrath"))]
+        load_cached_compat_provider(&env);
+        assert_math_and_table_aliases(&env);
+    }
+
+    #[cfg(not(feature = "client-wrath"))]
+    fn load_cached_compat_provider(env: &WowLuaEnv) {
+        let ui = crate::blizzard_ui_sync::default_cache_addons_path().expect("Blizzard UI cache");
+        let source = std::fs::read_to_string(ui.join("Blizzard_SharedXMLBase/Compat.lua"))
+            .expect("cached Blizzard Compat.lua source should exist");
+        env.exec(&source)
+            .expect("cached Blizzard Compat.lua source should execute");
+    }
+
+    fn assert_math_and_table_aliases(env: &WowLuaEnv) {
         let result: String = env
             .eval(
                 r#"
@@ -483,8 +509,7 @@ mod tests {
                 return "ok"
                 "#,
             )
-            .expect("legacy alias probe should run");
-
+            .expect("profile math and table alias probe should run");
         assert_eq!(result, "ok");
     }
 
