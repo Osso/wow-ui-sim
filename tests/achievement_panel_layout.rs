@@ -210,11 +210,8 @@ fn achievement_frame_layout_stays_locked() {
     }
 }
 
-#[test]
 #[cfg(feature = "gui")]
-fn achievement_summary_empty_text_does_not_overlap_summary_entries() {
-    if crate::common::wrath_achievement_fixtures::assert_native(
-        r#"
+const EMPTY_SUMMARY_NATIVE_LUA: &str = r#"
         A_Admin.SetAchievementEarned(6, true)
         ToggleAchievementFrame()
         local empty = assert(AchievementFrameSummaryAchievementsEmptyText)
@@ -226,15 +223,10 @@ fn achievement_summary_empty_text_does_not_overlap_summary_entries() {
         end
         AchievementFrameSummary_UpdateAchievements(6)
         assert(not empty:IsShown() and first:IsShown())
-        "#,
-    ) {
-        return;
-    }
-    test_timeout! {
-        let env = common::panel_fixtures::setup_env();
-        let result: String = env
-            .eval(
-                r#"
+        "#;
+
+#[cfg(feature = "gui")]
+const EMPTY_SUMMARY_GEOMETRY_LUA: &str = r#"
                 if not ToggleAchievementFrame then
                     return "missing_toggle_achievement_frame"
                 end
@@ -249,21 +241,57 @@ fn achievement_summary_empty_text_does_not_overlap_summary_entries() {
                     return "summary_empty_text_missing"
                 end
 
+                if not emptyText:IsShown() then
+                    return "summary_empty_text_hidden"
+                end
                 local first = AchievementFrameSummaryAchievement1
-                local emptyShown = emptyText:IsShown()
-                local firstShown = first and first:IsShown() or false
-                if emptyShown and firstShown then
-                    return "summary_empty_text_overlap"
+                if not first or not first:IsShown() then
+                    return "summary_first_entry_missing_or_hidden"
+                end
+
+                -- VERIFIED: Retail 12.1.5.70783 Blizzard_AchievementUI.lua:2379-2506
+                -- shows default incomplete rows and EmptyText together.
+                -- XML:2127-2144 places text 30px below the container top;
+                -- the first row starts 18px below it, intentionally overlapping.
+                for i = 1, ACHIEVEMENTUI_MAX_SUMMARY_ACHIEVEMENTS do
+                    local entry = _G["AchievementFrameSummaryAchievement" .. i]
+                    if entry and entry:IsShown() then
+                        local overlapX = emptyText:GetLeft() < entry:GetRight()
+                            and emptyText:GetRight() > entry:GetLeft()
+                        local overlapY = emptyText:GetBottom() < entry:GetTop()
+                            and emptyText:GetTop() > entry:GetBottom()
+                        if (overlapX and overlapY) ~= (i == 1) then
+                            return "summary_empty_text_unexpected_overlap_" .. i
+                        end
+                    end
                 end
 
                 return "ok"
-                "#,
-            )
-            .unwrap();
-        assert_eq!(
-            result, "ok",
-            "achievement summary empty text should not overlap summary rows: {result}"
-        );
+                "#;
+
+#[cfg(feature = "gui")]
+fn assert_native_empty_summary_layout() -> bool {
+    crate::common::wrath_achievement_fixtures::assert_native(EMPTY_SUMMARY_NATIVE_LUA)
+}
+
+#[cfg(feature = "gui")]
+fn assert_empty_summary_geometry() {
+    let env = common::panel_fixtures::setup_env();
+    let result: String = env.eval(EMPTY_SUMMARY_GEOMETRY_LUA).unwrap();
+    assert_eq!(
+        result, "ok",
+        "achievement summary empty text should not overlap summary rows: {result}"
+    );
+}
+
+#[test]
+#[cfg(feature = "gui")]
+fn achievement_summary_empty_text_does_not_overlap_summary_entries() {
+    if assert_native_empty_summary_layout() {
+        return;
+    }
+    test_timeout! {
+        assert_empty_summary_geometry();
     }
 }
 

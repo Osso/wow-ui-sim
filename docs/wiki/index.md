@@ -5,6 +5,9 @@
 ## [2026-11-18] implementation | RegisterUnitEvent unit scan
 
 [Event system](systems/event-system.md#frame-registerunitevent-unit-scan-r88aj) links the [R88aj contract](../specs/register-unit-event-units.md): Mists boundary and original CastSequenceManager tests pass; native scan evidence is limited to Mists, Retail and Forever.
+## [2026-11-18] investigation | Panel triage A
+
+The [panel triage](investigations/master-test-fixture-triage.md#panel-triage-a-lt-d032-2026-11-18) records original startup-owner omissions, the source-backed geometric achievement assertion correction, and intentional profession RED. Scope is Retail only with four compile gates; provisional non-Retail fallback restorations were removed.
 
 ## [2026-11-18] implementation | Retail role and friends settings
 

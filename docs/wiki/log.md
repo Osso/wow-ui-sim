@@ -9,6 +9,9 @@ Corrected the broad host gate in the [tooltip contract](../specs/tooltip-data-se
 ## [2026-11-18] implementation | RegisterUnitEvent unit scan
 
 Updated the [event-system record](../systems/event-system.md#frame-registerunitevent-unit-scan-r88aj) and [contract](../specs/register-unit-event-units.md). **VERIFIED (R88aj):** four-position scan rules are established for Mists, Retail and Forever; Mists rejects the documented unknown `boss6`–`boss8` tokens. **VERIFIED (Mists simulator):** 3/3 original-consumer/boundary cases and 2/2 unit-scan cases pass. Retail/Forever secret-state and forbidden-aspect inputs remain UNKNOWN and empty by default.
+## [2026-11-18] investigation | Panel triage A
+
+The [panel triage](investigations/master-test-fixture-triage.md#panel-triage-a-lt-d032-2026-11-18) records original startup-owner omissions, the source-backed geometric achievement assertion correction, and intentional profession RED. Scope is Retail only with four compile gates; provisional non-Retail fallback restorations were removed.
 
 ## [2026-11-18] implementation | Retail role and friends settings
 

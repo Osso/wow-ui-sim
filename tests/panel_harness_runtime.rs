@@ -79,15 +79,7 @@ fn load_blizzard_addon(env: &WowLuaEnv, addon_name: &str) {
 
 fn load_panel_harness(env: &WowLuaEnv) {
     let ui = blizzard_ui_dir();
-    for addon_name in PANEL_HARNESS_ADDONS {
-        if !profile_ships_addon(addon_name) {
-            continue;
-        }
-        let toc_path = find_toc_file(&ui.join(addon_name))
-            .unwrap_or_else(|| panic!("{addon_name} TOC for active profile should exist"));
-        load_addon(&env.loader_env(), &toc_path)
-            .unwrap_or_else(|error| panic!("{addon_name} should load in panel harness: {error}"));
-    }
+    load_panel_harness_addons(env, &ui);
 
     // Pinned PTR 12.1.7 adds Blizzard_GamepadSoftCursor. Blizzard_MapCanvas
     // reads its `SoftCursor` frame and bounds helpers when a map scroll
@@ -104,20 +96,10 @@ fn load_panel_harness(env: &WowLuaEnv) {
     ] {
         env.apply_runtime_addon_load_workarounds(addon_name);
     }
+    common::panel_fixtures::load_panel_startup_publishers(env, &ui);
     common::panel_fixtures::install_lua_harness_stubs(env);
     env.apply_post_load_workarounds();
-    common::fire_addon_loaded(env, "WoWUISim");
-    for event in ["VARIABLES_LOADED", "PLAYER_LOGIN"] {
-        let _ = env.fire_event(event);
-    }
-    common::fire_player_entering_world(env, true, false);
-    for event in [
-        "UPDATE_BINDINGS",
-        "DISPLAY_SIZE_CHANGED",
-        "UI_SCALE_CHANGED",
-    ] {
-        let _ = env.fire_event(event);
-    }
+    fire_panel_harness_startup_events(env);
 }
 
 /// Pinned Blizzard_EncounterJournal/Blizzard_EncounterJournal.toc:7 allows only
@@ -915,4 +897,31 @@ fn mail_frame_runtime_load_skips_glue_only_dependency() {
         !glue_xml,
         "Blizzard_GlueXML declares `## AllowLoad: Glue` and must not load on the Game screen"
     );
+}
+
+fn fire_panel_harness_startup_events(env: &WowLuaEnv) {
+    common::fire_addon_loaded(env, "WoWUISim");
+    for event in ["VARIABLES_LOADED", "PLAYER_LOGIN"] {
+        let _ = env.fire_event(event);
+    }
+    common::fire_player_entering_world(env, true, false);
+    for event in [
+        "UPDATE_BINDINGS",
+        "DISPLAY_SIZE_CHANGED",
+        "UI_SCALE_CHANGED",
+    ] {
+        let _ = env.fire_event(event);
+    }
+}
+
+fn load_panel_harness_addons(env: &WowLuaEnv, ui: &std::path::Path) {
+    for addon_name in PANEL_HARNESS_ADDONS {
+        if !profile_ships_addon(addon_name) {
+            continue;
+        }
+        let toc_path = find_toc_file(&ui.join(addon_name))
+            .unwrap_or_else(|| panic!("{addon_name} TOC for active profile should exist"));
+        load_addon(&env.loader_env(), &toc_path)
+            .unwrap_or_else(|error| panic!("{addon_name} should load in panel harness: {error}"));
+    }
 }

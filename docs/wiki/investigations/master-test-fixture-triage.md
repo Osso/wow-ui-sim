@@ -40,3 +40,15 @@ This investigation separates test-fixture failures from simulator behavior gaps 
 
 - [[consumer-selection-and-red-proof]] — prove original consumer selection before accepting a RED.
 - [[showuipanel-toggle-fixture-owners]] — original achievement and housing panel owners.
+
+## Panel triage A (lt-d032, 2026-11-18)
+
+**VERIFIED (baseline b8dcca011, Retail 12.1.5.70783):** all 15 assigned selectors failed before edits. Original panel fixtures omitted the Menu owner, eager Retail CatalogShop inbound publisher, and AchievementUI's `[Bootstrap]` publisher. AdventureMap's first Lua statement captures `C_AdventureMap.Close` in `UIPanelWindows`, so its fixture must finish loading the original UIParentPanelManager owner before loading AdventureMap; listing both roots in a dependency closure does not impose that ordering.
+
+Fixtures now load those original owners/publishers without replacing consumers. CatalogShop uses the existing master helper, not the separate secure-environment integration branch. Per the later scope correction (tracker #1646), PTR is dropped entirely: no further builds, tests, fixes or receipts. The provisional non-Retail fallback restorations have been removed. Final gates are Forever, Mists, Wrath (compile-only), then Retail.
+
+**VERIFIED (original source):** Retail 12.1.5.70783 `Blizzard_AchievementUI/Mainline/Blizzard_AchievementUI.lua:2379-2506` shows default incomplete summary buttons and also shows EmptyText when `numAchievements == 0`. Their simultaneous `IsShown` states do not establish overlap. Coordinator question 5 authorizes the isolated assertion correction: compare EmptyText's rectangle with every shown summary entry, retaining all other checks. The geometric run established overlap with entry 1. Original XML lines 2127-2144 anchors EmptyText 30px below the container top and a 20px header; Lua anchors the first row 2px above the header bottom. Therefore the original layout intentionally overlaps entry 1. The corrected assertion locks this exact overlap and rejects overlap with later rows, as authorized by question 5.
+
+**UNKNOWN:** the professions specialization tree and `C_ProfSpecs.GetChildrenForPath` remain unmodeled. Its test remains an intentional optional EXPECTED-RED per coordinator question 4; no invented tree nodes, changed fixture IDs or weakened assertions.
+
+Receipts record Retail cache version and provenance SHA256 alongside compiler-bound executable/dylib hashes. These are targeted proofs, not a full-suite pass.

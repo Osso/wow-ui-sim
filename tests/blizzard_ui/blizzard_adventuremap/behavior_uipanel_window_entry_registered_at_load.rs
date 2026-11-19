@@ -4,14 +4,7 @@ use crate::common::blizzard_addon_harness::with_blizzard_addon_closure;
 
 const ROOT: &str = "Blizzard_AdventureMap";
 
-// Wrath has no AdventureMap vendor widget/handler input; mixed and modeled probes remain enabled.
-post_wrath_ui_fixture! {
-#[test]
-fn adventure_map_uipanel_window_entry_captures_close_at_load_time() {
-    with_blizzard_addon_closure(&[ROOT], &[], |env, _loaded| {
-        let surface: LoadTimePanelEntry = env
-            .eval(
-                r#"
+const LOAD_TIME_PANEL_ENTRY_LUA: &str = r#"
                 local entry = UIPanelWindows and UIPanelWindows["AdventureMapFrame"]
                 local capturedClose = entry and entry.showFailedFunc
 
@@ -26,7 +19,19 @@ fn adventure_map_uipanel_window_entry_captures_close_at_load_time() {
                        type(capturedClose),
                        capturedClose == C_AdventureMap.Close,
                        replacementCalled
-                "#,
+                "#;
+
+// Wrath has no AdventureMap vendor widget/handler input; mixed and modeled probes remain enabled.
+post_wrath_ui_fixture! {
+#[test]
+fn adventure_map_uipanel_window_entry_captures_close_at_load_time() {
+    with_blizzard_addon_closure(&["Blizzard_UIParentPanelManager"], &[], |env, _loaded| {
+        crate::common::blizzard_addon_harness::load_blizzard_addon_closure_into_env(
+            env, &crate::common::blizzard_addon_harness::blizzard_ui_dir(), &[ROOT], &[],
+        );
+        let surface: LoadTimePanelEntry = env
+            .eval(
+                LOAD_TIME_PANEL_ENTRY_LUA,
             )
             .expect("AdventureMap UIPanelWindows load-time probe must run cleanly");
 

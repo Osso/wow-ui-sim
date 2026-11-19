@@ -10,6 +10,7 @@ const BLIZZARD_ADDONS: &[&str] = &[
     "Blizzard_SharedXMLBase",
     "Blizzard_Colors",
     "Blizzard_SharedXML",
+    "Blizzard_Menu",
     "Blizzard_SharedXMLGame",
     "Blizzard_UIPanelTemplates",
     "Blizzard_FrameXMLBase",
@@ -71,21 +72,12 @@ pub(crate) fn setup_env() -> common::LockedEnv {
         }
 
         if cfg!(feature = "client-wrath") {
-            common::panel_fixtures::load_wrath_panel_core(&env);
-            env.state().borrow_mut().known_spells = [6603, 635, 19750].into();
-            env.exec("A_Admin.SetGuildInfo('Binding fixture', 'Member', 1); SetCVar('ShowAllSpellRanks', '1'); assert(IsInGuild()); assert(GetNumSpellTabs() > 0)")
-                .expect("seed Wrath binding panel state");
-            env.apply_post_load_workarounds();
-            fire_startup_events(&env);
+            initialize_wrath_binding_panel(&env);
             return env;
         }
 
         if !common::load_classic_game_startup_inventory(&env) {
-            for addon_name in BLIZZARD_ADDONS {
-                common::load_required_blizzard_addon(&env, &ui, addon_name);
-                env.apply_runtime_addon_load_workarounds(addon_name);
-            }
-            common::load_click_binding_bootstrap(&env, &ui);
+            load_binding_panel_addons(&env, &ui);
         }
 
         load_token_ui(&env);
@@ -123,4 +115,22 @@ pub(crate) fn install_test_error_handler(env: &WowLuaEnv) {
 
 pub(crate) fn drain_test_errors(env: &WowLuaEnv) -> Vec<String> {
     common::drain_string_table(env, "__test_errors")
+}
+
+fn initialize_wrath_binding_panel(env: &WowLuaEnv) {
+    common::panel_fixtures::load_wrath_panel_core(env);
+    env.state().borrow_mut().known_spells = [6603, 635, 19750].into();
+    env.exec("A_Admin.SetGuildInfo('Binding fixture', 'Member', 1); SetCVar('ShowAllSpellRanks', '1'); assert(IsInGuild()); assert(GetNumSpellTabs() > 0)")
+        .expect("seed Wrath binding panel state");
+    env.apply_post_load_workarounds();
+    fire_startup_events(env);
+}
+
+fn load_binding_panel_addons(env: &WowLuaEnv, ui: &std::path::Path) {
+    for addon_name in BLIZZARD_ADDONS {
+        common::load_required_blizzard_addon(env, ui, addon_name);
+        env.apply_runtime_addon_load_workarounds(addon_name);
+    }
+    common::load_click_binding_bootstrap(env, ui);
+    common::panel_fixtures::load_panel_startup_publishers(env, ui);
 }
