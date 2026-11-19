@@ -683,8 +683,8 @@ fn spellbook_hover_shows_spell_tooltip() {
             "Spellbook hover should populate spell tooltip lines, got {num_lines}"
         );
 
+        let tooltip_id = active_spellbook_tooltip_id(&env);
         let state = env.state().borrow();
-        let tooltip_id = state.widgets.get_id_by_name("GameTooltip").unwrap();
         let tooltip = state
             .tooltips
             .get(&tooltip_id)
@@ -711,57 +711,72 @@ fn spellbook_hover_tooltip_is_sized_and_on_screen() {
             wow_ui_sim::iced_app::tooltip::prepare_tooltip_layout(&mut state, &mut font_sys);
         }
 
-        let tooltip_id = {
-            let state = env.state().borrow();
-            state.widgets.get_id_by_name("GameTooltip").unwrap()
-        };
-
-        let (tooltip_rect, tooltip_size) = {
-            let state = env.state().borrow();
-            let tooltip_frame = state.widgets.get(tooltip_id).unwrap();
-            (
-                compute_frame_rect(&state.widgets, tooltip_id, 1024.0, 768.0),
-                (tooltip_frame.width, tooltip_frame.height),
-            )
-        };
-
-        assert!(tooltip_size.0 > 0.0, "Tooltip width should be > 0 after spellbook hover");
-        assert!(tooltip_size.1 > 0.0, "Tooltip height should be > 0 after spellbook hover");
-        assert!(tooltip_rect.width > 0.0, "Tooltip rect width should be > 0");
-        assert!(tooltip_rect.height > 0.0, "Tooltip rect height should be > 0");
-        assert!(
-            tooltip_rect.x >= 0.0 && tooltip_rect.x < 1024.0,
-            "Tooltip x={} should be on screen",
-            tooltip_rect.x
-        );
-        assert!(
-            tooltip_rect.y >= 0.0 && tooltip_rect.y < 768.0,
-            "Tooltip y={} should be on screen",
-            tooltip_rect.y
-        );
-
-        let buckets = build_strata_buckets(&env);
-        let state = env.state().borrow();
-        let tooltip_data = wow_ui_sim::iced_app::tooltip::collect_tooltip_data(&state);
-        assert!(
-            tooltip_data.contains_key(&tooltip_id),
-            "Tooltip render data should include GameTooltip after spellbook hover"
-        );
-
-        let mut glyph_atlas = wow_ui_sim::render::glyph::GlyphAtlas::new();
-        let batch = build_quad_batch_for_registry(
-            RegistryQuadBatchParams::new(&state.widgets, (1024.0, 768.0), &buckets)
-                .text_ctx(Some((&mut font_sys, &mut glyph_atlas)))
-                .message_frames(Some(&state.message_frames))
-                .tooltip_data(Some(&tooltip_data)),
-        );
-
-        assert!(
-            batch.vertices.len() > 100,
-            "Quad batch should include tooltip geometry after spellbook hover"
-        );
+        let tooltip_id = active_spellbook_tooltip_id(&env);
+        assert_hover_tooltip_geometry(&env, tooltip_id);
+        assert_hover_tooltip_quads(&env, tooltip_id, &mut font_sys);
     }
 }
+}
+
+fn active_spellbook_tooltip_id(env: &WowLuaEnv) -> u64 {
+    // The ordinary Lua hover addresses this frame, not whichever secure or
+    // ordinary frame was last indexed by the shared registry name.
+    let tooltip = env.get_rilua_global("GameTooltip");
+    wow_ui_sim::lua_api::methods::extract_frame_id(&env.rilua(), tooltip)
+        .expect("GameTooltip should be a native frame")
+}
+
+fn assert_hover_tooltip_geometry(env: &WowLuaEnv, tooltip_id: u64) {
+    let (tooltip_rect, tooltip_size) = {
+        let state = env.state().borrow();
+        let tooltip_frame = state.widgets.get(tooltip_id).unwrap();
+        (
+            compute_frame_rect(&state.widgets, tooltip_id, 1024.0, 768.0),
+            (tooltip_frame.width, tooltip_frame.height),
+        )
+    };
+
+    assert!(tooltip_size.0 > 0.0, "Tooltip width should be > 0 after spellbook hover");
+    assert!(tooltip_size.1 > 0.0, "Tooltip height should be > 0 after spellbook hover");
+    assert!(tooltip_rect.width > 0.0, "Tooltip rect width should be > 0");
+    assert!(tooltip_rect.height > 0.0, "Tooltip rect height should be > 0");
+    assert!(
+        tooltip_rect.x >= 0.0 && tooltip_rect.x < 1024.0,
+        "Tooltip x={} should be on screen",
+        tooltip_rect.x
+    );
+    assert!(
+        tooltip_rect.y >= 0.0 && tooltip_rect.y < 768.0,
+        "Tooltip y={} should be on screen",
+        tooltip_rect.y
+    );
+}
+
+fn assert_hover_tooltip_quads(
+    env: &WowLuaEnv,
+    tooltip_id: u64,
+    font_sys: &mut wow_ui_sim::render::font::WowFontSystem,
+) {
+    let buckets = build_strata_buckets(env);
+    let state = env.state().borrow();
+    let tooltip_data = wow_ui_sim::iced_app::tooltip::collect_tooltip_data(&state);
+    assert!(
+        tooltip_data.contains_key(&tooltip_id),
+        "Tooltip render data should include GameTooltip after spellbook hover"
+    );
+
+    let mut glyph_atlas = wow_ui_sim::render::glyph::GlyphAtlas::new();
+    let batch = build_quad_batch_for_registry(
+        RegistryQuadBatchParams::new(&state.widgets, (1024.0, 768.0), &buckets)
+            .text_ctx(Some((font_sys, &mut glyph_atlas)))
+            .message_frames(Some(&state.message_frames))
+            .tooltip_data(Some(&tooltip_data)),
+    );
+
+    assert!(
+        batch.vertices.len() > 100,
+        "Quad batch should include tooltip geometry after spellbook hover"
+    );
 }
 
 #[test]
