@@ -1,4 +1,4 @@
-#![cfg(any(feature = "client-retail", feature = "client-wowforever", feature = "client-mists"))]
+#![cfg(any(feature = "client-retail", feature = "client-wowforever"))
 
 use crate::common::blizzard_addon_harness::with_blizzard_addon_closure;
 use wow_ui_sim::client_profile::{self, ClientProfile};
@@ -8,8 +8,7 @@ fn consumer_source() -> &'static str {
     match client_profile::ACTIVE {
         ClientProfile::Retail => "Standard/UnitPopupButtons.lua",
         ClientProfile::WowForever => "Mainline/UnitPopupButtons.lua",
-        ClientProfile::Mists => "Wrath/UnitPopupButtons.lua",
-        _ => unreachable!("test is enabled only for Retail, Forever and Mists"),
+        _ => unreachable!("test is enabled only for Retail and Forever"),
     }
 }
 

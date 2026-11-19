@@ -485,6 +485,7 @@ macro_rules! build_empty_sim_state {
             next_report_token: $runtime.next_report_token,
             party_members: $collections.party_members,
             party_group_active: $runtime.party_group_active,
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
             party_is_raid: None,
             home_subgroup_roster: None,
             instance_subgroup_roster: None,

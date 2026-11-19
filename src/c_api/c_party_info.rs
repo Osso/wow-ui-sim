@@ -40,6 +40,7 @@ const AVAILABLE_LOOT_METHODS: [i32; 5] = [0, 1, 2, 3, 4];
 
 /// INFERRED (simulator mapping, R88bk pending): mark the supplied active group as a raid.
 /// PartySync confirmation and event emission are UNKNOWN and remain unmodeled.
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn convert_to_raid(state: &mut LuaState) -> LuaResult<u32> {
     let mut sim = crate::lua_api::methods::borrow_state_mut(state)?;
     if sim.party_group_active {
@@ -51,14 +52,8 @@ fn convert_to_raid(state: &mut LuaState) -> LuaResult<u32> {
 pub(crate) fn register_c_party_info_surface(state: &mut LuaState) -> LuaResult<()> {
     let table_ref = ensure_namespace(state, "C_PartyInfo")?;
     register_group_membership_probes(state, table_ref)?;
-    if matches!(
-        crate::client_profile::ACTIVE,
-        crate::client_profile::ClientProfile::Retail
-            | crate::client_profile::ClientProfile::WowForever
-            | crate::client_profile::ClientProfile::Mists
-    ) {
-        table_set_rust_fn_static(state, table_ref, "ConvertToRaid", convert_to_raid)?;
-    }
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    table_set_rust_fn_static(state, table_ref, "ConvertToRaid", convert_to_raid)?;
     if matches!(
         crate::client_profile::ACTIVE,
         crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
