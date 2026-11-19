@@ -864,8 +864,6 @@ macro_rules! build_empty_sim_state {
             social_friends: default_social_friends(),
             social_restrictions: SocialRestrictionsState::default(),
             #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
-            social_system_policy_enabled: None,
-            #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
             cinematic_summaries: HashMap::new(),
             #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
             current_cinematic_id: 0,

@@ -347,6 +347,17 @@ fn server_mirrored_store_defaults() -> HashMap<String, String> {
 fn parse_default_cvars() -> (HashMap<String, String>, HashMap<String, String>) {
     let (mut defaults, mut original_names) = parse_cvar_yaml(include_str!("cvars.yaml"));
     insert_collected_journal_cvar(&mut defaults, &mut original_names);
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
+        defaults.insert("socialuienabledclient".into(), "0".into());
+        original_names.insert(
+            "socialuienabledclient".into(),
+            "socialUIEnabledClient".into(),
+        );
+    }
     // R47: real registered local CVar, with distinct PTR/Forever declarations.
     let preset_default = match crate::client_profile::ACTIVE {
         crate::client_profile::ClientProfile::Ptr => Some("1"),

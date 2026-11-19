@@ -531,6 +531,13 @@ impl WowLuaEnv {
         lua
     }
 
+    /// Apply a host-owned CVar update and run its registered callbacks.
+    pub fn set_native_cvar(&self, name: &str, value: &str) -> Result<bool> {
+        let mut lua = self.lua.borrow_mut();
+        super::globals::set_cvar_verb::set_native_cvar(lua.state_mut(), name, value)
+            .map_err(crate::Error::from)
+    }
+
     /// Execute Lua code.
     pub fn exec(&self, code: &str) -> Result<()> {
         self.exec_rilua(code)?;

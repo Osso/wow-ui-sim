@@ -212,9 +212,11 @@ if GetSpellConfirmationPromptsInfo == nil then
 end
 "#;
 
-// Missing social-UI service availability policy. Retire when its c_api producer
-// owns availability; ordinary friend-list state does not establish that policy.
-#[cfg(not(all(feature = "profile-retail", feature = "retail-12-1-5")))]
+// Profiles without the modeled native registration keep the inert compatibility value.
+#[cfg(not(any(
+    all(feature = "profile-retail", feature = "retail-12-1-5"),
+    feature = "client-wowforever"
+)))]
 const SOCIAL_UI_DEFAULTS_LUA: &str = r#"
 C_SocialUI = C_SocialUI or __wow_namespace()
 if rawget(C_SocialUI, "IsSystemEnabled") == nil then

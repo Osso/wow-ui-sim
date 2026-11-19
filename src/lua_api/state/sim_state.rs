@@ -1069,9 +1069,6 @@ pub struct SimState {
     #[cfg(feature = "retail-12-0-0")]
     pub bnet_custom_message: String,
     pub social_friends: Vec<SocialFriend>,
-    /// UNKNOWN writers/events: explicit R88ap.6 policy input; absent is false.
-    #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
-    pub social_system_policy_enabled: Option<bool>,
     pub social_restrictions: SocialRestrictionsState,
     pub restricted_actions: [u8; 6],
     pub restricted_actions_natural: [bool; 6],

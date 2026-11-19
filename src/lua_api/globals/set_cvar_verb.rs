@@ -72,6 +72,10 @@ fn set_cvar(state: &mut LuaState) -> LuaResult<u32> {
         state.push(Val::Bool(false));
         return Ok(1);
     };
+    if is_native_only_social_ui_cvar(&name) {
+        state.push(Val::Bool(false));
+        return Ok(1);
+    }
     require_cvar_write_access(state, &name)?;
     let value = value_to_string(state, 2);
 
@@ -416,14 +420,36 @@ fn insert_c_cvar_table(state: &mut LuaState, key: GcRef<LuaString>) -> GcRef<Tab
 /// CVarStorage currently has no active native validation callback.
 pub(crate) fn set_native_cvar(state: &mut LuaState, name: &str, value: &str) -> LuaResult<bool> {
     let changed = borrow_state(state)?.cvars.get(name).as_deref() != Some(value);
-    let accepted = borrow_state_mut(state)?.cvars.set(name, value);
+    let accepted = if is_native_only_social_ui_cvar(name) {
+        borrow_state_mut(state)?.cvars.set_temporary(name, value);
+        true
+    } else {
+        borrow_state_mut(state)?.cvars.set(name, value)
+    };
     if accepted {
         crate::c_api::game_mode_display::cvar_set_callback(state, name)?;
     }
     if accepted && changed {
-        let name_arg = create_string(state, name);
-        let value_arg = create_string(state, value);
-        dispatch_event_now(state, "CVAR_UPDATE", &[name_arg, value_arg])?;
+        dispatch_native_cvar_events(state, name, value)?;
     }
     Ok(accepted)
+}
+
+fn dispatch_native_cvar_events(state: &mut LuaState, name: &str, value: &str) -> LuaResult<()> {
+    let name_arg = create_string(state, name);
+    let value_arg = create_string(state, value);
+    dispatch_event_now(state, "CVAR_UPDATE", &[name_arg, value_arg])?;
+    if is_native_only_social_ui_cvar(name) {
+        crate::c_api::c_social_ui::cvar_set_callback(state)?;
+    }
+    Ok(())
+}
+
+fn is_native_only_social_ui_cvar(name: &str) -> bool {
+    name.eq_ignore_ascii_case("socialUIEnabledClient")
+        && matches!(
+            crate::client_profile::ACTIVE,
+            crate::client_profile::ClientProfile::Retail
+                | crate::client_profile::ClientProfile::WowForever
+        )
 }
