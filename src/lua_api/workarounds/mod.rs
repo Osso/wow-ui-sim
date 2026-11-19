@@ -381,8 +381,6 @@ fn apply_core_foundation_state_defaults(lua: &mut rilua::Lua) -> crate::Result<(
     temporary::pet_battle_runtime_state::apply_bootstrap(lua)?;
     temporary::pet_battle_action_legality_defaults::apply_bootstrap(lua)?;
     temporary::settings_surface_defaults::apply_bootstrap(lua)?;
-    #[cfg(not(feature = "client-retail"))]
-    temporary::tooltip_data_processor_defaults::apply_bootstrap(lua)?;
     #[cfg(not(feature = "client-wrath"))]
     temporary::startup_service_capability_defaults::apply_bootstrap(lua)?;
     Ok(())
