@@ -94,7 +94,7 @@ fn assert_pool_collection_behavior(env: &WowLuaEnv) {
             frame.collectionReset = true
         end)
 
-        local frame = collection:Acquire(nil)
+        local frame = collection:Acquire("")
         assert(frame ~= nil)
         assert(pool:IsActive(frame))
         assert(collection:IsActive(frame))
