@@ -124,6 +124,7 @@ pub(crate) fn parse_item_guid(guid: &str) -> Option<(i32, i32, u32)> {
 
 pub(super) fn register_c_item(state: &mut LuaState) -> LuaResult<()> {
     let table_ref = ensure_namespace(state, "C_Item")?;
+    register_c_item_data_request(state, table_ref)?;
     table_set_rust_fn_static(state, table_ref, "GetItemSpell", super::get_item_spell)?;
     register_c_item_existence_queries(state, table_ref)?;
     register_c_item_metadata_queries(state, table_ref)?;
@@ -149,6 +150,23 @@ pub(super) fn register_c_item(state: &mut LuaState) -> LuaResult<()> {
         )?;
     }
     Ok(())
+}
+
+fn register_c_item_data_request(state: &mut LuaState, table_ref: GcRef<Table>) -> LuaResult<()> {
+    if ACTIVE != ClientProfile::Retail {
+        return Ok(());
+    }
+    table_set_rust_fn_static(
+        state,
+        table_ref,
+        "RequestLoadItemData",
+        request_load_item_data,
+    )
+}
+
+fn request_load_item_data(_state: &mut LuaState) -> LuaResult<u32> {
+    // No request model exists; native completion-event behavior is UNKNOWN.
+    Ok(0)
 }
 
 fn register_c_item_dressability_query(
