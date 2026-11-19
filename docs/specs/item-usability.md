@@ -4,7 +4,7 @@
 
 - Retail `C_Item.IsUsableItem(itemInfo)` returns `usable, noMana` in that order. A missing player, zero ID or unowned item returns `(false, false)`.
 - For an owned item with a selected use spell, a supplied eligibility rejection returns `(false, false)`. An accepted eligibility outcome evaluates SpellPower costs against the supplied player's power; sufficient power returns `(true, false)`, and insufficient power returns `(false, true)`.
-- Eligibility is an explicit item-and-spell input. If it is not supplied for an owned item with a use spell, the simulator reports an error rather than inventing an eligibility result.
+- Eligibility is an explicit item-and-spell input. When it is not supplied for an owned item with a use spell, **INFERRED (best-guess in-game behaviour):** treat eligibility as accepted and continue with SpellPower cost evaluation; native level/class/combat eligibility rules remain UNKNOWN (pending decomp).
 
 ## Best-guess basis
 
