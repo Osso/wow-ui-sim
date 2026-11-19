@@ -25,7 +25,7 @@ fn sample_line() -> TalkingHeadLine {
     }
 }
 
-const API_CONTRACT: &str = r#"
+const API_CONTRACT: &str = r##"
     assert(not C_TalkingHead.GetConversationsDeferred())
     C_TalkingHead.SetConversationsDeferred(true)
     assert(C_TalkingHead.GetConversationsDeferred())
@@ -40,15 +40,15 @@ const API_CONTRACT: &str = r#"
     assert(select("#", C_TalkingHead.GetCurrentLineAnimationInfo()) == 4)
     assert(kitID == 10 and intro == 11 and loop == 12 and lineDuration == 2.5)
     return "ok"
-"#;
+"##;
 
 #[test]
 fn retail_talking_head_apis_project_explicit_host_inputs() {
     let env = WowLuaEnv::new().unwrap();
     let empty_results: bool = env
         .eval(
-            r#"return select("#", C_TalkingHead.GetCurrentLineInfo()) == 0
-                and select("#", C_TalkingHead.GetCurrentLineAnimationInfo()) == 0"#,
+            r##"return select("#", C_TalkingHead.GetCurrentLineInfo()) == 0
+                and select("#", C_TalkingHead.GetCurrentLineAnimationInfo()) == 0"##,
         )
         .unwrap();
     assert!(empty_results);
