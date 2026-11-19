@@ -329,8 +329,6 @@ fn set_keystone_context_without_item_identity(
 ) {
     input.item_id = None;
     input.item_guid = None;
-    input.item_class_id = None;
-    input.item_subclass_id = None;
     let mut sim = env.state().borrow_mut();
     let location = KeystoneLocation::Bag(0, slot as i32);
     sim.keystone.item_modifiers.insert(location, (item_id, modifiers));
@@ -1042,7 +1040,7 @@ fn assert_resilient_keystone_consumer_rows() {
 
 fn assert_plain_keystone_consumer_rows() {
     let (env, guid) = keystone_hover_fixture(4, 158_923);
-    let mut input = SlottedKeystoneTooltipInput::default();
+    let mut input = slotted_tooltip_input(158_923, &guid);
     input.map_names.insert(961, Some("Beta".to_string()));
     set_keystone_context_without_item_identity(
         &env,
