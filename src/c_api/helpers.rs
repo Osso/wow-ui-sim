@@ -78,7 +78,7 @@ pub(crate) fn read_untainted_signed32_argument(
 }
 
 /// Required Lua string, or a number converted with Lua's `%.14g` rule.
-#[cfg(feature = "client-retail")]
+#[cfg(feature = "retail-12-0-0")]
 pub(crate) fn read_untainted_string_argument(
     state: &LuaState,
     index: i32,
