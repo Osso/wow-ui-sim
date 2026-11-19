@@ -8,6 +8,9 @@ use crate::lua_api::methods::{
 use crate::widget::{AnchorPoint, Frame, FrameStrata, WidgetType};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
+use std::sync::atomic::{AtomicUsize, Ordering};
+
+static NAME_MAP_DIVERGENCE_COUNT: AtomicUsize = AtomicUsize::new(0);
 
 fn build_initial_frame(
     state: &mut LuaState,
@@ -59,7 +62,8 @@ pub fn create_frame_instance(
 ) -> LuaResult<u64> {
     let frame = build_initial_frame(state, widget_type, frame_type, name.clone(), parent_id, id)?;
 
-    let preserve_existing_name_binding = should_preserve_existing_frame_name(state, &name)?;
+    let preserve_existing_name_binding =
+        should_preserve_existing_frame_name(state, &name, frame.id)?;
     let (frame_id, replaced_placeholder) = register_new_frame_instance(
         state,
         frame,
@@ -505,6 +509,7 @@ fn publish_global_replacement_if_placeholder(
 fn should_preserve_existing_frame_name(
     state: &mut LuaState,
     name: &Option<String>,
+    new_frame_id: u64,
 ) -> LuaResult<bool> {
     let Some(name) = name.as_deref() else {
         return Ok(false);
@@ -514,16 +519,53 @@ fn should_preserve_existing_frame_name(
     if matches!(name, "UIParent" | "WorldFrame") {
         return Ok(existing_id.is_some());
     }
-    if existing_id.is_none() {
+    let Some(previous_frame_id) = existing_id else {
         return Ok(false);
-    }
+    };
     if existing_is_placeholder {
         return Ok(false);
     }
     if !secure_mode {
         return Ok(false);
     }
-    Ok(public_name_destination_is_occupied(state, name))
+    let public_occupied = public_name_destination_is_occupied(state, name);
+    trace_name_mapping_divergence(
+        state,
+        name,
+        previous_frame_id,
+        new_frame_id,
+        public_occupied,
+    );
+    Ok(public_occupied)
+}
+
+fn trace_name_mapping_divergence(
+    state: &mut LuaState,
+    name: &str,
+    previous_frame_id: u64,
+    new_frame_id: u64,
+    public_occupied: bool,
+) {
+    if !public_occupied || std::env::var_os("WOW_SIM_TRACE_NAME_MAP_DIVERGENCES").is_none() {
+        return;
+    }
+    let key = state.gc.intern_string(name.as_bytes());
+    let secureenv = match crate::lua_api::globals::security::secure_env_table(state) {
+        Ok(table) => table,
+        Err(error) => {
+            eprintln!("[name-map-trace-error] name={name} error={error}");
+            return;
+        }
+    };
+    let secure_occupied = state
+        .gc
+        .tables
+        .get(secureenv)
+        .is_some_and(|table| !matches!(table.get_str(key, &state.gc.string_arena), Val::Nil));
+    if secure_occupied || NAME_MAP_DIVERGENCE_COUNT.fetch_add(1, Ordering::Relaxed) >= 64 {
+        return;
+    }
+    eprintln!("[name-map-divergence] name={name} previous={previous_frame_id} new={new_frame_id}");
 }
 
 fn existing_frame_name_state(
