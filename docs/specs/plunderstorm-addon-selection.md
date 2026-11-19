@@ -26,6 +26,12 @@ toggles. Standard Retail must not execute those mode constants in either environ
 - `tests/blizzard_end_of_match_ui_loads.rs`: standard Retail discovery exclusion.
 - `tests/blizzard_plunderstorm_prematch_ui_loads.rs`: standard Retail discovery exclusion.
 
+The Retail spellbook hover tests inspect the widget behind the ordinary Lua
+`GameTooltip` global used by `Blizzard_SpellBookItem.lua`'s `OnIconEnter`.
+The simulator shares its widget registry across environments, so a registry
+lookup by display name can select a separate frame with no hovered spell data.
+This is a simulator test-fixture identity correction, not a native sizing change.
+
 ## Known gaps (current cycle)
 
 - [ ] The loader has no selectable Plunderstorm game type. The EndOfMatchUI standard-Retail force-load behavior tests were removed because `Blizzard_EndOfMatchUI.toc:4` selects Plunderstorm only. Restore behavioral coverage under a real Plunderstorm selection.

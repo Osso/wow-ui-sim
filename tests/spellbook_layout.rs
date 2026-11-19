@@ -735,10 +735,7 @@ fn active_spellbook_tooltip_id(env: &WowLuaEnv) -> u64 {
         .get(tooltip)
         .and_then(|table| table.backing())
         .expect("GameTooltip should have native widget identity");
-    let id = u64::from(low) | (u64::from(high) << 32);
-    let registered = env.state().borrow().widgets.get_id_by_name("GameTooltip");
-    eprintln!("GameTooltip Lua widget={id}, registry name widget={registered:?}");
-    id
+    u64::from(low) | (u64::from(high) << 32)
 }
 
 fn assert_hover_tooltip_geometry(env: &WowLuaEnv, tooltip_id: u64) {
