@@ -1,5 +1,6 @@
 local projectForbiddenDelegateArguments, retiredPortraitGlobal,
-  callPrivateProjectionFactory, retireGlueOwnerDefaults, retireGlueStateDefaults = ...
+  callPrivateProjectionFactory, retireGlueOwnerDefaults, retireGlueStateDefaults,
+  retireCreateAndInitFromMixinFallback = ...
 
 local function __wow_public_global_path(path)
   local first, rest = string.match(path, "^([^.]+)%.?(.*)$")
@@ -92,7 +93,7 @@ if CreateFromMixins == nil then
   end
 end
 
-if CreateAndInitFromMixin == nil then
+if CreateAndInitFromMixin == nil and not retireCreateAndInitFromMixinFallback then
   function CreateAndInitFromMixin(mixin, ...)
     local object = CreateFromMixins(mixin)
     if object.Init then
