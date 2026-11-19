@@ -375,7 +375,7 @@ fn clear_second_visualization_inputs(sim: &mut crate::lua_api::SimState, key: Wi
 
 fn insert_visualization(
     sim: &mut crate::lua_api::SimState,
-    _id: f64,
+    id: f64,
     key: WidgetId,
     record: WidgetVisualization,
 ) {
@@ -394,7 +394,7 @@ fn insert_visualization(
     let Some(record) = store_fifth_visualization_group(sim, key, record) else {
         return;
     };
-    store_remaining_visualization(sim, _id, key, record);
+    store_remaining_visualization(sim, id, key, record);
 }
 
 fn store_first_visualization_group(
@@ -544,7 +544,7 @@ fn store_fifth_visualization_group(
 
 fn store_remaining_visualization(
     sim: &mut crate::lua_api::SimState,
-    _id: f64,
+    id: f64,
     key: WidgetId,
     record: WidgetVisualization,
 ) {
@@ -557,7 +557,7 @@ fn store_remaining_visualization(
         }
         #[cfg(feature = "retail-12-0-0")]
         WidgetVisualization::PreyHuntProgress(record) => {
-            sim.prey_inputs.widgets.insert(_id as u32, record);
+            sim.prey_inputs.widgets.insert(id as u32, record);
         }
         _ => unreachable!("prior groups store all other visualizations"),
     }
