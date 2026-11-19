@@ -156,6 +156,8 @@ macro_rules! build_empty_sim_state {
             addon_saved_version_check_enabled: None,
             system_chat_log: Vec::new(),
             addon_message_prefixes: Default::default(),
+            #[cfg(feature = "client-retail")]
+            talking_head: Default::default(),
             adventure_map: AdventureMapState::default(),
             encounter_journal: EncounterJournalState::default(),
             pet_journal_hover: crate::c_api::c_pet_journal_hover::PetJournalHoverState::default(),
@@ -483,6 +485,8 @@ macro_rules! build_empty_sim_state {
             next_report_token: $runtime.next_report_token,
             party_members: $collections.party_members,
             party_group_active: $runtime.party_group_active,
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            party_is_raid: None,
             home_subgroup_roster: None,
             instance_subgroup_roster: None,
             group_member_counts: GroupMemberCountsState::default(),

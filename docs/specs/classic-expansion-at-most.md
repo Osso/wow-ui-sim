@@ -1,19 +1,20 @@
-# Forever Classic expansion upper-bound predicate
+# Classic expansion upper-bound predicate
 
-`ClassicExpansionAtMost(expansionLevel)` is exposed for the Forever profile. Cached `ExpansionInfoDocumentation.lua` specifies a required number, boolean result, and secret arguments accepted only from untainted callers. BigWigs `8931513` invokes it during LibDualSpec initialization.
+`ClassicExpansionAtMost(expansionLevel)` is declared in the Retail and Forever `ExpansionInfoDocumentation.lua` files; Mists keeps its existing compatibility-bootstrap implementation. Retail's declared argument is a required number and its result is a non-nil boolean. The original UnifiedProfileManager LibDualSpec consumer calls it while building options. The Forever profile also uses it in LibDualSpec.
 
 ## Contract
 
-- [x] Compare the numeric argument, without integer truncation, against the same temporary Classic level `10` already returned by `GetClassicExpansionLevel()` and used by `ClassicExpansionAtLeast()`; return one boolean.
-- [x] Keep the independently inferred Forever `GetExpansionLevel()` and `LE_EXPANSION_LEVEL_CURRENT` values at `0`. Preserve the existing Classic getter and AtLeast argument policy, other client profiles, and an already registered global.
+- [x] Retail and Forever compare the numeric argument, without integer truncation, against the same temporary Classic level `10` already returned by `GetClassicExpansionLevel()` and used by `ClassicExpansionAtLeast()`; return one boolean.
+- [x] Keep the independently inferred Forever `GetExpansionLevel()` and `LE_EXPANSION_LEVEL_CURRENT` values at `0`. Preserve the existing Classic getter and AtLeast argument policy, Mists bootstrap behavior, and an already registered global.
 - [x] Reject missing or nonnumeric arguments. Accept a secret number from an untainted caller; reject a secret argument from a tainted caller without declassification.
 - [x] The unchanged BigWigs LibDualSpec thresholds at Cataclysm (`4`) and Shadowlands (`8`) evaluate false against the temporary Classic level.
 
 ## Implementation inventory
 
 - `src/lua_api/workarounds/temporary/client_info_defaults.rs` — one shared temporary Classic level compatibility policy with a retirement condition, separate from current-expansion identity.
-- `src/lua_api/globals/stubs/global_stubs.rs` — existing Classic getter/AtLeast behavior and Forever-only upper-bound predicate consult that same policy; no other-profile behavior changes.
-- `tests/classic_expansion_at_most.rs` — numeric boundaries, fractional threshold, BigWigs-shaped branch, argument security and bootstrap retention in the grouped integration target.
+- `src/lua_api/globals/stubs/global_stubs.rs` — Classic getter/AtLeast behavior and Retail/Forever upper-bound predicate consult the same policy.
+- `tests/classic_expansion_at_most.rs` — Forever numeric boundaries, fractional threshold, BigWigs-shaped branch, argument security and bootstrap retention.
+- `tests/retail_classic_expansion_at_most.rs` — Retail function availability and the LibDualSpec-style conditional consumer.
 
 ## Known gaps
 

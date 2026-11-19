@@ -25,7 +25,7 @@ Bounded retained 12.0.5 prose row 182 motivates party connect/disconnect handlin
 - `src/lua_api/game_data.rs`: shared `PartyMember.connected` bool; every constructor initializes it to true.
 - `src/lua_api/state/sim_state.rs`: existing per-environment party roster.
 - `src/lua_api/globals/admin.rs`: active shared registration of `SetPartyMemberConnected`; `admin_party_target_helpers.rs` mutates only active existing members, releases the state borrow, then synchronously dispatches changed edges. Integer/bool decoding uses the same `FromStack` boundary as existing admin inputs; nonpositive indices no-op. Obsolete `admin_api/units.rs` receives only its constructor field, not duplicate registration or behavior.
-- `src/lua_api/globals/group_queries.rs` and `src/lua_api/globals/group_queries_relationships.rs`: aggregate offline query reads active members; party-token connectivity reads the same field. Other unit tokens retain presence-based behavior. Since `bfb0a01fc`, the shared active-group lookup exposes raid aliases only in raid mode; a party disconnect does not create such an alias.
+- `src/lua_api/globals/group_queries.rs` and `src/lua_api/globals/group_queries_relationships.rs`: aggregate offline query reads active members; party-token connectivity reads the same field. Other unit tokens retain presence-based behavior. Retail and Forever raid mode uses the explicit `party_is_raid` input when supplied; other profiles keep the existing six-member inference. See [party conversion](party-conversion.md).
 - `tests/party_connection.rs`: eight grouped fixtures discovered by the existing generated `integration` harness; no separate Cargo target or input scaffolding.
 
 ## Tests asserting this spec

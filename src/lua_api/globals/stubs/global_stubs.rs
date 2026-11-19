@@ -5,7 +5,7 @@ use rilua::vm::state::LuaState;
 
 use crate::lua_api::workarounds::CLASSIC_EXPANSION_LEVEL;
 use crate::lua_bridge::FromStack;
-#[cfg(feature = "client-wowforever")]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 use crate::lua_bridge::stack_val;
 
 use super::{
@@ -247,6 +247,8 @@ static GLOBAL_CUSTOM_STUBS: &[(&'static str, RustFn)] = &[
     // GetRestrictedAccountData is SimState-backed in real/xp_honor_rest.rs.
     ("GetClassicExpansionLevel", stub_current_expansion_level),
     ("ClassicExpansionAtLeast", stub_classic_expansion_at_least),
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    ("ClassicExpansionAtMost", classic_expansion_at_most),
     ("GetCurrentRegion", stub_current_region),
     ("GetServerExpansionLevel", stub_current_expansion_level),
     ("GetNumExpansions", stub_num_expansions),
@@ -277,7 +279,7 @@ fn stub_classic_expansion_at_least(state: &mut LuaState) -> rilua::LuaResult<u32
     Ok(1)
 }
 
-#[cfg(feature = "client-wowforever")]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn classic_expansion_at_most(state: &mut LuaState) -> rilua::LuaResult<u32> {
     let level = rilua::table_security::unwrap_secret(state, stack_val(state, 1))?;
     let rilua::Val::Num(level) = level else {
@@ -343,9 +345,5 @@ pub(super) fn register_global_stubs(state: &mut LuaState) {
     #[cfg(not(any(feature = "client-retail", feature = "client-ptr")))]
     if is_nil_global(state, "CanSummonFriend") {
         set_global_fn(state, "CanSummonFriend", stub_false);
-    }
-    #[cfg(feature = "client-wowforever")]
-    if is_nil_global(state, "ClassicExpansionAtMost") {
-        set_global_fn(state, "ClassicExpansionAtMost", classic_expansion_at_most);
     }
 }
