@@ -18,6 +18,7 @@ end
 local __wow_map_area_names = {
   [1] = "Dun Morogh",
   [2248] = "The Isle of Dorn",
+  __RETAIL_AREA_NAMES__
 }
 
 local function __wow_map_layer_dimensions(mapID)
@@ -391,15 +392,63 @@ end
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     let retain_fallback =
         crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail;
+    let area_names = generated_area_names();
+    let source = MAP_RUNTIME_STATE_LUA.replace("__RETAIL_AREA_NAMES__", &area_names);
     lua.exec(&format!(
-        "local retainUiMapPointFallback = {retain_fallback}\n{MAP_RUNTIME_STATE_LUA}"
+        "local retainUiMapPointFallback = {retain_fallback}\n{source}"
     ))?;
     Ok(())
+}
+
+fn generated_area_names() -> String {
+    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail {
+        return String::new();
+    }
+    sim_data_profile::area_names_retail::AREA_NAMES_RETAIL
+        .iter()
+        .map(|(id, name)| format!("[{id}] = {},", lua_string(name)))
+        .collect::<Vec<_>>()
+        .join("\n")
+}
+
+fn lua_string(value: &str) -> String {
+    let mut result = String::from("\"");
+    for character in value.chars() {
+        match character {
+            '\\' => result.push_str("\\\\"),
+            '\"' => result.push_str("\\\""),
+            '\n' => result.push_str("\\n"),
+            '\r' => result.push_str("\\r"),
+            '\t' => result.push_str("\\t"),
+            character => result.push(character),
+        }
+    }
+    result.push('\"');
+    result
 }
 
 #[cfg(test)]
 mod tests {
     use crate::lua_api::WowLuaEnv;
+
+    #[cfg(feature = "client-retail")]
+    #[test]
+    fn retail_area_names_match_db2_rows() {
+        let env = WowLuaEnv::new().expect("lua env should initialize");
+        let names: (String, String, String) = env
+            .eval(
+                "return C_Map.GetAreaInfo(7288), C_Map.GetAreaInfo(7290), C_Map.GetAreaInfo(7291)",
+            )
+            .expect("Retail AreaTable names should be available");
+        assert_eq!(
+            names,
+            (
+                "Smuggler's Den".into(),
+                "Hearthfire Tavern".into(),
+                "Stoktron Brewery".into()
+            )
+        );
+    }
 
     #[test]
     fn uimap_point_bootstrap_respects_profile_boundary() {
