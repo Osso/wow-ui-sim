@@ -230,9 +230,10 @@ mod forever {
         hidden_group_buffs_project_supplied_snapshot,
         "C_UnitAuras._hiddenGroupBuffs = {456}; local ids = C_UnitAuras.GetHiddenGroupBuffs(); assert(#ids == 1 and ids[1] == 456)"
     );
+    // The old nil expectation became stale when lt-0a60 registered the Rust-backed APIs.
     contract!(
-        hidden_buff_publication_does_not_enable_unrouted_visual_alert_apis,
-        "assert(C_UnitAuras.GetGroupBuffVisualAlerts == nil); assert(C_UnitAuras.SetGroupBuffVisualAlerts == nil); assert(C_UnitAuras.SetHiddenGroupBuffs == nil)"
+        forever_group_buff_settings_round_trip_two_alerts_and_hidden_ids,
+        "C_UnitAuras.SetGroupBuffVisualAlerts({{spellID=123,visualValue=2},{spellID=789,visualValue=1}}); C_UnitAuras.SetHiddenGroupBuffs({456,654}); local rows=C_UnitAuras.GetGroupBuffVisualAlerts(); local hidden=C_UnitAuras.GetHiddenGroupBuffs(); assert(#rows==2 and rows[1].spellID==123 and rows[1].visualValue==2 and rows[2].spellID==789 and rows[2].visualValue==1 and #hidden==2 and hidden[1]==456 and hidden[2]==654)"
     );
     contract!(
         identity_secrecy_accepts_party_token_without_party,
