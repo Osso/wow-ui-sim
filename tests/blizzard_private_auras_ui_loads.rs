@@ -1409,7 +1409,10 @@ const PRIVATE_AURA_TOOLTIP_PROBE: &str = r#"
         assert(aura and aura:IsShown(), 'private aura frame must be shown')
         PrivateAurasTooltip:SetOwner(aura, 'ANCHOR_BOTTOMLEFT')
         PrivateAurasTooltip:SetFrameLevel(aura:GetFrameLevel() + 2)
-        GameTooltipDataMixin.SetUnitPrivateAura(PrivateAurasTooltip, 'player', aura.auraInfo.auraInstanceID)
+        local instanceID = aura.auraInfo.auraInstanceID
+        local direct = C_TooltipInfo.GetUnitPrivateAura('player', instanceID)
+        assert(direct and direct.lines[1].leftText == name, 'direct private aura tooltip')
+        GameTooltipDataMixin.SetUnitPrivateAura(PrivateAurasTooltip, 'player', instanceID)
         local info = PrivateAurasTooltip:GetPrimaryTooltipInfo()
         local data = PrivateAurasTooltip:GetPrimaryTooltipData()
         assert(info and info.getterName == 'GetUnitPrivateAura', 'private aura accessor: ' .. tostring(info and info.getterName) .. ', data=' .. type(data))
