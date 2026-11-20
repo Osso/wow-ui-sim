@@ -108,6 +108,9 @@ pub struct SimState {
     pub(crate) addon_message_prefixes: crate::c_api::addon_message_prefixes::AddonMessagePrefixes,
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     pub(crate) social_queue: crate::c_api::c_social_queue::SocialQueueState,
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub(crate) party_invite_confirmations:
+        crate::c_api::c_party_info::pending_invites::PendingInviteConfirmations,
     pub addon_saved_enable_state: Option<AddonEnableSnapshot>,
     pub addon_saved_version_check_enabled: Option<bool>,
     pub system_chat_log: Vec<String>,
