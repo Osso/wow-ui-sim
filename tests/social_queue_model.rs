@@ -62,6 +62,8 @@ fn social_queue_config_returns_host_supplied_fields() {
 #[test]
 fn quick_join_consumer_reads_distinct_host_groups() {
     let env = setup();
+    env.exec("QuickJoinFrame:Show()")
+        .expect("QuickJoinFrame should register its update handler");
     env.exec(GROUP_INPUT)
         .expect("host groups should trigger the Quick Join update");
     env.exec(QUICK_JOIN_ASSERTIONS)
