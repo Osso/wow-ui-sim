@@ -142,19 +142,6 @@ fn search_friends(state: &mut LuaState) -> LuaResult<u32> {
 
 fn send_title_friend_invite_by_name(state: &mut LuaState) -> LuaResult<u32> {
     let name = Option::<String>::from_stack(state, 1)?.unwrap_or_default();
-    record_title_friend_request(&mut *borrow_state_mut(state)?, &name);
+    super::c_battle_net::record_title_friend_request(&mut *borrow_state_mut(state)?, &name);
     Ok(0)
-}
-
-/// Records an outgoing in-game ("title") friend request once per character
-/// name; acceptance is a server decision the simulator does not fabricate.
-pub(crate) fn record_title_friend_request(sim: &mut crate::lua_api::state::SimState, name: &str) {
-    let name = name.trim();
-    let already_sent = sim
-        .title_friend_requests
-        .iter()
-        .any(|sent| sent.eq_ignore_ascii_case(name));
-    if !name.is_empty() && !already_sent {
-        sim.title_friend_requests.push(name.to_string());
-    }
 }

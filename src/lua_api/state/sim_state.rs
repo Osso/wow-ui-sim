@@ -503,7 +503,6 @@ pub struct SimState {
     /// Outgoing in-game ("title") friend requests by character name.
     pub title_friend_requests: Vec<String>,
     /// Guild club member names sent a Battle.net friend request via `C_Club`.
-    #[cfg(feature = "retail-12-0-7")]
     pub club_battle_tag_friend_requests: Vec<String>,
     pub clubs: crate::c_api::club_model::ClubState,
     /// Host spell data: cooldown category of each spell that has one.

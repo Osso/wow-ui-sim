@@ -25,6 +25,10 @@ pub(crate) fn register_club_info_surface(state: &mut LuaState) -> LuaResult<()> 
     let table_ref = ensure_namespace(state, "C_Club")?;
     super::club_members::register(state)?;
     register_club_status_methods(state, table_ref)?;
+    register_club_profile_methods(state, table_ref)
+}
+
+fn register_club_profile_methods(state: &mut LuaState, table_ref: GcRef<Table>) -> LuaResult<()> {
     if ACTIVE == ClientProfile::WowForever {
         table_set_rust_fn_static(
             state,
@@ -33,20 +37,25 @@ pub(crate) fn register_club_info_surface(state: &mut LuaState) -> LuaResult<()> 
             c_club_get_invitation_candidates,
         )?;
     }
-    #[cfg(feature = "retail-12-1-0")]
-    table_set_rust_fn_static(
-        state,
-        table_ref,
-        "SendTitleFriendRequest",
-        c_club_send_title_friend_request,
-    )?;
-    #[cfg(feature = "retail-12-0-7")]
-    table_set_rust_fn_static(
-        state,
-        table_ref,
-        "SendBattleTagFriendRequest",
-        c_club_send_battle_tag_friend_request,
-    )?;
+    if matches!(
+        ACTIVE,
+        ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever
+    ) {
+        // INFERRED: Forever ClubDocumentation.lua:988,1041 declares both
+        // members; selected UnitPopupShared consumers use the Retail models.
+        table_set_rust_fn_static(
+            state,
+            table_ref,
+            "SendTitleFriendRequest",
+            c_club_send_title_friend_request,
+        )?;
+        table_set_rust_fn_static(
+            state,
+            table_ref,
+            "SendBattleTagFriendRequest",
+            c_club_send_battle_tag_friend_request,
+        )?;
+    }
     Ok(())
 }
 
@@ -63,7 +72,6 @@ fn c_club_get_invitation_candidates(state: &mut LuaState) -> LuaResult<u32> {
 
 /// Records a Battle.net friend request to a guild club member's account, once per
 /// member; acceptance is a server decision the simulator does not fabricate.
-#[cfg(feature = "retail-12-0-7")]
 fn c_club_send_battle_tag_friend_request(state: &mut LuaState) -> LuaResult<u32> {
     let member = super::club_members::guild_member_arg(state)?;
     let name = member
@@ -79,7 +87,6 @@ fn c_club_send_battle_tag_friend_request(state: &mut LuaState) -> LuaResult<u32>
 }
 
 /// Sends an in-game friend request to a guild club member, by their roster name.
-#[cfg(feature = "retail-12-1-0")]
 fn c_club_send_title_friend_request(state: &mut LuaState) -> LuaResult<u32> {
     let member = super::club_members::guild_member_arg(state)?;
     let name = member
@@ -87,7 +94,7 @@ fn c_club_send_title_friend_request(state: &mut LuaState) -> LuaResult<u32> {
         .map(|member| member.name);
     let mut sim = borrow_state_mut(state)?;
     if let Some(name) = name {
-        crate::c_api::c_battle_net_friend_search::record_title_friend_request(&mut *sim, &name);
+        crate::c_api::c_battle_net::record_title_friend_request(&mut *sim, &name);
     }
     Ok(0)
 }

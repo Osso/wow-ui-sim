@@ -83,6 +83,19 @@ pub(crate) fn register_c_battle_net_surface(state: &mut LuaState) -> LuaResult<(
     Ok(())
 }
 
+/// Records an outgoing in-game friend request once per character name.
+/// The server decides whether it is accepted; the simulator does not fabricate acceptance.
+pub(crate) fn record_title_friend_request(sim: &mut crate::lua_api::state::SimState, name: &str) {
+    let name = name.trim();
+    let already_sent = sim
+        .title_friend_requests
+        .iter()
+        .any(|sent| sent.eq_ignore_ascii_case(name));
+    if !name.is_empty() && !already_sent {
+        sim.title_friend_requests.push(name.to_string());
+    }
+}
+
 fn register_texture_methods(state: &mut LuaState, table_ref: BattleNetTable) -> LuaResult<()> {
     table_set_rust_fn_static(
         state,
