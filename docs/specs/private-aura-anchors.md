@@ -10,9 +10,9 @@ Public `C_UnitAuras.AddPrivateAuraAnchor` / `RemovePrivateAuraAnchor` must produ
 
 ### Retail/Forever placement (INFERRED; R88bw pending aso)
 
-- [ ] On Retail and WoW Forever, `C_UnitAurasPrivate.AnchorPrivateAura(auraFrame, icon, duration, anchorID)` applies the registered parent and icon/duration bindings to the supplied regions and reads the selected private aura from typed host data for the anchor's unit and `auraIndex`.
-- [ ] The supplied icon texture shows the selected aura's file ID. `PrivateAuraMixin:Update` remains responsible for stack text, border/symbol, cooldown, duration presentation, and shown state.
-- [ ] A private-aura data update followed by the original watcher refresh updates the rendered frame; replacing one supplied aura changes that frame without changing the other anchor.
+- [x] On Retail and WoW Forever, `C_UnitAurasPrivate.AnchorPrivateAura(auraFrame, icon, duration, anchorID)` applies the registered parent and icon/duration bindings to the supplied regions and reads the selected private aura from typed host data for the anchor's unit and `auraIndex`.
+- [x] The selected icon file ID, stack text, cooldown/duration state, and shown state match the aura through the original consumer.
+- [x] A private-aura data update followed by the original watcher refresh updates the rendered frame; replacing one supplied aura changes that frame without changing the other anchor.
 - [ ] This behavior is a researched best guess from the selected consumer and supplied in-game behavior description. Correct it if R88bw establishes different native semantics.
 
 ### Public contract and payload
