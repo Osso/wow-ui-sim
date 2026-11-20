@@ -594,7 +594,12 @@ pub(super) fn c_tooltip_get_quest_item(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 pub(super) fn c_tooltip_get_quest_log_currency(state: &mut LuaState) -> LuaResult<u32> {
-    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
+        // Forever docs declare the same arguments; payload semantics follow Retail by inference.
         return crate::c_api::c_tooltip_info_currency::get_quest_log_currency(state);
     }
     let _currency_type = Option::<i32>::from_stack(state, 1)?;

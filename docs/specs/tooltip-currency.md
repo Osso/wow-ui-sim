@@ -4,6 +4,10 @@ Retail 12.1.5 currency tooltips publish R84/R84b `C_TooltipInfo` data through th
 
 ## What it must do
 
+### Forever compatibility
+
+- [x] **INFERRED from Retail:** Forever `GetQuestLogCurrency` accepts the documented `(type, currencyIndex [, questID])` arguments and publishes currency lines through the `GameTooltip:SetQuestLogCurrency` consumer.
+
 ### Inputs and routing
 
 - [x] `GetCurrencyByID` passes the signed amount unchanged and uses zero when the amount is absent.
@@ -50,5 +54,5 @@ Retail 12.1.5 currency tooltips publish R84/R84b `C_TooltipInfo` data through th
 
 ## Out of scope
 
-- Non-Retail currency producer changes and other currency getters.
+- Other non-Retail currency producer changes and currency getters.
 - Guessed quest-list sources, missing-result behavior, error-row predicates, balance formulas or formatter modes.
