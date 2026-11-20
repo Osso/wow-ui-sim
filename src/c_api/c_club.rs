@@ -41,22 +41,21 @@ fn register_club_profile_methods(state: &mut LuaState, table_ref: GcRef<Table>) 
         ACTIVE,
         ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever
     ) {
-        // INFERRED: Forever ClubDocumentation.lua:1041 declares the member;
-        // UnitPopupShared uses the existing Retail friend request model.
+        // INFERRED: Forever ClubDocumentation.lua:988,1041 declares both
+        // members; selected UnitPopupShared consumers use the Retail models.
         table_set_rust_fn_static(
             state,
             table_ref,
             "SendTitleFriendRequest",
             c_club_send_title_friend_request,
         )?;
+        table_set_rust_fn_static(
+            state,
+            table_ref,
+            "SendBattleTagFriendRequest",
+            c_club_send_battle_tag_friend_request,
+        )?;
     }
-    #[cfg(feature = "retail-12-0-7")]
-    table_set_rust_fn_static(
-        state,
-        table_ref,
-        "SendBattleTagFriendRequest",
-        c_club_send_battle_tag_friend_request,
-    )?;
     Ok(())
 }
 
@@ -73,7 +72,6 @@ fn c_club_get_invitation_candidates(state: &mut LuaState) -> LuaResult<u32> {
 
 /// Records a Battle.net friend request to a guild club member's account, once per
 /// member; acceptance is a server decision the simulator does not fabricate.
-#[cfg(feature = "retail-12-0-7")]
 fn c_club_send_battle_tag_friend_request(state: &mut LuaState) -> LuaResult<u32> {
     let member = super::club_members::guild_member_arg(state)?;
     let name = member

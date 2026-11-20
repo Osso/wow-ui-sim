@@ -427,7 +427,6 @@ macro_rules! build_empty_sim_state {
             has_active_lair: false,
             active_lair_is_lfg: false,
             title_friend_requests: Vec::new(),
-            #[cfg(feature = "retail-12-0-7")]
             club_battle_tag_friend_requests: Vec::new(),
             clubs: crate::c_api::club_model::ClubState::default(),
             spell_cooldown_categories: HashMap::new(),
