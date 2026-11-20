@@ -12,7 +12,9 @@ use wow_ui_sim::c_api::{
     quest_special_item::{QuestSpecialItemCacheRecord, QuestSpecialItemObject},
     recipe_rank_tooltip::RecipeRankTooltipRecord,
 };
-use wow_ui_sim::lua_api::state::{AppearanceSourceInfo, ArtifactInfo, BagItem, RelicSlotInfo};
+#[cfg(feature = "client-retail")]
+use wow_ui_sim::lua_api::state::AppearanceSourceInfo;
+use wow_ui_sim::lua_api::state::{ArtifactInfo, BagItem, RelicSlotInfo};
 
 const SOCKET_ASSERTIONS: &str = r#"
 local sockets = C_ItemSocketInfo._state
@@ -260,14 +262,16 @@ fn seed_recipe_rank(env: &wow_ui_sim::lua_api::WowLuaEnv, recipe_id: i32, spell_
     );
 }
 
+#[cfg(feature = "client-wowforever")]
 fn seed_appearance_sources(env: &wow_ui_sim::lua_api::WowLuaEnv) {
-    if wow_ui_sim::client_profile::ACTIVE == wow_ui_sim::client_profile::ClientProfile::WowForever {
-        env.state()
-            .borrow_mut()
-            .forever_appearance_item_ids
-            .extend([(90001, 1728), (90002, 127830)]);
-        return;
-    }
+    env.state()
+        .borrow_mut()
+        .forever_appearance_item_ids
+        .extend([(90001, 1728), (90002, 127830)]);
+}
+
+#[cfg(feature = "client-retail")]
+fn seed_appearance_sources(env: &wow_ui_sim::lua_api::WowLuaEnv) {
     for (source_id, item_id) in [(90001, 1728), (90002, 127830)] {
         env.state().borrow_mut().transmog_appearance_sources.insert(
             source_id,
