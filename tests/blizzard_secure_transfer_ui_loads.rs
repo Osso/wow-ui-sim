@@ -89,7 +89,7 @@ fn secure_transfer_trade_dialog_uses_each_active_partner() {
     let env = load_full_game_ui();
     let warnings = ["Partner-Alpha", "Partner-Beta"].map(|partner| {
         env.exec(&format!("InitiateTrade('{partner}')")).unwrap();
-        env.exec("C_TradeInfo = C_TradeInfo or {}; C_TradeInfo._state = C_TradeInfo._state or {}; C_TradeInfo._state.shouldShowTradeOfferWarning = true; SecureTransferDialog_OnEvent(SecureTransferDialog, 'SECURE_TRANSFER_CONFIRM_TRADE_ACCEPT')").unwrap();
+        env.exec("C_TradeInfo = C_TradeInfo or {}; C_TradeInfo._state = C_TradeInfo._state or {}; C_TradeInfo._state.shouldShowTradeOfferWarning = true; SecureTransferDialog:GetScript('OnEvent')(SecureTransferDialog, 'SECURE_TRANSFER_CONFIRM_TRADE_ACCEPT')").unwrap();
         let warning: String = env.eval("return SecureTransferDialog.WarningText:GetText() or ''").unwrap();
         env.exec("CancelTrade()").unwrap();
         warning
@@ -105,7 +105,7 @@ fn secure_transfer_trade_dialog_uses_each_active_partner() {
     let env = load_full_game_ui();
     let warnings = ["Partner-Alpha", "Partner-Beta"].map(|partner| {
         env.exec(&format!("InitiateTrade('{partner}')")).unwrap();
-        env.exec("C_TradeInfo = C_TradeInfo or {}; C_TradeInfo._state = C_TradeInfo._state or {}; C_TradeInfo._state.shouldShowTradeOfferWarning = true; SecureTransferDialog_OnEvent(SecureTransferDialog, 'SECURE_TRANSFER_CONFIRM_TRADE_ACCEPT')").unwrap();
+        env.exec("C_TradeInfo = C_TradeInfo or {}; C_TradeInfo._state = C_TradeInfo._state or {}; C_TradeInfo._state.shouldShowTradeOfferWarning = true; SecureTransferDialog:GetScript('OnEvent')(SecureTransferDialog, 'SECURE_TRANSFER_CONFIRM_TRADE_ACCEPT')").unwrap();
         let warning: String = env.eval("return SecureTransferDialog.WarningText:GetText() or ''").unwrap();
         env.exec("CancelTrade()").unwrap();
         warning
@@ -122,7 +122,7 @@ fn secure_transfer_mail_dialog_uses_current_recipient_and_money() {
     env.exec("SendMailNameEditBox:SetText('Alt-Alpha'); SetSendMailMoney(12345)")
         .unwrap();
     env.exec(
-        "SecureTransferDialog_OnEvent(SecureTransferDialog, 'SECURE_TRANSFER_CONFIRM_SEND_MAIL')",
+        "SecureTransferDialog:GetScript('OnEvent')(SecureTransferDialog, 'SECURE_TRANSFER_CONFIRM_SEND_MAIL')",
     )
     .unwrap();
     let first: (String, String) = env
@@ -133,7 +133,7 @@ fn secure_transfer_mail_dialog_uses_current_recipient_and_money() {
     env.exec("SendMailNameEditBox:SetText('Alt-Beta'); SetSendMailMoney(67890)")
         .unwrap();
     env.exec(
-        "SecureTransferDialog_OnEvent(SecureTransferDialog, 'SECURE_TRANSFER_CONFIRM_SEND_MAIL')",
+        "SecureTransferDialog:GetScript('OnEvent')(SecureTransferDialog, 'SECURE_TRANSFER_CONFIRM_SEND_MAIL')",
     )
     .unwrap();
     let second: (String, String) = env
@@ -153,7 +153,7 @@ fn secure_transfer_mail_dialog_uses_current_recipient_and_money() {
     env.exec("SendMailNameEditBox:SetText('Alt-Alpha'); SetSendMailMoney(12345)")
         .unwrap();
     env.exec(
-        "SecureTransferDialog_OnEvent(SecureTransferDialog, 'SECURE_TRANSFER_CONFIRM_SEND_MAIL')",
+        "SecureTransferDialog:GetScript('OnEvent')(SecureTransferDialog, 'SECURE_TRANSFER_CONFIRM_SEND_MAIL')",
     )
     .unwrap();
     let first: (String, String) = env
@@ -164,7 +164,7 @@ fn secure_transfer_mail_dialog_uses_current_recipient_and_money() {
     env.exec("SendMailNameEditBox:SetText('Alt-Beta'); SetSendMailMoney(67890)")
         .unwrap();
     env.exec(
-        "SecureTransferDialog_OnEvent(SecureTransferDialog, 'SECURE_TRANSFER_CONFIRM_SEND_MAIL')",
+        "SecureTransferDialog:GetScript('OnEvent')(SecureTransferDialog, 'SECURE_TRANSFER_CONFIRM_SEND_MAIL')",
     )
     .unwrap();
     let second: (String, String) = env
