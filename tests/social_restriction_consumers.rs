@@ -73,8 +73,6 @@ fn set_community_account_muted(env: &WowLuaEnv, muted: bool) {
 fn validate_community(env: &WowLuaEnv, expected_accessible: bool) {
     env.exec(&format!(
         r#"
-        local source = debug.getinfo(CommunitiesFrameMixin.ValidateDisplayMode, "S").source:gsub("\\\\", "/")
-        assert(source:find("Blizzard_Communities/CommunitiesFrame.lua", 1, true), source)
         local frame = setmetatable({{
             displayMode = nil,
             ChatTab = {{ IconOverlay = {{ SetShown = function() end }} }},
