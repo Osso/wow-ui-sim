@@ -397,7 +397,8 @@ pub struct SimState {
         feature = "retail-12-0-0",
         feature = "client-mists",
         feature = "client-era",
-        feature = "client-anniversary"
+        feature = "client-anniversary",
+        feature = "client-wowforever"
     ))]
     pub transmog_appearance_sources: HashMap<i64, AppearanceSourceInfo>,
     /// INFERRED host relation from Forever appearance IDs to item IDs; empty by default.
@@ -468,7 +469,8 @@ pub struct SimState {
         feature = "retail-12-0-0",
         feature = "client-mists",
         feature = "client-era",
-        feature = "client-anniversary"
+        feature = "client-anniversary",
+        feature = "client-wowforever"
     ))]
     pub transmog_custom_sets: crate::c_api::c_transmog_collection::CustomSets,
     pub equipped_outfit_locked: bool,

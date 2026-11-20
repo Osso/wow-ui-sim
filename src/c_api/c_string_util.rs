@@ -5,14 +5,14 @@ use crate::lua_api::methods::{create_string, create_string_bytes, val_to_string}
 #[cfg(feature = "retail-12-0-5")]
 use crate::lua_bridge::FromStack;
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
-#[cfg(feature = "retail-12-0-0")]
+#[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
 use rilua::runtime_error;
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 
 use super::helpers::ensure_namespace;
 
-#[cfg(feature = "retail-12-0-0")]
+#[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
 mod hyperlinks;
 
 pub fn register_c_string_util(state: &mut LuaState) -> LuaResult<()> {
@@ -58,7 +58,9 @@ pub fn register_c_string_util(state: &mut LuaState) -> LuaResult<()> {
         "TruncateWhenZero",
         c_string_util_truncate_when_zero,
     )?;
-    #[cfg(feature = "retail-12-0-0")]
+    // Forever shape VERIFIED at StringUtilDocumentation.lua:153; semantics
+    // INFERRED from the existing Retail markup-stripping model.
+    #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
     table_set_rust_fn_static(
         state,
         c_string_util_ref,
@@ -187,7 +189,7 @@ fn c_string_util_truncate_when_zero(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-#[cfg(feature = "retail-12-0-0")]
+#[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
 fn c_string_util_strip_hyperlinks(state: &mut LuaState) -> LuaResult<u32> {
     let Val::Str(_) = stack_val(state, 1) else {
         return Err(runtime_error("StripHyperlinks expects string text"));
