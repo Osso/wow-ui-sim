@@ -74,7 +74,7 @@ fn assert_quest_item_hover(env: &WowLuaEnv, quest_log: bool, selector: &str, ite
         assert(data.lines[1].leftText == expected.lines[1].leftText, 'quest reward tooltip uses its supplied item')
         "#,
         getter = if quest_log { "GetQuestLogItem" } else { "GetQuestItem" },
-        selector,
+        selector = selector,
     ))
     .unwrap();
 }
