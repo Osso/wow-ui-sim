@@ -239,16 +239,27 @@ fn mythic_plus_requests_publish_update_events() {
     env.exec(&source)
         .expect("original WeeklyRewards consumer should load");
     env.exec(
-        "local seen = {}; local f = CreateFrame('Frame'); \
-         for _, event in ipairs({'MYTHIC_PLUS_CURRENT_AFFIX_UPDATE', \
-         'CHALLENGE_MODE_MAPS_UPDATE', 'WEEKLY_REWARDS_UPDATE'}) do \
-         f:RegisterEvent(event) end; \
-         f:SetScript('OnEvent', function(_, event) seen[event] = true end); \
-         C_MythicPlus.RequestCurrentAffixes(); C_MythicPlus.RequestRewards(); \
-         WeeklyRewardsMixin.OnEvent({}, 'CHALLENGE_MODE_COMPLETED'); \
-         assert(seen.MYTHIC_PLUS_CURRENT_AFFIX_UPDATE); \
-         assert(seen.CHALLENGE_MODE_MAPS_UPDATE); \
-         assert(seen.WEEKLY_REWARDS_UPDATE)",
+        r#"
+        local seen = {}
+        local frame = CreateFrame("Frame")
+        local events = {
+            "MYTHIC_PLUS_CURRENT_AFFIX_UPDATE",
+            "CHALLENGE_MODE_MAPS_UPDATE",
+            "WEEKLY_REWARDS_UPDATE",
+        }
+        for _, event in ipairs(events) do
+            frame:RegisterEvent(event)
+        end
+        frame:SetScript("OnEvent", function(_, event)
+            seen[event] = true
+        end)
+        C_MythicPlus.RequestCurrentAffixes()
+        C_MythicPlus.RequestRewards()
+        WeeklyRewardsMixin.OnEvent({}, "CHALLENGE_MODE_COMPLETED")
+        assert(seen.MYTHIC_PLUS_CURRENT_AFFIX_UPDATE)
+        assert(seen.CHALLENGE_MODE_MAPS_UPDATE)
+        assert(seen.WEEKLY_REWARDS_UPDATE)
+        "#,
     )
     .expect("Mythic+ requests should notify registered update consumers");
 }
