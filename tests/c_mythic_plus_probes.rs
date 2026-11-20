@@ -242,14 +242,9 @@ fn mythic_plus_requests_publish_update_events() {
         r#"
         local seen = {}
         local frame = CreateFrame("Frame")
-        local events = {
-            "MYTHIC_PLUS_CURRENT_AFFIX_UPDATE",
-            "CHALLENGE_MODE_MAPS_UPDATE",
-            "WEEKLY_REWARDS_UPDATE",
-        }
-        for _, event in ipairs(events) do
-            frame:RegisterEvent(event)
-        end
+        frame:RegisterEvent("MYTHIC_PLUS_CURRENT_AFFIX_UPDATE")
+        frame:RegisterEvent("CHALLENGE_MODE_MAPS_UPDATE")
+        frame:RegisterEvent("WEEKLY_REWARDS_UPDATE")
         frame:SetScript("OnEvent", function(_, event)
             seen[event] = true
         end)
