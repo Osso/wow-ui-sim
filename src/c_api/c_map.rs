@@ -29,10 +29,9 @@
 //!   `{x, y}` vector2 from `SimState.player_map_position` for any
 //!   known map, or matching explicit input for an active party member.
 //!   Returns `nil` when no position is available.
-//! - `C_Map.GetBestMapForUnit(unitToken)` — returns the seeded player
-//!   map id (`2248`) for `"player"`.
-//! - `C_Map.GetFallbackWorldMapID()` — returns the seeded player map
-//!   id (`2248`).
+//! - `C_Map.GetBestMapForUnit` and `C_Map.GetFallbackWorldMapID` read
+//!   the simulator quest-log selection on Retail and Forever, defaulting
+//!   to the initial player map. Native equivalence is not established.
 //! - `C_Map.MapHasArt(uiMapID)` — true for positive map ids.
 //! - `C_Map.RequestPreloadMap(uiMapID)` — queues map art + overlay textures.
 
@@ -54,7 +53,10 @@ use rilua::vm::table::Table;
 use rilua::{LuaResult, Val};
 use std::collections::HashSet;
 
+mod quest_log_selection;
 mod user_waypoint;
+
+pub(crate) use quest_log_selection::uses_rust_quest_log_selection;
 
 type LuaTableRef = GcRef<Table>;
 type RustLuaFn = rilua::vm::closure::RustFn;
@@ -115,6 +117,7 @@ const C_MAP_METHODS: &[(&str, RustLuaFn)] = &[
 pub(crate) fn register_c_map_surface(state: &mut LuaState) -> LuaResult<()> {
     let table_ref = ensure_namespace(state, "C_Map")?;
     register_c_map_methods(state, table_ref)?;
+    quest_log_selection::register(state, table_ref)?;
     super::c_map_bounties::register(state)?;
     super::map_world_coordinates::register(state)
 }
@@ -1025,22 +1028,29 @@ fn c_map_get_player_map_position(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn c_map_get_best_map_for_unit(state: &mut LuaState) -> LuaResult<u32> {
-    let unit_token = val_to_string(state, stack_val(state, 1)).unwrap_or_default();
-    if !matches!(unit_token.as_str(), "" | "player") {
+    let unit = stack_val(state, 1);
+    let unit_token = val_to_string(state, unit).unwrap_or_default();
+    if uses_rust_quest_log_selection() {
+        if unit != Val::Nil && unit_token != "player" {
+            state.push(Val::Nil);
+            return Ok(1);
+        }
+    } else if !matches!(unit_token.as_str(), "" | "player") {
         return Ok(0);
     }
-    state.push(Val::Num(DEFAULT_PLAYER_MAP_ID as f64));
-    Ok(1)
+    c_map_get_current_map_id(state)
 }
 
 fn c_map_get_current_map_id(state: &mut LuaState) -> LuaResult<u32> {
-    state.push(Val::Num(DEFAULT_PLAYER_MAP_ID as f64));
+    let current = borrow_state(state)?
+        .quest_log_selected_map_id
+        .unwrap_or(f64::from(DEFAULT_PLAYER_MAP_ID));
+    state.push(Val::Num(current));
     Ok(1)
 }
 
 fn c_map_get_fallback_world_map_id(state: &mut LuaState) -> LuaResult<u32> {
-    state.push(Val::Num(DEFAULT_PLAYER_MAP_ID as f64));
-    Ok(1)
+    c_map_get_current_map_id(state)
 }
 
 fn c_map_map_has_art(state: &mut LuaState) -> LuaResult<u32> {

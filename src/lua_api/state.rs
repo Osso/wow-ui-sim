@@ -843,6 +843,7 @@ macro_rules! build_empty_sim_state {
             mount_item_relations: HashMap::new(),
             equipment_manager: EquipmentManagerState::new(),
             maps: default_maps(),
+            quest_log_selected_map_id: None,
             user_waypoint: None,
             map_display_hide_icons: HashMap::new(),
             map_world_rects: HashMap::new(),

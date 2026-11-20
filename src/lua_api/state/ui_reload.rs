@@ -16,6 +16,7 @@ impl SimState {
         self.discard_addon_runtime();
         self.discard_ui_input();
         self.crafting.recipe_favorites = Default::default();
+        self.quest_log_selected_map_id = None;
         self.ui_reload_requested = false;
         self.ui_reloaded = true;
         self.is_logged_in = false;
