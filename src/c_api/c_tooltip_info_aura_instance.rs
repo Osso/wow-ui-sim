@@ -12,7 +12,7 @@ use rilua::vm::state::LuaState;
 use rilua::vm::table::Table;
 use rilua::{LuaResult, Val};
 
-/// Publish only into the existing, globally rooted namespace.
+/// Publish getters into the profile's native `C_TooltipInfo` namespace.
 pub(crate) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
         // Retail's verified C_TooltipInfo registration marks this getter secure-only.
