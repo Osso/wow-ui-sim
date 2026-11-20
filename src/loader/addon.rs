@@ -1177,6 +1177,7 @@ pub(super) fn is_secure_replay_library_addon(folder_name: &str) -> bool {
     SECURE_REPLAY_LIBRARY_ADDONS.contains(&folder_name)
 }
 
+/// INFERRED (R88cj): Forever secure replay follows enabled secure TOC dependencies.
 fn is_secure_replay_dependency(env: &LoaderEnv<'_>, folder_name: &str) -> bool {
     if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::WowForever {
         return false;
