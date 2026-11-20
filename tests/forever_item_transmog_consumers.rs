@@ -17,6 +17,10 @@ fn transmog_outfit_consumer_refreshes_from_two_created_outfits() {
         env.apply_post_load_workarounds();
         let result: String = env.eval(r#"
             IconSelectorPopupFrameTemplateMixin.OkayButton_OnClick = function() end
+            local ids = {}
+            local listener = CreateFrame("Frame")
+            listener:RegisterEvent("TRANSMOG_OUTFITS_CHANGED")
+            listener:SetScript("OnEvent", function(_, _, id) ids[#ids + 1] = id end)
             local popup = { mode = IconSelectorPopupFrameModes.New, BorderBox = {
                 SelectedIconArea = { SelectedIconButton = { GetIconTexture = function() return 123 end } },
                 IconSelectorEditBox = { GetText = function() return "Copper" end },
@@ -25,10 +29,7 @@ fn transmog_outfit_consumer_refreshes_from_two_created_outfits() {
             popup.BorderBox.SelectedIconArea.SelectedIconButton.GetIconTexture = function() return 456 end
             popup.BorderBox.IconSelectorEditBox.GetText = function() return "Silver" end
             TransmogOutfitPopupMixin.OkayButton_OnClick(popup)
-            local copper = C_TransmogOutfitInfo.GetOutfitInfoByName("Copper")
-            local silver = C_TransmogOutfitInfo.GetOutfitInfoByName("Silver")
-            if not copper or copper.name ~= "Copper" or copper.icon ~= 123 then return "first" end
-            if not silver or silver.name ~= "Silver" or silver.icon ~= 456 then return "second" end
+            if #ids ~= 2 or ids[1] ~= 1 or ids[2] ~= 2 then return "events" end
             return "ok"
         "#).expect("pinned TransmogOutfitPopupMixin consumer should run");
         assert_eq!(result, "ok");
