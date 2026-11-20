@@ -33,6 +33,7 @@ use crate::lua_api::env::WowLuaAppData;
 use crate::lua_api::methods::borrow_state;
 use crate::lua_api::next_timer_id;
 use crate::lua_bridge::{TableBuilder, stack_val};
+use rilua::vm::closure::{Closure, RustClosure, RustFn};
 use rilua::vm::state::LuaState;
 use rilua::vm::table::Table;
 use rilua::{LuaApiMut, LuaResult, Val, runtime_error};
@@ -94,6 +95,52 @@ pub(crate) fn store_timer_callback(state: &mut LuaState, timer_id: u64, callback
                 .insert(timer_id, source);
         }
     }
+}
+
+/// Queue a Rust callback for the next timer-processing boundary.
+pub(crate) fn defer_rust_event(
+    state: &mut LuaState,
+    dispatch: RustFn,
+    label: &'static str,
+) -> LuaResult<u64> {
+    let callback = Val::Function(
+        state
+            .gc
+            .alloc_closure(Closure::Rust(RustClosure::new(dispatch, label))),
+    );
+    let id = next_timer_id(state)?;
+    store_timer_callback(state, id, callback);
+    let app = state
+        .app_data::<WowLuaAppData>()
+        .ok_or_else(|| runtime_error("missing WowLuaAppData"))?;
+    let (owner_addon, fire_at) = {
+        let sim = app.sim_state.borrow();
+        (
+            sim.loading_addon_index.or(sim.executing_addon_index),
+            sim.clock_now(),
+        )
+    };
+    enqueue_rust_event_timer(&app, id, owner_addon, fire_at);
+    Ok(id)
+}
+
+fn enqueue_rust_event_timer(
+    app: &WowLuaAppData,
+    id: u64,
+    owner_addon: Option<u16>,
+    fire_at: Instant,
+) {
+    let timer = RiluaPendingTimer {
+        id,
+        fire_at,
+        interval: None,
+        remaining: None,
+        cancelled: false,
+        owner_addon,
+        callback_receives_timer: false,
+        callback_arg: None,
+    };
+    app.sim_state.borrow_mut().rilua_timers.push_back(timer);
 }
 
 /// Remove a timer callback from the registry table (called after firing/cancel).

@@ -25,6 +25,11 @@ if rawget(C_PartyInfo, "IsPartyWalkIn") == nil then
     end
 end
 
+"#;
+
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+const PARTY_INFO_LEGACY_INVITE_DEFAULT_LUA: &str = r#"
+C_PartyInfo = C_PartyInfo or __wow_namespace()
 if rawget(C_PartyInfo, "GetInviteConfirmationInfo") == nil then
     function C_PartyInfo.GetInviteConfirmationInfo(_guid)
     end
@@ -33,10 +38,15 @@ end
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(PARTY_INFO_STATIC_DEFAULTS_LUA)?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+    lua.exec(PARTY_INFO_LEGACY_INVITE_DEFAULT_LUA)?;
     Ok(())
 }
 
-#[cfg(test)]
+#[cfg(all(
+    test,
+    not(any(feature = "client-retail", feature = "client-wowforever"))
+))]
 mod tests {
     use crate::lua_api::WowLuaEnv;
 

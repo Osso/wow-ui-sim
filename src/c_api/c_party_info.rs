@@ -29,6 +29,8 @@ use rilua::{LuaResult, Val};
 pub(crate) mod countdown;
 #[cfg(feature = "retail-12-0-5")]
 mod loot_method;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) mod pending_invites;
 #[cfg(feature = "retail-12-0-5")]
 mod ping_restrictions;
 #[cfg(feature = "retail-12-0-7")]
@@ -59,6 +61,8 @@ fn invite_unit(state: &mut LuaState) -> LuaResult<u32> {
 
 pub(crate) fn register_c_party_info_surface(state: &mut LuaState) -> LuaResult<()> {
     let table_ref = ensure_namespace(state, "C_PartyInfo")?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pending_invites::register(state)?;
     register_group_membership_probes(state, table_ref)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     table_set_rust_fn_static(state, table_ref, "ConvertToRaid", convert_to_raid)?;
