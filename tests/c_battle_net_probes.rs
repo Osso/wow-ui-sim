@@ -3,8 +3,61 @@
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::lua_api::state::{BnetFriend, BnetGameAccount};
 
+#[cfg(feature = "client-wowforever")]
+use std::fs;
+
 fn env() -> WowLuaEnv {
     WowLuaEnv::new().expect("Failed to create Lua environment")
+}
+
+#[cfg(feature = "client-wowforever")]
+fn load_bnet_show_toast(env: &WowLuaEnv) {
+    let path = wow_ui_sim::blizzard_ui_sync::default_cache_addons_path()
+        .unwrap()
+        .join("Blizzard_BNet/Mainline/BNet.lua");
+    let source = fs::read_to_string(&path).unwrap();
+    let start = source.find("function BNToastMixin:ShowToast()").unwrap();
+    let body = &source[start..];
+    let end = body.find("\nfunction BNToastMixin:").unwrap();
+    env.exec(&body[..end])
+        .unwrap_or_else(|error| panic!("{}: {error}", path.display()));
+}
+
+#[cfg(feature = "client-wowforever")]
+#[test]
+fn bnet_offline_toast_reads_friend_account_by_id() {
+    let env = env();
+    env.exec(
+        r#"
+        local function line()
+            return {
+                Hide = function(self) self.shown = false end,
+                Show = function(self) self.shown = true end,
+                SetText = function(self, text) self.text = text end,
+                SetFormattedText = function(self, text, ...) self.text = string.format(text, ...) end,
+                SetTextColor = function() end,
+            }
+        end
+        tremove = table.remove
+        BN_TOAST_TYPE_OFFLINE, BN_TOAST_OFFLINE = "offline", "Offline"
+        FRIENDS_BNET_NAME_COLOR = { WrapTextInColorCode = function(_, text) return "friend:" .. text end }
+        FRIENDS_GRAY_COLOR = { r = 0.5, g = 0.5, b = 0.5 }
+        BNToastMixin = {
+            BNToasts = { { toastType = "offline", toastData = 100001 } },
+            TopLine = line(), MiddleLine = line(), BottomLine = line(), DoubleLine = line(),
+            IconTexture = { SetTexCoord = function() end },
+        }
+        "#,
+    )
+    .unwrap();
+    load_bnet_show_toast(&env);
+    env.exec("BNToastMixin:ShowToast()")
+        .expect("original offline toast consumer must resolve its account ID");
+    let (top, bottom): (String, String) = env
+        .eval("return BNToastMixin.TopLine.text, BNToastMixin.BottomLine.text")
+        .unwrap();
+    assert_eq!(top, "friend:Uther");
+    assert_eq!(bottom, "Offline");
 }
 
 #[test]
