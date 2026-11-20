@@ -12,6 +12,7 @@ use crate::lua_api::script_helpers::{
 };
 use rilua::{LuaApi, LuaApiMut, Val};
 use std::cell::RefCell;
+use std::collections::HashMap;
 use std::env;
 use std::rc::Rc;
 use std::time::{Duration, Instant};
@@ -270,6 +271,34 @@ impl WowLuaEnv {
             && name.eq_ignore_ascii_case("rewardsShopOverrideEnabled");
         if store_status_changed || override_status_changed {
             self.fire_event("STORE_STATUS_CHANGED")?;
+        }
+        Ok(())
+    }
+
+    /// Replace supplied Calendar day rows and notify Retail/Forever on count changes.
+    pub fn replace_calendar_day_events(
+        &self,
+        events: HashMap<
+            (i32, u32),
+            Vec<crate::c_api::c_calendar::day_event_record::CalendarDayEventRecord>,
+        >,
+    ) -> Result<()> {
+        let pending_count_changed = {
+            let mut state = self.state.borrow_mut();
+            let previous_count = crate::c_api::c_calendar::count_pending_calendar_invites(
+                &state.calendar_day_events,
+            );
+            let next_count = crate::c_api::c_calendar::count_pending_calendar_invites(&events);
+            state.calendar_day_events = events;
+            previous_count != next_count
+        };
+        let supports_invite_updates = matches!(
+            crate::client_profile::ACTIVE,
+            crate::client_profile::ClientProfile::Retail
+                | crate::client_profile::ClientProfile::WowForever
+        );
+        if pending_count_changed && supports_invite_updates {
+            self.fire_event("CALENDAR_UPDATE_PENDING_INVITES")?;
         }
         Ok(())
     }

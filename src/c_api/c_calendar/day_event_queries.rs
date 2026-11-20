@@ -1,6 +1,6 @@
 //! Queries over empty-default, host-supplied Calendar day records.
 
-use super::{civil, day_event_projection::push_day_event};
+use super::{civil, count_pending_calendar_invites, day_event_projection::push_day_event};
 use crate::c_api::helpers::validate_supplied_relation_id;
 use crate::lua_api::methods::borrow_state;
 use crate::lua_bridge::stack_val;
@@ -33,6 +33,15 @@ pub(super) fn query_first_pending_invite(state: &mut LuaState) -> LuaResult<u32>
         }
     };
     state.push(position.map_or(Val::Nil, |index| Val::Num((index + 1) as f64)));
+    Ok(1)
+}
+
+pub(super) fn query_num_pending_invites(state: &mut LuaState) -> LuaResult<u32> {
+    let count = {
+        let host = borrow_state(state)?;
+        count_pending_calendar_invites(&host.calendar_day_events)
+    };
+    state.push(Val::Num(count as f64));
     Ok(1)
 }
 

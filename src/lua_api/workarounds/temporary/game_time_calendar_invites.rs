@@ -1,9 +1,11 @@
-//! Temporary GameTime calendar defaults.
+//! Temporary GameTime defaults.
 //!
-//! Calendar invite state is not modeled yet, but Blizzard
-//! startup expects these fields/globals before real calendar data has loaded.
+//! Calendar invite fixtures remain only on profiles without the modeled count.
 
-#[cfg(any(test, not(feature = "client-retail")))]
+#[cfg(any(
+    test,
+    not(any(feature = "client-retail", feature = "client-wowforever"))
+))]
 use crate::lua_api::WowLuaEnv;
 
 const GAME_TIME_SECURE_ENVIRONMENT_BASE_LUA: &str = r#"
@@ -67,7 +69,7 @@ if GetQuestResetTime == nil then
 end
 "#;
 
-#[cfg(not(feature = "client-retail"))]
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 const GAME_TIME_CALENDAR_INVITES_LUA: &str = r#"
 if type(GameTimeFrame) == "table" and GameTimeFrame.pendingCalendarInvites == nil then
     GameTimeFrame.pendingCalendarInvites = 0
@@ -85,7 +87,7 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     Ok(())
 }
 
-#[cfg(not(feature = "client-retail"))]
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) fn patch(env: &WowLuaEnv) {
     let _ = env.exec(GAME_TIME_CALENDAR_INVITES_LUA);
 }
@@ -158,7 +160,7 @@ mod tests {
         assert_eq!(time, "03:14");
     }
 
-    #[cfg(not(feature = "client-retail"))]
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     #[test]
     fn seeds_missing_pending_calendar_invites() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
@@ -174,7 +176,7 @@ mod tests {
         assert_eq!(pending_invites, 0);
     }
 
-    #[cfg(not(feature = "client-retail"))]
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     #[test]
     fn preserves_existing_pending_calendar_invites() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
