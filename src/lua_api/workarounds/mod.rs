@@ -124,8 +124,8 @@ const POST_LOAD_WORKAROUNDS: &[WorkaroundStep] = &[
         label: "patch_catalog_shop_product_card_defaults",
         apply: patch_catalog_shop_product_card_defaults,
     },
-    // Retail Minimap GameTime.xml binds the original invite-count OnLoad.
-    #[cfg(not(feature = "client-retail"))]
+    // Retail and Forever Minimap bind the original invite-count handlers.
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     WorkaroundStep {
         label: "patch_game_time_defaults",
         apply: patch_game_time_defaults,

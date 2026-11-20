@@ -1,9 +1,11 @@
-//! Temporary GameTime calendar defaults.
+//! Temporary GameTime defaults.
 //!
-//! Calendar invite state is not modeled yet, but Blizzard
-//! startup expects these fields/globals before real calendar data has loaded.
+//! Calendar invite fixtures remain only on profiles without the modeled count.
 
-#[cfg(any(test, not(feature = "client-retail")))]
+#[cfg(any(
+    test,
+    not(any(feature = "client-retail", feature = "client-wowforever"))
+))]
 use crate::lua_api::WowLuaEnv;
 
 const GAME_TIME_SECURE_ENVIRONMENT_BASE_LUA: &str = r#"
