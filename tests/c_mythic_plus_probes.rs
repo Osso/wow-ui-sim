@@ -2,7 +2,8 @@
 
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::lua_api::state::{
-    MythicPlusAffix, MythicPlusRun, MythicPlusWeeklyBest, OwnedKeystone,
+    MythicPlusAffix, MythicPlusLastWeeklyChest, MythicPlusRun, MythicPlusWeeklyBest,
+    OwnedKeystone,
 };
 
 fn env() -> WowLuaEnv {
@@ -177,6 +178,7 @@ fn affix_info_returns_name_description_and_icon() {
 
 // ── GetLastWeeklyChest ───────────────────────────────────────────────────────
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn get_last_weekly_chest_returns_nothing_by_default() {
     let env = env();
@@ -193,6 +195,7 @@ fn get_last_weekly_chest_returns_nothing_by_default() {
     assert_eq!(count, 0, "no weekly chest tracked by default");
 }
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn request_helpers_are_callable_noops() {
     let env = env();
@@ -207,6 +210,53 @@ fn request_helpers_are_callable_noops() {
         )
         .unwrap();
     assert!(ok);
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn get_last_weekly_chest_returns_supplied_cache_values() {
+    let env = env();
+    for (challenge_map_id, level) in [(399, 12), (501, 17)] {
+        env.state().borrow_mut().mythic_plus.last_weekly_chest =
+            Some(MythicPlusLastWeeklyChest { challenge_map_id, level });
+        let result: (i32, i32) = env
+            .eval("return C_MythicPlus.GetLastWeeklyChest()")
+            .expect("last weekly chest should publish its cached values");
+        assert_eq!(result, (challenge_map_id, level));
+    }
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn mythic_plus_requests_publish_update_events() {
+    let env = env();
+    let addons = wow_ui_sim::paths::default_blizzard_ui_addons_path()
+        .expect("Blizzard UI cache should be available");
+    let source = std::fs::read_to_string(
+        addons.join("Blizzard_WeeklyRewards/Blizzard_WeeklyRewards.lua"),
+    )
+    .expect("selected Blizzard Weekly Rewards consumer should be readable");
+    env.exec(&source)
+        .expect("original WeeklyRewards consumer should load");
+    env.exec(
+        r#"
+        local seen = {}
+        local frame = CreateFrame("Frame")
+        frame:RegisterEvent("MYTHIC_PLUS_CURRENT_AFFIX_UPDATE")
+        frame:RegisterEvent("CHALLENGE_MODE_MAPS_UPDATE")
+        frame:RegisterEvent("WEEKLY_REWARDS_UPDATE")
+        frame:SetScript("OnEvent", function(_, event)
+            seen[event] = true
+        end)
+        C_MythicPlus.RequestCurrentAffixes()
+        C_MythicPlus.RequestRewards()
+        WeeklyRewardsMixin.OnEvent({}, "CHALLENGE_MODE_COMPLETED")
+        assert(seen.MYTHIC_PLUS_CURRENT_AFFIX_UPDATE)
+        assert(seen.CHALLENGE_MODE_MAPS_UPDATE)
+        assert(seen.WEEKLY_REWARDS_UPDATE)
+        "#,
+    )
+    .expect("Mythic+ requests should notify registered update consumers");
 }
 
 // ── GetRunHistory ─────────────────────────────────────────────────────────────

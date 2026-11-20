@@ -72,8 +72,8 @@ static NAMESPACE_NIL_STUBS: &[NsStub] = &[
     // missing_surface/c_map.rs, not stubs.
     // C_MythicPlus GetCurrentAffixes / GetCurrentSeason / GetRunHistory /
     // GetSeasonBestAffixScoreInfoForMap / GetWeeklyChestRewardLevel are
-    // SimState-backed in missing_surface/mythic_plus.rs. GetLastWeeklyChest
-    // and Request* live in workarounds::temporary until cache/refresh state exists.
+    // SimState-backed in c_api/c_mythic_plus.rs. GetLastWeeklyChest and
+    // Request* are modeled for Retail/Forever; other profiles use temporary defaults.
     // C_NamePlate GetNamePlateForUnit / GetNamePlates are registered in
     // missing_surface/nameplate.rs (nil and empty-table respectively).
     // C_PartyInfo probes are registered in c_api/c_party_info.rs.

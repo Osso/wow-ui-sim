@@ -21,7 +21,8 @@
 //!   members={}, or nothing if no data.
 //! - `IsMythicPlusActive()` — returns the `is_active` bool.
 //! - `IsWeeklyRewardAvailable()` — returns the `is_weekly_reward_available` bool.
-//! - `RequestCurrentAffixes()` / `RequestMapInfo()` / `RequestRewards()` — no-ops.
+//! - `GetLastWeeklyChest()` — returns the supplied cached challenge map ID and level.
+//! - `RequestCurrentAffixes()` / `RequestMapInfo()` / `RequestRewards()` — publish update events.
 //! - `C_ChallengeMode.GetMapTable()` / `GetMapUIInfo()` — seeded Mists-era
 //!   challenge dungeon rows for the legacy ChallengesFrame.
 
@@ -154,9 +155,16 @@ fn register_mythic_plus_status_handlers(state: &mut LuaState, ns: GcRef<Table>) 
 }
 
 fn register_mythic_plus_request_handlers(state: &mut LuaState, ns: GcRef<Table>) -> LuaResult<()> {
-    table_set_rust_fn_static(state, ns, "RequestCurrentAffixes", noop)?;
-    table_set_rust_fn_static(state, ns, "RequestMapInfo", noop)?;
-    table_set_rust_fn_static(state, ns, "RequestRewards", noop)?;
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
+        table_set_rust_fn_static(state, ns, "GetLastWeeklyChest", get_last_weekly_chest)?;
+        table_set_rust_fn_static(state, ns, "RequestCurrentAffixes", request_current_affixes)?;
+        table_set_rust_fn_static(state, ns, "RequestMapInfo", request_map_info)?;
+        table_set_rust_fn_static(state, ns, "RequestRewards", request_rewards)?;
+    }
     Ok(())
 }
 
@@ -276,6 +284,35 @@ fn challenge_get_num_medals(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn noop(_state: &mut LuaState) -> LuaResult<u32> {
+    Ok(0)
+}
+
+// INFERRED pending R88cc: the cache publishes its challenge map ID and level.
+fn get_last_weekly_chest(state: &mut LuaState) -> LuaResult<u32> {
+    let chest = borrow_state(state)?.mythic_plus.last_weekly_chest;
+    let Some(chest) = chest else {
+        return Ok(0);
+    };
+    state.push(Val::Num(f64::from(chest.challenge_map_id)));
+    state.push(Val::Num(f64::from(chest.level)));
+    Ok(2)
+}
+
+// INFERRED pending R88cc: each refresh request publishes its cache update.
+fn request_current_affixes(state: &mut LuaState) -> LuaResult<u32> {
+    publish_mythic_plus_update(state, "MYTHIC_PLUS_CURRENT_AFFIX_UPDATE")
+}
+
+fn request_map_info(state: &mut LuaState) -> LuaResult<u32> {
+    publish_mythic_plus_update(state, "CHALLENGE_MODE_MAPS_UPDATE")
+}
+
+fn request_rewards(state: &mut LuaState) -> LuaResult<u32> {
+    publish_mythic_plus_update(state, "WEEKLY_REWARDS_UPDATE")
+}
+
+fn publish_mythic_plus_update(state: &mut LuaState, event: &str) -> LuaResult<u32> {
+    crate::lua_api::globals::state_backed_queries::dispatch_event_now(state, event, &[])?;
     Ok(0)
 }
 
