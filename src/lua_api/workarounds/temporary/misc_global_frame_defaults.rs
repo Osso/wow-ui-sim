@@ -84,11 +84,18 @@ ensure_child_frame(objectiveHeader, "MinimizeButton")
 "#;
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
+    use crate::client_profile::{ACTIVE, ClientProfile};
+    // VERIFIED: selected GameMenu and ObjectiveTracker Lua/XML own these
+    // frames and members before normal menu input and tracker-manager startup.
+    if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever) {
+        return Ok(());
+    }
+    // INFERRED: other profiles retain compatibility until provider-order proof.
     lua.exec(MISC_GLOBAL_FRAME_DEFAULTS_LUA)?;
     Ok(())
 }
 
-#[cfg(test)]
+#[cfg(all(test, not(any(feature = "client-retail", feature = "client-wowforever"))))]
 mod tests {
     use crate::lua_api::WowLuaEnv;
 
