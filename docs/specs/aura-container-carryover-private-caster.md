@@ -15,7 +15,7 @@ Forever 1.60.1.70707 also [declares the nullable numeric query](https://github.c
 
 The pinned `Blizzard_AuraContainer/Blizzard_AuraContainerSources.lua:72–73` calls the private caster query with a unit token and aura instance ID. No generated declaration was identified for this private query; its behavior is not native-verified.
 
-The [Retail and Forever private-aura regression](../../tests/private_aura_data_consumer.rs) loads the selected Blizzard consumers and supplies two distinct host entries. It exercises `Blizzard_PrivateAurasUI.lua:487`, `:497`, `:1196`, and `:1228`, plus the caster query through the selected AuraContainer source.
+The [Retail and Forever private-aura regression](../../tests/blizzard_private_auras_ui_loads.rs) loads the full UI and supplies two distinct host entries. It exercises `Blizzard_PrivateAurasUI.lua:487`, `:497`, and `:1196`, plus the caster query through the selected AuraContainer source. `:1228` remains untested because the simulator has no update-callback producer. The watcher reaches `:1097`, where the selected UI calls the unimplemented `AnchorPrivateAura`; rendered-output proof remains blocked by that placement gap.
 
 The [Retail consumer regressions](../../tests/aura_container_missing_queries.rs) exercise the original methods with two supplied carryover caps and two supplied GUIDs, plus unknown private records on legacy profiles.
 

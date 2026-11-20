@@ -1253,13 +1253,6 @@ const PRIVATE_AURA_CONSUMER_PROBE: &str = r#"
 "#;
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
-const PRIVATE_AURA_UPDATE_PROBE: &str = r#"
-    rawget(__secureenv, 'C_UnitAurasPrivate')._TriggerPrivateAuraUpdate('player', 'Private', {
-        updatedAuraInstanceIDs = { 301 },
-    })
-"#;
-
-#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn private_anchor_errors(env: &WowLuaEnv) -> usize {
     env.state()
         .borrow()
@@ -1319,12 +1312,6 @@ fn supply_private_auras(env: &WowLuaEnv) {
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
-fn remove_private_aura_data(env: &WowLuaEnv, aura_id: i32) {
-    env.state().borrow_mut().private_aura_data.aura_data_by_unit
-        .get_mut("player").unwrap().remove(&aura_id);
-}
-
-#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 #[test]
 fn private_aura_state_drives_selected_blizzard_consumers() {
     let env = load_full_game_ui();
@@ -1334,14 +1321,12 @@ fn private_aura_state_drives_selected_blizzard_consumers() {
     env.process_timers().expect("run the original watcher parse timer");
     let initial = private_anchor_errors(&env);
     assert!(initial >= 2, "both supplied aura indices reach the original renderer: {initial}");
-    remove_private_aura_data(&env, 301);
-    env.exec(PRIVATE_AURA_UPDATE_PROBE)
-        .expect("dispatch an updated private-aura instance");
-    env.process_timers().expect("run the original watcher update timer");
-    let after_remove = private_anchor_errors(&env);
-    let remaining_errors = after_remove - initial;
+    env.exec("C_UnitAuras.AddPrivateAuraAnchor({ unitToken = 'player', auraIndex = 2, parent = PrivateAuraDataParent })")
+        .expect("add an anchor through the selected consumer callback");
+    env.process_timers().expect("run the original watcher parse timer");
+    let after_second_anchor = private_anchor_errors(&env);
     assert!(
-        remaining_errors >= 1 && remaining_errors < initial,
-        "removing one private entry changes the original watcher output: before={initial}, after={after_remove}"
+        after_second_anchor > initial,
+        "the second anchor's selected watcher parse reaches the supplied aura records: before={initial}, after={after_second_anchor}"
     );
 }
