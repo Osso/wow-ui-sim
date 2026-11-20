@@ -28,6 +28,7 @@ fn unit_threat_indicator_tracks_two_supplied_states() {
     let env = load_game_ui();
     let result: bool = env.eval(r#"
         assert(type(UnitFrame_UpdateThreatIndicator) == "function")
+        SetCVar("threatWarning", 1)
         A_Admin.SetTarget("Threat Test Mob", 63, 1, true)
         local icon = TargetFrame.threatIndicator
         assert(icon ~= nil)
