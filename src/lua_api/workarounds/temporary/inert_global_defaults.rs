@@ -57,8 +57,10 @@ CLOCK_TICKER_Y_OVERRIDE = CLOCK_TICKER_Y_OVERRIDE or false
 
 C_SocialRestrictions = C_SocialRestrictions or __wow_namespace()
 if rawget(C_SocialRestrictions, "IsChatDisabled") == nil then
+    -- INFERRED: other profiles have no modeled chat-disabled input.
     function C_SocialRestrictions.IsChatDisabled() return false end
 end
+
 C_Commentator = C_Commentator or __wow_namespace()
 if rawget(C_Commentator, "IsSpectating") == nil then
     function C_Commentator.IsSpectating() return false end

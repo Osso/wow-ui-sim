@@ -7,16 +7,53 @@ use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 
 pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
-    if !matches!(
+    let consumer_profile = matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever);
+    let squelch_profile = matches!(
         ACTIVE,
         ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::Mists
-    ) {
+    );
+    if !consumer_profile && !squelch_profile {
         return Ok(());
     }
     let namespace = super::ensure_namespace(state, "C_SocialRestrictions")?;
+    if consumer_profile {
+        table_set_rust_fn_static(state, namespace, "IsMuted", is_muted)?;
+        table_set_rust_fn_static(
+            state,
+            namespace,
+            "IsAgeVerificationRestricted",
+            is_age_verification_restricted,
+        )?;
+        table_set_rust_fn_static(state, namespace, "IsChatDisabled", is_chat_disabled)?;
+    }
+    if squelch_profile {
+        table_set_rust_fn_static(state, namespace, "IsSquelched", is_squelched)?;
+    }
     #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
-    table_set_rust_fn_static(state, namespace, "IsFriendsDisabled", is_friends_disabled)?;
-    table_set_rust_fn_static(state, namespace, "IsSquelched", is_squelched)
+    if ACTIVE == ClientProfile::Retail {
+        table_set_rust_fn_static(state, namespace, "IsFriendsDisabled", is_friends_disabled)?;
+    }
+    Ok(())
+}
+
+fn is_muted(state: &mut LuaState) -> LuaResult<u32> {
+    let muted = borrow_state(state)?.social_restrictions.is_muted;
+    state.push(Val::Bool(muted));
+    Ok(1)
+}
+
+fn is_age_verification_restricted(state: &mut LuaState) -> LuaResult<u32> {
+    let restricted = borrow_state(state)?
+        .social_restrictions
+        .age_verification_restricted;
+    state.push(Val::Bool(restricted));
+    Ok(1)
+}
+
+fn is_chat_disabled(state: &mut LuaState) -> LuaResult<u32> {
+    let disabled = borrow_state(state)?.social_restrictions.chat_disabled;
+    state.push(Val::Bool(disabled));
+    Ok(1)
 }
 
 fn is_squelched(state: &mut LuaState) -> LuaResult<u32> {
