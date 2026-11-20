@@ -110,7 +110,7 @@ fn guild_bank_item_hover_uses_the_selected_slot_item() {
         assert(loaded, 'GuildBankUI must load before its item consumer runs: ' .. tostring(reason))
         local button = CreateFrame('Button', nil, UIParent)
         button:SetID(17)
-        GuildBankItemButtonMixin:OnEnter(button)
+        GuildBankItemButtonMixin.OnEnter(button)
         local info = GameTooltip:GetPrimaryTooltipInfo()
         local data = GameTooltip:GetPrimaryTooltipData()
         local expected = C_TooltipInfo.GetItemByID(6948)
