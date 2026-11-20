@@ -3,9 +3,7 @@
 #[path = "tooltip_full_env_helpers.rs"]
 mod tooltip_full_env_helpers;
 
-use wow_ui_sim::lua_api::state::{
-    AzeriteEssenceInfo, AzeriteEssenceMilestoneInfo, BagItem, PetData,
-};
+use wow_ui_sim::lua_api::state::{AzeriteEssenceInfo, AzeriteEssenceMilestoneInfo, BagItem};
 
 const ESSENCE_ASSERTIONS: &str = r#"
 local previous
@@ -123,19 +121,22 @@ fn seed_azerite(env: &wow_ui_sim::lua_api::WowLuaEnv) {
                 has_never_activated: false,
             },
         );
-        state.azerite_essence.milestones.push(AzeriteEssenceMilestoneInfo {
-            id: essence_id,
-            required_level: 1,
-            slot: Some(slot),
-            unlocked: true,
-            can_unlock: false,
-            is_major_slot: slot == 0,
-            swirl_scale: 1.0,
-            requires_only_aura: false,
-            spell_id: 0,
-            rank: None,
-            active_essence_id: Some(essence_id),
-        });
+        state
+            .azerite_essence
+            .milestones
+            .push(AzeriteEssenceMilestoneInfo {
+                id: essence_id,
+                required_level: 1,
+                slot: Some(slot),
+                unlocked: true,
+                can_unlock: false,
+                is_major_slot: slot == 0,
+                swirl_scale: 1.0,
+                requires_only_aura: false,
+                spell_id: 0,
+                rank: None,
+                active_essence_id: Some(essence_id),
+            });
     }
 }
 
@@ -158,25 +159,16 @@ fn seed_runeforge_items(env: &wow_ui_sim::lua_api::WowLuaEnv) {
 
 fn seed_companion_pets(env: &wow_ui_sim::lua_api::WowLuaEnv) {
     let mut state = env.state().borrow_mut();
-    for (pet_id, name, species_id) in [
-        ("AuditPet-1", "First supplied pet", 190),
-        ("AuditPet-2", "Second supplied pet", 191),
-    ] {
-        state.world.pets.push(PetData {
-            pet_id: pet_id.into(),
-            species_id,
-            name: name.into(),
-            icon: 1,
-            pet_type: 1,
-            level: 25,
-            quality: 3,
-            is_collected: true,
-            custom_name: None,
-            is_favorite: false,
-            can_attach_to_decor: false,
-            creature_model_scale: None,
-        });
-    }
+    let mut first = state.world.pets.first().cloned().unwrap();
+    first.pet_id = "AuditPet-1".into();
+    first.name = "First supplied pet".into();
+    first.species_id = 190;
+    let mut second = first.clone();
+    second.pet_id = "AuditPet-2".into();
+    second.name = "Second supplied pet".into();
+    second.species_id = 191;
+    state.world.pets.clear();
+    state.world.pets.extend([first, second]);
 }
 
 #[test]
