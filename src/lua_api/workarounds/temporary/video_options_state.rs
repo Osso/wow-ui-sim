@@ -121,6 +121,24 @@ if rawget(C_VideoOptions, "SetGameWindowSize") == nil then
 end
 "#;
 
+// Retail and Forever expose the configured simulator display to Blizzard's settings consumer.
+const DISPLAY_BACKED_VIDEO_OPTIONS_LUA: &str = r#"
+function C_VideoOptions.GetCurrentGameWindowSize()
+    local width, height = GetPhysicalScreenSize()
+    return { x = width, y = height }
+end
+
+function C_VideoOptions.GetDefaultGameWindowSize()
+    local width, height = GetPhysicalScreenSize()
+    return { x = width, y = height }
+end
+
+function C_VideoOptions.GetGameWindowSizes()
+    local size = C_VideoOptions.GetCurrentGameWindowSize()
+    return { size }
+end
+"#;
+
 // Preserve the legacy fixture outside R63's Retail/PTR/Forever scope.
 const LEGACY_VIDEO_CAPABILITIES_LUA: &str = r#"
 if rawget(C_VideoOptions, "IsSpellVisualDensitySystemSupported") == nil then
@@ -145,6 +163,13 @@ end
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(VIDEO_OPTIONS_STATE_LUA)?;
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
+        lua.exec(DISPLAY_BACKED_VIDEO_OPTIONS_LUA)?;
+    }
     if !crate::c_api::video_capabilities::publishes_capabilities() {
         lua.exec(LEGACY_VIDEO_CAPABILITIES_LUA)?;
     }
@@ -158,6 +183,7 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
 mod tests {
     use crate::lua_api::WowLuaEnv;
 
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     #[test]
     fn installs_window_size_state_and_returns_copies() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
