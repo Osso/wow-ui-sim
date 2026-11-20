@@ -1,6 +1,6 @@
 ## [2026-11-19] investigation | Forever spell action-bar status
 
-[Forever spell action-bar status](investigations/forever-spell-action-bar-status.md) records the documented C_Spell/C_ActionBar surface, the empty Forever action-slot producer, and the fixes. **VERIFIED (Forever exact full-UI test):** passive, slotted, unslotted, ID-0, and ranged-input outcomes pass; **INFERRED:** passive masks reuse the Retail host-state model, and `setToSearch` filtering remains unmodeled.
+[Forever spell action-bar status](investigations/forever-spell-action-bar-status.md) records the documented C_Spell/C_ActionBar surface, the empty Forever action-slot producer, and the fixes. **VERIFIED (Forever exact full-UI test):** passive, slotted, unslotted, ID-0, and ranged-input outcomes pass. **INFERRED:** passive masks reuse the Retail host-state model. **VERIFIED (simulator source):** `setToSearch` filtering remains unmodeled.
 
 ## [2026-11-19] implementation | Retail gamepad addon queries
 
