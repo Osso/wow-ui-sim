@@ -334,7 +334,8 @@ macro_rules! build_empty_sim_state {
                 feature = "retail-12-0-0",
                 feature = "client-mists",
                 feature = "client-era",
-                feature = "client-anniversary"
+                feature = "client-anniversary",
+                feature = "client-wowforever"
             ))]
             transmog_appearance_sources: HashMap::new(),
             #[cfg(feature = "client-wowforever")]
@@ -401,7 +402,8 @@ macro_rules! build_empty_sim_state {
                 feature = "retail-12-0-0",
                 feature = "client-mists",
                 feature = "client-era",
-                feature = "client-anniversary"
+                feature = "client-anniversary",
+                feature = "client-wowforever"
             ))]
             transmog_custom_sets: crate::c_api::c_transmog_collection::CustomSets::default(),
             equipped_outfit_locked: false,
@@ -1042,7 +1044,8 @@ pub use crate::c_api::c_pvp::{PvpBrawlInfo, SpecialEventBrawlInfo};
     feature = "retail-12-0-0",
     feature = "client-mists",
     feature = "client-era",
-    feature = "client-anniversary"
+    feature = "client-anniversary",
+    feature = "client-wowforever"
 ))]
 pub use crate::c_api::c_transmog_collection::AppearanceSourceInfo;
 #[cfg(any(
