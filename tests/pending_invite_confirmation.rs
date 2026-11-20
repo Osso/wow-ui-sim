@@ -43,6 +43,7 @@ fn pending_invite_confirmation_event_drives_the_dialog_queue() {
         assert(text:find("North Battleground", 1, true), text)
 
         dialog.button1:Click()
+        assert(GetNextPendingInviteConfirmation() == "invite-b", "answering A should remove it")
 
         dialog = StaticPopup_FindVisible("GROUP_INVITE_CONFIRMATION")
         assert(dialog and dialog:IsShown(), "the next confirmation should open after answering A")
