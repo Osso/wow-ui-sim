@@ -35,6 +35,7 @@ const GUILD_ADDONS: &[&str] = &[
     "Blizzard_GameMenuEsc",
     "Blizzard_UIParentUtil",
     "Blizzard_Game",
+    "Blizzard_StaticPopup",
     "Blizzard_StoreUI",
     "Blizzard_MicroMenu",
     "Blizzard_EditMode",
