@@ -14,7 +14,7 @@ const ADDONS: &[&str] = &[
 ];
 
 const GUILD_ROSTER_INPUT: &str = r#"
-A_Admin.SetGuildRoster([[{"name":"Guild Leader","guid":"member-guid","rankIndex":1,"online":true}]])
+A_Admin.SetGuildRoster([[ [{"name":"Guild Leader","guid":"member-guid","rankIndex":1,"online":true}] ]])
 "#;
 const GROUP_INPUT: &str = r#"
 A_Admin.SetSocialQueueGroups([[ [
