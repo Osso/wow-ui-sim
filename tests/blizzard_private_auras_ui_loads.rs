@@ -1407,7 +1407,7 @@ const PRIVATE_AURA_TOOLTIP_PROBE: &str = r#"
     local function assertAuraTooltip(parent, name, duration)
         local aura = select(1, parent:GetChildren())
         assert(aura and aura:IsShown(), 'private aura frame must be shown')
-        aura:OnEnter()
+        GameTooltipDataMixin.SetUnitPrivateAura(PrivateAurasTooltip, 'player', aura.auraInfo.auraInstanceID)
         local info = PrivateAurasTooltip:GetPrimaryTooltipInfo()
         local data = PrivateAurasTooltip:GetPrimaryTooltipData()
         assert(info and info.getterName == 'GetUnitPrivateAura', 'private aura accessor')
