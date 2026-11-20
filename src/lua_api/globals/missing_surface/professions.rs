@@ -79,6 +79,10 @@ pub(super) fn register_profession_surface(state: &mut LuaState) -> LuaResult<()>
     ) {
         crate::lua_api::globals::real::trainer_services::register_legacy_globals(state)?;
     }
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever {
+        let namespace = ensure_namespace(state, "C_Trainer")?;
+        crate::c_api::trainer_service::register_forever_trainer_namespace(state, namespace)?;
+    }
     Ok(())
 }
 
