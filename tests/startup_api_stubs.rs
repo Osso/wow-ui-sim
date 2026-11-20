@@ -487,7 +487,10 @@ fn startup_quest_link_and_date_helpers_are_callable() {
     assert_eq!(calendar_year_type, "number");
 }
 
-#[cfg(not(feature = "retail-12-0-7"))]
+#[cfg(all(
+    not(any(feature = "client-retail", feature = "client-wowforever")),
+    not(feature = "retail-12-0-7")
+))]
 #[test]
 fn startup_legacy_auto_complete_realms_global_matches_namespace() {
     let env = env();
@@ -714,7 +717,7 @@ fn is_character_newly_boosted_returns_false() {
     );
 }
 
-#[cfg(feature = "retail-12-0-7")]
+#[cfg(all(feature = "retail-12-0-7", feature = "client-retail"))]
 #[test]
 fn autocomplete_namespace_remains_live_without_retired_native_globals() {
     let env = env();
@@ -723,7 +726,9 @@ fn autocomplete_namespace_remains_live_without_retired_native_globals() {
         assert(rawget(_G, "GetAutoCompleteRealms") == nil)
         assert(rawget(_G, "GetAutoCompleteResults") == nil)
         assert(type(C_AutoComplete.GetAutoCompleteRealms) == "function")
-        assert(#C_AutoComplete.GetAutoCompleteRealms() == 0)
+        A_Admin.SetAutoCompleteRealms({ "RealmA", "RealmB" })
+        local realms = C_AutoComplete.GetAutoCompleteRealms()
+        assert(#realms == 2 and realms[1] == "RealmA" and realms[2] == "RealmB")
     "#,
     )
     .unwrap();

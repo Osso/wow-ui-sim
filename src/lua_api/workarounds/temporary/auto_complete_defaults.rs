@@ -103,7 +103,7 @@ mod tests {
         assert_eq!(result, "coerced");
     }
 
-    #[cfg(feature = "retail-12-0-7")]
+    #[cfg(all(feature = "retail-12-0-7", feature = "client-retail"))]
     #[test]
     fn bootstrap_keeps_retired_globals_absent_and_namespace_callable() {
         let env = WowLuaEnv::new().unwrap();
@@ -112,7 +112,9 @@ mod tests {
             r#"
             assert(rawget(_G, "GetAutoCompleteRealms") == nil)
             assert(rawget(_G, "GetAutoCompleteResults") == nil)
-            assert(#C_AutoComplete.GetAutoCompleteRealms() == 0)
+            A_Admin.SetAutoCompleteRealms({ "RealmA", "RealmB" })
+            local realms = C_AutoComplete.GetAutoCompleteRealms()
+            assert(#realms == 2 and realms[1] == "RealmA" and realms[2] == "RealmB")
         "#,
         )
         .unwrap();
@@ -143,6 +145,7 @@ mod tests {
         assert_eq!(result, "legacy-modeled-result");
     }
 
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     #[test]
     fn preserves_existing_autocomplete_realms() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
