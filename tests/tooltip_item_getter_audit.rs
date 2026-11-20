@@ -140,7 +140,10 @@ end
 "#;
 
 fn item_env() -> wow_ui_sim::lua_api::WowLuaEnv {
-    tooltip_full_env_helpers::load_full_env_without_post_load()
+    let env = tooltip_full_env_helpers::load_full_env_without_post_load();
+    env.exec("GameTooltip:SetOwner(UIParent, 'ANCHOR_NONE')")
+        .unwrap();
+    env
 }
 
 fn seed_item_interaction(env: &wow_ui_sim::lua_api::WowLuaEnv, text: &str) {
