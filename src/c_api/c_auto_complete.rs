@@ -2,8 +2,8 @@
 //!
 //! Retail returns an array of `{ name, priority }` tables. The simulator does
 //! not model the full "recently interacted" or guild-roster caches yet, but it
-//! can provide real entries from the state it already owns: friends, party
-//! members, Battle.net accounts, and the current account character.
+//! can provide real entries from its owned social state. Connected realms are
+//! host-supplied inputs (INFERRED, R88ci), not discovered from account state.
 
 #[cfg(feature = "client-wrath")]
 pub(crate) mod wrath;
@@ -11,9 +11,11 @@ pub(crate) mod wrath;
 use std::collections::HashSet;
 
 use crate::c_api::helpers::{ensure_namespace, set_table_array};
-use crate::lua_api::methods::{borrow_state, create_string, create_table, table_set};
+use crate::lua_api::methods::{
+    borrow_state, borrow_state_mut, create_string, create_table, table_set, val_to_string,
+};
 use crate::lua_api::state_types::{BnetFriend, SEEDED_LOCAL_CHARACTER_NAME, SocialFriend};
-use crate::lua_bridge::{FromStack, table_set_rust_fn_static};
+use crate::lua_bridge::{FromStack, TableBuilder, stack_val, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val, runtime_error};
 
@@ -56,6 +58,36 @@ pub(crate) fn register_c_auto_complete_surface(state: &mut LuaState) -> LuaResul
         "GetAutoCompletePresenceID",
         c_auto_complete_get_presence_id,
     )
+}
+
+pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    {
+        return builder.set_function("SetAutoCompleteRealms", set_auto_complete_realms);
+    }
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+    {
+        Ok(builder)
+    }
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn set_auto_complete_realms(state: &mut LuaState) -> LuaResult<u32> {
+    let values = crate::c_api::crafting_input::read_array(state, stack_val(state, 1))?;
+    let realms = values
+        .into_iter()
+        .map(|value| match value {
+            Val::Str(_) => val_to_string(state, value).ok_or_else(|| {
+                runtime_error("A_Admin.SetAutoCompleteRealms: expected UTF-8 strings")
+            }),
+            other => Err(runtime_error(format!(
+                "A_Admin.SetAutoCompleteRealms: expected strings, got {}",
+                other.type_name()
+            ))),
+        })
+        .collect::<LuaResult<Vec<_>>>()?;
+    borrow_state_mut(state)?.auto_complete_realms = realms;
+    Ok(0)
 }
 
 /// INFERRED: a name is recognized when a flag-filtered candidate matches it

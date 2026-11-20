@@ -310,6 +310,9 @@ pub struct SimState {
     #[cfg(feature = "retail-12-0-0")]
     pub weekly_reward_progress:
         HashMap<i32, Vec<crate::c_api::c_weekly_rewards::ActivityTierProgress>>,
+    /// INFERRED connected-realm inputs for Retail and Forever autocomplete (R88ci).
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub auto_complete_realms: Vec<String>,
     /// WM97 DQ8 host seam: exact 64-bit keys with independent ready state.
     pub weekly_rewards: crate::c_api::c_tooltip_info_weekly::WeeklyRewards,
     /// Host-supplied SpellLabel IDs keyed by spell; empty when no label records are supplied.
