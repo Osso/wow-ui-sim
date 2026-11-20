@@ -5,77 +5,51 @@ use crate::common::blizzard_addon_harness::{
 };
 
 #[test]
-fn pending_invite_confirmation_warnings_use_each_supplied_invite() {
+fn pending_invite_confirmation_event_drives_the_dialog_queue() {
     let ui = blizzard_ui_dir();
     let env = new_blizzard_addon_env(&ui);
-    #[cfg(feature = "client-retail")]
-    let roots = ["Blizzard_LFGUtil", "Blizzard_UIPanels_Game"];
-    #[cfg(feature = "client-wowforever")]
-    let roots = ["Blizzard_StaticPopup_Game"];
+    let roots = [
+        "Blizzard_Game",
+        "Blizzard_LFGUtil",
+        "Blizzard_StaticPopup_Game",
+        "Blizzard_UIPanels_Game",
+    ];
     let loaded = load_blizzard_addon_closure_into_env(&env, &ui, &roots, &[]);
-    #[cfg(feature = "client-retail")]
-    assert!(loaded.iter().any(|name| name == "Blizzard_LFGUtil"));
-    #[cfg(feature = "client-wowforever")]
-    assert!(loaded.iter().any(|name| name == "Blizzard_StaticPopup_Game"));
+    for name in roots {
+        assert!(loaded.iter().any(|loaded| loaded == name), "{name} did not load");
+    }
 
     env.exec(
         r#"
         A_Admin.SetPendingInviteConfirmations([=[
         [
-            {"id":"invite-a", "confirmationType":1, "name":"Aster", "guid":"Player-1-A", "invalidQueues":[{"queueType":"pvp", "mapName":"North Battleground"}], "referral":{"guid":"Player-1-R1", "name":"Rhea", "relationship":1, "isQuickJoin":false}},
-            {"id":"invite-b", "confirmationType":1, "name":"Bramble", "guid":"Player-1-B", "invalidQueues":[{"queueType":"pvp", "mapName":"South Battleground"}], "referral":{"guid":"Player-1-R2", "name":"Soren", "relationship":2, "isQuickJoin":false}}
+            {"id":"invite-a", "confirmationType":0, "name":"Aster", "guid":"Player-1-A", "invalidQueues":[{"queueType":"pvp", "mapName":"North Battleground"}]},
+            {"id":"invite-b", "confirmationType":0, "name":"Bramble", "guid":"Player-1-B", "invalidQueues":[{"queueType":"pvp", "mapName":"South Battleground"}]}
         ]
         ]=])
         "#,
     )
-    .expect("host should supply two distinct pending invitations");
+    .expect("host should add two distinct pending invite confirmations");
 
-    #[cfg(feature = "client-retail")]
-    assert_retail_lfg_consumer(&env);
-    #[cfg(feature = "client-wowforever")]
-    assert_forever_party_invite_consumer(&env);
-}
-
-#[cfg(feature = "client-retail")]
-fn assert_retail_lfg_consumer(env: &wow_ui_sim::lua_api::WowLuaEnv) {
-    let warnings: (String, String) = env
-        .eval(
-            r#"
-            return CreatePendingInviteConfirmationText_GetWarnings("invite-a", "Aster", "Player-1-A", true, false),
-                   CreatePendingInviteConfirmationText_GetWarnings("invite-b", "Bramble", "Player-1-B", true, false)
-            "#,
-        )
-        .expect("Retail LFGUtil should format each supplied invite");
-    assert!(warnings.0.contains("North Battleground"), "{}", warnings.0);
-    assert!(warnings.1.contains("South Battleground"), "{}", warnings.1);
-    assert_ne!(warnings.0, warnings.1);
-
-    let referrals: (String, String) = env
-        .eval(
-            r#"
-            local _, firstName = C_PartyInfo.GetInviteReferralInfo("invite-a")
-            local _, secondName = C_PartyInfo.GetInviteReferralInfo("invite-b")
-            return firstName, secondName
-            "#,
-        )
-        .expect("the supplied referral records should remain queryable");
-    assert_eq!(referrals, ("Rhea".to_owned(), "Soren".to_owned()));
-}
-
-#[cfg(feature = "client-wowforever")]
-fn assert_forever_party_invite_consumer(env: &wow_ui_sim::lua_api::WowLuaEnv) {
     env.exec(
         r#"
-        local _, firstName = GetInviteConfirmationInfo("invite-a")
-        local firstPopup = StaticPopup_Show("PARTY_INVITE", firstName)
-        assert(firstPopup.Text:GetText():find(firstName, 1, true))
-        StaticPopup_Hide("PARTY_INVITE")
+        local dialog = StaticPopup_FindVisible("GROUP_INVITE_CONFIRMATION")
+        assert(dialog and dialog:IsShown(), "GROUP_INVITE_CONFIRMATION should open")
+        local text = dialog.Text:GetText()
+        assert(text:find("Aster", 1, true), text)
+        assert(text:find("North Battleground", 1, true), text)
 
-        local _, secondName = GetInviteConfirmationInfo("invite-b")
-        local secondPopup = StaticPopup_Show("PARTY_INVITE", secondName)
-        assert(secondPopup.Text:GetText():find(secondName, 1, true))
-        assert(firstName ~= secondName)
+        dialog.button1:Click()
+
+        dialog = StaticPopup_FindVisible("GROUP_INVITE_CONFIRMATION")
+        assert(dialog and dialog:IsShown(), "the next confirmation should open after answering A")
+        text = dialog.Text:GetText()
+        assert(text:find("Bramble", 1, true), text)
+        assert(text:find("South Battleground", 1, true), text)
+
+        dialog.button2:Click()
+        assert(StaticPopup_FindVisible("GROUP_INVITE_CONFIRMATION") == nil)
         "#,
     )
-    .expect("Forever PARTY_INVITE should display each supplied invite name");
+    .expect("the native event and dialog callbacks should advance the Rust confirmation queue");
 }
