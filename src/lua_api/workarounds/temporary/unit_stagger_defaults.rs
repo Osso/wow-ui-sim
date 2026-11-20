@@ -18,7 +18,7 @@ end
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
-    crate::lua_api::LuaApiMut::register_function(lua, "UnitStagger", unit_stagger)?;
+    rilua::LuaApiMut::register_function(lua, "UnitStagger", unit_stagger)?;
     Ok(())
 }
 

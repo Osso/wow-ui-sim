@@ -196,7 +196,11 @@ fn offhand_has_weapon(state: &mut LuaState) -> LuaResult<u32> {
 
 fn get_stagger_percentage(state: &mut LuaState) -> LuaResult<u32> {
     let unit = String::from_stack(state, 1)?;
-    let percentage = if matches!(unit.as_str(), "player" | "self") {
+    let percentage = if cfg!(any(
+        feature = "client-retail",
+        feature = "client-wowforever"
+    )) && matches!(unit.as_str(), "player" | "self")
+    {
         let player = &borrow_state(state)?.player;
         if player.health_max > 0 {
             player.stagger_amount / f64::from(player.health_max) * 100.0
