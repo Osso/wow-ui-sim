@@ -99,7 +99,7 @@ macro_rules! build_empty_sim_state {
             gamepad_allow_hover_events_with_free_look: false,
             #[cfg(feature = "retail-12-1-5")]
             weather: crate::c_api::c_weather::WeatherState::default(),
-            #[cfg(feature = "retail-12-1-0")]
+            #[cfg(any(feature = "retail-12-1-0", feature = "client-wowforever"))]
             encounter_timeline: crate::c_api::c_encounter_timeline::Timeline::default(),
             scripts: ScriptRegistry::default(),
             ui_reload_requested: false,

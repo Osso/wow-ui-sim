@@ -11,7 +11,7 @@ Retail 12.1.0+ (`retail-12-1-0`, the default Retail epoch) and PTR `C_EncounterT
 - [x] Commit state before dispatching added/state/removed notifications. Callbacks can query or mutate events without holding a SimState borrow. Cancel-all operates on its original ID set, so events created by callbacks survive.
 - [x] Retain terminal data until at least one subsequent game tick has run its OnUpdate/OnPostUpdate callbacks. Remove before notifying `ENCOUNTER_TIMELINE_EVENT_REMOVED`; ID queries then return no result.
 - [x] Return ordinary LuaDurationObject wrappers sharing an event-owned clock. Existing wrappers follow pauses/resumes and freeze after termination/removal; changing one wrapper's duration fields does not mutate events or another wrapper.
-- [x] Retail epochs before 12.1.0 retain the seeded demo and 12.5-second placeholder timer. Retail 12.1.0+ and PTR exclude that demo entirely, including after the post-load compat bootstrap.
+- [x] Retail epochs before 12.1.0 and profiles without a modeled timeline retain the seeded demo and 12.5-second placeholder timer. Retail 12.1.0+ and Forever use the Rust timeline model with an empty default event list; supplied script events reach the original Blizzard consumer. Forever's empty default is INFERRED; native encounter-event producer behavior is not proved.
 
 ## Modeled choices and boundaries
 
@@ -28,15 +28,16 @@ The dependent [track/view model](encounter-timeline-tracks.md) implements a boun
 
 ## Implementation inventory
 
-- `src/c_api/c_encounter_timeline.rs`: registration, public mutations, event dispatch and tick boundaries.
+- `src/c_api/c_encounter_timeline.rs`: registration, public mutations, event dispatch and tick boundaries on Retail 12.1.0+ and Forever.
 - `src/c_api/c_encounter_timeline/`: owned event state, input validation, query snapshots and duration clock adapters.
 - `src/lua_api/on_update.rs`: runtime lifecycle progression/removal hooks.
 - `src/lua_api/globals/lua_duration_object/core.rs`: clock-provider lookup shared with manual clocks.
-- `src/lua_api/workarounds/temporary/encounter_state.rs`: earlier-profile demo only; encounter customization remains separate.
+- `src/lua_api/workarounds/temporary/encounter_state.rs`: demo for profiles without the timeline model; encounter customization remains separate.
 
 ## Tests asserting this spec
 
 - `tests/encounter_timeline_script.rs`: public API lifecycle, callbacks, clock progression, retained timers, validation, isolation and earlier-retail baseline.
+- `tests/encounter_timeline_forever.rs`: Retail/Forever empty-default behavior and original Blizzard consumer event display.
 - `tests/duration_core.rs`: existing duration/manual-clock behavior.
 - `tests/system_api_seeded.rs`: seeded timeline expectations for epochs before 12.1.0; Retail 12.1.0+ and PTR use the lifecycle tests.
 - `startup_globals::test_patch_12_0_7_safe_global_bridges`: existing encounter color/customization consumer.
