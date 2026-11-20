@@ -101,10 +101,7 @@ fn get_layouts(state: &mut LuaState) -> LuaResult<u32> {
     let model = borrow_state(state)?.edit_mode_cache.clone();
     let active_layout = model.initial_active_layout();
     let layouts = EditModeValue::array(model.layouts);
-    let result = EditModeValue::object([
-        ("layouts", layouts),
-        ("activeLayout", active_layout),
-    ]);
+    let result = EditModeValue::object([("layouts", layouts), ("activeLayout", active_layout)]);
     let value = value_to_lua(state, &result)?;
     state.push(value);
     Ok(1)
@@ -471,28 +468,37 @@ fn decode_account_cache(state: &mut LuaState, text: Option<&str>) -> ParsedCache
     let Some(setting_count) = reader.read_count() else {
         return missing_cache(layout_count > 0);
     };
-    let (settings, complete_settings) = read_cached_account_settings(&mut reader, setting_count);
-    if !complete_settings {
+    let (settings, complete) = read_cached_account_settings(&mut reader, setting_count);
+    if !complete {
         return ParsedCache {
             layouts: Vec::new(),
             settings,
             missing_layouts: layout_count > 0,
         };
     }
-    let start = reader.cursor;
-    let (mut layouts, metadata_end) = read_layouts(state, &mut reader, layout_count, true);
-    if reader.has_token_at(metadata_end) {
-        reader.cursor = start;
-        let (legacy, legacy_end) = read_layouts(state, &mut reader, layout_count, false);
-        if legacy_end >= metadata_end {
-            layouts = legacy;
-        }
-    }
+    let layouts = read_cached_layouts(state, &mut reader, layout_count);
     ParsedCache {
         missing_layouts: layouts.len() < layout_count,
         layouts,
         settings,
     }
+}
+
+fn read_cached_layouts(
+    state: &mut LuaState,
+    reader: &mut CacheReader<'_>,
+    count: usize,
+) -> Vec<EditModeValue> {
+    let start = reader.cursor;
+    let (mut layouts, metadata_end) = read_layouts(state, reader, count, true);
+    if reader.has_token_at(metadata_end) {
+        reader.cursor = start;
+        let (legacy, legacy_end) = read_layouts(state, reader, count, false);
+        if legacy_end >= metadata_end {
+            layouts = legacy;
+        }
+    }
+    layouts
 }
 
 fn empty_cache() -> ParsedCache {
@@ -608,40 +614,64 @@ fn read_layouts(
 ) -> (Vec<EditModeValue>, usize) {
     let mut layouts = Vec::new();
     for _ in 0..layout_count {
-        let layout_start = reader.cursor;
-        let Some(prefix) = reader.read_number() else {
-            return (layouts, layout_start);
+        let start = reader.cursor;
+        let Some(layout) = read_layout(state, reader, has_metadata) else {
+            return (layouts, start);
         };
-        if prefix < 0.0 || prefix.fract() != 0.0 {
-            return (layouts, layout_start);
-        }
-        let (name, layout_index) = if has_metadata {
-            let Some(name) = reader.read_counted_name(prefix as usize) else {
-                return (layouts, layout_start);
-            };
-            if reader.read_count().is_none() {
-                return (layouts, layout_start);
-            }
-            (name, None)
-        } else {
-            let Some(name) = reader.read_token() else {
-                return (layouts, layout_start);
-            };
-            (name.to_owned(), Some(prefix))
-        };
-        let Some(system_count) = reader.read_count() else {
-            return (layouts, layout_start);
-        };
-        let mut systems = Vec::new();
-        for _ in 0..system_count {
-            let Some(system) = read_system(state, reader, has_metadata) else {
-                return (layouts, layout_start);
-            };
-            systems.push(system);
-        }
-        layouts.push(build_layout(state, name, layout_index, systems));
+        layouts.push(layout);
     }
     (layouts, reader.cursor)
+}
+
+fn read_layout(
+    state: &mut LuaState,
+    reader: &mut CacheReader<'_>,
+    has_metadata: bool,
+) -> Option<EditModeValue> {
+    let (name, index) = read_layout_identity(reader, has_metadata)?;
+    let count = reader.read_count()?;
+    let systems = read_layout_systems(state, reader, count, has_metadata)?;
+    Some(build_layout(state, name, index, systems))
+}
+
+fn read_layout_identity(
+    reader: &mut CacheReader<'_>,
+    has_metadata: bool,
+) -> Option<(String, Option<f64>)> {
+    let prefix = reader.read_number()?;
+    if prefix < 0.0 || prefix.fract() != 0.0 {
+        return None;
+    }
+    if has_metadata {
+        let name = reader.read_counted_name(prefix as usize)?;
+        reader.read_count()?;
+        Some((name, None))
+    } else {
+        Some((reader.read_token()?.to_owned(), Some(prefix)))
+    }
+}
+
+fn read_layout_systems(
+    state: &mut LuaState,
+    reader: &mut CacheReader<'_>,
+    count: usize,
+    has_metadata: bool,
+) -> Option<Vec<EditModeValue>> {
+    (0..count)
+        .map(|_| read_system(state, reader, has_metadata))
+        .collect()
+}
+
+struct CachedSystem {
+    system: f64,
+    index: Option<f64>,
+    default_position: f64,
+    point: String,
+    relative_point: String,
+    relative_to: String,
+    offset_x: f64,
+    offset_y: f64,
+    encoded_settings: String,
 }
 
 fn read_system(
@@ -649,8 +679,15 @@ fn read_system(
     reader: &mut CacheReader<'_>,
     has_metadata: bool,
 ) -> Option<EditModeValue> {
+    let cached = read_cached_system(reader, has_metadata)?;
+    let status_bar = enum_field_number(state, "EditModeSystem", "StatusTrackingBar");
+    let hidden = status_bar == Some(cached.system) && cached.default_position == 0.0;
+    Some(build_system_info(cached, hidden))
+}
+
+fn read_cached_system(reader: &mut CacheReader<'_>, has_metadata: bool) -> Option<CachedSystem> {
     let system = reader.read_number()?;
-    let mut system_index = reader.read_number()?;
+    let index = adjust_system_index(reader.read_number()?, has_metadata);
     let default_position = reader.read_number()?;
     let point = frame_point(reader.read_number()?);
     let relative_point = frame_point(reader.read_number()?);
@@ -660,46 +697,64 @@ fn read_system(
     }
     let offset_x = reader.read_number()?;
     let offset_y = reader.read_number()?;
-    let _secondary_anchor = reader.read_token()?;
-    let encoded_settings = reader.read_token()?;
-    if system_index >= 0.0 {
-        system_index += 1.0;
+    reader.read_token()?;
+    let encoded_settings = reader.read_token()?.to_owned();
+    Some(CachedSystem {
+        system,
+        index,
+        default_position,
+        point,
+        relative_point,
+        relative_to,
+        offset_x,
+        offset_y,
+        encoded_settings,
+    })
+}
+
+fn adjust_system_index(index: f64, has_metadata: bool) -> Option<f64> {
+    if index == -1.0 && has_metadata {
+        return None;
     }
-    if has_metadata && system_index == -1.0 {
-        system_index = f64::NAN;
-    }
-    let status_bar = enum_field_number(state, "EditModeSystem", "StatusTrackingBar");
-    let hidden = status_bar == Some(system) && default_position == 0.0;
-    Some(EditModeValue::object([
-        ("system", EditModeValue::Number(system)),
+    Some(if index >= 0.0 { index + 1.0 } else { index })
+}
+
+fn build_system_info(cached: CachedSystem, hidden: bool) -> EditModeValue {
+    EditModeValue::object([
+        ("system", EditModeValue::Number(cached.system)),
         (
             "systemIndex",
-            if system_index.is_nan() {
-                EditModeValue::Nil
-            } else {
-                EditModeValue::Number(system_index)
-            },
+            cached
+                .index
+                .map_or(EditModeValue::Nil, EditModeValue::Number),
         ),
         ("hidden", EditModeValue::Boolean(hidden)),
         (
             "isInDefaultPosition",
-            EditModeValue::Boolean(default_position != 0.0),
+            EditModeValue::Boolean(cached.default_position != 0.0),
         ),
-        (
-            "anchorInfo",
-            EditModeValue::object([
-                ("point", EditModeValue::String(point)),
-                ("relativeTo", EditModeValue::String(relative_to)),
-                ("relativePoint", EditModeValue::String(relative_point)),
-                ("offsetX", EditModeValue::Number(offset_x)),
-                ("offsetY", EditModeValue::Number(offset_y)),
-            ]),
-        ),
+        ("anchorInfo", build_anchor_info(&cached)),
         (
             "settings",
-            EditModeValue::array(decode_setting_chunks(encoded_settings)),
+            EditModeValue::array(decode_setting_chunks(&cached.encoded_settings)),
         ),
-    ]))
+    ])
+}
+
+fn build_anchor_info(cached: &CachedSystem) -> EditModeValue {
+    EditModeValue::object([
+        ("point", EditModeValue::String(cached.point.clone())),
+        (
+            "relativeTo",
+            EditModeValue::String(cached.relative_to.clone()),
+        ),
+        (
+            "relativePoint",
+            EditModeValue::String(cached.relative_point.clone()),
+        ),
+        ("offsetX", EditModeValue::Number(cached.offset_x)),
+        ("offsetY", EditModeValue::Number(cached.offset_y)),
+    ])
 }
 
 fn build_layout(
@@ -807,21 +862,30 @@ fn choose_override(
     if preferred.is_empty() {
         return None;
     }
-    let preset_count = enum_field_number(state, "EditModePresetLayoutsMeta", "NumValues")?;
-    if let Ok(layout_number) = preferred.parse::<f64>() {
-        if layout_number > 0.0 && layout_number.fract() == 0.0 {
-            let ordinal = layout_number as usize;
-            if ordinal <= layouts.len() {
-                return Some(preset_count + layout_number);
-            }
-            if let Some(index) = layouts.iter().position(|row| {
-                row.field("layoutIndex").and_then(EditModeValue::number) == Some(layout_number)
-            }) {
-                return Some(preset_count + index as f64 + 1.0);
-            }
-            return Some(layout_number);
-        }
+    let presets = enum_field_number(state, "EditModePresetLayoutsMeta", "NumValues")?;
+    choose_numeric_override(layouts, preferred, presets)
+        .or_else(|| choose_named_override(layouts, preferred, presets))
+}
+
+fn choose_numeric_override(
+    layouts: &[EditModeValue],
+    preferred: &str,
+    presets: f64,
+) -> Option<f64> {
+    let number = preferred.parse::<f64>().ok()?;
+    if number <= 0.0 {
+        return None;
     }
+    if number.fract() == 0.0 && number as usize <= layouts.len() {
+        return Some(presets + number);
+    }
+    let saved_index = layouts
+        .iter()
+        .position(|row| row.field("layoutIndex").and_then(EditModeValue::number) == Some(number));
+    Some(saved_index.map_or(number, |index| presets + index as f64 + 1.0))
+}
+
+fn choose_named_override(layouts: &[EditModeValue], preferred: &str, presets: f64) -> Option<f64> {
     layouts
         .iter()
         .position(|row| {
@@ -829,7 +893,7 @@ fn choose_override(
                 .and_then(value_string)
                 .is_some_and(|name| name.eq_ignore_ascii_case(preferred))
         })
-        .map(|index| preset_count + index as f64 + 1.0)
+        .map(|index| presets + index as f64 + 1.0)
 }
 
 fn value_string(value: &EditModeValue) -> Option<&str> {
