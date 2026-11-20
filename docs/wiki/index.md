@@ -1,6 +1,6 @@
 ## [2026-11-20] implementation | Secure XML mixin environment
 
-[Addon loading](systems/addon-loading.md#secure-dependency-replay-and-library-allowlist) records the Retail `PrivateAuraMixin:OnEnter` failure, the secure XML mixin resolution fix, and Forever's replay of `Blizzard_SharedXMLGame` for `TooltipDataHandlerMixin.ProcessInfo`. **INFERRED (R88cd):** native secure addons resolve XML mixins in their active environment. Exact original hover tests pass on Retail and Forever with two aura records.
+[Addon loading](systems/addon-loading.md#secure-dependency-replay-and-library-allowlist) records the Retail `PrivateAuraMixin:OnEnter` failure, secure XML mixin resolution, Forever's `Blizzard_SharedXMLGame` replay, and the secure `RaidWarning.xml` skip. **VERIFIED (stock Retail/Forever):** exact original hover tests pass with two aura records, and `--no-addons --no-saved-vars lua-errors` returns `[]` on both. **INFERRED (R88cd):** native secure addons resolve XML mixins in their active environment.
 
 ## [2026-11-20] implementation | Retail/Forever combat-log history
 
