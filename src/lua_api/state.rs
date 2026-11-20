@@ -690,6 +690,7 @@ macro_rules! build_empty_sim_state {
             bag_info: crate::c_api::bag_info::BagInfo::default_bags(),
             tracked_recipes: $collections.tracked_recipes,
             crafting: CraftingState::default(),
+            trainer: crate::c_api::trainer_service::TrainerState::default(),
             net_stats: NetStats::default(),
             game_clock: GameClock::default(),
             store_frame_shown: false,

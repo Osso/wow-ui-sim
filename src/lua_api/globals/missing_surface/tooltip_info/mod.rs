@@ -616,7 +616,10 @@ fn register_quest_and_recipe_methods(
             ("GetTradeSkillItem", c_tooltip_get_trade_skill_item),
             ("GetTradePlayerItem", c_tooltip_get_trade_player_item),
             ("GetTradeTargetItem", c_tooltip_get_trade_target_item),
-            ("GetTrainerService", c_tooltip_get_trainer_service),
+            (
+                "GetTrainerService",
+                crate::c_api::trainer_service::get_trainer_service_tooltip,
+            ),
         ],
     )
 }

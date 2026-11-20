@@ -660,9 +660,3 @@ pub(super) fn c_tooltip_get_shapeshift(state: &mut LuaState) -> LuaResult<u32> {
     }
     Ok(1)
 }
-
-pub(super) fn c_tooltip_get_trainer_service(state: &mut LuaState) -> LuaResult<u32> {
-    let _service_index = Option::<i32>::from_stack(state, 1)?;
-    state.push(Val::Nil);
-    Ok(1)
-}
