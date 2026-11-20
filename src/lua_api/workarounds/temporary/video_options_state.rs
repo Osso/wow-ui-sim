@@ -1,8 +1,7 @@
 //! Temporary `C_VideoOptions` state surface.
 //!
-//! Video option queries are currently a lightweight simulator fixture. Keep the
-//! mutable Lua-visible state explicit as temporary compatibility behavior until
-//! display configuration is backed by a real subsystem.
+//! Non-Retail/Forever profiles keep the legacy Lua fixture for video options.
+//! Retail/Forever window-size methods use the C API display model.
 
 const VIDEO_OPTIONS_STATE_LUA: &str = r#"
 if type(C_VideoOptions) ~= "table" then
@@ -121,6 +120,15 @@ if rawget(C_VideoOptions, "SetGameWindowSize") == nil then
 end
 "#;
 
+// Device enumeration is out of scope; this fallback is not a hardware claim.
+const UNKNOWN_VIDEO_ADAPTERS_LUA: &str = r#"
+if rawget(C_VideoOptions, "GetGxAdapterInfo") == nil then
+    function C_VideoOptions.GetGxAdapterInfo()
+        return {}
+    end
+end
+"#;
+
 // Preserve the legacy fixture outside R63's Retail/PTR/Forever scope.
 const LEGACY_VIDEO_CAPABILITIES_LUA: &str = r#"
 if rawget(C_VideoOptions, "IsSpellVisualDensitySystemSupported") == nil then
@@ -144,7 +152,15 @@ end
 "#;
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
-    lua.exec(VIDEO_OPTIONS_STATE_LUA)?;
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
+        lua.exec(UNKNOWN_VIDEO_ADAPTERS_LUA)?;
+    } else {
+        lua.exec(VIDEO_OPTIONS_STATE_LUA)?;
+    }
     if !crate::c_api::video_capabilities::publishes_capabilities() {
         lua.exec(LEGACY_VIDEO_CAPABILITIES_LUA)?;
     }
@@ -156,8 +172,10 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
 
 #[cfg(test)]
 mod tests {
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     use crate::lua_api::WowLuaEnv;
 
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     #[test]
     fn installs_window_size_state_and_returns_copies() {
         let env = WowLuaEnv::new().expect("lua env should initialize");

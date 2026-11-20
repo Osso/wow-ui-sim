@@ -18,6 +18,7 @@ mod env_init;
 mod env_lifecycle;
 mod env_rilua;
 mod env_runtime;
+pub(crate) use env_runtime::set_display_size_from_lua;
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) mod execution_budget;
 pub(crate) mod frame;

@@ -5,9 +5,10 @@ use super::state::{AddonInfo, AppFrameMetrics, LoadDiagnostics, PendingTimer, Si
 use super::timer_processing::{reschedule_timer, timer_should_wait};
 use crate::Result;
 use crate::font::WowFontSystem;
-use crate::lua_api::methods::registry_get;
+use crate::lua_api::methods::{borrow_state_mut, registry_get};
+use crate::lua_bridge::table_set_rust_fn_static;
 use crate::screen::ScreenKind;
-use rilua::{LuaApiMut, Val};
+use rilua::{LuaApiMut, LuaResult, Val};
 use std::cell::RefCell;
 use std::collections::VecDeque;
 use std::rc::Rc;
@@ -16,6 +17,33 @@ use std::time::{Duration, Instant};
 const RECENT_FRAME_WINDOW_SIZE: usize = 60;
 // Blizzard SharedXML PixelUtil uses this reference height for pixel/UI conversion.
 pub(crate) const UI_REFERENCE_HEIGHT: f32 = 768.0;
+const SCREEN_SIZE_GLOBALS_LUA: &str = r#"
+function GetScreenWidth()
+    local scale = UIParent and UIParent.GetEffectiveScale and UIParent:GetEffectiveScale() or 1
+    local width = __wow_get_screen_metrics()
+    return width / scale
+end
+
+function GetScreenHeight()
+    local scale = UIParent and UIParent.GetEffectiveScale and UIParent:GetEffectiveScale() or 1
+    local _, height = __wow_get_screen_metrics()
+    return height / scale
+end
+
+function GetPhysicalScreenSize()
+    local _, _, width, height = __wow_get_screen_metrics()
+    return width, height
+end
+
+function GetScreenDPIScale()
+    return 1
+end
+
+function ConvertPixelsToUI(pixels, scale)
+    local _, _, _, physicalHeight = __wow_get_screen_metrics()
+    return pixels * {UI_REFERENCE_HEIGHT} / (physicalHeight * scale)
+end
+"#;
 
 #[cfg(feature = "timed-signal-maps")]
 fn next_timer_or_signal_delay(timer_delay: Option<Duration>, state: &SimState) -> Option<Duration> {
@@ -161,17 +189,7 @@ impl WowLuaEnv {
 
     fn apply_screen_dimensions(&self, canvas: (f32, f32), physical: (f32, f32)) {
         let (width, height) = canvas;
-        {
-            let mut state = self.state.borrow_mut();
-            state.screen_width = width;
-            state.screen_height = height;
-            state.physical_screen_width = physical.0;
-            state.physical_screen_height = physical.1;
-            state.invalidate_strata_buckets();
-            state.widgets.set_layout_physical_height(physical.1);
-            state.widgets.set_layout_canvas_size(width, height);
-            update_screen_widgets_for_dimensions(&mut state, width, height);
-        }
+        update_screen_dimensions(&mut self.state.borrow_mut(), (width, height), physical);
         install_screen_size_globals(self);
         self.notify_screen_size_changed();
     }
@@ -490,6 +508,49 @@ pub(crate) fn finalize_frame_metrics_state(
     update_addon_frame_metrics(&mut state.addons);
 }
 
+fn update_screen_dimensions(state: &mut SimState, canvas: (f32, f32), physical: (f32, f32)) {
+    let (width, height) = canvas;
+    state.screen_width = width;
+    state.screen_height = height;
+    state.physical_screen_width = physical.0;
+    state.physical_screen_height = physical.1;
+    state.invalidate_strata_buckets();
+    state.widgets.set_layout_physical_height(physical.1);
+    state.widgets.set_layout_canvas_size(width, height);
+    update_screen_widgets_for_dimensions(state, width, height);
+}
+
+/// INFERRED: a requested resolution updates simulator display state and emits its display event.
+pub(crate) fn set_display_size_from_lua(
+    lua_state: &mut rilua::vm::state::LuaState,
+    width: f32,
+    height: f32,
+) -> LuaResult<()> {
+    if ![width, height]
+        .into_iter()
+        .all(|value| value.is_finite() && value > 0.0)
+    {
+        return Err(rilua::runtime_error(
+            "window dimensions must be finite and positive",
+        ));
+    }
+    let canvas = (width / height * UI_REFERENCE_HEIGHT, UI_REFERENCE_HEIGHT);
+    if !canvas.0.is_finite() {
+        return Err(rilua::runtime_error(
+            "window aspect ratio exceeds UI canvas range",
+        ));
+    }
+    let mut model = borrow_state_mut(lua_state)?;
+    update_screen_dimensions(&mut model, canvas, (width, height));
+    drop(model);
+    crate::lua_api::globals::state_backed_queries::dispatch_event_now(
+        lua_state,
+        "DISPLAY_SIZE_CHANGED",
+        &[],
+    )?;
+    Ok(())
+}
+
 fn update_screen_widgets_for_dimensions(state: &mut SimState, width: f32, height: f32) {
     for name in &["UIParent", "WorldFrame"] {
         if let Some(id) = state.widgets.get_id_by_name(name)
@@ -502,40 +563,38 @@ fn update_screen_widgets_for_dimensions(state: &mut SimState, width: f32, height
 }
 
 fn install_screen_size_globals(env: &WowLuaEnv) {
-    let (width, height, physical_width, physical_height) = {
-        let state = env.state.borrow();
+    let reference_height = UI_REFERENCE_HEIGHT.to_string();
+    let script = SCREEN_SIZE_GLOBALS_LUA.replace("{UI_REFERENCE_HEIGHT}", &reference_height);
+    let _ = env.exec(&script);
+    install_screen_metrics_helper(env);
+}
+
+fn install_screen_metrics_helper(env: &WowLuaEnv) {
+    let mut lua = env.lua.borrow_mut();
+    let state = lua.state_mut();
+    table_set_rust_fn_static(
+        state,
+        state.global,
+        "__wow_get_screen_metrics",
+        screen_metrics,
+    )
+    .expect("register dynamic screen metrics");
+}
+
+fn screen_metrics(state: &mut rilua::vm::state::LuaState) -> LuaResult<u32> {
+    let metrics = {
+        let model = crate::lua_api::methods::borrow_state(state)?;
         (
-            state.screen_width,
-            state.screen_height,
-            state.physical_screen_width,
-            state.physical_screen_height,
+            model.screen_width,
+            model.screen_height,
+            model.physical_screen_width,
+            model.physical_screen_height,
         )
     };
-    let _ = env.exec(&format!(
-        r#"
-        function GetScreenWidth()
-            local scale = UIParent and UIParent.GetEffectiveScale and UIParent:GetEffectiveScale() or 1
-            return {width} / scale
-        end
-
-        function GetScreenHeight()
-            local scale = UIParent and UIParent.GetEffectiveScale and UIParent:GetEffectiveScale() or 1
-            return {height} / scale
-        end
-
-        function GetPhysicalScreenSize()
-            return {physical_width}, {physical_height}
-        end
-
-        function GetScreenDPIScale()
-            return 1
-        end
-
-        function ConvertPixelsToUI(pixels, scale)
-            return pixels * {UI_REFERENCE_HEIGHT} / ({physical_height} * scale)
-        end
-        "#
-    ));
+    for value in [metrics.0, metrics.1, metrics.2, metrics.3] {
+        state.push(Val::Num(f64::from(value)));
+    }
+    Ok(4)
 }
 
 fn install_screen_mode_globals(env: &WowLuaEnv, screen_kind: ScreenKind) {
