@@ -24,32 +24,37 @@ fn load_bnet_show_toast(env: &WowLuaEnv) {
 }
 
 #[cfg(feature = "client-wowforever")]
+const BNET_OFFLINE_TOAST_FIXTURE: &str = r#"
+local function line()
+    return {
+        Hide = function(self) self.shown = false end,
+        Show = function(self) self.shown = true end,
+        SetText = function(self, text) self.text = text end,
+        SetFormattedText = function(self, text, ...) self.text = string.format(text, ...) end,
+        SetTextColor = function() end,
+        IsShown = function(self) return self.shown end,
+        SetPoint = function() end,
+    }
+end
+tremove = table.remove
+BN_TOAST_TYPE_OFFLINE, BN_TOAST_OFFLINE = "offline", "Offline"
+FRIENDS_BNET_NAME_COLOR = { WrapTextInColorCode = function(_, text) return "friend:" .. text end }
+FRIENDS_GRAY_COLOR = { r = 0.5, g = 0.5, b = 0.5 }
+SOUNDKIT = { UI_BNET_TOAST = 1 }
+PlaySound, AlertFrame_ShowNewAlert = function() end, function() end
+BNToastMixin = {
+    BNToasts = { { toastType = "offline", toastData = 100001 } },
+    TopLine = line(), MiddleLine = line(), BottomLine = line(), DoubleLine = line(),
+    IconTexture = { SetTexCoord = function() end },
+    SetHeight = function() end,
+}
+"#;
+
+#[cfg(feature = "client-wowforever")]
 #[test]
 fn bnet_offline_toast_reads_friend_account_by_id() {
     let env = env();
-    env.exec(
-        r#"
-        local function line()
-            return {
-                Hide = function(self) self.shown = false end,
-                Show = function(self) self.shown = true end,
-                SetText = function(self, text) self.text = text end,
-                SetFormattedText = function(self, text, ...) self.text = string.format(text, ...) end,
-                SetTextColor = function() end,
-            }
-        end
-        tremove = table.remove
-        BN_TOAST_TYPE_OFFLINE, BN_TOAST_OFFLINE = "offline", "Offline"
-        FRIENDS_BNET_NAME_COLOR = { WrapTextInColorCode = function(_, text) return "friend:" .. text end }
-        FRIENDS_GRAY_COLOR = { r = 0.5, g = 0.5, b = 0.5 }
-        BNToastMixin = {
-            BNToasts = { { toastType = "offline", toastData = 100001 } },
-            TopLine = line(), MiddleLine = line(), BottomLine = line(), DoubleLine = line(),
-            IconTexture = { SetTexCoord = function() end },
-        }
-        "#,
-    )
-    .unwrap();
+    env.exec(BNET_OFFLINE_TOAST_FIXTURE).unwrap();
     load_bnet_show_toast(&env);
     env.exec("BNToastMixin:ShowToast()")
         .expect("original offline toast consumer must resolve its account ID");
