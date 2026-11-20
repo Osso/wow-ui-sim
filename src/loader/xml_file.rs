@@ -729,13 +729,13 @@ fn process_frame_element(
     Ok(created.is_some())
 }
 
-struct LoadingAddonTableGuard<'env, 'lua> {
+struct LoadingAddonContextGuard<'env, 'lua> {
     env: &'env LoaderEnv<'lua>,
     previous: Val,
     previous_secure_env: Val,
 }
 
-impl<'env, 'lua> LoadingAddonTableGuard<'env, 'lua> {
+impl<'env, 'lua> LoadingAddonContextGuard<'env, 'lua> {
     fn install(env: &'env LoaderEnv<'lua>, addon_table: Val) -> Self {
         let secure_env = env.state().borrow().loading_addon_secure_env == Some(true);
         let (previous, previous_secure_env) =
@@ -749,7 +749,7 @@ impl<'env, 'lua> LoadingAddonTableGuard<'env, 'lua> {
     }
 }
 
-impl Drop for LoadingAddonTableGuard<'_, '_> {
+impl Drop for LoadingAddonContextGuard<'_, '_> {
     fn drop(&mut self) {
         let _ = set_loading_addon_context(self.env, self.previous, self.previous_secure_env);
     }

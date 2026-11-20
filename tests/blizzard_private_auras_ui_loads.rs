@@ -1415,6 +1415,18 @@ fn replace_first_private_aura(env: &WowLuaEnv) {
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+const PRIVATE_AURA_TOOLTIP_SNAPSHOT: &str = r#"
+    local tooltip = __secureenv.PrivateAurasTooltip
+    local info = tooltip:GetPrimaryTooltipInfo()
+    local data = tooltip:GetPrimaryTooltipData()
+    local lines = data and data.lines or {}
+    return info and info.getterName,
+        lines[1] and lines[1].leftText,
+        lines[2] and lines[2].leftText,
+        lines[3] and lines[3].leftText
+"#;
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn assert_private_aura_tooltip(env: &WowLuaEnv, parent: &str, name: &str, duration: &str) {
     let aura_id = crate::common::aura_container_harness::frame_id(
         env,
@@ -1422,10 +1434,13 @@ fn assert_private_aura_tooltip(env: &WowLuaEnv, parent: &str, name: &str, durati
     );
     env.fire_script_handler(aura_id, "OnEnter", Vec::new())
         .expect("selected Blizzard private-aura OnEnter handler should run");
-    let actual: (Option<String>, Option<String>, Option<String>, Option<String>) = env
-        .eval(
-            "local t = __secureenv.PrivateAurasTooltip; local info = t:GetPrimaryTooltipInfo(); local data = t:GetPrimaryTooltipData(); local lines = data and data.lines or {}; return info and info.getterName, lines[1] and lines[1].leftText, lines[2] and lines[2].leftText, lines[3] and lines[3].leftText",
-        )
+    let actual: (
+        Option<String>,
+        Option<String>,
+        Option<String>,
+        Option<String>,
+    ) = env
+        .eval(PRIVATE_AURA_TOOLTIP_SNAPSHOT)
         .expect("private-aura tooltip data should be readable");
     assert_eq!(actual.0.as_deref(), Some("GetUnitPrivateAura"));
     assert_eq!(actual.1.as_deref(), Some(name));
