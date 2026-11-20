@@ -221,7 +221,7 @@ fn read_secure_color_catalog(env: &WowLuaEnv) -> SecureColorCatalogSnapshot {
     }
 }
 
-#[cfg(feature = "client-retail")]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn load_full_game_ui() -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("Failed to create Lua environment");
     env.set_screen_size(1024.0, 768.0);
@@ -252,6 +252,39 @@ fn load_full_game_ui() -> WowLuaEnv {
     fire_startup_events_for_screen(&env, ScreenKind::Game);
 
     env
+}
+
+#[cfg(feature = "client-wowforever")]
+#[test]
+fn wowforever_private_auras_tooltip_consumer_publishes_accessor() {
+    let env = load_full_game_ui();
+    let consumer_errors = env
+        .state()
+        .borrow()
+        .lua_errors
+        .iter()
+        .filter(|message| message.contains("PrivateAurasTooltip"))
+        .cloned()
+        .collect::<Vec<_>>();
+    assert!(
+        consumer_errors.is_empty(),
+        "PrivateAurasTooltip must load without errors: {consumer_errors:?}"
+    );
+    let accessor_type: String = env
+        .eval(
+            "return type(rawget(rawget(__secureenv, 'GameTooltipDataMixin'), \
+             'SetUnitPrivateAura'))",
+        )
+        .expect("secure GameTooltipDataMixin accessor probe should evaluate");
+    assert_eq!(
+        accessor_type, "function",
+        "the original secure consumer must publish SetUnitPrivateAura"
+    );
+    env.state()
+        .borrow()
+        .widgets
+        .get_id_by_name("PrivateAurasTooltip")
+        .expect("the original PrivateAurasTooltip frame must be created");
 }
 
 #[cfg(feature = "client-retail")]

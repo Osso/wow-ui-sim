@@ -401,6 +401,45 @@ fn wowforever_profile_loads_carbonite_dash_provider_before_dependents() {
 
 #[test]
 #[cfg(feature = "client-wowforever")]
+fn wowforever_secure_environment_publishes_late_globals_without_overwriting_secure_values() {
+    use wow_ui_sim::{loader, lua_api::WowLuaEnv};
+    let root = tempfile::tempdir().unwrap();
+    let addon = root.path().join("SecureConsumer");
+    std::fs::create_dir(&addon).unwrap();
+    std::fs::write(
+        addon.join("SecureConsumer.toc"),
+        "## UseSecureEnvironment: 1\nCore.lua\n",
+    )
+    .unwrap();
+    std::fs::write(
+        addon.join("Core.lua"),
+        "assert(LatePublicAccessor('unit') == 'unit:published'); \
+         assert(PreservedValue == 'secure'); \
+         ObservedValue = LatePublicAccessor('unit')",
+    )
+    .unwrap();
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        "rawset(__secureenv, 'PreservedValue', 'secure'); \
+         rawset(_G, 'PreservedValue', 'insecure'); \
+         LatePublicAccessor = function(value) return value .. ':published' end",
+    )
+    .unwrap();
+    loader::load_addon(&env.loader_env(), &addon.join("SecureConsumer.toc")).unwrap();
+    assert_eq!(
+        env.eval::<String>("return rawget(__secureenv, 'ObservedValue')")
+            .unwrap(),
+        "unit:published"
+    );
+    assert_eq!(
+        env.eval::<String>("return rawget(__secureenv, 'PreservedValue')")
+            .unwrap(),
+        "secure"
+    );
+}
+
+#[test]
+#[cfg(feature = "client-wowforever")]
 fn wowforever_profile_loads_pinned_world_map_filename() {
     let root = tempfile::tempdir().unwrap();
     let addon = root.path().join("Blizzard_WorldMap");
