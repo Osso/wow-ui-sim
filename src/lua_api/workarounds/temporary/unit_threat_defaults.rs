@@ -1,8 +1,12 @@
 //! Threat APIs backed by explicitly supplied simulator state.
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 use crate::lua_api::methods::{borrow_state, borrow_state_mut};
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 use crate::lua_bridge::{FromStack, TableBuilder};
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 use rilua::vm::state::LuaState;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 use rilua::{LuaApiMut, LuaResult, Val};
 #[derive(Clone, Copy, Debug)]
 pub struct ThreatEntry {
@@ -12,6 +16,7 @@ pub struct ThreatEntry {
     pub threat_value: f64,
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub(crate) fn register_api(lua: &mut rilua::Lua) -> crate::Result<()> {
     LuaApiMut::register_function(lua, "UnitDetailedThreatSituation", detailed)?;
     LuaApiMut::register_function(lua, "UnitThreatPercentageOfLead", percentage_of_lead)?;
@@ -19,6 +24,7 @@ pub(crate) fn register_api(lua: &mut rilua::Lua) -> crate::Result<()> {
     Ok(())
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn detailed(state: &mut LuaState) -> LuaResult<u32> {
     let unit = String::from_stack(state, 1)?;
     let mob = String::from_stack(state, 2)?;
@@ -32,6 +38,7 @@ fn detailed(state: &mut LuaState) -> LuaResult<u32> {
     Ok(5)
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn situation(state: &mut LuaState) -> LuaResult<u32> {
     let unit = String::from_stack(state, 1)?;
     let mob = Option::<String>::from_stack(state, 2)?;
@@ -52,6 +59,7 @@ fn situation(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 // INFERRED (R88cg): the threat lead is the highest threat value recorded for this mob.
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn percentage_of_lead(state: &mut LuaState) -> LuaResult<u32> {
     let unit = String::from_stack(state, 1)?;
     let mob = String::from_stack(state, 2)?;
@@ -76,6 +84,7 @@ fn percentage_of_lead(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn set_threat(state: &mut LuaState) -> LuaResult<u32> {
     let unit = String::from_stack(state, 1)?;
     let mob = String::from_stack(state, 2)?;
@@ -102,6 +111,7 @@ fn set_threat(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
     builder.set_function("SetUnitThreatSituation", set_threat)
 }
