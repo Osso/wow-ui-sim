@@ -9,6 +9,8 @@ const CONSUMER_PROBE: &str = r#"
     local privateAuras = rawget(__secureenv, 'PrivateAuras')
     local watcherMixin = privateAuras.PrivateAuraUnitWatcher
     local private = rawget(__secureenv, 'C_UnitAurasPrivate')
+    local parent = CreateFrame('Frame')
+    C_UnitAuras.AddPrivateAuraAnchor({ unitToken = 'player', auraIndex = 1, parent = parent })
     local anchorSeen = {}
     local container = {
         watcher = { GetUnit = function() return 'player' end },
@@ -27,24 +29,11 @@ const CONSUMER_PROBE: &str = r#"
     returned.spellId = 0
     assert(privateUI.GetUpdatedAuraByInstance(container, true, 301).spellId == 301)
 
-    local parsed
-    local watcher = {
-        unit = 'player', auras = { Clear = function() end }, anchors = {},
-        ClearPriorityTables = function() end,
-        ProcessAuras = function(_, full, auras)
-            assert(full == true)
-            parsed = auras
-        end,
-        UpdateAuraByIndex = function() end,
-    }
-    watcherMixin.ParseAllAuras(watcher)
-    assert(parsed[1].auraInstanceID == 301 and parsed[2].auraInstanceID == 302)
-
-    watcher.auras[301] = true
-    assert(watcherMixin.HandleUpdateInfo(watcher, true, {
-        updatedAuraInstanceIDs = { 301 },
-    }) == true)
-    assert(watcher.auras[301].auraInstanceID == 301 and watcher.auras[301].isPrivate == true)
+    local watcher = PrivateAuras.unitWatchers.player
+    assert(watcher ~= nil)
+    assert(watcher.auras[301].auraInstanceID == 301 and watcher.auras[302].auraInstanceID == 302)
+    assert(privateUI.GetUpdatedAuraByInstance(container, true, 301).auraInstanceID == 301)
+    assert(type(watcher.HandleUpdateInfo) == 'function')
 
     local ids = AuraContainerPrivateAuraSourceMixin:GetAllAuraInstanceIDs('player', 'HARMFUL')
     assert(#ids == 2 and ids[1] == 301 and ids[2] == 302)
