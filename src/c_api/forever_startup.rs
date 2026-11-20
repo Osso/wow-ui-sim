@@ -2,6 +2,7 @@
 
 use std::collections::{HashMap, HashSet};
 
+pub use crate::c_api::c_unit_auras::GroupBuffAlert;
 use crate::c_api::helpers::ensure_namespace;
 use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::methods::{
@@ -30,6 +31,7 @@ pub struct StartupInputs {
     pub target_spell_id: Option<i32>,
     pub character_tts_settings_saved: bool,
     pub external_event: Option<ExternalEvent>,
+    pub group_buff_alerts: Vec<GroupBuffAlert>,
 }
 
 impl StartupInputs {

@@ -20,10 +20,12 @@ pub(crate) struct GroupBuffSettings {
 }
 
 #[derive(Clone, Debug)]
-pub(crate) struct GroupBuffVisualAlert {
+pub struct GroupBuffAlert {
     pub spell_id: i32,
     pub visual_value: i32,
 }
+
+type GroupBuffVisualAlert = GroupBuffAlert;
 
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     let public = super::ensure_namespace(state, "C_UnitAuras")?;
@@ -88,10 +90,18 @@ fn register_group_buff_settings(
 }
 
 fn get_group_buff_visual_alerts(state: &mut LuaState) -> LuaResult<u32> {
-    let alerts = borrow_state(state)?
-        .group_buff_settings
-        .visual_alerts
-        .clone();
+    let alerts =
+        if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever {
+            borrow_state(state)?
+                .forever_startup
+                .group_buff_alerts
+                .clone()
+        } else {
+            borrow_state(state)?
+                .group_buff_settings
+                .visual_alerts
+                .clone()
+        };
     let result = push_alert_rows(state, &alerts);
     state.push(result);
     Ok(1)
@@ -99,7 +109,11 @@ fn get_group_buff_visual_alerts(state: &mut LuaState) -> LuaResult<u32> {
 
 fn set_group_buff_visual_alerts(state: &mut LuaState) -> LuaResult<u32> {
     let alerts = read_alert_rows(state, 1)?;
-    borrow_state_mut(state)?.group_buff_settings.visual_alerts = alerts.clone();
+    let mut sim = borrow_state_mut(state)?;
+    sim.group_buff_settings.visual_alerts = alerts.clone();
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever {
+        sim.forever_startup.group_buff_alerts = alerts.clone();
+    }
     let payload = push_alert_rows(state, &alerts);
     dispatch_event_now(state, "GROUP_BUFF_VISUAL_ALERTS_CHANGED", &[payload])?;
     Ok(0)
