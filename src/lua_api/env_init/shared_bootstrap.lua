@@ -1,6 +1,6 @@
 local projectForbiddenDelegateArguments, retiredPortraitGlobal,
   callPrivateProjectionFactory, retireGlueOwnerDefaults, retireGlueStateDefaults,
-  retireCreateAndInitFromMixinFallback = ...
+  retireCreateAndInitFromMixinFallback, retireGenericFrameHelpers = ...
 
 local function __wow_public_global_path(path)
   local first, rest = string.match(path, "^([^.]+)%.?(.*)$")
@@ -1142,7 +1142,8 @@ if GetFontStringMetatable == nil then
   end
 end
 
-do
+-- INFERRED: retain this generic provider bridge for other profiles only.
+if not retireGenericFrameHelpers then
   local frameMeta = GetFrameMetatable and GetFrameMetatable()
   local frameIndex = frameMeta and frameMeta.__index
   if type(frameIndex) == "table" then

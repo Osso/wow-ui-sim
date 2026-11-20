@@ -178,6 +178,7 @@ fn test_minimap_ping_methods_persist_runtime_state() {
     );
 }
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn test_world_map_data_providers_are_tracked() {
     let env = env();
