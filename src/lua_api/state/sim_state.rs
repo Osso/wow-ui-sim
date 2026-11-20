@@ -394,8 +394,7 @@ pub struct SimState {
         feature = "retail-12-0-0",
         feature = "client-mists",
         feature = "client-era",
-        feature = "client-anniversary",
-        feature = "client-wowforever"
+        feature = "client-anniversary"
     ))]
     pub transmog_illusions: Vec<crate::c_api::c_transmog_collection::IllusionInfo>,
     /// Explicit itemModifiedAppearanceID-keyed inputs only.
@@ -417,8 +416,7 @@ pub struct SimState {
         feature = "retail-12-0-0",
         feature = "client-mists",
         feature = "client-era",
-        feature = "client-anniversary",
-        feature = "client-wowforever"
+        feature = "client-anniversary"
     ))]
     pub viewed_outfit_slots: HashMap<(i32, i32, i32), ViewedOutfitSlotInfo>,
     /// Explicit host snapshot only; absence does not fabricate a price.
@@ -426,8 +424,7 @@ pub struct SimState {
         feature = "retail-12-0-0",
         feature = "client-mists",
         feature = "client-era",
-        feature = "client-anniversary",
-        feature = "client-wowforever"
+        feature = "client-anniversary"
     ))]
     pub pending_transmog_cost: Option<crate::c_api::c_transmog_outfit_info::PendingTransmogCost>,
     pub transmog_outfit_locks: HashSet<i64>,
@@ -452,8 +449,7 @@ pub struct SimState {
         feature = "retail-12-0-0",
         feature = "client-mists",
         feature = "client-era",
-        feature = "client-anniversary",
-        feature = "client-wowforever"
+        feature = "client-anniversary"
     ))]
     pub active_transmog_outfit_id: Option<i64>,
     /// Explicit catalog-backed viewed selection; independent of active/pending state.
@@ -461,8 +457,7 @@ pub struct SimState {
         feature = "retail-12-0-0",
         feature = "client-mists",
         feature = "client-era",
-        feature = "client-anniversary",
-        feature = "client-wowforever"
+        feature = "client-anniversary"
     ))]
     pub viewed_transmog_outfit_id: Option<i64>,
     /// Global setting only; no per-outfit or pending-situation behavior.

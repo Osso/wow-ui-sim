@@ -234,8 +234,7 @@ fn build_items(state: &mut LuaState, items: &[ItemTransmogInfo]) -> Val {
     feature = "retail-12-0-0",
     feature = "client-mists",
     feature = "client-era",
-    feature = "client-anniversary",
-    feature = "client-wowforever"
+    feature = "client-anniversary"
 ))]
 pub(crate) fn read_custom_set_items(state: &LuaState, id: i32) -> LuaResult<Vec<ItemTransmogInfo>> {
     borrow_state(state)?
