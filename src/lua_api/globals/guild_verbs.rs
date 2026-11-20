@@ -58,6 +58,7 @@ pub(crate) fn guild_invite(state: &mut LuaState) -> LuaResult<u32> {
         let rank = lowest_rank_index(&st.world);
         st.world.guild_members.push(GuildMember {
             name,
+            guid: None,
             rank_index: rank,
             online: true,
         });

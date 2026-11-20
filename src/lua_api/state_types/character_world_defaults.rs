@@ -87,11 +87,13 @@ fn default_guild_members() -> Vec<GuildMember> {
     vec![
         GuildMember {
             name: "Uther".into(),
+            guid: None,
             rank_index: 1,
             online: true,
         },
         GuildMember {
             name: "Jaina".into(),
+            guid: None,
             rank_index: 2,
             online: false,
         },
