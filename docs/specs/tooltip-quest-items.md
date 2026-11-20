@@ -4,9 +4,9 @@ Retail and WoW Forever `C_TooltipInfo` item getters must publish tooltips from s
 
 ## What it must do
 
-- [ ] `GetQuestItem(type, itemIndex, allowCollectionText?)` selects the indexed reward or choice item from the active NPC quest and publishes its shared item tooltip. This mapping is inferred from the FrameXML consumer.
-- [ ] `GetQuestLogItem(type, itemIndex, questID?, allowCollectionText?)` selects the indexed reward or choice item from the requested quest, or the selected quest when `questID` is nil, and publishes its shared item tooltip. This mapping is inferred from the FrameXML consumer.
-- [ ] `GetGuildBankItem(tab, slot)` publishes the shared item tooltip for a supplied item at that guild-bank tab and slot. This mapping is inferred from the FrameXML consumer.
+- [x] `GetQuestItem(type, itemIndex, allowCollectionText?)` selects the indexed reward or choice item from the active NPC quest and publishes its shared item tooltip. This mapping is inferred from the FrameXML consumer.
+- [x] `GetQuestLogItem(type, itemIndex, questID?, allowCollectionText?)` selects the indexed reward or choice item from the requested quest, or the selected quest when `questID` is nil, and publishes its shared item tooltip. This mapping is inferred from the FrameXML consumer.
+- [x] `GetGuildBankItem(tab, slot)` publishes the shared item tooltip for a supplied item at that guild-bank tab and slot. This mapping is inferred from the FrameXML consumer.
 - [ ] Missing source rows do not produce item data. No item ID or item text may be invented.
 - [ ] Other client profiles keep their current getter behavior.
 
