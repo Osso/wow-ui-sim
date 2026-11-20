@@ -100,10 +100,13 @@ fn run_trade_dialog_cancel_case(env: &WowLuaEnv, partner: &str, show_warning: bo
         !env.eval::<bool>("return SecureTransferDialog:IsShown()")
             .unwrap()
     );
-    let active_partner: String = env
-        .eval("return C_SecureTransfer.GetTradePartner()")
-        .unwrap();
-    assert_eq!(active_partner, partner);
+    let state = env.state();
+    let state = state.borrow();
+    let trade = state
+        .active_trade
+        .as_ref()
+        .expect("canceling the dialog must retain the active trade");
+    assert_eq!(trade.target, partner);
     warning
 }
 
