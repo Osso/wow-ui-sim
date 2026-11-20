@@ -7,6 +7,7 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 const CONSUMER_PROBE: &str = r#"
     local privateUI = rawget(__secureenv, 'PrivateAuraAnchorContainerMixin')
     local watcherMixin = rawget(__secureenv, 'PrivateAuraUnitWatcher')
+    local private = rawget(__secureenv, 'C_UnitAurasPrivate')
     local anchorSeen = {}
     local container = {
         watcher = { GetUnit = function() return 'player' end },
@@ -16,9 +17,9 @@ const CONSUMER_PROBE: &str = r#"
     privateUI.ParseAllAuras(container)
     assert(anchorSeen[301].spellId == 301 and anchorSeen[302].spellId == 302)
     assert(anchorSeen[301].hideOnPartyFrames and anchorSeen[301].canActivePlayerDispel)
-    local firstRead = C_UnitAurasPrivate.GetAllPrivateAuras('player')
+    local firstRead = private.GetAllPrivateAuras('player')
     firstRead[1].spellId = 0
-    assert(C_UnitAurasPrivate.GetAllPrivateAuras('player')[1].spellId == 301)
+    assert(private.GetAllPrivateAuras('player')[1].spellId == 301)
 
     local returned = privateUI.GetUpdatedAuraByInstance(container, true, 301)
     assert(returned.auraInstanceID == 301 and returned.dispelName == 'Magic')
