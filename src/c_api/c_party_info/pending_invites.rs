@@ -225,6 +225,7 @@ fn respond_to_invite_confirmation(state: &mut LuaState) -> LuaResult<u32> {
     let invite_id = String::from_stack(state, 1)?;
     let _accepted = bool::from_stack(state, 2)?;
     let has_pending_invites = remove_responded_invite(state, &invite_id)?;
+    // INFERRED (R88cf): request remaining confirmations after this dialog hides.
     if has_pending_invites {
         schedule_confirmation_event(state)?;
     }
