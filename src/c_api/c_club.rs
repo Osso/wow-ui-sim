@@ -25,6 +25,10 @@ pub(crate) fn register_club_info_surface(state: &mut LuaState) -> LuaResult<()> 
     let table_ref = ensure_namespace(state, "C_Club")?;
     super::club_members::register(state)?;
     register_club_status_methods(state, table_ref)?;
+    register_club_profile_methods(state, table_ref)
+}
+
+fn register_club_profile_methods(state: &mut LuaState, table_ref: GcRef<Table>) -> LuaResult<()> {
     if ACTIVE == ClientProfile::WowForever {
         table_set_rust_fn_static(
             state,
@@ -38,7 +42,7 @@ pub(crate) fn register_club_info_surface(state: &mut LuaState) -> LuaResult<()> 
         ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever
     ) {
         // INFERRED: Forever ClubDocumentation.lua:1041 declares the member;
-        // UnitPopupShared uses the existing title-friend request model.
+        // UnitPopupShared uses the existing Retail friend request model.
         table_set_rust_fn_static(
             state,
             table_ref,
