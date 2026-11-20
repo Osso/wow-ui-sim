@@ -527,6 +527,11 @@ fn fire_world_enter_sequence(env: &WowLuaEnv) {
     } else {
         vec![Val::Bool(!reloaded), Val::Bool(reloaded)]
     };
+    // INFERRED: original load-on-demand consumers distinguish preload from world entry.
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    {
+        env.state().borrow_mut().in_world = true;
+    }
     if let Err(e) = env.fire_event_with_args("PLAYER_ENTERING_WORLD", &payload) {
         log_with_timestamp(env, &format!("Error firing PLAYER_ENTERING_WORLD: {e}"));
     }
