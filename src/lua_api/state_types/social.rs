@@ -3,6 +3,12 @@
 /// Supplied local social restriction input, not a native account-policy query.
 #[derive(Debug, Clone, Default)]
 pub struct SocialRestrictionsState {
+    /// INFERRED host input; false represents an unrestricted account by default.
+    pub is_muted: bool,
+    /// INFERRED host input; false represents an unrestricted adult account by default.
+    pub age_verification_restricted: bool,
+    /// INFERRED host input, distinct from friends-disabled and squelch state.
+    pub chat_disabled: bool,
     /// INFERRED (simulator mapping): host field standing in for the R88ap.4 settings byte; writers/events UNKNOWN.
     #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
     pub friends_disabled_byte: u8,

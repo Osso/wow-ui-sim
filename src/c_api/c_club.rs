@@ -109,7 +109,20 @@ fn register_club_privilege_methods(state: &mut LuaState, table_ref: GcRef<Table>
     )?;
     table_set_rust_fn_static(state, table_ref, "GetClubLimits", c_club_get_club_limits)?;
     table_set_rust_fn_static(state, table_ref, "IsEnabled", c_club_is_enabled)?;
+    if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever) {
+        table_set_rust_fn_static(state, table_ref, "IsAccountMuted", c_club_is_account_muted)?;
+    }
     Ok(())
+}
+
+fn c_club_is_account_muted(state: &mut LuaState) -> LuaResult<u32> {
+    let club_id = super::club_members::string_arg(state, 1)?;
+    let muted = borrow_state(state)?
+        .clubs
+        .account_muted_club_ids
+        .contains(&club_id);
+    state.push(Val::Bool(muted));
+    Ok(1)
 }
 
 fn register_club_message_methods(state: &mut LuaState, table_ref: GcRef<Table>) -> LuaResult<()> {
