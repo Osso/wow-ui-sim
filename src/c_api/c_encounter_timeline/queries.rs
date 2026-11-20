@@ -170,6 +170,8 @@ fn is_blocked(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn feature_enabled(state: &mut LuaState) -> LuaResult<u32> {
-    state.push(Val::Bool(true));
+    let available =
+        crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::WowForever;
+    state.push(Val::Bool(available));
     Ok(1)
 }

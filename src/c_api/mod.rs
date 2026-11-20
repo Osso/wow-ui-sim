@@ -202,7 +202,7 @@ pub mod c_dye_color;
 #[cfg(feature = "client-wowforever")]
 mod c_edit_mode;
 pub(crate) mod c_edit_mode_cache;
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(any(feature = "retail-12-1-0", feature = "client-wowforever"))]
 pub(crate) mod c_encounter_timeline;
 #[cfg(feature = "retail-12-0-0")]
 pub(crate) mod c_encounter_warnings;
@@ -674,7 +674,7 @@ pub(crate) fn register_utility_bootstrap_tables(state: &mut LuaState) -> LuaResu
         c_garrison_trees::register(state)?;
     }
     c_damage_meter::register(state)?;
-    #[cfg(feature = "retail-12-1-0")]
+    #[cfg(any(feature = "retail-12-1-0", feature = "client-wowforever"))]
     c_encounter_timeline::register(state)?;
     c_intl::register(state)?;
     #[cfg(feature = "aura-containers")]
