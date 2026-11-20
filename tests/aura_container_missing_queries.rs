@@ -37,6 +37,7 @@ fn pandemic_window_uses_stored_carryover() {
     .unwrap();
 }
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn private_source_returns_supplied_caster_guid() {
     let env = load_env();

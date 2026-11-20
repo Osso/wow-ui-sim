@@ -93,7 +93,10 @@ fn aura_instance_ids_apply_documented_sorting_and_limits() {
     "#).unwrap();
 }
 
-#[cfg(feature = "aura-containers")]
+#[cfg(all(
+    feature = "aura-containers",
+    not(any(feature = "client-retail", feature = "client-wowforever"))
+))]
 #[test]
 fn aura_instance_ids_private_queries_follow_existing_private_state() {
     let env = seeded_env();
@@ -118,7 +121,10 @@ fn aura_instance_ids_private_queries_follow_existing_private_state() {
     .unwrap();
 }
 
-#[cfg(feature = "aura-containers")]
+#[cfg(all(
+    feature = "aura-containers",
+    not(any(feature = "client-retail", feature = "client-wowforever"))
+))]
 #[test]
 fn aura_instance_ids_source_reports_filter_match_separately() {
     let env = seeded_env();

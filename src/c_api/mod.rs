@@ -539,6 +539,7 @@ pub(crate) mod patch_12_1_0_enums;
 pub mod permanent_shims;
 pub mod private_aura_anchors;
 pub(crate) mod private_aura_callbacks;
+pub mod private_aura_data;
 #[cfg(feature = "retail-12-0-5")]
 pub mod private_aura_sounds;
 pub(crate) mod ptr_edit_mode_enums;

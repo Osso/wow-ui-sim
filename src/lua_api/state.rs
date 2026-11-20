@@ -77,6 +77,7 @@ macro_rules! build_empty_sim_state {
             source_location_exclusions: Vec::new(),
             events: EventQueue::default(),
             private_aura_anchors: crate::c_api::private_aura_anchors::PrivateAuraAnchors::default(),
+            private_aura_data: Default::default(),
             #[cfg(all(
                 feature = "retail-12-0-5",
                 any(feature = "profile-retail", feature = "client-ptr")
