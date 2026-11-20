@@ -1,3 +1,4 @@
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 use crate::common::blizzard_addon_harness::{
     blizzard_ui_dir, load_blizzard_addon_closure_into_env, new_blizzard_addon_env,
 };
