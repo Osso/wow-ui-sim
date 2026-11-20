@@ -1413,6 +1413,7 @@ const PRIVATE_AURA_TOOLTIP_PROBE: &str = r#"
         assert(info and info.getterName == 'GetUnitPrivateAura', 'private aura accessor')
         assert(data and data.lines[1].leftText == name, 'private aura name: ' .. tostring(data and data.lines[1] and data.lines[1].leftText))
         assert(data.lines[2].leftText == duration, 'private aura duration: ' .. tostring(data.lines[2] and data.lines[2].leftText))
+        assert(data.lines[3] and type(data.lines[3].leftText) == 'string' and data.lines[3].leftText ~= '', 'private aura description line')
         aura:OnLeave()
     end
     assertAuraTooltip(PrivateAuraAnchorParent1, 'Private 301', '29 sec')
