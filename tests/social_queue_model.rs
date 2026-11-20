@@ -44,8 +44,6 @@ fn setup() -> WowLuaEnv {
         .expect("fixture supplies guild membership for the beta group leader");
     env.exec(CONFIG_INPUT)
         .expect("host config should be supplied");
-    env.exec(GROUP_INPUT)
-        .expect("host groups should be supplied");
     let loaded = load_blizzard_addon_closure_into_env(&env, &ui, ADDONS, &[]);
     assert!(loaded.iter().any(|name| name == "Blizzard_QuickJoin"));
     env
@@ -64,6 +62,8 @@ fn social_queue_config_returns_host_supplied_fields() {
 #[test]
 fn quick_join_consumer_reads_distinct_host_groups() {
     let env = setup();
+    env.exec(GROUP_INPUT)
+        .expect("host groups should trigger the Quick Join update");
     env.exec(QUICK_JOIN_ASSERTIONS)
         .expect("Quick Join should display supplied social queue groups");
 }
