@@ -71,16 +71,19 @@ fn get_num_members_in_rank_counts_roster_members_by_rank() {
     env.state().borrow_mut().world.guild_members = vec![
         GuildMember {
             name: "Alpha".into(),
+            guid: None,
             rank_index: 1,
             online: true,
         },
         GuildMember {
             name: "Beta".into(),
+            guid: None,
             rank_index: 2,
             online: false,
         },
         GuildMember {
             name: "Gamma".into(),
+            guid: None,
             rank_index: 2,
             online: true,
         },

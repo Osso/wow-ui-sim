@@ -187,11 +187,13 @@ fn get_num_guild_members_counts_roster() {
         st.world.guild_members = vec![
             GuildMember {
                 name: "Alpha".into(),
+                guid: None,
                 rank_index: 1,
                 online: true,
             },
             GuildMember {
                 name: "Beta".into(),
+                guid: None,
                 rank_index: 2,
                 online: false,
             },
@@ -212,11 +214,13 @@ fn seeded_guild_roster_has_one_online_and_one_offline_member() {
     env.state().borrow_mut().world.guild_members = vec![
         GuildMember {
             name: "Uther".into(),
+            guid: None,
             rank_index: 1,
             online: true,
         },
         GuildMember {
             name: "Jaina".into(),
+            guid: None,
             rank_index: 2,
             online: false,
         },
@@ -244,6 +248,7 @@ fn get_guild_roster_size_returns_total_count() {
     let env = env();
     env.state().borrow_mut().world.guild_members = vec![GuildMember {
         name: "Solo".into(),
+        guid: None,
         rank_index: 1,
         online: true,
     }];
@@ -301,6 +306,7 @@ fn get_guild_roster_info_synthesises_row_from_member_and_rank() {
         ];
         st.world.guild_members = vec![GuildMember {
             name: "Alpha".into(),
+            guid: None,
             rank_index: 2,
             online: true,
         }];
@@ -342,6 +348,7 @@ fn get_guild_roster_info_reports_offline_member() {
     let env = env();
     env.state().borrow_mut().world.guild_members = vec![GuildMember {
         name: "Offline".into(),
+        guid: None,
         rank_index: 1,
         online: false,
     }];
