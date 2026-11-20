@@ -11,11 +11,13 @@ pub(crate) mod wrath;
 use std::collections::HashSet;
 
 use crate::c_api::helpers::{ensure_namespace, set_table_array};
-use crate::lua_api::methods::{
-    borrow_state, borrow_state_mut, create_string, create_table, table_set, val_to_string,
-};
+use crate::lua_api::methods::{borrow_state, create_string, create_table, table_set};
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+use crate::lua_api::methods::{borrow_state_mut, val_to_string};
 use crate::lua_api::state_types::{BnetFriend, SEEDED_LOCAL_CHARACTER_NAME, SocialFriend};
-use crate::lua_bridge::{FromStack, TableBuilder, stack_val, table_set_rust_fn_static};
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+use crate::lua_bridge::stack_val;
+use crate::lua_bridge::{FromStack, TableBuilder, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val, runtime_error};
 
