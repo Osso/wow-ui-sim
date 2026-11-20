@@ -6,9 +6,11 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 
 const CONSUMER_PROBE: &str = r#"
     local privateUI = rawget(__secureenv, 'PrivateAuraAnchorContainerMixin')
-    local privateAuras = rawget(__secureenv, 'PrivateAuras')
-    local watcherMixin = privateAuras.PrivateAuraUnitWatcher
     local private = rawget(__secureenv, 'C_UnitAurasPrivate')
+    PrivateAuraDataParent = CreateFrame('Frame')
+    C_UnitAuras.AddPrivateAuraAnchor({
+        unitToken = 'player', auraIndex = 1, parent = PrivateAuraDataParent,
+    })
     local parent = CreateFrame('Frame')
     C_UnitAuras.AddPrivateAuraAnchor({ unitToken = 'player', auraIndex = 1, parent = parent })
     local anchorSeen = {}
@@ -29,15 +31,25 @@ const CONSUMER_PROBE: &str = r#"
     returned.spellId = 0
     assert(privateUI.GetUpdatedAuraByInstance(container, true, 301).spellId == 301)
 
-    local watcher = PrivateAuras.unitWatchers.player
-    assert(watcher ~= nil)
-    assert(watcher.auras[301].auraInstanceID == 301 and watcher.auras[302].auraInstanceID == 302)
-    assert(privateUI.GetUpdatedAuraByInstance(container, true, 301).auraInstanceID == 301)
-    assert(type(watcher.HandleUpdateInfo) == 'function')
-
     local ids = AuraContainerPrivateAuraSourceMixin:GetAllAuraInstanceIDs('player', 'HARMFUL')
     assert(#ids == 2 and ids[1] == 301 and ids[2] == 302)
     assert(AuraContainerPrivateAuraSourceMixin:GetAuraCasterGUID('player', 301) == 'Player-1-301')
+"#;
+
+const UPDATED_AURA_PROBE: &str = r#"
+    local private = rawget(__secureenv, 'C_UnitAurasPrivate')
+    private._TriggerPrivateAuraUpdate('player', 'Private', {
+        updatedAuraInstanceIDs = { 301 },
+    })
+"#;
+
+const READ_ANCHORED_AURA: &str = r#"
+    for _, frame in ipairs({ PrivateAuraDataParent:GetChildren() }) do
+        if frame.auraInfo and frame.auraInfo.auraInstanceID == 301 then
+            return frame.auraInfo.spellId
+        end
+    end
+    return nil
 "#;
 
 fn load_selected_private_aura_ui() -> WowLuaEnv {
@@ -47,6 +59,7 @@ fn load_selected_private_aura_ui() -> WowLuaEnv {
         &["Blizzard_PrivateAurasUI", "Blizzard_AuraContainer"],
         &[],
     );
+    env.apply_post_load_workarounds();
     env
 }
 
@@ -92,10 +105,28 @@ fn supply_entries(env: &WowLuaEnv) {
     );
 }
 
+fn update_entry_spell_id(env: &WowLuaEnv, spell_id: i32) {
+    let mut sim = env.state().borrow_mut();
+    let data = sim.private_aura_data.aura_data_by_unit.get_mut("player").unwrap();
+    data.get_mut(&301).unwrap().aura.spell_id = spell_id;
+}
+
+fn anchored_spell_id(env: &WowLuaEnv) -> Option<i32> {
+    env.eval(READ_ANCHORED_AURA)
+        .expect("read aura data consumed by the original anchor frame")
+}
+
 #[test]
 fn private_aura_state_drives_selected_blizzard_consumers() {
     let env = load_selected_private_aura_ui();
     supply_entries(&env);
     env.exec(CONSUMER_PROBE)
         .expect("selected private-aura consumer call sites should observe host entries");
+    env.fire_on_update(0.016).expect("run the original watcher parse");
+    assert_eq!(anchored_spell_id(&env), Some(301));
+    update_entry_spell_id(&env, 999);
+    env.exec(UPDATED_AURA_PROBE)
+        .expect("dispatch an updated private-aura instance");
+    env.fire_on_update(0.016).expect("run the original watcher update");
+    assert_eq!(anchored_spell_id(&env), Some(999));
 }
