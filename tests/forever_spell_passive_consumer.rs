@@ -24,6 +24,9 @@ fn forever_action_button_spell_status_uses_passive_and_bar_inputs() {
 
     {
         let mut state = env.state().borrow_mut();
+        state.set_input_interface_style(
+            wow_ui_sim::c_api::c_input_interface_style::InputInterfaceStyle::Mkb,
+        );
         state.spell_passive_attribute_masks.clear();
         state.spell_passive_attribute_masks.insert(131, 64);
         state.action_bars.clear();
