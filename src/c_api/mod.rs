@@ -731,3 +731,6 @@ fn register_token_texture_xml_tables(state: &mut LuaState) -> LuaResult<()> {
 }
 
 pub mod lfg_reward_writer;
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub mod pet_battle_runtime_model;

@@ -1,0 +1,184 @@
+#![cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+
+use crate::common;
+use wow_ui_sim::c_api::pet_battle_runtime_model::{PetBattleAbility, PetBattleAura};
+use wow_ui_sim::lua_api::WowLuaEnv;
+use wow_ui_sim::lua_api::state::PetBattlePet;
+
+fn loaded_game() -> WowLuaEnv {
+    let env = WowLuaEnv::new().expect("Lua environment");
+    env.set_screen_size(1024.0, 768.0);
+    env.state().borrow_mut().addon_base_paths = vec![common::blizzard_ui_dir()];
+    common::supply_empty_forever_spellbook_outfits(&env);
+    common::load_game_startup_inventory(&env);
+    env.apply_post_load_workarounds();
+    env.exec("assert(C_AddOns.LoadAddOn('Blizzard_PetBattleUI')); assert(C_AddOns.LoadAddOn('Blizzard_QueueStatusFrame'))")
+        .expect("load original consumer addons");
+    env
+}
+
+fn supply_queue(env: &WowLuaEnv, status: u8) {
+    let mut sim = env.state().borrow_mut();
+    let queue = &mut sim.pet_battles.runtime.matchmaking;
+    queue.status = status;
+    queue.estimated_time = 90;
+    queue.queued_time_ms = 2500;
+}
+
+fn assert_queue_entry_count(env: &WowLuaEnv, expected: i32) {
+    let count: i32 = env.eval(r#"
+        QueueStatusFrame:Update()
+        local count = 0
+        for entry in QueueStatusFrame.statusEntriesPool:EnumerateActive() do
+            if entry.Title:GetText() == PET_BATTLE_PVP_QUEUE then count = count + 1 end
+        end
+        return count
+    "#).expect("original queue frame update");
+    assert_eq!(count, expected, "original frame's pet-battle queue entries");
+}
+
+fn assert_queued_display(env: &WowLuaEnv) {
+    env.exec(r#"
+        RuntimeQueueEntry = CreateFrame('Frame', nil, UIParent, 'QueueStatusEntryTemplate')
+        QueueStatusEntry_SetUpPetBattlePvP(RuntimeQueueEntry)
+        local entry = RuntimeQueueEntry
+        assert(entry.Title:GetText() == PET_BATTLE_PVP_QUEUE)
+        assert(not entry.Status:IsShown())
+        assert(entry.AverageWait:IsShown() and entry.TimeInQueue:IsShown())
+        assert(entry.queuedTime == 2.5, 'supplied milliseconds reach original time display')
+        assert(entry.AverageWait:GetText() ==
+            LFG_STATISTIC_AVERAGE_WAIT:format(SecondsToTime(90, false, false, 1)))
+    "#).expect("original queue entry displays supplied timers");
+}
+
+fn assert_queue_label(env: &WowLuaEnv, status: u8, label: &str) {
+    supply_queue(env, status);
+    env.exec(&format!(r#"
+        QueueStatusEntry_SetUpPetBattlePvP(RuntimeQueueEntry)
+        assert(RuntimeQueueEntry.Status:IsShown())
+        assert(RuntimeQueueEntry.Status:GetText() == {label})
+        assert(not RuntimeQueueEntry.TimeInQueue:IsShown())
+    "#)).expect("original queue status label");
+}
+
+#[test]
+fn original_queue_entry_tracks_supplied_pet_matchmaking() {
+    test_timeout! {
+        let env = loaded_game();
+        supply_queue(&env, 0);
+        assert_queue_entry_count(&env, 0);
+        supply_queue(&env, 1);
+        assert_queue_entry_count(&env, 1);
+        assert_queued_display(&env);
+        assert_queue_label(&env, 3, "QUEUED_STATUS_PROPOSAL");
+        assert_queue_label(&env, 4, "QUEUED_STATUS_WAITING");
+        supply_queue(&env, 0);
+        assert_queue_entry_count(&env, 0);
+    }
+}
+
+fn supplied_pet() -> PetBattlePet {
+    PetBattlePet {
+        name: "Supplied battle pet".into(), display_id: None, species_id: 39,
+        level: 5, max_health: 100, current_health: 40, power: 11, speed: 13,
+        pet_type: 7, ability_ids: vec![73001], xp: 4, max_xp: 100,
+    }
+}
+
+fn supply_pet_data(env: &WowLuaEnv) {
+    let mut sim = env.state().borrow_mut();
+    sim.pet_battles.player_pets = vec![supplied_pet()];
+    sim.pet_battles.enemy_pets = vec![supplied_pet()];
+    sim.pet_battles.num_pets_player = 1;
+    sim.pet_battles.num_pets_enemy = 1;
+    sim.pet_battles.active_pet_player = 1;
+    sim.pet_battles.active_pet_enemy = 1;
+    sim.pet_battles.runtime.abilities.insert(73001, PetBattleAbility {
+        name: "Supplied ability".into(), icon: 136116, max_cooldown: 2,
+        description: "Supplied scenario ability".into(), num_turns: 1,
+        pet_type: 7, no_strong_weak_hints: true,
+    });
+    sim.pet_battles.runtime.attack_modifiers.insert((7, 7), 1.0);
+    sim.pet_battles.runtime.auras.insert((1, 1), vec![PetBattleAura {
+        ability_id: 73001, instance_id: 81001, turns_remaining: 3, is_buff: true,
+    }]);
+}
+
+fn assert_populated_health(env: &WowLuaEnv) {
+    env.exec(r#"
+        local frame = PetBattleFrame.ActiveAlly
+        frame.petOwner, frame.petIndex = Enum.BattlePetOwner.Ally, 1
+        PetBattleUnitFrame_UpdateHealthInstant(frame)
+        assert(frame.ActualHealthBar:IsShown(), "positive supplied health must show bar")
+        assert(math.abs(frame.ActualHealthBar:GetWidth() - frame.healthBarWidth * 0.4) < 0.001, "original bar must reflect supplied 40/100")
+        assert(frame.HealthText:GetText() ==
+            (frame.healthTextFormat or PET_BATTLE_CURRENT_HEALTH_FORMAT):format(40, 100), "original health text must show supplied values")
+    "#).expect("original health display reads supplied pet");
+}
+
+fn assert_populated_ability_and_aura(env: &WowLuaEnv) {
+    env.exec(r#"
+        local button = PetBattleFrame.BottomFrame.abilityButtons[1]
+        PetBattleAbilityButton_UpdateIcons(button)
+        assert(button.abilityID == 73001 and button:IsShown() and button:IsEnabled())
+        assert(button.Icon:GetTexture() == 136116)
+        local holder = PetBattleFrame.AllyBuffFrame
+        PetBattleAuraHolder_SetUnit(holder, Enum.BattlePetOwner.Ally, 1)
+        assert(holder:IsShown() and holder.frames[1]:IsShown())
+        local aura = holder.frames[1]
+        assert(aura.Icon:GetTexture() == 136116)
+        assert(aura.Duration:GetText() == PET_BATTLE_AURA_TURNS_REMAINING:format(3))
+        assert(not aura.DebuffBorder:IsShown())
+    "#).expect("original ability and aura display supplied records");
+}
+
+fn change_pet_data(env: &WowLuaEnv) {
+    let mut sim = env.state().borrow_mut();
+    sim.pet_battles.player_pets[0].current_health = 0;
+    sim.pet_battles.runtime.abilities.get_mut(&73001).unwrap().icon = 136048;
+    sim.pet_battles.runtime.auras.clear();
+}
+
+fn assert_changed_pet_display(env: &WowLuaEnv) {
+    env.exec(r#"
+        local frame = PetBattleFrame.ActiveAlly
+        PetBattleUnitFrame_UpdateHealthInstant(frame)
+        assert(not frame.ActualHealthBar:IsShown())
+        local button = PetBattleFrame.BottomFrame.abilityButtons[1]
+        PetBattleAbilityButton_UpdateIcons(button)
+        assert(button.Icon:GetTexture() == 136048)
+        local holder = PetBattleFrame.AllyBuffFrame
+        PetBattleAuraHolder_Update(holder)
+        assert(not holder:IsShown() and not holder.frames[1]:IsShown())
+    "#).expect("original consumers refresh changed host inputs");
+}
+
+#[test]
+fn original_pet_frames_track_supplied_health_abilities_and_auras() {
+    test_timeout! {
+        let env = loaded_game();
+        supply_pet_data(&env);
+        assert_populated_health(&env);
+        assert_populated_ability_and_aura(&env);
+        change_pet_data(&env);
+        assert_changed_pet_display(&env);
+    }
+}
+
+#[test]
+fn original_pet_duel_callbacks_emit_host_requests() {
+    test_timeout! {
+        use wow_ui_sim::c_api::pet_battle_runtime_model::PetBattleRequest;
+        let env = loaded_game();
+        env.exec(r#"
+            C_AddOns.LoadAddOn('Blizzard_UnitPopupShared')
+            UnitPopupPetBattleDuelButtonMixin:OnClick({unit = 'target'})
+            StaticPopupDialogs['PET_BATTLE_PVP_DUEL_REQUESTED'].OnAccept()
+        "#).expect("original duel menu and invitation callbacks");
+        let requests = env.state().borrow_mut().pet_battles.runtime.take_requests();
+        assert_eq!(requests, vec![
+            PetBattleRequest::StartDuel { unit: "target".into(), exact_match: true },
+            PetBattleRequest::AcceptDuel,
+        ]);
+    }
+}

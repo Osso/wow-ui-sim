@@ -206,6 +206,8 @@ pub struct GameRuleValue {
 /// PvP matchmaking flag.
 #[derive(Debug, Clone, PartialEq)]
 pub struct PetBattleState {
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub runtime: crate::c_api::pet_battle_runtime_model::PetBattleRuntime,
     pub num_pets_player: i32,
     pub num_pets_enemy: i32,
     pub battle_state: i32,
@@ -230,6 +232,8 @@ pub struct PetBattleState {
 impl Default for PetBattleState {
     fn default() -> Self {
         Self {
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            runtime: Default::default(),
             num_pets_player: 1,
             num_pets_enemy: 1,
             battle_state: 0,
