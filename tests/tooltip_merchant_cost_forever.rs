@@ -12,7 +12,7 @@ fn seed_currency_cost(env: &WowLuaEnv) {
     state.merchant_offer_costs.insert(
         0,
         MerchantCostRecord {
-            currency_costs: [2245, 0, 0, 0, 0],
+            currency_costs: [2245, 1792, 0, 0, 0],
             ..MerchantCostRecord::default()
         },
     );
@@ -29,18 +29,21 @@ fn original_money_frame_currency_cost_hover_publishes_the_cost() {
             'MoneyFrame cost consumer missing')
         local button = CreateFrame('Button', nil, UIParent)
         button.index = 1
-        button.item = 1
-        SmallDenominationTemplate_OnEnter(button)
-        local data = GameTooltip:GetPrimaryTooltipData()
-        assert(data, 'currency cost tooltip data missing')
-        assert(data.type == Enum.TooltipDataType.Currency,
-            'currency cost identity type, got ' .. tostring(data.type))
-        assert(data.id == 2245,
-            'currency cost identity must come from the selected offer')
-        assert(data.lines[1].leftText == 'Valorstones',
-            'currency cost must publish supplied currency text')
-        assert(GameTooltip:GetLeftLine(1):GetText() == 'Valorstones',
-            'currency cost lines must reach the frame')
+        for ordinal, currencyID in ipairs({2245, 1792}) do
+            button.item = ordinal
+            SmallDenominationTemplate_OnEnter(button)
+            local data = GameTooltip:GetPrimaryTooltipData()
+            assert(data, 'currency cost tooltip data missing')
+            assert(data.type == Enum.TooltipDataType.Currency,
+                'currency cost identity type, got ' .. tostring(data.type))
+            assert(data.id == currencyID,
+                'currency identity must follow the selected offer cost')
+            local name = C_CurrencyInfo.GetCurrencyInfo(currencyID).name
+            assert(data.lines[1].leftText == name,
+                'currency cost must publish selected currency text')
+            assert(GameTooltip:GetLeftLine(1):GetText() == name,
+                'currency cost lines must reach the frame')
+        end
         "#,
     )
     .unwrap();
