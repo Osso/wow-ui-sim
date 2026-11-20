@@ -27,7 +27,7 @@ fn forever_action_button_spell_status_uses_passive_and_bar_inputs() {
         state.spell_passive_attribute_masks.clear();
         state.spell_passive_attribute_masks.insert(131, 64);
         state.action_bars.clear();
-        state.action_bars.insert(1, 467);
+        state.action_bars.insert(13, 467);
         state.ranged_auto_attack_spell_id = 467;
     }
 
