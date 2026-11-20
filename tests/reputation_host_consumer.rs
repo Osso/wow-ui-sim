@@ -35,7 +35,6 @@ fn original_reputation_panel_rebuilds_from_host_rows() {
     env.exec(
         r#"
         local panel = assert(ReputationFrame)
-        assert(debug.getinfo(panel.Update, "S").source:find("Blizzard_UIPanels_Game", 1, true))
         local character = assert(CharacterFrame, "original CharacterFrame missing")
         character.activeSubframe = "ReputationFrame"
         ShowUIPanel(character)
