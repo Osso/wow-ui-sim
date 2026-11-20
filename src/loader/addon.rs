@@ -963,7 +963,7 @@ fn should_load_addon_file(
         && ctx.name == "Blizzard_RaidWarning"
         && file_rel == Path::new("RaidWarning.xml")
     {
-        // Secure replay needs RaidWarningUtil, not a second frame.
+        // Secure loading needs RaidWarningUtil, not a second frame.
         // Its OnLoad calls a global-only mixin.
         return false;
     }
