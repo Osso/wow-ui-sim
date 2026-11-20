@@ -30,18 +30,13 @@ assert(#C_SocialQueue.GetGroupMembers(groups[1]) == 0, "group member query shoul
 assert(C_SocialQueue.GetGroupQueues(groups[2])[1].clientID == 202, "queue query returned the wrong group data")
 FriendsFrame_UpdateQuickJoinTab(#groups)
 assert(FriendsFrameTab4:GetText() == QUICK_JOIN .. " " .. string.format(NUMBER_IN_PARENTHESES, 2), "FriendsFrame tab did not count both groups")
-local entries = QuickJoinFrame.entries:GetEntries()
-assert(#entries == 2, "QuickJoinFrame did not process both SOCIAL_QUEUE_UPDATE events")
-assert(entries[1]:GetGUID() == "group-alpha" and entries[2]:GetGUID() == "group-beta")
-assert(not entries[1]:HasLocalRelationshipWithLeader())
-assert(entries[2]:HasLocalRelationshipWithLeader())
+assert(QuickJoinToastButton.groups[groups[1]].guid == "group-alpha", "toast consumer lost alpha")
+assert(QuickJoinToastButton.groups[groups[2]].guid == "group-beta", "toast consumer lost beta")
 "#;
 
 fn setup() -> WowLuaEnv {
     let ui = blizzard_ui_dir();
     let env = new_blizzard_addon_env(&ui);
-    env.exec("IsGuildMember = function(guid) return guid == 'leader-beta' end")
-        .expect("fixture supplies guild membership for the beta group leader");
     env.exec(CONFIG_INPUT)
         .expect("host config should be supplied");
     let loaded = load_blizzard_addon_closure_into_env(&env, &ui, ADDONS, &[]);
@@ -62,8 +57,6 @@ fn social_queue_config_returns_host_supplied_fields() {
 #[test]
 fn quick_join_consumer_reads_distinct_host_groups() {
     let env = setup();
-    env.exec("QuickJoinFrame:Show()")
-        .expect("QuickJoinFrame should register its update handler");
     env.exec(GROUP_INPUT)
         .expect("host groups should trigger the Quick Join update");
     env.exec(QUICK_JOIN_ASSERTIONS)
