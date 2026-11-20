@@ -51,7 +51,7 @@ for _, row in ipairs({alpha, beta}) do
     assert(tooltip, 'original row hover publishes its service spell tooltip')
     assert(#tooltip.lines > 0, 'trainer spell tooltip has lines')
     assert(not previousTooltipID or previousTooltipID ~= tooltip.id, 'service tooltips must differ')
-    assert((row == alpha and tooltip.id == 2660) or (row == beta and tooltip.id == 2662),
+    assert((row == alpha and tooltip.id == 19750) or (row == beta and tooltip.id == 642),
         'each original trainer row selects its supplied spell')
     previousTooltipID = tooltip.id
 end
@@ -75,8 +75,8 @@ fn load_original_trainer_ui(env: &WowLuaEnv) {
 
 fn supplied_services() -> Vec<TrainerService> {
     vec![
-        trainer_service(2660, "Supplied Trainer Alpha", "Rank I", 1234),
-        trainer_service(2662, "Supplied Trainer Beta", "Rank II", 5678),
+        trainer_service(19750, "Supplied Trainer Alpha", "Rank I", 1234),
+        trainer_service(642, "Supplied Trainer Beta", "Rank II", 5678),
     ]
 }
 
