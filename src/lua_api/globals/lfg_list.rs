@@ -10,20 +10,19 @@ mod counts;
 pub use counts::{admin_set_applicant_counts, admin_set_application_counts};
 
 use crate::event::Event;
-use crate::lua_api::env::WowLuaAppData;
 use crate::lua_api::methods::{
     borrow_state, borrow_state_mut, call_function_state, create_string, create_table, frame_ref,
     table_set,
 };
 use crate::lua_api::script_helpers::{get_dispatch_script, get_event_listeners};
-use crate::lua_api::state_types::{LfgApplication, PendingTimer, PremadeListing};
-use crate::lua_api::{next_timer_id, timer_layout};
+use crate::lua_api::state_types::{LfgApplication, PremadeListing};
+use crate::lua_api::timer_layout;
 use crate::lua_bridge::{FromStack, table_set_rust_fn_static};
-use rilua::vm::closure::{Closure, RustClosure, RustFn};
+use rilua::vm::closure::RustFn;
 use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
 use rilua::vm::table::Table;
-use rilua::{LuaResult, Val, runtime_error};
+use rilua::{LuaResult, Val};
 use std::collections::HashMap;
 
 pub(crate) fn fire_event_with_args(
@@ -66,36 +65,7 @@ pub(crate) fn defer_lfg_event_with_id(
     dispatch: RustFn,
     label: &'static str,
 ) -> LuaResult<u64> {
-    let callback = Val::Function(
-        state
-            .gc
-            .alloc_closure(Closure::Rust(RustClosure::new(dispatch, label))),
-    );
-    let id = next_timer_id(state)?;
-    timer_layout::store_timer_callback(state, id, callback);
-
-    let app = state
-        .app_data::<WowLuaAppData>()
-        .ok_or_else(|| runtime_error("missing WowLuaAppData"))?;
-    let owner_addon = {
-        let sim = app.sim_state.borrow();
-        sim.loading_addon_index.or(sim.executing_addon_index)
-    };
-    let now = app.sim_state.borrow().clock_now();
-    app.sim_state
-        .borrow_mut()
-        .rilua_timers
-        .push_back(PendingTimer {
-            id,
-            fire_at: now,
-            interval: None,
-            remaining: None,
-            cancelled: false,
-            owner_addon,
-            callback_receives_timer: false,
-            callback_arg: None,
-        });
-    Ok(id)
+    timer_layout::defer_rust_event(state, dispatch, label)
 }
 
 pub(crate) fn premade_listing(state: &LuaState, search_result_id: u32) -> Option<PremadeListing> {
