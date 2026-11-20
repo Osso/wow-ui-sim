@@ -394,11 +394,8 @@ __wow_ensure_dispatcher_surface()
 "#;
 
 fn original_dispatcher_is_selected() -> bool {
-    matches!(
-        crate::client_profile::ACTIVE,
-        crate::client_profile::ClientProfile::Retail
-            | crate::client_profile::ClientProfile::WowForever
-    )
+    crate::client_profile::is_active_retail_12_1_5()
+        || crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever
 }
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
