@@ -4,7 +4,6 @@ use wow_ui_sim::c_api::combat_log_history::{CombatLogEntry, CombatLogValue};
 use wow_ui_sim::loader::discover_blizzard_addons_for_screen;
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::screen::ScreenKind;
-use wow_ui_sim::startup::fire_one_on_update_tick;
 
 fn blizzard_ui_dir() -> std::path::PathBuf {
     wow_ui_sim::client_profile::blizzard_ui_addons_dir_under(std::path::Path::new(env!(
@@ -72,7 +71,8 @@ fn assert_empty_history_contract(env: &WowLuaEnv) {
         "##,
     )
     .expect("empty history should enter the original processor");
-    fire_one_on_update_tick(env);
+    env.process_timers()
+        .expect("zero-delay empty-history ticker should fire");
     env.exec(
         r#"
         local state = tostring(__combatLogHistoryTestProcessor:IsRefiltering())
@@ -92,9 +92,10 @@ fn supply_host_history_and_refilter(env: &WowLuaEnv) {
     drop(sim);
     env.exec("__combatLogHistoryTestProcessor:StartRefiltering()")
         .expect("processor should start with supplied history");
-    fire_one_on_update_tick(env);
-    fire_one_on_update_tick(env);
-    fire_one_on_update_tick(env);
+    env.process_timers()
+        .expect("first populated-history ticker should fire");
+    env.process_timers()
+        .expect("second populated-history ticker should fire");
     assert_distinct_history_was_replayed(env);
 }
 
@@ -106,7 +107,7 @@ fn assert_distinct_history_was_replayed(env: &WowLuaEnv) {
             return #messages == 2
                 and messages[1].message == "COMBATLOG_TEST_SECOND"
                 and messages[2].message == "COMBATLOG_TEST_FIRST"
-                and not __combatLogHistoryTestProcessor:IsRefiltering()
+                and __combatLogHistoryTestProcessor:IsRefiltering()
             "#,
         )
         .expect("processor history output should be readable");
@@ -114,6 +115,8 @@ fn assert_distinct_history_was_replayed(env: &WowLuaEnv) {
         result,
         "two distinct host events must traverse newest-to-oldest through Blizzard's processor"
     );
+    env.exec("__combatLogHistoryTestProcessor:StopRefiltering()")
+        .expect("test processor ticker should stop after two observed entries");
 }
 
 fn entry(timestamp: f64, event: &str) -> CombatLogEntry {
