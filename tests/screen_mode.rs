@@ -236,42 +236,41 @@ fn physical_display_input_matches_captured_wow_ui_dimensions() {
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+const FIRST_DISPLAY_SCRIPT: &str = r#"
+    local function hasResolution(options, value)
+        for _, option in ipairs(options) do
+            if option.value == value then return true end
+        end
+        return false
+    end
+    assert(hasResolution(__video_resolution_options(), "1280x720"), "initial options")
+    assert(Settings.GetValue("PROXY_RESOLUTION") == "1280x720", "initial setting value")
+    Settings.SetValue("PROXY_RESOLUTION", "1600x900", true)
+    local size = C_VideoOptions.GetCurrentGameWindowSize()
+    local physicalWidth, physicalHeight = GetPhysicalScreenSize()
+    assert(size.x == 1600 and size.y == 900, "C_VideoOptions did not read updated model")
+    assert(physicalWidth == 1600 and physicalHeight == 900, "physical display did not update")
+    assert(Settings.GetValue("PROXY_RESOLUTION") == "1600x900", "consumer value did not update")
+"#;
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+const SECOND_DISPLAY_SCRIPT: &str = r#"
+    local hasResolution = false
+    for _, option in ipairs(__video_resolution_options()) do
+        if option.value == "2560x1440" then hasResolution = true end
+    end
+    assert(hasResolution, "second display missing from consumer options")
+    assert(Settings.GetValue("PROXY_RESOLUTION") == "2560x1440", "second consumer value")
+"#;
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 #[test]
 fn original_graphics_resolution_setting_tracks_display_model() {
-    let first = load_graphics_consumer(1280.0, 720.0);
-    first
-        .exec(
-            r#"
-            local function hasResolution(options, value)
-                for _, option in ipairs(options) do
-                    if option.value == value then return true end
-                end
-                return false
-            end
-            assert(hasResolution(__video_resolution_options(), "1280x720"), "initial options")
-            assert(Settings.GetValue("PROXY_RESOLUTION") == "1280x720", "initial setting value")
-            Settings.SetValue("PROXY_RESOLUTION", "1600x900", true)
-            local size = C_VideoOptions.GetCurrentGameWindowSize()
-            local physicalWidth, physicalHeight = GetPhysicalScreenSize()
-            assert(size.x == 1600 and size.y == 900, "C_VideoOptions did not read updated model")
-            assert(physicalWidth == 1600 and physicalHeight == 900, "physical display did not update")
-            assert(Settings.GetValue("PROXY_RESOLUTION") == "1600x900", "consumer value did not update")
-            "#,
-        )
+    load_graphics_consumer(1280.0, 720.0)
+        .exec(FIRST_DISPLAY_SCRIPT)
         .expect("original Graphics resolution setting should update display state");
-
-    let second = load_graphics_consumer(2560.0, 1440.0);
-    second
-        .exec(
-            r#"
-            local hasResolution = false
-            for _, option in ipairs(__video_resolution_options()) do
-                if option.value == "2560x1440" then hasResolution = true end
-            end
-            assert(hasResolution, "second display missing from consumer options")
-            assert(Settings.GetValue("PROXY_RESOLUTION") == "2560x1440", "second consumer value")
-            "#,
-        )
+    load_graphics_consumer(2560.0, 1440.0)
+        .exec(SECOND_DISPLAY_SCRIPT)
         .expect("original Graphics setting should read a second configured display size");
 }
 
