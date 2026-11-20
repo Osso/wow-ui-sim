@@ -122,35 +122,43 @@ fn seed_azerite_entry(
     slot: i32,
     essence_id: i32,
 ) {
-    state.azerite_essence.essences.insert(
-        essence_id,
-        AzeriteEssenceInfo {
-            id: essence_id,
-            name: format!("Supplied essence {essence_id}"),
-            rank: 1,
-            icon: 1,
-            unlocked: true,
-            valid: true,
-            access_rank: 1,
-            has_never_activated: false,
-        },
-    );
+    state
+        .azerite_essence
+        .essences
+        .insert(essence_id, supplied_essence(essence_id));
     state
         .azerite_essence
         .milestones
-        .push(AzeriteEssenceMilestoneInfo {
-            id: essence_id,
-            required_level: 1,
-            slot: Some(slot),
-            unlocked: true,
-            can_unlock: false,
-            is_major_slot: slot == 0,
-            swirl_scale: 1.0,
-            requires_only_aura: false,
-            spell_id: 0,
-            rank: None,
-            active_essence_id: Some(essence_id),
-        });
+        .push(supplied_milestone(slot, essence_id));
+}
+
+fn supplied_essence(essence_id: i32) -> AzeriteEssenceInfo {
+    AzeriteEssenceInfo {
+        id: essence_id,
+        name: format!("Supplied essence {essence_id}"),
+        rank: 1,
+        icon: 1,
+        unlocked: true,
+        valid: true,
+        access_rank: 1,
+        has_never_activated: false,
+    }
+}
+
+fn supplied_milestone(slot: i32, essence_id: i32) -> AzeriteEssenceMilestoneInfo {
+    AzeriteEssenceMilestoneInfo {
+        id: essence_id,
+        required_level: 1,
+        slot: Some(slot),
+        unlocked: true,
+        can_unlock: false,
+        is_major_slot: slot == 0,
+        swirl_scale: 1.0,
+        requires_only_aura: false,
+        spell_id: 0,
+        rank: None,
+        active_essence_id: Some(essence_id),
+    }
 }
 
 fn seed_runeforge_items(env: &wow_ui_sim::lua_api::WowLuaEnv) {
