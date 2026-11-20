@@ -1,6 +1,5 @@
 use wow_ui_sim::lua_api::WowLuaEnv;
 
-#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn unknown_c_members_remain_nil_without_mutating_namespace() {
     let env = WowLuaEnv::new().expect("Lua environment");
@@ -29,12 +28,23 @@ fn unknown_c_members_remain_nil_without_mutating_namespace() {
         assert(C_GameRules.IsGameRuleActive("F0Rule") == true)
         A_Admin.SetGuildClubId("f0-guild")
         assert(C_GuildInfo.GetClubId() == "f0-guild")
-        local before = C_SecureTransfer._state.cancelCount
-        C_SecureTransfer.Cancel()
-        assert(C_SecureTransfer._state.cancelCount == before + 1)
         assert(type(C_Container.GetContainerNumSlots) == "function")
         assert(C_HousingCatalog.GetCartSizeLimit() == 20)
         "#,
     )
     .expect("unknown C members must remain nil; explicit registrations must survive");
+}
+
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+#[test]
+fn secure_transfer_shim_cancel_increments_count() {
+    let env = WowLuaEnv::new().expect("Lua environment");
+    env.exec(
+        r#"
+        local before = C_SecureTransfer._state.cancelCount
+        C_SecureTransfer.Cancel()
+        assert(C_SecureTransfer._state.cancelCount == before + 1)
+        "#,
+    )
+    .expect("the legacy secure transfer shim must record cancellation");
 }

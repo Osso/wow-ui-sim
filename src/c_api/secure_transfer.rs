@@ -9,11 +9,13 @@ use super::helpers::{ensure_secure_namespace, global_val, register_namespace_fun
 use crate::lua_api::methods::{
     borrow_state, borrow_state_mut, call_function_state, create_string, table_set_static,
 };
+use crate::lua_bridge::{FromStack, TableBuilder};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val, runtime_error};
 
 #[derive(Clone, Debug, Default)]
 pub struct SecureTransferInputs {
+    pub should_show_trade_offer_warning: bool,
     pub housing_purchase_cost: Option<f64>,
     pub housing_purchase_quantity: Option<f64>,
     pub housing_vc_purchase_product_id: Option<f64>,
@@ -36,6 +38,13 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
 
 pub(crate) fn register_secure_environment(state: &mut LuaState) -> LuaResult<()> {
     register_members(state, RegistrationTarget::SecureEnvironment)
+}
+
+pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
+    builder.set_function(
+        "SetSecureTransferTradeOfferWarning",
+        set_trade_offer_warning,
+    )
 }
 
 fn register_members(state: &mut LuaState, target: RegistrationTarget) -> LuaResult<()> {
@@ -119,7 +128,12 @@ fn get_trade_partner(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn should_show_trade_offer_warning(state: &mut LuaState) -> LuaResult<u32> {
-    push_trade_warning(state, "shouldShowTradeOfferWarning")
+    let show_warning = borrow_state(state)?
+        .secure_transfer
+        .as_ref()
+        .is_some_and(|input| input.should_show_trade_offer_warning);
+    state.push(Val::Bool(show_warning));
+    Ok(1)
 }
 
 fn should_show_trade_rmt_warning(state: &mut LuaState) -> LuaResult<u32> {
@@ -222,6 +236,15 @@ fn push_housing_input(
         .ok_or_else(|| runtime_error(format!("secure transfer {field} is unavailable")))?;
     state.push(Val::Num(value));
     Ok(1)
+}
+
+fn set_trade_offer_warning(state: &mut LuaState) -> LuaResult<u32> {
+    let show_warning = bool::from_stack(state, 1)?;
+    borrow_state_mut(state)?
+        .secure_transfer
+        .get_or_insert_default()
+        .should_show_trade_offer_warning = show_warning;
+    Ok(0)
 }
 
 fn accept_trade(state: &mut LuaState) -> LuaResult<u32> {

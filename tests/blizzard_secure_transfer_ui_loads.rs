@@ -83,41 +83,42 @@ fn load_full_game_ui() -> WowLuaEnv {
     env
 }
 
-#[cfg(feature = "client-retail")]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn run_trade_dialog_cancel_case(env: &WowLuaEnv, partner: &str, show_warning: bool) -> String {
+    env.exec(&format!("InitiateTrade('{partner}')")).unwrap();
+    env.exec(&format!(
+        "A_Admin.SetSecureTransferTradeOfferWarning({show_warning})"
+    ))
+    .unwrap();
+    env.fire_event("SECURE_TRANSFER_CONFIRM_TRADE_ACCEPT")
+        .unwrap();
+    let warning: String = env
+        .eval("return SecureTransferDialog.WarningText:GetText() or ''")
+        .unwrap();
+    env.exec("SecureTransferDialog.Button2:Click()").unwrap();
+    assert!(
+        !env.eval::<bool>("return SecureTransferDialog:IsShown()")
+            .unwrap()
+    );
+    let active_partner: String = env
+        .eval("return C_SecureTransfer.GetTradePartner()")
+        .unwrap();
+    assert_eq!(active_partner, partner);
+    warning
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 #[test]
 fn secure_transfer_trade_dialog_uses_each_active_partner() {
     let env = load_full_game_ui();
-    let warnings = ["Partner-Alpha", "Partner-Beta"].map(|partner| {
-        env.exec(&format!("InitiateTrade('{partner}')")).unwrap();
-        env.exec("C_TradeInfo = C_TradeInfo or {}; C_TradeInfo._state = C_TradeInfo._state or {}; C_TradeInfo._state.shouldShowTradeOfferWarning = true").unwrap();
-        env.fire_event("SECURE_TRANSFER_CONFIRM_TRADE_ACCEPT").unwrap();
-        let warning: String = env.eval("return SecureTransferDialog.WarningText:GetText() or ''").unwrap();
-        env.exec("CancelTrade()").unwrap();
-        warning
-    });
-    assert!(warnings[0].contains("Partner-Alpha"));
-    assert!(warnings[1].contains("Partner-Beta"));
-    assert_ne!(warnings[0], warnings[1]);
+    let first = run_trade_dialog_cancel_case(&env, "Partner-Alpha", true);
+    env.exec("CancelTrade()").unwrap();
+    let second = run_trade_dialog_cancel_case(&env, "Partner-Beta", false);
+    assert!(first.contains("Partner-Alpha"));
+    assert!(second.is_empty());
 }
 
-#[cfg(feature = "client-wowforever")]
-#[test]
-fn secure_transfer_trade_dialog_uses_each_active_partner() {
-    let env = load_full_game_ui();
-    let warnings = ["Partner-Alpha", "Partner-Beta"].map(|partner| {
-        env.exec(&format!("InitiateTrade('{partner}')")).unwrap();
-        env.exec("C_TradeInfo = C_TradeInfo or {}; C_TradeInfo._state = C_TradeInfo._state or {}; C_TradeInfo._state.shouldShowTradeOfferWarning = true").unwrap();
-        env.fire_event("SECURE_TRANSFER_CONFIRM_TRADE_ACCEPT").unwrap();
-        let warning: String = env.eval("return SecureTransferDialog.WarningText:GetText() or ''").unwrap();
-        env.exec("CancelTrade()").unwrap();
-        warning
-    });
-    assert!(warnings[0].contains("Partner-Alpha"));
-    assert!(warnings[1].contains("Partner-Beta"));
-    assert_ne!(warnings[0], warnings[1]);
-}
-
-#[cfg(feature = "client-retail")]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 #[test]
 fn secure_transfer_mail_dialog_uses_current_recipient_and_money() {
     let env = load_full_game_ui();
@@ -164,6 +165,7 @@ fn secure_transfer_mail_receive_dialog_credits_selected_message() {
     );
 }
 
+#[cfg(feature = "client-wowforever")]
 fn seed_receive_mail(env: &WowLuaEnv, sender: &str, money: u64) {
     env.exec(&format!(
         "A_Admin.AddMail('{sender}', 'Transfer', '', {money})"
@@ -173,27 +175,23 @@ fn seed_receive_mail(env: &WowLuaEnv, sender: &str, money: u64) {
 
 #[cfg(feature = "client-wowforever")]
 #[test]
-fn secure_transfer_mail_dialog_uses_current_recipient_and_money() {
+fn secure_transfer_receive_mail_cancel_preserves_message_money() {
     let env = load_full_game_ui();
-    env.exec("SendMailNameEditBox:SetText('Alt-Alpha'); SetSendMailMoney(12345)")
+    seed_receive_mail(&env, "Sender-Alpha", 4321);
+    let balance = env.state().borrow().player.money;
+    env.exec("InboxFrame.openMailID = 1").unwrap();
+    env.fire_event("SECURE_TRANSFER_CONFIRM_TAKE_MAIL_MONEY")
         .unwrap();
-    env.fire_event("SECURE_TRANSFER_CONFIRM_SEND_MAIL").unwrap();
-    let first: (String, String) = env
-        .eval(
-            "return SecureTransferDialog.Text:GetText(), SecureTransferDialog.MoneyLabel:GetText()",
-        )
-        .unwrap();
-    env.exec("SendMailNameEditBox:SetText('Alt-Beta'); SetSendMailMoney(67890)")
-        .unwrap();
-    env.fire_event("SECURE_TRANSFER_CONFIRM_SEND_MAIL").unwrap();
-    let second: (String, String) = env
-        .eval(
-            "return SecureTransferDialog.Text:GetText(), SecureTransferDialog.MoneyLabel:GetText()",
-        )
-        .unwrap();
-    assert!(first.0.contains("Alt-Alpha"));
-    assert!(second.0.contains("Alt-Beta"));
-    assert_ne!(first.1, second.1);
+    env.exec("SecureTransferDialog.Button2:Click()").unwrap();
+    let state = env.state();
+    let state = state.borrow();
+    assert_eq!(state.player.money, balance);
+    assert_eq!(state.player.inbox[0].money, 4321);
+    drop(state);
+    assert!(
+        !env.eval::<bool>("return SecureTransferDialog:IsShown()")
+            .unwrap()
+    );
 }
 
 // Literal cached inputs absent from Wrath manifest1-382/cache; behavior cases stay enabled.
