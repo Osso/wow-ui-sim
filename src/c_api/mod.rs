@@ -121,7 +121,7 @@ pub(crate) mod c_action_bar_counts;
 pub(crate) mod c_action_bar_loss_of_control;
 #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
 pub mod c_action_bar_queries;
-#[cfg(feature = "retail-12-0-5")]
+#[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 pub(crate) mod c_action_bar_spell_slots;
 pub mod c_addon_profiler;
 pub mod c_addons;
