@@ -322,7 +322,7 @@ fn request_reward(_state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
-pub(super) fn register(
+pub(crate) fn register(
     state: &mut LuaState,
     table: rilua::vm::gc::arena::GcRef<rilua::vm::table::Table>,
 ) -> LuaResult<()> {
@@ -331,6 +331,8 @@ pub(super) fn register(
         ("GetNumFactions", num_factions),
         ("GetFactionDataByIndex", faction_by_index),
         ("GetFactionDataByID", faction_by_id),
+        // INFERRED: retain the existing compatibility alias over host data.
+        ("GetFactionInfo", faction_by_index),
         ("GetGuildFactionData", guild),
         ("GetWatchedFactionData", watched),
         ("GetSelectedFaction", selected_index),
