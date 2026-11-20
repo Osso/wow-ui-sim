@@ -17,9 +17,10 @@ Current Retail/PTR startup must preserve the active-layout index supplied by the
 
 ## Implementation inventory
 
-- `src/saved_variables.rs`: existing file import into the modeled cache API.
-- `src/lua_api/workarounds/temporary/edit_mode_cache_defaults.rs`: existing Lua-owned cache state, active selection and explicit override resolution.
-- `src/lua_api/workarounds/editmode/setup_layout_info.lua`: manager initialization preserves the active index while prepending presets; explicit override conversion belongs to cache import. Bounded Retail and PTR GREEN below; native/pixel parity remains separate.
+- `src/saved_variables.rs`: imports account and character files into `C_EditMode` before Game UI startup.
+- `src/c_api/c_edit_mode_cache.rs`: Retail/Forever Rust model for cache decoding, saved layouts, account settings and active-layout selection.
+- `src/lua_api/workarounds/temporary/edit_mode_cache_defaults.rs`: retains the Lua shim for profiles other than Retail and Forever.
+- `src/lua_api/workarounds/editmode/setup_layout_info.lua`: unchanged Blizzard-manager setup prepends presets while preserving the combined active index. Explicit override conversion remains in cache import. Bounded Retail and PTR GREEN below; native/pixel parity remains separate.
 
 ## Tests asserting this spec
 

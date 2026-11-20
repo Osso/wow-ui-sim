@@ -25,6 +25,13 @@ fn register_profile_spell_tables(state: &mut LuaState) -> LuaResult<()> {
     register_gamepad_tables(state)?;
     #[cfg(feature = "client-wowforever")]
     super::c_edit_mode::register(state)?;
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
+        super::c_edit_mode_cache::register(state)?;
+    }
     #[cfg(any(feature = "client-wowforever", feature = "client-ptr"))]
     super::gamepad_action_bar_constants::register(state);
     #[cfg(feature = "client-wowforever")]
