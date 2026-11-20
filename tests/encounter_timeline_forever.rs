@@ -43,7 +43,7 @@ fn encounter_timeline_forever_starts_empty_and_accepts_supplied_events() {
         assert(#ids == 1 and ids[1] == id)
         local info = timeline.GetEventInfo(id)
         assert(info.id == id and info.spellID == 19750 and info.duration == 9)
-        assert(timeline.GetEventInfo(ENCOUNTER_TIMELINE_INVALID_EVENT) == nil)
+        assert(timeline.GetEventInfo(0) == nil)
         "#,
     )
     .unwrap();
