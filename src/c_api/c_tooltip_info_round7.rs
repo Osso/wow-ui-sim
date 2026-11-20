@@ -348,7 +348,9 @@ fn get_possession(state: &mut LuaState) -> LuaResult<u32> {
     let Some(slot_index) = slot.checked_sub(1) else {
         return no_values();
     };
-    if slot_index != 0 || ACTIVE != ClientProfile::Retail {
+    // INFERRED for Forever: its pinned docs declare GetPossession at line 694.
+    let supported_profile = matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever);
+    if slot_index != 0 || !supported_profile {
         return no_values();
     }
     let Some(spell_id) = borrow_state(state)?.possession_spell_id else {
