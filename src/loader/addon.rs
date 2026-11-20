@@ -959,6 +959,14 @@ fn should_load_addon_file(
     if !toc.file_allows_screen(index, env.state().borrow().screen_kind) {
         return false;
     }
+    if pass.use_secure_env(ctx)
+        && ctx.name == "Blizzard_RaidWarning"
+        && file_rel == Path::new("RaidWarning.xml")
+    {
+        // Secure loading needs RaidWarningUtil, not a second frame.
+        // Its OnLoad calls a global-only mixin.
+        return false;
+    }
     if should_skip_addon_file(toc, file_rel) {
         return false;
     }
@@ -1139,6 +1147,14 @@ pub(super) fn is_secure_replay_library_addon(folder_name: &str) -> bool {
     // legacy replay path where R88g.1 does not apply. Evidence: pr46-49-decomp-answers.md, sections R88g.1.
     if crate::client_profile::is_active_retail_12_1_5() {
         return false;
+    }
+
+    // Forever's private-aura tooltip needs TooltipDataHandlerMixin in secureenv
+    // before its Blizzard_GameTooltip dependency is replayed.
+    if folder_name == "Blizzard_SharedXMLGame"
+        && crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever
+    {
+        return true;
     }
 
     // These Classic colors consume public FrameXML masks, absent in secureenv.

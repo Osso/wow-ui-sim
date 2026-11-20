@@ -64,6 +64,14 @@ function __wow_resolve_xml_mixin(path)
     return addonLocal
   end
 
+  if __wow_public_global_path("__wow_loading_addon_secure_env") == true then
+    local secureenv = __wow_public_global_path("__secureenv")
+    local secureMixin = __wow_xml_lookup_path(secureenv, path)
+    if secureMixin ~= nil then
+      return secureMixin
+    end
+  end
+
   local global = __wow_public_global_path(path)
   if global ~= nil then
     return global
