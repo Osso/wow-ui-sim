@@ -14,7 +14,18 @@ use rilua::{LuaResult, Val};
 
 /// Publish only into the existing, globally rooted namespace.
 pub(crate) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
-    table_set_rust_fn_static(state, namespace, "GetUnitPrivateAura", get_private_aura)?;
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+        // Retail's verified C_TooltipInfo registration marks this getter secure-only.
+        super::register_namespace_function_with_flags(
+            state,
+            "C_TooltipInfo",
+            "GetUnitPrivateAura",
+            get_private_aura,
+            2,
+        )?;
+    } else {
+        table_set_rust_fn_static(state, namespace, "GetUnitPrivateAura", get_private_aura)?;
+    }
     table_set_rust_fn_static(state, namespace, "GetUnitAuraByAuraInstanceID", get_aura)?;
     table_set_rust_fn_static(state, namespace, "GetUnitBuffByAuraInstanceID", get_buff)?;
     table_set_rust_fn_static(
