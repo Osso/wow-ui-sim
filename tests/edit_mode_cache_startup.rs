@@ -1,5 +1,9 @@
 //! File-cache import before whole Game startup; no mocked EditMode consumer.
-#![cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#![cfg(any(
+    feature = "client-retail",
+    feature = "client-ptr",
+    feature = "client-wowforever"
+))]
 
 use std::path::Path;
 use std::process::Command;
@@ -230,6 +234,29 @@ fn native_preset_index_two_keeps_classic_and_horizontal_micro_menu() {
                 'first microbuttons must share a horizontal row')
         "#).expect("unchanged Classic/micro-menu consumer result");
         assert!(warnings.is_empty(), "startup warnings retained: {warnings:?}");
+    }
+}
+
+#[test]
+fn original_edit_mode_consumer_switches_to_saved_layout_after_startup() {
+    test_timeout! {
+        let temp = tempfile::tempdir().expect("create isolated cache fixture");
+        let env = WowLuaEnv::new().expect("fresh pre-addon environment");
+        import_cache(&env, temp.path(), None, ACCOUNT_CACHE, CHARACTER_CACHE);
+        load_whole_game_ui(&env);
+        dispatch_specialization_change(&env);
+        env.exec(r#"
+            local presetCount = #EditModePresetLayoutManager:GetCopyOfPresetLayouts()
+            local savedIndex = presetCount + 2
+            assert(EditModeManagerFrame:GetActiveLayoutInfo().layoutName == "Classic",
+                "original startup consumer selects cached Classic")
+            EditModeManagerFrame:SelectLayout(savedIndex)
+            assert(C_EditMode.GetLayouts().activeLayout == savedIndex,
+                "original layout selector stores the combined index")
+            EditModeManagerFrame:UpdateLayoutInfo(C_EditMode.GetLayouts())
+            assert(EditModeManagerFrame:GetActiveLayoutInfo().layoutName == "Widescreen",
+                "original manager applies the saved layout after selection")
+        "#).expect("original EditMode startup and layout switch");
     }
 }
 
