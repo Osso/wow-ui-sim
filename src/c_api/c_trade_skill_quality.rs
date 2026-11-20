@@ -42,16 +42,14 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
         return Ok(());
     }
     let ns = super::ensure_namespace(state, "C_TradeSkillUI")?;
-    if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::Ptr) {
-        table_set_rust_fn_static(state, ns, "GetRecipeItemQualityInfo", item_quality)?;
-        table_set_rust_fn_static(state, ns, "GetRecipeQualityReagentLink", reagent_link)?;
-    }
-    // Forever 70707 TradeSkillUIDocumentation.lua:349-361 declares this
-    // nullable supplied-state getter, consumed by ItemButtonTemplate.lua:339.
+    // VERIFIED Forever 70707 shapes: TradeSkillUIDocumentation.lua:349,671,721.
+    // INFERRED: interpret the supplied recipe records as on Retail.
     if matches!(
         ACTIVE,
         ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever
     ) {
+        table_set_rust_fn_static(state, ns, "GetRecipeItemQualityInfo", item_quality)?;
+        table_set_rust_fn_static(state, ns, "GetRecipeQualityReagentLink", reagent_link)?;
         table_set_rust_fn_static(state, ns, "GetItemCraftedQualityInfo", crafted_item_quality)?;
     }
     table_set_rust_fn_static(state, ns, "GetItemReagentQualityInfo", reagent_item_quality)?;

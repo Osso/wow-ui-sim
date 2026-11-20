@@ -173,6 +173,7 @@ fn register_interaction_crafting(state: &mut LuaState) -> LuaResult<()> {
     super::c_trade_skill_first_craft::register(state)?;
     super::c_trade_skill_quality::register(state)?;
     super::c_trade_skill_source::register(state)?;
+    super::crafting_tables::trade_skill_modifications::register(state)?;
     #[cfg(feature = "retail-12-0-0")]
     super::c_crafting_orders::register(state)?;
     #[cfg(feature = "retail-12-0-0")]

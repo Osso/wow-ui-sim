@@ -1,54 +1,14 @@
 //! Bounded local crafting orders. Host recipe/ability mapping owns catalog input.
 use super::{crafting_input, crafting_reagents::*, crafting_tables};
 use crate::lua_api::methods::{borrow_state, borrow_state_mut};
-use crate::lua_bridge::{FromStack, stack_val, table_set_rust_fn_static};
+use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, runtime_error};
 
 pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
-    let trade = super::ensure_namespace(state, "C_TradeSkillUI")?;
-    table_set_rust_fn_static(state, trade, "GetItemSlotModifications", item_modifications)?;
-    table_set_rust_fn_static(
-        state,
-        trade,
-        "GetItemSlotModificationsForOrder",
-        order_modifications,
-    )?;
     let orders = super::ensure_namespace(state, "C_CraftingOrders")?;
     table_set_rust_fn_static(state, orders, "PlaceNewOrder", place_order)?;
     table_set_rust_fn_static(state, orders, "GetMyOrders", my_orders)
-}
-fn item_modifications(state: &mut LuaState) -> LuaResult<u32> {
-    let guid = String::from_stack(state, 1)?;
-    let mods = borrow_state(state)?
-        .crafting
-        .reagents
-        .item_modifications
-        .get(&guid)
-        .cloned()
-        .unwrap_or_default();
-    let table = crafting_tables::modifications(state, &mods);
-    state.push(table);
-    Ok(1)
-}
-fn order_modifications(state: &mut LuaState) -> LuaResult<u32> {
-    let id = String::from_stack(state, 1)?
-        .parse::<u32>()
-        .map_err(|_| runtime_error("invalid orderID"))?;
-    let sim = borrow_state(state)?;
-    let mods = sim
-        .crafting
-        .reagents
-        .orders
-        .get(&id)
-        .and_then(|order| order.request.recraft_item.as_ref())
-        .and_then(|guid| sim.crafting.reagents.item_modifications.get(guid))
-        .cloned()
-        .unwrap_or_default();
-    drop(sim);
-    let table = crafting_tables::modifications(state, &mods);
-    state.push(table);
-    Ok(1)
 }
 fn map_order_reagents(
     slots: &[ReagentSlotSchematic],
