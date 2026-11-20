@@ -26,7 +26,7 @@ fn load_game_ui() -> WowLuaEnv {
 #[test]
 fn unit_threat_indicator_tracks_two_supplied_states() {
     let env = load_game_ui();
-    let result: bool = env.eval(r#"
+    let result: String = env.eval(r#"
         assert(type(CompactUnitFrame_UpdateHealthColor) == "function")
         local frame = CreateFrame("Frame")
         frame.unit = "player"
@@ -47,7 +47,8 @@ fn unit_threat_indicator_tracks_two_supplied_states() {
         local r2, g2, b2 = frame.healthBar:GetStatusBarColor()
         assert(UnitDetailedThreatSituation("player", "target") == true)
         assert(UnitThreatSituation("player") == 2)
-        return r1 ~= r2 or g1 ~= g2 or b1 ~= b2
+        return string.format("first=%s,%s,%s second=%s,%s,%s", tostring(r1), tostring(g1), tostring(b1), tostring(r2), tostring(g2), tostring(b2))
     "#).expect("original Blizzard threat consumer runs");
-    assert!(result, "consumer output must change for the supplied threat states");
+    let (first, second) = result.split_once(" second=").expect("color pair is returned");
+    assert_ne!(first, second, "consumer color must change for the supplied threat states");
 }
