@@ -189,6 +189,7 @@ fn register_spell_mount_tooltip_info(
     state: &mut LuaState,
     table_ref: GcRef<Table>,
 ) -> LuaResult<()> {
+    #[cfg(feature = "retail-12-0-5")]
     crate::c_api::c_tooltip_info_spell_mount::register(state, table_ref)?;
     crate::c_api::c_tooltip_info_aura_instance::register(state, table_ref)?;
     crate::c_api::c_tooltip_info_indexed_aura::register(state, table_ref)?;
