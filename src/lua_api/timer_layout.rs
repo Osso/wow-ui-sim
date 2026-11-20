@@ -120,20 +120,27 @@ pub(crate) fn defer_rust_event(
             sim.clock_now(),
         )
     };
-    app.sim_state
-        .borrow_mut()
-        .rilua_timers
-        .push_back(RiluaPendingTimer {
-            id,
-            fire_at,
-            interval: None,
-            remaining: None,
-            cancelled: false,
-            owner_addon,
-            callback_receives_timer: false,
-            callback_arg: None,
-        });
+    enqueue_rust_event_timer(&app, id, owner_addon, fire_at);
     Ok(id)
+}
+
+fn enqueue_rust_event_timer(
+    app: &WowLuaAppData,
+    id: u64,
+    owner_addon: Option<u16>,
+    fire_at: Instant,
+) {
+    let timer = RiluaPendingTimer {
+        id,
+        fire_at,
+        interval: None,
+        remaining: None,
+        cancelled: false,
+        owner_addon,
+        callback_receives_timer: false,
+        callback_arg: None,
+    };
+    app.sim_state.borrow_mut().rilua_timers.push_back(timer);
 }
 
 /// Remove a timer callback from the registry table (called after firing/cancel).
