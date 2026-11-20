@@ -142,10 +142,12 @@ fn get_trainer_service_num_ability_req(state: &mut LuaState) -> LuaResult<u32> {
 
 fn get_trainer_service_ability_req(state: &mut LuaState) -> LuaResult<u32> {
     let service_index = i32::from_stack(state, 1)?;
-    let requirement_index =
-        usize::try_from(i32::from_stack(state, 2)?.saturating_sub(1)).unwrap_or(usize::MAX);
-    let requirement = service_from_index(state, service_index)?
-        .and_then(|service| service.ability_requirements.get(requirement_index).cloned());
+    let requirement_index = i32::from_stack(state, 2)?
+        .checked_sub(1)
+        .and_then(|index| usize::try_from(index).ok());
+    let requirement = service_from_index(state, service_index)?.and_then(|service| {
+        requirement_index.and_then(|index| service.ability_requirements.get(index).cloned())
+    });
     match requirement {
         Some(requirement) => {
             let name = create_string(state, &requirement.name);
