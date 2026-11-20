@@ -52,7 +52,8 @@ pub(crate) fn register_slot(state: &mut LuaState, namespace: GcRef<Table>) -> Lu
 fn produce_azerite_essence_tooltip(state: &mut LuaState) -> LuaResult<u32> {
     let essence_id = tooltip_getter_args::round7_signed(state, 1, ESSENCE_USAGE)?;
     let requested_rank = tooltip_getter_args::round7_optional_unsigned(state, 2, ESSENCE_USAGE)?;
-    if ACTIVE != ClientProfile::Retail || essence_id < 0 {
+    // INFERRED for Forever: reuse Retail's supplied essence catalog and state model.
+    if !matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever) || essence_id < 0 {
         return no_values();
     }
     let tooltip = compose_tooltip(
