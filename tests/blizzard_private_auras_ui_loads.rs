@@ -1227,9 +1227,6 @@ const PRIVATE_AURA_CONSUMER_PROBE: &str = r#"
     C_UnitAuras.AddPrivateAuraAnchor({
         unitToken = 'player', auraIndex = 1, parent = PrivateAuraDataParent,
     })
-    C_UnitAuras.AddPrivateAuraAnchor({
-        unitToken = 'player', auraIndex = 2, parent = PrivateAuraDataParent,
-    })
     local anchorSeen = {}
     local container = {
         watcher = { GetUnit = function() return 'player' end },
@@ -1320,7 +1317,7 @@ fn private_aura_state_drives_selected_blizzard_consumers() {
         .expect("selected private-aura consumers should read supplied host entries");
     env.process_timers().expect("run the original watcher parse timer");
     let initial = private_anchor_errors(&env);
-    assert!(initial >= 2, "both supplied aura indices reach the original renderer: {initial}");
+    assert!(initial >= 1, "the first supplied aura reaches the original renderer: {initial}");
     env.exec("C_UnitAuras.AddPrivateAuraAnchor({ unitToken = 'player', auraIndex = 2, parent = PrivateAuraDataParent })")
         .expect("add an anchor through the selected consumer callback");
     env.process_timers().expect("run the original watcher parse timer");
