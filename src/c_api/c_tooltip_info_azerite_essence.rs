@@ -102,7 +102,8 @@ fn produce_azerite_essence_slot_tooltip(state: &mut LuaState) -> LuaResult<u32> 
             "outside of expected range 0 to 3 - {ESSENCE_SLOT_USAGE}"
         )));
     }
-    if ACTIVE != ClientProfile::Retail {
+    // INFERRED for Forever: reuse Retail's supplied milestone and essence state.
+    if !matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever) {
         return no_values();
     }
     let Some(essence_id) = active_essence_for_slot(state, i32::from(slot)) else {
