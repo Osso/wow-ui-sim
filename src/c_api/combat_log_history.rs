@@ -128,7 +128,12 @@ fn register_combat_log_namespace(state: &mut LuaState) -> LuaResult<()> {
 }
 
 fn register_secure_namespace(state: &mut LuaState) -> LuaResult<()> {
-    let namespace = super::ensure_namespace(state, "C_CombatLogSecure")?;
+    // Retail publishes SecureOnly methods inside __secureenv; Forever uses its global namespace.
+    let namespace = if crate::client_profile::is_active_retail_12_1_5() {
+        super::ensure_secure_namespace(state, "C_CombatLogSecure")?
+    } else {
+        super::ensure_namespace(state, "C_CombatLogSecure")?
+    };
     table_set_rust_fn_static(state, namespace, "GetEntryCount", entry_count)?;
     table_set_rust_fn_static(state, namespace, "GetCurrentEntryInfo", current_event_info)?;
     table_set_rust_fn_static(state, namespace, "GetCurrentEventInfo", current_event_info)?;

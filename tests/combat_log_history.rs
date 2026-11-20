@@ -48,6 +48,8 @@ fn install_test_message_formatter(env: &WowLuaEnv) {
     env.exec(
         r#"
         local original = assert(rawget(__secureenv, "CombatLogProcessor"))
+        local secure = assert(getfenv(original.StartRefiltering).C_CombatLogSecure)
+        _G.__combatLogHistoryTestSecure = secure
         local processor = CreateFromMixins(original)
         _G.__combatLogHistoryTestProcessor = processor
         processor.GenerateMessage = function(_, _, _, event)
@@ -61,11 +63,11 @@ fn install_test_message_formatter(env: &WowLuaEnv) {
 fn assert_empty_history_contract(env: &WowLuaEnv) {
     env.exec(
         r##"
-        assert(C_CombatLogSecure.GetEntryCount() == 0)
-        local emptyCount = select("#", C_CombatLogSecure.GetCurrentEntryInfo())
-        local emptyEntry = C_CombatLogSecure.GetCurrentEntryInfo()
+        assert(__combatLogHistoryTestSecure.GetEntryCount() == 0)
+        local emptyCount = select("#", __combatLogHistoryTestSecure.GetCurrentEntryInfo())
+        local emptyEntry = __combatLogHistoryTestSecure.GetCurrentEntryInfo()
         assert(emptyCount == 1 and emptyEntry == nil, "empty current-entry is one nil")
-        assert(C_CombatLogSecure.SeekToNewestEntry() == false, "empty seek returns false")
+        assert(__combatLogHistoryTestSecure.SeekToNewestEntry() == false, "empty seek returns false")
         assert(C_CombatLog.ShouldShowCurrentEntry() == false)
         __combatLogHistoryTestProcessor:StartRefiltering()
         "##,
