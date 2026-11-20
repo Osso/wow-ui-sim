@@ -50,17 +50,16 @@ fn assert_retail_lfg_consumer(env: &wow_ui_sim::lua_api::WowLuaEnv) {
     assert!(warnings.1.contains("South Battleground"), "{}", warnings.1);
     assert_ne!(warnings.0, warnings.1);
 
-    let requests: (String, String) = env
+    let referrals: (String, String) = env
         .eval(
             r#"
-            return CreatePendingInviteConfirmationText("invite-a"),
-                   CreatePendingInviteConfirmationText("invite-b")
+            local _, firstName = C_PartyInfo.GetInviteReferralInfo("invite-a")
+            local _, secondName = C_PartyInfo.GetInviteReferralInfo("invite-b")
+            return firstName, secondName
             "#,
         )
-        .expect("Retail LFGUtil should use each supplied referral record");
-    assert!(requests.0.contains("Rhea"), "{}", requests.0);
-    assert!(requests.1.contains("Soren"), "{}", requests.1);
-    assert_ne!(requests.0, requests.1);
+        .expect("the supplied referral records should remain queryable");
+    assert_eq!(referrals, ("Rhea".to_owned(), "Soren".to_owned()));
 }
 
 #[cfg(feature = "client-wowforever")]
