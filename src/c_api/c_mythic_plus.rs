@@ -155,8 +155,11 @@ fn register_mythic_plus_status_handlers(state: &mut LuaState, ns: GcRef<Table>) 
 }
 
 fn register_mythic_plus_request_handlers(state: &mut LuaState, ns: GcRef<Table>) -> LuaResult<()> {
-    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
-    {
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
         table_set_rust_fn_static(state, ns, "GetLastWeeklyChest", get_last_weekly_chest)?;
         table_set_rust_fn_static(state, ns, "RequestCurrentAffixes", request_current_affixes)?;
         table_set_rust_fn_static(state, ns, "RequestMapInfo", request_map_info)?;
@@ -285,7 +288,6 @@ fn noop(_state: &mut LuaState) -> LuaResult<u32> {
 }
 
 // INFERRED pending R88cc: the cache publishes its challenge map ID and level.
-#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn get_last_weekly_chest(state: &mut LuaState) -> LuaResult<u32> {
     let chest = borrow_state(state)?.mythic_plus.last_weekly_chest;
     let Some(chest) = chest else {
@@ -297,22 +299,18 @@ fn get_last_weekly_chest(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 // INFERRED pending R88cc: each refresh request publishes its cache update.
-#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn request_current_affixes(state: &mut LuaState) -> LuaResult<u32> {
     publish_mythic_plus_update(state, "MYTHIC_PLUS_CURRENT_AFFIX_UPDATE")
 }
 
-#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn request_map_info(state: &mut LuaState) -> LuaResult<u32> {
     publish_mythic_plus_update(state, "CHALLENGE_MODE_MAPS_UPDATE")
 }
 
-#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn request_rewards(state: &mut LuaState) -> LuaResult<u32> {
     publish_mythic_plus_update(state, "WEEKLY_REWARDS_UPDATE")
 }
 
-#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn publish_mythic_plus_update(state: &mut LuaState, event: &str) -> LuaResult<u32> {
     crate::lua_api::globals::state_backed_queries::dispatch_event_now(state, event, &[])?;
     Ok(0)
