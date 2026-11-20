@@ -17,43 +17,10 @@ if rawget(C_PaperDollInfo, "GetStaggerPercentage") == nil then
 end
 "#;
 
-#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
-pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
-    rilua::LuaApiMut::register_function(lua, "UnitStagger", unit_stagger)?;
-    Ok(())
-}
-
 #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(UNIT_STAGGER_DEFAULTS_LUA)?;
     Ok(())
-}
-
-#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
-fn unit_stagger(state: &mut rilua::vm::state::LuaState) -> rilua::LuaResult<u32> {
-    use crate::lua_bridge::FromStack;
-
-    let unit = String::from_stack(state, 1)?;
-    let amount = if matches!(unit.as_str(), "player" | "self") {
-        crate::lua_api::methods::borrow_state(state)?
-            .player
-            .stagger_amount
-    } else {
-        0.0
-    };
-    state.push(rilua::Val::Num(amount));
-    Ok(1)
-}
-
-#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
-pub(crate) fn set_player_stagger(state: &mut rilua::vm::state::LuaState) -> rilua::LuaResult<u32> {
-    use crate::lua_bridge::FromStack;
-
-    let amount = f64::from_stack(state, 1)?;
-    crate::lua_api::methods::borrow_state_mut(state)?
-        .player
-        .stagger_amount = amount;
-    Ok(0)
 }
 
 #[cfg(test)]
