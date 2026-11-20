@@ -1074,3 +1074,48 @@ fn transmog_outfit_slot_defaults_are_not_c_api_temporary_shims() {
         "C_TransmogOutfitInfo slot/outfit defaults should not be wired through C API registration"
     );
 }
+
+#[cfg(feature = "client-wowforever")]
+fn load_wardrobe_is_custom_set_dressed(env: &WowLuaEnv) {
+    let path = wow_ui_sim::blizzard_ui_sync::default_cache_addons_path()
+        .unwrap()
+        .join("Blizzard_FrameXML/WardrobeCustomSets.lua");
+    let source = fs::read_to_string(&path).unwrap();
+    let start = source
+        .find("function WardrobeCustomSetDropdownMixin:IsCustomSetDressed()")
+        .unwrap();
+    let body = &source[start..];
+    let end = body
+        .find("\nfunction WardrobeCustomSetDropdownMixin:")
+        .unwrap();
+    env.exec("WardrobeCustomSetDropdownMixin = {}").unwrap();
+    env.exec(&body[..end])
+        .unwrap_or_else(|error| panic!("{}: {error}", path.display()));
+}
+
+#[cfg(feature = "client-wowforever")]
+#[test]
+fn forever_wardrobe_consumer_reads_custom_set_item_info() {
+    let env = env();
+    let set_id: i32 = env
+        .eval(
+            "return C_TransmogCollection.NewCustomSet('Warband', 9, {{appearanceID=42, secondaryAppearanceID=0, illusionID=0}})",
+        )
+        .unwrap();
+    load_wardrobe_is_custom_set_dressed(&env);
+    env.exec(
+        &format!(
+            "Constants = {{Transmog = {{NoTransmogID = -1}}}}; \\
+             WardrobeCustomSetDropdownMixin.GetSelectedCustomSetID = function() return {set_id} end; \\
+             WardrobeCustomSetDropdownMixin.GetItemTransmogInfoList = function() return {{{{appearanceID=42, IsEqual=function(self, other) return self.appearanceID == other.appearanceID end}}}} end",
+        ),
+    )
+    .unwrap();
+    let dressed: bool = env
+        .eval("return WardrobeCustomSetDropdownMixin:IsCustomSetDressed()")
+        .unwrap();
+    assert!(
+        dressed,
+        "the original wardrobe consumer sees the saved item info"
+    );
+}
