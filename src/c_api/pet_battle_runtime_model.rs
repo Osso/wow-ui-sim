@@ -9,7 +9,6 @@ pub struct PetBattleRuntime {
     pub abilities: HashMap<i32, PetBattleAbility>,
     pub ability_states: HashMap<(i32, i32, i32), PetBattleAbilityState>,
     pub auras: HashMap<(i32, i32), Vec<PetBattleAura>>,
-    pub attack_modifiers: HashMap<(i32, i32), f64>,
     pub parser_states: BTreeMap<String, i32>,
     pub matchmaking: PetBattleMatchmaking,
     pub selected_action: Option<(i32, Option<i32>)>,

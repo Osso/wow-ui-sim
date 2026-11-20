@@ -314,6 +314,8 @@ fn register_group_activity_surfaces(state: &mut LuaState) -> LuaResult<()> {
     c_api::c_lfg_info::register_c_lfg_info_surface(state)?;
     c_api::c_pet_battles::register_c_pet_battles_surface(state)?;
     pet_battles::register_pet_battles_surface(state)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    c_api::pet_battle_runtime::register(state)?;
     c_api::c_account_services::register_c_account_services_surface(state)?;
     c_api::c_merchant_frame::register_c_merchant_frame_surface(state)?;
     account_store::register_account_store_surface(state)?;

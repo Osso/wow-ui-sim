@@ -56,7 +56,7 @@ fn supply_names(env: &WowLuaEnv) {
         pet
     })
     .collect();
-    let battle_pet = sim.pet_battles.player_pets[0].clone();
+    let battle_pet = wow_ui_sim::lua_api::state::PetBattlePet::default_player();
     let battle_pets = [("Spark", 70001), ("Hush", 70002), ("Glimmer", 70003)]
         .into_iter()
         .map(|(name, species_id)| {
@@ -83,6 +83,7 @@ fn original_consumer() -> WowLuaEnv {
             "Blizzard_SharedXMLGame",
             "Blizzard_FrameXML",
             "Blizzard_TextStatusBar",
+            "Blizzard_ActionBar",
         ],
         &[],
     );

@@ -1,11 +1,18 @@
 //! Bounded pet-type state reads, not a pet-battle engine or native 2012 parity.
 use wow_ui_sim::lua_api::WowLuaEnv;
+use wow_ui_sim::lua_api::state::PetBattlePet;
 
 fn assert_pet_type_reads(env: &WowLuaEnv) {
     {
         let mut sim = env.state().borrow_mut();
-        sim.pet_battles.player_pets[0].pet_type = 7;
-        sim.pet_battles.enemy_pets[0].pet_type = 9;
+        sim.pet_battles.player_pets = vec![PetBattlePet {
+            pet_type: 7,
+            ..PetBattlePet::default_player()
+        }];
+        sim.pet_battles.enemy_pets = vec![PetBattlePet {
+            pet_type: 9,
+            ..PetBattlePet::default_enemy()
+        }];
     }
     let types: (Option<i32>, Option<i32>) = env
         .eval("return C_PetBattles.GetPetType(1, 1), C_PetBattles.GetPetType(2, 1)")

@@ -734,3 +734,11 @@ pub mod lfg_reward_writer;
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub mod pet_battle_runtime_model;
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) mod pet_battle_runtime;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+mod pet_battle_runtime_queries;
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+mod pet_battle_type_chart;

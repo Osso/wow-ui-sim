@@ -131,7 +131,6 @@ fn supply_ability_and_aura(
             no_strong_weak_hints: true,
         },
     );
-    runtime.attack_modifiers.insert((7, 7), 1.0);
     runtime.auras.insert(
         (1, 1),
         vec![PetBattleAura {

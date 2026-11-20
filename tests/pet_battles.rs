@@ -1,3 +1,8 @@
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+use wow_ui_sim::c_api::pet_battle_runtime_model::{
+    PetBattleAbility, PetBattleAbilityState, PetBattleAura, PetBattleMatchmaking, PetBattleRequest,
+    PetBattleRuntime,
+};
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::lua_api::state::PetBattlePet;
 
@@ -10,14 +15,12 @@ fn seed_sample_pet_battle(env: &WowLuaEnv) {
     seed_sample_pet_battle_state(&mut sim);
     sim.pet_battles.player_pets = seeded_player_pets();
     sim.pet_battles.enemy_pets = seeded_enemy_pets();
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    seed_runtime_inputs(&mut sim.pet_battles.runtime);
     drop(sim);
-    env.exec(
-        r#"
-        A_Admin.SetPetBattleState(1)
-        C_PetBattles._state.isWildBattle = true
-        "#,
-    )
-    .unwrap();
+    env.exec("A_Admin.SetPetBattleState(1)").unwrap();
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+    env.exec("C_PetBattles._state.isWildBattle = true").unwrap();
 }
 
 fn seed_sample_pet_battle_state(sim: &mut wow_ui_sim::lua_api::state::SimState) {
@@ -120,6 +123,7 @@ fn seeded_enemy_pets() -> Vec<PetBattlePet> {
 fn pet_battles_seeded_pet_state_and_abilities_are_exposed() {
     let env = env();
     seed_sample_pet_battle(&env);
+    assert_attack_modifier(&env);
     let result: String = env
         .eval(
             r#"
@@ -185,10 +189,6 @@ fn pet_battles_seeded_pet_state_and_abilities_are_exposed() {
                 return "xp_should_round_trip"
             end
 
-            if C_PetBattles.GetAttackModifier(7, 9) <= 1 then
-                return "expected_seeded_attack_modifier"
-            end
-
             local parserEnv = {}
             C_PetBattles.GetAllStates(parserEnv)
             if parserEnv.STATE_Stat_Power ~= 18 then
@@ -206,6 +206,7 @@ fn pet_battles_seeded_pet_state_and_abilities_are_exposed() {
     );
 }
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn pet_battles_actions_and_queue_state_are_mutable() {
     let env = env();
@@ -288,4 +289,210 @@ fn pet_battles_actions_and_queue_state_are_mutable() {
         result, "ok",
         "Pet battle actions should mutate seeded state"
     );
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn seed_runtime_inputs(runtime: &mut PetBattleRuntime) {
+    runtime.is_wild = true;
+    runtime.qualities = [
+        ((1, 1), 3),
+        ((1, 2), 3),
+        ((1, 3), 3),
+        ((2, 1), 3),
+        ((2, 2), 3),
+    ]
+    .into();
+    runtime.auras.insert(
+        (1, 1),
+        vec![PetBattleAura {
+            ability_id: 1002,
+            instance_id: 9001,
+            turns_remaining: 2,
+            is_buff: true,
+        }],
+    );
+    runtime.parser_states.insert("Stat_Power".into(), 18);
+    seed_ability_inputs(runtime);
+    seed_ability_states(runtime);
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn seed_ability_inputs(runtime: &mut PetBattleRuntime) {
+    for (id, name, cooldown, description, pet_type) in [
+        (1001, "Arcane Bite", 2, "Arcane bite.", 7),
+        (1002, "Blink Ward", 1, "Blink ward.", 7),
+        (1003, "Spring-Loaded", 2, "Jump forward.", 9),
+        (1004, "Snowball", 1, "Throw snowball.", 8),
+        (1101, "Pebble Toss", 1, "Pebble toss.", 9),
+        (1102, "Bog Kick", 1, "Bog kick.", 9),
+    ] {
+        runtime.abilities.insert(
+            id,
+            PetBattleAbility {
+                name: name.into(),
+                icon: 0,
+                max_cooldown: cooldown,
+                description: description.into(),
+                num_turns: 1,
+                pet_type,
+                no_strong_weak_hints: false,
+            },
+        );
+    }
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn seed_ability_states(runtime: &mut PetBattleRuntime) {
+    for (owner, slot, ability, cooldown) in [
+        (1, 1, 1, 0),
+        (1, 1, 2, 1),
+        (1, 2, 1, 0),
+        (1, 3, 1, 0),
+        (2, 1, 1, 0),
+        (2, 2, 1, 0),
+    ] {
+        runtime.ability_states.insert(
+            (owner, slot, ability),
+            PetBattleAbilityState {
+                usable: true,
+                cooldown,
+                lockdown: 0,
+            },
+        );
+    }
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+const QUEUED_ASSERTIONS: &str = r#"
+    local queueState, estimatedTime, queuedTime = C_PetBattles.GetPVPMatchmakingInfo()
+    if queueState ~= "queued" then return "matchmaking_should_project_host_queue_state" end
+    if estimatedTime ~= 12 or queuedTime ~= 4 then return "queue_timers_should_match_input" end
+    return "ok"
+"#;
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+const ACCEPT_ASSERTIONS: &str = r#"
+    if not C_PetBattles.CanAcceptQueuedPVPMatch() then
+        return "queue_should_be_accepting_before_accept"
+    end
+    C_PetBattles.AcceptQueuedPVPMatch()
+    if C_PetBattles.GetPVPMatchmakingInfo() ~= "entry" then
+        return "accept_should_update_queue_status"
+    end
+    if C_PetBattles.CanAcceptQueuedPVPMatch() then
+        return "accept_should_clear_accept_flag"
+    end
+    return "ok"
+"#;
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn assert_matchmaking_boundary(env: &WowLuaEnv) {
+    env.exec("C_PetBattles.StartPVPMatchmaking()").unwrap();
+    env.exec("assert(C_PetBattles.GetPVPMatchmakingInfo() == nil, 'request is not a queue acknowledgement')").unwrap();
+    env.state().borrow_mut().pet_battles.runtime.matchmaking = PetBattleMatchmaking {
+        status: 1,
+        estimated_time: 12,
+        queued_time_ms: 4000,
+        can_accept: false,
+    };
+    assert_eq!(env.eval::<String>(QUEUED_ASSERTIONS).unwrap(), "ok");
+    {
+        let mut sim = env.state().borrow_mut();
+        sim.pet_battles.runtime.matchmaking.status = 3;
+        sim.pet_battles.runtime.matchmaking.can_accept = true;
+    }
+    assert_eq!(env.eval::<String>(ACCEPT_ASSERTIONS).unwrap(), "ok");
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn assert_duel_and_report_requests(env: &WowLuaEnv) {
+    let _ = env.state().borrow_mut().pet_battles.runtime.take_requests();
+    env.exec(
+        r#"
+        C_PetBattles.StartPVPDuel("target", true)
+        C_PetBattles.AcceptPVPDuel()
+        C_PetBattles.SetPendingReportBattlePetTarget(3)
+        C_PetBattles.SetPendingReportTargetFromUnit("mouseover")
+    "#,
+    )
+    .unwrap();
+    let requests = env.state().borrow_mut().pet_battles.runtime.take_requests();
+    assert_eq!(
+        requests,
+        vec![
+            PetBattleRequest::StartDuel {
+                unit: "target".into(),
+                exact_match: true
+            },
+            PetBattleRequest::AcceptDuel,
+            PetBattleRequest::ReportPet(3),
+            PetBattleRequest::ReportUnit("mouseover".into()),
+        ]
+    );
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+const PUBLIC_ACTION_ASSERTIONS: &str = r#"
+    C_PetBattles.UseAbility(2)
+    local actionType, actionIndex = C_PetBattles.GetSelectedAction()
+    if actionType ~= Enum.BattlePetAction.Ability or actionIndex ~= 2 then
+        return "use_ability_should_select_action"
+    end
+
+    C_PetBattles.ChangePet(2)
+    actionType, actionIndex = C_PetBattles.GetSelectedAction()
+    if actionType ~= Enum.BattlePetAction.SwitchPet or actionIndex ~= 2 then
+        return "change_pet_should_select_swap_action"
+    end
+
+    C_PetBattles.UseTrap()
+    actionType = C_PetBattles.GetSelectedAction()
+    if actionType ~= Enum.BattlePetAction.Trap then
+        return "use_trap_should_select_trap_action"
+    end
+
+    C_PetBattles.SkipTurn()
+    actionType = C_PetBattles.GetSelectedAction()
+    if actionType ~= Enum.BattlePetAction.Skip then
+        return "skip_turn_should_select_skip_action"
+    end
+
+    C_PetBattles.ForfeitGame()
+    if C_PetBattles.GetBattleState() ~= Enum.PetbattleState.Finished then
+        return "forfeit_should_update_battle_state"
+    end
+
+    return "ok"
+"#;
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn pet_battles_actions_and_queue_state_are_mutable() {
+    let env = env();
+    seed_sample_pet_battle(&env);
+    assert_matchmaking_boundary(&env);
+    assert_duel_and_report_requests(&env);
+    assert_eq!(
+        env.eval::<String>(PUBLIC_ACTION_ASSERTIONS).unwrap(),
+        "ok",
+        "Pet battle actions should mutate seeded state"
+    );
+}
+
+fn assert_attack_modifier(env: &WowLuaEnv) {
+    // Main #1968: selected chart uses Elemental -> Mechanical; legacy unchanged.
+    let defender = if cfg!(any(
+        feature = "client-retail",
+        feature = "client-wowforever"
+    )) {
+        10
+    } else {
+        9
+    };
+    let modifier: f64 = env
+        .eval(&format!(
+            "return C_PetBattles.GetAttackModifier(7, {defender})"
+        ))
+        .unwrap();
+    assert!(modifier > 1.0, "expected_seeded_attack_modifier");
 }

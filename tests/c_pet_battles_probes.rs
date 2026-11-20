@@ -7,10 +7,28 @@ fn env() -> WowLuaEnv {
     WowLuaEnv::new().expect("Failed to create Lua environment")
 }
 
+/// The populated scenario belongs to this test, not production initialization.
+fn seeded_env() -> WowLuaEnv {
+    let env = env();
+    {
+        let mut sim = env.state().borrow_mut();
+        sim.pet_battles.player_pets = vec![PetBattlePet::default_player()];
+        sim.pet_battles.enemy_pets = vec![PetBattlePet::default_enemy()];
+        sim.pet_battles.num_pets_player = 1;
+        sim.pet_battles.num_pets_enemy = 1;
+        #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+        {
+            sim.pet_battles.runtime.qualities.insert((1, 1), 3);
+            sim.pet_battles.runtime.qualities.insert((2, 1), 3);
+        }
+    }
+    env
+}
+
 // ── Defaults ─────────────────────────────────────────────────────────────────
 
 #[test]
-fn get_num_pets_defaults_one_per_side() {
+fn get_num_pets_default_roster_matches_profile() {
     let env = env();
     let (player, enemy): (i32, i32) = env
         .eval(
@@ -19,8 +37,16 @@ fn get_num_pets_defaults_one_per_side() {
             "#,
         )
         .unwrap();
-    assert_eq!(player, 1);
-    assert_eq!(enemy, 1);
+    let expected = if cfg!(any(
+        feature = "client-retail",
+        feature = "client-wowforever"
+    )) {
+        0
+    } else {
+        1 // INFERRED legacy sample roster remains unchanged.
+    };
+    assert_eq!(player, expected);
+    assert_eq!(enemy, expected);
 }
 
 #[test]
@@ -57,7 +83,7 @@ fn get_active_pet_reflects_mutation() {
 
 #[test]
 fn get_pet_info_returns_seeded_player_pet_name() {
-    let env = env();
+    let env = seeded_env();
     let name: String = env
         .eval("local n = C_PetBattles.GetPetInfo(1, 1); return n")
         .unwrap();
@@ -66,7 +92,7 @@ fn get_pet_info_returns_seeded_player_pet_name() {
 
 #[test]
 fn get_pet_info_enemy_returns_rabbit() {
-    let env = env();
+    let env = seeded_env();
     let name: String = env
         .eval("local n = C_PetBattles.GetPetInfo(2, 1); return n")
         .unwrap();
@@ -75,7 +101,7 @@ fn get_pet_info_enemy_returns_rabbit() {
 
 #[test]
 fn get_pet_info_out_of_range_returns_nil() {
-    let env = env();
+    let env = seeded_env();
     let result: Option<String> = env.eval("return C_PetBattles.GetPetInfo(1, 99)").unwrap();
     assert!(result.is_none(), "out-of-range slot should return nil");
 }
@@ -102,7 +128,7 @@ fn get_ability_info_by_id_unknown_returns_nil() {
 
 #[test]
 fn get_pet_species_id_matches_journal_model_scenes_for_default_battle_pets() {
-    let env = env();
+    let env = seeded_env();
     let result: String = env
         .eval(
             r#"
@@ -129,7 +155,7 @@ fn get_pet_species_id_matches_journal_model_scenes_for_default_battle_pets() {
 
 #[test]
 fn get_pet_stats_returns_seeded_values() {
-    let env = env();
+    let env = seeded_env();
     let (hp, max_hp, power, speed, pet_type): (i32, i32, i32, i32, i32) =
         env.eval("return C_PetBattles.GetPetStats(1, 1)").unwrap();
     assert_eq!(hp, 289);
@@ -141,7 +167,7 @@ fn get_pet_stats_returns_seeded_values() {
 
 #[test]
 fn get_pet_stats_mutation_reflects() {
-    let env = env();
+    let env = seeded_env();
     {
         let mut sim = env.state().borrow_mut();
         sim.pet_battles.player_pets[0].current_health = 150;
@@ -157,7 +183,7 @@ fn get_pet_stats_mutation_reflects() {
 
 #[test]
 fn get_pet_ability_list_returns_ability_count() {
-    let env = env();
+    let env = seeded_env();
     let count: i32 = env
         .eval(
             r#"
@@ -171,7 +197,7 @@ fn get_pet_ability_list_returns_ability_count() {
 
 #[test]
 fn get_pet_ability_list_first_id_correct() {
-    let env = env();
+    let env = seeded_env();
     let first_id: i32 = env
         .eval("local ids = C_PetBattles.GetPetAbilityList(1, 1); return ids[1]")
         .unwrap();
@@ -182,7 +208,7 @@ fn get_pet_ability_list_first_id_correct() {
 
 #[test]
 fn get_all_effective_ability_ids_returns_array() {
-    let env = env();
+    let env = seeded_env();
     let (count, id): (i32, i32) = env
         .eval(
             r#"
@@ -233,7 +259,7 @@ fn get_turn_result_default_zero() {
 
 #[test]
 fn get_breed_quality_returns_numeric_seeded_and_missing_values() {
-    let env = env();
+    let env = seeded_env();
     let result: String = env
         .eval(
             r#"
@@ -259,7 +285,7 @@ fn get_breed_quality_returns_numeric_seeded_and_missing_values() {
 
 #[test]
 fn get_xp_returns_zero_by_default() {
-    let env = env();
+    let env = seeded_env();
     let (xp, max_xp): (i32, i32) = env.eval("return C_PetBattles.GetXP(1, 1)").unwrap();
     assert_eq!(xp, 0);
     assert_eq!(max_xp, 100);
@@ -316,7 +342,7 @@ fn start_pvp_matchmaking_sets_flag() {
 
 #[test]
 fn get_pet_ability_info_returns_name_and_charges() {
-    let env = env();
+    let env = seeded_env();
     let (name, _icon, max_charges): (String, i32, i32) = env
         .eval("return C_PetBattles.GetPetAbilityInfo(1, 1, 1)")
         .unwrap();
