@@ -294,6 +294,8 @@ pub mod c_super_track;
 #[cfg(feature = "client-retail")]
 pub mod c_talking_head;
 pub(crate) mod challenge_run;
+#[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
+pub mod combat_log_history;
 pub mod container_purchase;
 mod container_purchase_args;
 pub mod container_quest;

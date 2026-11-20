@@ -315,6 +315,8 @@ macro_rules! build_empty_sim_state {
             azerite_empowered: AzeriteEmpoweredItemState::default(),
             barber_shop: BarberShopState::default(),
             damage_meter: crate::c_api::c_damage_meter::DamageMeterInput::default(),
+            #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
+            combat_log_history: crate::c_api::combat_log_history::CombatLogHistory::default(),
             item_interaction: None,
             item_interaction_tooltip_input: None,
             possession_spell_id: None,
