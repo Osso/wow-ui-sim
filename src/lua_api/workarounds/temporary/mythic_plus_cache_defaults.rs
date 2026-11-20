@@ -33,6 +33,7 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
 
 #[cfg(test)]
 mod tests {
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     use crate::lua_api::WowLuaEnv;
 
     #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
