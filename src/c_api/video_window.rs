@@ -20,7 +20,8 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     table_set_rust_fn_static(state, namespace, "GetCurrentGameWindowSize", current_size)?;
     table_set_rust_fn_static(state, namespace, "GetDefaultGameWindowSize", current_size)?;
     table_set_rust_fn_static(state, namespace, "GetGameWindowSizes", available_sizes)?;
-    table_set_rust_fn_static(state, namespace, "SetGameWindowSize", set_size)
+    table_set_rust_fn_static(state, namespace, "SetGameWindowSize", set_size)?;
+    table_set_rust_fn_static(state, namespace, "GetGxAdapterInfo", adapter_info)
 }
 
 fn current_dimensions(state: &LuaState) -> LuaResult<(f32, f32)> {
@@ -51,6 +52,33 @@ fn available_sizes(state: &mut LuaState) -> LuaResult<u32> {
     };
     table_set_num(state, sizes_ref, 1.0, size);
     state.push(Val::Table(sizes_ref));
+    Ok(1)
+}
+
+pub(crate) fn default_gx_adapter_info() -> Vec<GxAdapterInfoDetails> {
+    vec![GxAdapterInfoDetails {
+        // INFERRED R88bx: use a descriptive simulator host adapter until aso
+        // provides evidence for live wgpu adapter naming and classification.
+        name: "Simulator Graphics Adapter".to_owned(),
+        is_low_power: false,
+        is_external: false,
+    }]
+}
+
+fn adapter_info(state: &mut LuaState) -> LuaResult<u32> {
+    let adapters = borrow_state(state)?.gx_adapter_info.clone();
+    let results = create_table(state);
+    let Val::Table(results) = results else {
+        unreachable!("create_table returns a table")
+    };
+    for (index, adapter) in adapters.iter().enumerate() {
+        let entry = create_table(state);
+        table_set(state, entry, "name", Val::Str(adapter.name.clone().into()));
+        table_set(state, entry, "isLowPower", Val::Bool(adapter.is_low_power));
+        table_set(state, entry, "isExternal", Val::Bool(adapter.is_external));
+        table_set_num(state, results, (index + 1) as f64, entry);
+    }
+    state.push(Val::Table(results));
     Ok(1)
 }
 

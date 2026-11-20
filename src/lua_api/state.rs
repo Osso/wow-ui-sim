@@ -92,7 +92,7 @@ macro_rules! build_empty_sim_state {
             #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
             last_gamepad_input_timestamp: None,
             #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
-            gx_adapter_info: Vec::new(),
+            gx_adapter_info: crate::c_api::video_window::default_gx_adapter_info(),
             video_capability_bytes: Default::default(),
             #[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
             performance_bar_protocol_types: None,

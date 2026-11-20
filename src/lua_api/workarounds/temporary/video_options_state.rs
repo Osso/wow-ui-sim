@@ -120,15 +120,6 @@ if rawget(C_VideoOptions, "SetGameWindowSize") == nil then
 end
 "#;
 
-// Device enumeration is out of scope; this fallback is not a hardware claim.
-const UNKNOWN_VIDEO_ADAPTERS_LUA: &str = r#"
-if rawget(C_VideoOptions, "GetGxAdapterInfo") == nil then
-    function C_VideoOptions.GetGxAdapterInfo()
-        return {}
-    end
-end
-"#;
-
 // Preserve the legacy fixture outside R63's Retail/PTR/Forever scope.
 const LEGACY_VIDEO_CAPABILITIES_LUA: &str = r#"
 if rawget(C_VideoOptions, "IsSpellVisualDensitySystemSupported") == nil then
@@ -152,13 +143,11 @@ end
 "#;
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
-    if matches!(
+    if !matches!(
         crate::client_profile::ACTIVE,
         crate::client_profile::ClientProfile::Retail
             | crate::client_profile::ClientProfile::WowForever
     ) {
-        lua.exec(UNKNOWN_VIDEO_ADAPTERS_LUA)?;
-    } else {
         lua.exec(VIDEO_OPTIONS_STATE_LUA)?;
     }
     if !crate::c_api::video_capabilities::publishes_capabilities() {
