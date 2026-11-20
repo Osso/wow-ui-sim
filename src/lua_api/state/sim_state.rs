@@ -104,6 +104,8 @@ pub struct SimState {
     /// TOC files parsed in this UI session; ReloadUI starts a new session.
     pub(crate) toc_cache: std::rc::Rc<crate::toc::TocCache>,
     pub(crate) addon_message_prefixes: crate::c_api::addon_message_prefixes::AddonMessagePrefixes,
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub(crate) social_queue: crate::c_api::c_social_queue::SocialQueueState,
     pub addon_saved_enable_state: Option<AddonEnableSnapshot>,
     pub addon_saved_version_check_enabled: Option<bool>,
     pub system_chat_log: Vec<String>,

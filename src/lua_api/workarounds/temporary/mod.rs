@@ -180,6 +180,7 @@ pub(crate) mod settings_surface_defaults;
 pub(crate) mod shared_character_services_defaults;
 pub(crate) mod shared_xml_anim_mixins;
 pub(crate) mod shared_xml_utility_defaults;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod social_queue_defaults;
 pub(crate) mod social_service_defaults;
 pub(crate) mod sound_driver_defaults;

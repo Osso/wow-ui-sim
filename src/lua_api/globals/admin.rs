@@ -118,6 +118,8 @@ pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
     )?;
     let builder = crate::c_api::c_stable_info::active_list::register_admin(builder)?;
     let builder = crate::c_api::c_stable_info::pet_info::register_admin(builder)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let builder = crate::c_api::c_social_queue::register_admin(builder)?;
     let builder = crate::c_api::c_stable_info::pet_spec_infos::register_admin(builder)?;
     let builder = crate::c_api::challenge_run::register_admin(builder)?;
     let builder = if crate::c_api::restricted_actions::supported() {

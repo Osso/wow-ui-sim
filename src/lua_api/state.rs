@@ -160,6 +160,8 @@ macro_rules! build_empty_sim_state {
             addon_saved_version_check_enabled: None,
             system_chat_log: Vec::new(),
             addon_message_prefixes: Default::default(),
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            social_queue: Default::default(),
             #[cfg(feature = "client-retail")]
             talking_head: Default::default(),
             adventure_map: AdventureMapState::default(),

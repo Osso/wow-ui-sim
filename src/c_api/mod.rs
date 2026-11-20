@@ -341,6 +341,8 @@ pub mod c_scenario_info;
 pub mod c_secrets;
 pub mod c_settings_util;
 pub mod c_social;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) mod c_social_queue;
 mod c_social_restrictions;
 pub(crate) mod c_social_ui;
 pub mod c_sound;
