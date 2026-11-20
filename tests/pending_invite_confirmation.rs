@@ -21,6 +21,7 @@ fn pending_invite_confirmation_event_drives_the_dialog_queue() {
 fn load_invite_consumers(ui: &Path) -> WowLuaEnv {
     let env = new_blizzard_addon_env(ui);
     let roots = [
+        "Blizzard_ChatFrameBase",
         "Blizzard_Game",
         "Blizzard_LFGUtil",
         "Blizzard_StaticPopup_Game",
