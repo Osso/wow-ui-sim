@@ -53,6 +53,7 @@ use rilua::LuaResult;
 use rilua::Val;
 use rilua::vm::state::LuaState;
 
+#[cfg(feature = "client-wowforever")]
 pub(super) fn register_forever(state: &mut LuaState) -> LuaResult<()> {
     let namespace = ensure_namespace(state, "C_TransmogOutfitInfo")?;
     lifecycle::register_forever(state, namespace)

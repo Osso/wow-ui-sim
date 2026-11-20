@@ -10,6 +10,7 @@ use rilua::{LuaResult, Val};
 
 use super::{OutfitEntry, model::valid_name};
 
+#[cfg(feature = "client-wowforever")]
 pub(super) fn register_forever(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
     table_set_rust_fn_static(state, namespace, "AddNewOutfit", add_new_outfit)?;
     table_set_rust_fn_static(state, namespace, "IsValidTransmogOutfitName", is_valid_name)
