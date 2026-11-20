@@ -20,7 +20,7 @@ A_Admin.SetSocialQueueGroups([[ [
 "#;
 const CONFIG_INPUT: &str =
     r#"A_Admin.SetSocialQueueConfig([[{"QUEUE_MULTIPLIER":1,"PLAYER_MULTIPLIER":1}]])"#;
-const FRIENDS_FRAME_ASSERTIONS: &str = r#"
+const QUICK_JOIN_ASSERTIONS: &str = r#"
 local groups = C_SocialQueue.GetAllGroups()
 assert(#groups == 2 and groups[1] == "group-alpha" and groups[2] == "group-beta")
 local canJoinA, queueCountA = C_SocialQueue.GetGroupInfo(groups[1])
@@ -30,11 +30,18 @@ assert(#C_SocialQueue.GetGroupMembers(groups[1]) == 0)
 assert(C_SocialQueue.GetGroupQueues(groups[2])[1].clientID == 202)
 FriendsFrame_UpdateQuickJoinTab(#groups)
 assert(FriendsFrameTab4:GetText() == QUICK_JOIN .. " " .. string.format(NUMBER_IN_PARENTHESES, 2))
+local entries = QuickJoinFrame.entries:GetEntries()
+assert(#entries == 2)
+assert(entries[1]:GetGUID() == "group-alpha" and entries[2]:GetGUID() == "group-beta")
+assert(not entries[1]:HasLocalRelationshipWithLeader())
+assert(entries[2]:HasLocalRelationshipWithLeader())
 "#;
 
 fn setup() -> WowLuaEnv {
     let ui = blizzard_ui_dir();
     let env = new_blizzard_addon_env(&ui);
+    env.exec("IsGuildMember = function(guid) return guid == 'leader-beta' end")
+        .expect("fixture supplies guild membership for the beta group leader");
     env.exec(CONFIG_INPUT)
         .expect("host config should be supplied");
     env.exec(GROUP_INPUT)
@@ -55,8 +62,8 @@ fn social_queue_config_returns_host_supplied_fields() {
 }
 
 #[test]
-fn friends_frame_quick_join_consumer_reads_distinct_host_groups() {
+fn quick_join_consumer_reads_distinct_host_groups() {
     let env = setup();
-    env.exec(FRIENDS_FRAME_ASSERTIONS)
-        .expect("FriendsFrame Quick Join should display supplied social queue groups");
+    env.exec(QUICK_JOIN_ASSERTIONS)
+        .expect("Quick Join should display supplied social queue groups");
 }
