@@ -34,10 +34,14 @@ fn assert_processor_is_runtime_selected() {
 fn load_combat_log_processor() -> WowLuaEnv {
     let (env, loaded) = crate::common::blizzard_addon_harness::build_blizzard_addon_closure_env(
         &blizzard_ui_dir(),
-        &["Blizzard_CombatLog"],
+        &["Blizzard_CombatLogProcessor"],
         &[],
     );
-    assert!(loaded.iter().any(|name| name == "Blizzard_CombatLogProcessor"));
+    assert!(
+        loaded
+            .iter()
+            .any(|name| name == "Blizzard_CombatLogProcessor")
+    );
     env
 }
 
@@ -63,7 +67,7 @@ fn assert_empty_history_contract(env: &WowLuaEnv) {
         local emptyEntry = C_CombatLogSecure.GetCurrentEntryInfo()
         assert(emptyCount == 1 and emptyEntry == nil, "empty current-entry is one nil")
         assert(C_CombatLogSecure.SeekToNewestEntry() == false, "empty seek returns false")
-        assert(C_CombatLogSecure.ShouldShowCurrentEntry() == false)
+        assert(C_CombatLog.ShouldShowCurrentEntry() == false)
         __combatLogHistoryTestProcessor:StartRefiltering()
         "##,
     )
