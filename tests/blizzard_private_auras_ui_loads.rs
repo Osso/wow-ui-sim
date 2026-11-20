@@ -1,3 +1,4 @@
+use std::collections::HashSet;
 use std::path::PathBuf;
 
 use wow_ui_sim::loader::{discover_all_blizzard_addons, discover_blizzard_addons_for_screen};
@@ -1222,9 +1223,13 @@ fn blizzard_private_auras_ui_loads_without_addon_specific_lua_errors(env: &WowLu
 const PRIVATE_AURA_CONSUMER_PROBE: &str = r#"
     local privateUI = rawget(__secureenv, 'PrivateAuraAnchorContainerMixin')
     local private = rawget(__secureenv, 'C_UnitAurasPrivate')
-    PrivateAuraDataParent = CreateFrame('Frame')
+    SetCVar('buffDurations', '1')
+    PrivateAuraDataParent = CreateFrame('Frame', 'PrivateAuraDataParent')
     C_UnitAuras.AddPrivateAuraAnchor({
         unitToken = 'player', auraIndex = 1, parent = PrivateAuraDataParent,
+    })
+    C_UnitAuras.AddPrivateAuraAnchor({
+        unitToken = 'player', auraIndex = 2, parent = PrivateAuraDataParent,
     })
     local anchorSeen = {}
     local container = {
@@ -1256,24 +1261,38 @@ const PRIVATE_AURA_UPDATE_PROBE: &str = r#"
 "#;
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
-const PRIVATE_AURA_FRAME_VALUE: &str = r#"
-    for _, frame in ipairs({ PrivateAuraDataParent:GetChildren() }) do
-        if frame.auraInfo and frame.auraInfo.auraInstanceID == 301 then
-            return frame.auraInfo.spellId
-        end
-    end
-    return nil
-"#;
+fn private_aura_widget_state(
+    env: &WowLuaEnv,
+    before: &HashSet<u64>,
+) -> Vec<(u64, bool, Option<i64>, Option<String>, Option<String>)> {
+    let state = env.state().borrow();
+    let mut result = state.widgets.iter_ids().filter(|id| !before.contains(id)).filter_map(|id| {
+        let frame = state.widgets.get(id)?;
+        let icon = state.widgets.get(*frame.children_keys.get("Icon")?)?;
+        let count = state.widgets.get(*frame.children_keys.get("Count")?)?;
+        let duration = state.widgets.get(*frame.children_keys.get("Duration")?)?;
+        Some((id, frame.visible, icon.texture_file_data_id, count.text.clone(), duration.text.clone()))
+    }).collect::<Vec<_>>();
+    result.sort_by_key(|widget| widget.0);
+    result
+}
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
-fn private_aura_entry(id: i32, hide: bool, can_dispel: bool) -> PrivateAuraEntry {
+fn private_aura_entry(
+    id: i32,
+    hide: bool,
+    can_dispel: bool,
+    applications: i32,
+    duration: f64,
+    now: f64,
+) -> PrivateAuraEntry {
     let aura = AuraInfo {
         name: format!("Private {id}"),
         spell_id: id,
         icon: id,
-        duration: 30.0,
-        expiration_time: 20.0,
-        applications: 1,
+        duration,
+        expiration_time: now + duration,
+        applications,
         source_unit: "player".into(),
         is_helpful: true,
         is_raid: false,
@@ -1294,8 +1313,12 @@ fn private_aura_entry(id: i32, hide: bool, can_dispel: bool) -> PrivateAuraEntry
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn supply_private_auras(env: &WowLuaEnv) {
+    let now = env.eval::<f64>("return GetTime()").unwrap();
+    let entries = vec![
+        private_aura_entry(301, true, true, 2, 30.0, now),
+        private_aura_entry(302, false, false, 3, 60.0, now),
+    ];
     let mut state = env.state().borrow_mut();
-    let entries = vec![private_aura_entry(301, true, true), private_aura_entry(302, false, false)];
     state.private_aura_data.private_auras_by_unit.insert("player".into(), entries.clone());
     state.private_aura_data.aura_data_by_unit.insert(
         "player".into(),
@@ -1304,28 +1327,39 @@ fn supply_private_auras(env: &WowLuaEnv) {
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
-fn update_private_spell_id(env: &WowLuaEnv, spell_id: i32) {
-    env.state().borrow_mut().private_aura_data.aura_data_by_unit
-        .get_mut("player").unwrap().get_mut(&301).unwrap().aura.spell_id = spell_id;
-}
-
-#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
-fn anchored_private_spell_id(env: &WowLuaEnv) -> Option<i32> {
-    env.eval(PRIVATE_AURA_FRAME_VALUE).expect("read the private aura frame data")
+fn update_private_aura(env: &WowLuaEnv) {
+    let now = env.eval::<f64>("return GetTime()").unwrap();
+    let mut state = env.state().borrow_mut();
+    let aura = &mut state.private_aura_data.aura_data_by_unit
+        .get_mut("player").unwrap().get_mut(&301).unwrap().aura;
+    aura.spell_id = 999;
+    aura.icon = 999;
+    aura.applications = 4;
+    aura.duration = 45.0;
+    aura.expiration_time = now + 45.0;
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 #[test]
 fn private_aura_state_drives_selected_blizzard_consumers() {
     let env = load_full_game_ui();
+    let before = env.state().borrow().widgets.iter_ids().collect::<HashSet<_>>();
     supply_private_auras(&env);
     env.exec(PRIVATE_AURA_CONSUMER_PROBE)
         .expect("selected private-aura consumers should read supplied host entries");
     env.fire_on_update(0.016).expect("run the original watcher parse");
-    assert_eq!(anchored_private_spell_id(&env), Some(301));
-    update_private_spell_id(&env, 999);
+    let initial = private_aura_widget_state(&env, &before);
+    assert_eq!(initial.len(), 2, "one rendered private aura per anchor: {initial:?}");
+    assert!(initial.iter().all(|(_, shown, ..)| *shown), "{initial:?}");
+    assert_ne!(initial[0].2, initial[1].2, "aura icons remain distinct: {initial:?}");
+    assert_ne!(initial[0].3, initial[1].3, "stack counts remain distinct: {initial:?}");
+    assert_ne!(initial[0].4, initial[1].4, "duration text remains distinct: {initial:?}");
+    update_private_aura(&env);
     env.exec(PRIVATE_AURA_UPDATE_PROBE)
         .expect("dispatch an updated private-aura instance");
     env.fire_on_update(0.016).expect("run the original watcher update");
-    assert_eq!(anchored_private_spell_id(&env), Some(999));
+    let updated = private_aura_widget_state(&env, &before);
+    assert!(updated.iter().any(|(_, shown, icon, count, _)|
+        *shown && *icon == Some(999) && count.as_deref() == Some("4")
+    ), "the existing aura frame reflects the updated private entry: {updated:?}");
 }
