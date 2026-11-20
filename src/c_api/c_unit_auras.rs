@@ -67,7 +67,10 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     Ok(())
 }
 
-fn register_group_buff_settings(state: &mut LuaState, public: Val) -> LuaResult<()> {
+fn register_group_buff_settings(
+    state: &mut LuaState,
+    public: rilua::vm::gc::arena::GcRef<rilua::vm::table::Table>,
+) -> LuaResult<()> {
     table_set_rust_fn_static(
         state,
         public,
@@ -89,7 +92,8 @@ fn get_group_buff_visual_alerts(state: &mut LuaState) -> LuaResult<u32> {
         .group_buff_settings
         .visual_alerts
         .clone();
-    state.push(push_alert_rows(state, &alerts));
+    let result = push_alert_rows(state, &alerts);
+    state.push(result);
     Ok(1)
 }
 
@@ -106,7 +110,8 @@ fn get_hidden_group_buffs(state: &mut LuaState) -> LuaResult<u32> {
         .group_buff_settings
         .hidden_spell_ids
         .clone();
-    state.push(push_spell_ids(state, &ids));
+    let result = push_spell_ids(state, &ids);
+    state.push(result);
     Ok(1)
 }
 
@@ -121,7 +126,7 @@ fn set_hidden_group_buffs(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn push_alert_rows(state: &mut LuaState, alerts: &[GroupBuffVisualAlert]) -> Val {
-    let rows = create_table(state);
+    let rows = state.gc.alloc_table(rilua::vm::table::Table::new());
     for (index, alert) in alerts.iter().enumerate() {
         let row = create_table_with_fields(
             state,
@@ -136,7 +141,7 @@ fn push_alert_rows(state: &mut LuaState, alerts: &[GroupBuffVisualAlert]) -> Val
 }
 
 fn push_spell_ids(state: &mut LuaState, ids: &[i32]) -> Val {
-    let rows = create_table(state);
+    let rows = state.gc.alloc_table(rilua::vm::table::Table::new());
     for (index, spell_id) in ids.iter().enumerate() {
         table_set_num(
             state,
