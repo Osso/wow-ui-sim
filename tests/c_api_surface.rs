@@ -1097,18 +1097,24 @@ fn load_wardrobe_is_custom_set_dressed(env: &WowLuaEnv) {
 #[test]
 fn forever_wardrobe_consumer_reads_custom_set_item_info() {
     let env = env();
-    let set_id: i32 = env
-        .eval(
-            "return C_TransmogCollection.NewCustomSet('Warband', 9, {{appearanceID=42, secondaryAppearanceID=0, illusionID=0}})",
-        )
-        .unwrap();
     load_wardrobe_is_custom_set_dressed(&env);
     env.exec(
-        &format!(
-            "Constants = {{Transmog = {{NoTransmogID = -1}}}}; \\
-             WardrobeCustomSetDropdownMixin.GetSelectedCustomSetID = function() return {set_id} end; \\
-             WardrobeCustomSetDropdownMixin.GetItemTransmogInfoList = function() return {{{{appearanceID=42, IsEqual=function(self, other) return self.appearanceID == other.appearanceID end}}}} end",
-        ),
+        r#"
+        Constants = { Transmog = { NoTransmogID = -1 } }
+        selectedCustomSetID = C_TransmogCollection.NewCustomSet(
+            'Warband', 9,
+            { { appearanceID = 42, secondaryAppearanceID = 0, illusionID = 0 } }
+        )
+        WardrobeCustomSetDropdownMixin.GetSelectedCustomSetID = function()
+            return selectedCustomSetID
+        end
+        WardrobeCustomSetDropdownMixin.GetItemTransmogInfoList = function()
+            return { {
+                appearanceID = 42,
+                IsEqual = function(self, other) return self.appearanceID == other.appearanceID end,
+            } }
+        end
+        "#,
     )
     .unwrap();
     let dressed: bool = env
