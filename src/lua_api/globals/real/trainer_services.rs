@@ -228,8 +228,9 @@ fn push_rank_values(state: &mut LuaState, values: Option<(u32, u32, u32)>) {
 }
 
 fn is_tradeskill_trainer(state: &mut LuaState) -> LuaResult<u32> {
-    let has_services = borrow_state(state)?.trainer.visible_service_count() > 0;
-    state.push(Val::Bool(has_services));
+    let is_tradeskill = borrow_state(state)?.trainer.trainer_type
+        == crate::c_api::trainer_service::TrainerType::Tradeskills;
+    state.push(Val::Bool(is_tradeskill));
     Ok(1)
 }
 

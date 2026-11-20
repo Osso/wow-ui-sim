@@ -61,10 +61,10 @@ pub enum TrainerServiceType {
 
 impl Default for TrainerState {
     fn default() -> Self {
-        // INFERRED from the existing Mists trainer UI defaults; R88cb is pending.
+        // INFERRED for the generic class trainer; native behavior is pending R88cb.
         Self {
             services: Vec::new(),
-            trainer_type: TrainerType::Tradeskills,
+            trainer_type: TrainerType::General,
             categorize_ui: false,
             selected_service_index: None,
             step_service_index: None,
