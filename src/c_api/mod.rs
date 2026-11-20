@@ -378,14 +378,14 @@ pub mod store_catalog_model;
 pub mod store_glue_model;
 pub mod store_guid;
 pub mod store_vas_model;
-// The pinned classic TransmogItemsDocumentation.lua / TransmogOutfitInfoDocumentation.lua
-// declare these namespaces on Mists, Era and Anniversary, so the backing model
-// is compiled for those profiles together with the retail API epochs.
+// The pinned TransmogItemsDocumentation.lua declares this model on Mists, Era,
+// Anniversary and Forever, in addition to the Retail API epochs.
 #[cfg(any(
     feature = "retail-12-0-0",
     feature = "client-mists",
     feature = "client-era",
-    feature = "client-anniversary"
+    feature = "client-anniversary",
+    feature = "client-wowforever"
 ))]
 pub(crate) mod c_transmog_collection;
 mod c_transmog_latest;
