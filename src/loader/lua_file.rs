@@ -261,6 +261,8 @@ fn prepare_addon_function_with_environment(
     if use_replay_environment {
         mark_secure_replay_state(state, func).map_err(|e| report_lua_load_error(state, e))?;
     } else if ctx.use_secure_env {
+        crate::lua_api::workarounds::refresh_missing_globals_for_secure_addon(state)
+            .map_err(|e| report_lua_load_error(state, e))?;
         mark_secure_state(state, func).map_err(|e| report_lua_load_error(state, e))?;
     }
     crate::lua_api::loader_env::apply_loading_scoped_fenv_state(state, func)

@@ -221,7 +221,7 @@ fn read_secure_color_catalog(env: &WowLuaEnv) -> SecureColorCatalogSnapshot {
     }
 }
 
-#[cfg(feature = "client-retail")]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn load_full_game_ui() -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("Failed to create Lua environment");
     env.set_screen_size(1024.0, 768.0);
@@ -252,6 +252,84 @@ fn load_full_game_ui() -> WowLuaEnv {
     fire_startup_events_for_screen(&env, ScreenKind::Game);
 
     env
+}
+
+#[cfg(feature = "client-wowforever")]
+fn create_secure_consumer_addon(root: &tempfile::TempDir) -> PathBuf {
+    let addon = root.path().join("SecureConsumer");
+    std::fs::create_dir(&addon).unwrap();
+    std::fs::write(
+        addon.join("SecureConsumer.toc"),
+        "## UseSecureEnvironment: 1\nCore.lua\n",
+    )
+    .unwrap();
+    std::fs::write(
+        addon.join("Core.lua"),
+        "assert(LatePublicAccessor('unit') == 'unit:published'); \
+         assert(PreservedValue == 'secure'); \
+         ObservedValue = LatePublicAccessor('unit')",
+    )
+    .unwrap();
+    addon.join("SecureConsumer.toc")
+}
+
+#[cfg(feature = "client-wowforever")]
+#[test]
+fn secure_consumer_sees_late_public_globals_without_overwriting_secure_values() {
+    use wow_ui_sim::loader;
+    let root = tempfile::tempdir().unwrap();
+    let toc = create_secure_consumer_addon(&root);
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        "rawset(__secureenv, 'PreservedValue', 'secure'); \
+         rawset(_G, 'PreservedValue', 'insecure'); \
+         LatePublicAccessor = function(value) return value .. ':published' end",
+    )
+    .unwrap();
+    load_addon(&env.loader_env(), &toc).unwrap();
+    assert_eq!(
+        env.eval::<String>("return rawget(__secureenv, 'ObservedValue')")
+            .unwrap(),
+        "unit:published"
+    );
+    assert_eq!(
+        env.eval::<String>("return rawget(__secureenv, 'PreservedValue')")
+            .unwrap(),
+        "secure"
+    );
+}
+
+#[cfg(feature = "client-wowforever")]
+#[test]
+fn wowforever_private_auras_tooltip_consumer_publishes_accessor() {
+    let env = load_full_game_ui();
+    let consumer_errors = env
+        .state()
+        .borrow()
+        .lua_errors
+        .iter()
+        .filter(|message| message.contains("PrivateAurasTooltip"))
+        .cloned()
+        .collect::<Vec<_>>();
+    assert!(
+        consumer_errors.is_empty(),
+        "PrivateAurasTooltip must load without errors: {consumer_errors:?}"
+    );
+    let accessor_type: String = env
+        .eval(
+            "return type(rawget(rawget(__secureenv, 'GameTooltipDataMixin'), \
+             'SetUnitPrivateAura'))",
+        )
+        .expect("secure GameTooltipDataMixin accessor probe should evaluate");
+    assert_eq!(
+        accessor_type, "function",
+        "the original secure consumer must publish SetUnitPrivateAura"
+    );
+    env.state()
+        .borrow()
+        .widgets
+        .get_id_by_name("PrivateAurasTooltip")
+        .expect("the original PrivateAurasTooltip frame must be created");
 }
 
 #[cfg(feature = "client-retail")]
