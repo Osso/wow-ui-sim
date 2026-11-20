@@ -243,6 +243,7 @@ fn apply_runtime_state_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
 
 fn apply_account_and_social_state_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     temporary::battle_net_account_defaults::apply_bootstrap(lua)?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::social_queue_defaults::apply_bootstrap(lua)?;
     temporary::merchant_filter_state::apply_bootstrap(lua)
 }

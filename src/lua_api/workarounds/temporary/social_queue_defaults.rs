@@ -1,7 +1,7 @@
 //! Temporary `C_SocialQueue` defaults.
 //!
-//! Quick Join/social queue state is not modeled yet. Keep the empty-result
-//! shapes explicit in the workaround layer until real social queue state exists.
+//! Other client profiles still use empty-result compatibility behavior.
+//! Retail and WoW Forever provide modeled, host-supplied Quick Join state.
 
 const SOCIAL_QUEUE_DEFAULTS_LUA: &str = r#"
 C_SocialQueue = C_SocialQueue or __wow_namespace()
@@ -58,7 +58,10 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     Ok(())
 }
 
-#[cfg(test)]
+#[cfg(all(
+    test,
+    not(any(feature = "client-retail", feature = "client-wowforever"))
+))]
 mod tests {
     use crate::lua_api::WowLuaEnv;
 

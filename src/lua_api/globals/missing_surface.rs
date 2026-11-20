@@ -302,6 +302,8 @@ fn register_social_namespace_surfaces(state: &mut LuaState) -> LuaResult<()> {
     #[cfg(feature = "retail-12-0-5")]
     c_api::c_pvp_crowd_control::register(state)?;
     c_api::c_social::register_c_social_surface(state)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    c_api::c_social_queue::register(state)?;
     c_api::c_summon_info::register_c_summon_info_surface(state)?;
     character_select::register_character_select_surface(state)?;
     Ok(())
