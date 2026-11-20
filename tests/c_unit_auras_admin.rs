@@ -21,55 +21,59 @@ fn env() -> WowLuaEnv {
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn register_group_buff_event_listener(env: &WowLuaEnv) {
+    env.exec(
+        r#"
+        local listener = CreateFrame("Frame")
+        listener:RegisterEvent("GROUP_BUFF_VISUAL_ALERTS_CHANGED")
+        listener:RegisterEvent("HIDDEN_GROUP_BUFFS_CHANGED")
+        listener:SetScript("OnEvent", function(_, event, payload)
+            if event == "GROUP_BUFF_VISUAL_ALERTS_CHANGED" then alertEvent = payload end
+            if event == "HIDDEN_GROUP_BUFFS_CHANGED" then hiddenEvent = payload end
+        end)
+        alertEvent, hiddenEvent = nil, nil
+        "#,
+    )
+    .expect("group buff event listeners should register");
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn update_group_buff_settings(env: &WowLuaEnv) -> (bool, bool, bool, bool) {
+    env.eval(
+        r#"
+        C_UnitAuras.SetGroupBuffVisualAlerts({
+            { spellID = 12345, visualValue = 2 }, { spellID = 67890, visualValue = 4 },
+        })
+        C_UnitAuras.SetHiddenGroupBuffs({ 23456, 78901 })
+        local alerts, hidden = C_UnitAuras.GetGroupBuffVisualAlerts(), C_UnitAuras.GetHiddenGroupBuffs()
+        return #alerts == 2 and alerts[1].spellID == 12345 and alerts[1].visualValue == 2
+                and alerts[2].spellID == 67890 and alerts[2].visualValue == 4,
+            #hidden == 2 and hidden[1] == 23456 and hidden[2] == 78901,
+            alertEvent ~= nil and #alertEvent == 2 and alertEvent[2].spellID == 67890,
+            hiddenEvent ~= nil and #hiddenEvent == 2 and hiddenEvent[2] == 78901
+        "#,
+    )
+    .expect("group buff settings should round-trip through the public API")
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 #[test]
 fn group_buff_settings_round_trip_and_notify_blizzard_listeners() {
     let env = env();
-    let (alerts_ok, hidden_ok, alert_event_ok, hidden_event_ok): (bool, bool, bool, bool) = env
-        .eval(
-            r#"
-            local alertEvent, hiddenEvent = nil, nil
-            local listener = CreateFrame("Frame")
-            listener:RegisterEvent("GROUP_BUFF_VISUAL_ALERTS_CHANGED")
-            listener:RegisterEvent("HIDDEN_GROUP_BUFFS_CHANGED")
-            listener:SetScript("OnEvent", function(_, event, payload)
-                if event == "GROUP_BUFF_VISUAL_ALERTS_CHANGED" then alertEvent = payload end
-                if event == "HIDDEN_GROUP_BUFFS_CHANGED" then hiddenEvent = payload end
-            end)
-
-            local alerts = {
-                { spellID = 12345, visualValue = 2 },
-                { spellID = 67890, visualValue = 4 },
-            }
-            local hidden = { 23456, 78901 }
-            C_UnitAuras.SetGroupBuffVisualAlerts(alerts)
-            C_UnitAuras.SetHiddenGroupBuffs(hidden)
-            local actualAlerts = C_UnitAuras.GetGroupBuffVisualAlerts()
-            local actualHidden = C_UnitAuras.GetHiddenGroupBuffs()
-            return #actualAlerts == 2
-                    and actualAlerts[1].spellID == 12345 and actualAlerts[1].visualValue == 2
-                    and actualAlerts[2].spellID == 67890 and actualAlerts[2].visualValue == 4,
-                #actualHidden == 2 and actualHidden[1] == 23456 and actualHidden[2] == 78901,
-                alertEvent ~= nil and #alertEvent == 2 and alertEvent[2].spellID == 67890,
-                hiddenEvent ~= nil and #hiddenEvent == 2 and hiddenEvent[2] == 78901
-            "#,
-        )
-        .expect("group buff settings should round-trip through the public API");
-
+    register_group_buff_event_listener(&env);
+    let (alerts_ok, hidden_ok, alert_event_ok, hidden_event_ok) = update_group_buff_settings(&env);
     assert!(
         alerts_ok,
-        "group buff alert rows must retain their data and order"
+        "group buff alert rows must retain data and order"
     );
-    assert!(
-        hidden_ok,
-        "hidden group buff spell IDs must retain their data and order"
-    );
+    assert!(hidden_ok, "hidden group buff spell IDs must retain order");
     assert!(
         alert_event_ok,
-        "visual-alert listeners must receive the updated rows"
+        "visual-alert listeners must receive updated rows"
     );
     assert!(
         hidden_event_ok,
-        "hidden-buff listeners must receive the updated spell IDs"
+        "hidden-buff listeners must receive updated spell IDs"
     );
 }
 
