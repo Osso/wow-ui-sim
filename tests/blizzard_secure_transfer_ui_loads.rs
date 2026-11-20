@@ -144,6 +144,50 @@ fn secure_transfer_mail_dialog_uses_current_recipient_and_money() {
 
 #[cfg(feature = "client-wowforever")]
 #[test]
+fn secure_transfer_mail_receive_dialog_credits_selected_message() {
+    let env = load_full_game_ui();
+    seed_receive_mail(&env, "Sender-Alpha", 4321);
+    let balance = env.state().borrow().player.money;
+    env.exec("InboxFrame.openMailID = 1").unwrap();
+    env.fire_event("SECURE_TRANSFER_CONFIRM_TAKE_MAIL_MONEY")
+        .unwrap();
+    env.exec("SecureTransferDialog.Button1:Enable(); SecureTransferDialog.Button1:Click()")
+        .unwrap();
+    let state = env.state();
+    let state = state.borrow();
+    assert_eq!(state.player.money, balance + 4321);
+    assert_eq!(state.player.inbox[0].money, 0);
+    drop(state);
+    assert!(
+        !env.eval::<bool>("return SecureTransferDialog:IsShown()")
+            .unwrap()
+    );
+}
+
+fn seed_receive_mail(env: &WowLuaEnv, sender: &str, money: u64) {
+    env.state()
+        .borrow_mut()
+        .player
+        .inbox
+        .push(wow_ui_sim::lua_api::state_types::MailMessage {
+            id: 1,
+            sender: sender.to_string(),
+            subject: "Transfer".to_string(),
+            body: String::new(),
+            money,
+            cod_amount: 0,
+            items: Vec::new(),
+            days_left: 30.0,
+            was_read: false,
+            was_returned: false,
+            can_reply: true,
+            is_gm: false,
+            stationery_icon: 0,
+        });
+}
+
+#[cfg(feature = "client-wowforever")]
+#[test]
 fn secure_transfer_mail_dialog_uses_current_recipient_and_money() {
     let env = load_full_game_ui();
     env.exec("SendMailNameEditBox:SetText('Alt-Alpha'); SetSendMailMoney(12345)")
