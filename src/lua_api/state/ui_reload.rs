@@ -19,6 +19,11 @@ impl SimState {
         self.ui_reload_requested = false;
         self.ui_reloaded = true;
         self.is_logged_in = false;
+        // INFERRED: reconstructed addons load before the next world-entry dispatch.
+        #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+        {
+            self.in_world = false;
+        }
         self.account_cvar_callback_pending = false;
         self.post_event_workarounds_applied = false;
         // Host policy: R88ad.8 leaves any reset of the native first-display state UNKNOWN.

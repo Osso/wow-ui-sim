@@ -1,16 +1,20 @@
 //! Temporary inert global defaults for unmodeled world/social state.
 //!
 //! These functions are startup compatibility fallbacks. The simulator does not
-//! model world-entry state, battleground queues, social restrictions,
+//! model battleground queues, social restrictions,
 //! commentator mode, cinematic playback, or group role composition yet, so keep the defaults
 //! explicit in the workaround layer.
 
-const INERT_GLOBAL_DEFAULTS_LUA: &str = r#"
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+const UNMODELED_WORLD_PRESENCE_LUA: &str = r#"
 if IsPlayerInWorld == nil then
     function IsPlayerInWorld()
         return true
     end
 end
+"#;
+
+const INERT_GLOBAL_DEFAULTS_LUA: &str = r#"
 if GetCurrentRegionName == nil then
     function GetCurrentRegionName() return "US" end
 end
@@ -245,6 +249,8 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
         any(feature = "profile-retail", feature = "client-ptr")
     )))]
     lua.exec(UNMODELED_SPELL_CONFIRMATION_QUERY_LUA)?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+    lua.exec(UNMODELED_WORLD_PRESENCE_LUA)?;
     lua.exec(INERT_GLOBAL_DEFAULTS_LUA)?;
     #[cfg(not(all(feature = "client-retail", feature = "retail-12-1-5")))]
     lua.exec(AVAILABLE_BANDWIDTH_DEFAULT_LUA)?;
@@ -282,10 +288,14 @@ mod tests {
         ))
         .expect("expected faction query result should be set");
 
+        let world_check = if cfg!(any(feature = "client-retail", feature = "client-wowforever")) {
+            r#"if IsPlayerInWorld() ~= false then return "player_world" end"#
+        } else {
+            r#"if IsPlayerInWorld() ~= true then return "player_world" end"#
+        };
         let result: String = env
             .eval(
-                r#"
-                if IsPlayerInWorld() ~= true then return "player_world" end
+                &[world_check, r#"
                 if GetCurrentRegionName() ~= "US" then return "region" end
                 local languageName, languageID = GetDefaultLanguage()
                 if languageName ~= "Common" or languageID ~= 1 then return "language" end
@@ -328,7 +338,7 @@ mod tests {
                 if GetNumArenaOpponents() ~= 0 then return "arena" end
                 if GetNumArenaOpponentSpecs() ~= 0 then return "arena_specs" end
                 return "ok"
-                "#,
+                "#].join("\n"),
             )
             .expect("inert defaults should be callable");
 
