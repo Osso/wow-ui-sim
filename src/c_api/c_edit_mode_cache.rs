@@ -49,10 +49,7 @@ impl EditModeCacheState {
     }
 
     fn account_settings(&mut self, defaults: Vec<EditModeValue>) -> Vec<EditModeValue> {
-        if self.account_settings.is_none() {
-            self.account_settings = Some(defaults);
-        }
-        self.account_settings.clone().unwrap_or_default()
+        self.account_settings.get_or_insert(defaults).clone()
     }
 
     fn merge_account_settings(
@@ -274,7 +271,6 @@ fn enum_numeric_values(state: &mut LuaState, name: &'static str) -> Vec<f64> {
         })
         .collect();
     values.sort_by(f64::total_cmp);
-    values.dedup_by(|left, right| left == right);
     values
 }
 
@@ -420,7 +416,7 @@ impl EditModeCacheState {
             .and_then(EditModeValue::table_values)
             .unwrap_or_default();
         let active = EditModeValue::from_table_field(&save_info, "activeLayout")
-            .filter(|value| *value != EditModeValue::Nil)
+            .filter(|value| !matches!(value, EditModeValue::Nil | EditModeValue::Boolean(false)))
             .unwrap_or_else(|| self.initial_active_layout());
         self.layouts = layouts;
         self.active_layout = active;
