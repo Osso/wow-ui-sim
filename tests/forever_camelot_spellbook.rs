@@ -27,7 +27,15 @@ fn entries(ids: &[i64]) -> Vec<OutfitEntry> {
 }
 
 fn supply(env: &WowLuaEnv, ids: Option<&[i64]>) {
-    env.state().borrow_mut().forever_outfits = Some(ids.map(entries));
+    let mut state = env.state().borrow_mut();
+    state.transmog_outfit_catalog.entries = ids.map(entries).unwrap_or_default();
+    state.transmog_outfit_catalog.outfits_info_supplied = Some(ids.is_some());
+}
+
+fn unset(env: &WowLuaEnv) {
+    let mut state = env.state().borrow_mut();
+    state.transmog_outfit_catalog.entries.clear();
+    state.transmog_outfit_catalog.outfits_info_supplied = None;
 }
 
 fn load_original(enabled: bool) -> WowLuaEnv {
@@ -99,8 +107,6 @@ fn observe(env: &WowLuaEnv, expected: bool) {
 
 fn exercise_availability(initial: bool) {
     let first = load_original(initial);
-    // Independent original query reaches line 507 even when construction would
-    // first encounter the separate outfit producer during Init.
     assert_eq!(
         first
             .eval::<bool>("return SpellBookTransmogCategoryMixin:IsAvailable()")
@@ -110,35 +116,43 @@ fn exercise_availability(initial: bool) {
     construct(&first);
     let second = load_original(!initial);
     construct(&second);
+    exercise_availability_changes(&first, &second, initial);
+    exercise_outfit_availability(&first, &second, initial);
+}
+
+fn exercise_availability_changes(first: &WowLuaEnv, second: &WowLuaEnv, initial: bool) {
     for enabled in [initial, !initial, initial] {
         first.state().borrow_mut().transmog_availability.enabled = Some(enabled);
-        observe(&first, enabled);
-        observe(&second, !initial);
+        observe(first, enabled);
+        observe(second, !initial);
     }
     first.state().borrow_mut().transmog_availability.enabled = None;
     let error = first.exec("Category:IsAvailable()").unwrap_err();
     assert!(error.to_string().contains(AVAILABILITY_UNSET), "{error}");
     first.state().borrow_mut().transmog_availability.enabled = Some(true);
+}
+
+fn exercise_outfit_availability(first: &WowLuaEnv, second: &WowLuaEnv, initial: bool) {
     for ids in [Some(&[][..]), None, Some(&[47][..])] {
-        supply(&first, ids);
-        observe(&first, ids.is_some_and(|ids| !ids.is_empty()));
+        supply(first, ids);
+        observe(first, ids.is_some_and(|ids| !ids.is_empty()));
     }
     first
         .state()
         .borrow_mut()
         .set_input_interface_style(InputInterfaceStyle::Mkb);
-    observe(&first, false);
+    observe(first, false);
     first
         .state()
         .borrow_mut()
         .set_input_interface_style(InputInterfaceStyle::Gamepad);
-    observe(&first, true);
-    first.state().borrow_mut().forever_outfits = None;
+    observe(first, true);
+    unset(first);
     let error = first.exec("Category:IsAvailable()").unwrap_err();
     assert!(error.to_string().contains(OUTFITS_UNSET), "{error}");
-    supply(&first, Some(&[23]));
-    observe(&first, true);
-    observe(&second, !initial);
+    supply(first, Some(&[23]));
+    observe(first, true);
+    observe(second, !initial);
     first
         .exec("Book:UpdateAllSpellData(false)")
         .expect("original refresh reaches category availability");
@@ -188,9 +202,16 @@ fn outfit_projection_original_sparse_groups_and_isolation() {
     assert_groups(&first, &[23, 81]);
     let second = load_original(false);
     construct(&second);
-    first
-        .exec(
-            r#"
+    assert_initial_outfit_snapshot(&first);
+    supply(&first, Some(&[47]));
+    assert_groups(&first, &[47]);
+    assert_groups(&second, &[23, 81]);
+    assert_empty_and_unset_outfit_states(&first);
+}
+
+fn assert_initial_outfit_snapshot(env: &WowLuaEnv) {
+    env.exec(
+        r#"
         local a = C_TransmogOutfitInfo.GetOutfitsInfo()
         assert(select('#', C_TransmogOutfitInfo.GetOutfitsInfo()) == 1)
         assert(#a == 2 and a[1].outfitID == 23 and a[2].outfitID == 81)
@@ -207,26 +228,24 @@ fn outfit_projection_original_sparse_groups_and_isolation() {
         assert(#b == 2 and b[1].outfitID == 23)
         assert(b[1].situationCategories[1] == 'supplied-23')
     "#,
-        )
+    )
+    .unwrap();
+}
+
+fn assert_empty_and_unset_outfit_states(env: &WowLuaEnv) {
+    supply(env, Some(&[]));
+    assert_groups(env, &[]);
+    env.exec("assert(select('#', C_TransmogOutfitInfo.GetOutfitsInfo()) == 1)")
         .unwrap();
-    supply(&first, Some(&[47]));
-    assert_groups(&first, &[47]);
-    assert_groups(&second, &[23, 81]);
-    supply(&first, Some(&[]));
-    assert_groups(&first, &[]);
-    first
-        .exec("assert(select('#', C_TransmogOutfitInfo.GetOutfitsInfo()) == 1)")
+    supply(env, None);
+    assert_groups(env, &[]);
+    env.exec("assert(select('#', C_TransmogOutfitInfo.GetOutfitsInfo()) == 0)")
         .unwrap();
-    supply(&first, None);
-    assert_groups(&first, &[]);
-    first
-        .exec("assert(select('#', C_TransmogOutfitInfo.GetOutfitsInfo()) == 0)")
-        .unwrap();
-    first.state().borrow_mut().forever_outfits = None;
-    let error = first
+    unset(env);
+    let error = env
         .exec("Category:PopulateSpellGroupsIndiciesByRange()")
         .unwrap_err();
     assert!(error.to_string().contains(OUTFITS_UNSET), "{error}");
-    supply(&first, Some(&[81, 23]));
-    assert_groups(&first, &[81, 23]);
+    supply(env, Some(&[81, 23]));
+    assert_groups(env, &[81, 23]);
 }

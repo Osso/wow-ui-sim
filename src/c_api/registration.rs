@@ -235,6 +235,7 @@ fn register_interaction_appearance(state: &mut LuaState) -> LuaResult<()> {
     super::transmog_availability::register(state)?;
     super::c_spectating_ui::register(state)?;
     super::c_commentator::register(state)?;
+    #[cfg(feature = "client-wowforever")]
     super::forever_outfits::register(state)?;
     c_ardenweald_gardening::register_c_ardenweald_gardening_surface(state)?;
     c_arrow_callout_manager::register_c_arrow_callout_manager_surface(state)?;

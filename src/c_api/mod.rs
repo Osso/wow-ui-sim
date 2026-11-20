@@ -306,6 +306,7 @@ mod container_purchase_args;
 pub mod container_quest;
 pub mod engraving_inputs;
 pub mod external_event_url;
+#[cfg(feature = "client-wowforever")]
 mod forever_outfits;
 pub mod forever_startup;
 mod lfr_availability;
@@ -314,6 +315,13 @@ pub mod profession_spec_inputs;
 pub(crate) use lfr_availability::stock_lfr_availability;
 #[cfg(all(test, feature = "client-wowforever"))]
 mod forever_lib_baseline_tests;
+#[cfg(any(
+    feature = "retail-12-0-0",
+    feature = "client-mists",
+    feature = "client-era",
+    feature = "client-anniversary",
+    feature = "client-wowforever"
+))]
 pub mod outfit_entry;
 mod scenario_finder_availability;
 pub mod store_public_eligibility;

@@ -51,7 +51,7 @@ empty name. **VERIFIED (selected consumer):** the Forever Camelot
 `TooltipDataHandler.lua:603` maps it to `GetOutfit`. The optional test loads this
 profile-selected closure and invokes the original method. This consumer result is
 **PRESERVATION** because only the missing-name path is modeled. **INFERRED:** the producer maps the native saved-name record to the existing
-`SimState.forever_outfits` snapshot. No test asserts populated names; native
+shared `SimState.transmog_outfit_catalog` entries. No test asserts a populated tooltip; native
 player association, writers and update events remain UNKNOWN.
 
 [Merchant-cost tooltips](../../specs/tooltip-merchant-cost-item.md) reuse the

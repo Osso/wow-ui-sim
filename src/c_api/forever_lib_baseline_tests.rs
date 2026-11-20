@@ -64,20 +64,33 @@ fn transmog_sets_query_supplied_records() {
 
 #[test]
 fn outfit_info_uses_existing_forever_catalog_and_emulated_empty() {
-    use super::outfit_entry::OutfitEntry;
     let env = WowLuaEnv::new().unwrap();
+    assert_no_outfit_match(&env);
+    seed_no_outfit_result(&env);
+    assert_no_outfit_match(&env);
+    seed_outfit_catalog_entries(&env);
+    assert_published_outfit_entries(&env);
+}
+
+fn assert_no_outfit_match(env: &WowLuaEnv) {
     assert_eq!(
         env.eval::<i32>("return select('#', C_TransmogOutfitInfo.GetOutfitInfo(91))")
             .unwrap(),
         0
     );
-    env.state().borrow_mut().forever_outfits = Some(None);
-    assert_eq!(
-        env.eval::<i32>("return select('#', C_TransmogOutfitInfo.GetOutfitInfo(91))")
-            .unwrap(),
-        0
-    );
-    env.state().borrow_mut().forever_outfits = Some(Some(vec![
+}
+
+fn seed_no_outfit_result(env: &WowLuaEnv) {
+    let mut state = env.state().borrow_mut();
+    state.transmog_outfit_catalog.entries.clear();
+    state.transmog_outfit_catalog.outfits_info_supplied = Some(false);
+}
+
+fn seed_outfit_catalog_entries(env: &WowLuaEnv) {
+    use super::outfit_entry::OutfitEntry;
+    let mut state = env.state().borrow_mut();
+    state.transmog_outfit_catalog.outfits_info_supplied = Some(true);
+    state.transmog_outfit_catalog.entries = vec![
         OutfitEntry {
             outfit_id: 91,
             name: "Copper".into(),
@@ -96,7 +109,10 @@ fn outfit_info_uses_existing_forever_catalog_and_emulated_empty() {
             is_disabled: false,
             player_facing_outfit_index: 42,
         },
-    ]));
+    ];
+}
+
+fn assert_published_outfit_entries(env: &WowLuaEnv) {
     let actual: (String, String, i32, i32, bool) = env.eval(r#"
         local first = C_TransmogOutfitInfo.GetOutfitInfo(91)
         local second = C_TransmogOutfitInfo.GetOutfitInfo(305)

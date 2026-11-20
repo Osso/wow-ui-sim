@@ -717,7 +717,6 @@ macro_rules! build_empty_sim_state {
             lfr_availability: crate::c_api::stock_lfr_availability(),
             transmog_availability: Default::default(),
             spectating: false,
-            forever_outfits: None,
             scenario_finder_availability: None,
             mists_party_min_level: None,
             lfg_category_info: default_lfg_category_info(),
