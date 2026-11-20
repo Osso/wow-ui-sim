@@ -6,7 +6,7 @@
 mod tooltip_full_env_helpers;
 
 use wow_ui_sim::lua_api::WowLuaEnv;
-use wow_ui_sim::lua_api::state::AuraInfo;
+use wow_ui_sim::lua_api::{game_data::TargetInfo, state::AuraInfo};
 
 fn aura(id: i32, name: &str) -> AuraInfo {
     AuraInfo {
@@ -25,6 +25,29 @@ fn aura(id: i32, name: &str) -> AuraInfo {
         is_from_player_or_player_pet: false,
         dispel_type: Some("Magic".into()),
         aura_instance_id: id,
+    }
+}
+
+fn target() -> TargetInfo {
+    TargetInfo {
+        unit_id: "target".into(),
+        name: "Supplied Target".into(),
+        class_index: 1,
+        level: 80,
+        health: 100,
+        health_max: 100,
+        power: 100,
+        power_max: 100,
+        power_type: 0,
+        power_type_name: "MANA".into(),
+        is_player: false,
+        is_enemy: true,
+        has_vehicle_ui: false,
+        guid: "Creature-0-0-0-0-1234-000001".into(),
+        classification: "normal".into(),
+        creature_type: "Humanoid".into(),
+        reaction: 1,
+        interaction: Default::default(),
     }
 }
 
@@ -60,4 +83,19 @@ fn unit_debuff_setters_publish_two_distinct_supplied_player_auras() {
             name,
         );
     }
+    {
+        let mut state = env.state().borrow_mut();
+        state.current_target = Some(target());
+        state.target_auras = vec![aura(92001, "Supplied Target Debuff")];
+    }
+    assert_tooltip_name(
+        &env,
+        "GameTooltip:SetUnitDebuff('target', 1, 'HARMFUL')",
+        "Supplied Target Debuff",
+    );
+    assert_tooltip_name(
+        &env,
+        "GameTooltip:SetUnitDebuffByAuraInstanceID('target', 92001, 'HARMFUL')",
+        "Supplied Target Debuff",
+    );
 }
