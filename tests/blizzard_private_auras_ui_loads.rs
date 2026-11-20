@@ -1242,9 +1242,10 @@ const PRIVATE_AURA_CONSUMER_PROBE: &str = r#"
     assert(returned.auraInstanceID == 301 and returned.dispelName == 'Magic')
     returned.spellId = 0
     assert(privateUI.GetUpdatedAuraByInstance(container, true, 301).spellId == 301)
-    local ids = AuraContainerPrivateAuraSourceMixin:GetAllAuraInstanceIDs('player', 'HARMFUL')
+    local privateSource = rawget(__secureenv, 'AuraContainerPrivateAuraSourceMixin')
+    local ids = privateSource:GetAllAuraInstanceIDs('player', 'HARMFUL')
     assert(#ids == 2 and ids[1] == 301 and ids[2] == 302)
-    assert(AuraContainerPrivateAuraSourceMixin:GetAuraCasterGUID('player', 301) == 'Player-1-301')
+    assert(privateSource:GetAuraCasterGUID('player', 301) == 'Player-1-301')
 "#;
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
