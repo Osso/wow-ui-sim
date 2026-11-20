@@ -732,27 +732,44 @@ fn process_frame_element(
 struct LoadingAddonTableGuard<'env, 'lua> {
     env: &'env LoaderEnv<'lua>,
     previous: Val,
+    previous_secure_env: Val,
 }
 
 impl<'env, 'lua> LoadingAddonTableGuard<'env, 'lua> {
     fn install(env: &'env LoaderEnv<'lua>, addon_table: Val) -> Self {
-        let previous = set_loading_addon_table(env, addon_table).unwrap_or(Val::Nil);
-        Self { env, previous }
+        let secure_env = env
+            .with_state(|state| Ok(state.loading_addon_secure_env == Some(true)))
+            .unwrap_or(false);
+        let (previous, previous_secure_env) =
+            set_loading_addon_context(env, addon_table, Val::Bool(secure_env))
+                .unwrap_or((Val::Nil, Val::Nil));
+        Self {
+            env,
+            previous,
+            previous_secure_env,
+        }
     }
 }
 
 impl Drop for LoadingAddonTableGuard<'_, '_> {
     fn drop(&mut self) {
-        let _ = set_loading_addon_table(self.env, self.previous);
+        let _ = set_loading_addon_context(self.env, self.previous, self.previous_secure_env);
     }
 }
 
-fn set_loading_addon_table(env: &LoaderEnv<'_>, value: Val) -> Result<Val, crate::Error> {
+fn set_loading_addon_context(
+    env: &LoaderEnv<'_>,
+    addon_table: Val,
+    secure_env: Val,
+) -> Result<(Val, Val), crate::Error> {
     env.with_state(|state| {
         let globals = Val::Table(state.global);
-        let previous = table_get_static(state, globals, "__wow_loading_addon_table");
-        table_set_static(state, globals, "__wow_loading_addon_table", value);
-        Ok(previous)
+        let previous_table = table_get_static(state, globals, "__wow_loading_addon_table");
+        let previous_secure_env =
+            table_get_static(state, globals, "__wow_loading_addon_secure_env");
+        table_set_static(state, globals, "__wow_loading_addon_table", addon_table);
+        table_set_static(state, globals, "__wow_loading_addon_secure_env", secure_env);
+        Ok((previous_table, previous_secure_env))
     })
 }
 
