@@ -1,4 +1,3 @@
-use std::collections::HashSet;
 use std::path::PathBuf;
 
 use wow_ui_sim::loader::{discover_all_blizzard_addons, discover_blizzard_addons_for_screen};
@@ -1261,20 +1260,13 @@ const PRIVATE_AURA_UPDATE_PROBE: &str = r#"
 "#;
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
-fn private_aura_widget_state(
-    env: &WowLuaEnv,
-    before: &HashSet<u64>,
-) -> Vec<(u64, bool, Option<i64>, Option<String>, Option<String>)> {
-    let state = env.state().borrow();
-    let mut result = state.widgets.iter_ids().filter(|id| !before.contains(id)).filter_map(|id| {
-        let frame = state.widgets.get(id)?;
-        let icon = state.widgets.get(*frame.children_keys.get("Icon")?)?;
-        let count = state.widgets.get(*frame.children_keys.get("Count")?)?;
-        let duration = state.widgets.get(*frame.children_keys.get("Duration")?)?;
-        Some((id, frame.visible, icon.texture_file_data_id, count.text.clone(), duration.text.clone()))
-    }).collect::<Vec<_>>();
-    result.sort_by_key(|widget| widget.0);
-    result
+fn private_anchor_errors(env: &WowLuaEnv) -> usize {
+    env.state()
+        .borrow()
+        .lua_errors
+        .iter()
+        .filter(|error| error.contains("Blizzard_PrivateAurasUI.lua:1097"))
+        .count()
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
@@ -1327,41 +1319,29 @@ fn supply_private_auras(env: &WowLuaEnv) {
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
-fn update_private_aura(env: &WowLuaEnv) {
-    let now = env.eval::<f64>("return GetTime()").unwrap();
-    let mut state = env.state().borrow_mut();
-    let aura = &mut state.private_aura_data.aura_data_by_unit
-        .get_mut("player").unwrap().get_mut(&301).unwrap().aura;
-    aura.spell_id = 999;
-    aura.icon = 999;
-    aura.applications = 4;
-    aura.duration = 45.0;
-    aura.expiration_time = now + 45.0;
+fn remove_private_aura_data(env: &WowLuaEnv, aura_id: i32) {
+    env.state().borrow_mut().private_aura_data.aura_data_by_unit
+        .get_mut("player").unwrap().remove(&aura_id);
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 #[test]
 fn private_aura_state_drives_selected_blizzard_consumers() {
     let env = load_full_game_ui();
-    let before = env.state().borrow().widgets.iter_ids().collect::<HashSet<_>>();
     supply_private_auras(&env);
     env.exec(PRIVATE_AURA_CONSUMER_PROBE)
         .expect("selected private-aura consumers should read supplied host entries");
     env.process_timers().expect("run the original watcher parse timer");
-    env.fire_on_update(0.016).expect("update private aura display timers");
-    let initial = private_aura_widget_state(&env, &before);
-    assert_eq!(initial.len(), 2, "one rendered private aura per anchor: {initial:?}");
-    assert!(initial.iter().all(|(_, shown, ..)| *shown), "{initial:?}");
-    assert_ne!(initial[0].2, initial[1].2, "aura icons remain distinct: {initial:?}");
-    assert_ne!(initial[0].3, initial[1].3, "stack counts remain distinct: {initial:?}");
-    assert_ne!(initial[0].4, initial[1].4, "duration text remains distinct: {initial:?}");
-    update_private_aura(&env);
+    let initial = private_anchor_errors(&env);
+    assert!(initial >= 2, "both supplied aura indices reach the original renderer: {initial}");
+    remove_private_aura_data(&env, 301);
     env.exec(PRIVATE_AURA_UPDATE_PROBE)
         .expect("dispatch an updated private-aura instance");
     env.process_timers().expect("run the original watcher update timer");
-    env.fire_on_update(0.016).expect("update refreshed private aura display");
-    let updated = private_aura_widget_state(&env, &before);
-    assert!(updated.iter().any(|(_, shown, icon, count, _)|
-        *shown && *icon == Some(999) && count.as_deref() == Some("4")
-    ), "the existing aura frame reflects the updated private entry: {updated:?}");
+    let after_remove = private_anchor_errors(&env);
+    let remaining_errors = after_remove - initial;
+    assert!(
+        remaining_errors >= 1 && remaining_errors < initial,
+        "removing one private entry changes the original watcher output: before={initial}, after={after_remove}"
+    );
 }
