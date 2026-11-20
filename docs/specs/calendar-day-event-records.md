@@ -10,6 +10,7 @@ Primary identifier reference: upstream wowless `data/products/wow/structures.yam
 
 - [x] Keep day storage empty in normal defaults; only host-supplied records make day queries positive. Do not add a Lua editor, calendar producer, or default day rows.
 - [x] Address host rows by exact `(offset_months: i32, month_day: u32)` key and dense Vec order. `GetNumDayEvents` returns the matching length, zero for absent/empty keys. `GetDayEvent` uses 1-based positions, one DTO for a supplied row, one nil on miss. Ordering, representability and one-nil arity are explicit simulator model policies, not native bounds/arity proof; `MayReturnNothing` does not establish arity.
+- [ ] (INFERRED; native evidence pending R88ca) On Retail and Forever, `C_Calendar.GetNumPendingInvites` counts supplied day-event rows whose `inviteStatus` is `Enum.CalendarStatus.Invited`; replacing the supplied rows fires `CALENDAR_UPDATE_PENDING_INVITES` when this count changes.
 - [x] Return independent outer and start/end tables. Caller mutation must not change host data or other results; replacement and erase must affect later lookups while retained snapshots stay unchanged. Environments must not share day rows.
 
 ### Projection inventory
@@ -58,10 +59,11 @@ Time field inventory, independently required for each time:
 ## Implementation inventory
 
 - `src/c_api/c_calendar/day_event_record.rs`: passive owned DTOs.
-- `src/c_api/c_calendar/day_event_queries.rs`: strict numeric/secret arguments, exact host lookups and cloned results.
+- `src/c_api/c_calendar/day_event_queries.rs`: strict numeric/secret arguments, exact host lookups, cloned results, and the pending-invite count query.
 - `src/c_api/c_calendar/day_event_projection.rs`: fresh rooted outer and independent time-table snapshots.
+- `src/lua_api/env_events.rs`: replaces supplied day rows and emits the pending-invite update event on Retail/Forever count changes.
 - `SimState.calendar_day_events`: `HashMap<(i32,u32),Vec<CalendarDayEventRecord>>`, empty default.
-- `src/c_api/c_calendar.rs`: owning Calendar namespace; existing event-index lookup unchanged; day queries registered. Only the replaced constant-zero day-count workaround is removed.
+- `src/c_api/c_calendar.rs`: owns the Calendar namespace; registers day queries and the Retail/Forever pending-invite query without changing event-index lookup.
 - Active profile cache `Blizzard_UIPanels_Game/Mainline/ItemRef.lua` and `Blizzard_FrameXMLUtil/CalendarUtil.lua`: unchanged consumer dependencies.
 
 ## Tests asserting this spec
@@ -73,6 +75,7 @@ Pre-producer RED executed separately on Retail (`122e272bb`) and PTR (`48902323e
 - `tests/calendar_day_events/security.rs`: two actual-VM secret cases under retail-12-1-0.
 - `tests/calendar_day_events/consumer.rs`: two real-cache consumer cases.
 - `tests/calendar_day_events/fixtures.rs`: explicit public passive DTO fixtures and exact Lua value assertions.
+- `tests/game_time_calendar_invites.rs`: Retail/Forever original GameTimeFrame consumer and model-update event behavior.
 
 Each seeded case first requires a supplied DTO before security/consumer setup. Count case first requires a positive count, then a supplied DTO. Function guard distinguishes missing registration from MissingSuppliedRecord. No case earns behavior credit with only function existence or absence/default assertions.
 

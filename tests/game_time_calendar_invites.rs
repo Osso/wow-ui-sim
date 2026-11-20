@@ -1,5 +1,6 @@
 #![cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 
+use std::collections::HashMap;
 use wow_ui_sim::c_api::c_calendar::day_event_record::CalendarDayEventRecord;
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::screen::ScreenKind;
@@ -35,12 +36,8 @@ fn supply_invites(env: &WowLuaEnv, statuses: &[i32]) {
         .enumerate()
         .map(|(index, status)| invite_record(index, *status))
         .collect();
-    env.state()
-        .borrow_mut()
-        .calendar_day_events
-        .insert((0, 15), rows);
-    env.fire_event("CALENDAR_UPDATE_PENDING_INVITES")
-        .expect("calendar invite update event");
+    env.replace_calendar_day_events(HashMap::from([((0, 15), rows)]))
+        .expect("replace calendar event rows");
 }
 
 fn assert_indicator(env: &WowLuaEnv, count: usize, shown: bool, flashing: bool) {
@@ -57,12 +54,24 @@ fn assert_indicator(env: &WowLuaEnv, count: usize, shown: bool, flashing: bool) 
 #[test]
 fn game_time_calendar_invites_follow_supplied_invited_events() {
     let env = game_time_env();
+    env.exec(
+        "CalendarInviteUpdateProbe = CreateFrame('Frame'); \
+         CalendarInviteUpdateProbe:RegisterEvent('CALENDAR_UPDATE_PENDING_INVITES'); \
+         CalendarInviteUpdateProbe:SetScript('OnEvent', function(self) \
+             self.updates = (self.updates or 0) + 1 \
+         end)",
+    )
+    .expect("install calendar update observer");
     assert_indicator(&env, 0, false, false);
 
     supply_invites(&env, &[0, 0]);
     assert_indicator(&env, 2, true, true);
+    env.exec("assert(CalendarInviteUpdateProbe.updates == 1, 'two invites emitted update')")
+        .expect("two pending invites notify listeners");
 
     supply_invites(&env, &[0, 1]);
+    env.exec("assert(CalendarInviteUpdateProbe.updates == 2, 'one invite emitted update')")
+        .expect("changed pending count notifies listeners");
     env.exec(
         "assert(C_Calendar.GetNumPendingInvites() == 1, 'updated calendar model count'); \
          assert(GameTimeFrame.pendingCalendarInvites == 2, 'original GameTimeFrame count'); \

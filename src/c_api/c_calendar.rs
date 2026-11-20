@@ -147,6 +147,19 @@ pub struct CalendarInviteRecord {
     pub response_time: Option<day_event_record::CalendarTimeRecord>,
 }
 
+const CALENDAR_STATUS_INVITED: i32 = 0;
+
+/// INFERRED pending-count policy from R88ca; the aso native request is pending.
+pub(crate) fn count_pending_calendar_invites(
+    events: &HashMap<(i32, u32), Vec<day_event_record::CalendarDayEventRecord>>,
+) -> usize {
+    events
+        .values()
+        .flatten()
+        .filter(|event| event.invite_status == CALENDAR_STATUS_INVITED)
+        .count()
+}
+
 /// Selected event identity and absolute calendar month.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct CalendarSelection {
@@ -198,6 +211,12 @@ fn register_modeled_calendar_surface(state: &mut LuaState) -> LuaResult<()> {
         namespace,
         "GetFirstPendingInvite",
         day_event_queries::query_first_pending_invite,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        namespace,
+        "GetNumPendingInvites",
+        day_event_queries::query_num_pending_invites,
     )
 }
 
