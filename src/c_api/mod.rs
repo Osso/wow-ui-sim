@@ -84,6 +84,7 @@ pub mod trait_group_display;
 pub mod ui_widget_manager;
 pub mod video_capabilities;
 pub(crate) mod video_texture_capability;
+mod video_window;
 #[cfg(feature = "client-wrath")]
 pub mod who_routing;
 
@@ -702,6 +703,7 @@ fn register_glue_and_display_tables(state: &mut LuaState) -> LuaResult<()> {
     c_glue::register_c_glue(state)?;
     c_login::register_c_login(state)?;
     video_capabilities::register(state)?;
+    video_window::register(state)?;
     video_texture_capability::register(state)?;
     credits::register(state)?;
     c_district_utils::register_ptr_game_surface(state)?;
