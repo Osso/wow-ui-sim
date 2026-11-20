@@ -165,25 +165,10 @@ fn secure_transfer_mail_receive_dialog_credits_selected_message() {
 }
 
 fn seed_receive_mail(env: &WowLuaEnv, sender: &str, money: u64) {
-    env.state()
-        .borrow_mut()
-        .player
-        .inbox
-        .push(wow_ui_sim::lua_api::state_types::MailMessage {
-            id: 1,
-            sender: sender.to_string(),
-            subject: "Transfer".to_string(),
-            body: String::new(),
-            money,
-            cod_amount: 0,
-            items: Vec::new(),
-            days_left: 30.0,
-            was_read: false,
-            was_returned: false,
-            can_reply: true,
-            is_gm: false,
-            stationery_icon: 0,
-        });
+    env.exec(&format!(
+        "A_Admin.AddMail('{sender}', 'Transfer', '', {money})"
+    ))
+    .unwrap();
 }
 
 #[cfg(feature = "client-wowforever")]
