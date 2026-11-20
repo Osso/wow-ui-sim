@@ -33,8 +33,10 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
 
 #[cfg(test)]
 mod tests {
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     use crate::lua_api::WowLuaEnv;
 
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     #[test]
     fn installs_mythic_plus_cache_defaults() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
@@ -66,6 +68,7 @@ mod tests {
         assert_eq!(result, "ok");
     }
 
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     #[test]
     fn preserves_existing_mythic_plus_cache_provider() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
