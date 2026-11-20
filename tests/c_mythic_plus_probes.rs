@@ -232,9 +232,12 @@ fn weekly_rewards_consumer_requests_map_refresh() {
     let env = env();
     let addons = wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("Blizzard UI cache should be available");
-    let toc = addons.join("Blizzard_WeeklyRewards/Blizzard_WeeklyRewards.toc");
-    wow_ui_sim::loader::load_addon(&env.loader_env(), &toc)
-        .expect("selected Blizzard Weekly Rewards consumer should load");
+    let source = std::fs::read_to_string(
+        addons.join("Blizzard_WeeklyRewards/Blizzard_WeeklyRewards.lua"),
+    )
+    .expect("selected Blizzard Weekly Rewards consumer should be readable");
+    env.exec(&source)
+        .expect("original WeeklyRewards consumer should load");
     env.exec(
         "map_update_seen = false; local f = CreateFrame('Frame'); \
          f:RegisterEvent('CHALLENGE_MODE_MAPS_UPDATE'); \
