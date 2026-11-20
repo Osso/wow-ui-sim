@@ -7,7 +7,7 @@ use std::collections::HashSet;
 use crate::c_api::helpers::{ensure_namespace, set_table_array};
 use crate::lua_api::globals::state_backed_queries::dispatch_event_now;
 use crate::lua_api::methods::{
-    borrow_state, borrow_state_mut, create_string, create_table, table_set_static,
+    borrow_state, borrow_state_mut, create_string, create_table, table_set,
 };
 use crate::lua_bridge::{FromStack, TableBuilder, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
@@ -175,16 +175,17 @@ fn get_group_for_player(state: &mut LuaState) -> LuaResult<u32> {
     let player_guid = String::from_stack(state, 1)?;
     let groups = borrow_state(state)?.social_queue.groups.clone();
     let found = groups.iter().find_map(|group| {
-        group["members"]
-            .as_array()?
+        let members = group["members"].as_array()?;
+        if !members
             .iter()
             .any(|member| member["guid"].as_str() == Some(player_guid.as_str()))
-            .then(|| {
-                (
-                    group["guid"].as_str()?.to_owned(),
-                    group["info"]["isSoloQueueParty"].as_bool().unwrap_or(false),
-                )
-            })
+        {
+            return None;
+        }
+        Some((
+            group["guid"].as_str()?.to_owned(),
+            group["info"]["isSoloQueueParty"].as_bool().unwrap_or(false),
+        ))
     });
     let Some((guid, solo)) = found else {
         return Ok(0);
@@ -298,7 +299,7 @@ fn to_lua(state: &mut LuaState, value: &Value) -> Val {
             let table = create_table(state);
             for (key, value) in fields {
                 let value = to_lua(state, value);
-                table_set_static(state, table, key, value);
+                table_set(state, table, key, value);
             }
             table
         }
