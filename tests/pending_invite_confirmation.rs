@@ -20,10 +20,12 @@ fn pending_invite_confirmation_warnings_use_each_supplied_invite() {
 
     env.exec(
         r#"
-        A_Admin.SetPendingInviteConfirmations([[
+        A_Admin.SetPendingInviteConfirmations([=[
+        [
             {"id":"invite-a", "name":"Aster", "guid":"Player-1-A", "invalidQueues":[{"queueType":"pvp", "mapName":"North Battleground"}]},
             {"id":"invite-b", "name":"Bramble", "guid":"Player-1-B", "invalidQueues":[{"queueType":"pvp", "mapName":"South Battleground"}]}
-        ]])
+        ]
+        ]=])
         "#,
     )
     .expect("host should supply two distinct pending invitations");
