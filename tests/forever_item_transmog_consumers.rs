@@ -49,13 +49,6 @@ fn transmog_outfit_popup_adds_two_outfits_through_consumer() {
         let env = load_transmog_consumer();
         let result: String = env.eval(TRANSMOG_POPUP_LUA).expect("popup consumer");
         assert_eq!(result, "ok");
-        let entries = env
-            .state()
-            .borrow()
-            .transmog_outfit_catalog
-            .entries
-            .clone();
-        env.state().borrow_mut().forever_outfits = Some(Some(entries));
         let result: String = env.eval(TRANSMOG_REFRESH_LUA).expect("outfit list consumer");
         assert_eq!(result, "ok");
     });
