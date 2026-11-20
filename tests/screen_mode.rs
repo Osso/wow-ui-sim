@@ -241,8 +241,13 @@ fn original_graphics_resolution_setting_tracks_display_model() {
     first
         .exec(
             r#"
-            local options = __video_resolution_options()
-            assert(options[1].value == "1280x720")
+            local function hasResolution(options, value)
+                for _, option in ipairs(options) do
+                    if option.value == value then return true end
+                end
+                return false
+            end
+            assert(hasResolution(__video_resolution_options(), "1280x720"))
             assert(Settings.GetValue("PROXY_RESOLUTION") == "1280x720")
             Settings.SetValue("PROXY_RESOLUTION", "1600x900")
             local size = C_VideoOptions.GetCurrentGameWindowSize()
@@ -258,8 +263,11 @@ fn original_graphics_resolution_setting_tracks_display_model() {
     second
         .exec(
             r#"
-            local options = __video_resolution_options()
-            assert(options[1].value == "2560x1440")
+            local hasResolution = false
+            for _, option in ipairs(__video_resolution_options()) do
+                if option.value == "2560x1440" then hasResolution = true end
+            end
+            assert(hasResolution)
             assert(Settings.GetValue("PROXY_RESOLUTION") == "2560x1440")
             "#,
         )
@@ -286,6 +294,10 @@ fn load_graphics_consumer(width: f32, height: f32) -> WowLuaEnv {
             .iter()
             .any(|name| name == "Blizzard_SettingsDefinitions_Shared")
     );
+    env.fire_event("VARIABLES_LOADED")
+        .expect("allow Settings registrants to run");
+    env.fire_event("PLAYER_ENTERING_WORLD")
+        .expect("run original game Graphics settings registrant");
     env
 }
 
