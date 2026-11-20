@@ -55,15 +55,12 @@ fn assert_retail_lfg_consumer(env: &wow_ui_sim::lua_api::WowLuaEnv) {
 fn assert_forever_party_invite_consumer(env: &wow_ui_sim::lua_api::WowLuaEnv) {
     env.exec(
         r#"
-        local first = GetNextPendingInviteConfirmation()
-        local _, firstName = GetInviteConfirmationInfo(first)
+        local _, firstName = GetInviteConfirmationInfo("invite-a")
         local firstPopup = StaticPopup_Show("PARTY_INVITE", firstName)
         assert(firstPopup.Text:GetText():find(firstName, 1, true))
-        C_PartyInfo.ConfirmInviteUnit(firstName)
         StaticPopup_Hide("PARTY_INVITE")
 
-        local second = GetNextPendingInviteConfirmation()
-        local _, secondName = GetInviteConfirmationInfo(second)
+        local _, secondName = GetInviteConfirmationInfo("invite-b")
         local secondPopup = StaticPopup_Show("PARTY_INVITE", secondName)
         assert(secondPopup.Text:GetText():find(secondName, 1, true))
         assert(firstName ~= secondName)

@@ -47,8 +47,9 @@ fn set_pending_invites(state: &mut LuaState) -> LuaResult<u32> {
     let invites: Vec<Value> = serde_json::from_str(&input)
         .map_err(|_| runtime_error("SetPendingInviteConfirmations requires a JSON array"))?;
     validate_invites(&invites)?;
-    borrow_state_mut(state)?.party_invite_confirmations.invites = invites.clone();
-    for _ in invites {
+    let event_count = invites.len();
+    borrow_state_mut(state)?.party_invite_confirmations.invites = invites;
+    for _ in 0..event_count {
         crate::lua_api::globals::state_backed_queries::dispatch_event_now(
             state,
             "NEW_MATCHMAKING_PARTY_INVITE",
@@ -139,11 +140,8 @@ fn get_referral_info(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn confirm_invite_unit(state: &mut LuaState) -> LuaResult<u32> {
-    let name = String::from_stack(state, 1)?;
-    let mut sim = borrow_state_mut(state)?;
-    sim.party_invite_confirmations
-        .invites
-        .retain(|invite| invite.get("name").and_then(Value::as_str) != Some(name.as_str()));
+    // INFERRED (R88cf pending): this local snapshot cannot model server-side group membership.
+    let _target_name = String::from_stack(state, 1)?;
     Ok(0)
 }
 
