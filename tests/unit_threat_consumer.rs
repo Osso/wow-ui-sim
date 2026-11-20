@@ -28,6 +28,8 @@ fn unit_threat_indicator_tracks_two_supplied_states() {
     let env = load_game_ui();
     let result: String = env.eval(r#"
         assert(type(CompactUnitFrame_UpdateHealthColor) == "function")
+        local cr, cg, cb = GetThreatStatusColor(3)
+        assert(cr == 1 and cg == 0 and cb == 0 and GetThreatStatusColor(99) == nil)
         local frame = CreateFrame("Frame")
         frame.unit = "player"
         frame.displayedUnit = "player"
