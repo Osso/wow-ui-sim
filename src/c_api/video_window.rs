@@ -23,7 +23,9 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     table_set_rust_fn_static(state, namespace, "GetDefaultGameWindowSize", current_size)?;
     table_set_rust_fn_static(state, namespace, "GetGameWindowSizes", available_sizes)?;
     table_set_rust_fn_static(state, namespace, "SetGameWindowSize", set_size)?;
-    table_set_rust_fn_static(state, namespace, "GetGxAdapterInfo", adapter_info)
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    table_set_rust_fn_static(state, namespace, "GetGxAdapterInfo", adapter_info)?;
+    Ok(())
 }
 
 fn current_dimensions(state: &LuaState) -> LuaResult<(f32, f32)> {
@@ -67,6 +69,7 @@ pub(crate) fn default_gx_adapter_info() -> Vec<GxAdapterInfoDetails> {
     }]
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn adapter_info(state: &mut LuaState) -> LuaResult<u32> {
     let adapters = borrow_state(state)?.gx_adapter_info.clone();
     let results = create_table(state);
