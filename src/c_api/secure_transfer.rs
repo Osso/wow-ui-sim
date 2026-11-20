@@ -238,8 +238,28 @@ fn cancel(state: &mut LuaState) -> LuaResult<u32> {
 
 fn take_mail_money(state: &mut LuaState) -> LuaResult<u32> {
     let index = open_mail_index(state)?;
-    let function = global_val(state, "TakeInboxMoney");
-    call_function_state(state, function, &[Val::Num((index + 1) as f64)])?;
+    let mut sim = borrow_state_mut(state)?;
+    let money = sim
+        .player
+        .inbox
+        .get(index)
+        .ok_or_else(|| runtime_error("secure transfer mail selection is unavailable"))?
+        .money;
+    let balance = sim
+        .player
+        .money
+        .checked_add(i64::try_from(money).map_err(|_| {
+            runtime_error("secure transfer mail money exceeds the player balance range")
+        })?)
+        .ok_or_else(|| runtime_error("secure transfer mail would overflow player money"))?;
+    sim.player.inbox[index].money = 0;
+    sim.player.money = balance;
+    drop(sim);
+    crate::lua_api::globals::state_backed_queries::dispatch_event_now(
+        state,
+        "MAIL_INBOX_UPDATE",
+        &[],
+    )?;
     Ok(0)
 }
 
