@@ -112,7 +112,7 @@ fn save_layouts(state: &mut LuaState) -> LuaResult<u32> {
     if !matches!(input, Val::Table(_)) {
         return Ok(0);
     }
-    let input = copy_lua_value(state, input, 0)?;
+    let input = copy_lua_value(state, input)?;
     borrow_state_mut(state)?.edit_mode_cache.save_layouts(input);
     Ok(0)
 }
@@ -215,8 +215,8 @@ fn setting_record_value(
     value: Val,
 ) -> LuaResult<EditModeValue> {
     Ok(EditModeValue::object([
-        ("setting", copy_lua_value(state, setting, 0)?),
-        ("value", copy_lua_value(state, value, 0)?),
+        ("setting", copy_lua_value(state, setting)?),
+        ("value", copy_lua_value(state, value)?),
     ]))
 }
 
@@ -324,10 +324,7 @@ fn numeric_argument(state: &LuaState, index: i32) -> Option<f64> {
     }
 }
 
-fn copy_lua_value(state: &mut LuaState, value: Val, depth: usize) -> LuaResult<EditModeValue> {
-    if depth > 64 {
-        return Ok(EditModeValue::Nil);
-    }
+fn copy_lua_value(state: &mut LuaState, value: Val) -> LuaResult<EditModeValue> {
     match value {
         Val::Nil => Ok(EditModeValue::Nil),
         Val::Bool(value) => Ok(EditModeValue::Boolean(value)),
@@ -335,7 +332,7 @@ fn copy_lua_value(state: &mut LuaState, value: Val, depth: usize) -> LuaResult<E
         Val::Str(_) => Ok(EditModeValue::String(
             val_to_string(state, value).unwrap_or_default(),
         )),
-        Val::Table(table_ref) => copy_lua_table(state, table_ref, depth + 1),
+        Val::Table(table_ref) => copy_lua_table(state, table_ref),
         _ => Ok(EditModeValue::Nil),
     }
 }
@@ -343,7 +340,6 @@ fn copy_lua_value(state: &mut LuaState, value: Val, depth: usize) -> LuaResult<E
 fn copy_lua_table(
     state: &mut LuaState,
     table_ref: rilua::vm::gc::arena::GcRef<rilua::vm::table::Table>,
-    depth: usize,
 ) -> LuaResult<EditModeValue> {
     use rilua::table_security::{TableAccess, check_table_access};
     check_table_access(state, table_ref, None, TableAccess::Index)?;
@@ -359,14 +355,14 @@ fn copy_lua_table(
         if value != Val::Nil {
             entries.push((
                 EditModeKey::Number((index + 1) as f64),
-                copy_lua_value(state, value, depth)?,
+                copy_lua_value(state, value)?,
             ));
         }
     }
     for (key, value) in hash {
         let key = copy_lua_key(state, key)?;
         if let Some(key) = key {
-            entries.push((key, copy_lua_value(state, value, depth)?));
+            entries.push((key, copy_lua_value(state, value)?));
         }
     }
     Ok(EditModeValue::Table(entries))
