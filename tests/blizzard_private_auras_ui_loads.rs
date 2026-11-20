@@ -1,10 +1,10 @@
 use std::path::PathBuf;
 
+use wow_ui_sim::c_api::private_aura_data::PrivateAuraEntry;
 use wow_ui_sim::loader::{discover_all_blizzard_addons, discover_blizzard_addons_for_screen};
 use wow_ui_sim::loader::{find_toc_file, load_addon};
-use wow_ui_sim::c_api::private_aura_data::PrivateAuraEntry;
-use wow_ui_sim::lua_api::state::AuraInfo;
 use wow_ui_sim::lua_api::WowLuaEnv;
+use wow_ui_sim::lua_api::state::AuraInfo;
 use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
@@ -1291,10 +1291,16 @@ fn supply_private_auras(env: &WowLuaEnv) {
         private_aura_entry(302, false, false, 3, 60.0, now),
     ];
     let mut state = env.state().borrow_mut();
-    state.private_aura_data.private_auras_by_unit.insert("player".into(), entries.clone());
+    state
+        .private_aura_data
+        .private_auras_by_unit
+        .insert("player".into(), entries.clone());
     state.private_aura_data.aura_data_by_unit.insert(
         "player".into(),
-        entries.into_iter().map(|entry| (entry.aura.aura_instance_id, entry)).collect(),
+        entries
+            .into_iter()
+            .map(|entry| (entry.aura.aura_instance_id, entry))
+            .collect(),
     );
 }
 
@@ -1392,38 +1398,45 @@ fn replace_first_private_aura(env: &WowLuaEnv) {
     let mut state = env.state().borrow_mut();
     state.private_aura_data.private_auras_by_unit.insert(
         "player".into(),
-        vec![replacement.clone(), private_aura_entry(302, false, false, 3, 60.0, now)],
+        vec![
+            replacement.clone(),
+            private_aura_entry(302, false, false, 3, 60.0, now),
+        ],
     );
     state.private_aura_data.aura_data_by_unit.insert(
         "player".into(),
-        [(303, replacement), (302, private_aura_entry(302, false, false, 3, 60.0, now))]
-            .into_iter()
-            .collect(),
+        [
+            (303, replacement),
+            (302, private_aura_entry(302, false, false, 3, 60.0, now)),
+        ]
+        .into_iter()
+        .collect(),
     );
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
-const PRIVATE_AURA_TOOLTIP_PROBE: &str = r#"
-    local function assertAuraTooltip(parent, name, duration)
-        local aura = select(1, parent:GetChildren())
-        assert(aura and aura:IsShown(), 'private aura frame must be shown')
-        GameTooltip:SetOwner(aura, 'ANCHOR_BOTTOMLEFT')
-        GameTooltip:SetFrameLevel(aura:GetFrameLevel() + 2)
-        local instanceID = aura.auraInfo.auraInstanceID
-        local direct = C_TooltipInfo.GetUnitPrivateAura('player', instanceID)
-        assert(direct and direct.lines[1].leftText == name, 'direct private aura tooltip')
-        local accepted = GameTooltipDataMixin.SetUnitPrivateAura(GameTooltip, 'player', instanceID)
-        local info = GameTooltip:GetPrimaryTooltipInfo()
-        local data = GameTooltip:GetPrimaryTooltipData()
-        assert(info and info.getterName == 'GetUnitPrivateAura', 'private aura accessor: ' .. tostring(info and info.getterName) .. ', data=' .. type(data) .. ', accepted=' .. tostring(accepted))
-        assert(data and data.lines[1].leftText == name, 'private aura name: ' .. tostring(data and data.lines[1] and data.lines[1].leftText))
-        assert(data.lines[2].leftText == duration, 'private aura duration: ' .. tostring(data.lines[2] and data.lines[2].leftText))
-        assert(data.lines[3] and type(data.lines[3].leftText) == 'string' and data.lines[3].leftText ~= '', 'private aura description line')
-        aura:OnLeave()
-    end
-    assertAuraTooltip(PrivateAuraAnchorParent1, 'Private 301', '29 sec')
-    assertAuraTooltip(PrivateAuraAnchorParent2, 'Private 302', '59 sec')
-"#;
+fn assert_private_aura_tooltip(env: &WowLuaEnv, parent: &str, name: &str, duration: &str) {
+    let aura_id = crate::common::aura_container_harness::frame_id(
+        env,
+        &format!("select(1, __secureenv.{parent}:GetChildren())"),
+    );
+    env.fire_script_handler(aura_id, "OnEnter", Vec::new())
+        .expect("selected Blizzard private-aura OnEnter handler should run");
+    let actual: (Option<String>, Option<String>, Option<String>, Option<String>) = env
+        .eval(
+            "local t = __secureenv.PrivateAurasTooltip; local info = t:GetPrimaryTooltipInfo(); local data = t:GetPrimaryTooltipData(); local lines = data and data.lines or {}; return info and info.getterName, lines[1] and lines[1].leftText, lines[2] and lines[2].leftText, lines[3] and lines[3].leftText",
+        )
+        .expect("private-aura tooltip data should be readable");
+    assert_eq!(actual.0.as_deref(), Some("GetUnitPrivateAura"));
+    assert_eq!(actual.1.as_deref(), Some(name));
+    assert_eq!(actual.2.as_deref(), Some(duration));
+    assert!(
+        actual.3.as_deref().is_some_and(|text| !text.is_empty()),
+        "selected Blizzard consumer should include the aura description"
+    );
+    env.fire_script_handler(aura_id, "OnLeave", Vec::new())
+        .expect("selected Blizzard private-aura OnLeave handler should run");
+}
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 #[test]
@@ -1441,13 +1454,21 @@ fn private_aura_tooltip_uses_the_selected_instance_data() {
     supply_private_auras(&env);
     {
         let mut state = env.state().borrow_mut();
-        state.aura_tooltip_inputs.entry(301).or_default().remaining_text = Some("29 sec".into());
-        state.aura_tooltip_inputs.entry(302).or_default().remaining_text = Some("59 sec".into());
+        state
+            .aura_tooltip_inputs
+            .entry(301)
+            .or_default()
+            .remaining_text = Some("29 sec".into());
+        state
+            .aura_tooltip_inputs
+            .entry(302)
+            .or_default()
+            .remaining_text = Some("59 sec".into());
     }
     env.exec_rilua_secure(PRIVATE_AURA_ANCHOR_PLACEMENT_PROBE)
         .expect("private aura anchors should initialize in the secure UI");
     wow_ui_sim::startup::process_pending_timers(&env);
     wow_ui_sim::startup::fire_one_on_update_tick(&env);
-    env.exec_rilua_secure(PRIVATE_AURA_TOOLTIP_PROBE)
-        .expect("private aura hover should use each supplied instance's tooltip data");
+    assert_private_aura_tooltip(&env, "PrivateAuraAnchorParent1", "Private 301", "29 sec");
+    assert_private_aura_tooltip(&env, "PrivateAuraAnchorParent2", "Private 302", "59 sec");
 }
