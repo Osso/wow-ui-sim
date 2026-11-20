@@ -26,8 +26,7 @@ fn encounter_timeline_retail_consumer_displays_supplied_events() {
 }
 
 #[cfg(feature = "client-wowforever")]
-#[test]
-fn encounter_timeline_forever_setting_hides_unavailable_timeline() {
+fn forever_settings_env() -> wow_ui_sim::lua_api::WowLuaEnv {
     let ui = wow_ui_sim::paths::default_blizzard_ui_addons_path().unwrap();
     let (env, loaded) = crate::common::blizzard_addon_harness::build_blizzard_addon_closure_env(
         &ui,
@@ -35,19 +34,22 @@ fn encounter_timeline_forever_setting_hides_unavailable_timeline() {
         &[],
     );
     assert!(loaded.iter().any(|name| name == "Blizzard_SettingsDefinitions_Frame"));
+    env
+}
+
+#[cfg(feature = "client-wowforever")]
+fn forever_timeline_setting_visibility(env: &wow_ui_sim::lua_api::WowLuaEnv) -> String {
     env.exec("SetCVar('combatWarningsEnabled', '1')").unwrap();
-    let visibility: String = env
-        .eval(
-            r#"
-            local layouts = {}
-            local register = Settings.RegisterVerticalLayoutCategory
-            Settings.RegisterVerticalLayoutCategory = function(...)
-                local category, layout = register(...)
-                table.insert(layouts, layout)
-                return category, layout
-            end
-            SettingsRegistrar.allowCallRegistrants = true
-            for _, callback in ipairs(SettingsRegistrar.registrants or {}) do callback() end
+    env.eval(
+        r#"
+        local layouts = {}
+        local register = Settings.RegisterVerticalLayoutCategory
+        Settings.RegisterVerticalLayoutCategory = function(...)
+            local category, layout = register(...)
+            table.insert(layouts, layout)
+            return category, layout
+        end
+        local function findTimelineSetting()
             for _, layout in ipairs(layouts) do
                 for _, initializer in ipairs(layout:GetInitializers()) do
                     local setting = initializer.GetSetting and initializer:GetSetting()
@@ -56,9 +58,24 @@ fn encounter_timeline_forever_setting_hides_unavailable_timeline() {
                     end
                 end
             end
-            return 'setting not registered'
-            "#,
-        )
-        .unwrap();
+        end
+        local registrationErrors = {}
+        for _, callback in ipairs(SettingsRegistrar.registrants or {}) do
+            local ok, err = pcall(callback)
+            if not ok then table.insert(registrationErrors, tostring(err)) end
+            local visibility = findTimelineSetting()
+            if visibility then return visibility end
+        end
+        return 'setting not registered: ' .. table.concat(registrationErrors, '; ')
+        "#,
+    )
+    .unwrap()
+}
+
+#[cfg(feature = "client-wowforever")]
+#[test]
+fn encounter_timeline_forever_setting_hides_unavailable_timeline() {
+    let env = forever_settings_env();
+    let visibility = forever_timeline_setting_visibility(&env);
     assert_eq!(visibility, "hidden");
 }
