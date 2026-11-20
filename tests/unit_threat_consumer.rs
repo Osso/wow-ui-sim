@@ -27,18 +27,27 @@ fn load_game_ui() -> WowLuaEnv {
 fn unit_threat_indicator_tracks_two_supplied_states() {
     let env = load_game_ui();
     let result: bool = env.eval(r#"
-        assert(type(UnitFrame_UpdateThreatIndicator) == "function")
-        SetCVar("threatWarning", 1)
-        A_Admin.SetTarget("Threat Test Mob", 63, 1, true)
-        UnitFrameThreatIndicator_Initialize("target", TargetFrame, "player")
-        local icon = TargetFrame.threatIndicator
-        assert(icon ~= nil)
-        A_Admin.SetUnitThreatSituation("player", "target", 0, 0, 0, 0)
-        UnitFrame_UpdateThreatIndicator(icon, nil, "player")
-        local first = icon:IsShown()
-        A_Admin.SetUnitThreatSituation("player", "target", 3, 100, 100, 1000)
-        UnitFrame_UpdateThreatIndicator(icon, nil, "player")
-        return first == false and icon:IsShown() == true
+        assert(type(CompactUnitFrame_UpdateHealthColor) == "function")
+        local frame = CreateFrame("Frame")
+        frame.unit = "player"
+        frame.displayedUnit = "player"
+        frame.optionTable = {}
+        frame.displayThreatHealthBarColor = true
+        frame.healthBar = CreateFrame("StatusBar", nil, frame)
+        A_Admin.SetUnitThreatSituation("player", "target", 1, 60, 50, 500)
+        A_Admin.SetUnitThreatSituation("pet", "target", 3, 100, 100, 1000)
+        CompactUnitFrame_UpdateHealthColor(frame)
+        local r1, g1, b1 = frame.healthBar:GetStatusBarColor()
+        local isTanking, status, scaled, raw, value = UnitDetailedThreatSituation("player", "target")
+        assert(isTanking == false and status == 1 and scaled == 60 and raw == 50 and value == 500)
+        assert(UnitThreatSituation("player") == 1)
+        assert(UnitThreatPercentageOfLead("player", "target") == 50)
+        A_Admin.SetUnitThreatSituation("player", "target", 2, 100, 100, 1200)
+        CompactUnitFrame_UpdateHealthColor(frame)
+        local r2, g2, b2 = frame.healthBar:GetStatusBarColor()
+        assert(UnitDetailedThreatSituation("player", "target") == true)
+        assert(UnitThreatSituation("player") == 2)
+        return r1 ~= r2 or g1 ~= g2 or b1 ~= b2
     "#).expect("original Blizzard threat consumer runs");
     assert!(result, "consumer output must change for the supplied threat states");
 }
