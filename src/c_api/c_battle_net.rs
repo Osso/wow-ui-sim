@@ -124,6 +124,7 @@ fn register_friend_query_methods(state: &mut LuaState, table_ref: BattleNetTable
         "GetAccountInfoByGUID",
         c_bnet_get_account_info_by_guid,
     )?;
+    register_retail_friend_game_account_methods(state, table_ref)?;
     table_set_rust_fn_static(
         state,
         table_ref,
@@ -567,6 +568,83 @@ fn c_bnet_get_account_info_by_guid(state: &mut LuaState) -> LuaResult<u32> {
     let t = push_account_info_table(state, &friend, game_account.as_ref());
     state.push(t);
     Ok(1)
+}
+
+fn register_retail_friend_game_account_methods(
+    state: &mut LuaState,
+    table_ref: BattleNetTable,
+) -> LuaResult<()> {
+    if !matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
+        return Ok(());
+    }
+    // Forever shapes VERIFIED at BattleNetDocumentation.lua:100, 148 and 194;
+    // lookup semantics are INFERRED from the existing Retail friend model.
+    table_set_rust_fn_static(
+        state,
+        table_ref,
+        "GetAccountInfoByID",
+        c_bnet_get_account_info_by_id,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        table_ref,
+        "GetFriendGameAccountInfo",
+        c_bnet_get_friend_game_account_info,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        table_ref,
+        "GetFriendNumGameAccounts",
+        c_bnet_get_friend_num_accounts,
+    )
+}
+
+fn c_bnet_get_account_info_by_id(state: &mut LuaState) -> LuaResult<u32> {
+    let account_id = i32::from_stack(state, 1)?;
+    let friend = {
+        let sim = borrow_state(state)?;
+        sim.bnet_friends
+            .iter()
+            .find(|friend| friend.bnet_account_id == account_id)
+            .cloned()
+    };
+    let Some(friend) = friend else {
+        state.push(Val::Nil);
+        return Ok(1);
+    };
+    let game_account = friend.game_accounts.first().cloned();
+    let account_info = push_account_info_table(state, &friend, game_account.as_ref());
+    state.push(account_info);
+    Ok(1)
+}
+
+fn c_bnet_get_friend_game_account_info(state: &mut LuaState) -> LuaResult<u32> {
+    let friend_index = i32::from_stack(state, 1)?;
+    let account_index = i32::from_stack(state, 2)?;
+    let game_account = {
+        let sim = borrow_state(state)?;
+        one_based_index(friend_index)
+            .and_then(|index| sim.bnet_friends.get(index))
+            .and_then(|friend| {
+                one_based_index(account_index).and_then(|index| friend.game_accounts.get(index))
+            })
+            .cloned()
+    };
+    let Some(game_account) = game_account else {
+        state.push(Val::Nil);
+        return Ok(1);
+    };
+    let info = push_game_account_info_table(state, &game_account);
+    state.push(info);
+    Ok(1)
+}
+
+fn one_based_index(index: i32) -> Option<usize> {
+    usize::try_from(index).ok()?.checked_sub(1)
 }
 
 fn c_bnet_get_game_account_info_by_guid(state: &mut LuaState) -> LuaResult<u32> {
