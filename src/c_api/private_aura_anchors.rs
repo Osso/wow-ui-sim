@@ -125,10 +125,27 @@ fn private_aura_placement(state: &LuaState, anchor_id: u64) -> LuaResult<(Anchor
         .private_aura_data
         .private_auras_by_unit
         .get(&record.unit_token)
-        .and_then(|auras| auras.get(index as usize - 1))
-        .map(|entry| entry.aura.icon)
+        .and_then(|auras| private_aura_icon_at_index(auras, index as usize - 1))
         .ok_or_else(|| runtime_error("private aura anchor aura data is unavailable"))?;
     Ok((record, aura))
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn private_aura_icon_at_index(
+    auras: &[crate::c_api::private_aura_data::PrivateAuraEntry],
+    index: usize,
+) -> Option<i32> {
+    // INFERRED from AuraUtil.DefaultAuraCompare; R88bw may establish a native selector.
+    let mut sorted: Vec<_> = auras.iter().collect();
+    sorted.sort_by(|a, b| {
+        let a_from_player = a.aura.source_unit == "player";
+        let b_from_player = b.aura.source_unit == "player";
+        b_from_player
+            .cmp(&a_from_player)
+            .then_with(|| b.aura.can_apply_aura.cmp(&a.aura.can_apply_aura))
+            .then_with(|| a.aura.aura_instance_id.cmp(&b.aura.aura_instance_id))
+    });
+    sorted.get(index).map(|entry| entry.aura.icon)
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
