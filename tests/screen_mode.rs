@@ -1,3 +1,6 @@
+use crate::common::blizzard_addon_harness::{
+    blizzard_ui_dir, load_blizzard_addon_closure_into_env, new_blizzard_addon_env,
+};
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::screen::ScreenKind;
 
@@ -233,26 +236,57 @@ fn physical_display_input_matches_captured_wow_ui_dimensions() {
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 #[test]
-fn video_window_size_queries_follow_configured_display_dimensions() {
-    let env = WowLuaEnv::new().expect("create environment");
-    for (width, height) in [(1280.0, 720.0), (2560.0, 1440.0)] {
-        env.set_display_size(width, height)
-            .expect("set physical display size");
-        let (current, default, listed_width, listed_height): (f64, f64, f64, f64) = env
-            .eval(
-                r#"
-                local current = C_VideoOptions.GetCurrentGameWindowSize()
-                local default = C_VideoOptions.GetDefaultGameWindowSize(1)
-                local sizes = C_VideoOptions.GetGameWindowSizes(1, false)
-                return current.x, default.x, sizes[1].x, sizes[1].y
-                "#,
-            )
-            .expect("query configured display size");
-        assert_eq!(current, f64::from(width));
-        assert_eq!(default, f64::from(width));
-        assert_eq!(listed_width, f64::from(width));
-        assert_eq!(listed_height, f64::from(height));
-    }
+fn original_graphics_resolution_setting_tracks_display_model() {
+    let first = load_graphics_consumer(1280.0, 720.0);
+    first
+        .exec(
+            r#"
+            local options = __video_resolution_options()
+            assert(options[1].value == "1280x720")
+            assert(Settings.GetValue("PROXY_RESOLUTION") == "1280x720")
+            Settings.SetValue("PROXY_RESOLUTION", "1600x900")
+            local size = C_VideoOptions.GetCurrentGameWindowSize()
+            local physicalWidth, physicalHeight = GetPhysicalScreenSize()
+            assert(size.x == 1600 and size.y == 900)
+            assert(physicalWidth == 1600 and physicalHeight == 900)
+            assert(Settings.GetValue("PROXY_RESOLUTION") == "1600x900")
+            "#,
+        )
+        .expect("original Graphics resolution setting should update display state");
+
+    let second = load_graphics_consumer(2560.0, 1440.0);
+    second
+        .exec(
+            r#"
+            local options = __video_resolution_options()
+            assert(options[1].value == "2560x1440")
+            assert(Settings.GetValue("PROXY_RESOLUTION") == "2560x1440")
+            "#,
+        )
+        .expect("original Graphics setting should read a second configured display size");
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn load_graphics_consumer(width: f32, height: f32) -> WowLuaEnv {
+    let ui = blizzard_ui_dir();
+    let env = new_blizzard_addon_env(&ui);
+    env.set_display_size(width, height)
+        .expect("set physical display size");
+    load_blizzard_addon_closure_into_env(&env, &ui, &["Blizzard_Settings_Shared"], &[]);
+    env.exec(include_str!("screen_mode_video_options_capture.lua"))
+        .expect("instrument dropdown creation for behavior test");
+    let loaded = load_blizzard_addon_closure_into_env(
+        &env,
+        &ui,
+        &["Blizzard_SettingsDefinitions_Shared"],
+        &[],
+    );
+    assert!(
+        loaded
+            .iter()
+            .any(|name| name == "Blizzard_SettingsDefinitions_Shared")
+    );
+    env
 }
 
 #[test]
