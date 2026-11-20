@@ -33,7 +33,9 @@ pub(crate) fn register_club_info_surface(state: &mut LuaState) -> LuaResult<()> 
             c_club_get_invitation_candidates,
         )?;
     }
-    #[cfg(feature = "retail-12-1-0")]
+    // INFERRED: Forever ClubDocumentation.lua:1041 declares the member; its
+    // selected UnitPopupShared consumer uses the existing Retail friend model.
+    #[cfg(any(feature = "retail-12-1-0", feature = "client-wowforever"))]
     table_set_rust_fn_static(
         state,
         table_ref,
@@ -79,7 +81,7 @@ fn c_club_send_battle_tag_friend_request(state: &mut LuaState) -> LuaResult<u32>
 }
 
 /// Sends an in-game friend request to a guild club member, by their roster name.
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(any(feature = "retail-12-1-0", feature = "client-wowforever"))]
 fn c_club_send_title_friend_request(state: &mut LuaState) -> LuaResult<u32> {
     let member = super::club_members::guild_member_arg(state)?;
     let name = member
