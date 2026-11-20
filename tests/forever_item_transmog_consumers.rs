@@ -72,8 +72,12 @@ fn load_transmog_consumer() -> WowLuaEnv {
 
 fn owned(item_id: u32, identity: u64) -> BagItem {
     BagItem {
-        owned_identity: Some(identity), item_id, stack_count: 1, hyperlink: None,
-        durability: None, applied_transmog: None,
+        owned_identity: Some(identity),
+        item_id,
+        stack_count: 1,
+        hyperlink: None,
+        durability: None,
+        applied_transmog: None,
     }
 }
 
@@ -100,6 +104,14 @@ fn secure_target_consumer_drops_two_items_into_trade() {
                 assert(not CursorHasItem())
             end
         "#).unwrap();
-        assert_eq!(env.state().borrow().active_trade.as_ref().unwrap().player_slots[..2], [6949, 6950]);
+        assert_eq!(
+            env.state()
+                .borrow()
+                .active_trade
+                .as_ref()
+                .unwrap()
+                .player_slots[..2],
+            [6949, 6950]
+        );
     });
 }
