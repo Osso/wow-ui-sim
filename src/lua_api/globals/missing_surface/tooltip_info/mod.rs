@@ -294,6 +294,7 @@ pub(crate) fn append_spell_to_tooltip(
 /// lines, because the native post-title rows are UNKNOWN.
 ///
 /// Forever's documented currency-cost getter uses the Retail producer by inference.
+#[cfg(any(feature = "retail-12-1-5", feature = "client-wowforever"))]
 pub(crate) fn tooltip_for_cost_currency(state: &mut LuaState, currency_id: u32) -> Val {
     let saved_top = state.top;
     let tooltip = match i32::try_from(currency_id)
