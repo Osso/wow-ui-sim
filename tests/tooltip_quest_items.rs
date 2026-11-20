@@ -58,11 +58,12 @@ fn assert_quest_reward_hover(env: &WowLuaEnv, quest_log: bool, item_id: u32) {
     env.exec(&format!(
         r#"
         QuestInfoFrame.questLog = {quest_log}
-        local button = CreateFrame('Button', nil, UIParent)
-        button:SetID(1)
-        button.type = 'reward'
-        button.objectType = 'item'
-        QuestInfoRewardItemMixin:OnEnter(button)
+        if not QuestInfoFrame.questLog then
+            QuestInfo_ShowRewards()
+        end
+        local button = QuestInfoRewardsFrame.RewardButtons[1]
+        assert(button:IsShown() and button.objectType == 'item', 'original quest item reward button')
+        button:OnEnter()
         local info = GameTooltip:GetPrimaryTooltipInfo()
         local data = GameTooltip:GetPrimaryTooltipData()
         local expected = C_TooltipInfo.GetItemByID({item_id})
