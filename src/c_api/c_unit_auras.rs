@@ -1,7 +1,9 @@
 //! Aura instance enumeration backed by the existing public/private aura stores.
 
 use crate::lua_api::game_data::AuraInfo;
-use crate::lua_api::globals::auras::collect_filtered_unit_auras;
+use crate::lua_api::globals::auras::{
+    GroupBuffAlert as GroupBuffVisualAlert, collect_filtered_unit_auras,
+};
 use crate::lua_api::globals::state_backed_queries::dispatch_event_now;
 use crate::lua_api::methods::{
     borrow_state, borrow_state_mut, create_table, create_table_with_fields, table_get, table_set,
@@ -12,20 +14,6 @@ use crate::lua_bridge::{FromStack, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val, runtime_error};
 use std::cmp::Ordering;
-
-#[derive(Clone, Debug, Default)]
-pub(crate) struct GroupBuffSettings {
-    pub visual_alerts: Vec<GroupBuffVisualAlert>,
-    pub hidden_spell_ids: Vec<i32>,
-}
-
-#[derive(Clone, Debug)]
-pub struct GroupBuffAlert {
-    pub spell_id: i32,
-    pub visual_value: i32,
-}
-
-type GroupBuffVisualAlert = GroupBuffAlert;
 
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     let public = super::ensure_namespace(state, "C_UnitAuras")?;

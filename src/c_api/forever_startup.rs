@@ -2,9 +2,9 @@
 
 use std::collections::{HashMap, HashSet};
 
-pub use crate::c_api::c_unit_auras::GroupBuffAlert;
 use crate::c_api::helpers::ensure_namespace;
 use crate::client_profile::{ACTIVE, ClientProfile};
+pub use crate::lua_api::globals::auras::GroupBuffAlert;
 use crate::lua_api::methods::{
     borrow_state, borrow_state_mut, create_string, create_table, create_table_with_fields,
 };
