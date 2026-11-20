@@ -226,6 +226,10 @@ fn register_interaction_appearance(state: &mut LuaState) -> LuaResult<()> {
         feature = "client-anniversary"
     ))]
     super::c_transmog_outfit_info::register(state)?;
+    #[cfg(feature = "client-wowforever")]
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever {
+        super::c_transmog_outfit_info::register_forever(state)?;
+    }
     super::transmog_availability::register(state)?;
     super::c_spectating_ui::register(state)?;
     super::c_commentator::register(state)?;

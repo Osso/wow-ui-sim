@@ -454,7 +454,8 @@ pub mod c_toy_box_info;
     feature = "retail-12-0-0",
     feature = "client-mists",
     feature = "client-era",
-    feature = "client-anniversary"
+    feature = "client-anniversary",
+    feature = "client-wowforever"
 ))]
 pub mod c_transmog_outfit_info;
 pub mod c_transmog_sets;

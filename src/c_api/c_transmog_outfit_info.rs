@@ -37,6 +37,11 @@ use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 
+pub(super) fn register_forever(state: &mut LuaState) -> LuaResult<()> {
+    let namespace = ensure_namespace(state, "C_TransmogOutfitInfo")?;
+    lifecycle::register_forever(state, namespace)
+}
+
 pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
     let namespace = ensure_namespace(state, "C_TransmogOutfitInfo")?;
     table_set_rust_fn_static(state, namespace, "InTransmogEvent", |s| {
