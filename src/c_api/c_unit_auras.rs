@@ -58,7 +58,7 @@ fn register_private_data(state: &mut LuaState) -> LuaResult<()> {
 
 fn register_private_data_methods(
     state: &mut LuaState,
-    namespace: rilua::vm::gc::GcRef<rilua::vm::table::Table>,
+    namespace: rilua::vm::gc::arena::GcRef<rilua::vm::table::Table>,
 ) -> LuaResult<()> {
     table_set_rust_fn_static(
         state,
