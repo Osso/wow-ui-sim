@@ -745,6 +745,9 @@ pub struct SimState {
     pub pvp_request_transport: crate::c_api::c_pvp::PvpRequestTransport,
     /// Explicit aura-filter classification and raid dispel capabilities.
     pub aura_filter_facts: crate::lua_api::game_data::AuraFilterFacts,
+    /// Session-scoped settings read by the Blizzard group-buff consumers.
+    #[cfg(feature = "aura-instance-enumeration")]
+    pub(crate) group_buff_settings: crate::lua_api::globals::auras::GroupBuffSettings,
     /// Live target auras; seeded with the legacy target fixture.
     pub target_auras: Vec<crate::lua_api::game_data::AuraInfo>,
     pub inventory_item_cooldowns: HashMap<i32, SpellCooldownState>,

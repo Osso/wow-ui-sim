@@ -43,6 +43,12 @@ end
 "#;
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
+    if cfg!(any(
+        feature = "client-retail",
+        feature = "client-wowforever"
+    )) {
+        return Ok(());
+    }
     let modern = cfg!(feature = "retail-12-1-0");
     let hidden_read = cfg!(any(
         feature = "retail-12-1-0",
