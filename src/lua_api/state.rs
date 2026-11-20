@@ -972,6 +972,8 @@ macro_rules! build_empty_sim_state {
             corpse_available: false,
             corpse_map_positions: HashMap::new(),
             active_trade: None,
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            secure_transfer: None,
             open_panels: ::std::collections::HashSet::new(),
             is_party_lfg: false,
             everyone_assistant: false,

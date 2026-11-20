@@ -4,6 +4,8 @@
 //! cleanup-removed secure namespaces remain absent from the public environment.
 
 use crate::lua_api::SimState;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+use rilua::LuaApiMut;
 use std::cell::RefCell;
 use std::rc::Rc;
 
@@ -18,6 +20,11 @@ pub(crate) fn restore_post_cleanup_globals(
     super::debug_environment_defaults::apply_bootstrap(lua)?;
     crate::lua_api::globals::real::secure_helpers::register(lua)?;
     super::gamepad_cursor_control_defaults::apply_bootstrap(lua)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    {
+        crate::c_api::secure_transfer::register_secure_environment(lua.state_mut())?;
+        crate::lua_api::workarounds::refresh_missing_globals_for_secure_addon(lua.state_mut())?;
+    }
     Ok(())
 }
 

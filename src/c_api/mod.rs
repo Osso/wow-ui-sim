@@ -265,8 +265,6 @@ pub mod c_neighborhood_initiative;
 pub mod c_paper_doll_info;
 pub mod c_party_info;
 mod c_perks_categories;
-pub(crate) mod level_link;
-pub mod perks_activities;
 pub mod c_pet_battles;
 pub(crate) mod c_pet_item;
 pub mod c_pet_journal_hover;
@@ -310,7 +308,9 @@ pub mod external_event_url;
 #[cfg(feature = "client-wowforever")]
 mod forever_outfits;
 pub mod forever_startup;
+pub(crate) mod level_link;
 mod lfr_availability;
+pub mod perks_activities;
 pub(crate) mod pet_orders;
 pub mod profession_spec_inputs;
 pub(crate) use lfr_availability::stock_lfr_availability;
@@ -392,6 +392,8 @@ pub(crate) mod mists_r88ai;
 #[cfg(feature = "client-mists")]
 pub(crate) mod mists_reputation_list;
 pub mod reputation_model;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) mod secure_transfer;
 #[cfg(any(feature = "retail-12-1-5", feature = "client-wowforever"))]
 pub mod spell_reagent_inventory;
 pub mod store_catalog_model;

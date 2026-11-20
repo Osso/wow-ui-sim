@@ -61,7 +61,11 @@ const REFRESH_MISSING_GLOBALS_IN_SECUREENV_LUA: &str = r##"
 /// Add globals that appeared after startup to Forever's existing secure snapshot.
 /// This is INFERRED from the temporary snapshot model; native publication is unknown.
 pub(crate) fn refresh_missing_globals_for_secure_addon(state: &mut LuaState) -> LuaResult<()> {
-    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::WowForever {
+    if !matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
         return Ok(());
     }
     let chunk = LuaApiMut::load(state, REFRESH_MISSING_GLOBALS_IN_SECUREENV_LUA)?;

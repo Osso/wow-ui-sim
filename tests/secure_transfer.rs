@@ -1,3 +1,5 @@
+#![cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 fn env() -> WowLuaEnv {

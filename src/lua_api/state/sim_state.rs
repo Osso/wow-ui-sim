@@ -1202,6 +1202,9 @@ pub struct SimState {
     /// Supplied corpse coordinates by UI map; never inferred from player position.
     pub corpse_map_positions: HashMap<i32, (f64, f64)>,
     pub active_trade: Option<TradeState>,
+    /// INFERRED secure transfer housing quote, supplied only when a quote exists.
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub secure_transfer: Option<crate::c_api::secure_transfer::SecureTransferInputs>,
     pub open_panels: ::std::collections::HashSet<String>,
     pub is_party_lfg: bool,
     pub everyone_assistant: bool,
