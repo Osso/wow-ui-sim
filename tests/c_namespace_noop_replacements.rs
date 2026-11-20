@@ -747,6 +747,7 @@ fn combat_log_globals_have_stable_stub_behavior() {
     );
 }
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn combat_log_namespaces_iterate_seeded_entries_and_messages() {
     let env = env();

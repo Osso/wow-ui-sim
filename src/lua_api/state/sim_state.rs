@@ -359,6 +359,9 @@ pub struct SimState {
     pub barber_shop: BarberShopState,
     /// Explicit DamageMeter snapshots; combat publication is blocked pending secrecy.
     pub damage_meter: crate::c_api::c_damage_meter::DamageMeterInput,
+    /// INFERRED host-supplied history; no automatic combat events are invented.
+    #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
+    pub combat_log_history: crate::c_api::combat_log_history::CombatLogHistory,
     pub item_interaction: Option<crate::c_api::c_item_interaction::ItemInteractionInfo>,
     /// One host-supplied item-interaction tooltip input; native writers are not modeled.
     pub item_interaction_tooltip_input: Option<crate::c_api::ItemInteractionTooltipInput>,

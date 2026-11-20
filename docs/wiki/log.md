@@ -1,3 +1,7 @@
+## [2026-11-20] implementation | Retail/Forever combat-log history
+
+Updated the [history contract](../specs/combat-log-history-state.md) and [system page](../systems/combat-log-history.md). **INFERRED (fixture parity):** Rust now owns the Retail/Forever history, cursor, settings and filter-settings handle; host input supplies records and no events are synthesized. **VERIFIED (simulator):** the selected original processor's empty and two-record refilter test passes on Retail and Forever. Native return details, filter rules, event ingestion and lifecycle remain UNKNOWN. The required profile compiles pass; Mists and Wrath each report two known `tooltip_for_cost_currency` dead-code warnings.
+
 ## [2026-11-19] investigation | Forever spell action-bar status
 
 Added [the investigation](../investigations/forever-spell-action-bar-status.md). **VERIFIED (Forever generated docs and exact full-UI test):** C_Spell passive/ranged API shapes, C_ActionBar slot-query shape, and passive/slotted/unslotted/ID-0 results. **INFERRED:** Forever uses the Retail host passive-mask model. **VERIFIED (simulator source):** `setToSearch` filtering remains unmodeled.
