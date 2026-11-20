@@ -138,6 +138,8 @@ pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
     } else {
         builder
     };
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let builder = crate::lua_api::workarounds::register_unit_threat_admin(builder)?;
     let builder = crate::lua_api::manual_clock::register_admin(builder)?;
     let builder = super::real::wrath_spell_slots::register_admin(builder)?;
     let admin_val = builder.build();

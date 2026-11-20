@@ -456,6 +456,7 @@ fn unit_is_unit(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 fn unit_threat_situation(state: &mut LuaState) -> LuaResult<u32> {
     let _ = Option::<String>::from_stack(state, 1)?;
     let _ = Option::<String>::from_stack(state, 2)?;
@@ -519,7 +520,10 @@ pub fn register_all(lua: &mut rilua::Lua) -> crate::Result<()> {
     LuaApiMut::register_function(lua, "UnitIsAFK", unit_is_afk)?;
     LuaApiMut::register_function(lua, "UnitIsDND", unit_is_dnd)?;
     LuaApiMut::register_function(lua, "UnitIsUnit", unit_is_unit)?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     LuaApiMut::register_function(lua, "UnitThreatSituation", unit_threat_situation)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    crate::lua_api::workarounds::register_unit_threat_api(lua)?;
     LuaApiMut::register_function(lua, "UnitAffectingCombat", unit_affecting_combat)?;
     #[cfg(feature = "retail-12-0-0")]
     LuaApiMut::register_function(lua, "PlayerIsInCombat", player_is_in_combat)?;
