@@ -124,32 +124,7 @@ fn register_friend_query_methods(state: &mut LuaState, table_ref: BattleNetTable
         "GetAccountInfoByGUID",
         c_bnet_get_account_info_by_guid,
     )?;
-    if matches!(
-        crate::client_profile::ACTIVE,
-        crate::client_profile::ClientProfile::Retail
-            | crate::client_profile::ClientProfile::WowForever
-    ) {
-        // Forever shapes VERIFIED at BattleNetDocumentation.lua:100, 148 and 194;
-        // lookup semantics are INFERRED from the existing Retail friend model.
-        table_set_rust_fn_static(
-            state,
-            table_ref,
-            "GetAccountInfoByID",
-            c_bnet_get_account_info_by_id,
-        )?;
-        table_set_rust_fn_static(
-            state,
-            table_ref,
-            "GetFriendGameAccountInfo",
-            c_bnet_get_friend_game_account_info,
-        )?;
-        table_set_rust_fn_static(
-            state,
-            table_ref,
-            "GetFriendNumGameAccounts",
-            c_bnet_get_friend_num_accounts,
-        )?;
-    }
+    register_retail_friend_game_account_methods(state, table_ref)?;
     table_set_rust_fn_static(
         state,
         table_ref,
@@ -593,6 +568,39 @@ fn c_bnet_get_account_info_by_guid(state: &mut LuaState) -> LuaResult<u32> {
     let t = push_account_info_table(state, &friend, game_account.as_ref());
     state.push(t);
     Ok(1)
+}
+
+fn register_retail_friend_game_account_methods(
+    state: &mut LuaState,
+    table_ref: BattleNetTable,
+) -> LuaResult<()> {
+    if !matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
+        return Ok(());
+    }
+    // Forever shapes VERIFIED at BattleNetDocumentation.lua:100, 148 and 194;
+    // lookup semantics are INFERRED from the existing Retail friend model.
+    table_set_rust_fn_static(
+        state,
+        table_ref,
+        "GetAccountInfoByID",
+        c_bnet_get_account_info_by_id,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        table_ref,
+        "GetFriendGameAccountInfo",
+        c_bnet_get_friend_game_account_info,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        table_ref,
+        "GetFriendNumGameAccounts",
+        c_bnet_get_friend_num_accounts,
+    )
 }
 
 fn c_bnet_get_account_info_by_id(state: &mut LuaState) -> LuaResult<u32> {
