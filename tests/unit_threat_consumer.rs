@@ -36,6 +36,7 @@ fn unit_threat_indicator_tracks_two_supplied_states() {
         frame.optionTable = {}
         frame.displayThreatHealthBarColor = true
         frame.healthBar = CreateFrame("StatusBar", nil, frame)
+        frame.selectionHighlight = frame:CreateTexture()
         A_Admin.SetUnitThreatSituation("player", "target", 1, 60, 50, 500)
         A_Admin.SetUnitThreatSituation("pet", "target", 3, 100, 100, 1000)
         CompactUnitFrame_UpdateHealthColor(frame)
