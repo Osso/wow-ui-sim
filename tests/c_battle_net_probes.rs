@@ -63,6 +63,13 @@ fn bnet_offline_toast_reads_friend_account_by_id() {
         .unwrap();
     assert_eq!(top, "friend:Uther");
     assert_eq!(bottom, "Offline");
+    let (count, character_name): (i32, String) = env
+        .eval(
+            "return C_BattleNet.GetFriendNumGameAccounts(1), C_BattleNet.GetFriendGameAccountInfo(1, 1).characterName",
+        )
+        .unwrap();
+    assert_eq!(count, 2);
+    assert_eq!(character_name, "Uther");
 }
 
 #[test]
