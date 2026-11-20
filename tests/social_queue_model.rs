@@ -12,23 +12,33 @@ const ADDONS: &[&str] = &[
     "Blizzard_RecruitAFriend",
 ];
 
-const QUICK_JOIN_GROUPS: &str = r#"
+const GROUP_INPUT: &str = r#"
 A_Admin.SetSocialQueueGroups([[ [
-    {"guid":"group-alpha","info":{"canJoin":true,"numQueues":1,"needTank":false,"needHealer":false,"needDamage":true,"isSoloQueueParty":false,"questSessionActive":false,"leaderGUID":"leader-alpha"},"members":[],"queues":[]},
-    {"guid":"group-beta","info":{"canJoin":true,"numQueues":2,"needTank":true,"needHealer":false,"needDamage":false,"isSoloQueueParty":false,"questSessionActive":false,"leaderGUID":"leader-beta"},"members":[],"queues":[]}
+    {"guid":"group-alpha","info":{"canJoin":true,"numQueues":1,"needTank":false,"needHealer":false,"needDamage":true,"isSoloQueueParty":false,"questSessionActive":false,"leaderGUID":"leader-alpha"},"members":[],"queues":[{"clientID":101,"eligible":false,"needTank":false,"needHealer":false,"needDamage":true,"isAutoAccept":false,"queueData":{"queueType":"pvp"}}]},
+    {"guid":"group-beta","info":{"canJoin":true,"numQueues":2,"needTank":true,"needHealer":false,"needDamage":false,"isSoloQueueParty":true,"questSessionActive":false,"leaderGUID":"leader-beta"},"members":[],"queues":[{"clientID":202,"eligible":false,"needTank":true,"needHealer":false,"needDamage":false,"isAutoAccept":false,"queueData":{"queueType":"pvp"}}]}
 ] ]])
-QuickJoinFrame.entries:UpdateAll()
-local entries = QuickJoinFrame.entries:GetEntries()
-assert(#entries == 2, "Quick Join displays both supplied groups")
-assert(entries[1]:GetGUID() == "group-alpha")
-assert(entries[2]:GetGUID() == "group-beta")
-assert(entries[1]:CanJoin() == true)
-assert(entries[2]:CanJoin() == true)
+"#;
+const CONFIG_INPUT: &str =
+    r#"A_Admin.SetSocialQueueConfig([[{"QUEUE_MULTIPLIER":1,"PLAYER_MULTIPLIER":1}]])"#;
+const FRIENDS_FRAME_ASSERTIONS: &str = r#"
+local groups = C_SocialQueue.GetAllGroups()
+assert(#groups == 2 and groups[1] == "group-alpha" and groups[2] == "group-beta")
+local canJoinA, queueCountA = C_SocialQueue.GetGroupInfo(groups[1])
+local canJoinB, queueCountB, needTankB = C_SocialQueue.GetGroupInfo(groups[2])
+assert(canJoinA and queueCountA == 1 and canJoinB and queueCountB == 2 and needTankB)
+assert(#C_SocialQueue.GetGroupMembers(groups[1]) == 0)
+assert(C_SocialQueue.GetGroupQueues(groups[2])[1].clientID == 202)
+FriendsFrame_UpdateQuickJoinTab(#groups)
+assert(FriendsFrameTab4:GetText() == QUICK_JOIN .. " " .. string.format(NUMBER_IN_PARENTHESES, 2))
 "#;
 
 fn setup() -> WowLuaEnv {
     let ui = blizzard_ui_dir();
     let env = new_blizzard_addon_env(&ui);
+    env.exec(CONFIG_INPUT)
+        .expect("host config should be supplied");
+    env.exec(GROUP_INPUT)
+        .expect("host groups should be supplied");
     let loaded = load_blizzard_addon_closure_into_env(&env, &ui, ADDONS, &[]);
     assert!(loaded.iter().any(|name| name == "Blizzard_QuickJoin"));
     env
@@ -45,8 +55,8 @@ fn social_queue_config_returns_host_supplied_fields() {
 }
 
 #[test]
-fn quick_join_entries_show_distinct_host_supplied_groups() {
+fn friends_frame_quick_join_consumer_reads_distinct_host_groups() {
     let env = setup();
-    env.exec(QUICK_JOIN_GROUPS)
-        .expect("Quick Join should display supplied social queue groups");
+    env.exec(FRIENDS_FRAME_ASSERTIONS)
+        .expect("FriendsFrame Quick Join should display supplied social queue groups");
 }
