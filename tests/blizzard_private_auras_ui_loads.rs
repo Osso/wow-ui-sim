@@ -1388,3 +1388,12 @@ fn replace_first_private_aura(env: &WowLuaEnv) {
             .collect(),
     );
 }
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn private_aura_state_drives_selected_blizzard_consumers() {
+    let env = load_full_game_ui();
+    supply_private_auras(&env);
+    env.exec(PRIVATE_AURA_CONSUMER_PROBE)
+        .expect("selected private-aura consumers should read supplied host entries");
+}
