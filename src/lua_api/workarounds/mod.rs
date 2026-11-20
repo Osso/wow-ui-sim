@@ -15,6 +15,8 @@ pub(crate) use temporary::secure_env_global_snapshot::{
     refresh_missing_globals_for_secure_addon,
 };
 pub(crate) use temporary::secure_legacy_unit_globals::copy_legacy_unit_globals_to_secureenv;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) use temporary::unit_stagger_defaults::set_player_stagger;
 
 #[cfg(feature = "client-wrath")]
 pub(crate) use temporary::wrath_attack_action;

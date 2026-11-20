@@ -171,7 +171,7 @@ fn register_player(b: TableBuilder) -> LuaResult<TableBuilder> {
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     let b = b.set_function(
         "SetPlayerStagger",
-        crate::lua_api::workarounds::temporary::unit_stagger_defaults::set_player_stagger,
+        crate::lua_api::workarounds::set_player_stagger,
     )?;
     b.set_function("SetPlayerName", set_player_name)?
         .set_function("SetPlayerClass", set_player_class)?
