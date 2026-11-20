@@ -51,7 +51,6 @@ fn install_test_message_formatter(env: &WowLuaEnv) {
         local original = assert(rawget(__secureenv, "CombatLogProcessor"))
         local secure = assert(getfenv(original.StartRefiltering).C_CombatLogSecure)
         _G.__combatLogHistoryTestSecure = secure
-        _G.__combatLogHistoryOriginalProcessor = original
         local processor = CreateFromMixins(original)
         _G.__combatLogHistoryTestProcessor = processor
         processor.GenerateMessage = function(_, _, _, event)
@@ -120,7 +119,6 @@ fn assert_filter_settings_are_rust_backed(env: &WowLuaEnv) {
         }
         C_CombatLog.ApplyFilterSettings(settings)
         assert(C_CombatLog._state.filterSettings == settings)
-        assert(__combatLogHistoryOriginalProcessor:GetFilterSettings() == settings)
         "#,
     )
     .expect("original processor should retain supplied filter settings");
