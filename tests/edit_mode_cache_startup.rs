@@ -211,6 +211,8 @@ fn complete_account_cache_preserves_both_layouts() {
     }
 }
 
+// Forever micro-button row differs from Retail; selection kept as before lt-cd7b.
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
 #[test]
 fn native_preset_index_two_keeps_classic_and_horizontal_micro_menu() {
     test_timeout! {
