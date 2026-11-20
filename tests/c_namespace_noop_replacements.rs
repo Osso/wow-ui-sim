@@ -146,6 +146,7 @@ mod combatlog_settings_tests {
     }
 }
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn perks_activities_remove_tracked_updates_state() {
     let env = env();
@@ -459,6 +460,7 @@ fn video_options_official_api_surface_returns_stable_shapes() {
     );
 }
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn perks_activities_monthly_accessors_return_stable_shapes() {
     let env = env();
