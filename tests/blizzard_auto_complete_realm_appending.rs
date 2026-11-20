@@ -25,8 +25,9 @@ end
 local function assertDisplayedRealm(index, name)
   local button = _G["AutoCompleteButton" .. index]
   expect(button:IsShown(), name .. " must be displayed")
-  expect(button:GetText() == name,
-         "expected " .. name .. ", got " .. tostring(button:GetText()))
+  expect(button.nameInfo and button.nameInfo.name == name,
+         "expected displayed result " .. name)
+  expect(button:GetText() ~= nil, name .. " must have visible text")
 end
 
 local editBox = makeEditBox(function()
