@@ -247,14 +247,14 @@ fn original_graphics_resolution_setting_tracks_display_model() {
                 end
                 return false
             end
-            assert(hasResolution(__video_resolution_options(), "1280x720"))
-            assert(Settings.GetValue("PROXY_RESOLUTION") == "1280x720")
+            assert(hasResolution(__video_resolution_options(), "1280x720"), "initial options")
+            assert(Settings.GetValue("PROXY_RESOLUTION") == "1280x720", "initial setting value")
             Settings.SetValue("PROXY_RESOLUTION", "1600x900")
             local size = C_VideoOptions.GetCurrentGameWindowSize()
             local physicalWidth, physicalHeight = GetPhysicalScreenSize()
-            assert(size.x == 1600 and size.y == 900)
-            assert(physicalWidth == 1600 and physicalHeight == 900)
-            assert(Settings.GetValue("PROXY_RESOLUTION") == "1600x900")
+            assert(size.x == 1600 and size.y == 900, "C_VideoOptions did not read updated model")
+            assert(physicalWidth == 1600 and physicalHeight == 900, "physical display did not update")
+            assert(Settings.GetValue("PROXY_RESOLUTION") == "1600x900", "consumer value did not update")
             "#,
         )
         .expect("original Graphics resolution setting should update display state");
@@ -267,8 +267,8 @@ fn original_graphics_resolution_setting_tracks_display_model() {
             for _, option in ipairs(__video_resolution_options()) do
                 if option.value == "2560x1440" then hasResolution = true end
             end
-            assert(hasResolution)
-            assert(Settings.GetValue("PROXY_RESOLUTION") == "2560x1440")
+            assert(hasResolution, "second display missing from consumer options")
+            assert(Settings.GetValue("PROXY_RESOLUTION") == "2560x1440", "second consumer value")
             "#,
         )
         .expect("original Graphics setting should read a second configured display size");
@@ -298,6 +298,7 @@ fn load_graphics_consumer(width: f32, height: f32) -> WowLuaEnv {
         .expect("allow Settings registrants to run");
     env.fire_event("PLAYER_ENTERING_WORLD")
         .expect("run original game Graphics settings registrant");
+    wow_ui_sim::startup::settle_headless_startup(&env);
     env
 }
 
