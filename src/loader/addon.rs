@@ -621,7 +621,11 @@ fn read_secure_dependency_toc(
     };
     // StoreUI's optional Plunderstorm dependency is screen-eligible in Game,
     // but must not publish its mode constants in standard Retail.
-    match (toc.allows_screen(screen), toc.is_game_type_restricted(), required) {
+    match (
+        toc.allows_screen(screen),
+        toc.is_game_type_restricted(),
+        required,
+    ) {
         (false, _, true) => Err(LoadError::DepWrongActiveInterface(dependency.to_owned())),
         (true, true, true) => Err(LoadError::DepWrongGameType(dependency.to_owned())),
         (true, false, _) => Ok(Some(toc)),

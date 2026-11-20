@@ -51,7 +51,10 @@ mod tests {
     fn binary_name_lookup_matches_distinct_db2_rows() {
         let started = Instant::now();
         let heart = get_spell_name(275825);
-        eprintln!("first_spell_name_lookup_ns={}", started.elapsed().as_nanos());
+        eprintln!(
+            "first_spell_name_lookup_ns={}",
+            started.elapsed().as_nanos()
+        );
         assert_eq!(heart, Some("Heart of Azeroth"));
         let repeated_started = Instant::now();
         for _ in 0..999 {
@@ -59,7 +62,10 @@ mod tests {
             std::hint::black_box(get_spell_name(id));
         }
         let repeated_ns = repeated_started.elapsed().as_nanos();
-        eprintln!("spell_name_lookup_ns_per_call_2_to_1000={}", repeated_ns / 999);
+        eprintln!(
+            "spell_name_lookup_ns_per_call_2_to_1000={}",
+            repeated_ns / 999
+        );
         assert_eq!(get_spell_name(133137), Some("Active"));
         assert_eq!(get_spell_name(u32::MAX), None);
     }
