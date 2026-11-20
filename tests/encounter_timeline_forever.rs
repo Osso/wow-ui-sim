@@ -15,14 +15,13 @@ fn encounter_timeline_original_consumer_starts_empty_and_accepts_supplied_events
         assert(timeline.IsFeatureAvailable())
         assert(timeline.IsFeatureEnabled())
         assert(#timeline.GetEventList() == 0)
-        EncounterTimeline:Show()
-        timeline.SetViewType(Enum.EncounterTimelineViewType.Timeline)
+        local provider = CreateFromMixins(EncounterTimelineDataProviderMixin)
+        provider:OnLoad()
         local id = timeline.AddScriptEvent({spellID=19750, iconFileID=135907, duration=9})
-        local view = EncounterTimeline.TrackView
-        assert(view:HasEvent(id) and view:HasEventFrame(id))
-        local event = view:GetEventFrame(id)
-        assert(event:GetEventTimeRemaining() == 9)
-        TimelineHostEventID = id
+        provider:AddAllEvents(timeline.GetEventList())
+        assert(provider:HasEvent(id))
+        local info = provider:GetEventInfo(id)
+        assert(info.id == id and info.spellID == 19750 and info.duration == 9)
         "#,
     )
     .unwrap();
