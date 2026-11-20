@@ -20,6 +20,7 @@ Retail and WoW Forever expose a shared Rust-backed history model in `src/c_api/c
 ## Implementation inventory
 
 - `src/c_api/combat_log_history.rs`: Rust-owned Retail/Forever history records, cursor, settings and C API publication.
+- `src/lua_api/globals/missing_surface.rs`: registers the model during the runtime-surface bootstrap.
 - `src/lua_api/state/sim_state.rs`: per-environment history ownership.
 - `src/lua_api/workarounds/temporary/combat_log_state.rs`: non-history compatibility helpers and other-profile shims.
 - `tests/combat_log_history.rs`: original processor test for empty and supplied history.

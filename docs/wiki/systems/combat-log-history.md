@@ -27,6 +27,7 @@ This page records the Retail/Forever simulator history model. The public contrac
 
 - [Combat-log history contract](../../specs/combat-log-history-state.md)
 - [Rust C API model](../../../src/c_api/combat_log_history.rs)
+- [Runtime registration](../../../src/lua_api/globals/missing_surface.rs)
 - [Per-environment state](../../../src/lua_api/state/sim_state.rs)
 - [Temporary profile bootstrap](../../../src/lua_api/workarounds/temporary/combat_log_state.rs)
 - [Original-consumer test](../../../tests/combat_log_history.rs)
