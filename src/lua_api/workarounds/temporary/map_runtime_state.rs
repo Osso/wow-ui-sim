@@ -1,8 +1,8 @@
 //! Temporary map runtime state and helper surface.
 //!
 //! Core map data is partly Rust-backed in `c_api::c_map` and
-//! `c_api::c_map_exploration_info`, but quest-log map selection and the
-//! `UiMapPoint` helper shape still live as Lua compatibility behavior.
+//! `c_api::c_map_exploration_info`, but non-modern quest-log map selection
+//! and other map helpers still live as Lua compatibility behavior.
 
 const MAP_RUNTIME_STATE_LUA: &str = r#"
 if type(C_Map) ~= "table" then
@@ -132,55 +132,57 @@ if type(C_MapExplorationInfo.GetExploredMapTextures) ~= "function" then
   end
 end
 
-local __wow_map_runtime_state = rawget(_G, "__wow_map_runtime_state")
-if type(__wow_map_runtime_state) ~= "table" then
-  __wow_map_runtime_state = {
-    currentMapID = type(C_Map.GetCurrentMapID) == "function" and C_Map.GetCurrentMapID() or 2248,
-  }
-  rawset(_G, "__wow_map_runtime_state", __wow_map_runtime_state)
-end
-
-C_Map.GetCurrentMapID = function()
-  return __wow_map_runtime_state.currentMapID or 2248
-end
-
-C_Map.SetMapForQuestLog = function(mapID)
-  if type(mapID) ~= "number" then
-    return
+if retainQuestLogSelectionFallback then
+  local __wow_map_runtime_state = rawget(_G, "__wow_map_runtime_state")
+  if type(__wow_map_runtime_state) ~= "table" then
+    __wow_map_runtime_state = {
+      currentMapID = type(C_Map.GetCurrentMapID) == "function" and C_Map.GetCurrentMapID() or 2248,
+    }
+    rawset(_G, "__wow_map_runtime_state", __wow_map_runtime_state)
   end
 
-  __wow_map_runtime_state.currentMapID = mapID
-
-  if WorldMapFrame and type(WorldMapFrame.SetMapID) == "function" then
-    WorldMapFrame:SetMapID(mapID)
+  C_Map.GetCurrentMapID = function()
+    return __wow_map_runtime_state.currentMapID or 2248
   end
 
-  if QuestMapFrame and type(QuestMapFrame.SetMapID) == "function" then
-    QuestMapFrame:SetMapID(mapID)
-  end
-end
+  C_Map.SetMapForQuestLog = function(mapID)
+    if type(mapID) ~= "number" then
+      return
+    end
 
-C_Map.GetBestMapForUnit = function(unitToken)
-  if unitToken ~= nil and unitToken ~= "player" then
-    return nil
-  end
-  if C_Map.GetCurrentMapID ~= nil then
-    local currentMapID = C_Map.GetCurrentMapID()
-    if currentMapID ~= nil then
-      return currentMapID
+    __wow_map_runtime_state.currentMapID = mapID
+
+    if WorldMapFrame and type(WorldMapFrame.SetMapID) == "function" then
+      WorldMapFrame:SetMapID(mapID)
+    end
+
+    if QuestMapFrame and type(QuestMapFrame.SetMapID) == "function" then
+      QuestMapFrame:SetMapID(mapID)
     end
   end
-  return 2248
-end
 
-C_Map.GetFallbackWorldMapID = function()
-  if C_Map.GetCurrentMapID ~= nil then
-    local currentMapID = C_Map.GetCurrentMapID()
-    if currentMapID ~= nil then
-      return currentMapID
+  C_Map.GetBestMapForUnit = function(unitToken)
+    if unitToken ~= nil and unitToken ~= "player" then
+      return nil
     end
+    if C_Map.GetCurrentMapID ~= nil then
+      local currentMapID = C_Map.GetCurrentMapID()
+      if currentMapID ~= nil then
+        return currentMapID
+      end
+    end
+    return 2248
   end
-  return 2248
+
+  C_Map.GetFallbackWorldMapID = function()
+    if C_Map.GetCurrentMapID ~= nil then
+      local currentMapID = C_Map.GetCurrentMapID()
+      if currentMapID ~= nil then
+        return currentMapID
+      end
+    end
+    return 2248
+  end
 end
 
 if retainUiMapPointFallback then
@@ -393,8 +395,10 @@ end
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     let retain_fallback =
         crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail;
+    let retain_selection = !crate::c_api::c_map::uses_rust_quest_log_selection();
     lua.exec(&format!(
-        "local retainUiMapPointFallback = {retain_fallback}\n{MAP_RUNTIME_STATE_LUA}"
+        "local retainUiMapPointFallback = {retain_fallback}\n\
+         local retainQuestLogSelectionFallback = {retain_selection}\n{MAP_RUNTIME_STATE_LUA}"
     ))?;
     Ok(())
 }
