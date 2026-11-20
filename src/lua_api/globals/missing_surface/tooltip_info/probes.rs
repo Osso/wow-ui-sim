@@ -544,6 +544,12 @@ pub(super) fn c_tooltip_get_aura(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(super) fn c_tooltip_get_guild_bank_item(state: &mut LuaState) -> LuaResult<u32> {
+    crate::c_api::c_tooltip_info_item_sources::get_guild_bank_item(state)
+}
+
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(super) fn c_tooltip_get_guild_bank_item(state: &mut LuaState) -> LuaResult<u32> {
     let _tab = i32::from_stack(state, 1)?;
     let _slot = i32::from_stack(state, 2)?;
@@ -592,6 +598,12 @@ pub(super) fn c_tooltip_get_quest_currency(state: &mut LuaState) -> LuaResult<u3
     Ok(1)
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(super) fn c_tooltip_get_quest_item(state: &mut LuaState) -> LuaResult<u32> {
+    crate::c_api::c_tooltip_info_item_sources::get_quest_item(state)
+}
+
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(super) fn c_tooltip_get_quest_item(state: &mut LuaState) -> LuaResult<u32> {
     let _quest_type = Option::<String>::from_stack(state, 1)?;
     let _slot = Option::<i32>::from_stack(state, 2)?;
@@ -614,6 +626,12 @@ pub(super) fn c_tooltip_get_quest_log_currency(state: &mut LuaState) -> LuaResul
     Ok(1)
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(super) fn c_tooltip_get_quest_log_item(state: &mut LuaState) -> LuaResult<u32> {
+    crate::c_api::c_tooltip_info_item_sources::get_quest_log_item(state)
+}
+
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(super) fn c_tooltip_get_quest_log_item(state: &mut LuaState) -> LuaResult<u32> {
     let _quest_type = Option::<String>::from_stack(state, 1)?;
     let _slot = Option::<i32>::from_stack(state, 2)?;

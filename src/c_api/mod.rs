@@ -23,6 +23,8 @@ pub(crate) mod c_tooltip_info_equipment_set;
 pub mod c_tooltip_info_hyperlink;
 pub(crate) mod c_tooltip_info_inventory_by_id;
 pub(crate) mod c_tooltip_info_item_key;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) mod c_tooltip_info_item_sources;
 pub(crate) mod c_tooltip_info_loot;
 #[cfg(any(feature = "retail-12-1-5", feature = "client-wowforever"))]
 pub(crate) mod c_tooltip_info_merchant_cost;
