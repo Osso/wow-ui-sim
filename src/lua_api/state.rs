@@ -329,6 +329,7 @@ macro_rules! build_empty_sim_state {
             latest_transmog_appearance: None,
             account_wide_reputation_factions: HashSet::new(),
             reputation: Default::default(),
+            perks_activities: Default::default(),
             faction_paragon: HashMap::new(),
             #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
             active_brawl: None,

@@ -381,6 +381,7 @@ pub struct SimState {
     pub latest_transmog_appearance: Option<(i32, i32)>,
     pub account_wide_reputation_factions: HashSet<i64>,
     pub reputation: crate::c_api::reputation_model::ReputationModel,
+    pub perks_activities: crate::c_api::perks_activities::PerksActivities,
     pub faction_paragon: HashMap<i64, FactionParagonInfo>,
     /// Explicit active-brawl input only; no native default record is assumed.
     #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
