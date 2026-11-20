@@ -1427,11 +1427,21 @@ const PRIVATE_AURA_TOOLTIP_SNAPSHOT: &str = r#"
 "#;
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn private_aura_frame_id(env: &WowLuaEnv, parent: &str) -> u64 {
+    let expression = format!("select(1, __secureenv.{parent}:GetChildren())");
+    let debug_name = env
+        .eval::<String>(&format!("return ({expression}):GetDebugName()"))
+        .unwrap();
+    debug_name
+        .rsplit(':')
+        .next()
+        .and_then(|id| id.parse().ok())
+        .unwrap_or_else(|| panic!("private aura frame has no debug ID: {debug_name}"))
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn assert_private_aura_tooltip(env: &WowLuaEnv, parent: &str, name: &str, duration: &str) {
-    let aura_id = crate::common::aura_container_harness::frame_id(
-        env,
-        &format!("select(1, __secureenv.{parent}:GetChildren())"),
-    );
+    let aura_id = private_aura_frame_id(env, parent);
     env.fire_script_handler(aura_id, "OnEnter", Vec::new())
         .expect("selected Blizzard private-aura OnEnter handler should run");
     let actual: (
