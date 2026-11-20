@@ -49,7 +49,7 @@ expect(not AutoCompleteButton3:IsShown(), "duplicate Stormscale completion must 
 return table.concat(failures, "\n")
 "#;
 
-post_wrath_ui_fixture! {
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 #[test]
 fn blizzard_auto_complete_appends_matching_realm_names() {
     common::with_perf_lock(|| {
@@ -71,5 +71,4 @@ fn blizzard_auto_complete_appends_matching_realm_names() {
             });
         });
     });
-}
 }
