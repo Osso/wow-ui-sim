@@ -293,9 +293,7 @@ pub(crate) fn append_spell_to_tooltip(
 /// resident currency row keeps the verified type-5 identity and publishes no
 /// lines, because the native post-title rows are UNKNOWN.
 ///
-/// Only the Retail/PTR merchant-cost getter calls this bridge, so it is compiled
-/// with that epoch to keep other profiles warning-free.
-#[cfg(feature = "retail-12-1-5")]
+/// Forever's documented currency-cost getter uses the Retail producer by inference.
 pub(crate) fn tooltip_for_cost_currency(state: &mut LuaState, currency_id: u32) -> Val {
     let saved_top = state.top;
     let tooltip = match i32::try_from(currency_id)

@@ -10,7 +10,6 @@
 //! getter. Forever's argument conversion follows R88n.8.
 
 use crate::c_api::tooltip_getter_args;
-#[cfg(feature = "retail-12-1-5")]
 use crate::lua_api::globals::missing_surface::tooltip_info::tooltip_for_cost_currency;
 use crate::lua_api::globals::missing_surface::tooltip_info::tooltip_for_item_context;
 use crate::lua_api::methods::borrow_state;
@@ -39,10 +38,7 @@ const MONEY_ITEM_CLASS: u8 = 10;
 
 enum MerchantCost {
     Item(u32, &'static crate::items::ItemInfo),
-    #[cfg(feature = "retail-12-1-5")]
     Currency(u32),
-    #[cfg(feature = "client-wowforever")]
-    Currency,
 }
 
 #[cfg(feature = "retail-12-1-5")]
@@ -68,14 +64,12 @@ fn get_merchant_cost_item(state: &mut LuaState) -> LuaResult<u32> {
             state.push(tooltip);
             Ok(1)
         }
-        #[cfg(feature = "retail-12-1-5")]
+        // INFERRED: Forever uses the Retail currency-cost producer for this supplied ID.
         Some(MerchantCost::Currency(currency_id)) => {
             let tooltip = tooltip_for_cost_currency(state, currency_id);
             state.push(tooltip);
             Ok(1)
         }
-        #[cfg(feature = "client-wowforever")]
-        Some(MerchantCost::Currency) => emulated_missing_tooltip(),
         None => emulated_missing_tooltip(),
     }
 }
@@ -106,20 +100,12 @@ fn selectable_costs(record: &MerchantCostRecord) -> impl Iterator<Item = Merchan
         .iter()
         .copied()
         .filter_map(selectable_item_cost);
-    #[cfg(feature = "retail-12-1-5")]
     let currency_costs = record
         .currency_costs
         .iter()
         .copied()
         .filter(|currency_id| *currency_id != 0)
         .map(MerchantCost::Currency);
-    #[cfg(feature = "client-wowforever")]
-    let currency_costs = record
-        .currency_costs
-        .iter()
-        .copied()
-        .filter(|currency_id| *currency_id != 0)
-        .map(|_| MerchantCost::Currency);
     item_costs.chain(currency_costs)
 }
 
