@@ -1,6 +1,6 @@
 ## [2026-11-20] implementation | Secure XML mixin environment
 
-Updated [addon loading](../systems/addon-loading.md#secure-dependency-replay-and-library-allowlist). Retail's original PrivateAura OnEnter failed because secure XML resolved a stale public `GameTooltipDataMixin` without its late-added accessor. XML resolution now follows the active secure-addon context; Retail's exact original hover test passes with two supplied auras; Forever proof is pending. **INFERRED (R88cd):** native secure XML mixins resolve from the active addon environment.
+Updated [addon loading](../systems/addon-loading.md#secure-dependency-replay-and-library-allowlist). Retail's original PrivateAura OnEnter failed because secure XML resolved a stale public `GameTooltipDataMixin` without its late-added accessor. XML resolution now follows the active secure-addon context; Forever also replays `Blizzard_SharedXMLGame` to provide `TooltipDataHandlerMixin.ProcessInfo`. Exact original hover tests pass on Retail and Forever with two supplied auras. **INFERRED (R88cd):** native secure XML mixins resolve from the active addon environment.
 
 ## [2026-11-20] implementation | Shared Retail/Forever outfit catalog
 
