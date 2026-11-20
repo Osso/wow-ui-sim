@@ -17,6 +17,7 @@ fn original_processor_refilters_empty_and_host_supplied_history() {
     let env = load_combat_log_processor();
     install_test_message_formatter(&env);
     assert_empty_history_contract(&env);
+    assert_filter_settings_are_rust_backed(&env);
     supply_host_history_and_refilter(&env);
 }
 
@@ -101,6 +102,18 @@ fn assert_empty_refilter_completed(env: &WowLuaEnv) {
         "#,
     )
     .expect("empty history should finish without output");
+}
+
+fn assert_filter_settings_are_rust_backed(env: &WowLuaEnv) {
+    env.exec(
+        r#"
+        local settings = { combat = true, spell = false }
+        C_CombatLog.ApplyFilterSettings(settings)
+        assert(C_CombatLog._state.filterSettings == settings)
+        assert(__wow_combat_log_get_filter_settings() == settings)
+        "#,
+    )
+    .expect("filter settings should be retained by the Rust history model");
 }
 
 fn supply_host_history_and_refilter(env: &WowLuaEnv) {
