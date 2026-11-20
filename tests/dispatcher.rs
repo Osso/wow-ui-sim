@@ -10,12 +10,44 @@ fn dispatcher_toc() -> PathBuf {
     .join("Blizzard_Dispatcher/Blizzard_Dispatcher.toc")
 }
 
+fn boost_tutorial_toc() -> PathBuf {
+    wow_ui_sim::client_profile::blizzard_ui_addons_dir_under(std::path::Path::new(env!(
+        "CARGO_MANIFEST_DIR"
+    )))
+    .join("Blizzard_BoostTutorial/Blizzard_BoostTutorial.toc")
+}
+
 fn env() -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("Failed to create Lua environment");
     load_addon(&env.loader_env(), &dispatcher_toc()).expect("Failed to load Blizzard_Dispatcher");
     env.exec("Dispatcher:Initialize()")
         .expect("Failed to initialize Dispatcher");
     env
+}
+
+#[test]
+fn dispatcher_routes_cinematic_event_to_blizzard_tutorial_consumer() {
+    let env = env();
+    load_addon(&env.loader_env(), &boost_tutorial_toc())
+        .expect("Failed to load Blizzard_BoostTutorial");
+    env.exec(
+        r#"
+        local frame = CreateFrame("Frame", "DispatcherConsumerFrame", UIParent)
+        frame:Hide()
+        NPE_TutorialMainFrame:Initialize(frame)
+        Dispatcher:OnEvent("CINEMATIC_START")
+        DispatcherConsumerHidden = not frame:IsShown()
+        "#,
+    )
+    .expect("Blizzard tutorial consumer event should dispatch");
+
+    let hidden: bool = env
+        .eval("return DispatcherConsumerHidden")
+        .expect("consumer effect query should succeed");
+    assert!(
+        hidden,
+        "CINEMATIC_START must hide the tutorial consumer frame"
+    );
 }
 
 #[test]
