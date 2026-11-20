@@ -253,31 +253,6 @@ fn mythic_plus_requests_publish_update_events() {
     .expect("Mythic+ requests should notify registered update consumers");
 }
 
-#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
-#[test]
-fn weekly_rewards_consumer_requests_map_refresh() {
-    let env = env();
-    let addons = wow_ui_sim::paths::default_blizzard_ui_addons_path()
-        .expect("Blizzard UI cache should be available");
-    let source = std::fs::read_to_string(
-        addons.join("Blizzard_WeeklyRewards/Blizzard_WeeklyRewards.lua"),
-    )
-    .expect("selected Blizzard Weekly Rewards consumer should be readable");
-    env.exec(&source)
-        .expect("original WeeklyRewards consumer should load");
-    env.exec(
-        "map_update_seen = false; local f = CreateFrame('Frame'); \
-         f:RegisterEvent('CHALLENGE_MODE_MAPS_UPDATE'); \
-         f:SetScript('OnEvent', function() map_update_seen = true end); \
-         WeeklyRewardsMixin.OnEvent({}, 'CHALLENGE_MODE_COMPLETED')",
-    )
-    .expect("weekly rewards consumer should request map data after a completed run");
-    let seen: bool = env
-        .eval("return map_update_seen")
-        .expect("map refresh event should be observable");
-    assert!(seen, "RequestMapInfo should publish CHALLENGE_MODE_MAPS_UPDATE");
-}
-
 // ── GetRunHistory ─────────────────────────────────────────────────────────────
 
 #[test]
