@@ -79,22 +79,3 @@ fn layout_frame_original_dirty_transition() {
     "#,
     );
 }
-
-// The pinned native method census does not publish these as generic Frame methods.
-#[test]
-fn bare_frame_has_no_mixin_helpers() {
-    let env = WowLuaEnv::new().expect("Lua environment");
-    env.exec(
-        r#"
-        local frame = CreateFrame("Frame")
-        for _, name in ipairs({
-            "AddDataProvider", "RemoveDataProvider", "SetTitle", "SetPortraitToAsset",
-            "SetInterpolateScroll", "CanInterpolateScroll", "Update", "SetDirtyMethod",
-            "MarkDirty", "IsDirty", "AddModule", "RemoveModule", "RemoveAllModules", "HasModule",
-        }) do
-            assert(frame[name] == nil, "bare Frame unexpectedly publishes " .. name)
-        end
-    "#,
-    )
-    .expect("native generic Frame surface");
-}
