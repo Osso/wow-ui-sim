@@ -91,6 +91,8 @@ macro_rules! build_empty_sim_state {
             edit_mode_cache: crate::c_api::c_edit_mode_cache::EditModeCacheState::default(),
             #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
             last_gamepad_input_timestamp: None,
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            gx_adapter_info: Vec::new(),
             video_capability_bytes: Default::default(),
             #[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
             performance_bar_protocol_types: None,

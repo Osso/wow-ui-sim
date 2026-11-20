@@ -4,6 +4,13 @@ use crate::lua_bridge::{FromStack, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val, runtime_error};
 
+#[derive(Clone, Debug)]
+pub struct GxAdapterInfoDetails {
+    pub name: String,
+    pub is_low_power: bool,
+    pub is_external: bool,
+}
+
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     use crate::client_profile::{ACTIVE, ClientProfile};
     if !matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever) {
