@@ -1,27 +1,42 @@
 #![cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 
+use std::path::Path;
+
 use crate::common::blizzard_addon_harness::{
     blizzard_ui_dir, load_blizzard_addon_closure_into_env, new_blizzard_addon_env,
 };
+use wow_ui_sim::lua_api::WowLuaEnv;
 
 #[test]
 fn pending_invite_confirmation_event_drives_the_dialog_queue() {
     let ui = blizzard_ui_dir();
-    let env = new_blizzard_addon_env(&ui);
+    let env = load_invite_consumers(&ui);
+    supply_invites(&env);
+    accept_first_invite(&env);
+    env.process_timers()
+        .expect("dispatch the next confirmation after A's dialog closes");
+    decline_second_invite(&env);
+}
+
+fn load_invite_consumers(ui: &Path) -> WowLuaEnv {
+    let env = new_blizzard_addon_env(ui);
     let roots = [
         "Blizzard_Game",
         "Blizzard_LFGUtil",
         "Blizzard_StaticPopup_Game",
         "Blizzard_UIPanels_Game",
     ];
-    let loaded = load_blizzard_addon_closure_into_env(&env, &ui, &roots, &[]);
+    let loaded = load_blizzard_addon_closure_into_env(&env, ui, &roots, &[]);
     for name in roots {
         assert!(
             loaded.iter().any(|loaded| loaded == name),
             "{name} did not load"
         );
     }
+    env
+}
 
+fn supply_invites(env: &WowLuaEnv) {
     env.exec(
         r#"
         A_Admin.SetPendingInviteConfirmations([=[
@@ -33,7 +48,9 @@ fn pending_invite_confirmation_event_drives_the_dialog_queue() {
         "#,
     )
     .expect("host should add two distinct pending invite confirmations");
+}
 
+fn accept_first_invite(env: &WowLuaEnv) {
     env.exec(
         r#"
         local dialog = StaticPopup_FindVisible("GROUP_INVITE_CONFIRMATION")
@@ -41,16 +58,14 @@ fn pending_invite_confirmation_event_drives_the_dialog_queue() {
         local text = dialog.Text:GetText()
         assert(text:find("Aster", 1, true), text)
         assert(text:find("North Battleground", 1, true), text)
-
         dialog.button1:Click()
         assert(GetNextPendingInviteConfirmation() == "invite-b", "answering A should remove it")
         "#,
     )
-    .expect("the original dialog should answer A and remove it from the Rust queue");
+    .expect("the dialog should answer A and remove it from the Rust queue");
+}
 
-    env.process_timers()
-        .expect("the deferred confirmation event should dispatch after A's dialog closes");
-
+fn decline_second_invite(env: &WowLuaEnv) {
     env.exec(
         r#"
         local dialog = StaticPopup_FindVisible("GROUP_INVITE_CONFIRMATION")
@@ -58,10 +73,9 @@ fn pending_invite_confirmation_event_drives_the_dialog_queue() {
         local text = dialog.Text:GetText()
         assert(text:find("Bramble", 1, true), text)
         assert(text:find("South Battleground", 1, true), text)
-
         dialog.button2:Click()
         assert(StaticPopup_FindVisible("GROUP_INVITE_CONFIRMATION") == nil)
         "#,
     )
-    .expect("the original event and dialog callbacks should advance the Rust confirmation queue");
+    .expect("the dialog should decline B and leave no confirmation visible");
 }
