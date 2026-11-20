@@ -579,9 +579,15 @@ pub(super) fn c_tooltip_get_pet_action(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 pub(super) fn c_tooltip_get_quest_currency(state: &mut LuaState) -> LuaResult<u32> {
-    let _quest_id = Option::<i32>::from_stack(state, 1)?;
-    let _currency_type = Option::<i32>::from_stack(state, 2)?;
-    let _index = Option::<i32>::from_stack(state, 3)?;
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
+        return crate::c_api::c_tooltip_info_currency::get_quest_currency(state);
+    }
+    let _quest_type = Option::<String>::from_stack(state, 1)?;
+    let _currency_index = Option::<i32>::from_stack(state, 2)?;
     state.push(Val::Nil);
     Ok(1)
 }
