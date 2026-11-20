@@ -11,6 +11,9 @@ use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 
+// VERIFIED: Retail and Forever generated docs declare Account=1 in EditModeLayoutType.
+const ACCOUNT_LAYOUT_TYPE: f64 = 1.0;
+
 #[derive(Clone, Debug, PartialEq)]
 enum EditModeKey {
     Number(f64),
@@ -329,7 +332,9 @@ fn copy_lua_value(state: &mut LuaState, value: Val) -> LuaResult<EditModeValue> 
             val_to_string(state, value).unwrap_or_default(),
         )),
         Val::Table(table_ref) => copy_lua_table(state, table_ref),
-        _ => Ok(EditModeValue::Nil),
+        _ => Err(rilua::runtime_error(
+            "C_EditMode layout values must be tables, strings, numbers, booleans, or nil",
+        )),
     }
 }
 
@@ -357,18 +362,20 @@ fn copy_lua_table(
     }
     for (key, value) in hash {
         let key = copy_lua_key(state, key)?;
-        if let Some(key) = key {
-            entries.push((key, copy_lua_value(state, value)?));
-        }
+        entries.push((key, copy_lua_value(state, value)?));
     }
     Ok(EditModeValue::Table(entries))
 }
 
-fn copy_lua_key(state: &LuaState, key: Val) -> LuaResult<Option<EditModeKey>> {
+fn copy_lua_key(state: &LuaState, key: Val) -> LuaResult<EditModeKey> {
     match key {
-        Val::Num(value) => Ok(Some(EditModeKey::Number(value))),
-        Val::Str(_) => Ok(val_to_string(state, key).map(EditModeKey::String)),
-        _ => Ok(None),
+        Val::Num(value) => Ok(EditModeKey::Number(value)),
+        Val::Str(_) => val_to_string(state, key)
+            .map(EditModeKey::String)
+            .ok_or_else(|| rilua::runtime_error("C_EditMode layout key is not a string")),
+        _ => Err(rilua::runtime_error(
+            "C_EditMode layout keys must be strings or numbers",
+        )),
     }
 }
 
@@ -623,7 +630,7 @@ fn read_layout(
     let (name, index) = read_layout_identity(reader, has_metadata)?;
     let count = reader.read_count()?;
     let systems = read_layout_systems(state, reader, count, has_metadata)?;
-    Some(build_layout(state, name, index, systems))
+    Some(build_layout(name, index, systems))
 }
 
 fn read_layout_identity(
@@ -750,12 +757,10 @@ fn build_anchor_info(cached: &CachedSystem) -> EditModeValue {
 }
 
 fn build_layout(
-    state: &mut LuaState,
     name: String,
     layout_index: Option<f64>,
     systems: Vec<EditModeValue>,
 ) -> EditModeValue {
-    let layout_type = enum_field_number(state, "EditModeLayoutType", "Account").unwrap_or(1.0);
     let mut fields = vec![
         (
             EditModeKey::String("layoutName".into()),
@@ -763,7 +768,7 @@ fn build_layout(
         ),
         (
             EditModeKey::String("layoutType".into()),
-            EditModeValue::Number(layout_type),
+            EditModeValue::Number(ACCOUNT_LAYOUT_TYPE),
         ),
         (
             EditModeKey::String("systems".into()),
