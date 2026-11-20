@@ -393,7 +393,18 @@ end
 __wow_ensure_dispatcher_surface()
 "#;
 
+fn original_dispatcher_is_selected() -> bool {
+    matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever
+    )
+}
+
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
+    if original_dispatcher_is_selected() {
+        return Ok(());
+    }
     lua.exec(DISPATCHER_SURFACE_LUA)?;
     Ok(())
 }
@@ -403,6 +414,9 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
 /// `hooksecurefunc(C_AddOns, "LoadAddOn", ...)` route no longer works because
 /// the shared bootstrap hooksecurefunc deliberately refuses that target.
 pub(crate) fn patch_for_addon_load(env: &crate::lua_api::LoaderEnv<'_>) -> crate::Result<()> {
+    if original_dispatcher_is_selected() {
+        return Ok(());
+    }
     env.exec(DISPATCHER_SURFACE_LUA)
 }
 
@@ -410,6 +424,7 @@ pub(crate) fn patch_for_addon_load(env: &crate::lua_api::LoaderEnv<'_>) -> crate
 mod tests {
     use crate::lua_api::WowLuaEnv;
 
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     #[test]
     fn installs_dispatcher_surface() {
         let env = WowLuaEnv::new().expect("lua env should initialize");

@@ -132,6 +132,7 @@ fn blizzard_dispatcher_loads_without_errors(env: &WowLuaEnv) {
 }
 }
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 prefork_full_ui_case! {
 fn blizzard_dispatcher_global_table_installed_with_simulator_marker(env: &WowLuaEnv) {
 

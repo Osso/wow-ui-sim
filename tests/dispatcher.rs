@@ -10,6 +10,7 @@ fn dispatcher_toc() -> PathBuf {
     .join("Blizzard_Dispatcher/Blizzard_Dispatcher.toc")
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn boost_tutorial_toc() -> PathBuf {
     wow_ui_sim::client_profile::blizzard_ui_addons_dir_under(std::path::Path::new(env!(
         "CARGO_MANIFEST_DIR"
@@ -25,6 +26,7 @@ fn env() -> WowLuaEnv {
     env
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 #[test]
 fn dispatcher_routes_cinematic_event_to_blizzard_tutorial_consumer() {
     let env = env();
