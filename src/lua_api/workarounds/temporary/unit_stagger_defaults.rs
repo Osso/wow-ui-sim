@@ -1,5 +1,6 @@
 //! Unit stagger compatibility for profiles without modeled combat state.
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 const UNIT_STAGGER_DEFAULTS_LUA: &str = r#"
 if UnitStagger == nil then
   function UnitStagger(_unit)
@@ -57,6 +58,7 @@ pub(crate) fn set_player_stagger(state: &mut rilua::vm::state::LuaState) -> rilu
 
 #[cfg(test)]
 mod tests {
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     use crate::lua_api::WowLuaEnv;
 
     #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
