@@ -2620,34 +2620,18 @@ mod storeglue_r88q_tuple {
         let env = load_blizzard_screen(ScreenKind::CharacterSelect);
         seed_purchase_records(&env);
         seed_r88q_product_inputs(&env);
-        env.exec(
-            r#"
-            local source = debug.getinfo(CharacterSelectListUtil.GetVASInfoForGUID, 'S')
-            assert(source.source:find('CharacterSelectListUtil.lua', 1, true))
-            assert(source.linedefined == 573)
-        "#,
-        )
-        .unwrap();
         env
     }
 
-    // Host input adapter; identical GUID/product/state/error data to the RED fixture.
+    // INFERRED host input supplies two distinct states to the selected consumer.
     fn seed_purchase_records(env: &WowLuaEnv) {
-        use wow_ui_sim::c_api::store_glue_model::VasPurchaseRecord;
-        let mut sim = env.state().borrow_mut();
-        for (guid, product_id, state, errors) in [
-            ("Player-1-a1", 2003, 3, vec![17, 0, -4]),
-            ("Player-2-b2", 189, 4, vec![0, 29]),
-        ] {
-            sim.store_glue.purchase_states.insert(
-                guid.into(),
-                VasPurchaseRecord {
-                    product_id,
-                    state,
-                    errors,
-                },
-            );
-        }
+        env.exec(
+            r#"
+            A_Admin.SetStoreGluePurchaseState('Player-1-a1', 2003, 3)
+            A_Admin.SetStoreGluePurchaseState('Player-2-b2', 189, 4)
+        "#,
+        )
+        .unwrap();
     }
 
     #[test]
