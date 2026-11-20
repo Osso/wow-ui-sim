@@ -4,6 +4,7 @@
 //! cleanup-removed secure namespaces remain absent from the public environment.
 
 use crate::lua_api::SimState;
+use rilua::LuaApiMut;
 use std::cell::RefCell;
 use std::rc::Rc;
 

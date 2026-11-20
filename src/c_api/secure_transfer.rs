@@ -6,7 +6,9 @@
 //! INFERRED (R88by): the cleanup restore republishes this model to secureenv.
 
 use super::helpers::{global_val, register_namespace_function_with_flags};
-use crate::lua_api::methods::{borrow_state, call_function_state, create_string, table_set_static};
+use crate::lua_api::methods::{
+    borrow_state, borrow_state_mut, call_function_state, create_string, table_set_static,
+};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val, runtime_error};
 
@@ -140,9 +142,9 @@ fn open_mail_index(state: &mut LuaState) -> LuaResult<usize> {
 
 fn push_mail_info(
     state: &mut LuaState,
-    name_key: &str,
+    name_key: &'static str,
     name: String,
-    amount_key: &str,
+    amount_key: &'static str,
     amount: u64,
 ) -> LuaResult<u32> {
     let info = crate::lua_api::methods::create_table(state);
@@ -154,7 +156,11 @@ fn push_mail_info(
 }
 
 fn push_optional_string(state: &mut LuaState, value: Option<String>) -> LuaResult<u32> {
-    state.push(value.map_or(Val::Nil, |text| create_string(state, &text)));
+    let value = match value {
+        Some(text) => create_string(state, &text),
+        None => Val::Nil,
+    };
+    state.push(value);
     Ok(1)
 }
 
@@ -212,21 +218,13 @@ fn complete_housing_purchase(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn complete_housing_vc_purchase(state: &mut LuaState) -> LuaResult<u32> {
-    let product_id = get_housing_vc_purchase_product_id(state)?;
-    let product_id = crate::lua_bridge::stack_val(state, -1);
-    state.pop();
-    call_catalog_shop_with_argument(state, "PurchaseProduct", product_id)
+    if let Some(input) = borrow_state_mut(state)?.secure_transfer.as_mut() {
+        input.housing_vc_purchase_product_id = None;
+    }
+    Ok(0)
 }
 
 fn call_catalog_shop(state: &mut LuaState, member: &str) -> LuaResult<u32> {
-    call_catalog_shop_with_argument(state, member, Val::Nil)
-}
-
-fn call_catalog_shop_with_argument(
-    state: &mut LuaState,
-    member: &str,
-    argument: Val,
-) -> LuaResult<u32> {
     let catalog_shop = global_val(state, "C_CatalogShop");
     let key = Val::Str(state.gc.intern_string(member.as_bytes()));
     let function = state.gettable(catalog_shop, key)?;
@@ -235,7 +233,7 @@ fn call_catalog_shop_with_argument(
             "C_CatalogShop.{member} is unavailable"
         )));
     }
-    call_function_state(state, function, &[argument])?;
+    call_function_state(state, function, &[])?;
     Ok(0)
 }
 
