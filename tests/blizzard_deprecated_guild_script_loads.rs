@@ -161,7 +161,7 @@ fn deprecated_guild_requests_validate_and_preserve_roster(env: &WowLuaEnv) {
         sim.world.guild_id = 42;
         sim.world.guild_player_rank = 0;
         sim.world.guild_members = vec![GuildMember {
-            name: "Alice".into(), rank_index: 2, online: true,
+            name: "Alice".into(), guid: None, rank_index: 2, online: true,
         }];
         sim.guild_request_inputs.transport_available = true;
     }

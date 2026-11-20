@@ -203,11 +203,13 @@ fn title_friend_requests_record_by_name_and_club_member() {
     env.state().borrow_mut().world.guild_members = vec![
         GuildMember {
             name: "Uther".to_string(),
+            guid: None,
             rank_index: 1,
             online: true,
         },
         GuildMember {
             name: "Jaina".to_string(),
+            guid: None,
             rank_index: 2,
             online: false,
         },

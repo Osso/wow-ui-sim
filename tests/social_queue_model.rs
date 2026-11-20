@@ -6,16 +6,20 @@ use crate::common::blizzard_addon_harness::{
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 const ADDONS: &[&str] = &[
+    "Blizzard_UIPanels_Game",
     "Blizzard_FriendsFrame",
     "Blizzard_QuickJoin",
     "Blizzard_RaidFrame",
     "Blizzard_RecruitAFriend",
 ];
 
+const GUILD_ROSTER_INPUT: &str = r#"
+A_Admin.SetGuildRoster([[ [{"name":"Guild Leader","guid":"member-guid","rankIndex":1,"online":true}] ]])
+"#;
 const GROUP_INPUT: &str = r#"
 A_Admin.SetSocialQueueGroups([[ [
-    {"guid":"group-alpha","info":{"canJoin":true,"numQueues":1,"needTank":false,"needHealer":false,"needDamage":true,"isSoloQueueParty":false,"questSessionActive":false,"leaderGUID":"leader-alpha"},"members":[],"queues":[{"clientID":101,"eligible":false,"needTank":false,"needHealer":false,"needDamage":true,"isAutoAccept":false,"queueData":{"queueType":"pvp"}}]},
-    {"guid":"group-beta","info":{"canJoin":true,"numQueues":2,"needTank":true,"needHealer":false,"needDamage":false,"isSoloQueueParty":true,"questSessionActive":false,"leaderGUID":"leader-beta"},"members":[],"queues":[{"clientID":202,"eligible":false,"needTank":true,"needHealer":false,"needDamage":false,"isAutoAccept":false,"queueData":{"queueType":"pvp"}}]}
+    {"guid":"group-alpha","info":{"canJoin":true,"numQueues":1,"needTank":false,"needHealer":false,"needDamage":true,"isSoloQueueParty":false,"questSessionActive":false,"leaderGUID":"member-guid"},"members":[],"queues":[{"clientID":101,"eligible":false,"needTank":false,"needHealer":false,"needDamage":true,"isAutoAccept":false,"queueData":{"queueType":"pvp"}}]},
+    {"guid":"group-beta","info":{"canJoin":true,"numQueues":2,"needTank":true,"needHealer":false,"needDamage":false,"isSoloQueueParty":true,"questSessionActive":false,"leaderGUID":"non-member-guid"},"members":[],"queues":[{"clientID":202,"eligible":false,"needTank":true,"needHealer":false,"needDamage":false,"isAutoAccept":false,"queueData":{"queueType":"pvp"}}]}
 ] ]])
 "#;
 const CONFIG_INPUT: &str =
@@ -27,11 +31,18 @@ local canJoinA, queueCountA = C_SocialQueue.GetGroupInfo(groups[1])
 local canJoinB, queueCountB, needTankB = C_SocialQueue.GetGroupInfo(groups[2])
 assert(canJoinA and queueCountA == 1 and canJoinB and queueCountB == 2 and needTankB, "group info was not projected per ID")
 assert(#C_SocialQueue.GetGroupMembers(groups[1]) == 0, "group member query should return the supplied empty list")
+assert(select(17, GetGuildRosterInfo(1)) == "member-guid", "roster query lost the supplied GUID")
 assert(C_SocialQueue.GetGroupQueues(groups[2])[1].clientID == 202, "queue query returned the wrong group data")
 FriendsFrame_UpdateQuickJoinTab(#groups)
 assert(FriendsFrameTab4:GetText() == QUICK_JOIN .. " " .. string.format(NUMBER_IN_PARENTHESES, 2), "FriendsFrame tab did not count both groups")
 assert(QuickJoinToastButton.groups[groups[1]].guid == "group-alpha", "toast consumer lost alpha")
 assert(QuickJoinToastButton.groups[groups[2]].guid == "group-beta", "toast consumer lost beta")
+local guildEntry = {guid = groups[1]}
+local otherEntry = {guid = groups[2]}
+QuickJoinEntryMixin.UpdateLeader(guildEntry)
+QuickJoinEntryMixin.UpdateLeader(otherEntry)
+assert(QuickJoinEntryMixin.HasLocalRelationshipWithLeader(guildEntry), "guild leader relationship was not detected")
+assert(not QuickJoinEntryMixin.HasLocalRelationshipWithLeader(otherEntry), "non-guild leader relationship was reported")
 "#;
 
 fn setup() -> WowLuaEnv {
@@ -57,6 +68,8 @@ fn social_queue_config_returns_host_supplied_fields() {
 #[test]
 fn quick_join_consumer_reads_distinct_host_groups() {
     let env = setup();
+    env.exec(GUILD_ROSTER_INPUT)
+        .expect("host guild roster should supply a member GUID");
     env.exec(GROUP_INPUT)
         .expect("host groups should trigger the Quick Join update");
     env.exec(QUICK_JOIN_ASSERTIONS)

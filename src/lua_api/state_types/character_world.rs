@@ -625,11 +625,14 @@ pub struct WorldState {
     pub guild_events: Vec<GuildEvent>,
 }
 
-/// A guild member: display name, 1-based rank index, and online state.
+/// A guild member: display name, optional host-supplied GUID, rank, and online state.
+/// INFERRED (R88ce): membership matches GUIDs exactly; unseeded members have no GUID.
 /// Rank 1 is highest (Guild Master). Higher values = lower rank.
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub struct GuildMember {
     pub name: String,
+    pub guid: Option<String>,
     pub rank_index: i32,
     pub online: bool,
 }
