@@ -16,21 +16,22 @@ fn transmog_outfit_consumer_refreshes_from_two_created_outfits() {
         assert!(loaded.iter().any(|name| name == "Blizzard_Transmog"));
         env.apply_post_load_workarounds();
         let result: String = env.eval(r#"
-            local refreshed
-            local frame = { OutfitCollection = { Refresh = function(_, provider, select)
-                refreshed = { provider = provider, select = select }
-            end } }
-            TransmogFrameMixin.RefreshOutfits(frame, false)
-            C_TransmogOutfitInfo.AddNewOutfit("Copper", 123)
-            C_TransmogOutfitInfo.AddNewOutfit("Silver", 456)
-            TransmogFrameMixin.RefreshOutfits(frame, true)
-            local collection = refreshed.provider:GetCollection()
-            if refreshed.select ~= true or #collection ~= 2 then return "count" end
-            if collection[1].name ~= "Copper" or collection[1].icon ~= 123 then return "first" end
-            if collection[2].name ~= "Silver" or collection[2].icon ~= 456 then return "second" end
+            IconSelectorPopupFrameTemplateMixin.OkayButton_OnClick = function() end
+            local popup = { mode = IconSelectorPopupFrameModes.New, BorderBox = {
+                SelectedIconArea = { SelectedIconButton = { GetIconTexture = function() return 123 end } },
+                IconSelectorEditBox = { GetText = function() return "Copper" end },
+            } }
+            TransmogOutfitPopupMixin.OkayButton_OnClick(popup)
+            popup.BorderBox.SelectedIconArea.SelectedIconButton.GetIconTexture = function() return 456 end
+            popup.BorderBox.IconSelectorEditBox.GetText = function() return "Silver" end
+            TransmogOutfitPopupMixin.OkayButton_OnClick(popup)
             return "ok"
-        "#).expect("pinned TransmogFrameMixin consumer should run");
+        "#).expect("pinned TransmogOutfitPopupMixin consumer should run");
         assert_eq!(result, "ok");
+        let entries = &env.state().borrow().transmog_outfit_catalog.entries;
+        assert_eq!(entries.len(), 2);
+        assert_eq!((entries[0].name.as_str(), entries[0].icon), ("Copper", 123));
+        assert_eq!((entries[1].name.as_str(), entries[1].icon), ("Silver", 456));
     });
 }
 
