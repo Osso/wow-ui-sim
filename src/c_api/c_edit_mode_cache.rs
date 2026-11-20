@@ -836,18 +836,21 @@ fn frame_point(value: f64) -> String {
 
 fn active_layout_from_character_cache(text: Option<&str>, spec_index: f64) -> Option<f64> {
     let text = text?.replace('\0', " ");
-    let tokens: Vec<f64> = text
-        .split_whitespace()
-        .filter_map(|token| token.parse().ok())
-        .collect();
+    let tokens: Vec<&str> = text.split_whitespace().collect();
     let selected = if spec_index >= 1.0 && spec_index.fract() == 0.0 {
-        tokens.get(spec_index as usize - 1).copied()
+        tokens
+            .get(spec_index as usize - 1)
+            .and_then(|token| token.parse::<f64>().ok())
     } else {
         None
     };
     selected
         .filter(|active| *active > 0.0)
-        .or_else(|| tokens.into_iter().find(|active| *active > 0.0))
+        .or_else(|| tokens.iter().find_map(|token| positive_number(token)))
+}
+
+fn positive_number(token: &str) -> Option<f64> {
+    token.parse::<f64>().ok().filter(|value| *value > 0.0)
 }
 
 fn choose_override(

@@ -20,6 +20,7 @@ mod bounded_process;
 const ACCOUNT_CACHE: &[u8] =
     include_bytes!("fixtures/frame_position_replay/edit-mode-cache-account.txt");
 const CHARACTER_CACHE: &[u8] = b"2 2 2 2 0 0\0";
+const MISALIGNED_CHARACTER_CACHE: &[u8] = b"invalid 2 4 2 0 0\0";
 
 fn import_cache(
     env: &WowLuaEnv,
@@ -242,7 +243,13 @@ fn original_edit_mode_consumer_switches_to_saved_layout_after_startup() {
     test_timeout! {
         let temp = tempfile::tempdir().expect("create isolated cache fixture");
         let env = WowLuaEnv::new().expect("fresh pre-addon environment");
-        import_cache(&env, temp.path(), None, ACCOUNT_CACHE, CHARACTER_CACHE);
+        import_cache(
+            &env,
+            temp.path(),
+            None,
+            ACCOUNT_CACHE,
+            MISALIGNED_CHARACTER_CACHE,
+        );
         load_whole_game_ui(&env);
         dispatch_specialization_change(&env);
         env.exec(r#"
