@@ -114,6 +114,7 @@ fn set_group_buff_visual_alerts(state: &mut LuaState) -> LuaResult<u32> {
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever {
         sim.forever_startup.group_buff_alerts = alerts.clone();
     }
+    drop(sim);
     let payload = push_alert_rows(state, &alerts);
     dispatch_event_now(state, "GROUP_BUFF_VISUAL_ALERTS_CHANGED", &[payload])?;
     Ok(0)
