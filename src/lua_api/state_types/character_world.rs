@@ -246,6 +246,8 @@ pub struct PlayerState {
     pub can_port_graveyard: bool,
     pub health: i32,
     pub health_max: i32,
+    /// INFERRED R88ch: supplied current stagger damage amount for this unit.
+    pub stagger_amount: f64,
     pub class_index: i32,
     pub race_index: usize,
     /// INFERRED (simulator mapping): host-supplied FactionTemplate flags keyed by one-based race ID; empty by default.

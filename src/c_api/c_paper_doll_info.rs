@@ -195,8 +195,22 @@ fn offhand_has_weapon(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn get_stagger_percentage(state: &mut LuaState) -> LuaResult<u32> {
-    state.push(Val::Num(0.0));
-    Ok(1)
+    let unit = String::from_stack(state, 1)?;
+    let percentage = if matches!(unit.as_str(), "player" | "self") {
+        let player = &borrow_state(state)?.player;
+        if player.health_max > 0 {
+            player.stagger_amount / f64::from(player.health_max) * 100.0
+        } else {
+            0.0
+        }
+    } else {
+        0.0
+    };
+
+    // INFERRED R88ch: target-relative stagger has no supplied model.
+    state.push(Val::Num(percentage));
+    state.push(Val::Nil);
+    Ok(2)
 }
 
 fn is_inventory_slot_enabled(state: &mut LuaState) -> LuaResult<u32> {

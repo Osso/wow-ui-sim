@@ -24,7 +24,7 @@ fn paper_doll_stagger_consumer_displays_light_moderate_and_heavy_amounts() {
             {40000, 40},
             {70000, 70},
         }) do
-            A_Admin.SetUnitStagger("player", sample[1])
+            A_Admin.SetPlayerStagger(sample[1])
             PaperDollFrame_SetStagger(stat, "player")
             assert(stat.numericValue == sample[2], "PaperDoll stagger percentage")
             assert(stat.Value:GetText() == sample[2] .. "%", "PaperDoll stagger text")
