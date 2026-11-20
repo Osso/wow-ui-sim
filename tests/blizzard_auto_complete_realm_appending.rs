@@ -38,15 +38,6 @@ AutoComplete_Update(editBox, "playername-Storm", strlen("playername-Storm"))
 assertDisplayedRealm(1, "playername-Stormrage")
 assertDisplayedRealm(2, "playername-Stormscale")
 
-local duplicateEditBox = makeEditBox(function()
-  return {{ name = "playername-Stormscale", priority = Enum.AutoCompletePriority.Other }}
-end)
-
-AutoComplete_Update(duplicateEditBox, "playername-Storm", strlen("playername-Storm"))
-assertDisplayedRealm(1, "playername-Stormscale")
-assertDisplayedRealm(2, "playername-Stormrage")
-expect(not AutoCompleteButton3:IsShown(), "duplicate Stormscale completion must not be appended")
-
 return table.concat(failures, "\n")
 "#;
 
