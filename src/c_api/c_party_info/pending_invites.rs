@@ -4,15 +4,13 @@ use std::collections::HashSet;
 
 use crate::c_api::helpers::{ensure_namespace, set_table_array};
 use crate::lua_api::methods::{
-    borrow_state, borrow_state_mut, call_function_state, create_string, create_table, registry_get,
-    registry_set, table_get, table_set,
+    borrow_state, borrow_state_mut, create_string, create_table, table_set,
 };
 use crate::lua_bridge::{FromStack, TableBuilder, table_set_rust_fn_static};
+use rilua::vm::closure::{Closure, RustClosure};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val, runtime_error};
 use serde::Deserialize;
-
-const PENDING_INVITE_EVENT_CALLBACK: &str = "__pending_invite_confirmation_event_callback";
 
 #[derive(Clone, Debug, Default)]
 pub(crate) struct PendingInviteConfirmations {
@@ -72,7 +70,6 @@ struct InviteReferralInfo {
 }
 
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
-    register_event_callback(state)?;
     let namespace = ensure_namespace(state, "C_PartyInfo")?;
     table_set_rust_fn_static(
         state,
@@ -227,7 +224,11 @@ fn respond_to_invite_confirmation(state: &mut LuaState) -> LuaResult<u32> {
     let has_pending_invites = remove_responded_invite(state, &invite_id)?;
     // INFERRED (R88cf): request remaining confirmations after this dialog hides.
     if has_pending_invites {
-        schedule_confirmation_event(state)?;
+        crate::lua_api::timer_layout::defer_rust_event(
+            state,
+            dispatch_pending_confirmation_event,
+            "Pending invite confirmation event",
+        )?;
     }
     Ok(0)
 }
@@ -240,24 +241,20 @@ fn remove_responded_invite(state: &mut LuaState, invite_id: &str) -> LuaResult<b
     Ok(!sim.party_invite_confirmations.invites.is_empty())
 }
 
-fn schedule_confirmation_event(state: &mut LuaState) -> LuaResult<()> {
-    let c_timer = table_get(state, Val::Table(state.global), "C_Timer");
-    let after = table_get(state, c_timer, "After");
-    let callback = registry_get(state, PENDING_INVITE_EVENT_CALLBACK);
-    call_function_state(state, after, &[Val::Num(0.0), callback])?;
-    Ok(())
-}
-
-fn register_event_callback(state: &mut LuaState) -> LuaResult<()> {
-    let loader = table_get(state, Val::Table(state.global), "loadstring");
-    let source = create_string(
+fn dispatch_pending_confirmation_event(state: &mut LuaState) -> LuaResult<u32> {
+    if borrow_state(state)?
+        .party_invite_confirmations
+        .invites
+        .is_empty()
+    {
+        return Ok(0);
+    }
+    crate::lua_api::globals::state_backed_queries::dispatch_event_now(
         state,
-        "return function() A_Admin.FireEvent('GROUP_INVITE_CONFIRMATION') end",
-    );
-    let chunk = call_function_state(state, loader, &[source])?;
-    let callback = call_function_state(state, chunk, &[])?;
-    registry_set(state, PENDING_INVITE_EVENT_CALLBACK, callback);
-    Ok(())
+        "GROUP_INVITE_CONFIRMATION",
+        &[],
+    )?;
+    Ok(0)
 }
 
 fn find_invite(state: &LuaState, invite_id: &str) -> LuaResult<Option<PendingInviteConfirmation>> {
