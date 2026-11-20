@@ -44,10 +44,18 @@ fn pending_invite_confirmation_event_drives_the_dialog_queue() {
 
         dialog.button1:Click()
         assert(GetNextPendingInviteConfirmation() == "invite-b", "answering A should remove it")
+        "#,
+    )
+    .expect("the original dialog should answer A and remove it from the Rust queue");
 
-        dialog = StaticPopup_FindVisible("GROUP_INVITE_CONFIRMATION")
+    env.process_timers()
+        .expect("the deferred confirmation event should dispatch after A's dialog closes");
+
+    env.exec(
+        r#"
+        local dialog = StaticPopup_FindVisible("GROUP_INVITE_CONFIRMATION")
         assert(dialog and dialog:IsShown(), "the next confirmation should open after answering A")
-        text = dialog.Text:GetText()
+        local text = dialog.Text:GetText()
         assert(text:find("Bramble", 1, true), text)
         assert(text:find("South Battleground", 1, true), text)
 
@@ -55,5 +63,5 @@ fn pending_invite_confirmation_event_drives_the_dialog_queue() {
         assert(StaticPopup_FindVisible("GROUP_INVITE_CONFIRMATION") == nil)
         "#,
     )
-    .expect("the native event and dialog callbacks should advance the Rust confirmation queue");
+    .expect("the original event and dialog callbacks should advance the Rust confirmation queue");
 }
