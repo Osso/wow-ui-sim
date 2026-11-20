@@ -252,6 +252,13 @@ fn register_c_item_inventory_queries(
 ) -> LuaResult<()> {
     if ACTIVE == ClientProfile::Retail {
         register_c_item_retail_inventory_queries(state, table_ref)?;
+    } else if ACTIVE == ClientProfile::WowForever {
+        table_set_rust_fn_static(
+            state,
+            table_ref,
+            "DropItemOnUnit",
+            super::item_drop_on_unit::drop_item_on_unit,
+        )?;
     }
     register_c_item_general_inventory_queries(state, table_ref)
 }

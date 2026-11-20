@@ -1,13 +1,22 @@
 //! Catalog creation, metadata edits and displayed selection.
 
 use crate::lua_api::globals::state_backed_queries::dispatch_event_now;
-use crate::lua_api::methods::{borrow_state, borrow_state_mut};
+#[cfg(not(feature = "client-wowforever"))]
+use crate::lua_api::methods::borrow_state;
+use crate::lua_api::methods::borrow_state_mut;
 use crate::lua_bridge::{FromStack, table_set_rust_fn_static};
 use rilua::vm::{gc::arena::GcRef, state::LuaState, table::Table};
 use rilua::{LuaResult, Val};
 
 use super::{OutfitEntry, model::valid_name};
 
+#[cfg(feature = "client-wowforever")]
+pub(super) fn register_forever(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
+    table_set_rust_fn_static(state, namespace, "AddNewOutfit", add_new_outfit)?;
+    table_set_rust_fn_static(state, namespace, "IsValidTransmogOutfitName", is_valid_name)
+}
+
+#[cfg(not(feature = "client-wowforever"))]
 pub(super) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
     for (name, handler) in [
         (
@@ -78,6 +87,7 @@ fn insert_outfit(state: &LuaState, name: String, icon: i64) -> LuaResult<i64> {
     Ok(id)
 }
 
+#[cfg(not(feature = "client-wowforever"))]
 fn commit_outfit_info(state: &mut LuaState) -> LuaResult<u32> {
     let id = i64::from_stack(state, 1)?;
     let (name, icon) = read_metadata(state, 2)?;
@@ -102,6 +112,7 @@ fn is_valid_name(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+#[cfg(not(feature = "client-wowforever"))]
 fn change_displayed_outfit(state: &mut LuaState) -> LuaResult<u32> {
     let id = i64::from_stack(state, 1)?;
     let _trigger = i32::from_stack(state, 2)?;
@@ -129,6 +140,7 @@ fn change_displayed_outfit(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
+#[cfg(not(feature = "client-wowforever"))]
 fn clear_displayed_outfit(state: &mut LuaState) -> LuaResult<u32> {
     let _trigger = i32::from_stack(state, 1)?;
     let toggle_lock = bool::from_stack(state, 2)?;
@@ -143,12 +155,14 @@ fn clear_displayed_outfit(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
+#[cfg(not(feature = "client-wowforever"))]
 fn is_equipped_displayed(state: &mut LuaState) -> LuaResult<u32> {
     let equipped = borrow_state(state)?.active_transmog_outfit_id.is_none();
     state.push(Val::Bool(equipped));
     Ok(1)
 }
 
+#[cfg(not(feature = "client-wowforever"))]
 fn pickup_outfit(state: &mut LuaState) -> LuaResult<u32> {
     let id = i64::from_stack(state, 1)?;
     let known = id == 0
@@ -168,6 +182,7 @@ fn pickup_outfit(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
+#[cfg(not(feature = "client-wowforever"))]
 fn read_source(state: &LuaState) -> LuaResult<usize> {
     let source = i32::from_stack(state, 1)?;
     if !(0..=2).contains(&source) {
@@ -176,6 +191,7 @@ fn read_source(state: &LuaState) -> LuaResult<usize> {
     Ok(source as usize)
 }
 
+#[cfg(not(feature = "client-wowforever"))]
 fn max_for_source(state: &mut LuaState) -> LuaResult<u32> {
     let source = read_source(state)?;
     let count = borrow_state(state)?.transmog_outfits.max_outfits_by_source[source];
@@ -183,6 +199,7 @@ fn max_for_source(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+#[cfg(not(feature = "client-wowforever"))]
 fn unlocked_for_source(state: &mut LuaState) -> LuaResult<u32> {
     let source = read_source(state)?;
     let count = borrow_state(state)?.transmog_outfits.unlocked_by_source[source];
@@ -190,6 +207,7 @@ fn unlocked_for_source(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+#[cfg(not(feature = "client-wowforever"))]
 fn max_usable(state: &mut LuaState) -> LuaResult<u32> {
     let count: u32 = borrow_state(state)?
         .transmog_outfits
@@ -200,6 +218,7 @@ fn max_usable(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+#[cfg(not(feature = "client-wowforever"))]
 fn next_cost(state: &mut LuaState) -> LuaResult<u32> {
     let cost = borrow_state(state)?.transmog_outfits.next_outfit_cost;
     state.push(Val::Num(cost as f64));

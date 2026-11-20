@@ -371,14 +371,16 @@ macro_rules! build_empty_sim_state {
                 feature = "retail-12-0-0",
                 feature = "client-mists",
                 feature = "client-era",
-                feature = "client-anniversary"
+                feature = "client-anniversary",
+                feature = "client-wowforever"
             ))]
             transmog_outfit_catalog: crate::c_api::c_transmog_outfit_info::OutfitCatalog::default(),
             #[cfg(any(
                 feature = "retail-12-0-0",
                 feature = "client-mists",
                 feature = "client-era",
-                feature = "client-anniversary"
+                feature = "client-anniversary",
+                feature = "client-wowforever"
             ))]
             transmog_outfits: crate::c_api::c_transmog_outfit_info::OutfitState::default(),
             #[cfg(any(
@@ -1061,7 +1063,8 @@ pub use crate::c_api::c_transmog_collection::AppearanceSourceInfo;
     feature = "retail-12-0-0",
     feature = "client-mists",
     feature = "client-era",
-    feature = "client-anniversary"
+    feature = "client-anniversary",
+    feature = "client-wowforever"
 ))]
 pub use crate::c_api::c_transmog_outfit_info::ViewedOutfitSlotInfo;
 
