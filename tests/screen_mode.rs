@@ -248,10 +248,10 @@ fn video_window_size_queries_follow_configured_display_dimensions() {
                 "#,
             )
             .expect("query configured display size");
-        assert_eq!(current, width);
-        assert_eq!(default, width);
-        assert_eq!(listed_width, width);
-        assert_eq!(listed_height, height);
+        assert_eq!(current, f64::from(width));
+        assert_eq!(default, f64::from(width));
+        assert_eq!(listed_width, f64::from(width));
+        assert_eq!(listed_height, f64::from(height));
     }
 }
 
