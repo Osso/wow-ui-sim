@@ -233,7 +233,10 @@ fn is_tradeskill_trainer(state: &mut LuaState) -> LuaResult<u32> {
 
 fn buy_trainer_service(state: &mut LuaState) -> LuaResult<u32> {
     let service_index = i32::from_stack(state, 1)?;
-    let changed = mark_service_used(&mut borrow_state_mut(state)?, service_index);
+    let changed = {
+        let mut sim = borrow_state_mut(state)?;
+        mark_service_used(&mut sim, service_index)
+    };
     if changed {
         fire_named_event_state(state, "TRAINER_UPDATE", &[]);
     }
@@ -241,17 +244,19 @@ fn buy_trainer_service(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn mark_service_used(sim: &mut crate::lua_api::state::SimState, service_index: i32) -> bool {
-    let Some(service) = sim.trainer.service_at(service_index) else {
+    let Some(spell_id) = sim
+        .trainer
+        .service_at(service_index)
+        .filter(|service| service.service_type == TrainerServiceType::Available)
+        .map(|service| service.spell_id)
+    else {
         return false;
     };
-    if service.service_type != TrainerServiceType::Available {
-        return false;
-    }
     let Some(stored) = sim
         .trainer
         .services
         .iter_mut()
-        .find(|stored| stored.spell_id == service.spell_id)
+        .find(|stored| stored.spell_id == spell_id)
     else {
         return false;
     };
