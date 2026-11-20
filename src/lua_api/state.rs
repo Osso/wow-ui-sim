@@ -416,6 +416,7 @@ macro_rules! build_empty_sim_state {
             transmog_custom_sets: crate::c_api::c_transmog_collection::CustomSets::default(),
             equipped_outfit_locked: false,
             locked_action_slots: HashSet::new(),
+            level_link_locked_spells: HashSet::new(),
             is_active_battlefield: false,
             spell_trade_skill_links: HashMap::new(),
             spell_id_aliases: HashMap::new(),

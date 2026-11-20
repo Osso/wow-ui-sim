@@ -40,10 +40,9 @@ fn select_original_items(env: &WowLuaEnv) -> (i32, i32) {
 }
 
 fn supply_lock(env: &WowLuaEnv, spell_id: i32) {
-    env.exec(&format!(
-        "C_LevelLink._state.lockedSpells = {{ [{spell_id}] = true }}"
-    ))
-    .expect("supply legacy spell lock input");
+    let mut state = env.state().borrow_mut();
+    state.level_link_locked_spells.clear();
+    state.level_link_locked_spells.insert(spell_id);
 }
 
 fn assert_overlays(env: &WowLuaEnv, locked_index: i32) {
