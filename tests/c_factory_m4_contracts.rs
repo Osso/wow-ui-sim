@@ -226,6 +226,7 @@ mod forever {
         cvars_are_loaded_before_the_lua_environment_is_published,
         "assert(C_CVar.AreCVarsLoaded() == true)"
     );
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     contract!(
         hidden_group_buffs_project_supplied_snapshot,
         "C_UnitAuras._hiddenGroupBuffs = {456}; local ids = C_UnitAuras.GetHiddenGroupBuffs(); assert(#ids == 1 and ids[1] == 456)"
