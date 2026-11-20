@@ -124,6 +124,20 @@ fn register_friend_query_methods(state: &mut LuaState, table_ref: BattleNetTable
         "GetAccountInfoByGUID",
         c_bnet_get_account_info_by_guid,
     )?;
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
+        // Forever shape VERIFIED at BattleNetDocumentation.lua:100; lookup semantics
+        // INFERRED from the Retail GetAccountInfoByGUID projection below.
+        table_set_rust_fn_static(
+            state,
+            table_ref,
+            "GetAccountInfoByID",
+            c_bnet_get_account_info_by_id,
+        )?;
+    }
     table_set_rust_fn_static(
         state,
         table_ref,
@@ -566,6 +580,25 @@ fn c_bnet_get_account_info_by_guid(state: &mut LuaState) -> LuaResult<u32> {
     let game_account = friend.game_accounts.first().cloned();
     let t = push_account_info_table(state, &friend, game_account.as_ref());
     state.push(t);
+    Ok(1)
+}
+
+fn c_bnet_get_account_info_by_id(state: &mut LuaState) -> LuaResult<u32> {
+    let account_id = i32::from_stack(state, 1)?;
+    let friend = {
+        let sim = borrow_state(state)?;
+        sim.bnet_friends
+            .iter()
+            .find(|friend| friend.bnet_account_id == account_id)
+            .cloned()
+    };
+    let Some(friend) = friend else {
+        state.push(Val::Nil);
+        return Ok(1);
+    };
+    let game_account = friend.game_accounts.first().cloned();
+    let account_info = push_account_info_table(state, &friend, game_account.as_ref());
+    state.push(account_info);
     Ok(1)
 }
 
