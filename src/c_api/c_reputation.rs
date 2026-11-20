@@ -194,6 +194,14 @@ pub(crate) fn set_faction_active(state: &mut LuaState) -> LuaResult<u32> {
     if super::reputation_model::active() {
         return set_host_faction_activity(state, index, set_active);
     }
+    set_legacy_faction_activity(state, index, set_active)
+}
+
+fn set_legacy_faction_activity(
+    state: &mut LuaState,
+    index: i32,
+    set_active: bool,
+) -> LuaResult<u32> {
     let row = reputation_faction_at_index(state, index);
     let faction_id = table_get_static(state, row, "factionID");
     let can_set_inactive = matches!(
@@ -259,6 +267,11 @@ pub(crate) fn set_reputation_sort_type(state: &mut LuaState) -> LuaResult<u32> {
         borrow_state_mut(state)?.reputation.sort_type = sort_type;
         return Ok(0);
     }
+    set_legacy_sort_type(state, sort_type);
+    Ok(0)
+}
+
+fn set_legacy_sort_type(state: &mut LuaState, sort_type: i32) {
     let global = Val::Table(state.global);
     let reputation_state = table_get_static(state, global, "__wow_reputation_state");
     table_set_static(
@@ -267,7 +280,6 @@ pub(crate) fn set_reputation_sort_type(state: &mut LuaState) -> LuaResult<u32> {
         "sortType",
         Val::Num(f64::from(sort_type)),
     );
-    Ok(0)
 }
 
 pub(crate) fn get_faction_paragon_info(state: &mut LuaState) -> LuaResult<u32> {

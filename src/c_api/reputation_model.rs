@@ -2,7 +2,10 @@
 //!
 //! Row selection/grouping is a simulator projection, not DB2 acquisition.
 
-use super::c_reputation::{read_faction_sort_index, read_required_number};
+use super::c_reputation::{
+    is_account_wide_reputation, is_faction_active, read_faction_sort_index, read_required_number,
+    set_faction_active, set_legacy_reputations_shown, set_reputation_sort_type,
+};
 use crate::lua_api::methods::{
     borrow_state, borrow_state_mut, create_string, create_table, table_set_static,
 };
@@ -322,38 +325,38 @@ fn request_reward(_state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
+const METHODS: &[(&str, fn(&mut LuaState) -> LuaResult<u32>)] = &[
+    ("GetNumFactions", num_factions),
+    ("GetFactionDataByIndex", faction_by_index),
+    ("GetFactionDataByID", faction_by_id),
+    // INFERRED: retain the existing compatibility alias over host data.
+    ("GetFactionInfo", faction_by_index),
+    ("GetGuildFactionData", guild),
+    ("GetWatchedFactionData", watched),
+    ("GetSelectedFaction", selected_index),
+    ("SetSelectedFaction", select_index),
+    ("SetWatchedFactionByID", watch_id),
+    ("SetWatchedFactionByIndex", watch_index),
+    ("CollapseFactionHeader", collapse),
+    ("ExpandFactionHeader", expand),
+    ("CollapseAllFactionHeaders", collapse_all),
+    ("ExpandAllFactionHeaders", expand_all),
+    ("GetReputationSortType", sort_type),
+    ("AreLegacyReputationsShown", show_legacy),
+    ("ToggleFactionAtWar", request_reward),
+    ("SetLegacyReputationsShown", set_legacy_reputations_shown),
+    ("SetReputationSortType", set_reputation_sort_type),
+    ("IsAccountWideReputation", is_account_wide_reputation),
+    ("IsFactionActive", is_faction_active),
+    ("SetFactionActive", set_faction_active),
+    ("RequestFactionParagonPreloadRewardData", request_reward),
+];
+
 pub(crate) fn register(
     state: &mut LuaState,
     table: rilua::vm::gc::arena::GcRef<rilua::vm::table::Table>,
 ) -> LuaResult<()> {
-    use super::c_reputation::*;
-    let methods: &[(&str, fn(&mut LuaState) -> LuaResult<u32>)] = &[
-        ("GetNumFactions", num_factions),
-        ("GetFactionDataByIndex", faction_by_index),
-        ("GetFactionDataByID", faction_by_id),
-        // INFERRED: retain the existing compatibility alias over host data.
-        ("GetFactionInfo", faction_by_index),
-        ("GetGuildFactionData", guild),
-        ("GetWatchedFactionData", watched),
-        ("GetSelectedFaction", selected_index),
-        ("SetSelectedFaction", select_index),
-        ("SetWatchedFactionByID", watch_id),
-        ("SetWatchedFactionByIndex", watch_index),
-        ("CollapseFactionHeader", collapse),
-        ("ExpandFactionHeader", expand),
-        ("CollapseAllFactionHeaders", collapse_all),
-        ("ExpandAllFactionHeaders", expand_all),
-        ("GetReputationSortType", sort_type),
-        ("AreLegacyReputationsShown", show_legacy),
-        ("ToggleFactionAtWar", request_reward),
-        ("SetLegacyReputationsShown", set_legacy_reputations_shown),
-        ("SetReputationSortType", set_reputation_sort_type),
-        ("IsAccountWideReputation", is_account_wide_reputation),
-        ("IsFactionActive", is_faction_active),
-        ("SetFactionActive", set_faction_active),
-        ("RequestFactionParagonPreloadRewardData", request_reward),
-    ];
-    for &(name, method) in methods {
+    for &(name, method) in METHODS {
         table_set_rust_fn_static(state, table, name, method)?;
     }
     Ok(())
