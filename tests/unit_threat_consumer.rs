@@ -30,6 +30,7 @@ fn unit_threat_indicator_tracks_two_supplied_states() {
         assert(type(UnitFrame_UpdateThreatIndicator) == "function")
         SetCVar("threatWarning", 1)
         A_Admin.SetTarget("Threat Test Mob", 63, 1, true)
+        UnitFrameThreatIndicator_Initialize("target", TargetFrame, "player")
         local icon = TargetFrame.threatIndicator
         assert(icon ~= nil)
         A_Admin.SetUnitThreatSituation("player", "target", 0, 0, 0, 0)
