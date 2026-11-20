@@ -1,5 +1,7 @@
 //! INFERRED window-size queries backed by the simulator's physical display.
-use crate::lua_api::methods::{borrow_state, create_table, table_set, table_set_num};
+use crate::lua_api::methods::{
+    borrow_state, create_string, create_table, table_set, table_set_num,
+};
 use crate::lua_bridge::{FromStack, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val, runtime_error};
@@ -73,7 +75,8 @@ fn adapter_info(state: &mut LuaState) -> LuaResult<u32> {
     };
     for (index, adapter) in adapters.iter().enumerate() {
         let entry = create_table(state);
-        table_set(state, entry, "name", Val::Str(adapter.name.clone().into()));
+        let name = create_string(state, &adapter.name);
+        table_set(state, entry, "name", name);
         table_set(state, entry, "isLowPower", Val::Bool(adapter.is_low_power));
         table_set(state, entry, "isExternal", Val::Bool(adapter.is_external));
         table_set_num(state, results, (index + 1) as f64, entry);
