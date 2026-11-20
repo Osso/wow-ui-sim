@@ -256,6 +256,45 @@ fn load_full_game_ui() -> WowLuaEnv {
 
 #[cfg(feature = "client-wowforever")]
 #[test]
+fn secure_consumer_sees_late_public_globals_without_overwriting_secure_values() {
+    use wow_ui_sim::loader;
+    let root = tempfile::tempdir().unwrap();
+    let addon = root.path().join("SecureConsumer");
+    std::fs::create_dir(&addon).unwrap();
+    std::fs::write(
+        addon.join("SecureConsumer.toc"),
+        "## UseSecureEnvironment: 1\nCore.lua\n",
+    )
+    .unwrap();
+    std::fs::write(
+        addon.join("Core.lua"),
+        "assert(LatePublicAccessor('unit') == 'unit:published'); \
+         assert(PreservedValue == 'secure'); \
+         ObservedValue = LatePublicAccessor('unit')",
+    )
+    .unwrap();
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        "rawset(__secureenv, 'PreservedValue', 'secure'); \
+         rawset(_G, 'PreservedValue', 'insecure'); \
+         LatePublicAccessor = function(value) return value .. ':published' end",
+    )
+    .unwrap();
+    load_addon(&env.loader_env(), &addon.join("SecureConsumer.toc")).unwrap();
+    assert_eq!(
+        env.eval::<String>("return rawget(__secureenv, 'ObservedValue')")
+            .unwrap(),
+        "unit:published"
+    );
+    assert_eq!(
+        env.eval::<String>("return rawget(__secureenv, 'PreservedValue')")
+            .unwrap(),
+        "secure"
+    );
+}
+
+#[cfg(feature = "client-wowforever")]
+#[test]
 fn wowforever_private_auras_tooltip_consumer_publishes_accessor() {
     let env = load_full_game_ui();
     let consumer_errors = env
