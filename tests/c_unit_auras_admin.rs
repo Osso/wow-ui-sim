@@ -55,10 +55,22 @@ fn group_buff_settings_round_trip_and_notify_blizzard_listeners() {
         )
         .expect("group buff settings should round-trip through the public API");
 
-    assert!(alerts_ok, "group buff alert rows must retain their data and order");
-    assert!(hidden_ok, "hidden group buff spell IDs must retain their data and order");
-    assert!(alert_event_ok, "visual-alert listeners must receive the updated rows");
-    assert!(hidden_event_ok, "hidden-buff listeners must receive the updated spell IDs");
+    assert!(
+        alerts_ok,
+        "group buff alert rows must retain their data and order"
+    );
+    assert!(
+        hidden_ok,
+        "hidden group buff spell IDs must retain their data and order"
+    );
+    assert!(
+        alert_event_ok,
+        "visual-alert listeners must receive the updated rows"
+    );
+    assert!(
+        hidden_event_ok,
+        "hidden-buff listeners must receive the updated spell IDs"
+    );
 }
 
 fn clear_buffs_and_insert(env: &WowLuaEnv, auras: Vec<AuraInfo>) {

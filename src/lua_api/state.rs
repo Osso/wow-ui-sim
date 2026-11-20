@@ -611,6 +611,7 @@ macro_rules! build_empty_sim_state {
             pvp_match_active: false,
             pvp_request_transport: Default::default(),
             aura_filter_facts: Default::default(),
+            group_buff_settings: Default::default(),
             target_auras: crate::lua_api::globals::auras::target_fixture_auras(),
             inventory_item_cooldowns: ::std::collections::HashMap::new(),
             item_cooldowns: ::std::collections::HashMap::new(),
