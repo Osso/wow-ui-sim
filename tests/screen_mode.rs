@@ -231,6 +231,30 @@ fn physical_display_input_matches_captured_wow_ui_dimensions() {
     .expect("display resize must retain scale and update aspect ratio");
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn video_window_size_queries_follow_configured_display_dimensions() {
+    let env = WowLuaEnv::new().expect("create environment");
+    for (width, height) in [(1280.0, 720.0), (2560.0, 1440.0)] {
+        env.set_display_size(width, height)
+            .expect("set physical display size");
+        let (current, default, listed_width, listed_height): (f64, f64, f64, f64) = env
+            .eval(
+                r#"
+                local current = C_VideoOptions.GetCurrentGameWindowSize()
+                local default = C_VideoOptions.GetDefaultGameWindowSize(1)
+                local sizes = C_VideoOptions.GetGameWindowSizes(1, false)
+                return current.x, default.x, sizes[1].x, sizes[1].y
+                "#,
+            )
+            .expect("query configured display size");
+        assert_eq!(current, width);
+        assert_eq!(default, width);
+        assert_eq!(listed_width, width);
+        assert_eq!(listed_height, height);
+    }
+}
+
 #[test]
 fn invalid_physical_display_dimensions_leave_screen_state_unchanged() {
     let env = WowLuaEnv::new().expect("create environment");
