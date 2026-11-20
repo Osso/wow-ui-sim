@@ -244,6 +244,7 @@ fn load_full_game_ui() -> WowLuaEnv {
     wow_ui_sim::xml::register_intrinsic_templates();
 
     let ui = blizzard_ui_dir();
+    env.scan_and_register_addons(&ui);
     let addons = discover_blizzard_addons_for_screen(&ui, ScreenKind::Game);
     for (name, toc_path) in &addons {
         load_addon(&env.loader_env(), toc_path)
