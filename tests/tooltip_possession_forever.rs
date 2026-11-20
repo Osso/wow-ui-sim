@@ -17,7 +17,7 @@ fn possess_button_hover_uses_supplied_spell_on_retail_and_forever() {
             GameTooltip:Hide()
             GameTooltip:ClearHandlerInfo()
             GameTooltip:ClearLines()
-            PossessButtonMixin:OnEnter(PossessButton1)
+            PossessButtonMixin.OnEnter(PossessButton1)
             local info = GameTooltip:GetPrimaryTooltipInfo()
             local data = GameTooltip:GetPrimaryTooltipData()
             local spell = C_TooltipInfo.GetSpellByID({spell_id})
