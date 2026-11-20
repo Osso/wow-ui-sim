@@ -6,6 +6,7 @@ use crate::common::blizzard_addon_harness::{
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 const ADDONS: &[&str] = &[
+    "Blizzard_UIPanels_Game",
     "Blizzard_FriendsFrame",
     "Blizzard_QuickJoin",
     "Blizzard_RaidFrame",
