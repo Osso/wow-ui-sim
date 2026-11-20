@@ -1403,10 +1403,45 @@ fn replace_first_private_aura(env: &WowLuaEnv) {
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+const PRIVATE_AURA_TOOLTIP_PROBE: &str = r#"
+    local function assertAuraTooltip(parent, name, duration)
+        local aura = select(1, parent:GetChildren())
+        assert(aura and aura:IsShown(), 'private aura frame must be shown')
+        aura:OnEnter()
+        local info = PrivateAurasTooltip:GetPrimaryTooltipInfo()
+        local data = PrivateAurasTooltip:GetPrimaryTooltipData()
+        assert(info and info.getterName == 'GetUnitPrivateAura', 'private aura accessor')
+        assert(data and data.lines[1].leftText == name, 'private aura name: ' .. tostring(data and data.lines[1] and data.lines[1].leftText))
+        assert(data.lines[2].leftText == duration, 'private aura duration: ' .. tostring(data.lines[2] and data.lines[2].leftText))
+        aura:OnLeave()
+    end
+    assertAuraTooltip(PrivateAuraAnchorParent1, 'Private 301', '29 sec')
+    assertAuraTooltip(PrivateAuraAnchorParent2, 'Private 302', '59 sec')
+"#;
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 #[test]
 fn private_aura_state_drives_selected_blizzard_consumers() {
     let env = load_full_game_ui();
     supply_private_auras(&env);
     env.exec(PRIVATE_AURA_CONSUMER_PROBE)
         .expect("selected private-aura consumers should read supplied host entries");
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn private_aura_tooltip_uses_the_selected_instance_data() {
+    let env = load_full_game_ui();
+    supply_private_auras(&env);
+    {
+        let mut state = env.state().borrow_mut();
+        state.aura_tooltip_inputs.entry(301).or_default().remaining_text = Some("29 sec".into());
+        state.aura_tooltip_inputs.entry(302).or_default().remaining_text = Some("59 sec".into());
+    }
+    env.exec_rilua_secure(PRIVATE_AURA_ANCHOR_PLACEMENT_PROBE)
+        .expect("private aura anchors should initialize in the secure UI");
+    wow_ui_sim::startup::process_pending_timers(&env);
+    wow_ui_sim::startup::fire_one_on_update_tick(&env);
+    env.exec_rilua_secure(PRIVATE_AURA_TOOLTIP_PROBE)
+        .expect("private aura hover should use each supplied instance's tooltip data");
 }
