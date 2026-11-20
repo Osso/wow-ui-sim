@@ -141,6 +141,35 @@ mod forever_shared_enums {
         )
         .unwrap();
     }
+
+    fn load_talent_strip_colors_consumer(env: &WowLuaEnv) {
+        let path = wow_ui_sim::blizzard_ui_sync::default_cache_addons_path()
+            .unwrap()
+            .join("Blizzard_SharedTalentUI/Blizzard_TalentButtonTierTrackTemplates.lua");
+        let source = fs::read_to_string(&path).unwrap();
+        let start = source
+            .find("function TalentButtonCapstoneTooltipMixin:StripColorsFromText(text)")
+            .unwrap();
+        let body = &source[start..];
+        let end = body
+            .find("\nfunction TalentButtonCapstoneTooltipMixin:")
+            .unwrap();
+        env.exec("TalentButtonCapstoneTooltipMixin = {}").unwrap();
+        env.exec(&body[..end])
+            .unwrap_or_else(|error| panic!("{}: {error}", path.display()));
+    }
+
+    #[test]
+    fn forever_talent_tooltip_consumer_strips_hyperlink_markup() {
+        let env = env();
+        load_talent_strip_colors_consumer(&env);
+        let actual: String = env
+            .eval(
+                "return TalentButtonCapstoneTooltipMixin:StripColorsFromText('|Hspell:1|h[|cFFFFFFFFUther|r]|h')",
+            )
+            .unwrap();
+        assert_eq!(actual, "Uther");
+    }
 }
 
 fn env() -> WowLuaEnv {
