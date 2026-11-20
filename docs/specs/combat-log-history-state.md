@@ -4,13 +4,13 @@ Retail and WoW Forever expose a shared Rust-backed history model in `src/c_api/c
 
 ## What it must do
 
-- [ ] Start with no history. Do not create combat events automatically; accept records only through explicit host input.
-- [ ] Preserve the prior fixture's empty results: count `0`, one `nil` from secure current-entry/current-event queries, `false` from empty seeks, and `false` from `ShouldShowCurrentEntry`.
-- [ ] Return each supplied record's values in order. Start traversal at the newest record and move to the previous record when the secure processor requests it.
-- [ ] Preserve the prior fixture's behavior when a previous seek reaches the oldest record: return `false` and leave the cursor on that record.
-- [ ] Keep retention time, message limit, filtered-event enablement, current-entry state and the filter-settings value isolated per simulator environment. Preserve filter-settings table identity through `ApplyFilterSettings` and the original processor. Defaults `300`, `300`, `false` and `0` are **INFERRED** from the previous fixture.
-- [ ] Run the selected original Blizzard_CombatLogProcessor against empty history and at least two distinct host records on Retail and Forever.
-- [ ] Keep other profiles on their existing compatibility shims.
+- [x] Start with no history. Do not create combat events automatically; accept records only through explicit host input.
+- [x] Preserve the prior fixture's empty results: count `0`, one `nil` from secure current-entry/current-event queries, `false` from empty seeks, and `false` from `ShouldShowCurrentEntry`.
+- [x] Return each supplied record's values in order. Start traversal at the newest record and move to the previous record when the secure processor requests it.
+- [x] Preserve the prior fixture's behavior when a previous seek reaches the oldest record: return `false` and leave the cursor on that record.
+- [x] Keep retention time, message limit, filtered-event enablement, current-entry state and the filter-settings value isolated per simulator environment. Preserve filter-settings table identity through `ApplyFilterSettings`. Defaults `300`, `300`, `false` and `0` are **INFERRED** from the previous fixture.
+- [x] Run the selected original Blizzard_CombatLogProcessor against empty history and at least two distinct host records on Retail and Forever.
+- [x] Keep other profiles on their existing compatibility shims.
 
 ## How it works
 
@@ -27,7 +27,7 @@ Retail and WoW Forever expose a shared Rust-backed history model in `src/c_api/c
 
 ## Tests asserting this spec
 
-`tests/combat_log_history.rs::original_processor_refilters_empty_and_host_supplied_history` covers empty result shapes, `ApplyFilterSettings` identity through the loaded processor and two distinct records through its refilter path. Exact Retail and Forever results are recorded in the lane report.
+`tests/combat_log_history.rs::original_processor_refilters_empty_and_host_supplied_history` covers empty result shapes, filter-settings identity in the Rust model, and two distinct host records through the selected original processor's refilter path. Exact Retail and Forever results are recorded in the lane report.
 
 ## Known gaps (current cycle)
 
