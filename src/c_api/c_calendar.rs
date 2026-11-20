@@ -163,7 +163,13 @@ pub(crate) fn seeded_event_indices() -> HashMap<i32, CalendarEventIndexInfo> {
 
 pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
     let namespace = ensure_namespace(state, "C_Calendar")?;
-    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+    // Forever CalendarDocumentation.lua:572 verifies the event-index shape;
+    // behavior is INFERRED from this existing Retail calendar model.
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
         civil::register(state, namespace)?;
         club::register(state, namespace)?;
         selection::register(state, namespace)?;
