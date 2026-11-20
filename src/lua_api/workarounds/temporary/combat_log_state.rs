@@ -264,6 +264,9 @@ if rawget(C_CombatLog, "ApplyFilterSettings") == nil then
     function C_CombatLog.ApplyFilterSettings(settings)
         local currentState = CombatLogState()
         currentState.filterSettings = settings
+        if modelCombatLogHistory then
+            __wow_combat_log_set_filter_settings(settings)
+        end
         FireEvent("COMBAT_LOG_APPLY_FILTER_SETTINGS", settings)
     end
 end

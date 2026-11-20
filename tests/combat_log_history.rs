@@ -120,11 +120,15 @@ fn assert_filter_settings_are_rust_backed(env: &WowLuaEnv) {
         }
         C_CombatLog.ApplyFilterSettings(settings)
         assert(C_CombatLog._state.filterSettings == settings)
-        assert(__wow_combat_log_get_filter_settings() == settings)
         assert(__combatLogHistoryOriginalProcessor:GetFilterSettings() == settings)
         "#,
     )
-    .expect("filter settings should be retained by the Rust history model");
+    .expect("original processor should retain supplied filter settings");
+    let settings: rilua::Val = env
+        .eval("return C_CombatLog._state.filterSettings")
+        .expect("filter settings value should remain readable");
+    let stored = env.state().borrow().combat_log_history.filter_settings;
+    assert_eq!(stored, Some(settings));
 }
 
 fn supply_host_history_and_refilter(env: &WowLuaEnv) {

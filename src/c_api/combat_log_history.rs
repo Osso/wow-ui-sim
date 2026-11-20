@@ -1,6 +1,6 @@
 //! INFERRED Retail/Forever combat-log history model.
 //!
-//! It preserves the temporary fixture's Lua-visible traversal and return shapes.
+//! It preserves the temporary fixture's Lua-visible traversal, settings state and return shapes.
 //! Host code supplies history explicitly; the simulator invents no combat events.
 
 use crate::lua_api::methods::{borrow_state, borrow_state_mut, create_string};
@@ -29,6 +29,7 @@ pub struct CombatLogHistory {
     pub current_entry: i64,
     pub retention_time: f64,
     pub filtered_events_enabled: bool,
+    pub filter_settings: Option<Val>,
     pub message_limit: i64,
 }
 
@@ -40,6 +41,7 @@ impl Default for CombatLogHistory {
             current_entry: 0,
             retention_time: 300.0,
             filtered_events_enabled: false,
+            filter_settings: None,
             message_limit: 300,
         }
     }
@@ -177,7 +179,13 @@ fn register_lua_helpers(state: &mut LuaState) -> LuaResult<()> {
         state,
         "__wow_combat_log_set_message_limit",
         set_message_limit,
-    )
+    )?;
+    LuaApiMut::register_function(
+        state,
+        "__wow_combat_log_set_filter_settings",
+        set_filter_settings,
+    )?;
+    Ok(())
 }
 
 fn entry_count(state: &mut LuaState) -> LuaResult<u32> {
@@ -297,5 +305,11 @@ fn set_filtered_events_enabled(state: &mut LuaState) -> LuaResult<u32> {
 fn set_message_limit(state: &mut LuaState) -> LuaResult<u32> {
     let value = i64::from_stack(state, 1)?;
     borrow_state_mut(state)?.combat_log_history.message_limit = value;
+    Ok(0)
+}
+
+fn set_filter_settings(state: &mut LuaState) -> LuaResult<u32> {
+    let value = Val::from_stack(state, 1)?;
+    borrow_state_mut(state)?.combat_log_history.filter_settings = Some(value);
     Ok(0)
 }
