@@ -373,6 +373,7 @@ pub(crate) mod mists_r88ah;
 pub(crate) mod mists_r88ai;
 #[cfg(feature = "client-mists")]
 pub(crate) mod mists_reputation_list;
+pub mod reputation_model;
 #[cfg(any(feature = "retail-12-1-5", feature = "client-wowforever"))]
 pub mod spell_reagent_inventory;
 pub mod store_catalog_model;

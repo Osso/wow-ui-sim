@@ -325,6 +325,7 @@ macro_rules! build_empty_sim_state {
             recent_allies: crate::c_api::c_recent_allies::RecentAlliesInput::default(),
             latest_transmog_appearance: None,
             account_wide_reputation_factions: HashSet::new(),
+            reputation: Default::default(),
             faction_paragon: HashMap::new(),
             #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
             active_brawl: None,

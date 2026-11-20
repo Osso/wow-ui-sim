@@ -1,7 +1,7 @@
 //! State-backed paragon reputation queries.
 
 use crate::lua_api::methods::{
-    borrow_state, call_function_state, table_get_static, table_set_static,
+    borrow_state, borrow_state_mut, call_function_state, table_get_static, table_set_static,
 };
 use crate::lua_bridge::stack_val;
 use rilua::table_security::{can_access_secrets, is_secret_value, unwrap_secret};
@@ -34,7 +34,7 @@ fn read_allowed_argument(state: &LuaState, value: Val, usage: &str) -> LuaResult
     unwrap_secret(state, value)
 }
 
-fn read_required_number(state: &mut LuaState, usage: &str) -> LuaResult<f64> {
+pub(super) fn read_required_number(state: &mut LuaState, usage: &str) -> LuaResult<f64> {
     let value = read_allowed_argument(state, stack_val(state, 1), usage)?;
     if matches!(value, Val::Nil) {
         return Err(runtime_error(usage));
@@ -102,17 +102,23 @@ pub(crate) fn is_account_wide_reputation(state: &mut LuaState) -> LuaResult<u32>
         return Err(runtime_error(USAGE));
     }
 
-    let global = Val::Table(state.global);
-    let reputation_state = table_get_static(state, global, "__wow_reputation_state");
-    let rows = table_get_static(state, reputation_state, "factions");
-    let is_account_wide = is_account_wide_reputation_in_rows(state, rows, number as i32);
+    let is_account_wide = if super::reputation_model::active() {
+        borrow_state(state)?
+            .reputation
+            .faction(number as i32)
+            .is_some_and(|row| row.is_account_wide)
+    } else {
+        let root = table_get_static(state, Val::Table(state.global), "__wow_reputation_state");
+        let rows = table_get_static(state, root, "factions");
+        is_account_wide_reputation_in_rows(state, rows, number as i32)
+    };
     state.push(Val::Bool(is_account_wide));
     Ok(1)
 }
 
 // VERIFIED (R88f.A.80-A.81): the API index is one-based; native subtracts one
 // before signed-integer truncation. The seeded Lua list remains one-based.
-fn read_faction_sort_index(state: &mut LuaState, usage: &str) -> LuaResult<Option<i32>> {
+pub(super) fn read_faction_sort_index(state: &mut LuaState, usage: &str) -> LuaResult<Option<i32>> {
     let index = read_required_number(state, usage)?;
     if index < 0.0 || index > f64::from(u32::MAX) {
         return Err(runtime_error(format!(
@@ -155,6 +161,11 @@ fn has_valid_activity_reputation_index(state: &mut LuaState, row: Val) -> bool {
 pub(crate) fn is_faction_active(state: &mut LuaState) -> LuaResult<u32> {
     const USAGE: &str = "Usage: local isActive = C_Reputation.IsFactionActive(factionSortIndex)";
     let index = read_faction_sort_index(state, USAGE)?;
+    if super::reputation_model::active() {
+        let active = host_faction_active(state, index)?;
+        state.push(Val::Bool(active));
+        return Ok(1);
+    }
     let row = index
         .map(|index| reputation_faction_at_index(state, index))
         .unwrap_or(Val::Nil);
@@ -180,6 +191,17 @@ pub(crate) fn set_faction_active(state: &mut LuaState) -> LuaResult<u32> {
     let Some(index) = index else {
         return Ok(0);
     };
+    if super::reputation_model::active() {
+        return set_host_faction_activity(state, index, set_active);
+    }
+    set_legacy_faction_activity(state, index, set_active)
+}
+
+fn set_legacy_faction_activity(
+    state: &mut LuaState,
+    index: i32,
+    set_active: bool,
+) -> LuaResult<u32> {
     let row = reputation_faction_at_index(state, index);
     let faction_id = table_get_static(state, row, "factionID");
     let can_set_inactive = matches!(
@@ -207,6 +229,10 @@ pub(crate) fn set_legacy_reputations_shown(state: &mut LuaState) -> LuaResult<u3
     }
 
     let show_legacy = !matches!(value, Val::Bool(false));
+    if super::reputation_model::active() {
+        borrow_state_mut(state)?.reputation.show_legacy = show_legacy;
+        return Ok(0);
+    }
     let global = Val::Table(state.global);
     let reputation_state = table_get_static(state, global, "__wow_reputation_state");
     table_set_static(
@@ -237,6 +263,15 @@ pub(crate) fn set_reputation_sort_type(state: &mut LuaState) -> LuaResult<u32> {
         return Err(runtime_error(USAGE));
     }
 
+    if super::reputation_model::active() {
+        borrow_state_mut(state)?.reputation.sort_type = sort_type;
+        return Ok(0);
+    }
+    set_legacy_sort_type(state, sort_type);
+    Ok(0)
+}
+
+fn set_legacy_sort_type(state: &mut LuaState, sort_type: i32) {
     let global = Val::Table(state.global);
     let reputation_state = table_get_static(state, global, "__wow_reputation_state");
     table_set_static(
@@ -245,7 +280,6 @@ pub(crate) fn set_reputation_sort_type(state: &mut LuaState) -> LuaResult<u32> {
         "sortType",
         Val::Num(f64::from(sort_type)),
     );
-    Ok(0)
 }
 
 pub(crate) fn get_faction_paragon_info(state: &mut LuaState) -> LuaResult<u32> {
@@ -270,4 +304,28 @@ pub(crate) fn get_faction_paragon_info(state: &mut LuaState) -> LuaResult<u32> {
     } else {
         Ok(5)
     }
+}
+
+fn host_faction_active(state: &LuaState, index: Option<i32>) -> LuaResult<bool> {
+    let sim = borrow_state(state)?;
+    let model = &sim.reputation;
+    Ok(index
+        .and_then(|index| model.position(index))
+        .map(|i| &model.factions[i])
+        .is_none_or(|row| !row.reputation_index.is_some_and(|i| i <= 999) || !row.is_inactive))
+}
+
+fn set_host_faction_activity(state: &mut LuaState, index: i32, active: bool) -> LuaResult<u32> {
+    let mut sim = borrow_state_mut(state)?;
+    let model = &mut sim.reputation;
+    if let Some(i) = model.position(index) {
+        let row = &mut model.factions[i];
+        if row.faction_id != 0
+            && row.can_set_inactive
+            && row.reputation_index.is_some_and(|i| i <= 999)
+        {
+            row.is_inactive = !active;
+        }
+    }
+    Ok(0)
 }

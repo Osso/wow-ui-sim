@@ -259,6 +259,10 @@ end
 "#;
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
+    if crate::c_api::reputation_model::active() {
+        return Ok(());
+    }
+    // INFERRED compatibility data for the remaining profiles.
     // Era/Anniversary have no selected Retail faction fixture. Keep existing
     // supplied Lua state intact; only a new state's population is scoped.
     let seed_retail_fixture = !matches!(
@@ -278,6 +282,7 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
 #[cfg(test)]
 mod tests {
     retail_faction_fixture! {
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     #[test]
     fn installs_seeded_reputation_state_and_visibility_controls() {
         use crate::lua_api::WowLuaEnv;
