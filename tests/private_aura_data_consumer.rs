@@ -54,6 +54,7 @@ const READ_ANCHORED_AURA: &str = r#"
 
 fn load_selected_private_aura_ui() -> WowLuaEnv {
     let ui = wow_ui_sim::blizzard_ui_sync::default_cache_addons_path().unwrap();
+    wow_ui_sim::xml::register_intrinsic_templates();
     let (env, _) = crate::common::blizzard_addon_harness::build_blizzard_addon_closure_env(
         &ui,
         &["Blizzard_PrivateAurasUI", "Blizzard_AuraContainer"],
