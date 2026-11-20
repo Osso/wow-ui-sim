@@ -5,7 +5,7 @@
 //! from the selected Blizzard consumer (pending R-request recorded on lt-e53a).
 //! INFERRED (R88by): the cleanup restore republishes this model to secureenv.
 
-use super::helpers::{global_val, register_namespace_function_with_flags};
+use super::helpers::{ensure_secure_namespace, global_val, register_namespace_function_with_flags};
 use crate::lua_api::methods::{
     borrow_state, borrow_state_mut, call_function_state, create_string, table_set_static,
 };
@@ -24,19 +24,33 @@ const PROFILE_ENABLED: bool = matches!(
     crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::WowForever
 );
 
+#[derive(Clone, Copy)]
+enum RegistrationTarget {
+    NamespacePair,
+    SecureEnvironment,
+}
+
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
+    register_members(state, RegistrationTarget::NamespacePair)
+}
+
+pub(crate) fn register_secure_environment(state: &mut LuaState) -> LuaResult<()> {
+    register_members(state, RegistrationTarget::SecureEnvironment)
+}
+
+fn register_members(state: &mut LuaState, target: RegistrationTarget) -> LuaResult<()> {
     if !PROFILE_ENABLED {
         return Ok(());
     }
-    register_shared_members(state)?;
+    register_shared_members(state, target)?;
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
-        register_retail_mail_member(state)
+        register_retail_mail_member(state, target)
     } else {
-        register_forever_mail_members(state)
+        register_forever_mail_members(state, target)
     }
 }
 
-fn register_shared_members(state: &mut LuaState) -> LuaResult<()> {
+fn register_shared_members(state: &mut LuaState, target: RegistrationTarget) -> LuaResult<()> {
     for (name, function) in [
         ("AcceptTrade", accept_trade as rilua::RustFn),
         ("Cancel", cancel),
@@ -55,29 +69,45 @@ fn register_shared_members(state: &mut LuaState) -> LuaResult<()> {
             should_show_trade_offer_warning,
         ),
     ] {
-        register_member(state, name, function)?;
+        register_member(state, target, name, function)?;
     }
     Ok(())
 }
 
-fn register_retail_mail_member(state: &mut LuaState) -> LuaResult<()> {
-    register_member(state, "GetMailInfo", get_mail_send_info)
+fn register_retail_mail_member(state: &mut LuaState, target: RegistrationTarget) -> LuaResult<()> {
+    register_member(state, target, "GetMailInfo", get_mail_send_info)
 }
 
-fn register_forever_mail_members(state: &mut LuaState) -> LuaResult<()> {
+fn register_forever_mail_members(
+    state: &mut LuaState,
+    target: RegistrationTarget,
+) -> LuaResult<()> {
     for (name, function) in [
         ("GetMailSendInfo", get_mail_send_info as rilua::RustFn),
         ("GetMailReceiveInfo", get_mail_receive_info),
         ("ShouldShowTradeRMTWarning", should_show_trade_rmt_warning),
         ("TakeMailMoney", take_mail_money),
     ] {
-        register_member(state, name, function)?;
+        register_member(state, target, name, function)?;
     }
     Ok(())
 }
 
-fn register_member(state: &mut LuaState, member: &str, function: rilua::RustFn) -> LuaResult<()> {
-    register_namespace_function_with_flags(state, "C_SecureTransfer", member, function, 3)
+fn register_member(
+    state: &mut LuaState,
+    target: RegistrationTarget,
+    member: &str,
+    function: rilua::RustFn,
+) -> LuaResult<()> {
+    match target {
+        RegistrationTarget::NamespacePair => {
+            register_namespace_function_with_flags(state, "C_SecureTransfer", member, function, 3)
+        }
+        RegistrationTarget::SecureEnvironment => {
+            let namespace = ensure_secure_namespace(state, "C_SecureTransfer")?;
+            crate::lua_bridge::table_set_rust_fn_unpaired(state, namespace, member, function)
+        }
+    }
 }
 
 fn get_trade_partner(state: &mut LuaState) -> LuaResult<u32> {

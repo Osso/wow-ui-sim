@@ -22,7 +22,7 @@ pub(crate) fn restore_post_cleanup_globals(
     super::gamepad_cursor_control_defaults::apply_bootstrap(lua)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     {
-        crate::c_api::secure_transfer::register(lua.state_mut())?;
+        crate::c_api::secure_transfer::register_secure_environment(lua.state_mut())?;
         crate::lua_api::workarounds::refresh_missing_globals_for_secure_addon(lua.state_mut())?;
     }
     Ok(())
