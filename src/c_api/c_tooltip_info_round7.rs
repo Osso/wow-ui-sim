@@ -437,7 +437,8 @@ fn publish_quest_party_progress(state: &mut LuaState) -> LuaResult<u32> {
 fn get_recipe_rank_info(state: &mut LuaState) -> LuaResult<u32> {
     let recipe_id = tooltip_getter_args::round7_signed(state, 1, RECIPE_RANK_USAGE)?;
     let rank = tooltip_getter_args::round7_signed(state, 2, RECIPE_RANK_USAGE)?;
-    if crate::client_profile::ACTIVE != ClientProfile::Retail {
+    // INFERRED for Forever: its declared getter shape can use the supplied cache.
+    if !matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever) {
         return no_values();
     }
     let Some(data) =
