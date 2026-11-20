@@ -256,7 +256,12 @@ fn seed_active_quest_currency_reward(env: &WowLuaEnv) -> i32 {
     let mut sim = env.state().borrow_mut();
     let quest_id = sim.quest_log_entries.entries[0].quest_id;
     sim.gossip.active = true;
-    let mut active_quest = sim.gossip.active_quests.first().cloned().unwrap_or_default();
+    let mut active_quest = sim
+        .gossip
+        .active_quests
+        .first()
+        .cloned()
+        .unwrap_or_default();
     active_quest.quest_id = quest_id as u32;
     sim.gossip.active_quests = vec![active_quest];
     sim.selected_quest_log_id = Some(quest_id as u32);
