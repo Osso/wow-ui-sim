@@ -45,11 +45,11 @@ fn supply_invites(env: &WowLuaEnv, statuses: &[i32]) {
 
 fn assert_indicator(env: &WowLuaEnv, count: usize, shown: bool, flashing: bool) {
     env.exec(&format!(
-        "assert(C_Calendar.GetNumPendingInvites() == {count}); \
-         assert(GameTimeFrame.pendingCalendarInvites == {count}); \
-         assert(GameTimeFrame.flashInvite == {flashing}); \
-         assert(GameTimeCalendarInvitesTexture:IsShown() == {shown}); \
-         assert(GameTimeCalendarInvitesGlow:IsShown() == {shown})"
+        "assert(C_Calendar.GetNumPendingInvites() == {count}, 'calendar model count'); \
+         assert(GameTimeFrame.pendingCalendarInvites == {count}, 'GameTimeFrame count'); \
+         assert(GameTimeFrame.flashInvite == {flashing}, 'invite flashing state'); \
+         assert(GameTimeCalendarInvitesTexture:IsShown() == {shown}, 'invite texture visibility'); \
+         assert(GameTimeCalendarInvitesGlow:IsShown() == {shown}, 'invite glow visibility')"
     ))
     .expect("original GameTimeFrame reflects pending calendar invites");
 }
@@ -64,11 +64,11 @@ fn game_time_calendar_invites_follow_supplied_invited_events() {
 
     supply_invites(&env, &[0, 1]);
     env.exec(
-        "assert(C_Calendar.GetNumPendingInvites() == 1); \
-         assert(GameTimeFrame.pendingCalendarInvites == 2); \
-         assert(GameTimeFrame.flashInvite == true); \
-         assert(GameTimeCalendarInvitesTexture:IsShown()); \
-         assert(GameTimeCalendarInvitesGlow:IsShown())",
+        "assert(C_Calendar.GetNumPendingInvites() == 1, 'updated calendar model count'); \
+         assert(GameTimeFrame.pendingCalendarInvites == 2, 'original GameTimeFrame count'); \
+         assert(GameTimeFrame.flashInvite == true, 'original invite flashing state'); \
+         assert(GameTimeCalendarInvitesTexture:IsShown(), 'original invite texture visibility'); \
+         assert(GameTimeCalendarInvitesGlow:IsShown(), 'original invite glow visibility')",
     )
     .expect("original GameTimeFrame retains its invite indicator until cleared");
 }
