@@ -34,33 +34,11 @@ fn forever_action_button_spell_status_uses_passive_and_bar_inputs() {
         state.ranged_auto_attack_spell_id = 467;
     }
 
-    let action_bar_chain: String = env
-        .eval(
-            r#"
-            local slots = C_ActionBar.FindSpellActionButtons(467, Enum.ActionBarSet.Mkb)
-            local page = ActionButtonUtil.GetPageForSlot(13)
-            local function show(value) return tostring(value) end
-            return table.concat({
-                'style=' .. show(C_InputInterfaceStyle.GetCurrentStyle()),
-                'mkb=' .. show(InputUtil.IsMKBUIEnabled()),
-                'slots=' .. show(slots and table.concat(slots, ',') or nil),
-                'page=' .. show(page),
-                'multi=' .. show(MultiActionBar_GetBarForPage(page)),
-                'vehicle=' .. show(C_ActionBar.GetVehicleBarIndex()),
-                'override=' .. show(C_ActionBar.GetOverrideBarIndex()),
-                'temp=' .. show(C_ActionBar.GetTempShapeshiftBarIndex()),
-                'bonus=' .. show(C_ActionBar.GetBonusBarIndexForSlot(13)),
-                'viewable=' .. show(VIEWABLE_ACTION_BAR_PAGES[page]),
-                'actionState=' .. show(ActionBarController_GetCurrentActionBarState()),
-                'status=' .. show(ActionButtonUtil.GetActionBarStatusForSpell(467)),
-            }, ';')
-            "#,
-        )
-        .expect("inspect each input in the original action-bar status path");
-    eprintln!("ActionButtonUtil status inputs: {action_bar_chain}");
-
     env.exec(
         r#"
+        local slots = C_ActionBar.FindSpellActionButtons(467, Enum.ActionBarSet.Mkb)
+        assert(slots and #slots == 1 and slots[1] == 13,
+            'the MKB action-bar query must observe the supplied slot')
         local status = ActionButtonUtil.GetActionBarStatusForSpell
         local actionStatus = ActionButtonUtil.ActionBarActionStatus
         assert(status(131) == actionStatus.NotMissing,
