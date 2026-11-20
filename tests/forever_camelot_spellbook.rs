@@ -29,7 +29,13 @@ fn entries(ids: &[i64]) -> Vec<OutfitEntry> {
 fn supply(env: &WowLuaEnv, ids: Option<&[i64]>) {
     let mut state = env.state().borrow_mut();
     state.transmog_outfit_catalog.entries = ids.map(entries).unwrap_or_default();
-    state.transmog_outfit_catalog.outfits_info_supplied = ids.is_some();
+    state.transmog_outfit_catalog.outfits_info_supplied = true;
+}
+
+fn unset(env: &WowLuaEnv) {
+    let mut state = env.state().borrow_mut();
+    state.transmog_outfit_catalog.entries.clear();
+    state.transmog_outfit_catalog.outfits_info_supplied = false;
 }
 
 fn load_original(enabled: bool) -> WowLuaEnv {
@@ -135,7 +141,7 @@ fn exercise_availability(initial: bool) {
         .borrow_mut()
         .set_input_interface_style(InputInterfaceStyle::Gamepad);
     observe(&first, true);
-    supply(&first, None);
+    unset(&first);
     let error = first.exec("Category:IsAvailable()").unwrap_err();
     assert!(error.to_string().contains(OUTFITS_UNSET), "{error}");
     supply(&first, Some(&[23]));
@@ -224,7 +230,7 @@ fn outfit_projection_original_sparse_groups_and_isolation() {
     first
         .exec("assert(select('#', C_TransmogOutfitInfo.GetOutfitsInfo()) == 0)")
         .unwrap();
-    supply(&first, None);
+    unset(&first);
     let error = first
         .exec("Category:PopulateSpellGroupsIndiciesByRange()")
         .unwrap_err();
