@@ -164,10 +164,7 @@ pub(crate) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResu
 }
 
 fn get_item_interaction_item(state: &mut LuaState) -> LuaResult<u32> {
-    // Only Retail's result paths are verified. Keep the other profiles' behavior.
-    if ACTIVE != ClientProfile::Retail {
-        return no_values();
-    }
+    // INFERRED for Forever: its selected consumer uses the shared supplied input model.
     let Some(input) = borrow_state(state)?.item_interaction_tooltip_input.clone() else {
         return no_values();
     };
