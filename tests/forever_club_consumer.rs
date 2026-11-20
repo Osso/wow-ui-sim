@@ -1,11 +1,11 @@
-#![cfg(feature = "client-wowforever")]
+#![cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::screen::ScreenKind;
 
 fn load_game_addons(env: &WowLuaEnv) {
     let ui = wow_ui_sim::paths::default_blizzard_ui_addons_path()
-        .expect("Forever Blizzard UI cache should be available");
+        .expect("active Blizzard UI cache should be available");
     env.set_screen_size(1024.0, 768.0);
     env.set_screen_mode(ScreenKind::Game);
     env.state().borrow_mut().addon_base_paths = vec![ui.clone()];
