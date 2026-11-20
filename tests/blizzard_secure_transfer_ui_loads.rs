@@ -83,6 +83,68 @@ fn load_full_game_ui() -> WowLuaEnv {
     env
 }
 
+#[cfg(feature = "client-retail")]
+#[test]
+fn secure_transfer_trade_dialog_uses_each_active_partner() {
+    let env = load_full_game_ui();
+    let warnings = ["Partner-Alpha", "Partner-Beta"].map(|partner| {
+        env.exec(&format!("InitiateTrade('{partner}')")).unwrap();
+        env.exec("C_TradeInfo._state.shouldShowTradeOfferWarning = true; SecureTransferDialog_OnEvent(SecureTransferDialog, 'SECURE_TRANSFER_CONFIRM_TRADE_ACCEPT')").unwrap();
+        let warning: String = env.eval("return SecureTransferDialog.WarningText:GetText()").unwrap();
+        env.exec("CancelTrade()").unwrap();
+        warning
+    });
+    assert!(warnings[0].contains("Partner-Alpha"));
+    assert!(warnings[1].contains("Partner-Beta"));
+    assert_ne!(warnings[0], warnings[1]);
+}
+
+#[cfg(feature = "client-wowforever")]
+#[test]
+fn secure_transfer_trade_dialog_uses_each_active_partner() {
+    let env = load_full_game_ui();
+    let warnings = ["Partner-Alpha", "Partner-Beta"].map(|partner| {
+        env.exec(&format!("InitiateTrade('{partner}')")).unwrap();
+        env.exec("C_TradeInfo._state.shouldShowTradeOfferWarning = true; SecureTransferDialog_OnEvent(SecureTransferDialog, 'SECURE_TRANSFER_CONFIRM_TRADE_ACCEPT')").unwrap();
+        let warning: String = env.eval("return SecureTransferDialog.WarningText:GetText()").unwrap();
+        env.exec("CancelTrade()").unwrap();
+        warning
+    });
+    assert!(warnings[0].contains("Partner-Alpha"));
+    assert!(warnings[1].contains("Partner-Beta"));
+    assert_ne!(warnings[0], warnings[1]);
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn secure_transfer_mail_dialog_uses_current_recipient_and_money() {
+    let env = load_full_game_ui();
+    env.exec("SendMailNameEditBox:SetText('Alt-Alpha'); SetSendMailMoney(12345)").unwrap();
+    env.exec("SecureTransferDialog_OnEvent(SecureTransferDialog, 'SECURE_TRANSFER_CONFIRM_SEND_MAIL')").unwrap();
+    let first: (String, String) = env.eval("return SecureTransferDialog.Text:GetText(), SecureTransferDialog.MoneyLabel:GetText()").unwrap();
+    env.exec("SendMailNameEditBox:SetText('Alt-Beta'); SetSendMailMoney(67890)").unwrap();
+    env.exec("SecureTransferDialog_OnEvent(SecureTransferDialog, 'SECURE_TRANSFER_CONFIRM_SEND_MAIL')").unwrap();
+    let second: (String, String) = env.eval("return SecureTransferDialog.Text:GetText(), SecureTransferDialog.MoneyLabel:GetText()").unwrap();
+    assert!(first.0.contains("Alt-Alpha"));
+    assert!(second.0.contains("Alt-Beta"));
+    assert_ne!(first.1, second.1);
+}
+
+#[cfg(feature = "client-wowforever")]
+#[test]
+fn secure_transfer_mail_dialog_uses_current_recipient_and_money() {
+    let env = load_full_game_ui();
+    env.exec("SendMailNameEditBox:SetText('Alt-Alpha'); SetSendMailMoney(12345)").unwrap();
+    env.exec("SecureTransferDialog_OnEvent(SecureTransferDialog, 'SECURE_TRANSFER_CONFIRM_SEND_MAIL')").unwrap();
+    let first: (String, String) = env.eval("return SecureTransferDialog.Text:GetText(), SecureTransferDialog.MoneyLabel:GetText()").unwrap();
+    env.exec("SendMailNameEditBox:SetText('Alt-Beta'); SetSendMailMoney(67890)").unwrap();
+    env.exec("SecureTransferDialog_OnEvent(SecureTransferDialog, 'SECURE_TRANSFER_CONFIRM_SEND_MAIL')").unwrap();
+    let second: (String, String) = env.eval("return SecureTransferDialog.Text:GetText(), SecureTransferDialog.MoneyLabel:GetText()").unwrap();
+    assert!(first.0.contains("Alt-Alpha"));
+    assert!(second.0.contains("Alt-Beta"));
+    assert_ne!(first.1, second.1);
+}
+
 // Literal cached inputs absent from Wrath manifest1-382/cache; behavior cases stay enabled.
 post_wrath_ui_fixture! {
 #[test]
