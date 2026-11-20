@@ -55,6 +55,6 @@ fn set_size(state: &mut LuaState) -> LuaResult<u32> {
             "window dimensions must be finite and positive",
         ));
     }
-    crate::lua_api::env_runtime::set_display_size_from_lua(state, width as f32, height as f32)?;
+    crate::lua_api::set_display_size_from_lua(state, width as f32, height as f32)?;
     Ok(0)
 }

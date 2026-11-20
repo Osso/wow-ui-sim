@@ -540,7 +540,9 @@ pub(crate) fn set_display_size_from_lua(
             "window aspect ratio exceeds UI canvas range",
         ));
     }
-    update_screen_dimensions(&mut borrow_state_mut(lua_state)?, canvas, (width, height));
+    let mut model = borrow_state_mut(lua_state)?;
+    update_screen_dimensions(&mut model, canvas, (width, height));
+    drop(model);
     crate::lua_api::globals::state_backed_queries::dispatch_event_now(
         lua_state,
         "DISPLAY_SIZE_CHANGED",
@@ -561,7 +563,9 @@ fn update_screen_widgets_for_dimensions(state: &mut SimState, width: f32, height
 }
 
 fn install_screen_size_globals(env: &WowLuaEnv) {
-    let _ = env.exec(&format!(SCREEN_SIZE_GLOBALS_LUA));
+    let reference_height = UI_REFERENCE_HEIGHT.to_string();
+    let script = SCREEN_SIZE_GLOBALS_LUA.replace("{UI_REFERENCE_HEIGHT}", &reference_height);
+    let _ = env.exec(&script);
     install_screen_metrics_helper(env);
 }
 
@@ -578,13 +582,16 @@ fn install_screen_metrics_helper(env: &WowLuaEnv) {
 }
 
 fn screen_metrics(state: &mut rilua::vm::state::LuaState) -> LuaResult<u32> {
-    let model = crate::lua_api::methods::borrow_state(state)?;
-    for value in [
-        model.screen_width,
-        model.screen_height,
-        model.physical_screen_width,
-        model.physical_screen_height,
-    ] {
+    let metrics = {
+        let model = crate::lua_api::methods::borrow_state(state)?;
+        (
+            model.screen_width,
+            model.screen_height,
+            model.physical_screen_width,
+            model.physical_screen_height,
+        )
+    };
+    for value in [metrics.0, metrics.1, metrics.2, metrics.3] {
         state.push(Val::Num(f64::from(value)));
     }
     Ok(4)
