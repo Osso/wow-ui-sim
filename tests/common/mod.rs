@@ -361,15 +361,16 @@ pub fn load_profile_framexml(env: &WowLuaEnv) {
 /// transmog category (Camelot/SpellBook/Blizzard_SpellBookFrame.lua:138+).
 /// Transmog is unavailable in this scenario, explicitly supplied as required by
 /// transmog-availability.md and Blizzard_SpellBookCategory.lua:506+.
+#[cfg(feature = "client-wowforever")]
 pub fn supply_empty_forever_spellbook_outfits(env: &WowLuaEnv) {
-    #[cfg(feature = "client-wowforever")]
-    if wow_ui_sim::client_profile::ACTIVE == wow_ui_sim::client_profile::ClientProfile::WowForever {
-        let mut state = env.state().borrow_mut();
-        state.transmog_outfit_catalog.entries.clear();
-        state.transmog_outfit_catalog.outfits_info_supplied = Some(true);
-        state.transmog_availability.enabled = Some(false);
-    }
+    let mut state = env.state().borrow_mut();
+    state.transmog_outfit_catalog.entries.clear();
+    state.transmog_outfit_catalog.outfits_info_supplied = Some(true);
+    state.transmog_availability.enabled = Some(false);
 }
+
+#[cfg(not(feature = "client-wowforever"))]
+pub fn supply_empty_forever_spellbook_outfits(_env: &WowLuaEnv) {}
 
 /// Match production's game-screen startup stream, including bootstrap-only roots.
 /// Forever's CharacterFrame hides StatisticsFrame on every tab change; its
