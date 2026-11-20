@@ -38,7 +38,7 @@ assertDisplayedRealm(1, "playername-Stormrage")
 assertDisplayedRealm(2, "playername-Stormscale")
 
 local duplicateEditBox = makeEditBox(function()
-  return { "playername-Stormscale" }
+  return {{ name = "playername-Stormscale", priority = Enum.AutoCompletePriority.Other }}
 end)
 
 AutoComplete_Update(duplicateEditBox, "playername-Storm", strlen("playername-Storm"))
