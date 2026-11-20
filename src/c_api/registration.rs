@@ -148,6 +148,8 @@ fn register_interaction_combat(state: &mut LuaState) -> LuaResult<()> {
         super::c_combat_log::register_restriction(state)?;
         super::c_limited_input::register(state)?;
     }
+    #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
+    super::combat_log_history::register(state)?;
     super::combat_audio_enabled::register(state)?;
     // INFERRED: R88ah's 70631 behavior applies to the 70268 Mists cache.
     #[cfg(feature = "client-mists")]
