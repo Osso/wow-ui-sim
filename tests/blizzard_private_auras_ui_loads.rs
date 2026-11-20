@@ -2,6 +2,8 @@ use std::path::PathBuf;
 
 use wow_ui_sim::loader::{discover_all_blizzard_addons, discover_blizzard_addons_for_screen};
 use wow_ui_sim::loader::{find_toc_file, load_addon};
+use wow_ui_sim::c_api::private_aura_data::PrivateAuraEntry;
+use wow_ui_sim::lua_api::state::AuraInfo;
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::startup::fire_startup_events_for_screen;
@@ -1214,4 +1216,93 @@ fn blizzard_private_auras_ui_loads_without_addon_specific_lua_errors(env: &WowLu
         load_errors.join("\n  ")
     );
 }
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+const PRIVATE_AURA_CONSUMER_PROBE: &str = r#"
+    local privateUI = rawget(__secureenv, 'PrivateAuraAnchorContainerMixin')
+    local private = rawget(__secureenv, 'C_UnitAurasPrivate')
+    SetCVar('buffDurations', '1')
+    PrivateAuraDataParent = CreateFrame('Frame', 'PrivateAuraDataParent')
+    C_UnitAuras.AddPrivateAuraAnchor({
+        unitToken = 'player', auraIndex = 1, parent = PrivateAuraDataParent,
+    })
+    local anchorSeen = {}
+    local container = {
+        watcher = { GetUnit = function() return 'player' end },
+        ClearPriorityTables = function() end,
+        ProcessAura = function(self, aura) anchorSeen[aura.auraInstanceID] = aura end,
+    }
+    privateUI.ParseAllAuras(container)
+    assert(anchorSeen[301].spellId == 301 and anchorSeen[302].spellId == 302)
+    assert(anchorSeen[301].hideOnPartyFrames and anchorSeen[301].canActivePlayerDispel)
+    local firstRead = private.GetAllPrivateAuras('player')
+    firstRead[1].spellId = 0
+    assert(private.GetAllPrivateAuras('player')[1].spellId == 301)
+    local returned = privateUI.GetUpdatedAuraByInstance(container, true, 301)
+    assert(returned.auraInstanceID == 301 and returned.dispelName == 'Magic')
+    returned.spellId = 0
+    assert(privateUI.GetUpdatedAuraByInstance(container, true, 301).spellId == 301)
+    local privateSource = rawget(__secureenv, 'AuraContainerPrivateAuraSourceMixin')
+    local ids = privateSource:GetAllAuraInstanceIDs('player', 'HARMFUL')
+    assert(#ids == 2 and ids[1] == 301 and ids[2] == 302)
+    assert(privateSource:GetAuraCasterGUID('player', 301) == 'Player-1-301')
+"#;
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn private_aura_entry(
+    id: i32,
+    hide: bool,
+    can_dispel: bool,
+    applications: i32,
+    duration: f64,
+    now: f64,
+) -> PrivateAuraEntry {
+    let aura = AuraInfo {
+        name: format!("Private {id}"),
+        spell_id: id,
+        icon: id,
+        duration,
+        expiration_time: now + duration,
+        applications,
+        source_unit: "player".into(),
+        is_helpful: true,
+        is_raid: false,
+        is_nameplate_only: false,
+        is_stealable: false,
+        can_apply_aura: true,
+        is_from_player_or_player_pet: false,
+        dispel_type: Some("Magic".into()),
+        aura_instance_id: id,
+    };
+    PrivateAuraEntry {
+        aura,
+        can_active_player_dispel: can_dispel,
+        hide_on_party_frames: hide,
+        source_guid: Some(format!("Player-1-{id}")),
+    }
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn supply_private_auras(env: &WowLuaEnv) {
+    let now = env.eval::<f64>("return GetTime()").unwrap();
+    let entries = vec![
+        private_aura_entry(301, true, true, 2, 30.0, now),
+        private_aura_entry(302, false, false, 3, 60.0, now),
+    ];
+    let mut state = env.state().borrow_mut();
+    state.private_aura_data.private_auras_by_unit.insert("player".into(), entries.clone());
+    state.private_aura_data.aura_data_by_unit.insert(
+        "player".into(),
+        entries.into_iter().map(|entry| (entry.aura.aura_instance_id, entry)).collect(),
+    );
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn private_aura_state_drives_selected_blizzard_consumers() {
+    let env = load_full_game_ui();
+    supply_private_auras(&env);
+    env.exec(PRIVATE_AURA_CONSUMER_PROBE)
+        .expect("selected private-aura consumers should read supplied host entries");
 }

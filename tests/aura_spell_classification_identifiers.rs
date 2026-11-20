@@ -319,6 +319,7 @@ fn generic_buff_and_cooldown_association_do_not_classify_a_spell() {
     );
 }
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn private_instance_state_does_not_supply_or_change_spell_classifications() {
     let env = seeded_env();

@@ -1,21 +1,24 @@
 //! Temporary private-aura state surface.
 //!
-//! Private aura data remains temporary compatibility behavior.
+//! Private aura data uses the Lua compatibility store only on legacy profiles.
 //! Anchor registration/placement belongs to c_api::private_aura_anchors;
 //! callback lifecycle and authored dispatch belong to c_api::private_aura_callbacks.
 
 const PRIVATE_AURA_STATE_LUA: &str = r#"
-if type(C_UnitAuras) ~= "table" then
-    C_UnitAuras = {}
-end
-if type(C_UnitAurasPrivate) ~= "table" then
-    C_UnitAurasPrivate = {}
-end
+if type(C_UnitAuras) ~= "table" then C_UnitAuras = {} end
+if type(C_UnitAurasPrivate) ~= "table" then C_UnitAurasPrivate = {} end
+if type(C_UnitAurasPrivate._state) ~= "table" then C_UnitAurasPrivate._state = {} end
 
-if type(C_UnitAurasPrivate._state) ~= "table" then
-    C_UnitAurasPrivate._state = {}
+if rawget(C_UnitAurasPrivate, "SetShowDispelTypeCallback") == nil then
+    function C_UnitAurasPrivate.SetShowDispelTypeCallback(callback)
+        C_UnitAurasPrivate._showDispelTypeCallback = callback
+    end
 end
+"#;
 
+// Legacy profiles retain the Lua-owned compatibility store.
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+const LEGACY_PRIVATE_AURA_DATA_LUA: &str = r#"
 local function PrivateAuraState()
     local state = C_UnitAurasPrivate._state
     if type(state.privateAurasByUnit) ~= "table" then
@@ -57,12 +60,6 @@ local function CopyPrivateAuraList(list)
     return copy
 end
 
-if rawget(C_UnitAurasPrivate, "SetShowDispelTypeCallback") == nil then
-    function C_UnitAurasPrivate.SetShowDispelTypeCallback(callback)
-        C_UnitAurasPrivate._showDispelTypeCallback = callback
-    end
-end
-
 if rawget(C_UnitAurasPrivate, "GetAllPrivateAuras") == nil then
     function C_UnitAurasPrivate.GetAllPrivateAuras(unitToken)
         local state = PrivateAuraState()
@@ -89,17 +86,6 @@ if rawget(C_UnitAurasPrivate, "GetAuraDataByAuraInstanceIDPrivate") == nil then
 end
 "#;
 
-// User-approved default, not native evidence. The pinned consumer calls this
-// undeclared query; the temporary private-aura store owns the supplied GUID.
-#[cfg(feature = "retail-12-1-5")]
-const PRIVATE_CASTER_GUID_LUA: &str = r#"
-function C_UnitAurasPrivate.GetPrivateAuraCasterGUID(unitToken, auraInstanceID)
-    local byUnit = C_UnitAurasPrivate._state.auraDataByUnit[unitToken]
-    local aura = byUnit and byUnit[auraInstanceID]
-    return aura and aura.sourceGUID or nil
-end
-"#;
-
 // 12.1.0 removed the public trigger.
 #[cfg(not(feature = "retail-12-1-0"))]
 const SHOW_DISPEL_TYPE_TRIGGER_LUA: &str = r#"
@@ -116,14 +102,17 @@ end
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(PRIVATE_AURA_STATE_LUA)?;
-    #[cfg(feature = "retail-12-1-5")]
-    lua.exec(PRIVATE_CASTER_GUID_LUA)?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+    lua.exec(LEGACY_PRIVATE_AURA_DATA_LUA)?;
     #[cfg(not(feature = "retail-12-1-0"))]
     lua.exec(SHOW_DISPEL_TYPE_TRIGGER_LUA)?;
     Ok(())
 }
 
-#[cfg(test)]
+#[cfg(all(
+    test,
+    not(any(feature = "client-retail", feature = "client-wowforever"))
+))]
 mod tests {
     use crate::lua_api::WowLuaEnv;
 

@@ -229,6 +229,7 @@ fn private_aura_update_callbacks_do_not_dispatch_plain_functions() {
     .expect("update dispatch requires a FunctionContainer");
 }
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn private_aura_update_callbacks_and_lookup_queries_are_stateful() {
     let env = env();

@@ -32,6 +32,7 @@ pub struct SimState {
     pub wrath_relic_slot: crate::lua_api::globals::real::wrath_relic_slot::RelicSlotState,
     pub plain_global_inputs: crate::lua_api::globals::real::publication_12_0_0::PlainGlobalInputs,
     pub(crate) private_aura_anchors: crate::c_api::private_aura_anchors::PrivateAuraAnchors,
+    pub private_aura_data: crate::c_api::private_aura_data::PrivateAuraData,
     /// Explicit pending records only; empty default and lifecycle are simulator policy.
     #[cfg(all(
         feature = "retail-12-0-5",

@@ -1123,7 +1123,7 @@ fn all_unit_auras(state: &mut LuaState, unit: &str) -> Vec<AuraInfo> {
 
 // ── Aura table builder ───────────────────────────────────────────────────────
 
-fn build_aura_table(state: &mut LuaState, aura: &AuraInfo, unit: &str) -> Val {
+pub(crate) fn build_aura_table(state: &mut LuaState, aura: &AuraInfo, unit: &str) -> Val {
     let t = create_table_with_capacity(state, AURA_DATA_HASH_FIELDS);
     write_aura_identity(state, t, aura, unit);
     write_aura_flags(state, t, aura);
