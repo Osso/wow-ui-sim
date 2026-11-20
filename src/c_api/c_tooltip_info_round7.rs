@@ -403,13 +403,13 @@ fn publish_ready_quest_special_item(state: &mut LuaState, quest_id: i32) -> LuaR
 }
 
 fn publish_quest_party_progress(state: &mut LuaState) -> LuaResult<u32> {
-    // Retail TooltipInfoDocumentation.lua:833; only the Retail 70688
-    // populated output is evidenced for this implementation.
+    // Retail TooltipInfoDocumentation.lua:833; host supplies every progress row.
+    // INFERRED for Forever: its declared getter shape can use the supplied snapshot.
     let quest_id = tooltip_getter_args::round7_signed(state, 1, QUEST_PARTY_USAGE)?;
     let omit_title = tooltip_getter_args::round7_optional_bool(state, 2, QUEST_PARTY_USAGE)?;
     let ignore_active_player =
         tooltip_getter_args::round7_optional_bool(state, 3, QUEST_PARTY_USAGE)?;
-    if ACTIVE != ClientProfile::Retail {
+    if !matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever) {
         return no_values();
     }
     let snapshot = borrow_state(state)?
