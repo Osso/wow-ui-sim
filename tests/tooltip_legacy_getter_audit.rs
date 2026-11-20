@@ -11,6 +11,7 @@ for _, essenceID in ipairs({2, 3}) do
     local direct = C_TooltipInfo.GetAzeriteEssence(essenceID, 1)
     assert(direct and direct.id == essenceID and #direct.lines > 0,
         'getter selects supplied essence')
+    GameTooltip:ClearLines()
     GameTooltip:SetAzeriteEssence(essenceID, 1)
     local shown = GameTooltip:GetPrimaryTooltipData()
     assert(shown and shown.id == essenceID and #shown.lines > 0,
@@ -26,6 +27,7 @@ for _, case in ipairs({{0, 2}, {1, 3}}) do
     local direct = C_TooltipInfo.GetAzeriteEssenceSlot(case[1])
     assert(direct and direct.id == case[2] and #direct.lines > 0,
         'getter selects supplied essence slot')
+    GameTooltip:ClearLines()
     GameTooltip:SetAzeriteEssenceSlot(case[1])
     local shown = GameTooltip:GetPrimaryTooltipData()
     assert(shown and shown.id == case[2] and #shown.lines > 0,
@@ -39,6 +41,7 @@ const CONDUIT_ASSERTIONS: &str = r#"
 for _, case in ipairs({{5, 1}, {7, 2}}) do
     local direct = C_TooltipInfo.GetConduit(case[1], case[2])
     assert(direct and #direct.lines > 0, 'getter publishes selected conduit')
+    GameTooltip:ClearLines()
     GameTooltip:SetConduit(case[1], case[2])
     local shown = GameTooltip:GetPrimaryTooltipData()
     assert(shown and #shown.lines > 0, 'setter publishes selected conduit')
@@ -55,6 +58,7 @@ const ENHANCED_CONDUIT_ASSERTIONS: &str = r#"
 for _, case in ipairs({{5, 1}, {7, 2}}) do
     local direct = C_TooltipInfo.GetEnhancedConduit(case[1], case[2])
     assert(direct and #direct.lines > 0, 'getter publishes selected enhanced conduit')
+    GameTooltip:ClearLines()
     GameTooltip:SetEnhancedConduit(case[1], case[2])
     local shown = GameTooltip:GetPrimaryTooltipData()
     assert(shown and #shown.lines > 0, 'setter publishes selected enhanced conduit')
@@ -75,6 +79,7 @@ for _, case in ipairs({
     local direct = C_TooltipInfo.GetRuneforgeResultItem(case[1], case[3])
     assert(direct and direct.id == case[2] and direct.overrideItemLevel == case[3],
         'getter selects supplied runeforge item')
+    GameTooltip:ClearLines()
     GameTooltip:SetRuneforgeResultItem(case[1], case[3])
     local shown = GameTooltip:GetPrimaryTooltipData()
     assert(shown and shown.id == case[2] and shown.overrideItemLevel == case[3],
@@ -88,6 +93,7 @@ for _, petID in ipairs({'AuditPet-1', 'AuditPet-2'}) do
     local direct = C_TooltipInfo.GetCompanionPet(petID)
     assert(direct and direct.id == petID and direct.lines[1].leftText ~= '',
         'getter selects supplied companion pet')
+    GameTooltip:ClearLines()
     GameTooltip:SetCompanionPet(petID)
     local shown = GameTooltip:GetPrimaryTooltipData()
     assert(shown and shown.id == petID and shown.lines[1].leftText == direct.lines[1].leftText,
