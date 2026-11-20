@@ -31,6 +31,8 @@ const FLAGS_1_ACCOUNT_WIDE: u32 = 1 << 3;
 const FLAGS_1_XP_ROW: u32 = 1 << 1;
 const FLAGS_1_SEASONAL_ROWS: u32 = 1;
 const FLAGS_1_TOTAL_MAXIMUM_OVERRIDE: u32 = (1 << 6) | (1 << 7);
+const QUEST_CURRENCY_USAGE: &str =
+    "Usage: local data = C_TooltipInfo.GetQuestCurrency(type, currencyIndex)";
 const QUEST_LOG_CURRENCY_USAGE: &str =
     "Usage: local data = C_TooltipInfo.GetQuestLogCurrency(type, currencyIndex [, questID])";
 
@@ -254,6 +256,49 @@ pub(crate) fn get_loot_currency(state: &mut LuaState) -> LuaResult<u32> {
     };
     state.push(tooltip);
     Ok(1)
+}
+
+/// INFERRED: `GetQuestCurrency` reads the active NPC dialog's supplied source row.
+pub(crate) fn get_quest_currency(state: &mut LuaState) -> LuaResult<u32> {
+    let selector = String::from_stack(state, 1).map_err(|_| runtime_error(QUEST_CURRENCY_USAGE))?;
+    let source_index = one_based_index(state, 2, QUEST_CURRENCY_USAGE)?;
+    let Some(source_index) = source_index else {
+        return crate::c_api::tooltip_data::unknown_getter_failure();
+    };
+    let selector = selector.to_ascii_lowercase();
+    if !matches!(selector.as_str(), "reward" | "required" | "choice") {
+        return crate::c_api::tooltip_data::unknown_getter_failure();
+    }
+    let Some(quest_id) = active_npc_dialog_quest(state)? else {
+        return crate::c_api::tooltip_data::unknown_getter_failure();
+    };
+    let Some((currency_id, raw_quantity)) =
+        find_quest_currency_source(state, quest_id, selector, source_index)?
+    else {
+        return crate::c_api::tooltip_data::unknown_getter_failure();
+    };
+    let amount = normalize_amount(state, currency_id, raw_quantity)?;
+    let Some(tooltip) = build_currency_tooltip(state, currency_id, amount)? else {
+        return crate::c_api::tooltip_data::unknown_getter_failure();
+    };
+    state.push(tooltip);
+    Ok(1)
+}
+
+fn active_npc_dialog_quest(state: &LuaState) -> LuaResult<Option<i32>> {
+    let sim = borrow_state(state)?;
+    let Some((quest_id, _phase)) = sim.quest_log_entries.readiness.dialog else {
+        return Ok(None);
+    };
+    let selected = sim
+        .selected_quest_log_id
+        .and_then(|id| i32::try_from(id).ok());
+    if selected != Some(quest_id)
+        || !crate::c_api::quest_readiness::has_active_npc_quest(&sim, quest_id)
+    {
+        return Ok(None);
+    }
+    Ok(Some(quest_id))
 }
 
 /// Retail `GetQuestLogCurrency` uses the selected quest when its optional ID is
