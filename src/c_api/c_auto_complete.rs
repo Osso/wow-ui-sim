@@ -57,7 +57,27 @@ pub(crate) fn register_c_auto_complete_surface(state: &mut LuaState) -> LuaResul
         table_ref,
         "GetAutoCompletePresenceID",
         c_auto_complete_get_presence_id,
-    )
+    )?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    table_set_rust_fn_static(
+        state,
+        table_ref,
+        "GetAutoCompleteRealms",
+        get_auto_complete_realms,
+    )?;
+    Ok(())
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn get_auto_complete_realms(state: &mut LuaState) -> LuaResult<u32> {
+    let realms = borrow_state(state)?.auto_complete_realms.clone();
+    let table = create_table(state);
+    for (index, realm) in realms.iter().enumerate() {
+        let name = create_string(state, realm);
+        set_table_array(state, table, index as i64 + 1, name);
+    }
+    state.push(table);
+    Ok(1)
 }
 
 pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
