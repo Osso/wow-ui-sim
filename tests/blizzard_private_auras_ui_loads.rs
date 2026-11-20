@@ -1347,7 +1347,8 @@ fn private_aura_state_drives_selected_blizzard_consumers() {
     supply_private_auras(&env);
     env.exec(PRIVATE_AURA_CONSUMER_PROBE)
         .expect("selected private-aura consumers should read supplied host entries");
-    env.fire_on_update(0.016).expect("run the original watcher parse");
+    env.process_timers().expect("run the original watcher parse timer");
+    env.fire_on_update(0.016).expect("update private aura display timers");
     let initial = private_aura_widget_state(&env, &before);
     assert_eq!(initial.len(), 2, "one rendered private aura per anchor: {initial:?}");
     assert!(initial.iter().all(|(_, shown, ..)| *shown), "{initial:?}");
@@ -1357,7 +1358,8 @@ fn private_aura_state_drives_selected_blizzard_consumers() {
     update_private_aura(&env);
     env.exec(PRIVATE_AURA_UPDATE_PROBE)
         .expect("dispatch an updated private-aura instance");
-    env.fire_on_update(0.016).expect("run the original watcher update");
+    env.process_timers().expect("run the original watcher update timer");
+    env.fire_on_update(0.016).expect("update refreshed private aura display");
     let updated = private_aura_widget_state(&env, &before);
     assert!(updated.iter().any(|(_, shown, icon, count, _)|
         *shown && *icon == Some(999) && count.as_deref() == Some("4")
