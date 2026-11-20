@@ -1412,10 +1412,10 @@ const PRIVATE_AURA_TOOLTIP_PROBE: &str = r#"
         local instanceID = aura.auraInfo.auraInstanceID
         local direct = C_TooltipInfo.GetUnitPrivateAura('player', instanceID)
         assert(direct and direct.lines[1].leftText == name, 'direct private aura tooltip')
-        GameTooltipDataMixin.SetUnitPrivateAura(PrivateAurasTooltip, 'player', instanceID)
+        local accepted = GameTooltipDataMixin.SetUnitPrivateAura(PrivateAurasTooltip, 'player', instanceID)
         local info = PrivateAurasTooltip:GetPrimaryTooltipInfo()
         local data = PrivateAurasTooltip:GetPrimaryTooltipData()
-        assert(info and info.getterName == 'GetUnitPrivateAura', 'private aura accessor: ' .. tostring(info and info.getterName) .. ', data=' .. type(data))
+        assert(info and info.getterName == 'GetUnitPrivateAura', 'private aura accessor: ' .. tostring(info and info.getterName) .. ', data=' .. type(data) .. ', accepted=' .. tostring(accepted))
         assert(data and data.lines[1].leftText == name, 'private aura name: ' .. tostring(data and data.lines[1] and data.lines[1].leftText))
         assert(data.lines[2].leftText == duration, 'private aura duration: ' .. tostring(data.lines[2] and data.lines[2].leftText))
         assert(data.lines[3] and type(data.lines[3].leftText) == 'string' and data.lines[3].leftText ~= '', 'private aura description line')
