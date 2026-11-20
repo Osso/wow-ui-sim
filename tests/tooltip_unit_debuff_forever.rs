@@ -60,16 +60,20 @@ fn unit_debuff_setters_publish_two_distinct_supplied_player_auras() {
             name,
         );
     }
+    assert_target_debuff_tooltips(&env);
+}
+
+fn assert_target_debuff_tooltips(env: &WowLuaEnv) {
     env.exec("A_Admin.SetTarget('Supplied Target', 80, 1, true)")
         .unwrap();
     env.state().borrow_mut().target_auras = vec![aura(92001, "Supplied Target Debuff")];
     assert_tooltip_name(
-        &env,
+        env,
         "GameTooltip:SetUnitDebuff('target', 1, 'HARMFUL')",
         "Supplied Target Debuff",
     );
     assert_tooltip_name(
-        &env,
+        env,
         "GameTooltip:SetUnitDebuffByAuraInstanceID('target', 92001, 'HARMFUL')",
         "Supplied Target Debuff",
     );
