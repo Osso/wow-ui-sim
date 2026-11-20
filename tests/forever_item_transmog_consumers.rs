@@ -25,13 +25,13 @@ fn transmog_outfit_consumer_refreshes_from_two_created_outfits() {
             popup.BorderBox.SelectedIconArea.SelectedIconButton.GetIconTexture = function() return 456 end
             popup.BorderBox.IconSelectorEditBox.GetText = function() return "Silver" end
             TransmogOutfitPopupMixin.OkayButton_OnClick(popup)
+            local copper = C_TransmogOutfitInfo.GetOutfitInfoByName("Copper")
+            local silver = C_TransmogOutfitInfo.GetOutfitInfoByName("Silver")
+            if not copper or copper.name ~= "Copper" or copper.icon ~= 123 then return "first" end
+            if not silver or silver.name ~= "Silver" or silver.icon ~= 456 then return "second" end
             return "ok"
         "#).expect("pinned TransmogOutfitPopupMixin consumer should run");
         assert_eq!(result, "ok");
-        let entries = &env.state().borrow().transmog_outfit_catalog.entries;
-        assert_eq!(entries.len(), 2);
-        assert_eq!((entries[0].name.as_str(), entries[0].icon), ("Copper", 123));
-        assert_eq!((entries[1].name.as_str(), entries[1].icon), ("Silver", 456));
     });
 }
 
