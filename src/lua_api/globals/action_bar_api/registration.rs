@@ -10,7 +10,7 @@ const GENERAL_METHODS: &[ActionBarMethod] = &[
     ("GetBonusBarIndexForSlot", get_bonus_bar_index_for_slot),
     #[cfg(not(feature = "retail-12-0-5"))]
     ("IsOnBarOrSpecialBar", is_on_bar_or_special_bar),
-    #[cfg(not(feature = "retail-12-0-5"))]
+    #[cfg(all(not(feature = "retail-12-0-5"), not(feature = "client-wowforever")))]
     ("FindSpellActionButtons", find_spell_action_buttons),
     (
         "GetCurrentActionBarByClass",
@@ -114,6 +114,10 @@ pub fn register_all(lua: &mut rilua::Lua) -> crate::Result<()> {
     crate::c_api::action_macros::register(state, table_ref)?;
     #[cfg(feature = "retail-12-0-5")]
     crate::c_api::c_action_bar_spell_slots::register(state, table_ref)?;
+    // VERIFIED: Forever ActionBarFrameDocumentation.lua:74–88 declares a spell ID and set argument.
+    // INFERRED: reuse Retail's state-backed direct-spell slot model.
+    #[cfg(feature = "client-wowforever")]
+    crate::c_api::c_action_bar_spell_slots::register_find_spell_action_buttons(state, table_ref)?;
     Ok(())
 }
 

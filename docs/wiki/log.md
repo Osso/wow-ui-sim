@@ -1,3 +1,7 @@
+## [2026-11-19] investigation | Forever spell action-bar status
+
+Added [the investigation](../investigations/forever-spell-action-bar-status.md). **VERIFIED (Forever generated docs and exact full-UI test):** C_Spell passive/ranged API shapes, C_ActionBar slot-query shape, and passive/slotted/unslotted/ID-0 results. **INFERRED:** Forever uses the Retail host passive-mask model. **VERIFIED (simulator source):** `setToSearch` filtering remains unmodeled.
+
 ## [2026-11-19] implementation | Retail gamepad addon queries
 
 Updated the [gamepad system](../systems/gamepad-mapped-state.md#retail-device-queries) and [contract](../specs/forever-gamepad-enabled.md). **VERIFIED (Retail generated docs):** the signatures and return shapes. **INFERRED (simulator mapping):** with no device input, `GetAllDeviceIDs` returns an empty table, `GetDeviceRawState` returns nil, and `IsEnabled` reads the existing CVar; no physical-device model was added.

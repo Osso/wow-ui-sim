@@ -1,3 +1,7 @@
+## [2026-11-19] investigation | Forever spell action-bar status
+
+[Forever spell action-bar status](investigations/forever-spell-action-bar-status.md) records the documented C_Spell/C_ActionBar surface, the empty Forever action-slot producer, and the fixes. **VERIFIED (Forever exact full-UI test):** passive, slotted, unslotted, ID-0, and ranged-input outcomes pass. **INFERRED:** passive masks reuse the Retail host-state model. **VERIFIED (simulator source):** `setToSearch` filtering remains unmodeled.
+
 ## [2026-11-19] implementation | Retail gamepad addon queries
 
 [Gamepad system](systems/gamepad-mapped-state.md#retail-device-queries) records the Retail `C_GamePad` members used by DialogueUI. **VERIFIED (Retail generated docs):** signatures and output shapes; **INFERRED (simulator mapping):** no device input yields an empty ID list and nil raw state, while `IsEnabled` reads the existing CVar.

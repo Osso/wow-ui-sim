@@ -56,18 +56,27 @@ const SPELL_INFO_HASH_FIELDS: usize = 7;
 const SPELL_COOLDOWN_HASH_FIELDS: usize = 5;
 #[cfg(feature = "retail-12-1-5")]
 const RANGED_AUTO_ATTACK_ATTRIBUTE_MASK: u32 = 16_777_216;
-#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+#[cfg(any(
+    all(feature = "client-retail", feature = "retail-12-1-5"),
+    feature = "client-wowforever"
+))]
 const SPELL_PASSIVE_ATTRIBUTE_MASK: u32 = 64;
-#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+#[cfg(any(
+    all(feature = "client-retail", feature = "retail-12-1-5"),
+    feature = "client-wowforever"
+))]
 const SPELL_PASSIVE_API: &str = "C_Spell.IsSpellPassive";
-#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+#[cfg(any(
+    all(feature = "client-retail", feature = "retail-12-1-5"),
+    feature = "client-wowforever"
+))]
 const SPELL_PASSIVE_USAGE: &str =
     "Usage: local isPassive = C_Spell.IsSpellPassive(spellIdentifier)";
 const VISIBILITY_API: &str = "C_Spell.GetVisibilityInfo";
 const VISIBILITY_USAGE: &str = "Usage: local hasCustom, alwaysShowMine, showForMySpec = C_Spell.GetVisibilityInfo(spellID, visibilityType)";
-#[cfg(feature = "retail-12-1-5")]
+#[cfg(any(feature = "retail-12-1-5", feature = "client-wowforever"))]
 const RANGED_AUTO_ATTACK_API: &str = "C_Spell.IsRangedAutoAttackSpell";
-#[cfg(feature = "retail-12-1-5")]
+#[cfg(any(feature = "retail-12-1-5", feature = "client-wowforever"))]
 const RANGED_AUTO_ATTACK_USAGE: &str =
     "Usage: local isRangedAutoAttack = C_Spell.IsRangedAutoAttackSpell(spellIdentifier)";
 const MAX_VISIBILITY_TYPE: u8 = 2;
@@ -122,8 +131,12 @@ pub(crate) fn register_c_spell_surface(state: &mut LuaState) -> LuaResult<()> {
     )?;
     register_spell_methods(state, ns, SPELL_QUERY_METHODS)?;
     register_spell_methods(state, ns, SPELL_BOOLEAN_METHODS)?;
-    #[cfg(feature = "retail-12-1-5")]
-    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+    #[cfg(any(feature = "retail-12-1-5", feature = "client-wowforever"))]
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
         table_set_rust_fn_static(
             state,
             ns,
@@ -216,7 +229,10 @@ const SPELL_QUERY_METHODS: &[(&str, SpellScriptFn)] = &[
 const SPELL_BOOLEAN_METHODS: &[(&str, SpellScriptFn)] = &[
     ("DoesSpellExist", does_spell_exist),
     ("IsSpellDataCached", is_spell_data_cached),
-    #[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+    #[cfg(any(
+        all(feature = "client-retail", feature = "retail-12-1-5"),
+        feature = "client-wowforever"
+    ))]
     ("IsSpellPassive", is_spell_passive),
     ("IsSelfBuff", is_self_buff),
     ("IsAutoAttackSpell", is_auto_attack_spell),
@@ -945,11 +961,13 @@ fn is_spell_data_cached(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-/// VERIFIED (R88i.14): missing records return false; present records test mask 64.
-/// UNKNOWN (R88i.14): table and field; host masks are empty by default.
-/// INFERRED (simulator mapping): `SPELL_DB` presence stands in for the native selected-record
-/// lookup; R88i.14 does not establish that the generated spell table is that record source.
-#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+/// VERIFIED (Forever SpellDocumentation.lua:965–977): accepts a SpellIdentifier and returns bool.
+/// INFERRED (Forever): reuse Retail's host mask model; R88i.14 tests mask 64 on existing records.
+/// UNKNOWN (R88i.14): native table and field identity; the host mask map is empty by default.
+#[cfg(any(
+    all(feature = "client-retail", feature = "retail-12-1-5"),
+    feature = "client-wowforever"
+))]
 fn is_spell_passive(state: &mut LuaState) -> LuaResult<u32> {
     let spell_id = read_retail_spell_identifier(
         state,
@@ -958,7 +976,7 @@ fn is_spell_passive(state: &mut LuaState) -> LuaResult<u32> {
         SPELL_PASSIVE_USAGE,
     )?;
     let is_passive = match spell_id {
-        Some(spell_id) if spell_id != 0 && SPELL_DB.contains_key(&spell_id) => borrow_state(state)?
+        Some(spell_id) if spell_id != 0 && spell_record_exists(spell_id) => borrow_state(state)?
             .spell_passive_attribute_masks
             .get(&spell_id)
             .is_some_and(|attributes| attributes & SPELL_PASSIVE_ATTRIBUTE_MASK != 0),
@@ -968,7 +986,20 @@ fn is_spell_passive(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-#[cfg(feature = "retail-12-1-5")]
+#[cfg(any(
+    all(feature = "client-retail", feature = "retail-12-1-5"),
+    feature = "client-wowforever"
+))]
+fn spell_record_exists(spell_id: u32) -> bool {
+    // Forever's selected records come from the profile-aware runtime catalog.
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever {
+        spells::get_spell(spell_id).is_some()
+    } else {
+        SPELL_DB.contains_key(&spell_id)
+    }
+}
+
+#[cfg(any(feature = "retail-12-1-5", feature = "client-wowforever"))]
 fn is_ranged_auto_attack_spell(state: &mut LuaState) -> LuaResult<u32> {
     let spell_id = read_retail_spell_identifier(
         state,

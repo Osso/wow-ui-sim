@@ -6,6 +6,7 @@ use crate::lua_bridge::table_set_rust_fn_static;
 use rilua::vm::{gc::arena::GcRef, state::LuaState, table::Table};
 use rilua::{LuaResult, Val};
 
+#[cfg(feature = "retail-12-0-5")]
 pub(crate) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
     table_set_rust_fn_static(
         state,
@@ -13,12 +14,7 @@ pub(crate) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResu
         "FindAssistedCombatActionButtons",
         find_assisted_combat_action_buttons,
     )?;
-    table_set_rust_fn_static(
-        state,
-        namespace,
-        "FindSpellActionButtons",
-        find_spell_action_buttons,
-    )?;
+    register_find_spell_action_buttons(state, namespace)?;
     table_set_rust_fn_static(
         state,
         namespace,
@@ -30,6 +26,19 @@ pub(crate) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResu
         namespace,
         "IsOnBarOrSpecialBar",
         is_on_bar_or_special_bar,
+    )
+}
+
+pub(crate) fn register_find_spell_action_buttons(
+    state: &mut LuaState,
+    namespace: GcRef<Table>,
+) -> LuaResult<()> {
+    // Forever declares this query; its action-bar-set filtering remains unmodeled.
+    table_set_rust_fn_static(
+        state,
+        namespace,
+        "FindSpellActionButtons",
+        find_spell_action_buttons,
     )
 }
 
@@ -75,6 +84,7 @@ fn collect_sorted_spell_slots(sim: &SimState, spell_id: u32) -> Vec<u32> {
     slots
 }
 
+#[cfg(feature = "retail-12-0-5")]
 fn find_assisted_combat_action_buttons(state: &mut LuaState) -> LuaResult<u32> {
     let slots = {
         let sim = borrow_state(state)?;
@@ -99,6 +109,7 @@ fn find_assisted_combat_action_buttons(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+#[cfg(feature = "retail-12-0-5")]
 fn has_spell_action_buttons(state: &mut LuaState) -> LuaResult<u32> {
     let has_slots =
         query_public_direct_spell_membership(state, "C_ActionBar.HasSpellActionButtons")?;
@@ -106,6 +117,7 @@ fn has_spell_action_buttons(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+#[cfg(feature = "retail-12-0-5")]
 fn is_on_bar_or_special_bar(state: &mut LuaState) -> LuaResult<u32> {
     // AllowedWhenTainted is NOT AllowedWhenUntainted: retain the bounded public reader.
     // Native secret-input permission/result secrecy remain unmodeled.
@@ -126,6 +138,7 @@ fn is_on_bar_or_special_bar(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+#[cfg(feature = "retail-12-0-5")]
 fn query_public_direct_spell_membership(state: &LuaState, api_name: &str) -> LuaResult<bool> {
     let spell_id = super::c_spell::read_public_spell_identifier_at(state, 1, api_name)?;
     match spell_id {
