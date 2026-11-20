@@ -432,7 +432,8 @@ pub mod url_texture_inputs;
     feature = "retail-12-0-0",
     feature = "client-mists",
     feature = "client-era",
-    feature = "client-anniversary"
+    feature = "client-anniversary",
+    feature = "client-wowforever"
 ))]
 pub use c_transmog_collection::IllusionInfo;
 pub mod c_achievement_telemetry;
