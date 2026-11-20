@@ -14,9 +14,9 @@ use rilua::{LuaResult, Val};
 #[derive(Debug, Default)]
 pub struct OutfitCatalog {
     pub entries: Vec<OutfitEntry>,
-    /// Forever observation state; outfit records remain in `entries`.
+    /// Forever: None is unset; Some(false) is explicit no-result; Some(true) uses entries.
     #[cfg(feature = "client-wowforever")]
-    pub outfits_info_supplied: bool,
+    pub outfits_info_supplied: Option<bool>,
 }
 
 pub use crate::c_api::outfit_entry::OutfitEntry;

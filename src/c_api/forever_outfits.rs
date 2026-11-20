@@ -16,7 +16,7 @@ fn get_outfit_info(state: &mut LuaState) -> LuaResult<u32> {
     let id = i64::from_stack(state, 1)?;
     let entry = {
         let sim = borrow_state(state)?;
-        if !sim.transmog_outfit_catalog.outfits_info_supplied {
+        if sim.transmog_outfit_catalog.outfits_info_supplied != Some(true) {
             return Ok(0);
         }
         sim.transmog_outfit_catalog
@@ -32,17 +32,20 @@ fn get_outfit_info(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn get_outfits_info(state: &mut LuaState) -> LuaResult<u32> {
-    let (supplied, entries) = {
+    let (observation, entries) = {
         let sim = borrow_state(state)?;
         (
             sim.transmog_outfit_catalog.outfits_info_supplied,
             sim.transmog_outfit_catalog.entries.clone(),
         )
     };
-    if !supplied {
+    let Some(has_result) = observation else {
         return Err(runtime_error(
             "C_TransmogOutfitInfo.GetOutfitsInfo: outfit list has not been supplied",
         ));
+    };
+    if !has_result {
+        return Ok(0);
     }
     let snapshot = super::outfit_entry::build_entry_array(state, &entries);
     state.push(snapshot);

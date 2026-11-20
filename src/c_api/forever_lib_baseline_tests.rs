@@ -74,7 +74,7 @@ fn outfit_info_uses_existing_forever_catalog_and_emulated_empty() {
     {
         let mut state = env.state().borrow_mut();
         state.transmog_outfit_catalog.entries.clear();
-        state.transmog_outfit_catalog.outfits_info_supplied = true;
+        state.transmog_outfit_catalog.outfits_info_supplied = Some(false);
     }
     assert_eq!(
         env.eval::<i32>("return select('#', C_TransmogOutfitInfo.GetOutfitInfo(91))")
@@ -83,7 +83,7 @@ fn outfit_info_uses_existing_forever_catalog_and_emulated_empty() {
     );
     {
         let mut state = env.state().borrow_mut();
-        state.transmog_outfit_catalog.outfits_info_supplied = true;
+        state.transmog_outfit_catalog.outfits_info_supplied = Some(true);
         state.transmog_outfit_catalog.entries = vec![
             OutfitEntry {
                 outfit_id: 91,

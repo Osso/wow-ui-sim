@@ -29,13 +29,13 @@ fn entries(ids: &[i64]) -> Vec<OutfitEntry> {
 fn supply(env: &WowLuaEnv, ids: Option<&[i64]>) {
     let mut state = env.state().borrow_mut();
     state.transmog_outfit_catalog.entries = ids.map(entries).unwrap_or_default();
-    state.transmog_outfit_catalog.outfits_info_supplied = true;
+    state.transmog_outfit_catalog.outfits_info_supplied = Some(ids.is_some());
 }
 
 fn unset(env: &WowLuaEnv) {
     let mut state = env.state().borrow_mut();
     state.transmog_outfit_catalog.entries.clear();
-    state.transmog_outfit_catalog.outfits_info_supplied = false;
+    state.transmog_outfit_catalog.outfits_info_supplied = None;
 }
 
 fn load_original(enabled: bool) -> WowLuaEnv {

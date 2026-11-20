@@ -1,6 +1,6 @@
 # Transmog outfits
 
-Retail outfit editing and Forever outfit queries share catalog metadata in simulator state; Forever keeps a supplied-list flag but no second row store. Saved contents and a pending overlay remain separate state. The [publication closure contract](../../specs/patch-12-0-0-publication-sweep.md#transmog-outfit-closure-contract) owns required behavior and proof boundaries.
+Retail outfit editing and Forever outfit queries share catalog metadata in simulator state; Forever keeps a three-state list marker but no second row store. Saved contents and a pending overlay remain separate state. The [publication closure contract](../../specs/patch-12-0-0-publication-sweep.md#transmog-outfit-closure-contract) owns required behavior and proof boundaries.
 
 ## State and API
 

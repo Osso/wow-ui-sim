@@ -4,7 +4,7 @@ The [contract](../../specs/forever-camelot-spellbook.md) supplies only the two o
 
 ## Model
 
-`SimState.transmog_outfit_catalog.entries` is the single outfit-record store used by the Retail writer and Forever outfit queries. Forever's `outfits_info_supplied` flag records whether its list observation has been supplied; it stores no duplicate rows. The common OutfitEntry keeps the seven non-nil fields from pinned Forever 70532 `TransmogOutfitInfoDocumentation.lua:896–907`. Snapshot conversion copies rows and nested situationCategories.
+`SimState.transmog_outfit_catalog.entries` is the single outfit-record store used by the Retail writer and Forever outfit queries. Forever's `outfits_info_supplied` marker distinguishes unset, explicit no-result and returned-list states; it stores no duplicate rows. The common OutfitEntry keeps the seven non-nil fields from pinned Forever 70532 `TransmogOutfitInfoDocumentation.lua:896–907`. Snapshot conversion copies rows and nested situationCategories.
 
 Only Forever publishes the supplied GetOutfitsInfo and GetOutfitInfo handlers. The other modern outfit queries remain unavailable on Forever; catalog defaults and mutations are unchanged.
 

@@ -367,7 +367,7 @@ pub fn supply_empty_forever_spellbook_outfits(env: &WowLuaEnv) {
         state.transmog_outfit_catalog.entries.clear();
         #[cfg(feature = "client-wowforever")]
         {
-            state.transmog_outfit_catalog.outfits_info_supplied = true;
+            state.transmog_outfit_catalog.outfits_info_supplied = Some(true);
         }
         state.transmog_availability.enabled = Some(false);
     }

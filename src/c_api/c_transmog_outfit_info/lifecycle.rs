@@ -66,7 +66,7 @@ fn insert_outfit(state: &LuaState, name: String, icon: i64) -> LuaResult<i64> {
     sim.transmog_outfits.saved.insert(id, Default::default());
     #[cfg(feature = "client-wowforever")]
     {
-        sim.transmog_outfit_catalog.outfits_info_supplied = true;
+        sim.transmog_outfit_catalog.outfits_info_supplied = Some(true);
     }
     Ok(id)
 }
