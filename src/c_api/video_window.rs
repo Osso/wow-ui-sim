@@ -1,11 +1,12 @@
 //! INFERRED window-size queries backed by the simulator's physical display.
-use crate::lua_api::methods::{
-    borrow_state, create_string, create_table, table_set, table_set_num,
-};
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+use crate::lua_api::methods::create_string;
+use crate::lua_api::methods::{borrow_state, create_table, table_set, table_set_num};
 use crate::lua_bridge::{FromStack, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val, runtime_error};
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 #[derive(Clone, Debug)]
 pub struct GxAdapterInfoDetails {
     pub name: String,
@@ -59,6 +60,7 @@ fn available_sizes(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub(crate) fn default_gx_adapter_info() -> Vec<GxAdapterInfoDetails> {
     vec![GxAdapterInfoDetails {
         // INFERRED R88bx: use a descriptive simulator host adapter until aso
