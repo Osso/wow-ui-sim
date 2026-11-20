@@ -249,7 +249,7 @@ fn original_graphics_resolution_setting_tracks_display_model() {
             end
             assert(hasResolution(__video_resolution_options(), "1280x720"), "initial options")
             assert(Settings.GetValue("PROXY_RESOLUTION") == "1280x720", "initial setting value")
-            Settings.SetValue("PROXY_RESOLUTION", "1600x900")
+            Settings.SetValue("PROXY_RESOLUTION", "1600x900", true)
             local size = C_VideoOptions.GetCurrentGameWindowSize()
             local physicalWidth, physicalHeight = GetPhysicalScreenSize()
             assert(size.x == 1600 and size.y == 900, "C_VideoOptions did not read updated model")
