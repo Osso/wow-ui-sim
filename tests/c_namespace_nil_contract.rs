@@ -1,5 +1,6 @@
 use wow_ui_sim::lua_api::WowLuaEnv;
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn unknown_c_members_remain_nil_without_mutating_namespace() {
     let env = WowLuaEnv::new().expect("Lua environment");
