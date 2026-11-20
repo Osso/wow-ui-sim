@@ -49,6 +49,9 @@ pub struct SimState {
     /// VERIFIED-neutral host seam for the last gamepad input timestamp; None maps to native zero.
     #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
     pub last_gamepad_input_timestamp: Option<u32>,
+    /// INFERRED supplied host adapters; names and classifications are scenario inputs.
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub gx_adapter_info: Vec<crate::c_api::video_window::GxAdapterInfoDetails>,
     /// INFERRED host byte projection, independent of CVars and GPU detection.
     pub video_capability_bytes: crate::c_api::video_capabilities::VideoCapabilityBytes,
     /// UNKNOWN live protocol values. INFERRED (simulator mapping): None means

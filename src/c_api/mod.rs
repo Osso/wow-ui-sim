@@ -86,7 +86,7 @@ pub mod trait_group_display;
 pub mod ui_widget_manager;
 pub mod video_capabilities;
 pub(crate) mod video_texture_capability;
-mod video_window;
+pub(crate) mod video_window;
 #[cfg(feature = "client-wrath")]
 pub mod who_routing;
 

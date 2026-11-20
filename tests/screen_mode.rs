@@ -236,6 +236,22 @@ fn physical_display_input_matches_captured_wow_ui_dimensions() {
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+const GRAPHICS_ADAPTER_SCRIPT: &str = r#"
+    local options = __video_adapter_options()
+    local function hasAdapter(name)
+        for _, option in ipairs(options) do
+            if option.value == name then return true end
+        end
+        return false
+    end
+    assert(hasAdapter("Integrated Test Adapter"), "integrated adapter missing from graphics options")
+    assert(hasAdapter("External Test Adapter"), "external adapter missing from graphics options")
+    SetCVar("gxAdapter", "External Test Adapter")
+    assert(Settings.GetValue("PROXY_GX_ADAPTER") == "External Test Adapter",
+           "graphics setting should show the selected adapter")
+"#;
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 const FIRST_DISPLAY_SCRIPT: &str = r#"
     local function hasResolution(options, value)
         for _, option in ipairs(options) do
@@ -262,6 +278,18 @@ const SECOND_DISPLAY_SCRIPT: &str = r#"
     assert(hasResolution, "second display missing from consumer options")
     assert(Settings.GetValue("PROXY_RESOLUTION") == "2560x1440", "second consumer value")
 "#;
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn original_graphics_adapter_setting_uses_host_model() {
+    let env = load_graphics_consumer(1920.0, 1080.0);
+    env.set_gx_adapter_info(&[
+        ("Integrated Test Adapter", true, false),
+        ("External Test Adapter", false, true),
+    ]);
+    env.exec(GRAPHICS_ADAPTER_SCRIPT)
+        .expect("original Graphics adapter setting should show supplied host adapters");
+}
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 #[test]

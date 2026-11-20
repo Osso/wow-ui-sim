@@ -166,6 +166,22 @@ impl WowLuaEnv {
         self.apply_screen_dimensions((width, height), (width, height));
     }
 
+    /// Supply host graphics adapters for the Retail and Forever video model.
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub fn set_gx_adapter_info(&self, adapters: &[(&str, bool, bool)]) {
+        let mut state = self.state.borrow_mut();
+        state.gx_adapter_info = adapters
+            .iter()
+            .map(|(name, is_low_power, is_external)| {
+                crate::c_api::video_window::GxAdapterInfoDetails {
+                    name: (*name).to_owned(),
+                    is_low_power: *is_low_power,
+                    is_external: *is_external,
+                }
+            })
+            .collect();
+    }
+
     /// Set physical display pixels using WoW's 768-unit base UI canvas.
     /// UIParent scale is applied separately by the existing frame/CVar model.
     pub fn set_display_size(&self, width: f32, height: f32) -> Result<()> {
