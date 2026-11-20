@@ -22,8 +22,8 @@ fn pending_invite_confirmation_warnings_use_each_supplied_invite() {
         r#"
         A_Admin.SetPendingInviteConfirmations([=[
         [
-            {"id":"invite-a", "name":"Aster", "guid":"Player-1-A", "invalidQueues":[{"queueType":"pvp", "mapName":"North Battleground"}]},
-            {"id":"invite-b", "name":"Bramble", "guid":"Player-1-B", "invalidQueues":[{"queueType":"pvp", "mapName":"South Battleground"}]}
+            {"id":"invite-a", "confirmationType":1, "name":"Aster", "guid":"Player-1-A", "invalidQueues":[{"queueType":"pvp", "mapName":"North Battleground"}], "referral":{"guid":"Player-1-R1", "name":"Rhea", "relationship":1, "isQuickJoin":false}},
+            {"id":"invite-b", "confirmationType":1, "name":"Bramble", "guid":"Player-1-B", "invalidQueues":[{"queueType":"pvp", "mapName":"South Battleground"}], "referral":{"guid":"Player-1-R2", "name":"Soren", "relationship":2, "isQuickJoin":false}}
         ]
         ]=])
         "#,
@@ -49,6 +49,18 @@ fn assert_retail_lfg_consumer(env: &wow_ui_sim::lua_api::WowLuaEnv) {
     assert!(warnings.0.contains("North Battleground"), "{}", warnings.0);
     assert!(warnings.1.contains("South Battleground"), "{}", warnings.1);
     assert_ne!(warnings.0, warnings.1);
+
+    let requests: (String, String) = env
+        .eval(
+            r#"
+            return CreatePendingInviteConfirmationText("invite-a"),
+                   CreatePendingInviteConfirmationText("invite-b")
+            "#,
+        )
+        .expect("Retail LFGUtil should use each supplied referral record");
+    assert!(requests.0.contains("Rhea"), "{}", requests.0);
+    assert!(requests.1.contains("Soren"), "{}", requests.1);
+    assert_ne!(requests.0, requests.1);
 }
 
 #[cfg(feature = "client-wowforever")]
