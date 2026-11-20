@@ -25,13 +25,7 @@ pub(super) fn cost_gate(value: u32, mode: i32, test: impl FnOnce(u32, i32) -> bo
 // duplicate faction state. Comparison direction is not established by R88i.5.
 pub(super) fn reputation_test(state: &mut LuaState, id: u32, required: i32) -> bool {
     if crate::c_api::reputation_model::active() {
-        return i32::try_from(id).ok().is_some_and(|id| {
-            borrow_state(state).ok().is_some_and(|sim| {
-                sim.reputation
-                    .faction(id)
-                    .is_some_and(|row| row.reaction >= required)
-            })
-        });
+        return supplied_reputation_test(state, id, required);
     }
     let root = table_get_static(state, Val::Table(state.global), "__wow_reputation_state");
     let Val::Table(rows) = table_get_static(state, root, "factions") else {
@@ -55,6 +49,18 @@ pub(super) fn reputation_test(state: &mut LuaState, id: u32, required: i32) -> b
         }
         index += 1;
     }
+}
+
+// INFERRED: the existing reaction >= threshold adapter now reads the
+// explicit modern host row; R88i.5 does not prove the comparison direction.
+fn supplied_reputation_test(state: &LuaState, id: u32, required: i32) -> bool {
+    i32::try_from(id).ok().is_some_and(|id| {
+        borrow_state(state).ok().is_some_and(|sim| {
+            sim.reputation
+                .faction(id)
+                .is_some_and(|row| !row.is_header && row.reaction >= required)
+        })
+    })
 }
 
 // INFERRED: ItemExtendedCost RequiredArenaRating/ArenaBracket and >= mapping.
