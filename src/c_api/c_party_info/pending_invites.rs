@@ -1,5 +1,7 @@
 //! INFERRED pending invite-confirmation state (native evidence requested as R88cf).
 
+use std::collections::HashSet;
+
 use crate::c_api::helpers::{ensure_namespace, set_table_array};
 use crate::lua_api::methods::{
     borrow_state, borrow_state_mut, create_string, create_table, table_set,
@@ -7,16 +9,67 @@ use crate::lua_api::methods::{
 use crate::lua_bridge::{FromStack, TableBuilder, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val, runtime_error};
-use serde_json::Value;
+use serde::Deserialize;
 
 #[derive(Clone, Debug, Default)]
 pub(crate) struct PendingInviteConfirmations {
-    invites: Vec<Value>,
+    invites: Vec<PendingInviteConfirmation>,
+}
+
+#[derive(Clone, Debug, Default, Deserialize)]
+#[serde(rename_all = "camelCase")]
+struct PendingInviteConfirmation {
+    id: String,
+    #[serde(default)]
+    confirmation_type: i32,
+    #[serde(default)]
+    name: String,
+    #[serde(default)]
+    guid: String,
+    #[serde(default)]
+    roles_invalid: bool,
+    #[serde(default)]
+    will_convert_to_raid: bool,
+    level: Option<i32>,
+    spec: Option<i32>,
+    item_level: Option<f64>,
+    #[serde(default)]
+    is_cross_faction: bool,
+    player_faction_group: Option<String>,
+    localized_faction: Option<String>,
+    #[serde(default)]
+    invalid_queues: Vec<InvalidQueueInfo>,
+    #[serde(default)]
+    referral: InviteReferralInfo,
+}
+
+#[derive(Clone, Debug, Default, Deserialize)]
+#[serde(rename_all = "camelCase")]
+struct InvalidQueueInfo {
+    queue_type: Option<String>,
+    map_name: Option<String>,
+    battlefield_type: Option<String>,
+    team_size: Option<i32>,
+    is_brawl: Option<bool>,
+    #[serde(default)]
+    lfg_ids: Vec<i32>,
+    lfg_list_id: Option<i64>,
+    activity_id: Option<i64>,
+}
+
+#[derive(Clone, Debug, Default, Deserialize)]
+#[serde(rename_all = "camelCase")]
+struct InviteReferralInfo {
+    guid: Option<String>,
+    name: Option<String>,
+    relationship: Option<i32>,
+    #[serde(default)]
+    is_quick_join: bool,
+    club_id: Option<i64>,
 }
 
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     let namespace = ensure_namespace(state, "C_PartyInfo")?;
-    table_set_rust_fn_static(state, namespace, "ConfirmInviteUnit", confirm_invite_unit)?;
     table_set_rust_fn_static(
         state,
         namespace,
@@ -35,6 +88,12 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
         state.global,
         "GetInviteConfirmationInfo",
         confirmation_info,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        state.global,
+        "RespondToInviteConfirmation",
+        respond_to_invite_confirmation,
     )
 }
 
@@ -44,7 +103,7 @@ pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
 
 fn set_pending_invites(state: &mut LuaState) -> LuaResult<u32> {
     let input = String::from_stack(state, 1)?;
-    let invites: Vec<Value> = serde_json::from_str(&input)
+    let invites: Vec<PendingInviteConfirmation> = serde_json::from_str(&input)
         .map_err(|_| runtime_error("SetPendingInviteConfirmations requires a JSON array"))?;
     validate_invites(&invites)?;
     let event_count = invites.len();
@@ -52,20 +111,17 @@ fn set_pending_invites(state: &mut LuaState) -> LuaResult<u32> {
     for _ in 0..event_count {
         crate::lua_api::globals::state_backed_queries::dispatch_event_now(
             state,
-            "NEW_MATCHMAKING_PARTY_INVITE",
+            "GROUP_INVITE_CONFIRMATION",
             &[],
         )?;
     }
     Ok(0)
 }
 
-fn validate_invites(invites: &[Value]) -> LuaResult<()> {
-    let mut ids = std::collections::HashSet::new();
+fn validate_invites(invites: &[PendingInviteConfirmation]) -> LuaResult<()> {
+    let mut ids = HashSet::new();
     for invite in invites {
-        let Some(id) = invite.get("id").and_then(Value::as_str) else {
-            return Err(runtime_error("pending invite requires a string id"));
-        };
-        if id.is_empty() || !ids.insert(id) {
+        if invite.id.is_empty() || !ids.insert(&invite.id) {
             return Err(runtime_error(
                 "pending invite ids must be non-empty and unique",
             ));
@@ -79,9 +135,7 @@ fn next_pending(state: &mut LuaState) -> LuaResult<u32> {
         .party_invite_confirmations
         .invites
         .first()
-        .and_then(|invite| invite.get("id"))
-        .and_then(Value::as_str)
-        .map(str::to_owned);
+        .map(|invite| invite.id.clone());
     if let Some(invite_id) = invite_id {
         let value = create_string(state, &invite_id);
         state.push(value);
@@ -93,24 +147,25 @@ fn next_pending(state: &mut LuaState) -> LuaResult<u32> {
 
 fn confirmation_info(state: &mut LuaState) -> LuaResult<u32> {
     let invite_id = String::from_stack(state, 1)?;
-    let invite = find_invite(state, &invite_id)?;
-    let Some(invite) = invite else { return Ok(0) };
-    push_json_field(state, &invite, "confirmationType");
-    for field in [
-        "name",
-        "guid",
-        "rolesInvalid",
-        "willConvertToRaid",
-        "level",
-        "spec",
-        "itemLevel",
-        "isCrossFaction",
-        "playerFactionGroup",
-        "localizedFaction",
-    ] {
-        push_json_field(state, &invite, field);
-    }
+    let Some(invite) = find_invite(state, &invite_id)? else {
+        return Ok(0);
+    };
+    push_confirmation_info(state, &invite);
     Ok(11)
+}
+
+fn push_confirmation_info(state: &mut LuaState, invite: &PendingInviteConfirmation) {
+    state.push(Val::Num(f64::from(invite.confirmation_type)));
+    push_string(state, &invite.name);
+    push_string(state, &invite.guid);
+    state.push(Val::Bool(invite.roles_invalid));
+    state.push(Val::Bool(invite.will_convert_to_raid));
+    push_optional_i32(state, invite.level);
+    push_optional_i32(state, invite.spec);
+    push_optional_f64(state, invite.item_level);
+    state.push(Val::Bool(invite.is_cross_faction));
+    push_optional_string(state, invite.player_faction_group.as_deref());
+    push_optional_string(state, invite.localized_faction.as_deref());
 }
 
 fn get_invalid_queues(state: &mut LuaState) -> LuaResult<u32> {
@@ -118,13 +173,35 @@ fn get_invalid_queues(state: &mut LuaState) -> LuaResult<u32> {
     let Some(invite) = find_invite(state, &invite_id)? else {
         return Ok(0);
     };
-    let queues = invite
-        .get("invalidQueues")
-        .cloned()
-        .unwrap_or_else(|| Value::Array(Vec::new()));
-    let value = value_to_lua(state, &queues);
-    state.push(value);
+    let queues = create_table(state);
+    for (index, queue) in invite.invalid_queues.iter().enumerate() {
+        let item = invalid_queue_to_lua(state, queue);
+        set_table_array(state, queues, index as i64 + 1, item);
+    }
+    state.push(queues);
     Ok(1)
+}
+
+fn invalid_queue_to_lua(state: &mut LuaState, queue: &InvalidQueueInfo) -> Val {
+    let table = create_table(state);
+    set_optional_string_field(state, table, "queueType", queue.queue_type.as_deref());
+    set_optional_string_field(state, table, "mapName", queue.map_name.as_deref());
+    set_optional_string_field(
+        state,
+        table,
+        "battlefieldType",
+        queue.battlefield_type.as_deref(),
+    );
+    set_optional_i32_field(state, table, "teamSize", queue.team_size);
+    set_optional_bool_field(state, table, "isBrawl", queue.is_brawl);
+    let lfg_ids = create_table(state);
+    for (index, id) in queue.lfg_ids.iter().enumerate() {
+        set_table_array(state, lfg_ids, index as i64 + 1, Val::Num(f64::from(*id)));
+    }
+    table_set(state, table, "lfgIDs", lfg_ids);
+    set_optional_i64_field(state, table, "lfgListID", queue.lfg_list_id);
+    set_optional_i64_field(state, table, "activityID", queue.activity_id);
+    table
 }
 
 fn get_referral_info(state: &mut LuaState) -> LuaResult<u32> {
@@ -132,56 +209,79 @@ fn get_referral_info(state: &mut LuaState) -> LuaResult<u32> {
     let Some(invite) = find_invite(state, &invite_id)? else {
         return Ok(0);
     };
-    let referral = invite.get("referral").cloned().unwrap_or(Value::Null);
-    for field in ["guid", "name", "relationship", "isQuickJoin", "clubId"] {
-        push_json_field(state, &referral, field);
-    }
+    push_optional_string(state, invite.referral.guid.as_deref());
+    push_optional_string(state, invite.referral.name.as_deref());
+    push_optional_i32(state, invite.referral.relationship);
+    state.push(Val::Bool(invite.referral.is_quick_join));
+    push_optional_i64(state, invite.referral.club_id);
     Ok(5)
 }
 
-fn confirm_invite_unit(state: &mut LuaState) -> LuaResult<u32> {
-    // INFERRED (R88cf pending): this local snapshot cannot model server-side group membership.
-    let _target_name = String::from_stack(state, 1)?;
+fn respond_to_invite_confirmation(state: &mut LuaState) -> LuaResult<u32> {
+    let invite_id = String::from_stack(state, 1)?;
+    let _accepted = bool::from_stack(state, 2)?;
+    borrow_state_mut(state)?
+        .party_invite_confirmations
+        .invites
+        .retain(|invite| invite.id != invite_id);
     Ok(0)
 }
 
-fn find_invite(state: &LuaState, invite_id: &str) -> LuaResult<Option<Value>> {
+fn find_invite(state: &LuaState, invite_id: &str) -> LuaResult<Option<PendingInviteConfirmation>> {
     Ok(borrow_state(state)?
         .party_invite_confirmations
         .invites
         .iter()
-        .find(|invite| invite.get("id").and_then(Value::as_str) == Some(invite_id))
+        .find(|invite| invite.id == invite_id)
         .cloned())
 }
 
-fn push_json_field(state: &mut LuaState, object: &Value, field: &str) {
-    let value = object
-        .get(field)
-        .map_or(Val::Nil, |value| value_to_lua(state, value));
+fn push_string(state: &mut LuaState, value: &str) {
+    let value = create_string(state, value);
     state.push(value);
 }
 
-fn value_to_lua(state: &mut LuaState, value: &Value) -> Val {
-    match value {
-        Value::Null => Val::Nil,
-        Value::Bool(value) => Val::Bool(*value),
-        Value::Number(value) => Val::Num(value.as_f64().unwrap_or_default()),
-        Value::String(value) => create_string(state, value),
-        Value::Array(values) => {
-            let table = create_table(state);
-            for (index, value) in values.iter().enumerate() {
-                let item = value_to_lua(state, value);
-                set_table_array(state, table, index as i64 + 1, item);
-            }
-            table
-        }
-        Value::Object(fields) => {
-            let table = create_table(state);
-            for (key, value) in fields {
-                let item = value_to_lua(state, value);
-                table_set(state, table, key, item);
-            }
-            table
-        }
+fn push_optional_string(state: &mut LuaState, value: Option<&str>) {
+    if let Some(value) = value {
+        push_string(state, value);
+    } else {
+        state.push(Val::Nil);
+    }
+}
+
+fn push_optional_i32(state: &mut LuaState, value: Option<i32>) {
+    state.push(value.map_or(Val::Nil, |value| Val::Num(f64::from(value))));
+}
+
+fn push_optional_i64(state: &mut LuaState, value: Option<i64>) {
+    state.push(value.map_or(Val::Nil, |value| Val::Num(value as f64)));
+}
+
+fn push_optional_f64(state: &mut LuaState, value: Option<f64>) {
+    state.push(value.map_or(Val::Nil, Val::Num));
+}
+
+fn set_optional_string_field(state: &mut LuaState, table: Val, name: &str, value: Option<&str>) {
+    if let Some(value) = value {
+        let value = create_string(state, value);
+        table_set(state, table, name, value);
+    }
+}
+
+fn set_optional_i32_field(state: &mut LuaState, table: Val, name: &str, value: Option<i32>) {
+    if let Some(value) = value {
+        table_set(state, table, name, Val::Num(f64::from(value)));
+    }
+}
+
+fn set_optional_i64_field(state: &mut LuaState, table: Val, name: &str, value: Option<i64>) {
+    if let Some(value) = value {
+        table_set(state, table, name, Val::Num(value as f64));
+    }
+}
+
+fn set_optional_bool_field(state: &mut LuaState, table: Val, name: &str, value: Option<bool>) {
+    if let Some(value) = value {
+        table_set(state, table, name, Val::Bool(value));
     }
 }

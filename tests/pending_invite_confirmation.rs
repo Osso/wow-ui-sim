@@ -16,7 +16,10 @@ fn pending_invite_confirmation_event_drives_the_dialog_queue() {
     ];
     let loaded = load_blizzard_addon_closure_into_env(&env, &ui, &roots, &[]);
     for name in roots {
-        assert!(loaded.iter().any(|loaded| loaded == name), "{name} did not load");
+        assert!(
+            loaded.iter().any(|loaded| loaded == name),
+            "{name} did not load"
+        );
     }
 
     env.exec(

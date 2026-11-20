@@ -66,6 +66,18 @@ fn player_class_info(class_index: i32) -> (&'static str, &'static str) {
     (CLASS_LABELS[idx], CLASS_FILES[idx])
 }
 
+/// INFERRED from the GUID query at Blizzard_UIPanels_Game/Shared/SocialQueue.lua:204.
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn is_guild_member(state: &mut LuaState) -> LuaResult<u32> {
+    let guid = String::from_stack(state, 1)?;
+    let is_member = borrow_state(state)?
+        .world
+        .guild_member_guids
+        .contains(&guid);
+    state.push(Val::Bool(is_member));
+    Ok(1)
+}
+
 fn is_in_guild(state: &mut LuaState) -> LuaResult<u32> {
     let b = borrow_state(state)?.world.guild_name.is_some();
     state.push(Val::Bool(b));
@@ -373,6 +385,8 @@ pub fn register_all(lua: &mut rilua::Lua) -> crate::Result<()> {
 
 fn register_guild_membership_queries(lua: &mut rilua::Lua) -> crate::Result<()> {
     LuaApiMut::register_function(lua, "IsInGuild", is_in_guild)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    LuaApiMut::register_function(lua, "IsGuildMember", is_guild_member)?;
     LuaApiMut::register_function(lua, "CanReplaceGuildMaster", can_replace_guild_master)?;
     LuaApiMut::register_function(
         lua,

@@ -616,6 +616,8 @@ pub struct WorldState {
     /// `GuildInvite` / `GuildUninvite` / `GuildKick` / `GuildPromote`.
     /// Empty when the player has no guild.
     pub guild_members: Vec<GuildMember>,
+    /// Host-supplied GUID identities for the guild-member query; empty when unknown.
+    pub guild_member_guids: HashSet<String>,
     /// Guild chat messages sent at runtime via `C_Club.SendMessage`. Appended
     /// after the static seed messages exposed by `C_Club.GetMessagesBefore`.
     pub guild_chat_messages: Vec<GuildChatMessage>,
