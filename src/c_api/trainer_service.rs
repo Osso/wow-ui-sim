@@ -1,7 +1,7 @@
 //! INFERRED host-supplied class trainer rows; native evidence is pending as R88cb.
 
 use crate::lua_api::globals::missing_surface::tooltip_info::tooltip_for_spell;
-use crate::lua_api::methods::{borrow_state, borrow_state_mut};
+use crate::lua_api::methods::{borrow_state, borrow_state_mut, create_table, table_get, table_set};
 use crate::lua_bridge::{FromStack, table_set_rust_fn_static};
 use rilua::vm::{gc::arena::GcRef, state::LuaState, table::Table};
 use rilua::{LuaResult, Val};
@@ -76,10 +76,13 @@ impl Default for TrainerState {
     }
 }
 
+// Forever TrainerDocumentation.lua:7-44 declares these C_Trainer methods;
+// TrainerConstantsDocumentation.lua:5-18 defines TrainerType values.
 pub(crate) fn register_forever_trainer_namespace(
     state: &mut LuaState,
     namespace: GcRef<Table>,
 ) -> LuaResult<()> {
+    register_trainer_type_enum(state);
     table_set_rust_fn_static(
         state,
         namespace,
@@ -93,6 +96,36 @@ pub(crate) fn register_forever_trainer_namespace(
         "SetCategorizeTrainerUI",
         set_categorize_trainer_ui,
     )
+}
+
+fn register_trainer_type_enum(state: &mut LuaState) {
+    let global = Val::Table(state.global);
+    let enum_table = ensure_table_field(state, global, "Enum");
+    let trainer_type = ensure_table_field(state, enum_table, "TrainerType");
+    table_set(state, trainer_type, "General", Val::Num(0.0));
+    table_set(state, trainer_type, "TalentsObsolete", Val::Num(1.0));
+    table_set(state, trainer_type, "Tradeskills", Val::Num(2.0));
+    table_set(state, trainer_type, "Pet", Val::Num(3.0));
+    let metadata = create_table_with_metadata(state);
+    table_set(state, enum_table, "TrainerTypeMeta", metadata);
+}
+
+fn ensure_table_field(state: &mut LuaState, parent: Val, key: &str) -> Val {
+    let existing = table_get(state, parent, key);
+    if matches!(existing, Val::Table(_)) {
+        return existing;
+    }
+    let created = create_table(state);
+    table_set(state, parent, key, created);
+    created
+}
+
+fn create_table_with_metadata(state: &mut LuaState) -> Val {
+    let metadata = create_table(state);
+    table_set(state, metadata, "MinValue", Val::Num(0.0));
+    table_set(state, metadata, "MaxValue", Val::Num(3.0));
+    table_set(state, metadata, "NumValues", Val::Num(4.0));
+    metadata
 }
 
 fn get_categorize_trainer_ui(state: &mut LuaState) -> LuaResult<u32> {
