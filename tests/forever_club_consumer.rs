@@ -20,9 +20,12 @@ fn load_game_addons(env: &WowLuaEnv) {
 }
 
 #[test]
-fn unit_popup_battle_tag_friend_request_closes_menu() {
+fn unit_popup_battle_tag_friend_request_updates_club_state() {
     let env = WowLuaEnv::new().expect("Lua environment should initialize");
     load_game_addons(&env);
+    let member_name: String = env
+        .eval("return C_Club.GetMemberInfo('guild-0', C_Club.GetClubMembers('guild-0')[2]).name")
+        .unwrap();
     env.exec(
         r#"
         local memberIDs = C_Club.GetClubMembers('guild-0')
@@ -35,6 +38,10 @@ fn unit_popup_battle_tag_friend_request_closes_menu() {
     "#,
     )
     .unwrap();
+    assert_eq!(
+        env.state().borrow().club_battle_tag_friend_requests,
+        vec![member_name]
+    );
 }
 
 #[test]
