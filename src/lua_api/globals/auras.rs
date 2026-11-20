@@ -48,6 +48,18 @@ use rilua::{LuaResult, RustFn, Val};
 const AURA_DATA_HASH_FIELDS: usize = 23;
 const AURA_FILTER_COUNT: usize = 4;
 
+#[derive(Clone, Debug, Default)]
+pub struct GroupBuffSettings {
+    pub visual_alerts: Vec<GroupBuffAlert>,
+    pub hidden_spell_ids: Vec<i32>,
+}
+
+#[derive(Clone, Debug)]
+pub struct GroupBuffAlert {
+    pub spell_id: i32,
+    pub visual_value: i32,
+}
+
 pub fn register_all(state: &mut LuaState) {
     let ns = ensure_c_unit_auras(state);
     ensure_runtime_aura_state(state, ns);

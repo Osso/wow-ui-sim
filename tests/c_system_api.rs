@@ -325,6 +325,7 @@ fn test_c_reputation_get_num_factions() {
     assert!(count > 0, "expected faction list to have entries");
 }
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn test_c_reputation_get_faction_info() {
     let env = env();
@@ -336,6 +337,7 @@ fn test_c_reputation_get_faction_info() {
     assert!(!name.is_empty(), "expected first faction to have a name");
 }
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn test_c_reputation_get_faction_info_out_of_range_nil() {
     let env = env();

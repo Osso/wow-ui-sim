@@ -1,5 +1,5 @@
-//! Retail 12.0.5 aura-instance tooltip input boundary.
-//! Polarity/miss policies are inferred; restricted aura output remains unmodeled.
+//! Retail and Forever aura-instance tooltip input boundaries.
+//! Forever lookup semantics are inferred; restricted aura output remains unmodeled.
 
 use crate::lua_api::globals::missing_surface::tooltip_info::tooltip_for_aura_instance;
 use crate::lua_api::methods::val_to_string;

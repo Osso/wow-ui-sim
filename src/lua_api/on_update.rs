@@ -44,7 +44,7 @@ pub(crate) fn fire_state(
     let mut timings = dispatch_tick_handlers(state, &frame_ids, elapsed)?;
     #[cfg(feature = "retail-12-0-5")]
     super::frame::methods::widgets::tick_countdown_formatters(state)?;
-    #[cfg(feature = "retail-12-1-0")]
+    #[cfg(any(feature = "retail-12-1-0", feature = "client-wowforever"))]
     crate::c_api::c_encounter_timeline::end_tick(state)?;
     let started = Instant::now();
     super::env_runtime::finalize_frame_metrics_state(state, elapsed * 1000.0);
@@ -75,7 +75,7 @@ fn begin_tick(state: &mut LuaState, elapsed: f64) -> crate::Result<()> {
     super::globals::real::loot_specialization::apply_pending(state)?;
     #[cfg(feature = "player-cast-durations")]
     super::channeling::tick(state)?;
-    #[cfg(feature = "retail-12-1-0")]
+    #[cfg(any(feature = "retail-12-1-0", feature = "client-wowforever"))]
     crate::c_api::c_encounter_timeline::begin_tick(state, elapsed)?;
     {
         let mut sim = borrow_state_mut(state)?;

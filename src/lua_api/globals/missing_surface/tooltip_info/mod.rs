@@ -66,7 +66,7 @@ fn register_c_tooltip_info(state: &mut LuaState) -> LuaResult<()> {
     register_retail_merchant_tooltip_info(state, table_ref)?;
     register_item_spell_aura_methods(state, table_ref)?;
     register_spell_aura_unit_methods(state, table_ref)?;
-    #[cfg(feature = "retail-12-0-5")]
+    #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
     register_spell_mount_tooltip_info(state, table_ref)?;
     #[cfg(feature = "client-retail")]
     register_retail_pvp_talent_tooltip_info(state, table_ref)?;
@@ -183,11 +183,13 @@ fn register_retail_merchant_tooltip_info(
     Ok(())
 }
 
-#[cfg(feature = "retail-12-0-5")]
+// INFERRED for Forever: its docs declare the aura getter shapes; reuse Retail's state lookup.
+#[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 fn register_spell_mount_tooltip_info(
     state: &mut LuaState,
     table_ref: GcRef<Table>,
 ) -> LuaResult<()> {
+    #[cfg(feature = "retail-12-0-5")]
     crate::c_api::c_tooltip_info_spell_mount::register(state, table_ref)?;
     crate::c_api::c_tooltip_info_aura_instance::register(state, table_ref)?;
     crate::c_api::c_tooltip_info_indexed_aura::register(state, table_ref)?;
@@ -352,25 +354,32 @@ pub(crate) fn tooltip_for_spell_identifier_options(
     }
 }
 
-/// Narrow player-only lookup; clone before the unchanged builder allocates in the VM.
-#[cfg(feature = "retail-12-0-5")]
+/// Select a supplied unit aura before the tooltip builder allocates in the VM.
+#[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 pub(crate) fn tooltip_for_aura_instance(
     state: &mut LuaState,
     unit: &str,
     instance_id: i32,
     helpful: Option<bool>,
 ) -> rilua::Val {
-    let aura = if unit == "player" {
-        spell::lookup_player_aura_by_instance_id(state, instance_id)
-            .filter(|aura| helpful.is_none_or(|helpful| aura.is_helpful == helpful))
-    } else {
-        None
-    };
+    use crate::lua_api::globals::auras::{AuraFilter, collect_visible_unit_auras};
+
+    let aura = match helpful {
+        Some(true) => collect_visible_unit_auras(state, unit, AuraFilter::Helpful),
+        Some(false) => collect_visible_unit_auras(state, unit, AuraFilter::Harmful),
+        None => {
+            let mut auras = collect_visible_unit_auras(state, unit, AuraFilter::Helpful);
+            auras.extend(collect_visible_unit_auras(state, unit, AuraFilter::Harmful));
+            auras
+        }
+    }
+    .into_iter()
+    .find(|aura| aura.aura_instance_id == instance_id);
     spell::tooltip_for_unit_aura(state, aura)
 }
 
 /// Dispatch the selected clone through the unchanged aura payload builder.
-#[cfg(feature = "retail-12-0-5")]
+#[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 pub(crate) fn tooltip_for_selected_indexed_aura(
     state: &mut LuaState,
     aura: Option<crate::lua_api::state::AuraInfo>,

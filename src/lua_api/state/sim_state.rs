@@ -72,7 +72,7 @@ pub struct SimState {
     pub(crate) source_location_exclusions: Vec<Vec<u8>>,
     #[cfg(feature = "retail-12-1-5")]
     pub(crate) weather: crate::c_api::c_weather::WeatherState,
-    #[cfg(feature = "retail-12-1-0")]
+    #[cfg(any(feature = "retail-12-1-0", feature = "client-wowforever"))]
     pub(crate) encounter_timeline: crate::c_api::c_encounter_timeline::Timeline,
     pub events: EventQueue,
     pub scripts: ScriptRegistry,
@@ -360,6 +360,9 @@ pub struct SimState {
     pub barber_shop: BarberShopState,
     /// Explicit DamageMeter snapshots; combat publication is blocked pending secrecy.
     pub damage_meter: crate::c_api::c_damage_meter::DamageMeterInput,
+    /// INFERRED host-supplied history; no automatic combat events are invented.
+    #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
+    pub combat_log_history: crate::c_api::combat_log_history::CombatLogHistory,
     pub item_interaction: Option<crate::c_api::c_item_interaction::ItemInteractionInfo>,
     /// One host-supplied item-interaction tooltip input; native writers are not modeled.
     pub item_interaction_tooltip_input: Option<crate::c_api::ItemInteractionTooltipInput>,
@@ -746,6 +749,9 @@ pub struct SimState {
     pub pvp_request_transport: crate::c_api::c_pvp::PvpRequestTransport,
     /// Explicit aura-filter classification and raid dispel capabilities.
     pub aura_filter_facts: crate::lua_api::game_data::AuraFilterFacts,
+    /// Session-scoped settings read by the Blizzard group-buff consumers.
+    #[cfg(feature = "aura-instance-enumeration")]
+    pub(crate) group_buff_settings: crate::lua_api::globals::auras::GroupBuffSettings,
     /// Live target auras; seeded with the legacy target fixture.
     pub target_auras: Vec<crate::lua_api::game_data::AuraInfo>,
     pub inventory_item_cooldowns: HashMap<i32, SpellCooldownState>,

@@ -1,6 +1,6 @@
 # Combat-log setting state
 
-This slice verifies existing ordinary `C_CombatLog` setting storage. It does not add runtime behavior or model combat-log filtering/retention enforcement.
+This slice verifies stored `C_CombatLog` settings and links the Retail/Forever history model. **INFERRED (simulator mapping):** the Rust model preserves the previous fixture's settings and traversal behavior; this is not native-parity evidence. It does not implement filter matching, retention pruning or message-limit enforcement.
 
 ## Contract under test
 
@@ -15,7 +15,7 @@ Five grouped tests in `tests/c_namespace_noop_replacements.rs`, committed `7bd7f
 
 Follow-up `3d69ec6ea` writes distinct settings in both environments: first `(true, 180)`, then second `(true, 120)` and `(false, 60)`, asserting neither write leaks across environments. Independent `/tmp/verify-combatlog-settings-isolation-ledger.json` records fresh 5/5 each on retail 12.0.0/12.0.5/12.0.7, fmt/readability PASS and exact unchanged-runtime gate reuse. Metadata verification at `19eab5ef4` records 14,933 fresh hashes, zero stale, zero renewals, 16 additions, four credits and validator exit 0 with 3,410 matching rows. This is stored-setting proof only; it does not alter runtime behavior or the initial 5/5 evidence. Four bounded audit credits do not attach the earlier broad fixture tests as native proof.
 
-Existing implementation: `src/lua_api/workarounds/temporary/combat_log_state.rs`. Stored settings are part of a temporary combat-log fixture, not a complete combat history model.
+Settings and history storage for Retail/Forever live in `src/c_api/combat_log_history.rs`; the temporary bootstrap retains compatibility helpers and the other profiles' fixture. See the [combat-log history contract](combat-log-history-state.md).
 
 ## Message-limit query
 
@@ -25,4 +25,4 @@ Prior SetMessageLimit event proof remains separate. These tests do not establish
 
 ## Gaps
 
-Filtering effects, pruning, clocks, defaults, invalid-input/coercion/error behavior, events, reset/persistence/lifecycle and native consumer behavior remain unproven. Restriction/secret/taint enforcement is deferred. No broader combat-log implementation or earlier-profile availability claim follows from setting-state tests.
+**UNKNOWN (native):** filter matching, pruning, clocks, defaults, invalid-input/coercion/error behavior, events, reset/persistence/lifecycle and restriction/secret/taint behavior. The simulator's empty history, `300` retention/message-limit defaults and disabled filtered-events flag are **INFERRED (fixture parity)**. The new original-processor test proves only those simulator behaviors and two-record traversal on Retail/Forever; it does not establish native behavior or earlier-profile parity.

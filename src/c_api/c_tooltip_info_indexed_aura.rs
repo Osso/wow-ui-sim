@@ -1,5 +1,5 @@
-//! Retail 12.0.5 indexed-aura tooltip input boundaries.
-//! Lookup/default/miss policies are inferred; access/restricted output remain unmodeled.
+//! Retail and Forever indexed-aura tooltip input boundaries.
+//! Forever lookup semantics are inferred; access/restricted output remain unmodeled.
 
 use crate::lua_api::globals::auras::{
     AuraFilter, aura_matches_filter_string, collect_visible_unit_auras,
@@ -96,10 +96,6 @@ fn select_indexed_aura(
     polarity: AuraFilter,
 ) -> Option<AuraInfo> {
     if index <= 0 {
-        return None;
-    }
-    // The helper fabricates target auras; they are not live Debuff backing state.
-    if matches!(polarity, AuraFilter::Harmful) && unit == "target" {
         return None;
     }
     let helpful = matches!(polarity, AuraFilter::Helpful);

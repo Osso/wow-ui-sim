@@ -100,7 +100,7 @@ macro_rules! build_empty_sim_state {
             gamepad_allow_hover_events_with_free_look: false,
             #[cfg(feature = "retail-12-1-5")]
             weather: crate::c_api::c_weather::WeatherState::default(),
-            #[cfg(feature = "retail-12-1-0")]
+            #[cfg(any(feature = "retail-12-1-0", feature = "client-wowforever"))]
             encounter_timeline: crate::c_api::c_encounter_timeline::Timeline::default(),
             scripts: ScriptRegistry::default(),
             ui_reload_requested: false,
@@ -316,6 +316,8 @@ macro_rules! build_empty_sim_state {
             azerite_empowered: AzeriteEmpoweredItemState::default(),
             barber_shop: BarberShopState::default(),
             damage_meter: crate::c_api::c_damage_meter::DamageMeterInput::default(),
+            #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
+            combat_log_history: crate::c_api::combat_log_history::CombatLogHistory::default(),
             item_interaction: None,
             item_interaction_tooltip_input: None,
             possession_spell_id: None,
@@ -612,6 +614,8 @@ macro_rules! build_empty_sim_state {
             pvp_match_active: false,
             pvp_request_transport: Default::default(),
             aura_filter_facts: Default::default(),
+            #[cfg(feature = "aura-instance-enumeration")]
+            group_buff_settings: Default::default(),
             target_auras: crate::lua_api::globals::auras::target_fixture_auras(),
             inventory_item_cooldowns: ::std::collections::HashMap::new(),
             item_cooldowns: ::std::collections::HashMap::new(),

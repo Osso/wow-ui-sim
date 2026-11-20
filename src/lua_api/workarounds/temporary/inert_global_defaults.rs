@@ -290,7 +290,10 @@ mod tests {
         ))
         .expect("expected faction query result should be set");
 
-        let world_check = if cfg!(any(feature = "client-retail", feature = "client-wowforever")) {
+        let world_check = if cfg!(any(
+            feature = "client-retail",
+            feature = "client-wowforever"
+        )) {
             r#"if IsPlayerInWorld() ~= false then return "player_world" end"#
         } else {
             r#"if IsPlayerInWorld() ~= true then return "player_world" end"#
