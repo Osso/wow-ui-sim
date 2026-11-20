@@ -167,7 +167,7 @@ fn reparent_aura_frame(
 ) -> LuaResult<(bool, bool)> {
     use crate::lua_api::frame::methods::button_anchor_hierarchy::apply_parent_change;
     use crate::lua_api::methods::{borrow_state_mut, clear_child_from_rilua_parent_key};
-    let mut sim = borrow_state_mut(state)?;
+    let sim = borrow_state_mut(state)?;
     if crate::lua_api::frame::methods::methods_hierarchy::would_create_parent_cycle(
         &sim.widgets,
         frame_id,
