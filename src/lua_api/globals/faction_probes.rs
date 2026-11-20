@@ -273,6 +273,7 @@ const REPUTATION_METHODS: &[(&str, RustFn)] = &[
         crate::c_api::c_reputation::get_faction_paragon_info,
     ),
     ("GetNumFactions", reputation_get_num_factions),
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     ("GetFactionInfo", reputation_get_faction_info),
     ("GetWatchedFactionData", reputation_get_watched_faction_data),
     (
@@ -350,6 +351,7 @@ fn reputation_get_num_factions(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 fn reputation_get_faction_info(state: &mut LuaState) -> LuaResult<u32> {
     let index = stack_i32(state, 1).unwrap_or(0);
     let Some(entry) = reputation_data::get_faction_by_index(index) else {
