@@ -30,6 +30,7 @@ local canJoinA, queueCountA = C_SocialQueue.GetGroupInfo(groups[1])
 local canJoinB, queueCountB, needTankB = C_SocialQueue.GetGroupInfo(groups[2])
 assert(canJoinA and queueCountA == 1 and canJoinB and queueCountB == 2 and needTankB, "group info was not projected per ID")
 assert(#C_SocialQueue.GetGroupMembers(groups[1]) == 0, "group member query should return the supplied empty list")
+assert(select(17, GetGuildRosterInfo(1)) == "member-guid", "roster query lost the supplied GUID")
 assert(C_SocialQueue.GetGroupQueues(groups[2])[1].clientID == 202, "queue query returned the wrong group data")
 FriendsFrame_UpdateQuickJoinTab(#groups)
 assert(FriendsFrameTab4:GetText() == QUICK_JOIN .. " " .. string.format(NUMBER_IN_PARENTHESES, 2), "FriendsFrame tab did not count both groups")
@@ -39,8 +40,8 @@ local guildEntry = {guid = groups[1]}
 local otherEntry = {guid = groups[2]}
 QuickJoinEntryMixin.UpdateLeader(guildEntry)
 QuickJoinEntryMixin.UpdateLeader(otherEntry)
-assert(guildEntry:HasLocalRelationshipWithLeader(), "guild leader relationship was not detected")
-assert(not otherEntry:HasLocalRelationshipWithLeader(), "non-guild leader relationship was reported")
+assert(QuickJoinEntryMixin.HasLocalRelationshipWithLeader(guildEntry), "guild leader relationship was not detected")
+assert(not QuickJoinEntryMixin.HasLocalRelationshipWithLeader(otherEntry), "non-guild leader relationship was reported")
 "#;
 
 fn setup() -> WowLuaEnv {
