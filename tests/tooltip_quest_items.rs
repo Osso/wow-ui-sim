@@ -35,9 +35,11 @@ fn seed_quest_items(env: &WowLuaEnv) -> (i32, i32) {
     let mut dialog = sim.quest_log_entries.entries[0].clone();
     dialog.quest_id = dialog_id;
     dialog.reward_items = vec![reward_item(6948, "Dialog reward")];
+    dialog.reward_choices = vec![reward_item(229181, "Dialog choice")];
     let mut log = sim.quest_log_entries.entries[1].clone();
     log.quest_id = log_id;
     log.reward_items = vec![reward_item(229181, "Quest-log reward")];
+    log.reward_choices = vec![reward_item(6948, "Quest-log choice")];
     sim.quest_log_entries.entries = vec![dialog, log];
     sim.quest_log = vec![dialog_id as u32, log_id as u32];
     sim.selected_quest_log_id = Some(dialog_id as u32);
@@ -54,13 +56,13 @@ fn seed_quest_items(env: &WowLuaEnv) -> (i32, i32) {
     (dialog_id, log_id)
 }
 
-fn assert_quest_reward_hover(env: &WowLuaEnv, quest_log: bool, item_id: u32) {
+fn assert_quest_item_hover(env: &WowLuaEnv, quest_log: bool, selector: &str, item_id: u32) {
     env.exec(&format!(
         r#"
         QuestInfoFrame.questLog = {quest_log}
         local button = QuestInfoRewardsFrame.RewardButtons[1]
         button:SetID(1)
-        button.type = 'reward'
+        button.type = '{selector}'
         button.objectType = 'item'
         button:Show()
         button:OnEnter()
@@ -72,6 +74,7 @@ fn assert_quest_reward_hover(env: &WowLuaEnv, quest_log: bool, item_id: u32) {
         assert(data.lines[1].leftText == expected.lines[1].leftText, 'quest reward tooltip uses its supplied item')
         "#,
         getter = if quest_log { "GetQuestLogItem" } else { "GetQuestItem" },
+        selector,
     ))
     .unwrap();
 }
@@ -82,9 +85,11 @@ fn quest_info_reward_hover_uses_dialog_and_quest_log_items() {
         return;
     };
     let (dialog_id, log_id) = seed_quest_items(&env);
-    assert_quest_reward_hover(&env, false, 6948);
+    assert_quest_item_hover(&env, false, "reward", 6948);
+    assert_quest_item_hover(&env, false, "choice", 229181);
     env.state().borrow_mut().selected_quest_log_id = Some(log_id as u32);
-    assert_quest_reward_hover(&env, true, 229181);
+    assert_quest_item_hover(&env, true, "reward", 229181);
+    assert_quest_item_hover(&env, true, "choice", 6948);
     assert_ne!(dialog_id, log_id);
 }
 
