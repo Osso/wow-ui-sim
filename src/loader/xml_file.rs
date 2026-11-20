@@ -737,9 +737,7 @@ struct LoadingAddonTableGuard<'env, 'lua> {
 
 impl<'env, 'lua> LoadingAddonTableGuard<'env, 'lua> {
     fn install(env: &'env LoaderEnv<'lua>, addon_table: Val) -> Self {
-        let secure_env = env
-            .with_state(|state| Ok(state.loading_addon_secure_env == Some(true)))
-            .unwrap_or(false);
+        let secure_env = env.state().borrow().loading_addon_secure_env == Some(true);
         let (previous, previous_secure_env) =
             set_loading_addon_context(env, addon_table, Val::Bool(secure_env))
                 .unwrap_or((Val::Nil, Val::Nil));
