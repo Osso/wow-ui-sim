@@ -10,7 +10,7 @@ Primary identifier reference: upstream wowless `data/products/wow/structures.yam
 
 - [x] Keep day storage empty in normal defaults; only host-supplied records make day queries positive. Do not add a Lua editor, calendar producer, or default day rows.
 - [x] Address host rows by exact `(offset_months: i32, month_day: u32)` key and dense Vec order. `GetNumDayEvents` returns the matching length, zero for absent/empty keys. `GetDayEvent` uses 1-based positions, one DTO for a supplied row, one nil on miss. Ordering, representability and one-nil arity are explicit simulator model policies, not native bounds/arity proof; `MayReturnNothing` does not establish arity.
-- [ ] (INFERRED; native evidence pending R88ca) On Retail and Forever, `C_Calendar.GetNumPendingInvites` counts supplied day-event rows whose `inviteStatus` is `Enum.CalendarStatus.Invited`; replacing the supplied rows fires `CALENDAR_UPDATE_PENDING_INVITES` when this count changes.
+- [x] (INFERRED; native evidence pending R88ca) On Retail and Forever, `C_Calendar.GetNumPendingInvites` counts supplied day-event rows whose `inviteStatus` is `Enum.CalendarStatus.Invited`; replacing the supplied rows fires `CALENDAR_UPDATE_PENDING_INVITES` when this count changes.
 - [x] Return independent outer and start/end tables. Caller mutation must not change host data or other results; replacement and erase must affect later lookups while retained snapshots stay unchanged. Environments must not share day rows.
 
 ### Projection inventory
