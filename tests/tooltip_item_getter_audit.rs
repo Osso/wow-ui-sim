@@ -4,9 +4,11 @@
 mod tooltip_full_env_helpers;
 
 use wow_ui_sim::c_api::{
-    ItemInteractionTooltipInput, ItemInteractionTooltipLine, QuestPartyProgressHeading,
-    QuestPartyProgressParticipant, QuestPartyProgressRow, QuestPartyProgressSnapshot,
-    QuestPartyProgressText,
+    ItemInteractionTooltipInput, ItemInteractionTooltipLine,
+    quest_party_progress::{
+        QuestPartyProgressHeading, QuestPartyProgressParticipant, QuestPartyProgressRow,
+        QuestPartyProgressSnapshot, QuestPartyProgressText,
+    },
     quest_special_item::{QuestSpecialItemCacheRecord, QuestSpecialItemObject},
     recipe_rank_tooltip::RecipeRankTooltipRecord,
 };
