@@ -1141,6 +1141,14 @@ pub(super) fn is_secure_replay_library_addon(folder_name: &str) -> bool {
         return false;
     }
 
+    // Forever's private-aura tooltip needs TooltipDataHandlerMixin in secureenv
+    // before its Blizzard_GameTooltip dependency is replayed.
+    if folder_name == "Blizzard_SharedXMLGame"
+        && crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever
+    {
+        return true;
+    }
+
     // These Classic colors consume public FrameXML masks, absent in secureenv.
     if folder_name == "Blizzard_CombatLogBase"
         && matches!(
