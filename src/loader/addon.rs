@@ -959,6 +959,14 @@ fn should_load_addon_file(
     if !toc.file_allows_screen(index, env.state().borrow().screen_kind) {
         return false;
     }
+    if pass.use_secure_env(ctx)
+        && ctx.name == "Blizzard_RaidWarning"
+        && file_rel == Path::new("RaidWarning.xml")
+    {
+        // Secure replay needs RaidWarningUtil, not a second frame.
+        // Its OnLoad calls a global-only mixin.
+        return false;
+    }
     if should_skip_addon_file(toc, file_rel) {
         return false;
     }
