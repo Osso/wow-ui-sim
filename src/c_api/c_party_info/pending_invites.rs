@@ -7,7 +7,6 @@ use crate::lua_api::methods::{
     borrow_state, borrow_state_mut, create_string, create_table, table_set,
 };
 use crate::lua_bridge::{FromStack, TableBuilder, table_set_rust_fn_static};
-use rilua::vm::closure::{Closure, RustClosure};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val, runtime_error};
 use serde::Deserialize;
