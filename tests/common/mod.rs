@@ -364,7 +364,11 @@ pub fn load_profile_framexml(env: &WowLuaEnv) {
 pub fn supply_empty_forever_spellbook_outfits(env: &WowLuaEnv) {
     if wow_ui_sim::client_profile::ACTIVE == wow_ui_sim::client_profile::ClientProfile::WowForever {
         let mut state = env.state().borrow_mut();
-        state.forever_outfits = Some(Some(Vec::new()));
+        state.transmog_outfit_catalog.entries.clear();
+        #[cfg(feature = "client-wowforever")]
+        {
+            state.transmog_outfit_catalog.outfits_info_supplied = true;
+        }
         state.transmog_availability.enabled = Some(false);
     }
 }

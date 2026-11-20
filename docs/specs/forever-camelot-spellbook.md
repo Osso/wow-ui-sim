@@ -4,7 +4,7 @@ Forever 1.60.1.70532 uses the shared transmog availability observation and a sep
 
 ## What it must do
 
-- [x] Extend IsTransmogEnabled publication and add only GetOutfitsInfo on Forever via ACTIVE, without enabling the modern outfit catalog.
+- [x] Extend IsTransmogEnabled publication and provide the Forever GetOutfitInfo/GetOutfitsInfo queries via the Forever profile gate, while storing rows in the shared outfit catalog.
 - [x] Reuse the shared Option<bool> and its named unset error; preserve true, false and independent environments.
 - [x] Distinguish unset (named `C_TransmogOutfitInfo.GetOutfitsInfo: outfit list has not been supplied` error), explicit no-result (zero results), and complete supplied records (one array, including empty).
 - [x] Return fresh rows and nested situationCategories arrays on each snapshot, preserving supplied record order and all seven declared fields.
@@ -19,7 +19,7 @@ Forever 1.60.1.70532 uses the shared transmog availability observation and a sep
 - `src/c_api/transmog_availability.rs`: shared availability registrar and observation.
 - `src/c_api/forever_outfits.rs`: Forever-only supplied query.
 - `src/c_api/outfit_entry.rs`: complete shared record and fresh snapshot conversion.
-- `src/lua_api/state/sim_state.rs` and `state.rs`: environment-local supplied list.
+- `src/lua_api/state/sim_state.rs` and `state.rs`: shared outfit catalog; Forever-only supplied-state marker.
 - `tests/forever_camelot_spellbook.rs`: original selected consumers.
 
 ## Tests asserting this spec

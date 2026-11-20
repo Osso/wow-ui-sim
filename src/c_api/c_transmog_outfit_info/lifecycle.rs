@@ -61,7 +61,17 @@ fn insert_outfit(state: &LuaState, name: String, icon: i64) -> LuaResult<i64> {
     if sim.transmog_outfit_catalog.entries.len() >= capacity as usize {
         return Err(rilua::runtime_error("no unlocked outfit slots available"));
     }
-    let entries = &mut sim.transmog_outfit_catalog.entries;
+    let id = append_outfit_entry(&mut sim.transmog_outfit_catalog.entries, name, icon);
+
+    sim.transmog_outfits.saved.insert(id, Default::default());
+    #[cfg(feature = "client-wowforever")]
+    {
+        sim.transmog_outfit_catalog.outfits_info_supplied = true;
+    }
+    Ok(id)
+}
+
+fn append_outfit_entry(entries: &mut Vec<OutfitEntry>, name: String, icon: i64) -> i64 {
     let id = entries
         .iter()
         .map(|entry| entry.outfit_id)
@@ -83,8 +93,7 @@ fn insert_outfit(state: &LuaState, name: String, icon: i64) -> LuaResult<i64> {
         is_disabled: false,
         player_facing_outfit_index: index,
     });
-    sim.transmog_outfits.saved.insert(id, Default::default());
-    Ok(id)
+    id
 }
 
 #[cfg(not(feature = "client-wowforever"))]

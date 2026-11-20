@@ -31,13 +31,13 @@ Focused default-retail GREEN: 5/5 tests, exit 0, on shared build revision `72220
 ## Forever 70707 singular lookup
 
 Pinned `TransmogOutfitInfoDocumentation.lua:312–325` declares `GetOutfitInfo`.
-Forever queries the same supplied `forever_outfits` entries as `GetOutfitsInfo`,
-not the Retail catalog. Supplied outfit IDs and entry fields are preserved in
-fresh snapshots. **EMULATED:** `emulated_singular_outfit_lookup` treats an
-unsupplied observation or a supplied no-list observation as no match, returning
+Forever `GetOutfitInfo` and `GetOutfitsInfo` read the same `transmog_outfit_catalog`
+entries as the Retail lookup and outfit-creation path. `outfits_info_supplied`
+tracks whether Forever has received an outfit-list observation; it stores no
+outfit rows. **EMULATED:** an unsupplied singular query or a missing ID returns
 zero values; native missing-state arity is UNKNOWN. Enumeration retains its
-existing strict unsupplied-state error. The exact supplied-record and empty-state
-contract is exercised by `src/c_api/forever_lib_baseline_tests.rs`.
+strict unsupplied-state error. Supplied records and the empty-state contract are
+exercised by `src/c_api/forever_lib_baseline_tests.rs`.
 
 ## Known gaps (current cycle)
 

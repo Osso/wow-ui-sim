@@ -71,32 +71,40 @@ fn outfit_info_uses_existing_forever_catalog_and_emulated_empty() {
             .unwrap(),
         0
     );
-    env.state().borrow_mut().forever_outfits = Some(None);
+    {
+        let mut state = env.state().borrow_mut();
+        state.transmog_outfit_catalog.entries.clear();
+        state.transmog_outfit_catalog.outfits_info_supplied = true;
+    }
     assert_eq!(
         env.eval::<i32>("return select('#', C_TransmogOutfitInfo.GetOutfitInfo(91))")
             .unwrap(),
         0
     );
-    env.state().borrow_mut().forever_outfits = Some(Some(vec![
-        OutfitEntry {
-            outfit_id: 91,
-            name: "Copper".into(),
-            situation_categories: vec!["combat".into()],
-            icon: 123,
-            is_event_outfit: false,
-            is_disabled: true,
-            player_facing_outfit_index: 7,
-        },
-        OutfitEntry {
-            outfit_id: 305,
-            name: "Silver".into(),
-            situation_categories: vec!["rest".into()],
-            icon: 456,
-            is_event_outfit: true,
-            is_disabled: false,
-            player_facing_outfit_index: 42,
-        },
-    ]));
+    {
+        let mut state = env.state().borrow_mut();
+        state.transmog_outfit_catalog.outfits_info_supplied = true;
+        state.transmog_outfit_catalog.entries = vec![
+            OutfitEntry {
+                outfit_id: 91,
+                name: "Copper".into(),
+                situation_categories: vec!["combat".into()],
+                icon: 123,
+                is_event_outfit: false,
+                is_disabled: true,
+                player_facing_outfit_index: 7,
+            },
+            OutfitEntry {
+                outfit_id: 305,
+                name: "Silver".into(),
+                situation_categories: vec!["rest".into()],
+                icon: 456,
+                is_event_outfit: true,
+                is_disabled: false,
+                player_facing_outfit_index: 42,
+            },
+        ];
+    }
     let actual: (String, String, i32, i32, bool) = env.eval(r#"
         local first = C_TransmogOutfitInfo.GetOutfitInfo(91)
         local second = C_TransmogOutfitInfo.GetOutfitInfo(305)

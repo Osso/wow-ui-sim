@@ -1,3 +1,7 @@
+## [2026-11-20] implementation | Shared Retail/Forever outfit catalog
+
+Updated the [outfit catalog contract](../specs/outfit-catalog-lookups.md), [Forever spellbook contract](../specs/forever-camelot-spellbook.md), [Forever spellbook model](systems/forever-camelot-spellbook.md), and [tooltip contract](../specs/tooltip-outfit.md). `SimState.transmog_outfit_catalog` is now the sole outfit-record store; Forever retains a supplied-state flag, not duplicate rows. Proof is recorded in the lane handoff.
+
 ## [2026-11-20] implementation | Retail/Forever combat-log history
 
 Updated the [history contract](../specs/combat-log-history-state.md) and [system page](../systems/combat-log-history.md). **INFERRED (fixture parity):** Rust now owns the Retail/Forever history, cursor, settings and filter-settings handle; host input supplies records and no events are synthesized. **VERIFIED (simulator):** the selected original processor's empty and two-record refilter test passes on Retail and Forever. Native return details, filter rules, event ingestion and lifecycle remain UNKNOWN. The required profile compiles pass; Mists and Wrath each report two known `tooltip_for_cost_currency` dead-code warnings.

@@ -304,6 +304,7 @@ mod container_purchase_args;
 pub mod container_quest;
 pub mod engraving_inputs;
 pub mod external_event_url;
+#[cfg(feature = "client-wowforever")]
 mod forever_outfits;
 pub mod forever_startup;
 mod lfr_availability;

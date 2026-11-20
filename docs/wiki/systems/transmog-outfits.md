@@ -1,6 +1,6 @@
 # Transmog outfits
 
-Retail outfit editing stores catalog metadata, saved contents and a pending overlay in simulator state. The [publication closure contract](../../specs/patch-12-0-0-publication-sweep.md#transmog-outfit-closure-contract) owns required behavior and proof boundaries.
+Retail outfit editing and Forever outfit queries share catalog metadata in simulator state; Forever keeps a supplied-list flag but no second row store. Saved contents and a pending overlay remain separate state. The [publication closure contract](../../specs/patch-12-0-0-publication-sweep.md#transmog-outfit-closure-contract) owns required behavior and proof boundaries.
 
 ## State and API
 
@@ -24,5 +24,6 @@ Native prices/caps, artifact/spec restrictions, binding/race/form eligibility, a
 
 ## See Also
 
+- [Forever Camelot outfit queries](forever-camelot-spellbook.md) — shared outfit rows and Forever supplied-list state
 - [[transmog-inventory-slot-scope]] — previous cache/source mismatch, not a reason to monkey-patch vendor Lua
 - [[lua-api]] — runtime namespace registration
