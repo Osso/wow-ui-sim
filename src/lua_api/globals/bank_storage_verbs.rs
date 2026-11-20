@@ -1,4 +1,4 @@
-//! Shared guild-tabard lookup and bank globals used by the Mists storage panels.
+//! Shared guild-tabard and bank storage globals.
 
 use crate::c_api::ensure_namespace;
 use crate::items;
@@ -12,6 +12,12 @@ const MAX_BANK_BAG_SLOTS: i32 = 7;
 
 pub fn register_guild_tabard_files(lua: &mut rilua::Lua) -> crate::Result<()> {
     LuaApiMut::register_function(lua, "GetGuildTabardFiles", get_guild_tabard_files)?;
+    Ok(())
+}
+
+/// INFERRED from `Blizzard_GuildBankUI/Mainline/Blizzard_GuildBankUI.lua:719-721`.
+pub fn register_current_guild_bank_tab(lua: &mut rilua::Lua) -> crate::Result<()> {
+    LuaApiMut::register_function(lua, "GetCurrentGuildBankTab", get_current_guild_bank_tab)?;
     Ok(())
 }
 

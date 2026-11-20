@@ -19,6 +19,7 @@ Retail and WoW Forever `C_TooltipInfo` item getters must publish tooltips from s
 
 - `src/c_api/c_tooltip_info_item_sources.rs` — reads supplied quest and guild-bank item rows and publishes item tooltips.
 - `src/lua_api/globals/missing_surface/tooltip_info/probes.rs` — routes Retail and Forever registrations to the state-backed getters.
+- `src/lua_api/globals/bank_storage_verbs.rs` and `src/lua_api/globals/register.rs` — expose the existing selected-tab state reader to the Retail and Forever guild-bank consumer.
 
 ## Tests asserting this spec
 
