@@ -108,9 +108,17 @@ fn assert_filter_settings_are_rust_backed(env: &WowLuaEnv) {
     env.exec(
         r#"
         local settings = { combat = true, spell = false }
+        local received
+        local frame = CreateFrame("Frame")
+        local registered = frame:RegisterEventCallback(
+            "COMBAT_LOG_APPLY_FILTER_SETTINGS",
+            function(_, value) received = value end
+        )
+        assert(registered == false)
         C_CombatLog.ApplyFilterSettings(settings)
         assert(C_CombatLog._state.filterSettings == settings)
         assert(__wow_combat_log_get_filter_settings() == settings)
+        assert(received == settings)
         "#,
     )
     .expect("filter settings should be retained by the Rust history model");
