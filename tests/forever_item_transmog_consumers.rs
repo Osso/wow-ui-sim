@@ -7,7 +7,7 @@ use common::blizzard_addon_harness::{
 use wow_ui_sim::lua_api::state::BagItem;
 
 #[test]
-fn transmog_outfit_consumer_refreshes_from_two_created_outfits() {
+fn transmog_outfit_popup_adds_two_outfits_through_consumer() {
     common::with_timeout(240, || {
         let ui = blizzard_ui_dir();
         let env = new_blizzard_addon_env(&ui);

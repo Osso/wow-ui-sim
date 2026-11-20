@@ -1,9 +1,8 @@
 //! Outfit settings, catalog queries, and applied selection.
 //!
-//! The module is compiled for the retail API epochs and for the modern-engine
-//! classic profiles whose pinned `TransmogOutfitInfoDocumentation.lua` declares
-//! `C_TransmogOutfitInfo` (Mists 66 functions, Era and Anniversary 65; see
-//! `src/c_api/mod.rs`).
+//! The full module is compiled for retail API epochs and modern-engine classic
+//! profiles whose pinned API docs declare `C_TransmogOutfitInfo`. Forever uses
+//! only the two existing lifecycle handlers required by its selected consumer.
 
 mod catalog;
 pub use catalog::{OutfitCatalog, OutfitEntry};
