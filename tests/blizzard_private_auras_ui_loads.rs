@@ -1299,10 +1299,92 @@ fn supply_private_auras(env: &WowLuaEnv) {
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+const PRIVATE_AURA_ANCHOR_PLACEMENT_PROBE: &str = r#"
+    SetCVar('buffDurations', '1')
+    PrivateAuraAnchorParent1 = CreateFrame('Frame', 'PrivateAuraAnchorParent1')
+    PrivateAuraAnchorParent2 = CreateFrame('Frame', 'PrivateAuraAnchorParent2')
+    local function addAnchor(parent, index)
+        return C_UnitAuras.AddPrivateAuraAnchor({
+            unitToken = 'player', auraIndex = index, parent = parent,
+            showCooldownFrame = true, showCooldownEdge = true,
+            showCountdownNumbers = true,
+            iconInfo = {
+                iconAnchor = { point = 'CENTER', relativeTo = parent,
+                    relativePoint = 'CENTER', offsetX = 0, offsetY = 0 },
+                iconWidth = 36, iconHeight = 36,
+            },
+            durationAnchor = { point = 'TOP', relativeTo = parent,
+                relativePoint = 'BOTTOM', offsetX = 0, offsetY = 0 },
+        })
+    end
+    PrivateAuraAnchorID1 = addAnchor(PrivateAuraAnchorParent1, 1)
+    PrivateAuraAnchorID2 = addAnchor(PrivateAuraAnchorParent2, 2)
+"#;
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+const PRIVATE_AURA_ANCHOR_INITIAL_ASSERTIONS: &str = r#"
+    local first = select(1, PrivateAuraAnchorParent1:GetChildren())
+    local second = select(1, PrivateAuraAnchorParent2:GetChildren())
+    assert(first and second, 'reserved private aura frames must be parented to their anchors')
+    local _, firstCooldown = first.Cooldown:GetCooldownTimes()
+    local _, secondCooldown = second.Cooldown:GetCooldownTimes()
+    assert(first:IsShown() and first.Icon:GetTexture() == 301)
+    assert(first.Count:GetText() == '2' and first.Duration:IsShown())
+    assert(first.Duration:GetText() ~= '' and firstCooldown == 30000)
+    assert(second:IsShown() and second.Icon:GetTexture() == 302)
+    assert(second.Count:GetText() == '3' and second.Duration:IsShown())
+    assert(second.Duration:GetText() ~= '' and secondCooldown == 60000)
+"#;
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+const PRIVATE_AURA_ANCHOR_REPLACEMENT_PROBE: &str = r#"
+    C_UnitAurasPrivate._TriggerPrivateAuraUpdate('player', true, { isFullUpdate = true })
+"#;
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 #[test]
-fn private_aura_state_drives_selected_blizzard_consumers() {
+fn private_aura_anchor_places_and_refreshes_rendered_frames() {
     let env = load_full_game_ui();
     supply_private_auras(&env);
-    env.exec(PRIVATE_AURA_CONSUMER_PROBE)
-        .expect("selected private-aura consumers should read supplied host entries");
+    env.exec(PRIVATE_AURA_ANCHOR_PLACEMENT_PROBE).unwrap();
+    wow_ui_sim::startup::process_pending_timers(&env);
+    wow_ui_sim::startup::fire_one_on_update_tick(&env);
+    env.exec(PRIVATE_AURA_ANCHOR_INITIAL_ASSERTIONS)
+        .expect("both supplied private auras should render through Blizzard UI");
+    replace_first_private_aura(&env);
+    env.exec(PRIVATE_AURA_ANCHOR_REPLACEMENT_PROBE).unwrap();
+    wow_ui_sim::startup::process_pending_timers(&env);
+    wow_ui_sim::startup::fire_one_on_update_tick(&env);
+    env.exec(PRIVATE_AURA_ANCHOR_REFRESH_ASSERTIONS)
+        .expect("private aura replacement should refresh rendered state");
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+const PRIVATE_AURA_ANCHOR_REFRESH_ASSERTIONS: &str = r#"
+    local first = select(1, PrivateAuraAnchorParent1:GetChildren())
+    local second = select(1, PrivateAuraAnchorParent2:GetChildren())
+    local _, firstCooldown = first.Cooldown:GetCooldownTimes()
+    local _, secondCooldown = second.Cooldown:GetCooldownTimes()
+    assert(first:IsShown() and first.Icon:GetTexture() == 303)
+    assert(first.Count:GetText() == '4' and first.Duration:IsShown())
+    assert(first.Duration:GetText() ~= '' and firstCooldown == 45000)
+    assert(second:IsShown() and second.Icon:GetTexture() == 302)
+    assert(second.Count:GetText() == '3' and secondCooldown == 60000)
+"#;
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn replace_first_private_aura(env: &WowLuaEnv) {
+    let now = env.eval::<f64>("return GetTime()").unwrap();
+    let replacement = private_aura_entry(303, false, false, 4, 45.0, now);
+    let mut state = env.state().borrow_mut();
+    state.private_aura_data.private_auras_by_unit.insert(
+        "player".into(),
+        vec![replacement.clone(), private_aura_entry(302, false, false, 3, 60.0, now)],
+    );
+    state.private_aura_data.aura_data_by_unit.insert(
+        "player".into(),
+        [(303, replacement), (302, private_aura_entry(302, false, false, 3, 60.0, now))]
+            .into_iter()
+            .collect(),
+    );
 }
