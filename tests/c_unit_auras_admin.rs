@@ -20,6 +20,47 @@ fn env() -> WowLuaEnv {
     WowLuaEnv::new().expect("Failed to create Lua environment")
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn group_buff_settings_round_trip_and_notify_blizzard_listeners() {
+    let env = env();
+    let (alerts_ok, hidden_ok, alert_event_ok, hidden_event_ok): (bool, bool, bool, bool) = env
+        .eval(
+            r#"
+            local alertEvent, hiddenEvent = nil, nil
+            local listener = CreateFrame("Frame")
+            listener:RegisterEvent("GROUP_BUFF_VISUAL_ALERTS_CHANGED")
+            listener:RegisterEvent("HIDDEN_GROUP_BUFFS_CHANGED")
+            listener:SetScript("OnEvent", function(_, event, payload)
+                if event == "GROUP_BUFF_VISUAL_ALERTS_CHANGED" then alertEvent = payload end
+                if event == "HIDDEN_GROUP_BUFFS_CHANGED" then hiddenEvent = payload end
+            end)
+
+            local alerts = {
+                { spellID = 12345, visualValue = 2 },
+                { spellID = 67890, visualValue = 4 },
+            }
+            local hidden = { 23456, 78901 }
+            C_UnitAuras.SetGroupBuffVisualAlerts(alerts)
+            C_UnitAuras.SetHiddenGroupBuffs(hidden)
+            local actualAlerts = C_UnitAuras.GetGroupBuffVisualAlerts()
+            local actualHidden = C_UnitAuras.GetHiddenGroupBuffs()
+            return #actualAlerts == 2
+                    and actualAlerts[1].spellID == 12345 and actualAlerts[1].visualValue == 2
+                    and actualAlerts[2].spellID == 67890 and actualAlerts[2].visualValue == 4,
+                #actualHidden == 2 and actualHidden[1] == 23456 and actualHidden[2] == 78901,
+                alertEvent ~= nil and #alertEvent == 2 and alertEvent[2].spellID == 67890,
+                hiddenEvent ~= nil and #hiddenEvent == 2 and hiddenEvent[2] == 78901
+            "#,
+        )
+        .expect("group buff settings should round-trip through the public API");
+
+    assert!(alerts_ok, "group buff alert rows must retain their data and order");
+    assert!(hidden_ok, "hidden group buff spell IDs must retain their data and order");
+    assert!(alert_event_ok, "visual-alert listeners must receive the updated rows");
+    assert!(hidden_event_ok, "hidden-buff listeners must receive the updated spell IDs");
+}
+
 fn clear_buffs_and_insert(env: &WowLuaEnv, auras: Vec<AuraInfo>) {
     let mut state = env.state().borrow_mut();
     state.player.buffs.clear();
