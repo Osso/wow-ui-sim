@@ -6,7 +6,7 @@ use crate::lua_api::methods::{
     borrow_state, borrow_state_mut, create_string, create_table, registry_get, table_get_static,
     table_set_static,
 };
-use crate::lua_bridge::{FromStack, TableBuilder, stack_val, table_set_rust_fn_static};
+use crate::lua_bridge::{FromStack, TableBuilder, stack_val, table_set_rust_fn_static, val_to_i32};
 use rilua::vm::{gc::arena::GcRef, state::LuaState, table::Table};
 use rilua::{LuaResult, Val, runtime_error};
 
@@ -47,10 +47,11 @@ fn set_purchase_state(state: &mut LuaState) -> LuaResult<u32> {
     let guid = String::from_stack(state, 1)?;
     let product_id = i32::from_stack(state, 2)?;
     let purchase_state = i32::from_stack(state, 3)?;
+    let errors = purchase_errors(state, 4)?;
     let record = VasPurchaseRecord {
         product_id,
         state: purchase_state,
-        errors: Vec::new(),
+        errors,
     };
     if !borrow_state_mut(state)?
         .store_glue
@@ -61,6 +62,24 @@ fn set_purchase_state(state: &mut LuaState) -> LuaResult<u32> {
         ));
     }
     Ok(0)
+}
+
+fn purchase_errors(state: &LuaState, index: i32) -> LuaResult<Vec<i32>> {
+    let Val::Table(table) = stack_val(state, index) else {
+        return Err(runtime_error(
+            "A_Admin.SetStoreGluePurchaseState: errors must be an array",
+        ));
+    };
+    let values = state
+        .gc
+        .tables
+        .get(table)
+        .map(|table| table.array_slice().to_vec())
+        .unwrap_or_default();
+    values
+        .into_iter()
+        .map(|value| val_to_i32(value, index))
+        .collect()
 }
 
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {

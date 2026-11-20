@@ -2627,8 +2627,8 @@ mod storeglue_r88q_tuple {
     fn seed_purchase_records(env: &WowLuaEnv) {
         env.exec(
             r#"
-            A_Admin.SetStoreGluePurchaseState('Player-1-a1', 2003, 3)
-            A_Admin.SetStoreGluePurchaseState('Player-2-b2', 189, 4)
+            A_Admin.SetStoreGluePurchaseState('Player-1-a1', 2003, 3, {17, 0, -4})
+            A_Admin.SetStoreGluePurchaseState('Player-2-b2', 189, 4, {0, 29})
         "#,
         )
         .unwrap();
