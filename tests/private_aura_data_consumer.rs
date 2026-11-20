@@ -6,7 +6,8 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 
 const CONSUMER_PROBE: &str = r#"
     local privateUI = rawget(__secureenv, 'PrivateAuraAnchorContainerMixin')
-    local watcherMixin = rawget(__secureenv, 'PrivateAuraUnitWatcher')
+    local privateAuras = rawget(__secureenv, 'PrivateAuras')
+    local watcherMixin = privateAuras.PrivateAuraUnitWatcher
     local private = rawget(__secureenv, 'C_UnitAurasPrivate')
     local anchorSeen = {}
     local container = {
