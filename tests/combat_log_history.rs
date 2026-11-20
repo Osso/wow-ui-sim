@@ -61,20 +61,38 @@ fn install_test_message_formatter(env: &WowLuaEnv) {
 }
 
 fn assert_empty_history_contract(env: &WowLuaEnv) {
-    env.exec(
-        r##"
-        assert(__combatLogHistoryTestSecure.GetEntryCount() == 0)
-        local emptyCount = select("#", __combatLogHistoryTestSecure.GetCurrentEntryInfo())
-        local emptyEntry = __combatLogHistoryTestSecure.GetCurrentEntryInfo()
-        assert(emptyCount == 1 and emptyEntry == nil, "empty current-entry is one nil")
-        assert(__combatLogHistoryTestSecure.SeekToNewestEntry() == false, "empty seek returns false")
-        assert(C_CombatLog.ShouldShowCurrentEntry() == false)
-        __combatLogHistoryTestProcessor:StartRefiltering()
-        "##,
-    )
-    .expect("empty history should enter the original processor");
+    assert_empty_api_results(env);
+    env.exec("__combatLogHistoryTestProcessor:StartRefiltering()")
+        .expect("empty history should enter the original processor");
     env.process_timers()
         .expect("zero-delay empty-history ticker should fire");
+    assert_empty_refilter_completed(env);
+}
+
+fn assert_empty_api_results(env: &WowLuaEnv) {
+    env.exec(
+        r##"
+        assert(C_CombatLog.GetEntryCount() == 0)
+        assert(C_CombatLog.GetCurrentEntryInfo() == 0)
+        assert(C_CombatLog.GetEntryRetentionTime() == 300)
+        assert(C_CombatLog.GetMessageLimit() == 300)
+        assert(C_CombatLog.AreFilteredEventsEnabled() == false)
+        assert(__combatLogHistoryTestSecure.GetEntryCount() == 0)
+        local entryCount = select("#", __combatLogHistoryTestSecure.GetCurrentEntryInfo())
+        local entry = __combatLogHistoryTestSecure.GetCurrentEntryInfo()
+        assert(entryCount == 1 and entry == nil, "empty current-entry is one nil")
+        local eventCount = select("#", __combatLogHistoryTestSecure.GetCurrentEventInfo())
+        local event = __combatLogHistoryTestSecure.GetCurrentEventInfo()
+        assert(eventCount == 1 and event == nil, "empty current-event is one nil")
+        assert(__combatLogHistoryTestSecure.SeekToNewestEntry() == false)
+        assert(__combatLogHistoryTestSecure.SeekToPreviousEntry() == false)
+        assert(C_CombatLog.ShouldShowCurrentEntry() == false)
+        "##,
+    )
+    .expect("empty history API results should match the previous fixture");
+}
+
+fn assert_empty_refilter_completed(env: &WowLuaEnv) {
     env.exec(
         r#"
         local state = tostring(__combatLogHistoryTestProcessor:IsRefiltering())
