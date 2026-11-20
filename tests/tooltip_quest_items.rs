@@ -103,7 +103,6 @@ fn quest_info_reward_hover_uses_dialog_and_quest_log_items() {
     assert_ne!(dialog_id, log_id);
 }
 
-#[test]
 fn bank_item(item_id: u32) -> BagItem {
     BagItem {
         owned_identity: None,
