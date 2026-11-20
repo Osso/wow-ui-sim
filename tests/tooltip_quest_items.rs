@@ -65,6 +65,11 @@ fn assert_quest_item_hover(env: &WowLuaEnv, quest_log: bool, selector: &str, ite
         button.type = '{selector}'
         button.objectType = 'item'
         button:SetAlpha(1)
+        local parent = button:GetParent()
+        while parent do
+            parent:SetAlpha(1)
+            parent = parent:GetParent()
+        end
         button:Show()
         assert(button:GetEffectiveAlpha() > 0, 'original reward button must be active')
         local direct = C_TooltipInfo.{getter}('{selector}', 1, nil, false)
@@ -125,7 +130,7 @@ fn guild_bank_item_hover_uses_the_selected_slot_item() {
         GuildBankItemButtonMixin.OnEnter(button)
         local info = GameTooltip:GetPrimaryTooltipInfo()
         local data = GameTooltip:GetPrimaryTooltipData()
-        assert(info and info.getterName == 'GetGuildBankItem', 'guild-bank item hover selects GetGuildBankItem')
+        assert(info and info.getterName == 'GetGuildBankItem', 'guild-bank hover selects GetGuildBankItem; got ' .. tostring(info and info.getterName) .. ', type=' .. tostring(data and data.type))
         assert(data and data.type == Enum.TooltipDataType.Item, 'guild-bank tooltip is an item')
         assert(data.lines[1].leftText == expected.lines[1].leftText, 'guild-bank tooltip uses the selected slot item')
         "###,
