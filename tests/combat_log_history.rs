@@ -107,7 +107,16 @@ fn assert_empty_refilter_completed(env: &WowLuaEnv) {
 fn assert_filter_settings_are_rust_backed(env: &WowLuaEnv) {
     env.exec(
         r#"
-        local settings = { combat = true, spell = false }
+        local settings = {
+            settings = {},
+            filters = {
+                {
+                    eventList = { SPELL_DAMAGE = true },
+                    sourceFlags = { [1] = true },
+                    destFlags = { [1] = true },
+                },
+            },
+        }
         local received
         local frame = CreateFrame("Frame")
         local registered = frame:RegisterEventCallback(
