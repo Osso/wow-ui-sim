@@ -168,7 +168,7 @@ mod forever_shared_enums {
                 "return TalentButtonCapstoneTooltipMixin:StripColorsFromText('|Hspell:1|h[|cFFFFFFFFUther|r]|h')",
             )
             .unwrap();
-        assert_eq!(actual, "Uther");
+        assert_eq!(actual, "[Uther]");
     }
 }
 
