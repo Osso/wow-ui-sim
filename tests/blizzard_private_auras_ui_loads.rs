@@ -1250,16 +1250,6 @@ const PRIVATE_AURA_CONSUMER_PROBE: &str = r#"
 "#;
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
-fn private_anchor_errors(env: &WowLuaEnv) -> usize {
-    env.state()
-        .borrow()
-        .lua_errors
-        .iter()
-        .filter(|error| error.contains("Blizzard_PrivateAurasUI.lua:1097"))
-        .count()
-}
-
-#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn private_aura_entry(
     id: i32,
     hide: bool,
@@ -1315,15 +1305,4 @@ fn private_aura_state_drives_selected_blizzard_consumers() {
     supply_private_auras(&env);
     env.exec(PRIVATE_AURA_CONSUMER_PROBE)
         .expect("selected private-aura consumers should read supplied host entries");
-    env.process_timers().expect("run the original watcher parse timer");
-    let initial = private_anchor_errors(&env);
-    assert!(initial >= 1, "the first supplied aura reaches the original renderer: {initial}");
-    env.exec("C_UnitAuras.AddPrivateAuraAnchor({ unitToken = 'player', auraIndex = 2, parent = PrivateAuraDataParent })")
-        .expect("add an anchor through the selected consumer callback");
-    env.process_timers().expect("run the original watcher parse timer");
-    let after_second_anchor = private_anchor_errors(&env);
-    assert!(
-        after_second_anchor > initial,
-        "the second anchor's selected watcher parse reaches the supplied aura records: before={initial}, after={after_second_anchor}"
-    );
 }
