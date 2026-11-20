@@ -290,11 +290,13 @@ fn classic_b_r11_original_guild_initialization_and_row_selection_statements() {
     env.state().borrow_mut().world.guild_members = vec![
         GuildMember {
             name: "First".into(),
+            guid: None,
             rank_index: 1,
             online: true,
         },
         GuildMember {
             name: "Second".into(),
+            guid: None,
             rank_index: 2,
             online: true,
         },

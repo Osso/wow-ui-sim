@@ -6,9 +6,10 @@
 //! them into the A_Admin TableBuilder chain.
 
 use crate::lua_api::methods::{borrow_state_mut, frame_id_from_stack};
+use crate::lua_api::state::GuildMember;
 use crate::lua_bridge::{FromStack, stack_val};
 use rilua::vm::state::LuaState;
-use rilua::{LuaResult, Val};
+use rilua::{LuaResult, Val, runtime_error};
 
 // ── Zone ──────────────────────────────────────────────────────────────────────
 
@@ -206,9 +207,17 @@ pub(super) fn set_meta_key_down(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
-/// `A_Admin.SetGuildRanks({ {name, flags}, ... })` — replaces the guild
-/// roster. Each entry is `{ name = string, flags = { bool, bool, ... } }`.
-/// Pass no arg or an empty table to clear the roster (no guild).
+/// INFERRED (R88ce): replace the host-supplied guild roster, including member GUIDs.
+pub(super) fn set_guild_roster(state: &mut LuaState) -> LuaResult<u32> {
+    let input = String::from_stack(state, 1)?;
+    let members = serde_json::from_str::<Vec<GuildMember>>(&input)
+        .map_err(|_| runtime_error("SetGuildRoster requires a JSON member array"))?;
+    borrow_state_mut(state)?.world.guild_members = members;
+    Ok(0)
+}
+
+/// `A_Admin.SetGuildRanks({ {name, flags}, ... })` — replaces the guild ranks.
+/// Pass no arg or an empty table to clear the rank list.
 pub(super) fn set_guild_ranks(state: &mut LuaState) -> LuaResult<u32> {
     use rilua::Val;
     let arg = crate::lua_bridge::stack_val(state, 1);

@@ -616,8 +616,6 @@ pub struct WorldState {
     /// `GuildInvite` / `GuildUninvite` / `GuildKick` / `GuildPromote`.
     /// Empty when the player has no guild.
     pub guild_members: Vec<GuildMember>,
-    /// Host-supplied GUID identities for the guild-member query; empty when unknown.
-    pub guild_member_guids: HashSet<String>,
     /// Guild chat messages sent at runtime via `C_Club.SendMessage`. Appended
     /// after the static seed messages exposed by `C_Club.GetMessagesBefore`.
     pub guild_chat_messages: Vec<GuildChatMessage>,
@@ -627,11 +625,14 @@ pub struct WorldState {
     pub guild_events: Vec<GuildEvent>,
 }
 
-/// A guild member: display name, 1-based rank index, and online state.
+/// A guild member: display name, optional host-supplied GUID, rank, and online state.
+/// INFERRED (R88ce): membership matches GUIDs exactly; unseeded members have no GUID.
 /// Rank 1 is highest (Guild Master). Higher values = lower rank.
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub struct GuildMember {
     pub name: String,
+    pub guid: Option<String>,
     pub rank_index: i32,
     pub online: bool,
 }

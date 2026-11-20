@@ -152,6 +152,7 @@ fn update_guild_roster(roster: &mut Vec<GuildMember>, previous: Option<&Member>,
         .unwrap_or(&member.name);
     let entry = GuildMember {
         name: member.name.clone(),
+        guid: member.guid.clone(),
         rank_index: member.guild_rank.unwrap_or(1),
         online: member.presence != 3 && member.presence != 0,
     };

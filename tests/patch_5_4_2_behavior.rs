@@ -8,6 +8,7 @@ prefork_full_ui_case! {
 fn patch_5_4_2_existing_roster_backing(env: &WowLuaEnv) {
     env.state().borrow_mut().world.guild_members = vec![GuildMember {
         name: "Arthas-Silvermoon".into(),
+        guid: None,
         rank_index: 1,
         online: true,
     }];

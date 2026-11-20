@@ -39,6 +39,12 @@ fn load_invite_consumers(ui: &Path) -> WowLuaEnv {
 fn supply_invites(env: &WowLuaEnv) {
     env.exec(
         r#"
+        A_Admin.SetGuildRoster([=[
+        [
+            {"name":"Aster", "guid":"Player-1-A", "rankIndex":1, "online":true},
+            {"name":"Bramble", "guid":"Player-1-B", "rankIndex":1, "online":true}
+        ]
+        ]=])
         A_Admin.SetPendingInviteConfirmations([=[
         [
             {"id":"invite-a", "confirmationType":0, "name":"Aster", "guid":"Player-1-A", "invalidQueues":[{"queueType":"pvp", "mapName":"North Battleground"}]},

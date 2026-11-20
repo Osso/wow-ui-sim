@@ -35,6 +35,7 @@ const GUILD_ADDONS: &[&str] = &[
     "Blizzard_GameMenuEsc",
     "Blizzard_UIParentUtil",
     "Blizzard_Game",
+    "Blizzard_StaticPopup",
     "Blizzard_StoreUI",
     "Blizzard_MicroMenu",
     "Blizzard_EditMode",
@@ -73,6 +74,7 @@ fn setup_guild_leader_env() -> WowLuaEnv {
         state.world.guild_num_members = 1;
         state.world.guild_members = vec![wow_ui_sim::lua_api::state::GuildMember {
             name: "Uther".into(),
+            guid: None,
             rank_index: 1,
             online: true,
         }];
@@ -305,11 +307,13 @@ fn communities_member_detail_rank_dropdown_shows_rank_rows() {
         env.state().borrow_mut().world.guild_members = vec![
             GuildMember {
                 name: "Uther".to_string(),
+                guid: None,
                 rank_index: 1,
                 online: true,
             },
             GuildMember {
                 name: "Jaina".to_string(),
+                guid: None,
                 rank_index: 2,
                 online: true,
             },
