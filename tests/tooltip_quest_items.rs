@@ -104,49 +104,52 @@ fn quest_info_reward_hover_uses_dialog_and_quest_log_items() {
 }
 
 #[test]
+fn bank_item(item_id: u32) -> BagItem {
+    BagItem {
+        owned_identity: None,
+        item_id,
+        stack_count: 1,
+        hyperlink: None,
+        durability: None,
+        applied_transmog: None,
+    }
+}
+
+fn seed_guild_bank_items(env: &WowLuaEnv) {
+    let mut state = env.state().borrow_mut();
+    for (slot, item_id) in [(17, 6948), (18, 229181)] {
+        state.guild_bank_items.insert((1, slot), bank_item(item_id));
+    }
+}
+
+const GUILD_BANK_ITEM_HOVER_LUA: &str = r###"
+    local loaded, reason = C_AddOns.LoadAddOn('Blizzard_GuildBankUI')
+    assert(loaded, 'GuildBankUI must load before its item consumer runs: ' .. tostring(reason))
+    assert(GetCurrentGuildBankTab() == 1, 'guild-bank consumer reads the supplied selected tab')
+    local button = CreateFrame('Button', nil, UIParent)
+    button:SetID(17)
+    local expected = C_TooltipInfo.GetItemByID(6948)
+    local direct = C_TooltipInfo.GetGuildBankItem(1, 17)
+    assert(direct and direct.lines[1].leftText == expected.lines[1].leftText, 'guild-bank getter uses first slot item')
+    GuildBankItemButtonMixin.OnEnter(button)
+    local info = GameTooltip:GetPrimaryTooltipInfo()
+    local data = GameTooltip:GetPrimaryTooltipData()
+    assert(info and info.getterName == 'GetGuildBankItem', 'guild-bank hover selects GetGuildBankItem; got ' .. tostring(info and info.getterName) .. ', type=' .. tostring(data and data.type) .. ', tab=' .. tostring(GetCurrentGuildBankTab()) .. ', slot=' .. tostring(button:GetID()))
+    assert(data and data.type == Enum.TooltipDataType.Item, 'guild-bank tooltip is an item')
+    assert(data.lines[1].leftText == expected.lines[1].leftText, 'guild-bank tooltip uses the first slot item')
+    button:SetID(18)
+    expected = C_TooltipInfo.GetItemByID(229181)
+    GuildBankItemButtonMixin.OnEnter(button)
+    data = GameTooltip:GetPrimaryTooltipData()
+    assert(data.lines[1].leftText == expected.lines[1].leftText, 'guild-bank hover selects the second slot item')
+    assert(data.lines[1].leftText ~= direct.lines[1].leftText, 'different guild-bank slots must show different items')
+"###;
+
+#[test]
 fn guild_bank_item_hover_uses_the_selected_slot_item() {
     let Some(env) = tooltip_env() else {
         return;
     };
-    {
-        let mut state = env.state().borrow_mut();
-        for (slot, item_id) in [(17, 6948), (18, 229181)] {
-            state.guild_bank_items.insert(
-                (1, slot),
-                BagItem {
-                    owned_identity: None,
-                    item_id,
-                    stack_count: 1,
-                    hyperlink: None,
-                    durability: None,
-                    applied_transmog: None,
-                },
-            );
-        }
-    }
-    env.exec(
-        r###"
-        local loaded, reason = C_AddOns.LoadAddOn('Blizzard_GuildBankUI')
-        assert(loaded, 'GuildBankUI must load before its item consumer runs: ' .. tostring(reason))
-        assert(GetCurrentGuildBankTab() == 1, 'guild-bank consumer reads the supplied selected tab')
-        local button = CreateFrame('Button', nil, UIParent)
-        button:SetID(17)
-        local expected = C_TooltipInfo.GetItemByID(6948)
-        local direct = C_TooltipInfo.GetGuildBankItem(1, 17)
-        assert(direct and direct.lines[1].leftText == expected.lines[1].leftText, 'guild-bank getter uses first slot item')
-        GuildBankItemButtonMixin.OnEnter(button)
-        local info = GameTooltip:GetPrimaryTooltipInfo()
-        local data = GameTooltip:GetPrimaryTooltipData()
-        assert(info and info.getterName == 'GetGuildBankItem', 'guild-bank hover selects GetGuildBankItem; got ' .. tostring(info and info.getterName) .. ', type=' .. tostring(data and data.type) .. ', tab=' .. tostring(GetCurrentGuildBankTab()) .. ', slot=' .. tostring(button:GetID()))
-        assert(data and data.type == Enum.TooltipDataType.Item, 'guild-bank tooltip is an item')
-        assert(data.lines[1].leftText == expected.lines[1].leftText, 'guild-bank tooltip uses the first slot item')
-        button:SetID(18)
-        expected = C_TooltipInfo.GetItemByID(229181)
-        GuildBankItemButtonMixin.OnEnter(button)
-        data = GameTooltip:GetPrimaryTooltipData()
-        assert(data.lines[1].leftText == expected.lines[1].leftText, 'guild-bank hover selects the second slot item')
-        assert(data.lines[1].leftText ~= direct.lines[1].leftText, 'different guild-bank slots must show different items')
-        "###,
-    )
-    .unwrap();
+    seed_guild_bank_items(&env);
+    env.exec(GUILD_BANK_ITEM_HOVER_LUA).unwrap();
 }
