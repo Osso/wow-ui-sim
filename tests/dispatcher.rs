@@ -37,17 +37,23 @@ fn dispatcher_routes_cinematic_event_to_blizzard_tutorial_consumer() {
         local frame = CreateFrame("Frame", "DispatcherConsumerFrame", UIParent)
         frame:Hide()
         NPE_TutorialMainFrame:Initialize(frame)
+        frame:Show()
+        DispatcherConsumerShownBefore = frame:IsShown()
         Dispatcher:OnEvent("CINEMATIC_START")
         DispatcherConsumerHidden = not frame:IsShown()
         "#,
     )
     .expect("Blizzard tutorial consumer event should dispatch");
 
-    let hidden: bool = env
-        .eval("return DispatcherConsumerHidden")
+    let (shown_before, hidden_after): (bool, bool) = env
+        .eval("return DispatcherConsumerShownBefore, DispatcherConsumerHidden")
         .expect("consumer effect query should succeed");
     assert!(
-        hidden,
+        shown_before,
+        "consumer frame must be shown before event dispatch"
+    );
+    assert!(
+        hidden_after,
         "CINEMATIC_START must hide the tutorial consumer frame"
     );
 }
