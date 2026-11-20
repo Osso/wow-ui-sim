@@ -64,6 +64,13 @@ function __wow_resolve_xml_mixin(path)
     return addonLocal
   end
 
+  local callerEnv = getfenv(2)
+  local callerMixin = type(callerEnv) == "table"
+    and __wow_xml_lookup_path(callerEnv, path)
+  if callerMixin ~= nil then
+    return callerMixin
+  end
+
   local global = __wow_public_global_path(path)
   if global ~= nil then
     return global
