@@ -17,6 +17,33 @@ use std::time::{Duration, Instant};
 const RECENT_FRAME_WINDOW_SIZE: usize = 60;
 // Blizzard SharedXML PixelUtil uses this reference height for pixel/UI conversion.
 pub(crate) const UI_REFERENCE_HEIGHT: f32 = 768.0;
+const SCREEN_SIZE_GLOBALS_LUA: &str = r#"
+function GetScreenWidth()
+    local scale = UIParent and UIParent.GetEffectiveScale and UIParent:GetEffectiveScale() or 1
+    local width = __wow_get_screen_metrics()
+    return width / scale
+end
+
+function GetScreenHeight()
+    local scale = UIParent and UIParent.GetEffectiveScale and UIParent:GetEffectiveScale() or 1
+    local _, height = __wow_get_screen_metrics()
+    return height / scale
+end
+
+function GetPhysicalScreenSize()
+    local _, _, width, height = __wow_get_screen_metrics()
+    return width, height
+end
+
+function GetScreenDPIScale()
+    return 1
+end
+
+function ConvertPixelsToUI(pixels, scale)
+    local _, _, _, physicalHeight = __wow_get_screen_metrics()
+    return pixels * {UI_REFERENCE_HEIGHT} / (physicalHeight * scale)
+end
+"#;
 
 #[cfg(feature = "timed-signal-maps")]
 fn next_timer_or_signal_delay(timer_delay: Option<Duration>, state: &SimState) -> Option<Duration> {
@@ -534,35 +561,11 @@ fn update_screen_widgets_for_dimensions(state: &mut SimState, width: f32, height
 }
 
 fn install_screen_size_globals(env: &WowLuaEnv) {
-    let _ = env.exec(&format!(
-        r#"
-        function GetScreenWidth()
-            local scale = UIParent and UIParent.GetEffectiveScale and UIParent:GetEffectiveScale() or 1
-            local width = __wow_get_screen_metrics()
-            return width / scale
-        end
+    let _ = env.exec(&format!(SCREEN_SIZE_GLOBALS_LUA));
+    install_screen_metrics_helper(env);
+}
 
-        function GetScreenHeight()
-            local scale = UIParent and UIParent.GetEffectiveScale and UIParent:GetEffectiveScale() or 1
-            local _, height = __wow_get_screen_metrics()
-            return height / scale
-        end
-
-        function GetPhysicalScreenSize()
-            local _, _, width, height = __wow_get_screen_metrics()
-            return width, height
-        end
-
-        function GetScreenDPIScale()
-            return 1
-        end
-
-        function ConvertPixelsToUI(pixels, scale)
-            local _, _, _, physicalHeight = __wow_get_screen_metrics()
-            return pixels * {UI_REFERENCE_HEIGHT} / (physicalHeight * scale)
-        end
-        "#
-    ));
+fn install_screen_metrics_helper(env: &WowLuaEnv) {
     let mut lua = env.lua.borrow_mut();
     let state = lua.state_mut();
     table_set_rust_fn_static(
