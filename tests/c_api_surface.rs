@@ -1125,3 +1125,45 @@ fn forever_wardrobe_consumer_reads_custom_set_item_info() {
         "the original wardrobe consumer sees the saved item info"
     );
 }
+
+#[cfg(feature = "client-wowforever")]
+fn load_calendar_day_event_click_consumer(env: &WowLuaEnv) {
+    let path = wow_ui_sim::blizzard_ui_sync::default_cache_addons_path()
+        .unwrap()
+        .join("Blizzard_Calendar/Mainline/Blizzard_Calendar.lua");
+    let source = fs::read_to_string(&path).unwrap();
+    let start = source
+        .find("function CalendarDayEventButton_Click(button, openEvent)")
+        .unwrap();
+    let body = &source[start..];
+    let end = body.find("\nfunction CalendarTitleFrame_SetText").unwrap();
+    env.exec(&body[..end])
+        .unwrap_or_else(|error| panic!("{}: {error}", path.display()));
+}
+
+#[cfg(feature = "client-wowforever")]
+#[test]
+fn forever_calendar_consumer_uses_selected_event_index() {
+    let env = env();
+    load_calendar_day_event_click_consumer(&env);
+    let (popup, selected_event): (String, i32) = env
+        .eval(
+            r#"
+            local popup, selectedEvent
+            StaticPopup_Hide = function(name) popup = name end
+            CalendarFrame_SetSelectedEvent = function(button)
+                selectedEvent = button.eventIndex
+            end
+            local dayButton = { day = 3, monthOffset = 0 }
+            local button = {
+                eventIndex = 1,
+                GetParent = function() return dayButton end,
+            }
+            CalendarDayEventButton_Click(button, false)
+            return popup, selectedEvent
+            "#,
+        )
+        .unwrap();
+    assert_eq!(popup, "CALENDAR_DELETE_EVENT");
+    assert_eq!(selected_event, 1);
+}
