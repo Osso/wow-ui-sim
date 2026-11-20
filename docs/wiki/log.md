@@ -1,3 +1,7 @@
+## [2026-11-20] implementation | Secure XML mixin environment
+
+Updated [addon loading](../systems/addon-loading.md#secure-dependency-replay-and-library-allowlist). Retail's original PrivateAura OnEnter failed because secure XML resolved a stale public `GameTooltipDataMixin` without its late-added accessor. XML resolution now follows the active secure-addon context; Retail's exact original hover test passes with two supplied auras; Forever proof is pending. **INFERRED (R88cd):** native secure XML mixins resolve from the active addon environment.
+
 ## [2026-11-20] implementation | Shared Retail/Forever outfit catalog
 
 Updated the [outfit catalog contract](../specs/outfit-catalog-lookups.md), [Forever spellbook contract](../specs/forever-camelot-spellbook.md), [Forever spellbook model](systems/forever-camelot-spellbook.md), and [tooltip contract](../specs/tooltip-outfit.md). `SimState.transmog_outfit_catalog` is now the sole outfit-record store; Forever retains a three-state list marker, not duplicate rows. Proof is recorded in the lane handoff.

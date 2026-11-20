@@ -1,3 +1,7 @@
+## [2026-11-20] implementation | Secure XML mixin environment
+
+[Addon loading](systems/addon-loading.md#secure-dependency-replay-and-library-allowlist) records the Retail `PrivateAuraMixin:OnEnter` failure: XML copied a stale public mixin without the secure-only `SetUnitPrivateAura`; secure-addon XML now resolves from `__secureenv`. **INFERRED (R88cd):** native secure addons resolve XML mixins in their active environment. Retail's exact original hover test passes with two aura records; Forever proof is pending.
+
 ## [2026-11-20] implementation | Retail/Forever combat-log history
 
 [Combat-log history](systems/combat-log-history.md) links the [history contract](../specs/combat-log-history-state.md). **INFERRED (fixture parity):** Retail/Forever now store host-supplied history, cursor, settings and filter-settings identity in per-environment Rust state; selected original processor tests pass on both profiles. Native filter rules, ingestion and lifecycle remain UNKNOWN. The four-profile compile matrix passes; Mists/Wrath report two pre-existing `tooltip_for_cost_currency` warnings each.
