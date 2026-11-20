@@ -26,19 +26,24 @@ fn supply_queue(env: &WowLuaEnv, status: u8) {
 }
 
 fn assert_queue_entry_count(env: &WowLuaEnv, expected: i32) {
-    let count: i32 = env.eval(r#"
+    let count: i32 = env
+        .eval(
+            r#"
         QueueStatusFrame:Update()
         local count = 0
         for entry in QueueStatusFrame.statusEntriesPool:EnumerateActive() do
             if entry.Title:GetText() == PET_BATTLE_PVP_QUEUE then count = count + 1 end
         end
         return count
-    "#).expect("original queue frame update");
+    "#,
+        )
+        .expect("original queue frame update");
     assert_eq!(count, expected, "original frame's pet-battle queue entries");
 }
 
 fn assert_queued_display(env: &WowLuaEnv) {
-    env.exec(r#"
+    env.exec(
+        r#"
         RuntimeQueueEntry = CreateFrame('Frame', nil, UIParent, 'QueueStatusEntryTemplate')
         QueueStatusEntry_SetUpPetBattlePvP(RuntimeQueueEntry)
         local entry = RuntimeQueueEntry
@@ -48,17 +53,22 @@ fn assert_queued_display(env: &WowLuaEnv) {
         assert(entry.queuedTime == 2.5, 'supplied milliseconds reach original time display')
         assert(entry.AverageWait:GetText() ==
             LFG_STATISTIC_AVERAGE_WAIT:format(SecondsToTime(90, false, false, 1)))
-    "#).expect("original queue entry displays supplied timers");
+    "#,
+    )
+    .expect("original queue entry displays supplied timers");
 }
 
 fn assert_queue_label(env: &WowLuaEnv, status: u8, label: &str) {
     supply_queue(env, status);
-    env.exec(&format!(r#"
+    env.exec(&format!(
+        r#"
         QueueStatusEntry_SetUpPetBattlePvP(RuntimeQueueEntry)
         assert(RuntimeQueueEntry.Status:IsShown())
         assert(RuntimeQueueEntry.Status:GetText() == {label})
         assert(not RuntimeQueueEntry.TimeInQueue:IsShown())
-    "#)).expect("original queue status label");
+    "#
+    ))
+    .expect("original queue status label");
 }
 
 #[test]
@@ -79,9 +89,18 @@ fn original_queue_entry_tracks_supplied_pet_matchmaking() {
 
 fn supplied_pet() -> PetBattlePet {
     PetBattlePet {
-        name: "Supplied battle pet".into(), display_id: None, species_id: 39,
-        level: 5, max_health: 100, current_health: 40, power: 11, speed: 13,
-        pet_type: 7, ability_ids: vec![73001], xp: 4, max_xp: 100,
+        name: "Supplied battle pet".into(),
+        display_id: None,
+        species_id: 39,
+        level: 5,
+        max_health: 100,
+        current_health: 40,
+        power: 11,
+        speed: 13,
+        pet_type: 7,
+        ability_ids: vec![73001],
+        xp: 4,
+        max_xp: 100,
     }
 }
 
@@ -89,19 +108,39 @@ fn supply_pet_data(env: &WowLuaEnv) {
     let mut sim = env.state().borrow_mut();
     sim.pet_battles.player_pets = vec![supplied_pet()];
     sim.pet_battles.enemy_pets = vec![supplied_pet()];
+    sim.pet_battles.battle_state = 1;
     sim.pet_battles.num_pets_player = 1;
     sim.pet_battles.num_pets_enemy = 1;
     sim.pet_battles.active_pet_player = 1;
     sim.pet_battles.active_pet_enemy = 1;
-    sim.pet_battles.runtime.abilities.insert(73001, PetBattleAbility {
-        name: "Supplied ability".into(), icon: 136116, max_cooldown: 2,
-        description: "Supplied scenario ability".into(), num_turns: 1,
-        pet_type: 7, no_strong_weak_hints: true,
-    });
-    sim.pet_battles.runtime.attack_modifiers.insert((7, 7), 1.0);
-    sim.pet_battles.runtime.auras.insert((1, 1), vec![PetBattleAura {
-        ability_id: 73001, instance_id: 81001, turns_remaining: 3, is_buff: true,
-    }]);
+    supply_ability_and_aura(&mut sim.pet_battles.runtime);
+}
+
+fn supply_ability_and_aura(
+    runtime: &mut wow_ui_sim::c_api::pet_battle_runtime_model::PetBattleRuntime,
+) {
+    runtime.abilities.insert(
+        73001,
+        PetBattleAbility {
+            name: "Supplied ability".into(),
+            icon: 136116,
+            max_cooldown: 2,
+            description: "Supplied scenario ability".into(),
+            num_turns: 1,
+            pet_type: 7,
+            no_strong_weak_hints: true,
+        },
+    );
+    runtime.attack_modifiers.insert((7, 7), 1.0);
+    runtime.auras.insert(
+        (1, 1),
+        vec![PetBattleAura {
+            ability_id: 73001,
+            instance_id: 81001,
+            turns_remaining: 3,
+            is_buff: true,
+        }],
+    );
 }
 
 fn assert_populated_health(env: &WowLuaEnv) {
@@ -117,7 +156,9 @@ fn assert_populated_health(env: &WowLuaEnv) {
 }
 
 fn assert_populated_ability_and_aura(env: &WowLuaEnv) {
-    env.exec(r#"
+    env.exec(
+        r#"
+        PetBattleFrame_UpdateActionBarLayout(PetBattleFrame)
         local button = PetBattleFrame.BottomFrame.abilityButtons[1]
         PetBattleAbilityButton_UpdateIcons(button)
         assert(button.abilityID == 73001 and button:IsShown() and button:IsEnabled())
@@ -129,18 +170,26 @@ fn assert_populated_ability_and_aura(env: &WowLuaEnv) {
         assert(aura.Icon:GetTexture() == 136116)
         assert(aura.Duration:GetText() == PET_BATTLE_AURA_TURNS_REMAINING:format(3))
         assert(not aura.DebuffBorder:IsShown())
-    "#).expect("original ability and aura display supplied records");
+    "#,
+    )
+    .expect("original ability and aura display supplied records");
 }
 
 fn change_pet_data(env: &WowLuaEnv) {
     let mut sim = env.state().borrow_mut();
     sim.pet_battles.player_pets[0].current_health = 0;
-    sim.pet_battles.runtime.abilities.get_mut(&73001).unwrap().icon = 136048;
+    sim.pet_battles
+        .runtime
+        .abilities
+        .get_mut(&73001)
+        .unwrap()
+        .icon = 136048;
     sim.pet_battles.runtime.auras.clear();
 }
 
 fn assert_changed_pet_display(env: &WowLuaEnv) {
-    env.exec(r#"
+    env.exec(
+        r#"
         local frame = PetBattleFrame.ActiveAlly
         PetBattleUnitFrame_UpdateHealthInstant(frame)
         assert(not frame.ActualHealthBar:IsShown())
@@ -150,7 +199,24 @@ fn assert_changed_pet_display(env: &WowLuaEnv) {
         local holder = PetBattleFrame.AllyBuffFrame
         PetBattleAuraHolder_Update(holder)
         assert(not holder:IsShown() and not holder.frames[1]:IsShown())
-    "#).expect("original consumers refresh changed host inputs");
+    "#,
+    )
+    .expect("original consumers refresh changed host inputs");
+}
+
+fn assert_original_action_callbacks(env: &WowLuaEnv) {
+    env.exec(
+        r#"
+        local button = PetBattleFrame.BottomFrame.abilityButtons[1]
+        PetBattleAbilityButton_OnClick(button)
+        local action, slot = C_PetBattles.GetSelectedAction()
+        assert(action == Enum.BattlePetAction.Ability and slot == button:GetID())
+        StaticPopupDialogs['PET_BATTLE_FORFEIT'].OnAccept()
+        assert(C_PetBattles.GetBattleState() == Enum.PetbattleState.Finished)
+        assert(not C_PetBattles.IsInBattle())
+    "#,
+    )
+    .expect("original ability and forfeit callbacks preserve local actions");
 }
 
 #[test]
@@ -162,6 +228,7 @@ fn original_pet_frames_track_supplied_health_abilities_and_auras() {
         assert_populated_ability_and_aura(&env);
         change_pet_data(&env);
         assert_changed_pet_display(&env);
+        assert_original_action_callbacks(&env);
     }
 }
 
@@ -181,4 +248,55 @@ fn original_pet_duel_callbacks_emit_host_requests() {
             PetBattleRequest::AcceptDuel,
         ]);
     }
+}
+
+fn assert_type_hint(env: &WowLuaEnv, defender_type: i32, suffix: Option<&str>) {
+    env.state().borrow_mut().pet_battles.enemy_pets[0].pet_type = defender_type;
+    env.exec("PetBattleAbilityButton_UpdateIcons(PetBattleFrame.BottomFrame.abilityButtons[1])")
+        .expect("original type hint refresh");
+    let shown: bool = env
+        .eval("return PetBattleFrame.BottomFrame.abilityButtons[1].BetterIcon:IsShown()")
+        .unwrap();
+    assert_eq!(shown, suffix.is_some());
+    if let Some(suffix) = suffix {
+        let texture: String = env
+            .eval("return PetBattleFrame.BottomFrame.abilityButtons[1].BetterIcon:GetTexture()")
+            .unwrap();
+        assert_eq!(
+            texture,
+            format!("Interface\\PetBattles\\BattleBar-AbilityBadge-{suffix}")
+        );
+    }
+}
+
+#[test]
+fn original_ability_hint_tracks_type_chart() {
+    test_timeout! {
+        let env = loaded_game();
+        supply_pet_data(&env);
+        env.state().borrow_mut().pet_battles.runtime.abilities.get_mut(&73001)
+            .unwrap().no_strong_weak_hints = false;
+        env.exec("PetBattleFrame_UpdateActionBarLayout(PetBattleFrame)").unwrap();
+        assert_type_hint(&env, 10, Some("Strong"));
+        assert_type_hint(&env, 5, Some("Weak"));
+        assert_type_hint(&env, 9, None);
+    }
+}
+
+#[test]
+fn empty_pet_queries_do_not_create_sample_rosters() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        assert(C_PetBattles.GetNumPets(1) == 0 and C_PetBattles.GetNumPets(2) == 0)
+        assert(C_PetBattles.GetHealth(1, 1) == 100)
+        assert(C_PetBattles.GetMaxHealth(1, 1) == 100)
+        assert(C_PetBattles.GetLevel(1, 1) == 1)
+        assert(C_PetBattles.GetAbilityInfo(1, 1, 1) == nil)
+        assert(C_PetBattles.GetAuraInfo(1, 1, 1) == nil)
+        assert(C_PetBattles.GetNumAuras(1, 1) == 0)
+        assert(C_PetBattles.GetNumPets(1) == 0 and C_PetBattles.GetNumPets(2) == 0)
+    "#,
+    )
+    .expect("approved empty shapes remain empty after queries");
 }
