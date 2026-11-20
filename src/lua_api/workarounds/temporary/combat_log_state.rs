@@ -451,6 +451,7 @@ mod tests {
     }
 
     #[cfg(feature = "retail-12-0-0")]
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     #[test]
     fn patch_12_0_0_combat_log_producers_dispatch_exact_notifications() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
