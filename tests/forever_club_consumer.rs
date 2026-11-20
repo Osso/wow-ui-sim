@@ -20,6 +20,24 @@ fn load_game_addons(env: &WowLuaEnv) {
 }
 
 #[test]
+fn unit_popup_battle_tag_friend_request_closes_menu() {
+    let env = WowLuaEnv::new().expect("Lua environment should initialize");
+    load_game_addons(&env);
+    env.exec(
+        r#"
+        local memberIDs = C_Club.GetClubMembers('guild-0')
+        BNGetInfo = function() return nil, 'Fixture#1234' end
+        local response = UnitPopupAddBtagFriendButtonMixin:OnClick({
+            clubInfo = { clubId = 'guild-0' },
+            clubMemberInfo = { memberId = memberIDs[2] },
+        })
+        assert(response == MenuResponse.Close)
+    "#,
+    )
+    .unwrap();
+}
+
+#[test]
 fn unit_popup_title_friend_request_records_guild_member() {
     let env = WowLuaEnv::new().expect("Lua environment should initialize");
     load_game_addons(&env);
