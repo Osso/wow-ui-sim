@@ -75,8 +75,9 @@ fn assert_empty_history_contract(env: &WowLuaEnv) {
     fire_one_on_update_tick(env);
     env.exec(
         r#"
-        assert(not __combatLogHistoryTestProcessor:IsRefiltering())
-        assert(#C_CombatLog._state.createdMessages == 0)
+        local state = tostring(__combatLogHistoryTestProcessor:IsRefiltering())
+            .. ":" .. tostring(#C_CombatLog._state.createdMessages)
+        assert(state == "false:0", "empty-history output was " .. state)
         "#,
     )
     .expect("empty history should finish without output");
