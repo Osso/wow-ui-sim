@@ -329,8 +329,6 @@ const METHODS: &[(&str, fn(&mut LuaState) -> LuaResult<u32>)] = &[
     ("GetNumFactions", num_factions),
     ("GetFactionDataByIndex", faction_by_index),
     ("GetFactionDataByID", faction_by_id),
-    // INFERRED: retain the existing compatibility alias over host data.
-    ("GetFactionInfo", faction_by_index),
     ("GetGuildFactionData", guild),
     ("GetWatchedFactionData", watched),
     ("GetSelectedFaction", selected_index),

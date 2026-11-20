@@ -282,6 +282,7 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
 #[cfg(test)]
 mod tests {
     retail_faction_fixture! {
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     #[test]
     fn installs_seeded_reputation_state_and_visibility_controls() {
         use crate::lua_api::WowLuaEnv;

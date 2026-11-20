@@ -215,6 +215,7 @@ fn retail_reputation_filter_toggles_and_requires_legacy_visibility_argument() {
 fn retail_reputation_header_consumer_expands_all_for_zero_index() {
     test_timeout! {
         let env = setup_env();
+        install_reputation_header_fixtures(&env);
         let result: String = env
             .eval(
                 r#"
@@ -334,6 +335,7 @@ fn retail_reputation_sort_consumer_rejects_unknown_sort_type() {
 fn retail_reputation_tooltip_consumer_truncates_faction_id() {
     test_timeout! {
         let env = setup_env();
+        install_reputation_activity_fixture(&env, false);
         let result: String = env
             .eval(
                 r#"
@@ -364,6 +366,7 @@ fn retail_reputation_tooltip_consumer_truncates_faction_id() {
 fn retail_inactive_checkbox_consumer_updates_faction_activity() {
     test_timeout! {
         let env = setup_env();
+        install_reputation_activity_fixture(&env, true);
         let result: String = env
             .eval(
                 r#"
@@ -376,10 +379,6 @@ fn retail_inactive_checkbox_consumer_updates_faction_activity() {
                     return "wrong_inactive_checkbox_consumer=" .. source
                 end
 
-                local faction = __wow_reputation_state.factions[2]
-                faction.canSetInactive = true
-                faction.reputationIndex = 114
-                faction.isInactive = false
                 C_Reputation.SetSelectedFaction(2)
                 local checked = false
                 local checkbox = { GetChecked = function() return checked end }
@@ -408,6 +407,7 @@ fn retail_inactive_checkbox_consumer_updates_faction_activity() {
 fn retail_inactive_checkbox_truncates_zero_based_native_index() {
     test_timeout! {
         let env = setup_env();
+        install_reputation_activity_fixture(&env, false);
         let result: String = env
             .eval(
                 r#"
@@ -420,11 +420,6 @@ fn retail_inactive_checkbox_truncates_zero_based_native_index() {
                     return "wrong_inactive_checkbox_consumer=" .. source
                 end
 
-                local faction = __wow_reputation_state.factions[1]
-                faction.factionID = 2590
-                faction.canSetInactive = true
-                faction.reputationIndex = 114
-                faction.isInactive = false
                 C_Reputation.GetSelectedFaction = function() return 0.5 end
                 local checked = false
                 local checkbox = { GetChecked = function() return checked end }
@@ -754,4 +749,49 @@ fn reputation_filter_dropdown_mouse_down_materializes_menu_rows() {
         assert_eq!(result, "ok");
     }
 }
+}
+
+#[cfg(feature = "client-retail")]
+fn install_reputation_header_fixtures(env: &WowLuaEnv) {
+    use wow_ui_sim::c_api::reputation_model::ReputationFaction;
+    let mut rows = Vec::new();
+    for (group, size) in [4, 2, 2].into_iter().enumerate() {
+        rows.push(ReputationFaction {
+            name: Some(format!("Fixture group {group}")),
+            is_header: true,
+            ..Default::default()
+        });
+        for child in 0..size {
+            rows.push(ReputationFaction {
+                name: Some(format!("Fixture faction {group}/{child}")),
+                faction_id: 899_200 + group as i32 * 10 + child,
+                is_child: true,
+                ..Default::default()
+            });
+        }
+    }
+    env.state().borrow_mut().reputation.factions = rows;
+}
+
+#[cfg(feature = "client-retail")]
+fn install_reputation_activity_fixture(env: &WowLuaEnv, with_header: bool) {
+    use wow_ui_sim::c_api::reputation_model::ReputationFaction;
+    let mut sim = env.state().borrow_mut();
+    sim.reputation.factions.clear();
+    if with_header {
+        sim.reputation.factions.push(ReputationFaction {
+            name: Some("Fixture group".to_owned()),
+            is_header: true,
+            ..Default::default()
+        });
+    }
+    sim.reputation.factions.push(ReputationFaction {
+        faction_id: 2590,
+        name: Some("Fixture reputation".to_owned()),
+        is_child: with_header,
+        is_account_wide: true,
+        can_set_inactive: true,
+        reputation_index: Some(114),
+        ..Default::default()
+    });
 }

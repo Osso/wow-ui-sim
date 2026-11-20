@@ -36,7 +36,11 @@ fn original_reputation_panel_rebuilds_from_host_rows() {
         r#"
         local panel = assert(ReputationFrame)
         assert(debug.getinfo(panel.Update, "S").source:find("Blizzard_UIPanels_Game", 1, true))
+        local character = assert(CharacterFrame, "original CharacterFrame missing")
+        character.activeSubframe = "ReputationFrame"
+        ShowUIPanel(character)
         panel:Show()
+        assert(panel:IsVisible(), "original panel is not visible")
         panel:Update()
         assert(panel.ScrollBox:GetDataProvider():GetSize() == 0, "host rows must start empty")
     "#,
@@ -49,7 +53,7 @@ fn original_reputation_panel_rebuilds_from_host_rows() {
         assert(panel.ScrollBox:GetDataProvider():GetSize() == 2, "both host rows must be presented")
         local function check(id, label, standing)
             local row = assert(panel.ScrollBox:FindFrameByPredicate(
-                function(_, entry) return entry.factionID == id end))
+                function(_, entry) return entry.factionID == id end), "original row not materialized: " .. id)
             assert(row.Content.Name:GetText() == label, "original row must display supplied name")
             assert(row.elementData.currentStanding == standing, "original row must consume standing")
         end
