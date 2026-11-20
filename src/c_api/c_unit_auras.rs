@@ -50,17 +50,31 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
 }
 
 fn register_private_data(state: &mut LuaState) -> LuaResult<()> {
-    let private = super::ensure_namespace(state, "C_UnitAurasPrivate")?;
-    table_set_rust_fn_static(state, private, "GetAllPrivateAuras", get_all_private_auras)?;
+    let public = super::ensure_namespace(state, "C_UnitAurasPrivate")?;
+    register_private_data_methods(state, public)?;
+    let secure = super::ensure_secure_namespace(state, "C_UnitAurasPrivate")?;
+    register_private_data_methods(state, secure)
+}
+
+fn register_private_data_methods(
+    state: &mut LuaState,
+    namespace: rilua::vm::gc::GcRef<rilua::vm::table::Table>,
+) -> LuaResult<()> {
     table_set_rust_fn_static(
         state,
-        private,
+        namespace,
+        "GetAllPrivateAuras",
+        get_all_private_auras,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        namespace,
         "GetAuraDataByAuraInstanceIDPrivate",
         get_private_aura_data,
     )?;
     table_set_rust_fn_static(
         state,
-        private,
+        namespace,
         "GetPrivateAuraCasterGUID",
         get_private_aura_caster_guid,
     )
