@@ -70,9 +70,20 @@ pub struct OwnedKeystone {
     pub challenge_map_id: i32,
 }
 
+/// Result of the player's most recent Mythic+ weekly chest calculation.
+#[derive(Debug, Clone, Copy)]
+pub struct MythicPlusLastWeeklyChest {
+    /// Challenge-mode map ID for the cached weekly result.
+    pub challenge_map_id: i32,
+    /// Keystone level represented by the cached result.
+    pub level: i32,
+}
+
 /// Backing state for `C_MythicPlus.*` probes.
 #[derive(Debug, Clone)]
 pub struct MythicPlusState {
+    /// INFERRED pending R88cc: cached last-weekly-chest map and level.
+    pub last_weekly_chest: Option<MythicPlusLastWeeklyChest>,
     /// Active affixes for the current weekly rotation.
     pub current_affixes: Vec<MythicPlusAffix>,
     /// Current M+ season id (e.g. 14 = Dragonflight Season 4).
@@ -100,6 +111,7 @@ pub struct MythicPlusState {
 impl Default for MythicPlusState {
     fn default() -> Self {
         Self {
+            last_weekly_chest: None,
             current_affixes: vec![MythicPlusAffix {
                 id: 9,
                 season_id: 14,

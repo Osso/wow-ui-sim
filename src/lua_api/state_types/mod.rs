@@ -31,8 +31,9 @@ pub use group_member_counts::{GroupMemberCountsMember, GroupMemberCountsState};
 pub use lfg_rewards::{LfgTooltipReward, LfgTooltipRewardGroup};
 pub use loot_history::LootHistoryState;
 pub use mythic_plus_scenario::{
-    DeathRecapEntry, DeathRecapEventInfo, KillingBlowInfo, MythicPlusAffix, MythicPlusRun,
-    MythicPlusState, MythicPlusWeeklyBest, OwnedKeystone, ScenarioState, ScenarioStep,
+    DeathRecapEntry, DeathRecapEventInfo, KillingBlowInfo, MythicPlusAffix,
+    MythicPlusLastWeeklyChest, MythicPlusRun, MythicPlusState, MythicPlusWeeklyBest, OwnedKeystone,
+    ScenarioState, ScenarioStep,
 };
 pub use player_choice::*;
 pub use pvp::*;
