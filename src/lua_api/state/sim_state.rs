@@ -487,6 +487,8 @@ pub struct SimState {
     pub transmog_custom_sets: crate::c_api::c_transmog_collection::CustomSets,
     pub equipped_outfit_locked: bool,
     pub locked_action_slots: HashSet<i32>,
+    /// Explicit spell-lock input; no inferred level progression.
+    pub level_link_locked_spells: HashSet<i32>,
     pub is_active_battlefield: bool,
     pub spell_trade_skill_links: HashMap<u32, String>,
     pub spell_id_aliases: HashMap<String, u32>,
