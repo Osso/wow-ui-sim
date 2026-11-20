@@ -201,6 +201,7 @@ mod c_dungeon_score_rarity;
 pub mod c_dye_color;
 #[cfg(feature = "client-wowforever")]
 mod c_edit_mode;
+pub(crate) mod c_edit_mode_cache;
 #[cfg(feature = "retail-12-1-0")]
 pub(crate) mod c_encounter_timeline;
 #[cfg(feature = "retail-12-0-0")]

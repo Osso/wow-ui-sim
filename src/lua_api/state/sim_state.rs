@@ -44,6 +44,7 @@ pub struct SimState {
     #[cfg(feature = "retail-12-0-5")]
     pub(crate) nameplate_hit_test_insets: crate::c_api::c_nameplate_manager::NamePlateHitTestInsets,
     pub(crate) input_interface_style: crate::c_api::c_input_interface_style::InputInterfaceStyle,
+    pub(crate) edit_mode_cache: crate::c_api::c_edit_mode_cache::EditModeCacheState,
     /// VERIFIED-neutral host seam for the last gamepad input timestamp; None maps to native zero.
     #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
     pub last_gamepad_input_timestamp: Option<u32>,
