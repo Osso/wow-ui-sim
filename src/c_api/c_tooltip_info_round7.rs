@@ -350,10 +350,7 @@ fn get_possession(state: &mut LuaState) -> LuaResult<u32> {
     };
     // INFERRED for Forever: its pinned docs declare GetPossession at line 694.
     let supported_profile = matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever);
-    if slot_index != 0 {
-        return no_values();
-    }
-    if !supported_profile {
+    if slot_index != 0 || !supported_profile {
         return no_values();
     }
     let Some(spell_id) = borrow_state(state)?.possession_spell_id else {
