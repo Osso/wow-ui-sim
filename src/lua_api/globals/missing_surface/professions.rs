@@ -72,6 +72,13 @@ pub(super) fn register_profession_surface(state: &mut LuaState) -> LuaResult<()>
     register_legacy_trade_skill_globals(state)?;
     #[cfg(feature = "client-mists")]
     register_legacy_trainer_globals(state)?;
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
+        crate::lua_api::globals::real::trainer_services::register_legacy_globals(state)?;
+    }
     Ok(())
 }
 

@@ -81,6 +81,7 @@ pub mod quest_special_item;
 pub mod recipe_rank_tooltip;
 pub(crate) mod tooltip_data;
 pub(crate) mod tooltip_power_catalog_data;
+pub mod trainer_service;
 pub mod trait_group_currency;
 pub mod trait_group_display;
 pub mod ui_widget_manager;
