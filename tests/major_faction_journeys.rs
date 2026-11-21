@@ -1,4 +1,4 @@
-mod common;
+use crate::common;
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 #[test]
