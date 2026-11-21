@@ -60,13 +60,12 @@ pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
 
 fn set_catalog(state: &mut LuaState) -> LuaResult<u32> {
     let rows = read_array(state, stack_val(state, 1))?;
-    let mut entries = Vec::with_capacity(rows.len());
-    let mut slot_sources = BTreeMap::new();
-    for row in rows {
-        let (entry, sources) = read_set(state, row)?;
-        entries.push(entry);
-        slot_sources.extend(sources);
-    }
+    let parsed = rows
+        .into_iter()
+        .map(|row| read_set(state, row))
+        .collect::<LuaResult<Vec<_>>>()?;
+    let (entries, source_maps): (Vec<_>, Vec<_>) = parsed.into_iter().unzip();
+    let slot_sources = source_maps.into_iter().flatten().collect();
     let mut sim = borrow_state_mut(state)?;
     sim.transmog_sets.entries = entries;
     sim.transmog_sets.slot_sources = slot_sources;
