@@ -127,6 +127,82 @@ fn load_map_data_providers_closure() -> WowLuaEnv {
 }
 
 // Literal cached inputs absent from Wrath manifest1-382/cache; behavior cases stay enabled.
+const TAXI_MAP_REFRESH_LUA: &str = r#"
+            A_Admin.SetTaxiMapNodes({
+                { mapID=2248, nodeID=101, name="Node Alpha", atlasName="TaxiNode", textureKit="", faction=0,
+                  x=0.25, y=0.75, state=2, slotIndex=1, isUndiscovered=false,
+                  useSpecialIcon=false, isMapLayerTransition=false },
+                { mapID=2248, nodeID=102, name="Node Beta", atlasName="TaxiNode", textureKit="", faction=0,
+                  x=0.75, y=0.25, state=2, slotIndex=2, isUndiscovered=false,
+                  useSpecialIcon=false, isMapLayerTransition=false },
+                { mapID=9999, nodeID=103, name="Other Map", atlasName="TaxiNode", textureKit="", faction=0,
+                  x=0.5, y=0.5, state=2, slotIndex=3, isUndiscovered=false,
+                  useSpecialIcon=false, isMapLayerTransition=false },
+            })
+
+            local function mapFor(mapID)
+                local map = { id=mapID, pins={} }
+                function map:GetMapID() return self.id end
+                function map:RemoveAllPinsByTemplate() self.pins = {} end
+                function map:ResetTitleAndPortraitIcon() end
+                function map:GetCanvasZoomPercent() return 0.5 end
+                function map:AcquirePin(template, value)
+                    local pin = { template=template, value=value }
+                    function pin:SetPosition(x, y) self.x, self.y = x, y end
+                    function pin:SetFlightPathStyle(state) self.state = state end
+                    function pin:UpdatePinSize(state) self.sizeState = state end
+                    function pin:SetShown(shown) self.shown = shown end
+                    map.pins[#map.pins + 1] = pin
+                    return pin
+                end
+                return map
+            end
+
+            local flightMap = mapFor(2248)
+            local flightProvider = CreateFromMixins(FlightMap_FlightPathDataProviderMixin)
+            function flightProvider:GetMap() return flightMap end
+            flightProvider.backgroundLinePool = {}
+            flightProvider:RefreshAllData()
+
+            local sharedMap = mapFor(2248)
+            local sharedProvider = CreateFromMixins(FlightPointDataProviderMixin)
+            function sharedProvider:GetMap() return sharedMap end
+            sharedProvider:RefreshAllData()
+
+            return #flightMap.pins, flightMap.pins[1].value.name, flightMap.pins[2].value.name,
+                   #sharedMap.pins, sharedMap.pins[1].value.name, sharedMap.pins[2].value.name,
+                   C_TaxiMap.ShouldMapShowTaxiNodes(2248), C_TaxiMap.ShouldMapShowTaxiNodes(9999)
+            "#;
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn taxi_map_providers_refresh_pins_from_supplied_nodes() {
+    let (env, loaded) =
+        build_blizzard_addon_closure_env(&blizzard_ui_dir(), &["Blizzard_FlightMap"], &[]);
+    assert!(loaded.iter().any(|name| name == "Blizzard_FlightMap"));
+    assert!(
+        loaded
+            .iter()
+            .any(|name| name == "Blizzard_SharedMapDataProviders")
+    );
+    let observed: (i32, String, String, i32, String, String, bool, bool) = env
+        .eval(TAXI_MAP_REFRESH_LUA)
+        .expect("original taxi map data providers should refresh from model-supplied nodes");
+    assert_eq!(
+        observed,
+        (
+            2,
+            "Node Alpha".into(),
+            "Node Beta".into(),
+            2,
+            "Node Alpha".into(),
+            "Node Beta".into(),
+            true,
+            false
+        )
+    );
+}
+
 post_wrath_ui_fixture! {
 #[test]
 fn find_toc_file_resolves_mainline_variant() {
