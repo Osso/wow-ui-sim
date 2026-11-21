@@ -132,31 +132,21 @@ fn assert_published_outfit_entries(env: &WowLuaEnv) {
 
 #[test]
 fn group_buffs_publish_six_supplied_fields_and_fresh_snapshots() {
-    use super::c_cooldown_viewer::GroupBuffItem;
     let env = WowLuaEnv::new().unwrap();
     assert_eq!(
         env.eval::<i32>("return #C_CooldownViewer.GetGroupBuffItems()")
             .unwrap(),
         0
     );
-    env.state().borrow_mut().cooldown_viewer_group_buffs = vec![
-        GroupBuffItem {
-            spell_id: 91,
-            display_spell_id: Some(92),
-            name: "Copper".into(),
-            icon_id: 123,
-            flags: 1,
-            is_known: false,
-        },
-        GroupBuffItem {
-            spell_id: 305,
-            display_spell_id: Some(306),
-            name: "Silver".into(),
-            icon_id: 456,
-            flags: 2,
-            is_known: true,
-        },
-    ];
+    env.exec(
+        r#"
+        A_Admin.SetGroupBuffItems({
+            { spellID = 91, displaySpellID = 92, name = 'Copper', iconID = 123, flags = 1, isKnown = false },
+            { spellID = 305, displaySpellID = 306, name = 'Silver', iconID = 456, flags = 2, isKnown = true },
+        })
+        "#,
+    )
+    .unwrap();
     let actual: (String, String, i32) = env.eval(r#"
         local items = C_CooldownViewer.GetGroupBuffItems()
         assert(#items == 2)
@@ -168,7 +158,7 @@ fn group_buffs_publish_six_supplied_fields_and_fresh_snapshots() {
         return C_CooldownViewer.GetGroupBuffItems()[1].name, items[2].name, count
     "#).unwrap();
     assert_eq!(actual, ("Copper".into(), "Silver".into(), 6));
-    env.state().borrow_mut().cooldown_viewer_group_buffs.clear();
+    env.exec("A_Admin.SetGroupBuffItems({})").unwrap();
     assert_eq!(
         env.eval::<i32>("return #C_CooldownViewer.GetGroupBuffItems()")
             .unwrap(),
