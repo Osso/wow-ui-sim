@@ -16,12 +16,17 @@
 //!   when the category id is in `lfg_active_categories`, false otherwise.
 
 use crate::c_api::ensure_namespace;
+#[cfg(feature = "client-retail")]
 use crate::c_api::helpers::set_table_array;
+#[cfg(feature = "client-retail")]
+use crate::lua_api::methods::table_get;
 use crate::lua_api::methods::{
-    borrow_state, borrow_state_mut, create_string, create_table, table_get, table_set,
+    borrow_state, borrow_state_mut, create_string, create_table, table_set,
 };
 use crate::lua_api::state_types::LfgCategoryInfo;
-use crate::lua_bridge::{FromStack, stack_val, table_set_rust_fn_static};
+#[cfg(feature = "client-retail")]
+use crate::lua_bridge::stack_val;
+use crate::lua_bridge::{FromStack, table_set_rust_fn_static};
 use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
 use rilua::vm::table::Table;
@@ -33,13 +38,8 @@ pub(crate) fn register_c_lfg_info_surface(state: &mut LuaState) -> LuaResult<()>
     register_access_methods(state, table_ref)?;
     register_category_methods(state, table_ref)?;
     register_dungeon_methods(state, table_ref)?;
-    if matches!(
-        crate::client_profile::ACTIVE,
-        crate::client_profile::ClientProfile::Retail
-            | crate::client_profile::ClientProfile::WowForever
-    ) {
-        register_queue_state_methods(state, table_ref)?;
-    }
+    #[cfg(feature = "client-retail")]
+    register_queue_state_methods(state, table_ref)?;
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
         table_set_rust_fn_static(
             state,
@@ -148,6 +148,7 @@ fn register_category_methods(state: &mut LuaState, table_ref: GcRef<Table>) -> L
     Ok(())
 }
 
+#[cfg(feature = "client-retail")]
 fn register_queue_state_methods(state: &mut LuaState, table: GcRef<Table>) -> LuaResult<()> {
     table_set_rust_fn_static(
         state,
@@ -158,7 +159,8 @@ fn register_queue_state_methods(state: &mut LuaState, table: GcRef<Table>) -> Lu
     table_set_rust_fn_static(state, table, "GetLFDLockStates", get_lfd_lock_states)
 }
 
-/// INFERRED from the selected queue-status consumer (R88da): return supplied IDs by category.
+/// INFERRED from the selected Retail consumer (R88da): return supplied IDs by category.
+#[cfg(feature = "client-retail")]
 fn get_all_entries_for_category(state: &mut LuaState) -> LuaResult<u32> {
     let category = i32::from_stack(state, 1)?;
     let entries = borrow_state(state)?
@@ -180,7 +182,8 @@ fn get_all_entries_for_category(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-/// INFERRED from Blizzard_GroupFinder (R88da): return supplied lock rows with frame-used fields.
+/// INFERRED from Retail Blizzard_GroupFinder (R88da): return supplied lock rows.
+#[cfg(feature = "client-retail")]
 fn get_lfd_lock_states(state: &mut LuaState) -> LuaResult<u32> {
     let locks = borrow_state(state)?.lfg_lock_states.clone();
     let result = create_table(state);
@@ -205,20 +208,15 @@ fn get_lfd_lock_states(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-/// Supplies queue entries and lock rows for the Retail/Forever LFG consumers.
+/// Supplies queue entries and lock rows for selected Retail LFG consumers.
+#[cfg(feature = "client-retail")]
 pub(crate) fn register_admin(
     builder: crate::lua_bridge::TableBuilder,
 ) -> LuaResult<crate::lua_bridge::TableBuilder> {
-    if !matches!(
-        crate::client_profile::ACTIVE,
-        crate::client_profile::ClientProfile::Retail
-            | crate::client_profile::ClientProfile::WowForever
-    ) {
-        return Ok(builder);
-    }
     builder.set_function("SetLfgQueueData", set_lfg_queue_data)
 }
 
+#[cfg(feature = "client-retail")]
 fn set_lfg_queue_data(state: &mut LuaState) -> LuaResult<u32> {
     let entry_rows = stack_val(state, 1);
     let lock_rows = stack_val(state, 2);
@@ -230,6 +228,7 @@ fn set_lfg_queue_data(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
+#[cfg(feature = "client-retail")]
 fn read_lfg_queue_entries(
     state: &mut LuaState,
     value: Val,
@@ -248,6 +247,7 @@ fn read_lfg_queue_entries(
         .collect()
 }
 
+#[cfg(feature = "client-retail")]
 fn read_lfg_lock_states(
     state: &mut LuaState,
     value: Val,
@@ -268,6 +268,7 @@ fn read_lfg_lock_states(
         .collect()
 }
 
+#[cfg(feature = "client-retail")]
 fn read_array(state: &LuaState, value: Val) -> LuaResult<Vec<Val>> {
     let Val::Table(reference) = value else {
         return Err(rilua::runtime_error("LFG supplied data must be an array"));
@@ -282,6 +283,7 @@ fn read_array(state: &LuaState, value: Val) -> LuaResult<Vec<Val>> {
         .collect())
 }
 
+#[cfg(feature = "client-retail")]
 fn read_lfg_integer(value: Val, field: &str) -> LuaResult<i32> {
     match value {
         Val::Num(number) if number.is_finite() && number.fract() == 0.0 => {

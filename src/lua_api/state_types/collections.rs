@@ -171,14 +171,16 @@ pub struct LfgActivityInfo {
     pub is_current_raid_activity: bool,
 }
 
-/// A supplied queue entry for a legacy LFG category.
+/// A supplied Retail queue entry for a legacy LFG category.
+#[cfg(feature = "client-retail")]
 #[derive(Debug, Clone)]
 pub struct LfgQueueEntry {
     pub category_id: i32,
     pub entry_id: i32,
 }
 
-/// A supplied LFD lock row consumed by the Group Finder frame.
+/// A supplied Retail LFD lock row consumed by the Group Finder frame.
+#[cfg(feature = "client-retail")]
 #[derive(Debug, Clone)]
 pub struct LfgLockState {
     pub lfg_id: i32,
