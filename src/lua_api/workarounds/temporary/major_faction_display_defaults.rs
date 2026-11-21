@@ -42,6 +42,7 @@ mod tests {
     #[cfg(any(
         feature = "client-wrath",
         feature = "client-mists",
+        feature = "client-wowforever",
         feature = "client-era",
         feature = "client-anniversary"
     ))]
@@ -50,6 +51,7 @@ mod tests {
     #[cfg(any(
         feature = "client-wrath",
         feature = "client-mists",
+        feature = "client-wowforever",
         feature = "client-era",
         feature = "client-anniversary"
     ))]
@@ -75,6 +77,7 @@ mod tests {
     #[cfg(any(
         feature = "client-wrath",
         feature = "client-mists",
+        feature = "client-wowforever",
         feature = "client-era",
         feature = "client-anniversary"
     ))]
