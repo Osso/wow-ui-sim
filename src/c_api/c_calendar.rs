@@ -195,6 +195,7 @@ fn register_modeled_calendar_surface(state: &mut LuaState) -> LuaResult<()> {
     civil::register(state, namespace)?;
     club::register(state, namespace)?;
     club_event_queries::register(state, namespace)?;
+    event_types::register(state, namespace)?;
     selection::register(state, namespace)?;
     context_policy::register(state, namespace)?;
     context_reads::register(state, namespace)?;
