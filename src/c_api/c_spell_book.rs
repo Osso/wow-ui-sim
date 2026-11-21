@@ -252,11 +252,15 @@ fn register_spell_book_item_actions(
         "IsSpellInSpellBook",
         c_spell_book_is_spell_in_spell_book,
     )?;
-    if matches!(
-        crate::client_profile::ACTIVE,
-        crate::client_profile::ClientProfile::Retail
-            | crate::client_profile::ClientProfile::WowForever
-    ) {
+    register_spell_book_auto_cast_actions(state, table_ref)?;
+    register_retail_spell_book_item_actions(state, table_ref)
+}
+
+fn register_spell_book_auto_cast_actions(
+    state: &mut LuaState,
+    table_ref: rilua::vm::gc::arena::GcRef<rilua::vm::table::Table>,
+) -> LuaResult<()> {
+    if supports_spell_book_auto_cast() {
         table_set_rust_fn_static(
             state,
             table_ref,
@@ -270,26 +274,34 @@ fn register_spell_book_item_actions(
             c_spell_book_toggle_auto_cast,
         )?;
     }
-    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
-        table_set_rust_fn_static(
-            state,
-            table_ref,
-            "FindSpellOverrideByID",
-            c_spell_book_find_spell_override_by_id,
-        )?;
-        table_set_rust_fn_static(
-            state,
-            table_ref,
-            "FindFlyoutSlotBySpellID",
-            c_spell_book_find_flyout_slot_by_spell_id,
-        )?;
-        table_set_rust_fn_static(
-            state,
-            table_ref,
-            "FindBaseSpellByID",
-            c_spell_book_find_base_spell_by_id,
-        )?;
+    Ok(())
+}
+
+fn register_retail_spell_book_item_actions(
+    state: &mut LuaState,
+    table_ref: rilua::vm::gc::arena::GcRef<rilua::vm::table::Table>,
+) -> LuaResult<()> {
+    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail {
+        return Ok(());
     }
+    table_set_rust_fn_static(
+        state,
+        table_ref,
+        "FindSpellOverrideByID",
+        c_spell_book_find_spell_override_by_id,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        table_ref,
+        "FindFlyoutSlotBySpellID",
+        c_spell_book_find_flyout_slot_by_spell_id,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        table_ref,
+        "FindBaseSpellByID",
+        c_spell_book_find_base_spell_by_id,
+    )?;
     Ok(())
 }
 

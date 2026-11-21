@@ -45,6 +45,11 @@ fn load_startup_addons(env: &WowLuaEnv, ui: &std::path::Path) {
 #[test]
 fn original_spellbook_autocast_update_uses_each_supplied_row() {
     let env = opened_spellbook_env();
+    assert_supplied_autocast_visuals(&env);
+    assert_autocast_mutations_update_visuals(&env);
+}
+
+fn assert_supplied_autocast_visuals(env: &WowLuaEnv) {
     env.exec(
         r#"
         local items = {}
@@ -66,13 +71,32 @@ fn original_spellbook_autocast_update_uses_each_supplied_row() {
         assert(not items[2].Button.AutoCastOverlay.Shine:IsShown(), 'disabled row hides shine')
         assert(not items[3].Button.AutoCastOverlay:IsShown(), 'disallowed row hides overlay')
         assert(not items[3].Button.AutoCastOverlay.Shine:IsShown(), 'disallowed row hides shine')
-        C_SpellBook.SetSpellBookItemAutoCastEnabled(items[2].slotIndex, items[2].spellBank, true)
-        items[2]:UpdateAutoCast()
-        assert(items[2].Button.AutoCastOverlay.Shine:IsShown(), 'set-enabled turns shine on')
-        C_SpellBook.ToggleSpellBookItemAutoCast(items[2].slotIndex, items[2].spellBank)
-        items[2]:UpdateAutoCast()
-        assert(not items[2].Button.AutoCastOverlay.Shine:IsShown(), 'toggle turns shine off')
         "#,
     )
     .expect("the original item update must render supplied autocast flags per row");
+}
+
+fn assert_autocast_mutations_update_visuals(env: &WowLuaEnv) {
+    env.exec(
+        r#"
+        for _, item in PlayerSpellsFrame.SpellBookFrame.PagedSpellsFrame:EnumerateFrames() do
+            if item:IsShown() and item.HasValidData and item:HasValidData()
+                and item.spellBank == Enum.SpellBookSpellBank.Player
+                and item.Button and item.Button.AutoCastOverlay then
+                A_Admin.SetSpellBookItemAutoCast(item.slotIndex, item.spellBank, true, false)
+                item:UpdateAutoCast()
+                assert(not item.Button.AutoCastOverlay.Shine:IsShown())
+                C_SpellBook.SetSpellBookItemAutoCastEnabled(item.slotIndex, item.spellBank, true)
+                item:UpdateAutoCast()
+                assert(item.Button.AutoCastOverlay.Shine:IsShown(), 'set-enabled turns shine on')
+                C_SpellBook.ToggleSpellBookItemAutoCast(item.slotIndex, item.spellBank)
+                item:UpdateAutoCast()
+                assert(not item.Button.AutoCastOverlay.Shine:IsShown(), 'toggle turns shine off')
+                return
+            end
+        end
+        error('no visible spell row to test autocast mutations')
+        "#,
+    )
+    .expect("spellbook autocast mutations update the original row visuals");
 }
