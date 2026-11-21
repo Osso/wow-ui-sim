@@ -46,11 +46,12 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
 
 fn get_required_currency_info(state: &mut LuaState) -> LuaResult<u32> {
     let index = Option::<f64>::from_stack(state, 1)?.unwrap_or(0.0) as usize;
-    let currency = crate::c_api::quest_objectives::progress_requirements_for_active_dialog(
-        &borrow_state(state)?,
-    )
-    .and_then(|requirements| requirements.currencies.get(index.saturating_sub(1)))
-    .cloned();
+    let currency = {
+        let sim = borrow_state(state)?;
+        crate::c_api::quest_objectives::progress_requirements_for_active_dialog(&sim)
+            .and_then(|requirements| requirements.currencies.get(index.saturating_sub(1)))
+            .cloned()
+    };
     let Some(currency) = currency.filter(|_| index > 0) else {
         return Ok(0);
     };

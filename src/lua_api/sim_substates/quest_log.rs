@@ -275,6 +275,7 @@ impl QuestLogState {
             #[cfg(feature = "client-wrath")]
             manual_watch_ids: Vec::new(),
             objective_progress: crate::c_api::quest_objectives::seeded_progress(),
+            progress_requirements: HashMap::new(),
             background_materials: HashMap::new(),
             additional_highlights: HashMap::new(),
             readiness: Default::default(),

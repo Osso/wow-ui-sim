@@ -232,11 +232,12 @@ pub fn get_num_quest_rewards(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn get_required_progress_item_info(state: &mut LuaState, index: usize) -> LuaResult<u32> {
-    let item = crate::c_api::quest_objectives::progress_requirements_for_active_dialog(
-        &borrow_state(state)?,
-    )
-    .and_then(|requirements| requirements.items.get(index - 1))
-    .cloned();
+    let item = {
+        let sim = borrow_state(state)?;
+        crate::c_api::quest_objectives::progress_requirements_for_active_dialog(&sim)
+            .and_then(|requirements| requirements.items.get(index - 1))
+            .cloned()
+    };
     let Some(item) = item else {
         return Ok(0);
     };
