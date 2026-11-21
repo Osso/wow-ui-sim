@@ -19,13 +19,7 @@ end
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     use crate::client_profile::{ACTIVE, ClientProfile};
-    if matches!(
-        ACTIVE,
-        ClientProfile::Retail
-            | ClientProfile::Ptr
-            | ClientProfile::Mists
-            | ClientProfile::WowForever
-    ) {
+    if matches!(ACTIVE, ClientProfile::Ptr | ClientProfile::Mists) {
         lua.exec(PET_ACTION_LEGALITY)?;
     }
     Ok(())
