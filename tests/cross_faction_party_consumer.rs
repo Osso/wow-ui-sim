@@ -2,6 +2,8 @@
 
 #[path = "common/blizzard_addon_harness.rs"]
 mod blizzard_addon_harness;
+#[path = "common/panel_fixtures.rs"]
+mod panel_fixtures;
 
 fn assert_groupfinder_cross_faction_consumer(env: &wow_ui_sim::lua_api::WowLuaEnv) {
     env.exec(
