@@ -45,18 +45,18 @@ fn register_progress_requirement_queries(state: &mut LuaState) -> LuaResult<()> 
         state,
         namespace,
         "GetQuestRequiredCurrencyInfo",
-        get_required_currency_info,
+        read_required_currency_info,
     )?;
     table_set_rust_fn_static(
         state,
         namespace,
         "GetHideRequiredItems",
-        get_hide_required_items,
+        read_hide_required_items,
     )?;
     Ok(())
 }
 
-fn get_hide_required_items(state: &mut LuaState) -> LuaResult<u32> {
+fn read_hide_required_items(state: &mut LuaState) -> LuaResult<u32> {
     // INFERRED (R88db pending): absent inputs leave required rows visible.
     let hidden = {
         let sim = borrow_state(state)?;
@@ -68,7 +68,7 @@ fn get_hide_required_items(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-fn get_required_currency_info(state: &mut LuaState) -> LuaResult<u32> {
+fn read_required_currency_info(state: &mut LuaState) -> LuaResult<u32> {
     let index = Option::<f64>::from_stack(state, 1)?.unwrap_or(0.0) as usize;
     let currency = {
         let sim = borrow_state(state)?;

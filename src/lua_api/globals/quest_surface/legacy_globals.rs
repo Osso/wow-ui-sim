@@ -231,7 +231,7 @@ pub fn get_num_quest_rewards(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-fn get_required_progress_item_info(state: &mut LuaState, index: usize) -> LuaResult<u32> {
+fn read_required_progress_item_info(state: &mut LuaState, index: usize) -> LuaResult<u32> {
     let item = {
         let sim = borrow_state(state)?;
         crate::c_api::quest_objectives::progress_requirements_for_active_dialog(&sim)
@@ -256,7 +256,7 @@ pub fn get_quest_item_info(state: &mut LuaState) -> LuaResult<u32> {
         return Ok(0);
     }
     if reward_type == "required" && quest_objectives::ENABLED {
-        return get_required_progress_item_info(state, reward_index);
+        return read_required_progress_item_info(state, reward_index);
     }
     if reward_type != "reward" {
         return Ok(0);
