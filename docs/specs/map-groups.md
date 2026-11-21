@@ -1,6 +1,6 @@
 # Map groups
 
-`C_Map.GetMapGroupID` and `C_Map.GetMapGroupMembersInfo` expose supplied UI map-group membership to the WorldMap floor-navigation consumer on Retail and WoW Forever. See [map-group model](../wiki/systems/map-groups.md) for implementation details.
+`C_Map.GetMapGroupID` and `C_Map.GetMapGroupMembersInfo` expose supplied UI map-group membership to the WorldMap floor-navigation consumer on Retail and WoW Forever. See [map-group model](../../src/c_api/c_map.rs) for implementation details.
 
 ## What it must do
 
@@ -10,7 +10,7 @@
 
 ## How it works
 
-- [map-group model](../wiki/systems/map-groups.md)
+- [map-group model](../../src/c_api/c_map.rs)
 
 ## Implementation inventory
 
