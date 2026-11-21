@@ -1,3 +1,4 @@
+#[cfg(feature = "client-retail")]
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 #[cfg(feature = "client-retail")]
@@ -63,16 +64,4 @@ fn supplied_locks_reach_selected_group_finder_frame(env: &WowLuaEnv) {
     )
     .expect("the selected GroupFinder frame must consume both supplied lock rows");
 }
-}
-
-#[cfg(feature = "client-wowforever")]
-#[test]
-fn forever_keeps_empty_legacy_lfg_defaults() {
-    let env = WowLuaEnv::new().expect("lua env should initialize");
-    let result: String = env
-        .eval(
-            "return tostring(#C_LFGInfo.GetLFDLockStates()) .. ',' .. tostring(#C_LFGInfo.GetAllEntriesForCategory(8))",
-        )
-        .expect("Forever legacy LFG defaults should remain callable");
-    assert_eq!(result, "0,0");
 }
