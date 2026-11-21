@@ -5,14 +5,21 @@ use crate::common;
 fn journeys_refresh_and_reward_track_follow_supplied_faction_flags() {
     use wow_ui_sim::lua_api::WowLuaEnv;
 
-    let env = WowLuaEnv::new().expect("Failed to create Lua environment");
-    env.set_screen_size(1024.0, 768.0);
     let ui = common::blizzard_addon_harness::blizzard_ui_dir();
-    common::panel_fixtures::seed_addon_search_paths(&env);
-    common::panel_fixtures::load_panel_addons(&env);
+    let env = common::blizzard_addon_harness::new_blizzard_addon_env(&ui);
+    let loaded = common::blizzard_addon_harness::load_blizzard_addon_closure_into_env(
+        &env,
+        &ui,
+        &["Blizzard_EncounterJournal"],
+        &[],
+    );
+    assert!(
+        loaded
+            .iter()
+            .any(|name| name == "Blizzard_EncounterJournal")
+    );
     env.apply_post_load_workarounds();
     common::panel_fixtures::fire_startup_events(&env);
-    common::load_required_blizzard_addon(&env, &ui, "Blizzard_EncounterJournal");
     env.apply_runtime_addon_load_workarounds("Blizzard_EncounterJournal");
     common::fire_addon_loaded(&env, "Blizzard_EncounterJournal");
 
@@ -25,8 +32,7 @@ fn journeys_refresh_and_reward_track_follow_supplied_faction_flags() {
         local journeys = EncounterJournal.JourneysFrame
         journeys:Refresh()
         local ids = {}
-        for _, node in journeys.dataProvider:EnumerateEntireRange() do
-            local data = node:GetData()
+        for _, data in journeys.dataProvider:EnumerateEntireRange() do
             if data.factionID then ids[#ids + 1] = data.factionID end
         end
         table.sort(ids)
