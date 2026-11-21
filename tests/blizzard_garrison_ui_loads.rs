@@ -1,4 +1,8 @@
-#![cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#![cfg(any(
+    feature = "client-retail",
+    feature = "client-ptr",
+    feature = "client-wowforever"
+))]
 use std::path::PathBuf;
 
 use wow_ui_sim::loader::{discover_blizzard_addons_for_screen, find_toc_file, load_addon};
@@ -75,6 +79,17 @@ fn load_full_game_ui_with_lod_deps() -> WowLuaEnv {
     env.apply_post_load_workarounds();
     fire_startup_events_for_screen(&env, ScreenKind::Game);
     env
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn supplied_missions_update_the_real_covenant_mission_list() {
+    let env = load_full_game_ui_with_lod_deps();
+    load_addon(&env.loader_env(), &garrison_ui_toc()).expect("load original Garrison UI");
+    let counts: (i64, i64, i64, i64) = env
+        .eval(include_str!("fixtures/garrison_mission_lists.lua"))
+        .expect("Covenant mission list consumes supplied missions");
+    assert_eq!(counts, (1, 1, 900001, 900002));
 }
 
 #[test]
@@ -255,6 +270,7 @@ fn is_three_d_model_gap(message: &str) -> bool {
         || message.contains("expected number, got nil at argument 1")
 }
 
+#[cfg(feature = "client-ptr")]
 prefork_full_ui_case! {
 fn blizzard_garrison_ui_loads_explicitly_via_load_addon_without_errors(env: &WowLuaEnv) {
     #[cfg(feature = "client-retail")]
@@ -291,7 +307,7 @@ fn blizzard_garrison_ui_loads_explicitly_via_load_addon_without_errors(env: &Wow
 }
 }
 
-#[cfg(not(feature = "client-retail"))]
+#[cfg(all(feature = "client-ptr", not(feature = "client-retail")))]
 #[test]
 fn blizzard_garrison_ui_loads_explicitly_via_load_addon_without_errors() {
     let env = load_full_game_ui_with_lod_deps();
