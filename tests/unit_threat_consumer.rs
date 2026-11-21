@@ -43,7 +43,7 @@ fn compact_aggro_highlight_tracks_two_supplied_states() {
         local isTanking, status, scaled, raw, value = UnitDetailedThreatSituation("player", "target")
         local firstSituation = UnitThreatSituation("player")
         local firstLead = UnitThreatPercentageOfLead("player", "target")
-        A_Admin.SetUnitThreatSituation("player", "target", 2, 100, 100, 1200)
+        A_Admin.SetUnitThreatSituation("player", "target", 3, 100, 100, 1200)
         A_Admin.SetUnitThreatSituation("pet", "target", 0, 80, 80, 1000)
         CompactUnitFrame_UpdateAggroHighlight(frame)
         local second = frame.aggroHighlight:IsShown()
@@ -51,7 +51,7 @@ fn compact_aggro_highlight_tracks_two_supplied_states() {
         assert(isTanking == false and status == 0 and scaled == 50 and raw == 50 and value == 500)
         assert(firstSituation == 0 and firstLead == 50)
         assert(UnitDetailedThreatSituation("player", "target") == true)
-        assert(UnitThreatSituation("player") == 2)
+        assert(UnitThreatSituation("player") == 3)
         assert(UnitThreatPercentageOfLead("player", "target") == 100)
         return first ~= second
     "#).expect("original Blizzard threat consumer runs");
