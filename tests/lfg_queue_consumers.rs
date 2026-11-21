@@ -1,27 +1,12 @@
 #![cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 
-use wow_ui_sim::loader::discover_blizzard_addons_for_screen;
 use wow_ui_sim::lua_api::WowLuaEnv;
-use wow_ui_sim::screen::ScreenKind;
 
-fn load_selected_consumer(addon: &str) -> WowLuaEnv {
-    let ui = wow_ui_sim::paths::default_blizzard_ui_addons_path().unwrap();
-    let selected = discover_blizzard_addons_for_screen(&ui, ScreenKind::Game);
-    assert!(
-        selected.iter().any(|(name, _)| name == addon),
-        "{addon} must be selected by the active Game TOC"
-    );
-    let (env, loaded) =
-        crate::common::blizzard_addon_harness::build_blizzard_addon_closure_env(&ui, &[addon], &[]);
-    assert!(loaded.iter().any(|name| name == addon), "{addon} must load");
-    env
-}
-
-#[test]
-fn supplied_entries_reach_selected_queue_status_rows() {
-    let env = load_selected_consumer("Blizzard_QueueStatusFrame");
+prefork_full_ui_case! {
+fn supplied_entries_reach_selected_queue_status_rows(env: &WowLuaEnv) {
     env.exec(
         r#"
+        assert(C_AddOns.IsAddOnLoaded('Blizzard_QueueStatusFrame'))
         A_Admin.SetLfgQueueData(
             {
                 { categoryID = LE_LFG_CATEGORY_LAIR, entryID = 1203 },
@@ -45,13 +30,14 @@ fn supplied_entries_reach_selected_queue_status_rows() {
     )
     .expect("the selected QueueStatusFrame must display supplied category entry IDs");
 }
+}
 
 #[cfg(feature = "client-retail")]
-#[test]
-fn supplied_locks_reach_selected_group_finder_frame() {
-    let env = load_selected_consumer("Blizzard_GroupFinder");
+prefork_full_ui_case! {
+fn supplied_locks_reach_selected_group_finder_frame(env: &WowLuaEnv) {
     env.exec(
         r#"
+        assert(C_AddOns.IsAddOnLoaded('Blizzard_GroupFinder'))
         A_Admin.SetLfgQueueData(
             {},
             {
@@ -67,4 +53,5 @@ fn supplied_locks_reach_selected_group_finder_frame() {
         "#,
     )
     .expect("the selected GroupFinder frame must consume both supplied lock rows");
+}
 }
