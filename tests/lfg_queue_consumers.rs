@@ -68,8 +68,10 @@ fn supplied_locks_reach_selected_group_finder_frame(env: &WowLuaEnv) {
 #[test]
 fn forever_keeps_empty_legacy_lfg_defaults() {
     let env = WowLuaEnv::new().expect("lua env should initialize");
-    let result: (usize, usize) = env
-        .eval("return #C_LFGInfo.GetLFDLockStates(), #C_LFGInfo.GetAllEntriesForCategory(8)")
+    let result: String = env
+        .eval(
+            "return tostring(#C_LFGInfo.GetLFDLockStates()) .. ',' .. tostring(#C_LFGInfo.GetAllEntriesForCategory(8))",
+        )
         .expect("Forever legacy LFG defaults should remain callable");
-    assert_eq!(result, (0, 0));
+    assert_eq!(result, "0,0");
 }
