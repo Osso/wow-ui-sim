@@ -66,6 +66,12 @@ fn original_spellbook_autocast_update_uses_each_supplied_row() {
         assert(not items[2].Button.AutoCastOverlay.Shine:IsShown(), 'disabled row hides shine')
         assert(not items[3].Button.AutoCastOverlay:IsShown(), 'disallowed row hides overlay')
         assert(not items[3].Button.AutoCastOverlay.Shine:IsShown(), 'disallowed row hides shine')
+        C_SpellBook.SetSpellBookItemAutoCastEnabled(items[2].slotIndex, items[2].spellBank, true)
+        items[2]:UpdateAutoCast()
+        assert(items[2].Button.AutoCastOverlay.Shine:IsShown(), 'set-enabled turns shine on')
+        C_SpellBook.ToggleSpellBookItemAutoCast(items[2].slotIndex, items[2].spellBank)
+        items[2]:UpdateAutoCast()
+        assert(not items[2].Button.AutoCastOverlay.Shine:IsShown(), 'toggle turns shine off')
         "#,
     )
     .expect("the original item update must render supplied autocast flags per row");
