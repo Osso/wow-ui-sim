@@ -1,6 +1,7 @@
 //! Host-supplied Calendar day records and synthetic event-index relations.
 pub(crate) mod civil;
 mod club;
+pub(crate) mod club_events;
 mod context_actions;
 mod context_policy;
 mod context_reads;

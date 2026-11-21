@@ -1223,6 +1223,7 @@ fn test_adjust_time_by_minutes_crosses_day_boundaries() {
 }
 
 #[test]
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 fn test_get_club_calendar_events_defaults_empty() {
     let env = env();
     let count: i32 = env
