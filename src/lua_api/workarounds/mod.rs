@@ -485,6 +485,7 @@ fn apply_feature_progression_defaults(lua: &mut rilua::Lua) -> crate::Result<()>
 fn apply_feature_model_defaults(lua: &mut rilua::Lua) -> crate::Result<()> {
     temporary::sound_driver_defaults::apply_bootstrap(lua)?;
     temporary::static_popup_defaults::apply_bootstrap(lua)?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::taxi_map_defaults::apply_bootstrap(lua)?;
     temporary::texture_file_data_defaults::apply_bootstrap(lua)?;
     temporary::tracking_namespace_defaults::apply_bootstrap(lua)?;
