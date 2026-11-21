@@ -2,6 +2,30 @@
 
 use wow_ui_sim::lua_api::WowLuaEnv;
 
+const TRACKER_PROBE: &str = r#"
+local taskIDs = {}
+for _, questID in ipairs(GetTasksTable()) do
+  taskIDs[questID] = true
+end
+if not taskIDs[80000] then return "supplied_task_missing" end
+if not taskIDs[90002] then return "second_task_missing_from_table" end
+if not QuestUtils_IsQuestWorldQuest(90002) then return "second_task_not_world" end
+local inArea, onMap, count = GetTaskInfo(90002)
+if not inArea then return "second_task_not_in_area" end
+if count ~= 1 then return "second_task_wrong_count" end
+WorldQuestObjectiveTracker:Update(2000, false)
+local shown = {}
+for _, questID in ipairs(WorldQuestObjectiveTracker.currentContentList) do
+  shown[questID] = true
+end
+local blocks = WorldQuestObjectiveTracker.usedBlocks[WorldQuestObjectiveTracker.blockTemplate]
+if not blocks[90001] then return "first_task_block_missing" end
+if not blocks[90002] then return "second_task_block_missing" end
+if not shown[90002] then return "second_task_not_in_content_list" end
+if shown[80000] then return "non_world_task_shown" end
+return "ok"
+"#;
+
 #[test]
 fn world_quest_tracker_renders_world_tasks_and_skips_non_world_task() {
     crate::common::blizzard_addon_harness::with_blizzard_addon_startup_shape(
@@ -15,32 +39,8 @@ fn assert_tracker_blocks(env: &WowLuaEnv, loaded: &[String]) {
     assert!(loaded.iter().any(|addon| addon == "Blizzard_ObjectiveTracker"));
     supply_task_rows(env);
     let result: String = env
-                .eval(
-                    r#"
-                    local taskIDs = {}
-                    for _, questID in ipairs(GetTasksTable()) do
-                      taskIDs[questID] = true
-                    end
-                    if not taskIDs[80000] then return "supplied_task_missing" end
-                    if not taskIDs[90002] then return "second_task_missing_from_table" end
-                    if not QuestUtils_IsQuestWorldQuest(90002) then return "second_task_not_world" end
-                    local inArea, onMap, count = GetTaskInfo(90002)
-                    if not inArea then return "second_task_not_in_area" end
-                    if count ~= 1 then return "second_task_wrong_count" end
-                    WorldQuestObjectiveTracker:Update(2000, false)
-                    local shown = {}
-                    for _, questID in ipairs(WorldQuestObjectiveTracker.currentContentList) do
-                      shown[questID] = true
-                    end
-                    local blocks = WorldQuestObjectiveTracker.usedBlocks[WorldQuestObjectiveTracker.blockTemplate]
-                    if not blocks[90001] then return "first_task_block_missing" end
-                    if not blocks[90002] then return "second_task_block_missing" end
-                    if not shown[90002] then return "second_task_not_in_content_list" end
-                    if shown[80000] then return "non_world_task_shown" end
-                    return "ok"
-                    "#,
-                )
-                .expect("world-quest tracker layout should run");
+        .eval(TRACKER_PROBE)
+        .expect("world-quest tracker layout should run");
     assert_eq!(result, "ok", "tracker result: {result}");
 }
 
