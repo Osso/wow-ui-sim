@@ -23,9 +23,8 @@ fn content_tracking_defaults_are_empty_and_inactive() {
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
-#[test]
-fn collection_wardrobe_consumer_reflects_supplied_tracking_entries() {
-    let env = env();
+prefork_full_ui_case! {
+fn collection_wardrobe_consumer_reflects_supplied_tracking_entries(env: &WowLuaEnv) {
     let loaded: bool = env
         .eval("return C_AddOns.IsAddOnLoaded('Blizzard_FrameXMLUtil')")
         .expect("FrameXMLUtil load state should be available");
@@ -58,6 +57,7 @@ fn collection_wardrobe_consumer_reflects_supplied_tracking_entries() {
         enabled,
         "the C API must return the supplied capability state"
     );
+}
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
