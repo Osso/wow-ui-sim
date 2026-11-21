@@ -27,7 +27,8 @@ fn forever_quest_timer_frame_renders_supplied_countdowns() {
         "#,
     )
     .expect("supply timers to the original QuestTimerFrame");
-    let (first, second, first_id, second_id, first_expected, second_expected): (
+    let (count, first, second, first_id, second_id, first_expected, second_expected): (
+        i32,
         String,
         String,
         i32,
@@ -36,9 +37,10 @@ fn forever_quest_timer_frame_renders_supplied_countdowns() {
         String,
     ) = env
         .eval(
-            "return QuestTimerFrame.activeElements[1].Name:GetText(), QuestTimerFrame.activeElements[2].Name:GetText(), QuestTimerFrame.activeElements[1].questID, QuestTimerFrame.activeElements[2].questID, SecondsToTime(90), SecondsToTime(150)",
+            "local first, second = QuestTimerFrame.activeElements[1], QuestTimerFrame.activeElements[2]; return QuestTimerFrame.numTimers, first and first.Name:GetText() or '', second and second.Name:GetText() or '', first and first.questID or 0, second and second.questID or 0, SecondsToTime(90), SecondsToTime(150)",
         )
         .expect("read rendered timer rows");
+    assert_eq!(count, 2, "both supplied timers must render as rows");
     assert_eq!((first_id, second_id), (41001, 41002));
     assert_eq!((first, second), (first_expected, second_expected));
 
