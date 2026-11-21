@@ -5,6 +5,8 @@
 
 pub(crate) mod azerite_essence_spell_selector;
 mod c_account_info;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) mod c_gossip_info_poi;
 pub mod c_guild_info;
 pub mod c_heirloom;
 pub mod c_recruit_a_friend;
@@ -184,6 +186,8 @@ pub mod c_combat_text;
 mod c_commentator;
 pub(crate) mod c_console;
 pub mod c_content_tracking;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) mod c_contribution_collector;
 pub mod c_cooldown_viewer;
 #[cfg(feature = "retail-12-0-0")]
 mod c_crafting_orders;

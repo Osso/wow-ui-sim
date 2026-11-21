@@ -29,6 +29,8 @@ const GOSSIP_QUEST_HASH_FIELDS: usize = 12;
 
 pub(super) fn register_gossip_info_surface(state: &mut LuaState) -> LuaResult<()> {
     let table_ref = ensure_namespace(state, "C_GossipInfo")?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    crate::c_api::c_gossip_info_poi::register(state)?;
     table_set_rust_fn_static(state, table_ref, "GetOptions", c_gossip_info_get_options)?;
     table_set_rust_fn_static(
         state,

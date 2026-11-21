@@ -148,6 +148,46 @@ const TAXI_MAP_ADDON_OVERRIDES: &[BlizzardAddonOverride<'static>] = &[
 ];
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+const CONTRIBUTION_COLLECTOR_INPUT_LUA: &str = r#"
+A_Admin.SetContributionCollectors({
+    { mapID=2248, areaPoiID=901, collectorCreatureID=301, name="Collector Alpha", atlasName="TaxiNode", x=0.2, y=0.3,
+      contributions={{ contributionID=401, name="Contribution Alpha", state=1, amount=0.5,
+        nextStateTime=123.5, startTime=100,
+        appearance={ stateName="Progress", stateColor={r=0.2, g=0.4, b=0.6}, tooltipLine="%.0f%%",
+          tooltipUseTimeRemaining=false, statusBarAtlas="Status", borderAtlas="Border", bannerAtlas="Banner" } }} },
+    { mapID=2248, areaPoiID=902, collectorCreatureID=302, name="Collector Beta", atlasName="TaxiNode", x=0.7, y=0.8,
+      contributions={{ contributionID=402, name="Contribution Beta", state=2, amount=0.75,
+        nextStateTime=234.5, startTime=200 }} },
+    { mapID=9999, areaPoiID=903, collectorCreatureID=303, name="Other Map", atlasName="TaxiNode", x=0.5, y=0.5 },
+})
+"#;
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+const CONTRIBUTION_COLLECTOR_REFRESH_LUA: &str = r#"
+WorldMapFrame:SetMapID(2248)
+local provider = CreateFromMixins(ContributionCollectorDataProviderMixin)
+WorldMapFrame:AddDataProvider(provider)
+provider:RefreshAllData()
+local names, areas = {}, {}
+for pin in WorldMapFrame:EnumeratePinsByTemplate("ContributionCollectorPinTemplate") do
+    names[pin.name] = pin.collectorCreatureID
+    areas[pin.name] = pin.poiInfo.areaPoiID
+end
+return WorldMapFrame:GetNumActivePinsByTemplate("ContributionCollectorPinTemplate"),
+       names["Collector Alpha"], names["Collector Beta"], names["Other Map"] ~= nil,
+       areas["Collector Alpha"], areas["Collector Beta"]
+"#;
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+const CONTRIBUTION_COLLECTOR_GETTERS_LUA: &str = r#"
+local ids = { C_ContributionCollector.GetManagedContributionsForCreatureID(301) }
+local state, amount, nextStateTime, startTime = C_ContributionCollector.GetState(ids[1])
+local appearance = C_ContributionCollector.GetContributionAppearance(ids[1], state)
+return ids[1], C_ContributionCollector.GetName(ids[1]), state, amount, nextStateTime, startTime,
+       appearance.stateName, appearance.tooltipLine
+"#;
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 const TAXI_MAP_NODE_INPUT_LUA: &str = r#"
 A_Admin.SetTaxiMapNodes({
     { mapID=2248, nodeID=101, name="Node Alpha", atlasName="TaxiNode", textureKit="", faction=0,
@@ -205,6 +245,138 @@ fn load_taxi_map_addon_closure() -> (WowLuaEnv, Vec<String>) {
     );
     env.apply_post_load_workarounds();
     (env, loaded)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+const GOSSIP_MAP_OVERRIDES: &[BlizzardAddonOverride<'static>] = &[BlizzardAddonOverride {
+    addon: "Blizzard_WorldMap",
+    extra_roots: &["Blizzard_FrameXML", "Blizzard_UIParentPanelManager"],
+}];
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+const GOSSIP_MAP_REFRESH_LUA: &str = r#"
+local provider = CreateFromMixins(GossipDataProviderMixin)
+WorldMapFrame:AddDataProvider(provider)
+local function readGossipPin(mapID)
+    WorldMapFrame:SetMapID(mapID)
+    provider:RefreshAllData()
+    local pin = WorldMapFrame:EnumeratePinsByTemplate("GossipPinTemplate")()
+    if not pin then return 0, "", -1, -1 end
+    local x, y = pin:GetPosition()
+    return WorldMapFrame:GetNumActivePinsByTemplate("GossipPinTemplate"), pin.poiInfo.name, x, y
+end
+local countA, nameA, xA, yA = readGossipPin(2248)
+local infoA = C_GossipInfo.GetPoiInfo(2248, 401)
+local countB, nameB, xB, yB = readGossipPin(84)
+local infoB = C_GossipInfo.GetPoiInfo(84, 402)
+return countA, nameA, xA, yA, infoA.atlasName, infoA.textureIndex,
+       countB, nameB, xB, yB, infoB.atlasName, infoB.textureIndex
+"#;
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn load_gossip_map_addon_closure() -> WowLuaEnv {
+    let ui = blizzard_ui_dir();
+    let env = new_blizzard_addon_env(&ui);
+    env.exec(
+        "A_Admin.SetGossipPoi(2248, 401, 'North Gossip', 0.2, 0.8, 'TaxiNode', 3); A_Admin.SetGossipPoi(84, 402, 'South Gossip', 0.7, 0.3, 'TaxiNode', 7)",
+    )
+    .expect("supply map-specific gossip POIs before loading Blizzard consumers");
+    let loaded = load_blizzard_addon_closure_into_env(
+        &env,
+        &ui,
+        &["Blizzard_SharedMapDataProviders", "Blizzard_WorldMap"],
+        GOSSIP_MAP_OVERRIDES,
+    );
+    assert!(loaded.iter().any(|name| name == "Blizzard_FrameXML"));
+    assert!(loaded.iter().any(|name| name == ROOT_ADDON));
+    assert!(loaded.iter().any(|name| name == "Blizzard_WorldMap"));
+    env.apply_post_load_workarounds();
+    env
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn gossip_map_provider_refreshes_the_supplied_poi_for_each_map() {
+    let env = load_gossip_map_addon_closure();
+    let observed: (
+        i32,
+        String,
+        f64,
+        f64,
+        String,
+        i32,
+        i32,
+        String,
+        f64,
+        f64,
+        String,
+        i32,
+    ) = env
+        .eval(GOSSIP_MAP_REFRESH_LUA)
+        .expect("original gossip provider should refresh pins on the real WorldMapFrame");
+    assert_eq!(
+        observed,
+        (
+            1,
+            "North Gossip".into(),
+            0.2,
+            0.8,
+            "TaxiNode".into(),
+            3,
+            1,
+            "South Gossip".into(),
+            0.7,
+            0.3,
+            "TaxiNode".into(),
+            7
+        )
+    );
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn contribution_collector_provider_refreshes_pins_from_supplied_records() {
+    let ui = blizzard_ui_dir();
+    let env = new_blizzard_addon_env(&ui);
+    env.exec(CONTRIBUTION_COLLECTOR_INPUT_LUA)
+        .expect("supply contribution collectors before loading the UI consumer");
+    let loaded = load_blizzard_addon_closure_into_env(
+        &env,
+        &ui,
+        &["Blizzard_SharedMapDataProviders", "Blizzard_WorldMap"],
+        TAXI_MAP_ADDON_OVERRIDES,
+    );
+    env.apply_post_load_workarounds();
+    for addon in [
+        "Blizzard_FrameXML",
+        "Blizzard_SharedMapDataProviders",
+        "Blizzard_WorldMap",
+    ] {
+        assert!(
+            loaded.iter().any(|name| name == addon),
+            "{addon} was not loaded"
+        );
+    }
+    let pins: (i32, i32, i32, bool, i32, i32) = env
+        .eval(CONTRIBUTION_COLLECTOR_REFRESH_LUA)
+        .expect("original contribution collector provider should refresh on WorldMapFrame");
+    assert_eq!(pins, (2, 301, 302, false, 901, 902));
+    let getters: (i32, String, i32, f64, f64, f64, String, String) = env
+        .eval(CONTRIBUTION_COLLECTOR_GETTERS_LUA)
+        .expect("supplied contribution getters should expose the collector records");
+    assert_eq!(
+        getters,
+        (
+            401,
+            "Contribution Alpha".to_string(),
+            1,
+            0.5,
+            123.5,
+            100.0,
+            "Progress".to_string(),
+            "%.0f%%".to_string(),
+        )
+    );
 }
 
 // INFERRED R88cr: Forever uses the mainline SoftCursor addon through FrameXML.
