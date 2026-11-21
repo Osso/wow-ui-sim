@@ -75,7 +75,8 @@ fn read_primary_appearances(
     state: &mut LuaState,
     row: Val,
 ) -> LuaResult<Vec<TransmogSetPrimaryAppearanceInfo>> {
-    read_array(state, table_get(state, row, "primaryAppearances"))?
+    let value = table_get(state, row, "primaryAppearances");
+    read_array(state, value)?
         .into_iter()
         .map(|appearance| {
             Ok(TransmogSetPrimaryAppearanceInfo {
@@ -86,7 +87,7 @@ fn read_primary_appearances(
         .collect()
 }
 
-fn required_integer(state: &LuaState, row: Val, key: &str) -> LuaResult<i32> {
+fn required_integer(state: &mut LuaState, row: Val, key: &str) -> LuaResult<i32> {
     match table_get(state, row, key) {
         Val::Num(value) if value.is_finite() && value.fract() == 0.0 => Ok(value as i32),
         _ => Err(rilua::runtime_error(format!(
@@ -95,7 +96,7 @@ fn required_integer(state: &LuaState, row: Val, key: &str) -> LuaResult<i32> {
     }
 }
 
-fn optional_integer(state: &LuaState, row: Val, key: &str) -> LuaResult<Option<i32>> {
+fn optional_integer(state: &mut LuaState, row: Val, key: &str) -> LuaResult<Option<i32>> {
     match table_get(state, row, key) {
         Val::Nil => Ok(None),
         Val::Num(value) if value.is_finite() && value.fract() == 0.0 => Ok(Some(value as i32)),
@@ -105,7 +106,7 @@ fn optional_integer(state: &LuaState, row: Val, key: &str) -> LuaResult<Option<i
     }
 }
 
-fn required_bool(state: &LuaState, row: Val, key: &str) -> LuaResult<bool> {
+fn required_bool(state: &mut LuaState, row: Val, key: &str) -> LuaResult<bool> {
     match table_get(state, row, key) {
         Val::Bool(value) => Ok(value),
         _ => Err(rilua::runtime_error(format!(
@@ -114,7 +115,7 @@ fn required_bool(state: &LuaState, row: Val, key: &str) -> LuaResult<bool> {
     }
 }
 
-fn required_text(state: &LuaState, row: Val, key: &str) -> LuaResult<String> {
+fn required_text(state: &mut LuaState, row: Val, key: &str) -> LuaResult<String> {
     crate::lua_api::methods::val_to_string(state, table_get(state, row, key))
         .ok_or_else(|| rilua::runtime_error(format!("transmog set {key} must be a string")))
 }
