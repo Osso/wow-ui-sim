@@ -174,7 +174,7 @@ fn read_group_buff_items(state: &mut LuaState, value: Val) -> LuaResult<Vec<Grou
         .collect()
 }
 
-fn read_group_buff_item(state: &LuaState, value: Val) -> LuaResult<GroupBuffItem> {
+fn read_group_buff_item(state: &mut LuaState, value: Val) -> LuaResult<GroupBuffItem> {
     let Val::Table(table) = value else {
         return Err(invalid_group_buff_field("item"));
     };
@@ -194,7 +194,7 @@ fn read_group_buff_item(state: &LuaState, value: Val) -> LuaResult<GroupBuffItem
     })
 }
 
-fn group_buff_integer(state: &LuaState, table: GcRef<Table>, key: &str) -> LuaResult<i32> {
+fn group_buff_integer(state: &mut LuaState, table: GcRef<Table>, key: &str) -> LuaResult<i32> {
     match table_get(state, Val::Table(table), key) {
         Val::Num(value)
             if value.is_finite()
@@ -208,7 +208,7 @@ fn group_buff_integer(state: &LuaState, table: GcRef<Table>, key: &str) -> LuaRe
 }
 
 fn optional_group_buff_integer(
-    state: &LuaState,
+    state: &mut LuaState,
     table: GcRef<Table>,
     key: &str,
 ) -> LuaResult<Option<i32>> {
@@ -225,7 +225,7 @@ fn optional_group_buff_integer(
     }
 }
 
-fn group_buff_icon_id(state: &LuaState, table: GcRef<Table>) -> LuaResult<u32> {
+fn group_buff_icon_id(state: &mut LuaState, table: GcRef<Table>) -> LuaResult<u32> {
     match table_get(state, Val::Table(table), "iconID") {
         Val::Num(value)
             if value.is_finite()
@@ -238,12 +238,12 @@ fn group_buff_icon_id(state: &LuaState, table: GcRef<Table>) -> LuaResult<u32> {
     }
 }
 
-fn group_buff_string(state: &LuaState, table: GcRef<Table>, key: &str) -> LuaResult<String> {
+fn group_buff_string(state: &mut LuaState, table: GcRef<Table>, key: &str) -> LuaResult<String> {
     val_to_string(state, table_get(state, Val::Table(table), key))
         .ok_or_else(|| invalid_group_buff_field(key))
 }
 
-fn group_buff_bool(state: &LuaState, table: GcRef<Table>, key: &str) -> LuaResult<bool> {
+fn group_buff_bool(state: &mut LuaState, table: GcRef<Table>, key: &str) -> LuaResult<bool> {
     match table_get(state, Val::Table(table), key) {
         Val::Bool(value) => Ok(value),
         _ => Err(invalid_group_buff_field(key)),
