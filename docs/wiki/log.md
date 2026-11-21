@@ -1,3 +1,7 @@
+## [2026-11-20] correction | Secure dependency replay rule
+
+Updated [addon loading](systems/addon-loading.md#secure-dependency-replay-and-library-allowlist). **VERIFIED (simulator source):** Forever replay membership now follows enabled secure TOC dependency closure; secure dependency passes skip XML for already ordinary-loaded dependencies instead of naming `RaidWarning.xml`. **INFERRED (R88cj pending):** the dependency-closure selector matches native behavior; evidence is pending. Exact private-aura, secure-replay and secure-XML tests pass on Retail and Forever; stock no-addons/no-SavedVariables scans return `[]`.
+
 ## [2026-11-20] implementation | Secure XML mixin environment
 
 Updated [addon loading](../systems/addon-loading.md#secure-dependency-replay-and-library-allowlist). Retail's original PrivateAura OnEnter failed because secure XML resolved a stale public `GameTooltipDataMixin` without its late-added accessor. XML resolution now follows the active secure-addon context; Forever also replays `Blizzard_SharedXMLGame` to provide `TooltipDataHandlerMixin.ProcessInfo`; secure loads skip duplicate `RaidWarning.xml`. Exact original hover tests pass on both profiles, and stock no-addons/no-SavedVariables lua-errors scans return `[]`. **INFERRED (R88cd):** native secure XML mixins resolve from the active addon environment.
