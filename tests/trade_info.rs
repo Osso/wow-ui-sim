@@ -30,7 +30,8 @@ const MONEY_TRUNCATION_CASE: &str = r#"
 "#;
 
 const MONEY_OVER_OFFER_CASE: &str = r#"
-    A_Admin.SetTradeInfoCursorMoney(7)
+    ClearCursor()
+    PickupPlayerMoney(7)
     local pickup = GetMoneyTypeInfoField('PLAYER_TRADE', 'PickupFunc')
     pickup({}, 51)
     local kind, copper = GetCursorInfo()
@@ -94,6 +95,7 @@ fn r88e5_trade_money_consumer_uses_supplied_offer_and_cursor_state() {
         assert_trade_money_pickup(env, MONEY_TRUNCATION_CASE, (75.0, "money".into(), 25.0));
 
         supply_trade_offer(env, 50);
+        env.state().borrow_mut().player.money = 1_000;
         assert_trade_money_pickup(env, MONEY_OVER_OFFER_CASE, (50.0, "money".into(), 7.0));
 
         supply_trade_offer(env, 100_000_000_001);

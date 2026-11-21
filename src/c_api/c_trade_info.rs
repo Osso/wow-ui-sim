@@ -66,12 +66,10 @@ fn register_ptr_warning_getters(state: &mut LuaState, trade_info: GcRef<Table>) 
 }
 
 pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
-    let builder = builder
-        .set_function(
-            "SetTradeMoneyPickupRestricted",
-            set_pickup_trade_money_restricted,
-        )?
-        .set_function("SetTradeInfoCursorMoney", set_trade_info_cursor_money)?;
+    let builder = builder.set_function(
+        "SetTradeMoneyPickupRestricted",
+        set_pickup_trade_money_restricted,
+    )?;
     #[cfg(feature = "client-ptr")]
     let builder = builder.set_function(
         "SetSecureTransferTradeOfferWarning",
@@ -102,12 +100,6 @@ fn pickup_restricted(state: &LuaState) -> LuaResult<bool> {
 fn set_pickup_trade_money_restricted(state: &mut LuaState) -> LuaResult<u32> {
     let restricted = bool::from_stack(state, 1)?;
     borrow_state_mut(state)?.pickup_trade_money_restricted = restricted;
-    Ok(0)
-}
-
-fn set_trade_info_cursor_money(state: &mut LuaState) -> LuaResult<u32> {
-    let amount = read_money_amount(state, "A_Admin.SetTradeInfoCursorMoney")?;
-    cursor_model::place(state, CursorInfo::Money { copper: amount })?;
     Ok(0)
 }
 
