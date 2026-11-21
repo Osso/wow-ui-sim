@@ -154,7 +154,8 @@ fn register_queue_state_methods(state: &mut LuaState, table: GcRef<Table>) -> Lu
         "GetAllEntriesForCategory",
         get_all_entries_for_category,
     )?;
-    table_set_rust_fn_static(state, table, "GetLFDLockStates", get_lfd_lock_states)
+    table_set_rust_fn_static(state, table, "GetLFDLockStates", get_lfd_lock_states)?;
+    table_set_rust_fn_static(state, table, "HideNameFromUI", hide_name_from_ui)
 }
 
 /// INFERRED from the selected Retail consumer (R88da): return supplied IDs by category.
@@ -206,6 +207,19 @@ fn get_lfd_lock_states(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+/// INFERRED (R88da): unsupplied entries are visible; supplied rows set the hidden flag.
+#[cfg(feature = "client-retail")]
+fn hide_name_from_ui(state: &mut LuaState) -> LuaResult<u32> {
+    let entry_id = i32::from_stack(state, 1)?;
+    let hide_name = borrow_state(state)?
+        .lfg_queue_entries
+        .iter()
+        .find(|entry| entry.entry_id == entry_id)
+        .is_some_and(|entry| entry.hide_name);
+    state.push(Val::Bool(hide_name));
+    Ok(1)
+}
+
 /// Supplies queue entries and lock rows for selected Retail LFG consumers.
 #[cfg(feature = "client-retail")]
 pub(crate) fn register_admin(
@@ -234,12 +248,15 @@ fn read_lfg_queue_entries(
     read_array(state, value)?
         .into_iter()
         .map(|row| {
+            let entry_id = read_lfg_integer(table_get(state, row.clone(), "entryID"), "entryID")?;
+            let hide_name = match table_get(state, row.clone(), "hideName") {
+                Val::Bool(value) => value,
+                _ => return Err(rilua::runtime_error("LFG entry hideName must be boolean")),
+            };
             Ok(crate::lua_api::state_types::collections::LfgQueueEntry {
-                category_id: read_lfg_integer(
-                    table_get(state, row.clone(), "categoryID"),
-                    "categoryID",
-                )?,
-                entry_id: read_lfg_integer(table_get(state, row, "entryID"), "entryID")?,
+                category_id: read_lfg_integer(table_get(state, row, "categoryID"), "categoryID")?,
+                entry_id,
+                hide_name,
             })
         })
         .collect()

@@ -177,6 +177,7 @@ pub struct LfgActivityInfo {
 pub struct LfgQueueEntry {
     pub category_id: i32,
     pub entry_id: i32,
+    pub hide_name: bool,
 }
 
 /// A supplied Retail LFD lock row consumed by the Group Finder frame.

@@ -8,9 +8,9 @@ fn supplied_entries_reach_selected_queue_status_rows(env: &WowLuaEnv) {
         assert(C_AddOns.IsAddOnLoaded('Blizzard_QueueStatusFrame'))
         A_Admin.SetLfgQueueData(
             {
-                { categoryID = LE_LFG_CATEGORY_LAIR, entryID = 1203 },
-                { categoryID = LE_LFG_CATEGORY_LAIR, entryID = 1204 },
-                { categoryID = LE_LFG_CATEGORY_SCENARIO, entryID = 1204 },
+                { categoryID = LE_LFG_CATEGORY_LAIR, entryID = 1203, hideName = true },
+                { categoryID = LE_LFG_CATEGORY_LAIR, entryID = 1204, hideName = false },
+                { categoryID = LE_LFG_CATEGORY_SCENARIO, entryID = 1204, hideName = false },
             },
             {}
         )
@@ -18,6 +18,7 @@ fn supplied_entries_reach_selected_queue_status_rows(env: &WowLuaEnv) {
         local entries = C_LFGInfo.GetAllEntriesForCategory(LE_LFG_CATEGORY_LAIR)
         assert(#entries == 2 and entries[1] == 1203 and entries[2] == 1204,
             'queue category must retain both supplied entry IDs')
+        assert(not C_LFGInfo.HideNameFromUI(9999), 'unsupplied entries default to visible')
 
         local menuMixin = MenuVariants.GetDefaultContextMenuMixin()
         local function assertQueueStatusTitle(category, entryID)
@@ -32,7 +33,7 @@ fn supplied_entries_reach_selected_queue_status_rows(env: &WowLuaEnv) {
             assert(count == 1, 'each category must produce one queue-status title row')
         end
 
-        assertQueueStatusTitle(LE_LFG_CATEGORY_LAIR, 1203)
+        assertQueueStatusTitle(LE_LFG_CATEGORY_LAIR, 1204)
         assertQueueStatusTitle(LE_LFG_CATEGORY_SCENARIO, 1204)
         "#,
     )
