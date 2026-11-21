@@ -30,6 +30,7 @@ fn unit_threat_indicator_tracks_two_supplied_states() {
         assert(type(CompactUnitFrame_UpdateHealthColor) == "function")
         local cr, cg, cb = GetThreatStatusColor(3)
         assert(cr == 1 and cg == 0 and cb == 0 and GetThreatStatusColor(99) == nil)
+        A_Admin.SetPartySize(1)
         local frame = CreateFrame("Frame")
         frame.unit = "player"
         frame.displayedUnit = "player"
