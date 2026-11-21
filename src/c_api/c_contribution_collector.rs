@@ -4,8 +4,8 @@ use std::collections::HashMap;
 
 use crate::c_api::helpers::{ensure_namespace, set_table_array};
 use crate::lua_api::methods::{
-    borrow_state, borrow_state_mut, create_string, create_table_with_capacity, table_set_static,
-    val_to_string,
+    borrow_state, borrow_state_mut, create_string, create_table_with_capacity, table_get,
+    table_set_static, val_to_string,
 };
 use crate::lua_bridge::{FromStack, TableBuilder, stack_val, table_set_rust_fn_static};
 use rilua::vm::gc::arena::GcRef;
@@ -240,17 +240,12 @@ fn read_number(state: &mut LuaState, table: GcRef<Table>, key: &str) -> LuaResul
 }
 
 fn read_string(state: &mut LuaState, table: GcRef<Table>, key: &str) -> LuaResult<String> {
-    val_to_string(state, field(state, table, key)).ok_or_else(|| invalid_field(key))
+    let value = table_get(state, Val::Table(table), key);
+    val_to_string(state, value).ok_or_else(|| invalid_field(key))
 }
 
 fn field(state: &mut LuaState, table: GcRef<Table>, key: &str) -> Val {
-    let key = state.gc.intern_string(key.as_bytes());
-    state
-        .gc
-        .tables
-        .get(table)
-        .map(|table| table.get_str(key, &state.gc.string_arena))
-        .unwrap_or(Val::Nil)
+    table_get(state, Val::Table(table), key)
 }
 
 fn invalid_field(key: &str) -> rilua::LuaError {
