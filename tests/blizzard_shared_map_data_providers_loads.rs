@@ -226,8 +226,11 @@ local function readGossipPin(mapID)
     return WorldMapFrame:GetNumActivePinsByTemplate("GossipPinTemplate"), pin.poiInfo.name, x, y
 end
 local countA, nameA, xA, yA = readGossipPin(2248)
+local infoA = C_GossipInfo.GetPoiInfo(2248, 401)
 local countB, nameB, xB, yB = readGossipPin(84)
-return countA, nameA, xA, yA, countB, nameB, xB, yB
+local infoB = C_GossipInfo.GetPoiInfo(84, 402)
+return countA, nameA, xA, yA, infoA.atlasName, infoA.textureIndex,
+       countB, nameB, xB, yB, infoB.atlasName, infoB.textureIndex
 "#;
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
@@ -255,7 +258,20 @@ fn load_gossip_map_addon_closure() -> WowLuaEnv {
 #[test]
 fn gossip_map_provider_refreshes_the_supplied_poi_for_each_map() {
     let env = load_gossip_map_addon_closure();
-    let observed: (i32, String, f64, f64, i32, String, f64, f64) = env
+    let observed: (
+        i32,
+        String,
+        f64,
+        f64,
+        String,
+        i32,
+        i32,
+        String,
+        f64,
+        f64,
+        String,
+        i32,
+    ) = env
         .eval(GOSSIP_MAP_REFRESH_LUA)
         .expect("original gossip provider should refresh pins on the real WorldMapFrame");
     assert_eq!(
@@ -265,10 +281,14 @@ fn gossip_map_provider_refreshes_the_supplied_poi_for_each_map() {
             "North Gossip".into(),
             0.2,
             0.8,
+            "TaxiNode".into(),
+            3,
             1,
             "South Gossip".into(),
             0.7,
-            0.3
+            0.3,
+            "TaxiNode".into(),
+            7
         )
     );
 }
