@@ -45,6 +45,22 @@ fn test_bootstrap_registers_color_override_members() {
     assert_eq!(color_ty, "function");
     assert_eq!(default_color_ty, "function");
     assert_eq!(override_info_ty, "function");
+
+    let (poor_red, poor_green, poor_blue, epic_red, epic_green, epic_blue):
+        (f64, f64, f64, f64, f64, f64) = env
+            .eval(
+                r#"
+                local poor = C_ColorOverrides.GetDefaultColorForQuality(0)
+                local epic = C_ColorOverrides.GetDefaultColorForQuality(4)
+                return poor.r, poor.g, poor.b, epic.r, epic.g, epic.b
+                "#,
+            )
+            .unwrap();
+
+    assert_ne!(
+        (poor_red, poor_green, poor_blue),
+        (epic_red, epic_green, epic_blue)
+    );
 }
 }
 #[test]
