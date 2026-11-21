@@ -3,8 +3,8 @@
 
 use wow_ui_sim::lua_api::WowLuaEnv;
 
-const FIRST_REQUIREMENTS: &str = r#"{money=234567, hideRequiredItems=false, text='Bring the requested supplies.', items={{name='Rugged Hide', texture='Interface\\Icons\\INV_Misc_LeatherScrap_03', requiredAmount=4}, {name='Iron Bar', texture='Interface\\Icons\\INV_Ingot_03', requiredAmount=2}}, currencies={{currencyID=77, name='Harbor Token', texture=134400, quality=1, requiredAmount=3}, {currencyID=78, name='Dock Seal', texture=134401, quality=2, requiredAmount=6}}, portraitDisplayID=0, portraitName='', portraitText=''}"#;
-const SECOND_REQUIREMENTS: &str = r#"{money=234567, hideRequiredItems=false, text='Deliver the expedition cargo.', items={{name='Mooncloth', texture='Interface\\Icons\\INV_Fabric_MoonRag_01', requiredAmount=8}, {name='Primal Fire', texture='Interface\\Icons\\INV_Elemental_Primal_Fire', requiredAmount=5}}, currencies={{currencyID=81, name='Expedition Mark', texture=134402, quality=1, requiredAmount=7}, {currencyID=82, name='Survey Stamp', texture=134403, quality=3, requiredAmount=6}}, portraitDisplayID=701, portraitName='Harbor Marshal', portraitText='Report to the marshal.'}"#;
+const FIRST_REQUIREMENTS: &str = r#"{money=234567, hideRequiredItems=false, text='Bring the requested supplies.', items={{name='Rugged Hide', texture='Interface\\Icons\\INV_Misc_LeatherScrap_03', requiredAmount=4, hidden=false}, {name='Iron Bar', texture='Interface\\Icons\\INV_Ingot_03', requiredAmount=2, hidden=false}}, currencies={{currencyID=77, name='Harbor Token', texture=134400, quality=1, requiredAmount=3}, {currencyID=78, name='Dock Seal', texture=134401, quality=2, requiredAmount=6}}, portraitDisplayID=0, portraitName='', portraitText=''}"#;
+const SECOND_REQUIREMENTS: &str = r#"{money=234567, hideRequiredItems=false, text='Deliver the expedition cargo.', items={{name='Mooncloth', texture='Interface\\Icons\\INV_Fabric_MoonRag_01', requiredAmount=8, hidden=false}, {name='Primal Fire', texture='Interface\\Icons\\INV_Elemental_Primal_Fire', requiredAmount=5, hidden=false}}, currencies={{currencyID=81, name='Expedition Mark', texture=134402, quality=1, requiredAmount=7}, {currencyID=82, name='Survey Stamp', texture=134403, quality=3, requiredAmount=6}}, portraitDisplayID=701, portraitName='Harbor Marshal', portraitText='Report to the marshal.'}"#;
 
 fn progress_env() -> WowLuaEnv {
     let cache = wow_ui_sim::blizzard_ui_sync::default_cache_addons_path().unwrap();
@@ -36,7 +36,7 @@ fn show_progress_set(env: &WowLuaEnv, requirements: &str) {
 fn assert_panel_text_and_money(env: &WowLuaEnv, expected: [&str; 5]) {
     let shown: String = env
         .eval(
-            "return table.concat({tostring(QuestProgressText:GetText()), tostring(QuestProgressItem1Name:GetText()), tostring(QuestProgressItem2Name:GetText()), tostring(QuestProgressItem3Name:GetText()), tostring(QuestProgressItem4Name:GetText()), tostring(QuestProgressRequiredMoneyFrame.GoldButton.Text:GetText()), tostring(QuestProgressRequiredMoneyFrame.SilverButton.Text:GetText()), tostring(QuestFrame:IsShown()), tostring(QuestFrame:IsVisible()), tostring(UIParent:IsShown()), tostring(QuestFrameProgressPanel:IsShown()), tostring(QuestProgressRequiredMoneyFrame:IsShown()), tostring(GetProgressText()), tostring(GetNumQuestItems()), tostring(GetNumQuestCurrencies()), tostring(GetQuestMoneyToGet()), tostring(SplashFrame:IsShown()), tostring(C_QuestOffer.GetHideRequiredItems())}, '|')",
+            "return table.concat({tostring(QuestProgressText:GetText()), tostring(QuestProgressItem1Name:GetText()), tostring(QuestProgressItem2Name:GetText()), tostring(QuestProgressItem3Name:GetText()), tostring(QuestProgressItem4Name:GetText()), tostring(QuestProgressRequiredMoneyFrame.GoldButton.Text:GetText()), tostring(QuestProgressRequiredMoneyFrame.SilverButton.Text:GetText()), tostring(QuestFrame:IsShown()), tostring(QuestFrame:IsVisible()), tostring(UIParent:IsShown()), tostring(QuestFrameProgressPanel:IsShown()), tostring(QuestProgressRequiredMoneyFrame:IsShown()), tostring(GetProgressText()), tostring(GetNumQuestItems()), tostring(GetNumQuestCurrencies()), tostring(GetQuestMoneyToGet()), tostring(SplashFrame:IsShown()), tostring(C_QuestOffer.GetHideRequiredItems()), tostring(IsQuestItemHidden(1))}, '|')",
         )
         .unwrap();
     let expected_summary = [
@@ -58,6 +58,7 @@ fn assert_panel_text_and_money(env: &WowLuaEnv, expected: [&str; 5]) {
         "234567",
         "false",
         "false",
+        "0",
     ]
     .join("|");
     assert_eq!(shown, expected_summary);

@@ -34,19 +34,25 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
         get_major_faction_reputation_rewards,
     )?;
     if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever) {
-        table_set_rust_fn_static(
-            state,
-            namespace,
-            "GetQuestRequiredCurrencyInfo",
-            get_required_currency_info,
-        )?;
-        table_set_rust_fn_static(
-            state,
-            namespace,
-            "GetHideRequiredItems",
-            get_hide_required_items,
-        )?;
+        register_progress_requirement_queries(state)?;
     }
+    Ok(())
+}
+
+fn register_progress_requirement_queries(state: &mut LuaState) -> LuaResult<()> {
+    let namespace = super::ensure_namespace(state, "C_QuestOffer")?;
+    table_set_rust_fn_static(
+        state,
+        namespace,
+        "GetQuestRequiredCurrencyInfo",
+        get_required_currency_info,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        namespace,
+        "GetHideRequiredItems",
+        get_hide_required_items,
+    )?;
     Ok(())
 }
 

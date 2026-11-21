@@ -16,6 +16,7 @@ pub(crate) fn register_progress_requirement_globals(lua: &mut rilua::Lua) -> cra
         ("GetNumQuestCurrencies", get_progress_currency_count),
         ("GetProgressText", get_progress_text),
         ("GetQuestPortraitTurnIn", get_progress_portrait),
+        ("IsQuestItemHidden", get_quest_item_hidden),
     ];
     for (name, function) in functions {
         LuaApiMut::register_function(lua, *name, *function)?;
@@ -65,6 +66,24 @@ pub(crate) fn get_progress_text(state: &mut LuaState) -> LuaResult<u32> {
     };
     let text = create_string(state, &text);
     state.push(text);
+    Ok(1)
+}
+
+pub(crate) fn get_quest_item_hidden(state: &mut LuaState) -> LuaResult<u32> {
+    let index = Option::<f64>::from_stack(state, 1)?.unwrap_or(0.0) as usize;
+    if index == 0 {
+        return Ok(0);
+    }
+    let hidden = {
+        let sim = borrow_state(state)?;
+        crate::c_api::quest_objectives::progress_requirements_for_active_dialog(&sim)
+            .and_then(|requirements| requirements.items.get(index - 1))
+            .map(|item| item.hidden)
+    };
+    let Some(hidden) = hidden else {
+        return Ok(0);
+    };
+    state.push(Val::Num(if hidden { 1.0 } else { 0.0 }));
     Ok(1)
 }
 

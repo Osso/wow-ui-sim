@@ -71,6 +71,7 @@ fn decode_progress_items(state: &mut LuaState, table: Val) -> LuaResult<Vec<Ques
             name: read_field(state, row, "name")?,
             texture: read_field(state, row, "texture")?,
             required_amount: read_field(state, row, "requiredAmount")?,
+            hidden: read_field(state, row, "hidden")?,
         })
     })
 }

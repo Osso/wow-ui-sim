@@ -39,6 +39,8 @@ pub struct QuestProgressItem {
     pub name: String,
     pub texture: String,
     pub required_amount: i32,
+    /// INFERRED from QuestFrame.lua:252; zero from IsQuestItemHidden shows the row.
+    pub hidden: bool,
 }
 
 /// Supplied currency row for the original quest-giver progress panel.
