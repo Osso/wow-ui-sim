@@ -4,7 +4,6 @@
 //! workaround layer instead of the central runtime bootstrap.
 
 use crate::lua_api::LoaderEnv;
-use rilua::LuaApiMut;
 
 const QUEST_OBJECTIVE_DEFAULTS_LUA: &str = r#"
 if SpellCanTargetQuest == nil then
@@ -112,18 +111,7 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
         lua.exec(UNMODELED_POPUPS_LUA)?;
     }
     lua.exec(QUEST_OBJECTIVE_DEFAULTS_LUA)?;
-    if crate::c_api::quest_objectives::ENABLED {
-        LuaApiMut::register_function(
-            lua,
-            "GetTasksTable",
-            crate::lua_api::globals::quest_surface::task_quest::build_tasks_table,
-        )?;
-        LuaApiMut::register_function(
-            lua,
-            "GetTaskInfo",
-            crate::lua_api::globals::quest_surface::task_quest::get_task_info,
-        )?;
-    } else {
+    if !crate::c_api::quest_objectives::ENABLED {
         lua.exec(LEGACY_TASKS_TABLE_LUA)?;
     }
     Ok(())
