@@ -1,12 +1,27 @@
 #![cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 
+use wow_ui_sim::loader::discover_blizzard_addons_for_screen;
 use wow_ui_sim::lua_api::WowLuaEnv;
+use wow_ui_sim::screen::ScreenKind;
 
-prefork_full_ui_case! {
-fn supplied_entries_reach_selected_queue_status_rows(env: &WowLuaEnv) {
+fn load_selected_consumer(addon: &str) -> WowLuaEnv {
+    let ui = wow_ui_sim::paths::default_blizzard_ui_addons_path().unwrap();
+    let selected = discover_blizzard_addons_for_screen(&ui, ScreenKind::Game);
+    assert!(
+        selected.iter().any(|(name, _)| name == addon),
+        "{addon} must be selected by the active Game TOC"
+    );
+    let (env, loaded) =
+        crate::common::blizzard_addon_harness::build_blizzard_addon_closure_env(&ui, &[addon], &[]);
+    assert!(loaded.iter().any(|name| name == addon), "{addon} must load");
+    env
+}
+
+#[test]
+fn supplied_entries_reach_selected_queue_status_rows() {
+    let env = load_selected_consumer("Blizzard_QueueStatusFrame");
     env.exec(
         r#"
-        assert(C_AddOns.IsAddOnLoaded('Blizzard_QueueStatusFrame'))
         A_Admin.SetLfgQueueData(
             {
                 { categoryID = LE_LFG_CATEGORY_LAIR, entryID = 1203 },
@@ -15,29 +30,37 @@ fn supplied_entries_reach_selected_queue_status_rows(env: &WowLuaEnv) {
             },
             {}
         )
-        SetLFGDungeon(LE_LFG_CATEGORY_LAIR, 1203)
-        JoinLFG(LE_LFG_CATEGORY_LAIR)
-        SetLFGDungeon(LE_LFG_CATEGORY_SCENARIO, 1204)
-        JoinLFG(LE_LFG_CATEGORY_SCENARIO)
-        QueueStatusFrame:Update()
-        local firstRow = QueueStatusFrame:GetEntry(1)
-        local secondRow = QueueStatusFrame:GetEntry(2)
-        assert(firstRow.Title:GetText() == GetLFGDungeonInfo(1203),
-            'Lair queue-status row must use its first supplied entry ID')
-        assert(secondRow.Title:GetText() == GetLFGDungeonInfo(1204),
-            'Scenario queue-status row must use its supplied entry ID')
+
+        local entries = C_LFGInfo.GetAllEntriesForCategory(LE_LFG_CATEGORY_LAIR)
+        assert(#entries == 2 and entries[1] == 1203 and entries[2] == 1204,
+            'queue category must retain both supplied entry IDs')
+
+        local menuMixin = MenuVariants.GetDefaultContextMenuMixin()
+        local function assertQueueStatusTitle(category, entryID)
+            local description = MenuUtil.CreateRootMenuDescription(menuMixin)
+            QueueStatusDropdown_AddLFGButtons(description, category)
+            local count = 0
+            for _, row in description:EnumerateElementDescriptions() do
+                count = count + 1
+                assert(MenuUtil.GetElementText(row) == GetLFGDungeonInfo(entryID),
+                    'queue-status title must resolve the supplied entry ID')
+            end
+            assert(count == 1, 'each category must produce one queue-status title row')
+        end
+
+        assertQueueStatusTitle(LE_LFG_CATEGORY_LAIR, 1203)
+        assertQueueStatusTitle(LE_LFG_CATEGORY_SCENARIO, 1204)
         "#,
     )
-    .expect("the selected QueueStatusFrame must display supplied category entry IDs");
-}
+    .expect("the selected QueueStatusFrame consumer must display supplied category entries");
 }
 
 #[cfg(feature = "client-retail")]
-prefork_full_ui_case! {
-fn supplied_locks_reach_selected_group_finder_frame(env: &WowLuaEnv) {
+#[test]
+fn supplied_locks_reach_selected_group_finder_frame() {
+    let env = load_selected_consumer("Blizzard_GroupFinder");
     env.exec(
         r#"
-        assert(C_AddOns.IsAddOnLoaded('Blizzard_GroupFinder'))
         A_Admin.SetLfgQueueData(
             {},
             {
@@ -53,5 +76,4 @@ fn supplied_locks_reach_selected_group_finder_frame(env: &WowLuaEnv) {
         "#,
     )
     .expect("the selected GroupFinder frame must consume both supplied lock rows");
-}
 }
