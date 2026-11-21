@@ -38,7 +38,7 @@ fn world_quest_tracker_renders_world_tasks_and_skips_non_world_task() {
                 )
                 .expect("world-quest tracker layout should run");
 
-            assert_eq!(result, "ok");
+            assert_eq!(result, "ok", "tracker result: {result}");
         },
     );
 }
