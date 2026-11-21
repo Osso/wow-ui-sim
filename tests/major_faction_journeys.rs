@@ -29,6 +29,14 @@ fn journeys_refresh_and_reward_track_follow_supplied_faction_flags() {
         A_Admin.SetMajorFactionJourneyFlags(2710, true, false)
         A_Admin.SetMajorFactionJourneyFlags(2696, true, true)
         A_Admin.SetMajorFactionJourneyFlags(2704, false, false)
+        assert(C_MajorFactions.ShouldDisplayMajorFactionAsJourney(2710),
+            "supplied journey display flag should be true")
+        assert(C_MajorFactions.ShouldDisplayMajorFactionAsJourney(2696),
+            "second supplied journey display flag should be true")
+        assert(not C_MajorFactions.ShouldUseJourneyRewardTrack(2710),
+            "first supplied faction should use the renown track")
+        assert(C_MajorFactions.ShouldUseJourneyRewardTrack(2696),
+            "second supplied faction should use the Journey reward track")
         local journeys = EncounterJournal.JourneysFrame
         journeys:Refresh()
         local ids = {}
