@@ -8,8 +8,8 @@ mod token_ui_fixtures;
 #[cfg(not(feature = "client-wrath"))]
 use token_ui_fixtures::load_token_ui;
 use wow_ui_sim::loader::{
-    discover_all_blizzard_addons, discover_blizzard_startup_addons_for_screen,
-    load_startup_addon, register_load_with_addons,
+    discover_all_blizzard_addons, discover_blizzard_startup_addons_for_screen, load_startup_addon,
+    register_load_with_addons,
 };
 use wow_ui_sim::lua_api::{WowLuaEnv, compute_frame_rect};
 use wow_ui_sim::startup::{fire_one_on_update_tick, fire_startup_events, process_pending_timers};
@@ -65,13 +65,12 @@ fn load_all_blizzard_addons(env: &WowLuaEnv) {
     let ui = blizzard_ui_dir();
     register_load_with_addons(&env.loader_env(), &discover_all_blizzard_addons(&ui));
 
-    for addon in discover_blizzard_startup_addons_for_screen(&ui, wow_ui_sim::screen::ScreenKind::Game) {
-        let loaded = env
-            .state()
-            .borrow()
-            .addons
-            .iter()
-            .any(|entry| entry.folder_name == addon.name && entry.is_loaded_in_environment(entry.use_secure_env));
+    for addon in
+        discover_blizzard_startup_addons_for_screen(&ui, wow_ui_sim::screen::ScreenKind::Game)
+    {
+        let loaded = env.state().borrow().addons.iter().any(|entry| {
+            entry.folder_name == addon.name && entry.is_loaded_in_environment(entry.use_secure_env)
+        });
         if !loaded {
             load_startup_addon(&env.loader_env(), &addon.toc_path, addon.kind, None)
                 .unwrap_or_else(|error| panic!("[load {}] FAILED: {error}", addon.name));
