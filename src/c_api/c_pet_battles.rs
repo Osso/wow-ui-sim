@@ -1,8 +1,8 @@
 //! State-backed `C_PetBattles` identity and pet-type probes.
 
 use crate::c_api::ensure_namespace;
-use crate::lua_api::methods::{borrow_state, create_string};
-use crate::lua_bridge::{FromStack, IntoStack, table_set_rust_fn_static};
+use crate::lua_api::methods::{borrow_state, borrow_state_mut, create_string};
+use crate::lua_bridge::{FromStack, IntoStack, TableBuilder, stack_val, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 
@@ -23,7 +23,69 @@ pub(crate) fn register_c_pet_battles_surface(state: &mut LuaState) -> LuaResult<
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Mists {
         table_set_rust_fn_static(state, namespace, "GetDisplayID", get_display_id)?;
     }
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
+        table_set_rust_fn_static(state, namespace, "CanPetSwapIn", can_pet_swap_in)?;
+        table_set_rust_fn_static(state, namespace, "IsSkipAvailable", is_skip_available)?;
+    }
     Ok(())
+}
+
+fn can_pet_swap_in(state: &mut LuaState) -> LuaResult<u32> {
+    let slot = i32::from_stack(state, 1)?;
+    let index = slot
+        .checked_sub(1)
+        .and_then(|slot| usize::try_from(slot).ok());
+    let can_swap = if let Some(index) = index.filter(|index| *index < 3) {
+        borrow_state(state)?.pet_battles.can_swap_in[index]
+    } else {
+        false
+    };
+    state.push(Val::Bool(can_swap));
+    Ok(1)
+}
+
+fn is_skip_available(state: &mut LuaState) -> LuaResult<u32> {
+    let available = borrow_state(state)?.pet_battles.skip_available;
+    state.push(Val::Bool(available));
+    Ok(1)
+}
+
+pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
+        builder.set_function("SetPetBattleActionLegality", set_action_legality)
+    } else {
+        Ok(builder)
+    }
+}
+
+fn set_action_legality(state: &mut LuaState) -> LuaResult<u32> {
+    let legality = [
+        bool_arg(state, 1)?,
+        bool_arg(state, 2)?,
+        bool_arg(state, 3)?,
+    ];
+    let skip_available = bool_arg(state, 4)?;
+    let mut sim = borrow_state_mut(state)?;
+    sim.pet_battles.can_swap_in = legality;
+    sim.pet_battles.skip_available = skip_available;
+    Ok(0)
+}
+
+fn bool_arg(state: &LuaState, index: usize) -> LuaResult<bool> {
+    match stack_val(state, index) {
+        Val::Bool(value) => Ok(value),
+        _ => Err(rilua::runtime_error(
+            "pet battle legality requires booleans",
+        )),
+    }
 }
 
 fn get_display_id(state: &mut LuaState) -> LuaResult<u32> {

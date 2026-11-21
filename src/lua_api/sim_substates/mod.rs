@@ -223,6 +223,10 @@ pub struct PetBattleState {
     pub round_time_ms: f64,
     /// Last-turn result code (0 = not set / in-progress).
     pub turn_result: i32,
+    /// Supplied legality for switching into each of the three player pet slots.
+    pub can_swap_in: [bool; 3],
+    /// Supplied availability of the skip action for the current turn.
+    pub skip_available: bool,
     /// Whether StartPVPMatchmaking has been called without a cancellation.
     pub is_matchmaking: bool,
 }
@@ -240,6 +244,8 @@ impl Default for PetBattleState {
             round_time_left_ms: 0.0,
             round_time_ms: 30_000.0,
             turn_result: 0,
+            can_swap_in: [false; 3],
+            skip_available: false,
             is_matchmaking: false,
         }
     }
