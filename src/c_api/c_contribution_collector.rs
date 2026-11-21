@@ -392,7 +392,7 @@ fn set_appearance_details(state: &mut LuaState, table: Val, appearance: &Appeara
     set_appearance_atlas(state, table, "bannerAtlas", &appearance.banner_atlas);
 }
 
-fn set_appearance_atlas(state: &mut LuaState, table: Val, key: &str, name: &str) {
+fn set_appearance_atlas(state: &mut LuaState, table: Val, key: &'static str, name: &str) {
     let name = create_string(state, name);
     table_set_static(state, table, key, name);
 }
