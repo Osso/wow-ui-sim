@@ -1,6 +1,8 @@
 //! Host-supplied Calendar day records and synthetic event-index relations.
 pub(crate) mod civil;
 mod club;
+mod club_event_queries;
+pub(crate) mod club_events;
 mod context_actions;
 mod context_policy;
 mod context_reads;
@@ -18,6 +20,7 @@ mod editable_time;
 mod editable_title;
 mod editable_type;
 mod event_submission;
+pub(crate) mod event_types;
 mod selection;
 mod submission_policy;
 mod view_info;
@@ -191,6 +194,8 @@ fn register_modeled_calendar_surface(state: &mut LuaState) -> LuaResult<()> {
     // behavior is INFERRED from this existing Retail calendar model.
     civil::register(state, namespace)?;
     club::register(state, namespace)?;
+    club_event_queries::register(state, namespace)?;
+    event_types::register(state, namespace)?;
     selection::register(state, namespace)?;
     context_policy::register(state, namespace)?;
     context_reads::register(state, namespace)?;

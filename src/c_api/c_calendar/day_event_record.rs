@@ -1,7 +1,8 @@
 //! Passive host-owned calendar records; no Lua projection or query behavior.
 
 /// Owned calendar time fields; declared numbers retain their numeric representation.
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, Default, PartialEq, serde::Deserialize)]
+#[serde(default, rename_all = "camelCase")]
 pub struct CalendarTimeRecord {
     pub month_day: u32,
     pub month: u32,
@@ -12,7 +13,8 @@ pub struct CalendarTimeRecord {
 }
 
 /// Supplied holiday metadata. Its presence marks a holiday event.
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, Default, PartialEq, serde::Deserialize)]
+#[serde(default, rename_all = "camelCase")]
 pub struct CalendarHolidayRecord {
     pub name: Option<String>,
     pub description: Option<String>,
@@ -21,7 +23,8 @@ pub struct CalendarHolidayRecord {
 }
 
 /// Owned day-event fields. Identifier strings are opaque, not numeric index-map keys.
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, Default, PartialEq, serde::Deserialize)]
+#[serde(default, rename_all = "camelCase")]
 pub struct CalendarDayEventRecord {
     pub event_id: String,
     pub category_flags: u32,

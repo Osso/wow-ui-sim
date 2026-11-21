@@ -2,9 +2,111 @@
 use crate::lua_api::methods::{borrow_state, borrow_state_mut, create_string};
 use crate::lua_bridge::FromStack;
 use rilua::vm::state::LuaState;
-use rilua::{LuaResult, Val};
+use rilua::{LuaApiMut, LuaResult, Val};
 
 pub(crate) use crate::c_api::quest_readiness::{complete_quest, is_quest_completable};
+
+pub(crate) fn register_progress_requirement_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
+    if !crate::c_api::quest_objectives::ENABLED {
+        return Ok(());
+    }
+    let functions: &[(&str, fn(&mut LuaState) -> LuaResult<u32>)] = &[
+        ("GetQuestMoneyToGet", read_progress_money),
+        ("GetNumQuestItems", count_progress_items),
+        ("GetNumQuestCurrencies", count_progress_currencies),
+        ("GetProgressText", read_progress_text),
+        ("GetQuestPortraitTurnIn", read_progress_portrait),
+        ("IsQuestItemHidden", read_quest_item_hidden),
+    ];
+    for (name, function) in functions {
+        LuaApiMut::register_function(lua, *name, *function)?;
+    }
+    Ok(())
+}
+
+pub(crate) fn read_progress_money(state: &mut LuaState) -> LuaResult<u32> {
+    let money = {
+        let sim = borrow_state(state)?;
+        crate::c_api::quest_objectives::progress_requirements_for_active_dialog(&sim)
+            .map(|requirements| requirements.money)
+            .unwrap_or(0)
+    };
+    state.push(Val::Num(f64::from(money)));
+    Ok(1)
+}
+
+pub(crate) fn count_progress_items(state: &mut LuaState) -> LuaResult<u32> {
+    let count = {
+        let sim = borrow_state(state)?;
+        crate::c_api::quest_objectives::progress_requirements_for_active_dialog(&sim)
+            .map(|requirements| requirements.items.len())
+            .unwrap_or(0)
+    };
+    state.push(Val::Num(count as f64));
+    Ok(1)
+}
+
+pub(crate) fn count_progress_currencies(state: &mut LuaState) -> LuaResult<u32> {
+    let count = {
+        let sim = borrow_state(state)?;
+        crate::c_api::quest_objectives::progress_requirements_for_active_dialog(&sim)
+            .map(|requirements| requirements.currencies.len())
+            .unwrap_or(0)
+    };
+    state.push(Val::Num(count as f64));
+    Ok(1)
+}
+
+pub(crate) fn read_progress_text(state: &mut LuaState) -> LuaResult<u32> {
+    let text = {
+        let sim = borrow_state(state)?;
+        crate::c_api::quest_objectives::progress_requirements_for_active_dialog(&sim)
+            .map(|requirements| requirements.text.clone())
+            .unwrap_or_default()
+    };
+    let text = create_string(state, &text);
+    state.push(text);
+    Ok(1)
+}
+
+pub(crate) fn read_quest_item_hidden(state: &mut LuaState) -> LuaResult<u32> {
+    let index = Option::<f64>::from_stack(state, 1)?.unwrap_or(0.0) as usize;
+    if index == 0 {
+        return Ok(0);
+    }
+    let hidden = {
+        let sim = borrow_state(state)?;
+        crate::c_api::quest_objectives::progress_requirements_for_active_dialog(&sim)
+            .and_then(|requirements| requirements.items.get(index - 1))
+            .map(|item| item.hidden)
+    };
+    let Some(hidden) = hidden else {
+        return Ok(0);
+    };
+    state.push(Val::Num(if hidden { 1.0 } else { 0.0 }));
+    Ok(1)
+}
+
+pub(crate) fn read_progress_portrait(state: &mut LuaState) -> LuaResult<u32> {
+    let portrait = {
+        let sim = borrow_state(state)?;
+        crate::c_api::quest_objectives::requirements_for_active_dialog(&sim)
+            .map(|value| {
+                (
+                    value.portrait_display_id,
+                    value.portrait_name.clone(),
+                    value.portrait_text.clone(),
+                )
+            })
+            .unwrap_or_default()
+    };
+    let text = create_string(state, &portrait.2);
+    let name = create_string(state, &portrait.1);
+    state.push(Val::Num(f64::from(portrait.0)));
+    state.push(text);
+    state.push(name);
+    Ok(3)
+}
 
 pub(crate) fn add_auto_quest_popup(state: &mut LuaState) -> LuaResult<u32> {
     let id = i32::from_stack(state, 1)?;

@@ -76,9 +76,7 @@ pub(super) fn init_lua_state(
     register_permanent_bootstrap(lua)?;
     register_temporary_bootstrap(lua, skip_chat_frame_placeholder)?;
     register_runtime_api_functions(lua)?;
-    trace_debug_getter_values(lua, "before_profile_bootstrap");
-    register_profile_bootstrap(lua)?;
-    trace_debug_getter_values(lua, "after_profile_bootstrap");
+    register_profile_bootstrap_with_progress_globals(lua)?;
     copy_legacy_unit_globals_to_secureenv(lua)?;
     let screen_kind = state.borrow().screen_kind;
     install_secure_runtime_surface(lua, screen_kind)?;
@@ -169,6 +167,15 @@ fn register_runtime_api_functions(lua: &mut rilua::Lua) -> crate::Result<()> {
     crate::c_api::c_curve_util::register(lua)?;
     crate::c_api::seconds_formatter::register(lua)?;
     crate::c_api::duration_text_binding::register(lua)
+}
+
+fn register_profile_bootstrap_with_progress_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
+    trace_debug_getter_values(lua, "before_profile_bootstrap");
+    register_profile_bootstrap(lua)?;
+    trace_debug_getter_values(lua, "after_profile_bootstrap");
+    // Replace typed quest-progress defaults after temporary bootstrap registration.
+    super::globals::real::quest_dialog::register_progress_requirement_globals(lua)?;
+    Ok(())
 }
 
 fn register_profile_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
