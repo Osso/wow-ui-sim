@@ -1,33 +1,61 @@
 use crate::common::blizzard_addon_harness::with_blizzard_addon_startup_shape;
 use wow_ui_sim::lua_api::WowLuaEnv;
 
+// VERIFIED: Retail getters share the client-local flag.
+// INFERRED (R88co): Retail and Forever TradeFrame use C_SecureTransfer's shared warning source.
 const WARNING_CONSUMER_CASE: &str = r#"
     A_Admin.SetSecureTransferTradeOfferWarning(true)
-    assert(C_TradeInfo.ShouldShowTradeOfferWarning() == true)
+    local tradeTrue = C_TradeInfo.ShouldShowTradeOfferWarning()
+    local secureTrue = C_SecureTransfer.ShouldShowTradeOfferWarning()
     TradeFrame_UpdateWarnings()
-    assert(TradeFrameTradeButton.warningTooltip ~= nil)
+    local tradeShown = TradeFrameTradeButton.warningTooltip ~= nil
 
     A_Admin.SetSecureTransferTradeOfferWarning(false)
-    assert(C_TradeInfo.ShouldShowTradeOfferWarning() == false)
+    local tradeFalse = C_TradeInfo.ShouldShowTradeOfferWarning()
+    local secureFalse = C_SecureTransfer.ShouldShowTradeOfferWarning()
     TradeFrame_UpdateWarnings()
-    assert(TradeFrameTradeButton.warningTooltip == nil)
+    local tradeHidden = TradeFrameTradeButton.warningTooltip == nil
+    return tradeTrue, secureTrue, tradeShown, tradeFalse, secureFalse, tradeHidden
 "#;
 
-const PICKUP_MONEY_CASE: &str = r#"
-    assert(type(GetMoneyTypeInfoField) == 'function')
+// VERIFIED: Restriction precedes parsing, valid money truncates, an over-offer skips
+// removal, and the cursor limit is exclusive.
+// INFERRED: The test supplies host restriction and cursor state.
+// UNKNOWN: Packet, hook, flag, and full success/error outcomes are not modeled.
+const MONEY_TRUNCATION_CASE: &str = r#"
     local pickup = GetMoneyTypeInfoField('PLAYER_TRADE', 'PickupFunc')
-    pickup({}, 25)
-    assert(GetPlayerTradeMoney() == 75)
-    local kind, amount = GetCursorInfo()
-    assert(kind == 'money' and amount == 25)
+    pickup({}, 25.9)
+    local kind, copper = GetCursorInfo()
+    return GetPlayerTradeMoney(), kind, copper
 "#;
 
-const REJECT_EXCESS_MONEY_CASE: &str = r#"
+const MONEY_OVER_OFFER_CASE: &str = r#"
+    A_Admin.SetTradeInfoCursorMoney(7)
     local pickup = GetMoneyTypeInfoField('PLAYER_TRADE', 'PickupFunc')
     pickup({}, 51)
-    assert(GetPlayerTradeMoney() == 50)
-    assert(select('#', GetCursorInfo()) == 0)
+    local kind, copper = GetCursorInfo()
+    return GetPlayerTradeMoney(), kind, copper
 "#;
+
+const MONEY_CURSOR_LIMIT_CASE: &str = r#"
+    ClearCursor()
+    local pickup = GetMoneyTypeInfoField('PLAYER_TRADE', 'PickupFunc')
+    pickup({}, 100000000000)
+    return GetPlayerTradeMoney(), select('#', GetCursorInfo())
+"#;
+
+const MONEY_RESTRICTION_CASE: &str = r##"
+    A_Admin.SetTradeMoneyPickupRestricted(true)
+    local restrictedCall = pcall(function()
+        return C_TradeInfo.PickupTradeMoney(nil)
+    end)
+    local restrictedReturns = select('#', C_TradeInfo.PickupTradeMoney(nil))
+    A_Admin.SetTradeMoneyPickupRestricted(false)
+    local ordinaryNilAccepted = pcall(function()
+        C_TradeInfo.PickupTradeMoney(nil)
+    end)
+    return restrictedCall, restrictedReturns, ordinaryNilAccepted
+"##;
 
 fn supply_trade_offer(env: &WowLuaEnv, copper: u64) {
     let mut sim = env.state().borrow_mut();
@@ -38,31 +66,47 @@ fn supply_trade_offer(env: &WowLuaEnv, copper: u64) {
         .player_money = copper;
 }
 
+fn assert_trade_money_pickup(env: &WowLuaEnv, script: &str, expected: (f64, String, f64)) {
+    let actual: (f64, String, f64) = env
+        .eval(script)
+        .expect("PLAYER_TRADE pickup consumer should run");
+    assert_eq!(actual, expected);
+}
+
 #[test]
-fn r88co_trade_offer_warning_updates_trade_frame_for_both_supplied_values() {
+fn r88e5_trade_offer_warning_consumer_reads_shared_host_value() {
     with_blizzard_addon_startup_shape(&["Blizzard_UIPanels_Game"], &[], |env, loaded| {
         assert!(loaded.iter().any(|name| name == "Blizzard_UIPanels_Game"));
-        env.exec(WARNING_CONSUMER_CASE)
-            .expect("selected TradeFrame warning consumer should reflect supplied state");
+        let result: (bool, bool, bool, bool, bool, bool) = env
+            .eval(WARNING_CONSUMER_CASE)
+            .expect("selected TradeFrame warning consumer should run");
+        assert_eq!(result, (true, true, true, false, false, true));
     });
 }
 
 #[test]
-fn r88co_trade_money_pickup_moves_supplied_offer_amount_to_cursor() {
+fn r88e5_trade_money_consumer_uses_supplied_offer_and_cursor_state() {
     with_blizzard_addon_startup_shape(&["Blizzard_UIPanels_Game"], &[], |env, loaded| {
         assert!(loaded.iter().any(|name| name == "Blizzard_UIPanels_Game"));
+        assert_eq!(env.eval::<String>("return type(GetMoneyTypeInfoField)").unwrap(), "function");
+
         supply_trade_offer(env, 100);
-        env.exec(PICKUP_MONEY_CASE)
-            .expect("selected trade money-frame consumer should move supplied money");
+        assert_trade_money_pickup(env, MONEY_TRUNCATION_CASE, (75.0, "money".into(), 25.0));
+
+        supply_trade_offer(env, 50);
+        assert_trade_money_pickup(env, MONEY_OVER_OFFER_CASE, (50.0, "money".into(), 7.0));
+
+        supply_trade_offer(env, 100_000_000_001);
+        let actual: (f64, i32) = env.eval(MONEY_CURSOR_LIMIT_CASE).unwrap();
+        assert_eq!(actual, (1.0, 0));
     });
 }
 
 #[test]
-fn r88co_trade_money_pickup_preserves_offer_when_amount_is_too_large() {
-    with_blizzard_addon_startup_shape(&["Blizzard_UIPanels_Game"], &[], |env, loaded| {
-        assert!(loaded.iter().any(|name| name == "Blizzard_UIPanels_Game"));
-        supply_trade_offer(env, 50);
-        env.exec(REJECT_EXCESS_MONEY_CASE)
-            .expect("selected trade money-frame consumer should preserve an oversized offer");
-    });
+fn r88e5_trade_money_restriction_precedes_argument_parsing() {
+    let env = WowLuaEnv::new().expect("lua env should initialize");
+    let actual: (bool, i32, bool) = env
+        .eval(MONEY_RESTRICTION_CASE)
+        .expect("trade restriction and argument paths should be observable");
+    assert_eq!(actual, (true, 0, false));
 }
