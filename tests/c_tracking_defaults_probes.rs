@@ -34,14 +34,14 @@ fn collection_wardrobe_consumer_reflects_supplied_tracking_entries() {
         "the selected CollectionsUtil consumer must be loaded"
     );
 
-    let appearance_type: u32 = env
+    let appearance_type: i32 = env
         .eval("return Enum.ContentTrackingType.Appearance")
         .expect("Appearance tracking type should be available");
     env.state()
         .borrow_mut()
         .content_tracking
         .tracked_ids_by_type
-        .insert(appearance_type, vec![301, 302]);
+        .insert(appearance_type as u32, vec![301, 302]);
     env.exec("A_Admin.SetContentTrackingEnabled(true)")
         .expect("enable content tracking through the admin model setter");
 
