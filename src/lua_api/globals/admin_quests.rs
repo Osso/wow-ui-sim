@@ -35,6 +35,10 @@ pub(super) fn register_quests(b: TableBuilder) -> LuaResult<TableBuilder> {
             "SetQuestReadiness",
             super::real::quest_dialog::set_quest_readiness,
         )?
+        .set_function(
+            "SetQuestProgressRequirements",
+            super::admin_quest_objectives::set_quest_progress_requirements,
+        )?
     } else {
         b
     };

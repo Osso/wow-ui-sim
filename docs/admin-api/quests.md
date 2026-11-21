@@ -18,6 +18,10 @@ not infer progress, grant rewards or create membership. Identical input is inert
 cardinality and committed-before-notify behavior. Both-profile behavioral RED is
 recorded; producer GREEN remains pending.
 
+## SetQuestProgressRequirements
+
+Retail/Forever only: `A_Admin.SetQuestProgressRequirements(questID, requirements)` supplies progress text, required money, ordered item and currency rows, required-item visibility, and turn-in portrait inputs for an existing active quest. All top-level fields are required: `money`, `hideRequiredItems`, `text`, `portraitDisplayID`, `portraitName`, `portraitText`, `items`, and `currencies`. Money and portrait display ID are nonnegative integers; the visibility fields are booleans; text and portrait names are strings. Each item row has string `name` and `texture`, positive integer `requiredAmount`, and boolean `hidden`. Each currency row has positive integer `currencyID` and `texture`, string `name`, nonnegative integer `quality`, and positive integer `requiredAmount`. Returns `true` only when valid input changes the stored snapshot; invalid data errors before mutation, and identical data returns `false`. It does not discover requirements or grant items, currency, money, or rewards. [Contract](../specs/quest-progress-requirements-empty.md) covers the original Blizzard progress-panel consumer and proof boundary.
+
 ## SetQuestReadiness
 
 Retail/Forever only: `A_Admin.SetQuestReadiness(questID, ready, autoComplete)`
