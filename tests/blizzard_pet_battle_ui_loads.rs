@@ -1,4 +1,4 @@
-#![cfg(feature = "client-retail") ]
+#![cfg(feature = "client-retail")]
 use std::path::PathBuf;
 
 use wow_ui_sim::loader::{discover_all_blizzard_addons, discover_blizzard_addons_for_screen};

@@ -21,40 +21,36 @@ fn load_game_ui() -> WowLuaEnv {
     env
 }
 
+const ACTION_BUTTON_STATE: &str = r#"
+    local switch = PetBattleFrame.BottomFrame.SwitchPetButton
+    local skip = PetBattleFrame.BottomFrame.TurnTimer.SkipButton
+    PetBattleActionButton_UpdateState(switch)
+    PetBattleActionButton_UpdateState(skip)
+    return tostring(switch:IsEnabled()) .. "," .. tostring(skip:IsEnabled())
+"#;
+
+fn action_buttons_after(env: &WowLuaEnv, legality: &str) -> String {
+    env.exec(&format!("A_Admin.SetPetBattleActionLegality({legality})"))
+        .unwrap();
+    env.eval(ACTION_BUTTON_STATE).unwrap()
+}
+
 #[test]
 fn blizzard_pet_battle_ui_action_buttons_follow_supplied_turn_legality() {
     let env = load_game_ui();
     let loaded: bool = env
         .eval("return C_AddOns.IsAddOnLoaded('Blizzard_PetBattleUI')")
         .expect("consumer load probe succeeds");
-    assert!(loaded, "Blizzard_PetBattleUI must be selected for this profile");
+    assert!(
+        loaded,
+        "Blizzard_PetBattleUI must be selected for this profile"
+    );
     env.exec("A_Admin.SetPetBattleCounts(3, 2); A_Admin.SetPetBattleState(1)")
         .unwrap();
     env.exec("assert(Enum.BattlePetOwner.Ally == 1 and Enum.BattlePetOwner.Enemy == 2)")
         .unwrap();
-    env.exec("A_Admin.SetPetBattleActionLegality(false, false, false, false, false)")
-        .unwrap();
-    let first: String = env.eval(
-        r#"
-        local switch = PetBattleFrame.BottomFrame.SwitchPetButton
-        local skip = PetBattleFrame.BottomFrame.TurnTimer.SkipButton
-        PetBattleActionButton_UpdateState(switch)
-        PetBattleActionButton_UpdateState(skip)
-        return tostring(switch:IsEnabled()) .. "," .. tostring(skip:IsEnabled())
-        "#,
-    ).unwrap();
+    let first = action_buttons_after(&env, "false, false, false, false, false");
     assert_eq!(first, "false,false");
-
-    env.exec("A_Admin.SetPetBattleActionLegality(true, false, false, true, true)")
-        .unwrap();
-    let second: String = env.eval(
-        r#"
-        local switch = PetBattleFrame.BottomFrame.SwitchPetButton
-        local skip = PetBattleFrame.BottomFrame.TurnTimer.SkipButton
-        PetBattleActionButton_UpdateState(switch)
-        PetBattleActionButton_UpdateState(skip)
-        return tostring(switch:IsEnabled()) .. "," .. tostring(skip:IsEnabled())
-        "#,
-    ).unwrap();
+    let second = action_buttons_after(&env, "true, false, false, true, true");
     assert_eq!(second, "true,true");
 }
