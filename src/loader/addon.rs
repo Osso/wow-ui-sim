@@ -1341,6 +1341,7 @@ mod tests {
 
     use super::{build_addon_context, load_addon_internal};
 
+    #[cfg(feature = "client-wowforever")]
     fn write_addon(root: &Path, name: &str, toc: &str, lua: &str) -> std::path::PathBuf {
         let addon_dir = root.join(name);
         std::fs::create_dir_all(&addon_dir).unwrap();
@@ -1444,11 +1445,9 @@ mod tests {
         assert!(ctx.taint, "third-party addon code must be taint stamped");
     }
 
+    #[cfg(feature = "client-wowforever")]
     #[test]
     fn secure_addon_toc_dependency_replays_into_secure_environment() {
-        if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::WowForever {
-            return;
-        }
         let env = WowLuaEnv::new().unwrap();
         let temp = tempfile::tempdir().unwrap();
         let provider_dir = write_addon(
