@@ -28,7 +28,7 @@ fn progress_env() -> WowLuaEnv {
 
 fn show_progress_set(env: &WowLuaEnv, requirements: &str) {
     env.exec(&format!(
-        "assert(A_Admin.SetQuestProgressRequirements(80000, {requirements})); A_Admin.OpenMultiQuestNpc(); SelectActiveQuest(2)"
+        "assert(A_Admin.SetQuestProgressRequirements(80000, {requirements})); QuestFrameProgressPanel:Hide(); A_Admin.OpenMultiQuestNpc(); SelectActiveQuest(2)"
     ))
     .unwrap();
 }
@@ -36,17 +36,33 @@ fn show_progress_set(env: &WowLuaEnv, requirements: &str) {
 fn assert_panel_text_and_money(env: &WowLuaEnv, expected: [&str; 5]) {
     let shown: String = env
         .eval(
-            "return table.concat({tostring(QuestProgressText:GetText()), tostring(QuestProgressItem1Name:GetText()), tostring(QuestProgressItem2Name:GetText()), tostring(QuestProgressItem3Name:GetText()), tostring(QuestProgressItem4Name:GetText()), tostring(QuestProgressRequiredMoneyFrame.GoldButton.Text:GetText()), tostring(QuestProgressRequiredMoneyFrame.SilverButton.Text:GetText()), tostring(QuestFrame:IsShown()), tostring(QuestFrame:IsVisible()), tostring(QuestFrameProgressPanel:IsShown()), tostring(QuestProgressRequiredMoneyFrame:IsShown()), tostring(GetProgressText()), tostring(GetNumQuestItems()), tostring(GetNumQuestCurrencies()), tostring(GetQuestMoneyToGet()), tostring(SplashFrame:IsShown())}, '|')",
+            "return table.concat({tostring(QuestProgressText:GetText()), tostring(QuestProgressItem1Name:GetText()), tostring(QuestProgressItem2Name:GetText()), tostring(QuestProgressItem3Name:GetText()), tostring(QuestProgressItem4Name:GetText()), tostring(QuestProgressRequiredMoneyFrame.GoldButton.Text:GetText()), tostring(QuestProgressRequiredMoneyFrame.SilverButton.Text:GetText()), tostring(QuestFrame:IsShown()), tostring(QuestFrame:IsVisible()), tostring(UIParent:IsShown()), tostring(QuestFrameProgressPanel:IsShown()), tostring(QuestProgressRequiredMoneyFrame:IsShown()), tostring(GetProgressText()), tostring(GetNumQuestItems()), tostring(GetNumQuestCurrencies()), tostring(GetQuestMoneyToGet()), tostring(SplashFrame:IsShown())}, '|')",
         )
         .unwrap();
-    let expected = format!(
-        "{}|{}|{}|{}|{}|23|45|true|true|true|true|{}|2|2|234567|false",
-        expected[0], expected[1], expected[2], expected[3], expected[4]
-    );
+    let expected = [
+        expected[0],
+        expected[1],
+        expected[2],
+        expected[3],
+        expected[4],
+        "23",
+        "45",
+        "true",
+        "true",
+        "true",
+        "true",
+        "true",
+        expected[0],
+        "2",
+        "2",
+        "234567",
+        "false",
+    ]
+    .join("|");
     assert_eq!(shown, expected);
 }
 
-fn assert_panel_rows(env: &WowLuaEnv, item_amount: i32, currency_name: &str, currency_amount: i32) {
+fn assert_visible_item_buttons(env: &WowLuaEnv, item_amount: i32, currency_amount: i32) {
     let buttons: (bool, bool, bool, bool, String, String) = env
         .eval(
             "return QuestProgressItem1:IsShown(), QuestProgressItem2:IsShown(), QuestProgressItem3:IsShown(), QuestProgressItem4:IsShown(), QuestProgressItem1.Count:GetText(), QuestProgressItem3.Count:GetText()",
@@ -63,19 +79,26 @@ fn assert_panel_rows(env: &WowLuaEnv, item_amount: i32, currency_name: &str, cur
             currency_amount.to_string()
         )
     );
+}
+
+fn assert_required_item(env: &WowLuaEnv, name: &str, amount: i32) {
     let item: (String, i32) = env
-        .eval("local n, _, count = GetQuestItemInfo('required', 1); return n, count")
+        .eval("local name, _, count = GetQuestItemInfo('required', 1); return name, count")
+        .unwrap();
+    assert_eq!(item, (name.into(), amount));
+}
+
+fn assert_required_currencies(env: &WowLuaEnv, names: [&str; 2], amounts: [i32; 2]) {
+    let currencies: (String, i32, String, i32) = env
+        .eval("local a, b = C_QuestOffer.GetQuestRequiredCurrencyInfo(1), C_QuestOffer.GetQuestRequiredCurrencyInfo(2); return a.name, a.requiredAmount, b.name, b.requiredAmount")
         .unwrap();
     assert_eq!(
-        item.0,
-        env.eval::<String>("return QuestProgressItem1Name:GetText()")
-            .unwrap()
+        currencies,
+        (names[0].into(), amounts[0], names[1].into(), amounts[1])
     );
-    assert_eq!(item.1, item_amount);
-    let currency: (String, i32) = env
-        .eval("local c = C_QuestOffer.GetQuestRequiredCurrencyInfo(1); return c.name, c.requiredAmount")
-        .unwrap();
-    assert_eq!(currency, (currency_name.into(), currency_amount));
+}
+
+fn assert_required_counts(env: &WowLuaEnv) {
     assert_eq!(env.eval::<i32>("return GetNumQuestItems()").unwrap(), 2);
     assert_eq!(
         env.eval::<i32>("return GetNumQuestCurrencies()").unwrap(),
@@ -87,15 +110,21 @@ fn assert_panel_rows(env: &WowLuaEnv, item_amount: i32, currency_name: &str, cur
     );
 }
 
+fn assert_panel_rows(env: &WowLuaEnv, expected: [&str; 5], item_amount: i32, currency_amount: i32) {
+    assert_visible_item_buttons(env, item_amount, currency_amount);
+    assert_required_item(env, expected[1], item_amount);
+    assert_required_currencies(env, [expected[3], expected[4]], [currency_amount, 6]);
+    assert_required_counts(env);
+}
+
 fn assert_progress_set(
     env: &WowLuaEnv,
     expected: [&str; 5],
-    amount: i32,
-    currency: &str,
+    item_amount: i32,
     currency_amount: i32,
 ) {
     assert_panel_text_and_money(env, expected);
-    assert_panel_rows(env, amount, currency, currency_amount);
+    assert_panel_rows(env, expected, item_amount, currency_amount);
 }
 
 fn assert_turnin_portrait(env: &WowLuaEnv, expected: (i32, &str, &str)) {
@@ -105,38 +134,28 @@ fn assert_turnin_portrait(env: &WowLuaEnv, expected: (i32, &str, &str)) {
 
 fn assert_first_progress_set(env: &WowLuaEnv) {
     show_progress_set(env, FIRST_REQUIREMENTS);
-    assert_progress_set(
-        env,
-        [
-            "Bring the requested supplies.",
-            "Rugged Hide",
-            "Iron Bar",
-            "Harbor Token",
-            "Dock Seal",
-        ],
-        4,
+    let expected = [
+        "Bring the requested supplies.",
+        "Rugged Hide",
+        "Iron Bar",
         "Harbor Token",
-        3,
-    );
+        "Dock Seal",
+    ];
+    assert_progress_set(env, expected, 4, 3);
     assert_turnin_portrait(env, (0, "", ""));
 }
 
 fn assert_second_progress_set(env: &WowLuaEnv) {
     env.exec("A_Admin.CloseQuestNpc()").unwrap();
     show_progress_set(env, SECOND_REQUIREMENTS);
-    assert_progress_set(
-        env,
-        [
-            "Deliver the expedition cargo.",
-            "Mooncloth",
-            "Primal Fire",
-            "Expedition Mark",
-            "Survey Stamp",
-        ],
-        8,
+    let expected = [
+        "Deliver the expedition cargo.",
+        "Mooncloth",
+        "Primal Fire",
         "Expedition Mark",
-        7,
-    );
+        "Survey Stamp",
+    ];
+    assert_progress_set(env, expected, 8, 7);
     assert_turnin_portrait(env, (701, "Report to the marshal.", "Harbor Marshal"));
 }
 
