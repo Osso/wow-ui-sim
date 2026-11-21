@@ -1,13 +1,19 @@
 //! Explicit set-filter state; native defaults and filtering effects are unmodeled.
 
 mod catalog;
-pub use catalog::{TransmogSetInfo, TransmogSets};
+pub use catalog::{TransmogSetInfo, TransmogSetPrimaryAppearanceInfo, TransmogSets};
+
+use crate::lua_bridge::TableBuilder;
 
 use super::helpers::ensure_namespace;
 use crate::lua_api::methods::{borrow_state, borrow_state_mut};
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
+
+pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
+    catalog::register_admin(builder)
+}
 
 pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
     let forever = crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever;
@@ -30,11 +36,46 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
     }
     // WowForever's TransmogSetsDocumentation.lua:231-491 declares the same query
     // and filter surface as Retail/PTR, so it registers the whole block below.
+    // Retail declarations: GetAllSets, GetBaseSetID, GetBaseSets,
+    // GetSetPrimaryAppearances, GetSourcesForSlot, GetUsableSets, and
+    // IsBaseSetCollected are at lines 36, 70, 86, 199, 264, 290, and 358.
+    // Forever declares the same members at the same lines except IsBaseSetCollected
+    // at line 367. TransmogDocumentation.lua:41 declares GetAllSetAppearancesByID.
     if !cfg!(feature = "retail-12-0-0") && !forever {
         return Ok(());
     }
     let namespace = ensure_namespace(state, "C_TransmogSets")?;
     table_set_rust_fn_static(state, namespace, "GetVariantSets", catalog::get_variants)?;
+    table_set_rust_fn_static(state, namespace, "GetBaseSetID", catalog::get_base_set_id)?;
+    table_set_rust_fn_static(
+        state,
+        namespace,
+        "GetSetPrimaryAppearances",
+        catalog::get_primary_appearances,
+    )?;
+    table_set_rust_fn_static(state, namespace, "GetBaseSets", catalog::get_base_sets)?;
+    table_set_rust_fn_static(state, namespace, "GetAllSets", catalog::get_all_sets)?;
+    table_set_rust_fn_static(state, namespace, "GetUsableSets", catalog::get_usable_sets)?;
+    table_set_rust_fn_static(
+        state,
+        namespace,
+        "IsBaseSetCollected",
+        catalog::is_base_set_collected,
+    )?;
+    #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
+    table_set_rust_fn_static(
+        state,
+        namespace,
+        "GetSourcesForSlot",
+        catalog::get_sources_for_slot,
+    )?;
+    let transmog = ensure_namespace(state, "C_Transmog")?;
+    table_set_rust_fn_static(
+        state,
+        transmog,
+        "GetAllSetAppearancesByID",
+        catalog::get_all_set_appearances,
+    )?;
     table_set_rust_fn_static(state, namespace, "GetAvailableSets", catalog::get_available)?;
     table_set_rust_fn_static(state, namespace, "GetSetsFilter", get_sets_filter)?;
     table_set_rust_fn_static(state, namespace, "SetSetsFilter", set_sets_filter)?;

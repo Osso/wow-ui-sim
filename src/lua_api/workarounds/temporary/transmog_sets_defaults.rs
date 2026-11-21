@@ -58,6 +58,7 @@ mod tests {
     use crate::lua_api::WowLuaEnv;
 
     modern_engine_namespace_fixture! {
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     #[test]
     fn installs_transmog_sets_empty_inventory_defaults() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
