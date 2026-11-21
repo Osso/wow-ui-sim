@@ -1,4 +1,4 @@
-//! Host-supplied content-tracking lists and Retail queries.
+//! Host-supplied content-tracking lists and Retail/Forever queries.
 //!
 //! Empty lists mean that the simulator host supplied no tracked IDs; they do not
 //! establish the native client's initial tracking state.
@@ -32,9 +32,11 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     }
 
     let namespace = ensure_namespace(state, "C_ContentTracking")?;
-    // PTR 70493 and Forever 70707 ContentTrackingDocumentation.lua:151–163
-    // declare GetTrackedIDs. Sharing the host list model is INFERRED.
+    // Retail and Forever ContentTrackingDocumentation.lua:151–163 declare
+    // GetTrackedIDs. Sharing the host list model is INFERRED.
     table_set_rust_fn_static(state, namespace, "GetTrackedIDs", get_tracked_ids)?;
+    // Retail and Forever ContentTrackingDocumentation.lua declares the
+    // capability query at lines 29–35 and IsTracking at lines 233–245.
     if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever) {
         table_set_rust_fn_static(
             state,
