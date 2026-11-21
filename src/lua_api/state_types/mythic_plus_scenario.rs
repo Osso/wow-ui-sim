@@ -166,6 +166,12 @@ pub struct ScenarioState {
     pub num_steps: i32,
     /// Scenario type flag (matches `Enum.ScenarioType` values).
     pub scenario_type: i32,
+    /// Scenario flags used by the objective tracker.
+    pub flags: i32,
+    /// Experience reward supplied for the scenario.
+    pub xp: i32,
+    /// Money reward supplied for the scenario.
+    pub money: i32,
     /// UI texture kit name for the scenario tracker background.
     pub texture_kit: String,
     /// Whether this is a tiered entrance scenario. Drives
@@ -192,6 +198,9 @@ impl Default for ScenarioState {
             current_step: 1,
             num_steps: 0,
             scenario_type: 0,
+            flags: 0,
+            xp: 0,
+            money: 0,
             texture_kit: String::new(),
             is_tiered_entrance: false,
             tiered_entrance_active_spells: Vec::new(),

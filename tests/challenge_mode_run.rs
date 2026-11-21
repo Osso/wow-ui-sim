@@ -88,6 +88,35 @@ fn original_challenge_timer_reads_supplied_run_and_reset() {
     .unwrap();
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn original_scenario_tracker_reads_supplied_scenario_and_step() {
+    let env = load_tracker();
+    env.exec(
+        r#"
+        ScenarioObjectiveTracker:InitModule()
+        A_Admin.SetScenarioCriteria({
+            stepID=1, title='First supplied stage', description='First stage details',
+            scenarioName='First supplied scenario', scenarioID=6101,
+        }, {})
+        assert(C_Scenario.IsInScenario())
+        ScenarioObjectiveTracker:LayoutContents()
+        assert(ScenarioObjectiveTracker.Header.Text:GetText() == 'First supplied scenario')
+        assert(ScenarioObjectiveTracker.StageBlock.Name:GetText() == 'First supplied stage')
+
+        A_Admin.SetScenarioCriteria({
+            stepID=2, title='Second supplied stage', description='Second stage details',
+            scenarioName='Second supplied scenario', scenarioID=6102,
+        }, {})
+        assert(C_Scenario.IsInScenario())
+        ScenarioObjectiveTracker:LayoutContents()
+        assert(ScenarioObjectiveTracker.Header.Text:GetText() == 'Second supplied scenario')
+        assert(ScenarioObjectiveTracker.StageBlock.Name:GetText() == 'Second supplied stage')
+        "#,
+    )
+    .unwrap();
+}
+
 #[test]
 fn original_scenario_criteria_render_order_quantity_and_completion() {
     let env = load_tracker();
@@ -309,7 +338,8 @@ fn challenge_admin_events_observe_updated_state_and_reject_invalid_input() {
 fn keystone_globals_survive_run_end_and_only_the_reset_input_zeroes_them() {
     let env = WowLuaEnv::new().unwrap();
     let errors_before = env.state().borrow().lua_errors.len();
-    env.exec(r#"
+    env.exec(
+        r#"
         local function read()
             assert(select('#', C_ChallengeMode.GetActiveKeystoneInfo()) == 3)
             local level, affixes, charged = C_ChallengeMode.GetActiveKeystoneInfo()
@@ -342,7 +372,9 @@ fn keystone_globals_survive_run_end_and_only_the_reset_input_zeroes_them() {
         A_Admin.ResetActiveKeystoneInfo()
         level, affixes, charged = read()
         assert(level == 0 and affixes == '' and charged == false)
-    "#).unwrap();
+    "#,
+    )
+    .unwrap();
     assert_eq!(env.state().borrow().lua_errors.len(), errors_before);
 }
 
@@ -363,7 +395,9 @@ fn original_scenario_tracker_reads_supplied_criteria_visibility_on_init() {
     )
     .unwrap();
     let independent = WowLuaEnv::new().unwrap();
-    let shown: bool = independent.eval("return C_Scenario.ShouldShowCriteria()").unwrap();
+    let shown: bool = independent
+        .eval("return C_Scenario.ShouldShowCriteria()")
+        .unwrap();
     assert!(shown, "criteria default to shown in a fresh environment");
 }
 
