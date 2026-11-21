@@ -43,18 +43,21 @@ fn encounter_journal_renders_supplied_item_sets_and_items() {
                 { setID=503, name="Filtered Out", itemLevel=640, classID=3, specID=73,
                   items={{ itemID=41003, icon=91003, slot=3, invType=15 }} },
             })
-            local sets = C_LootJournal.GetItemSets(2, 71)
-            assert(#sets == 2, "the loot journal must receive both supplied sets")
+            local journal = EncounterJournal.LootJournalItems
+            journal:SetClassAndSpecFilters(2, 71)
+            local list = journal.ItemSetsFrame
+            list.dirty = true
+            list:UpdateList()
+
+            local provider = list.ScrollBox:GetDataProvider()
+            assert(provider:GetSize() == 2, "the loot-journal consumer must filter to two sets")
             local rendered = {}
-            for _, set in ipairs(sets) do
-                local button = CreateFrame("Button", nil, UIParent, "LootJournalItemSetButtonTemplate")
-                LootJournalItemSetButtonMixin.Init(button, set, function() end)
+            list.ScrollBox:ForEachFrame(function(button)
                 local item = button.ItemButtons[1]
-                local icon = item.Icon:GetTexture()
                 rendered[#rendered + 1] = table.concat({
-                    button.SetName:GetText(), item.itemID, icon
+                    button.SetName:GetText(), item.itemID, item.Icon:GetTexture()
                 }, ":")
-            end
+            end)
             table.sort(rendered)
             return table.concat(rendered, "|")
             "#,
