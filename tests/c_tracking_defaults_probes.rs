@@ -85,9 +85,10 @@ fn consumer_env() -> WowLuaEnv {
 fn consumer_tracking_states(env: &WowLuaEnv) -> (bool, bool, bool) {
     env.eval(
         r#"
-        local tooltip = { lines = {} }
+        local tooltip = { lines = {}, trackedNames = {} }
         function tooltip:SetText() end
-        function tooltip:AddDoubleLine(left) table.insert(self.lines, left) end
+        function tooltip:ClearLines() self.lines = {} end
+        function tooltip:AddDoubleLine(left) table.insert(self.trackedNames, left) end
         function tooltip:AddLine() end
         function tooltip:Show() end
         CollectionWardrobeUtil.SetAppearanceTooltip(tooltip, {
@@ -99,9 +100,9 @@ fn consumer_tracking_states(env: &WowLuaEnv) -> (bool, bool, bool) {
             primarySourceID = 301,
             showTrackingInfo = true,
         })
-        return tooltip.lines[1]:find("checkmark%-minimal") ~= nil,
-               tooltip.lines[2]:find("checkmark%-minimal") ~= nil,
-               tooltip.lines[3]:find("checkmark%-minimal") ~= nil
+        return tooltip.trackedNames[1]:find("checkmark%-minimal") ~= nil,
+               tooltip.trackedNames[2]:find("checkmark%-minimal") ~= nil,
+               tooltip.trackedNames[3]:find("checkmark%-minimal") ~= nil
         "#,
     )
     .expect("CollectionsUtil should render the supplied tracked state")
