@@ -24,7 +24,7 @@ fn world_quest_tracker_renders_world_tasks_and_skips_non_world_task() {
                       taskIDs[questID] = true
                     end
                     if not taskIDs[80000] then return "supplied_task_missing" end
-                    WorldQuestObjectiveTracker:LayoutContents()
+                    WorldQuestObjectiveTracker:Update(2000, false)
                     local shown = {}
                     for _, questID in ipairs(WorldQuestObjectiveTracker.currentContentList) do
                       shown[questID] = true
