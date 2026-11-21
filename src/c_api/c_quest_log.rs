@@ -138,9 +138,8 @@ fn read_timer_seconds(
 pub(crate) fn register_info_queries(state: &mut LuaState) -> LuaResult<()> {
     let namespace = ensure_namespace(state, "C_QuestLog")?;
     table_set_rust_fn_static(state, namespace, "GetInfo", get_info)?;
-    if ACTIVE == ClientProfile::WowForever {
-        table_set_rust_fn_static(state, namespace, "GetQuestTimers", get_quest_timers)?;
-    }
+    #[cfg(feature = "client-wowforever")]
+    table_set_rust_fn_static(state, namespace, "GetQuestTimers", get_quest_timers)?;
     if ACTIVE == ClientProfile::Retail {
         table_set_rust_fn_static(state, namespace, "IsQuestTask", is_quest_task)?;
         table_set_rust_fn_static(state, namespace, "IsQuestBounty", is_quest_bounty)?;
