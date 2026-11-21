@@ -651,6 +651,9 @@ pub struct SimState {
     pub current_target: Option<TargetInfo>,
     /// Supplied target GUIDs for target, focus, and party unit tokens.
     pub unit_target_guids: HashMap<String, String>,
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub unit_threats:
+        HashMap<(String, String), crate::lua_api::globals::real::unit_threat::ThreatEntry>,
     /// Host-supplied GUIDs for unit tokens not resolved by the built-in inputs.
     pub unit_guid_overrides: HashMap<String, String>,
     /// Host-supplied GUIDs owned or controlled by the player.

@@ -189,6 +189,8 @@ pub mod unit_speed;
 pub mod unit_spell_target_name;
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub(crate) mod unit_stagger;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) mod unit_threat;
 pub(crate) mod utf8_case;
 pub mod vehicle_possession;
 pub mod voice_chat_probes;
