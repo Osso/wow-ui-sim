@@ -275,6 +275,7 @@ pub(super) fn set_party_member(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
+#[cfg(feature = "client-retail")]
 pub(super) fn set_party_member_faction(state: &mut LuaState) -> LuaResult<u32> {
     let index = i32::from_stack(state, 1)?;
     let faction_group = String::from_stack(state, 2)?;
