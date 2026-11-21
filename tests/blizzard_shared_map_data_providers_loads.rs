@@ -235,8 +235,7 @@ fn load_gossip_map_addon_closure() -> WowLuaEnv {
     let ui = blizzard_ui_dir();
     let env = new_blizzard_addon_env(&ui);
     env.exec(
-        "A_Admin.SetGossipPoi(2248, 401, 'North Gossip', 0.2, 0.8, nil, 3); \\
-         A_Admin.SetGossipPoi(84, 402, 'South Gossip', 0.7, 0.3, nil, 7)",
+        "A_Admin.SetGossipPoi(2248, 401, 'North Gossip', 0.2, 0.8, nil, 3); A_Admin.SetGossipPoi(84, 402, 'South Gossip', 0.7, 0.3, nil, 7)",
     )
     .expect("supply map-specific gossip POIs before loading Blizzard consumers");
     let loaded = load_blizzard_addon_closure_into_env(
