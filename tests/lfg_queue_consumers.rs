@@ -1,7 +1,6 @@
-#![cfg(feature = "client-retail")]
-
 use wow_ui_sim::lua_api::WowLuaEnv;
 
+#[cfg(feature = "client-retail")]
 prefork_full_ui_case! {
 fn supplied_entries_reach_selected_queue_status_rows(env: &WowLuaEnv) {
     env.exec(
@@ -41,6 +40,7 @@ fn supplied_entries_reach_selected_queue_status_rows(env: &WowLuaEnv) {
 }
 }
 
+#[cfg(feature = "client-retail")]
 prefork_full_ui_case! {
 fn supplied_locks_reach_selected_group_finder_frame(env: &WowLuaEnv) {
     env.exec(
@@ -62,4 +62,14 @@ fn supplied_locks_reach_selected_group_finder_frame(env: &WowLuaEnv) {
     )
     .expect("the selected GroupFinder frame must consume both supplied lock rows");
 }
+}
+
+#[cfg(feature = "client-wowforever")]
+#[test]
+fn forever_keeps_empty_legacy_lfg_defaults() {
+    let env = WowLuaEnv::new().expect("lua env should initialize");
+    let result: (usize, usize) = env
+        .eval("return #C_LFGInfo.GetLFDLockStates(), #C_LFGInfo.GetAllEntriesForCategory(8)")
+        .expect("Forever legacy LFG defaults should remain callable");
+    assert_eq!(result, (0, 0));
 }
