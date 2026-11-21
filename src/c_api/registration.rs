@@ -189,7 +189,11 @@ fn register_interaction_crafting(state: &mut LuaState) -> LuaResult<()> {
     super::c_cooldown_viewer::register(state)?;
     super::c_content_tracking::register(state)?;
     super::c_neighborhood_initiative::register(state)?;
-    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    #[cfg(any(
+        feature = "client-retail",
+        feature = "client-ptr",
+        feature = "client-wowforever"
+    ))]
     super::c_trade_info::register(state)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     super::secure_transfer::register(state)?;

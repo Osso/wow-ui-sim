@@ -1208,6 +1208,16 @@ pub struct SimState {
     /// Supplied corpse coordinates by UI map; never inferred from player position.
     pub corpse_map_positions: HashMap<i32, (f64, f64)>,
     pub active_trade: Option<TradeState>,
+    /// Host-supplied trade-money pickup restriction result.
+    #[cfg(any(
+        feature = "client-retail",
+        feature = "client-ptr",
+        feature = "client-wowforever"
+    ))]
+    pub pickup_trade_money_restricted: bool,
+    /// PTR host input used by the preserved C_TradeInfo warning surface.
+    #[cfg(feature = "client-ptr")]
+    pub trade_offer_warning: bool,
     /// INFERRED secure transfer housing quote, supplied only when a quote exists.
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     pub secure_transfer: Option<crate::c_api::secure_transfer::SecureTransferInputs>,
