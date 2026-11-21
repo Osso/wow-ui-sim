@@ -1,10 +1,10 @@
-#![cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#![cfg(feature = "client-retail")]
 
 fn assert_groupfinder_cross_faction_consumer(env: &wow_ui_sim::lua_api::WowLuaEnv) {
     env.exec(
         r#"
         assert(type(RaidFinderFrameFindRaidButton_Update) == "function", "RaidFinder consumer is loaded")
-        A_Admin.SetPlayerRace(1)
+        A_Admin.SetPlayerRace(0)
         A_Admin.SetPartySize(2)
         A_Admin.SetPartyMember(1, "Alliance One", 1, 80)
         A_Admin.SetPartyMemberFaction(1, "Alliance")
@@ -25,21 +25,8 @@ fn assert_groupfinder_cross_faction_consumer(env: &wow_ui_sim::lua_api::WowLuaEn
     .expect("original RaidFinder consumer must report mixed-faction roster state");
 }
 
-#[cfg(feature = "client-retail")]
 #[test]
 fn retail_groupfinder_raidfinder_reports_cross_faction_party() {
-    crate::common::blizzard_addon_harness::with_blizzard_addon_startup_shape(
-        &["Blizzard_GroupFinder"],
-        &[],
-        |env, _loaded| {
-            assert_groupfinder_cross_faction_consumer(env);
-        },
-    );
-}
-
-#[cfg(feature = "client-wowforever")]
-#[test]
-fn wowforever_groupfinder_raidfinder_reports_cross_faction_party() {
     crate::common::blizzard_addon_harness::with_blizzard_addon_startup_shape(
         &["Blizzard_GroupFinder"],
         &[],

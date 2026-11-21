@@ -12,10 +12,15 @@ macro_rules! contract {
     };
 }
 
-contract!(
-    cross_faction_party_has_no_supplied_faction_roster,
-    "assert(C_PartyInfo.IsCrossFactionParty() == false); assert(C_PartyInfo.IsCrossFactionParty(1) == false)"
-);
+#[cfg(not(feature = "client-retail"))]
+mod non_retail_cross_faction_shim {
+    use super::*;
+
+    contract!(
+        cross_faction_party_has_no_supplied_faction_roster,
+        "assert(C_PartyInfo.IsCrossFactionParty() == false); assert(C_PartyInfo.IsCrossFactionParty(1) == false)"
+    );
+}
 contract!(
     silence_policy_is_explicitly_inactive,
     "assert(C_SocialRestrictions.IsSilenced() == false)"
