@@ -75,6 +75,50 @@ pub fn get_reward_skill_points_nil_triplet(state: &mut LuaState) -> LuaResult<u3
     Ok(3)
 }
 
+/// INFERRED from R88cq: tracker callers consume area/map flags, objective count,
+/// task name and objective-display classification from `GetTaskInfo`.
+pub(crate) fn get_task_info(state: &mut LuaState) -> LuaResult<u32> {
+    let quest_id = Option::<f64>::from_stack(state, 1)?.unwrap_or(0.0) as i32;
+    let Some((num_objectives, title)) = task_info(state, quest_id)? else {
+        return Ok(0);
+    };
+    state.push(Val::Bool(true));
+    state.push(Val::Bool(false));
+    state.push(Val::Num(f64::from(num_objectives)));
+    let title = create_string(state, &title);
+    state.push(title);
+    state.push(Val::Bool(false));
+    Ok(5)
+}
+
+fn task_info(state: &LuaState, quest_id: i32) -> LuaResult<Option<(i32, String)>> {
+    if let Some(quest) = read_available_world_quests(state)?
+        .into_iter()
+        .find(|quest| quest.quest_id == quest_id)
+    {
+        let count = if quest_objectives::ENABLED {
+            quest_objectives::objective_count(
+                &borrow_state(state)?.quest_log_entries,
+                quest.quest_id,
+            )
+        } else {
+            quest.num_objectives
+        };
+        return Ok(Some((count, quest.title.to_string())));
+    }
+    let sim = borrow_state(state)?;
+    let Some(entry) = sim
+        .quest_log_entries
+        .entries
+        .iter()
+        .find(|entry| entry.quest_id == quest_id && entry.info_flags.is_task)
+    else {
+        return Ok(None);
+    };
+    let count = quest_objectives::objective_count(&sim.quest_log_entries, quest_id);
+    Ok(Some((count, entry.title.clone())))
+}
+
 pub(crate) fn build_tasks_table(state: &mut LuaState) -> LuaResult<u32> {
     let available = read_available_world_quests(state)?;
     let mut task_ids: HashSet<i32> = available.iter().map(|quest| quest.quest_id).collect();

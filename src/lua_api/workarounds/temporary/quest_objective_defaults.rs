@@ -1,8 +1,7 @@
 //! Temporary quest/objective tracker query defaults.
 //!
-//! The simulator does not model bonus objective task lists, spell-targetable
-//! quest state, or auto quest popup toasts yet. Keep these startup-safe empty
-//! defaults in the workaround layer instead of the central runtime bootstrap.
+//! Keep unsupported spell-targetable quest and auto-popup defaults in the
+//! workaround layer instead of the central runtime bootstrap.
 
 use crate::lua_api::LoaderEnv;
 use rilua::LuaApiMut;
@@ -120,6 +119,11 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
             lua,
             "GetTasksTable",
             crate::lua_api::globals::quest_surface::task_quest::build_tasks_table,
+        )?;
+        LuaApiMut::register_function(
+            lua,
+            "GetTaskInfo",
+            crate::lua_api::globals::quest_surface::task_quest::get_task_info,
         )?;
     } else {
         lua.exec(LEGACY_TASKS_TABLE_LUA)?;
