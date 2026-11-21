@@ -47,30 +47,55 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
 /// INFERRED from the selected objective tracker; native evidence is pending R88dh.
 #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 fn get_scenario_info(state: &mut LuaState) -> LuaResult<u32> {
-    let scenario = borrow_state(state)?.scenario.clone();
-    let name = if scenario.in_scenario {
-        create_string(state, &scenario.name)
+    let (
+        in_scenario,
+        name,
+        current_step,
+        num_steps,
+        flags,
+        xp,
+        money,
+        scenario_type,
+        texture_kit,
+        scenario_id,
+    ) = {
+        let scenario = &borrow_state(state)?.scenario;
+        (
+            scenario.in_scenario,
+            scenario.name.clone(),
+            scenario.current_step,
+            scenario.num_steps,
+            scenario.flags,
+            scenario.xp,
+            scenario.money,
+            scenario.scenario_type,
+            scenario.texture_kit.clone(),
+            scenario.scenario_id,
+        )
+    };
+    let name = if in_scenario {
+        create_string(state, &name)
     } else {
         Val::Nil
     };
     state.push(name);
-    for value in [scenario.current_step, scenario.num_steps, scenario.flags] {
+    for value in [current_step, num_steps, flags] {
         state.push(Val::Num(f64::from(value)));
     }
     state.push(Val::Nil);
     state.push(Val::Nil);
     state.push(Val::Nil);
-    for value in [scenario.xp, scenario.money, scenario.scenario_type] {
+    for value in [xp, money, scenario_type] {
         state.push(Val::Num(f64::from(value)));
     }
     state.push(Val::Nil);
-    let texture_kit = if scenario.texture_kit.is_empty() {
+    let texture_kit = if texture_kit.is_empty() {
         Val::Nil
     } else {
-        create_string(state, &scenario.texture_kit)
+        create_string(state, &texture_kit)
     };
     state.push(texture_kit);
-    state.push(Val::Num(f64::from(scenario.scenario_id)));
+    state.push(Val::Num(f64::from(scenario_id)));
     Ok(13)
 }
 
