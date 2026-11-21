@@ -28,7 +28,8 @@ fn blizzard_pet_battle_ui_action_buttons_follow_supplied_turn_legality() {
         .eval("return C_AddOns.IsAddOnLoaded('Blizzard_PetBattleUI')")
         .expect("consumer load probe succeeds");
     assert!(loaded, "Blizzard_PetBattleUI must be selected for this profile");
-    env.exec("A_Admin.SetPetBattleState(1)").unwrap();
+    env.exec("A_Admin.SetPetBattleCounts(3, 2); A_Admin.SetPetBattleState(1)")
+        .unwrap();
     env.exec("A_Admin.SetPetBattleActionLegality(true, false, true, false)")
         .unwrap();
     let first: String = env.eval(
