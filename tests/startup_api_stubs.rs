@@ -482,7 +482,15 @@ fn startup_quest_link_and_date_helpers_are_callable() {
         quest_link.contains("|Hquest:80000|h[The Lost Expedition]|h"),
         "GetQuestLink should return a colored quest hyperlink"
     );
-    assert_eq!(reset_time, 86400.0);
+    let expected_reset_time = if cfg!(any(
+        feature = "client-retail",
+        feature = "client-wowforever"
+    )) {
+        68_400.0
+    } else {
+        86_400.0
+    };
+    assert_eq!(reset_time, expected_reset_time);
     assert_eq!(calendar_type, "table");
     assert_eq!(calendar_year_type, "number");
 }
