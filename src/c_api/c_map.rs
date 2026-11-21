@@ -174,7 +174,8 @@ fn set_map_group_member(state: &mut LuaState) -> LuaResult<u32> {
     let map_id = i32::from_stack(state, 1)?;
     let group_id = i32::from_stack(state, 2)?;
     let relative_height_index = i32::from_stack(state, 3)?;
-    let Some(map) = borrow_state_mut(state)?.maps.get_mut(&map_id) else {
+    let mut sim_state = borrow_state_mut(state)?;
+    let Some(map) = sim_state.maps.get_mut(&map_id) else {
         return Err(runtime_error(format!(
             "A_Admin.SetMapGroupMember: unknown map {map_id}"
         )));
