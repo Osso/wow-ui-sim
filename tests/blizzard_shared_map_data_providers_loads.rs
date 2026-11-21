@@ -130,11 +130,11 @@ fn load_map_data_providers_closure() -> WowLuaEnv {
 const TAXI_MAP_ADDON_OVERRIDES: &[BlizzardAddonOverride<'static>] = &[
     BlizzardAddonOverride {
         addon: "Blizzard_FlightMap",
-        extra_roots: &["Blizzard_UIParentPanelManager"],
+        extra_roots: &["Blizzard_UIParentPanelManager", "Blizzard_SharedXML"],
     },
     BlizzardAddonOverride {
         addon: "Blizzard_WorldMap",
-        extra_roots: &["Blizzard_UIParentPanelManager"],
+        extra_roots: &["Blizzard_UIParentPanelManager", "Blizzard_SharedXML"],
     },
 ];
 
@@ -201,6 +201,7 @@ fn taxi_map_providers_refresh_pins_from_supplied_nodes() {
     let (env, loaded) = load_taxi_map_addon_closure();
     for addon in [
         "Blizzard_UIParentPanelManager",
+        "Blizzard_SharedXML",
         "Blizzard_FlightMap",
         "Blizzard_SharedMapDataProviders",
         "Blizzard_WorldMap",
