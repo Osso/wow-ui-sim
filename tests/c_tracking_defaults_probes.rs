@@ -25,14 +25,14 @@ fn content_tracking_defaults_are_empty_and_inactive() {
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 #[test]
-fn collection_wardrobe_consumer_reflects_supplied_tracking_entries() {
+fn content_tracking_element_consumer_reflects_supplied_tracking_entries() {
     let env = consumer_env();
     let loaded: bool = env
-        .eval("return C_AddOns.IsAddOnLoaded('Blizzard_FrameXMLUtil')")
-        .expect("FrameXMLUtil load state should be available");
+        .eval("return C_AddOns.IsAddOnLoaded('Blizzard_ContentTracking')")
+        .expect("ContentTracking load state should be available");
     assert!(
         loaded,
-        "the selected CollectionsUtil consumer must be loaded"
+        "the selected ContentTracking consumer must be loaded"
     );
 
     let appearance_type: i32 = env
@@ -85,27 +85,19 @@ fn consumer_env() -> WowLuaEnv {
 fn consumer_tracking_states(env: &WowLuaEnv) -> (bool, bool, bool) {
     env.eval(
         r#"
-        local tooltip = { lines = {}, trackedNames = {} }
-        function tooltip:SetText() end
-        function tooltip:ClearLines() self.lines = {} end
-        function tooltip:AddDoubleLine(left) table.insert(self.trackedNames, left) end
-        function tooltip:AddLine() end
-        function tooltip:Show() end
-        CollectionWardrobeUtil.SetAppearanceTooltip(tooltip, {
-            sources = {
-                { sourceID = 301, visualID = 900, isCollected = false },
-                { sourceID = 302, visualID = 900, isCollected = false },
-                { sourceID = 303, visualID = 900, isCollected = false },
-            },
-            primarySourceID = 301,
-            showTrackingInfo = true,
-        })
-        return tooltip.trackedNames[1]:find("checkmark%-minimal") ~= nil,
-               tooltip.trackedNames[2]:find("checkmark%-minimal") ~= nil,
-               tooltip.trackedNames[3]:find("checkmark%-minimal") ~= nil
+        local trackableType = Enum.ContentTrackingType.Appearance
+        local function isShownFor(trackableID)
+            local checkmark = {}
+            function checkmark:SetShown(shown) self.shown = shown end
+            local element = { ContentTrackingCheckmark = checkmark }
+            ContentTrackingElementMixin.AddTrackable(element, trackableType, trackableID)
+            ContentTrackingElementMixin.UpdateTrackingCheckmark(element)
+            return checkmark.shown == true
+        end
+        return isShownFor(301), isShownFor(302), isShownFor(303)
         "#,
     )
-    .expect("CollectionsUtil should render the supplied tracked state")
+    .expect("ContentTrackingElement should render the supplied tracked state")
 }
 
 post_wrath_ui_fixture! {
