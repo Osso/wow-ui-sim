@@ -28,6 +28,10 @@ pub struct GarrisonMission {
     pub follower_type_id: u32,
     pub level: u32,
     pub duration_seconds: f64,
+    pub duration: String,
+    pub time_left: String,
+    pub xp: f64,
+    pub can_be_completed: bool,
     pub rewards: Vec<GarrisonMissionReward>,
     pub in_progress: bool,
     pub completed: bool,
@@ -258,8 +262,10 @@ fn publish_missions_into(
 }
 
 fn publish_mission(state: &mut LuaState, mission: &GarrisonMission) -> LuaResult<Val> {
-    let result = create_table_with_capacity(state, 8);
+    let result = create_table_with_capacity(state, 12);
     let name = create_string(state, &mission.name);
+    let duration = create_string(state, &mission.duration);
+    let time_left = create_string(state, &mission.time_left);
     table_set_static(
         state,
         result,
@@ -279,6 +285,15 @@ fn publish_mission(state: &mut LuaState, mission: &GarrisonMission) -> LuaResult
         result,
         "durationSeconds",
         Val::Num(mission.duration_seconds),
+    );
+    table_set_static(state, result, "duration", duration);
+    table_set_static(state, result, "timeLeft", time_left);
+    table_set_static(state, result, "xp", Val::Num(mission.xp));
+    table_set_static(
+        state,
+        result,
+        "canBeCompleted",
+        Val::Bool(mission.can_be_completed),
     );
     table_set_static(state, result, "inProgress", Val::Bool(mission.in_progress));
     table_set_static(state, result, "completed", Val::Bool(mission.completed));
@@ -371,6 +386,10 @@ fn parse_mission(state: &mut LuaState, value: Val) -> LuaResult<GarrisonMission>
         follower_type_id: read_field_u32(state, table, "followerTypeID")?,
         level: read_field_u32(state, table, "level")?,
         duration_seconds: read_field_number(state, table, "durationSeconds")?,
+        duration: read_field_string(state, table, "duration")?,
+        time_left: read_field_string(state, table, "timeLeft")?,
+        xp: read_field_number(state, table, "xp")?,
+        can_be_completed: read_field_bool(state, table, "canBeCompleted")?,
         rewards,
         in_progress: read_field_bool(state, table, "inProgress")?,
         completed: read_field_bool(state, table, "completed")?,

@@ -5,7 +5,7 @@
 ## What it must do
 
 - [ ] **INFERRED (R88dg pending):** `A_Admin.SetGarrisonMissions` replaces the supplied mission records for the current simulator session.
-- [ ] **INFERRED (R88dg pending):** Each record carries `missionID`, `name`, `followerTypeID`, `level`, `durationSeconds`, `rewards`, `inProgress`, and `completed` values supplied by the host.
+- [ ] **INFERRED (R88dg pending):** Each record carries the host-supplied `missionID`, `name`, `followerTypeID`, `level`, `durationSeconds`, `duration`, `timeLeft`, `xp`, `canBeCompleted`, `rewards`, `inProgress`, and `completed` fields, plus optional `encounterIconInfo`.
 - [ ] **INFERRED (R88dg pending):** `C_Garrison.GetAvailableMissions` returns records for the requested follower type that are neither in progress nor completed.
 - [ ] **INFERRED (R88dg pending):** `C_Garrison.GetInProgressMissions` returns records for the requested follower type whose `inProgress` value is true.
 - [ ] **INFERRED (R88dg pending):** `C_Garrison.GetCompleteMissions` returns records for the requested follower type whose `completed` value is true.
