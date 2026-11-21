@@ -4,6 +4,7 @@
 use {
     super::ensure_namespace,
     crate::lua_api::methods::{borrow_state, create_string, create_table, table_set_static},
+    crate::lua_api::state::ScenarioStep,
     crate::lua_bridge::{stack_val, table_set_rust_fn_static},
     rilua::table_security::{unwrap_secret, wrap_host_secret_number, wrap_host_secret_string},
     rilua::vm::state::LuaState,
@@ -30,6 +31,10 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
         "GetUnitCriteriaProgressValues",
         get_unit_criteria_progress_values,
     )?;
+    let scenario = ensure_namespace(state, "C_Scenario")?;
+    table_set_rust_fn_static(state, scenario, "GetInfo", get_scenario_info)?;
+    table_set_rust_fn_static(state, scenario, "IsInScenario", is_in_scenario)?;
+    table_set_rust_fn_static(state, scenario, "GetStepInfo", get_step_info)?;
     table_set_rust_fn_static(state, namespace, "GetDisplayInfo", get_display_info)?;
     table_set_rust_fn_static(
         state,
@@ -37,6 +42,101 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
         "GetTieredEntranceActiveSpells",
         get_tiered_entrance_active_spells,
     )
+}
+
+/// INFERRED from the selected objective tracker; native evidence is pending R88dh.
+#[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
+fn get_scenario_info(state: &mut LuaState) -> LuaResult<u32> {
+    let scenario = borrow_state(state)?.scenario.clone();
+    let name = if scenario.in_scenario {
+        create_string(state, &scenario.name)
+    } else {
+        Val::Nil
+    };
+    state.push(name);
+    for value in [scenario.current_step, scenario.num_steps, scenario.flags] {
+        state.push(Val::Num(f64::from(value)));
+    }
+    state.push(Val::Nil);
+    state.push(Val::Nil);
+    state.push(Val::Nil);
+    for value in [scenario.xp, scenario.money, scenario.scenario_type] {
+        state.push(Val::Num(f64::from(value)));
+    }
+    state.push(Val::Nil);
+    let texture_kit = if scenario.texture_kit.is_empty() {
+        Val::Nil
+    } else {
+        create_string(state, &scenario.texture_kit)
+    };
+    state.push(texture_kit);
+    state.push(Val::Num(f64::from(scenario.scenario_id)));
+    Ok(13)
+}
+
+#[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
+fn is_in_scenario(state: &mut LuaState) -> LuaResult<u32> {
+    let in_scenario = borrow_state(state)?.scenario.in_scenario;
+    state.push(Val::Bool(in_scenario));
+    Ok(1)
+}
+
+/// INFERRED step projection for the original scenario tracker; pending R88dh.
+#[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
+fn get_step_info(state: &mut LuaState) -> LuaResult<u32> {
+    let step = {
+        let scenario = &borrow_state(state)?.scenario;
+        scenario
+            .in_scenario
+            .then(|| {
+                scenario
+                    .steps
+                    .iter()
+                    .find(|step| step.step_id == scenario.current_step)
+                    .cloned()
+            })
+            .flatten()
+    };
+    let Some(step) = step else {
+        return push_empty_step_info(state);
+    };
+    push_scenario_step(state, &step);
+    Ok(12)
+}
+
+#[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
+fn push_empty_step_info(state: &mut LuaState) -> LuaResult<u32> {
+    state.push(Val::Nil);
+    state.push(Val::Nil);
+    state.push(Val::Num(0.0));
+    state.push(Val::Bool(false));
+    state.push(Val::Bool(false));
+    state.push(Val::Num(0.0));
+    state.push(Val::Num(0.0));
+    state.push(Val::Num(0.0));
+    state.push(Val::Nil);
+    state.push(Val::Bool(false));
+    state.push(Val::Bool(false));
+    state.push(Val::Nil);
+    Ok(12)
+}
+
+#[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
+fn push_scenario_step(state: &mut LuaState, step: &ScenarioStep) {
+    let title = create_string(state, &step.title);
+    state.push(title);
+    let description = create_string(state, &step.description);
+    state.push(description);
+    state.push(Val::Num(f64::from(step.num_criteria)));
+    state.push(Val::Bool(step.completed));
+    state.push(Val::Bool(step.is_bonus_step));
+    state.push(Val::Num(f64::from(step.bonus_reward_quest_id.unwrap_or(0))));
+    state.push(Val::Num(0.0));
+    state.push(Val::Num(0.0));
+    state.push(Val::Nil);
+    state.push(Val::Bool(false));
+    state.push(Val::Bool(false));
+    state.push(Val::Nil);
 }
 
 /// Returns nothing outside a scenario or when it has no theme color.
