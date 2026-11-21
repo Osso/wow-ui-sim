@@ -8,6 +8,13 @@ use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val, runtime_error};
 use std::cmp::Ordering;
 
+const SECONDS_PER_MINUTE: i64 = 60;
+const SECONDS_PER_HOUR: i64 = 3_600;
+const SECONDS_PER_DAY: i64 = 86_400;
+const SECONDS_PER_WEEK: i64 = 604_800;
+const DAYS_PER_400_YEARS: i64 = 146_097;
+const UNIX_EPOCH_DAY_OFFSET: i64 = 719_468;
+
 /// INFERRED (R88df): default regional reset schedule; hosts can supply the region's values.
 #[derive(Debug, Clone, Copy)]
 pub(crate) struct WeeklyResetSchedule {
@@ -137,11 +144,14 @@ fn seconds_until_daily_reset(state: &mut LuaState) -> LuaResult<u32> {
     let sim = borrow_state(state)?;
     let now = unix_timestamp(sim.calendar_now);
     let hour = i64::from(sim.weekly_reset_schedule.hour);
-    let day = now.div_euclid(86_400);
-    let reset = day * 86_400 + hour * 3_600;
-    state.push(Val::Num(
-        (if reset > now { reset } else { reset + 86_400 } - now) as f64,
-    ));
+    let day = now.div_euclid(SECONDS_PER_DAY);
+    let reset = day * SECONDS_PER_DAY + hour * SECONDS_PER_HOUR;
+    let next_reset = if reset > now {
+        reset
+    } else {
+        reset + SECONDS_PER_DAY
+    };
+    state.push(Val::Num((next_reset - now) as f64));
     Ok(1)
 }
 
@@ -149,26 +159,33 @@ fn weekly_reset_timestamp(state: &mut LuaState) -> LuaResult<i64> {
     let sim = borrow_state(state)?;
     let now = unix_timestamp(sim.calendar_now);
     let schedule = sim.weekly_reset_schedule;
-    let day = now.div_euclid(86_400);
-    let weekday = (day + 4).rem_euclid(7) as u8 + 1;
+    let day = now.div_euclid(SECONDS_PER_DAY);
+    let weekday = weekday_from_unix_day(day);
     let days_since_reset = (weekday + 7 - schedule.weekday) % 7;
-    let mut start = (day - i64::from(days_since_reset)) * 86_400 + i64::from(schedule.hour) * 3_600;
+    let mut start = (day - i64::from(days_since_reset)) * SECONDS_PER_DAY
+        + i64::from(schedule.hour) * SECONDS_PER_HOUR;
     if start > now {
-        start -= 7 * 86_400;
+        start -= SECONDS_PER_WEEK;
     }
     Ok(start)
 }
 
+fn weekday_from_unix_day(day: i64) -> u8 {
+    ((day + 4).rem_euclid(7) + 1) as u8
+}
+
 fn unix_timestamp(time: crate::c_api::c_calendar::CivilDateTime) -> i64 {
-    let year = i64::from(time.year) - i64::from(time.month <= 2);
-    let era = year.div_euclid(400);
-    let year_of_era = year - era * 400;
+    let adjusted_year = i64::from(time.year) - i64::from(time.month <= 2);
+    let era = adjusted_year.div_euclid(400);
+    let year_of_era = adjusted_year - era * 400;
     let month = i64::from(time.month);
-    let day_of_year =
-        (153 * (month + if month > 2 { -3 } else { 9 }) + 2) / 5 + i64::from(time.day) - 1;
+    let shifted_month = month + if month > 2 { -3 } else { 9 };
+    let day_of_year = (153 * shifted_month + 2) / 5 + i64::from(time.day) - 1;
     let day_of_era = year_of_era * 365 + year_of_era / 4 - year_of_era / 100 + day_of_year;
-    let days = era * 146_097 + day_of_era - 719_468;
-    days * 86_400 + i64::from(time.hour) * 3_600 + i64::from(time.minute) * 60
+    let days_since_epoch = era * DAYS_PER_400_YEARS + day_of_era - UNIX_EPOCH_DAY_OFFSET;
+    days_since_epoch * SECONDS_PER_DAY
+        + i64::from(time.hour) * SECONDS_PER_HOUR
+        + i64::from(time.minute) * SECONDS_PER_MINUTE
 }
 
 fn read_integer_field(state: &mut LuaState, data: Val, name: &str) -> LuaResult<i32> {
