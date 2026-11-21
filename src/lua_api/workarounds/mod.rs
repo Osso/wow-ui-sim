@@ -209,6 +209,8 @@ pub(crate) fn update_player_location_for_screen(
 }
 
 fn apply_temporary_state_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
+    use rilua::LuaApiMut;
+
     temporary::garrison_mission_lists::apply_bootstrap(lua)?;
     apply_runtime_state_bootstrap(lua)?;
     apply_account_and_social_state_bootstrap(lua)?;

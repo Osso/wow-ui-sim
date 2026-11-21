@@ -70,7 +70,7 @@ fn get_in_progress(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn get_complete(state: &mut LuaState) -> LuaResult<u32> {
-    let follower_type_id = read_follower_type(state, stack_val(state, 1), 1)?;
+    let follower_type_id = read_follower_type(stack_val(state, 1), 1)?;
     let missions = select_missions(state, follower_type_id, MissionListKind::Complete)?;
     let result = publish_missions(state, &missions)?;
     state.push(result);
@@ -89,19 +89,16 @@ fn get_missions(state: &mut LuaState, kind: MissionListKind) -> LuaResult<u32> {
 fn read_list_arguments(state: &LuaState) -> LuaResult<(Option<Val>, u32)> {
     let first = stack_val(state, 1);
     match first {
-        Val::Table(_) => Ok((
-            Some(first),
-            read_follower_type(state, stack_val(state, 2), 2)?,
-        )),
-        Val::Num(_) => Ok((None, read_follower_type(state, first, 1)?)),
-        Val::Nil => Ok((None, read_follower_type(state, stack_val(state, 2), 2)?)),
+        Val::Table(_) => Ok((Some(first), read_follower_type(stack_val(state, 2), 2)?)),
+        Val::Num(_) => Ok((None, read_follower_type(first, 1)?)),
+        Val::Nil => Ok((None, read_follower_type(stack_val(state, 2), 2)?)),
         _ => Err(runtime_error(
             "bad argument #1 (table, number or nil expected)",
         )),
     }
 }
 
-fn read_follower_type(state: &LuaState, value: Val, index: i32) -> LuaResult<u32> {
+fn read_follower_type(value: Val, index: i32) -> LuaResult<u32> {
     read_u32(value).ok_or_else(|| {
         runtime_error(format!(
             "bad argument #{index} (followerTypeID must be a number)"
@@ -353,7 +350,8 @@ fn read_field_string(
     table: GcRef<Table>,
     key: &'static str,
 ) -> LuaResult<String> {
-    val_to_string(state, field(state, table, key)).ok_or_else(|| invalid_field(key))
+    let value = field(state, table, key);
+    val_to_string(state, value).ok_or_else(|| invalid_field(key))
 }
 
 fn read_field_bool(
