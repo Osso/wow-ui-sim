@@ -32,23 +32,16 @@ fn show_progress_set(env: &WowLuaEnv, requirements: &str) {
 }
 
 fn assert_panel_text_and_money(env: &WowLuaEnv, expected: [&str; 5]) {
-    let shown: (String, String, String, String, String, String, String, bool, bool) = env
+    let shown: String = env
         .eval(
-            "return QuestProgressText:GetText(), QuestProgressItem1Name:GetText(), QuestProgressItem2Name:GetText(), QuestProgressItem3Name:GetText(), QuestProgressItem4Name:GetText(), QuestProgressRequiredMoneyFrame.GoldButton.Text:GetText(), QuestProgressRequiredMoneyFrame.SilverButton.Text:GetText(), QuestFrameProgressPanel:IsShown(), QuestProgressRequiredMoneyFrame:IsShown()",
+            "return table.concat({tostring(QuestProgressText:GetText()), tostring(QuestProgressItem1Name:GetText()), tostring(QuestProgressItem2Name:GetText()), tostring(QuestProgressItem3Name:GetText()), tostring(QuestProgressItem4Name:GetText()), tostring(QuestProgressRequiredMoneyFrame.GoldButton.Text:GetText()), tostring(QuestProgressRequiredMoneyFrame.SilverButton.Text:GetText()), tostring(QuestFrameProgressPanel:IsShown()), tostring(QuestProgressRequiredMoneyFrame:IsShown())}, '|')",
         )
         .unwrap();
-    assert_eq!(
-        [
-            shown.0.as_str(),
-            shown.1.as_str(),
-            shown.2.as_str(),
-            shown.3.as_str(),
-            shown.4.as_str(),
-        ],
-        expected
+    let expected = format!(
+        "{}|{}|{}|{}|{}|23|45|true|true",
+        expected[0], expected[1], expected[2], expected[3], expected[4]
     );
-    assert_eq!((&shown.5[..], &shown.6[..]), ("23", "45"));
-    assert!(shown.7 && shown.8);
+    assert_eq!(shown, expected);
 }
 
 fn assert_panel_rows(env: &WowLuaEnv, item_amount: i32, currency_name: &str, currency_amount: i32) {
