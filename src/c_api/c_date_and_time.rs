@@ -141,9 +141,13 @@ fn seconds_until_weekly_reset(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn seconds_until_daily_reset(state: &mut LuaState) -> LuaResult<u32> {
-    let sim = borrow_state(state)?;
-    let now = unix_timestamp(sim.calendar_now);
-    let hour = i64::from(sim.weekly_reset_schedule.hour);
+    let (now, hour) = {
+        let sim = borrow_state(state)?;
+        (
+            unix_timestamp(sim.calendar_now),
+            i64::from(sim.weekly_reset_schedule.hour),
+        )
+    };
     let day = now.div_euclid(SECONDS_PER_DAY);
     let reset = day * SECONDS_PER_DAY + hour * SECONDS_PER_HOUR;
     let next_reset = if reset > now {
