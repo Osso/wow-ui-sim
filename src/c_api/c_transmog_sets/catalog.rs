@@ -317,6 +317,7 @@ pub(super) fn is_base_set_collected(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+#[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
 pub(super) fn get_sources_for_slot(state: &mut LuaState) -> LuaResult<u32> {
     let set_id: i32 = crate::lua_bridge::FromStack::from_stack(state, 1)?;
     let slot: i32 = crate::lua_bridge::FromStack::from_stack(state, 2)?;
