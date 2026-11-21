@@ -25,28 +25,11 @@ fn content_tracking_defaults_are_empty_and_inactive() {
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 #[test]
-fn content_tracking_element_consumer_reflects_supplied_tracking_entries() {
+fn tracking_consumers_reflect_supplied_tracking_entries() {
     let env = consumer_env();
-    let loaded: bool = env
-        .eval("return C_AddOns.IsAddOnLoaded('Blizzard_ContentTracking')")
-        .expect("ContentTracking load state should be available");
-    assert!(
-        loaded,
-        "the selected ContentTracking consumer must be loaded"
-    );
-
-    let appearance_type: i32 = env
-        .eval("return Enum.ContentTrackingType.Appearance")
-        .expect("Appearance tracking type should be available");
-    env.state()
-        .borrow_mut()
-        .content_tracking
-        .tracked_ids_by_type
-        .insert(appearance_type as u32, vec![301, 302]);
-    env.state()
-        .borrow_mut()
-        .content_tracking
-        .collectable_source_tracking_enabled = true;
+    assert_tracking_consumers_loaded(&env);
+    assert!(collections_shows_disabled_prompt(&env));
+    seed_tracking_inputs(&env);
     env.exec("A_Admin.FireEvent('CONTENT_TRACKING_IS_ENABLED_UPDATE', true)")
         .expect("enable the selected content-tracking consumer");
 
@@ -59,6 +42,45 @@ fn content_tracking_element_consumer_reflects_supplied_tracking_entries() {
         enabled,
         "the C API must return the supplied capability state"
     );
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn assert_tracking_consumers_loaded(env: &WowLuaEnv) {
+    for addon in ["Blizzard_ContentTracking", "Blizzard_FrameXMLUtil"] {
+        let loaded: bool = env
+            .eval(&format!("return C_AddOns.IsAddOnLoaded({addon:?})"))
+            .expect("tracking consumer load state should be available");
+        assert!(loaded, "selected consumer addon {addon} must be loaded");
+    }
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn seed_tracking_inputs(env: &WowLuaEnv) {
+    let appearance_type: i32 = env
+        .eval("return Enum.ContentTrackingType.Appearance")
+        .expect("Appearance tracking type should be available");
+    env.state()
+        .borrow_mut()
+        .content_tracking
+        .tracked_ids_by_type
+        .insert(appearance_type as u32, vec![301, 302]);
+    env.state()
+        .borrow_mut()
+        .content_tracking
+        .collectable_source_tracking_enabled = true;
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn collections_shows_disabled_prompt(env: &WowLuaEnv) -> bool {
+    env.eval(
+        r#"
+        local tooltip = { lines = {} }
+        function tooltip:AddLine(text) table.insert(self.lines, text) end
+        CollectionWardrobeUtil.AddTrackingTooltipLine(tooltip, 301)
+        return tooltip.lines[1] == CONTENT_TRACKING_DISABLED_TOOLTIP_PROMPT
+        "#,
+    )
+    .expect("CollectionsUtil should show the disabled-tracking prompt")
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
@@ -87,12 +109,12 @@ fn consumer_tracking_states(env: &WowLuaEnv) -> (bool, bool, bool) {
         r#"
         local trackableType = Enum.ContentTrackingType.Appearance
         local function isShownFor(trackableID)
-            local checkmark = {}
-            function checkmark:SetShown(shown) self.shown = shown end
-            local element = { ContentTrackingCheckmark = checkmark }
-            ContentTrackingElementMixin.AddTrackable(element, trackableType, trackableID)
-            ContentTrackingElementMixin.UpdateTrackingCheckmark(element)
-            return checkmark.shown == true
+            local element = CreateFrame("Frame")
+            Mixin(element, ContentTrackingElementMixin)
+            element.ContentTrackingCheckmark = element:CreateTexture(nil, "OVERLAY")
+            element:AddTrackable(trackableType, trackableID)
+            element:UpdateTrackingCheckmark()
+            return element.ContentTrackingCheckmark:IsShown()
         end
         return isShownFor(301), isShownFor(302), isShownFor(303)
         "#,
