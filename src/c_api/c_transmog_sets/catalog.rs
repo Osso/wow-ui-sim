@@ -116,7 +116,8 @@ fn required_bool(state: &mut LuaState, row: Val, key: &str) -> LuaResult<bool> {
 }
 
 fn required_text(state: &mut LuaState, row: Val, key: &str) -> LuaResult<String> {
-    crate::lua_api::methods::val_to_string(state, table_get(state, row, key))
+    let value = table_get(state, row, key);
+    crate::lua_api::methods::val_to_string(state, value)
         .ok_or_else(|| rilua::runtime_error(format!("transmog set {key} must be a string")))
 }
 
