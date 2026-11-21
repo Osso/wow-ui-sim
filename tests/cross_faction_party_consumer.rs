@@ -4,6 +4,7 @@ fn assert_groupfinder_cross_faction_consumer(env: &wow_ui_sim::lua_api::WowLuaEn
     env.exec(
         r#"
         assert(type(RaidFinderFrameFindRaidButton_Update) == "function", "RaidFinder consumer is loaded")
+        assert(type(LFDQueueFrameFindGroupButton_Update) == "function", "LFD consumer is loaded")
         A_Admin.SetPlayerRace(0)
         A_Admin.SetPartySize(2)
         A_Admin.SetPartyMember(1, "Alliance One", 1, 80)
