@@ -9,8 +9,9 @@ use crate::c_api::helpers::{
     ensure_namespace, parse_numeric_string, read_untainted_signed32_argument,
 };
 use crate::client_profile::{ACTIVE, ClientProfile};
-use crate::lua_api::methods::{borrow_state, create_table, table_set_num};
-use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
+use crate::lua_api::methods::{borrow_state, borrow_state_mut, create_table, table_set_num};
+use crate::lua_api::script_helpers::fire_named_event_state;
+use crate::lua_bridge::{FromStack, TableBuilder, stack_val, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 
@@ -34,10 +35,53 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     // PTR 70493 and Forever 70707 ContentTrackingDocumentation.lua:151–163
     // declare GetTrackedIDs. Sharing the host list model is INFERRED.
     table_set_rust_fn_static(state, namespace, "GetTrackedIDs", get_tracked_ids)?;
-    if ACTIVE == ClientProfile::Retail {
+    if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever) {
+        table_set_rust_fn_static(
+            state,
+            namespace,
+            "GetCollectableSourceTrackingEnabled",
+            get_collectable_source_tracking_enabled,
+        )?;
         table_set_rust_fn_static(state, namespace, "IsTracking", is_tracking)?;
     }
     Ok(())
+}
+
+pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
+    if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever) {
+        builder.set_function(
+            "SetContentTrackingEnabled",
+            set_collectable_source_tracking_enabled,
+        )
+    } else {
+        Ok(builder)
+    }
+}
+
+fn get_collectable_source_tracking_enabled(state: &mut LuaState) -> LuaResult<u32> {
+    let enabled = borrow_state(state)?
+        .content_tracking
+        .collectable_source_tracking_enabled;
+    state.push(Val::Bool(enabled));
+    Ok(1)
+}
+
+fn set_collectable_source_tracking_enabled(state: &mut LuaState) -> LuaResult<u32> {
+    let enabled = bool::from_stack(state, 1)?;
+    let changed = {
+        let mut sim = borrow_state_mut(state)?;
+        let changed = sim.content_tracking.collectable_source_tracking_enabled != enabled;
+        sim.content_tracking.collectable_source_tracking_enabled = enabled;
+        changed
+    };
+    if changed {
+        fire_named_event_state(
+            state,
+            "CONTENT_TRACKING_IS_ENABLED_UPDATE",
+            &[Val::Bool(enabled)],
+        );
+    }
+    Ok(0)
 }
 
 /// The decoded Retail reader uses zero when Lua numeric conversion fails.

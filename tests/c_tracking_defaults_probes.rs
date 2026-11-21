@@ -30,8 +30,8 @@ fn tracking_consumers_reflect_supplied_tracking_entries() {
     assert_tracking_consumers_loaded(&env);
     assert!(collections_shows_disabled_prompt(&env));
     seed_tracking_inputs(&env);
-    env.exec("A_Admin.FireEvent('CONTENT_TRACKING_IS_ENABLED_UPDATE', true)")
-        .expect("enable the selected content-tracking consumer");
+    env.exec("A_Admin.SetContentTrackingEnabled(true)")
+        .expect("enable content tracking through the admin setter");
 
     let consumer_states = consumer_tracking_states(&env);
     let enabled: bool = env
@@ -64,10 +64,6 @@ fn seed_tracking_inputs(env: &WowLuaEnv) {
         .content_tracking
         .tracked_ids_by_type
         .insert(appearance_type as u32, vec![301, 302]);
-    env.state()
-        .borrow_mut()
-        .content_tracking
-        .collectable_source_tracking_enabled = true;
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
