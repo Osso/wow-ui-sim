@@ -288,6 +288,7 @@ pub(crate) fn register_map_prefix_tables(state: &mut LuaState) -> LuaResult<()> 
         crate::client_profile::ClientProfile::Retail
             | crate::client_profile::ClientProfile::WowForever
     ) {
+        super::c_contribution_collector::register(state)?;
         super::c_taxi_map::register(state)?;
     }
     Ok(())
