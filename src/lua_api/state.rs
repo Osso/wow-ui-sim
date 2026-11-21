@@ -524,6 +524,7 @@ macro_rules! build_empty_sim_state {
             wrath_unit_tap_states: HashMap::new(),
             current_target: $runtime.current_target,
             unit_target_guids: HashMap::new(),
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
             unit_threats: HashMap::new(),
             unit_guid_overrides: HashMap::new(),
             player_owned_or_controlled_unit_guids: HashSet::new(),

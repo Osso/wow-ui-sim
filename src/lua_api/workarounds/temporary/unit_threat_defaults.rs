@@ -39,11 +39,11 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
 }
 
 #[cfg(test)]
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 mod tests {
     use crate::lua_api::WowLuaEnv;
 
     #[test]
-    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     fn installs_unit_threat_defaults() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
 
