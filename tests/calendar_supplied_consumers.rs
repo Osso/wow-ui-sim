@@ -12,6 +12,13 @@ fn blizzard_ui_dir() -> PathBuf {
     default_blizzard_ui_addons_path().expect("Blizzard UI cache should be available")
 }
 
+fn load_calendar_addon(env: &WowLuaEnv) {
+    let addon_dir = blizzard_ui_dir().join("Blizzard_Calendar");
+    let toc = wow_ui_sim::loader::find_toc_file(&addon_dir)
+        .expect("Blizzard_Calendar TOC should resolve");
+    wow_ui_sim::loader::load_addon(&env.loader_env(), &toc).expect("Blizzard_Calendar should load");
+}
+
 fn load_full_game_ui() -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("Lua environment should initialize");
     env.set_screen_size(1024.0, 768.0);
@@ -55,6 +62,7 @@ fn club_calendar_tooltip_renders_only_in_range_events() {
 #[test]
 fn calendar_create_event_dropdown_renders_supplied_types() {
     let env = load_full_game_ui();
+    load_calendar_addon(&env);
     env.exec(
         r#"
         A_Admin.SetCalendarEventTypes('[{"displayString":"CALENDAR_TYPE_PVP","eventType":2},{"displayString":"CALENDAR_TYPE_MEETING","eventType":3}]')
