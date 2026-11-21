@@ -4,8 +4,8 @@ use crate::c_api::ensure_namespace;
 use crate::c_api::helpers::{bad_argument, parse_numeric_string, read_untainted_signed32_argument};
 use crate::lua_api::globals::spellbook_data;
 use crate::lua_api::methods::{
-    borrow_state, create_string, create_string_static, create_table, create_table_with_capacity,
-    frame_ref, table_set_num, table_set_static,
+    borrow_state, borrow_state_mut, create_string, create_string_static, create_table,
+    create_table_with_capacity, frame_ref, table_set_num, table_set_static,
 };
 use crate::lua_api::script_helpers::{
     call_error_handler_state, get_event_listeners, get_scripts_for_dispatch,
