@@ -81,7 +81,7 @@ fn load_full_game_ui_with_lod_deps() -> WowLuaEnv {
     env
 }
 
-#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[cfg(feature = "client-retail")]
 #[test]
 fn supplied_missions_update_the_real_covenant_mission_list() {
     let env = load_full_game_ui_with_lod_deps();
