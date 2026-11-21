@@ -260,6 +260,7 @@ impl QuestLogState {
                 glittering_geodes_entry(),
                 earthen_relic_recovery_entry(),
             ],
+            timers: Vec::new(),
             abandon_ready_ids: HashSet::new(),
             abandon_record_flags: HashMap::new(),
             abandon_classification_flags: HashMap::new(),
