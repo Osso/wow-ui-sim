@@ -575,21 +575,6 @@ fn item_targeting_defaults_are_not_c_api_temporary_shims() {
 }
 
 #[test]
-fn spell_target_defaults_are_not_c_api_temporary_shims() {
-    let temporary_shims = c_api_temporary_shims_source();
-    let registration = include_str!("../src/c_api/registration.rs");
-
-    assert!(
-        !temporary_shims.contains("c_spell_target"),
-        "unmodeled C_Spell target-spell metadata defaults belong in lua_api::workarounds::temporary"
-    );
-    assert!(
-        !registration.contains("c_spell_target"),
-        "C_Spell TargetSpell* defaults should not be wired through c_api registration"
-    );
-}
-
-#[test]
 fn merchant_and_raid_defaults_are_not_c_api_temporary_shims() {
     let temporary_shims = c_api_temporary_shims_source();
     let registration = include_str!("../src/c_api/registration.rs");

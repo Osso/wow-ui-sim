@@ -66,6 +66,7 @@ macro_rules! build_empty_sim_state {
         let quest_log_entries = QuestLogState::seeded();
         Self {
             store_glue: Default::default(),
+            pending_target_spell: Default::default(),
             loot_specialization: 0,
             loot_spec_window: None,
             pending_loot_specs: Vec::new(),

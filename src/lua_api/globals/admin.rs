@@ -87,6 +87,8 @@ pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
     let builder = TableBuilder::new(lua.state_mut());
     let builder = register_player(builder)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let builder = crate::c_api::target_spell::register_admin(builder)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     let builder = crate::c_api::secure_transfer::register_admin(builder)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     let builder = crate::c_api::c_pet_battles::register_admin(builder)?;

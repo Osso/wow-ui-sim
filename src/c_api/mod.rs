@@ -402,6 +402,7 @@ pub mod store_catalog_model;
 pub mod store_glue_model;
 pub mod store_guid;
 pub mod store_vas_model;
+pub(crate) mod target_spell;
 // The pinned TransmogItemsDocumentation.lua declares this model on Mists, Era,
 // Anniversary and Forever, in addition to the Retail API epochs.
 #[cfg(any(

@@ -57,6 +57,7 @@ fn register_gamepad_tables(state: &mut LuaState) -> LuaResult<()> {
 pub(crate) fn register_spell_and_widget_tables(state: &mut LuaState) -> LuaResult<()> {
     register_profile_spell_tables(state)?;
     c_spell::register_c_spell_surface(state)?;
+    super::target_spell::register(state)?;
     // INFERRED: R88ah's 70631 behavior applies to the 70268 declarations and enum.
     #[cfg(feature = "client-mists")]
     super::mists_r88ah::register_spell_visibility(state)?;
