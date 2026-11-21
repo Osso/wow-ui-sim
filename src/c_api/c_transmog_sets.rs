@@ -46,36 +46,14 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
     }
     let namespace = ensure_namespace(state, "C_TransmogSets")?;
     table_set_rust_fn_static(state, namespace, "GetVariantSets", catalog::get_variants)?;
-    table_set_rust_fn_static(state, namespace, "GetBaseSetID", catalog::get_base_set_id)?;
-    table_set_rust_fn_static(
-        state,
-        namespace,
-        "GetSetPrimaryAppearances",
-        catalog::get_primary_appearances,
-    )?;
-    table_set_rust_fn_static(state, namespace, "GetBaseSets", catalog::get_base_sets)?;
-    table_set_rust_fn_static(state, namespace, "GetAllSets", catalog::get_all_sets)?;
-    table_set_rust_fn_static(state, namespace, "GetUsableSets", catalog::get_usable_sets)?;
-    table_set_rust_fn_static(
-        state,
-        namespace,
-        "IsBaseSetCollected",
-        catalog::is_base_set_collected,
-    )?;
-    #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
-    table_set_rust_fn_static(
-        state,
-        namespace,
-        "GetSourcesForSlot",
-        catalog::get_sources_for_slot,
-    )?;
-    let transmog = ensure_namespace(state, "C_Transmog")?;
-    table_set_rust_fn_static(
-        state,
-        transmog,
-        "GetAllSetAppearancesByID",
-        catalog::get_all_set_appearances,
-    )?;
+    // PTR is deferred: it keeps the temporary Lua relation defaults.
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
+        register_relation_queries(state, namespace)?;
+    }
     table_set_rust_fn_static(state, namespace, "GetAvailableSets", catalog::get_available)?;
     table_set_rust_fn_static(state, namespace, "GetSetsFilter", get_sets_filter)?;
     table_set_rust_fn_static(state, namespace, "SetSetsFilter", set_sets_filter)?;
@@ -134,4 +112,42 @@ fn set_sets_filter(state: &mut LuaState) -> LuaResult<u32> {
         .transmog_set_filters
         .insert(index, value);
     Ok(0)
+}
+
+/// INFERRED (R88cs): Retail/Forever set-relation queries backed by the supplied catalog.
+fn register_relation_queries(
+    state: &mut LuaState,
+    namespace: rilua::vm::gc::arena::GcRef<rilua::vm::table::Table>,
+) -> LuaResult<()> {
+    table_set_rust_fn_static(state, namespace, "GetBaseSetID", catalog::get_base_set_id)?;
+    table_set_rust_fn_static(
+        state,
+        namespace,
+        "GetSetPrimaryAppearances",
+        catalog::get_primary_appearances,
+    )?;
+    table_set_rust_fn_static(state, namespace, "GetBaseSets", catalog::get_base_sets)?;
+    table_set_rust_fn_static(state, namespace, "GetAllSets", catalog::get_all_sets)?;
+    table_set_rust_fn_static(state, namespace, "GetUsableSets", catalog::get_usable_sets)?;
+    table_set_rust_fn_static(
+        state,
+        namespace,
+        "IsBaseSetCollected",
+        catalog::is_base_set_collected,
+    )?;
+    #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
+    table_set_rust_fn_static(
+        state,
+        namespace,
+        "GetSourcesForSlot",
+        catalog::get_sources_for_slot,
+    )?;
+    let transmog = ensure_namespace(state, "C_Transmog")?;
+    table_set_rust_fn_static(
+        state,
+        transmog,
+        "GetAllSetAppearancesByID",
+        catalog::get_all_set_appearances,
+    )?;
+    Ok(())
 }
