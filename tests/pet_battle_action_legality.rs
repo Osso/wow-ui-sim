@@ -31,31 +31,27 @@ fn blizzard_pet_battle_ui_action_buttons_follow_supplied_turn_legality() {
     env.exec("A_Admin.SetPetBattleState(1)").unwrap();
     env.exec("A_Admin.SetPetBattleActionLegality(true, false, true, false)")
         .unwrap();
-    env.exec(
+    let first: String = env.eval(
         r#"
         local selection = PetBattleFrame.BottomFrame.PetSelectionFrame
         PetBattlePetSelectionFrame_Show(selection)
         local skip = PetBattleFrame.BottomFrame.TurnTimer.SkipButton
         PetBattleActionButton_UpdateState(skip)
-        assert(selection.Pet1:IsEnabled())
-        assert(not selection.Pet2:IsEnabled())
-        assert(skip:IsEnabled() == false)
+        return tostring(selection.Pet1:IsEnabled()) .. "," .. tostring(selection.Pet2:IsEnabled()) .. "," .. tostring(skip:IsEnabled())
         "#,
-    )
-    .unwrap();
+    ).unwrap();
+    assert_eq!(first, "true,false,false");
 
     env.exec("A_Admin.SetPetBattleActionLegality(false, true, false, true)")
         .unwrap();
-    env.exec(
+    let second: String = env.eval(
         r#"
         local selection = PetBattleFrame.BottomFrame.PetSelectionFrame
         PetBattlePetSelectionFrame_Show(selection)
         local skip = PetBattleFrame.BottomFrame.TurnTimer.SkipButton
         PetBattleActionButton_UpdateState(skip)
-        assert(not selection.Pet1:IsEnabled())
-        assert(selection.Pet2:IsEnabled())
-        assert(skip:IsEnabled())
+        return tostring(selection.Pet1:IsEnabled()) .. "," .. tostring(selection.Pet2:IsEnabled()) .. "," .. tostring(skip:IsEnabled())
         "#,
-    )
-    .unwrap();
+    ).unwrap();
+    assert_eq!(second, "false,true,true");
 }
