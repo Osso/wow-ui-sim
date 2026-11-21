@@ -183,6 +183,8 @@ fn register_frame_foundation_globals(lua: &mut rilua::Lua) -> crate::Result<()> 
     super::real::game_clock::register_all(lua)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     super::real::world_presence::register_all(lua)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    super::real::quest_objective_info::register_all(lua)?;
     #[cfg(feature = "client-retail")]
     super::real::bnet_friend_index::register_all(lua)?;
     super::real::template_queries::register_all(lua)?;
