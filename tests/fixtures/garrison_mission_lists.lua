@@ -20,11 +20,21 @@ A_Admin.SetGarrisonMissions({
         inProgress = true,
         completed = false,
     },
+    {
+        missionID = 900003,
+        name = "Supplied completed mission",
+        followerTypeID = followerTypeID,
+        level = 82,
+        durationSeconds = 10800,
+        rewards = {},
+        inProgress = false,
+        completed = true,
+    },
 })
 
 local list = CovenantMissionFrame.MissionTab.MissionList
 list:UpdateMissions()
-return #list.availableMissions,
-    #list.inProgressMissions,
-    list.availableMissions[1].missionID,
-    list.inProgressMissions[1].missionID
+return #list.combinedMissions,
+    list.combinedMissions[1].missionID,
+    list.combinedMissions[2].missionID,
+    list.combinedMissions[3].missionID
