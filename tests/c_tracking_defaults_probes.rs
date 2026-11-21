@@ -4,7 +4,7 @@ fn env() -> WowLuaEnv {
     WowLuaEnv::new().expect("Failed to create Lua environment")
 }
 
-#[cfg(feature = "client-retail")]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 #[test]
 fn content_tracking_defaults_are_empty_and_inactive() {
     let env = env();
@@ -20,6 +20,58 @@ fn content_tracking_defaults_are_empty_and_inactive() {
         .expect("content tracking defaults should be callable");
 
     assert_eq!(result, "ok");
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn collection_wardrobe_consumer_reflects_supplied_tracking_entries() {
+    let env = env();
+    let loaded: bool = env
+        .eval("return C_AddOns.IsAddOnLoaded('Blizzard_FrameXMLUtil')")
+        .expect("FrameXMLUtil load state should be available");
+    assert!(
+        loaded,
+        "the selected CollectionsUtil consumer must be loaded"
+    );
+
+    let appearance_type: u32 = env
+        .eval("return Enum.ContentTrackingType.Appearance")
+        .expect("Appearance tracking type should be available");
+    env.state()
+        .borrow_mut()
+        .content_tracking
+        .tracked_ids_by_type
+        .insert(appearance_type, vec![301, 302]);
+    env.exec("A_Admin.SetContentTrackingEnabled(true)")
+        .expect("enable content tracking through the admin model setter");
+
+    assert_eq!(consumer_tracking_states(&env), (true, true, false));
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn consumer_tracking_states(env: &WowLuaEnv) -> (bool, bool, bool) {
+    env.eval(
+        r#"
+        local tooltip = { lines = {} }
+        function tooltip:SetText() end
+        function tooltip:AddDoubleLine(left) table.insert(self.lines, left) end
+        function tooltip:AddLine() end
+        function tooltip:Show() end
+        CollectionWardrobeUtil.SetAppearanceTooltip(tooltip, {
+            sources = {
+                { sourceID = 301, visualID = 900, isCollected = false },
+                { sourceID = 302, visualID = 900, isCollected = false },
+                { sourceID = 303, visualID = 900, isCollected = false },
+            },
+            primarySourceID = 301,
+            showTrackingInfo = true,
+        })
+        return tooltip.lines[1]:find("checkmark%-minimal") ~= nil,
+               tooltip.lines[2]:find("checkmark%-minimal") ~= nil,
+               tooltip.lines[3]:find("checkmark%-minimal") ~= nil
+        "#,
+    )
+    .expect("CollectionsUtil should render the supplied tracked state")
 }
 
 post_wrath_ui_fixture! {
