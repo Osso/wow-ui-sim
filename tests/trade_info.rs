@@ -16,6 +16,7 @@ const MONEY_CONSUMER_CASE: &str = r#"
     A_Admin.SetMoney(1000)
     InitiateTrade('Partner')
     C_TradeInfo.SetTradeMoney(100)
+    assert(type(GetMoneyTypeInfoField) == 'function')
     local pickup = GetMoneyTypeInfoField('PLAYER_TRADE', 'PickupFunc')
     pickup({}, 25)
     assert(GetPlayerTradeMoney() == 75)
