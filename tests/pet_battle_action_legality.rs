@@ -30,7 +30,9 @@ fn blizzard_pet_battle_ui_action_buttons_follow_supplied_turn_legality() {
     assert!(loaded, "Blizzard_PetBattleUI must be selected for this profile");
     env.exec("A_Admin.SetPetBattleCounts(3, 2); A_Admin.SetPetBattleState(1)")
         .unwrap();
-    env.exec("A_Admin.SetPetBattleActionLegality(false, false, false, false)")
+    env.exec("assert(Enum.BattlePetOwner.Ally == 1 and Enum.BattlePetOwner.Enemy == 2)")
+        .unwrap();
+    env.exec("A_Admin.SetPetBattleActionLegality(false, false, false, false, false)")
         .unwrap();
     let first: String = env.eval(
         r#"
@@ -43,7 +45,7 @@ fn blizzard_pet_battle_ui_action_buttons_follow_supplied_turn_legality() {
     ).unwrap();
     assert_eq!(first, "false,false");
 
-    env.exec("A_Admin.SetPetBattleActionLegality(true, false, false, true)")
+    env.exec("A_Admin.SetPetBattleActionLegality(true, false, false, true, true)")
         .unwrap();
     let second: String = env.eval(
         r#"

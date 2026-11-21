@@ -33,6 +33,12 @@ pub(crate) fn register_c_pet_battles_surface(state: &mut LuaState) -> LuaResult<
             | crate::client_profile::ClientProfile::WowForever
     ) {
         table_set_rust_fn_static(state, namespace, "CanPetSwapIn", can_pet_swap_in)?;
+        table_set_rust_fn_static(
+            state,
+            namespace,
+            "CanActivePetSwapOut",
+            can_active_pet_swap_out,
+        )?;
         table_set_rust_fn_static(state, namespace, "IsSkipAvailable", is_skip_available)?;
     }
     Ok(())
@@ -49,6 +55,13 @@ fn can_pet_swap_in(state: &mut LuaState) -> LuaResult<u32> {
         false
     };
     state.push(Val::Bool(can_swap));
+    Ok(1)
+}
+
+// INFERRED (R88cl): the UI combines this turn permission with per-slot legality.
+fn can_active_pet_swap_out(state: &mut LuaState) -> LuaResult<u32> {
+    let can_swap_out = borrow_state(state)?.pet_battles.can_active_pet_swap_out;
+    state.push(Val::Bool(can_swap_out));
     Ok(1)
 }
 
@@ -78,9 +91,11 @@ fn set_action_legality(state: &mut LuaState) -> LuaResult<u32> {
         bool_arg(state, 2)?,
         bool_arg(state, 3)?,
     ];
-    let skip_available = bool_arg(state, 4)?;
+    let can_swap_out = bool_arg(state, 4)?;
+    let skip_available = bool_arg(state, 5)?;
     let mut sim = borrow_state_mut(state)?;
     sim.pet_battles.can_swap_in = legality;
+    sim.pet_battles.can_active_pet_swap_out = can_swap_out;
     sim.pet_battles.skip_available = skip_available;
     Ok(0)
 }
