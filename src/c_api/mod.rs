@@ -377,6 +377,7 @@ pub mod c_tooltip_info_pvp_talent;
 pub(crate) mod c_tooltip_info_socketed_relic;
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) mod c_tooltip_info_spell_mount;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub(crate) mod c_trade_info;
 pub(crate) mod c_trade_skill_cooldown;
 pub mod c_trade_skill_crafting_ui;
