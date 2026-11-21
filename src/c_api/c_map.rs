@@ -509,6 +509,7 @@ fn map_info_source(
     Some(MapInfoSource::UiMap { ui_map_id, info })
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub(crate) fn map_type_for_ui_map_id(
     maps: &std::collections::HashMap<i32, MapData>,
     ui_map_id: i32,
