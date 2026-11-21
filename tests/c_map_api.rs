@@ -1631,6 +1631,20 @@ fn test_should_map_show_taxi_nodes() {
     assert!(val);
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn test_should_map_show_taxi_nodes_uses_map_type() {
+    let env = env();
+    let observed: (bool, bool, bool) = env
+        .eval(
+            "return C_Map.GetMapInfo(1).mapType == Enum.UIMapType.Zone, \
+                    C_TaxiMap.ShouldMapShowTaxiNodes(1), \
+                    C_TaxiMap.ShouldMapShowTaxiNodes(9999)",
+        )
+        .unwrap();
+    assert_eq!(observed, (true, true, false));
+}
+
 #[test]
 fn test_is_visible_ignores_alpha() {
     // Reproduces the world map blank canvas bug:

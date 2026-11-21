@@ -1,5 +1,5 @@
-//! INFERRED (R88cp): taxi-map queries return supplied nodes for the requested UI map.
-//! `ShouldMapShowTaxiNodes` is true when the simulator has at least one node for that map.
+//! INFERRED (R88cp): taxi-node queries filter supplied nodes by UI map ID.
+//! `ShouldMapShowTaxiNodes` is true for Continent and Zone map types in the existing map-info catalog.
 
 use crate::c_api::helpers::{ensure_namespace, set_table_array};
 use crate::lua_api::methods::{
@@ -13,6 +13,8 @@ use rilua::vm::table::Table;
 use rilua::{LuaResult, Val, runtime_error};
 
 const SET_NODES_ERROR: &str = "A_Admin.SetTaxiMapNodes: expected an array of node tables";
+const UI_MAP_TYPE_CONTINENT: i32 = 2;
+const UI_MAP_TYPE_ZONE: i32 = 3;
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct TaxiMapNode {
@@ -85,11 +87,10 @@ fn get_taxi_nodes_for_map(state: &mut LuaState) -> LuaResult<u32> {
 
 fn should_map_show_nodes(state: &mut LuaState) -> LuaResult<u32> {
     let map_id = i32::from_stack(state, 1)?;
-    let should_show = borrow_state(state)?
-        .taxi_map
-        .nodes
-        .iter()
-        .any(|node| node.map_id == map_id);
+    let sim_state = borrow_state(state)?;
+    let map_type = crate::c_api::c_map::map_type_for_ui_map_id(&sim_state.maps, map_id);
+    let should_show = map_type
+        .is_some_and(|map_type| matches!(map_type, UI_MAP_TYPE_CONTINENT | UI_MAP_TYPE_ZONE));
     state.push(Val::Bool(should_show));
     Ok(1)
 }

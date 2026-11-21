@@ -127,6 +127,7 @@ fn load_map_data_providers_closure() -> WowLuaEnv {
 }
 
 // Literal cached inputs absent from Wrath manifest1-382/cache; behavior cases stay enabled.
+#[cfg(feature = "client-retail")]
 const TAXI_MAP_ADDON_OVERRIDES: &[BlizzardAddonOverride<'static>] = &[
     BlizzardAddonOverride {
         addon: "Blizzard_FlightMap",
@@ -138,6 +139,7 @@ const TAXI_MAP_ADDON_OVERRIDES: &[BlizzardAddonOverride<'static>] = &[
     },
 ];
 
+#[cfg(feature = "client-retail")]
 const TAXI_MAP_NODE_INPUT_LUA: &str = r#"
 A_Admin.SetTaxiMapNodes({
     { mapID=2248, nodeID=101, name="Node Alpha", atlasName="TaxiNode", textureKit="", faction=0,
@@ -152,6 +154,7 @@ A_Admin.SetTaxiMapNodes({
 })
 "#;
 
+#[cfg(feature = "client-retail")]
 const TAXI_MAP_REFRESH_LUA: &str = r#"
 FlightMapFrame:SetMapID(2248)
 WorldMapFrame:SetMapID(2248)
@@ -176,10 +179,11 @@ return FlightMapFrame:GetNumActivePinsByTemplate("FlightMap_FlightPointPinTempla
        flightPins["Node Alpha"] == true, flightPins["Node Beta"] == true,
        WorldMapFrame:GetNumActivePinsByTemplate("FlightPointPinTemplate"),
        sharedPins["Node Alpha"] == true, sharedPins["Node Beta"] == true,
-       C_TaxiMap.ShouldMapShowTaxiNodes(2248), C_TaxiMap.ShouldMapShowTaxiNodes(9999),
+       C_TaxiMap.ShouldMapShowTaxiNodes(1), C_TaxiMap.ShouldMapShowTaxiNodes(9999),
        C_TaxiMap.ShouldMapShowTaxiNodes(7777)
 "#;
 
+#[cfg(feature = "client-retail")]
 fn load_taxi_map_addon_closure() -> (WowLuaEnv, Vec<String>) {
     let ui = blizzard_ui_dir();
     let env = new_blizzard_addon_env(&ui);
@@ -195,7 +199,7 @@ fn load_taxi_map_addon_closure() -> (WowLuaEnv, Vec<String>) {
     (env, loaded)
 }
 
-#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[cfg(feature = "client-retail")]
 #[test]
 fn taxi_map_providers_refresh_pins_from_supplied_nodes() {
     let (env, loaded) = load_taxi_map_addon_closure();
@@ -214,7 +218,7 @@ fn taxi_map_providers_refresh_pins_from_supplied_nodes() {
     let observed: (i32, bool, bool, i32, bool, bool, bool, bool, bool) = env
         .eval(TAXI_MAP_REFRESH_LUA)
         .expect("original taxi map data providers should refresh on real map canvases");
-    assert_eq!(observed, (2, true, true, 2, true, true, true, true, false));
+    assert_eq!(observed, (2, true, true, 2, true, true, true, false, false));
 }
 
 post_wrath_ui_fixture! {

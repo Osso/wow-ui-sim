@@ -509,6 +509,13 @@ fn map_info_source(
     Some(MapInfoSource::UiMap { ui_map_id, info })
 }
 
+pub(crate) fn map_type_for_ui_map_id(
+    maps: &std::collections::HashMap<i32, MapData>,
+    ui_map_id: i32,
+) -> Option<i32> {
+    map_info_source(maps, ui_map_id).map(|info| info.map_type())
+}
+
 type MapChildrenByParent = std::collections::HashMap<i32, Vec<i32>>;
 
 fn insert_map_child(children: &mut MapChildrenByParent, parent_id: i32, child_id: i32) {
