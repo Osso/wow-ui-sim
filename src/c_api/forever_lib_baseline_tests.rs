@@ -142,7 +142,7 @@ fn group_buffs_publish_six_supplied_fields_and_fresh_snapshots() {
     env.state().borrow_mut().cooldown_viewer_group_buffs = vec![
         GroupBuffItem {
             spell_id: 91,
-            display_spell_id: 92,
+            display_spell_id: Some(92),
             name: "Copper".into(),
             icon_id: 123,
             flags: 1,
@@ -150,7 +150,7 @@ fn group_buffs_publish_six_supplied_fields_and_fresh_snapshots() {
         },
         GroupBuffItem {
             spell_id: 305,
-            display_spell_id: 306,
+            display_spell_id: Some(306),
             name: "Silver".into(),
             icon_id: 456,
             flags: 2,
