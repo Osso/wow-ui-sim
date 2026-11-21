@@ -6,6 +6,66 @@ use rilua::{LuaResult, Val};
 
 pub(crate) use crate::c_api::quest_readiness::{complete_quest, is_quest_completable};
 
+pub(crate) fn get_progress_money(state: &mut LuaState) -> LuaResult<u32> {
+    let money = crate::c_api::quest_objectives::progress_requirements_for_active_dialog(
+        &borrow_state(state)?,
+    )
+    .map(|requirements| requirements.money)
+    .unwrap_or(0);
+    state.push(Val::Num(f64::from(money)));
+    Ok(1)
+}
+
+pub(crate) fn get_progress_item_count(state: &mut LuaState) -> LuaResult<u32> {
+    let count = crate::c_api::quest_objectives::progress_requirements_for_active_dialog(
+        &borrow_state(state)?,
+    )
+    .map(|requirements| requirements.items.len())
+    .unwrap_or(0);
+    state.push(Val::Num(count as f64));
+    Ok(1)
+}
+
+pub(crate) fn get_progress_currency_count(state: &mut LuaState) -> LuaResult<u32> {
+    let count = crate::c_api::quest_objectives::progress_requirements_for_active_dialog(
+        &borrow_state(state)?,
+    )
+    .map(|requirements| requirements.currencies.len())
+    .unwrap_or(0);
+    state.push(Val::Num(count as f64));
+    Ok(1)
+}
+
+pub(crate) fn get_progress_text(state: &mut LuaState) -> LuaResult<u32> {
+    let text = crate::c_api::quest_objectives::progress_requirements_for_active_dialog(
+        &borrow_state(state)?,
+    )
+    .map(|requirements| requirements.text.as_str())
+    .unwrap_or("");
+    let text = create_string(state, text);
+    state.push(text);
+    Ok(1)
+}
+
+pub(crate) fn get_progress_portrait(state: &mut LuaState) -> LuaResult<u32> {
+    let portrait = {
+        let sim = borrow_state(state)?;
+        crate::c_api::quest_objectives::progress_requirements_for_active_dialog(&sim)
+            .map(|value| {
+                (
+                    value.portrait_display_id,
+                    value.portrait_name.clone(),
+                    value.portrait_text.clone(),
+                )
+            })
+            .unwrap_or_default()
+    };
+    state.push(Val::Num(f64::from(portrait.0)));
+    state.push(create_string(state, &portrait.1));
+    state.push(create_string(state, &portrait.2));
+    Ok(3)
+}
+
 pub(crate) fn add_auto_quest_popup(state: &mut LuaState) -> LuaResult<u32> {
     let id = i32::from_stack(state, 1)?;
     let kind = String::from_stack(state, 2)?;

@@ -92,6 +92,11 @@ pub const TASK_QUEST_METHODS: &[(&str, SurfaceFn)] = &[
 
 const LIVE_QUEST_GLOBALS: &[(&str, SurfaceFn)] = &[
     ("GetQuestBackgroundMaterial", get_quest_background_material),
+    ("GetQuestMoneyToGet", get_progress_money),
+    ("GetNumQuestItems", get_progress_item_count),
+    ("GetNumQuestCurrencies", get_progress_currency_count),
+    ("GetProgressText", get_progress_text),
+    ("GetQuestPortraitTurnIn", get_progress_portrait),
     ("GetTasksTable", build_tasks_table),
     ("GetTaskInfo", get_task_info),
     ("IsQuestCompletable", is_quest_completable),

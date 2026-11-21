@@ -151,6 +151,9 @@ pub struct QuestLogState {
     #[cfg(feature = "client-wrath")]
     pub manual_watch_ids: Vec<i32>,
     pub objective_progress: HashMap<i32, QuestObjectiveProgress>,
+    /// Explicit turn-in requirements, keyed by active quest ID.
+    pub progress_requirements:
+        HashMap<i32, crate::c_api::quest_objectives::QuestProgressRequirements>,
     /// Explicit quest-dialog materials; absence leaves the original UI default.
     pub background_materials: HashMap<i32, String>,
     pub readiness: crate::c_api::quest_readiness::QuestReadinessState,
@@ -193,6 +196,7 @@ impl QuestLogState {
             return false;
         }
         self.objective_progress.remove(&quest_id);
+        self.progress_requirements.remove(&quest_id);
         self.background_materials.remove(&quest_id);
         self.readiness.remove_quest(quest_id);
         self.offer.major_faction_rewards.remove(&quest_id);
@@ -212,6 +216,7 @@ impl QuestLogState {
         }
         self.entries.retain(|entry| entry.quest_id != quest_id);
         self.objective_progress.remove(&quest_id);
+        self.progress_requirements.remove(&quest_id);
         self.background_materials.remove(&quest_id);
         self.readiness.remove_quest(quest_id);
         self.offer.major_faction_rewards.remove(&quest_id);

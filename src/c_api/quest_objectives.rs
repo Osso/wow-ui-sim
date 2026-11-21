@@ -33,6 +33,85 @@ pub struct QuestObjectiveProgress {
     pub declared_objective_count: Option<i32>,
 }
 
+/// Supplied item row for the original quest-giver progress panel.
+#[derive(Debug, Clone, PartialEq)]
+pub struct QuestProgressItem {
+    pub name: String,
+    pub texture: String,
+    pub required_amount: i32,
+}
+
+/// Supplied currency row for the original quest-giver progress panel.
+#[derive(Debug, Clone, PartialEq)]
+pub struct QuestProgressCurrency {
+    pub currency_id: i32,
+    pub name: String,
+    pub texture: i32,
+    pub quality: i32,
+    pub required_amount: i32,
+}
+
+/// Inputs read by Blizzard's original quest-giver progress and turn-in panels.
+#[derive(Debug, Clone, Default, PartialEq)]
+pub struct QuestProgressRequirements {
+    pub money: i32,
+    pub items: Vec<QuestProgressItem>,
+    pub currencies: Vec<QuestProgressCurrency>,
+    pub text: String,
+    pub portrait_display_id: i32,
+    pub portrait_name: String,
+    pub portrait_text: String,
+}
+
+pub fn valid_progress_requirements(requirements: &QuestProgressRequirements) -> bool {
+    requirements.money >= 0
+        && requirements.portrait_display_id >= 0
+        && requirements
+            .items
+            .iter()
+            .all(|item| item.required_amount > 0)
+        && requirements.currencies.iter().all(|currency| {
+            currency.currency_id > 0
+                && currency.texture > 0
+                && currency.quality >= 0
+                && currency.required_amount > 0
+        })
+}
+
+pub fn commit_progress_requirements(
+    log: &mut QuestLogState,
+    quest_id: i32,
+    requirements: QuestProgressRequirements,
+) -> bool {
+    let active = quest_id > 0 && log.entries.iter().any(|entry| entry.quest_id == quest_id);
+    if !active || !valid_progress_requirements(&requirements) {
+        return false;
+    }
+    if log.progress_requirements.get(&quest_id) == Some(&requirements) {
+        return false;
+    }
+    log.progress_requirements.insert(quest_id, requirements);
+    true
+}
+
+pub fn progress_requirements_for_active_dialog(
+    sim: &crate::lua_api::SimState,
+) -> Option<&QuestProgressRequirements> {
+    let (quest_id, phase) = sim.quest_log_entries.readiness.dialog?;
+    if phase != crate::c_api::quest_readiness::QuestDialogPhase::Progress {
+        return None;
+    }
+    let selected = sim
+        .selected_quest_log_id
+        .and_then(|id| i32::try_from(id).ok());
+    if selected != Some(quest_id)
+        || !crate::c_api::quest_readiness::has_active_npc_quest(sim, quest_id)
+    {
+        return None;
+    }
+    sim.quest_log_entries.progress_requirements.get(&quest_id)
+}
+
 pub fn objectives_for_quest(log: &QuestLogState, quest_id: i32) -> &[QuestObjective] {
     log.objective_progress
         .get(&quest_id)

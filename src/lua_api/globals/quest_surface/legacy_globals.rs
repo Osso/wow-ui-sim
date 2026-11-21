@@ -231,10 +231,31 @@ pub fn get_num_quest_rewards(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+fn get_required_progress_item_info(state: &mut LuaState, index: usize) -> LuaResult<u32> {
+    let item = crate::c_api::quest_objectives::progress_requirements_for_active_dialog(
+        &borrow_state(state)?,
+    )
+    .and_then(|requirements| requirements.items.get(index - 1))
+    .cloned();
+    let Some(item) = item else {
+        return Ok(0);
+    };
+    state.push(create_string(state, &item.name));
+    state.push(create_string(state, &item.texture));
+    state.push(Val::Num(f64::from(item.required_amount)));
+    Ok(3)
+}
+
 pub fn get_quest_item_info(state: &mut LuaState) -> LuaResult<u32> {
     let reward_type = Option::<String>::from_stack(state, 1)?.unwrap_or_default();
     let reward_index = Option::<f64>::from_stack(state, 2)?.unwrap_or(0.0) as usize;
-    if reward_type != "reward" || reward_index == 0 {
+    if reward_index == 0 {
+        return Ok(0);
+    }
+    if reward_type == "required" && quest_objectives::ENABLED {
+        return get_required_progress_item_info(state, reward_index);
+    }
+    if reward_type != "reward" {
         return Ok(0);
     }
     let quest_id = selected_quest_id(state)?;
