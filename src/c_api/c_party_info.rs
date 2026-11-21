@@ -9,9 +9,11 @@
 
 use crate::c_api::helpers::{ensure_namespace, set_table_array};
 use crate::lua_api::globals::group_queries::active_party_count;
-use crate::lua_api::methods::create_table;
+#[cfg(any(not(feature = "retail-12-0-7"), feature = "client-retail"))]
+use crate::lua_api::methods::borrow_state;
 #[cfg(not(feature = "retail-12-0-7"))]
-use crate::lua_api::methods::{borrow_state, borrow_state_mut};
+use crate::lua_api::methods::borrow_state_mut;
+use crate::lua_api::methods::create_table;
 #[cfg(not(feature = "retail-12-0-7"))]
 use crate::lua_api::state::SEEDED_LOCAL_CHARACTER_GUID;
 use crate::lua_bridge::FromStack;
