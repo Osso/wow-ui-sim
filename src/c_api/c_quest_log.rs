@@ -83,7 +83,7 @@ fn read_quest_timers(
 
 #[cfg(feature = "client-wowforever")]
 fn read_quest_timer(
-    state: &LuaState,
+    state: &mut LuaState,
     array: rilua::vm::gc::arena::GcRef<rilua::vm::table::Table>,
     index: usize,
     supplied_at: Duration,
@@ -108,7 +108,7 @@ fn read_quest_timer(
 
 #[cfg(feature = "client-wowforever")]
 fn read_timer_integer(
-    state: &LuaState,
+    state: &mut LuaState,
     record: rilua::vm::gc::arena::GcRef<rilua::vm::table::Table>,
     field: &str,
 ) -> LuaResult<i32> {
@@ -124,7 +124,7 @@ fn read_timer_integer(
 
 #[cfg(feature = "client-wowforever")]
 fn read_timer_seconds(
-    state: &LuaState,
+    state: &mut LuaState,
     record: rilua::vm::gc::arena::GcRef<rilua::vm::table::Table>,
 ) -> LuaResult<f64> {
     let Val::Num(seconds) = table_get(state, Val::Table(record), "questTimer") else {
