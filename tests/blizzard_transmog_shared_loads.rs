@@ -717,7 +717,7 @@ fn wardrobe_sets_provider_reads_supplied_base_and_variant_relations() {
                 validForCharacter = true,
                 primaryAppearances = {
                     { appearanceID = 8101, collected = true },
-                    { appearanceID = 8102, collected = false },
+                    { appearanceID = 8102, collected = true },
                 },
             },
             {
@@ -727,7 +727,7 @@ fn wardrobe_sets_provider_reads_supplied_base_and_variant_relations() {
                 collected = true,
                 validForCharacter = true,
                 primaryAppearances = {
-                    { appearanceID = 8201, collected = false },
+                    { appearanceID = 8201, collected = true },
                     { appearanceID = 8202, collected = true },
                 },
             },
@@ -746,10 +746,14 @@ fn wardrobe_sets_provider_reads_supplied_base_and_variant_relations() {
             if #usableSets ~= 2 then return "usable_sets" end
             local baseCollected, baseTotal = provider:GetSetSourceCounts(9101)
             local variantCollected, variantTotal = provider:GetSetSourceCounts(9102)
-            if baseCollected ~= 1 or baseTotal ~= 2 then return "base_sources" end
-            if variantCollected ~= 1 or variantTotal ~= 2 then return "variant_sources" end
+            if baseCollected ~= 2 or baseTotal ~= 2 then return "base_sources" end
+            if variantCollected ~= 2 or variantTotal ~= 2 then return "variant_sources" end
+            local baseAppearances = provider:GetSetSourceData(9101).primaryAppearances
+            local variantAppearances = provider:GetSetSourceData(9102).primaryAppearances
+            if baseAppearances[1].appearanceID ~= 8101 then return "base_appearance" end
+            if variantAppearances[1].appearanceID ~= 8201 then return "variant_appearance" end
             local baseData = provider:GetBaseSetData(9101)
-            if baseData.topCollected ~= 1 or baseData.topTotal ~= 2 then return "base_data" end
+            if baseData.topCollected ~= 2 or baseData.topTotal ~= 2 then return "base_data" end
             if provider:GetBaseSetData(9102) ~= nil then return "variant_base_data" end
             return "ok"
             "#,
