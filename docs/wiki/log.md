@@ -1,3 +1,7 @@
+## [2026-11-20] implementation | Trilinear mipmapped RGBA GPU atlas
+
+Added per-cell RGBA mip chains down to 1×1 and cell-clamped trilinear sampling to reduce aliasing on downscaled icons. Generated mips retain premultiplied RGB through filtering to avoid dark fringes at transparent edges; mip 0 retains straight alpha for magnification. See [rendering pipeline](systems/rendering-pipeline.md).
+
 ## [2026-11-20] implementation | Secure XML mixin environment
 
 Updated [addon loading](../systems/addon-loading.md#secure-dependency-replay-and-library-allowlist). Retail's original PrivateAura OnEnter failed because secure XML resolved a stale public `GameTooltipDataMixin` without its late-added accessor. XML resolution now follows the active secure-addon context; Forever also replays `Blizzard_SharedXMLGame` to provide `TooltipDataHandlerMixin.ProcessInfo`; secure loads skip duplicate `RaidWarning.xml`. Exact original hover tests pass on both profiles, and stock no-addons/no-SavedVariables lua-errors scans return `[]`. **INFERRED (R88cd):** native secure XML mixins resolve from the active addon environment.

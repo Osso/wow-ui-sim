@@ -96,6 +96,8 @@ fn vs_main(in: VertexInput) -> VertexOutput {
 const BLEND_ALPHA: u32 = 0u;
 const BLEND_ADDITIVE: u32 = 1u;
 const TEX_INDEX_GLYPH: i32 = 5;
+const ATLAS_SIZE: f32 = 4096.0;
+const MAX_ATLAS_UV: f32 = 4095.5 / 4096.0;
 const DISPLAY_RGB_MAX_BYTE: f32 = 255.0;
 const DISPLAY_RGB_ROUNDING_HALF: f32 = 0.5;
 
@@ -140,47 +142,109 @@ fn prepare_solid_color(color: vec4<f32>) -> vec4<f32> {
     return color;
 }
 
+fn clamp_cell_uv_for_mip(
+    uv: vec2<f32>,
+    cell_origin: vec2<f32>,
+    cell_uv: f32,
+    mip_level: f32,
+) -> vec2<f32> {
+    let half_texel = 0.5 * exp2(mip_level) / ATLAS_SIZE;
+    let min_uv = cell_origin + half_texel;
+    let max_uv = max(min_uv, cell_origin + cell_uv - half_texel);
+    return clamp(uv, min_uv, max_uv);
+}
+
+// The common tint/desaturation path works on straight RGB.
+fn unpremultiply_sample(sample: vec4<f32>) -> vec4<f32> {
+    if sample.a <= 0.0 {
+        return vec4<f32>(0.0);
+    }
+    return vec4<f32>(min(sample.rgb / sample.a, vec3<f32>(1.0)), sample.a);
+}
+
+fn sample_tier_trilinear(
+    tex: texture_2d<f32>,
+    uv: vec2<f32>,
+    ddx: vec2<f32>,
+    ddy: vec2<f32>,
+    grid_size: f32,
+    max_lod: f32,
+) -> vec4<f32> {
+    let rho = max(length(ddx * ATLAS_SIZE), length(ddy * ATLAS_SIZE));
+    let lod = clamp(log2(max(rho, 1.0)), 0.0, max_lod);
+    let cell_origin = floor(uv * grid_size) / grid_size;
+    let cell_uv = 1.0 / grid_size;
+
+    let mip_floor = floor(lod);
+    let uv_floor = clamp_cell_uv_for_mip(uv, cell_origin, cell_uv, mip_floor);
+    var sample_floor = textureSampleLevel(tex, texture_sampler, uv_floor, mip_floor);
+
+    let frac_lod = fract(lod);
+    if frac_lod <= 0.001 {
+        if mip_floor == 0.0 {
+            return sample_floor;
+        }
+        return unpremultiply_sample(sample_floor);
+    }
+
+    // Mip 0 is straight-alpha to preserve the existing magnified path.
+    // Convert it before mixing it with a premultiplied generated mip.
+    if mip_floor == 0.0 {
+        sample_floor = vec4<f32>(sample_floor.rgb * sample_floor.a, sample_floor.a);
+    }
+    let mip_ceil = min(mip_floor + 1.0, max_lod);
+    let uv_ceil = clamp_cell_uv_for_mip(uv, cell_origin, cell_uv, mip_ceil);
+    let sample_ceil = textureSampleLevel(tex, texture_sampler, uv_ceil, mip_ceil);
+    return unpremultiply_sample(mix(sample_floor, sample_ceil, frac_lod));
+}
+
 // Sample from the appropriate tier based on tex_index
 // tex_index 0-4: tiered RGBA atlases, 5: glyph atlas, 6: BC1 atlas, 7: BC3 atlas
 // UV coordinates are already transformed to the correct sub-region
-fn sample_tiered_texture(tex_index: i32, tex_coords: vec2<f32>) -> vec4<f32> {
-    // Clamp tex_coords to valid range
-    let uv = clamp(tex_coords, vec2<f32>(0.0), vec2<f32>(0.9999));
+fn sample_tiered_texture(
+    tex_index: i32,
+    tex_coords: vec2<f32>,
+    ddx: vec2<f32>,
+    ddy: vec2<f32>,
+) -> vec4<f32> {
+    let uv = clamp(tex_coords, vec2<f32>(0.0), vec2<f32>(MAX_ATLAS_UV));
 
-    // Sample all textures unconditionally to avoid control flow issues
-    let s0 = textureSampleLevel(tier_64, texture_sampler, uv, 0.0);
-    let s1 = textureSampleLevel(tier_128, texture_sampler, uv, 0.0);
-    let s2 = textureSampleLevel(tier_256, texture_sampler, uv, 0.0);
-    let s3 = textureSampleLevel(tier_512, texture_sampler, uv, 0.0);
-    let s4 = textureSampleLevel(tier_2048, texture_sampler, uv, 0.0);
-    let sg = textureSampleLevel(glyph_atlas, glyph_sampler, uv, 0.0);
-    let sbc1 = textureSampleLevel(bc1_atlas, texture_sampler, uv, 0.0);
-    let sbc3 = textureSampleLevel(bc3_atlas, texture_sampler, uv, 0.0);
-
-    // Select result based on tier
-    if tex_index == 0 {
-        return s0;
-    } else if tex_index == 1 {
-        return s1;
-    } else if tex_index == 2 {
-        return s2;
-    } else if tex_index == 3 {
-        return s3;
-    } else if tex_index == 4 {
-        return s4;
-    } else if tex_index == TEX_INDEX_GLYPH {
-        return sg;
-    } else if tex_index == 6 {
-        return sbc1;
-    } else if tex_index == 7 {
-        return sbc3;
-    } else {
-        return sg;
+    switch tex_index {
+        case 0: {
+            return sample_tier_trilinear(tier_64, uv, ddx, ddy, 64.0, 6.0);
+        }
+        case 1: {
+            return sample_tier_trilinear(tier_128, uv, ddx, ddy, 32.0, 7.0);
+        }
+        case 2: {
+            return sample_tier_trilinear(tier_256, uv, ddx, ddy, 16.0, 8.0);
+        }
+        case 3: {
+            return sample_tier_trilinear(tier_512, uv, ddx, ddy, 8.0, 9.0);
+        }
+        case 4: {
+            return sample_tier_trilinear(tier_2048, uv, ddx, ddy, 2.0, 11.0);
+        }
+        case 6: {
+            return textureSampleLevel(bc1_atlas, texture_sampler, uv, 0.0);
+        }
+        case 7: {
+            return textureSampleLevel(bc3_atlas, texture_sampler, uv, 0.0);
+        }
+        default: {
+            return textureSampleLevel(glyph_atlas, glyph_sampler, uv, 0.0);
+        }
     }
 }
 
 @fragment
 fn fs_main(in: VertexOutput) -> @location(0) vec4<f32> {
+    // Compute derivatives before any control-flow branch (WGSL uniformity requirement).
+    let tex_ddx = dpdx(in.tex_coords);
+    let tex_ddy = dpdy(in.tex_coords);
+    let mask_ddx = dpdx(in.mask_tex_coords);
+    let mask_ddy = dpdy(in.mask_tex_coords);
+
     var color: vec4<f32>;
     const FLAG_COOLDOWN_SWIPE: u32 = 0x200u;
 
@@ -190,7 +254,8 @@ fn fs_main(in: VertexOutput) -> @location(0) vec4<f32> {
         } else {
             // Cooldown swipes use mask_tex_coords as sample UVs because tex_coords.x
             // is reserved for the radial progress value.
-            let tex_color = sample_tiered_texture(in.tex_index, in.mask_tex_coords);
+            let tex_color =
+                sample_tiered_texture(in.tex_index, in.mask_tex_coords, mask_ddx, mask_ddy);
             color = modulate_texture(
                 tex_color,
                 in.color,
@@ -202,7 +267,7 @@ fn fs_main(in: VertexOutput) -> @location(0) vec4<f32> {
         color = prepare_solid_color(in.color);
     } else {
         // Textured quad - sample from the appropriate tier atlas
-        let tex_color = sample_tiered_texture(in.tex_index, in.tex_coords);
+        let tex_color = sample_tiered_texture(in.tex_index, in.tex_coords, tex_ddx, tex_ddy);
         color = modulate_texture(
             tex_color,
             in.color,
@@ -251,7 +316,8 @@ fn fs_main(in: VertexOutput) -> @location(0) vec4<f32> {
 
     // Mask coverage comes from alpha; opaque mask pixels may have black RGB.
     if in.mask_tex_index >= 0 {
-        let mask_color = sample_tiered_texture(in.mask_tex_index, in.mask_tex_coords);
+        let mask_color =
+            sample_tiered_texture(in.mask_tex_index, in.mask_tex_coords, mask_ddx, mask_ddy);
         color.a *= mask_color.a;
     }
 
