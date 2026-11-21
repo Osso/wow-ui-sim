@@ -48,7 +48,9 @@ fn unit_threat_indicator_tracks_two_supplied_states() {
         A_Admin.SetUnitThreatSituation("pet", "target", 0, 80, 80, 1000)
         CompactUnitFrame_UpdateHealthColor(frame)
         local r2, g2, b2 = frame.healthBar:GetStatusBarColor()
-        assert(r1 ~= r2 or g1 ~= g2 or b1 ~= b2, "Blizzard consumer color must change")
+        local secondSituation = UnitThreatSituation("player")
+        assert(r1 ~= r2 or g1 ~= g2 or b1 ~= b2,
+            "Blizzard consumer color must change: " .. tostring(firstSituation) .. " -> " .. tostring(secondSituation))
         assert(isTanking == false and status == 1 and scaled == 60 and raw == 50 and value == 500)
         assert(firstSituation == 1 and firstLead == 50)
         assert(UnitDetailedThreatSituation("player", "target") == true)
