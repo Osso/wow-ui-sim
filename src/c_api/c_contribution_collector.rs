@@ -343,22 +343,32 @@ fn contribution_state(state: &mut LuaState) -> LuaResult<u32> {
 
 fn contribution_appearance(state: &mut LuaState) -> LuaResult<u32> {
     let id = u32::from_stack(state, 1)?;
-    let value = borrow_state(state)?
+    let appearance = borrow_state(state)?
         .contribution_collectors
         .contributions
         .get(&id)
-        .cloned();
-    let Some(value) = value else {
-        state.push(Val::Nil);
-        return Ok(1);
-    };
-    let Some(appearance) = value.appearance else {
-        state.push(Val::Nil);
-        return Ok(1);
-    };
+        .and_then(|value| value.appearance.clone());
+    let result = appearance
+        .map(|appearance| build_appearance_table(state, &appearance))
+        .unwrap_or(Val::Nil);
+    state.push(result);
+    Ok(1)
+}
+
+fn build_appearance_table(state: &mut LuaState, appearance: &Appearance) -> Val {
     let table = create_table_with_capacity(state, 7);
+    set_appearance_name(state, table, appearance);
+    set_appearance_color(state, table, appearance);
+    set_appearance_details(state, table, appearance);
+    table
+}
+
+fn set_appearance_name(state: &mut LuaState, table: Val, appearance: &Appearance) {
     let state_name = create_string(state, &appearance.state_name);
     table_set_static(state, table, "stateName", state_name);
+}
+
+fn set_appearance_color(state: &mut LuaState, table: Val, appearance: &Appearance) {
     let color = super::c_allied_races::create_color_mixin(
         state,
         appearance.color[0],
@@ -366,6 +376,9 @@ fn contribution_appearance(state: &mut LuaState) -> LuaResult<u32> {
         appearance.color[2],
     );
     table_set_static(state, table, "stateColor", color);
+}
+
+fn set_appearance_details(state: &mut LuaState, table: Val, appearance: &Appearance) {
     let tooltip_line = create_string(state, &appearance.tooltip_line);
     table_set_static(state, table, "tooltipLine", tooltip_line);
     table_set_static(
@@ -374,12 +387,12 @@ fn contribution_appearance(state: &mut LuaState) -> LuaResult<u32> {
         "tooltipUseTimeRemaining",
         Val::Bool(appearance.use_time_remaining),
     );
-    let status_bar_atlas = create_string(state, &appearance.status_bar_atlas);
-    table_set_static(state, table, "statusBarAtlas", status_bar_atlas);
-    let border_atlas = create_string(state, &appearance.border_atlas);
-    table_set_static(state, table, "borderAtlas", border_atlas);
-    let banner_atlas = create_string(state, &appearance.banner_atlas);
-    table_set_static(state, table, "bannerAtlas", banner_atlas);
-    state.push(table);
-    Ok(1)
+    set_appearance_atlas(state, table, "statusBarAtlas", &appearance.status_bar_atlas);
+    set_appearance_atlas(state, table, "borderAtlas", &appearance.border_atlas);
+    set_appearance_atlas(state, table, "bannerAtlas", &appearance.banner_atlas);
+}
+
+fn set_appearance_atlas(state: &mut LuaState, table: Val, key: &str, name: &str) {
+    let name = create_string(state, name);
+    table_set_static(state, table, key, name);
 }
