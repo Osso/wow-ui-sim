@@ -27,13 +27,20 @@ fn forever_quest_timer_frame_renders_supplied_countdowns() {
         "#,
     )
     .expect("supply timers to the original QuestTimerFrame");
-    let (first, second, first_id, second_id): (String, String, i32, i32) = env
+    let (first, second, first_id, second_id, first_expected, second_expected): (
+        String,
+        String,
+        i32,
+        i32,
+        String,
+        String,
+    ) = env
         .eval(
-            "return QuestTimerFrame.activeElements[1].Name:GetText(), QuestTimerFrame.activeElements[2].Name:GetText(), QuestTimerFrame.activeElements[1].questID, QuestTimerFrame.activeElements[2].questID",
+            "return QuestTimerFrame.activeElements[1].Name:GetText(), QuestTimerFrame.activeElements[2].Name:GetText(), QuestTimerFrame.activeElements[1].questID, QuestTimerFrame.activeElements[2].questID, SecondsToTime(90), SecondsToTime(150)",
         )
         .expect("read rendered timer rows");
     assert_eq!((first_id, second_id), (41001, 41002));
-    assert_ne!(first, second, "each supplied timer must render its own duration");
+    assert_eq!((first, second), (first_expected, second_expected));
 
     env.exec("A_Admin.AdvanceTime(10)")
         .expect("advance the simulator clock");
