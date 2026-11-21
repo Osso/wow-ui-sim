@@ -105,7 +105,8 @@ fn set_journey_flags(state: &mut LuaState) -> LuaResult<u32> {
     let faction_id = i64::from_stack(state, 1)?;
     let should_display = bool::from_stack(state, 2)?;
     let should_use_track = bool::from_stack(state, 3)?;
-    let Some(data) = borrow_state_mut(state)?.major_factions.get_mut(&faction_id) else {
+    let mut sim = borrow_state_mut(state)?;
+    let Some(data) = sim.major_factions.get_mut(&faction_id) else {
         return Err(runtime_error(format!(
             "A_Admin.SetMajorFactionJourneyFlags: unknown faction id {faction_id}"
         )));
