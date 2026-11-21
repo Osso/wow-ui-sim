@@ -39,15 +39,21 @@ fn journeys_refresh_and_reward_track_follow_supplied_faction_flags() {
             "second supplied faction should use the Journey reward track")
         local journeys = EncounterJournal.JourneysFrame
         journeys:Refresh()
-        local ids = {}
+        local journeyIDs, renownIDs = {}, {}
         for _, data in journeys.dataProvider:EnumerateEntireRange() do
-            if data.factionID then ids[#ids + 1] = data.factionID end
+            if data.factionID then
+                local ids = data.isRenownJourney and renownIDs or journeyIDs
+                ids[#ids + 1] = data.factionID
+            end
         end
-        table.sort(ids)
-        assert(#ids == 2 and ids[1] == 2696 and ids[2] == 2710,
-            string.format("Journeys list must render only supplied journey factions: count=%d ids=%s expansion=%s current=%s",
-                #ids, table.concat(ids, ","), tostring(journeys.expansionFilter),
-                tostring(LE_EXPANSION_LEVEL_CURRENT)))
+        table.sort(journeyIDs)
+        table.sort(renownIDs)
+        assert(#journeyIDs == 2 and journeyIDs[1] == 2696 and journeyIDs[2] == 2710,
+            string.format("Journey cards must include only supplied Journey factions: count=%d ids=%s",
+                #journeyIDs, table.concat(journeyIDs, ",")))
+        assert(#renownIDs == 2 and renownIDs[1] == 2699 and renownIDs[2] == 2704,
+            string.format("non-Journey factions must remain renown cards: count=%d ids=%s",
+                #renownIDs, table.concat(renownIDs, ",")))
 
         local progress = journeys.JourneyProgress
         progress.majorFactionData = C_MajorFactions.GetMajorFactionData(2710)
