@@ -20,6 +20,7 @@ use crate::lua_bridge::{FromStack, stack_val, table_set_rust_fn_static};
 use rilua::runtime_error;
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
+#[cfg(feature = "client-wowforever")]
 use std::time::Duration;
 
 /// Map and categories highlighted by a quest. The default has no highlights.
@@ -44,6 +45,7 @@ const QUEST_LOG_HEADER_TITLE: &str = "Khaz Algar";
 const SET_QUEST_TIMERS_ERROR: &str = "A_Admin.SetQuestTimers: expected an array of timer records";
 
 /// One timer supplied for Forever's original quest-timer consumer.
+#[cfg(feature = "client-wowforever")]
 #[derive(Debug, Clone)]
 pub struct QuestTimer {
     pub quest_id: i32,
