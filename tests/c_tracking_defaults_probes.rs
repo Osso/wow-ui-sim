@@ -1,4 +1,5 @@
 use wow_ui_sim::lua_api::WowLuaEnv;
+use wow_ui_sim::screen::ScreenKind;
 
 fn env() -> WowLuaEnv {
     WowLuaEnv::new().expect("Failed to create Lua environment")
@@ -23,8 +24,9 @@ fn content_tracking_defaults_are_empty_and_inactive() {
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
-prefork_full_ui_case! {
-fn collection_wardrobe_consumer_reflects_supplied_tracking_entries(env: &WowLuaEnv) {
+#[test]
+fn collection_wardrobe_consumer_reflects_supplied_tracking_entries() {
+    let env = consumer_env();
     let loaded: bool = env
         .eval("return C_AddOns.IsAddOnLoaded('Blizzard_FrameXMLUtil')")
         .expect("FrameXMLUtil load state should be available");
@@ -58,6 +60,25 @@ fn collection_wardrobe_consumer_reflects_supplied_tracking_entries(env: &WowLuaE
         "the C API must return the supplied capability state"
     );
 }
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn consumer_env() -> WowLuaEnv {
+    let env = WowLuaEnv::new().expect("Lua environment should initialize");
+    env.set_screen_size(1024.0, 768.0);
+    env.set_screen_mode(ScreenKind::Game);
+    let ui = wow_ui_sim::paths::default_blizzard_ui_addons_path()
+        .expect("profile Blizzard UI cache should exist");
+    env.state().borrow_mut().addon_base_paths = vec![ui.clone()];
+    wow_ui_sim::xml::register_intrinsic_templates();
+    for (name, toc) in
+        wow_ui_sim::loader::discover_blizzard_addons_for_screen(&ui, ScreenKind::Game)
+    {
+        wow_ui_sim::loader::load_addon(&env.loader_env(), &toc)
+            .unwrap_or_else(|error| panic!("load {name}: {error}"));
+    }
+    env.apply_post_load_workarounds();
+    wow_ui_sim::startup::fire_startup_events_for_screen(&env, ScreenKind::Game);
+    env
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
