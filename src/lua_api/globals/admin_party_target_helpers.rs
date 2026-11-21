@@ -275,6 +275,18 @@ pub(super) fn set_party_member(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
+pub(super) fn set_party_member_faction(state: &mut LuaState) -> LuaResult<u32> {
+    let index = i32::from_stack(state, 1)?;
+    let faction_group = String::from_stack(state, 2)?;
+    if let Some(member) = borrow_state_mut(state)?
+        .party_members
+        .get_mut((index - 1) as usize)
+    {
+        member.faction_group = Some(faction_group);
+    }
+    Ok(0)
+}
+
 pub(super) fn set_party_member_connected(state: &mut LuaState) -> LuaResult<u32> {
     use crate::lua_api::globals::state_backed_queries::dispatch_event_now;
     use crate::lua_api::methods::create_string;

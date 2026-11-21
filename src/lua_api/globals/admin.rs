@@ -61,8 +61,8 @@ use super::admin_movement::{set_falling, set_flying, set_mounted, set_moving, se
 use super::admin_party_target_helpers::{
     clear_focus, clear_target, kill_party_member, res_party_member, set_focus, set_focus_health,
     set_focus_power, set_focus_type, set_party_leader, set_party_member,
-    set_party_member_connected, set_party_member_health, set_party_size, set_rot_damage,
-    set_target, set_target_power, set_target_type,
+    set_party_member_connected, set_party_member_faction, set_party_member_health, set_party_size,
+    set_rot_damage, set_target, set_target_power, set_target_type,
 };
 use super::admin_premade::{add_premade_listing, clear_premade_listings, update_premade_listing};
 use super::admin_pvp_guild::{
@@ -258,7 +258,8 @@ fn register_channel_inputs(b: TableBuilder) -> LuaResult<TableBuilder> {
 }
 
 fn register_targeting_party(b: TableBuilder) -> LuaResult<TableBuilder> {
-    b.set_function("SetTarget", set_target)?
+    let b = b
+        .set_function("SetTarget", set_target)?
         .set_function("ClearTarget", clear_target)?
         .set_function("SetFocus", set_focus)?
         .set_function("ClearFocus", clear_focus)?
@@ -272,8 +273,10 @@ fn register_targeting_party(b: TableBuilder) -> LuaResult<TableBuilder> {
         .set_function("SetPartyLeader", set_party_leader)?
         .set_function("SetPartyMember", set_party_member)?
         .set_function("SetPartyMemberConnected", set_party_member_connected)?
-        .set_function("SetPartyMemberHealth", set_party_member_health)?
-        .set_function("KillPartyMember", kill_party_member)?
+        .set_function("SetPartyMemberHealth", set_party_member_health)?;
+    #[cfg(feature = "client-retail")]
+    let b = b.set_function("SetPartyMemberFaction", set_party_member_faction)?;
+    b.set_function("KillPartyMember", kill_party_member)?
         .set_function("ResPartyMember", res_party_member)?
         .set_function("SetRotDamage", set_rot_damage)?
         .set_function("SetEnemyPool", super::targeting_verbs::admin_set_enemy_pool)
