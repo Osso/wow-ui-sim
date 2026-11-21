@@ -150,9 +150,9 @@ const TAXI_MAP_ADDON_OVERRIDES: &[BlizzardAddonOverride<'static>] = &[
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 const CONTRIBUTION_COLLECTOR_INPUT_LUA: &str = r#"
 A_Admin.SetContributionCollectors({
-    { mapID=2248, collectorCreatureID=301, name="Collector Alpha", x=0.2, y=0.3 },
-    { mapID=2248, collectorCreatureID=302, name="Collector Beta", x=0.7, y=0.8 },
-    { mapID=9999, collectorCreatureID=303, name="Other Map", x=0.5, y=0.5 },
+    { mapID=2248, collectorCreatureID=301, name="Collector Alpha", atlasName="TaxiNode", textureKit="", x=0.2, y=0.3 },
+    { mapID=2248, collectorCreatureID=302, name="Collector Beta", atlasName="TaxiNode", textureKit="", x=0.7, y=0.8 },
+    { mapID=9999, collectorCreatureID=303, name="Other Map", atlasName="TaxiNode", textureKit="", x=0.5, y=0.5 },
 })
 "#;
 

@@ -27,6 +27,8 @@ struct Collector {
     map_id: i32,
     creature_id: u32,
     name: String,
+    atlas_name: String,
+    texture_kit: String,
     x: f64,
     y: f64,
     contribution_ids: Vec<u32>,
@@ -135,6 +137,8 @@ fn read_collector(state: &mut LuaState, value: Val) -> LuaResult<CollectorInput>
         map_id: read_integer(state, table, "mapID")? as i32,
         creature_id: read_integer(state, table, "collectorCreatureID")? as u32,
         name: read_string(state, table, "name")?,
+        atlas_name: read_string(state, table, "atlasName")?,
+        texture_kit: read_string(state, table, "textureKit")?,
         x: read_number(state, table, "x")?,
         y: read_number(state, table, "y")?,
         contribution_ids: contributions.iter().map(|entry| entry.0).collect(),
@@ -273,6 +277,10 @@ fn collectors_for_map(state: &mut LuaState) -> LuaResult<u32> {
         );
         let name = create_string(state, &record.name);
         table_set_static(state, value, "name", name);
+        let atlas_name = create_string(state, &record.atlas_name);
+        table_set_static(state, value, "atlasName", atlas_name);
+        let texture_kit = create_string(state, &record.texture_kit);
+        table_set_static(state, value, "textureKit", texture_kit);
         table_set_static(state, value, "position", position);
         set_table_array(state, result, (index + 1) as i64, value);
     }
