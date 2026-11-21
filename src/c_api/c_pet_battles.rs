@@ -79,7 +79,7 @@ fn set_action_legality(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
-fn bool_arg(state: &LuaState, index: usize) -> LuaResult<bool> {
+fn bool_arg(state: &LuaState, index: i32) -> LuaResult<bool> {
     match stack_val(state, index) {
         Val::Bool(value) => Ok(value),
         _ => Err(rilua::runtime_error(
