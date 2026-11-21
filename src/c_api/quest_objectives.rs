@@ -64,18 +64,17 @@ pub struct QuestProgressRequirements {
 }
 
 pub fn valid_progress_requirements(requirements: &QuestProgressRequirements) -> bool {
-    requirements.money >= 0
-        && requirements.portrait_display_id >= 0
-        && requirements
-            .items
-            .iter()
-            .all(|item| item.required_amount > 0)
-        && requirements.currencies.iter().all(|currency| {
-            currency.currency_id > 0
-                && currency.texture > 0
-                && currency.quality >= 0
-                && currency.required_amount > 0
-        })
+    let valid_dialog = requirements.money >= 0 && requirements.portrait_display_id >= 0;
+    let valid_items = requirements
+        .items
+        .iter()
+        .all(|item| item.required_amount > 0);
+    let valid_currencies = requirements.currencies.iter().all(|currency| {
+        let valid_identity = currency.currency_id > 0 && currency.texture > 0;
+        let valid_details = currency.quality >= 0 && currency.required_amount > 0;
+        valid_identity && valid_details
+    });
+    valid_dialog && valid_items && valid_currencies
 }
 
 pub fn commit_progress_requirements(
