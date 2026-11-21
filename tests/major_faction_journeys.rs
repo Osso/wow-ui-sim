@@ -5,8 +5,11 @@ use crate::common;
 fn journeys_refresh_and_reward_track_follow_supplied_faction_flags() {
     use wow_ui_sim::lua_api::WowLuaEnv;
 
+    let env = WowLuaEnv::new().expect("Failed to create Lua environment");
+    env.set_screen_size(1024.0, 768.0);
     let ui = common::blizzard_addon_harness::blizzard_ui_dir();
-    let env = common::blizzard_addon_harness::new_blizzard_addon_env(&ui);
+    common::panel_fixtures::seed_addon_search_paths(&env);
+    common::panel_fixtures::load_panel_addons(&env);
     let loaded = common::blizzard_addon_harness::load_blizzard_addon_closure_into_env(
         &env,
         &ui,
@@ -20,15 +23,12 @@ fn journeys_refresh_and_reward_track_follow_supplied_faction_flags() {
     );
     env.apply_post_load_workarounds();
     common::panel_fixtures::fire_startup_events(&env);
-    env.apply_runtime_addon_load_workarounds("Blizzard_EncounterJournal");
-    common::fire_addon_loaded(&env, "Blizzard_EncounterJournal");
 
     env.exec(
         r#"
         A_Admin.SetMajorFactionJourneyFlags(2710, true, false)
         A_Admin.SetMajorFactionJourneyFlags(2696, true, true)
         A_Admin.SetMajorFactionJourneyFlags(2704, false, false)
-        ToggleEncounterJournal()
         local journeys = EncounterJournal.JourneysFrame
         journeys:Refresh()
         local ids = {}
