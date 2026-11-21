@@ -51,6 +51,7 @@ fn supply_task_rows(env: &WowLuaEnv) {
         .completed_quest_ids
         .extend([90101, 90102, 90103, 90104, 90003, 90004, 90005, 90006, 90007, 90008]);
     state.quest_log_entries.entries[0].info_flags.is_task = true;
+    supply_second_world_quest(&mut state);
     for (quest_id, text) in [(90001, "Geodes collected"), (90002, "Rift sealed")] {
         let progress = state
             .quest_log_entries
@@ -67,4 +68,19 @@ fn supply_task_rows(env: &WowLuaEnv) {
             criteria_id: None,
         });
     }
+}
+
+fn supply_second_world_quest(state: &mut wow_ui_sim::lua_api::SimState) {
+    let mut entry = state
+        .quest_log_entries
+        .entries
+        .iter()
+        .find(|entry| entry.quest_id == 90001)
+        .expect("first seeded world quest entry exists")
+        .clone();
+    entry.quest_id = 90002;
+    entry.title = "Temporal Rift Collapse".to_string();
+    entry.is_world_quest = true;
+    entry.info_flags.is_task = true;
+    state.quest_log_entries.entries.push(entry);
 }
