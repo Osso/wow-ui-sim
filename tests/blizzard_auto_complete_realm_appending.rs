@@ -27,7 +27,19 @@ local function assertDisplayedRealm(index, name)
   expect(button:IsShown(), name .. " must be displayed")
   expect(button.nameInfo and button.nameInfo.name == name,
          "expected displayed result " .. name)
+  expect(button.nameInfo and button.nameInfo.priority == Enum.AutoCompletePriority.Other,
+         name .. " must use Enum.AutoCompletePriority.Other")
   expect(button:GetText() ~= nil, name .. " must have visible text")
+end
+
+local function countShownButtons()
+  local count = 0
+  for index = 1, AUTOCOMPLETE_MAX_BUTTONS do
+    if _G["AutoCompleteButton" .. index]:IsShown() then
+      count = count + 1
+    end
+  end
+  return count
 end
 
 local editBox = makeEditBox(function()
@@ -37,6 +49,7 @@ end)
 AutoComplete_Update(editBox, "playername-Storm", strlen("playername-Storm"))
 assertDisplayedRealm(1, "playername-Stormrage")
 assertDisplayedRealm(2, "playername-Stormscale")
+expect(countShownButtons() == 2, "exactly two autocomplete buttons must be displayed")
 
 return table.concat(failures, "\n")
 "#;
