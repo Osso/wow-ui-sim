@@ -20,18 +20,18 @@ fn opened_spellbook_env() -> WowLuaEnv {
     env.sync_string_metatable_to_global_string();
     env.apply_post_load_workarounds();
     wow_ui_sim::startup::fire_startup_events_for_screen(&env, ScreenKind::Game);
-    supply_empty_forever_outfit_list(&env);
+    supply_forever_spellbook_inputs(&env);
     env.exec("PlayerSpellsUtil.ToggleSpellBookFrame()")
         .expect("load and open the original PlayerSpells book");
     env
 }
 
-fn supply_empty_forever_outfit_list(env: &WowLuaEnv) {
+fn supply_forever_spellbook_inputs(env: &WowLuaEnv) {
     if wow_ui_sim::client_profile::ACTIVE == wow_ui_sim::client_profile::ClientProfile::WowForever {
-        env.state()
-            .borrow_mut()
-            .transmog_outfit_catalog
-            .outfits_info_supplied = Some(false);
+        let mut state = env.state().borrow_mut();
+        state.transmog_availability.enabled = Some(false);
+        state.transmog_outfit_catalog.entries.clear();
+        state.transmog_outfit_catalog.outfits_info_supplied = Some(false);
     }
 }
 
