@@ -99,6 +99,7 @@ fn original_scenario_tracker_reads_supplied_scenario_and_step() {
             stepID=1, title='First supplied stage', description='First stage details',
             scenarioName='First supplied scenario', scenarioID=6101,
         }, {})
+        assert(C_Scenario.IsInScenario())
         ScenarioObjectiveTracker:LayoutContents()
         assert(ScenarioObjectiveTracker.Header.Text:GetText() == 'First supplied scenario')
         assert(ScenarioObjectiveTracker.StageBlock.Name:GetText() == 'First supplied stage')
@@ -107,6 +108,7 @@ fn original_scenario_tracker_reads_supplied_scenario_and_step() {
             stepID=2, title='Second supplied stage', description='Second stage details',
             scenarioName='Second supplied scenario', scenarioID=6102,
         }, {})
+        assert(C_Scenario.IsInScenario())
         ScenarioObjectiveTracker:LayoutContents()
         assert(ScenarioObjectiveTracker.Header.Text:GetText() == 'Second supplied scenario')
         assert(ScenarioObjectiveTracker.StageBlock.Name:GetText() == 'Second supplied stage')
