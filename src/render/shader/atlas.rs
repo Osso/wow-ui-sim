@@ -17,6 +17,7 @@ use super::atlas_bc::{BcAtlasTier, build_bc_entry, init_bc_atlases, write_bc_slo
 use super::atlas_bind_groups::{
     create_atlas_bind_groups, create_glyph_atlas, create_texture_sampler,
 };
+use super::atlas_mipmaps::{mip_chain_bytes, tier_mip_level_count, upload_cell_mip_chain};
 
 pub use super::atlas_bc::{BC_CELL_SIZE, BcFormat, BcTextureEntry, is_bc_supported};
 
@@ -72,6 +73,7 @@ struct TierAtlas {
     texture: wgpu::Texture,
     view: wgpu::TextureView,
     cell_size: u32,
+    mip_level_count: u32,
     /// Grid dimensions (how many cells fit in each direction).
     grid_size: u32,
     /// Next available grid position (linear index).
@@ -81,6 +83,7 @@ struct TierAtlas {
 impl TierAtlas {
     fn new(device: &wgpu::Device, cell_size: u32, tier_index: usize) -> Self {
         let grid_size = ATLAS_SIZE / cell_size;
+        let mip_level_count = tier_mip_level_count(cell_size);
 
         let texture = device.create_texture(&wgpu::TextureDescriptor {
             label: Some(&format!(
@@ -92,7 +95,7 @@ impl TierAtlas {
                 height: ATLAS_SIZE,
                 depth_or_array_layers: 1,
             },
-            mip_level_count: 1,
+            mip_level_count,
             sample_count: 1,
             dimension: wgpu::TextureDimension::D2,
             format: wgpu::TextureFormat::Rgba8UnormSrgb,
@@ -110,6 +113,7 @@ impl TierAtlas {
             texture,
             view,
             cell_size,
+            mip_level_count,
             grid_size,
             next_slot: 0,
         }
@@ -410,14 +414,14 @@ impl GpuTextureAtlas {
         );
     }
 
-    /// Get memory usage statistics (includes glyph atlas).
+    /// Get memory usage statistics (includes glyph atlas and tier mip chains).
     pub fn memory_stats(&self) -> TierStats {
         let mut stats = TierStats::default();
         for (i, tier) in self.tiers.iter().enumerate() {
-            let tier_bytes = (ATLAS_SIZE * ATLAS_SIZE * 4) as usize;
+            let tier_bytes = mip_chain_bytes(ATLAS_SIZE, tier.mip_level_count);
             stats.allocated_bytes += tier_bytes;
             stats.used_slots[i] = tier.next_slot as usize;
-            let slot_bytes = (tier.cell_size * tier.cell_size * 4) as usize;
+            let slot_bytes = mip_chain_bytes(tier.cell_size, tier.mip_level_count);
             stats.used_bytes += slot_bytes * tier.next_slot as usize;
         }
         // Glyph atlas
@@ -548,28 +552,13 @@ fn upload_cell_to_gpu(queue: &wgpu::Queue, cell: AtlasCell<'_>, source: TextureU
     );
     let (pixel_x, pixel_y) = cell.tier.pixel_offset(cell.grid_x, cell.grid_y);
 
-    queue.write_texture(
-        wgpu::TexelCopyTextureInfo {
-            texture: &cell.tier.texture,
-            mip_level: 0,
-            origin: wgpu::Origin3d {
-                x: pixel_x,
-                y: pixel_y,
-                z: 0,
-            },
-            aspect: wgpu::TextureAspect::All,
-        },
+    upload_cell_mip_chain(
+        queue,
+        &cell.tier.texture,
+        (pixel_x, pixel_y),
+        cell.cell_size,
+        cell.tier.mip_level_count,
         &data,
-        wgpu::TexelCopyBufferLayout {
-            offset: 0,
-            bytes_per_row: Some(cell.cell_size * 4),
-            rows_per_image: Some(cell.cell_size),
-        },
-        wgpu::Extent3d {
-            width: cell.cell_size,
-            height: cell.cell_size,
-            depth_or_array_layers: 1,
-        },
     );
 }
 
@@ -668,6 +657,10 @@ mod tests {
 
         for (index, tier) in tiers.iter().enumerate() {
             assert_eq!(tier.cell_size, TIER_SIZES[index]);
+            assert_eq!(
+                tier.mip_level_count,
+                tier_mip_level_count(TIER_SIZES[index])
+            );
             assert_eq!(tier.grid_size, ATLAS_SIZE / TIER_SIZES[index]);
             assert_eq!(tier.next_slot, 0);
         }

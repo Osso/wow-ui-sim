@@ -29,19 +29,19 @@ Prepare phase: resize power-of-two buffers if needed, upload vertices and indice
 
 ## WGSL Shaders (`src/render/shader/quad.wgsl`)
 
-Fragment shader samples the five-tier RGBA atlas, glyph atlas, or BC1/BC3 compressed atlas according to `tex_index`; `tex_index < 0` uses vertex color directly (solid or unresolved quads). All colors are premultiplied: `color = vec4f(rgb * a, a)`. Additive quads zero output alpha. UV coords are clamped to `[0, 0.9999]` to prevent edge bleeding. No mipmapping (`textureSampleLevel(..., 0.0)`). Mask coverage is applied after sampling through mask alpha. Simulator mask paths do not use RGB as clipping coverage because valid opaque regions may be black in RGB.
+Fragment shader samples the five-tier RGBA atlas, glyph atlas, or BC1/BC3 compressed atlas according to `tex_index`; `tex_index < 0` uses vertex color directly (solid or unresolved quads). All colors are premultiplied: `color = vec4f(rgb * a, a)`. Additive quads zero output alpha. Screen-space derivatives (`dpdx`/`dpdy`) are computed unconditionally before branches in `fs_main` so RGBA tiers `0–4` perform trilinear mipmap sampling (`sample_tier_trilinear`) with per-level UV clamping inside each grid cell (`[cell_origin + half_mip_texel, cell_origin + cell_uv - half_mip_texel]`), preventing cross-cell bleeding at higher mip levels. Glyph, BC1, and BC3 atlases still sample mip 0 (`textureSampleLevel(..., 0.0)`). Mask coverage is applied after sampling through mask alpha. Simulator mask paths do not use RGB as clipping coverage because valid opaque regions may be black in RGB.
 
 ## Tiered Texture Atlas (`src/render/shader/atlas.rs`)
 
-| Tier | Cell size | Grid | Capacity |
-|------|-----------|------|----------|
-| 0 | 64×64 | 64×64 | 4,096 |
-| 1 | 128×128 | 32×32 | 1,024 |
-| 2 | 256×256 | 16×16 | 256 |
-| 3 | 512×512 | 8×8 | 64 |
-| 4 | 2048×2048 | 2×2 | 4 |
+| Tier | Cell size | Grid | Capacity | Mip levels |
+|------|-----------|------|----------|------------|
+| 0 | 64×64 | 64×64 | 4,096 | 7 (down to 1×1) |
+| 1 | 128×128 | 32×32 | 1,024 | 8 (down to 1×1) |
+| 2 | 256×256 | 16×16 | 256 | 9 (down to 1×1) |
+| 3 | 512×512 | 8×8 | 64 | 10 (down to 1×1) |
+| 4 | 2048×2048 | 2×2 | 4 | 12 (down to 1×1) |
 
-All RGBA tiers back a 4096×4096 texture. Glyph, BC1, and BC3 atlases are separate bindings. Deferred mask requests check the RGBA map first, then the BC map; resolved UVs are remapped into the selected slot. Tier selection: smallest tier that fits; falls back to largest with scaling if oversized.
+All RGBA tiers back a 4096×4096 `Rgba8UnormSrgb` texture with per-cell CPU-generated mipmap chains (`src/render/shader/atlas_mipmaps.rs`). Generated levels retain premultiplied RGB through GPU filtering so transparent texels do not darken the filtered color. Mip 0 retains straight alpha for magnification; the shader premultiplies its sample only when blending it with a generated mip. The shader converts back to straight RGB before tint and desaturation. Chains stop at 1×1 per cell so neighboring slots never merge. Glyph, BC1, and BC3 atlases are separate bindings. Deferred mask requests check the RGBA map first, then the BC map; resolved UVs are remapped into the selected slot. Tier selection: smallest tier that fits; falls back to largest with scaling if oversized.
 
 ## Strata and Draw Layer Sorting
 

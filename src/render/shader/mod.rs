@@ -6,6 +6,7 @@
 pub mod atlas;
 pub mod atlas_bc;
 mod atlas_bind_groups;
+mod atlas_mipmaps;
 mod pipeline;
 pub mod primitive;
 mod primitive_textures;
