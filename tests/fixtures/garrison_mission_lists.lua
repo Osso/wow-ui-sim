@@ -32,15 +32,9 @@ A_Admin.SetGarrisonMissions({
     },
 })
 
+CovenantMissionFrame:Show()
 local list = CovenantMissionFrame.MissionTab.MissionList
-if not list.ScrollBox:GetView() then
-    local view = CreateScrollBoxListLinearView()
-    view:SetElementInitializer("CovenantMissionListButtonTemplate", function(button, elementData)
-        CovenantMissionButton_InitButton(button, elementData)
-    end)
-    view:SetPadding(8, 0, 13, 0, -4)
-    ScrollUtil.InitScrollBoxListWithScrollBar(list.ScrollBox, list.ScrollBar, view)
-end
+assert(list.ScrollBox:GetView(), "Covenant mission frame initializes its original ScrollBox view")
 list:UpdateMissions()
 local providerMissions = list.ScrollBox:GetDataProvider():GetCollection()
 local providerIDs = {}

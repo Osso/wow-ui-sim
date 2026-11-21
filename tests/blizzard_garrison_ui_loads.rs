@@ -270,7 +270,6 @@ fn is_three_d_model_gap(message: &str) -> bool {
         || message.contains("expected number, got nil at argument 1")
 }
 
-#[cfg(feature = "client-ptr")]
 prefork_full_ui_case! {
 fn blizzard_garrison_ui_loads_explicitly_via_load_addon_without_errors(env: &WowLuaEnv) {
     #[cfg(feature = "client-retail")]
@@ -307,7 +306,7 @@ fn blizzard_garrison_ui_loads_explicitly_via_load_addon_without_errors(env: &Wow
 }
 }
 
-#[cfg(all(feature = "client-ptr", not(feature = "client-retail")))]
+#[cfg(not(feature = "client-retail"))]
 #[test]
 fn blizzard_garrison_ui_loads_explicitly_via_load_addon_without_errors() {
     let env = load_full_game_ui_with_lod_deps();

@@ -578,7 +578,7 @@ fn garrison_mission_frames_use_db2_currency_types() {
     panic!("GarrisonUI missing from Game coverage");
 }
 
-#[cfg(feature = "client-ptr")]
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn garrison_consumers_clear_and_read_empty_mission_lists() {
     let _full_ui = lock_full_ui();
@@ -634,7 +634,7 @@ fn load_garrison_original_consumers() -> WowLuaEnv {
     panic!("GarrisonUI missing from Game coverage");
 }
 
-#[cfg(feature = "client-ptr")]
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn shipyard_consumer_reads_empty_in_progress_missions() {
     let _full_ui = lock_full_ui();
@@ -651,7 +651,7 @@ fn shipyard_consumer_reads_empty_in_progress_missions() {
     assert!(ok);
 }
 
-#[cfg(feature = "client-ptr")]
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn landing_page_consumer_reads_empty_available_missions() {
     let _full_ui = lock_full_ui();
@@ -673,7 +673,7 @@ fn landing_page_consumer_reads_empty_available_missions() {
     assert!(ok);
 }
 
-#[cfg(feature = "client-ptr")]
+#[cfg(feature = "client-retail")]
 #[test]
 fn order_hall_hides_missing_combat_ally_and_uses_full_height() {
     let _full_ui = lock_full_ui();
