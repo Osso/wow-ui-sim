@@ -942,6 +942,48 @@ fn shared_map_poi_templates_register_in_template_registry_not_global_frames() {
     );
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn quest_hub_glow_uses_supplied_weekly_reset_boundary() {
+    let env = load_map_data_providers_closure();
+
+    env.state().borrow_mut().calendar_now = wow_ui_sim::c_api::c_calendar::CivilDateTime {
+        year: 2026,
+        month: 4,
+        day: 14,
+        hour: 6,
+        minute: 0,
+    };
+    env.exec(
+        r#"
+        A_Admin.SetWeeklyResetSchedule(3, 7)
+        local pin = CreateFrame("Button")
+        Mixin(pin, QuestHubPinMixin, QuestHubPinGlowMixin)
+        pin.relatedQuests = {{ questID = 80592 }}
+        GLOW_HUB_QUESTS_ACKNOWLEDGED[80592] = 0
+        assert(pin:GetHighlightType() == MapPinHighlightType.ImportantHubQuestHighlight,
+            "quest must glow before the supplied Tuesday reset")
+        "#,
+    )
+    .expect("loaded QuestHubPinGlowMixin should use the supplied weekly reset");
+
+    env.state().borrow_mut().calendar_now = wow_ui_sim::c_api::c_calendar::CivilDateTime {
+        year: 2026,
+        month: 4,
+        day: 15,
+        hour: 8,
+        minute: 0,
+    };
+    env.exec(
+        r#"
+        A_Admin.SetWeeklyResetSchedule(4, 9)
+        assert(pin:GetHighlightType() == MapPinHighlightType.ImportantHubQuestHighlight,
+            "quest must glow before the changed Wednesday reset")
+        "#,
+    )
+    .expect("loaded QuestHubPinGlowMixin should use the changed reset input");
+}
+
 #[cfg(all(feature = "optional-tests", feature = "client-retail"))]
 #[test]
 fn empty_contribution_id_list_adds_no_map_tooltip_rows() {
