@@ -87,8 +87,10 @@ fn get_taxi_nodes_for_map(state: &mut LuaState) -> LuaResult<u32> {
 
 fn should_map_show_nodes(state: &mut LuaState) -> LuaResult<u32> {
     let map_id = i32::from_stack(state, 1)?;
-    let sim_state = borrow_state(state)?;
-    let map_type = crate::c_api::c_map::map_type_for_ui_map_id(&sim_state.maps, map_id);
+    let map_type = {
+        let sim_state = borrow_state(state)?;
+        crate::c_api::c_map::map_type_for_ui_map_id(&sim_state.maps, map_id)
+    };
     let should_show = map_type
         .is_some_and(|map_type| matches!(map_type, UI_MAP_TYPE_CONTINENT | UI_MAP_TYPE_ZONE));
     state.push(Val::Bool(should_show));
