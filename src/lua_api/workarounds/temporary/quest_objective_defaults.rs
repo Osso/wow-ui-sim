@@ -5,7 +5,7 @@
 //! defaults in the workaround layer instead of the central runtime bootstrap.
 
 use crate::lua_api::LoaderEnv;
-use crate::lua_bridge::LuaApiMut;
+use rilua::LuaApiMut;
 
 const QUEST_OBJECTIVE_DEFAULTS_LUA: &str = r#"
 if SpellCanTargetQuest == nil then
