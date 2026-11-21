@@ -60,6 +60,7 @@ pub(super) fn make_target_info(
 pub(super) fn default_party_member() -> PartyMember {
     PartyMember {
         map_position: None,
+        faction_group: None,
         name: "Unknown".to_string(),
         name_cached: true,
         connected: true,

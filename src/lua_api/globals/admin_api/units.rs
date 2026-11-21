@@ -61,6 +61,15 @@ pub(super) fn register_party_api(
     add_party_member_setter(
         lua,
         t,
+        "SetPartyMemberFaction",
+        Rc::clone(&state),
+        |member, faction_group: String| {
+            member.faction_group = Some(faction_group);
+        },
+    )?;
+    add_party_member_setter(
+        lua,
+        t,
         "SetPartyMemberHealth",
         Rc::clone(&state),
         |member, args| {
@@ -389,6 +398,7 @@ fn resize_party_members(state: &mut SimState, size: usize) {
 fn default_party_member() -> PartyMember {
     PartyMember {
         map_position: None,
+        faction_group: None,
         name: "Unknown".to_string(),
         name_cached: true,
         connected: true,
