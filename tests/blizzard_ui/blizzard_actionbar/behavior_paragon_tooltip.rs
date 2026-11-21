@@ -6,6 +6,7 @@
 
 use crate::common;
 use crate::common::blizzard_addon_harness::with_blizzard_addon_closure;
+use wow_ui_sim::c_api::reputation_model::ReputationFaction;
 use wow_ui_sim::lua_api::{FactionParagonInfo, WowLuaEnv};
 
 const ROOTS: &[&str] = &[
@@ -89,7 +90,14 @@ fn paragon_watch_bar_tooltip_uses_seeded_reward_quest_and_progress() {
 }
 
 fn seed_paragon(env: &WowLuaEnv) {
-    env.state().borrow_mut().faction_paragon.insert(
+    let mut state = env.state().borrow_mut();
+    state.reputation.factions = vec![ReputationFaction {
+        faction_id: WATCHED_FACTION_ID as i32,
+        name: Some("Council of Dornogal".to_string()),
+        reaction: 6,
+        ..Default::default()
+    }];
+    state.faction_paragon.insert(
         WATCHED_FACTION_ID,
         FactionParagonInfo {
             current_value: PARAGON_CURRENT,
