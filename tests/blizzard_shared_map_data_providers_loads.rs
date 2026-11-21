@@ -150,9 +150,15 @@ const TAXI_MAP_ADDON_OVERRIDES: &[BlizzardAddonOverride<'static>] = &[
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 const CONTRIBUTION_COLLECTOR_INPUT_LUA: &str = r#"
 A_Admin.SetContributionCollectors({
-    { mapID=2248, collectorCreatureID=301, name="Collector Alpha", atlasName="TaxiNode", textureKit="", x=0.2, y=0.3 },
-    { mapID=2248, collectorCreatureID=302, name="Collector Beta", atlasName="TaxiNode", textureKit="", x=0.7, y=0.8 },
-    { mapID=9999, collectorCreatureID=303, name="Other Map", atlasName="TaxiNode", textureKit="", x=0.5, y=0.5 },
+    { mapID=2248, areaPoiID=901, collectorCreatureID=301, name="Collector Alpha", atlasName="TaxiNode", x=0.2, y=0.3,
+      contributions={{ contributionID=401, name="Contribution Alpha", state=1, amount=0.5,
+        nextStateTime=123.5, startTime=100,
+        appearance={ stateName="Progress", stateColor={r=0.2, g=0.4, b=0.6}, tooltipLine="%.0f%%",
+          tooltipUseTimeRemaining=false, statusBarAtlas="Status", borderAtlas="Border", bannerAtlas="Banner" } }} },
+    { mapID=2248, areaPoiID=902, collectorCreatureID=302, name="Collector Beta", atlasName="TaxiNode", x=0.7, y=0.8,
+      contributions={{ contributionID=402, name="Contribution Beta", state=2, amount=0.75,
+        nextStateTime=234.5, startTime=200 }} },
+    { mapID=9999, areaPoiID=903, collectorCreatureID=303, name="Other Map", atlasName="TaxiNode", x=0.5, y=0.5 },
 })
 "#;
 
@@ -162,12 +168,19 @@ WorldMapFrame:SetMapID(2248)
 local provider = CreateFromMixins(ContributionCollectorDataProviderMixin)
 WorldMapFrame:AddDataProvider(provider)
 provider:RefreshAllData()
-local names = {}
+local names, areas = {}, {}
 for pin in WorldMapFrame:EnumeratePinsByTemplate("ContributionCollectorPinTemplate") do
     names[pin.name] = pin.collectorCreatureID
+    areas[pin.name] = pin.poiInfo.areaPoiID
 end
+local ids = { C_ContributionCollector.GetManagedContributionsForCreatureID(301) }
+local state, amount, nextStateTime, startTime = C_ContributionCollector.GetState(ids[1])
+local appearance = C_ContributionCollector.GetContributionAppearance(ids[1], state)
 return WorldMapFrame:GetNumActivePinsByTemplate("ContributionCollectorPinTemplate"),
-       names["Collector Alpha"], names["Collector Beta"], names["Other Map"] ~= nil
+       names["Collector Alpha"], names["Collector Beta"], names["Other Map"] ~= nil,
+       areas["Collector Alpha"], areas["Collector Beta"],
+       ids[1], C_ContributionCollector.GetName(ids[1]), state, amount, nextStateTime, startTime,
+       appearance.stateName, appearance.tooltipLine
 "#;
 
 const TAXI_MAP_NODE_INPUT_LUA: &str = r#"
@@ -254,10 +267,43 @@ fn contribution_collector_provider_refreshes_pins_from_supplied_records() {
             "{addon} was not loaded"
         );
     }
-    let observed: (i32, i32, i32, bool) = env
+    let observed: (
+        i32,
+        i32,
+        i32,
+        bool,
+        i32,
+        i32,
+        i32,
+        String,
+        i32,
+        f64,
+        f64,
+        f64,
+        String,
+        String,
+    ) = env
         .eval(CONTRIBUTION_COLLECTOR_REFRESH_LUA)
         .expect("original contribution collector provider should refresh on WorldMapFrame");
-    assert_eq!(observed, (2, 301, 302, false));
+    assert_eq!(
+        observed,
+        (
+            2,
+            301,
+            302,
+            false,
+            901,
+            902,
+            401,
+            "Contribution Alpha".to_string(),
+            1,
+            0.5,
+            123.5,
+            100.0,
+            "Progress".to_string(),
+            "%.0f%%".to_string(),
+        )
+    );
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]

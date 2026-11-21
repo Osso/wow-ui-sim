@@ -25,10 +25,10 @@ pub struct ContributionCollectorState {
 #[derive(Clone, Debug)]
 struct Collector {
     map_id: i32,
+    area_poi_id: u32,
     creature_id: u32,
     name: String,
     atlas_name: String,
-    texture_kit: String,
     x: f64,
     y: f64,
     contribution_ids: Vec<u32>,
@@ -40,6 +40,7 @@ struct Contribution {
     state: i32,
     amount: f64,
     next_state_time: Option<f64>,
+    start_time: f64,
     appearance: Option<Appearance>,
 }
 
@@ -135,10 +136,10 @@ fn read_collector(state: &mut LuaState, value: Val) -> LuaResult<CollectorInput>
     let contributions = read_contributions(state, contribution_values)?;
     let collector = Collector {
         map_id: read_integer(state, table, "mapID")? as i32,
+        area_poi_id: read_integer(state, table, "areaPoiID")? as u32,
         creature_id: read_integer(state, table, "collectorCreatureID")? as u32,
         name: read_string(state, table, "name")?,
         atlas_name: read_string(state, table, "atlasName")?,
-        texture_kit: read_string(state, table, "textureKit")?,
         x: read_number(state, table, "x")?,
         y: read_number(state, table, "y")?,
         contribution_ids: contributions.iter().map(|entry| entry.0).collect(),
@@ -191,6 +192,7 @@ fn read_contribution(state: &mut LuaState, value: Val) -> LuaResult<(u32, Contri
             Val::Nil => None,
             _ => return Err(invalid_field("nextStateTime")),
         },
+        start_time: read_number(state, table, "startTime")?,
         appearance,
     };
     Ok((id, contribution))
@@ -273,25 +275,34 @@ fn collectors_for_map(state: &mut LuaState) -> LuaResult<u32> {
         .collect::<Vec<_>>();
     let result = create_table_with_capacity(state, records.len());
     for (index, record) in records.iter().enumerate() {
-        let position = super::c_map::create_world_position_vector(state, record.x, record.y)?;
-        let value = create_table_with_capacity(state, 4);
-        table_set_static(
-            state,
-            value,
-            "collectorCreatureID",
-            Val::Num(f64::from(record.creature_id)),
-        );
-        let name = create_string(state, &record.name);
-        table_set_static(state, value, "name", name);
-        let atlas_name = create_string(state, &record.atlas_name);
-        table_set_static(state, value, "atlasName", atlas_name);
-        let texture_kit = create_string(state, &record.texture_kit);
-        table_set_static(state, value, "textureKit", texture_kit);
-        table_set_static(state, value, "position", position);
+        let value = collector_map_info(state, record)?;
         set_table_array(state, result, (index + 1) as i64, value);
     }
     state.push(result);
     Ok(1)
+}
+
+fn collector_map_info(state: &mut LuaState, record: &Collector) -> LuaResult<Val> {
+    let position = super::c_map::create_world_position_vector(state, record.x, record.y)?;
+    let info = create_table_with_capacity(state, 5);
+    table_set_static(
+        state,
+        info,
+        "areaPoiID",
+        Val::Num(f64::from(record.area_poi_id)),
+    );
+    table_set_static(
+        state,
+        info,
+        "collectorCreatureID",
+        Val::Num(f64::from(record.creature_id)),
+    );
+    let name = create_string(state, &record.name);
+    table_set_static(state, info, "name", name);
+    let atlas_name = create_string(state, &record.atlas_name);
+    table_set_static(state, info, "atlasName", atlas_name);
+    table_set_static(state, info, "position", position);
+    Ok(info)
 }
 
 fn managed_contributions(state: &mut LuaState) -> LuaResult<u32> {
@@ -315,10 +326,9 @@ fn contribution_name(state: &mut LuaState) -> LuaResult<u32> {
         .contribution_collectors
         .contributions
         .get(&id)
-        .map(|value| value.name.clone());
-    let name = name
-        .map(|name| create_string(state, &name))
-        .unwrap_or(Val::Nil);
+        .map(|value| value.name.clone())
+        .unwrap_or_default();
+    let name = create_string(state, &name);
     state.push(name);
     Ok(1)
 }
@@ -334,10 +344,14 @@ fn contribution_state(state: &mut LuaState) -> LuaResult<u32> {
         state.push(Val::Num(f64::from(value.state)));
         state.push(Val::Num(value.amount));
         state.push(value.next_state_time.map(Val::Num).unwrap_or(Val::Nil));
-        Ok(3)
+        state.push(Val::Num(value.start_time));
+        Ok(4)
     } else {
+        state.push(Val::Num(0.0));
+        state.push(Val::Num(0.0));
         state.push(Val::Nil);
-        Ok(1)
+        state.push(Val::Num(0.0));
+        Ok(4)
     }
 }
 
