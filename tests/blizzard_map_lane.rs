@@ -125,6 +125,78 @@ fn load_full_game_ui() -> WowLuaEnv {
     env
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+const FLOOR_MENU_LUA: &str = r#"
+    local function floor_menu(mapID)
+        WorldMapFrame:SetMapID(mapID)
+        local dropdown
+        for _, frame in ipairs(WorldMapFrame.overlayFrames or {}) do
+            if type(frame.RefreshMenu) == "function" then
+                dropdown = frame
+                break
+            end
+        end
+        assert(dropdown, "WorldMap floor-navigation frame must exist")
+        local shown = dropdown:RefreshMenu(mapID)
+        local rows = {}
+        for _, entry in dropdown:GetMenuDescription():EnumerateElementDescriptions() do
+            local member = entry:GetData()
+            table.insert(rows, member.mapID .. ":" .. member.name)
+        end
+        return shown, table.concat(rows, ",")
+    end
+    local firstShown, firstRows = floor_menu(84)
+    local secondShown, secondRows = floor_menu(2248)
+    return firstShown, firstRows, secondShown, secondRows
+"#;
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn supply_map_group_members(env: &WowLuaEnv) {
+    env.exec(
+        r#"
+        A_Admin.SetMapGroupMember(84, 7001, 1)
+        A_Admin.SetMapGroupMember(1, 7001, 2)
+        A_Admin.SetMapGroupMember(2248, 7002, 1)
+        A_Admin.SetMapGroupMember(2200, 7002, 2)
+        "#,
+    )
+    .expect("map-group fixtures should be supplied through A_Admin");
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn read_floor_menu_outputs(env: &WowLuaEnv) -> (bool, String, bool, String) {
+    env.eval(FLOOR_MENU_LUA)
+        .expect("WorldMap floor-navigation consumer should build both menus")
+}
+
+#[test]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn world_map_floor_navigation_uses_each_supplied_map_group() {
+    let env = load_full_game_ui();
+    let loaded = &env.state().borrow().addons;
+    assert!(
+        loaded
+            .iter()
+            .any(|addon| addon.folder_name == "Blizzard_FrameXML")
+    );
+    assert!(
+        loaded
+            .iter()
+            .any(|addon| addon.folder_name == "Blizzard_WorldMap")
+    );
+    supply_map_group_members(&env);
+
+    assert_eq!(
+        read_floor_menu_outputs(&env),
+        (
+            true,
+            "84:Stormwind City,1:Dun Morogh".into(),
+            true,
+            "2248:Isle of Dorn,2200:Emerald Dream".into()
+        )
+    );
+}
+
 #[test]
 fn each_lane_addon_directory_resolves_with_a_toc() {
     if cfg!(feature = "client-wrath") {
@@ -143,7 +215,10 @@ fn each_lane_addon_directory_resolves_with_a_toc() {
         let dir = blizzard_ui_dir().join(name);
         if toc_layout::classic_cache() && !dir.is_dir() {
             assert!(
-                matches!(*name, "Blizzard_MapCanvasSecureUtil" | "Blizzard_AdventureMap"),
+                matches!(
+                    *name,
+                    "Blizzard_MapCanvasSecureUtil" | "Blizzard_AdventureMap"
+                ),
                 "only the two retail-only map addons may be absent from the classic caches"
             );
             continue;
