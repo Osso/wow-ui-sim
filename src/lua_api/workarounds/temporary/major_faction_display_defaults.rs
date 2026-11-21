@@ -39,8 +39,22 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
 
 #[cfg(test)]
 mod tests {
+    #[cfg(any(
+        feature = "client-wrath",
+        feature = "client-mists",
+        feature = "client-wowforever",
+        feature = "client-era",
+        feature = "client-anniversary"
+    ))]
     use crate::lua_api::WowLuaEnv;
 
+    #[cfg(any(
+        feature = "client-wrath",
+        feature = "client-mists",
+        feature = "client-wowforever",
+        feature = "client-era",
+        feature = "client-anniversary"
+    ))]
     #[test]
     fn installs_major_faction_display_defaults() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
@@ -60,6 +74,13 @@ mod tests {
         assert_eq!(result, (false, false, 0, false, 0));
     }
 
+    #[cfg(any(
+        feature = "client-wrath",
+        feature = "client-mists",
+        feature = "client-wowforever",
+        feature = "client-era",
+        feature = "client-anniversary"
+    ))]
     #[test]
     fn preserves_existing_major_faction_display_provider() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
