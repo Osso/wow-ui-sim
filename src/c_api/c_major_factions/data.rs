@@ -10,6 +10,8 @@ pub struct MajorFactionData {
     pub renown_track_level_effect_id: Option<i32>,
     pub player_companion_id: Option<i32>,
     pub faction_id: i64,
+    pub should_display_as_journey: bool,
+    pub should_use_journey_reward_track: bool,
     pub name: String,
     pub expansion_filter: i32,
     pub max_level: i32,
