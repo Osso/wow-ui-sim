@@ -40,6 +40,10 @@ fn assert_tracker_blocks(env: &WowLuaEnv, loaded: &[String]) {
 
 fn supply_task_rows(env: &WowLuaEnv) {
     let mut state = env.state().borrow_mut();
+    state
+        .quest_log_entries
+        .completed_quest_ids
+        .extend([90101, 90102, 90103, 90104, 90003, 90004, 90005, 90006, 90007, 90008]);
     state.quest_log_entries.entries[0].info_flags.is_task = true;
     for (quest_id, text) in [(90001, "Geodes collected"), (90002, "Rift sealed")] {
         let progress = state
