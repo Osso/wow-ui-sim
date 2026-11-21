@@ -651,6 +651,9 @@ pub struct SimState {
     pub current_target: Option<TargetInfo>,
     /// Supplied target GUIDs for target, focus, and party unit tokens.
     pub unit_target_guids: HashMap<String, String>,
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub unit_threats:
+        HashMap<(String, String), crate::lua_api::globals::real::unit_threat::ThreatEntry>,
     /// Host-supplied GUIDs for unit tokens not resolved by the built-in inputs.
     pub unit_guid_overrides: HashMap<String, String>,
     /// Host-supplied GUIDs owned or controlled by the player.
@@ -1212,6 +1215,16 @@ pub struct SimState {
     /// Supplied corpse coordinates by UI map; never inferred from player position.
     pub corpse_map_positions: HashMap<i32, (f64, f64)>,
     pub active_trade: Option<TradeState>,
+    /// Host-supplied trade-money pickup restriction result.
+    #[cfg(any(
+        feature = "client-retail",
+        feature = "client-ptr",
+        feature = "client-wowforever"
+    ))]
+    pub pickup_trade_money_restricted: bool,
+    /// PTR host input used by the preserved C_TradeInfo warning surface.
+    #[cfg(feature = "client-ptr")]
+    pub trade_offer_warning: bool,
     /// INFERRED secure transfer housing quote, supplied only when a quote exists.
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     pub secure_transfer: Option<crate::c_api::secure_transfer::SecureTransferInputs>,

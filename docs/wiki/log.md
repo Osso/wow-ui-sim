@@ -1,3 +1,7 @@
+## [2026-11-20] implementation | Trilinear mipmapped RGBA GPU atlas
+
+Added per-cell RGBA mip chains down to 1×1 and cell-clamped trilinear sampling to reduce aliasing on downscaled icons. Generated mips retain premultiplied RGB through filtering to avoid dark fringes at transparent edges; mip 0 retains straight alpha for magnification. See [rendering pipeline](systems/rendering-pipeline.md).
+
 ## [2026-11-20] correction | Secure dependency replay rule
 
 Updated [addon loading](systems/addon-loading.md#secure-dependency-replay-and-library-allowlist). **VERIFIED (simulator source):** Forever replay membership now follows enabled secure TOC dependency closure; secure dependency passes skip XML for already ordinary-loaded dependencies instead of naming `RaidWarning.xml`. **INFERRED (R88cj pending):** the dependency-closure selector matches native behavior; evidence is pending. Exact private-aura, secure-replay and secure-XML tests pass on Retail and Forever; stock no-addons/no-SavedVariables scans return `[]`.

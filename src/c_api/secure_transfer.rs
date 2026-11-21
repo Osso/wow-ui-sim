@@ -127,7 +127,7 @@ fn get_trade_partner(state: &mut LuaState) -> LuaResult<u32> {
     push_optional_string(state, partner)
 }
 
-fn should_show_trade_offer_warning(state: &mut LuaState) -> LuaResult<u32> {
+pub(crate) fn should_show_trade_offer_warning(state: &mut LuaState) -> LuaResult<u32> {
     let show_warning = borrow_state(state)?
         .secure_transfer
         .as_ref()

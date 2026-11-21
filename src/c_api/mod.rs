@@ -381,6 +381,11 @@ pub mod c_tooltip_info_pvp_talent;
 pub(crate) mod c_tooltip_info_socketed_relic;
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) mod c_tooltip_info_spell_mount;
+#[cfg(any(
+    feature = "client-retail",
+    feature = "client-ptr",
+    feature = "client-wowforever"
+))]
 pub(crate) mod c_trade_info;
 pub(crate) mod c_trade_skill_cooldown;
 pub mod c_trade_skill_crafting_ui;
@@ -600,6 +605,8 @@ mod helpers;
 mod secure_publication;
 mod secure_publication_data;
 pub(crate) use helpers::parse_numeric_string;
+#[cfg(feature = "client-ptr")]
+pub(crate) use helpers::read_untainted_signed32_argument;
 #[cfg(feature = "client-retail")]
 pub(crate) use helpers::{
     bad_argument, read_untainted_signed32_argument, read_untainted_string_argument,
