@@ -1058,6 +1058,8 @@ pub struct SimState {
     pub mount_item_relations: HashMap<i32, i32>,
     pub equipment_manager: EquipmentManagerState,
     pub maps: HashMap<i32, MapData>,
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub taxi_map: crate::c_api::c_taxi_map::TaxiMapState,
     /// Existing simulator selection, scoped to the current Lua UI lifetime.
     pub(crate) quest_log_selected_map_id: Option<f64>,
     /// INFERRED session-only storage because waypoint ownership/persistence are UNKNOWN.

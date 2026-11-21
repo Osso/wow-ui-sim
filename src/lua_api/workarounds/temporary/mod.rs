@@ -201,6 +201,7 @@ pub(crate) mod store_glue_state;
 pub(crate) mod store_public_defaults;
 pub(crate) mod super_track_defaults;
 pub(crate) mod talent_edge_frame_level_sync;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod taxi_map_defaults;
 pub(crate) mod texture_file_data_defaults;
 pub(crate) mod tooltip_nineslice_surface;

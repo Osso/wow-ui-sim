@@ -299,6 +299,8 @@ pub mod c_shared_character_services;
 pub mod c_super_track;
 #[cfg(feature = "client-retail")]
 pub mod c_talking_head;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) mod c_taxi_map;
 pub(crate) mod challenge_run;
 #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
 pub mod combat_log_history;
