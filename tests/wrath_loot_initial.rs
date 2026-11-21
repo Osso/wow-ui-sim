@@ -386,6 +386,7 @@ fn seed_party(env: &WowLuaEnv, linked: bool) {
         sim.party_group_active = true;
         sim.party_members = vec![PartyMember {
             map_position: None,
+            faction_group: None,
             name: "LootFriend".into(),
             name_cached: true,
             connected: true,
