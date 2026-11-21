@@ -1177,6 +1177,20 @@ pub(super) fn is_secure_replay_library_addon(folder_name: &str) -> bool {
     SECURE_REPLAY_LIBRARY_ADDONS.contains(&folder_name)
 }
 
+fn secure_replay_dependency_names(metadata: &crate::toc::TocMetadata) -> Vec<String> {
+    crate::toc::collect_metadata_lists(
+        metadata,
+        &[
+            "Dep",
+            "RequiredDep",
+            "Dependencies",
+            "RequiredDeps",
+            "OptionalDep",
+            "OptionalDeps",
+        ],
+    )
+}
+
 /// INFERRED (R88cj): Forever secure replay follows enabled secure TOC dependencies.
 fn is_secure_replay_dependency(env: &LoaderEnv<'_>, folder_name: &str) -> bool {
     if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::WowForever {
@@ -1187,7 +1201,7 @@ fn is_secure_replay_dependency(env: &LoaderEnv<'_>, folder_name: &str) -> bool {
         .addons
         .iter()
         .filter(|addon| addon.enabled && addon.use_secure_env)
-        .flat_map(|addon| addon.dependencies.iter().cloned())
+        .flat_map(|addon| secure_replay_dependency_names(&addon.metadata))
         .collect::<Vec<_>>();
     let mut visited = HashSet::new();
     while let Some(dependency) = pending.pop() {
@@ -1202,7 +1216,7 @@ fn is_secure_replay_dependency(env: &LoaderEnv<'_>, folder_name: &str) -> bool {
             .iter()
             .find(|addon| addon.folder_name == dependency)
         {
-            pending.extend(addon.dependencies.iter().cloned());
+            pending.extend(secure_replay_dependency_names(&addon.metadata));
         }
     }
     false
@@ -1446,7 +1460,7 @@ mod tests {
         write_addon(
             temp.path(),
             "ReplayConsumer",
-            "## UseSecureEnvironment: 1\n## Dep: ReplayProvider\nMain.lua\n",
+            "## UseSecureEnvironment: 1\n## OptionalDep: ReplayProvider\nMain.lua\n",
             "",
         );
         env.scan_and_register_addons(temp.path());
