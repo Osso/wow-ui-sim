@@ -1,6 +1,6 @@
 # Garrison mission lists
 
-The Retail and WoW Forever `C_Garrison` mission-list queries use host-supplied records stored by the Rust mission model. The queries serve the original Garrison and Covenant mission consumers. Native behavior is pending (R88dg); inferred behavior stays labelled below. See [Lua API architecture](../lua-api.md).
+**INFERRED (R88dg pending):** The Retail and WoW Forever `C_Garrison` mission-list queries use host-supplied records stored by the Rust mission model. They serve original Garrison and Covenant mission consumers. Native query behavior is pending. See [Lua API architecture](../lua-api.md).
 
 ## What it must do
 
@@ -10,8 +10,8 @@ The Retail and WoW Forever `C_Garrison` mission-list queries use host-supplied r
 - [ ] **INFERRED (R88dg pending):** `C_Garrison.GetInProgressMissions` returns records for the requested follower type whose `inProgress` value is true.
 - [ ] **INFERRED (R88dg pending):** `C_Garrison.GetCompleteMissions` returns records for the requested follower type whose `completed` value is true.
 - [ ] **INFERRED (R88dg pending):** The available and in-progress queries fill and return a supplied output table, or return a new table when called with a follower type or `nil` plus a follower type.
-- [ ] The original Retail and Forever Covenant mission-list consumer displays all supplied available, completed, and in-progress mission records; it must not pass with an empty producer.
-- [ ] The Rust model and setter are registered on Retail and WoW Forever only. PTR keeps the existing Lua shim unchanged.
+- [ ] **INFERRED (R88dg pending):** The original Retail and Forever Covenant mission-list consumer displays all supplied available, completed, and in-progress mission records; it must not pass with an empty producer.
+- [ ] The Rust model and setter are registered on Retail and WoW Forever only. **VERIFIED:** PTR keeps the existing Lua shim unchanged.
 
 ## How it works
 
