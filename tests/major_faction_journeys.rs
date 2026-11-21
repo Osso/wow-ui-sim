@@ -37,7 +37,9 @@ fn journeys_refresh_and_reward_track_follow_supplied_faction_flags() {
         end
         table.sort(ids)
         assert(#ids == 2 and ids[1] == 2696 and ids[2] == 2710,
-            "Journeys list must render only supplied journey factions")
+            string.format("Journeys list must render only supplied journey factions: count=%d ids=%s expansion=%s current=%s",
+                #ids, table.concat(ids, ","), tostring(journeys.expansionFilter),
+                tostring(LE_EXPANSION_LEVEL_CURRENT)))
 
         local progress = journeys.JourneyProgress
         progress.majorFactionData = C_MajorFactions.GetMajorFactionData(2710)
