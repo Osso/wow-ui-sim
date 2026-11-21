@@ -34,7 +34,7 @@ fn club_calendar_tooltip_renders_only_in_range_events() {
     let env = load_full_game_ui();
     env.exec(
         r#"
-        A_Admin.SetCalendarClubEvents([[{"clubId":"guild-0","title":"In range one","inviteStatus":0,"startTime":{"year":2026,"month":4,"monthDay":15,"weekday":4,"hour":13,"minute":0}},{"clubId":"guild-0","title":"In range two","inviteStatus":0,"startTime":{"year":2026,"month":4,"monthDay":17,"weekday":6,"hour":13,"minute":0}},{"clubId":"guild-0","title":"Outside range","inviteStatus":0,"startTime":{"year":2026,"month":4,"monthDay":20,"weekday":2,"hour":13,"minute":0}}]])
+        A_Admin.SetCalendarClubEvents([[[{"clubId":"guild-0","title":"In range one","inviteStatus":0,"startTime":{"year":2026,"month":4,"monthDay":15,"weekday":4,"hour":13,"minute":0}},{"clubId":"guild-0","title":"In range two","inviteStatus":0,"startTime":{"year":2026,"month":4,"monthDay":17,"weekday":6,"hour":13,"minute":0}},{"clubId":"guild-0","title":"Outside range","inviteStatus":0,"startTime":{"year":2026,"month":4,"monthDay":20,"weekday":2,"hour":13,"minute":0}}]]])
         CommunitiesFrame:Show()
         CommunitiesFrame:SelectClub('guild-0')
         CommunitiesFrame.CommunitiesCalendarButton:OnEnter()
