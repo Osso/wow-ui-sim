@@ -239,8 +239,8 @@ fn group_buff_icon_id(state: &mut LuaState, table: GcRef<Table>) -> LuaResult<u3
 }
 
 fn group_buff_string(state: &mut LuaState, table: GcRef<Table>, key: &str) -> LuaResult<String> {
-    val_to_string(state, table_get(state, Val::Table(table), key))
-        .ok_or_else(|| invalid_group_buff_field(key))
+    let value = table_get(state, Val::Table(table), key);
+    val_to_string(state, value).ok_or_else(|| invalid_group_buff_field(key))
 }
 
 fn group_buff_bool(state: &mut LuaState, table: GcRef<Table>, key: &str) -> LuaResult<bool> {
