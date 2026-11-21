@@ -44,9 +44,11 @@ use crate::lua_api::methods::{
     table_get, table_set, table_set_static, val_to_string,
 };
 use crate::lua_api::state::MapData;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+use crate::lua_bridge::TableBuilder;
 #[cfg(feature = "retail-12-1-0")]
 use crate::lua_bridge::val_to_i32;
-use crate::lua_bridge::{FromStack, TableBuilder, stack_val, table_set_rust_fn_static};
+use crate::lua_bridge::{FromStack, stack_val, table_set_rust_fn_static};
 #[cfg(any(
     all(feature = "profile-retail", feature = "retail-12-1-5"),
     feature = "client-retail",
