@@ -24,41 +24,36 @@ fn load_game_ui() -> WowLuaEnv {
 }
 
 #[test]
-fn unit_threat_indicator_tracks_two_supplied_states() {
+fn compact_aggro_highlight_tracks_two_supplied_states() {
     let env = load_game_ui();
-    let result: String = env.eval(r#"
-        assert(type(CompactUnitFrame_UpdateHealthColor) == "function")
+    let result: bool = env.eval(r#"
+        assert(type(CompactUnitFrame_UpdateAggroHighlight) == "function")
         local cr, cg, cb = GetThreatStatusColor(3)
         assert(cr == 1 and cg == 0 and cb == 0 and GetThreatStatusColor(99) == nil)
         A_Admin.SetPartySize(1)
         local frame = CreateFrame("Frame")
         frame.unit = "player"
         frame.displayedUnit = "player"
-        frame.optionTable = {}
-        frame.displayThreatHealthBarColor = true
-        frame.healthBar = CreateFrame("StatusBar", nil, frame)
-        frame.selectionHighlight = frame:CreateTexture()
-        A_Admin.SetUnitThreatSituation("player", "target", 1, 60, 50, 500)
+        frame.optionTable = { displayAggroHighlight = true }
+        frame.aggroHighlight = frame:CreateTexture()
+        A_Admin.SetUnitThreatSituation("player", "target", 0, 50, 50, 500)
         A_Admin.SetUnitThreatSituation("pet", "target", 3, 100, 100, 1000)
-        CompactUnitFrame_UpdateHealthColor(frame)
-        local r1, g1, b1 = frame.healthBar:GetStatusBarColor()
+        CompactUnitFrame_UpdateAggroHighlight(frame)
+        local first = frame.aggroHighlight:IsShown()
         local isTanking, status, scaled, raw, value = UnitDetailedThreatSituation("player", "target")
         local firstSituation = UnitThreatSituation("player")
         local firstLead = UnitThreatPercentageOfLead("player", "target")
         A_Admin.SetUnitThreatSituation("player", "target", 2, 100, 100, 1200)
         A_Admin.SetUnitThreatSituation("pet", "target", 0, 80, 80, 1000)
-        CompactUnitFrame_UpdateHealthColor(frame)
-        local r2, g2, b2 = frame.healthBar:GetStatusBarColor()
-        local secondSituation = UnitThreatSituation("player")
-        assert(r1 ~= r2 or g1 ~= g2 or b1 ~= b2,
-            "Blizzard consumer color must change: " .. tostring(firstSituation) .. " -> " .. tostring(secondSituation))
-        assert(isTanking == false and status == 1 and scaled == 60 and raw == 50 and value == 500)
-        assert(firstSituation == 1 and firstLead == 50)
+        CompactUnitFrame_UpdateAggroHighlight(frame)
+        local second = frame.aggroHighlight:IsShown()
+        assert(first == false and second == true, "Blizzard aggro highlight must change")
+        assert(isTanking == false and status == 0 and scaled == 50 and raw == 50 and value == 500)
+        assert(firstSituation == 0 and firstLead == 50)
         assert(UnitDetailedThreatSituation("player", "target") == true)
         assert(UnitThreatSituation("player") == 2)
         assert(UnitThreatPercentageOfLead("player", "target") == 100)
-        return string.format("first=%s,%s,%s second=%s,%s,%s", tostring(r1), tostring(g1), tostring(b1), tostring(r2), tostring(g2), tostring(b2))
+        return first ~= second
     "#).expect("original Blizzard threat consumer runs");
-    let (first, second) = result.split_once(" second=").expect("color pair is returned");
-    assert_ne!(first, second, "consumer color must change for the supplied threat states");
+    assert!(result, "consumer visibility must change for the supplied threat states");
 }
