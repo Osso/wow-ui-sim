@@ -127,19 +127,27 @@ fn load_map_data_providers_closure() -> WowLuaEnv {
 }
 
 // Literal cached inputs absent from Wrath manifest1-382/cache; behavior cases stay enabled.
-#[cfg(feature = "client-retail")]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 const TAXI_MAP_ADDON_OVERRIDES: &[BlizzardAddonOverride<'static>] = &[
     BlizzardAddonOverride {
         addon: "Blizzard_FlightMap",
-        extra_roots: &["Blizzard_UIParentPanelManager", "Blizzard_SharedXML"],
+        extra_roots: &[
+            "Blizzard_FrameXML",
+            "Blizzard_UIParentPanelManager",
+            "Blizzard_SharedXML",
+        ],
     },
     BlizzardAddonOverride {
         addon: "Blizzard_WorldMap",
-        extra_roots: &["Blizzard_UIParentPanelManager", "Blizzard_SharedXML"],
+        extra_roots: &[
+            "Blizzard_FrameXML",
+            "Blizzard_UIParentPanelManager",
+            "Blizzard_SharedXML",
+        ],
     },
 ];
 
-#[cfg(feature = "client-retail")]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 const TAXI_MAP_NODE_INPUT_LUA: &str = r#"
 A_Admin.SetTaxiMapNodes({
     { mapID=2248, nodeID=101, name="Node Alpha", atlasName="TaxiNode", textureKit="", faction=0,
@@ -154,7 +162,7 @@ A_Admin.SetTaxiMapNodes({
 })
 "#;
 
-#[cfg(feature = "client-retail")]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 const TAXI_MAP_REFRESH_LUA: &str = r#"
 FlightMapFrame:SetMapID(2248)
 WorldMapFrame:SetMapID(2248)
@@ -183,7 +191,7 @@ return FlightMapFrame:GetNumActivePinsByTemplate("FlightMap_FlightPointPinTempla
        C_TaxiMap.ShouldMapShowTaxiNodes(7777)
 "#;
 
-#[cfg(feature = "client-retail")]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn load_taxi_map_addon_closure() -> (WowLuaEnv, Vec<String>) {
     let ui = blizzard_ui_dir();
     let env = new_blizzard_addon_env(&ui);
@@ -199,14 +207,14 @@ fn load_taxi_map_addon_closure() -> (WowLuaEnv, Vec<String>) {
     (env, loaded)
 }
 
-// lt-b50d tracks the Forever SoftCursor gap; R88cr requests native confirmation.
-// Keep real-frame refresh coverage on Retail and use API/model coverage for Forever.
-#[cfg(feature = "client-retail")]
+// INFERRED R88cr: Forever uses the mainline SoftCursor addon through FrameXML.
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 #[test]
 fn taxi_map_providers_refresh_pins_from_supplied_nodes() {
     let (env, loaded) = load_taxi_map_addon_closure();
     for addon in [
         "Blizzard_UIParentPanelManager",
+        "Blizzard_FrameXML",
         "Blizzard_SharedXML",
         "Blizzard_FlightMap",
         "Blizzard_SharedMapDataProviders",
@@ -215,6 +223,14 @@ fn taxi_map_providers_refresh_pins_from_supplied_nodes() {
         assert!(
             loaded.iter().any(|name| name == addon),
             "{addon} was not loaded"
+        );
+    }
+    if cfg!(feature = "client-wowforever") {
+        assert!(
+            loaded
+                .iter()
+                .any(|name| name == "Blizzard_GamepadSoftCursor"),
+            "Forever FrameXML must load its mainline SoftCursor dependency"
         );
     }
     let observed: (i32, bool, bool, i32, bool, bool, bool, bool, bool) = env
