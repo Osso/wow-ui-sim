@@ -9,6 +9,7 @@ use crate::lua_api::methods::{
 use crate::lua_bridge::{FromStack, stack_val, table_set_rust_fn_static};
 use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
+use rilua::vm::table::Table;
 use rilua::{LuaResult, Val, runtime_error};
 
 const SET_NODES_ERROR: &str = "A_Admin.SetTaxiMapNodes: expected an array of node tables";
@@ -113,7 +114,7 @@ fn read_taxi_map_nodes(state: &mut LuaState, value: Val) -> LuaResult<Vec<TaxiMa
                 .gc
                 .tables
                 .get(array_ref)
-                .map(|array| array.get_int(index))
+                .map(|array| array.get_int(index as i64))
                 .unwrap_or(Val::Nil);
             read_taxi_map_node(state, entry)
         })
@@ -142,7 +143,7 @@ fn read_taxi_map_node(state: &mut LuaState, value: Val) -> LuaResult<TaxiMapNode
     })
 }
 
-fn read_number(state: &mut LuaState, table: GcRef, key: &str) -> LuaResult<f64> {
+fn read_number(state: &mut LuaState, table: GcRef<Table>, key: &str) -> LuaResult<f64> {
     match table_get(state, Val::Table(table), key) {
         Val::Num(value) if value.is_finite() => Ok(value),
         _ => Err(invalid_field(key)),
@@ -151,7 +152,7 @@ fn read_number(state: &mut LuaState, table: GcRef, key: &str) -> LuaResult<f64> 
 
 fn read_integer(
     state: &mut LuaState,
-    table: GcRef,
+    table: GcRef<Table>,
     key: &str,
     min: f64,
     max: f64,
@@ -164,14 +165,14 @@ fn read_integer(
     }
 }
 
-fn read_string(state: &mut LuaState, table: GcRef, key: &str) -> LuaResult<String> {
+fn read_string(state: &mut LuaState, table: GcRef<Table>, key: &str) -> LuaResult<String> {
     let value = table_get(state, Val::Table(table), key);
     val_to_string(state, value).ok_or_else(|| invalid_field(key))
 }
 
 fn read_optional_string(
     state: &mut LuaState,
-    table: GcRef,
+    table: GcRef<Table>,
     key: &str,
 ) -> LuaResult<Option<String>> {
     let value = table_get(state, Val::Table(table), key);
@@ -183,7 +184,7 @@ fn read_optional_string(
     }
 }
 
-fn read_bool(state: &mut LuaState, table: GcRef, key: &str) -> LuaResult<bool> {
+fn read_bool(state: &mut LuaState, table: GcRef<Table>, key: &str) -> LuaResult<bool> {
     match table_get(state, Val::Table(table), key) {
         Val::Bool(value) => Ok(value),
         _ => Err(invalid_field(key)),
