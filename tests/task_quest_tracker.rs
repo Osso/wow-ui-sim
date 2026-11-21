@@ -7,16 +7,14 @@ fn world_quest_tracker_renders_world_tasks_and_skips_non_world_task() {
     crate::common::blizzard_addon_harness::with_blizzard_addon_startup_shape(
         &["Blizzard_ObjectiveTracker"],
         &[],
-        |env: &WowLuaEnv, loaded| {
-            assert!(loaded.iter().any(|addon| addon == "Blizzard_ObjectiveTracker"));
-            env.state()
-                .borrow_mut()
-                .quest_log_entries
-                .entries[0]
-                .info_flags
-                .is_task = true;
+        |env: &WowLuaEnv, loaded| assert_tracker_blocks(env, loaded),
+    );
+}
 
-            let result: String = env
+fn assert_tracker_blocks(env: &WowLuaEnv, loaded: &[String]) {
+    assert!(loaded.iter().any(|addon| addon == "Blizzard_ObjectiveTracker"));
+    supply_task_rows(env);
+    let result: String = env
                 .eval(
                     r#"
                     local taskIDs = {}
@@ -37,8 +35,26 @@ fn world_quest_tracker_renders_world_tasks_and_skips_non_world_task() {
                     "#,
                 )
                 .expect("world-quest tracker layout should run");
+    assert_eq!(result, "ok", "tracker result: {result}");
+}
 
-            assert_eq!(result, "ok", "tracker result: {result}");
-        },
-    );
+fn supply_task_rows(env: &WowLuaEnv) {
+    let mut state = env.state().borrow_mut();
+    state.quest_log_entries.entries[0].info_flags.is_task = true;
+    for (quest_id, text) in [(90001, "Geodes collected"), (90002, "Rift sealed")] {
+        let progress = state
+            .quest_log_entries
+            .objective_progress
+            .get_mut(&quest_id)
+            .expect("seeded world quest progress exists");
+        progress.declared_objective_count = None;
+        progress.objectives.push(wow_ui_sim::c_api::quest_objectives::QuestObjective {
+            text: text.to_string(),
+            objective_type: "item".to_string(),
+            finished: false,
+            num_fulfilled: 1,
+            num_required: 3,
+            criteria_id: None,
+        });
+    }
 }
