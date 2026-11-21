@@ -32,7 +32,8 @@ pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
 
 fn set_club_events(state: &mut LuaState) -> LuaResult<u32> {
     let input = String::from_stack(state, 1)?;
-    let records = serde_json::from_str(&input).map_err(|_| runtime_error(INPUT_ERROR))?;
+    let records = serde_json::from_str(&input)
+        .map_err(|error| runtime_error(format!("{INPUT_ERROR}: {error}")))?;
     borrow_state_mut(state)?.calendar_club_events = records;
     Ok(0)
 }
