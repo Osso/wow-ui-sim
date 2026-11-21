@@ -1649,7 +1649,7 @@ fn test_should_map_show_taxi_nodes_uses_map_type() {
 #[test]
 fn test_taxi_map_queries_return_supplied_nodes_by_map() {
     let env = env();
-    let observed: (i32, String, i32, i32, String, String, i32, bool, bool, i32) = env
+    let observed: (i32, String, i32, i32, i32, String, String, i32, bool, i32) = env
         .eval(
             r#"
             A_Admin.SetTaxiMapNodes({
