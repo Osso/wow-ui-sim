@@ -76,14 +76,15 @@ pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
 
 // INFERRED (R88cu): unknown faction IDs return false; native evidence is pending.
 fn should_display_as_journey(state: &mut LuaState) -> LuaResult<u32> {
-    let should_display = read_journey_flags(state)?.is_some_and(|flags| flags.0);
+    let should_display = read_journey_flags(state)?.is_some_and(|(display, _)| display);
     state.push(Val::Bool(should_display));
     Ok(1)
 }
 
 // INFERRED (R88cu): read each supplied faction's reward-track selection.
 fn should_use_journey_reward_track(state: &mut LuaState) -> LuaResult<u32> {
-    let should_use_track = read_journey_flags(state)?.is_some_and(|flags| flags.1);
+    let should_use_track =
+        read_journey_flags(state)?.is_some_and(|(_, use_reward_track)| use_reward_track);
     state.push(Val::Bool(should_use_track));
     Ok(1)
 }
