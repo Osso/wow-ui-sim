@@ -523,7 +523,7 @@ pub fn register_all(lua: &mut rilua::Lua) -> crate::Result<()> {
     #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     LuaApiMut::register_function(lua, "UnitThreatSituation", unit_threat_situation)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
-    crate::lua_api::workarounds::register_unit_threat_api(lua)?;
+    super::real::unit_threat::register_api(lua)?;
     LuaApiMut::register_function(lua, "UnitAffectingCombat", unit_affecting_combat)?;
     #[cfg(feature = "retail-12-0-0")]
     LuaApiMut::register_function(lua, "PlayerIsInCombat", player_is_in_combat)?;

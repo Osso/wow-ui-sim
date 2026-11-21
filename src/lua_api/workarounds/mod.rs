@@ -15,11 +15,6 @@ pub(crate) use temporary::secure_env_global_snapshot::{
     refresh_missing_globals_for_secure_addon,
 };
 pub(crate) use temporary::secure_legacy_unit_globals::copy_legacy_unit_globals_to_secureenv;
-pub(crate) use temporary::unit_threat_defaults::ThreatEntry;
-#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
-pub(crate) use temporary::unit_threat_defaults::{
-    register_admin as register_unit_threat_admin, register_api as register_unit_threat_api,
-};
 
 #[cfg(feature = "client-wrath")]
 pub(crate) use temporary::wrath_attack_action;
