@@ -35,6 +35,9 @@ fn blizzard_pet_battle_ui_action_buttons_follow_supplied_turn_legality() {
     let first: String = env.eval(
         r#"
         local selection = PetBattleFrame.BottomFrame.PetSelectionFrame
+        for index = 1, 3 do
+            PetBattleUnitFrame_SetUnit(selection["Pet" .. index], Enum.BattlePetOwner.Ally, index)
+        end
         PetBattlePetSelectionFrame_Show(selection)
         local skip = PetBattleFrame.BottomFrame.TurnTimer.SkipButton
         PetBattleActionButton_UpdateState(skip)
@@ -48,6 +51,9 @@ fn blizzard_pet_battle_ui_action_buttons_follow_supplied_turn_legality() {
     let second: String = env.eval(
         r#"
         local selection = PetBattleFrame.BottomFrame.PetSelectionFrame
+        for index = 1, 3 do
+            PetBattleUnitFrame_SetUnit(selection["Pet" .. index], Enum.BattlePetOwner.Ally, index)
+        end
         PetBattlePetSelectionFrame_Show(selection)
         local skip = PetBattleFrame.BottomFrame.TurnTimer.SkipButton
         PetBattleActionButton_UpdateState(skip)
