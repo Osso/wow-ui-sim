@@ -880,16 +880,17 @@ fn read_auto_cast_flags(
     slot: u32,
     bank: i32,
 ) -> LuaResult<Option<SpellBookItemAutoCast>> {
-    if bank == 1 {
-        // Pet rows are available only when the host supplies their slot flags.
-        return Ok(borrow_state(state)?
-            .spellbook_auto_cast
-            .get(&(slot, bank))
-            .copied());
+    match bank {
+        0 => read_player_auto_cast_flags(state, slot),
+        1 => read_supplied_pet_auto_cast_flags(state, slot),
+        _ => Ok(None),
     }
-    if bank != 0 {
-        return Ok(None);
-    }
+}
+
+fn read_player_auto_cast_flags(
+    state: &LuaState,
+    slot: u32,
+) -> LuaResult<Option<SpellBookItemAutoCast>> {
     let Some((_, entry, _)) = i32::try_from(slot)
         .ok()
         .and_then(spellbook_data::get_spell_at_slot)
@@ -901,10 +902,21 @@ fn read_auto_cast_flags(
     }
     let flags = borrow_state(state)?
         .spellbook_auto_cast
-        .get(&(slot, bank))
+        .get(&(slot, 0))
         .copied()
         .unwrap_or_default();
     Ok(Some(flags))
+}
+
+fn read_supplied_pet_auto_cast_flags(
+    state: &LuaState,
+    slot: u32,
+) -> LuaResult<Option<SpellBookItemAutoCast>> {
+    // Pet rows are available only when the host supplies their slot flags.
+    Ok(borrow_state(state)?
+        .spellbook_auto_cast
+        .get(&(slot, 1))
+        .copied())
 }
 
 fn c_spell_book_set_auto_cast_enabled(state: &mut LuaState) -> LuaResult<u32> {
