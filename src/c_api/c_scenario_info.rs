@@ -49,59 +49,70 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
     )
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+struct ScenarioInfoSnapshot {
+    in_scenario: bool,
+    name: String,
+    current_step: i32,
+    num_steps: i32,
+    flags: i32,
+    xp: i32,
+    money: i32,
+    scenario_type: i32,
+    texture_kit: String,
+    scenario_id: i32,
+}
+
 /// INFERRED from the selected objective tracker; native evidence is pending R88dh.
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn get_scenario_info(state: &mut LuaState) -> LuaResult<u32> {
-    let (
-        in_scenario,
-        name,
-        current_step,
-        num_steps,
-        flags,
-        xp,
-        money,
-        scenario_type,
-        texture_kit,
-        scenario_id,
-    ) = {
-        let scenario = &borrow_state(state)?.scenario;
-        (
-            scenario.in_scenario,
-            scenario.name.clone(),
-            scenario.current_step,
-            scenario.num_steps,
-            scenario.flags,
-            scenario.xp,
-            scenario.money,
-            scenario.scenario_type,
-            scenario.texture_kit.clone(),
-            scenario.scenario_id,
-        )
-    };
-    let name = if in_scenario {
-        create_string(state, &name)
+    let snapshot = read_scenario_info(state)?;
+    push_scenario_info(state, snapshot);
+    Ok(13)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn read_scenario_info(state: &LuaState) -> LuaResult<ScenarioInfoSnapshot> {
+    let scenario = &borrow_state(state)?.scenario;
+    Ok(ScenarioInfoSnapshot {
+        in_scenario: scenario.in_scenario,
+        name: scenario.name.clone(),
+        current_step: scenario.current_step,
+        num_steps: scenario.num_steps,
+        flags: scenario.flags,
+        xp: scenario.xp,
+        money: scenario.money,
+        scenario_type: scenario.scenario_type,
+        texture_kit: scenario.texture_kit.clone(),
+        scenario_id: scenario.scenario_id,
+    })
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn push_scenario_info(state: &mut LuaState, snapshot: ScenarioInfoSnapshot) {
+    let name = if snapshot.in_scenario {
+        create_string(state, &snapshot.name)
     } else {
         Val::Nil
     };
     state.push(name);
-    for value in [current_step, num_steps, flags] {
+    for value in [snapshot.current_step, snapshot.num_steps, snapshot.flags] {
         state.push(Val::Num(f64::from(value)));
     }
     state.push(Val::Nil);
     state.push(Val::Nil);
     state.push(Val::Nil);
-    for value in [xp, money, scenario_type] {
+    for value in [snapshot.xp, snapshot.money, snapshot.scenario_type] {
         state.push(Val::Num(f64::from(value)));
     }
     state.push(Val::Nil);
-    let texture_kit = if texture_kit.is_empty() {
+    let texture_kit = if snapshot.texture_kit.is_empty() {
         Val::Nil
     } else {
-        create_string(state, &texture_kit)
+        create_string(state, &snapshot.texture_kit)
     };
     state.push(texture_kit);
-    state.push(Val::Num(f64::from(scenario_id)));
-    Ok(13)
+    state.push(Val::Num(f64::from(snapshot.scenario_id)));
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
