@@ -1,9 +1,6 @@
 #![cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 
-#[path = "common/blizzard_addon_harness.rs"]
-mod blizzard_addon_harness;
-#[path = "common/panel_fixtures.rs"]
-mod panel_fixtures;
+mod common;
 
 fn assert_groupfinder_cross_faction_consumer(env: &wow_ui_sim::lua_api::WowLuaEnv) {
     env.exec(
@@ -32,7 +29,7 @@ fn assert_groupfinder_cross_faction_consumer(env: &wow_ui_sim::lua_api::WowLuaEn
 #[cfg(feature = "client-retail")]
 #[test]
 fn retail_groupfinder_raidfinder_reports_cross_faction_party() {
-    blizzard_addon_harness::with_blizzard_addon_startup_shape(
+    common::blizzard_addon_harness::with_blizzard_addon_startup_shape(
         &["Blizzard_GroupFinder"],
         &[],
         |env, loaded| {
@@ -45,7 +42,7 @@ fn retail_groupfinder_raidfinder_reports_cross_faction_party() {
 #[cfg(feature = "client-wowforever")]
 #[test]
 fn wowforever_groupfinder_raidfinder_reports_cross_faction_party() {
-    blizzard_addon_harness::with_blizzard_addon_startup_shape(
+    common::blizzard_addon_harness::with_blizzard_addon_startup_shape(
         &["Blizzard_GroupFinder"],
         &[],
         |env, loaded| {
