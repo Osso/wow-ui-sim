@@ -10,6 +10,7 @@ end
 if not taskIDs[80000] then return "supplied_task_missing" end
 if not taskIDs[90002] then return "second_task_missing_from_table" end
 if not QuestUtils_IsQuestWorldQuest(90002) then return "second_task_not_world" end
+if C_Map.GetBestMapForUnit("player") ~= 2025 then return "player_map_not_supplied" end
 local localArea, localMap, count = GetTaskInfo(90002)
 if not localArea or not localMap then return "local_task_map_flags" end
 if count ~= 1 then return "second_task_wrong_count" end
