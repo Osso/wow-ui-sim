@@ -568,6 +568,18 @@ pub struct GossipState {
     pub options: Vec<GossipOption>,
     pub active_quests: Vec<GossipQuestRow>,
     pub available_quests: Vec<GossipQuestRow>,
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub pois: HashMap<i32, GossipPoiInfo>,
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[derive(Debug, Clone)]
+pub struct GossipPoiInfo {
+    pub poi_id: i32,
+    pub name: String,
+    pub position: (f64, f64),
+    pub atlas_name: Option<String>,
+    pub texture_index: i32,
 }
 
 /// Torghast (Jailer's Tower) run state.  Drives

@@ -49,9 +49,8 @@ static NAMESPACE_NIL_STUBS: &[NsStub] = &[
     // SimState-backed in c_api/c_death_recap.rs, not stubs.
     // C_EncounterJournal GetEncounterInfo / GetInstanceInfo are
     // static-seeded in missing_surface/encounter_journal.rs, not stubs.
-    // C_GossipInfo GetActiveQuests / GetAvailableQuests / GetOptions are
-    // SimState-backed in missing_surface/gossip_info.rs. GetPoiForUiMapID
-    // lives in workarounds::temporary until gossip POI state exists.
+    // C_GossipInfo queries are SimState-backed in missing_surface/gossip_info.rs
+    // and c_api/c_gossip_info_poi.rs for Retail and WoW Forever.
     // C_Heirloom GetHeirloomInfo is WorldState-backed in
     // missing_surface/heirloom.rs, not a stub.
     // GetHeirloomItemIDFromDisplayedSlot was a misnamed stub (the real

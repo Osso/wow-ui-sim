@@ -207,6 +207,92 @@ fn load_taxi_map_addon_closure() -> (WowLuaEnv, Vec<String>) {
     (env, loaded)
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+const GOSSIP_MAP_OVERRIDES: &[BlizzardAddonOverride<'static>] = &[BlizzardAddonOverride {
+    addon: "Blizzard_WorldMap",
+    extra_roots: &["Blizzard_FrameXML", "Blizzard_UIParentPanelManager"],
+}];
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+const GOSSIP_MAP_REFRESH_LUA: &str = r#"
+local provider = CreateFromMixins(GossipDataProviderMixin)
+WorldMapFrame:AddDataProvider(provider)
+local function readGossipPin(mapID)
+    WorldMapFrame:SetMapID(mapID)
+    provider:RefreshAllData()
+    local pin = WorldMapFrame:EnumeratePinsByTemplate("GossipPinTemplate")()
+    if not pin then return 0, "", -1, -1 end
+    local x, y = pin:GetPosition()
+    return WorldMapFrame:GetNumActivePinsByTemplate("GossipPinTemplate"), pin.poiInfo.name, x, y
+end
+local countA, nameA, xA, yA = readGossipPin(2248)
+local infoA = C_GossipInfo.GetPoiInfo(2248, 401)
+local countB, nameB, xB, yB = readGossipPin(84)
+local infoB = C_GossipInfo.GetPoiInfo(84, 402)
+return countA, nameA, xA, yA, infoA.atlasName, infoA.textureIndex,
+       countB, nameB, xB, yB, infoB.atlasName, infoB.textureIndex
+"#;
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn load_gossip_map_addon_closure() -> WowLuaEnv {
+    let ui = blizzard_ui_dir();
+    let env = new_blizzard_addon_env(&ui);
+    env.exec(
+        "A_Admin.SetGossipPoi(2248, 401, 'North Gossip', 0.2, 0.8, 'TaxiNode', 3); A_Admin.SetGossipPoi(84, 402, 'South Gossip', 0.7, 0.3, 'TaxiNode', 7)",
+    )
+    .expect("supply map-specific gossip POIs before loading Blizzard consumers");
+    let loaded = load_blizzard_addon_closure_into_env(
+        &env,
+        &ui,
+        &["Blizzard_SharedMapDataProviders", "Blizzard_WorldMap"],
+        GOSSIP_MAP_OVERRIDES,
+    );
+    assert!(loaded.iter().any(|name| name == "Blizzard_FrameXML"));
+    assert!(loaded.iter().any(|name| name == ROOT_ADDON));
+    assert!(loaded.iter().any(|name| name == "Blizzard_WorldMap"));
+    env.apply_post_load_workarounds();
+    env
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn gossip_map_provider_refreshes_the_supplied_poi_for_each_map() {
+    let env = load_gossip_map_addon_closure();
+    let observed: (
+        i32,
+        String,
+        f64,
+        f64,
+        String,
+        i32,
+        i32,
+        String,
+        f64,
+        f64,
+        String,
+        i32,
+    ) = env
+        .eval(GOSSIP_MAP_REFRESH_LUA)
+        .expect("original gossip provider should refresh pins on the real WorldMapFrame");
+    assert_eq!(
+        observed,
+        (
+            1,
+            "North Gossip".into(),
+            0.2,
+            0.8,
+            "TaxiNode".into(),
+            3,
+            1,
+            "South Gossip".into(),
+            0.7,
+            0.3,
+            "TaxiNode".into(),
+            7
+        )
+    );
+}
+
 // INFERRED R88cr: Forever uses the mainline SoftCursor addon through FrameXML.
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 #[test]

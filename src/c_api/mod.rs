@@ -5,6 +5,8 @@
 
 pub(crate) mod azerite_essence_spell_selector;
 mod c_account_info;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) mod c_gossip_info_poi;
 pub mod c_guild_info;
 pub mod c_heirloom;
 pub mod c_recruit_a_friend;
