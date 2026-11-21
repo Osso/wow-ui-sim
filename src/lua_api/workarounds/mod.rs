@@ -209,6 +209,7 @@ pub(crate) fn update_player_location_for_screen(
 }
 
 fn apply_temporary_state_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     use rilua::LuaApiMut;
 
     temporary::garrison_mission_lists::apply_bootstrap(lua)?;
