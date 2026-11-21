@@ -22,6 +22,11 @@ fn assert_tracker_blocks(env: &WowLuaEnv, loaded: &[String]) {
                       taskIDs[questID] = true
                     end
                     if not taskIDs[80000] then return "supplied_task_missing" end
+                    if not taskIDs[90002] then return "second_task_missing_from_table" end
+                    if not QuestUtils_IsQuestWorldQuest(90002) then return "second_task_not_world" end
+                    local inArea, onMap, count = GetTaskInfo(90002)
+                    if not inArea then return "second_task_not_in_area" end
+                    if count ~= 1 then return "second_task_wrong_count" end
                     WorldQuestObjectiveTracker:Update(2000, false)
                     local shown = {}
                     for _, questID in ipairs(WorldQuestObjectiveTracker.currentContentList) do
@@ -30,6 +35,7 @@ fn assert_tracker_blocks(env: &WowLuaEnv, loaded: &[String]) {
                     local blocks = WorldQuestObjectiveTracker.usedBlocks[WorldQuestObjectiveTracker.blockTemplate]
                     if not blocks[90001] then return "first_task_block_missing" end
                     if not blocks[90002] then return "second_task_block_missing" end
+                    if not shown[90002] then return "second_task_not_in_content_list" end
                     if shown[80000] then return "non_world_task_shown" end
                     return "ok"
                     "#,
