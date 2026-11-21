@@ -33,6 +33,9 @@ A_Admin.SetGarrisonMissions({
 })
 
 local list = CovenantMissionFrame.MissionTab.MissionList
+if not list.ScrollBox:GetView() then
+    CovenantMissionFrame:OnLoadMainFrame()
+end
 list:UpdateMissions()
 return #list.combinedMissions,
     list.combinedMissions[1].missionID,
