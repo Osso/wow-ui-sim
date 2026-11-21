@@ -119,6 +119,13 @@ const SHARED_PIN_MIXINS: &[&str] = &[
     "WorldQuestPinMixin",
 ];
 
+// Forever's Mainline TOC line 29 excludes EncounterJournalDataProvider.xml for camelot.
+#[cfg(feature = "client-wowforever")]
+const PROFILE_EXCLUDED_PIN_MIXINS: &[&str] =
+    &["EncounterJournalPinMixin", "EncounterMapTrackingPinMixin"];
+#[cfg(not(feature = "client-wowforever"))]
+const PROFILE_EXCLUDED_PIN_MIXINS: &[&str] = &[];
+
 fn load_map_data_providers_closure() -> WowLuaEnv {
     let (env, _) =
         build_blizzard_addon_closure_env(&blizzard_ui_dir(), &[ROOT_ADDON], ADDON_OVERRIDES);
@@ -836,7 +843,7 @@ fn publishes_pin_mixin_tables_for_per_widget_pins() {
     let pin_mixins = SHARED_PIN_MIXINS
         .iter()
         .copied()
-        .filter(|mixin| !toc_layout::forever() || *mixin != "EncounterJournalPinMixin");
+        .filter(|mixin| !PROFILE_EXCLUDED_PIN_MIXINS.contains(mixin));
 
     for mixin in pin_mixins {
         let kind: String = env
