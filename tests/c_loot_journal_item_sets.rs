@@ -1,8 +1,10 @@
 #![cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 
 use std::path::PathBuf;
-use wow_ui_sim::loader::load_addon;
+use wow_ui_sim::loader::{discover_blizzard_addons_for_screen, load_addon};
 use wow_ui_sim::lua_api::WowLuaEnv;
+use wow_ui_sim::screen::ScreenKind;
+use wow_ui_sim::startup::fire_startup_events_for_screen;
 
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::client_profile::blizzard_ui_addons_dir_under(std::path::Path::new(env!(
@@ -19,12 +21,25 @@ fn encounter_journal_toc() -> PathBuf {
     }
 }
 
-fn load_loot_journal(env: &WowLuaEnv) {
+fn load_full_game_ui(env: &WowLuaEnv) {
     let ui = blizzard_ui_dir();
-    env.state().borrow_mut().addon_base_paths = vec![ui];
+    env.set_screen_size(1024.0, 768.0);
+    env.set_screen_mode(ScreenKind::Game);
+    env.state().borrow_mut().addon_base_paths = vec![ui.clone()];
     wow_ui_sim::xml::register_intrinsic_templates();
+    for (name, toc_path) in discover_blizzard_addons_for_screen(&ui, ScreenKind::Game) {
+        load_addon(&env.loader_env(), &toc_path)
+            .unwrap_or_else(|err| panic!("[load {name}] FAILED: {err}"));
+    }
+    env.apply_post_load_workarounds();
+    fire_startup_events_for_screen(env, ScreenKind::Game);
+}
+
+fn load_loot_journal(env: &WowLuaEnv) {
+    load_full_game_ui(env);
     load_addon(&env.loader_env(), &encounter_journal_toc())
         .expect("selected Encounter Journal TOC should load");
+    env.apply_post_load_workarounds();
 }
 
 #[test]
