@@ -89,7 +89,11 @@ fn r88e5_trade_offer_warning_consumer_reads_shared_host_value() {
 fn r88e5_trade_money_consumer_uses_supplied_offer_and_cursor_state() {
     with_blizzard_addon_startup_shape(&["Blizzard_UIPanels_Game"], &[], |env, loaded| {
         assert!(loaded.iter().any(|name| name == "Blizzard_UIPanels_Game"));
-        assert_eq!(env.eval::<String>("return type(GetMoneyTypeInfoField)").unwrap(), "function");
+        assert_eq!(
+            env.eval::<String>("return type(GetMoneyTypeInfoField)")
+                .unwrap(),
+            "function"
+        );
 
         supply_trade_offer(env, 100);
         assert_trade_money_pickup(env, MONEY_TRUNCATION_CASE, (75.0, "money".into(), 25.0));

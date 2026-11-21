@@ -5,6 +5,7 @@ use crate::lua_api::methods::{borrow_state, create_string, create_table, table_s
 use crate::lua_bridge::FromStack;
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
+use std::collections::HashSet;
 
 use super::data::{SEEDED_WORLD_QUEST_TIME_LEFT_MINUTES, WORLD_QUESTS};
 use super::handlers::{find_world_quest, set_array_value};
@@ -72,6 +73,82 @@ pub fn get_reward_skill_points_nil_triplet(state: &mut LuaState) -> LuaResult<u3
     state.push(Val::Nil);
     state.push(Val::Nil);
     Ok(3)
+}
+
+/// INFERRED from R88cq: tracker callers consume area/map flags, objective count,
+/// task name and objective-display classification from `GetTaskInfo`.
+pub(crate) fn get_task_info(state: &mut LuaState) -> LuaResult<u32> {
+    let quest_id = Option::<f64>::from_stack(state, 1)?.unwrap_or(0.0) as i32;
+    let Some((task_map_id, num_objectives, title)) = task_info(state, quest_id)? else {
+        return Ok(0);
+    };
+    let player_map_id = crate::c_api::c_map::best_map_for_player(state)?;
+    let on_task_map = task_map_id.is_some_and(|map_id| f64::from(map_id) == player_map_id);
+    state.push(Val::Bool(on_task_map));
+    state.push(Val::Bool(on_task_map));
+    state.push(Val::Num(f64::from(num_objectives)));
+    let title = create_string(state, &title);
+    state.push(title);
+    // INFERRED from R88cq: no selected task is displayed as a tracker objective.
+    state.push(Val::Bool(false));
+    Ok(5)
+}
+
+fn task_info(state: &LuaState, quest_id: i32) -> LuaResult<Option<(Option<i32>, i32, String)>> {
+    if let Some(quest) = read_available_world_quests(state)?
+        .into_iter()
+        .find(|quest| quest.quest_id == quest_id)
+    {
+        let count = if quest_objectives::ENABLED {
+            quest_objectives::objective_count(
+                &borrow_state(state)?.quest_log_entries,
+                quest.quest_id,
+            )
+        } else {
+            quest.num_objectives
+        };
+        return Ok(Some((Some(quest.map_id), count, quest.title.to_string())));
+    }
+    let sim = borrow_state(state)?;
+    let Some(entry) = sim
+        .quest_log_entries
+        .entries
+        .iter()
+        .find(|entry| entry.quest_id == quest_id && entry.info_flags.is_task)
+    else {
+        return Ok(None);
+    };
+    let count = quest_objectives::objective_count(&sim.quest_log_entries, quest_id);
+    Ok(Some((entry.map_id, count, entry.title.clone())))
+}
+
+pub(crate) fn build_tasks_table(state: &mut LuaState) -> LuaResult<u32> {
+    let available = read_available_world_quests(state)?;
+    let mut task_ids: HashSet<i32> = available.iter().map(|quest| quest.quest_id).collect();
+    let task_entries: Vec<_> = {
+        let sim = borrow_state(state)?;
+        let completed = &sim.quest_log_entries.completed_quest_ids;
+        sim.quest_log_entries
+            .entries
+            .iter()
+            .filter(|entry| entry.info_flags.is_task && !completed.contains(&entry.quest_id))
+            .map(|entry| entry.quest_id)
+            .filter(|quest_id| task_ids.insert(*quest_id))
+            .collect()
+    };
+    let task_ids = available
+        .into_iter()
+        .map(|quest| quest.quest_id)
+        .chain(task_entries);
+    let result = create_table(state);
+    let Val::Table(result_ref) = result else {
+        unreachable!("create_table must return a table");
+    };
+    for (index, quest_id) in (1..).zip(task_ids) {
+        set_array_value(state, result_ref, index, Val::Num(f64::from(quest_id)));
+    }
+    state.push(result);
+    Ok(1)
 }
 
 pub fn build_task_quest_info(state: &mut LuaState) -> LuaResult<u32> {

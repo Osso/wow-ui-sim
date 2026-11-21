@@ -92,6 +92,8 @@ pub const TASK_QUEST_METHODS: &[(&str, SurfaceFn)] = &[
 
 const LIVE_QUEST_GLOBALS: &[(&str, SurfaceFn)] = &[
     ("GetQuestBackgroundMaterial", get_quest_background_material),
+    ("GetTasksTable", build_tasks_table),
+    ("GetTaskInfo", get_task_info),
     ("IsQuestCompletable", is_quest_completable),
     ("CompleteQuest", complete_quest),
     ("AddAutoQuestPopUp", add_auto_quest_popup),

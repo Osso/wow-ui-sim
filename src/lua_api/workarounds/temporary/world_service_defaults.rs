@@ -51,11 +51,6 @@ const FOREVER: &str = r#"
 if rawget(C_GameRules, "GetForeverExperiencePreset") == nil then
     function C_GameRules.GetForeverExperiencePreset() return nil end
 end
--- VERIFIED: Forever registers this API; the incomplete Retail C_QuestLog census has no exact entry.
--- UNKNOWN: the Retail census does not establish export status or timer behavior.
-if rawget(C_QuestLog, "GetQuestTimers") == nil then
-    function C_QuestLog.GetQuestTimers() return {} end
-end
 "#;
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {

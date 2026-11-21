@@ -1049,10 +1049,14 @@ fn c_map_get_best_map_for_unit(state: &mut LuaState) -> LuaResult<u32> {
     c_map_get_current_map_id(state)
 }
 
-fn c_map_get_current_map_id(state: &mut LuaState) -> LuaResult<u32> {
-    let current = borrow_state(state)?
+pub(crate) fn best_map_for_player(state: &LuaState) -> LuaResult<f64> {
+    Ok(borrow_state(state)?
         .quest_log_selected_map_id
-        .unwrap_or(f64::from(DEFAULT_PLAYER_MAP_ID));
+        .unwrap_or(f64::from(DEFAULT_PLAYER_MAP_ID)))
+}
+
+fn c_map_get_current_map_id(state: &mut LuaState) -> LuaResult<u32> {
+    let current = best_map_for_player(state)?;
     state.push(Val::Num(current));
     Ok(1)
 }

@@ -1,20 +1,11 @@
 //! Temporary quest/objective tracker query defaults.
 //!
-//! The simulator does not model bonus objective task lists, spell-targetable
-//! quest state, or auto quest popup toasts yet. Keep these startup-safe empty
-//! defaults in the workaround layer instead of the central runtime bootstrap.
+//! Keep unsupported spell-targetable quest and auto-popup defaults in the
+//! workaround layer instead of the central runtime bootstrap.
 
 use crate::lua_api::LoaderEnv;
 
 const QUEST_OBJECTIVE_DEFAULTS_LUA: &str = r#"
--- Bonus / world-quest objective trackers iterate the task list at startup.
--- Return an empty table so the `for ... in ipairs(tasksTable)` loops no-op.
-if GetTasksTable == nil then
-  function GetTasksTable()
-    return {}
-  end
-end
-
 if SpellCanTargetQuest == nil then
   function SpellCanTargetQuest()
     return false
@@ -96,6 +87,15 @@ if QuestUtil.QuestShowsItemByIndex == nil then
 end
 "#;
 
+// Keep the unsupported-profile shim byte-identical; Retail/Forever use modeled tasks.
+const LEGACY_TASKS_TABLE_LUA: &str = r#"-- Bonus / world-quest objective trackers iterate the task list at startup.
+-- Return an empty table so the `for ... in ipairs(tasksTable)` loops no-op.
+if GetTasksTable == nil then
+  function GetTasksTable()
+    return {}
+  end
+end"#;
+
 // Existing non-Retail/Forever empty popup domain remains outside QL-2.
 const UNMODELED_POPUPS_LUA: &str = r#"
 if GetNumAutoQuestPopUps == nil then
@@ -111,6 +111,9 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
         lua.exec(UNMODELED_POPUPS_LUA)?;
     }
     lua.exec(QUEST_OBJECTIVE_DEFAULTS_LUA)?;
+    if !crate::c_api::quest_objectives::ENABLED {
+        lua.exec(LEGACY_TASKS_TABLE_LUA)?;
+    }
     Ok(())
 }
 
@@ -119,12 +122,16 @@ pub(crate) fn patch_loader(env: &LoaderEnv<'_>) {
         let _ = env.exec(UNMODELED_POPUPS_LUA);
     }
     let _ = env.exec(QUEST_OBJECTIVE_DEFAULTS_LUA);
+    if !crate::c_api::quest_objectives::ENABLED {
+        let _ = env.exec(LEGACY_TASKS_TABLE_LUA);
+    }
 }
 
 #[cfg(test)]
 mod tests {
     use crate::lua_api::WowLuaEnv;
 
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     #[test]
     fn installs_empty_quest_objective_defaults() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
