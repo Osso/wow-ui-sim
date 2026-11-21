@@ -58,6 +58,8 @@ use super::admin_events::{fire_event_admin, toggle_debug_anchors, toggle_debug_b
 use super::admin_interactions::{close_mailbox, open_mailbox};
 use super::admin_mail::{add_mail, clear_inbox, set_inbox_count, set_stationery_catalog};
 use super::admin_movement::{set_falling, set_flying, set_mounted, set_moving, set_swimming};
+#[cfg(feature = "client-retail")]
+use super::admin_party_target_helpers::set_party_member_faction;
 use super::admin_party_target_helpers::{
     clear_focus, clear_target, kill_party_member, res_party_member, set_focus, set_focus_health,
     set_focus_power, set_focus_type, set_party_leader, set_party_member,
@@ -258,7 +260,8 @@ fn register_channel_inputs(b: TableBuilder) -> LuaResult<TableBuilder> {
 }
 
 fn register_targeting_party(b: TableBuilder) -> LuaResult<TableBuilder> {
-    b.set_function("SetTarget", set_target)?
+    let b = b
+        .set_function("SetTarget", set_target)?
         .set_function("ClearTarget", clear_target)?
         .set_function("SetFocus", set_focus)?
         .set_function("ClearFocus", clear_focus)?
@@ -272,8 +275,10 @@ fn register_targeting_party(b: TableBuilder) -> LuaResult<TableBuilder> {
         .set_function("SetPartyLeader", set_party_leader)?
         .set_function("SetPartyMember", set_party_member)?
         .set_function("SetPartyMemberConnected", set_party_member_connected)?
-        .set_function("SetPartyMemberHealth", set_party_member_health)?
-        .set_function("KillPartyMember", kill_party_member)?
+        .set_function("SetPartyMemberHealth", set_party_member_health)?;
+    #[cfg(feature = "client-retail")]
+    let b = b.set_function("SetPartyMemberFaction", set_party_member_faction)?;
+    b.set_function("KillPartyMember", kill_party_member)?
         .set_function("ResPartyMember", res_party_member)?
         .set_function("SetRotDamage", set_rot_damage)?
         .set_function("SetEnemyPool", super::targeting_verbs::admin_set_enemy_pool)

@@ -49,6 +49,7 @@ fn required_string(state: &mut LuaState, index: i32) -> Option<String> {
 fn synthesize_party_member(name: String) -> PartyMember {
     PartyMember {
         map_position: None,
+        faction_group: None,
         name,
         name_cached: true,
         connected: true,

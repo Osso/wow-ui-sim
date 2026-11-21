@@ -344,6 +344,7 @@ fn seed_group(env: &WowLuaEnv, count: usize, local_leader: bool) {
     state.party_members = (0..count)
         .map(|index| PartyMember {
             map_position: None,
+            faction_group: None,
             name: format!("Member{index}"),
             name_cached: true,
             connected: true,

@@ -53,6 +53,8 @@ pub struct TargetInfo {
 pub struct PartyMember {
     /// Explicit normalized map input; absent until supplied by simulator state.
     pub map_position: Option<crate::c_api::c_map::UnitMapPosition>,
+    /// Supplied member faction group; absent members inherit the player's group.
+    pub faction_group: Option<String>,
     pub name: String,
     /// Whether the member's name is available in the name cache.
     /// INFERRED initialization: existing named fixtures start cached (true).
@@ -522,6 +524,7 @@ pub fn default_party() -> Vec<PartyMember> {
                 let (buffs, debuffs) = default_party_auras(i);
                 PartyMember {
                     map_position: None,
+                    faction_group: None,
                     name: name.to_string(),
                     name_cached: true,
                     connected: true,

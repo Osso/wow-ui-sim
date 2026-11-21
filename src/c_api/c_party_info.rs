@@ -9,9 +9,11 @@
 
 use crate::c_api::helpers::{ensure_namespace, set_table_array};
 use crate::lua_api::globals::group_queries::active_party_count;
-use crate::lua_api::methods::create_table;
+#[cfg(any(not(feature = "retail-12-0-7"), feature = "client-retail"))]
+use crate::lua_api::methods::borrow_state;
 #[cfg(not(feature = "retail-12-0-7"))]
-use crate::lua_api::methods::{borrow_state, borrow_state_mut};
+use crate::lua_api::methods::borrow_state_mut;
+use crate::lua_api::methods::create_table;
 #[cfg(not(feature = "retail-12-0-7"))]
 use crate::lua_api::state::SEEDED_LOCAL_CHARACTER_GUID;
 use crate::lua_bridge::FromStack;
@@ -131,6 +133,13 @@ fn register_group_membership_probes(
     state: &mut LuaState,
     table_ref: GcRef<Table>,
 ) -> LuaResult<()> {
+    #[cfg(feature = "client-retail")]
+    table_set_rust_fn_static(
+        state,
+        table_ref,
+        "IsCrossFactionParty",
+        c_party_info_is_cross_faction_party,
+    )?;
     table_set_rust_fn_static(
         state,
         table_ref,
@@ -214,6 +223,31 @@ fn register_loot_method_probes(state: &mut LuaState, table_ref: GcRef<Table>) ->
     #[cfg(feature = "retail-12-0-5")]
     loot_method::register(state, table_ref)?;
     Ok(())
+}
+
+/// INFERRED (R88dc pending native evidence): unsupplied member factions match the player.
+#[cfg(feature = "client-retail")]
+fn c_party_info_is_cross_faction_party(state: &mut LuaState) -> LuaResult<u32> {
+    let category = Option::<f64>::from_stack(state, 1)?.map(|value| value as i32);
+    let cross_faction = if category == Some(2) {
+        false
+    } else {
+        let sim = borrow_state(state)?;
+        let player_faction = crate::lua_api::game_data::RACE_DATA
+            .get(sim.player.race_index)
+            .map(|(_, _, faction)| *faction)
+            .filter(|faction| !faction.is_empty())
+            .unwrap_or("Alliance");
+        sim.party_group_active
+            && sim.party_members.iter().any(|member| {
+                member
+                    .faction_group
+                    .as_deref()
+                    .is_some_and(|faction| faction != player_faction)
+            })
+    };
+    state.push(Val::Bool(cross_faction));
+    Ok(1)
 }
 
 fn c_party_info_get_active_categories(state: &mut LuaState) -> LuaResult<u32> {

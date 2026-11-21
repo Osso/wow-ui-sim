@@ -95,6 +95,7 @@ mod retail {
             sim.party_group_active = true;
             sim.party_members = vec![PartyMember {
                 map_position: None,
+                faction_group: None,
                 name: "Empty Focus Member".into(),
                 name_cached: true,
                 connected: true,

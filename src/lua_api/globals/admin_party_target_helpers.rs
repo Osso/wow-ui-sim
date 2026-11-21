@@ -60,6 +60,7 @@ pub(super) fn make_target_info(
 pub(super) fn default_party_member() -> PartyMember {
     PartyMember {
         map_position: None,
+        faction_group: None,
         name: "Unknown".to_string(),
         name_cached: true,
         connected: true,
@@ -270,6 +271,19 @@ pub(super) fn set_party_member(state: &mut LuaState) -> LuaResult<u32> {
         let info = crate::c_api::unit_aura_access::full_update_payload(state, &unit_token)?;
         let unit = crate::lua_api::methods::create_string(state, &unit_token);
         dispatch_event_now(state, "UNIT_AURA", &[unit, info])?;
+    }
+    Ok(0)
+}
+
+#[cfg(feature = "client-retail")]
+pub(super) fn set_party_member_faction(state: &mut LuaState) -> LuaResult<u32> {
+    let index = i32::from_stack(state, 1)?;
+    let faction_group = String::from_stack(state, 2)?;
+    if let Some(member) = borrow_state_mut(state)?
+        .party_members
+        .get_mut((index - 1) as usize)
+    {
+        member.faction_group = Some(faction_group);
     }
     Ok(0)
 }
