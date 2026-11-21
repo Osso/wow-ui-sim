@@ -2,11 +2,27 @@
 //! Other date/time operations remain explicitly temporary providers.
 
 use crate::c_api::ensure_namespace;
-use crate::lua_api::methods::table_get;
-use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
+use crate::lua_api::methods::{borrow_state, borrow_state_mut, table_get};
+use crate::lua_bridge::{TableBuilder, stack_val, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val, runtime_error};
 use std::cmp::Ordering;
+
+/// INFERRED (R88df): default regional reset schedule; hosts can supply the region's values.
+#[derive(Debug, Clone, Copy)]
+pub(crate) struct WeeklyResetSchedule {
+    pub weekday: u8,
+    pub hour: u8,
+}
+
+impl Default for WeeklyResetSchedule {
+    fn default() -> Self {
+        Self {
+            weekday: 3,
+            hour: 7,
+        }
+    }
+}
 
 /// Weekday is derived metadata, not part of a civil timestamp's ordering.
 #[derive(PartialEq, Eq, PartialOrd, Ord)]
@@ -39,7 +55,120 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
         namespace,
         "CompareCalendarTime",
         compare_calendar_time,
-    )
+    )?;
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
+        table_set_rust_fn_static(
+            state,
+            namespace,
+            "GetWeeklyResetStartTime",
+            weekly_reset_start,
+        )?;
+        table_set_rust_fn_static(
+            state,
+            namespace,
+            "GetSecondsUntilWeeklyReset",
+            seconds_until_weekly_reset,
+        )?;
+        table_set_rust_fn_static(
+            state,
+            namespace,
+            "GetSecondsUntilDailyReset",
+            seconds_until_daily_reset,
+        )?;
+    }
+    Ok(())
+}
+
+pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
+        builder.set_function("SetWeeklyResetSchedule", set_weekly_reset_schedule)
+    } else {
+        Ok(builder)
+    }
+}
+
+fn set_weekly_reset_schedule(state: &mut LuaState) -> LuaResult<u32> {
+    let weekday = schedule_number(state, 1, 1, 7, "weekday")? as u8;
+    let hour = schedule_number(state, 2, 0, 23, "hour")? as u8;
+    borrow_state_mut(state)?.weekly_reset_schedule = WeeklyResetSchedule { weekday, hour };
+    Ok(0)
+}
+
+fn schedule_number(state: &LuaState, index: i32, min: i32, max: i32, name: &str) -> LuaResult<i32> {
+    let Val::Num(value) = stack_val(state, index) else {
+        return Err(runtime_error(format!(
+            "A_Admin.SetWeeklyResetSchedule: {name} must be an integer in {min}..{max}"
+        )));
+    };
+    if !value.is_finite()
+        || value.fract() != 0.0
+        || value < f64::from(min)
+        || value > f64::from(max)
+    {
+        return Err(runtime_error(format!(
+            "A_Admin.SetWeeklyResetSchedule: {name} must be an integer in {min}..{max}"
+        )));
+    }
+    Ok(value as i32)
+}
+
+fn weekly_reset_start(state: &mut LuaState) -> LuaResult<u32> {
+    let start = weekly_reset_timestamp(state)?;
+    state.push(Val::Num(start as f64));
+    Ok(1)
+}
+
+fn seconds_until_weekly_reset(state: &mut LuaState) -> LuaResult<u32> {
+    let now = unix_timestamp(borrow_state(state)?.calendar_now);
+    let start = weekly_reset_timestamp(state)?;
+    state.push(Val::Num((start + 7 * 86_400 - now) as f64));
+    Ok(1)
+}
+
+fn seconds_until_daily_reset(state: &mut LuaState) -> LuaResult<u32> {
+    let sim = borrow_state(state)?;
+    let now = unix_timestamp(sim.calendar_now);
+    let hour = i64::from(sim.weekly_reset_schedule.hour);
+    let day = now.div_euclid(86_400);
+    let reset = day * 86_400 + hour * 3_600;
+    state.push(Val::Num(
+        (if reset > now { reset } else { reset + 86_400 } - now) as f64,
+    ));
+    Ok(1)
+}
+
+fn weekly_reset_timestamp(state: &mut LuaState) -> LuaResult<i64> {
+    let sim = borrow_state(state)?;
+    let now = unix_timestamp(sim.calendar_now);
+    let schedule = sim.weekly_reset_schedule;
+    let day = now.div_euclid(86_400);
+    let weekday = (day + 4).rem_euclid(7) as u8 + 1;
+    let days_since_reset = (weekday + 7 - schedule.weekday) % 7;
+    let mut start = (day - i64::from(days_since_reset)) * 86_400 + i64::from(schedule.hour) * 3_600;
+    if start > now {
+        start -= 7 * 86_400;
+    }
+    Ok(start)
+}
+
+fn unix_timestamp(time: crate::c_api::c_calendar::CivilDateTime) -> i64 {
+    let year = i64::from(time.year) - i64::from(time.month <= 2);
+    let era = year.div_euclid(400);
+    let year_of_era = year - era * 400;
+    let month = i64::from(time.month);
+    let day_of_year =
+        (153 * (month + if month > 2 { -3 } else { 9 }) + 2) / 5 + i64::from(time.day) - 1;
+    let day_of_era = year_of_era * 365 + year_of_era / 4 - year_of_era / 100 + day_of_year;
+    let days = era * 146_097 + day_of_era - 719_468;
+    days * 86_400 + i64::from(time.hour) * 3_600 + i64::from(time.minute) * 60
 }
 
 fn read_integer_field(state: &mut LuaState, data: Val, name: &str) -> LuaResult<i32> {

@@ -95,6 +95,7 @@ pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
     ))]
     let builder = crate::c_api::c_trade_info::register_admin(builder)?;
     let builder = crate::c_api::c_content_tracking::register_admin(builder)?;
+    let builder = crate::c_api::c_date_and_time::register_admin(builder)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     let builder = crate::c_api::target_spell::register_admin(builder)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]

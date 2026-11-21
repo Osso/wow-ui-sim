@@ -943,17 +943,21 @@ fn shared_map_poi_templates_register_in_template_registry_not_global_frames() {
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
-#[test]
-fn quest_hub_glow_uses_supplied_weekly_reset_boundary() {
-    let env = load_map_data_providers_closure();
-
+fn set_supplied_calendar_time(env: &WowLuaEnv, day: u8, hour: u8) {
     env.state().borrow_mut().calendar_now = wow_ui_sim::c_api::c_calendar::CivilDateTime {
         year: 2026,
         month: 4,
-        day: 14,
-        hour: 6,
+        day,
+        hour,
         minute: 0,
     };
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn quest_hub_glow_uses_supplied_weekly_reset_boundary() {
+    let env = load_map_data_providers_closure();
+    set_supplied_calendar_time(&env, 14, 6);
     env.exec(
         r#"
         A_Admin.SetWeeklyResetSchedule(3, 7)
@@ -961,22 +965,20 @@ fn quest_hub_glow_uses_supplied_weekly_reset_boundary() {
         Mixin(pin, QuestHubPinMixin, QuestHubPinGlowMixin)
         pin.relatedQuests = {{ questID = 80592 }}
         GLOW_HUB_QUESTS_ACKNOWLEDGED[80592] = 0
+        assert(C_DateAndTime.GetSecondsUntilWeeklyReset() == 3600)
+        assert(C_DateAndTime.GetSecondsUntilDailyReset() == 3600)
         assert(pin:GetHighlightType() == MapPinHighlightType.ImportantHubQuestHighlight,
             "quest must glow before the supplied Tuesday reset")
         "#,
     )
     .expect("loaded QuestHubPinGlowMixin should use the supplied weekly reset");
 
-    env.state().borrow_mut().calendar_now = wow_ui_sim::c_api::c_calendar::CivilDateTime {
-        year: 2026,
-        month: 4,
-        day: 15,
-        hour: 8,
-        minute: 0,
-    };
+    set_supplied_calendar_time(&env, 15, 8);
     env.exec(
         r#"
         A_Admin.SetWeeklyResetSchedule(4, 9)
+        assert(C_DateAndTime.GetSecondsUntilWeeklyReset() == 3600)
+        assert(C_DateAndTime.GetSecondsUntilDailyReset() == 3600)
         assert(pin:GetHighlightType() == MapPinHighlightType.ImportantHubQuestHighlight,
             "quest must glow before the changed Wednesday reset")
         "#,
