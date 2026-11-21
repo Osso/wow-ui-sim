@@ -173,13 +173,17 @@ for pin in WorldMapFrame:EnumeratePinsByTemplate("ContributionCollectorPinTempla
     names[pin.name] = pin.collectorCreatureID
     areas[pin.name] = pin.poiInfo.areaPoiID
 end
+return WorldMapFrame:GetNumActivePinsByTemplate("ContributionCollectorPinTemplate"),
+       names["Collector Alpha"], names["Collector Beta"], names["Other Map"] ~= nil,
+       areas["Collector Alpha"], areas["Collector Beta"]
+"#;
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+const CONTRIBUTION_COLLECTOR_GETTERS_LUA: &str = r#"
 local ids = { C_ContributionCollector.GetManagedContributionsForCreatureID(301) }
 local state, amount, nextStateTime, startTime = C_ContributionCollector.GetState(ids[1])
 local appearance = C_ContributionCollector.GetContributionAppearance(ids[1], state)
-return WorldMapFrame:GetNumActivePinsByTemplate("ContributionCollectorPinTemplate"),
-       names["Collector Alpha"], names["Collector Beta"], names["Other Map"] ~= nil,
-       areas["Collector Alpha"], areas["Collector Beta"],
-       ids[1], C_ContributionCollector.GetName(ids[1]), state, amount, nextStateTime, startTime,
+return ids[1], C_ContributionCollector.GetName(ids[1]), state, amount, nextStateTime, startTime,
        appearance.stateName, appearance.tooltipLine
 "#;
 
@@ -267,33 +271,16 @@ fn contribution_collector_provider_refreshes_pins_from_supplied_records() {
             "{addon} was not loaded"
         );
     }
-    let observed: (
-        i32,
-        i32,
-        i32,
-        bool,
-        i32,
-        i32,
-        i32,
-        String,
-        i32,
-        f64,
-        f64,
-        f64,
-        String,
-        String,
-    ) = env
+    let pins: (i32, i32, i32, bool, i32, i32) = env
         .eval(CONTRIBUTION_COLLECTOR_REFRESH_LUA)
         .expect("original contribution collector provider should refresh on WorldMapFrame");
+    assert_eq!(pins, (2, 301, 302, false, 901, 902));
+    let getters: (i32, String, i32, f64, f64, f64, String, String) = env
+        .eval(CONTRIBUTION_COLLECTOR_GETTERS_LUA)
+        .expect("supplied contribution getters should expose the collector records");
     assert_eq!(
-        observed,
+        getters,
         (
-            2,
-            301,
-            302,
-            false,
-            901,
-            902,
             401,
             "Contribution Alpha".to_string(),
             1,
