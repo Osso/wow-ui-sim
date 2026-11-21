@@ -30,35 +30,29 @@ fn blizzard_pet_battle_ui_action_buttons_follow_supplied_turn_legality() {
     assert!(loaded, "Blizzard_PetBattleUI must be selected for this profile");
     env.exec("A_Admin.SetPetBattleCounts(3, 2); A_Admin.SetPetBattleState(1)")
         .unwrap();
-    env.exec("A_Admin.SetPetBattleActionLegality(true, false, true, false)")
+    env.exec("A_Admin.SetPetBattleActionLegality(false, false, false, false)")
         .unwrap();
     let first: String = env.eval(
         r#"
-        local selection = PetBattleFrame.BottomFrame.PetSelectionFrame
-        for index = 1, 3 do
-            PetBattleUnitFrame_SetUnit(selection["Pet" .. index], Enum.BattlePetOwner.Ally, index)
-        end
-        PetBattlePetSelectionFrame_Show(selection)
+        local switch = PetBattleFrame.BottomFrame.SwitchPetButton
         local skip = PetBattleFrame.BottomFrame.TurnTimer.SkipButton
+        PetBattleActionButton_UpdateState(switch)
         PetBattleActionButton_UpdateState(skip)
-        return tostring(selection.Pet1:IsEnabled()) .. "," .. tostring(selection.Pet2:IsEnabled()) .. "," .. tostring(skip:IsEnabled())
+        return tostring(switch:IsEnabled()) .. "," .. tostring(skip:IsEnabled())
         "#,
     ).unwrap();
-    assert_eq!(first, "true,false,false");
+    assert_eq!(first, "false,false");
 
-    env.exec("A_Admin.SetPetBattleActionLegality(false, true, false, true)")
+    env.exec("A_Admin.SetPetBattleActionLegality(true, false, false, true)")
         .unwrap();
     let second: String = env.eval(
         r#"
-        local selection = PetBattleFrame.BottomFrame.PetSelectionFrame
-        for index = 1, 3 do
-            PetBattleUnitFrame_SetUnit(selection["Pet" .. index], Enum.BattlePetOwner.Ally, index)
-        end
-        PetBattlePetSelectionFrame_Show(selection)
+        local switch = PetBattleFrame.BottomFrame.SwitchPetButton
         local skip = PetBattleFrame.BottomFrame.TurnTimer.SkipButton
+        PetBattleActionButton_UpdateState(switch)
         PetBattleActionButton_UpdateState(skip)
-        return tostring(selection.Pet1:IsEnabled()) .. "," .. tostring(selection.Pet2:IsEnabled()) .. "," .. tostring(skip:IsEnabled())
+        return tostring(switch:IsEnabled()) .. "," .. tostring(skip:IsEnabled())
         "#,
     ).unwrap();
-    assert_eq!(second, "false,true,true");
+    assert_eq!(second, "true,true");
 }
