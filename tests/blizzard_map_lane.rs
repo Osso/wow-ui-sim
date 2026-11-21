@@ -173,14 +173,17 @@ fn read_floor_menu_outputs(env: &WowLuaEnv) -> (bool, String, bool, String) {
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn world_map_floor_navigation_uses_each_supplied_map_group() {
     let env = load_full_game_ui();
-    let loaded = &env.state().borrow().addons;
     assert!(
-        loaded
+        env.state()
+            .borrow()
+            .addons
             .iter()
             .any(|addon| addon.folder_name == "Blizzard_FrameXML")
     );
     assert!(
-        loaded
+        env.state()
+            .borrow()
+            .addons
             .iter()
             .any(|addon| addon.folder_name == "Blizzard_WorldMap")
     );
