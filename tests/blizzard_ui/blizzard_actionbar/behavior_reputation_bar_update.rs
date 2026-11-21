@@ -240,10 +240,9 @@ fn assert_cold_globals_resolve(env: &WowLuaEnv) {
         .expect("watched faction probe must run cleanly");
     assert!(
         watched_id_present,
-        "Cold `C_Reputation.GetWatchedFactionData().factionID` must be \
-         {WATCHED_FACTION_ID} (Council of Dornogal, hardcoded by \
-         `reputation_data.rs::watched_faction`); other reading means \
-         the faction-list seed regressed."
+        "`C_Reputation.GetWatchedFactionData()` must return the supplied \
+         Council of Dornogal row (factionID {WATCHED_FACTION_ID}); otherwise \
+         the host-fed reputation state was not published."
     );
 }
 
