@@ -60,9 +60,11 @@ pub(crate) fn get_progress_portrait(state: &mut LuaState) -> LuaResult<u32> {
             })
             .unwrap_or_default()
     };
+    let name = create_string(state, &portrait.1);
+    let text = create_string(state, &portrait.2);
     state.push(Val::Num(f64::from(portrait.0)));
-    state.push(create_string(state, &portrait.1));
-    state.push(create_string(state, &portrait.2));
+    state.push(name);
+    state.push(text);
     Ok(3)
 }
 

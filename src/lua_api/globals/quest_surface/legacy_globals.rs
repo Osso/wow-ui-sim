@@ -240,8 +240,10 @@ fn get_required_progress_item_info(state: &mut LuaState, index: usize) -> LuaRes
     let Some(item) = item else {
         return Ok(0);
     };
-    state.push(create_string(state, &item.name));
-    state.push(create_string(state, &item.texture));
+    let name = create_string(state, &item.name);
+    let texture = create_string(state, &item.texture);
+    state.push(name);
+    state.push(texture);
     state.push(Val::Num(f64::from(item.required_amount)));
     Ok(3)
 }
