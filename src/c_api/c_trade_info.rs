@@ -5,8 +5,10 @@ use crate::lua_api::globals::real::cursor_model;
 use crate::lua_api::methods::{borrow_state, borrow_state_mut};
 use crate::lua_api::state_types::CursorInfo;
 use crate::lua_bridge::{FromStack, TableBuilder, table_set_rust_fn_static};
+#[cfg(feature = "client-ptr")]
+use rilua::Val;
 use rilua::vm::state::LuaState;
-use rilua::{LuaResult, Val, runtime_error};
+use rilua::{LuaResult, runtime_error};
 
 const MAX_MONEY_AMOUNT: f64 = 9_007_199_254_740_991.0;
 const CURSOR_MONEY_LIMIT: u64 = 100_000_000_000;
