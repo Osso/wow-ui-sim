@@ -1,13 +1,19 @@
 //! Explicit set-filter state; native defaults and filtering effects are unmodeled.
 
 mod catalog;
-pub use catalog::{TransmogSetInfo, TransmogSets};
+pub use catalog::{TransmogSetInfo, TransmogSetPrimaryAppearanceInfo, TransmogSets};
+
+use crate::lua_bridge::TableBuilder;
 
 use super::helpers::ensure_namespace;
 use crate::lua_api::methods::{borrow_state, borrow_state_mut};
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
+
+pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
+    catalog::register_admin(builder)
+}
 
 pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
     let forever = crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever;

@@ -1,8 +1,11 @@
 //! Explicit set catalog and slot-source membership used by outfit imports.
 
+use crate::c_api::crafting_input::read_array;
 use crate::lua_api::methods::{
-    borrow_state, create_string, create_table, table_set, table_set_num,
+    borrow_state, borrow_state_mut, create_string, create_table, table_get, table_set,
+    table_set_num,
 };
+use crate::lua_bridge::{TableBuilder, stack_val};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 use std::collections::BTreeMap;
@@ -11,6 +14,12 @@ use std::collections::BTreeMap;
 pub struct TransmogSets {
     pub entries: Vec<TransmogSetInfo>,
     pub slot_sources: BTreeMap<(i32, i32), Vec<i64>>,
+}
+
+#[derive(Debug, Clone, Default)]
+pub struct TransmogSetPrimaryAppearanceInfo {
+    pub appearance_id: i32,
+    pub collected: bool,
 }
 
 #[derive(Debug, Clone, Default)]
@@ -33,6 +42,81 @@ pub struct TransmogSetInfo {
     pub grant_as_preceding_variant: bool,
     /// Host filter classification, not a returned TransmogSetInfo field.
     pub is_pvp: bool,
+    pub primary_appearances: Vec<TransmogSetPrimaryAppearanceInfo>,
+}
+
+pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
+    builder.set_function("SetTransmogSetCatalog", set_catalog)
+}
+
+fn set_catalog(state: &mut LuaState) -> LuaResult<u32> {
+    let rows = read_array(state, stack_val(state, 1))?;
+    let entries = rows
+        .into_iter()
+        .map(|row| read_set(state, row))
+        .collect::<LuaResult<Vec<_>>>()?;
+    borrow_state_mut(state)?.transmog_sets.entries = entries;
+    Ok(0)
+}
+
+fn read_set(state: &mut LuaState, row: Val) -> LuaResult<TransmogSetInfo> {
+    Ok(TransmogSetInfo {
+        set_id: required_integer(state, row, "setID")?,
+        name: required_text(state, row, "name")?,
+        base_set_id: optional_integer(state, row, "baseSetID")?,
+        collected: required_bool(state, row, "collected")?,
+        valid_for_character: required_bool(state, row, "validForCharacter")?,
+        primary_appearances: read_primary_appearances(state, row)?,
+        ..Default::default()
+    })
+}
+
+fn read_primary_appearances(
+    state: &mut LuaState,
+    row: Val,
+) -> LuaResult<Vec<TransmogSetPrimaryAppearanceInfo>> {
+    read_array(state, table_get(state, row, "primaryAppearances"))?
+        .into_iter()
+        .map(|appearance| {
+            Ok(TransmogSetPrimaryAppearanceInfo {
+                appearance_id: required_integer(state, appearance, "appearanceID")?,
+                collected: required_bool(state, appearance, "collected")?,
+            })
+        })
+        .collect()
+}
+
+fn required_integer(state: &LuaState, row: Val, key: &str) -> LuaResult<i32> {
+    match table_get(state, row, key) {
+        Val::Num(value) if value.is_finite() && value.fract() == 0.0 => Ok(value as i32),
+        _ => Err(rilua::runtime_error(format!(
+            "transmog set {key} must be an integer"
+        ))),
+    }
+}
+
+fn optional_integer(state: &LuaState, row: Val, key: &str) -> LuaResult<Option<i32>> {
+    match table_get(state, row, key) {
+        Val::Nil => Ok(None),
+        Val::Num(value) if value.is_finite() && value.fract() == 0.0 => Ok(Some(value as i32)),
+        _ => Err(rilua::runtime_error(format!(
+            "transmog set {key} must be an integer"
+        ))),
+    }
+}
+
+fn required_bool(state: &LuaState, row: Val, key: &str) -> LuaResult<bool> {
+    match table_get(state, row, key) {
+        Val::Bool(value) => Ok(value),
+        _ => Err(rilua::runtime_error(format!(
+            "transmog set {key} must be a boolean"
+        ))),
+    }
+}
+
+fn required_text(state: &LuaState, row: Val, key: &str) -> LuaResult<String> {
+    crate::lua_api::methods::val_to_string(state, table_get(state, row, key))
+        .ok_or_else(|| rilua::runtime_error(format!("transmog set {key} must be a string")))
 }
 
 pub(super) fn get_available(state: &mut LuaState) -> LuaResult<u32> {
