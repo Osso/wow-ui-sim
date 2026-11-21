@@ -42,7 +42,5 @@ if not list.ScrollBox:GetView() then
     ScrollUtil.InitScrollBoxListWithScrollBar(list.ScrollBox, list.ScrollBar, view)
 end
 list:UpdateMissions()
-return #list.combinedMissions,
-    list.combinedMissions[1].missionID,
-    list.combinedMissions[2].missionID,
-    list.combinedMissions[3].missionID
+local missions = list.ScrollBox:GetDataProvider():GetCollection()
+return #missions, missions[1].missionID, missions[2].missionID, missions[3].missionID
