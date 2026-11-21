@@ -54,7 +54,7 @@ pub(crate) fn get_progress_text(state: &mut LuaState) -> LuaResult<u32> {
 pub(crate) fn get_progress_portrait(state: &mut LuaState) -> LuaResult<u32> {
     let portrait = {
         let sim = borrow_state(state)?;
-        crate::c_api::quest_objectives::progress_requirements_for_active_dialog(&sim)
+        crate::c_api::quest_objectives::requirements_for_active_dialog(&sim)
             .map(|value| {
                 (
                     value.portrait_display_id,
@@ -64,11 +64,11 @@ pub(crate) fn get_progress_portrait(state: &mut LuaState) -> LuaResult<u32> {
             })
             .unwrap_or_default()
     };
-    let name = create_string(state, &portrait.1);
     let text = create_string(state, &portrait.2);
+    let name = create_string(state, &portrait.1);
     state.push(Val::Num(f64::from(portrait.0)));
-    state.push(name);
     state.push(text);
+    state.push(name);
     Ok(3)
 }
 

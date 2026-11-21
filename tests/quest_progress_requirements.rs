@@ -34,11 +34,11 @@ fn show_progress_set(env: &WowLuaEnv, requirements: &str) {
 fn assert_panel_text_and_money(env: &WowLuaEnv, expected: [&str; 5]) {
     let shown: String = env
         .eval(
-            "return table.concat({tostring(QuestProgressText:GetText()), tostring(QuestProgressItem1Name:GetText()), tostring(QuestProgressItem2Name:GetText()), tostring(QuestProgressItem3Name:GetText()), tostring(QuestProgressItem4Name:GetText()), tostring(QuestProgressRequiredMoneyFrame.GoldButton.Text:GetText()), tostring(QuestProgressRequiredMoneyFrame.SilverButton.Text:GetText()), tostring(QuestFrameProgressPanel:IsShown()), tostring(QuestProgressRequiredMoneyFrame:IsShown())}, '|')",
+            "return table.concat({tostring(QuestProgressText:GetText()), tostring(QuestProgressItem1Name:GetText()), tostring(QuestProgressItem2Name:GetText()), tostring(QuestProgressItem3Name:GetText()), tostring(QuestProgressItem4Name:GetText()), tostring(QuestProgressRequiredMoneyFrame.GoldButton.Text:GetText()), tostring(QuestProgressRequiredMoneyFrame.SilverButton.Text:GetText()), tostring(QuestFrame:IsShown()), tostring(QuestFrameProgressPanel:IsShown()), tostring(QuestProgressRequiredMoneyFrame:IsShown()), tostring(GetProgressText()), tostring(GetNumQuestItems()), tostring(GetNumQuestCurrencies()), tostring(GetQuestMoneyToGet()), tostring(SplashFrame:IsShown())}, '|')",
         )
         .unwrap();
     let expected = format!(
-        "{}|{}|{}|{}|{}|23|45|true|true",
+        "{}|{}|{}|{}|{}|23|45|true|true|true|{}|2|2|234567|false",
         expected[0], expected[1], expected[2], expected[3], expected[4]
     );
     assert_eq!(shown, expected);
@@ -135,7 +135,7 @@ fn assert_second_progress_set(env: &WowLuaEnv) {
         "Expedition Mark",
         7,
     );
-    assert_turnin_portrait(env, (701, "Harbor Marshal", "Report to the marshal."));
+    assert_turnin_portrait(env, (701, "Report to the marshal.", "Harbor Marshal"));
 }
 
 #[test]

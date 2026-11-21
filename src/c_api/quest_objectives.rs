@@ -93,13 +93,10 @@ pub fn commit_progress_requirements(
     true
 }
 
-pub fn progress_requirements_for_active_dialog(
+pub fn requirements_for_active_dialog(
     sim: &crate::lua_api::SimState,
 ) -> Option<&QuestProgressRequirements> {
-    let (quest_id, phase) = sim.quest_log_entries.readiness.dialog?;
-    if phase != crate::c_api::quest_readiness::QuestDialogPhase::Progress {
-        return None;
-    }
+    let (quest_id, _) = sim.quest_log_entries.readiness.dialog?;
     let selected = sim
         .selected_quest_log_id
         .and_then(|id| i32::try_from(id).ok());
@@ -109,6 +106,16 @@ pub fn progress_requirements_for_active_dialog(
         return None;
     }
     sim.quest_log_entries.progress_requirements.get(&quest_id)
+}
+
+pub fn progress_requirements_for_active_dialog(
+    sim: &crate::lua_api::SimState,
+) -> Option<&QuestProgressRequirements> {
+    let (_, phase) = sim.quest_log_entries.readiness.dialog?;
+    if phase != crate::c_api::quest_readiness::QuestDialogPhase::Progress {
+        return None;
+    }
+    requirements_for_active_dialog(sim)
 }
 
 pub fn objectives_for_quest(log: &QuestLogState, quest_id: i32) -> &[QuestObjective] {
