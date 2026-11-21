@@ -365,6 +365,10 @@ pub struct MapData {
     /// the parent chain to project the map onto a non-direct
     /// ancestor.
     pub rect_on_parent: Option<MapRect>,
+    /// INFERRED (R88cy pending): supplied UI map group for floor navigation.
+    pub map_group_id: Option<i32>,
+    /// INFERRED (R88cy pending): ordering index within its UI map group.
+    pub map_group_relative_height_index: i32,
 }
 
 /// One entry in `MapData.child_rects`. The child whose rect contains a

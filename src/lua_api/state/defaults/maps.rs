@@ -464,6 +464,8 @@ fn default_map_entry(seed: &DefaultMapSeed) -> (i32, MapData) {
         child_map_ids: seed.child_map_ids.to_vec(),
         child_rects: Vec::new(),
         rect_on_parent: None,
+        map_group_id: None,
+        map_group_relative_height_index: 0,
     };
 
     (map.ui_map_id, map)
