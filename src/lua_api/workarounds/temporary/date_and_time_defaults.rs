@@ -160,7 +160,15 @@ mod tests {
             )
             .expect("date/time defaults should be callable");
 
-        assert_eq!(result, (2026, 4, 14, 3, 12, 0, 0, 0));
+        let expected_weekly_start = if cfg!(any(
+            feature = "client-retail",
+            feature = "client-wowforever"
+        )) {
+            1_776_150_000
+        } else {
+            0
+        };
+        assert_eq!(result, (2026, 4, 14, 3, 12, 0, 0, expected_weekly_start));
     }
 
     #[test]

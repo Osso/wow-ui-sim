@@ -167,7 +167,10 @@ fn test_startup_service_namespaces_exist() {
     assert!(month_day > 0);
     assert_eq!(adjusted_day, month_day + 1);
     assert_eq!(reset_ty, "function");
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     assert_eq!(reset_start, 0);
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    assert_eq!(reset_start, 1_776_150_000);
 
     let (
         shop_ty,

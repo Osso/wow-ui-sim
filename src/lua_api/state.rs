@@ -877,6 +877,7 @@ macro_rules! build_empty_sim_state {
             achievement_eligibility: AchievementEligibilityInputs::default(),
             achievement_superceding: HashMap::new(),
             calendar_now: Default::default(),
+            weekly_reset_schedule: Default::default(),
             calendar_displayed_month: Default::default(),
             calendar_next_club_id: None,
             calendar_club_events: Vec::new(),

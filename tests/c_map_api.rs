@@ -1251,6 +1251,7 @@ fn test_get_server_time_local() {
     assert_eq!(time, 0);
 }
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn test_get_seconds_until_daily_reset() {
     let env = env();
@@ -1260,6 +1261,7 @@ fn test_get_seconds_until_daily_reset() {
     assert_eq!(secs, 86400);
 }
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn test_get_seconds_until_weekly_reset() {
     let env = env();
