@@ -171,6 +171,24 @@ pub struct LfgActivityInfo {
     pub is_current_raid_activity: bool,
 }
 
+/// A supplied Retail queue entry for a legacy LFG category.
+#[cfg(feature = "client-retail")]
+#[derive(Debug, Clone)]
+pub struct LfgQueueEntry {
+    pub category_id: i32,
+    pub entry_id: i32,
+    pub hide_name: bool,
+}
+
+/// A supplied Retail LFD lock row consumed by the Group Finder frame.
+#[cfg(feature = "client-retail")]
+#[derive(Debug, Clone)]
+pub struct LfgLockState {
+    pub lfg_id: i32,
+    pub reason: i32,
+    pub hide_entry: bool,
+}
+
 /// A dungeon entry for the LFD (Looking for Dungeon) panel.
 /// Drives `GetLFGDungeonInfo`, `GetLFDChoiceOrder`, etc.
 #[derive(Debug, Clone)]
