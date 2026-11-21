@@ -2,13 +2,15 @@
 
 #[cfg(feature = "client-wowforever")]
 use super::helpers::read_untainted_signed32_argument;
-use super::helpers::{ensure_namespace, set_table_array, validate_supplied_relation_id};
+#[cfg(feature = "client-wowforever")]
+use super::helpers::set_table_array;
+use super::helpers::{ensure_namespace, validate_supplied_relation_id};
 use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::methods::{
-    borrow_state, create_string, create_table, create_table_with_capacity, table_set, val_to_string,
+    borrow_state, create_string, create_table, table_set, val_to_string,
 };
 #[cfg(feature = "client-wowforever")]
-use crate::lua_api::methods::{borrow_state_mut, table_get};
+use crate::lua_api::methods::{borrow_state_mut, create_table_with_capacity, table_get};
 use crate::lua_api::sim_substates::QuestLogEntry;
 use crate::lua_api::workarounds::update_campaign_headers;
 #[cfg(feature = "client-wowforever")]
