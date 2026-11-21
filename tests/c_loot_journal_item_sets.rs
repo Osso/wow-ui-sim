@@ -61,8 +61,7 @@ fn encounter_journal_renders_supplied_item_sets_and_items() {
             local journal = EncounterJournal.LootJournalItems
             journal:SetClassAndSpecFilters(2, 71)
             local list = journal.ItemSetsFrame
-            list.dirty = true
-            list:UpdateList()
+            list:Refresh()
 
             local provider = list.ScrollBox:GetDataProvider()
             assert(provider:GetSize() == 2, "the loot-journal consumer must filter to two sets")
