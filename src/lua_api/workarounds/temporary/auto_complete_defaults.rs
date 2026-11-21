@@ -1,7 +1,8 @@
 //! Temporary autocomplete realm defaults and legacy global forwarders.
 //!
-//! Realm completion data is not modeled yet, so realm probes return an empty
-//! list. Character/name completion is modeled in `c_api::c_auto_complete`; this
+//! Realm completion uses host-supplied Rust state on Retail and Forever
+//! (INFERRED, R88ci); other profiles retain an empty-list shim. Character/name
+//! completion is modeled in `c_api::c_auto_complete`; this
 //! bootstrap retains legacy globals before Retail 12.0.7. At 12.0.7+, only
 //! Blizzard_DeprecatedAutoComplete owns those globals when its CVar permits them.
 //! Wrath's result global is modeled separately; never install the modern
@@ -10,9 +11,9 @@
 use rilua::LuaApiMut;
 
 const AUTO_COMPLETE_DEFAULTS_LUA: &str = r#"
-local publishLegacyNative, publishLegacyResults = ...
+local publishLegacyNative, publishLegacyResults, publishRealmDefault = ...
 C_AutoComplete = C_AutoComplete or __wow_namespace()
-if rawget(C_AutoComplete, "GetAutoCompleteRealms") == nil then
+if publishRealmDefault and rawget(C_AutoComplete, "GetAutoCompleteRealms") == nil then
     function C_AutoComplete.GetAutoCompleteRealms()
         return {}
     end
@@ -39,6 +40,11 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
         &[
             rilua::Val::Bool(!cfg!(feature = "retail-12-0-7")),
             rilua::Val::Bool(!cfg!(feature = "retail-12-0-7") && !cfg!(feature = "client-wrath")),
+            rilua::Val::Bool(!matches!(
+                crate::client_profile::ACTIVE,
+                crate::client_profile::ClientProfile::Retail
+                    | crate::client_profile::ClientProfile::WowForever
+            )),
         ],
     )?;
     Ok(())
@@ -48,7 +54,10 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
 mod tests {
     use crate::lua_api::WowLuaEnv;
 
-    #[cfg(not(feature = "retail-12-0-7"))]
+    #[cfg(all(
+        not(any(feature = "client-retail", feature = "client-wowforever")),
+        not(feature = "retail-12-0-7")
+    ))]
     #[test]
     fn installs_empty_realm_defaults() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
@@ -94,7 +103,7 @@ mod tests {
         assert_eq!(result, "coerced");
     }
 
-    #[cfg(feature = "retail-12-0-7")]
+    #[cfg(all(feature = "retail-12-0-7", feature = "client-retail"))]
     #[test]
     fn bootstrap_keeps_retired_globals_absent_and_namespace_callable() {
         let env = WowLuaEnv::new().unwrap();
@@ -103,7 +112,9 @@ mod tests {
             r#"
             assert(rawget(_G, "GetAutoCompleteRealms") == nil)
             assert(rawget(_G, "GetAutoCompleteResults") == nil)
-            assert(#C_AutoComplete.GetAutoCompleteRealms() == 0)
+            A_Admin.SetAutoCompleteRealms({ "RealmA", "RealmB" })
+            local realms = C_AutoComplete.GetAutoCompleteRealms()
+            assert(#realms == 2 and realms[1] == "RealmA" and realms[2] == "RealmB")
         "#,
         )
         .unwrap();
@@ -134,6 +145,7 @@ mod tests {
         assert_eq!(result, "legacy-modeled-result");
     }
 
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     #[test]
     fn preserves_existing_autocomplete_realms() {
         let env = WowLuaEnv::new().expect("lua env should initialize");

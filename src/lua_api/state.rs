@@ -573,6 +573,8 @@ macro_rules! build_empty_sim_state {
             action_spell_ranges: Default::default(),
             #[cfg(feature = "retail-12-0-0")]
             weekly_reward_progress: Default::default(),
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            auto_complete_realms: Vec::new(),
             weekly_rewards: Default::default(),
             #[cfg(feature = "retail-12-0-0")]
             encounter_warning_settings: Default::default(),
