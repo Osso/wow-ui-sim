@@ -116,6 +116,8 @@ pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     let builder = crate::c_api::c_gossip_info_poi::register_admin(builder)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let builder = crate::c_api::c_contribution_collector::register_admin(builder)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     let builder = crate::c_api::c_taxi_map::register_admin(builder)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     let builder = crate::c_api::c_map::register_admin(builder)?;
