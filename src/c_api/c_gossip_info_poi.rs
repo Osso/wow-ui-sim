@@ -104,7 +104,7 @@ fn set_gossip_poi(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
-fn coordinate(state: &mut LuaState, index: usize) -> LuaResult<f64> {
+fn coordinate(state: &mut LuaState, index: i32) -> LuaResult<f64> {
     let value = f64::from_stack(state, index)?;
     if !value.is_finite() || !(0.0..=1.0).contains(&value) {
         return Err(runtime_error(
