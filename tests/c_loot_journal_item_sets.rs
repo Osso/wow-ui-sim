@@ -40,6 +40,8 @@ fn encounter_journal_renders_supplied_item_sets_and_items() {
                   items={{ itemID=41001, icon=91001, slot=1, invType=13 }} },
                 { setID=502, name="Supplied Beta", itemLevel=630, classID=2, specID=71,
                   items={{ itemID=41002, icon=91002, slot=2, invType=14 }} },
+                { setID=503, name="Filtered Out", itemLevel=640, classID=3, specID=73,
+                  items={{ itemID=41003, icon=91003, slot=3, invType=15 }} },
             })
             local sets = C_LootJournal.GetItemSets(2, 71)
             assert(#sets == 2, "the loot journal must receive both supplied sets")
@@ -48,8 +50,9 @@ fn encounter_journal_renders_supplied_item_sets_and_items() {
                 local button = CreateFrame("Button", nil, UIParent, "LootJournalItemSetButtonTemplate")
                 LootJournalItemSetButtonMixin.Init(button, set, function() end)
                 local item = button.ItemButtons[1]
+                local icon = item.Icon:GetTexture()
                 rendered[#rendered + 1] = table.concat({
-                    button.SetName:GetText(), item.itemID, item.Icon:GetTexture()
+                    button.SetName:GetText(), item.itemID, icon
                 }, ":")
             end
             table.sort(rendered)
