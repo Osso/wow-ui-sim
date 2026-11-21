@@ -1,5 +1,7 @@
 //! INFERRED (R88dg pending): host-supplied mission records for Retail/Forever consumers.
 
+use std::collections::HashMap;
+
 use crate::c_api::helpers::{ensure_namespace, set_table_array};
 use crate::lua_api::methods::{
     borrow_state, borrow_state_mut, create_string, create_table_with_capacity, table_get,
@@ -16,6 +18,7 @@ const INPUT_ERROR: &str = "A_Admin.SetGarrisonMissions: expected an array of mis
 #[derive(Clone, Debug, Default)]
 pub struct GarrisonMissionLists {
     pub missions: Vec<GarrisonMission>,
+    pub follower_quality_tables: HashMap<u32, Vec<(u32, f64)>>,
 }
 
 #[derive(Clone, Debug)]
@@ -28,6 +31,15 @@ pub struct GarrisonMission {
     pub rewards: Vec<GarrisonMissionReward>,
     pub in_progress: bool,
     pub completed: bool,
+    pub encounter_icon_info: Option<GarrisonMissionEncounterIconInfo>,
+}
+
+#[derive(Clone, Debug, Default)]
+pub struct GarrisonMissionEncounterIconInfo {
+    pub portrait_file_data_id: u32,
+    pub mission_scalar: f64,
+    pub is_elite: bool,
+    pub is_rare: bool,
 }
 
 #[derive(Clone, Debug)]
@@ -48,11 +60,28 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     let namespace = ensure_namespace(state, "C_Garrison")?;
     table_set_rust_fn_static(state, namespace, "GetAvailableMissions", get_available)?;
     table_set_rust_fn_static(state, namespace, "GetInProgressMissions", get_in_progress)?;
-    table_set_rust_fn_static(state, namespace, "GetCompleteMissions", get_complete)
+    table_set_rust_fn_static(state, namespace, "GetCompleteMissions", get_complete)?;
+    table_set_rust_fn_static(
+        state,
+        namespace,
+        "GetMissionEncounterIconInfo",
+        get_mission_encounter_icon_info,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        namespace,
+        "GetFollowerQualityTable",
+        get_follower_quality_table,
+    )
 }
 
 pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
-    builder.set_function("SetGarrisonMissions", set_missions)
+    builder
+        .set_function("SetGarrisonMissions", set_missions)?
+        .set_function(
+            "SetGarrisonFollowerQualityTable",
+            set_follower_quality_table,
+        )
 }
 
 fn set_missions(state: &mut LuaState) -> LuaResult<u32> {
@@ -75,6 +104,59 @@ fn get_complete(state: &mut LuaState) -> LuaResult<u32> {
     let result = publish_missions(state, &missions)?;
     state.push(result);
     Ok(1)
+}
+
+fn get_mission_encounter_icon_info(state: &mut LuaState) -> LuaResult<u32> {
+    let mission_id = read_u32(stack_val(state, 1))
+        .ok_or_else(|| runtime_error("bad argument #1 (missionID must be a number)"))?;
+    let info = borrow_state(state)?
+        .garrison_mission_lists
+        .missions
+        .iter()
+        .find(|mission| mission.mission_id == mission_id)
+        .and_then(|mission| mission.encounter_icon_info.clone())
+        .unwrap_or_default();
+    let result = publish_encounter_icon_info(state, &info);
+    state.push(result);
+    Ok(1)
+}
+
+fn get_follower_quality_table(state: &mut LuaState) -> LuaResult<u32> {
+    let follower_type_id = read_follower_type(stack_val(state, 1), 1)?;
+    let entries = borrow_state(state)?
+        .garrison_mission_lists
+        .follower_quality_tables
+        .get(&follower_type_id)
+        .cloned()
+        .unwrap_or_default();
+    let result = create_table_with_capacity(state, entries.len());
+    let Val::Table(table_ref) = result else {
+        unreachable!("create_table_with_capacity returns a table")
+    };
+    for (quality, xp) in entries {
+        let table = state
+            .gc
+            .tables
+            .get_mut(table_ref)
+            .expect("newly created quality table exists");
+        table.raw_set(
+            Val::Num(f64::from(quality)),
+            Val::Num(xp),
+            &state.gc.string_arena,
+        )?;
+    }
+    state.push(result);
+    Ok(1)
+}
+
+fn set_follower_quality_table(state: &mut LuaState) -> LuaResult<u32> {
+    let follower_type_id = read_follower_type(stack_val(state, 1), 1)?;
+    let entries = parse_follower_quality_table(state, stack_val(state, 2))?;
+    borrow_state_mut(state)?
+        .garrison_mission_lists
+        .follower_quality_tables
+        .insert(follower_type_id, entries);
+    Ok(0)
 }
 
 fn get_missions(state: &mut LuaState, kind: MissionListKind) -> LuaResult<u32> {
@@ -135,6 +217,28 @@ fn publish_missions(state: &mut LuaState, missions: &[GarrisonMission]) -> LuaRe
     let result = create_table_with_capacity(state, missions.len());
     publish_missions_into(state, result, missions)?;
     Ok(result)
+}
+
+fn publish_encounter_icon_info(
+    state: &mut LuaState,
+    info: &GarrisonMissionEncounterIconInfo,
+) -> Val {
+    let result = create_table_with_capacity(state, 4);
+    table_set_static(
+        state,
+        result,
+        "portraitFileDataID",
+        Val::Num(f64::from(info.portrait_file_data_id)),
+    );
+    table_set_static(
+        state,
+        result,
+        "missionScalar",
+        Val::Num(info.mission_scalar),
+    );
+    table_set_static(state, result, "isElite", Val::Bool(info.is_elite));
+    table_set_static(state, result, "isRare", Val::Bool(info.is_rare));
+    result
 }
 
 fn publish_missions_into(
@@ -260,6 +364,7 @@ fn parse_mission(state: &mut LuaState, value: Val) -> LuaResult<GarrisonMission>
     };
     let reward_values = field(state, table, "rewards");
     let rewards = parse_rewards(state, reward_values)?;
+    let encounter_icon_info = parse_optional_encounter_icon_info(state, table)?;
     Ok(GarrisonMission {
         mission_id: read_field_u32(state, table, "missionID")?,
         name: read_field_string(state, table, "name")?,
@@ -269,7 +374,52 @@ fn parse_mission(state: &mut LuaState, value: Val) -> LuaResult<GarrisonMission>
         rewards,
         in_progress: read_field_bool(state, table, "inProgress")?,
         completed: read_field_bool(state, table, "completed")?,
+        encounter_icon_info,
     })
+}
+
+fn parse_optional_encounter_icon_info(
+    state: &mut LuaState,
+    mission: GcRef<Table>,
+) -> LuaResult<Option<GarrisonMissionEncounterIconInfo>> {
+    let value = field(state, mission, "encounterIconInfo");
+    let Val::Table(info) = value else {
+        return if matches!(value, Val::Nil) {
+            Ok(None)
+        } else {
+            Err(invalid_field("encounterIconInfo"))
+        };
+    };
+    Ok(Some(GarrisonMissionEncounterIconInfo {
+        portrait_file_data_id: read_field_u32(state, info, "portraitFileDataID")?,
+        mission_scalar: read_field_number(state, info, "missionScalar")?,
+        is_elite: read_field_bool(state, info, "isElite")?,
+        is_rare: read_field_bool(state, info, "isRare")?,
+    }))
+}
+
+fn parse_follower_quality_table(state: &LuaState, value: Val) -> LuaResult<Vec<(u32, f64)>> {
+    let Val::Table(table_ref) = value else {
+        return Err(invalid_field("followerQualityTable"));
+    };
+    let table = state
+        .gc
+        .tables
+        .get(table_ref)
+        .ok_or_else(|| invalid_field("followerQualityTable"))?;
+    let mut entries = Vec::new();
+    let mut key = Val::Nil;
+    while let Some((next_key, xp)) = table.next(key, &state.gc.string_arena)? {
+        let quality = read_u32(next_key).ok_or_else(|| invalid_field("followerQuality"))?;
+        let xp = match xp {
+            Val::Num(value) if value.is_finite() && value >= 0.0 => value,
+            _ => return Err(invalid_field("followerQualityXP")),
+        };
+        entries.push((quality, xp));
+        key = next_key;
+    }
+    entries.sort_by_key(|(quality, _)| *quality);
+    Ok(entries)
 }
 
 fn parse_rewards(state: &mut LuaState, value: Val) -> LuaResult<Vec<GarrisonMissionReward>> {

@@ -11,7 +11,9 @@
 - [ ] **INFERRED (R88dg pending):** `C_Garrison.GetCompleteMissions` returns records for the requested follower type whose `completed` value is true.
 - [ ] **INFERRED (R88dg pending):** The available and in-progress queries fill and return a supplied output table, or return a new table when called with a follower type or `nil` plus a follower type.
 - [ ] **INFERRED (R88dg pending):** The original Retail and Forever Covenant mission-list consumer displays all supplied available, completed, and in-progress mission records; it must not pass with an empty producer.
-- [ ] The Rust model and setter are registered on Retail and WoW Forever only. **VERIFIED:** PTR keeps the existing Lua shim unchanged.
+- [ ] `C_Garrison.GetMissionEncounterIconInfo(missionID)` returns the documented `MissionEncounterIconInfo` shape, populated from an optional supplied mission field. An unsupplied mission returns that shape with zero numeric fields and false boolean fields. **INFERRED (R88dg pending).**
+- [ ] `A_Admin.SetGarrisonFollowerQualityTable(followerTypeID, table)` supplies the quality-to-XP entries returned by `C_Garrison.GetFollowerQualityTable(followerTypeID)`. No generated DB2 quality table exists; an unset follower type returns an empty table. **INFERRED (R88dg pending).**
+- [ ] The Rust model and setters are registered on Retail and WoW Forever only. **VERIFIED:** PTR keeps the existing Lua shim unchanged.
 
 ## How it works
 
@@ -25,7 +27,7 @@
 - `src/lua_api/globals/admin.rs` — profile-scoped setter registration.
 - `src/lua_api/workarounds/mod.rs` — install the Rust queries after the unchanged legacy bootstrap.
 - `tests/blizzard_garrison_ui_loads.rs` — selected original Covenant consumer test.
-- `tests/fixtures/garrison_mission_lists.lua` — host-supplied mission fixture.
+- `tests/fixtures/garrison_mission_lists.lua` — host-supplied mission and follower-quality fixture.
 
 ## Tests asserting this spec
 

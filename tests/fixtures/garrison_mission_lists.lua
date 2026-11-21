@@ -9,6 +9,12 @@ A_Admin.SetGarrisonMissions({
         rewards = {},
         inProgress = false,
         completed = false,
+        encounterIconInfo = {
+            portraitFileDataID = 12345,
+            missionScalar = 1.25,
+            isElite = true,
+            isRare = false,
+        },
     },
     {
         missionID = 900002,
@@ -31,6 +37,7 @@ A_Admin.SetGarrisonMissions({
         completed = true,
     },
 })
+A_Admin.SetGarrisonFollowerQualityTable(followerTypeID, { [1] = 11, [2] = 22 })
 
 CovenantMissionFrame:Show()
 local list = CovenantMissionFrame.MissionTab.MissionList
@@ -44,6 +51,29 @@ end
 assert(
     #providerMissions == 3 and providerIDs[900001] and providerIDs[900002] and providerIDs[900003],
     "Covenant mission scrollbox receives every supplied mission"
+)
+local encounterInfo = C_Garrison.GetMissionEncounterIconInfo(900001)
+assert(
+    encounterInfo.portraitFileDataID == 12345
+        and encounterInfo.missionScalar == 1.25
+        and encounterInfo.isElite
+        and not encounterInfo.isRare,
+    "mission encounter icon info comes from the supplied record"
+)
+local emptyEncounterInfo = C_Garrison.GetMissionEncounterIconInfo(999999)
+assert(
+    emptyEncounterInfo.portraitFileDataID == 0
+        and emptyEncounterInfo.missionScalar == 0
+        and not emptyEncounterInfo.isElite
+        and not emptyEncounterInfo.isRare,
+    "unsupplied mission encounter icon info has the documented empty shape"
+)
+local qualityTable = C_Garrison.GetFollowerQualityTable(followerTypeID)
+assert(
+    qualityTable[1] == 11
+        and qualityTable[2] == 22
+        and next(C_Garrison.GetFollowerQualityTable(followerTypeID + 1)) == nil,
+    "follower quality table uses supplied entries and an inferred empty default"
 )
 return #list.combinedMissions,
     list.combinedMissions[1].missionID,
