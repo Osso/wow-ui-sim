@@ -69,6 +69,8 @@ pub(crate) fn register_spell_and_widget_tables(state: &mut LuaState) -> LuaResul
 }
 
 pub(crate) fn register_item_power_tables(state: &mut LuaState) -> LuaResult<()> {
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    super::c_loot_journal::register(state)?;
     super::c_tooltip_comparison::register(state)?;
     super::c_garrison_currency::register(state)?;
     super::c_garrison_follower_xp::register(state)?;
