@@ -54,6 +54,7 @@ fn is_skip_available(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
     if matches!(
         crate::client_profile::ACTIVE,
@@ -66,6 +67,7 @@ pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
     }
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn set_action_legality(state: &mut LuaState) -> LuaResult<u32> {
     let legality = [
         bool_arg(state, 1)?,
@@ -79,6 +81,7 @@ fn set_action_legality(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn bool_arg(state: &LuaState, index: i32) -> LuaResult<bool> {
     match stack_val(state, index) {
         Val::Bool(value) => Ok(value),
