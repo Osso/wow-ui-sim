@@ -19,7 +19,7 @@ fn progress_env() -> WowLuaEnv {
         ],
         &[],
     );
-    env.exec("C_CVar.SetCVar('questTextContrast', '0'); C_CVar.SetCVar('instantQuestText', '1')")
+    env.exec("C_CVar.SetCVar('questTextContrast', '0'); C_CVar.SetCVar('instantQuestText', '1'); SplashFrame:Hide()")
         .unwrap();
     env
 }
