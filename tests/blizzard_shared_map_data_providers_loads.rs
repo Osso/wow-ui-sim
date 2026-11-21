@@ -169,9 +169,10 @@ const TAXI_MAP_REFRESH_LUA: &str = r#"
             function sharedProvider:GetMap() return sharedMap end
             sharedProvider:RefreshAllData()
 
-            return #flightMap.pins, flightMap.pins[1].value.name, flightMap.pins[2].value.name,
+            return #flightMap.pins, flightMap.pins[1].taxiNodeData.name, flightMap.pins[2].taxiNodeData.name,
                    #sharedMap.pins, sharedMap.pins[1].value.name, sharedMap.pins[2].value.name,
-                   C_TaxiMap.ShouldMapShowTaxiNodes(2248), C_TaxiMap.ShouldMapShowTaxiNodes(9999)
+                   C_TaxiMap.ShouldMapShowTaxiNodes(2248), C_TaxiMap.ShouldMapShowTaxiNodes(9999),
+                   C_TaxiMap.ShouldMapShowTaxiNodes(7777)
             "#;
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
@@ -185,7 +186,7 @@ fn taxi_map_providers_refresh_pins_from_supplied_nodes() {
             .iter()
             .any(|name| name == "Blizzard_SharedMapDataProviders")
     );
-    let observed: (i32, String, String, i32, String, String, bool, bool) = env
+    let observed: (i32, String, String, i32, String, String, bool, bool, bool) = env
         .eval(TAXI_MAP_REFRESH_LUA)
         .expect("original taxi map data providers should refresh from model-supplied nodes");
     assert_eq!(
@@ -197,6 +198,7 @@ fn taxi_map_providers_refresh_pins_from_supplied_nodes() {
             2,
             "Node Alpha".into(),
             "Node Beta".into(),
+            true,
             true,
             false
         )
