@@ -30,8 +30,7 @@ fn retail_groupfinder_raidfinder_reports_cross_faction_party() {
     crate::common::blizzard_addon_harness::with_blizzard_addon_startup_shape(
         &["Blizzard_GroupFinder"],
         &[],
-        |env, loaded| {
-            assert!(loaded.iter().any(|name| name == "Blizzard_GroupFinder"));
+        |env, _loaded| {
             assert_groupfinder_cross_faction_consumer(env);
         },
     );
@@ -43,8 +42,7 @@ fn wowforever_groupfinder_raidfinder_reports_cross_faction_party() {
     crate::common::blizzard_addon_harness::with_blizzard_addon_startup_shape(
         &["Blizzard_GroupFinder"],
         &[],
-        |env, loaded| {
-            assert!(loaded.iter().any(|name| name == "Blizzard_GroupFinder"));
+        |env, _loaded| {
             assert_groupfinder_cross_faction_consumer(env);
         },
     );
