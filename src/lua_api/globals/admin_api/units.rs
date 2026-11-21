@@ -58,6 +58,7 @@ pub(super) fn register_party_api(
             member.level = level;
         },
     )?;
+    #[cfg(feature = "client-retail")]
     add_party_member_setter(
         lua,
         t,
