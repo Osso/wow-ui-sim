@@ -89,15 +89,13 @@ end
 "#;
 
 // Keep the unsupported-profile shim byte-identical; Retail/Forever use modeled tasks.
-const LEGACY_TASKS_TABLE_LUA: &str = r#"
--- Bonus / world-quest objective trackers iterate the task list at startup.
+const LEGACY_TASKS_TABLE_LUA: &str = r#"-- Bonus / world-quest objective trackers iterate the task list at startup.
 -- Return an empty table so the `for ... in ipairs(tasksTable)` loops no-op.
 if GetTasksTable == nil then
   function GetTasksTable()
     return {}
   end
-end
-"#;
+end"#;
 
 // Existing non-Retail/Forever empty popup domain remains outside QL-2.
 const UNMODELED_POPUPS_LUA: &str = r#"
