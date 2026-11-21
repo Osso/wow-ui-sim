@@ -6,7 +6,7 @@ use crate::lua_api::methods::{
     borrow_state, borrow_state_mut, create_string, create_table_with_capacity, table_get,
     table_set_static, val_to_string,
 };
-use crate::lua_bridge::{FromStack, stack_val, table_set_rust_fn_static};
+use crate::lua_bridge::{FromStack, TableBuilder, stack_val, table_set_rust_fn_static};
 use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
 use rilua::vm::table::Table;
@@ -52,9 +52,11 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
         "ShouldMapShowTaxiNodes",
         should_map_show_nodes,
     )?;
-    let admin = ensure_namespace(state, "A_Admin")?;
-    table_set_rust_fn_static(state, admin, "SetTaxiMapNodes", set_taxi_map_nodes)?;
     Ok(())
+}
+
+pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
+    builder.set_function("SetTaxiMapNodes", set_taxi_map_nodes)
 }
 
 fn get_all_taxi_nodes(state: &mut LuaState) -> LuaResult<u32> {
