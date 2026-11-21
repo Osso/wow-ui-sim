@@ -4726,7 +4726,7 @@ The sixteen retail 12.0.0 `Enum.EditModeDamageMeterSetting.*` and `Enum.EditMode
 | [[adventure-guide-disabled-tabs]] | Disabled Adventure Guide boss/model tabs looked active because model no-op stubs overwrote generic desaturation setters on the shared frame metatable |
 | [[adventure-guide-boss-icons]] | Encounter Journal creature icon fileDataID `0` must be returned as nil so Blizzard boss buttons use their default icon instead of clearing the texture |
 | [[adventure-guide-simplehtml-markup]] | Encounter Journal overview text uses SimpleHTML; HTML stripping now also removes WoW color/link escapes and converts `|n` line breaks |
-| [[appearances-wardrobe-api]] | Collections Journal Appearances opens, but browsing/filtering/search/favorites need stateful `C_TransmogCollection` source, visual, filter, and search backing instead of fixed stubs |
+| [[appearances-wardrobe-api]] | Wardrobe browsing still has broad stubs; Retail and Forever now read supplied base/variant relations through the shared transmog sets provider |
 | [[transmog-inventory-slot-scope]] | Retired stale-source workaround: refreshed retail 12.1 UI uses `C_PaperDollInfo.GetInventorySlotInfo`, so no loader scope remains |
 | [[widget-registry-storage]] | Lazy boxed model-family state removes per-frame storage waste while preserving defaults, round trips, and complete heap accounting; settled 45,002-frame estimate falls below the unchanged 230MB budget |
 | [[backpack-background-texture]] | Static Gethe XML explains the flat panel body but not current source completeness; exact 69977 `bagsitemslot2xc60` was MD5-verified and cached, while release-fixture GUI evidence reports a ready 16-slot Backpack but leaves five `Not found` texture paths under investigation |

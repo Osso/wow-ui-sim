@@ -1,3 +1,7 @@
+## [2026-11-21] implementation | Retail/Forever transmog set relations
+
+Updated the [Wardrobe API investigation](investigations/appearances-wardrobe-api.md) and [relation contract](../specs/transmog-set-relations.md). **VERIFIED (simulator):** the exact loaded `WardrobeSetsDataProviderMixin` test passes on Retail and Forever with two supplied records and distinct primary appearance IDs; both no-addons/no-saved-vars `lua-errors` runs return `[]`, and Forever→Mists→Wrath→Retail compile receipts report zero warnings. **INFERRED (R88cs pending):** catalog relation semantics beyond the tested consumer projection remain provisional; the temporary Lua body is byte-identical.
+
 ## [2026-11-20] implementation | Trilinear mipmapped RGBA GPU atlas
 
 Added per-cell RGBA mip chains down to 1×1 and cell-clamped trilinear sampling to reduce aliasing on downscaled icons. Generated mips retain premultiplied RGB through filtering to avoid dark fringes at transparent edges; mip 0 retains straight alpha for magnification. See [rendering pipeline](systems/rendering-pipeline.md).

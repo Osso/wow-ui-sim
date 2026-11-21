@@ -4,15 +4,15 @@ Retail and WoW Forever `C_TransmogSets` relation queries and `C_Transmog.GetAllS
 
 ## What it must do
 
-- [ ] Project supplied base and variant records through the Retail and Forever `WardrobeSetsDataProviderMixin` consumer; distinct sets retain distinct primary appearances.
+- [x] Project supplied base and variant records through the Retail and Forever `WardrobeSetsDataProviderMixin` consumer; distinct sets retain distinct primary appearances.
 - [ ] INFERRED (R88cs pending): return catalog-backed base-set, usable-set, primary-appearance, collection, slot-source and complete appearance-item relations.
 - [ ] INFERRED (R88cs pending): treat a valid, collected set as usable and a base as collected when its base or a variant is collected.
-- [ ] Accept catalog data through `A_Admin.SetTransmogSetCatalog` without direct test-state writes or Lua API replacement.
+- [x] Accept catalog data through `A_Admin.SetTransmogSetCatalog` without direct test-state writes or Lua API replacement.
 - [ ] Keep the temporary empty defaults active for profiles outside Retail and WoW Forever.
 
 ## How it works
 
-- [Transmog C API model](../wiki/systems/transmog-set-relations.md)
+- [Wardrobe API investigation](../wiki/investigations/appearances-wardrobe-api.md)
 
 ## Implementation inventory
 
