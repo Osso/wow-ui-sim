@@ -20,6 +20,7 @@ mod editable_time;
 mod editable_title;
 mod editable_type;
 mod event_submission;
+pub(crate) mod event_types;
 mod selection;
 mod submission_policy;
 mod view_info;

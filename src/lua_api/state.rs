@@ -880,6 +880,7 @@ macro_rules! build_empty_sim_state {
             calendar_displayed_month: Default::default(),
             calendar_next_club_id: None,
             calendar_club_events: Vec::new(),
+            calendar_event_types: Vec::new(),
             calendar_context_policy: Default::default(),
             calendar_opened_selection: None,
             calendar_context_selection: None,

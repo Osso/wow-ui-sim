@@ -1090,6 +1090,8 @@ pub struct SimState {
     pub calendar_next_club_id: Option<u64>,
     pub calendar_club_events:
         Vec<crate::c_api::c_calendar::day_event_record::CalendarDayEventRecord>,
+    pub calendar_event_types:
+        Vec<crate::c_api::c_calendar::event_types::CalendarEventTypeDisplayInfo>,
     pub calendar_context_policy: crate::c_api::c_calendar::CalendarContextPolicy,
     pub calendar_opened_selection: Option<crate::c_api::c_calendar::CalendarSelection>,
     pub calendar_context_selection: Option<crate::c_api::c_calendar::CalendarSelection>,

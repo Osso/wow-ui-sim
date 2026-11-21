@@ -51,3 +51,28 @@ fn club_calendar_tooltip_renders_only_in_range_events() {
     )
     .expect("CommunitiesCalendar's real tooltip should render supplied in-range events");
 }
+
+#[test]
+fn calendar_create_event_dropdown_renders_supplied_types() {
+    let env = load_full_game_ui();
+    env.exec(
+        r#"
+        A_Admin.SetCalendarEventTypes('[{"displayString":"CALENDAR_TYPE_PVP","eventType":2},{"displayString":"CALENDAR_TYPE_MEETING","eventType":3}]')
+        CalendarCreateEventFrame:Show()
+        local dropdown = CalendarCreateEventFrame.EventTypeDropdown
+        dropdown:Show()
+        dropdown:GenerateMenu()
+        dropdown:OpenMenu()
+        local menu = Menu.GetManager():GetOpenMenu()
+        assert(menu, 'calendar event type menu should open')
+        local labels = {}
+        for _, child in ipairs({menu:GetChildren()}) do
+            if child.fontString then table.insert(labels, child.fontString:GetText()) end
+        end
+        local text = table.concat(labels, '\n')
+        assert(text:find(CALENDAR_TYPE_PVP, 1, true), text)
+        assert(text:find(CALENDAR_TYPE_MEETING, 1, true), text)
+        "#,
+    )
+    .expect("the real create-event dropdown should render supplied type labels");
+}
