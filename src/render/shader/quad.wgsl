@@ -162,6 +162,17 @@ fn unpremultiply_sample(sample: vec4<f32>) -> vec4<f32> {
     return vec4<f32>(min(sample.rgb / sample.a, vec3<f32>(1.0)), sample.a);
 }
 
+fn sample_tier_mip(
+    tex: texture_2d<f32>,
+    uv: vec2<f32>,
+    cell_origin: vec2<f32>,
+    cell_uv: f32,
+    lod: f32,
+) -> vec4<f32> {
+    let mip_uv = clamp_cell_uv_for_mip(uv, cell_origin, cell_uv, lod);
+    return textureSampleLevel(tex, texture_sampler, mip_uv, lod);
+}
+
 fn sample_tier_trilinear(
     tex: texture_2d<f32>,
     uv: vec2<f32>,
@@ -174,28 +185,33 @@ fn sample_tier_trilinear(
     let lod = clamp(log2(max(rho, 1.0)), 0.0, max_lod);
     let cell_origin = floor(uv * grid_size) / grid_size;
     let cell_uv = 1.0 / grid_size;
-
     let mip_floor = floor(lod);
-    let uv_floor = clamp_cell_uv_for_mip(uv, cell_origin, cell_uv, mip_floor);
-    var sample_floor = textureSampleLevel(tex, texture_sampler, uv_floor, mip_floor);
-
+    var sample_floor = sample_tier_mip(tex, uv, cell_origin, cell_uv, mip_floor);
     let frac_lod = fract(lod);
     if frac_lod <= 0.001 {
-        if mip_floor == 0.0 {
-            return sample_floor;
-        }
-        return unpremultiply_sample(sample_floor);
+        return select(unpremultiply_sample(sample_floor), sample_floor, mip_floor == 0.0);
     }
-
-    // Mip 0 is straight-alpha to preserve the existing magnified path.
-    // Convert it before mixing it with a premultiplied generated mip.
     if mip_floor == 0.0 {
         sample_floor = vec4<f32>(sample_floor.rgb * sample_floor.a, sample_floor.a);
     }
     let mip_ceil = min(mip_floor + 1.0, max_lod);
-    let uv_ceil = clamp_cell_uv_for_mip(uv, cell_origin, cell_uv, mip_ceil);
-    let sample_ceil = textureSampleLevel(tex, texture_sampler, uv_ceil, mip_ceil);
+    let sample_ceil = sample_tier_mip(tex, uv, cell_origin, cell_uv, mip_ceil);
     return unpremultiply_sample(mix(sample_floor, sample_ceil, frac_lod));
+}
+
+fn sample_rgba_tier(
+    tex_index: i32,
+    uv: vec2<f32>,
+    ddx: vec2<f32>,
+    ddy: vec2<f32>,
+) -> vec4<f32> {
+    switch tex_index {
+        case 0: { return sample_tier_trilinear(tier_64, uv, ddx, ddy, 64.0, 6.0); }
+        case 1: { return sample_tier_trilinear(tier_128, uv, ddx, ddy, 32.0, 7.0); }
+        case 2: { return sample_tier_trilinear(tier_256, uv, ddx, ddy, 16.0, 8.0); }
+        case 3: { return sample_tier_trilinear(tier_512, uv, ddx, ddy, 8.0, 9.0); }
+        default: { return sample_tier_trilinear(tier_2048, uv, ddx, ddy, 2.0, 11.0); }
+    }
 }
 
 // Sample from the appropriate tier based on tex_index
@@ -209,32 +225,16 @@ fn sample_tiered_texture(
 ) -> vec4<f32> {
     let uv = clamp(tex_coords, vec2<f32>(0.0), vec2<f32>(MAX_ATLAS_UV));
 
-    switch tex_index {
-        case 0: {
-            return sample_tier_trilinear(tier_64, uv, ddx, ddy, 64.0, 6.0);
-        }
-        case 1: {
-            return sample_tier_trilinear(tier_128, uv, ddx, ddy, 32.0, 7.0);
-        }
-        case 2: {
-            return sample_tier_trilinear(tier_256, uv, ddx, ddy, 16.0, 8.0);
-        }
-        case 3: {
-            return sample_tier_trilinear(tier_512, uv, ddx, ddy, 8.0, 9.0);
-        }
-        case 4: {
-            return sample_tier_trilinear(tier_2048, uv, ddx, ddy, 2.0, 11.0);
-        }
-        case 6: {
-            return textureSampleLevel(bc1_atlas, texture_sampler, uv, 0.0);
-        }
-        case 7: {
-            return textureSampleLevel(bc3_atlas, texture_sampler, uv, 0.0);
-        }
-        default: {
-            return textureSampleLevel(glyph_atlas, glyph_sampler, uv, 0.0);
-        }
+    if tex_index >= 0 && tex_index < 5 {
+        return sample_rgba_tier(tex_index, uv, ddx, ddy);
     }
+    if tex_index == 6 {
+        return textureSampleLevel(bc1_atlas, texture_sampler, uv, 0.0);
+    }
+    if tex_index == 7 {
+        return textureSampleLevel(bc3_atlas, texture_sampler, uv, 0.0);
+    }
+    return textureSampleLevel(glyph_atlas, glyph_sampler, uv, 0.0);
 }
 
 @fragment
