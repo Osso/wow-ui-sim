@@ -28,7 +28,7 @@ fn progress_env() -> WowLuaEnv {
 
 fn show_progress_set(env: &WowLuaEnv, requirements: &str) {
     env.exec(&format!(
-        "assert(A_Admin.SetQuestProgressRequirements(80000, {requirements})); QuestFrameProgressPanel:Hide(); A_Admin.OpenMultiQuestNpc(); SelectActiveQuest(2)"
+        "QuestFrameProgressPanel:Hide(); A_Admin.OpenMultiQuestNpc(); assert(A_Admin.SetQuestProgressRequirements(80000, {requirements})); SelectActiveQuest(2)"
     ))
     .unwrap();
 }
@@ -39,7 +39,7 @@ fn assert_panel_text_and_money(env: &WowLuaEnv, expected: [&str; 5]) {
             "return table.concat({tostring(QuestProgressText:GetText()), tostring(QuestProgressItem1Name:GetText()), tostring(QuestProgressItem2Name:GetText()), tostring(QuestProgressItem3Name:GetText()), tostring(QuestProgressItem4Name:GetText()), tostring(QuestProgressRequiredMoneyFrame.GoldButton.Text:GetText()), tostring(QuestProgressRequiredMoneyFrame.SilverButton.Text:GetText()), tostring(QuestFrame:IsShown()), tostring(QuestFrame:IsVisible()), tostring(UIParent:IsShown()), tostring(QuestFrameProgressPanel:IsShown()), tostring(QuestProgressRequiredMoneyFrame:IsShown()), tostring(GetProgressText()), tostring(GetNumQuestItems()), tostring(GetNumQuestCurrencies()), tostring(GetQuestMoneyToGet()), tostring(SplashFrame:IsShown())}, '|')",
         )
         .unwrap();
-    let expected = [
+    let expected_summary = [
         expected[0],
         expected[1],
         expected[2],
@@ -59,7 +59,7 @@ fn assert_panel_text_and_money(env: &WowLuaEnv, expected: [&str; 5]) {
         "false",
     ]
     .join("|");
-    assert_eq!(shown, expected);
+    assert_eq!(shown, expected_summary);
 }
 
 fn assert_visible_item_buttons(env: &WowLuaEnv, item_amount: i32, currency_amount: i32) {

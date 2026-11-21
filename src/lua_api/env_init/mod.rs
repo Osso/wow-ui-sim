@@ -79,6 +79,8 @@ pub(super) fn init_lua_state(
     trace_debug_getter_values(lua, "before_profile_bootstrap");
     register_profile_bootstrap(lua)?;
     trace_debug_getter_values(lua, "after_profile_bootstrap");
+    // Replace typed quest-progress defaults after temporary bootstrap registration.
+    super::globals::real::quest_dialog::register_progress_requirement_globals(lua)?;
     copy_legacy_unit_globals_to_secureenv(lua)?;
     let screen_kind = state.borrow().screen_kind;
     install_secure_runtime_surface(lua, screen_kind)?;

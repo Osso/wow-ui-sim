@@ -2,9 +2,26 @@
 use crate::lua_api::methods::{borrow_state, borrow_state_mut, create_string};
 use crate::lua_bridge::FromStack;
 use rilua::vm::state::LuaState;
-use rilua::{LuaResult, Val};
+use rilua::{LuaApiMut, LuaResult, Val};
 
 pub(crate) use crate::c_api::quest_readiness::{complete_quest, is_quest_completable};
+
+pub(crate) fn register_progress_requirement_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
+    if !crate::c_api::quest_objectives::ENABLED {
+        return Ok(());
+    }
+    let functions: &[(&str, fn(&mut LuaState) -> LuaResult<u32>)] = &[
+        ("GetQuestMoneyToGet", get_progress_money),
+        ("GetNumQuestItems", get_progress_item_count),
+        ("GetNumQuestCurrencies", get_progress_currency_count),
+        ("GetProgressText", get_progress_text),
+        ("GetQuestPortraitTurnIn", get_progress_portrait),
+    ];
+    for (name, function) in functions {
+        LuaApiMut::register_function(lua, *name, *function)?;
+    }
+    Ok(())
+}
 
 pub(crate) fn get_progress_money(state: &mut LuaState) -> LuaResult<u32> {
     let money = {
