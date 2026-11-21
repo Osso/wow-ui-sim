@@ -2,10 +2,11 @@
 
 #[cfg(feature = "client-wowforever")]
 use super::helpers::read_untainted_signed32_argument;
-use super::helpers::{ensure_namespace, validate_supplied_relation_id};
+use super::helpers::{ensure_namespace, set_table_array, validate_supplied_relation_id};
 use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::methods::{
-    borrow_state, create_string, create_table, table_set, val_to_string,
+    borrow_state, create_string, create_table, create_table_with_capacity, table_get, table_set,
+    val_to_string,
 };
 use crate::lua_api::sim_substates::QuestLogEntry;
 use crate::lua_api::workarounds::update_campaign_headers;
@@ -136,11 +137,44 @@ fn read_timer_seconds(
 pub(crate) fn register_info_queries(state: &mut LuaState) -> LuaResult<()> {
     let namespace = ensure_namespace(state, "C_QuestLog")?;
     table_set_rust_fn_static(state, namespace, "GetInfo", get_info)?;
+    if ACTIVE == ClientProfile::WowForever {
+        table_set_rust_fn_static(state, namespace, "GetQuestTimers", get_quest_timers)?;
+    }
     if ACTIVE == ClientProfile::Retail {
         table_set_rust_fn_static(state, namespace, "IsQuestTask", is_quest_task)?;
         table_set_rust_fn_static(state, namespace, "IsQuestBounty", is_quest_bounty)?;
     }
     Ok(())
+}
+
+// INFERRED (R88ct; native evidence pending): questTimer is a remaining-seconds
+// countdown and decreases against the simulator clock after the host supplies it.
+#[cfg(feature = "client-wowforever")]
+fn get_quest_timers(state: &mut LuaState) -> LuaResult<u32> {
+    let timers = {
+        let sim = borrow_state(state)?;
+        let elapsed = sim.clock_elapsed();
+        sim.quest_log_entries
+            .timers
+            .iter()
+            .map(|timer| {
+                let since_supplied = elapsed.saturating_sub(timer.supplied_at).as_secs_f64();
+                (
+                    timer.quest_id,
+                    (timer.initial_seconds - since_supplied).max(0.0),
+                )
+            })
+            .collect::<Vec<_>>()
+    };
+    let result = create_table_with_capacity(state, timers.len());
+    for (index, (quest_id, quest_timer)) in timers.into_iter().enumerate() {
+        let info = create_table(state);
+        table_set(state, info, "questID", Val::Num(f64::from(quest_id)));
+        table_set(state, info, "questTimer", Val::Num(quest_timer));
+        set_table_array(state, result, index as i64 + 1, info);
+    }
+    state.push(result);
+    Ok(1)
 }
 
 fn info_entry_flags(entry: &QuestLogEntry) -> QuestInfoEntryFlags {
