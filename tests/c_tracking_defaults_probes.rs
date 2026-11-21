@@ -42,10 +42,22 @@ fn collection_wardrobe_consumer_reflects_supplied_tracking_entries() {
         .content_tracking
         .tracked_ids_by_type
         .insert(appearance_type as u32, vec![301, 302]);
-    env.exec("A_Admin.SetContentTrackingEnabled(true)")
-        .expect("enable content tracking through the admin model setter");
+    env.state()
+        .borrow_mut()
+        .content_tracking
+        .collectable_source_tracking_enabled = true;
+    env.exec("A_Admin.FireEvent('CONTENT_TRACKING_IS_ENABLED_UPDATE', true)")
+        .expect("enable the selected content-tracking consumer");
 
-    assert_eq!(consumer_tracking_states(&env), (true, true, false));
+    let consumer_states = consumer_tracking_states(&env);
+    let enabled: bool = env
+        .eval("return C_ContentTracking.GetCollectableSourceTrackingEnabled()")
+        .expect("content-tracking capability query should run");
+    assert_eq!(consumer_states, (true, true, false));
+    assert!(
+        enabled,
+        "the C API must return the supplied capability state"
+    );
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]

@@ -16,6 +16,8 @@ use rilua::{LuaResult, Val};
 
 #[derive(Clone, Debug, Default)]
 pub struct ContentTrackingState {
+    /// INFERRED (R88cw): collectable-source tracking is disabled until supplied.
+    pub collectable_source_tracking_enabled: bool,
     /// Parsed tracking type to ordered ID list. The vector preserves duplicates.
     pub tracked_ids_by_type: BTreeMap<u32, Vec<i32>>,
 }
