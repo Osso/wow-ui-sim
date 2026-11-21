@@ -40,8 +40,26 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
             "GetQuestRequiredCurrencyInfo",
             get_required_currency_info,
         )?;
+        table_set_rust_fn_static(
+            state,
+            namespace,
+            "GetHideRequiredItems",
+            get_hide_required_items,
+        )?;
     }
     Ok(())
+}
+
+fn get_hide_required_items(state: &mut LuaState) -> LuaResult<u32> {
+    // INFERRED (R88db pending): absent inputs leave required rows visible.
+    let hidden = {
+        let sim = borrow_state(state)?;
+        crate::c_api::quest_objectives::progress_requirements_for_active_dialog(&sim)
+            .map(|requirements| requirements.hide_required_items)
+            .unwrap_or(false)
+    };
+    state.push(Val::Bool(hidden));
+    Ok(1)
 }
 
 fn get_required_currency_info(state: &mut LuaState) -> LuaResult<u32> {

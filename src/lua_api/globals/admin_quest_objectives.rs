@@ -49,6 +49,7 @@ fn decode_progress_requirements(state: &mut LuaState) -> LuaResult<QuestProgress
     let table = stack_val(state, 2);
     let requirements = QuestProgressRequirements {
         money: read_field(state, table, "money")?,
+        hide_required_items: read_field(state, table, "hideRequiredItems")?,
         items: decode_progress_items(state, table)?,
         currencies: decode_progress_currencies(state, table)?,
         text: read_field(state, table, "text")?,

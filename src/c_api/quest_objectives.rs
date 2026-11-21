@@ -55,6 +55,7 @@ pub struct QuestProgressCurrency {
 #[derive(Debug, Clone, Default, PartialEq)]
 pub struct QuestProgressRequirements {
     pub money: i32,
+    pub hide_required_items: bool,
     pub items: Vec<QuestProgressItem>,
     pub currencies: Vec<QuestProgressCurrency>,
     pub text: String,
