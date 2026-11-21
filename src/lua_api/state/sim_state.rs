@@ -529,6 +529,8 @@ pub struct SimState {
     pub clubs: crate::c_api::club_model::ClubState,
     /// Host spell data: cooldown category of each spell that has one.
     pub spell_cooldown_categories: HashMap<u32, i32>,
+    /// Supplied autocast flags, keyed by spellbook slot and bank.
+    pub spellbook_auto_cast: HashMap<(u32, i32), crate::c_api::c_spell_book::SpellBookItemAutoCast>,
     /// Supplied low-rank spell IDs for the current scenario.
     pub spellbook_low_rank: HashSet<u32>,
     /// Supplied spell IDs represented in a flyout.
