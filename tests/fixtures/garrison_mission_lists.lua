@@ -34,7 +34,12 @@ A_Admin.SetGarrisonMissions({
 
 local list = CovenantMissionFrame.MissionTab.MissionList
 if not list.ScrollBox:GetView() then
-    CovenantMissionFrame:OnLoadMainFrame()
+    local view = CreateScrollBoxListLinearView()
+    view:SetElementInitializer("CovenantMissionListButtonTemplate", function(button, elementData)
+        CovenantMissionButton_InitButton(button, elementData)
+    end)
+    view:SetPadding(8, 0, 13, 0, -4)
+    ScrollUtil.InitScrollBoxListWithScrollBar(list.ScrollBox, list.ScrollBar, view)
 end
 list:UpdateMissions()
 return #list.combinedMissions,
