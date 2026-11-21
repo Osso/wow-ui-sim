@@ -248,43 +248,15 @@ impl QuestLogState {
 
     pub fn seeded() -> Self {
         Self {
-            campaign_ids: HashMap::new(),
-            info_record_autocomplete: HashMap::new(),
-            task_category_five: HashSet::new(),
-            task_record_values: HashMap::new(),
-            task_list_lookup_matches: HashSet::new(),
-            bounty_category_matches: HashSet::new(),
-            campaign_chapter_ids: HashMap::new(),
-            threat_entry_flags: HashMap::new(),
-            bounties_by_set: HashMap::new(),
-            party_quest_ids: HashMap::new(),
-            party_progress: HashMap::new(),
-            quest_special_item_inputs: Default::default(),
             entries: vec![
                 lost_expedition_entry(),
                 defending_the_gates_entry(),
                 glittering_geodes_entry(),
                 earthen_relic_recovery_entry(),
             ],
-            #[cfg(feature = "client-wowforever")]
-            timers: Vec::new(),
-            abandon_ready_ids: HashSet::new(),
-            abandon_record_flags: HashMap::new(),
-            abandon_classification_flags: HashMap::new(),
-            abandon_conditional_blocked: HashMap::new(),
-            #[cfg(feature = "client-wrath")]
-            manual_watch_ids: Vec::new(),
             objective_progress: crate::c_api::quest_objectives::seeded_progress(),
-            progress_requirements: HashMap::new(),
-            background_materials: HashMap::new(),
-            additional_highlights: HashMap::new(),
-            readiness: Default::default(),
-            offer: Default::default(),
-            processed_reward_factions: Vec::new(),
-            #[cfg(feature = "client-wrath")]
-            daily_quest_ids: [0; WRATH_DAILY_QUEST_LIMIT],
             completed_quest_ids: seeded_completed_quest_ids(),
-            turn_in_choices: HashMap::new(),
+            ..Self::default()
         }
     }
 }
