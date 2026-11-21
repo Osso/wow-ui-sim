@@ -20,13 +20,13 @@ pub use renown_rewards::RenownRewardInfo;
 
 use crate::c_api::helpers::ensure_namespace;
 use crate::lua_api::methods::{
-    borrow_state, call_function_state, create_string, create_table, create_table_with_fields,
-    table_set_num, table_set_static,
+    borrow_state, borrow_state_mut, call_function_state, create_string, create_table,
+    create_table_with_fields, table_set_num, table_set_static,
 };
 use crate::lua_api::state::RenownLevelInfo;
-use crate::lua_bridge::{FromStack, table_set_rust_fn_static};
+use crate::lua_bridge::{FromStack, TableBuilder, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
-use rilua::{LuaResult, Val};
+use rilua::{LuaResult, Val, runtime_error};
 
 pub(crate) fn register_c_major_factions_surface(state: &mut LuaState) -> LuaResult<()> {
     let ns = ensure_namespace(state, "C_MajorFactions")?;
@@ -47,9 +47,72 @@ pub(crate) fn register_c_major_factions_surface(state: &mut LuaState) -> LuaResu
         renown_rewards::get_renown_rewards_for_level,
     )?;
     table_set_rust_fn_static(state, ns, "GetMajorFactionIDs", get_major_faction_ids)?;
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
+        table_set_rust_fn_static(
+            state,
+            ns,
+            "ShouldDisplayMajorFactionAsJourney",
+            should_display_as_journey,
+        )?;
+        table_set_rust_fn_static(
+            state,
+            ns,
+            "ShouldUseJourneyRewardTrack",
+            should_use_journey_reward_track,
+        )?;
+    }
     table_set_rust_fn_static(state, ns, "GetCurrentRenownLevel", get_current_renown_level)?;
     table_set_rust_fn_static(state, ns, "HasMaximumRenown", has_maximum_renown)?;
     Ok(())
+}
+
+pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
+    builder.set_function("SetMajorFactionJourneyFlags", set_journey_flags)
+}
+
+fn should_display_as_journey(state: &mut LuaState) -> LuaResult<u32> {
+    let should_display = read_journey_flags(state)?.is_some_and(|flags| flags.0);
+    state.push(Val::Bool(should_display));
+    Ok(1)
+}
+
+fn should_use_journey_reward_track(state: &mut LuaState) -> LuaResult<u32> {
+    let should_use_track = read_journey_flags(state)?.is_some_and(|flags| flags.1);
+    state.push(Val::Bool(should_use_track));
+    Ok(1)
+}
+
+fn read_journey_flags(state: &LuaState) -> LuaResult<Option<(bool, bool)>> {
+    let Ok(faction_id) = i64::from_stack(state, 1) else {
+        return Ok(None);
+    };
+    Ok(borrow_state(state)?
+        .major_factions
+        .get(&faction_id)
+        .map(|data| {
+            (
+                data.should_display_as_journey,
+                data.should_use_journey_reward_track,
+            )
+        }))
+}
+
+fn set_journey_flags(state: &mut LuaState) -> LuaResult<u32> {
+    let faction_id = i64::from_stack(state, 1)?;
+    let should_display = bool::from_stack(state, 2)?;
+    let should_use_track = bool::from_stack(state, 3)?;
+    let Some(data) = borrow_state_mut(state)?.major_factions.get_mut(&faction_id) else {
+        return Err(runtime_error(format!(
+            "A_Admin.SetMajorFactionJourneyFlags: unknown faction id {faction_id}"
+        )));
+    };
+    data.should_display_as_journey = should_display;
+    data.should_use_journey_reward_track = should_use_track;
+    Ok(0)
 }
 
 /// `(renown_level, max_level)` for a known faction; `None` for unknown or
