@@ -108,11 +108,14 @@ fn item_table(state: &mut LuaState, item: &ItemSetItem) -> Val {
 }
 
 fn push_sequence(state: &mut LuaState, rows: Vec<Val>) -> LuaResult<u32> {
-    let table = create_table(state);
+    let sequence = create_table(state);
+    let Val::Table(table) = sequence else {
+        unreachable!("create_table must return a table");
+    };
     for (index, row) in rows.into_iter().enumerate() {
         table_set_num(state, table, (index + 1) as f64, row);
     }
-    state.push(Val::Table(table));
+    state.push(sequence);
     Ok(1)
 }
 
