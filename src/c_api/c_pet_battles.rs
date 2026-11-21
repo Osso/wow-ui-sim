@@ -1,8 +1,12 @@
 //! State-backed `C_PetBattles` identity and pet-type probes.
 
 use crate::c_api::ensure_namespace;
-use crate::lua_api::methods::{borrow_state, borrow_state_mut, create_string};
-use crate::lua_bridge::{FromStack, IntoStack, TableBuilder, stack_val, table_set_rust_fn_static};
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+use crate::lua_api::methods::borrow_state_mut;
+use crate::lua_api::methods::{borrow_state, create_string};
+use crate::lua_bridge::{FromStack, IntoStack, table_set_rust_fn_static};
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+use crate::lua_bridge::{TableBuilder, stack_val};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 
