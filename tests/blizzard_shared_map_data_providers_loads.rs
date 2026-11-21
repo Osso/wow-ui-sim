@@ -961,7 +961,7 @@ fn quest_hub_glow_uses_supplied_weekly_reset_boundary() {
     env.exec(
         r#"
         A_Admin.SetWeeklyResetSchedule(3, 7)
-        local pin = CreateFrame("Button")
+        pin = CreateFrame("Button")
         Mixin(pin, QuestHubPinMixin, QuestHubPinGlowMixin)
         pin.relatedQuests = {{ questID = 80592 }}
         GLOW_HUB_QUESTS_ACKNOWLEDGED[80592] = 0
