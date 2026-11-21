@@ -170,6 +170,11 @@ fn register_player(b: TableBuilder) -> LuaResult<TableBuilder> {
     )?;
     #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
     let b = b.set_function("SetGuildFactionGroupFlags", set_guild_faction_group_flags)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let b = b.set_function(
+        "SetPlayerStagger",
+        crate::lua_api::globals::real::unit_stagger::set_player_stagger,
+    )?;
     b.set_function("SetPlayerName", set_player_name)?
         .set_function("SetPlayerClass", set_player_class)?
         .set_function("SetPlayerRace", set_player_race)?
