@@ -172,6 +172,8 @@ macro_rules! build_empty_sim_state {
             pet_journal_hover: crate::c_api::c_pet_journal_hover::PetJournalHoverState::default(),
             anima_diversion: AnimaDiversionState::default(),
             garrison_talents: GarrisonTalentState::default(),
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            garrison_mission_lists: Default::default(),
             hyperlink_tooltip: Default::default(),
             trade_skill_crafting_ui_inputs: Default::default(),
             #[cfg(feature = "client-retail")]

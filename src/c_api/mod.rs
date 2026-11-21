@@ -223,6 +223,8 @@ pub(crate) mod c_garrison_damage_classes;
 mod c_garrison_follower_xp;
 #[cfg(feature = "client-retail")]
 pub(crate) mod c_garrison_landing_page;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) mod c_garrison_mission_lists;
 #[cfg(feature = "client-retail")]
 pub mod c_garrison_trees;
 pub mod c_glue;

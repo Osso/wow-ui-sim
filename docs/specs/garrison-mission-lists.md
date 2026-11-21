@@ -1,13 +1,42 @@
 # Garrison mission lists
 
-Until the garrison mission model exists, `C_Garrison.GetInProgressMissions` and `C_Garrison.GetAvailableMissions` return empty lists on Retail, PTR and WoW Forever. With `(table, followerTypeID)`, they clear and return the supplied table. With `(followerTypeID)` or `(nil, followerTypeID)`, they return a new empty table. The follower type must be numeric; the first argument must be a table, number or nil.
+The Retail and WoW Forever `C_Garrison` mission-list queries use host-supplied records stored by the Rust mission model. The queries serve the original Garrison and Covenant mission consumers. Native behavior is pending (R88dg); inferred behavior stays labelled below. See [Lua API architecture](../lua-api.md).
 
-`C_Garrison.GetCombatAllyMission(followerTypeID)` requires a numeric follower type and returns no values while the mission model is absent.
+## What it must do
 
-## Best-guess basis (best-guess, native UNKNOWN)
+- [ ] **INFERRED (R88dg pending):** `A_Admin.SetGarrisonMissions` replaces the supplied mission records for the current simulator session.
+- [ ] **INFERRED (R88dg pending):** Each record carries `missionID`, `name`, `followerTypeID`, `level`, `durationSeconds`, `rewards`, `inProgress`, and `completed` values supplied by the host.
+- [ ] **INFERRED (R88dg pending):** `C_Garrison.GetAvailableMissions` returns records for the requested follower type that are neither in progress nor completed.
+- [ ] **INFERRED (R88dg pending):** `C_Garrison.GetInProgressMissions` returns records for the requested follower type whose `inProgress` value is true.
+- [ ] **INFERRED (R88dg pending):** `C_Garrison.GetCompleteMissions` returns records for the requested follower type whose `completed` value is true.
+- [ ] **INFERRED (R88dg pending):** The available and in-progress queries fill and return a supplied output table, or return a new table when called with a follower type or `nil` plus a follower type.
+- [ ] The original Retail and Forever Covenant mission-list consumer displays all supplied available, completed, and in-progress mission records; it must not pass with an empty producer.
+- [ ] The Rust model and setter are registered on Retail and WoW Forever only. PTR keeps the existing Lua shim unchanged.
 
-The pinned Retail, PTR and WoW Forever `Blizzard_GarrisonUI/Mainline/Blizzard_GarrisonMissionUI.lua:871–872` pass output tables and a follower type. `Blizzard_GarrisonUI/Mainline/Blizzard_GarrisonShipyardUI.lua:1173–1174` and `Blizzard_GarrisonUI/Mainline/Blizzard_GarrisonLandingPage.lua:542` use a numeric first argument; `Blizzard_AdventureMap/AM_ZoneSummaryDataProvider.lua:87,94` uses nil-plus-number and number-only forms. No declaration was found in the pinned Retail generated API documentation. Empty results reflect the missing simulator mission model. `Blizzard_GarrisonUI/Mainline/Blizzard_GarrisonMissionUI.lua:867` queries the combat-ally mission; `Blizzard_OrderHallMissionUI.lua:637–648` has an explicit no-mission branch. Returning nothing when no mission is modeled is a best guess.
+## How it works
 
-## Known gaps
+- [Lua API architecture](../lua-api.md)
+- [Addon loading pipeline](../addon-loading-pipeline.md)
 
-Native clearing behavior and the return value for the supplied-table form are unknown. The shape of a combat-ally mission is unknown. Replace this temporary workaround when the garrison mission model is implemented.
+## Implementation inventory
+
+- `src/c_api/c_garrison_mission_lists.rs` — mission records, query functions, and `A_Admin.SetGarrisonMissions`.
+- `src/lua_api/state/sim_state.rs` and `src/lua_api/state.rs` — per-environment mission state.
+- `src/lua_api/globals/admin.rs` — profile-scoped setter registration.
+- `src/lua_api/workarounds/mod.rs` — install the Rust queries after the unchanged legacy bootstrap.
+- `tests/blizzard_garrison_ui_loads.rs` — selected original Covenant consumer test.
+- `tests/fixtures/garrison_mission_lists.lua` — host-supplied mission fixture.
+
+## Tests asserting this spec
+
+- `tests/blizzard_garrison_ui_loads.rs::supplied_missions_update_the_real_covenant_mission_list`
+
+## Known gaps (current cycle)
+
+- [ ] Native query signatures, table-clearing behavior, reward record shape, and default results are pending evidence from R88dg.
+- [ ] The combat-ally mission result shape and producer remain unmodeled.
+
+## Out of scope
+
+- PTR continues to use the legacy Lua shim.
+- Automatic mission discovery, progression, timing, and completion events are not modeled by this host-supplied snapshot.
