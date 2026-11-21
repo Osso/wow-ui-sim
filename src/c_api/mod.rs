@@ -600,7 +600,9 @@ mod helpers;
 mod secure_publication;
 mod secure_publication_data;
 pub(crate) use helpers::parse_numeric_string;
-#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[cfg(feature = "client-ptr")]
+pub(crate) use helpers::read_untainted_signed32_argument;
+#[cfg(feature = "client-retail")]
 pub(crate) use helpers::{
     bad_argument, read_untainted_signed32_argument, read_untainted_string_argument,
     read_untainted_truthy_argument, read_untainted_value,
