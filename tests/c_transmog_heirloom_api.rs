@@ -163,7 +163,8 @@ fn test_transmog_uncollected_returns_false() {
 #[test]
 fn test_transmog_collection_get_item_info_resolves_item_appearance() {
     let env = env();
-    env.exec("A_Admin.AddTransmogAppearance(9001, 4, 123456)").unwrap();
+    env.exec("A_Admin.AddTransmogAppearance(9001, 4, 123456)")
+        .unwrap();
     let result: String = env
         .eval(
             r##"
