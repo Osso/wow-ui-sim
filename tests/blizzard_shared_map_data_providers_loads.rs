@@ -199,6 +199,8 @@ fn load_taxi_map_addon_closure() -> (WowLuaEnv, Vec<String>) {
     (env, loaded)
 }
 
+// lt-b50d tracks the Forever SoftCursor gap; R88cr requests native confirmation.
+// Keep real-frame refresh coverage on Retail and use API/model coverage for Forever.
 #[cfg(feature = "client-retail")]
 #[test]
 fn taxi_map_providers_refresh_pins_from_supplied_nodes() {
