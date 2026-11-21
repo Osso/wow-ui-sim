@@ -4,8 +4,8 @@ use crate::c_api::ensure_namespace;
 use crate::c_api::helpers::{bad_argument, parse_numeric_string, read_untainted_signed32_argument};
 use crate::lua_api::globals::spellbook_data;
 use crate::lua_api::methods::{
-    borrow_state, create_string, create_string_static, create_table, create_table_with_capacity,
-    frame_ref, table_set_num, table_set_static,
+    borrow_state, borrow_state_mut, create_string, create_string_static, create_table,
+    create_table_with_capacity, frame_ref, table_set_num, table_set_static,
 };
 use crate::lua_api::script_helpers::{
     call_error_handler_state, get_event_listeners, get_scripts_for_dispatch,
@@ -28,6 +28,17 @@ const FIND_FLYOUT_SLOT_USAGE: &str =
 const FIND_BASE_SPELL_USAGE: &str =
     "Usage: local baseSpellID = C_SpellBook.FindBaseSpellByID(spellID)";
 const AUTO_CAST_USAGE: &str = "Usage: local autoCastAllowed, autoCastEnabled = C_SpellBook.GetSpellBookItemAutoCast(spellBookItem)";
+const SET_AUTO_CAST_USAGE: &str =
+    "Usage: C_SpellBook.SetSpellBookItemAutoCastEnabled(spellBookItem, spellBank, enabled)";
+const TOGGLE_AUTO_CAST_USAGE: &str =
+    "Usage: C_SpellBook.ToggleSpellBookItemAutoCast(spellBookItem, spellBank)";
+
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+pub struct SpellBookItemAutoCast {
+    pub auto_cast_allowed: bool,
+    pub auto_cast_enabled: bool,
+}
+
 pub(crate) fn register_c_spell_book(state: &mut LuaState) -> LuaResult<()> {
     let table_ref = ensure_namespace(state, "C_SpellBook")?;
     register_spell_book_skill_line_queries(state, table_ref)?;
@@ -241,26 +252,56 @@ fn register_spell_book_item_actions(
         "IsSpellInSpellBook",
         c_spell_book_is_spell_in_spell_book,
     )?;
-    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+    register_spell_book_auto_cast_actions(state, table_ref)?;
+    register_retail_spell_book_item_actions(state, table_ref)
+}
+
+fn register_spell_book_auto_cast_actions(
+    state: &mut LuaState,
+    table_ref: rilua::vm::gc::arena::GcRef<rilua::vm::table::Table>,
+) -> LuaResult<()> {
+    if supports_spell_book_auto_cast() {
         table_set_rust_fn_static(
             state,
             table_ref,
-            "FindSpellOverrideByID",
-            c_spell_book_find_spell_override_by_id,
+            "SetSpellBookItemAutoCastEnabled",
+            c_spell_book_set_auto_cast_enabled,
         )?;
         table_set_rust_fn_static(
             state,
             table_ref,
-            "FindFlyoutSlotBySpellID",
-            c_spell_book_find_flyout_slot_by_spell_id,
-        )?;
-        table_set_rust_fn_static(
-            state,
-            table_ref,
-            "FindBaseSpellByID",
-            c_spell_book_find_base_spell_by_id,
+            "ToggleSpellBookItemAutoCast",
+            c_spell_book_toggle_auto_cast,
         )?;
     }
+    Ok(())
+}
+
+fn register_retail_spell_book_item_actions(
+    state: &mut LuaState,
+    table_ref: rilua::vm::gc::arena::GcRef<rilua::vm::table::Table>,
+) -> LuaResult<()> {
+    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail {
+        return Ok(());
+    }
+    table_set_rust_fn_static(
+        state,
+        table_ref,
+        "FindSpellOverrideByID",
+        c_spell_book_find_spell_override_by_id,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        table_ref,
+        "FindFlyoutSlotBySpellID",
+        c_spell_book_find_flyout_slot_by_spell_id,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        table_ref,
+        "FindBaseSpellByID",
+        c_spell_book_find_base_spell_by_id,
+    )?;
     Ok(())
 }
 
@@ -766,35 +807,160 @@ fn c_spell_book_get_spell_book_item_texture(state: &mut LuaState) -> LuaResult<u
     Ok(1)
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) fn register_admin(
+    builder: crate::lua_bridge::TableBuilder,
+) -> LuaResult<crate::lua_bridge::TableBuilder> {
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
+        builder.set_function("SetSpellBookItemAutoCast", set_spell_book_item_auto_cast)
+    } else {
+        Ok(builder)
+    }
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn set_spell_book_item_auto_cast(state: &mut LuaState) -> LuaResult<u32> {
+    let (slot, bank) = read_spell_book_item_arguments(
+        state,
+        "A_Admin.SetSpellBookItemAutoCast",
+        "Usage: A_Admin.SetSpellBookItemAutoCast(slot, bank, allowed, enabled)",
+    )?;
+    let flags = SpellBookItemAutoCast {
+        auto_cast_allowed: bool::from_stack(state, 3)?,
+        auto_cast_enabled: bool::from_stack(state, 4)?,
+    };
+    let valid_item = if bank == 1 {
+        slot > 0
+    } else {
+        read_auto_cast_flags(state, slot, bank)?.is_some()
+    };
+    if !valid_item {
+        return Err(rilua::runtime_error(
+            "A_Admin.SetSpellBookItemAutoCast: invalid spellbook item",
+        ));
+    }
+    borrow_state_mut(state)?
+        .spellbook_auto_cast
+        .insert((slot, bank), flags);
+    Ok(0)
+}
+
 fn c_spell_book_get_spell_book_item_auto_cast(state: &mut LuaState) -> LuaResult<u32> {
-    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+    if supports_spell_book_auto_cast() {
         let (slot, bank) = read_spell_book_item_arguments(
             state,
             "C_SpellBook.GetSpellBookItemAutoCast",
             AUTO_CAST_USAGE,
         )?;
-        // No ordered pet-book rows or spell-keyed snapshot flags are supplied.
-        // The membership HashSet and action-bar indices do not establish a pet
-        // book slot. Keep that gap explicit rather than manufacture an ordering.
-        let entry = (bank == 0)
-            .then(|| i32::try_from(slot).ok())
-            .flatten()
-            .and_then(spellbook_data::get_spell_at_slot);
-        let Some((_, entry, _)) = entry else {
+        let Some(flags) = read_auto_cast_flags(state, slot, bank)? else {
             return Ok(0);
         };
-        if entry.spell_id == 0 || spells::get_spell(entry.spell_id).is_none() {
-            return Ok(0);
-        }
-        // R88m.4 supported-record fallback: absent candidate/flag state is
-        // false/false. Native snapshot producers and action eligibility remain
-        // unmodeled; do not infer those flags from DB2 or unrelated bar slots.
-    } else {
-        let _ = i32::from_stack(state, 1)?;
+        state.push(Val::Bool(flags.auto_cast_allowed));
+        state.push(Val::Bool(flags.auto_cast_enabled));
+        return Ok(2);
     }
+    let _ = i32::from_stack(state, 1)?;
     state.push(Val::Bool(false));
     state.push(Val::Bool(false));
     Ok(2)
+}
+
+fn supports_spell_book_auto_cast() -> bool {
+    matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever
+    )
+}
+
+fn read_auto_cast_flags(
+    state: &LuaState,
+    slot: u32,
+    bank: i32,
+) -> LuaResult<Option<SpellBookItemAutoCast>> {
+    match bank {
+        0 => read_player_auto_cast_flags(state, slot),
+        1 => read_supplied_pet_auto_cast_flags(state, slot),
+        _ => Ok(None),
+    }
+}
+
+fn read_player_auto_cast_flags(
+    state: &LuaState,
+    slot: u32,
+) -> LuaResult<Option<SpellBookItemAutoCast>> {
+    let Some((_, entry, _)) = i32::try_from(slot)
+        .ok()
+        .and_then(spellbook_data::get_spell_at_slot)
+    else {
+        return Ok(None);
+    };
+    if entry.spell_id == 0 || spells::get_spell(entry.spell_id).is_none() {
+        return Ok(None);
+    }
+    let flags = borrow_state(state)?
+        .spellbook_auto_cast
+        .get(&(slot, 0))
+        .copied()
+        .unwrap_or_default();
+    Ok(Some(flags))
+}
+
+fn read_supplied_pet_auto_cast_flags(
+    state: &LuaState,
+    slot: u32,
+) -> LuaResult<Option<SpellBookItemAutoCast>> {
+    // Pet rows are available only when the host supplies their slot flags.
+    Ok(borrow_state(state)?
+        .spellbook_auto_cast
+        .get(&(slot, 1))
+        .copied())
+}
+
+fn c_spell_book_set_auto_cast_enabled(state: &mut LuaState) -> LuaResult<u32> {
+    let (slot, bank) = read_spell_book_item_arguments(
+        state,
+        "C_SpellBook.SetSpellBookItemAutoCastEnabled",
+        SET_AUTO_CAST_USAGE,
+    )?;
+    let enabled = bool::from_stack(state, 3)?;
+    update_auto_cast_enabled(state, slot, bank, enabled)?;
+    Ok(0)
+}
+
+fn c_spell_book_toggle_auto_cast(state: &mut LuaState) -> LuaResult<u32> {
+    let (slot, bank) = read_spell_book_item_arguments(
+        state,
+        "C_SpellBook.ToggleSpellBookItemAutoCast",
+        TOGGLE_AUTO_CAST_USAGE,
+    )?;
+    let Some(flags) = read_auto_cast_flags(state, slot, bank)? else {
+        return Ok(0);
+    };
+    update_auto_cast_enabled(state, slot, bank, !flags.auto_cast_enabled)?;
+    Ok(0)
+}
+
+fn update_auto_cast_enabled(
+    state: &mut LuaState,
+    slot: u32,
+    bank: i32,
+    enabled: bool,
+) -> LuaResult<()> {
+    let Some(mut flags) = read_auto_cast_flags(state, slot, bank)? else {
+        return Ok(());
+    };
+    if flags.auto_cast_allowed {
+        flags.auto_cast_enabled = enabled;
+        borrow_state_mut(state)?
+            .spellbook_auto_cast
+            .insert((slot, bank), flags);
+    }
+    Ok(())
 }
 
 fn read_spell_book_item_arguments(

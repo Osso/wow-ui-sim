@@ -98,6 +98,8 @@ pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
     let builder = crate::c_api::secure_transfer::register_admin(builder)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     let builder = crate::c_api::c_pet_battles::register_admin(builder)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let builder = crate::c_api::c_spell_book::register_admin(builder)?;
     let builder = register_combat_casting(builder)?;
     #[cfg(all(
         feature = "retail-12-0-5",
