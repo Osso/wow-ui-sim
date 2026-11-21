@@ -1,4 +1,5 @@
 //! Retail trade state supplied by the host; the PTR path is inferred from Retail.
+//! INFERRED (R88co): Forever's selected family TradeFrame uses this API surface.
 
 use super::helpers::ensure_namespace;
 use crate::lua_api::globals::real::cursor_model;
@@ -7,7 +8,9 @@ use crate::lua_api::state_types::CursorInfo;
 use crate::lua_bridge::{FromStack, TableBuilder, table_set_rust_fn_static};
 #[cfg(feature = "client-ptr")]
 use rilua::Val;
+use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
+use rilua::vm::table::Table;
 use rilua::{LuaResult, runtime_error};
 
 const MAX_MONEY_AMOUNT: f64 = 9_007_199_254_740_991.0;
@@ -25,10 +28,14 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
 
     let trade_info = ensure_namespace(state, "C_TradeInfo")?;
     table_set_rust_fn_static(state, trade_info, "PickupTradeMoney", pickup_trade_money)?;
+    register_warning_getters(state, trade_info)
+}
+
+fn register_warning_getters(state: &mut LuaState, trade_info: GcRef<Table>) -> LuaResult<()> {
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     {
         // VERIFIED — both Retail getters read the same client-local warning value.
-        // INFERRED (R88co) — Forever's selected TradeFrame uses this shared warning source.
+        // INFERRED (R88co) — C_TradeInfo shares C_SecureTransfer's Rust warning input.
         table_set_rust_fn_static(
             state,
             trade_info,
@@ -37,22 +44,25 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
         )?;
     }
     #[cfg(feature = "client-ptr")]
-    {
-        table_set_rust_fn_static(
-            state,
-            trade_info,
-            "ShouldShowTradeOfferWarning",
-            should_show_ptr_trade_offer_warning,
-        )?;
-        let secure_transfer = ensure_namespace(state, "C_SecureTransfer")?;
-        table_set_rust_fn_static(
-            state,
-            secure_transfer,
-            "ShouldShowTradeOfferWarning",
-            should_show_ptr_trade_offer_warning,
-        )?;
-    }
+    register_ptr_warning_getters(state, trade_info)?;
     Ok(())
+}
+
+#[cfg(feature = "client-ptr")]
+fn register_ptr_warning_getters(state: &mut LuaState, trade_info: GcRef<Table>) -> LuaResult<()> {
+    table_set_rust_fn_static(
+        state,
+        trade_info,
+        "ShouldShowTradeOfferWarning",
+        should_show_ptr_trade_offer_warning,
+    )?;
+    let secure_transfer = ensure_namespace(state, "C_SecureTransfer")?;
+    table_set_rust_fn_static(
+        state,
+        secure_transfer,
+        "ShouldShowTradeOfferWarning",
+        should_show_ptr_trade_offer_warning,
+    )
 }
 
 pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
@@ -109,29 +119,33 @@ fn pickup_trade_money(state: &mut LuaState) -> LuaResult<u32> {
     }
 
     let amount = read_money_amount(state, "PickupTradeMoney")?;
-    {
-        let mut sim = borrow_state_mut(state)?;
-        let Some(trade) = sim.active_trade.as_mut() else {
-            // INFERRED — return no values without a host-supplied trade;
-            // native no-trade behavior is unknown.
-            return Ok(0);
-        };
-        if amount > trade.player_money {
-            // VERIFIED — an amount above the offer skips removal and cursor handling.
-            // INFERRED — this simulator returns no values; native response is unknown.
-            return Ok(0);
-        }
-        if amount > 0 {
-            trade.player_money -= amount;
-            // UNKNOWN — packet submission, trade flag, optional hook and
-            // change counter are not modeled.
-        }
+    if !deduct_trade_offer_amount(state, amount)? {
+        // INFERRED — this simulator returns no values; native response is unknown.
+        return Ok(0);
     }
 
     // VERIFIED — update the offer before attempting the cursor setter.
     set_trade_money_cursor(state, amount)?;
     // INFERRED — the simulator returns no values on success; native return count is unknown.
     Ok(0)
+}
+
+fn deduct_trade_offer_amount(state: &mut LuaState, amount: u64) -> LuaResult<bool> {
+    let mut sim = borrow_state_mut(state)?;
+    let Some(trade) = sim.active_trade.as_mut() else {
+        // INFERRED — return no values without a host-supplied trade;
+        // native no-trade behavior is unknown.
+        return Ok(false);
+    };
+    if amount > trade.player_money {
+        // VERIFIED — an amount above the offer skips removal and cursor handling.
+        return Ok(false);
+    }
+    if amount > 0 {
+        trade.player_money -= amount;
+        // UNKNOWN — packet submission, trade flag, optional hook and change counter are not modeled.
+    }
+    Ok(true)
 }
 
 fn read_money_amount(state: &LuaState, api: &str) -> LuaResult<u64> {
