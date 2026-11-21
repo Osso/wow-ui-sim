@@ -45,6 +45,7 @@ fn test_bootstrap_registers_color_override_members() {
     assert_eq!(color_ty, "function");
     assert_eq!(default_color_ty, "function");
     assert_eq!(override_info_ty, "function");
+    env.exec("ColorMixin = {}").unwrap();
 
     let (poor_red, poor_green, poor_blue, epic_red, epic_green, epic_blue):
         (f64, f64, f64, f64, f64, f64) = env
