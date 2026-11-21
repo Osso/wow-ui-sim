@@ -13,7 +13,7 @@ use crate::lua_api::script_helpers::{
 };
 use crate::lua_api::state::{SpellFlyoutInfo, SpellFlyoutSlot};
 use crate::lua_api::state_types::CursorInfo;
-use crate::lua_bridge::{FromStack, TableBuilder, stack_val, table_set_rust_fn_static};
+use crate::lua_bridge::{FromStack, stack_val, table_set_rust_fn_static};
 use crate::spells;
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
@@ -808,7 +808,9 @@ fn c_spell_book_get_spell_book_item_texture(state: &mut LuaState) -> LuaResult<u
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
-pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
+pub(crate) fn register_admin(
+    builder: crate::lua_bridge::TableBuilder,
+) -> LuaResult<crate::lua_bridge::TableBuilder> {
     if matches!(
         crate::client_profile::ACTIVE,
         crate::client_profile::ClientProfile::Retail
