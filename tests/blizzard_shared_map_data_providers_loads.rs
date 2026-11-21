@@ -148,6 +148,28 @@ const TAXI_MAP_ADDON_OVERRIDES: &[BlizzardAddonOverride<'static>] = &[
 ];
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+const CONTRIBUTION_COLLECTOR_INPUT_LUA: &str = r#"
+A_Admin.SetContributionCollectors({
+    { mapID=2248, collectorCreatureID=301, name="Collector Alpha", x=0.2, y=0.3 },
+    { mapID=2248, collectorCreatureID=302, name="Collector Beta", x=0.7, y=0.8 },
+    { mapID=9999, collectorCreatureID=303, name="Other Map", x=0.5, y=0.5 },
+})
+"#;
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+const CONTRIBUTION_COLLECTOR_REFRESH_LUA: &str = r#"
+WorldMapFrame:SetMapID(2248)
+local provider = CreateFromMixins(ContributionCollectorDataProviderMixin)
+WorldMapFrame:AddDataProvider(provider)
+provider:RefreshAllData()
+local names = {}
+for pin in WorldMapFrame:EnumeratePinsByTemplate("ContributionCollectorPinTemplate") do
+    names[pin.name] = pin.collectorCreatureID
+end
+return WorldMapFrame:GetNumActivePinsByTemplate("ContributionCollectorPinTemplate"),
+       names["Collector Alpha"], names["Collector Beta"], names["Other Map"] ~= nil
+"#;
+
 const TAXI_MAP_NODE_INPUT_LUA: &str = r#"
 A_Admin.SetTaxiMapNodes({
     { mapID=2248, nodeID=101, name="Node Alpha", atlasName="TaxiNode", textureKit="", faction=0,
@@ -208,6 +230,36 @@ fn load_taxi_map_addon_closure() -> (WowLuaEnv, Vec<String>) {
 }
 
 // INFERRED R88cr: Forever uses the mainline SoftCursor addon through FrameXML.
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn contribution_collector_provider_refreshes_pins_from_supplied_records() {
+    let ui = blizzard_ui_dir();
+    let env = new_blizzard_addon_env(&ui);
+    env.exec(CONTRIBUTION_COLLECTOR_INPUT_LUA)
+        .expect("supply contribution collectors before loading the UI consumer");
+    let loaded = load_blizzard_addon_closure_into_env(
+        &env,
+        &ui,
+        &["Blizzard_SharedMapDataProviders", "Blizzard_WorldMap"],
+        TAXI_MAP_ADDON_OVERRIDES,
+    );
+    env.apply_post_load_workarounds();
+    for addon in [
+        "Blizzard_FrameXML",
+        "Blizzard_SharedMapDataProviders",
+        "Blizzard_WorldMap",
+    ] {
+        assert!(
+            loaded.iter().any(|name| name == addon),
+            "{addon} was not loaded"
+        );
+    }
+    let observed: (i32, i32, i32, bool) = env
+        .eval(CONTRIBUTION_COLLECTOR_REFRESH_LUA)
+        .expect("original contribution collector provider should refresh on WorldMapFrame");
+    assert_eq!(observed, (2, 301, 302, false));
+}
+
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 #[test]
 fn taxi_map_providers_refresh_pins_from_supplied_nodes() {
