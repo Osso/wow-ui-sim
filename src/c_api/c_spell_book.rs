@@ -831,7 +831,12 @@ fn set_spell_book_item_auto_cast(state: &mut LuaState) -> LuaResult<u32> {
         auto_cast_allowed: bool::from_stack(state, 3)?,
         auto_cast_enabled: bool::from_stack(state, 4)?,
     };
-    if read_auto_cast_flags(state, slot, bank)?.is_none() {
+    let valid_item = if bank == 1 {
+        slot > 0
+    } else {
+        read_auto_cast_flags(state, slot, bank)?.is_some()
+    };
+    if !valid_item {
         return Err(rilua::runtime_error(
             "A_Admin.SetSpellBookItemAutoCast: invalid spellbook item",
         ));
@@ -875,9 +880,18 @@ fn read_auto_cast_flags(
     slot: u32,
     bank: i32,
 ) -> LuaResult<Option<SpellBookItemAutoCast>> {
+    if bank == 1 {
+        // Pet rows are available only when the host supplies their slot flags.
+        return Ok(borrow_state(state)?
+            .spellbook_auto_cast
+            .get(&(slot, bank))
+            .copied());
+    }
+    if bank != 0 {
+        return Ok(None);
+    }
     let Some((_, entry, _)) = i32::try_from(slot)
         .ok()
-        .filter(|_| bank == 0)
         .and_then(spellbook_data::get_spell_at_slot)
     else {
         return Ok(None);

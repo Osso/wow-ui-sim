@@ -59,6 +59,28 @@ fn original_spellbook_autocast_update_uses_each_supplied_row() {
     assert_autocast_mutations_update_visuals(&env);
 }
 
+#[test]
+fn supplied_pet_spellbook_autocast_can_be_toggled() {
+    let env = WowLuaEnv::new().expect("pet spellbook autocast API environment");
+    env.exec(
+        r#"
+        local pet = Enum.SpellBookSpellBank.Pet
+        A_Admin.SetSpellBookItemAutoCast(1, pet, true, false)
+        local allowed, enabled = C_SpellBook.GetSpellBookItemAutoCast(1, pet)
+        assert(allowed and not enabled)
+        C_SpellBook.SetSpellBookItemAutoCastEnabled(1, pet, true)
+        assert(select(2, C_SpellBook.GetSpellBookItemAutoCast(1, pet)))
+        C_SpellBook.ToggleSpellBookItemAutoCast(1, pet)
+        assert(not select(2, C_SpellBook.GetSpellBookItemAutoCast(1, pet)))
+        A_Admin.SetSpellBookItemAutoCast(2, pet, false, false)
+        C_SpellBook.ToggleSpellBookItemAutoCast(2, pet)
+        local disallowed, disabled = C_SpellBook.GetSpellBookItemAutoCast(2, pet)
+        assert(not disallowed and not disabled)
+        "#,
+    )
+    .expect("explicit pet rows retain their supplied autocast state");
+}
+
 fn assert_supplied_autocast_visuals(env: &WowLuaEnv) {
     env.exec(
         r#"
