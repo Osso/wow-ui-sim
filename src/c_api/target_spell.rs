@@ -3,8 +3,12 @@
 
 use crate::c_api::helpers::ensure_namespace;
 use crate::client_profile::{ACTIVE, ClientProfile};
-use crate::lua_api::methods::{borrow_state, borrow_state_mut};
-use crate::lua_bridge::{FromStack, TableBuilder, table_set_rust_fn_static};
+use crate::lua_api::methods::borrow_state;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+use crate::lua_api::methods::borrow_state_mut;
+use crate::lua_bridge::table_set_rust_fn_static;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+use crate::lua_bridge::{FromStack, TableBuilder};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 
@@ -36,10 +40,12 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     )
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
     builder.set_function("SetPendingTargetSpell", set_pending_target_spell)
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn set_pending_target_spell(state: &mut LuaState) -> LuaResult<u32> {
     let spell_id = i32::from_stack(state, 1)?;
     let is_enchanting = bool::from_stack(state, 2)?;
