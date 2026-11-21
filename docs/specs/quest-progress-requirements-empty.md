@@ -1,6 +1,6 @@
 # Supplied quest progress requirements
 
-Retail and WoW Forever model quest-giver progress text, required items and currencies, required money, and turn-in portrait input for an active NPC dialog. The model lives in `src/c_api/quest_objectives.rs`; the simulator-only producer is `A_Admin.SetQuestProgressRequirements`. The legacy temporary defaults remain byte-identical, and modeled globals register after them for Retail and WoW Forever. [Quest architecture](../wiki/systems/lua-api.md#quest-dialog-material) and the [execution receipt](../baselines/quest-lifecycle.md) own implementation details and proof.
+Retail and WoW Forever model quest-giver progress text, required items and currencies, required money, and turn-in portrait input for an active NPC dialog. The model lives in `src/c_api/quest_objectives.rs`; the simulator-only producer is `A_Admin.SetQuestProgressRequirements`. The legacy temporary defaults remain byte-identical; Retail and WoW Forever modeled globals register after them, while Wrath retains the temporary defaults. [Quest architecture](../wiki/systems/lua-api.md#quest-dialog-material) and the [execution receipt](../baselines/quest-lifecycle.md) own implementation details and proof.
 
 ## What it must do
 
@@ -8,7 +8,7 @@ Retail and WoW Forever model quest-giver progress text, required items and curre
 - [x] Show supplied progress text, required item and currency rows, and required money in Blizzard's original progress panel.
 - [x] Render required item rows when the supplied item-row and quest-level visibility inputs are both false.
 - [x] Return the supplied portrait display ID, text, and name in the order consumed by Blizzard's original turn-in panel. This order is inferred from the cached consumer; native evidence is pending (R88db).
-- [x] Keep the no-input progress panel empty. Existing temporary defaults remain in the simulator for compatibility outside this modeled Retail/Forever behavior.
+- [x] Keep the no-input progress panel empty. Wrath retains the existing temporary defaults for its unmodeled progress-dialog inputs.
 - [ ] Verify inferred defaults and field semantics against native evidence (R88db pending).
 
 These are supplied-state and original-consumer contracts, not claims of native requirement discovery, inventory/currency ownership, or reward acquisition.
