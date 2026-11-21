@@ -47,4 +47,15 @@ fn original_group_buff_filter_partitions_supplied_items_by_default_hidden_flag()
         "#,
     )
     .expect("original Blizzard GroupBuffFilter consumer must partition supplied records");
+    #[cfg(feature = "client-retail")]
+    assert!(
+        env.eval::<bool>("return C_CooldownViewer.GetGroupBuffItems()[1].displaySpellID == nil")
+            .unwrap()
+    );
+    #[cfg(feature = "client-wowforever")]
+    assert_eq!(
+        env.eval::<i32>("return C_CooldownViewer.GetGroupBuffItems()[1].displaySpellID")
+            .unwrap(),
+        1459
+    );
 }

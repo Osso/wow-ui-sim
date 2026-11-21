@@ -39,7 +39,7 @@ pub struct CooldownViewerCooldown {
     pub valid_alert_types: Vec<u8>,
 }
 
-/// Supplied Forever `GroupBuffItem`; no rank or display-data derivation.
+/// Supplied `GroupBuffItem`; Retail omits `displaySpellID` from its records.
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct GroupBuffItem {
     pub spell_id: i32,
