@@ -8,6 +8,9 @@ use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val, runtime_error};
 use std::cmp::Ordering;
 
+const WEEKDAYS_PER_WEEK: u8 = 7;
+const DEFAULT_RESET_WEEKDAY: u8 = 3;
+const DEFAULT_RESET_HOUR: u8 = 7;
 const SECONDS_PER_MINUTE: i64 = 60;
 const SECONDS_PER_HOUR: i64 = 3_600;
 const SECONDS_PER_DAY: i64 = 86_400;
@@ -25,8 +28,8 @@ pub(crate) struct WeeklyResetSchedule {
 impl Default for WeeklyResetSchedule {
     fn default() -> Self {
         Self {
-            weekday: 3,
-            hour: 7,
+            weekday: DEFAULT_RESET_WEEKDAY,
+            hour: DEFAULT_RESET_HOUR,
         }
     }
 }
@@ -103,7 +106,7 @@ pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
 }
 
 fn set_weekly_reset_schedule(state: &mut LuaState) -> LuaResult<u32> {
-    let weekday = schedule_number(state, 1, 1, 7, "weekday")? as u8;
+    let weekday = schedule_number(state, 1, 1, i32::from(WEEKDAYS_PER_WEEK), "weekday")? as u8;
     let hour = schedule_number(state, 2, 0, 23, "hour")? as u8;
     borrow_state_mut(state)?.weekly_reset_schedule = WeeklyResetSchedule { weekday, hour };
     Ok(0)
@@ -136,10 +139,11 @@ fn weekly_reset_start(state: &mut LuaState) -> LuaResult<u32> {
 fn seconds_until_weekly_reset(state: &mut LuaState) -> LuaResult<u32> {
     let now = unix_timestamp(borrow_state(state)?.calendar_now);
     let start = weekly_reset_timestamp(state)?;
-    state.push(Val::Num((start + 7 * 86_400 - now) as f64));
+    state.push(Val::Num((start + SECONDS_PER_WEEK - now) as f64));
     Ok(1)
 }
 
+// INFERRED (R88df): daily resets share the supplied region's reset hour.
 fn seconds_until_daily_reset(state: &mut LuaState) -> LuaResult<u32> {
     let (now, hour) = {
         let sim = borrow_state(state)?;
@@ -165,7 +169,7 @@ fn weekly_reset_timestamp(state: &mut LuaState) -> LuaResult<i64> {
     let schedule = sim.weekly_reset_schedule;
     let day = now.div_euclid(SECONDS_PER_DAY);
     let weekday = weekday_from_unix_day(day);
-    let days_since_reset = (weekday + 7 - schedule.weekday) % 7;
+    let days_since_reset = (weekday + WEEKDAYS_PER_WEEK - schedule.weekday) % WEEKDAYS_PER_WEEK;
     let mut start = (day - i64::from(days_since_reset)) * SECONDS_PER_DAY
         + i64::from(schedule.hour) * SECONDS_PER_HOUR;
     if start > now {
