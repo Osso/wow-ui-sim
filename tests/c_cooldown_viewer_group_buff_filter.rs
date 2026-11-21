@@ -3,20 +3,16 @@
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 fn group_buff_consumer_env() -> WowLuaEnv {
-    let env = WowLuaEnv::new().expect("create Lua environment");
-    let ui = wow_ui_sim::blizzard_ui_sync::default_cache_addons_path().unwrap();
-    env.state().borrow_mut().addon_base_paths = vec![ui.clone()];
+    let ui = crate::common::blizzard_addon_harness::blizzard_ui_dir();
+    let env = crate::common::blizzard_addon_harness::new_blizzard_addon_env(&ui);
     crate::common::load_profile_framexml(&env);
-    let addons = wow_ui_sim::loader::discover_blizzard_addons(&ui);
-    assert!(
-        addons
-            .iter()
-            .any(|(name, _)| name == "Blizzard_CooldownViewer")
+    let loaded = crate::common::blizzard_addon_harness::load_blizzard_addon_closure_into_env(
+        &env,
+        &ui,
+        &["Blizzard_CooldownViewer"],
+        &[],
     );
-    for (name, toc) in addons {
-        wow_ui_sim::loader::load_addon(&env.loader_env(), &toc)
-            .unwrap_or_else(|error| panic!("{name}: {error}"));
-    }
+    assert!(loaded.iter().any(|name| name == "Blizzard_CooldownViewer"));
     env
 }
 
