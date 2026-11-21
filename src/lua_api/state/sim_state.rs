@@ -1086,7 +1086,7 @@ pub struct SimState {
     /// Explicit supplied relations; no native catalog or inferred chain.
     pub achievement_superceding: HashMap<i32, Vec<i32>>,
     pub calendar_now: crate::c_api::c_calendar::CivilDateTime,
-    pub weekly_reset_schedule: crate::c_api::c_date_and_time::WeeklyResetSchedule,
+    pub(crate) weekly_reset_schedule: crate::c_api::c_date_and_time::WeeklyResetSchedule,
     pub calendar_displayed_month: crate::c_api::c_calendar::DisplayedMonth,
     pub calendar_next_club_id: Option<u64>,
     pub calendar_context_policy: crate::c_api::c_calendar::CalendarContextPolicy,
