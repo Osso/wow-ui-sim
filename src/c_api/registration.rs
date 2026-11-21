@@ -192,6 +192,11 @@ fn register_interaction_crafting(state: &mut LuaState) -> LuaResult<()> {
     super::c_cooldown_viewer::register(state)?;
     super::c_content_tracking::register(state)?;
     super::c_neighborhood_initiative::register(state)?;
+    #[cfg(any(
+        feature = "client-retail",
+        feature = "client-ptr",
+        feature = "client-wowforever"
+    ))]
     super::c_trade_info::register(state)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     super::secure_transfer::register(state)?;
@@ -276,7 +281,16 @@ fn register_retirement_successors(state: &mut LuaState) -> LuaResult<()> {
 }
 
 pub(crate) fn register_map_prefix_tables(state: &mut LuaState) -> LuaResult<()> {
-    c_map::register_c_map_surface(state)
+    c_map::register_c_map_surface(state)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
+        super::c_taxi_map::register(state)?;
+    }
+    Ok(())
 }
 
 pub(crate) fn register_map_environment_tables(state: &mut LuaState) -> LuaResult<()> {

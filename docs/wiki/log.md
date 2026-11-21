@@ -1,3 +1,11 @@
+## [2026-11-21] implementation | Retail/Forever transmog set relations
+
+Updated the [Wardrobe API investigation](investigations/appearances-wardrobe-api.md) and [relation contract](../specs/transmog-set-relations.md). **VERIFIED (simulator):** the exact loaded `WardrobeSetsDataProviderMixin` test passes on Retail and Forever with two supplied records and distinct primary appearance IDs; both no-addons/no-saved-vars `lua-errors` runs return `[]`, and Forever→Mists→Wrath→Retail compile receipts report zero warnings. **INFERRED (R88cs pending):** catalog relation semantics beyond the tested consumer projection remain provisional; the temporary Lua body is byte-identical.
+
+## [2026-11-20] implementation | Trilinear mipmapped RGBA GPU atlas
+
+Added per-cell RGBA mip chains down to 1×1 and cell-clamped trilinear sampling to reduce aliasing on downscaled icons. Generated mips retain premultiplied RGB through filtering to avoid dark fringes at transparent edges; mip 0 retains straight alpha for magnification. See [rendering pipeline](systems/rendering-pipeline.md).
+
 ## [2026-11-20] correction | Secure dependency replay rule
 
 Updated [addon loading](systems/addon-loading.md#secure-dependency-replay-and-library-allowlist). **VERIFIED (simulator source):** Forever replay membership now follows enabled secure TOC dependency closure; secure dependency passes skip XML for already ordinary-loaded dependencies instead of naming `RaidWarning.xml`. **INFERRED (R88cj pending):** the dependency-closure selector matches native behavior; evidence is pending. Exact private-aura, secure-replay and secure-XML tests pass on Retail and Forever; stock no-addons/no-SavedVariables scans return `[]`.

@@ -1631,6 +1631,61 @@ fn test_should_map_show_taxi_nodes() {
     assert!(val);
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn test_should_map_show_taxi_nodes_uses_map_type() {
+    let env = env();
+    let observed: (bool, bool, bool) = env
+        .eval(
+            "return C_Map.GetMapInfo(1).mapType == Enum.UIMapType.Zone, \
+                    C_TaxiMap.ShouldMapShowTaxiNodes(1), \
+                    C_TaxiMap.ShouldMapShowTaxiNodes(9999)",
+        )
+        .unwrap();
+    assert_eq!(observed, (true, true, false));
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn test_taxi_map_queries_return_supplied_nodes_by_map() {
+    let env = env();
+    let observed: (i32, String, i32, i32, i32, String, String, i32, bool, i32) = env
+        .eval(
+            r#"
+            A_Admin.SetTaxiMapNodes({
+                { mapID=1, nodeID=101, name="Zone Node", atlasName="TaxiNode", textureKit="", faction=0,
+                  x=0.25, y=0.75, state=2, slotIndex=1, isUndiscovered=false,
+                  useSpecialIcon=false, isMapLayerTransition=false },
+                { mapID=9999, nodeID=102, name="Unknown Node", atlasName="OtherTaxiNode", textureKit="", faction=1,
+                  x=0.5, y=0.5, state=1, slotIndex=2, isUndiscovered=true,
+                  useSpecialIcon=true, isMapLayerTransition=true },
+            })
+            local allNodes = C_TaxiMap.GetAllTaxiNodes(1)
+            local otherMapNodes = C_TaxiMap.GetTaxiNodesForMap(9999)
+            return #allNodes, allNodes[1].name, allNodes[1].state, allNodes[1].slotIndex,
+                   #otherMapNodes, otherMapNodes[1].name, otherMapNodes[1].atlasName,
+                   otherMapNodes[1].faction, otherMapNodes[1].isUndiscovered,
+                   #C_TaxiMap.GetTaxiNodesForMap(7777)
+            "#,
+        )
+        .unwrap();
+    assert_eq!(
+        observed,
+        (
+            1,
+            "Zone Node".into(),
+            2,
+            1,
+            1,
+            "Unknown Node".into(),
+            "OtherTaxiNode".into(),
+            1,
+            true,
+            0
+        )
+    );
+}
+
 #[test]
 fn test_is_visible_ignores_alpha() {
     // Reproduces the world map blank canvas bug:

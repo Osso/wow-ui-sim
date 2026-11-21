@@ -127,6 +127,118 @@ fn load_map_data_providers_closure() -> WowLuaEnv {
 }
 
 // Literal cached inputs absent from Wrath manifest1-382/cache; behavior cases stay enabled.
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+const TAXI_MAP_ADDON_OVERRIDES: &[BlizzardAddonOverride<'static>] = &[
+    BlizzardAddonOverride {
+        addon: "Blizzard_FlightMap",
+        extra_roots: &[
+            "Blizzard_FrameXML",
+            "Blizzard_UIParentPanelManager",
+            "Blizzard_SharedXML",
+        ],
+    },
+    BlizzardAddonOverride {
+        addon: "Blizzard_WorldMap",
+        extra_roots: &[
+            "Blizzard_FrameXML",
+            "Blizzard_UIParentPanelManager",
+            "Blizzard_SharedXML",
+        ],
+    },
+];
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+const TAXI_MAP_NODE_INPUT_LUA: &str = r#"
+A_Admin.SetTaxiMapNodes({
+    { mapID=2248, nodeID=101, name="Node Alpha", atlasName="TaxiNode", textureKit="", faction=0,
+      x=0.25, y=0.75, state=2, slotIndex=1, isUndiscovered=false,
+      useSpecialIcon=false, isMapLayerTransition=false },
+    { mapID=2248, nodeID=102, name="Node Beta", atlasName="TaxiNode", textureKit="", faction=0,
+      x=0.75, y=0.25, state=2, slotIndex=2, isUndiscovered=false,
+      useSpecialIcon=false, isMapLayerTransition=false },
+    { mapID=9999, nodeID=103, name="Other Map", atlasName="TaxiNode", textureKit="", faction=0,
+      x=0.5, y=0.5, state=2, slotIndex=3, isUndiscovered=false,
+      useSpecialIcon=false, isMapLayerTransition=false },
+})
+"#;
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+const TAXI_MAP_REFRESH_LUA: &str = r#"
+FlightMapFrame:SetMapID(2248)
+WorldMapFrame:SetMapID(2248)
+
+local flightProvider = CreateFromMixins(FlightMap_FlightPathDataProviderMixin)
+FlightMapFrame:AddDataProvider(flightProvider)
+flightProvider:RefreshAllData()
+
+local sharedProvider = CreateFromMixins(FlightPointDataProviderMixin)
+WorldMapFrame:AddDataProvider(sharedProvider)
+sharedProvider:RefreshAllData()
+
+local flightPins, sharedPins = {}, {}
+for pin in FlightMapFrame:EnumeratePinsByTemplate("FlightMap_FlightPointPinTemplate") do
+    flightPins[pin.taxiNodeData.name] = true
+end
+for pin in WorldMapFrame:EnumeratePinsByTemplate("FlightPointPinTemplate") do
+    sharedPins[pin.poiInfo.name] = true
+end
+
+return FlightMapFrame:GetNumActivePinsByTemplate("FlightMap_FlightPointPinTemplate"),
+       flightPins["Node Alpha"] == true, flightPins["Node Beta"] == true,
+       WorldMapFrame:GetNumActivePinsByTemplate("FlightPointPinTemplate"),
+       sharedPins["Node Alpha"] == true, sharedPins["Node Beta"] == true,
+       C_TaxiMap.ShouldMapShowTaxiNodes(1), C_TaxiMap.ShouldMapShowTaxiNodes(9999),
+       C_TaxiMap.ShouldMapShowTaxiNodes(7777)
+"#;
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn load_taxi_map_addon_closure() -> (WowLuaEnv, Vec<String>) {
+    let ui = blizzard_ui_dir();
+    let env = new_blizzard_addon_env(&ui);
+    env.exec(TAXI_MAP_NODE_INPUT_LUA)
+        .expect("supply taxi nodes before loading the UI consumers");
+    let loaded = load_blizzard_addon_closure_into_env(
+        &env,
+        &ui,
+        &["Blizzard_FlightMap", "Blizzard_WorldMap"],
+        TAXI_MAP_ADDON_OVERRIDES,
+    );
+    env.apply_post_load_workarounds();
+    (env, loaded)
+}
+
+// INFERRED R88cr: Forever uses the mainline SoftCursor addon through FrameXML.
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn taxi_map_providers_refresh_pins_from_supplied_nodes() {
+    let (env, loaded) = load_taxi_map_addon_closure();
+    for addon in [
+        "Blizzard_UIParentPanelManager",
+        "Blizzard_FrameXML",
+        "Blizzard_SharedXML",
+        "Blizzard_FlightMap",
+        "Blizzard_SharedMapDataProviders",
+        "Blizzard_WorldMap",
+    ] {
+        assert!(
+            loaded.iter().any(|name| name == addon),
+            "{addon} was not loaded"
+        );
+    }
+    if cfg!(feature = "client-wowforever") {
+        assert!(
+            loaded
+                .iter()
+                .any(|name| name == "Blizzard_GamepadSoftCursor"),
+            "Forever FrameXML must load its mainline SoftCursor dependency"
+        );
+    }
+    let observed: (i32, bool, bool, i32, bool, bool, bool, bool, bool) = env
+        .eval(TAXI_MAP_REFRESH_LUA)
+        .expect("original taxi map data providers should refresh on real map canvases");
+    assert_eq!(observed, (2, true, true, 2, true, true, true, false, false));
+}
+
 post_wrath_ui_fixture! {
 #[test]
 fn find_toc_file_resolves_mainline_variant() {

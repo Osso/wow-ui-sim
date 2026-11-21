@@ -607,6 +607,7 @@ fn test_transmog_util_get_best_item_modified_appearance_id_nil() {
 // C_TransmogSets
 // ============================================================================
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn test_transmog_sets_get_base_set_id() {
     let env = env();
@@ -615,6 +616,7 @@ fn test_transmog_sets_get_base_set_id() {
 }
 
 post_wrath_ui_fixture! {
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn test_transmog_sets_get_variant_sets_empty() {
     let env = env();
@@ -634,6 +636,7 @@ fn test_transmog_sets_get_set_info() {
     assert!(missing, "unknown catalog entry must not fabricate set zero");
 }
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn test_transmog_sets_get_set_primary_appearances_empty() {
     let env = env();
@@ -643,6 +646,7 @@ fn test_transmog_sets_get_set_primary_appearances_empty() {
     assert_eq!(count, 0);
 }
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn test_transmog_sets_get_all_sets_empty() {
     let env = env();
@@ -650,6 +654,7 @@ fn test_transmog_sets_get_all_sets_empty() {
     assert_eq!(count, 0);
 }
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn test_transmog_sets_get_base_sets_empty() {
     let env = env();
@@ -666,6 +671,7 @@ fn test_transmog_sets_get_base_sets_empty() {
     assert_eq!(result, "ok");
 }
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn test_transmog_sets_get_usable_sets_empty() {
     let env = env();
@@ -682,6 +688,7 @@ fn test_transmog_sets_has_available_sets_false_when_set_inventory_is_empty() {
     assert!(!has_available_sets);
 }
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn test_transmog_sets_is_base_set_collected() {
     let env = env();
@@ -691,6 +698,7 @@ fn test_transmog_sets_is_base_set_collected() {
     assert!(!collected);
 }
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn test_transmog_sets_get_sources_for_slot_empty() {
     let env = env();

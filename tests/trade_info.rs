@@ -1,136 +1,114 @@
+use crate::common::blizzard_addon_harness::with_blizzard_addon_startup_shape;
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 // VERIFIED: Retail getters share the client-local flag.
-// INFERRED: `_state` is this simulator's host input; its initial native value is unknown.
-#[cfg(feature = "optional-tests")]
-prefork_full_ui_case! {
-fn r88e5_trade_offer_warning_consumer_reads_shared_host_value(env: &WowLuaEnv) {
-    let loaded: (bool, bool) = env
-        .eval("return C_AddOns.IsAddOnLoaded('Blizzard_UIPanels_Game'), C_AddOns.IsAddOnLoaded('Blizzard_MoneyFrame')")
-        .expect("Retail trade and money addons should have load state");
-    assert_eq!(loaded, (true, true));
+// INFERRED (R88co): Retail and Forever TradeFrame use C_SecureTransfer's shared warning source.
+const WARNING_CONSUMER_CASE: &str = r#"
+    A_Admin.SetSecureTransferTradeOfferWarning(true)
+    local tradeTrue = C_TradeInfo.ShouldShowTradeOfferWarning()
+    local secureTrue = C_SecureTransfer.ShouldShowTradeOfferWarning()
+    TradeFrame_UpdateWarnings()
+    local tradeShown = TradeFrameTradeButton.warningTooltip ~= nil
 
-    let results: (bool, bool, bool, bool) = env
-        .eval(
-            r#"
-            C_TradeInfo._state = C_TradeInfo._state or {}
-            C_TradeInfo._state.shouldShowTradeOfferWarning = true
-            TradeFrame_UpdateWarnings()
-            local tradeShown = TradeFrameTradeButton.warningTooltip ~= nil
-            local tradeValue = C_TradeInfo.ShouldShowTradeOfferWarning()
-            C_TradeInfo._state.shouldShowTradeOfferWarning = false
-            TradeFrame_UpdateWarnings()
-            local tradeHidden = TradeFrameTradeButton.warningTooltip == nil
-            local tradeFalse = C_TradeInfo.ShouldShowTradeOfferWarning()
-            return tradeValue, tradeShown, tradeFalse, tradeHidden
-            "#,
-        )
-        .expect("Retail TradeFrame warning consumer should run");
-
-    assert_eq!(results, (true, true, false, true));
-
-    let api_env = WowLuaEnv::new().expect("standalone API environment should initialize");
-    let getters: (bool, bool, bool, bool) = api_env
-        .eval(
-            r#"
-            C_TradeInfo._state = C_TradeInfo._state or {}
-            C_TradeInfo._state.shouldShowTradeOfferWarning = true
-            local tradeTrue = C_TradeInfo.ShouldShowTradeOfferWarning()
-            local secureTrue = C_SecureTransfer.ShouldShowTradeOfferWarning()
-            C_TradeInfo._state.shouldShowTradeOfferWarning = false
-            local tradeFalse = C_TradeInfo.ShouldShowTradeOfferWarning()
-            local secureFalse = C_SecureTransfer.ShouldShowTradeOfferWarning()
-            return tradeTrue, secureTrue, tradeFalse, secureFalse
-            "#,
-        )
-        .expect("trade warning getters should share their supplied value");
-    assert_eq!(getters, (true, true, false, false));
-}
-}
+    A_Admin.SetSecureTransferTradeOfferWarning(false)
+    local tradeFalse = C_TradeInfo.ShouldShowTradeOfferWarning()
+    local secureFalse = C_SecureTransfer.ShouldShowTradeOfferWarning()
+    TradeFrame_UpdateWarnings()
+    local tradeHidden = TradeFrameTradeButton.warningTooltip == nil
+    return tradeTrue, secureTrue, tradeShown, tradeFalse, secureFalse, tradeHidden
+"#;
 
 // VERIFIED: Restriction precedes parsing, valid money truncates, an over-offer skips
 // removal, and the cursor limit is exclusive.
 // INFERRED: The test supplies host restriction and cursor state.
 // UNKNOWN: Packet, hook, flag, and full success/error outcomes are not modeled.
-#[cfg(feature = "optional-tests")]
-prefork_full_ui_case! {
-fn r88e5_trade_money_consumer_uses_supplied_offer_and_cursor_state(env: &WowLuaEnv) {
-    let money_frame_loaded: bool = env
-        .eval("return C_AddOns.IsAddOnLoaded('Blizzard_MoneyFrame')")
-        .expect("Retail money frame load state should be queryable");
-    assert!(money_frame_loaded, "Retail MoneyFrame is selected at startup");
-    let money_picker_type: String = env
-        .eval("return type(GetMoneyTypeInfoField)")
-        .expect("MoneyFrame consumer accessor should be queryable");
-    assert_eq!(money_picker_type, "function");
-    env.state().borrow_mut().player.money = 1_000;
+const MONEY_TRUNCATION_CASE: &str = r#"
+    local pickup = GetMoneyTypeInfoField('PLAYER_TRADE', 'PickupFunc')
+    pickup({}, 25.9)
+    local kind, copper = GetCursorInfo()
+    return GetPlayerTradeMoney(), kind, copper
+"#;
 
-    env.exec(
-        "InitiateTrade('Partner'); C_TradeInfo.SetTradeMoney(100); GetMoneyTypeInfoField('PLAYER_TRADE', 'PickupFunc')({}, 25.9)",
-    )
-    .expect("MoneyFrame trade pickup consumer should run");
-    assert_eq!(
-        env.state()
-            .borrow()
-            .active_trade
-            .as_ref()
-            .expect("trade remains open")
-            .player_money,
-        75
-    );
-    env.exec(
-        "ClearCursor(); C_TradeInfo.SetTradeMoney(50); PickupPlayerMoney(7); GetMoneyTypeInfoField('PLAYER_TRADE', 'PickupFunc')({}, 51)",
-    )
-    .expect("over-offer pickup should return through the original consumer");
-    let state = env.state().borrow();
-    assert_eq!(
-        state
-            .active_trade
-            .as_ref()
-            .expect("trade remains open")
-            .player_money,
-        50
-    );
-    drop(state);
-    let cursor: (String, f64) = env
-        .eval("local kind, amount = GetCursorInfo(); return kind, amount")
-        .expect("unchanged money cursor should be readable");
-    assert_eq!(cursor, ("money".to_string(), 7.0));
+const MONEY_OVER_OFFER_CASE: &str = r#"
+    ClearCursor()
+    PickupPlayerMoney(7)
+    local pickup = GetMoneyTypeInfoField('PLAYER_TRADE', 'PickupFunc')
+    pickup({}, 51)
+    local kind, copper = GetCursorInfo()
+    return GetPlayerTradeMoney(), kind, copper
+"#;
 
-    env.exec(
-        "ClearCursor(); C_TradeInfo.SetTradeMoney(100000000001); GetMoneyTypeInfoField('PLAYER_TRADE', 'PickupFunc')({}, 100000000000)",
-    )
-    .expect("cursor-limit pickup should return through the original consumer");
-    assert_eq!(
-        env.state()
-            .borrow()
-            .active_trade
-            .as_ref()
-            .expect("trade remains open")
-            .player_money,
-        1
-    );
-    let cursor_type: Option<String> = env
-        .eval("return (GetCursorInfo())")
-        .expect("cursor state should be readable");
-    assert_eq!(cursor_type, None);
+const MONEY_CURSOR_LIMIT_CASE: &str = r#"
+    ClearCursor()
+    local pickup = GetMoneyTypeInfoField('PLAYER_TRADE', 'PickupFunc')
+    pickup({}, 100000000000)
+    return GetPlayerTradeMoney(), select('#', GetCursorInfo())
+"#;
 
-    let restriction: (bool, i32, bool) = env
-        .eval(
-            r##"
-            C_TradeInfo._state = { pickupTradeMoneyRestricted = true }
-            local restrictedCall = pcall(function()
-                return C_TradeInfo.PickupTradeMoney(nil)
-            end)
-            local restrictedReturns = select("#", C_TradeInfo.PickupTradeMoney(nil))
-            C_TradeInfo._state.pickupTradeMoneyRestricted = false
-            local ordinaryNilAccepted = pcall(function()
-                C_TradeInfo.PickupTradeMoney(nil)
-            end)
-            return restrictedCall, restrictedReturns, ordinaryNilAccepted
-            "##,
-        )
-        .expect("trade restriction and argument paths should be observable");
-    assert_eq!(restriction, (true, 0, false));
+const MONEY_RESTRICTION_CASE: &str = r##"
+    A_Admin.SetTradeMoneyPickupRestricted(true)
+    local restrictedCall = pcall(function()
+        return C_TradeInfo.PickupTradeMoney(nil)
+    end)
+    local restrictedReturns = select('#', C_TradeInfo.PickupTradeMoney(nil))
+    A_Admin.SetTradeMoneyPickupRestricted(false)
+    local ordinaryNilAccepted = pcall(function()
+        C_TradeInfo.PickupTradeMoney(nil)
+    end)
+    return restrictedCall, restrictedReturns, ordinaryNilAccepted
+"##;
+
+fn supply_trade_offer(env: &WowLuaEnv, copper: u64) {
+    let mut sim = env.state().borrow_mut();
+    sim.active_trade = Some(Default::default());
+    sim.active_trade
+        .as_mut()
+        .expect("trade state should be supplied")
+        .player_money = copper;
 }
+
+fn assert_trade_money_pickup(env: &WowLuaEnv, script: &str, expected: (f64, String, f64)) {
+    let actual: (f64, String, f64) = env
+        .eval(script)
+        .expect("PLAYER_TRADE pickup consumer should run");
+    assert_eq!(actual, expected);
+}
+
+#[test]
+fn r88e5_trade_offer_warning_consumer_reads_shared_host_value() {
+    with_blizzard_addon_startup_shape(&["Blizzard_UIPanels_Game"], &[], |env, loaded| {
+        assert!(loaded.iter().any(|name| name == "Blizzard_UIPanels_Game"));
+        let result: (bool, bool, bool, bool, bool, bool) = env
+            .eval(WARNING_CONSUMER_CASE)
+            .expect("selected TradeFrame warning consumer should run");
+        assert_eq!(result, (true, true, true, false, false, true));
+    });
+}
+
+#[test]
+fn r88e5_trade_money_consumer_uses_supplied_offer_and_cursor_state() {
+    with_blizzard_addon_startup_shape(&["Blizzard_UIPanels_Game"], &[], |env, loaded| {
+        assert!(loaded.iter().any(|name| name == "Blizzard_UIPanels_Game"));
+        assert_eq!(env.eval::<String>("return type(GetMoneyTypeInfoField)").unwrap(), "function");
+
+        supply_trade_offer(env, 100);
+        assert_trade_money_pickup(env, MONEY_TRUNCATION_CASE, (75.0, "money".into(), 25.0));
+
+        supply_trade_offer(env, 50);
+        env.state().borrow_mut().player.money = 1_000;
+        assert_trade_money_pickup(env, MONEY_OVER_OFFER_CASE, (50.0, "money".into(), 7.0));
+
+        supply_trade_offer(env, 100_000_000_001);
+        let actual: (f64, i32) = env.eval(MONEY_CURSOR_LIMIT_CASE).unwrap();
+        assert_eq!(actual, (1.0, 0));
+    });
+}
+
+#[test]
+fn r88e5_trade_money_restriction_precedes_argument_parsing() {
+    let env = WowLuaEnv::new().expect("lua env should initialize");
+    let actual: (bool, i32, bool) = env
+        .eval(MONEY_RESTRICTION_CASE)
+        .expect("trade restriction and argument paths should be observable");
+    assert_eq!(actual, (true, 0, false));
 }

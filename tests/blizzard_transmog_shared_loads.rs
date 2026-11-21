@@ -699,3 +699,66 @@ fn explicit_load_emits_no_addon_specific_errors() {
     );
 }
 }
+
+post_wrath_ui_fixture! {
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn wardrobe_sets_provider_reads_supplied_base_and_variant_relations() {
+    let env = fresh_game_env();
+    load_addon(&env.loader_env(), &transmog_shared_toc())
+        .expect("Blizzard_TransmogShared must load via Rust loader");
+    env.exec(
+        r#"
+        A_Admin.SetTransmogSetCatalog({
+            {
+                setID = 9101,
+                name = "Copper regalia",
+                collected = true,
+                validForCharacter = true,
+                primaryAppearances = {
+                    { appearanceID = 8101, collected = true },
+                    { appearanceID = 8102, collected = true },
+                },
+            },
+            {
+                setID = 9102,
+                name = "Copper regalia (variant)",
+                baseSetID = 9101,
+                collected = true,
+                validForCharacter = true,
+                primaryAppearances = {
+                    { appearanceID = 8201, collected = true },
+                    { appearanceID = 8202, collected = true },
+                },
+            },
+        })
+        "#,
+    )
+    .expect("A_Admin must accept the supplied transmog-set catalog");
+
+    let result: String = env
+        .eval(
+            r#"
+            local provider = setmetatable({}, { __index = WardrobeSetsDataProviderMixin })
+            local baseSets = provider:GetBaseSets()
+            if #baseSets ~= 1 or baseSets[1].setID ~= 9101 then return "base_sets" end
+            local usableSets = provider:GetUsableSets()
+            if #usableSets ~= 2 then return "usable_sets" end
+            local baseCollected, baseTotal = provider:GetSetSourceCounts(9101)
+            local variantCollected, variantTotal = provider:GetSetSourceCounts(9102)
+            if baseCollected ~= 2 or baseTotal ~= 2 then return "base_sources" end
+            if variantCollected ~= 2 or variantTotal ~= 2 then return "variant_sources" end
+            local baseAppearances = provider:GetSetSourceData(9101).primaryAppearances
+            local variantAppearances = provider:GetSetSourceData(9102).primaryAppearances
+            if baseAppearances[1].appearanceID ~= 8101 then return "base_appearance" end
+            if variantAppearances[1].appearanceID ~= 8201 then return "variant_appearance" end
+            local baseData = provider:GetBaseSetData(9101)
+            if baseData.topCollected ~= 2 or baseData.topTotal ~= 2 then return "base_data" end
+            if provider:GetBaseSetData(9102) ~= nil then return "variant_base_data" end
+            return "ok"
+            "#,
+        )
+        .expect("WardrobeSetsDataProviderMixin must read the supplied set relations");
+    assert_eq!(result, "ok");
+}
+}

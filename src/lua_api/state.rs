@@ -859,6 +859,8 @@ macro_rules! build_empty_sim_state {
             mount_item_relations: HashMap::new(),
             equipment_manager: EquipmentManagerState::new(),
             maps: default_maps(),
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            taxi_map: Default::default(),
             quest_log_selected_map_id: None,
             user_waypoint: None,
             map_display_hide_icons: HashMap::new(),
@@ -979,6 +981,14 @@ macro_rules! build_empty_sim_state {
             corpse_available: false,
             corpse_map_positions: HashMap::new(),
             active_trade: None,
+            #[cfg(any(
+                feature = "client-retail",
+                feature = "client-ptr",
+                feature = "client-wowforever"
+            ))]
+            pickup_trade_money_restricted: false,
+            #[cfg(feature = "client-ptr")]
+            trade_offer_warning: false,
             #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
             secure_transfer: None,
             open_panels: ::std::collections::HashSet::new(),
