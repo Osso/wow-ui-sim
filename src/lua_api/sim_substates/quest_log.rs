@@ -116,6 +116,8 @@ pub struct QuestLogState {
     /// Supplied chapter IDs in campaign order.
     pub campaign_chapter_ids: HashMap<i32, Vec<i32>>,
     pub entries: Vec<QuestLogEntry>,
+    /// Explicitly supplied countdowns displayed by the Forever quest timer.
+    pub timers: Vec<crate::c_api::c_quest_log::QuestTimer>,
     /// R88e.2 quest-record autocomplete flags, independent of active log rows.
     pub info_record_autocomplete: HashMap<i32, bool>,
     /// Results of separate native category and list lookups, not log flags.

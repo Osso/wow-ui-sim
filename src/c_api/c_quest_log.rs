@@ -9,9 +9,14 @@ use crate::lua_api::methods::{
 };
 use crate::lua_api::sim_substates::QuestLogEntry;
 use crate::lua_api::workarounds::update_campaign_headers;
+#[cfg(feature = "client-wowforever")]
+use crate::lua_bridge::TableBuilder;
 use crate::lua_bridge::{FromStack, stack_val, table_set_rust_fn_static};
+#[cfg(feature = "client-wowforever")]
+use rilua::runtime_error;
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
+use std::time::Duration;
 
 /// Map and categories highlighted by a quest. The default has no highlights.
 #[derive(Debug, Clone, Copy, Default, PartialEq, Eq)]
@@ -31,6 +36,102 @@ pub struct QuestInfoEntryFlags {
 }
 
 const QUEST_LOG_HEADER_TITLE: &str = "Khaz Algar";
+#[cfg(feature = "client-wowforever")]
+const SET_QUEST_TIMERS_ERROR: &str = "A_Admin.SetQuestTimers: expected an array of timer records";
+
+/// One timer supplied for Forever's original quest-timer consumer.
+#[derive(Debug, Clone)]
+pub struct QuestTimer {
+    pub quest_id: i32,
+    pub initial_seconds: f64,
+    pub supplied_at: Duration,
+}
+
+#[cfg(feature = "client-wowforever")]
+pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
+    builder.set_function("SetQuestTimers", set_quest_timers)
+}
+
+#[cfg(feature = "client-wowforever")]
+fn set_quest_timers(state: &mut LuaState) -> LuaResult<u32> {
+    let supplied_at = borrow_state(state)?.clock_elapsed();
+    let timers = read_quest_timers(state, stack_val(state, 1), supplied_at)?;
+    borrow_state_mut(state)?.quest_log_entries.timers = timers;
+    Ok(0)
+}
+
+#[cfg(feature = "client-wowforever")]
+fn read_quest_timers(
+    state: &mut LuaState,
+    value: Val,
+    supplied_at: Duration,
+) -> LuaResult<Vec<QuestTimer>> {
+    let Val::Table(array) = value else {
+        return Err(runtime_error(SET_QUEST_TIMERS_ERROR));
+    };
+    let Some(table) = state.gc.tables.get(array) else {
+        return Err(runtime_error(SET_QUEST_TIMERS_ERROR));
+    };
+    let length = table.len(&state.gc.string_arena);
+    (1..=length)
+        .map(|index| read_quest_timer(state, array, index, supplied_at))
+        .collect()
+}
+
+#[cfg(feature = "client-wowforever")]
+fn read_quest_timer(
+    state: &LuaState,
+    array: rilua::vm::gc::arena::GcRef<rilua::vm::table::Table>,
+    index: usize,
+    supplied_at: Duration,
+) -> LuaResult<QuestTimer> {
+    let record = state
+        .gc
+        .tables
+        .get(array)
+        .map(|table| table.get_int(index as i64))
+        .unwrap_or(Val::Nil);
+    let Val::Table(record) = record else {
+        return Err(runtime_error(SET_QUEST_TIMERS_ERROR));
+    };
+    let quest_id = read_timer_integer(state, record, "questID")?;
+    let initial_seconds = read_timer_seconds(state, record)?;
+    Ok(QuestTimer {
+        quest_id,
+        initial_seconds,
+        supplied_at,
+    })
+}
+
+#[cfg(feature = "client-wowforever")]
+fn read_timer_integer(
+    state: &LuaState,
+    record: rilua::vm::gc::arena::GcRef<rilua::vm::table::Table>,
+    field: &str,
+) -> LuaResult<i32> {
+    let value = table_get(state, Val::Table(record), field);
+    let Val::Num(value) = value else {
+        return Err(runtime_error(SET_QUEST_TIMERS_ERROR));
+    };
+    if value.fract() != 0.0 || !(0.0..=i32::MAX as f64).contains(&value) {
+        return Err(runtime_error(SET_QUEST_TIMERS_ERROR));
+    }
+    Ok(value as i32)
+}
+
+#[cfg(feature = "client-wowforever")]
+fn read_timer_seconds(
+    state: &LuaState,
+    record: rilua::vm::gc::arena::GcRef<rilua::vm::table::Table>,
+) -> LuaResult<f64> {
+    let Val::Num(seconds) = table_get(state, Val::Table(record), "questTimer") else {
+        return Err(runtime_error(SET_QUEST_TIMERS_ERROR));
+    };
+    if !seconds.is_finite() || seconds < 0.0 || Duration::try_from_secs_f64(seconds).is_err() {
+        return Err(runtime_error(SET_QUEST_TIMERS_ERROR));
+    }
+    Ok(seconds)
+}
 
 pub(crate) fn register_info_queries(state: &mut LuaState) -> LuaResult<()> {
     let namespace = ensure_namespace(state, "C_QuestLog")?;
