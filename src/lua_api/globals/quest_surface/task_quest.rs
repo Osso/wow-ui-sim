@@ -5,6 +5,7 @@ use crate::lua_api::methods::{borrow_state, create_string, create_table, table_s
 use crate::lua_bridge::FromStack;
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
+use std::collections::HashSet;
 
 use super::data::{SEEDED_WORLD_QUEST_TIME_LEFT_MINUTES, WORLD_QUESTS};
 use super::handlers::{find_world_quest, set_array_value};
@@ -72,6 +73,32 @@ pub fn get_reward_skill_points_nil_triplet(state: &mut LuaState) -> LuaResult<u3
     state.push(Val::Nil);
     state.push(Val::Nil);
     Ok(3)
+}
+
+pub(crate) fn build_tasks_table(state: &mut LuaState) -> LuaResult<u32> {
+    let available = read_available_world_quests(state)?;
+    let mut task_ids: HashSet<i32> = available.iter().map(|quest| quest.quest_id).collect();
+    let task_entries: Vec<_> = borrow_state(state)?
+        .quest_log_entries
+        .entries
+        .iter()
+        .filter(|entry| entry.info_flags.is_task)
+        .map(|entry| entry.quest_id)
+        .filter(|quest_id| task_ids.insert(*quest_id))
+        .collect();
+    let task_ids = available
+        .into_iter()
+        .map(|quest| quest.quest_id)
+        .chain(task_entries);
+    let result = create_table(state);
+    let Val::Table(result_ref) = result else {
+        unreachable!("create_table must return a table");
+    };
+    for (index, quest_id) in (1..).zip(task_ids) {
+        set_array_value(state, result_ref, index, Val::Num(f64::from(quest_id)));
+    }
+    state.push(result);
+    Ok(1)
 }
 
 pub fn build_task_quest_info(state: &mut LuaState) -> LuaResult<u32> {

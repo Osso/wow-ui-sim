@@ -8,7 +8,7 @@ pub mod data;
 mod handlers;
 mod legacy_globals;
 mod register;
-mod task_quest;
+pub(crate) mod task_quest;
 #[cfg(feature = "client-wrath")]
 mod wrath_gossip;
 #[cfg(feature = "client-wrath")]
