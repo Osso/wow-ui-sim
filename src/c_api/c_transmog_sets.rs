@@ -36,6 +36,11 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
     }
     // WowForever's TransmogSetsDocumentation.lua:231-491 declares the same query
     // and filter surface as Retail/PTR, so it registers the whole block below.
+    // Retail declarations: GetAllSets, GetBaseSetID, GetBaseSets,
+    // GetSetPrimaryAppearances, GetSourcesForSlot, GetUsableSets, and
+    // IsBaseSetCollected are at lines 36, 70, 86, 199, 264, 290, and 358.
+    // Forever declares the same members at the same lines except IsBaseSetCollected
+    // at line 367. TransmogDocumentation.lua:41 declares GetAllSetAppearancesByID.
     if !cfg!(feature = "retail-12-0-0") && !forever {
         return Ok(());
     }
