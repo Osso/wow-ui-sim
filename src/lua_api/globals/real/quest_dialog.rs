@@ -7,37 +7,45 @@ use rilua::{LuaResult, Val};
 pub(crate) use crate::c_api::quest_readiness::{complete_quest, is_quest_completable};
 
 pub(crate) fn get_progress_money(state: &mut LuaState) -> LuaResult<u32> {
-    let sim = borrow_state(state)?;
-    let money = crate::c_api::quest_objectives::progress_requirements_for_active_dialog(&sim)
-        .map(|requirements| requirements.money)
-        .unwrap_or(0);
+    let money = {
+        let sim = borrow_state(state)?;
+        crate::c_api::quest_objectives::progress_requirements_for_active_dialog(&sim)
+            .map(|requirements| requirements.money)
+            .unwrap_or(0)
+    };
     state.push(Val::Num(f64::from(money)));
     Ok(1)
 }
 
 pub(crate) fn get_progress_item_count(state: &mut LuaState) -> LuaResult<u32> {
-    let sim = borrow_state(state)?;
-    let count = crate::c_api::quest_objectives::progress_requirements_for_active_dialog(&sim)
-        .map(|requirements| requirements.items.len())
-        .unwrap_or(0);
+    let count = {
+        let sim = borrow_state(state)?;
+        crate::c_api::quest_objectives::progress_requirements_for_active_dialog(&sim)
+            .map(|requirements| requirements.items.len())
+            .unwrap_or(0)
+    };
     state.push(Val::Num(count as f64));
     Ok(1)
 }
 
 pub(crate) fn get_progress_currency_count(state: &mut LuaState) -> LuaResult<u32> {
-    let sim = borrow_state(state)?;
-    let count = crate::c_api::quest_objectives::progress_requirements_for_active_dialog(&sim)
-        .map(|requirements| requirements.currencies.len())
-        .unwrap_or(0);
+    let count = {
+        let sim = borrow_state(state)?;
+        crate::c_api::quest_objectives::progress_requirements_for_active_dialog(&sim)
+            .map(|requirements| requirements.currencies.len())
+            .unwrap_or(0)
+    };
     state.push(Val::Num(count as f64));
     Ok(1)
 }
 
 pub(crate) fn get_progress_text(state: &mut LuaState) -> LuaResult<u32> {
-    let sim = borrow_state(state)?;
-    let text = crate::c_api::quest_objectives::progress_requirements_for_active_dialog(&sim)
-        .map(|requirements| requirements.text.clone())
-        .unwrap_or_default();
+    let text = {
+        let sim = borrow_state(state)?;
+        crate::c_api::quest_objectives::progress_requirements_for_active_dialog(&sim)
+            .map(|requirements| requirements.text.clone())
+            .unwrap_or_default()
+    };
     let text = create_string(state, &text);
     state.push(text);
     Ok(1)
