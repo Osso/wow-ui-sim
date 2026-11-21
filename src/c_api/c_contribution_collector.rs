@@ -151,7 +151,10 @@ fn read_collector(state: &mut LuaState, value: Val) -> LuaResult<CollectorInput>
 
 fn read_contributions(state: &mut LuaState, value: Val) -> LuaResult<Vec<(u32, Contribution)>> {
     let Val::Table(array) = value else {
-        return Ok(Vec::new());
+        return match value {
+            Val::Nil => Ok(Vec::new()),
+            _ => Err(invalid_field("contributions")),
+        };
     };
     let length = state
         .gc
@@ -195,7 +198,10 @@ fn read_contribution(state: &mut LuaState, value: Val) -> LuaResult<(u32, Contri
 
 fn read_appearance(state: &mut LuaState, value: Val) -> LuaResult<Option<Appearance>> {
     let Val::Table(table) = value else {
-        return Ok(None);
+        return match value {
+            Val::Nil => Ok(None),
+            _ => Err(invalid_field("appearance")),
+        };
     };
     let color_value = field(state, table, "stateColor");
     let Val::Table(color) = color_value else {
