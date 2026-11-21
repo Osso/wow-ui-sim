@@ -966,6 +966,8 @@ pub struct SimState {
     /// Supplied legacy trainer visibility: available, unavailable, used.
     #[cfg(feature = "client-wrath")]
     pub wrath_trainer_filters: [bool; 3],
+    /// INFERRED R88cn: pending target-spell metadata supplied by the simulator host.
+    pub(crate) pending_target_spell: crate::c_api::target_spell::PendingTargetSpell,
     /// Host inputs for Forever 70532; other profiles do not publish these probes.
     pub forever_startup: crate::c_api::forever_startup::StartupInputs,
     /// Host-supplied promotion state for the declared `C_ExternalEventURL` namespace.

@@ -188,6 +188,7 @@ pub(crate) mod source_patches;
 pub(crate) mod spell_book_static_defaults;
 pub(crate) mod spell_metadata_defaults;
 pub(crate) mod spell_static_defaults;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod spell_target_defaults;
 #[cfg(not(feature = "client-wrath"))]
 pub(crate) mod startup_condition_capability_defaults;

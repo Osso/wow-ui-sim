@@ -1,8 +1,6 @@
-//! Temporary `C_Spell` target-spell metadata defaults.
+//! Temporary `C_Spell` target-spell defaults for profiles without the model.
 //!
-//! Target-spell metadata is not modeled yet. Keep these inert false answers in
-//! the temporary workaround layer until cursor/target spell state has a real
-//! simulator owner.
+//! Retail and Forever provide these queries from `c_api::target_spell`.
 
 const SPELL_TARGET_DEFAULTS_LUA: &str = r#"
 C_Spell = C_Spell or __wow_namespace()
@@ -25,7 +23,10 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     Ok(())
 }
 
-#[cfg(test)]
+#[cfg(all(
+    test,
+    not(any(feature = "client-retail", feature = "client-wowforever"))
+))]
 mod tests {
     use crate::lua_api::WowLuaEnv;
 
