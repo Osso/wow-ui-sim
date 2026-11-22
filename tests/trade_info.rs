@@ -74,6 +74,7 @@ fn assert_trade_money_pickup(env: &WowLuaEnv, script: &str, expected: (f64, Stri
     assert_eq!(actual, expected);
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn click_trade_accept(env: &WowLuaEnv, warning: bool) -> (bool, bool) {
     env.state().borrow_mut().active_trade = Some(Default::default());
     env.exec(&format!(
@@ -93,6 +94,7 @@ fn click_trade_accept(env: &WowLuaEnv, warning: bool) -> (bool, bool) {
 }
 
 // INFERRED (R88ed, native evidence pending): the supplied warning input drives the selected TradeFrame before its original accept-button handler.
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 #[test]
 fn r88ed_trade_frame_accept_button_uses_supplied_warning() {
     with_blizzard_addon_startup_shape(&["Blizzard_UIPanels_Game"], &[], |env, loaded| {
