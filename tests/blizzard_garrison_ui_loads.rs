@@ -141,7 +141,7 @@ fn run_covenant_mission_show_hide_show(
         local mapShown = CovenantMissionFrame.MapTab:IsShown()
         CovenantMissionFrame:Hide()
         local atNpcAfterClose = C_Garrison.IsAtGarrisonMissionNPC()
-        A_Admin.SetAtGarrisonMissionNPC(false)
+        A_Admin.SetAtGarrisonMissionNPC(true)
         A_Admin.SetShouldShowGarrisonMissionMapTab(false)
         CovenantMissionFrame:Show()
         local mapHidden = not CovenantMissionFrame.MapTab:IsShown()
