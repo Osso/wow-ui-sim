@@ -102,7 +102,7 @@ pub(crate) mod merchant_affordability;
 pub mod merchant_buyback;
 pub(crate) mod merchant_filter;
 pub mod merchant_item_link;
-#[cfg(feature = "client-wowforever")]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub mod merchant_repair;
 mod merchant_requirements;
 #[cfg(feature = "client-mists")]

@@ -1,4 +1,4 @@
-//! Forever merchant service capability query; policy is inferred from cached UI use.
+//! INFERRED R88dx: the selected MerchantFrame consumer reads repair capability.
 
 use crate::lua_api::methods::borrow_state;
 use rilua::vm::state::LuaState;
