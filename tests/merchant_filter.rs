@@ -31,12 +31,9 @@ fn merchant_game_env() -> WowLuaEnv {
 }
 
 fn supply_merchant_offers(env: &WowLuaEnv) {
-    use wow_ui_sim::lua_api::globals::real::merchant_item_link::{
-        MerchantLinkOffer, MerchantLinks,
-    };
-
     let mut sim = env.state().borrow_mut();
     sim.merchant_items = vec![6948, 1728];
+    sim.merchant_item_refundable.insert(1, true);
     sim.merchant_offer_costs.insert(
         0,
         MerchantCostRecord {
@@ -51,15 +48,6 @@ fn supply_merchant_offers(env: &WowLuaEnv) {
             ..MerchantCostRecord::default()
         },
     );
-    sim.merchant_links = MerchantLinks::default();
-    for slot in 0..2 {
-        sim.merchant_links.offers.insert(
-            slot,
-            MerchantLinkOffer::Item {
-                fields: Some(vec![0, 80, 0, 7]),
-            },
-        );
-    }
     sim.merchant_frame_open = true;
     sim.player.present = true;
 }
@@ -69,10 +57,14 @@ fn merchant_dropdown_filters_rendered_rows_by_boe() {
     let env = merchant_game_env();
     supply_merchant_offers(&env);
     env.exec(
-        r#"
+        r##"
         MerchantFrame.selectedTab = 1
         MerchantFrame.lastTab = 1
         MerchantFrame.page = 1
+        SetMerchantFilter(LE_LOOT_FILTER_BOE)
+        assert(select("#", ResetSetMerchantFilter()) == 0)
+        assert(GetMerchantFilter() == LE_LOOT_FILTER_CLASS)
+        SetMerchantFilter(LE_LOOT_FILTER_ALL)
         MerchantFrame_Update()
         assert(GetMerchantNumItems() == 2, "all filter must show both supplied offers")
         assert(MerchantItem1Name:GetText() == "Hearthstone")
@@ -102,12 +94,12 @@ fn merchant_dropdown_filters_rendered_rows_by_boe() {
         assert(C_MerchantFrame.GetItemInfo(1).price == 456)
         assert(GetMerchantItemID(1) == 1728)
         assert(GetMerchantItemLink(1):find("|Hitem:1728:", 1, true))
-        assert(C_MerchantFrame.IsMerchantItemRefundable(1) == false)
+        assert(C_MerchantFrame.IsMerchantItemRefundable(1) == true)
         assert(MerchantItem1Name:GetText() == "Teebu's Blazing Longsword")
         assert(MerchantItem1ItemButton.name == "Teebu's Blazing Longsword")
         assert(MerchantItem1ItemButton.price == 456)
         assert(MerchantItem1ItemButton.link == GetMerchantItemLink(1))
-        "#,
+        "##,
     )
     .expect("original merchant dropdown must render the selected filtered offer");
 }

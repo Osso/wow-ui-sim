@@ -827,6 +827,7 @@ macro_rules! build_empty_sim_state {
             stable_reads: crate::c_api::c_stable_info::forever::StableReadState::default(),
             merchant_items: Vec::new(),
             merchant_filter: 0,
+            merchant_item_refundable: HashMap::new(),
             purchase_inputs: Default::default(),
             inventory_candidates: Default::default(),
             merchant_links: Default::default(),

@@ -83,6 +83,25 @@ fn reset_set_merchant_filter(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
+fn get_merchant_item_id(state: &mut LuaState) -> LuaResult<u32> {
+    let index = i32::from_stack(state, 1)?;
+    let Some(index) = index
+        .checked_sub(1)
+        .and_then(|index| usize::try_from(index).ok())
+    else {
+        return Ok(0);
+    };
+    let item_id = {
+        let sim = borrow_state(state)?;
+        let Some((_, item_id)) = visible_merchant_item(&sim, index) else {
+            return Ok(0);
+        };
+        item_id
+    };
+    state.push(Val::Num(f64::from(item_id)));
+    Ok(1)
+}
+
 pub(crate) fn register_all(lua: &mut rilua::Lua) -> crate::Result<()> {
     if cfg!(any(
         feature = "client-retail",
@@ -91,6 +110,7 @@ pub(crate) fn register_all(lua: &mut rilua::Lua) -> crate::Result<()> {
         LuaApiMut::register_function(lua, "GetMerchantFilter", get_merchant_filter)?;
         LuaApiMut::register_function(lua, "SetMerchantFilter", set_merchant_filter)?;
         LuaApiMut::register_function(lua, "ResetSetMerchantFilter", reset_set_merchant_filter)?;
+        LuaApiMut::register_function(lua, "GetMerchantItemID", get_merchant_item_id)?;
     }
     Ok(())
 }

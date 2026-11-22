@@ -24,6 +24,12 @@ pub(crate) fn register_c_merchant_frame_surface(state: &mut LuaState) -> LuaResu
         || crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever
     {
         table_set_rust_fn_static(state, merchant, "GetItemInfo", get_item_info)?;
+        table_set_rust_fn_static(
+            state,
+            merchant,
+            "IsMerchantItemRefundable",
+            is_merchant_item_refundable,
+        )?;
     }
     register_patch_12_0_7_merchant_frame_surface(state, merchant)?;
     // Forever MerchantFrameDocumentation.lua:77-83 declares this member.
@@ -75,6 +81,24 @@ fn get_item_info(state: &mut LuaState) -> LuaResult<u32> {
     let name = create_string(state, item.name);
     table_set_static(state, info, "name", name);
     set_offer_fields(state, info, item.icon_file_data_id, costs);
+    Ok(1)
+}
+
+fn is_merchant_item_refundable(state: &mut LuaState) -> LuaResult<u32> {
+    let index = i32::from_stack(state, 1)?;
+    let refundable = {
+        let sim = borrow_state(state)?;
+        index
+            .checked_sub(1)
+            .and_then(|index| usize::try_from(index).ok())
+            .and_then(|index| {
+                crate::lua_api::globals::real::merchant_filter::visible_merchant_item(&sim, index)
+            })
+            .and_then(|(slot, _)| u32::try_from(slot).ok())
+            .and_then(|slot| sim.merchant_item_refundable.get(&slot).copied())
+            .unwrap_or(false)
+    };
+    state.push(rilua::Val::Bool(refundable));
     Ok(1)
 }
 

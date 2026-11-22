@@ -1020,6 +1020,8 @@ pub struct SimState {
     pub merchant_items: Vec<u32>,
     /// INFERRED R88dx: selected legacy merchant filter; zero is the all-items default.
     pub merchant_filter: i32,
+    /// INFERRED R88dx: optional refundability keyed by the source offer slot.
+    pub merchant_item_refundable: HashMap<u32, bool>,
     /// R88k.2 native item identities, counts and default-empty purchase records.
     pub purchase_inputs: crate::c_api::container_purchase::PurchaseInputs,
     /// R88k.1 accepted candidate/link inputs; native filter writers stay unknown.
