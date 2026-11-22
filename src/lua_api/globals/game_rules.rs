@@ -34,7 +34,7 @@ fn read_rule_key(state: &mut LuaState) -> LuaResult<Option<GameRuleKey>> {
     let key = match stack_val(state, 1) {
         Val::Str(value) => read_rule_name(state, value).map(|name| rule_key_from_name(state, name)),
         Val::Num(value) if ACTIVE == ClientProfile::WowForever => {
-            Some(GameRuleKey::Id(value as i32))
+            resolve_rule_key_from_id(state, value as i64)
         }
         Val::Num(value) => {
             resolve_rule_name_from_enum_id(state, value as i64).map(GameRuleKey::Name)
@@ -54,6 +54,11 @@ fn read_rule_name(
         .get(value)
         .and_then(|lua_str| std::str::from_utf8(lua_str.data()).ok())
         .map(str::to_owned)
+}
+
+fn resolve_rule_key_from_id(state: &mut LuaState, id: i64) -> Option<GameRuleKey> {
+    resolve_rule_name_from_enum_id(state, id)?;
+    Some(GameRuleKey::Id(id as i32))
 }
 
 fn rule_key_from_name(state: &mut LuaState, name: String) -> GameRuleKey {
@@ -490,7 +495,7 @@ fn admin_rule_key(state: &mut LuaState) -> Option<GameRuleKey> {
     match stack_val(state, 1) {
         Val::Str(value) => read_rule_name(state, value).map(|name| rule_key_from_name(state, name)),
         Val::Num(value) if ACTIVE == ClientProfile::WowForever => {
-            Some(GameRuleKey::Id(value as i32))
+            resolve_rule_key_from_id(state, value as i64)
         }
         _ => None,
     }
