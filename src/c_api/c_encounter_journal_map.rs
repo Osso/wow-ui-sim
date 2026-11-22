@@ -1,9 +1,8 @@
 //! INFERRED R88dj (native evidence pending): return host-supplied encounter rows for one UI map.
 
-use crate::c_api::helpers::ensure_namespace;
+use crate::c_api::helpers::{ensure_namespace, set_table_array};
 use crate::lua_api::methods::{
-    borrow_state, borrow_state_mut, create_table_with_capacity, table_get, table_set_num,
-    table_set_static,
+    borrow_state, borrow_state_mut, create_table_with_capacity, table_get, table_set_static,
 };
 use crate::lua_bridge::{FromStack, TableBuilder, stack_val, table_set_rust_fn_static};
 use rilua::vm::gc::arena::GcRef;
@@ -46,7 +45,7 @@ fn get_encounters_on_map(state: &mut LuaState) -> LuaResult<u32> {
     let result = create_table_with_capacity(state, rows.len());
     for (index, row) in rows.iter().enumerate() {
         let info = encounter_map_info(state, row);
-        table_set_num(state, result, (index + 1) as f64, info);
+        set_table_array(state, result, (index + 1) as i64, info);
     }
     state.push(result);
     Ok(1)

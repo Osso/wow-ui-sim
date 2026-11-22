@@ -1,8 +1,6 @@
 #[cfg(feature = "client-retail")]
 use std::collections::HashMap;
 
-use super::*;
-
 /// Zone-choice descriptor for the adventure map. A zone choice is one of
 /// the competing quests on the Broken Isles starting-zone selection
 /// screen, exposed via `C_AdventureMap.GetZoneChoiceInfo`.
