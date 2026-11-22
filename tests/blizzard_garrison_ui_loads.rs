@@ -94,12 +94,36 @@ fn supplied_missions_update_the_real_covenant_mission_list() {
     ) = env
         .eval(include_str!("fixtures/garrison_mission_lists.lua"))
         .expect("Covenant mission list consumes supplied missions");
+    assert!(env.state().borrow().lua_errors.is_empty());
     let mission_ids = (mission_count, mission_1, mission_2, mission_3);
     assert_eq!(mission_ids, (3, 900001, 900003, 900002));
     assert_eq!(
         (width_1, height_1, width_2, height_2),
         (3840, 2560, 1002, 668)
     );
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn covenant_mission_tabs_follow_supplied_npc_interaction_state() {
+    let env = load_full_game_ui_with_lod_deps();
+    load_addon(&env.loader_env(), &garrison_ui_toc()).expect("load original Garrison UI");
+    let tabs: (bool, bool, bool, bool) = env
+        .eval(
+            r#"
+            local function show_tabs(at_npc)
+                A_Admin.SetAtGarrisonMissionNPC(at_npc)
+                CovenantMissionFrame:Hide()
+                CovenantMissionFrame:Show()
+                return CovenantMissionFrame.Tab1:IsShown(), CovenantMissionFrame.Tab2:IsShown()
+            end
+            local away_first, away_second = show_tabs(false)
+            local at_first, at_second = show_tabs(true)
+            return away_first, away_second, at_first, at_second
+            "#,
+        )
+        .expect("original Covenant mission tabs use supplied NPC interaction state");
+    assert_eq!(tabs, (false, false, true, true));
 }
 
 #[cfg(feature = "client-retail")]
