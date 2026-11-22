@@ -361,7 +361,7 @@ fn set_zone_story_info(state: &mut LuaState) -> LuaResult<u32> {
     let mut parsed = [0; 3];
     for (index, name) in ids.iter().enumerate() {
         let id = validate_supplied_relation_id(
-            stack_val(state, index + 1),
+            stack_val(state, index as i32 + 1),
             "SetZoneStoryInfo requires positive integer IDs",
         )?;
         parsed[index] = id.filter(|id| *id > 0).ok_or_else(|| {
