@@ -343,10 +343,10 @@ fn gossip_map_provider_refreshes_the_supplied_poi_for_each_map() {
 #[cfg(feature = "client-retail")]
 const ENCOUNTER_MAP_INPUT_LUA: &str = r#"
 A_Admin.SetEncounterJournalMapEncounters(2248, {
-    { encounterID = 301, mapX = 0.2, mapY = 0.8, completed = true },
+    { encounterID = 2519, mapX = 0.2, mapY = 0.8, completed = true },
 })
 A_Admin.SetEncounterJournalMapEncounters(84, {
-    { encounterID = 302, mapX = 0.7, mapY = 0.3, completed = false },
+    { encounterID = 2602, mapX = 0.7, mapY = 0.3, completed = false },
 })
 CanShowEncounterJournal = function() return true end
 "#;
