@@ -115,14 +115,24 @@ fn item_place_bid(state: &mut LuaState) -> LuaResult<u32> {
         .black_market
         .items
         .iter_mut()
-        .chain(sim.black_market.hot_item.iter_mut())
         .find(|item| item.market_id == market_id);
     if let Some(item) = item {
-        item.curr_bid = bid;
-        item.you_have_high_bid = true;
-        item.num_bids += 1;
+        apply_bid(item, bid);
+    } else if let Some(item) = sim
+        .black_market
+        .hot_item
+        .as_mut()
+        .filter(|item| item.market_id == market_id)
+    {
+        apply_bid(item, bid);
     }
     Ok(0)
+}
+
+fn apply_bid(item: &mut BlackMarketItem, bid: u64) {
+    item.curr_bid = bid;
+    item.you_have_high_bid = true;
+    item.num_bids += 1;
 }
 
 fn is_view_only(state: &mut LuaState) -> LuaResult<u32> {
