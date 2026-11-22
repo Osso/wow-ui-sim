@@ -1,16 +1,16 @@
 # Class-trial character state
 
-The simulator models the `C_ClassTrial` character flag and logout deadline from host-supplied state. The deadline contract is INFERRED from the Retail/Forever timer consumer; native evidence is pending R88en.
+The simulator models the `C_ClassTrial` character flag and logout deadline from host-supplied state. The deadline contract is INFERRED from the Retail timer consumer; native evidence is pending R88en.
 
 ## What it must do
 
 ### API surface
-- [ ] INFERRED (R88en pending): `C_ClassTrial.IsClassTrialCharacter()` returns the supplied class-trial flag.
-- [ ] INFERRED (R88en pending): `C_ClassTrial.GetClassTrialLogoutTimeSeconds()` returns the supplied deadline in the `GetTime()` clock domain.
-- [ ] `A_Admin.SetClassTrialState(isTrialCharacter, logoutDeadline)` supplies both API inputs for a simulation.
+- [x] INFERRED (R88en pending): `C_ClassTrial.IsClassTrialCharacter()` returns the supplied class-trial flag.
+- [x] INFERRED (R88en pending): `C_ClassTrial.GetClassTrialLogoutTimeSeconds()` returns the supplied deadline in the `GetTime()` clock domain.
+- [x] `A_Admin.SetClassTrialState(isTrialCharacter, logoutDeadline)` supplies both API inputs for a simulation.
 
 ### Timer consumer
-- [ ] INFERRED (R88en pending): Retail's loaded `ClassTrialTimerDisplay` stays hidden when its supplied deadline is zero, shows formatted remaining time for a positive deadline, and updates as the simulation clock advances.
+- [x] INFERRED (R88en pending): Retail's loaded `ClassTrialTimerDisplay` stays hidden when its supplied deadline is zero, shows formatted remaining time for a positive deadline, and updates as the simulation clock advances.
 
 ## How it works
 
