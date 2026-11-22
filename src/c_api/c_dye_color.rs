@@ -212,8 +212,11 @@ fn colors_for_item(state: &mut LuaState) -> LuaResult<u32> {
 
 fn colors_for_item_location(state: &mut LuaState) -> LuaResult<u32> {
     let location = stack_val(state, 1);
-    let item_id = crate::c_api::item_location::read_numeric_item_slot(state, location)
-        .and_then(|slot| slot.item_id(&borrow_state(state).ok()?));
+    let slot = crate::c_api::item_location::read_numeric_item_slot(state, location);
+    let item_id = slot.and_then(|slot| {
+        let sim = borrow_state(state).ok()?;
+        slot.item_id(&sim)
+    });
     push_item_colors(state, item_id)
 }
 
