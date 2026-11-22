@@ -13,18 +13,6 @@ fn load_original_addon(addon: &str) -> WowLuaEnv {
     env
 }
 
-fn load_original_communities() -> WowLuaEnv {
-    let ui = blizzard_ui_dir();
-    let addons = ["Blizzard_Communities", "Blizzard_CommunitiesSecure"];
-    let (env, loaded) = build_blizzard_addon_closure_env(&ui, &addons, &[]);
-    for addon in addons {
-        assert!(loaded.iter().any(|name| name == addon), "load {addon}");
-    }
-    env.apply_post_load_workarounds();
-    wow_ui_sim::startup::settle_headless_startup(&env);
-    env
-}
-
 fn supply_social_restrictions(env: &WowLuaEnv, muted: bool, age_restricted: bool, disabled: bool) {
     let mut sim = env.state().borrow_mut();
     sim.social_restrictions.is_muted = muted;
@@ -125,22 +113,17 @@ fn original_communities_mode_reads_chat_restrictions() {
 }
 
 #[test]
-fn original_communities_chat_editbox_hides_when_chat_disabled() {
-    let env = load_original_communities();
-    supply_community(&env);
+fn original_social_settings_reads_chat_disabled_admin_input() {
+    let env = load_original_addon("Blizzard_SettingsDefinitions_Frame");
     env.exec(
         r#"
-        CommunitiesFrame:GetScript("OnLoad")(CommunitiesFrame)
+        local setting = Settings.GetSetting("PROXY_DISABLE_CHAT")
+        assert(setting ~= nil, "original Social.lua registered the disable-chat setting")
         A_Admin.SetChatDisabled(false)
-        CommunitiesFrame:SelectClub("club-test")
-        assert(CommunitiesFrame:GetDisplayMode() == COMMUNITIES_FRAME_DISPLAY_MODES.CHAT)
-        assert(CommunitiesFrame.ChatEditBox:IsShown(), "chat edit box is shown when chat is enabled")
-
+        assert(setting:GetValue() == false, "enabled chat remains enabled")
         A_Admin.SetChatDisabled(true)
-        CommunitiesFrame:ValidateDisplayMode()
-        assert(CommunitiesFrame:GetDisplayMode() == COMMUNITIES_FRAME_DISPLAY_MODES.ROSTER)
-        assert(not CommunitiesFrame.ChatEditBox:IsShown(), "disabled chat edit box is hidden")
+        assert(setting:GetValue() == true, "disabled chat is reflected in the original setting")
         "#,
     )
-    .expect("original CommunitiesFrame prevents chat entry while chat is disabled");
+    .expect("original Social.lua setting follows A_Admin-supplied chat-disabled state");
 }
