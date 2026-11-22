@@ -71,6 +71,7 @@ fn is_rewards_shop_enabled_store(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn is_rewards_shop_enabled_rules(state: &mut LuaState) -> LuaResult<u32> {
+    let rule_key = super::c_game_rules::key_from_name(state, "RewardsShopFlags");
     let enabled = {
         let sim = borrow_state(state)?;
         let store_enabled = if ACTIVE == ClientProfile::Ptr {
@@ -96,7 +97,7 @@ fn is_rewards_shop_enabled_rules(state: &mut LuaState) -> LuaResult<u32> {
             && sim
                 .game_rules
                 .rules
-                .get("RewardsShopFlags")
+                .get(&rule_key)
                 .and_then(|rule| rule.integer_value)
                 .is_some_and(|flags| flags & 1 != 0)
     };

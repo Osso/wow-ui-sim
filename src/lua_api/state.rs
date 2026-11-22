@@ -1204,13 +1204,14 @@ pub use super::sim_substates::{
     ArchaeologyArtifact, ArchaeologyRace, ArchaeologyState, ArrowCalloutInfo, ArrowCalloutState,
     ArtifactAppearanceInfo, ArtifactAppearanceSetInfo, ArtifactArtInfo, ArtifactPowerInfo,
     BattlefieldQueue, BattlefieldStatus, ChatChannel, ChatWindow, ColorRgb, FactionEntry,
-    GameClock, GameRuleValue, GameRulesState, GardenwealdState, GossipOption, GossipQuestRow,
-    GossipState, Keybindings, LfgListCounts, LootMethodState, MessageLogEntry, MetaPowerEntry,
-    ModifierKeys, MouseButtons, NetStats, PetBattlePet, PetBattleState, PetState, QuestBounty,
-    QuestLogEntry, QuestLogState, QuestRewardCurrency, QuestRewardItem, QuestRewardSpell,
-    RelicSlotInfo, SelectedArtifact, TorghastState, TradeState, ViewedArtifactState, VoiceChannel,
-    VoiceChatState, VoiceMember, WowLabsAreaInfo, WowLabsCircleInfo, WowLabsDataManagerState,
-    WowLabsMatchmakingState, WowLabsPartyInvite, WowLabsPartyMember, WowLabsPoint, WowLabsState,
+    GameClock, GameRuleKey, GameRuleValue, GameRulesState, GardenwealdState, GossipOption,
+    GossipQuestRow, GossipState, Keybindings, LfgListCounts, LootMethodState, MessageLogEntry,
+    MetaPowerEntry, ModifierKeys, MouseButtons, NetStats, PetBattlePet, PetBattleState, PetState,
+    QuestBounty, QuestLogEntry, QuestLogState, QuestRewardCurrency, QuestRewardItem,
+    QuestRewardSpell, RelicSlotInfo, SelectedArtifact, TorghastState, TradeState,
+    ViewedArtifactState, VoiceChannel, VoiceChatState, VoiceMember, WowLabsAreaInfo,
+    WowLabsCircleInfo, WowLabsDataManagerState, WowLabsMatchmakingState, WowLabsPartyInvite,
+    WowLabsPartyMember, WowLabsPoint, WowLabsState,
 };
 
 #[derive(Default)]
