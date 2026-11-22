@@ -2,7 +2,7 @@
 //!
 //! Retail 12.0.7 currency IDs read the explicit ordered host snapshot.
 
-#[cfg(feature = "client-wowforever")]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub mod junk;
 
 use crate::c_api::helpers::ensure_namespace;
@@ -13,7 +13,7 @@ use crate::lua_api::methods::{
 };
 use crate::lua_bridge::{FromStack, table_set_rust_fn_static};
 use rilua::LuaResult;
-#[cfg(feature = "client-wowforever")]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 use rilua::Val;
 use rilua::vm::state::LuaState;
 
@@ -24,10 +24,14 @@ pub(crate) fn register_c_merchant_frame_surface(state: &mut LuaState) -> LuaResu
         || crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever
     {
         table_set_rust_fn_static(state, merchant, "GetItemInfo", get_item_info)?;
+        table_set_rust_fn_static(
+            state,
+            merchant,
+            "IsMerchantItemRefundable",
+            is_merchant_item_refundable,
+        )?;
     }
-    register_patch_12_0_7_merchant_frame_surface(state, merchant)?;
-    // Forever MerchantFrameDocumentation.lua:77-83 declares this member.
-    #[cfg(feature = "client-wowforever")]
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     {
         table_set_rust_fn_static(state, merchant, "GetNumJunkItems", junk::get_num_junk_items)?;
         table_set_rust_fn_static(
@@ -37,42 +41,77 @@ pub(crate) fn register_c_merchant_frame_surface(state: &mut LuaState) -> LuaResu
             is_sell_all_junk_enabled,
         )?;
     }
+    register_patch_12_0_7_merchant_frame_surface(state, merchant)?;
     Ok(())
 }
 
-#[cfg(feature = "client-wowforever")]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn is_sell_all_junk_enabled(state: &mut LuaState) -> LuaResult<u32> {
     let enabled = borrow_state(state)?.merchant_sell_all_junk_feature_enabled;
     state.push(Val::Bool(enabled));
     Ok(1)
 }
 
-/// ID-only host inventory represents free, single-unit offers with unlimited
-/// stock. Prices, stock limits and eligibility are not supplied by this model.
+/// Host merchant IDs and explicit cost records supply visible offers and prices.
+/// Missing stock and eligibility data retain the existing scenario defaults.
 fn get_item_info(state: &mut LuaState) -> LuaResult<u32> {
     let index = i32::from_stack(state, 1)?;
-    let item_id = {
+    let (item_id, costs) = {
         let sim = borrow_state(state)?;
-        index
+        let Some((slot, item_id)) = index
             .checked_sub(1)
             .and_then(|slot| usize::try_from(slot).ok())
-            .and_then(|slot| sim.merchant_items.get(slot).copied())
+            .and_then(|index| {
+                crate::lua_api::globals::real::merchant_filter::visible_merchant_item(&sim, index)
+            })
+        else {
+            return Ok(0);
+        };
+        let costs = u32::try_from(slot)
+            .ok()
+            .and_then(|slot| sim.merchant_offer_costs.get(&slot).copied());
+        (item_id, costs)
     };
-    let Some(item) = item_id.and_then(crate::items::get_item) else {
+    let Some(item) = crate::items::get_item(item_id) else {
         return Ok(0);
     };
     let info = create_table_with_capacity(state, 11);
     state.push(info);
     let name = create_string(state, item.name);
     table_set_static(state, info, "name", name);
-    set_offer_fields(state, info, item.icon_file_data_id);
+    set_offer_fields(state, info, item.icon_file_data_id, costs);
     Ok(1)
 }
 
-fn set_offer_fields(state: &mut LuaState, info: rilua::Val, icon_id: u32) {
+fn is_merchant_item_refundable(state: &mut LuaState) -> LuaResult<u32> {
+    let index = i32::from_stack(state, 1)?;
+    let refundable = {
+        let sim = borrow_state(state)?;
+        index
+            .checked_sub(1)
+            .and_then(|index| usize::try_from(index).ok())
+            .and_then(|index| {
+                crate::lua_api::globals::real::merchant_filter::visible_merchant_item(&sim, index)
+            })
+            .and_then(|(slot, _)| u32::try_from(slot).ok())
+            .and_then(|slot| sim.merchant_item_refundable.get(&slot).copied())
+            .unwrap_or(false)
+    };
+    state.push(rilua::Val::Bool(refundable));
+    Ok(1)
+}
+
+fn set_offer_fields(
+    state: &mut LuaState,
+    info: rilua::Val,
+    icon_id: u32,
+    costs: Option<crate::lua_api::state::MerchantCostRecord>,
+) {
+    let price = costs.map_or(0.0, |record| record.price as f64);
+    let has_extended_cost = costs.is_some_and(|record| offer_has_extended_cost(&record));
     for (key, value) in [
         ("texture", f64::from(icon_id)),
-        ("price", 0.0),
+        ("price", price),
         ("stackCount", 1.0),
         ("numAvailable", -1.0),
     ] {
@@ -81,11 +120,19 @@ fn set_offer_fields(state: &mut LuaState, info: rilua::Val, icon_id: u32) {
     for (key, value) in [
         ("isPurchasable", true),
         ("isUsable", true),
-        ("hasExtendedCost", false),
+        ("hasExtendedCost", has_extended_cost),
         ("isQuestStartItem", false),
     ] {
         table_set_static(state, info, key, rilua::Val::Bool(value));
     }
+}
+
+fn offer_has_extended_cost(record: &crate::lua_api::state::MerchantCostRecord) -> bool {
+    record.item_costs.iter().any(|&item_id| item_id != 0)
+        || record
+            .currency_costs
+            .iter()
+            .any(|&currency_id| currency_id != 0)
 }
 
 #[cfg(any(feature = "retail-12-0-7", feature = "retail-12-1-0"))]

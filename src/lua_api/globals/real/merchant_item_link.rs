@@ -76,16 +76,21 @@ fn get_merchant_item_link(state: &mut LuaState) -> LuaResult<u32> {
     if sim.merchant_links.unavailable {
         return Ok(0);
     }
-    let slot = index;
+    let Some((slot, item_id)) =
+        crate::lua_api::globals::real::merchant_filter::visible_merchant_item(&sim, index)
+    else {
+        return Ok(0);
+    };
     if sim.merchant_links.rejected_slots.contains(&slot) {
         return Ok(0);
     }
-    let Some(&item_id) = sim.merchant_items.get(slot) else {
-        return Ok(0);
-    };
     let offer = sim.merchant_links.offers.get(&slot).cloned();
     drop(sim);
-    let Some(text) = merchant_link_text(item_id, offer) else {
+    let text = match offer {
+        Some(offer) => merchant_link_text(item_id, Some(offer)),
+        None => crate::c_api::item_spell::item_link_for_id(item_id).map(Some),
+    };
+    let Some(text) = text else {
         return Ok(0);
     };
     let value = text
@@ -140,8 +145,11 @@ fn merchant_link_text(item_id: u32, offer: Option<MerchantLinkOffer>) -> Option<
 }
 
 pub(crate) fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
-    // Native evidence is Retail-only; no speculative publication elsewhere.
-    if cfg!(feature = "client-retail") {
+    // INFERRED (R88dx): the original Mainline consumer is selected on Forever.
+    if cfg!(any(
+        feature = "client-retail",
+        feature = "client-wowforever"
+    )) {
         LuaApiMut::register_function(lua, "GetMerchantItemLink", get_merchant_item_link)?;
     }
     Ok(())

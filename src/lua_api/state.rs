@@ -814,7 +814,6 @@ macro_rules! build_empty_sim_state {
             merchant_frame_open: false,
             // Inferred default scenario: no configured repair service.
             merchant_repair_capable: false,
-            #[cfg(feature = "client-wowforever")]
             merchant_sell_all_junk_feature_enabled: false,
             tabard_frame_open: false,
             trainer_frame_open: false,
@@ -830,6 +829,8 @@ macro_rules! build_empty_sim_state {
             #[cfg(feature = "client-wowforever")]
             stable_reads: crate::c_api::c_stable_info::forever::StableReadState::default(),
             merchant_items: Vec::new(),
+            merchant_filter: 0,
+            merchant_item_refundable: HashMap::new(),
             purchase_inputs: Default::default(),
             inventory_candidates: Default::default(),
             merchant_links: Default::default(),

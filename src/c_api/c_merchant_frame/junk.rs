@@ -1,5 +1,6 @@
-//! Inferred Forever junk policy: sellable poor-quality stack units in carried slots.
+//! INFERRED R88dx: count known sellable poor-quality units in carried slots.
 
+#[cfg(feature = "client-wowforever")]
 use crate::c_api::item_spell::{BAG_SLOT_FLAG_EXCLUDE_JUNK_SELL, bag_slot_flag_is_set};
 use crate::items::{self, ItemInfo};
 use crate::lua_api::methods::borrow_state;
@@ -25,10 +26,20 @@ pub fn junk_stack_quantity(
     }
 }
 
-pub(super) fn get_num_junk_items(state: &mut LuaState) -> LuaResult<u32> {
-    let excluded: [bool; 6] = std::array::from_fn(|bag| {
+#[cfg(feature = "client-wowforever")]
+fn excluded_bags(state: &mut LuaState) -> [bool; 6] {
+    std::array::from_fn(|bag| {
         bag_slot_flag_is_set(state, bag as i32, BAG_SLOT_FLAG_EXCLUDE_JUNK_SELL)
-    });
+    })
+}
+
+#[cfg(feature = "client-retail")]
+fn excluded_bags(_state: &mut LuaState) -> [bool; 6] {
+    [false; 6]
+}
+
+pub(super) fn get_num_junk_items(state: &mut LuaState) -> LuaResult<u32> {
+    let excluded = excluded_bags(state);
     let count = {
         let sim = borrow_state(state)?;
         sim.bag_items

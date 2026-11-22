@@ -70,7 +70,7 @@ pub(crate) fn item_class(item_id: u32) -> Option<u8> {
 /// Build the derived record, or None when ItemSparse/Item data is missing.
 /// Normal derivation copies ItemSparse flag 134217728 into itemFlag27;
 /// accepted overrides leave it false (WM48).
-pub(super) fn derive_record(item_id: u32, level: i32) -> Option<ItemSpecRecord> {
+pub(crate) fn derive_record(item_id: u32, level: i32) -> Option<ItemSpecRecord> {
     let row = find_item_row(item_id)?;
     let input = item_input(row);
     Some(

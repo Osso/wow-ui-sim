@@ -1004,8 +1004,7 @@ pub struct SimState {
     pub guild_bank_tabs: Vec<GuildBankTab>,
     pub merchant_frame_open: bool,
     pub merchant_repair_capable: bool,
-    /// Forever feature-state input; false is the native image-load default, not a CVar.
-    #[cfg(feature = "client-wowforever")]
+    /// INFERRED R88dx host input; false is the sell-all-junk feature default.
     pub merchant_sell_all_junk_feature_enabled: bool,
     pub tabard_frame_open: bool,
     pub trainer_frame_open: bool,
@@ -1025,6 +1024,10 @@ pub struct SimState {
     #[cfg(feature = "client-wowforever")]
     pub stable_reads: crate::c_api::c_stable_info::forever::StableReadState,
     pub merchant_items: Vec<u32>,
+    /// INFERRED R88dx: selected legacy merchant filter; zero is the all-items default.
+    pub merchant_filter: i32,
+    /// INFERRED R88dx: optional refundability keyed by the source offer slot.
+    pub merchant_item_refundable: HashMap<u32, bool>,
     /// R88k.2 native item identities, counts and default-empty purchase records.
     pub purchase_inputs: crate::c_api::container_purchase::PurchaseInputs,
     /// R88k.1 accepted candidate/link inputs; native filter writers stay unknown.
