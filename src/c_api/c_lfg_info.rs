@@ -38,6 +38,8 @@ pub(crate) fn register_c_lfg_info_surface(state: &mut LuaState) -> LuaResult<()>
     register_dungeon_methods(state, table_ref)?;
     #[cfg(feature = "client-retail")]
     register_queue_state_methods(state, table_ref)?;
+    #[cfg(feature = "client-wowforever")]
+    register_forever_queue_title_methods(state, table_ref)?;
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
         table_set_rust_fn_static(
             state,
@@ -146,6 +148,19 @@ fn register_category_methods(state: &mut LuaState, table_ref: GcRef<Table>) -> L
     Ok(())
 }
 
+#[cfg(feature = "client-wowforever")]
+fn register_forever_queue_title_methods(
+    state: &mut LuaState,
+    table: GcRef<Table>,
+) -> LuaResult<()> {
+    table_set_rust_fn_static(
+        state,
+        table,
+        "GetAllEntriesForCategory",
+        get_all_entries_for_category,
+    )
+}
+
 #[cfg(feature = "client-retail")]
 fn register_queue_state_methods(state: &mut LuaState, table: GcRef<Table>) -> LuaResult<()> {
     table_set_rust_fn_static(
@@ -158,8 +173,8 @@ fn register_queue_state_methods(state: &mut LuaState, table: GcRef<Table>) -> Lu
     table_set_rust_fn_static(state, table, "HideNameFromUI", hide_name_from_ui)
 }
 
-/// INFERRED from the selected Retail consumer (R88da): return supplied IDs by category.
-#[cfg(feature = "client-retail")]
+/// INFERRED from the Retail model (R88da) and Forever docs: return supplied IDs by category.
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn get_all_entries_for_category(state: &mut LuaState) -> LuaResult<u32> {
     let category = i32::from_stack(state, 1)?;
     let entries = borrow_state(state)?
