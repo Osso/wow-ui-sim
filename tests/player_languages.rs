@@ -27,13 +27,14 @@ local function inspectLanguageMenu(race)
         table.insert(languages, MenuUtil.GetElementText(description))
     end
     return table.concat(languages, ","), ChatFrame1.defaultLanguage,
-        ChatFrame1.editBox.language
+        ChatFrame1.editBox.language, ChatFrame1.alternativeDefaultLanguage
 end
 
-local allianceLanguages, allianceDefault, allianceShown = inspectLanguageMenu(0)
-local hordeLanguages, hordeDefault, hordeShown = inspectLanguageMenu(7)
+local allianceLanguages, allianceDefault, allianceShown, allianceAlternative = inspectLanguageMenu(0)
+local hordeLanguages, hordeDefault, hordeShown, hordeAlternative = inspectLanguageMenu(7)
 return allianceLanguages, allianceDefault, allianceShown,
-    hordeLanguages .. "|" .. hordeDefault .. "|" .. hordeShown
+    tostring(allianceAlternative or "nil"),
+    hordeLanguages .. "|" .. hordeDefault .. "|" .. hordeShown .. "|" .. hordeAlternative
 "#;
 
 fn load_full_game_ui() -> WowLuaEnv {
@@ -58,12 +59,13 @@ fn load_full_game_ui() -> WowLuaEnv {
 #[test]
 fn chat_language_menu_uses_the_player_race() {
     let env = load_full_game_ui();
-    let observed: (String, String, String, String) = env
+    let observed: (String, String, String, String, String) = env
         .eval(CHAT_LANGUAGE_MENU_OBSERVATION)
         .expect("the Blizzard chat language menu should read the player languages");
 
     assert_eq!(observed.0, "Common");
     assert_eq!(observed.1, "Common");
     assert_eq!(observed.2, "Common");
-    assert_eq!(observed.3, "Orcish,Troll|Orcish|Orcish");
+    assert_eq!(observed.3, "nil");
+    assert_eq!(observed.4, "Orcish,Troll|Orcish|Orcish|Troll");
 }
