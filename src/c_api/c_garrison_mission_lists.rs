@@ -19,6 +19,8 @@ const INPUT_ERROR: &str = "A_Admin.SetGarrisonMissions: expected an array of mis
 pub struct GarrisonMissionLists {
     pub missions: Vec<GarrisonMission>,
     pub follower_quality_tables: HashMap<u32, Vec<(u32, f64)>>,
+    /// INFERRED (R88do, native evidence pending): supplied NPC interaction state.
+    pub at_garrison_mission_npc: bool,
 }
 
 #[derive(Clone, Debug)]
@@ -76,21 +78,54 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
         namespace,
         "GetFollowerQualityTable",
         get_follower_quality_table,
-    )
+    )?;
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+        table_set_rust_fn_static(
+            state,
+            namespace,
+            "IsAtGarrisonMissionNPC",
+            is_at_garrison_mission_npc,
+        )
+    } else {
+        Ok(())
+    }
 }
 
 pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
-    builder
+    let builder = builder
         .set_function("SetGarrisonMissions", set_missions)?
         .set_function(
             "SetGarrisonFollowerQualityTable",
             set_follower_quality_table,
-        )
+        )?;
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+        builder.set_function("SetAtGarrisonMissionNPC", set_at_garrison_mission_npc)
+    } else {
+        Ok(builder)
+    }
 }
 
 fn set_missions(state: &mut LuaState) -> LuaResult<u32> {
     let missions = parse_missions(state, stack_val(state, 1))?;
     borrow_state_mut(state)?.garrison_mission_lists.missions = missions;
+    Ok(0)
+}
+
+fn is_at_garrison_mission_npc(state: &mut LuaState) -> LuaResult<u32> {
+    let at_npc = borrow_state(state)?
+        .garrison_mission_lists
+        .at_garrison_mission_npc;
+    state.push(Val::Bool(at_npc));
+    Ok(1)
+}
+
+fn set_at_garrison_mission_npc(state: &mut LuaState) -> LuaResult<u32> {
+    let Val::Bool(at_npc) = stack_val(state, 1) else {
+        return Err(runtime_error("bad argument #1 (boolean expected)"));
+    };
+    borrow_state_mut(state)?
+        .garrison_mission_lists
+        .at_garrison_mission_npc = at_npc;
     Ok(0)
 }
 
