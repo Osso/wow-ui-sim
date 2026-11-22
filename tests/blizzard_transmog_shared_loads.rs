@@ -1,5 +1,9 @@
 use std::path::PathBuf;
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+use crate::common::blizzard_addon_harness::{
+    load_blizzard_addon_closure_into_env, new_blizzard_addon_env,
+};
 use wow_ui_sim::loader::load_addon;
 use wow_ui_sim::loader::{discover_blizzard_addons_for_screen, find_toc_file};
 use wow_ui_sim::lua_api::WowLuaEnv;
@@ -467,16 +471,39 @@ fn explicit_load_publishes_transmog_location_mixin() {
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn load_original_transmog_frame(visible: bool) -> WowLuaEnv {
+    let ui = blizzard_ui_dir();
+    let env = new_blizzard_addon_env(&ui);
+    env.exec(&format!("A_Admin.SetRangedSlotShown({visible})"))
+        .expect("set ranged-slot visibility input");
+    let shared = load_blizzard_addon_closure_into_env(&env, &ui, &["Blizzard_SharedXML"], &[]);
+    assert!(shared.iter().any(|name| name == "Blizzard_SharedXML"));
+    load_transmog_addon(&env, &ui);
+    env
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn load_transmog_addon(env: &WowLuaEnv, ui: &std::path::Path) {
+    let toc_path = ui.join("Blizzard_Transmog/Blizzard_Transmog.toc");
+    let toc = TocFile::from_file(&toc_path).expect("Blizzard_Transmog TOC parses");
+    assert!(toc.is_load_on_demand());
+    assert!(toc.allows_screen(ScreenKind::Game));
+    assert!(!toc.is_game_type_restricted());
+    assert!(
+        toc.files
+            .iter()
+            .any(|file| file.to_string_lossy() == "Blizzard_Transmog.lua")
+    );
+
+    let loaded = load_blizzard_addon_closure_into_env(env, ui, &["Blizzard_Transmog"], &[]);
+    assert!(loaded.iter().any(|name| name == "Blizzard_Transmog"));
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 #[test]
 fn supplied_ranged_slot_visibility_controls_transmog_refresh() {
     for (visible, expected) in [(true, true), (false, false)] {
-        let env = fresh_game_env();
-        env.exec(&format!("A_Admin.SetRangedSlotShown({visible})"))
-            .expect("set ranged-slot visibility input");
-        env.apply_post_event_workarounds();
-        env.exec("assert(C_AddOns.LoadAddOn('Blizzard_Transmog'))")
-            .expect("Blizzard_Transmog and its declared dependencies must load");
-
+        let env = load_original_transmog_frame(visible);
         let actual: bool = env
             .eval(
                 r#"
@@ -490,7 +517,7 @@ fn supplied_ranged_slot_visibility_controls_transmog_refresh() {
                 })
                 "#,
             )
-            .expect("query TransmogFrame ranged-slot refresh behavior");
+            .expect("query original TransmogFrame refresh behavior");
         assert_eq!(actual, expected, "ranged slot visibility: {visible}");
     }
 }
