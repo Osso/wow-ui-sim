@@ -82,6 +82,8 @@ pub(crate) mod quest_reward_spells;
 pub mod quest_special_item;
 pub mod recipe_rank_tooltip;
 #[cfg(feature = "client-wowforever")]
+pub(crate) mod reincarnation;
+#[cfg(feature = "client-wowforever")]
 pub(crate) mod specialization_system;
 pub(crate) mod tooltip_data;
 pub(crate) mod tooltip_power_catalog_data;
