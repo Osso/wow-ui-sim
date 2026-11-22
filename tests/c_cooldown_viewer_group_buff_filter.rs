@@ -16,33 +16,33 @@ fn group_buff_consumer_env() -> WowLuaEnv {
     env
 }
 
+const GROUP_BUFF_FILTER_FIXTURE: &str = r#"
+    local source = debug.getinfo(GroupBuffFilterMixin.Refresh, 'S').source:gsub('\\\\', '/')
+    assert(source:sub(-#'Blizzard_CooldownViewer/GroupBuffFilter.lua') == 'Blizzard_CooldownViewer/GroupBuffFilter.lua',
+        'must execute the cached Blizzard group-buff filter')
+    A_Admin.SetGroupBuffItems({
+        { spellID = 1459, displaySpellID = 1459, name = 'Arcane Intellect', iconID = 135932, flags = 0, isKnown = true },
+        { spellID = 21562, displaySpellID = 21562, name = 'Power Word: Fortitude', iconID = 135987, flags = Enum.GroupBuffItemFlags.HideByDefault, isKnown = true },
+    })
+    local filter = CreateFrame('Frame', nil, UIParent, 'GroupBuffFilterTemplate')
+    filter:Refresh()
+    local function ids(section)
+        local result = {}
+        for item in section.itemPool:EnumerateActive() do
+            table.insert(result, item:GetGroupBuffItem().spellID)
+        end
+        return result
+    end
+    local shown, hidden = ids(filter.shownSection), ids(filter.hiddenSection)
+    assert(#shown == 1 and shown[1] == 1459, 'shown section must contain Arcane Intellect')
+    assert(#hidden == 1 and hidden[1] == 21562, 'hidden section must contain Power Word: Fortitude')
+"#;
+
 #[test]
 fn original_group_buff_filter_partitions_supplied_items_by_default_hidden_flag() {
     let env = group_buff_consumer_env();
-    env.exec(
-        r#"
-        local source = debug.getinfo(GroupBuffFilterMixin.Refresh, 'S').source:gsub('\\\\', '/')
-        assert(source:sub(-#'Blizzard_CooldownViewer/GroupBuffFilter.lua') == 'Blizzard_CooldownViewer/GroupBuffFilter.lua',
-            'must execute the cached Blizzard group-buff filter')
-        A_Admin.SetGroupBuffItems({
-            { spellID = 1459, displaySpellID = 1459, name = 'Arcane Intellect', iconID = 135932, flags = 0, isKnown = true },
-            { spellID = 21562, displaySpellID = 21562, name = 'Power Word: Fortitude', iconID = 135987, flags = Enum.GroupBuffItemFlags.HideByDefault, isKnown = true },
-        })
-        local filter = CreateFrame('Frame', nil, UIParent, 'GroupBuffFilterTemplate')
-        filter:Refresh()
-        local function ids(section)
-            local result = {}
-            for item in section.itemPool:EnumerateActive() do
-                table.insert(result, item:GetGroupBuffItem().spellID)
-            end
-            return result
-        end
-        local shown, hidden = ids(filter.shownSection), ids(filter.hiddenSection)
-        assert(#shown == 1 and shown[1] == 1459, 'shown section must contain Arcane Intellect')
-        assert(#hidden == 1 and hidden[1] == 21562, 'hidden section must contain Power Word: Fortitude')
-        "#,
-    )
-    .expect("original Blizzard GroupBuffFilter consumer must partition supplied records");
+    env.exec(GROUP_BUFF_FILTER_FIXTURE)
+        .expect("original Blizzard GroupBuffFilter consumer must partition supplied records");
     #[cfg(feature = "client-retail")]
     assert!(
         env.eval::<bool>("return C_CooldownViewer.GetGroupBuffItems()[1].displaySpellID == nil")
