@@ -16,7 +16,7 @@
 //!   when the category id is in `lfg_active_categories`, false otherwise.
 
 use crate::c_api::ensure_namespace;
-#[cfg(feature = "client-retail")]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 use crate::c_api::helpers::set_table_array;
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 use crate::lua_api::methods::table_get;
