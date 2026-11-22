@@ -1,14 +1,14 @@
 //! INFERRED supplied warning inputs for the Glue character-select consumer.
 //! See R88du (native evidence pending); empty state means no host warnings.
 
-use crate::c_api::helpers::ensure_namespace;
+use crate::c_api::ensure_namespace;
 use crate::lua_api::methods::{
     borrow_state, borrow_state_mut, create_string, create_table, table_get, table_get_num,
     table_set_num,
 };
 use crate::lua_bridge::{TableBuilder, stack_val, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
-use rilua::{LuaResult, Val, runtime_error};
+use rilua::{LuaApiMut, LuaResult, Val, runtime_error};
 
 #[derive(Clone, Debug)]
 pub(crate) struct ConfigurationWarning {
@@ -61,8 +61,10 @@ fn parse_warning(state: &mut LuaState, row: Val, index: usize) -> LuaResult<Conf
     if !matches!(row, Val::Table(_)) {
         return Err(invalid_warning(index));
     }
-    let warning = read_warning_id(table_get(state, row, "warning"), index)?;
-    let text = read_warning_text(state, table_get(state, row, "text"), index)?;
+    let warning_value = table_get(state, row, "warning");
+    let warning = read_warning_id(warning_value, index)?;
+    let text_value = table_get(state, row, "text");
+    let text = read_warning_text(state, text_value, index)?;
     Ok(ConfigurationWarning { warning, text })
 }
 
@@ -130,9 +132,10 @@ fn get_warning_string(state: &mut LuaState) -> LuaResult<u32> {
         .iter()
         .find(|entry| entry.warning == warning)
         .map(|entry| entry.text.clone());
-    state.push(
-        text.map(|text| create_string(state, &text))
-            .unwrap_or(Val::Nil),
-    );
+    let value = match text {
+        Some(text) => create_string(state, &text),
+        None => Val::Nil,
+    };
+    state.push(value);
     Ok(1)
 }
