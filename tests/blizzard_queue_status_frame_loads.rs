@@ -610,6 +610,7 @@ fn forever_queue_status_title_uses_first_visible_supplied_lfg_entry() {
             title = MenuUtil.GetElementText(row)
             break
         end
+        assert(type(title) == 'string' and title ~= '', 'the queue title must be a non-empty dungeon name')
         assert(title == GetLFGDungeonInfo(1204),
             'the selected queue-status consumer must show the unhidden entry, not the hidden first entry')
         "#,
