@@ -130,6 +130,7 @@ fn original_communities_chat_editbox_hides_when_chat_disabled() {
     supply_community(&env);
     env.exec(
         r#"
+        CommunitiesFrame:GetScript("OnLoad")(CommunitiesFrame)
         A_Admin.SetChatDisabled(false)
         CommunitiesFrame:SelectClub("club-test")
         assert(CommunitiesFrame:GetDisplayMode() == COMMUNITIES_FRAME_DISPLAY_MODES.CHAT)
