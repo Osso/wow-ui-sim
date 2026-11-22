@@ -466,6 +466,28 @@ fn explicit_load_publishes_transmog_location_mixin() {
 }
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn supplied_ranged_slot_visibility_controls_transmog_slot() {
+    for (visible, expected) in [(true, true), (false, false)] {
+        let env = fresh_game_env();
+        env.exec(&format!("A_Admin.SetRangedSlotShown({visible})"))
+            .expect("set ranged-slot visibility input");
+        load_addon(&env.loader_env(), &transmog_shared_toc())
+            .expect("Blizzard_TransmogShared must load via Rust loader");
+
+        let actual: bool = env
+            .eval(
+                r#"
+                local rangedSlotID = C_PaperDollInfo.GetInventorySlotInfo("RANGEDSLOT")
+                return TransmogUtil.IsValidTransmogSlotID(rangedSlotID)
+                "#,
+            )
+            .expect("query ranged transmog slot");
+        assert_eq!(actual, expected, "ranged slot visibility: {visible}");
+    }
+}
+
 post_wrath_ui_fixture! {
 #[test]
 fn explicit_load_publishes_item_model_base_mixin() {
