@@ -57,10 +57,10 @@ fn blizzard_black_market_displays_supplied_listings_and_hot_deal() {
         .expect("Blizzard Black Market rows should be readable");
     assert_eq!(rows, "Supplied Relic|Supplied Blade");
     assert_eq!(hot_name, "Hot Deal Supplied");
-    let bid_state: (f64, bool, f64, bool, f64) = env
-        .eval("C_BlackMarket.ItemPlaceBid(701, 1200); local _,_,_,_,_,_,_,_,_,_,bid,high,bids=C_BlackMarket.GetItemInfoByID(701); return C_BlackMarket.GetNumItems(),C_BlackMarket.IsViewOnly(),bid,high,bids")
+    let bid_state: (f64, bool, f64, bool, f64, bool) = env
+        .eval("C_BlackMarket.ItemPlaceBid(701, 1200); local _,_,_,_,_,_,_,_,_,_,bid,high,bids=C_BlackMarket.GetItemInfoByID(701); local invalid=C_BlackMarket.GetItemInfoByIndex(0); return C_BlackMarket.GetNumItems(),C_BlackMarket.IsViewOnly(),bid,high,bids,invalid==nil")
         .expect("Black Market state should reflect the supplied bid");
-    assert_eq!(bid_state, (2.0, false, 1200.0, true, 1.0));
+    assert_eq!(bid_state, (2.0, false, 1200.0, true, 1.0, true));
 }
 
 #[test]
