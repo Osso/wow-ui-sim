@@ -18,6 +18,11 @@ pub(crate) fn register_api(lua: &mut rilua::Lua) -> crate::Result<()> {
     LuaApiMut::register_function(lua, "UnitThreatPercentageOfLead", percentage_of_lead)?;
     LuaApiMut::register_function(lua, "UnitThreatSituation", situation)?;
     LuaApiMut::register_function(lua, "IsThreatWarningEnabled", is_threat_warning_enabled)?;
+    LuaApiMut::register_function(
+        lua,
+        "UnitHasEffectivelyTankAura",
+        unit_has_effectively_tank_aura,
+    )?;
     Ok(())
 }
 
@@ -59,6 +64,21 @@ fn percentage_of_lead(state: &mut LuaState) -> LuaResult<u32> {
     let entry = borrow_state(state)?.unit_threats.get(&(unit, mob)).copied();
     let Some(entry) = entry else { return Ok(0) };
     state.push(Val::Num(entry.percentage_of_lead));
+    Ok(1)
+}
+
+// INFERRED (R88dz (native evidence pending)): absent host input means no effective tank aura.
+fn unit_has_effectively_tank_aura(state: &mut LuaState) -> LuaResult<u32> {
+    let unit = Option::<String>::from_stack(state, 1)?;
+    let active = match unit {
+        Some(unit) => borrow_state(state)?
+            .unit_effectively_tank_auras
+            .get(&unit)
+            .copied()
+            .unwrap_or(false),
+        None => false,
+    };
+    state.push(Val::Bool(active));
     Ok(1)
 }
 
@@ -113,6 +133,17 @@ fn set_threat(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
+fn set_effectively_tank_aura(state: &mut LuaState) -> LuaResult<u32> {
+    let unit = String::from_stack(state, 1)?;
+    let active = bool::from_stack(state, 2)?;
+    borrow_state_mut(state)?
+        .unit_effectively_tank_auras
+        .insert(unit, active);
+    Ok(0)
+}
+
 pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
-    builder.set_function("SetUnitThreatSituation", set_threat)
+    builder
+        .set_function("SetUnitThreatSituation", set_threat)?
+        .set_function("SetUnitEffectivelyTankAura", set_effectively_tank_aura)
 }
