@@ -4,12 +4,16 @@
 //! table starts empty; callers (tests, future spec/talent models) populate it.
 
 use super::helpers::{ensure_namespace, set_table_array};
-use crate::lua_api::methods::{
-    borrow_state, borrow_state_mut, create_table, table_get, table_set, val_to_string,
-};
-use crate::lua_bridge::{FromStack, TableBuilder, stack_val, table_set_rust_fn_static};
+use crate::lua_api::methods::{borrow_state, create_table, table_set};
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+use crate::lua_api::methods::{borrow_state_mut, table_get, val_to_string};
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+use crate::lua_bridge::TableBuilder;
+use crate::lua_bridge::{FromStack, stack_val, table_set_rust_fn_static};
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 use rilua::vm::table::Table;
 use rilua::{LuaResult, Val, runtime_error};
 
@@ -148,16 +152,19 @@ fn register_group_buff_flags(state: &mut LuaState) -> LuaResult<()> {
     crate::c_api::set_namespace_member(state, Val::Table(flags), "HideByDefault", Val::Num(1.0))
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
     builder.set_function("SetGroupBuffItems", set_group_buff_items)
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn set_group_buff_items(state: &mut LuaState) -> LuaResult<u32> {
     let items = read_group_buff_items(state, stack_val(state, 1))?;
     borrow_state_mut(state)?.cooldown_viewer_group_buffs = items;
     Ok(0)
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn read_group_buff_items(state: &mut LuaState, value: Val) -> LuaResult<Vec<GroupBuffItem>> {
     let Val::Table(array_ref) = value else {
         return Err(runtime_error(
@@ -183,6 +190,7 @@ fn read_group_buff_items(state: &mut LuaState, value: Val) -> LuaResult<Vec<Grou
         .collect()
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn read_group_buff_item(state: &mut LuaState, value: Val) -> LuaResult<GroupBuffItem> {
     let Val::Table(table) = value else {
         return Err(invalid_group_buff_field("item"));
@@ -203,6 +211,7 @@ fn read_group_buff_item(state: &mut LuaState, value: Val) -> LuaResult<GroupBuff
     })
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn group_buff_integer(state: &mut LuaState, table: GcRef<Table>, key: &str) -> LuaResult<i32> {
     match table_get(state, Val::Table(table), key) {
         Val::Num(value)
@@ -216,6 +225,7 @@ fn group_buff_integer(state: &mut LuaState, table: GcRef<Table>, key: &str) -> L
     }
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn optional_group_buff_integer(
     state: &mut LuaState,
     table: GcRef<Table>,
@@ -234,6 +244,7 @@ fn optional_group_buff_integer(
     }
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn group_buff_icon_id(state: &mut LuaState, table: GcRef<Table>) -> LuaResult<u32> {
     match table_get(state, Val::Table(table), "iconID") {
         Val::Num(value)
@@ -247,11 +258,13 @@ fn group_buff_icon_id(state: &mut LuaState, table: GcRef<Table>) -> LuaResult<u3
     }
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn group_buff_string(state: &mut LuaState, table: GcRef<Table>, key: &str) -> LuaResult<String> {
     let value = table_get(state, Val::Table(table), key);
     val_to_string(state, value).ok_or_else(|| invalid_group_buff_field(key))
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn group_buff_bool(state: &mut LuaState, table: GcRef<Table>, key: &str) -> LuaResult<bool> {
     match table_get(state, Val::Table(table), key) {
         Val::Bool(value) => Ok(value),
@@ -259,6 +272,7 @@ fn group_buff_bool(state: &mut LuaState, table: GcRef<Table>, key: &str) -> LuaR
     }
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn invalid_group_buff_field(key: &str) -> rilua::LuaError {
     runtime_error(format!("A_Admin.SetGroupBuffItems: invalid {key}"))
 }
