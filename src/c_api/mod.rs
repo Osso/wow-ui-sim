@@ -59,6 +59,8 @@ pub mod credits;
 #[cfg(feature = "client-retail")]
 pub mod currency_list;
 pub mod forever_talents;
+#[cfg(feature = "client-wowforever")]
+pub(crate) mod specialization_system;
 pub(crate) mod game_mode;
 pub mod game_mode_display;
 pub(crate) mod game_rules_personal_resource;

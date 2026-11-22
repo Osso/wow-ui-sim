@@ -18,6 +18,9 @@ pub struct SimState {
     /// INFERRED host input for Retail talking-head consumers; native fields remain UNKNOWN.
     #[cfg(feature = "client-retail")]
     pub talking_head: crate::c_api::c_talking_head::TalkingHeadState,
+    /// INFERRED (R88ee (native evidence pending)): active Forever specialization system; TalentTab by default.
+    #[cfg(feature = "client-wowforever")]
+    pub specialization_system: u32,
     /// INFERRED host-supplied warning records; native behavior is pending R88du.
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     pub(crate) configuration_warnings:
