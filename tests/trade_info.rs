@@ -74,6 +74,34 @@ fn assert_trade_money_pickup(env: &WowLuaEnv, script: &str, expected: (f64, Stri
     assert_eq!(actual, expected);
 }
 
+fn click_trade_accept(env: &WowLuaEnv, warning: bool) -> (bool, bool) {
+    env.state().borrow_mut().active_trade = Some(Default::default());
+    env.exec(&format!(
+        "A_Admin.SetSecureTransferTradeOfferWarning({warning}); TradeFrame_UpdateWarnings(); TradeFrameTradeButton:Click()"
+    ))
+    .expect("loaded TradeFrame accept button should run");
+    let warning_shown = env
+        .eval("return TradeFrameTradeButton.warningTooltip ~= nil")
+        .expect("TradeFrame warning state should be readable");
+    let trade_accepted = env
+        .state()
+        .borrow()
+        .active_trade
+        .as_ref()
+        .is_some_and(|trade| trade.player_accepted);
+    (warning_shown, trade_accepted)
+}
+
+// INFERRED (R88ed, native evidence pending): the supplied warning input drives the selected TradeFrame before its original accept-button handler.
+#[test]
+fn r88ed_trade_frame_accept_button_uses_supplied_warning() {
+    with_blizzard_addon_startup_shape(&["Blizzard_UIPanels_Game"], &[], |env, loaded| {
+        assert!(loaded.iter().any(|name| name == "Blizzard_UIPanels_Game"));
+        assert_eq!(click_trade_accept(env, true), (true, true));
+        assert_eq!(click_trade_accept(env, false), (false, true));
+    });
+}
+
 #[test]
 fn r88e5_trade_offer_warning_consumer_reads_shared_host_value() {
     with_blizzard_addon_startup_shape(&["Blizzard_UIPanels_Game"], &[], |env, loaded| {
