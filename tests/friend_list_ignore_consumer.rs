@@ -18,8 +18,16 @@ const IGNORE_LIST_SETUP: &str = r#"
 const IGNORE_LIST_ASSERTIONS: &str = r#"
     local scrollBox = FriendsFrame.IgnoreListWindow.ScrollBox
     local width, height = scrollBox:GetSize()
-    assert(width > 0 and height > 0,
-        string.format("ignore ScrollBox size must be positive: %sx%s", width, height))
+    local hasViewport = width > 0 and height > 0
+    local windowWidth, windowHeight = FriendsFrame.IgnoreListWindow:GetSize()
+    local parentWidth, parentHeight = FriendsFrame:GetSize()
+    local point1, relativeTo1, relativePoint1, x1, y1 = scrollBox:GetPoint(1)
+    local point2, relativeTo2, relativePoint2, x2, y2 = scrollBox:GetPoint(2)
+    assert(hasViewport, string.format(
+        "ignore ScrollBox size must be positive: scroll=%sx%s window=%sx%s parent=%sx%s anchors=%s/%s(%s,%s,%s),%s/%s(%s,%s,%s)",
+        width, height, windowWidth, windowHeight, parentWidth, parentHeight,
+        tostring(point1), tostring(relativeTo1 and relativeTo1:GetName()), tostring(relativePoint1), x1, y1,
+        tostring(point2), tostring(relativeTo2 and relativeTo2:GetName()), tostring(relativePoint2), x2, y2))
     local provider = scrollBox:GetDataProvider()
     assert(provider:GetSize() == 5, "provider must contain two headers and three rows")
     local visibleFrames = 0
