@@ -1125,38 +1125,22 @@ fn character_select_builds_scrollbox_entries() {
 fn character_select_configuration_warnings_shows_supplied_records() {
     test_timeout! {
         let env = load_blizzard_screen(ScreenKind::CharacterSelect);
-
-        env.exec(
-            r#"
+        env.exec(r#"
             A_Admin.SetConfigurationWarnings({
                 { warning = 3, text = "Graphics driver is blocked" },
                 { warning = 4, text = "Graphics driver is out of date" },
             })
             CharacterSelect_CheckDialogStates()
-            "#,
-        )
-        .expect("configuration warning inputs should reach the character-select consumer");
-
-        let result: (bool, String, String) = env
-            .eval(
-                r#"
-                local warningButton = CharacterSelectUI.VisibilityFramesContainer.ConfigurationWarnings
-                return warningButton:IsShown(),
-                    C_ConfigurationWarnings.GetConfigurationWarningString(3),
-                    C_ConfigurationWarnings.GetConfigurationWarningString(4)
-                "#,
-            )
-            .expect("the character-select warning state and warning text should be queryable");
-
-        assert_eq!(
-            result,
-            (
-                true,
-                "Graphics driver is blocked".to_string(),
-                "Graphics driver is out of date".to_string(),
-            ),
-            "the selected character-select consumer should show two supplied warning records and their text"
-        );
+            "#).expect("warning inputs should reach the character-select consumer");
+        let result: (bool, i64, i64, i64, String, String) = env.eval(r#"
+            local warnings = C_ConfigurationWarnings.GetConfigurationWarnings(true)
+            local button = CharacterSelectUI.VisibilityFramesContainer.ConfigurationWarnings
+            return button:IsShown(), #warnings, warnings[1], warnings[2],
+                C_ConfigurationWarnings.GetConfigurationWarningString(3),
+                C_ConfigurationWarnings.GetConfigurationWarningString(4)
+            "#).expect("character-select warning state and text should be queryable");
+        assert_eq!(result, (true, 2, 3, 4, "Graphics driver is blocked".into(),
+            "Graphics driver is out of date".into()));
     }
 }
 

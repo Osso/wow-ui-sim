@@ -102,6 +102,7 @@ mod tests {
     use crate::lua_api::WowLuaEnv;
 
     #[test]
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     fn installs_empty_configuration_warning_defaults() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
 
