@@ -10,14 +10,17 @@ use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
 use rilua::vm::table::Table;
 use rilua::{LuaResult, Val, runtime_error};
+#[cfg(feature = "retail-12-0-0")]
 use std::collections::HashMap;
 
+#[cfg(feature = "retail-12-0-0")]
 const INVALID_PING_TYPE: &str =
     "C_Ping.GetTextureKitForType: ping type must be a finite i32 integer";
 const INVALID_PING_OPTIONS: &str =
     "A_Admin.SetDefaultPingOptions: expected an array of option tables";
 
 /// Whole host input; empty by default, with no native mapping catalog.
+#[cfg(feature = "retail-12-0-0")]
 #[derive(Default)]
 pub struct PingTextureKits {
     pub by_type: HashMap<i32, String>,
@@ -151,6 +154,7 @@ fn invalid_option_field(key: &str) -> rilua::LuaError {
     runtime_error(format!("A_Admin.SetDefaultPingOptions: invalid {key}"))
 }
 
+#[cfg(feature = "retail-12-0-0")]
 fn read_ping_type(value: Val) -> LuaResult<i32> {
     let Val::Num(number) = value else {
         return Err(runtime_error(INVALID_PING_TYPE));
@@ -163,6 +167,7 @@ fn read_ping_type(value: Val) -> LuaResult<i32> {
     Ok(number as i32)
 }
 
+#[cfg(feature = "retail-12-0-0")]
 fn query_texture_kit(state: &mut LuaState) -> LuaResult<u32> {
     // AllowedWhenUntainted: authenticate before validation or any map lookup.
     let value = rilua::table_security::unwrap_secret(state, stack_val(state, 1))?;
