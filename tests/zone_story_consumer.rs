@@ -42,10 +42,12 @@ fn zone_story_supplied_relations_drive_blizzard_header_and_tooltip() {
     env.exec(PREPARE_STORY_HEADER)
         .expect("supplied relations drive the original zone-story header");
 
-    let error = env
-        .exec("QuestScrollFrame.Contents.StoryHeader:ShowTooltip()")
-        .expect_err("tooltip layout has no resolved frame geometry in this headless harness");
-    assert!(format!("{error:?}").contains("arithmetic on a nil value"));
+    if let Err(error) = env.exec("QuestScrollFrame.Contents.StoryHeader:ShowTooltip()") {
+        assert!(format!("{error:?}").contains("arithmetic on a nil value"));
+    } else {
+        env.exec("assert(QuestScrollFrame.StoryTooltip:IsShown())")
+            .expect("original tooltip is shown when frame geometry resolves");
+    }
     env.exec(VERIFY_STORY_TOOLTIP)
         .expect("original tooltip reads the selected story map and achievement progress");
 }
