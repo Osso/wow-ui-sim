@@ -259,7 +259,7 @@ pub(super) fn unit_faction_group(state: &mut LuaState) -> LuaResult<u32> {
     };
     match faction {
         Some(name) => {
-            let value = create_string(state, name);
+            let value = create_string(state, &name);
             state.push(value);
             state.push(value);
         }
@@ -271,26 +271,30 @@ pub(super) fn unit_faction_group(state: &mut LuaState) -> LuaResult<u32> {
     Ok(2)
 }
 
-fn faction_group_for_unit<'a>(
-    st: &'a crate::lua_api::state::SimState,
+fn faction_group_for_unit(
+    st: &crate::lua_api::state::SimState,
     unit: &str,
-    player_faction: &'a str,
-) -> Option<&'a str> {
+    player_faction: &str,
+) -> Option<String> {
     match unit {
-        "player" | "pet" | "vehicle" => Some(player_faction),
+        "player" | "pet" | "vehicle" => Some(player_faction.to_owned()),
         "target" => st
             .current_target
             .as_ref()
-            .map(|target| target_faction(target.is_enemy, player_faction)),
+            .map(|target| target_faction(target.is_enemy, player_faction).to_owned()),
         "focus" => st
             .current_focus
             .as_ref()
-            .map(|target| target_faction(target.is_enemy, player_faction)),
+            .map(|target| target_faction(target.is_enemy, player_faction).to_owned()),
         #[cfg(feature = "client-retail")]
-        other => visible_party_member(st, other)
-            .map(|member| member.faction_group.as_deref().unwrap_or(player_faction)),
+        other => visible_party_member(st, other).map(|member| {
+            member
+                .faction_group
+                .clone()
+                .unwrap_or_else(|| player_faction.to_owned())
+        }),
         #[cfg(not(feature = "client-retail"))]
-        other if visible_party_member(st, other).is_some() => Some(player_faction),
+        other if visible_party_member(st, other).is_some() => Some(player_faction.to_owned()),
         #[cfg(not(feature = "client-retail"))]
         _ => None,
     }
