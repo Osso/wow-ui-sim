@@ -169,12 +169,16 @@ fn get_item_info_by_id(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn get_item_info_by_index(state: &mut LuaState) -> LuaResult<u32> {
-    let index = u32::from_stack(state, 1)? as usize;
-    let item = borrow_state(state)?
-        .black_market
-        .items
-        .get(index.saturating_sub(1))
-        .cloned();
+    let index = u32::from_stack(state, 1)?;
+    let item = if let Some(zero_based_index) = index.checked_sub(1) {
+        borrow_state(state)?
+            .black_market
+            .items
+            .get(zero_based_index as usize)
+            .cloned()
+    } else {
+        None
+    };
     push_optional_item_info(state, item)
 }
 
