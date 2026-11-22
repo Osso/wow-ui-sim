@@ -164,6 +164,16 @@ pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
         )?;
     let builder = crate::c_api::equipment_set_locks::register_admin(builder)?;
     let builder = crate::c_api::item_overlay::register_admin(builder)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let builder = builder.set_function(
+        "SetSocialIgnoreName",
+        crate::c_api::c_friend_list::set_social_ignore_name,
+    )?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let builder = builder.set_function(
+        "SetSocialBlockedEntry",
+        crate::c_api::c_friend_list::set_social_blocked_entry,
+    )?;
     let builder = crate::c_api::c_minimap_tracking::register_admin(builder)?;
     let builder = crate::c_api::c_minimap_quest_blob::register_admin(builder)?;
     let builder = crate::c_api::c_tooltip_info_weekly::register_admin(builder)?;
@@ -179,6 +189,8 @@ pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
     let builder = crate::c_api::c_lfg_info::register_admin(builder)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     let builder = crate::c_api::c_social_queue::register_admin(builder)?;
+    let builder = crate::c_api::c_commentator::register_admin(builder)?;
+    let builder = crate::c_api::c_social_restrictions::register_admin(builder)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     let builder = crate::c_api::c_party_info::pending_invites::register_admin(builder)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
