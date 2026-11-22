@@ -1,9 +1,23 @@
 #![cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 
+use crate::common::blizzard_addon_harness::{blizzard_ui_dir, build_blizzard_addon_closure_env};
 use wow_ui_sim::lua_api::WowLuaEnv;
 
-prefork_full_ui_case! {
-fn timer_tracker_parent_tracks_commentator_spectating(env: &WowLuaEnv) {
+fn load_frame_xml_consumer() -> WowLuaEnv {
+    let ui = blizzard_ui_dir();
+    let (env, loaded) = build_blizzard_addon_closure_env(&ui, &["Blizzard_FrameXML"], &[]);
+    assert!(
+        loaded.iter().any(|name| name == "Blizzard_FrameXML"),
+        "Blizzard_FrameXML loads"
+    );
+    env.apply_post_load_workarounds();
+    wow_ui_sim::startup::settle_headless_startup(&env);
+    env
+}
+
+#[test]
+fn timer_tracker_parent_tracks_commentator_spectating() {
+    let env = load_frame_xml_consumer();
     env.exec(
         r#"
         assert(TimerTracker and TimerTracker:GetScript("OnEvent"), "real TimerTracker frame loaded")
@@ -19,5 +33,4 @@ fn timer_tracker_parent_tracks_commentator_spectating(env: &WowLuaEnv) {
         "#,
     )
     .expect("original TimerTracker event handler follows supplied commentator state");
-}
 }
