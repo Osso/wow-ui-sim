@@ -374,6 +374,8 @@ pub struct SimState {
     pub model_scenes: HashMap<i64, Vec<String>>,
     pub active_player_interactions: HashSet<i32>,
     pub outdoor_pvp_world_state: crate::c_api::c_pvp::OutdoorPvpWorldState,
+    /// INFERRED (R88ec, native evidence pending): host-supplied hybrid minimap choice.
+    pub should_use_hybrid_minimap: Option<bool>,
     pub minimap_tracking_mask: Option<u32>,
     pub battleground_enlistment: crate::c_api::c_pvp::BattlegroundEnlistmentInputs,
     pub pvp_reward_caches: crate::c_api::c_pvp::reward_cache::PvpRewardCaches,
