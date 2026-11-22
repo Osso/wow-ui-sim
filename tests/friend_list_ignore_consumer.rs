@@ -10,6 +10,8 @@ const IGNORE_LIST_SETUP: &str = r#"
     assert(C_FriendList.GetNumIgnores() == 2, "both supplied ignores must be counted")
     assert(C_FriendList.GetIgnoreName(1) == "R88eh-IgnoreAlpha", "first supplied ignore")
     assert(C_FriendList.GetIgnoreName(2) == "R88eh-IgnoreBeta", "second supplied ignore")
+    assert(C_SocialRestrictions.IsFriendsDisabled() == false,
+        "Forever should expose the modeled default friends-disabled state")
 
     FriendsFrame:Show()
     FriendsFrame.IgnoreListWindow:Show()
