@@ -360,6 +360,7 @@ fn register_actor_state_probes(lua: &mut rilua::Lua) -> crate::Result<()> {
     super::pvp_probes::register_all(lua)?;
     super::real::player_probes::register_all(lua)?;
     super::real::player_identity::register_all(lua)?;
+    super::real::player_languages::register_all(lua)?;
     super::unit_stats::register_all(lua)?;
     super::real::combat_stats::register_all(lua)?;
     super::real::wrath_inventory_candidates::register_all(lua)?;
