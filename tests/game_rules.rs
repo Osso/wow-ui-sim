@@ -63,8 +63,15 @@ fn forever_character_create_uses_the_supplied_hardcore_rule() {
                     .iter()
                     .any(|addon| addon == "Blizzard_CharacterCreate")
             );
-            env.exec("CharacterCreateFrame:Hide(); A_Admin.SetGameRule(Enum.GameRule.HardcoreRuleset, 1); CharacterCreateFrame.ForwardButton:SetText('sentinel'); CharacterCreateFrame:Show()")
+            env.exec("CharacterCreateFrame:Hide(); A_Admin.SetGameRule(Enum.GameRule.HardcoreRuleset, 1); A_Admin.SetGameRule(Enum.GameRule.SelfFoundAllowed, 1); CharacterCreateFrame.ForwardButton:SetText('sentinel'); CharacterCreateFrame:Show()")
                 .unwrap();
+            let (hardcore_active, hardcore_value, self_found): (bool, f64, bool) = env
+                .eval("return C_GameRules.IsGameRuleActive(Enum.GameRule.HardcoreRuleset), C_GameRules.GetGameRuleAsFloat(Enum.GameRule.HardcoreRuleset), C_GameRules.IsSelfFoundAllowed()")
+                .unwrap();
+            assert_eq!(
+                (hardcore_active, hardcore_value, self_found),
+                (true, 1.0, true)
+            );
             let active_text: String = env
                 .eval("return CharacterCreateFrame.ForwardButton:GetText()")
                 .unwrap();
@@ -73,6 +80,13 @@ fn forever_character_create_uses_the_supplied_hardcore_rule() {
 
             env.exec("CharacterCreateFrame:Hide(); A_Admin.SetGameRule(Enum.GameRule.HardcoreRuleset, nil); CharacterCreateFrame.ForwardButton:SetText('sentinel'); CharacterCreateFrame:Show()")
                 .unwrap();
+            let (hardcore_active, hardcore_value, self_found): (bool, f64, bool) = env
+                .eval("return C_GameRules.IsGameRuleActive(Enum.GameRule.HardcoreRuleset), C_GameRules.GetGameRuleAsFloat(Enum.GameRule.HardcoreRuleset), C_GameRules.IsSelfFoundAllowed()")
+                .unwrap();
+            assert_eq!(
+                (hardcore_active, hardcore_value, self_found),
+                (false, 0.0, true)
+            );
             let inactive_text: String = env
                 .eval("return CharacterCreateFrame.ForwardButton:GetText()")
                 .unwrap();
