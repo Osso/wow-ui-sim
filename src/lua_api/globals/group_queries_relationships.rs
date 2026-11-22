@@ -248,33 +248,20 @@ fn target_faction<'a>(is_enemy: bool, player_faction: &'a str) -> &'a str {
     }
 }
 
-/// `UnitFactionGroup(unit)` — returns `(english, localized)` faction tokens
-/// for simple UI gating. Player / party / friendly target inherit the player's
-/// faction; hostile targets return the opposing faction.
+/// `UnitFactionGroup(unit)` returns `(english, localized)` faction tokens.
+/// INFERRED (R88dl, native evidence pending): Retail party and raid units use
+/// their supplied faction when present; otherwise they inherit the player's.
 pub(super) fn unit_faction_group(state: &mut LuaState) -> LuaResult<u32> {
     let unit = Option::<String>::from_stack(state, 1)?.unwrap_or_default();
     let faction = {
         let st = borrow_state(state)?;
-        let pf = player_faction_name(&st);
-        match unit.as_str() {
-            "player" | "pet" | "vehicle" => Some(pf),
-            "target" => st
-                .current_target
-                .as_ref()
-                .map(|t| target_faction(t.is_enemy, pf)),
-            "focus" => st
-                .current_focus
-                .as_ref()
-                .map(|t| target_faction(t.is_enemy, pf)),
-            other if visible_party_member(&st, other).is_some() => Some(pf),
-            _ => None,
-        }
+        faction_group_for_unit(&st, &unit, player_faction_name(&st))
     };
     match faction {
         Some(name) => {
-            let s = create_string(state, name);
-            state.push(s);
-            state.push(s);
+            let value = create_string(state, name);
+            state.push(value);
+            state.push(value);
         }
         None => {
             state.push(Val::Nil);
@@ -282,6 +269,31 @@ pub(super) fn unit_faction_group(state: &mut LuaState) -> LuaResult<u32> {
         }
     }
     Ok(2)
+}
+
+fn faction_group_for_unit<'a>(
+    st: &'a crate::lua_api::state::SimState,
+    unit: &str,
+    player_faction: &'a str,
+) -> Option<&'a str> {
+    match unit {
+        "player" | "pet" | "vehicle" => Some(player_faction),
+        "target" => st
+            .current_target
+            .as_ref()
+            .map(|target| target_faction(target.is_enemy, player_faction)),
+        "focus" => st
+            .current_focus
+            .as_ref()
+            .map(|target| target_faction(target.is_enemy, player_faction)),
+        #[cfg(feature = "client-retail")]
+        other => visible_party_member(st, other)
+            .map(|member| member.faction_group.as_deref().unwrap_or(player_faction)),
+        #[cfg(not(feature = "client-retail"))]
+        other if visible_party_member(st, other).is_some() => Some(player_faction),
+        #[cfg(not(feature = "client-retail"))]
+        _ => None,
+    }
 }
 
 /// `UnitCanCooperate(unit1, unit2)` — true when both units are friendly
