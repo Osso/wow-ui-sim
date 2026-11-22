@@ -10,10 +10,8 @@ use crate::lua_api::methods::{borrow_state_mut, table_get, val_to_string};
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 use crate::lua_bridge::TableBuilder;
 use crate::lua_bridge::{FromStack, stack_val, table_set_rust_fn_static};
-#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
-#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 use rilua::vm::table::Table;
 use rilua::{LuaResult, Val, runtime_error};
 
@@ -72,6 +70,11 @@ impl Default for CooldownViewerAvailability {
 
 pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
     let namespace = ensure_namespace(state, "C_CooldownViewer")?;
+    register_viewer_members(state, namespace)?;
+    register_cooldown_queries(state, namespace)
+}
+
+fn register_viewer_members(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
     if cfg!(any(
         feature = "retail-12-0-0",
         feature = "client-wowforever"
@@ -92,6 +95,10 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
         table_set_rust_fn_static(state, namespace, "GetGroupBuffItems", get_group_buff_items)?;
         register_group_buff_flags(state)?;
     }
+    Ok(())
+}
+
+fn register_cooldown_queries(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
     #[cfg(feature = "retail-12-0-0")]
     table_set_rust_fn_static(
         state,
