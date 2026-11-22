@@ -29,8 +29,11 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
     if squelch_profile {
         table_set_rust_fn_static(state, namespace, "IsSquelched", is_squelched)?;
     }
-    #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
-    if ACTIVE == ClientProfile::Retail {
+    #[cfg(any(
+        all(feature = "profile-retail", feature = "retail-12-1-5"),
+        feature = "client-wowforever"
+    ))]
+    if consumer_profile {
         table_set_rust_fn_static(state, namespace, "IsFriendsDisabled", is_friends_disabled)?;
     }
     Ok(())
@@ -64,7 +67,10 @@ fn is_squelched(state: &mut LuaState) -> LuaResult<u32> {
 
 /// VERIFIED R88ap part A §4: one Boolean from settings byte, initially zero.
 /// INFERRED (simulator mapping): `friends_disabled_byte` is the host stand-in for that byte.
-#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+#[cfg(any(
+    all(feature = "profile-retail", feature = "retail-12-1-5"),
+    feature = "client-wowforever"
+))]
 fn is_friends_disabled(state: &mut LuaState) -> LuaResult<u32> {
     let disabled = borrow_state(state)?
         .social_restrictions

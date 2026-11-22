@@ -10,7 +10,10 @@ pub struct SocialRestrictionsState {
     /// INFERRED host input, distinct from friends-disabled and squelch state.
     pub chat_disabled: bool,
     /// INFERRED (simulator mapping): host field standing in for the R88ap.4 settings byte; writers/events UNKNOWN.
-    #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+    #[cfg(any(
+        all(feature = "profile-retail", feature = "retail-12-1-5"),
+        feature = "client-wowforever"
+    ))]
     pub friends_disabled_byte: u8,
     /// The simulator seeds an unrestricted local player; callers can supply either value.
     pub is_squelched: bool,
@@ -145,6 +148,14 @@ pub struct BnetGameAccount {
     pub region_id: i32,
     /// Player GUID string (character GUID, distinct from bnet/game account GUIDs).
     pub player_guid: String,
+}
+
+/// One supplied Battle.net blocked-account row for the legacy friends UI.
+/// INFERRED input fields; live blocked-account identity and native defaults are unknown.
+#[derive(Debug, Clone)]
+pub struct BnetBlockedEntry {
+    pub blocked_id: i32,
+    pub name: String,
 }
 
 /// One WoW friends-list entry. Drives `C_Social.GetFriendInfo`,

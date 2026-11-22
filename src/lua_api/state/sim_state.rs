@@ -1163,6 +1163,18 @@ pub struct SimState {
     #[cfg(feature = "retail-12-0-0")]
     pub bnet_custom_message: String,
     pub social_friends: Vec<SocialFriend>,
+    /// INFERRED host-supplied ignore rows for Retail/Forever FriendsFrame.
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub social_ignores: Vec<String>,
+    /// INFERRED host-supplied Battle.net block rows for Retail/Forever FriendsFrame.
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub bnet_blocked_entries: Vec<BnetBlockedEntry>,
+    /// Selected one-based ignore row; None means no supplied selection.
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub selected_social_ignore: Option<i32>,
+    /// Selected one-based Battle.net block row; None means no supplied selection.
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub selected_bnet_block: Option<i32>,
     pub social_restrictions: SocialRestrictionsState,
     pub restricted_actions: [u8; 6],
     pub restricted_actions_natural: [bool; 6],
