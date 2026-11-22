@@ -11,6 +11,8 @@ use crate::common::blizzard_addon_harness::{
 use sha2::{Digest, Sha256};
 use wow_ui_sim::c_api::c_quest_log::QuestAdditionalHighlights;
 use wow_ui_sim::lua_api::WowLuaEnv;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+use wow_ui_sim::toc::TocFile;
 
 fn observe(env: &WowLuaEnv) {
     env.exec(
@@ -121,6 +123,45 @@ fn content_transitions(env: &WowLuaEnv) {
         assert(not C_SuperTrack.IsSuperTrackingAnything())
     "#).unwrap();
     assert_consumer_errors_absent(env);
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn original_quest_navigation_consumer() -> WowLuaEnv {
+    let ui = blizzard_ui_dir();
+    let addon_dir = ui.join("Blizzard_QuestNavigation");
+    let toc_path = wow_ui_sim::loader::find_toc_file(&addon_dir).unwrap();
+    let toc = TocFile::from_file(&toc_path).unwrap();
+    assert!(!toc.is_game_type_restricted());
+    assert!(
+        toc.files
+            .iter()
+            .any(|file| file.to_string_lossy() == "SuperTrackedFrame.xml")
+    );
+
+    let env = new_blizzard_addon_env(&ui);
+    let shared = load_blizzard_addon_closure_into_env(&env, &ui, &["Blizzard_SharedXML"], &[]);
+    assert!(shared.iter().any(|name| name == "Blizzard_SharedXML"));
+    let loaded =
+        load_blizzard_addon_closure_into_env(&env, &ui, &["Blizzard_QuestNavigation"], &[]);
+    assert!(loaded.iter().any(|name| name == "Blizzard_QuestNavigation"));
+    env
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn quest_navigation_displays_the_tracked_supertrack_type() {
+    test_timeout! {
+        let env = original_quest_navigation_consumer();
+        env.exec(r#"
+            C_SuperTrack.SetSuperTrackedQuestID(70001)
+            assert(C_SuperTrack.GetHighestPrioritySuperTrackingType() == Enum.SuperTrackingType.Quest)
+            assert(SuperTrackedFrame.Icon:GetAtlas() == "Navigation-Tracked-Icon")
+
+            C_SuperTrack.SetSuperTrackedContent(Enum.ContentTrackingType.Achievement, 202)
+            assert(C_SuperTrack.GetHighestPrioritySuperTrackingType() == Enum.SuperTrackingType.Content)
+            assert(SuperTrackedFrame.Icon:GetAtlas() == "Waypoint-MapPin-Tracked")
+        "#).unwrap();
+    }
 }
 
 #[test]
