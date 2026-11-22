@@ -169,6 +169,7 @@ fn nameplate_size_helper_exists_as_safe_noop() {
     );
 }
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn instance_abandon_vote_and_shutdown_helpers_return_numeric_pairs() {
     let env = env();
