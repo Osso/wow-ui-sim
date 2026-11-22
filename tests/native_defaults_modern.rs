@@ -12,6 +12,7 @@ use wow_ui_sim::loader::find_toc_file;
 use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::toc::TocFile;
 
+#[rustfmt::skip]
 #[test]
 fn approved_native_defaults_quest_story_return_shape() {
     let ui = blizzard_ui_dir();
