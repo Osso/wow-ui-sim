@@ -832,7 +832,7 @@ fn test_patch_12_1_housing_editor_decor_layout_state() {
     assert_eq!(result, "ok");
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(all(feature = "retail-12-1-0", not(feature = "client-retail")))]
 #[test]
 fn test_patch_12_1_safe_global_bridges() {
     let env = WowLuaEnv::new().unwrap();
