@@ -1,4 +1,5 @@
-//! Minimap tracking defaults and Forever's static tracking filters.
+//! INFERRED: Retail tracking rows and mask behavior follow the mainline menu consumer;
+//! R88dp (native evidence pending).
 
 use super::helpers::{ensure_namespace, global_val};
 use crate::client_profile::{ACTIVE, ClientProfile};
@@ -8,11 +9,12 @@ use crate::lua_api::methods::{
 };
 use crate::lua_api::script_helpers::fire_named_event_state;
 use crate::lua_api::workarounds::RETAIL_TRACKING_DEFAULT_MASK;
-use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
+use crate::lua_bridge::{FromStack, TableBuilder, stack_val, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val, runtime_error};
 
 const FOREVER_FILTER_MASK: i32 = 0x1ff_ffff;
+const RETAIL_FILTER_MASK: i32 = 0x7f_ffff;
 const FOREVER_DEFAULT_MASK: u32 = 2_162_728;
 
 struct TrackingRow {
@@ -207,19 +209,47 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
     let namespace = ensure_namespace(state, "C_Minimap")?;
     // Forever MinimapDocumentation.lua:28, 61, 88, 103, 136, 234.
     table_set_rust_fn_static(state, namespace, "GetDefaultTrackingValue", query_default)?;
-    if ACTIVE == ClientProfile::WowForever {
-        table_set_rust_fn_static(state, namespace, "IsFilteredOut", is_filtered_out)?;
-        table_set_rust_fn_static(state, namespace, "GetNumTrackingTypes", |state| {
-            let count = eligible_rows(state)?.count();
-            state.push(Val::Num(count as f64));
-            Ok(1)
-        })?;
-        table_set_rust_fn_static(state, namespace, "GetTrackingFilter", get_tracking_filter)?;
-        table_set_rust_fn_static(state, namespace, "GetTrackingInfo", get_tracking_info)?;
-        table_set_rust_fn_static(state, namespace, "SetTracking", set_tracking)?;
-        table_set_rust_fn_static(state, namespace, "ClearAllTracking", clear_tracking)?;
-    }
+    table_set_rust_fn_static(state, namespace, "IsFilteredOut", is_filtered_out)?;
+    table_set_rust_fn_static(state, namespace, "GetNumTrackingTypes", |state| {
+        let count = eligible_rows(state)?.count();
+        state.push(Val::Num(count as f64));
+        Ok(1)
+    })?;
+    table_set_rust_fn_static(state, namespace, "GetTrackingFilter", get_tracking_filter)?;
+    table_set_rust_fn_static(state, namespace, "GetTrackingInfo", get_tracking_info)?;
+    table_set_rust_fn_static(state, namespace, "SetTracking", set_tracking)?;
+    table_set_rust_fn_static(state, namespace, "ClearAllTracking", clear_tracking)?;
     Ok(())
+}
+
+pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
+    if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever) {
+        builder.set_function("SetMinimapTrackingMask", set_tracking_mask)
+    } else {
+        Ok(builder)
+    }
+}
+
+fn set_tracking_mask(state: &mut LuaState) -> LuaResult<u32> {
+    let mask = u32::from_stack(state, 1)?;
+    borrow_state_mut(state)?.minimap_tracking_mask = Some(mask);
+    Ok(0)
+}
+
+fn tracking_filter_mask() -> i32 {
+    if ACTIVE == ClientProfile::WowForever {
+        FOREVER_FILTER_MASK
+    } else {
+        RETAIL_FILTER_MASK
+    }
+}
+
+fn tracking_default_mask() -> u32 {
+    if ACTIVE == ClientProfile::WowForever {
+        FOREVER_DEFAULT_MASK
+    } else {
+        RETAIL_TRACKING_DEFAULT_MASK
+    }
 }
 
 fn eligible_rows(state: &mut LuaState) -> LuaResult<impl Iterator<Item = &'static TrackingRow>> {
@@ -232,9 +262,10 @@ fn eligible_rows(state: &mut LuaState) -> LuaResult<impl Iterator<Item = &'stati
     } else {
         0
     };
-    Ok(ROWS
-        .iter()
-        .filter(move |row| row.classes == 0 || row.classes & class_mask != 0))
+    Ok(ROWS.iter().filter(move |row| {
+        row.filter <= tracking_filter_mask() as u32
+            && (row.classes == 0 || row.classes & class_mask != 0)
+    }))
 }
 
 fn tracking_row(state: &mut LuaState) -> LuaResult<Option<&'static TrackingRow>> {
@@ -255,7 +286,7 @@ fn tracking_mask(state: &mut LuaState) -> LuaResult<u32> {
         .cvars
         .get("minimapTrackedInfov4")
         .and_then(|v| v.parse::<u32>().ok())
-        .unwrap_or(FOREVER_DEFAULT_MASK)
+        .unwrap_or_else(tracking_default_mask)
         & eligible;
     Ok(*sim.minimap_tracking_mask.get_or_insert(initial))
 }
@@ -276,11 +307,8 @@ fn query_default(state: &mut LuaState) -> LuaResult<u32> {
         ));
     }
     let filter = number as i32;
-    let (max_filter, default_mask) = if ACTIVE == ClientProfile::WowForever {
-        (FOREVER_FILTER_MASK, FOREVER_DEFAULT_MASK)
-    } else {
-        (0x7fffff, RETAIL_TRACKING_DEFAULT_MASK)
-    };
+    let max_filter = tracking_filter_mask();
+    let default_mask = tracking_default_mask();
     if !(0..=max_filter).contains(&filter) {
         return Err(runtime_error(
             "GetDefaultTrackingValue filterType out of range",
@@ -296,7 +324,7 @@ fn is_filtered_out(state: &mut LuaState) -> LuaResult<u32> {
     let Val::Num(filter) = value else {
         return Err(runtime_error("IsFilteredOut requires a numeric filterType"));
     };
-    if !(0.0..=f64::from(FOREVER_FILTER_MASK)).contains(&filter) || filter.fract() != 0.0 {
+    if !(0.0..=f64::from(tracking_filter_mask())).contains(&filter) || filter.fract() != 0.0 {
         return Err(runtime_error("IsFilteredOut filterType out of range"));
     }
     let filter = filter as u32;
@@ -368,7 +396,7 @@ fn set_tracking(state: &mut LuaState) -> LuaResult<u32> {
 
 fn clear_tracking(state: &mut LuaState) -> LuaResult<u32> {
     let mask = tracking_mask(state)?;
-    let new_mask = mask & !(FOREVER_FILTER_MASK as u32);
+    let new_mask = mask & !(tracking_filter_mask() as u32);
     if mask != new_mask {
         borrow_state_mut(state)?.minimap_tracking_mask = Some(new_mask);
         fire_named_event_state(state, "MINIMAP_UPDATE_TRACKING", &[]);
