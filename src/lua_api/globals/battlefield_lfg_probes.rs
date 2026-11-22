@@ -73,6 +73,20 @@ fn is_default_lfd_enabled(d: &LfdDungeonInfo, player_level: i32) -> bool {
         && player_level <= d.max_level
 }
 
+/// INFERRED R88ei (native evidence pending): the highest supplied active queue index.
+fn get_max_battlefield_id(state: &mut LuaState) -> LuaResult<u32> {
+    let max_id = {
+        let sim = borrow_state(state)?;
+        if sim.battlefield_queue.status == BattlefieldStatus::None {
+            0
+        } else {
+            sim.battlefield_queue.index.max(0)
+        }
+    };
+    state.push(Val::Num(max_id as f64));
+    Ok(1)
+}
+
 /// `GetBattlefieldStatus(index)` — retail returns 9 values. The sim
 /// only models a single active queue, so any index other than the
 /// one stored in `battlefield_queue` reports `"none"` with default
@@ -647,6 +661,13 @@ fn register_lfg_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
 }
 
 fn register_battlefield_queue_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
+        LuaApiMut::register_function(lua, "GetMaxBattlefieldID", get_max_battlefield_id)?;
+    }
     LuaApiMut::register_function(lua, "GetBattlefieldStatus", get_battlefield_status)?;
     LuaApiMut::register_function(
         lua,

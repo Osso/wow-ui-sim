@@ -38,11 +38,11 @@ fn battlefield_queue_consumer_reads_each_supplied_queue_index() {
     let env = load_game_ui();
     env.exec(
         r#"
-        A_Admin.SetBattlefieldQueue(1, "queued", "Queue One")
+        A_Admin.SetBattlefieldQueue(1, true)
         QueueStatusFrame:Update()
         assert(QueueStatusButton:IsShown(), "queue index 1 must appear")
 
-        A_Admin.SetBattlefieldQueue(2, "queued", "Queue Two")
+        A_Admin.SetBattlefieldQueue(2, true)
         QueueStatusFrame:Update()
         assert(QueueStatusButton:IsShown(), "queue index 2 must appear")
         "#,

@@ -788,6 +788,8 @@ pub struct SimState {
     /// Explicit unit-aura output policy input, independent of cooldowns and unit stats.
     /// INFERRED host input: active PvP match, not queue/instance presence.
     pub pvp_match_active: bool,
+    /// INFERRED host input: the player PvP timer is running.
+    pub pvp_timer_running: bool,
     pub pvp_request_transport: crate::c_api::c_pvp::PvpRequestTransport,
     /// Explicit aura-filter classification and raid dispel capabilities.
     pub aura_filter_facts: crate::lua_api::game_data::AuraFilterFacts,
