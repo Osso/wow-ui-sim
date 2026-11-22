@@ -9,6 +9,7 @@ use wow_ui_sim::toc::TocFile;
 
 const VOICE_TOGGLE_LOGIN_CASE: &str = r#"
     local button = CreateFrame("Button", nil, UIParent, "ToggleVoiceMuteButtonTemplate")
+    VoiceToggleButtonOnlyVisibleWhenLoggedInMixin.OnLoad(button)
     assert(C_VoiceChat.IsLoggedIn() == false, "default login state")
     assert(button:UpdateVisibleState() == false, "default button visibility")
     assert(not button:IsShown(), "default button is hidden")
