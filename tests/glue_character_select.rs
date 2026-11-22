@@ -377,7 +377,15 @@ fn reincarnation_state_drives_original_forever_glue_consumers() {
     test_timeout! {
         let env = load_blizzard_screen(ScreenKind::CharacterSelect);
         env.exec(
-            r#"
+            r##"
+            local function assert_state(guid, name, class_name, level)
+                assert(select("#", C_Reincarnation.GetReincarnatingCharacter()) == 4)
+                local actual_guid, actual_name, actual_class, actual_level =
+                    C_Reincarnation.GetReincarnatingCharacter()
+                assert(actual_guid == guid and actual_name == name)
+                assert(actual_class == class_name and actual_level == level)
+            end
+
             local function assert_consumers_show_character(name, class_name, level)
                 CharacterReincarnatePopUpDialog:ShowWarning()
                 local text = CharacterReincarnatePopUpText1:GetText()
@@ -392,11 +400,13 @@ fn reincarnation_state_drives_original_forever_glue_consumers() {
 
             C_Reincarnation.StartReincarnation("Player-1", "Ari", "PALADIN", 60)
             assert(C_Reincarnation.IsReincarnating())
+            assert_state("Player-1", "Ari", "PALADIN", 60)
             assert_consumers_show_character("Ari", "PALADIN", 60)
 
             A_Admin.SetReincarnationCharacter("Player-2", "Bee", "MAGE", 42)
+            assert_state("Player-2", "Bee", "MAGE", 42)
             assert_consumers_show_character("Bee", "MAGE", 42)
-            "#,
+            "##,
         )
         .expect("original Forever glue consumers should display supplied reincarnation data");
     }
