@@ -209,16 +209,18 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
     let namespace = ensure_namespace(state, "C_Minimap")?;
     // Forever MinimapDocumentation.lua:28, 61, 88, 103, 136, 234.
     table_set_rust_fn_static(state, namespace, "GetDefaultTrackingValue", query_default)?;
-    table_set_rust_fn_static(state, namespace, "IsFilteredOut", is_filtered_out)?;
-    table_set_rust_fn_static(state, namespace, "GetNumTrackingTypes", |state| {
-        let count = eligible_rows(state)?.count();
-        state.push(Val::Num(count as f64));
-        Ok(1)
-    })?;
-    table_set_rust_fn_static(state, namespace, "GetTrackingFilter", get_tracking_filter)?;
-    table_set_rust_fn_static(state, namespace, "GetTrackingInfo", get_tracking_info)?;
-    table_set_rust_fn_static(state, namespace, "SetTracking", set_tracking)?;
-    table_set_rust_fn_static(state, namespace, "ClearAllTracking", clear_tracking)?;
+    if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever) {
+        table_set_rust_fn_static(state, namespace, "IsFilteredOut", is_filtered_out)?;
+        table_set_rust_fn_static(state, namespace, "GetNumTrackingTypes", |state| {
+            let count = eligible_rows(state)?.count();
+            state.push(Val::Num(count as f64));
+            Ok(1)
+        })?;
+        table_set_rust_fn_static(state, namespace, "GetTrackingFilter", get_tracking_filter)?;
+        table_set_rust_fn_static(state, namespace, "GetTrackingInfo", get_tracking_info)?;
+        table_set_rust_fn_static(state, namespace, "SetTracking", set_tracking)?;
+        table_set_rust_fn_static(state, namespace, "ClearAllTracking", clear_tracking)?;
+    }
     Ok(())
 }
 
