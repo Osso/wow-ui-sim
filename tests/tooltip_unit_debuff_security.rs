@@ -45,6 +45,8 @@ fn member(name: &str, debuffs: Vec<AuraInfo>) -> PartyMember {
     PartyMember {
         map_position: None,
         faction_group: None,
+        #[cfg(feature = "client-retail")]
+        pvp: None,
         name: name.into(),
         name_cached: true,
         connected: true,

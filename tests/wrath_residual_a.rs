@@ -345,6 +345,8 @@ fn seed_group(env: &WowLuaEnv, count: usize, local_leader: bool) {
         .map(|index| PartyMember {
             map_position: None,
             faction_group: None,
+            #[cfg(feature = "client-retail")]
+            pvp: None,
             name: format!("Member{index}"),
             name_cached: true,
             connected: true,

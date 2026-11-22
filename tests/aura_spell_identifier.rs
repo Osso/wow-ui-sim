@@ -31,6 +31,8 @@ fn fixture_party() -> PartyMember {
     PartyMember {
         map_position: None,
         faction_group: None,
+        #[cfg(feature = "client-retail")]
+        pvp: None,
         name: "Aura lookup fixture member".into(),
         name_cached: true,
         connected: true,

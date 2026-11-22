@@ -55,6 +55,9 @@ pub struct PartyMember {
     pub map_position: Option<crate::c_api::c_map::UnitMapPosition>,
     /// Supplied member faction group; absent members inherit the player's group.
     pub faction_group: Option<String>,
+    /// INFERRED: R88dl (native evidence pending) — supplied PvP state; absent means false.
+    #[cfg(feature = "client-retail")]
+    pub pvp: Option<bool>,
     pub name: String,
     /// Whether the member's name is available in the name cache.
     /// INFERRED initialization: existing named fixtures start cached (true).
@@ -525,6 +528,8 @@ pub fn default_party() -> Vec<PartyMember> {
                 PartyMember {
                     map_position: None,
                     faction_group: None,
+                    #[cfg(feature = "client-retail")]
+                    pvp: None,
                     name: name.to_string(),
                     name_cached: true,
                     connected: true,

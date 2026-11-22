@@ -58,14 +58,14 @@ use super::admin_events::{fire_event_admin, toggle_debug_anchors, toggle_debug_b
 use super::admin_interactions::{close_mailbox, open_mailbox};
 use super::admin_mail::{add_mail, clear_inbox, set_inbox_count, set_stationery_catalog};
 use super::admin_movement::{set_falling, set_flying, set_mounted, set_moving, set_swimming};
-#[cfg(feature = "client-retail")]
-use super::admin_party_target_helpers::set_party_member_faction;
 use super::admin_party_target_helpers::{
     clear_focus, clear_target, kill_party_member, res_party_member, set_focus, set_focus_health,
     set_focus_power, set_focus_type, set_party_leader, set_party_member,
     set_party_member_connected, set_party_member_health, set_party_size, set_rot_damage,
     set_target, set_target_power, set_target_type,
 };
+#[cfg(feature = "client-retail")]
+use super::admin_party_target_helpers::{set_party_member_faction, set_party_member_pvp};
 use super::admin_premade::{add_premade_listing, clear_premade_listings, update_premade_listing};
 use super::admin_pvp_guild::{
     clear_guild, join_guild, leave_guild, set_guild_info, set_honor_level, set_pvp_enabled,
@@ -284,7 +284,9 @@ fn register_targeting_party(b: TableBuilder) -> LuaResult<TableBuilder> {
         .set_function("SetPartyMemberConnected", set_party_member_connected)?
         .set_function("SetPartyMemberHealth", set_party_member_health)?;
     #[cfg(feature = "client-retail")]
-    let b = b.set_function("SetPartyMemberFaction", set_party_member_faction)?;
+    let b = b
+        .set_function("SetPartyMemberFaction", set_party_member_faction)?
+        .set_function("SetPartyMemberPvP", set_party_member_pvp)?;
     b.set_function("KillPartyMember", kill_party_member)?
         .set_function("ResPartyMember", res_party_member)?
         .set_function("SetRotDamage", set_rot_damage)?

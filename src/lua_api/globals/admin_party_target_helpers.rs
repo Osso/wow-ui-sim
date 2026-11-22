@@ -61,6 +61,8 @@ pub(super) fn default_party_member() -> PartyMember {
     PartyMember {
         map_position: None,
         faction_group: None,
+        #[cfg(feature = "client-retail")]
+        pvp: None,
         name: "Unknown".to_string(),
         name_cached: true,
         connected: true,
@@ -284,6 +286,19 @@ pub(super) fn set_party_member_faction(state: &mut LuaState) -> LuaResult<u32> {
         .get_mut((index - 1) as usize)
     {
         member.faction_group = Some(faction_group);
+    }
+    Ok(0)
+}
+
+#[cfg(feature = "client-retail")]
+pub(super) fn set_party_member_pvp(state: &mut LuaState) -> LuaResult<u32> {
+    let index = i32::from_stack(state, 1)?;
+    let is_pvp = bool::from_stack(state, 2)?;
+    if let Some(member) = borrow_state_mut(state)?
+        .party_members
+        .get_mut((index - 1) as usize)
+    {
+        member.pvp = Some(is_pvp);
     }
     Ok(0)
 }

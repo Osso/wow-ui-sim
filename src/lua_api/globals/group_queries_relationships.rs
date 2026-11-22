@@ -138,10 +138,17 @@ pub(super) fn unit_is_owner_or_controller_of_unit(state: &mut LuaState) -> LuaRe
     finish_identity_restricted(state, &[&controlling, &controlled], 1)
 }
 
-/// `UnitIsPVP(unit)` — PvP flagging is not modeled.
+/// `UnitIsPVP(unit)` reads supplied PvP state for Retail party and raid units.
 pub(super) fn unit_is_pvp(state: &mut LuaState) -> LuaResult<u32> {
     let unit = Option::<String>::from_stack(state, 1)?.unwrap_or_default();
-    state.push(Val::Bool(false));
+    #[cfg(feature = "client-retail")]
+    let is_pvp = {
+        let sim = borrow_state(state)?;
+        visible_party_member(&sim, &unit).is_some_and(|member| member.pvp.unwrap_or(false))
+    };
+    #[cfg(not(feature = "client-retail"))]
+    let is_pvp = false;
+    state.push(Val::Bool(is_pvp));
     finish_identity_restricted(state, &[&unit], 1)
 }
 
