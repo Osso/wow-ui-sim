@@ -122,6 +122,29 @@ fn forever_without_encounter_journal(env: &WowLuaEnv) -> bool {
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 #[test]
+fn pet_collection_button_uses_supplied_achievement_ui_access() {
+    let env = WowLuaEnv::new().expect("Failed to create Lua environment");
+    env.set_screen_size(1024.0, 768.0);
+    env.state().borrow_mut().addon_base_paths = vec![blizzard_ui_dir()];
+    load_panel_harness(&env);
+
+    env.exec(
+        r#"
+        assert(C_AddOns.LoadAddOn("Blizzard_Collections"))
+        assert(CanShowAchievementUI())
+        A_Admin.SetCanShowAchievementUI(false)
+        PetJournalAchievementStatus_OnClick()
+        assert(not C_AddOns.IsAddOnLoaded("Blizzard_AchievementUI"))
+        A_Admin.SetCanShowAchievementUI(true)
+        PetJournalAchievementStatus_OnClick()
+        assert(C_AddOns.IsAddOnLoaded("Blizzard_AchievementUI"))
+        "#,
+    )
+    .expect("pet collection consumer should follow supplied UI access");
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
 fn achievement_microbutton_uses_supplied_ui_access() {
     let env = WowLuaEnv::new().expect("Failed to create Lua environment");
     env.set_screen_size(1024.0, 768.0);
