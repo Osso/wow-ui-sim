@@ -70,13 +70,14 @@ fn player_frame_timer_consumer_reads_timer_state() {
     let env = load_game_ui();
     env.exec(
         r#"
-        A_Admin.SetPVPTimerRunning(false)
+        A_Admin.SetPVPTimer(false, 0)
         PlayerFrame_OnEvent(PlayerFrame, "PVP_TIMER_UPDATE")
         assert(not PlayerPVPTimerText:IsShown(), "stopped PvP timer must be hidden")
 
-        A_Admin.SetPVPTimerRunning(true)
+        A_Admin.SetPVPTimer(true, 12000)
         PlayerFrame_OnEvent(PlayerFrame, "PVP_TIMER_UPDATE")
         assert(PlayerPVPTimerText:IsShown(), "running PvP timer must be shown")
+        assert(PlayerPVPTimerText.timeLeft == 12000, "consumer must read supplied remaining time")
         "#,
     )
     .expect("original PlayerFrame consumer must read supplied timer state");

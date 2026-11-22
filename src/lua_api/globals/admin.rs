@@ -71,7 +71,7 @@ use super::admin_party_target_helpers::{set_party_member_faction, set_party_memb
 use super::admin_premade::{add_premade_listing, clear_premade_listings, update_premade_listing};
 use super::admin_pvp_guild::{
     clear_guild, join_guild, leave_guild, set_battlefield_arena, set_battlefield_queue,
-    set_guild_info, set_honor_level, set_pvp_enabled, set_pvp_timer_running,
+    set_guild_info, set_honor_level, set_pvp_enabled, set_pvp_timer,
 };
 use super::admin_spec::{reset_talents, set_spec, set_talent_rank, set_talent_selection};
 use super::admin_vault::{clear_vault, set_vault_activity, set_vault_rewards};
@@ -547,7 +547,7 @@ fn register_collections_pvp<'lua>(b: TableBuilder<'lua>) -> LuaResult<TableBuild
         return b
             .set_function("SetBattlefieldQueue", set_battlefield_queue)?
             .set_function("SetBattlefieldArena", set_battlefield_arena)?
-            .set_function("SetPVPTimerRunning", set_pvp_timer_running);
+            .set_function("SetPVPTimer", set_pvp_timer);
     }
     Ok(b)
 }

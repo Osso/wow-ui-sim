@@ -50,9 +50,12 @@ pub(super) fn set_battlefield_arena(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
-pub(super) fn set_pvp_timer_running(state: &mut LuaState) -> LuaResult<u32> {
+pub(super) fn set_pvp_timer(state: &mut LuaState) -> LuaResult<u32> {
     let running = bool::from_stack(state, 1)?;
-    borrow_state_mut(state)?.pvp_timer_running = running;
+    let remaining_ms = f64::from_stack(state, 2)?;
+    let mut sim = borrow_state_mut(state)?;
+    sim.pvp_timer_running = running;
+    sim.pvp_timer_remaining_ms = remaining_ms;
     Ok(0)
 }
 
