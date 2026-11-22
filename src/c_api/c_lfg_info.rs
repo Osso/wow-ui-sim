@@ -158,7 +158,8 @@ fn register_forever_queue_title_methods(
         table,
         "GetAllEntriesForCategory",
         get_all_entries_for_category,
-    )
+    )?;
+    table_set_rust_fn_static(state, table, "HideNameFromUI", hide_name_from_ui)
 }
 
 #[cfg(feature = "client-retail")]
@@ -222,8 +223,8 @@ fn get_lfd_lock_states(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-/// INFERRED (R88da): unsupplied entries are visible; supplied rows set the hidden flag.
-#[cfg(feature = "client-retail")]
+/// INFERRED from the Retail model (R88da) and Forever docs: unsupplied IDs are visible; supplied rows set this flag.
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn hide_name_from_ui(state: &mut LuaState) -> LuaResult<u32> {
     let entry_id = i32::from_stack(state, 1)?;
     let hide_name = borrow_state(state)?
