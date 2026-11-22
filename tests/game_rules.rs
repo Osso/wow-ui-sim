@@ -99,37 +99,22 @@ fn assert_hardcore_rule_values(env: &WowLuaEnv, active: bool) {
 #[test]
 #[cfg(feature = "client-wowforever")]
 fn forever_self_found_allowed_uses_rule_22_and_defaults_false() {
-    const SELF_FOUND_ALLOWED_RULE_ID: i32 = 22;
-
     let env = env();
-    let unset: bool = env.eval("return C_GameRules.IsSelfFoundAllowed()").unwrap();
-    assert!(!unset);
+    assert_eq!(query_self_found_allowed(&env), (false, 1));
+    env.exec("A_Admin.SetGameRule(22, 1)").unwrap();
+    assert_eq!(query_self_found_allowed(&env), (true, 1));
+}
 
-    let (allowed, return_count): (bool, i64) = env
-        .eval(
-            r##"
-            local function pack(...) return { n = select("#", ...), ... } end
-            local result = pack(C_GameRules.IsSelfFoundAllowed())
-            return result[1], result.n
-            "##,
-        )
-        .unwrap();
-    assert_eq!((allowed, return_count), (false, 1));
-
-    env.exec(&format!(
-        "A_Admin.SetGameRule({SELF_FOUND_ALLOWED_RULE_ID}, 1)"
-    ))
-    .unwrap();
-    let (allowed, return_count): (bool, i64) = env
-        .eval(
-            r##"
-            local function pack(...) return { n = select("#", ...), ... } end
-            local result = pack(C_GameRules.IsSelfFoundAllowed())
-            return result[1], result.n
-            "##,
-        )
-        .unwrap();
-    assert_eq!((allowed, return_count), (true, 1));
+#[cfg(feature = "client-wowforever")]
+fn query_self_found_allowed(env: &WowLuaEnv) -> (bool, i64) {
+    env.eval(
+        r##"
+        local function pack(...) return { n = select("#", ...), ... } end
+        local result = pack(C_GameRules.IsSelfFoundAllowed())
+        return result[1], result.n
+        "##,
+    )
+    .unwrap()
 }
 
 #[test]
