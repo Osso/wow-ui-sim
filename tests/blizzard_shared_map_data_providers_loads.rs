@@ -350,8 +350,7 @@ CanShowEncounterJournal = function() return true end
 "#;
 
 #[cfg(feature = "client-retail")]
-#[test]
-fn encounter_journal_provider_positions_supplied_encounter_pins() {
+fn load_encounter_journal_map_addon_closure() -> WowLuaEnv {
     let ui = blizzard_ui_dir();
     let env = new_blizzard_addon_env(&ui);
     env.exec(ENCOUNTER_MAP_INPUT_LUA)
@@ -368,6 +367,14 @@ fn encounter_journal_provider_positions_supplied_encounter_pins() {
     );
     assert!(loaded.iter().any(|name| name == ROOT_ADDON));
     assert!(loaded.iter().any(|name| name == "Blizzard_WorldMap"));
+    env.apply_post_load_workarounds();
+    env
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn encounter_journal_provider_positions_supplied_encounter_pins() {
+    let env = load_encounter_journal_map_addon_closure();
     let pins: (i32, f64, f64, f64, f64) = env
         .eval(
             r#"
