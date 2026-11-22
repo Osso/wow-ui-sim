@@ -1,6 +1,7 @@
 #![cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 
 use wow_ui_sim::lua_api::WowLuaEnv;
+use wow_ui_sim::startup::{fire_one_on_update_tick, fire_startup_events, process_pending_timers};
 
 const IGNORE_LIST_SCENARIO: &str = r#"
     A_Admin.SetSocialIgnoreName(1, "R88eh-IgnoreAlpha")
@@ -46,6 +47,10 @@ fn load_friends_frame() -> WowLuaEnv {
     env.set_screen_size(1024.0, 768.0);
     crate::common::load_game_startup_inventory(&env);
     env.apply_post_load_workarounds();
+    fire_startup_events(&env);
+    env.apply_post_event_workarounds();
+    process_pending_timers(&env);
+    fire_one_on_update_tick(&env);
     env
 }
 
