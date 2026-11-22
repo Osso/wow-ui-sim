@@ -13,6 +13,7 @@ const PREPARE_STORY_HEADER: &str = r#"
     assert(achievementID == 513 and storyMapID == 84)
     achievementID, storyMapID = C_QuestLog.GetZoneStoryInfo(otherMapID)
     assert(achievementID == 948 and storyMapID == 85)
+    assert(select("#", C_QuestLog.GetZoneStoryInfo(otherMapID + 1)) == 0)
     assert(GetAchievementNumCriteria(513) > 0)
     assert(select(3, GetAchievementCriteriaInfo(513, 1)) == true)
 
