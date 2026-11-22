@@ -114,6 +114,12 @@ fn register_instance_abandon_vote_surface(
     state: &mut LuaState,
     table_ref: GcRef<Table>,
 ) -> LuaResult<()> {
+    register_vote_information(state, table_ref)?;
+    register_vote_responses(state, table_ref)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn register_vote_information(state: &mut LuaState, table_ref: GcRef<Table>) -> LuaResult<()> {
     table_set_rust_fn_static(
         state,
         table_ref,
@@ -133,6 +139,11 @@ fn register_instance_abandon_vote_surface(
         "GetInstanceAbandonShutdownTime",
         shutdown_time,
     )?;
+    Ok(())
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn register_vote_responses(state: &mut LuaState, table_ref: GcRef<Table>) -> LuaResult<()> {
     table_set_rust_fn_static(
         state,
         table_ref,
@@ -150,8 +161,7 @@ fn register_instance_abandon_vote_surface(
         table_ref,
         "GetNumInstanceAbandonGroupVoteResponses",
         group_vote_response_count,
-    )?;
-    Ok(())
+    )
 }
 
 /// A_Admin.SetInstanceAbandonVoteState(voteDuration, voteTimeLeft,
