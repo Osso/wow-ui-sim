@@ -47,11 +47,20 @@ const THREAT_CONSUMER_CHECK: &str = r#"
 
 #[test]
 fn compact_aggro_highlight_tracks_two_supplied_states() {
-    harness::with_blizzard_addon_startup_shape(&["Blizzard_UnitFrame"], &[], |env, loaded| {
-        assert!(loaded.iter().any(|name| name == "Blizzard_UnitFrame"));
-        let result: bool = env
-            .eval(THREAT_CONSUMER_CHECK)
-            .expect("original Blizzard threat consumers run");
-        assert!(result, "consumer output must follow supplied threat states");
-    });
+    harness::with_blizzard_addon_startup_shape(
+        &["Blizzard_UnitFrame", "Blizzard_CompactRaidFrames"],
+        &[],
+        |env, loaded| {
+            assert!(loaded.iter().any(|name| name == "Blizzard_UnitFrame"));
+            assert!(
+                loaded
+                    .iter()
+                    .any(|name| name == "Blizzard_CompactRaidFrames")
+            );
+            let result: bool = env
+                .eval(THREAT_CONSUMER_CHECK)
+                .expect("original Blizzard threat consumers run");
+            assert!(result, "consumer output must follow supplied threat states");
+        },
+    );
 }
