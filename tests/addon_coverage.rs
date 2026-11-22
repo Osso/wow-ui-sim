@@ -578,7 +578,7 @@ fn garrison_mission_frames_use_db2_currency_types() {
     panic!("GarrisonUI missing from Game coverage");
 }
 
-#[cfg(feature = "client-retail")]
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn garrison_consumers_clear_and_read_empty_mission_lists() {
     let _full_ui = lock_full_ui();
@@ -620,7 +620,7 @@ fn garrison_consumers_clear_and_read_empty_mission_lists() {
     assert!(env.exec("C_Garrison.GetAvailableMissions(true, 1)").is_err());
 }
 
-#[cfg(feature = "client-retail")]
+#[cfg(not(feature = "client-wowforever"))]
 fn load_garrison_original_consumers() -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("create Lua environment");
     env.state().borrow_mut().addon_base_paths = vec![blizzard_ui_dir()];
@@ -634,7 +634,7 @@ fn load_garrison_original_consumers() -> WowLuaEnv {
     panic!("GarrisonUI missing from Game coverage");
 }
 
-#[cfg(feature = "client-retail")]
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn shipyard_consumer_reads_empty_in_progress_missions() {
     let _full_ui = lock_full_ui();
@@ -651,7 +651,7 @@ fn shipyard_consumer_reads_empty_in_progress_missions() {
     assert!(ok);
 }
 
-#[cfg(feature = "client-retail")]
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn landing_page_consumer_reads_empty_available_missions() {
     let _full_ui = lock_full_ui();

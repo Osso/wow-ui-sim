@@ -119,6 +119,8 @@ pub struct SimState {
     pub pet_journal_hover: crate::c_api::c_pet_journal_hover::PetJournalHoverState,
     pub anima_diversion: AnimaDiversionState,
     pub garrison_talents: GarrisonTalentState,
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub garrison_mission_lists: crate::c_api::c_garrison_mission_lists::GarrisonMissionLists,
     #[cfg(feature = "client-retail")]
     pub garrison_trees: crate::c_api::c_garrison_trees::GarrisonTrees,
     #[cfg(feature = "client-retail")]

@@ -209,6 +209,9 @@ pub(crate) fn update_player_location_for_screen(
 }
 
 fn apply_temporary_state_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    use rilua::LuaApiMut;
+
     temporary::garrison_mission_lists::apply_bootstrap(lua)?;
     apply_runtime_state_bootstrap(lua)?;
     apply_account_and_social_state_bootstrap(lua)?;
@@ -217,7 +220,11 @@ fn apply_temporary_state_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     apply_unit_state_bootstrap(lua)?;
     temporary::uiparent_onupdate_worklists::apply_bootstrap(lua)?;
     temporary::forever_glue_display_defaults::apply_bootstrap(lua)?;
-    temporary::video_options_state::apply_bootstrap(lua)
+    temporary::video_options_state::apply_bootstrap(lua)?;
+    // Replace the legacy shim's mission-list functions, not its combat-ally stub.
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    crate::c_api::c_garrison_mission_lists::register(lua.state_mut())?;
+    Ok(())
 }
 
 fn apply_runtime_state_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {

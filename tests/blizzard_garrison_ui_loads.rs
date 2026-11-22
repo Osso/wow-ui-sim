@@ -77,6 +77,17 @@ fn load_full_game_ui_with_lod_deps() -> WowLuaEnv {
     env
 }
 
+#[cfg(feature = "client-retail")]
+#[test]
+fn supplied_missions_update_the_real_covenant_mission_list() {
+    let env = load_full_game_ui_with_lod_deps();
+    load_addon(&env.loader_env(), &garrison_ui_toc()).expect("load original Garrison UI");
+    let mission_ids: (i64, i64, i64, i64) = env
+        .eval(include_str!("fixtures/garrison_mission_lists.lua"))
+        .expect("Covenant mission list consumes supplied missions");
+    assert_eq!(mission_ids, (3, 900001, 900003, 900002));
+}
+
 #[test]
 fn adventures_board_aura_tooltip_applies_original_spacing() {
     let env = load_full_game_ui_with_lod_deps();
