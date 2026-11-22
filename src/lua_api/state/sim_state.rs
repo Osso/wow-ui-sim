@@ -202,6 +202,9 @@ pub struct SimState {
     /// Whole host-supplied mapping, empty by default; not a native kit catalog.
     #[cfg(feature = "retail-12-0-0")]
     pub ping_texture_kits: crate::c_api::PingTextureKits,
+    /// Supplied default ping-wheel rows; native defaults remain unknown (R88ds).
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub ping_default_options: crate::c_api::PingDefaultOptions,
     /// Explicit AI identities only; initially empty, no membership producer.
     #[cfg(feature = "retail-12-0-0")]
     pub party_ai_guids: HashSet<String>,

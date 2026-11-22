@@ -335,6 +335,31 @@ fn blizzard_ping_ui_appears_in_full_addon_inventory() {
 }
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn blizzard_ping_manager_builds_sorted_default_wedges_from_supplied_options() {
+    let env = load_full_game_ui();
+    env.exec(
+        r#"
+        A_Admin.SetDefaultPingOptions({
+            { type = Enum.PingSubjectType.Warning, orderIndex = 20, uiTextureKitID = "late" },
+            { type = Enum.PingSubjectType.Assist, orderIndex = 10, uiTextureKitID = "early" },
+        })
+        local manager = __secureenv.PingManager
+        manager:SetupDefaultPingOptions()
+        local wedges = manager.defaultWedgeInfo
+        assert(#wedges == 2)
+        assert(wedges[1].type == Enum.PingSubjectType.Assist)
+        assert(wedges[1].icon == "Ping_Wheel_Icon_early")
+        assert(wedges[1].text == PING_TYPE_ASSIST)
+        assert(wedges[2].type == Enum.PingSubjectType.Warning)
+        assert(wedges[2].icon == "Ping_Wheel_Icon_late")
+        assert(wedges[2].text == PING_TYPE_WARNING)
+        "#,
+    )
+    .expect("PingManager should sort and format supplied default ping options");
+}
+
 prefork_full_ui_case! {
 fn blizzard_ping_ui_loads_without_addon_specific_lua_errors(env: &WowLuaEnv) {
 

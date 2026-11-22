@@ -552,10 +552,14 @@ pub use item_set_bonuses::ItemSetBonuses;
 #[cfg(feature = "retail-12-0-0")]
 mod c_ping_cooldown;
 pub use c_ping_secure::PingCooldownInterval;
-#[cfg(feature = "retail-12-0-0")]
+#[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
 mod c_ping_texture_kits;
 #[cfg(feature = "retail-12-0-0")]
 pub use c_ping_texture_kits::PingTextureKits;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) use c_ping_texture_kits::register_admin as register_ping_defaults_admin;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub use c_ping_texture_kits::{PingDefaultOption, PingDefaultOptions};
 #[cfg(any(feature = "retail-12-1-0", feature = "client-wowforever"))]
 mod c_cvar_readiness;
 pub mod c_loss_of_control;
@@ -770,6 +774,8 @@ fn register_token_texture_xml_tables(state: &mut LuaState) -> LuaResult<()> {
     c_ping_cooldown::register(state)?;
     #[cfg(feature = "retail-12-0-0")]
     c_ping_texture_kits::register(state)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    c_ping_texture_kits::register_default_options(state)?;
     c_wowtoken_secure::register_c_wowtoken_secure(state)?;
     c_wow_token_public::register_c_wow_token_public(state)?;
     c_wow_token_ui::register(state)?;
