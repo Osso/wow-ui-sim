@@ -207,6 +207,12 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
         return Ok(());
     }
     let namespace = ensure_namespace(state, "C_Minimap")?;
+    table_set_rust_fn_static(
+        state,
+        namespace,
+        "ShouldUseHybridMinimap",
+        should_use_hybrid_minimap,
+    )?;
     // Forever MinimapDocumentation.lua:28, 61, 88, 103, 136, 234.
     table_set_rust_fn_static(state, namespace, "GetDefaultTrackingValue", query_default)?;
     if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever) {
@@ -226,10 +232,26 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
 
 pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
     if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever) {
-        builder.set_function("SetMinimapTrackingMask", set_tracking_mask)
+        builder
+            .set_function("SetMinimapTrackingMask", set_tracking_mask)?
+            .set_function("SetShouldUseHybridMinimap", set_should_use_hybrid_minimap)
     } else {
         Ok(builder)
     }
+}
+
+fn should_use_hybrid_minimap(state: &mut LuaState) -> LuaResult<u32> {
+    let supplied = borrow_state(state)?
+        .should_use_hybrid_minimap
+        .unwrap_or(false);
+    state.push(Val::Bool(supplied));
+    Ok(1)
+}
+
+fn set_should_use_hybrid_minimap(state: &mut LuaState) -> LuaResult<u32> {
+    let supplied = bool::from_stack(state, 1)?;
+    borrow_state_mut(state)?.should_use_hybrid_minimap = Some(supplied);
+    Ok(0)
 }
 
 fn set_tracking_mask(state: &mut LuaState) -> LuaResult<u32> {
