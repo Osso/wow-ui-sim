@@ -169,6 +169,8 @@ macro_rules! build_empty_sim_state {
             social_queue: Default::default(),
             #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
             party_invite_confirmations: Default::default(),
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            black_market: Default::default(),
             #[cfg(feature = "client-retail")]
             talking_head: Default::default(),
             adventure_map: AdventureMapState::default(),
