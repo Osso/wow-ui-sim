@@ -128,6 +128,7 @@ pub mod pet_stats;
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub mod player_facing;
 pub mod player_identity;
+pub(crate) mod player_languages;
 pub mod player_probes;
 pub mod preferred_interact;
 pub(crate) mod protected_globals;
