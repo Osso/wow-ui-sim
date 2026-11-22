@@ -16,6 +16,7 @@ type VoteFrameState = (
     f64,
     f64,
     String,
+    String,
 );
 
 #[test]
@@ -24,7 +25,7 @@ fn instance_abandon_vote_frame_uses_supplied_vote_state() {
         assert!(loaded.iter().any(|name| name == "Blizzard_FrameXML"));
         env.exec(
             r#"
-            A_Admin.SetInstanceAbandonVoteState(30, 18, 60, 45, true, {true, false})
+            A_Admin.SetInstanceAbandonVoteState(30, 18, 60, 45, 3, 2, false, true, {true, false})
             A_Admin.FireEvent("INSTANCE_ABANDON_VOTE_STARTED")
             "#,
         )
@@ -33,7 +34,7 @@ fn instance_abandon_vote_frame_uses_supplied_vote_state() {
         let state = read_vote_frame_state(env);
 
         assert!(state.0, "vote frame should be shown");
-        assert!(!state.1.is_empty(), "vote requirement text should be set");
+        assert_eq!(state.1, state.12);
         assert!(state.2, "local vote response should be shown");
         assert_eq!(state.3, state.11);
         assert_eq!(state.4, "ui-lfg-roleicon-generic");
@@ -48,6 +49,7 @@ fn read_vote_frame_state(env: &WowLuaEnv) -> VoteFrameState {
     env.eval(
         r#"
                 local textures = InstanceAbandonFrame.StatusFrame.textures
+                local expectedVoteText = string.format(VOTE_TO_ABANDON_VOTES_NEEDED, 3)
                 return InstanceAbandonFrame:IsShown(),
                        InstanceAbandonFrame.VoteText:GetText(),
                        InstanceAbandonFrame.ResponseText:IsShown(),
@@ -59,7 +61,8 @@ fn read_vote_frame_state(env: &WowLuaEnv) -> VoteFrameState {
                        InstanceAbandonPopup.progressBarDuration,
                        InstanceAbandonPopup.timeleft,
                        C_PartyInfo.GetNumInstanceAbandonGroupVoteResponses(),
-                       VOTE_TO_ABANDON_VOTED_YES
+                       VOTE_TO_ABANDON_VOTED_YES,
+                       expectedVoteText
                 "#,
     )
     .expect("vote frame state should be observable")
