@@ -2,7 +2,7 @@
 //! Indexed and earlier name queries share the existing simulator projection.
 
 use crate::lua_api::methods::{borrow_state_mut, create_string, create_table, table_set_static};
-use crate::lua_api::state::SocialFriend;
+use crate::lua_api::state::{BnetBlockedEntry, SocialFriend};
 use crate::lua_bridge::FromStack;
 use rilua::Val;
 use rilua::vm::state::LuaState;
@@ -37,6 +37,27 @@ pub(crate) fn set_social_ignore_name(state: &mut LuaState) -> rilua::LuaResult<u
         sim.social_ignores.push(name);
     } else {
         sim.social_ignores[index - 1] = name;
+    }
+    Ok(0)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) fn set_social_blocked_entry(state: &mut LuaState) -> rilua::LuaResult<u32> {
+    let index = i32::from_stack(state, 1)?;
+    let blocked_id = i32::from_stack(state, 2)?;
+    let name = String::from_stack(state, 3)?;
+    let mut sim = borrow_state_mut(state)?;
+    if index < 1 || index as usize > sim.bnet_blocked_entries.len() + 1 {
+        return Err(rilua::runtime_error(
+            "A_Admin.SetSocialBlockedEntry: index must append or replace an existing entry",
+        ));
+    }
+    let entry = BnetBlockedEntry { blocked_id, name };
+    let index = index as usize;
+    if index == sim.bnet_blocked_entries.len() + 1 {
+        sim.bnet_blocked_entries.push(entry);
+    } else {
+        sim.bnet_blocked_entries[index - 1] = entry;
     }
     Ok(0)
 }

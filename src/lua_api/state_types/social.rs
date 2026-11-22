@@ -147,6 +147,14 @@ pub struct BnetGameAccount {
     pub player_guid: String,
 }
 
+/// One supplied Battle.net blocked-account row for the legacy friends UI.
+/// INFERRED input fields; live blocked-account identity and native defaults are unknown.
+#[derive(Debug, Clone)]
+pub struct BnetBlockedEntry {
+    pub blocked_id: i32,
+    pub name: String,
+}
+
 /// One WoW friends-list entry. Drives `C_Social.GetFriendInfo`,
 /// `C_Social.GetFriends`, and `C_FriendList.GetNumFriends`.
 /// Maps to the `C_FriendList.FriendInfo` retail structure.

@@ -166,6 +166,10 @@ pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
         "SetSocialIgnoreName",
         crate::c_api::c_friend_list::set_social_ignore_name,
     )?;
+    let builder = builder.set_function(
+        "SetSocialBlockedEntry",
+        crate::c_api::c_friend_list::set_social_blocked_entry,
+    )?;
     let builder = crate::c_api::c_minimap_tracking::register_admin(builder)?;
     let builder = crate::c_api::c_minimap_quest_blob::register_admin(builder)?;
     let builder = crate::c_api::c_tooltip_info_weekly::register_admin(builder)?;
