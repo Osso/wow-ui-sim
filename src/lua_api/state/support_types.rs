@@ -220,6 +220,15 @@ pub struct ActionHighlightState {
     pub on_bar: HashMap<i32, ActionHighlightKind>,
 }
 
+/// Supplied data for one slot in Blizzard's two-slot PossessActionBar.
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[derive(Clone, Debug)]
+pub struct PossessActionSlot {
+    pub texture: String,
+    pub spell_id: u32,
+    pub enabled: bool,
+}
+
 /// Action-bar transition state read by `MultiActionBar_Update` and
 /// `ActionBarController_GetCurrentActionBarState`. `busy` is true while a
 /// status-tracking-bar fade or page change is mid-animation, gating
@@ -240,6 +249,10 @@ pub struct ActionBarStateInfo {
     /// (when true and not currently shown) or `:Hide()` it (when false
     /// and currently shown). Default false — no possession active.
     pub possess_bar_visible: bool,
+    /// INFERRED: supplied slot data read by Retail/Forever `GetPossessInfo`.
+    /// R88ea (native evidence pending).
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub possess_slots: [Option<PossessActionSlot>; 2],
 }
 
 impl Default for ActionBarStateInfo {
@@ -249,6 +262,8 @@ impl Default for ActionBarStateInfo {
             busy: false,
             current_state: 1,
             possess_bar_visible: false,
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            possess_slots: std::array::from_fn(|_| None),
         }
     }
 }

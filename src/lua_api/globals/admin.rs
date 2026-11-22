@@ -24,6 +24,8 @@ use rilua::{LuaResult, Val};
 
 // Focused sub-modules — each holds one A_Admin section and keeps the
 // entry-point file small. The parent TableBuilder chain wires these up.
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+use super::admin_actionbars_bags::set_possess_action_slot;
 use super::admin_actionbars_bags::{
     add_bag_item, add_guild_bank_item, add_guild_bank_tab, clear_action_bars, clear_action_slot,
     clear_bags, clear_guild_bank, clear_guild_bank_tabs, remove_bag_item, set_action_slot,
@@ -469,6 +471,8 @@ fn register_query_catalog_inputs(b: TableBuilder) -> LuaResult<TableBuilder> {
 }
 
 fn register_inventory_and_mail(b: TableBuilder) -> LuaResult<TableBuilder> {
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let b = b.set_function("SetPossessActionSlot", set_possess_action_slot)?;
     let b = b
         .set_function("SetActionSlot", set_action_slot)?
         .set_function(
