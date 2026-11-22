@@ -58,7 +58,11 @@ fn forever_character_create_uses_the_supplied_hardcore_rule() {
         &["Blizzard_CharacterCreate"],
         &[],
         |env, loaded| {
-            assert!(loaded.iter().any(|addon| addon == "Blizzard_CharacterCreate"));
+            assert!(
+                loaded
+                    .iter()
+                    .any(|addon| addon == "Blizzard_CharacterCreate")
+            );
             env.exec("CharacterCreateFrame:Hide(); A_Admin.SetGameRule(Enum.GameRule.HardcoreRuleset, 1); CharacterCreateFrame.ForwardButton:SetText('sentinel'); CharacterCreateFrame:Show()")
                 .unwrap();
             let active_text: String = env
