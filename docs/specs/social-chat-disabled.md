@@ -27,7 +27,7 @@ The simulator supplies the existing `C_SocialRestrictions.IsChatDisabled()` quer
 ## Known gaps (current cycle)
 
 - [ ] Native account-policy producer and default remain unknown.
-- [ ] The Communities chat-edit-box consumer remains unproven: its closure setup fails in the cached Forever source at `CommunitiesFrame.lua:1523` because `inviteButton` is nil.
+- [ ] The Communities chat-edit-box consumer remains unproven. A closure probe failed at cached Forever `CommunitiesFrame.lua:1523` because `inviteButton` was nil.
 
 ## Out of scope
 
