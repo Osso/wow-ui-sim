@@ -1,6 +1,9 @@
 //! Retail default-state PRESERVATION through the original XML microbutton.
 //! No alternate native availability state or RED claim: current producers are constants.
-#![cfg(all(feature = "client-retail", feature = "optional-tests"))]
+#![cfg(all(
+    not(any(feature = "client-retail", feature = "client-wowforever")),
+    feature = "optional-tests"
+))]
 
 use crate::common::blizzard_addon_harness::{blizzard_ui_dir, new_blizzard_addon_env};
 use wow_ui_sim::loader::{

@@ -380,6 +380,39 @@ return countA, xA, yA, completeA, countB, xB, yB, completeB,
 "#;
 
 #[cfg(feature = "client-retail")]
+#[test]
+fn adventure_guide_availability_controls_original_encounter_map_pins() {
+    let env = load_encounter_journal_map_addon_closure();
+    let (shown, unavailable, hidden, restored): (i64, bool, i64, i64) = env
+        .eval(
+            r#"
+            assert(not Kiosk.IsEnabled())
+            assert(AdventureGuideUtil.IsAvailable())
+            local provider = CreateFromMixins(EncounterJournalDataProviderMixin)
+            WorldMapFrame:SetMapID(2248)
+            WorldMapFrame:AddDataProvider(provider)
+            provider:RefreshAllData()
+            local shown = WorldMapFrame:GetNumActivePinsByTemplate("EncounterJournalPinTemplate")
+            A_Admin.SetAdventureJournalCanBeShown(false)
+            local unavailable = AdventureGuideUtil.IsAvailable()
+            assert(not CanShowEncounterJournal())
+            provider:RefreshAllData()
+            local hidden = WorldMapFrame:GetNumActivePinsByTemplate("EncounterJournalPinTemplate")
+            A_Admin.SetAdventureJournalCanBeShown(true)
+            assert(AdventureGuideUtil.IsAvailable())
+            provider:RefreshAllData()
+            local restored = WorldMapFrame:GetNumActivePinsByTemplate("EncounterJournalPinTemplate")
+            return shown, unavailable, hidden, restored
+        "#,
+        )
+        .expect("the original Adventure Guide gate controls encounter map pins");
+    assert!(shown > 0);
+    assert!(!unavailable);
+    assert_eq!(hidden, 0);
+    assert_eq!(restored, shown);
+}
+
+#[cfg(feature = "client-retail")]
 fn load_encounter_journal_map_addon_closure() -> WowLuaEnv {
     let ui = blizzard_ui_dir();
     let env = new_blizzard_addon_env(&ui);

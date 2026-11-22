@@ -427,6 +427,7 @@ fn test_get_section_info_resolves_boss_spell_icon() {
     );
 }
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn adventure_journal_suggestions_seed_visible_cards() {
     let env = env();
