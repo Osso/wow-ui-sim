@@ -4,7 +4,9 @@ use crate::common::blizzard_addon_harness::{
     build_blizzard_addon_closure_env, load_blizzard_addon_closure_into_env, new_blizzard_addon_env,
 };
 use wow_ui_sim::loader::{
-    BlizzardAddonOverride, discover_blizzard_addons_for_screen, find_toc_file,
+    BlizzardAddonOverride, discover_all_blizzard_addons, discover_blizzard_addons_for_screen,
+    discover_blizzard_startup_addons_for_screen, find_toc_file, load_startup_addon,
+    register_load_with_addons,
 };
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::screen::ScreenKind;
@@ -348,12 +350,17 @@ A_Admin.SetEncounterJournalMapEncounters(2248, {
 A_Admin.SetEncounterJournalMapEncounters(84, {
     { encounterID = 2602, mapX = 0.7, mapY = 0.3, completed = false },
 })
-CanShowEncounterJournal = function() return true end
 "#;
 
 #[cfg(feature = "client-retail")]
 const ENCOUNTER_MAP_REFRESH_LUA: &str = r#"
 assert(CanShowEncounterJournal(), "encounter journal gate must be true")
+assert(debug.getinfo(CanShowEncounterJournal, "S").source
+    :find("Blizzard_EncounterJournal_Bootstrap.lua", 1, true))
+assert(debug.getinfo(AdventureGuideUtil.IsAvailable, "S").source
+    :find("Blizzard_FrameXMLUtil/AdventureGuideUtil.lua", 1, true))
+assert(not Kiosk.IsEnabled() and C_AdventureJournal.CanBeShown())
+assert(AdventureGuideUtil.IsAvailable())
 local provider = CreateFromMixins(EncounterJournalDataProviderMixin)
 WorldMapFrame:SetMapID(2248)
 WorldMapFrame:AddDataProvider(provider)
@@ -378,7 +385,8 @@ fn load_encounter_journal_map_addon_closure() -> WowLuaEnv {
     let ui = blizzard_ui_dir();
     let env = new_blizzard_addon_env(&ui);
     env.exec(ENCOUNTER_MAP_INPUT_LUA)
-        .expect("supply encounter map rows before loading the Blizzard provider");
+        .expect("supply encounter map rows before startup and provider loading");
+    load_normal_game_startup_addons(&env, &ui);
     let loaded = load_blizzard_addon_closure_into_env(
         &env,
         &ui,
@@ -393,6 +401,29 @@ fn load_encounter_journal_map_addon_closure() -> WowLuaEnv {
     assert!(loaded.iter().any(|name| name == "Blizzard_WorldMap"));
     env.apply_post_load_workarounds();
     env
+}
+
+#[cfg(feature = "client-retail")]
+fn load_normal_game_startup_addons(env: &WowLuaEnv, ui: &std::path::Path) {
+    let addons = discover_all_blizzard_addons(ui);
+    register_load_with_addons(&env.loader_env(), &addons);
+    let startup = discover_blizzard_startup_addons_for_screen(ui, ScreenKind::Game);
+    for addon in startup {
+        let loaded = env
+            .state()
+            .borrow()
+            .addons
+            .iter()
+            .any(|entry| entry.folder_name == addon.name && entry.loaded);
+        if !loaded {
+            load_startup_addon(&env.loader_env(), &addon.toc_path, addon.kind, None)
+                .unwrap_or_else(|error| panic!("startup {}: {error}", addon.name));
+        }
+        if addon.name == "Blizzard_EnvironmentCleanup" {
+            env.restore_post_cleanup_globals();
+        }
+    }
+    env.sync_string_metatable_to_global_string();
 }
 
 #[cfg(feature = "client-retail")]
