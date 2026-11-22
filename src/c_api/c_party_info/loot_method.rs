@@ -36,7 +36,7 @@ pub(super) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResu
 }
 
 fn get_loot_method_style(state: &mut LuaState) -> LuaResult<u32> {
-    let key = super::c_game_rules::key_from_name(state, LOOT_METHOD_STYLE_RULE);
+    let key = crate::c_api::c_game_rules::key_from_name(state, LOOT_METHOD_STYLE_RULE);
     let style = borrow_state(state)?
         .game_rules
         .rules
