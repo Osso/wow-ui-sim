@@ -30,7 +30,7 @@ These are simulator scenario defaults, approved by the user on 2026-10-28. They 
 | `C_VoiceChat.GetActiveVoiceProviderID` | `Enum.VoiceProviderID.Legacy` | PTR | VoiceTranscriptionFrame_UpdateVisibility | 2026-10-28 |
 | `C_Bank.ShouldUsePlayerBagsInBank` | `false` | PTR | BankPanelMixin.OnEvent and OnLoad | 2026-10-28 |
 | `C_ExternalEventURL` | No supplied promotion: `HasURL`, `IsNew` false; `LaunchURL` records nothing; `CanShow` false (PTR only). Now modeled host state; see [external event URL](external-event-url.md) | Retail, PTR, Mists, Era, Anniversary | GameMenuFrameMixin.ExternalEventClickCallback; PTR minimap | 2026-10-28 |
-| `C_QuestLog.GetZoneStoryInfo` | No values for unknown map | Retail, PTR | QuestLogQuests_Update | 2026-10-28 |
+| `C_QuestLog.GetZoneStoryInfo` | No values for unknown map | PTR | QuestLogQuests_Update | 2026-10-28 |
 | Ordinary quest watch seed | Every seeded non-world quest is Manual; user-approved for Retail/PTR, simulator policy, not native evidence | Retail, PTR | QuestLogQuests_AddQuestButton | 2026-10-28 |
 | `C_StableInfo.GetAvailablePetSpecInfos` | Empty table when no catalog is supplied | Retail, PTR | StableUI specialization Refresh (Retail), OnLoad and Refresh (PTR) | 2026-10-28 |
 

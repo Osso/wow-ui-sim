@@ -8,6 +8,7 @@ use wow_ui_sim::loader::find_toc_file;
 use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::toc::TocFile;
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn approved_native_defaults_quest_story_return_shape() {
     let ui = blizzard_ui_dir();
@@ -31,12 +32,15 @@ fn approved_native_defaults_quest_story_return_shape() {
     // The real quest list stops before the story lookup on the missing
     // C_PlayerInfo.GetContentDifficultyQuestForPlayer: QuestMapFrame.lua:1751
     // in Retail and :1835 in PTR. This checks only the declared return shape.
-    env.exec(r#"
+    env.exec(
+        r#"
         local source = debug.getinfo(QuestLogQuests_Update, 'S').source:gsub('\\', '/')
         assert(source:find('Mainline/QuestMapFrame.lua', 1, true))
         assert(select('#', C_QuestLog.GetZoneStoryInfo(84)) == 0)
         assert(select('#', C_QuestLog.GetZoneStoryInfo(999999)) == 0)
-    "#).expect("unknown zone story returns no values");
+    "#,
+    )
+    .expect("unknown zone story returns no values");
 }
 
 #[test]

@@ -233,6 +233,8 @@ macro_rules! build_empty_sim_state {
             weapon_attack_power: ::std::collections::HashMap::new(),
             quest_blobs: $collections.quest_blobs,
             minimap_quest_blob_inside: HashMap::new(),
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            zone_story_info: HashMap::new(),
             fog_of_war_frames: $collections.fog_of_war_frames,
             unit_position_frames: $collections.unit_position_frames,
             report_player_eligible: false,
