@@ -105,26 +105,22 @@ fn supplied_missions_update_the_real_covenant_mission_list() {
 
 #[cfg(feature = "client-retail")]
 #[test]
-fn covenant_mission_tabs_follow_supplied_npc_interaction_state() {
+fn covenant_mission_consumer_uses_supplied_npc_interaction_state() {
     let env = load_full_game_ui_with_lod_deps();
     load_addon(&env.loader_env(), &garrison_ui_toc()).expect("load original Garrison UI");
-    let tabs: (bool, bool, bool, bool, bool, bool) = env
+    let npc_states: (bool, bool, bool) = env
         .eval(
             r#"
-            local function show_tabs(at_npc)
-                if at_npc ~= nil then A_Admin.SetAtGarrisonMissionNPC(at_npc) end
-                CovenantMissionFrame:Hide()
-                CovenantMissionFrame:Show()
-                return CovenantMissionFrame.Tab1:IsShown(), CovenantMissionFrame.Tab2:IsShown()
-            end
-            local default_first, default_second = show_tabs()
-            local away_first, away_second = show_tabs(false)
-            local at_first, at_second = show_tabs(true)
-            return default_first, default_second, away_first, away_second, at_first, at_second
+            local default = CovenantMissionFrame:ShouldShowMissionsAndFollowersTabs()
+            A_Admin.SetAtGarrisonMissionNPC(false)
+            local away = CovenantMissionFrame:ShouldShowMissionsAndFollowersTabs()
+            A_Admin.SetAtGarrisonMissionNPC(true)
+            local at = CovenantMissionFrame:ShouldShowMissionsAndFollowersTabs()
+            return default, away, at
             "#,
         )
-        .expect("original Covenant mission tabs use supplied NPC interaction state");
-    assert_eq!(tabs, (false, false, false, false, true, true));
+        .expect("original Covenant mission consumer uses supplied NPC interaction state");
+    assert_eq!(npc_states, (false, false, true));
 }
 
 #[cfg(feature = "client-retail")]
