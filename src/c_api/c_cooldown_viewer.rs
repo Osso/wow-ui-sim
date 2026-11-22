@@ -116,11 +116,20 @@ fn get_group_buff_items(state: &mut LuaState) -> LuaResult<u32> {
         let row = create_table(state);
         for (key, value) in [
             ("spellID", Some(entry.spell_id)),
-            ("displaySpellID", entry.display_spell_id),
             ("flags", Some(entry.flags)),
         ] {
             if let Some(value) = value {
                 table_set(state, row, key, Val::Num(f64::from(value)));
+            }
+        }
+        if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever {
+            if let Some(display_spell_id) = entry.display_spell_id {
+                table_set(
+                    state,
+                    row,
+                    "displaySpellID",
+                    Val::Num(f64::from(display_spell_id)),
+                );
             }
         }
         table_set(state, row, "iconID", Val::Num(f64::from(entry.icon_id)));
