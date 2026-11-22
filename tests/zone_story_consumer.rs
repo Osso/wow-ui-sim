@@ -42,9 +42,20 @@ fn zone_story_supplied_relations_drive_blizzard_header_and_tooltip() {
         .expect("supplied relations drive the original zone-story header");
 
     let geometry: String = env
-        .eval("return tostring(UIParent:GetRight()) .. '|' .. tostring(QuestMapFrame:GetParent():GetRight())")
+        .eval(
+            r#"
+            local map = QuestMapFrame:GetParent()
+            local uiRight = select('#', UIParent:GetRight())
+            local mapRight = select('#', map:GetRight())
+            local mapRect = select('#', map:GetRect())
+            local mapSize = select('#', map:GetSize())
+            return table.concat({uiRight, mapRight, mapRect, mapSize}, '|')
+        "#,
+        )
         .expect("read original tooltip anchor geometry");
-    eprintln!("tooltip right edges: UIParent|WorldMapFrame={geometry}");
+    eprintln!(
+        "tooltip geometry result counts: UIParent|WorldMapFrame right, rect, size={geometry}"
+    );
     env.exec("QuestScrollFrame.Contents.StoryHeader:ShowTooltip()")
         .expect("original story tooltip should display");
     env.exec(VERIFY_STORY_TOOLTIP)
