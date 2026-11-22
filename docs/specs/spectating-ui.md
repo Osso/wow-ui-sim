@@ -6,7 +6,7 @@ This simulator scenario supplies the booleans read by `C_SpectatingUI.IsSpectati
 
 - [ ] Publish `IsSpectating()` on Retail, PTR, and WowForever, whose pinned UI calls it.
 - [x] Return the environment-local supplied boolean from `C_SpectatingUI.IsSpectating`. The initial `false` is a user-authorized simulator scenario default, not a native observation.
-- [ ] Publish `C_Commentator.IsSpectating` on Retail and WowForever from the supplied boolean; verify with the original `TimerTracker` event handler.
+- [x] Publish `C_Commentator.IsSpectating` on Retail and WowForever from the supplied boolean; verify with the original `TimerTracker` event handler.
 - [x] The original Retail game-menu Esc handler consumes both supplied values.
 
 ## How it works

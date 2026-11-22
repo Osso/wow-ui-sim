@@ -5,8 +5,8 @@ The simulator supplies the existing `C_SocialRestrictions.IsChatDisabled()` quer
 ## What it must do
 
 - [x] Register `C_SocialRestrictions.IsChatDisabled()` on Retail and WowForever and return the supplied environment-local boolean.
-- [ ] Let `A_Admin.SetChatDisabled(bool)` supply the local scenario without changing the public C API surface.
-- [ ] The original Social settings proxy reflects both supplied values.
+- [x] Let `A_Admin.SetChatDisabled(bool)` supply the local scenario without changing the public C API surface.
+- [x] The original Social settings proxy reflects both supplied values.
 
 ## How it works
 
