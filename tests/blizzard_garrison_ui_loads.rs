@@ -111,13 +111,15 @@ fn covenant_mission_frame_show_hide_show_preserves_supplied_map_and_closes_npc()
     env.eval::<()>(include_str!("fixtures/garrison_mission_lists.lua"))
         .expect("original Covenant mission setup succeeds");
     let errors_before = env.state().borrow().lua_errors.len();
-    let state_and_sizes = run_covenant_mission_show_hide_show(&env);
+    let cycle = run_covenant_mission_show_hide_show(&env);
     let new_errors = &env.state().borrow().lua_errors[errors_before..];
 
-    assert_eq!(state_and_sizes.0, false, "closing clears at-NPC state");
-    assert_eq!(state_and_sizes.1, false, "the second cycle uses away state");
-    assert_eq!((state_and_sizes.2, state_and_sizes.3), (3840, 2560));
-    assert_eq!((state_and_sizes.4, state_and_sizes.5), (3840, 2560));
+    assert!(!cycle.0, "closing clears at-NPC state");
+    assert!(!cycle.1, "the away state remains supplied");
+    assert!(cycle.2, "the supplied true state shows the map tab");
+    assert!(!cycle.3, "the supplied false state hides the map tab");
+    assert_eq!((cycle.4, cycle.5), (3840, 2560));
+    assert_eq!((cycle.6, cycle.7), (3840, 2560));
     assert!(
         new_errors.is_empty(),
         "Covenant mission Show/Hide/Show added Lua errors:\n{}",
@@ -126,20 +128,29 @@ fn covenant_mission_frame_show_hide_show_preserves_supplied_map_and_closes_npc()
 }
 
 #[cfg(feature = "client-retail")]
-fn run_covenant_mission_show_hide_show(env: &WowLuaEnv) -> (bool, bool, i32, i32, i32, i32) {
+fn run_covenant_mission_show_hide_show(
+    env: &WowLuaEnv,
+) -> (bool, bool, bool, bool, i32, i32, i32, i32) {
     env.eval(
         r#"
         CovenantMissionFrame:Hide()
         A_Admin.SetAtGarrisonMissionNPC(true)
+        A_Admin.SetShouldShowGarrisonMissionMapTab(true)
         CovenantMissionFrame:Show()
-        local firstWidth, firstHeight = CovenantMissionFrame.MapTab:GetCanvas():GetSize()
+        local shownWidth, shownHeight = CovenantMissionFrame.MapTab:GetCanvas():GetSize()
+        local mapShown = CovenantMissionFrame.MapTab:IsShown()
         CovenantMissionFrame:Hide()
         local atNpcAfterClose = C_Garrison.IsAtGarrisonMissionNPC()
         A_Admin.SetAtGarrisonMissionNPC(false)
+        A_Admin.SetShouldShowGarrisonMissionMapTab(false)
         CovenantMissionFrame:Show()
-        local secondWidth, secondHeight = CovenantMissionFrame.MapTab:GetCanvas():GetSize()
-        return atNpcAfterClose, C_Garrison.IsAtGarrisonMissionNPC(),
-            firstWidth, firstHeight, secondWidth, secondHeight
+        local mapHidden = not CovenantMissionFrame.MapTab:IsShown()
+        CovenantMissionFrame:Hide()
+        A_Admin.SetShouldShowGarrisonMissionMapTab(true)
+        CovenantMissionFrame:Show()
+        local awayWidth, awayHeight = CovenantMissionFrame.MapTab:GetCanvas():GetSize()
+        return atNpcAfterClose, C_Garrison.IsAtGarrisonMissionNPC(), mapShown, mapHidden,
+            shownWidth, shownHeight, awayWidth, awayHeight
         "#,
     )
     .expect("original Covenant mission frame completes Show/Hide/Show")

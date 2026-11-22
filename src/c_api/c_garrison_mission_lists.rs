@@ -21,6 +21,8 @@ pub struct GarrisonMissionLists {
     pub follower_quality_tables: HashMap<u32, Vec<(u32, f64)>>,
     /// INFERRED (R88do, native evidence pending): supplied NPC interaction state.
     pub at_garrison_mission_npc: bool,
+    /// INFERRED (R88dr, native evidence pending): explicit map-tab visibility state.
+    pub should_show_map_tab: Option<bool>,
 }
 
 #[derive(Clone, Debug)]
@@ -85,7 +87,9 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
             namespace,
             "IsAtGarrisonMissionNPC",
             is_at_garrison_mission_npc,
-        )
+        )?;
+        table_set_rust_fn_static(state, namespace, "CloseMissionNPC", close_mission_npc)?;
+        table_set_rust_fn_static(state, namespace, "ShouldShowMapTab", should_show_map_tab)
     } else {
         Ok(())
     }
@@ -99,7 +103,12 @@ pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
             set_follower_quality_table,
         )?;
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
-        builder.set_function("SetAtGarrisonMissionNPC", set_at_garrison_mission_npc)
+        builder
+            .set_function("SetAtGarrisonMissionNPC", set_at_garrison_mission_npc)?
+            .set_function(
+                "SetShouldShowGarrisonMissionMapTab",
+                set_should_show_map_tab,
+            )
     } else {
         Ok(builder)
     }
@@ -126,6 +135,39 @@ fn set_at_garrison_mission_npc(state: &mut LuaState) -> LuaResult<u32> {
     borrow_state_mut(state)?
         .garrison_mission_lists
         .at_garrison_mission_npc = at_npc;
+    Ok(0)
+}
+
+fn close_mission_npc(state: &mut LuaState) -> LuaResult<u32> {
+    borrow_state_mut(state)?
+        .garrison_mission_lists
+        .at_garrison_mission_npc = false;
+    crate::lua_api::globals::state_backed_queries::dispatch_event_now(
+        state,
+        "GARRISON_MISSION_NPC_CLOSED",
+        &[],
+    )?;
+    Ok(0)
+}
+
+fn should_show_map_tab(state: &mut LuaState) -> LuaResult<u32> {
+    read_u32(stack_val(state, 1))
+        .ok_or_else(|| runtime_error("bad argument #1 (garrisonType must be a number)"))?;
+    let should_show = borrow_state(state)?
+        .garrison_mission_lists
+        .should_show_map_tab
+        .unwrap_or(true);
+    state.push(Val::Bool(should_show));
+    Ok(1)
+}
+
+fn set_should_show_map_tab(state: &mut LuaState) -> LuaResult<u32> {
+    let Val::Bool(should_show) = stack_val(state, 1) else {
+        return Err(runtime_error("bad argument #1 (boolean expected)"));
+    };
+    borrow_state_mut(state)?
+        .garrison_mission_lists
+        .should_show_map_tab = Some(should_show);
     Ok(0)
 }
 
