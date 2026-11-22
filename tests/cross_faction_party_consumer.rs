@@ -53,9 +53,16 @@ fn retail_unitframe_pvp_consumer_reads_supplied_party_factions() {
                 end
                 A_Admin.SetPartyMemberFaction(1, "Alliance")
                 A_Admin.SetPartyMemberFaction(2, "Horde")
+                A_Admin.SetPartyMemberPvP(1, true)
+                A_Admin.SetPartyMemberPvP(2, true)
 
-                UnitFrameUtil.GetUnitPvPIndicatorDisplayInfo("party1")
-                UnitFrameUtil.GetUnitPvPIndicatorDisplayInfo("party2")
+                local allianceDisplay = UnitFrameUtil.GetUnitPvPIndicatorDisplayInfo("party1")
+                local hordeDisplay = UnitFrameUtil.GetUnitPvPIndicatorDisplayInfo("party2")
+                assert(allianceDisplay.showPvPIcon, "PvP consumer must show the Alliance member icon")
+                assert(allianceDisplay.pvpIconTexture == "UI-HUD-UnitFrame-Player-PVP-AllianceIcon", "PvP consumer must return the Alliance atlas")
+                assert(hordeDisplay.showPvPIcon, "PvP consumer must show the Horde member icon")
+                assert(hordeDisplay.pvpIconTexture == "UI-HUD-UnitFrame-Player-PVP-HordeIcon", "PvP consumer must return the Horde atlas")
+
                 local partyFaction = UnitFactionGroup("party1")
                 local raidFaction = UnitFactionGroup("raid2")
                 assert(partyFaction == "Alliance", "party faction must use supplied member state")
