@@ -23,9 +23,49 @@
 
 use crate::lua_api::methods::{borrow_state, borrow_state_mut, create_string, val_to_string};
 use crate::lua_api::script_helpers::fire_named_event_state;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+use crate::lua_api::state::PossessActionSlot;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+use crate::lua_bridge::FromStack;
 use crate::lua_bridge::stack_val;
 use rilua::vm::state::LuaState;
 use rilua::{LuaApiMut, LuaResult, Val};
+
+/// INFERRED from `PossessActionBar.lua:32,114,120`: project a supplied slot
+/// as `(texture, spellID, enabled)`. R88ea (native evidence pending).
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn get_possess_info(state: &mut LuaState) -> LuaResult<u32> {
+    let slot = i32::from_stack(state, 1)?;
+    let index = slot
+        .checked_sub(1)
+        .and_then(|value| usize::try_from(value).ok());
+    let possess_slot = {
+        let sim = borrow_state(state)?;
+        index
+            .and_then(|index| sim.action_bar_state.possess_slots.get(index))
+            .and_then(Option::as_ref)
+            .cloned()
+    };
+    push_possess_info(state, possess_slot)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn push_possess_info(state: &mut LuaState, slot: Option<PossessActionSlot>) -> LuaResult<u32> {
+    match slot {
+        Some(slot) => {
+            let texture = create_string(state, &slot.texture);
+            state.push(texture);
+            state.push(Val::Num(slot.spell_id as f64));
+            state.push(Val::Bool(slot.enabled));
+        }
+        None => {
+            state.push(Val::Nil);
+            state.push(Val::Nil);
+            state.push(Val::Bool(false));
+        }
+    }
+    Ok(3)
+}
 
 fn unit_arg_is_player(state: &mut LuaState, index: i32) -> bool {
     val_to_string(state, stack_val(state, index)).as_deref() == Some("player")
@@ -133,6 +173,8 @@ fn taxi_request_early_landing(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 pub fn register_all(lua: &mut rilua::Lua) -> crate::Result<()> {
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    LuaApiMut::register_function(lua, "GetPossessInfo", get_possess_info)?;
     LuaApiMut::register_function(lua, "UnitInVehicle", unit_in_vehicle)?;
     LuaApiMut::register_function(lua, "UnitHasVehicleUI", unit_has_vehicle_ui)?;
     LuaApiMut::register_function(

@@ -8,6 +8,8 @@
 use crate::lua_api::methods::borrow_state_mut;
 use crate::lua_api::script_helpers::fire_named_event_state;
 use crate::lua_api::state::PetActionSlot;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+use crate::lua_api::state::PossessActionSlot;
 use crate::lua_bridge::{FromStack, stack_val};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
@@ -20,6 +22,29 @@ pub(super) fn set_action_slot(state: &mut LuaState) -> LuaResult<u32> {
     let mut state = borrow_state_mut(state)?;
     crate::c_api::action_macros::clear_slot(&mut state, slot);
     state.action_bars.insert(slot, spell_id);
+    Ok(0)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(super) fn set_possess_action_slot(state: &mut LuaState) -> LuaResult<u32> {
+    let slot = u32::from_stack(state, 1)?;
+    let texture = String::from_stack(state, 2)?;
+    let spell_id = u32::from_stack(state, 3)?;
+    let enabled = bool::from_stack(state, 4)?;
+    let Some(index) = slot
+        .checked_sub(1)
+        .and_then(|slot| usize::try_from(slot).ok())
+    else {
+        return Ok(0);
+    };
+    let mut sim = borrow_state_mut(state)?;
+    if let Some(entry) = sim.action_bar_state.possess_slots.get_mut(index) {
+        *entry = Some(PossessActionSlot {
+            texture,
+            spell_id,
+            enabled,
+        });
+    }
     Ok(0)
 }
 
