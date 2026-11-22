@@ -130,6 +130,7 @@ fn register_interaction_store_voice(state: &mut LuaState) -> LuaResult<()> {
     super::c_store_glue::register(state)?;
     super::store_public_eligibility::register(state)?;
     super::c_shared_character_services::register(state)?;
+    super::c_voice_chat_login::register(state)?;
     super::c_voice_chat_activity::register(state)?;
     super::c_voice_chat_settings::register(state)?;
     super::c_voice_chat_devices::register(state)?;
