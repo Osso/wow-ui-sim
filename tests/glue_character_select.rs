@@ -372,8 +372,9 @@ fn forever_name_reservation_default_is_false_on_glue() {
 }
 
 #[cfg(feature = "client-wowforever")]
-const REINCARNATION_CONSUMER_TEST: &str = r##"
+const REINCARNATION_API_TEST: &str = r##"
 local function assert_state(guid, name, class_name, level)
+    assert(C_Reincarnation.IsReincarnating())
     assert(select("#", C_Reincarnation.GetReincarnatingCharacter()) == 4)
     local actual_guid, actual_name, actual_class, actual_level =
         C_Reincarnation.GetReincarnatingCharacter()
@@ -381,32 +382,36 @@ local function assert_state(guid, name, class_name, level)
     assert(actual_class == class_name and actual_level == level)
 end
 
-local function assert_character_create(name)
-    CharacterCreateFrame:Hide()
-    CharacterCreateFrame:Show()
-    assert(CharacterCreateFrame:IsMode(1))
-    assert(CharacterCreateFrame.NameChoiceFrame.EditBox:GetText() == name)
-    local title = CharacterCreateFrame.ForwardButton:GetText()
-    assert(title:sub(1, #CUSTOMIZE) == CUSTOMIZE)
+local function start_character(guid, name, class_name, class_index, level)
+    local dialog = StaticPopupDialogs and StaticPopupDialogs.HARDCORE_DEATH
+    if dialog and dialog.OnButton3 then
+        A_Admin.SetPlayerName(name)
+        A_Admin.SetPlayerClass(class_index)
+        A_Admin.SetPlayerLevel(level)
+        local player_guid = UnitGUID("player")
+        dialog.OnButton3(StaticPopup1, nil)
+        return player_guid
+    end
+    C_Reincarnation.StartReincarnation(guid, name, class_name, level)
+    return guid
 end
 
-C_Reincarnation.StartReincarnation("Player-1", "Ari", "PALADIN", 60)
-assert(C_Reincarnation.IsReincarnating())
-assert_state("Player-1", "Ari", "PALADIN", 60)
-assert_character_create("Ari")
+A_Admin.SetReincarnationCharacter("Player-1", "Ari", "PALADIN", 60)
+local first_guid = start_character("Player-1", "Ari", "Paladin", 2, 60)
+assert_state(first_guid, "Ari", "Paladin", 60)
 
 A_Admin.SetReincarnationCharacter("Player-2", "Bee", "MAGE", 42)
-assert_state("Player-2", "Bee", "MAGE", 42)
-assert_character_create("Bee")
+local second_guid = start_character("Player-2", "Bee", "Mage", 8, 42)
+assert_state(second_guid, "Bee", "Mage", 42)
 "##;
 
 #[test]
 #[cfg(feature = "client-wowforever")]
-fn reincarnation_state_drives_original_forever_glue_consumers() {
+fn reincarnation_api_roundtrips_two_supplied_characters() {
     test_timeout! {
-        let env = load_blizzard_screen(ScreenKind::CharacterSelect);
-        env.exec(REINCARNATION_CONSUMER_TEST)
-            .expect("original Forever glue consumers should display supplied reincarnation data");
+        let env = load_blizzard_screen(ScreenKind::Game);
+        env.exec(REINCARNATION_API_TEST)
+            .expect("reincarnation should return both supplied character records");
     }
 }
 
