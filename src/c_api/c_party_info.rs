@@ -44,7 +44,8 @@ pub(crate) mod solo_1207;
 
 const AVAILABLE_LOOT_METHODS: [i32; 5] = [0, 1, 2, 3, 4];
 
-/// Retail/Forever PartyInfoDocumentation.lua:196-201, 230-245, 338-344, 550-562.
+/// Retail/Forever PartyInfoDocumentation.lua:196-201, 219-227, 230-245,
+/// 338-344, 378-384, 550-562.
 /// INFERRED (R88dt (native evidence pending)): supplied instance-abandon vote inputs.
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 #[derive(Default)]
@@ -53,6 +54,9 @@ pub(crate) struct InstanceAbandonVoteState {
     vote_time_left: f64,
     shutdown_duration: f64,
     shutdown_time_left: f64,
+    votes_required: f64,
+    keystone_owner_vote_weight: f64,
+    is_keystone_owner: bool,
     response: Option<bool>,
     group_responses: Vec<bool>,
 }
@@ -110,6 +114,18 @@ fn register_instance_abandon_vote_surface(
     state: &mut LuaState,
     table_ref: GcRef<Table>,
 ) -> LuaResult<()> {
+    table_set_rust_fn_static(
+        state,
+        table_ref,
+        "GetInstanceAbandonVoteRequirements",
+        vote_requirements,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        table_ref,
+        "IsChallengeModeKeystoneOwner",
+        is_keystone_owner,
+    )?;
     table_set_rust_fn_static(state, table_ref, "GetInstanceAbandonVoteTime", vote_time)?;
     table_set_rust_fn_static(
         state,
@@ -138,12 +154,36 @@ fn register_instance_abandon_vote_surface(
     Ok(())
 }
 
+/// A_Admin.SetInstanceAbandonVoteState(voteDuration, voteTimeLeft,
+/// shutdownDuration, shutdownTimeLeft, votesRequired, ownerVoteWeight,
+/// isOwner, response, groupResponses).
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
     builder.set_function(
         "SetInstanceAbandonVoteState",
         set_instance_abandon_vote_state,
     )
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn vote_requirements(state: &mut LuaState) -> LuaResult<u32> {
+    let (votes_required, owner_vote_weight) = {
+        let sim = borrow_state(state)?;
+        (
+            sim.instance_abandon_vote.votes_required,
+            sim.instance_abandon_vote.keystone_owner_vote_weight,
+        )
+    };
+    state.push(Val::Num(votes_required));
+    state.push(Val::Num(owner_vote_weight));
+    Ok(2)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn is_keystone_owner(state: &mut LuaState) -> LuaResult<u32> {
+    let is_owner = borrow_state(state)?.instance_abandon_vote.is_keystone_owner;
+    state.push(Val::Bool(is_owner));
+    Ok(1)
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
@@ -206,7 +246,10 @@ fn set_instance_abandon_vote_state(state: &mut LuaState) -> LuaResult<u32> {
     let vote_time_left = f64::from_stack(state, 2)?;
     let shutdown_duration = f64::from_stack(state, 3)?;
     let shutdown_time_left = f64::from_stack(state, 4)?;
-    let response = Option::<bool>::from_stack(state, 5)?;
+    let votes_required = f64::from_stack(state, 5)?;
+    let keystone_owner_vote_weight = f64::from_stack(state, 6)?;
+    let is_keystone_owner = bool::from_stack(state, 7)?;
+    let response = Option::<bool>::from_stack(state, 8)?;
     let group_responses = read_group_vote_responses(state)?;
     let mut sim = crate::lua_api::methods::borrow_state_mut(state)?;
     sim.instance_abandon_vote = InstanceAbandonVoteState {
@@ -214,6 +257,9 @@ fn set_instance_abandon_vote_state(state: &mut LuaState) -> LuaResult<u32> {
         vote_time_left,
         shutdown_duration,
         shutdown_time_left,
+        votes_required,
+        keystone_owner_vote_weight,
+        is_keystone_owner,
         response,
         group_responses,
     };
@@ -222,7 +268,7 @@ fn set_instance_abandon_vote_state(state: &mut LuaState) -> LuaResult<u32> {
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn read_group_vote_responses(state: &mut LuaState) -> LuaResult<Vec<bool>> {
-    let Val::Table(table_ref) = Val::from_stack(state, 6)? else {
+    let Val::Table(table_ref) = Val::from_stack(state, 9)? else {
         return Err(runtime_error("group vote responses must be an array"));
     };
     let Some(table) = state.gc.tables.get(table_ref) else {
