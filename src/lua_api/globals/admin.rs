@@ -166,6 +166,7 @@ pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
         "SetSocialIgnoreName",
         crate::c_api::c_friend_list::set_social_ignore_name,
     )?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     let builder = builder.set_function(
         "SetSocialBlockedEntry",
         crate::c_api::c_friend_list::set_social_blocked_entry,

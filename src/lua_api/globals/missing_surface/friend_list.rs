@@ -105,6 +105,8 @@ fn get_num_ignores(state: &mut LuaState) -> LuaResult<u32> {
 
 fn get_ignore_name(state: &mut LuaState) -> LuaResult<u32> {
     let index = i32::from_stack(state, 1)?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+    let _ = index;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     let name = {
         let ignores = &borrow_state(state)?.social_ignores;

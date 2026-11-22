@@ -2,7 +2,10 @@
 //! Indexed and earlier name queries share the existing simulator projection.
 
 use crate::lua_api::methods::{borrow_state_mut, create_string, create_table, table_set_static};
-use crate::lua_api::state::{BnetBlockedEntry, SocialFriend};
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+use crate::lua_api::state::BnetBlockedEntry;
+use crate::lua_api::state::SocialFriend;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 use crate::lua_bridge::FromStack;
 use rilua::Val;
 use rilua::vm::state::LuaState;
