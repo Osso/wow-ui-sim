@@ -65,6 +65,66 @@ const THREAT_CONSUMER_CHECK: &str = r#"
     return first ~= second
 "#;
 
+#[cfg(feature = "client-wowforever")]
+const SPECIALIZATION_SYSTEM_CONSUMER_CHECK: &str = r#"
+    assert(TargetFrame and TargetFrame.threatIndicator and TargetFrame.threatNumericIndicator)
+    SetCVar("threatWarning", "3")
+    SetCVar("threatShowNumeric", "1")
+    A_Admin.SetPlayerClass(2)
+    A_Admin.SetUnitThreatSituation("player", "target", 0, 50, 50, 500, false, 50)
+    A_Admin.SetUnitEffectivelyTankAura("player", false)
+    A_Admin.SetSpecializationSystem(Enum.SpecializationSystem.TalentTab)
+    A_Admin.SetSpec(2)
+    UnitFrame_UpdateThreatIndicator(TargetFrame.threatIndicator, TargetFrame.threatNumericIndicator)
+    local talentTabTank = PlayerUtil.IsPlayerEffectivelyTank()
+    local talentTabText = TargetFrame.threatNumericIndicator.text:GetText()
+    A_Admin.SetSpecializationSystem(Enum.SpecializationSystem.ChrSpecialization)
+    UnitFrame_UpdateThreatIndicator(TargetFrame.threatIndicator, TargetFrame.threatNumericIndicator)
+    local chrSpecTank = PlayerUtil.IsPlayerEffectivelyTank()
+    local chrSpecText = TargetFrame.threatNumericIndicator.text:GetText()
+    A_Admin.SetSpec(1)
+    UnitFrame_UpdateThreatIndicator(TargetFrame.threatIndicator, TargetFrame.threatNumericIndicator)
+    local holySpecTank = PlayerUtil.IsPlayerEffectivelyTank()
+    assert(not talentTabTank and chrSpecTank and not holySpecTank, "selector and active spec drive UnitUtil tank role")
+    assert(talentTabText == "50%" and chrSpecText == "50%", "TargetFrame numeric threat indicator stays live")
+    return true
+"#;
+
+#[cfg(feature = "client-retail")]
+const SPECIALIZATION_SYSTEM_CONSUMER_CHECK: &str = r#"
+    assert(TargetFrame and TargetFrame.threatIndicator and TargetFrame.threatNumericIndicator)
+    SetCVar("threatWarning", "3")
+    SetCVar("threatShowNumeric", "1")
+    A_Admin.SetPlayerClass(2)
+    A_Admin.SetUnitThreatSituation("player", "target", 0, 50, 50, 500, false, 50)
+    A_Admin.SetUnitEffectivelyTankAura("player", false)
+    A_Admin.SetSpec(2)
+    UnitFrame_UpdateThreatIndicator(TargetFrame.threatIndicator, TargetFrame.threatNumericIndicator)
+    local protSpecTank = PlayerUtil.IsPlayerEffectivelyTank()
+    local protSpecText = TargetFrame.threatNumericIndicator.text:GetText()
+    A_Admin.SetSpec(1)
+    UnitFrame_UpdateThreatIndicator(TargetFrame.threatIndicator, TargetFrame.threatNumericIndicator)
+    local holySpecTank = PlayerUtil.IsPlayerEffectivelyTank()
+    local holySpecText = TargetFrame.threatNumericIndicator.text:GetText()
+    assert(protSpecTank and not holySpecTank, "Retail selector uses supplied active specialization")
+    assert(protSpecText == "50%" and holySpecText == "50%", "TargetFrame numeric threat indicator stays live")
+    return true
+"#;
+
+#[test]
+fn target_threat_indicator_uses_supplied_specialization_system_and_spec() {
+    harness::with_blizzard_addon_startup_shape(&["Blizzard_UnitFrame"], &[], |env, loaded| {
+        assert!(loaded.iter().any(|name| name == "Blizzard_UnitFrame"));
+        let result: bool = env
+            .eval(SPECIALIZATION_SYSTEM_CONSUMER_CHECK)
+            .expect("original UnitUtil tank-role consumer runs through TargetFrame");
+        assert!(
+            result,
+            "TargetFrame output must follow supplied specialization state"
+        );
+    });
+}
+
 #[test]
 fn compact_aggro_highlight_tracks_two_supplied_states() {
     harness::with_blizzard_addon_startup_shape(
