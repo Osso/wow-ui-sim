@@ -79,7 +79,7 @@ fn load_hardcore_popup(hardcore: bool) -> WowLuaEnv {
     let env = new_blizzard_addon_env(&ui_dir);
     let value = if hardcore { "1" } else { "nil" };
     env.exec(&format!(
-        "A_Admin.SetGameRule('HardcoreRuleset', {value}); A_Admin.SetGameRule(22, 1)"
+        "A_Admin.SetGameRule(Enum.GameRule.HardcoreRuleset, {value}); A_Admin.SetGameRule(22, 1)"
     ))
     .unwrap();
     let loaded =
