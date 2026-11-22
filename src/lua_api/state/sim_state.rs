@@ -28,6 +28,8 @@ pub struct SimState {
     /// Supplied visibility for the Retail/Forever ranged transmog slot.
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     pub ranged_slot: crate::c_api::ranged_slot::RangedSlotState,
+    #[cfg(feature = "client-wowforever")]
+    pub(crate) reincarnation: crate::c_api::reincarnation::ReincarnationState,
     /// Explicit empty-default R88q host inputs; no automatic server records.
     pub store_glue: crate::c_api::store_glue_model::StoreGlueState,
     pub hyperlink_tooltip: crate::c_api::c_tooltip_info_hyperlink::inputs::HyperlinkTooltipInputs,

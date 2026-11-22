@@ -36,6 +36,10 @@ fn register_profile_spell_tables(state: &mut LuaState) -> LuaResult<()> {
     super::gamepad_action_bar_constants::register(state);
     #[cfg(feature = "client-wowforever")]
     super::forever_finite_constants::register(state);
+    #[cfg(feature = "client-wowforever")]
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever {
+        super::reincarnation::register(state)?;
+    }
     Ok(())
 }
 
