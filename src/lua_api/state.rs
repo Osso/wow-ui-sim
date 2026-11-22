@@ -990,6 +990,8 @@ macro_rules! build_empty_sim_state {
             super_district_info_by_id: ::std::collections::HashMap::new(),
             selected_super_district_id: 0,
             character_services: CharacterServicesState::default(),
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            class_trial: crate::c_api::c_class_trial::ClassTrialState::default(),
             shared_character_services:
                 crate::c_api::c_shared_character_services::SharedCharacterServicesState::default(),
             trial_boost_level:

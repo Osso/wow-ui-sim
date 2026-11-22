@@ -1239,6 +1239,9 @@ pub struct SimState {
     /// Currently selected superdistrict ID; native clear/start/reset value is zero.
     pub selected_super_district_id: i32,
     pub character_services: CharacterServicesState,
+    /// INFERRED GetTime-clock inputs for class-trial character consumers (R88en (native evidence pending)).
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub(crate) class_trial: crate::c_api::c_class_trial::ClassTrialState,
     pub shared_character_services:
         crate::c_api::c_shared_character_services::SharedCharacterServicesState,
     pub trial_boost_level: crate::c_api::c_character_creation_trial_boost::TrialBoostLevelState,
