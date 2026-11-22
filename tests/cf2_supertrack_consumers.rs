@@ -139,6 +139,8 @@ fn original_quest_navigation_consumer() -> WowLuaEnv {
     );
 
     let env = new_blizzard_addon_env(&ui);
+    let shared = load_blizzard_addon_closure_into_env(&env, &ui, &["Blizzard_SharedXML"], &[]);
+    assert!(shared.iter().any(|name| name == "Blizzard_SharedXML"));
     let loaded =
         load_blizzard_addon_closure_into_env(&env, &ui, &["Blizzard_QuestNavigation"], &[]);
     assert!(loaded.iter().any(|name| name == "Blizzard_QuestNavigation"));
