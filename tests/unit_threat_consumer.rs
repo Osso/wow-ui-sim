@@ -57,7 +57,7 @@ const THREAT_CONSUMER_CHECK: &str = r#"
     assert(UnitThreatPercentageOfLead("player", "target") == 100, "second lead")
     assert(firstIndicator == false and firstNumeric and firstText == "50%", "first indicator text and visibility")
     -- UnitUtil.lua:110-115: the tank-aura path overrides a non-tanking status to 2.
-    assert(firstR == 1 and firstG == 0.6 and firstB == 0, "first indicator color")
+    assert(firstR == 1 and math.abs(firstG - 0.6) < 0.001 and firstB == 0, "first indicator color")
     assert(secondIndicator and secondNumeric and secondText == "100%", "second indicator text and visibility")
     assert(secondR == 1 and secondG == 0 and secondB == 0, "second indicator color")
     return true
