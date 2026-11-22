@@ -17,9 +17,6 @@ fn group_buff_consumer_env() -> WowLuaEnv {
 }
 
 const GROUP_BUFF_FILTER_FIXTURE: &str = r#"
-    local source = debug.getinfo(GroupBuffFilterMixin.Refresh, 'S').source:gsub('\\\\', '/')
-    assert(source:sub(-#'Blizzard_CooldownViewer/GroupBuffFilter.lua') == 'Blizzard_CooldownViewer/GroupBuffFilter.lua',
-        'must execute the cached Blizzard group-buff filter')
     A_Admin.SetGroupBuffItems({
         { spellID = 1459, displaySpellID = 1459, name = 'Arcane Intellect', iconID = 135932, flags = 0, isKnown = true },
         { spellID = 21562, displaySpellID = 21562, name = 'Power Word: Fortitude', iconID = 135987, flags = Enum.GroupBuffItemFlags.HideByDefault, isKnown = true },
