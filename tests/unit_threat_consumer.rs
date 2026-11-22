@@ -30,8 +30,8 @@ const THREAT_CONSUMER_CHECK: &str = r#"
     assert(IsThreatWarningEnabled(), "threatWarning=2 enables warnings in a group")
     SetCVar("threatWarning", "3")
     assert(IsThreatWarningEnabled(), "threatWarning=3 enables threat indicators")
-    A_Admin.SetUnitEffectivelyTankAura("player", false)
-    assert(not UnitHasEffectivelyTankAura("player"), "supplied player aura state")
+    A_Admin.SetUnitEffectivelyTankAura("player", true)
+    assert(UnitHasEffectivelyTankAura("player"), "supplied player aura state")
     UnitFrame_UpdateThreatIndicator(TargetFrame.threatIndicator, TargetFrame.threatNumericIndicator)
     local firstIndicator = TargetFrame.threatIndicator:IsShown()
     local firstNumeric = TargetFrame.threatNumericIndicator:IsShown()
@@ -56,7 +56,8 @@ const THREAT_CONSUMER_CHECK: &str = r#"
     assert(UnitThreatSituation("player") == 3, "second situation")
     assert(UnitThreatPercentageOfLead("player", "target") == 100, "second lead")
     assert(firstIndicator == false and firstNumeric and firstText == "50%", "first indicator text and visibility")
-    assert(firstR == 0.69 and firstG == 0.69 and firstB == 0.69, "first indicator color")
+    -- UnitUtil.lua:110-115: the tank-aura path overrides a non-tanking status to 2.
+    assert(firstR == 1 and firstG == 0.6 and firstB == 0, "first indicator color")
     assert(secondIndicator and secondNumeric and secondText == "100%", "second indicator text and visibility")
     assert(secondR == 1 and secondG == 0 and secondB == 0, "second indicator color")
     return true
