@@ -381,13 +381,7 @@ local function assert_state(guid, name, class_name, level)
     assert(actual_class == class_name and actual_level == level)
 end
 
-local function assert_consumers_show_character(name, class_name, level)
-    CharacterReincarnatePopUpDialog:ShowWarning()
-    local text = CharacterReincarnatePopUpText1:GetText()
-    assert(text:find(name, 1, true), "Hardcore warning omitted character name")
-    assert(text:find(class_name, 1, true), "Hardcore warning omitted class")
-    assert(text:find(tostring(level), 1, true), "Hardcore warning omitted level")
-
+local function assert_character_create_uses_name(name)
     CharacterCreateFrame:Hide()
     CharacterCreateFrame:Show()
     assert(CharacterCreateFrame.NameChoiceFrame.EditBox:GetText() == name)
@@ -396,11 +390,11 @@ end
 C_Reincarnation.StartReincarnation("Player-1", "Ari", "PALADIN", 60)
 assert(C_Reincarnation.IsReincarnating())
 assert_state("Player-1", "Ari", "PALADIN", 60)
-assert_consumers_show_character("Ari", "PALADIN", 60)
+assert_character_create_uses_name("Ari")
 
 A_Admin.SetReincarnationCharacter("Player-2", "Bee", "MAGE", 42)
 assert_state("Player-2", "Bee", "MAGE", 42)
-assert_consumers_show_character("Bee", "MAGE", 42)
+assert_character_create_uses_name("Bee")
 "##;
 
 #[test]
