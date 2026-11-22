@@ -41,37 +41,6 @@ fn zone_story_supplied_relations_drive_blizzard_header_and_tooltip() {
     env.exec(PREPARE_STORY_HEADER)
         .expect("supplied relations drive the original zone-story header");
 
-    let geometry: String = env
-        .eval(
-            r#"
-            local map = QuestMapFrame:GetParent()
-            local width, height = map:GetSize()
-            local uiRight = select('#', UIParent:GetRight())
-            local mapRight = select('#', map:GetRight())
-            local mapLeft = select('#', map:GetLeft())
-            local mapTop = select('#', map:GetTop())
-            local mapRect = select('#', map:GetRect())
-            return table.concat({uiRight, mapRight, mapLeft, mapTop, mapRect, tostring(width), tostring(height), map:IsShown() and 1 or 0}, '|')
-        "#,
-        )
-        .expect("read original tooltip anchor geometry");
-    eprintln!("tooltip geometry result counts: {geometry}");
-    let state = env.state().borrow();
-    let map = state
-        .widgets
-        .get_by_name("WorldMapFrame")
-        .expect("loaded WorldMapFrame widget");
-    eprintln!(
-        "WorldMapFrame state: id={} parent={:?} size={}x{} visible={} rect_valid={} rect={:?} anchors={:?}",
-        map.id,
-        map.parent_id,
-        map.width,
-        map.height,
-        map.visible,
-        map.rect_valid,
-        map.layout_rect,
-        map.anchors,
-    );
     env.exec("QuestScrollFrame.Contents.StoryHeader:ShowTooltip()")
         .expect("original story tooltip should display");
     env.exec(VERIFY_STORY_TOOLTIP)
