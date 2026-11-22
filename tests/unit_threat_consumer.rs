@@ -30,6 +30,8 @@ const THREAT_CONSUMER_CHECK: &str = r#"
     assert(IsThreatWarningEnabled(), "threatWarning=2 enables warnings in a group")
     SetCVar("threatWarning", "3")
     assert(IsThreatWarningEnabled(), "threatWarning=3 enables threat indicators")
+    A_Admin.SetUnitEffectivelyTankAura("player", false)
+    assert(not UnitHasEffectivelyTankAura("player"), "supplied player aura state")
     UnitFrame_UpdateThreatIndicator(TargetFrame.threatIndicator, TargetFrame.threatNumericIndicator)
     local firstIndicator = TargetFrame.threatIndicator:IsShown()
     local firstNumeric = TargetFrame.threatNumericIndicator:IsShown()
