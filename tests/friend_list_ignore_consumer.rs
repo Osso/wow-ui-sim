@@ -14,12 +14,12 @@ const IGNORE_LIST_SCENARIO: &str = r#"
     FriendsFrame:Show()
     local ignoreWindow = FriendsFrame.IgnoreListWindow
     local scrollBox = ignoreWindow.ScrollBox
-    -- Supply the original XML viewport size because this test does not render a frame.
-    scrollBox:SetSize(252, 271)
     ignoreWindow:Show()
+    local width, height = scrollBox:GetSize()
+    assert(width > 0 and height > 0,
+        string.format("ignore ScrollBox size must be positive: %sx%s", width, height))
     local provider = scrollBox:GetDataProvider()
     assert(provider:GetSize() == 5, "provider must contain two headers and three rows")
-    local width, height = scrollBox:GetSize()
     local visibleFrames = 0
     for _ in scrollBox:EnumerateFrames() do
         visibleFrames = visibleFrames + 1
