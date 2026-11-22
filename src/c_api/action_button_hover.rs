@@ -109,12 +109,12 @@ pub(crate) fn read_converted_slot(state: &LuaState, function: &str, usage: &str)
     Ok(unknown_policy::narrow_converted_slot(converted))
 }
 
-fn select_visualization(sim: &crate::lua_api::SimState, slot: u32) -> Option<u32> {
-    if !sim
-        .game_rules
-        .rules
-        .contains_key("ActionCombatSpellHitIndicationEnabled")
-    {
+fn select_visualization(
+    sim: &crate::lua_api::SimState,
+    slot: u32,
+    rule_key: &crate::lua_api::state::GameRuleKey,
+) -> Option<u32> {
+    if !sim.game_rules.rules.contains_key(rule_key) {
         return None;
     }
     let spell = sim.action_bars.get(&(slot + 1))?;
@@ -131,8 +131,10 @@ fn enter(state: &mut LuaState) -> LuaResult<u32> {
     let Some(slot) = read_slot(state, "EnterActionButton")? else {
         return Ok(0);
     };
+    let rule_key =
+        super::c_game_rules::key_from_name(state, "ActionCombatSpellHitIndicationEnabled");
     let mut sim = borrow_state_mut(state)?;
-    if let Some(value) = select_visualization(&sim, slot) {
+    if let Some(value) = select_visualization(&sim, slot, &rule_key) {
         let visualization = &mut sim.spell_range_visualization;
         visualization.stored_slot = Some(slot);
         visualization.value = value;

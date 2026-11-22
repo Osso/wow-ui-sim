@@ -32,13 +32,9 @@ use rilua::{LuaResult, Val};
 /// other profiles keep their existing name-keyed behavior.
 fn read_rule_key(state: &mut LuaState) -> LuaResult<Option<GameRuleKey>> {
     let key = match stack_val(state, 1) {
-        Val::Str(value) => read_rule_name(state, value).map(|name| rule_key_from_name(state, name)),
-        Val::Num(value) if ACTIVE == ClientProfile::WowForever => {
-            resolve_rule_key_from_id(state, value as i64)
-        }
-        Val::Num(value) => {
-            resolve_rule_name_from_enum_id(state, value as i64).map(GameRuleKey::Name)
-        }
+        Val::Str(value) => read_rule_name(state, value)
+            .map(|name| crate::c_api::c_game_rules::key_from_name(state, &name)),
+        Val::Num(value) => crate::c_api::c_game_rules::key_from_id(state, value as i64),
         _ => None,
     };
     Ok(key)
@@ -54,113 +50,6 @@ fn read_rule_name(
         .get(value)
         .and_then(|lua_str| std::str::from_utf8(lua_str.data()).ok())
         .map(str::to_owned)
-}
-
-fn resolve_rule_key_from_id(state: &mut LuaState, id: i64) -> Option<GameRuleKey> {
-    resolve_rule_name_from_enum_id(state, id)?;
-    Some(GameRuleKey::Id(id as i32))
-}
-
-fn rule_key_from_name(state: &mut LuaState, name: String) -> GameRuleKey {
-    if ACTIVE == ClientProfile::WowForever {
-        if let Some(id) = resolve_rule_id_from_enum_name(state, &name) {
-            return GameRuleKey::Id(id);
-        }
-    }
-    GameRuleKey::Name(name)
-}
-
-/// Resolve a rule ID from its name on the active profile's Enum.GameRule table.
-pub(crate) fn resolve_rule_id_from_enum_name(state: &mut LuaState, name: &str) -> Option<i32> {
-    let rule_table = resolve_enum_game_rule_table(state)?;
-    find_rule_id_for_name(state, rule_table, name)
-}
-
-/// Reverse-lookup `Enum.GameRule` to find the rule name whose numeric id
-/// matches `id`. Returns `None` when the enum table is missing or has no
-/// entry with that id.
-pub(crate) fn resolve_rule_name_from_enum_id(state: &mut LuaState, id: i64) -> Option<String> {
-    let rule_table = resolve_enum_game_rule_table(state)?;
-    find_rule_name_for_id(state, rule_table, id)
-}
-
-/// Resolve `_G.Enum.GameRule` to its backing table, or `None` if either
-/// `Enum` or `Enum.GameRule` is missing / non-table.
-fn resolve_enum_game_rule_table(
-    state: &mut LuaState,
-) -> Option<rilua::vm::gc::arena::GcRef<rilua::vm::table::Table>> {
-    let enum_key = state.gc.intern_string_static(b"Enum");
-    let enum_val = state
-        .gc
-        .tables
-        .get(state.global)?
-        .get_str(enum_key, &state.gc.string_arena);
-    let Val::Table(enum_table) = enum_val else {
-        return None;
-    };
-    let rule_key = state.gc.intern_string_static(b"GameRule");
-    let rule_val = state
-        .gc
-        .tables
-        .get(enum_table)?
-        .get_str(rule_key, &state.gc.string_arena);
-    match rule_val {
-        Val::Table(rule_table) => Some(rule_table),
-        _ => None,
-    }
-}
-
-/// Walk the hash part of `rule_table` (name → numeric id pairs) and
-/// return the first name whose id matches. None when no entry matches.
-fn find_rule_name_for_id(
-    state: &mut LuaState,
-    rule_table: rilua::vm::gc::arena::GcRef<rilua::vm::table::Table>,
-    id: i64,
-) -> Option<String> {
-    let mut key = Val::Nil;
-    while let Some((next_key, next_value)) = state
-        .gc
-        .tables
-        .get(rule_table)?
-        .next(key, &state.gc.string_arena)
-        .ok()?
-    {
-        if let (Val::Str(name_ref), Val::Num(value)) = (next_key, next_value) {
-            if value as i64 == id {
-                return state
-                    .gc
-                    .string_arena
-                    .get(name_ref)
-                    .and_then(|lua_str| std::str::from_utf8(lua_str.data()).ok())
-                    .map(str::to_owned);
-            }
-        }
-        key = next_key;
-    }
-    None
-}
-
-fn find_rule_id_for_name(
-    state: &mut LuaState,
-    rule_table: rilua::vm::gc::arena::GcRef<rilua::vm::table::Table>,
-    name: &str,
-) -> Option<i32> {
-    let mut key = Val::Nil;
-    while let Some((next_key, next_value)) = state
-        .gc
-        .tables
-        .get(rule_table)?
-        .next(key, &state.gc.string_arena)
-        .ok()?
-    {
-        if let (Val::Str(name_ref), Val::Num(id)) = (next_key, next_value) {
-            if read_rule_name(state, name_ref).as_deref() == Some(name) {
-                return Some(id as i32);
-            }
-        }
-        key = next_key;
-    }
-    None
 }
 
 pub fn is_game_rule_active(state: &mut LuaState) -> LuaResult<u32> {
@@ -493,9 +382,10 @@ pub fn admin_set_game_rule(state: &mut LuaState) -> LuaResult<u32> {
 
 fn admin_rule_key(state: &mut LuaState) -> Option<GameRuleKey> {
     match stack_val(state, 1) {
-        Val::Str(value) => read_rule_name(state, value).map(|name| rule_key_from_name(state, name)),
+        Val::Str(value) => read_rule_name(state, value)
+            .map(|name| crate::c_api::c_game_rules::key_from_name(state, &name)),
         Val::Num(value) if ACTIVE == ClientProfile::WowForever => {
-            resolve_rule_key_from_id(state, value as i64)
+            crate::c_api::c_game_rules::key_from_id(state, value as i64)
         }
         _ => None,
     }

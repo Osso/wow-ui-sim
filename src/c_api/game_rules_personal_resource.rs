@@ -5,12 +5,13 @@ use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 
 pub(crate) fn is_enabled(state: &mut LuaState) -> LuaResult<u32> {
+    let rule_key = super::c_game_rules::key_from_name(state, "PersonalResourceDisplayDisabled");
     let enabled = {
         let sim = borrow_state(state)?;
         let disabled = sim
             .game_rules
             .rules
-            .get("PersonalResourceDisplayDisabled")
+            .get(&rule_key)
             .is_some_and(|rule| rule.as_float > 0.0 || rule.as_float < 0.0);
         let setting = sim
             .cvars

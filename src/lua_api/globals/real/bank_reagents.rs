@@ -11,7 +11,6 @@ pub(crate) fn unknown_character_default() -> Option<bool> {
 use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::WowLuaEnv;
 use crate::lua_api::methods::borrow_state;
-use crate::lua_api::state::GameRuleKey;
 use rilua::LuaApiMut;
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
@@ -40,14 +39,11 @@ pub(crate) fn update_screen_registration(env: &WowLuaEnv, is_glue: bool) {
 }
 
 fn query(state: &mut LuaState) -> LuaResult<u32> {
+    let rule_key = crate::c_api::c_game_rules::key_from_name(state, "CraftFromBankRestricted");
     let allowed = {
         let sim = borrow_state(state)?;
-        sim.bank_reagent_object.is_some_and(|permission| {
-            !sim.game_rules
-                .rules
-                .contains_key(&GameRuleKey::Name("CraftFromBankRestricted".into()))
-                || permission
-        })
+        sim.bank_reagent_object
+            .is_some_and(|permission| !sim.game_rules.rules.contains_key(&rule_key) || permission)
     };
     publish_unknown_native_policy(state, allowed)
 }
