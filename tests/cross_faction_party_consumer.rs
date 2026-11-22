@@ -36,3 +36,34 @@ fn retail_groupfinder_raidfinder_reports_cross_faction_party() {
         },
     );
 }
+
+#[test]
+fn retail_unitframe_pvp_consumer_reads_supplied_party_factions() {
+    crate::common::blizzard_addon_harness::with_blizzard_addon_startup_shape(
+        &["Blizzard_UnitFrame"],
+        &[],
+        |env, _loaded| {
+            env.exec(
+                r#"
+                assert(type(UnitFrameUtil.GetUnitPvPIndicatorDisplayInfo) == "function", "Retail UnitFrame PvP consumer is loaded")
+                A_Admin.SetPlayerRace(0)
+                A_Admin.SetPartySize(6)
+                for index = 1, 6 do
+                    A_Admin.SetPartyMember(index, "Faction Member " .. index, 1, 80)
+                end
+                A_Admin.SetPartyMemberFaction(1, "Alliance")
+                A_Admin.SetPartyMemberFaction(2, "Horde")
+
+                UnitFrameUtil.GetUnitPvPIndicatorDisplayInfo("party1")
+                UnitFrameUtil.GetUnitPvPIndicatorDisplayInfo("party2")
+                local partyFaction = UnitFactionGroup("party1")
+                local raidFaction = UnitFactionGroup("raid2")
+                assert(partyFaction == "Alliance", "party faction must use supplied member state")
+                assert(raidFaction == "Horde", "raid faction must use supplied member state")
+                assert(C_PartyInfo.IsCrossFactionParty(LE_PARTY_CATEGORY_HOME), "party faction inputs must agree with cross-faction party state")
+                "#,
+            )
+            .expect("original UnitFrame PvP consumer must read supplied party factions");
+        },
+    );
+}
