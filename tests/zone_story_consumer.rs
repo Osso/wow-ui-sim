@@ -27,6 +27,7 @@ const PREPARE_STORY_HEADER: &str = r#"
 const VERIFY_STORY_TOOLTIP: &str = r#"
     local tooltip = QuestScrollFrame.StoryTooltip
     local numCriteria = GetAchievementNumCriteria(513)
+    assert(tooltip:IsShown())
     assert(tooltip.Title:GetText() == C_Map.GetMapInfo(84).name)
     assert(tooltip.ProgressCount:GetText() == string.format(STORY_CHAPTERS, 1, numCriteria))
 "#;
@@ -34,21 +35,18 @@ const VERIFY_STORY_TOOLTIP: &str = r#"
 #[test]
 fn zone_story_supplied_relations_drive_blizzard_header_and_tooltip() {
     let env = keybinding_panel_fixtures::setup_env();
-    env.state()
-        .borrow_mut()
-        .world
-        .earned_achievements
-        .insert(513);
+    env.exec("A_Admin.SetAchievementEarned(513, true)")
+        .expect("supply achievement completion through the admin API");
     env.send_key_press("M", None).expect("open world map");
     env.exec(PREPARE_STORY_HEADER)
         .expect("supplied relations drive the original zone-story header");
 
-    if let Err(error) = env.exec("QuestScrollFrame.Contents.StoryHeader:ShowTooltip()") {
-        assert!(format!("{error:?}").contains("arithmetic on a nil value"));
-    } else {
-        env.exec("assert(QuestScrollFrame.StoryTooltip:IsShown())")
-            .expect("original tooltip is shown when frame geometry resolves");
-    }
+    let geometry: String = env
+        .eval("return tostring(UIParent:GetRight()) .. '|' .. tostring(QuestMapFrame:GetParent():GetRight())")
+        .expect("read original tooltip anchor geometry");
+    eprintln!("tooltip right edges: UIParent|WorldMapFrame={geometry}");
+    env.exec("QuestScrollFrame.Contents.StoryHeader:ShowTooltip()")
+        .expect("original story tooltip should display");
     env.exec(VERIFY_STORY_TOOLTIP)
         .expect("original tooltip reads the selected story map and achievement progress");
 }
