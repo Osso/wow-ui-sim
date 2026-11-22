@@ -9,24 +9,24 @@ use wow_ui_sim::toc::TocFile;
 
 const VOICE_TOGGLE_LOGIN_CASE: &str = r#"
     local button = CreateFrame("Button", nil, UIParent, "ToggleVoiceMuteButtonTemplate")
-    assert(C_VoiceChat.IsLoggedIn() == false)
-    assert(button:UpdateVisibleState() == false)
-    assert(not button:IsShown())
+    assert(C_VoiceChat.IsLoggedIn() == false, "default login state")
+    assert(button:UpdateVisibleState() == false, "default button visibility")
+    assert(not button:IsShown(), "default button is hidden")
 
     A_Admin.SetVoiceChatLoggedIn(false)
-    assert(C_VoiceChat.IsLoggedIn() == false)
-    assert(button:UpdateVisibleState() == false)
-    assert(not button:IsShown())
+    assert(C_VoiceChat.IsLoggedIn() == false, "supplied logged-out state")
+    assert(button:UpdateVisibleState() == false, "logged-out visibility")
+    assert(not button:IsShown(), "logged-out button is hidden")
 
     A_Admin.SetVoiceChatLoggedIn(true)
-    assert(C_VoiceChat.IsLoggedIn() == true)
-    assert(C_VoiceChat.CanAccessSettings() == false)
-    assert(button:UpdateVisibleState() == true)
-    assert(button:IsShown())
+    assert(C_VoiceChat.IsLoggedIn() == true, "supplied logged-in state")
+    assert(C_VoiceChat.CanAccessSettings() == false, "readiness remains independent")
+    assert(button:UpdateVisibleState() == true, "logged-in visibility")
+    assert(button:IsShown(), "logged-in button is shown")
 
     A_Admin.SetVoiceChatLoggedIn(false)
-    assert(button:UpdateVisibleState() == false)
-    assert(not button:IsShown())
+    assert(button:UpdateVisibleState() == false, "updated logged-out visibility")
+    assert(not button:IsShown(), "updated logged-out button is hidden")
 "#;
 
 fn assert_voice_addon_selected() {
