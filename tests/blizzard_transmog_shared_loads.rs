@@ -19,12 +19,6 @@ fn transmog_shared_toc() -> PathBuf {
     transmog_shared_dir().join("Blizzard_TransmogShared.toc")
 }
 
-fn transmog_toc() -> PathBuf {
-    blizzard_ui_dir()
-        .join("Blizzard_Transmog")
-        .join("Blizzard_Transmog.toc")
-}
-
 const GLUE_SCREENS: &[ScreenKind] = &[
     ScreenKind::Login,
     ScreenKind::CharacterSelect,
@@ -479,8 +473,8 @@ fn supplied_ranged_slot_visibility_controls_transmog_refresh() {
         let env = fresh_game_env();
         env.exec(&format!("A_Admin.SetRangedSlotShown({visible})"))
             .expect("set ranged-slot visibility input");
-        load_addon(&env.loader_env(), &transmog_toc())
-            .expect("Blizzard_Transmog must load via Rust loader");
+        env.exec("assert(C_AddOns.LoadAddOn('Blizzard_Transmog'))")
+            .expect("Blizzard_Transmog and its declared dependencies must load");
 
         let actual: bool = env
             .eval(
