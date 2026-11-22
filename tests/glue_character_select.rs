@@ -381,20 +381,23 @@ local function assert_state(guid, name, class_name, level)
     assert(actual_class == class_name and actual_level == level)
 end
 
-local function assert_character_create_uses_name(name)
+local function assert_character_create(name)
+    A_Admin.SetGameRule(10, 1)
     CharacterCreateFrame:Hide()
     CharacterCreateFrame:Show()
+    assert(CharacterCreateFrame:IsMode(1))
     assert(CharacterCreateFrame.NameChoiceFrame.EditBox:GetText() == name)
+    assert(CharacterCreateFrame.ForwardButton:GetText() == DEATH_REINCARNATE_CHARACTER)
 end
 
 C_Reincarnation.StartReincarnation("Player-1", "Ari", "PALADIN", 60)
 assert(C_Reincarnation.IsReincarnating())
 assert_state("Player-1", "Ari", "PALADIN", 60)
-assert_character_create_uses_name("Ari")
+assert_character_create("Ari")
 
 A_Admin.SetReincarnationCharacter("Player-2", "Bee", "MAGE", 42)
 assert_state("Player-2", "Bee", "MAGE", 42)
-assert_character_create_uses_name("Bee")
+assert_character_create("Bee")
 "##;
 
 #[test]
