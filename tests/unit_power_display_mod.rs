@@ -24,44 +24,44 @@ fn load_full_game_ui() -> WowLuaEnv {
     env
 }
 
+const SHARD_BAR_TEST: &str = r#"
+local frame = WarlockPowerFrame
+assert(frame, "WarlockPowerFrame was not created")
+assert(frame:IsShown(), "WarlockPowerFrame is hidden")
+assert(frame.powerType == Enum.PowerType.SoulShards, "wrong WarlockPowerFrame power type")
+A_Admin.SetPlayerPower(35, 5, frame.powerType)
+A_Admin.SetUnitPowerDisplayMod(frame.powerType, 10)
+frame:UpdatePower()
+
+local shards = {}
+for shard in frame.classResourceButtonPool:EnumerateActive() do
+    shards[shard.layoutIndex] = shard
+end
+assert(#shards == 5, "expected 5 active shards, got " .. #shards)
+for index = 1, 3 do
+    assert(shards[index].fillAmount == 1, "full shard has wrong fill amount")
+    assert(shards[index].Shard_Soul:IsShown(), "full shard soul is hidden")
+    assert(not shards[index].FillIncrement:IsShown(), "full shard increment is shown")
+end
+assert(shards[4].fillAmount == 0.5, "10x modifier did not show a half shard")
+assert(not shards[4].Shard_Soul:IsShown(), "half shard soul is shown")
+assert(shards[4].FillIncrement:IsShown(), "half shard increment is hidden")
+
+A_Admin.SetUnitPowerDisplayMod(frame.powerType, 100)
+frame:UpdatePower()
+assert(shards[1].fillAmount == 0.3, "100x modifier did not show a 0.3 shard")
+assert(not shards[1].Shard_Soul:IsShown(), "partial shard soul is shown")
+assert(shards[1].FillIncrement:IsShown(), "partial shard increment is hidden")
+for index = 2, 5 do
+    assert(shards[index].fillAmount == 0, "later shard has a nonzero fill")
+    assert(not shards[index].Shard_Soul:IsShown(), "later shard soul is shown")
+    assert(not shards[index].FillIncrement:IsShown(), "later shard increment is shown")
+end
+"#;
+
 #[test]
 fn shard_bar_uses_supplied_power_display_modifiers() {
-    let env = load_full_game_ui();
-    env.exec(
-        r#"
-        local frame = WarlockPowerFrame
-        assert(frame, "WarlockPowerFrame was not created")
-        assert(frame:IsShown(), "WarlockPowerFrame is hidden")
-        assert(frame.powerType == Enum.PowerType.SoulShards, "wrong WarlockPowerFrame power type")
-        A_Admin.SetPlayerPower(35, 5, frame.powerType)
-        A_Admin.SetUnitPowerDisplayMod(frame.powerType, 10)
-        frame:UpdatePower()
-
-        local shards = {}
-        for shard in frame.classResourceButtonPool:EnumerateActive() do
-            shards[#shards + 1] = shard
-        end
-        assert(#shards == 5, "expected 5 active shards, got " .. #shards)
-        for index = 1, 3 do
-            assert(shards[index].fillAmount == 1, "full shard has wrong fill amount")
-            assert(shards[index].Shard_Soul:IsShown(), "full shard soul is hidden")
-            assert(not shards[index].FillIncrement:IsShown(), "full shard increment is shown")
-        end
-        assert(shards[4].fillAmount == 0.5, "10x modifier did not show a half shard")
-        assert(not shards[4].Shard_Soul:IsShown(), "half shard soul is shown")
-        assert(shards[4].FillIncrement:IsShown(), "half shard increment is hidden")
-
-        A_Admin.SetUnitPowerDisplayMod(frame.powerType, 100)
-        frame:UpdatePower()
-        assert(shards[1].fillAmount == 0.3, "100x modifier did not show a 0.3 shard")
-        assert(not shards[1].Shard_Soul:IsShown(), "partial shard soul is shown")
-        assert(shards[1].FillIncrement:IsShown(), "partial shard increment is hidden")
-        for index = 2, 5 do
-            assert(shards[index].fillAmount == 0, "later shard has a nonzero fill")
-            assert(not shards[index].Shard_Soul:IsShown(), "later shard soul is shown")
-            assert(not shards[index].FillIncrement:IsShown(), "later shard increment is shown")
-        end
-        "#,
-    )
-    .expect("the visible Warlock shard frame should use supplied display modifiers");
+    load_full_game_ui()
+        .exec(SHARD_BAR_TEST)
+        .expect("the visible Warlock shard frame should use supplied display modifiers");
 }
