@@ -262,6 +262,9 @@ pub struct PlayerState {
     pub power_type: i32,
     /// Secondary power pools keyed by Enum.PowerType value (e.g. Holy Power).
     pub secondary_powers: HashMap<i32, SecondaryPowerState>,
+    /// INFERRED (R88dy, native evidence pending): supplied display modifiers by PowerType.
+    #[cfg(feature = "client-retail")]
+    pub power_display_modifiers: HashMap<i32, f64>,
     /// Explicit regen pairs indexed by power type; no mana/player-stat alias.
     #[cfg(feature = "client-retail")]
     pub power_regen: HashMap<i32, PowerRegen>,

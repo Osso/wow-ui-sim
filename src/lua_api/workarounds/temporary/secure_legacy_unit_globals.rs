@@ -899,7 +899,7 @@ const MASTER_SNAPSHOT_UNIT_GLOBALS: &[MasterUnitGlobal] = &[
         "UnitPowerDisplayMod",
         RETAIL_FOREVER_PROFILES,
         RETAIL_FOREVER_PROFILES,
-        "src/lua_api/workarounds/temporary/unit_power_display_mod.rs:12 (Retail/WowForever)",
+        "src/lua_api/globals/real/unit_power_display_mod.rs (Retail); src/lua_api/workarounds/temporary/unit_power_display_mod.rs (WowForever)",
     ),
     unit_global(
         "UnitPowerMax",

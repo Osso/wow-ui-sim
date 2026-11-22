@@ -226,6 +226,8 @@ fn register_player(b: TableBuilder) -> LuaResult<TableBuilder> {
         "SetPlayerStagger",
         crate::lua_api::globals::real::unit_stagger::set_player_stagger,
     )?;
+    #[cfg(feature = "client-retail")]
+    let b = super::real::unit_power_display_mod::register_admin(b)?;
     b.set_function("SetPlayerName", set_player_name)?
         .set_function("SetPlayerClass", set_player_class)?
         .set_function("SetPlayerRace", set_player_race)?
