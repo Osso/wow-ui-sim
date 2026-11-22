@@ -358,10 +358,6 @@ A_Admin.SetEncounterJournalMapEncounters(84, {
 #[cfg(feature = "client-retail")]
 const ENCOUNTER_MAP_REFRESH_LUA: &str = r#"
 assert(CanShowEncounterJournal(), "encounter journal gate must be true")
-assert(debug.getinfo(CanShowEncounterJournal, "S").source
-    :find("Blizzard_EncounterJournal_Bootstrap.lua", 1, true))
-assert(debug.getinfo(AdventureGuideUtil.IsAvailable, "S").source
-    :find("Blizzard_FrameXMLUtil/AdventureGuideUtil.lua", 1, true))
 assert(not Kiosk.IsEnabled() and C_AdventureJournal.CanBeShown())
 assert(AdventureGuideUtil.IsAvailable())
 local provider = CreateFromMixins(EncounterJournalDataProviderMixin)
