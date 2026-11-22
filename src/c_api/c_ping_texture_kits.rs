@@ -36,7 +36,7 @@ pub struct PingDefaultOptions {
 pub struct PingDefaultOption {
     pub ping_type: i32,
     pub order_index: i32,
-    pub ui_texture_kit_id: Option<String>,
+    pub ui_texture_kit_id: String,
 }
 
 #[cfg(feature = "retail-12-0-0")]
@@ -73,10 +73,8 @@ fn get_default_ping_options(state: &mut LuaState) -> LuaResult<u32> {
             "orderIndex",
             Val::Num(f64::from(row.order_index)),
         );
-        if let Some(kit) = &row.ui_texture_kit_id {
-            let kit = create_string(state, kit);
-            table_set_static(state, option, "uiTextureKitID", kit);
-        }
+        let kit = create_string(state, &row.ui_texture_kit_id);
+        table_set_static(state, option, "uiTextureKitID", kit);
         set_table_array(state, options, index as i64 + 1, option);
     }
     state.push(options);
@@ -122,7 +120,7 @@ fn read_default_ping_option(state: &mut LuaState, value: Val) -> LuaResult<PingD
     Ok(PingDefaultOption {
         ping_type: read_option_integer(state, table, "type")?,
         order_index: read_option_integer(state, table, "orderIndex")?,
-        ui_texture_kit_id: read_optional_option_string(state, table, "uiTextureKitID")?,
+        ui_texture_kit_id: read_option_string(state, table, "uiTextureKitID")?,
     })
 }
 
@@ -137,17 +135,9 @@ fn read_option_integer(state: &mut LuaState, table: GcRef<Table>, key: &str) -> 
     Ok(value as i32)
 }
 
-fn read_optional_option_string(
-    state: &mut LuaState,
-    table: GcRef<Table>,
-    key: &str,
-) -> LuaResult<Option<String>> {
-    match table_get(state, Val::Table(table), key) {
-        Val::Nil => Ok(None),
-        value => val_to_string(state, value)
-            .map(Some)
-            .ok_or_else(|| invalid_option_field(key)),
-    }
+fn read_option_string(state: &mut LuaState, table: GcRef<Table>, key: &str) -> LuaResult<String> {
+    let value = table_get(state, Val::Table(table), key);
+    val_to_string(state, value).ok_or_else(|| invalid_option_field(key))
 }
 
 fn invalid_option_field(key: &str) -> rilua::LuaError {
