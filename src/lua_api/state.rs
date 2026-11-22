@@ -65,6 +65,8 @@ macro_rules! build_empty_sim_state {
         let restricted_actions = crate::c_api::restricted_actions::initial_states(&cvars);
         let quest_log_entries = QuestLogState::seeded();
         Self {
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            ranged_slot: crate::c_api::ranged_slot::RangedSlotState::default(),
             store_glue: Default::default(),
             pending_target_spell: Default::default(),
             loot_specialization: 0,
