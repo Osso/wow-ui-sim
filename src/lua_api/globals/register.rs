@@ -215,6 +215,8 @@ fn register_frame_context_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
     super::real::unit_speed::register_all(lua)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     super::real::unit_stagger::register_all(lua)?;
+    #[cfg(feature = "client-retail")]
+    super::real::unit_power_display_mod::register_all(lua)?;
     super::real::preferred_interact::register_all(lua)?;
     super::unit_misc::register_all(lua)?;
     #[cfg(feature = "aura-containers")]

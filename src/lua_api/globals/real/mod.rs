@@ -177,6 +177,8 @@ pub mod ui_widget_container;
 #[cfg(any(feature = "client-era", feature = "client-anniversary"))]
 pub(crate) mod unit_health_knowledge;
 pub mod unit_interaction;
+#[cfg(feature = "client-retail")]
+pub(crate) mod unit_power_display_mod;
 #[cfg(feature = "aura-containers")]
 pub mod unit_relationships;
 pub(crate) mod unit_roles;
