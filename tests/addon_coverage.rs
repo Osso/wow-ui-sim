@@ -620,7 +620,7 @@ fn garrison_consumers_clear_and_read_empty_mission_lists() {
     assert!(env.exec("C_Garrison.GetAvailableMissions(true, 1)").is_err());
 }
 
-#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[cfg(not(feature = "client-wowforever"))]
 fn load_garrison_original_consumers() -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("create Lua environment");
     env.state().borrow_mut().addon_base_paths = vec![blizzard_ui_dir()];
