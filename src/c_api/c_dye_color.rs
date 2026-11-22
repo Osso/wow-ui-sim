@@ -3,9 +3,10 @@
 use crate::c_api::helpers::{ensure_namespace, global_val, set_table_array};
 use crate::lua_api::SimState;
 use crate::lua_api::methods::{
-    borrow_state, call_function_state, create_string, create_table, table_set_static,
+    borrow_state, borrow_state_mut, call_function_state, create_string, create_table,
+    table_set_static,
 };
-use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
+use crate::lua_bridge::{FromStack, TableBuilder, stack_val, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 use std::collections::BTreeMap;
@@ -14,6 +15,7 @@ use std::collections::BTreeMap;
 pub struct DyeColorState {
     pub categories: BTreeMap<i32, String>,
     pub colors: BTreeMap<i32, DyeColorRecord>,
+    pub item_colors: BTreeMap<u32, Vec<i32>>,
 }
 
 #[derive(Clone, Debug)]
@@ -35,10 +37,16 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
         ("GetDyeColorInfo", color_info),
         ("GetDyeColorsInCategory", category_colors),
         ("IsDyeColorOwned", is_owned),
+        ("GetDyeColorsForItem", colors_for_item),
+        ("GetDyeColorsForItemLocation", colors_for_item_location),
     ] {
         table_set_rust_fn_static(state, ns, name, function)?;
     }
     Ok(())
+}
+
+pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
+    builder.set_function("SetDyeColorsForItem", set_item_colors)
 }
 
 fn read_id(state: &LuaState) -> LuaResult<i32> {
@@ -195,6 +203,49 @@ fn push_color_info(
         table_set_static(state, row, field, color);
     }
     Ok(())
+}
+
+fn colors_for_item(state: &mut LuaState) -> LuaResult<u32> {
+    let item_id = crate::c_api::item_spell::parse_item_id_key(state, stack_val(state, 1));
+    push_item_colors(state, item_id)
+}
+
+fn colors_for_item_location(state: &mut LuaState) -> LuaResult<u32> {
+    let location = stack_val(state, 1);
+    let item_id = crate::c_api::item_location::read_numeric_item_slot(state, location)
+        .and_then(|slot| slot.item_id(&borrow_state(state).ok()?));
+    push_item_colors(state, item_id)
+}
+
+fn push_item_colors(state: &mut LuaState, item_id: Option<u32>) -> LuaResult<u32> {
+    let ids = item_id
+        .and_then(|item_id| {
+            borrow_state(state)
+                .ok()?
+                .dye_colors
+                .item_colors
+                .get(&item_id)
+                .cloned()
+        })
+        .unwrap_or_default();
+    push_ids(state, &ids)
+}
+
+// INFERRED best-guess scenario input; R88eo (native evidence pending).
+fn set_item_colors(state: &mut LuaState) -> LuaResult<u32> {
+    let item_id = u32::from_stack(state, 1)?;
+    let ids = String::from_stack(state, 2)?
+        .split(',')
+        .map(str::parse::<i32>)
+        .collect::<Result<Vec<_>, _>>()
+        .map_err(|_| {
+            rilua::runtime_error("A_Admin.SetDyeColorsForItem: expected comma-separated dye IDs")
+        })?;
+    borrow_state_mut(state)?
+        .dye_colors
+        .item_colors
+        .insert(item_id, ids);
+    Ok(0)
 }
 
 fn is_owned(state: &mut LuaState) -> LuaResult<u32> {

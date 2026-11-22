@@ -179,6 +179,8 @@ pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
     let builder = crate::c_api::c_tooltip_info_weekly::register_admin(builder)?;
     let builder = crate::c_api::c_store_glue::register_admin(builder)?;
     let builder = crate::c_api::c_tooltip_info_possession::register_admin(builder)?;
+    #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
+    let builder = crate::c_api::c_dye_color::register_admin(builder)?;
     let builder = builder.set_function(
         "SetHousingCatalogVariantStoredCount",
         crate::c_api::c_housing::catalog::set_variant_stored_count,
