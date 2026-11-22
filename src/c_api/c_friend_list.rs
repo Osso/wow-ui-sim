@@ -62,6 +62,33 @@ pub(crate) fn set_social_blocked_entry(state: &mut LuaState) -> rilua::LuaResult
     Ok(0)
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) mod selected_ignore {
+    use crate::c_api::helpers::ensure_namespace;
+    use crate::lua_api::methods::{borrow_state, borrow_state_mut};
+    use crate::lua_bridge::{FromStack, table_set_rust_fn_static};
+    use rilua::vm::state::LuaState;
+    use rilua::{LuaResult, Val};
+
+    pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
+        let namespace = ensure_namespace(state, "C_FriendList")?;
+        table_set_rust_fn_static(state, namespace, "GetSelectedIgnore", get_selected)?;
+        table_set_rust_fn_static(state, namespace, "SetSelectedIgnore", set_selected)
+    }
+
+    fn get_selected(state: &mut LuaState) -> LuaResult<u32> {
+        let selected = borrow_state(state)?.selected_social_ignore;
+        state.push(selected.map_or(Val::Nil, |index| Val::Num(index as f64)));
+        Ok(1)
+    }
+
+    fn set_selected(state: &mut LuaState) -> LuaResult<u32> {
+        let index = i32::from_stack(state, 1)?;
+        borrow_state_mut(state)?.selected_social_ignore = Some(index);
+        Ok(0)
+    }
+}
+
 #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
 pub(crate) mod current {
     use super::build_friend_info_table;
