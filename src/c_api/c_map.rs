@@ -168,7 +168,19 @@ fn register_c_map_methods(state: &mut LuaState, table_ref: LuaTableRef) -> LuaRe
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
-    builder.set_function("SetMapGroupMember", set_map_group_member)
+    let builder = builder.set_function("SetMapGroupMember", set_map_group_member)?;
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+        builder.set_function("SetAdventureMapMapID", set_adventure_map_id)
+    } else {
+        Ok(builder)
+    }
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn set_adventure_map_id(state: &mut LuaState) -> LuaResult<u32> {
+    let map_id = i64::from_stack(state, 1)?;
+    borrow_state_mut(state)?.adventure_map.map_id = map_id;
+    Ok(0)
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]

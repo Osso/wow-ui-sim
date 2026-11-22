@@ -82,10 +82,46 @@ fn load_full_game_ui_with_lod_deps() -> WowLuaEnv {
 fn supplied_missions_update_the_real_covenant_mission_list() {
     let env = load_full_game_ui_with_lod_deps();
     load_addon(&env.loader_env(), &garrison_ui_toc()).expect("load original Garrison UI");
-    let mission_ids: (i64, i64, i64, i64) = env
+    let (mission_count, mission_1, mission_2, mission_3, width_1, height_1, width_2, height_2): (
+        i64,
+        i64,
+        i64,
+        i64,
+        i32,
+        i32,
+        i32,
+        i32,
+    ) = env
         .eval(include_str!("fixtures/garrison_mission_lists.lua"))
         .expect("Covenant mission list consumes supplied missions");
+    let mission_ids = (mission_count, mission_1, mission_2, mission_3);
     assert_eq!(mission_ids, (3, 900001, 900003, 900002));
+    assert_eq!(
+        (width_1, height_1, width_2, height_2),
+        (3840, 2560, 1002, 668)
+    );
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn adventure_map_canvas_uses_supplied_generated_map_layers() {
+    let env = load_full_game_ui_with_lod_deps();
+    load_addon(&env.loader_env(), &garrison_ui_toc()).expect("load original Garrison UI");
+    let canvas_sizes: (i32, i32, i32, i32) = env
+        .eval(
+            r#"
+            A_Admin.SetAdventureMapMapID(1550)
+            AdventureMapMixin.OnShow(CovenantMissionFrame.MapTab)
+            local width1, height1 = CovenantMissionFrame.MapTab:GetCanvas():GetSize()
+            A_Admin.SetAdventureMapMapID(1552)
+            AdventureMapMixin.OnShow(CovenantMissionFrame.MapTab)
+            local width2, height2 = CovenantMissionFrame.MapTab:GetCanvas():GetSize()
+            return width1, height1, width2, height2
+            "#,
+        )
+        .expect("original AdventureMap canvas accepts supplied map IDs");
+    assert_eq!(canvas_sizes, (3840, 2560, 1002, 668));
+    assert!(env.state().borrow().lua_errors.is_empty());
 }
 
 #[test]

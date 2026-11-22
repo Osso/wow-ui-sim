@@ -51,7 +51,10 @@ A_Admin.SetGarrisonMissions({
 })
 A_Admin.SetGarrisonFollowerQualityTable(followerTypeID, { [1] = 11, [2] = 22 })
 
+-- VERIFIED: generated sim-data MapArt rows give maps 1550 and 1552 these canvas dimensions.
+A_Admin.SetAdventureMapMapID(1550)
 CovenantMissionFrame:Show()
+local firstCanvasWidth, firstCanvasHeight = CovenantMissionFrame.MapTab:GetCanvas():GetSize()
 local list = CovenantMissionFrame.MissionTab.MissionList
 assert(list.ScrollBox:GetView(), "Covenant mission frame initializes its original ScrollBox view")
 list:UpdateMissions()
@@ -87,7 +90,13 @@ assert(
         and next(C_Garrison.GetFollowerQualityTable(followerTypeID + 1)) == nil,
     "follower quality table uses supplied entries and an inferred empty default"
 )
+CovenantMissionFrame.MapTab:SetMapID(1552)
+local secondCanvasWidth, secondCanvasHeight = CovenantMissionFrame.MapTab:GetCanvas():GetSize()
 return #list.combinedMissions,
     list.combinedMissions[1].missionID,
     list.combinedMissions[2].missionID,
-    list.combinedMissions[3].missionID
+    list.combinedMissions[3].missionID,
+    firstCanvasWidth,
+    firstCanvasHeight,
+    secondCanvasWidth,
+    secondCanvasHeight
