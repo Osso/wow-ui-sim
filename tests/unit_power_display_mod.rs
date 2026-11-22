@@ -8,6 +8,8 @@ use wow_ui_sim::startup::fire_startup_events_for_screen;
 
 fn load_full_game_ui() -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("Failed to create Lua environment");
+    env.exec("A_Admin.SetPlayerClass(9); A_Admin.SetSpec(3)")
+        .expect("Set the player to a Destruction Warlock before UI loading");
     env.set_screen_size(1024.0, 768.0);
     env.set_screen_mode(ScreenKind::Game);
     let ui = wow_ui_sim::paths::default_blizzard_ui_addons_path().expect("Blizzard UI cache");
@@ -26,13 +28,39 @@ fn load_full_game_ui() -> WowLuaEnv {
 fn shard_bar_uses_supplied_power_display_modifiers() {
     let env = load_full_game_ui();
     env.exec(
-        "local powerType = Enum.PowerType.SoulShards; \
-         local bar = { powerType = powerType }; \
-         A_Admin.SetPlayerPower(100, 500, powerType); \
-         A_Admin.SetUnitPowerDisplayMod(powerType, 10); \
-         assert(WarlockPowerBar.UnitPower(bar, 'player') == 10); \
-         A_Admin.SetUnitPowerDisplayMod(powerType, 100); \
-         assert(WarlockPowerBar.UnitPower(bar, 'player') == 1)",
+        r#"
+        local frame = WarlockPowerFrame
+        assert(frame and frame:IsShown())
+        assert(frame.powerType == Enum.PowerType.SoulShards)
+        A_Admin.SetPlayerPower(35, 5, frame.powerType)
+        A_Admin.SetUnitPowerDisplayMod(frame.powerType, 10)
+        frame:UpdatePower()
+
+        local shards = {}
+        for shard in frame.classResourceButtonPool:EnumerateActive() do
+            shards[#shards + 1] = shard
+        end
+        assert(#shards == 5)
+        for index = 1, 3 do
+            assert(shards[index].fillAmount == 1)
+            assert(shards[index].Shard_Soul:IsShown())
+            assert(not shards[index].FillIncrement:IsShown())
+        end
+        assert(shards[4].fillAmount == 0.5)
+        assert(not shards[4].Shard_Soul:IsShown())
+        assert(shards[4].FillIncrement:IsShown())
+
+        A_Admin.SetUnitPowerDisplayMod(frame.powerType, 100)
+        frame:UpdatePower()
+        assert(shards[1].fillAmount == 0.3)
+        assert(not shards[1].Shard_Soul:IsShown())
+        assert(shards[1].FillIncrement:IsShown())
+        for index = 2, 5 do
+            assert(shards[index].fillAmount == 0)
+            assert(not shards[index].Shard_Soul:IsShown())
+            assert(not shards[index].FillIncrement:IsShown())
+        end
+        "#,
     )
-    .expect("original ShardBar should scale power by the supplied display modifier");
+    .expect("the visible Warlock shard frame should use supplied display modifiers");
 }
