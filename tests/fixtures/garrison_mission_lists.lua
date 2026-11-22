@@ -89,9 +89,7 @@ assert(
         and next(C_Garrison.GetFollowerQualityTable(followerTypeID + 1)) == nil,
     "follower quality table uses supplied entries and an inferred empty default"
 )
-CovenantMissionFrame:Hide()
-A_Admin.SetAdventureMapMapID(1552)
-CovenantMissionFrame:Show()
+CovenantMissionFrame.MapTab:SetMapID(1552)
 local secondCanvasWidth, secondCanvasHeight = CovenantMissionFrame.MapTab:GetCanvas():GetSize()
 return #list.combinedMissions,
     list.combinedMissions[1].missionID,
