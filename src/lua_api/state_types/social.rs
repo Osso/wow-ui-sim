@@ -10,7 +10,10 @@ pub struct SocialRestrictionsState {
     /// INFERRED host input, distinct from friends-disabled and squelch state.
     pub chat_disabled: bool,
     /// INFERRED (simulator mapping): host field standing in for the R88ap.4 settings byte; writers/events UNKNOWN.
-    #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+    #[cfg(any(
+        all(feature = "profile-retail", feature = "retail-12-1-5"),
+        feature = "client-wowforever"
+    ))]
     pub friends_disabled_byte: u8,
     /// The simulator seeds an unrestricted local player; callers can supply either value.
     pub is_squelched: bool,
