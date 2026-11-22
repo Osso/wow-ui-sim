@@ -247,6 +247,9 @@ pub struct SimState {
     pub quest_blobs: HashMap<u64, QuestBlobState>,
     /// Supplied per-quest minimap containment observations.
     pub minimap_quest_blob_inside: HashMap<i32, bool>,
+    /// INFERRED (R88el (native evidence pending)); only explicit map-story inputs are returned.
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub zone_story_info: HashMap<i32, (i32, i32)>,
     pub fog_of_war_frames: HashMap<u64, FogOfWarFrameState>,
     pub unit_position_frames: HashMap<u64, UnitPositionFrameState>,
     /// Scenario-supplied reporting eligibility; no target or account policy inference.

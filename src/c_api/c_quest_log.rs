@@ -6,17 +6,19 @@ use super::helpers::read_untainted_signed32_argument;
 use super::helpers::set_table_array;
 use super::helpers::{ensure_namespace, validate_supplied_relation_id};
 use crate::client_profile::{ACTIVE, ClientProfile};
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+use crate::lua_api::methods::borrow_state_mut;
 use crate::lua_api::methods::{
     borrow_state, create_string, create_table, table_set, val_to_string,
 };
 #[cfg(feature = "client-wowforever")]
-use crate::lua_api::methods::{borrow_state_mut, create_table_with_capacity, table_get};
+use crate::lua_api::methods::{create_table_with_capacity, table_get};
 use crate::lua_api::sim_substates::QuestLogEntry;
 use crate::lua_api::workarounds::update_campaign_headers;
-#[cfg(feature = "client-wowforever")]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 use crate::lua_bridge::TableBuilder;
 use crate::lua_bridge::{FromStack, stack_val, table_set_rust_fn_static};
-#[cfg(feature = "client-wowforever")]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 use rilua::runtime_error;
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
@@ -329,6 +331,51 @@ fn write_quest_identity_fields(
     table_set(state, t, "isFailed", Val::Bool(entry.is_failed));
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn get_zone_story_info(state: &mut LuaState) -> LuaResult<u32> {
+    let map_id = validate_supplied_relation_id(
+        stack_val(state, 1),
+        "GetZoneStoryInfo requires a uiMapID number",
+    )?;
+    let relation = match map_id {
+        Some(map_id) => borrow_state(state)?.zone_story_info.get(&map_id).copied(),
+        None => None,
+    };
+    if let Some((achievement_id, story_map_id)) = relation {
+        state.push(Val::Num(f64::from(achievement_id)));
+        state.push(Val::Num(f64::from(story_map_id)));
+        Ok(2)
+    } else {
+        Ok(0)
+    }
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) fn register_zone_story_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
+    builder.set_function("SetZoneStoryInfo", set_zone_story_info)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn set_zone_story_info(state: &mut LuaState) -> LuaResult<u32> {
+    let ids = ["uiMapID", "achievementID", "storyMapID"];
+    let mut parsed = [0; 3];
+    for (index, name) in ids.iter().enumerate() {
+        let id = validate_supplied_relation_id(
+            stack_val(state, index as i32 + 1),
+            "SetZoneStoryInfo requires positive integer IDs",
+        )?;
+        parsed[index] = id.filter(|id| *id > 0).ok_or_else(|| {
+            runtime_error(format!(
+                "SetZoneStoryInfo: {name} must be a positive integer"
+            ))
+        })?;
+    }
+    borrow_state_mut(state)?
+        .zone_story_info
+        .insert(parsed[0], (parsed[1], parsed[2]));
+    Ok(0)
+}
+
 fn write_quest_classification_flags(state: &mut LuaState, t: Val, entry: &QuestLogEntry) {
     table_set(state, t, "isMeta", Val::Bool(entry.is_meta));
     table_set(state, t, "isWorldQuest", Val::Bool(entry.is_world_quest));
@@ -367,6 +414,9 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
     // Retail and Forever QuestLogDocumentation.lua:46 declare this query.
     if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever) {
         table_set_rust_fn_static(state, namespace, "CanAbandonQuest", can_abandon_quest)?;
+        // Retail QuestLogDocumentation.lua:675-689; Forever :693-707.
+        #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+        table_set_rust_fn_static(state, namespace, "GetZoneStoryInfo", get_zone_story_info)?;
     }
     // Retail/PTR/Forever QuestLogDocumentation.lua declare these queries
     // (IsUnitOnQuest :1033/:1066; UpdateCampaignHeaders :1269/:1302).

@@ -1,5 +1,9 @@
 //! Approved defaults through selected modern Blizzard consumers.
-#![cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#![cfg(any(
+    feature = "client-retail",
+    feature = "client-ptr",
+    feature = "client-wowforever"
+))]
 
 use crate::common::blizzard_addon_harness::{
     blizzard_ui_dir, load_blizzard_addon_closure_into_env, new_blizzard_addon_env,
@@ -8,6 +12,7 @@ use wow_ui_sim::loader::find_toc_file;
 use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::toc::TocFile;
 
+#[rustfmt::skip]
 #[test]
 fn approved_native_defaults_quest_story_return_shape() {
     let ui = blizzard_ui_dir();
