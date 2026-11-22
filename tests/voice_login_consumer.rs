@@ -1,3 +1,4 @@
+#![cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 //! The loaded Blizzard voice toggle reads the supplied voice login state.
 
 use crate::common::blizzard_addon_harness::{blizzard_ui_dir, with_blizzard_addon_startup_shape};
