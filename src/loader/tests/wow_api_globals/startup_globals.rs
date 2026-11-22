@@ -959,8 +959,9 @@ fn test_patch_12_1_safe_global_bridges() {
             C_UnitAuras.SetGroupBuffVisualAlerts({ { spellID = 123, visualValue = Enum.VisualAlertType.MarchingAnts }, { spellID = 456, visualValue = Enum.VisualAlertType.MarchingAntsCyan } })
             local groupAlerts = C_UnitAuras.GetGroupBuffVisualAlerts()
             if #groupAlerts ~= 2 or groupAlerts[1].spellID ~= 123 or groupAlerts[1].visualValue ~= Enum.VisualAlertType.MarchingAnts or groupAlerts[2].spellID ~= 456 or groupAlerts[2].visualValue ~= Enum.VisualAlertType.MarchingAntsCyan then return "group-alerts" end
-            C_UnitAuras.SetHiddenGroupBuffs({ [456] = true })
-            if C_UnitAuras.GetHiddenGroupBuffs()[456] ~= true then return "hidden-buffs" end
+            C_UnitAuras.SetHiddenGroupBuffs({ 456, 789 })
+            local hiddenBuffs = C_UnitAuras.GetHiddenGroupBuffs()
+            if #hiddenBuffs ~= 2 or hiddenBuffs[1] ~= 456 or hiddenBuffs[2] ~= 789 then return "hidden-buffs" end
             CooldownManagerLayout_SetGroupBuffVisualAlerts({ [789] = true })
             if CooldownManagerLayout_GetGroupBuffVisualAlerts()[789] ~= true then return "layout-group-alerts" end
             CooldownManagerLayout_SetHiddenGroupBuffs({ [987] = true })
