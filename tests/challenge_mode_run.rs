@@ -159,12 +159,21 @@ fn original_scenario_criteria_render_order_quantity_and_completion() {
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
-#[test]
-fn original_challenges_dungeon_icon_reads_supplied_map_metadata() {
+fn load_challenges_ui() -> WowLuaEnv {
     let ui = blizzard_ui_dir();
     let env = new_blizzard_addon_env(&ui);
+    // SharedXML is eager at startup; load its TOC closure before ChallengesUI.
+    let startup = load_blizzard_addon_closure_into_env(&env, &ui, &["Blizzard_SharedXML"], &[]);
+    assert!(startup.iter().any(|name| name == "Blizzard_SharedXML"));
     let loaded = load_blizzard_addon_closure_into_env(&env, &ui, &["Blizzard_ChallengesUI"], &[]);
     assert!(loaded.iter().any(|name| name == "Blizzard_ChallengesUI"));
+    env
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[test]
+fn original_challenges_dungeon_icon_reads_supplied_map_metadata() {
+    let env = load_challenges_ui();
     env.exec(
         r#"
         local icon = CreateFrame('Frame', nil, UIParent, 'ChallengesDungeonIconFrameTemplate')
@@ -189,10 +198,7 @@ fn original_challenges_dungeon_icon_reads_supplied_map_metadata() {
 
 #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
 fn load_map_icon() -> WowLuaEnv {
-    let ui = blizzard_ui_dir();
-    let env = new_blizzard_addon_env(&ui);
-    let loaded = load_blizzard_addon_closure_into_env(&env, &ui, &["Blizzard_ChallengesUI"], &[]);
-    assert!(loaded.iter().any(|name| name == "Blizzard_ChallengesUI"));
+    let env = load_challenges_ui();
     env.exec(r#"
         icon = CreateFrame('Frame', nil, UIParent, 'ChallengesDungeonIconFrameTemplate')
         assert(icon.SetUp == ChallengesDungeonIconMixin.SetUp)
