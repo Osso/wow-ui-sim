@@ -145,13 +145,15 @@ fn get_hot_item(state: &mut LuaState) -> LuaResult<u32> {
 
 fn get_item_info_by_id(state: &mut LuaState) -> LuaResult<u32> {
     let market_id = u32::from_stack(state, 1)?;
-    let item = borrow_state(state)?
-        .black_market
-        .items
-        .iter()
-        .chain(borrow_state(state)?.black_market.hot_item.iter())
-        .find(|item| item.market_id == market_id)
-        .cloned();
+    let item = {
+        let sim = borrow_state(state)?;
+        sim.black_market
+            .items
+            .iter()
+            .chain(sim.black_market.hot_item.iter())
+            .find(|item| item.market_id == market_id)
+            .cloned()
+    };
     push_optional_item_info(state, item)
 }
 
@@ -172,21 +174,26 @@ fn push_optional_item_info(state: &mut LuaState, item: Option<BlackMarketItem>) 
 }
 
 fn push_item_info(state: &mut LuaState, item: &BlackMarketItem) {
-    state.push(create_string(state, &item.name));
-    state.push(create_string(state, &item.texture));
+    push_string(state, &item.name);
+    push_string(state, &item.texture);
     state.push(Val::Num(item.quantity as f64));
-    state.push(create_string(state, &item.item_type));
+    push_string(state, &item.item_type);
     state.push(Val::Bool(item.usable));
     state.push(Val::Num(item.level as f64));
-    state.push(create_string(state, &item.level_type));
-    state.push(create_string(state, &item.seller_name));
+    push_string(state, &item.level_type);
+    push_string(state, &item.seller_name);
     state.push(Val::Num(item.min_bid as f64));
     state.push(Val::Num(item.min_increment as f64));
     state.push(Val::Num(item.curr_bid as f64));
     state.push(Val::Bool(item.you_have_high_bid));
     state.push(Val::Num(item.num_bids as f64));
     state.push(Val::Num(item.time_left as f64));
-    state.push(create_string(state, &item.link));
+    push_string(state, &item.link);
     state.push(Val::Num(item.market_id as f64));
     state.push(Val::Num(item.quality as f64));
+}
+
+fn push_string(state: &mut LuaState, text: &str) {
+    let value = create_string(state, text);
+    state.push(value);
 }
