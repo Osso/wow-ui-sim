@@ -523,8 +523,8 @@ fn supplied_ranged_slot_visibility_controls_transmog_refresh() {
                     "RANGEDSLOT", Enum.TransmogType.Appearance, false)
                 local mainHand = TransmogUtil.CreateTransmogLocation(
                     "MAINHANDSLOT", Enum.TransmogType.Appearance, false)
-                TransmogFrame.selectedSlotData = { transmogLocation = ranged }
-                return TransmogFrame:ShouldForceRefreshOnSlotUpdate({
+                TransmogFrame.CharacterPreview.selectedSlotData = { transmogLocation = ranged }
+                return TransmogFrame.CharacterPreview:ShouldForceRefreshOnSlotUpdate({
                     transmogLocation = mainHand,
                 })
                 "#,
