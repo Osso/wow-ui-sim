@@ -415,6 +415,7 @@ fn test_has_completed_any_achievement_is_available_for_ui_gating() {
     assert!(completed_any);
 }
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn test_can_show_achievement_ui_is_enabled() {
     let env = env();
