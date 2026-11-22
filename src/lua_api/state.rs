@@ -924,6 +924,8 @@ macro_rules! build_empty_sim_state {
             #[cfg(feature = "retail-12-0-0")]
             bnet_custom_message: String::new(),
             social_friends: default_social_friends(),
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            social_ignores: Vec::new(),
             social_restrictions: SocialRestrictionsState::default(),
             #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
             cinematic_summaries: HashMap::new(),

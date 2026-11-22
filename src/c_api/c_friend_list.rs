@@ -1,8 +1,9 @@
 //! Exact current-profile friend-name queries and note mutation over owned social state.
 //! Indexed and earlier name queries share the existing simulator projection.
 
-use crate::lua_api::methods::{create_string, create_table, table_set_static};
+use crate::lua_api::methods::{borrow_state_mut, create_string, create_table, table_set_static};
 use crate::lua_api::state::SocialFriend;
+use crate::lua_bridge::FromStack;
 use rilua::Val;
 use rilua::vm::state::LuaState;
 
@@ -15,9 +16,27 @@ pub(crate) fn friends_in_display_order(friends: &[SocialFriend]) -> Vec<SocialFr
 
 /// Simulator response policy: enqueue refresh notification over the supplied list.
 pub(crate) fn show_friends(state: &mut LuaState) -> rilua::LuaResult<u32> {
-    crate::lua_api::methods::borrow_state_mut(state)?
+    borrow_state_mut(state)?
         .events
         .push_simple("FRIENDLIST_UPDATE");
+    Ok(0)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) fn set_social_ignore_name(state: &mut LuaState) -> rilua::LuaResult<u32> {
+    let index = usize::from_stack(state, 1)?;
+    let name = String::from_stack(state, 2)?;
+    let mut sim = borrow_state_mut(state)?;
+    if index == 0 || index > sim.social_ignores.len() + 1 {
+        return Err(rilua::runtime_error(
+            "A_Admin.SetSocialIgnoreName: index must append or replace an existing entry",
+        ));
+    }
+    if index == sim.social_ignores.len() + 1 {
+        sim.social_ignores.push(name);
+    } else {
+        sim.social_ignores[index - 1] = name;
+    }
     Ok(0)
 }
 

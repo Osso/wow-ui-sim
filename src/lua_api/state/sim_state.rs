@@ -1154,6 +1154,9 @@ pub struct SimState {
     #[cfg(feature = "retail-12-0-0")]
     pub bnet_custom_message: String,
     pub social_friends: Vec<SocialFriend>,
+    /// INFERRED host-supplied ignore names for Retail/Forever FriendsFrame.
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub social_ignores: Vec<String>,
     pub social_restrictions: SocialRestrictionsState,
     pub restricted_actions: [u8; 6],
     pub restricted_actions_natural: [bool; 6],
