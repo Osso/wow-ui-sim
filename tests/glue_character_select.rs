@@ -1121,27 +1121,59 @@ fn character_select_builds_scrollbox_entries() {
 }
 
 #[test]
-#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
-fn character_select_configuration_warnings_shows_supplied_records() {
+fn character_select_configuration_warnings_returns_a_table() {
     test_timeout! {
         let env = load_blizzard_screen(ScreenKind::CharacterSelect);
-        env.exec(r#"
-            A_Admin.SetConfigurationWarnings({
-                { warning = 3, text = "Graphics driver is blocked" },
-                { warning = 4, text = "Graphics driver is out of date" },
-            })
-            CharacterSelect_CheckDialogStates()
-            "#).expect("warning inputs should reach the character-select consumer");
-        let result: (bool, i64, i64, i64, String, String) = env.eval(r#"
-            local warnings = C_ConfigurationWarnings.GetConfigurationWarnings(true)
-            local button = CharacterSelectUI.VisibilityFramesContainer.ConfigurationWarnings
-            return button:IsShown(), #warnings, warnings[1], warnings[2],
-                C_ConfigurationWarnings.GetConfigurationWarningString(3),
-                C_ConfigurationWarnings.GetConfigurationWarningString(4)
-            "#).expect("character-select warning state and text should be queryable");
-        assert_eq!(result, (true, 2, 3, 4, "Graphics driver is blocked".into(),
-            "Graphics driver is out of date".into()));
+
+        let warnings_type: String = env
+            .eval("return type(C_ConfigurationWarnings.GetConfigurationWarnings(false))")
+            .expect("configuration warnings should be queryable");
+        assert_eq!(
+            warnings_type, "table",
+            "configuration warnings API should return a table even when there are no warnings"
+        );
     }
+}
+
+#[test]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn character_select_configuration_warning_popups_track_seen_records() {
+    test_timeout! {
+        let env = load_blizzard_screen(ScreenKind::CharacterSelect);
+        exercise_configuration_warning_popups(&env);
+    }
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn exercise_configuration_warning_popups(env: &common::LockedEnv) {
+    env.exec(
+        r#"
+        A_Admin.SetConfigurationWarnings({
+            { warning = 3, text = "Graphics driver is blocked" },
+            { warning = 4, text = "Graphics driver is out of date" },
+        })
+        CheckSystemRequirements(false)
+        StaticPopup_CheckQueuedDialogs()
+        local first = StaticPopup_FindVisible("CONFIGURATION_WARNING")
+        assert(first and first:IsShown(), "first configuration warning should show")
+        assert(first.Text:GetText() == "Graphics driver is blocked")
+        assert(first.data.configurationWarning == 3)
+        first.button1:Click()
+        StaticPopup_CheckQueuedDialogs()
+        local second = StaticPopup_FindVisible("CONFIGURATION_WARNING")
+        assert(second and second:IsShown(), "second configuration warning should show")
+        assert(second.Text:GetText() == "Graphics driver is out of date")
+        assert(second.data.configurationWarning == 4)
+        second.button1:Click()
+        StaticPopup_CheckQueuedDialogs()
+        CheckSystemRequirements(false)
+        StaticPopup_CheckQueuedDialogs()
+        assert(StaticPopup_FindVisible("CONFIGURATION_WARNING") == nil)
+        CharacterSelect_CheckDialogStates()
+        assert(CharacterSelectUI.VisibilityFramesContainer.ConfigurationWarnings:IsShown())
+        "#,
+    )
+    .expect("original warning popup consumers should preserve and consume warning state");
 }
 
 character_select_tooltip_fixture! {
