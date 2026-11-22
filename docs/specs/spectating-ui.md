@@ -26,7 +26,7 @@ This simulator scenario supplies the booleans read by `C_SpectatingUI.IsSpectati
 
 ## Known gaps (current cycle)
 
-- [x] Seven-profile all-target checks pass with zero compiler warnings.
+- [x] WowForever, Mists, Wrath, and Retail `--lib --test integration --no-run` builds pass with zero warnings.
 
 ## Out of scope
 
