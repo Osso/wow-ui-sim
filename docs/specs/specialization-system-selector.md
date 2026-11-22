@@ -7,7 +7,7 @@ VERIFIED — Retail 12.1.5.70688 `GetSpecializationSystem` ignores Lua arguments
 - [x] Return exactly one non-nil Lua number with raw integer value 1 on the Retail normal publication path.
 - [x] Ignore absent, nil, wrong-type, and extra arguments while keeping the same one-number return shape.
 - [x] Allow the cached Retail `PlayerUtil.IsPlayerEffectivelyTank` consumer to call the getter.
-- [ ] INFERRED — On Forever, return the supplied `SpecializationSystem` value so the cached UnitUtil tank-role consumer can select its specialization path.
+- [x] INFERRED — On Forever, return the supplied `SpecializationSystem` value so the cached UnitUtil tank-role consumer can select its specialization path.
 
 ## How it works
 
@@ -17,6 +17,7 @@ VERIFIED — Retail 12.1.5.70688 `GetSpecializationSystem` ignores Lua arguments
 
 - `src/lua_api/globals/real/specialization_system.rs` registers and returns the verified selector result.
 - `src/lua_api/globals/register.rs` registers the getter for the Retail profile.
+- INFERRED — `src/c_api/specialization_system.rs` registers the state-backed Forever getter and `A_Admin.SetSpecializationSystem`; Retail registration is unchanged.
 - `src/ptr/compat_bootstrap.lua` no longer supplies the unsupported `Traits` guess.
 
 ## Tests asserting this spec
