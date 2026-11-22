@@ -543,6 +543,8 @@ macro_rules! build_empty_sim_state {
             unit_threats: HashMap::new(),
             #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
             unit_effectively_tank_auras: HashMap::new(),
+            #[cfg(feature = "client-wowforever")]
+            specialization_system: 0,
             unit_guid_overrides: HashMap::new(),
             player_owned_or_controlled_unit_guids: HashSet::new(),
             previous_target: None,
@@ -641,6 +643,8 @@ macro_rules! build_empty_sim_state {
             #[cfg(feature = "retail-12-0-5")]
             spell_max_cumulative_aura_applications: ::std::collections::HashMap::new(),
             pvp_match_active: false,
+            pvp_timer_running: false,
+            pvp_timer_remaining_ms: 0.0,
             pvp_request_transport: Default::default(),
             aura_filter_facts: Default::default(),
             #[cfg(feature = "aura-instance-enumeration")]

@@ -284,6 +284,8 @@ fn register_core_surfaces(lua: &mut rilua::Lua) -> crate::Result<()> {
     super::missing_surface::register_all(lua)?;
     #[cfg(feature = "client-retail")]
     super::real::specialization_system::register(lua)?;
+    #[cfg(feature = "client-wowforever")]
+    crate::c_api::specialization_system::register(lua)?;
     #[cfg(feature = "client-retail")]
     super::real::glue_state::register(lua.state_mut())?;
     super::real::achievement_eligibility::register(lua)?;
@@ -362,6 +364,7 @@ fn register_actor_state_probes(lua: &mut rilua::Lua) -> crate::Result<()> {
     super::pvp_probes::register_all(lua)?;
     super::real::player_probes::register_all(lua)?;
     super::real::player_identity::register_all(lua)?;
+    super::real::player_languages::register_all(lua)?;
     super::unit_stats::register_all(lua)?;
     super::real::combat_stats::register_all(lua)?;
     super::real::wrath_inventory_candidates::register_all(lua)?;
