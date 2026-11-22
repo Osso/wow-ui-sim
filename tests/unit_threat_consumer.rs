@@ -1,7 +1,6 @@
 #![cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 
-#[path = "common/blizzard_addon_harness.rs"]
-mod harness;
+use crate::common::blizzard_addon_harness as harness;
 
 const THREAT_CONSUMER_CHECK: &str = r#"
     assert(type(CompactUnitFrame_UpdateAggroHighlight) == "function")
