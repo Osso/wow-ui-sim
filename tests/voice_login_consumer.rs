@@ -26,6 +26,10 @@ fn assert_loaded_button_tracks_login(env: &WowLuaEnv) {
     env.exec(
         r#"
         local button = CreateFrame("Button", nil, UIParent, "ToggleVoiceMuteButtonTemplate")
+        assert(C_VoiceChat.IsLoggedIn() == false)
+        assert(button:UpdateVisibleState() == false)
+        assert(not button:IsShown())
+
         A_Admin.SetVoiceChatLoggedIn(false)
         assert(C_VoiceChat.IsLoggedIn() == false)
         assert(button:UpdateVisibleState() == false)
