@@ -51,6 +51,7 @@ A_Admin.SetGarrisonMissions({
 })
 A_Admin.SetGarrisonFollowerQualityTable(followerTypeID, { [1] = 11, [2] = 22 })
 
+-- VERIFIED: generated sim-data MapArt rows give maps 1550 and 1552 these canvas dimensions.
 A_Admin.SetAdventureMapMapID(1550)
 CovenantMissionFrame:Show()
 local firstCanvasWidth, firstCanvasHeight = CovenantMissionFrame.MapTab:GetCanvas():GetSize()
