@@ -340,6 +340,53 @@ fn gossip_map_provider_refreshes_the_supplied_poi_for_each_map() {
     );
 }
 
+#[cfg(feature = "client-retail")]
+const ENCOUNTER_MAP_INPUT_LUA: &str = r#"
+A_Admin.SetEncounterJournalMapEncounters(2248, {
+    { encounterID = 301, mapX = 0.2, mapY = 0.8 },
+    { encounterID = 302, mapX = 0.7, mapY = 0.3 },
+})
+CanShowEncounterJournal = function() return true end
+"#;
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn encounter_journal_provider_positions_supplied_encounter_pins() {
+    let ui = blizzard_ui_dir();
+    let env = new_blizzard_addon_env(&ui);
+    env.exec(ENCOUNTER_MAP_INPUT_LUA)
+        .expect("supply encounter map rows before loading the Blizzard provider");
+    let loaded = load_blizzard_addon_closure_into_env(
+        &env,
+        &ui,
+        &[
+            "Blizzard_SharedMapDataProviders",
+            "Blizzard_WorldMap",
+            "Blizzard_ContentTracking",
+        ],
+        GOSSIP_MAP_OVERRIDES,
+    );
+    assert!(loaded.iter().any(|name| name == ROOT_ADDON));
+    assert!(loaded.iter().any(|name| name == "Blizzard_WorldMap"));
+    let pins: (i32, f64, f64, f64, f64) = env
+        .eval(
+            r#"
+            local provider = CreateFromMixins(EncounterJournalDataProviderMixin)
+            WorldMapFrame:SetMapID(2248)
+            WorldMapFrame:AddDataProvider(provider)
+            provider:RefreshAllData()
+            local iter = WorldMapFrame:EnumeratePinsByTemplate("EncounterJournalPinTemplate")
+            local first, second = iter(), iter()
+            local firstX, firstY = first:GetPosition()
+            local secondX, secondY = second:GetPosition()
+            return WorldMapFrame:GetNumActivePinsByTemplate("EncounterJournalPinTemplate"),
+                   firstX, firstY, secondX, secondY
+            "#,
+        )
+        .expect("original encounter-journal provider should position map pins");
+    assert_eq!(pins, (2, 0.2, 0.8, 0.7, 0.3));
+}
+
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 #[test]
 fn contribution_collector_provider_refreshes_pins_from_supplied_records() {
