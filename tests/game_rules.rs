@@ -80,7 +80,7 @@ fn forever_character_create_uses_the_supplied_hardcore_rule() {
 #[cfg(feature = "client-wowforever")]
 fn show_character_create_with_hardcore(env: &WowLuaEnv, active: bool) -> String {
     let value = if active { "1" } else { "nil" };
-    env.exec(&format!("CharacterCreateFrame:Hide(); A_Admin.SetGameRule(Enum.GameRule.HardcoreRuleset, {value}); CharacterCreateFrame.ForwardButton:SetText('sentinel'); CharacterCreateFrame:Show()"))
+    env.exec(&format!("CharacterCreateFrame:Hide(); A_Admin.SetGameRule('HardcoreRuleset', {value}); CharacterCreateFrame.ForwardButton:SetText('sentinel'); CharacterCreateFrame:Show()"))
         .unwrap();
     env.eval("return CharacterCreateFrame.ForwardButton:GetText()")
         .unwrap()
@@ -102,13 +102,8 @@ fn forever_self_found_allowed_uses_rule_22_and_defaults_false() {
     const SELF_FOUND_ALLOWED_RULE_ID: i32 = 22;
 
     let env = env();
-    assert!(
-        !env.state()
-            .borrow()
-            .game_rules
-            .rules_by_id
-            .contains_key(&SELF_FOUND_ALLOWED_RULE_ID)
-    );
+    let unset: bool = env.eval("return C_GameRules.IsSelfFoundAllowed()").unwrap();
+    assert!(!unset);
 
     let (allowed, return_count): (bool, i64) = env
         .eval(
@@ -121,11 +116,10 @@ fn forever_self_found_allowed_uses_rule_22_and_defaults_false() {
         .unwrap();
     assert_eq!((allowed, return_count), (false, 1));
 
-    env.state()
-        .borrow_mut()
-        .game_rules
-        .rules_by_id
-        .insert(SELF_FOUND_ALLOWED_RULE_ID, 1);
+    env.exec(&format!(
+        "A_Admin.SetGameRule({SELF_FOUND_ALLOWED_RULE_ID}, 1)"
+    ))
+    .unwrap();
     let (allowed, return_count): (bool, i64) = env
         .eval(
             r##"

@@ -1,6 +1,7 @@
 //! Forever C_GameRules queries backed by native numeric rule IDs.
 
 use crate::lua_api::methods::borrow_state;
+use crate::lua_api::state::GameRuleKey;
 use crate::lua_bridge::table_set_rust_fn_static;
 use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
@@ -48,9 +49,9 @@ fn is_self_found_allowed(state: &mut LuaState) -> LuaResult<u32> {
 fn read_numeric_rule_value(state: &mut LuaState, rule_id: i32) -> LuaResult<i64> {
     let value = borrow_state(state)?
         .game_rules
-        .rules_by_id
-        .get(&rule_id)
-        .copied()
+        .rules
+        .get(&GameRuleKey::Id(rule_id))
+        .map(|value| value.as_int)
         .unwrap_or_default();
     Ok(value)
 }

@@ -11,7 +11,8 @@
 //! - `GetGameModeGlueScreenName()`   — glue screen string.
 //!
 //! Admin:
-//! - `A_Admin.SetGameRule(name, value)` — value by Lua type: number →
+//! - `A_Admin.SetGameRule(name, value)` — Forever resolves enum names/IDs to one ID-keyed entry;
+//!   other profiles retain name-keyed rules. Value by Lua type: number →
 //!   populates all three (int = as i64, float = as f64, string = str), string
 //!   → string form only, bool → clears on false / sets 0/0/"" with true as
 //!   marker. `nil` removes the rule.
@@ -22,25 +23,52 @@
 use crate::c_api::game_mode;
 use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::methods::{borrow_state, borrow_state_mut, create_string, create_table};
-use crate::lua_api::state::GameRuleValue;
+use crate::lua_api::state::{GameRuleKey, GameRuleValue};
 use crate::lua_bridge::{FromStack, stack_val, table_set_rust_fn};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 
-/// Resolve the rule-key arg at stack index 1. Accepts either a string name
-/// or an `Enum.GameRule` integer id (reverse-looked-up by scanning
-/// `Enum.GameRule` for the matching value). Returns `None` when no key.
-fn read_rule_key(state: &mut LuaState) -> LuaResult<Option<String>> {
-    match crate::lua_bridge::stack_val(state, 1) {
-        Val::Str(s) => Ok(state
-            .gc
-            .string_arena
-            .get(s)
-            .and_then(|lua_str| std::str::from_utf8(lua_str.data()).ok())
-            .map(str::to_owned)),
-        Val::Num(n) => Ok(resolve_rule_name_from_enum_id(state, n as i64)),
-        _ => Ok(None),
+/// Resolve a getter key. Forever stores enum-backed names and IDs by numeric ID;
+/// other profiles keep their existing name-keyed behavior.
+fn read_rule_key(state: &mut LuaState) -> LuaResult<Option<GameRuleKey>> {
+    let key = match stack_val(state, 1) {
+        Val::Str(value) => read_rule_name(state, value).map(|name| rule_key_from_name(state, name)),
+        Val::Num(value) if ACTIVE == ClientProfile::WowForever => {
+            Some(GameRuleKey::Id(value as i32))
+        }
+        Val::Num(value) => {
+            resolve_rule_name_from_enum_id(state, value as i64).map(GameRuleKey::Name)
+        }
+        _ => None,
+    };
+    Ok(key)
+}
+
+fn read_rule_name(
+    state: &LuaState,
+    value: rilua::vm::gc::arena::GcRef<rilua::vm::string::LuaString>,
+) -> Option<String> {
+    state
+        .gc
+        .string_arena
+        .get(value)
+        .and_then(|lua_str| std::str::from_utf8(lua_str.data()).ok())
+        .map(str::to_owned)
+}
+
+fn rule_key_from_name(state: &mut LuaState, name: String) -> GameRuleKey {
+    if ACTIVE == ClientProfile::WowForever {
+        if let Some(id) = resolve_rule_id_from_enum_name(state, &name) {
+            return GameRuleKey::Id(id);
+        }
     }
+    GameRuleKey::Name(name)
+}
+
+/// Resolve a rule ID from its name on the active profile's Enum.GameRule table.
+pub(crate) fn resolve_rule_id_from_enum_name(state: &mut LuaState, name: &str) -> Option<i32> {
+    let rule_table = resolve_enum_game_rule_table(state)?;
+    find_rule_id_for_name(state, rule_table, name)
 }
 
 /// Reverse-lookup `Enum.GameRule` to find the rule name whose numeric id
@@ -107,9 +135,32 @@ fn find_rule_name_for_id(
     None
 }
 
+fn find_rule_id_for_name(
+    state: &mut LuaState,
+    rule_table: rilua::vm::gc::arena::GcRef<rilua::vm::table::Table>,
+    name: &str,
+) -> Option<i32> {
+    let mut key = Val::Nil;
+    while let Some((next_key, next_value)) = state
+        .gc
+        .tables
+        .get(rule_table)?
+        .next(key, &state.gc.string_arena)
+        .ok()?
+    {
+        if let (Val::Str(name_ref), Val::Num(id)) = (next_key, next_value) {
+            if read_rule_name(state, name_ref).as_deref() == Some(name) {
+                return Some(id as i32);
+            }
+        }
+        key = next_key;
+    }
+    None
+}
+
 pub fn is_game_rule_active(state: &mut LuaState) -> LuaResult<u32> {
     let active = match read_rule_key(state)? {
-        Some(name) => borrow_state(state)?.game_rules.rules.contains_key(&name),
+        Some(key) => borrow_state(state)?.game_rules.rules.contains_key(&key),
         None => false,
     };
     state.push(Val::Bool(active));
@@ -123,10 +174,10 @@ pub fn get_game_rule_as_float(state: &mut LuaState) -> LuaResult<u32> {
     let shift = Option::<f64>::from_stack(state, 2)?.unwrap_or(0.0) as i32;
     let divisor = 10f64.powi(shift.max(0));
     let value = match read_rule_key(state)? {
-        Some(name) => borrow_state(state)?
+        Some(key) => borrow_state(state)?
             .game_rules
             .rules
-            .get(&name)
+            .get(&key)
             .map(|r| r.as_float)
             .unwrap_or(0.0),
         None => 0.0,
@@ -137,10 +188,10 @@ pub fn get_game_rule_as_float(state: &mut LuaState) -> LuaResult<u32> {
 
 pub fn get_game_rule_as_int(state: &mut LuaState) -> LuaResult<u32> {
     let value = match read_rule_key(state)? {
-        Some(name) => borrow_state(state)?
+        Some(key) => borrow_state(state)?
             .game_rules
             .rules
-            .get(&name)
+            .get(&key)
             .map(|r| r.as_int)
             .unwrap_or(0),
         None => 0,
@@ -151,10 +202,10 @@ pub fn get_game_rule_as_int(state: &mut LuaState) -> LuaResult<u32> {
 
 pub fn get_game_rule_as_string(state: &mut LuaState) -> LuaResult<u32> {
     let value = match read_rule_key(state)? {
-        Some(name) => borrow_state(state)?
+        Some(key) => borrow_state(state)?
             .game_rules
             .rules
-            .get(&name)
+            .get(&key)
             .map(|r| r.as_string.clone())
             .unwrap_or_default(),
         None => String::new(),
@@ -411,7 +462,7 @@ fn rule_value_from_string(
     }
 }
 
-/// Install a game rule by name + Lua value.
+/// Install an Enum-ID rule on Forever or a legacy name-keyed rule elsewhere.
 ///
 /// - `nil` / `false`: removes the rule.
 /// - number: stored as all three forms (`as_float = n`, `as_int = n as i64`,
@@ -419,20 +470,30 @@ fn rule_value_from_string(
 /// - string: stored as-is; float/int forms try to parse the string, default 0.
 /// - boolean `true`: stored as a marker with `("true", 1, 1.0)`.
 pub fn admin_set_game_rule(state: &mut LuaState) -> LuaResult<u32> {
-    let Some(name) = Option::<String>::from_stack(state, 1)? else {
+    let Some(key) = admin_rule_key(state) else {
         return Ok(0);
     };
     let op = read_rule_op(state);
     let mut sim = borrow_state_mut(state)?;
     match op {
         RuleOp::Remove => {
-            sim.game_rules.rules.remove(&name);
+            sim.game_rules.rules.remove(&key);
         }
         RuleOp::Set(value) => {
-            sim.game_rules.rules.insert(name, value);
+            sim.game_rules.rules.insert(key, value);
         }
     }
     Ok(0)
+}
+
+fn admin_rule_key(state: &mut LuaState) -> Option<GameRuleKey> {
+    match stack_val(state, 1) {
+        Val::Str(value) => read_rule_name(state, value).map(|name| rule_key_from_name(state, name)),
+        Val::Num(value) if ACTIVE == ClientProfile::WowForever => {
+            Some(GameRuleKey::Id(value as i32))
+        }
+        _ => None,
+    }
 }
 
 pub fn admin_set_active_game_mode(state: &mut LuaState) -> LuaResult<u32> {
