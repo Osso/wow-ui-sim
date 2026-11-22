@@ -18,7 +18,7 @@
 use crate::c_api::ensure_namespace;
 #[cfg(feature = "client-retail")]
 use crate::c_api::helpers::set_table_array;
-#[cfg(feature = "client-retail")]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 use crate::lua_api::methods::table_get;
 use crate::lua_api::methods::{
     borrow_state, borrow_state_mut, create_string, create_table, table_set,
@@ -220,15 +220,15 @@ fn hide_name_from_ui(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-/// Supplies queue entries and lock rows for selected Retail LFG consumers.
-#[cfg(feature = "client-retail")]
+/// Supplies queue entries and lock rows for selected Retail and Forever LFG consumers.
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub(crate) fn register_admin(
     builder: crate::lua_bridge::TableBuilder,
 ) -> LuaResult<crate::lua_bridge::TableBuilder> {
     builder.set_function("SetLfgQueueData", set_lfg_queue_data)
 }
 
-#[cfg(feature = "client-retail")]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn set_lfg_queue_data(state: &mut LuaState) -> LuaResult<u32> {
     let entry_rows = stack_val(state, 1);
     let lock_rows = stack_val(state, 2);
@@ -240,7 +240,7 @@ fn set_lfg_queue_data(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
-#[cfg(feature = "client-retail")]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn read_lfg_queue_entries(
     state: &mut LuaState,
     value: Val,
@@ -262,7 +262,7 @@ fn read_lfg_queue_entries(
         .collect()
 }
 
-#[cfg(feature = "client-retail")]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn read_lfg_lock_states(
     state: &mut LuaState,
     value: Val,
@@ -283,7 +283,7 @@ fn read_lfg_lock_states(
         .collect()
 }
 
-#[cfg(feature = "client-retail")]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn read_array(state: &LuaState, value: Val) -> LuaResult<Vec<Val>> {
     let Val::Table(reference) = value else {
         return Err(rilua::runtime_error("LFG supplied data must be an array"));
@@ -298,7 +298,7 @@ fn read_array(state: &LuaState, value: Val) -> LuaResult<Vec<Val>> {
         .collect())
 }
 
-#[cfg(feature = "client-retail")]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn read_lfg_integer(value: Val, field: &str) -> LuaResult<i32> {
     match value {
         Val::Num(number) if number.is_finite() && number.fract() == 0.0 => {

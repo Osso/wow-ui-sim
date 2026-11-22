@@ -903,9 +903,9 @@ pub struct SimState {
     /// Supplied Mists active-party minimum; None leaves native policy unknown.
     pub mists_party_min_level: Option<f64>,
     pub lfg_category_info: std::collections::HashMap<i32, LfgCategoryInfo>,
-    #[cfg(feature = "client-retail")]
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     pub lfg_queue_entries: Vec<crate::lua_api::state_types::collections::LfgQueueEntry>,
-    #[cfg(feature = "client-retail")]
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     pub lfg_lock_states: Vec<crate::lua_api::state_types::collections::LfgLockState>,
     pub lfg_active_categories: std::collections::HashSet<i32>,
     pub lfg_queued_dungeons: std::collections::HashMap<i32, std::collections::BTreeSet<i32>>,

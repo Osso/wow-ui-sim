@@ -731,9 +731,9 @@ macro_rules! build_empty_sim_state {
             scenario_finder_availability: None,
             mists_party_min_level: None,
             lfg_category_info: default_lfg_category_info(),
-            #[cfg(feature = "client-retail")]
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
             lfg_queue_entries: Vec::new(),
-            #[cfg(feature = "client-retail")]
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
             lfg_lock_states: Vec::new(),
             lfg_active_categories: ::std::collections::HashSet::new(),
             lfg_queued_dungeons: ::std::collections::HashMap::new(),
