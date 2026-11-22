@@ -31,25 +31,28 @@ fn supply_possess_slots_and_show_bar(env: &WowLuaEnv) {
 }
 
 fn assert_possess_buttons_show_supplied_slots(env: &WowLuaEnv) {
-    let supplied_slots_reached_original_consumer: bool = env
+    let observed: String = env
         .eval(
             r#"
             local first = PossessButton1:GetActionButtonInfo()
             local second = PossessButton2:GetActionButtonInfo()
-            return PossessButton1.icon:GetTexture() == "Interface\\Icons\\Ability_Hunter_BeastCall"
-                and PossessButton2.icon:GetTexture() == "Interface\\Icons\\Spell_Shadow_MindControl"
-                and PossessButton1:HasAction()
-                and not PossessButton2:HasAction()
-                and first.id == 883 and first.enabled == true
-                and second.id == 605 and second.enabled == false
-                and PossessButton1:IsEnabled() and PossessButton2:IsEnabled()
-                and not PossessButton1.icon:IsDesaturated()
-                and not PossessButton2.icon:IsDesaturated()
+            return table.concat({
+                tostring(PossessButton1.icon:GetTexture()),
+                tostring(PossessButton2.icon:GetTexture()),
+                tostring(PossessButton1:HasAction()),
+                tostring(PossessButton2:HasAction()),
+                tostring(first.id), tostring(first.enabled),
+                tostring(second.id), tostring(second.enabled),
+                tostring(PossessButton1:IsEnabled()),
+                tostring(PossessButton2:IsEnabled()),
+                tostring(PossessButton1.icon:IsDesaturated()),
+                tostring(PossessButton2.icon:IsDesaturated())
+            }, "|")
             "#,
         )
         .expect("original possess-button consumer should expose supplied state");
-    assert!(
-        supplied_slots_reached_original_consumer,
-        "each Blizzard possess button must use its own supplied texture, spell ID, and enabled value while retaining UpdateState's enabled, non-desaturated presentation"
+    assert_eq!(
+        observed,
+        "Interface\\Icons\\Ability_Hunter_BeastCall|Interface\\Icons\\Spell_Shadow_MindControl|true|false|883|true|605|false|true|true|false|false"
     );
 }
