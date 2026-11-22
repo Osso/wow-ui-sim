@@ -1121,16 +1121,41 @@ fn character_select_builds_scrollbox_entries() {
 }
 
 #[test]
-fn character_select_configuration_warnings_returns_a_table() {
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn character_select_configuration_warnings_shows_supplied_records() {
     test_timeout! {
         let env = load_blizzard_screen(ScreenKind::CharacterSelect);
 
-        let warnings_type: String = env
-            .eval("return type(C_ConfigurationWarnings.GetConfigurationWarnings(false))")
-            .expect("configuration warnings should be queryable");
+        env.exec(
+            r#"
+            A_Admin.SetConfigurationWarnings({
+                { warning = 3, text = "Graphics driver is blocked" },
+                { warning = 4, text = "Graphics driver is out of date" },
+            })
+            CharacterSelect_CheckDialogStates()
+            "#,
+        )
+        .expect("configuration warning inputs should reach the character-select consumer");
+
+        let result: (bool, String, String) = env
+            .eval(
+                r#"
+                local warningButton = CharacterSelectUI.VisibilityFramesContainer.ConfigurationWarnings
+                return warningButton:IsShown(),
+                    C_ConfigurationWarnings.GetConfigurationWarningString(3),
+                    C_ConfigurationWarnings.GetConfigurationWarningString(4)
+                "#,
+            )
+            .expect("the character-select warning state and warning text should be queryable");
+
         assert_eq!(
-            warnings_type, "table",
-            "configuration warnings API should return a table even when there are no warnings"
+            result,
+            (
+                true,
+                "Graphics driver is blocked".to_string(),
+                "Graphics driver is out of date".to_string(),
+            ),
+            "the selected character-select consumer should show two supplied warning records and their text"
         );
     }
 }
