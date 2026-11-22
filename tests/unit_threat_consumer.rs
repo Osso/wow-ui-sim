@@ -4,6 +4,8 @@ use crate::common::blizzard_addon_harness as harness;
 
 const THREAT_CONSUMER_CHECK: &str = r#"
     assert(type(CompactUnitFrame_UpdateAggroHighlight) == "function", "compact consumer loaded")
+    local cr, cg, cb = GetThreatStatusColor(3)
+    assert(cr == 1 and cg == 0 and cb == 0 and GetThreatStatusColor(99) == nil)
     assert(TargetFrame and TargetFrame.threatIndicator and TargetFrame.threatNumericIndicator, "target frame consumer loaded")
     assert(GetCVar("threatWarning") == "3", "registered threatWarning default")
     SetCVar("threatShowNumeric", "1")
@@ -60,7 +62,7 @@ const THREAT_CONSUMER_CHECK: &str = r#"
     assert(firstR == 1 and math.abs(firstG - 0.6) < 0.001 and firstB == 0, "first indicator color")
     assert(secondIndicator and secondNumeric and secondText == "100%", "second indicator text and visibility")
     assert(secondR == 1 and secondG == 0 and secondB == 0, "second indicator color")
-    return true
+    return first ~= second
 "#;
 
 #[test]
