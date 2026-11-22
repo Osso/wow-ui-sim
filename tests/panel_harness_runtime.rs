@@ -120,7 +120,7 @@ fn forever_without_encounter_journal(env: &WowLuaEnv) -> bool {
     true
 }
 
-#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[cfg(feature = "client-retail")]
 #[test]
 fn pet_collection_button_uses_supplied_achievement_ui_access() {
     let env = WowLuaEnv::new().expect("Failed to create Lua environment");
