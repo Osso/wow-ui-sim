@@ -295,6 +295,8 @@ pub(crate) fn register_map_prefix_tables(state: &mut LuaState) -> LuaResult<()> 
 }
 
 pub(crate) fn register_map_environment_tables(state: &mut LuaState) -> LuaResult<()> {
+    #[cfg(feature = "client-retail")]
+    super::c_encounter_journal_map::register(state)?;
     c_fog_of_war::register_fog_of_war_surface(state)?;
     c_map_exploration_info::register_c_map_exploration_info_surface(state)
 }

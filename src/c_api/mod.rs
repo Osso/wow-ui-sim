@@ -210,6 +210,8 @@ pub mod c_dye_color;
 #[cfg(feature = "client-wowforever")]
 mod c_edit_mode;
 pub(crate) mod c_edit_mode_cache;
+#[cfg(feature = "client-retail")]
+pub(crate) mod c_encounter_journal_map;
 #[cfg(any(feature = "retail-12-1-0", feature = "client-wowforever"))]
 pub(crate) mod c_encounter_timeline;
 #[cfg(feature = "retail-12-0-0")]
