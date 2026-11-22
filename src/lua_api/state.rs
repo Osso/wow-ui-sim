@@ -876,6 +876,7 @@ macro_rules! build_empty_sim_state {
             map_world_rects: HashMap::new(),
             bounty_set_maps: HashMap::new(),
             achievements: default_achievements(),
+            can_show_achievement_ui: true,
             achievement_eligibility: AchievementEligibilityInputs::default(),
             achievement_superceding: HashMap::new(),
             calendar_now: Default::default(),

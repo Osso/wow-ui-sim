@@ -280,6 +280,7 @@ fn register_core_surfaces(lua: &mut rilua::Lua) -> crate::Result<()> {
     #[cfg(feature = "client-retail")]
     super::real::glue_state::register(lua.state_mut())?;
     super::real::achievement_eligibility::register(lua)?;
+    super::real::achievement_ui_access::register(lua)?;
     crate::c_api::encoding_util::register(lua.state_mut())?;
     super::quest_surface::register_all(lua)?;
     #[cfg(any(

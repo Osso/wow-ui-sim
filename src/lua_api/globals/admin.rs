@@ -536,6 +536,7 @@ const COLLECTIONS_PVP_FUNCTIONS: &[(&str, RustFn)] = &[
     ("SetToyCollected", set_toy_collected),
     ("SetCampsiteCollected", set_campsite_collected),
     ("SetAchievementEarned", set_achievement_earned),
+    ("SetCanShowAchievementUI", set_can_show_achievement_ui),
     ("HasAchievement", has_achievement),
     ("SetMerchantItems", set_merchant_items),
     ("CollectMount", collect_mount),

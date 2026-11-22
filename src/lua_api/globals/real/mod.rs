@@ -5,6 +5,7 @@
 //! `lua_api::workarounds::{temporary,permanent}` instead.
 
 pub(crate) mod achievement_eligibility;
+pub(crate) mod achievement_ui_access;
 pub mod action_bar_state;
 pub mod action_highlights;
 pub(crate) mod ambiguate;

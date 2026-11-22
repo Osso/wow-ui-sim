@@ -14,7 +14,20 @@ function CanShowAchievementUI()
 end
 "#;
 
+const MODELED_ACHIEVEMENT_UI_ACCESS_LUA: &str = r#"
+function HasCompletedAnyAchievement()
+  return true
+end
+"#;
+
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
-    lua.exec(ACHIEVEMENT_UI_ACCESS_DEFAULTS_LUA)?;
+    use crate::client_profile::{ACTIVE, ClientProfile};
+
+    let bootstrap = if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever) {
+        MODELED_ACHIEVEMENT_UI_ACCESS_LUA
+    } else {
+        ACHIEVEMENT_UI_ACCESS_DEFAULTS_LUA
+    };
+    lua.exec(bootstrap)?;
     Ok(())
 }

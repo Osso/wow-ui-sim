@@ -195,6 +195,12 @@ pub(super) fn uncollect_campsite(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
+pub(super) fn set_can_show_achievement_ui(state: &mut LuaState) -> LuaResult<u32> {
+    let available = bool::from_stack(state, 1)?;
+    borrow_state_mut(state)?.can_show_achievement_ui = available;
+    Ok(0)
+}
+
 pub(super) fn set_achievement_earned(state: &mut LuaState) -> LuaResult<u32> {
     let id = i32::from_stack(state, 1)?;
     let collected = bool::from_stack(state, 2)?;
