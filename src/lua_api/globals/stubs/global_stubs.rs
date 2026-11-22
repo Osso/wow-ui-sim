@@ -117,6 +117,7 @@ static GLOBAL_FALSE_STUBS: &[&str] = &[
     // IsOnGroundFloorInJailersTower is SimState-backed in torghast.rs, not a stub.
     "IsInCinematicScene",
     // IsShiftKeyDown is SimState-backed in globals::real::modifier_keys, not a stub.
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     "IsThreatWarningEnabled",
     "NeedToDisplayDisclaimer",
     "PetUsesPetFrame",

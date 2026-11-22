@@ -5,16 +5,19 @@ use rilua::{LuaApiMut, LuaResult, Val};
 
 #[derive(Clone, Copy, Debug)]
 pub struct ThreatEntry {
+    pub is_tanking: bool,
     pub status: u8,
     pub scaled_percent: f64,
     pub raw_percent: f64,
     pub threat_value: f64,
+    pub percentage_of_lead: f64,
 }
 
 pub(crate) fn register_api(lua: &mut rilua::Lua) -> crate::Result<()> {
     LuaApiMut::register_function(lua, "UnitDetailedThreatSituation", detailed)?;
     LuaApiMut::register_function(lua, "UnitThreatPercentageOfLead", percentage_of_lead)?;
     LuaApiMut::register_function(lua, "UnitThreatSituation", situation)?;
+    LuaApiMut::register_function(lua, "IsThreatWarningEnabled", is_threat_warning_enabled)?;
     Ok(())
 }
 
@@ -23,7 +26,7 @@ fn detailed(state: &mut LuaState) -> LuaResult<u32> {
     let mob = String::from_stack(state, 2)?;
     let entry = borrow_state(state)?.unit_threats.get(&(unit, mob)).copied();
     let Some(entry) = entry else { return Ok(0) };
-    state.push(Val::Bool(entry.status >= 2));
+    state.push(Val::Bool(entry.is_tanking));
     state.push(Val::Num(entry.status as f64));
     state.push(Val::Num(entry.scaled_percent));
     state.push(Val::Num(entry.raw_percent));
@@ -50,28 +53,33 @@ fn situation(state: &mut LuaState) -> LuaResult<u32> {
     Ok(u32::from(status.is_some()))
 }
 
-// INFERRED (R88cg): the threat lead is the highest threat value recorded for this mob.
 fn percentage_of_lead(state: &mut LuaState) -> LuaResult<u32> {
     let unit = String::from_stack(state, 1)?;
     let mob = String::from_stack(state, 2)?;
-    let percentage = {
+    let entry = borrow_state(state)?.unit_threats.get(&(unit, mob)).copied();
+    let Some(entry) = entry else { return Ok(0) };
+    state.push(Val::Num(entry.percentage_of_lead));
+    Ok(1)
+}
+
+// INFERRED (R88dz (native evidence pending)): threatWarning gates threat UI by group and instance state.
+fn is_threat_warning_enabled(state: &mut LuaState) -> LuaResult<u32> {
+    let enabled = {
         let sim = borrow_state(state)?;
-        let Some(entry) = sim.unit_threats.get(&(unit, mob.clone())) else {
-            return Ok(0);
-        };
-        let lead = sim
-            .unit_threats
-            .iter()
-            .filter(|((_, target), _)| target == &mob)
-            .map(|(_, entry)| entry.threat_value)
-            .fold(0.0, f64::max);
-        if lead > 0.0 {
-            entry.threat_value * 100.0 / lead
-        } else {
-            0.0
+        let in_instance = sim.world.in_instance;
+        let in_group = sim.party_group_active;
+        match sim
+            .cvars
+            .cached_integer("threatWarning")
+            .unwrap_or_default()
+        {
+            1 => in_instance,
+            2 => in_group || in_instance,
+            3 => true,
+            _ => false,
         }
     };
-    state.push(Val::Num(percentage));
+    state.push(Val::Bool(enabled));
     Ok(1)
 }
 
@@ -82,6 +90,8 @@ fn set_threat(state: &mut LuaState) -> LuaResult<u32> {
     let scaled_percent = f64::from_stack(state, 4)?;
     let raw_percent = f64::from_stack(state, 5)?;
     let threat_value = f64::from_stack(state, 6)?;
+    let is_tanking = bool::from_stack(state, 7)?;
+    let percentage_of_lead = f64::from_stack(state, 8)?;
     if !(0..=3).contains(&status) {
         return Err(rilua::LuaError::Runtime(rilua::RuntimeError {
             message: "threat status must be between 0 and 3".into(),
@@ -92,10 +102,12 @@ fn set_threat(state: &mut LuaState) -> LuaResult<u32> {
     borrow_state_mut(state)?.unit_threats.insert(
         (unit, mob),
         ThreatEntry {
+            is_tanking,
             status: status as u8,
             scaled_percent,
             raw_percent,
             threat_value,
+            percentage_of_lead,
         },
     );
     Ok(0)
