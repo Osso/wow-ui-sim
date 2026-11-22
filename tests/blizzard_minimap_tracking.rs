@@ -4,26 +4,26 @@ use crate::common::blizzard_addon_harness::with_blizzard_addon_closure;
 
 const TRACKING_MENU_ASSERTIONS: &str = r#"
     local tracking = MinimapCluster.Tracking.Button
-    assert(tracking)
-    assert(C_Minimap.GetNumTrackingTypes() >= 2)
+    assert(tracking, "Blizzard_Minimap tracking button is missing")
+    assert(C_Minimap.GetNumTrackingTypes() >= 2, "tracking rows are empty")
 
     local firstFilter = C_Minimap.GetTrackingFilter(1)
     local secondFilter = C_Minimap.GetTrackingFilter(2)
-    assert(firstFilter.filterID ~= secondFilter.filterID)
+    assert(firstFilter.filterID ~= secondFilter.filterID, "tracking rows share a filter")
 
     local first = C_Minimap.GetTrackingInfo(1)
     local second = C_Minimap.GetTrackingInfo(2)
-    assert(first and second and first.name ~= second.name)
-    assert(type(first.texture) == "number" and type(second.texture) == "number")
+    assert(first and second and first.name ~= second.name, "tracking rows are not distinct")
+    assert(type(first.texture) == "number" and type(second.texture) == "number", "tracking texture is missing")
 
     C_Minimap.SetTracking(1, true)
     tracking:OnEvent("VARIABLES_LOADED")
     tracking:GenerateMenu()
 
-    assert(first.active == true)
+    assert(first.active == true, "selected tracking state is not active")
     local selected = MenuUtil.GetSelections(tracking.menuDescription)
-    assert(#selected == 1)
-    assert(selected[1].data.index == 1)
+    assert(#selected == 1, "tracking menu selection count is wrong")
+    assert(selected[1].data.index == 1, "tracking menu selected the wrong row")
 "#;
 
 #[test]
