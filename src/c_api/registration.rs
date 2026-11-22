@@ -83,6 +83,8 @@ pub(crate) fn register_item_power_tables(state: &mut LuaState) -> LuaResult<()> 
     super::c_transmog_latest::register(state)?;
     super::weapon_enchants::register(state)?;
     c_paper_doll_info::register_c_paper_doll_info_surface(state)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    super::ranged_slot::register(state)?;
     c_artifact_ui::register_c_artifact_ui_surface(state)?;
     c_artifact_relic_forge_ui::register_c_artifact_relic_forge_ui_surface(state)?;
     c_azerite_item::register_c_azerite_item_surface(state)?;

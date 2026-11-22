@@ -102,6 +102,8 @@ pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
     let builder = crate::c_api::c_adventure_journal::register_admin(builder)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     let builder = crate::c_api::c_cooldown_viewer::register_admin(builder)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let builder = crate::c_api::ranged_slot::register_admin(builder)?;
     let builder = crate::c_api::c_content_tracking::register_admin(builder)?;
     let builder = crate::c_api::c_calendar::club_events::register_admin(builder)?;
     let builder = crate::c_api::c_calendar::event_types::register_admin(builder)?;
