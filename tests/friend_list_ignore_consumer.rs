@@ -12,8 +12,11 @@ const IGNORE_LIST_SCENARIO: &str = r#"
     assert(C_FriendList.GetIgnoreName(2) == "R88eh-IgnoreBeta", "second supplied ignore")
 
     FriendsFrame:Show()
-    FriendsFrame.IgnoreListWindow:Show()
-    local scrollBox = FriendsFrame.IgnoreListWindow.ScrollBox
+    local ignoreWindow = FriendsFrame.IgnoreListWindow
+    local scrollBox = ignoreWindow.ScrollBox
+    -- Supply the original XML viewport size because this test does not render a frame.
+    scrollBox:SetSize(252, 271)
+    ignoreWindow:Show()
     local provider = scrollBox:GetDataProvider()
     assert(provider:GetSize() == 5, "provider must contain two headers and three rows")
     local width, height = scrollBox:GetSize()
