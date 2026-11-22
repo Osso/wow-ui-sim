@@ -473,6 +473,7 @@ fn supplied_ranged_slot_visibility_controls_transmog_refresh() {
         let env = fresh_game_env();
         env.exec(&format!("A_Admin.SetRangedSlotShown({visible})"))
             .expect("set ranged-slot visibility input");
+        env.apply_post_event_workarounds();
         env.exec("assert(C_AddOns.LoadAddOn('Blizzard_Transmog'))")
             .expect("Blizzard_Transmog and its declared dependencies must load");
 
