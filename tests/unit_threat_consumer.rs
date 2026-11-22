@@ -3,14 +3,14 @@
 use crate::common::blizzard_addon_harness as harness;
 
 const THREAT_CONSUMER_CHECK: &str = r#"
-    assert(type(CompactUnitFrame_UpdateAggroHighlight) == "function")
-    assert(TargetFrame and TargetFrame.threatIndicator and TargetFrame.threatNumericIndicator)
+    assert(type(CompactUnitFrame_UpdateAggroHighlight) == "function", "compact consumer loaded")
+    assert(TargetFrame and TargetFrame.threatIndicator and TargetFrame.threatNumericIndicator, "target frame consumer loaded")
     SetCVar("threatShowNumeric", "1")
     A_Admin.SetPartySize(1)
     local compact = CompactPartyFrame_Generate()
     compact:RefreshMembers()
     local frame = compact.memberUnitFrames[1]
-    assert(frame.unit == "player" and frame.aggroHighlight)
+    assert(frame.unit == "player" and frame.aggroHighlight, "party member frame uses player")
     A_Admin.SetUnitThreatSituation("player", "target", 0, 50, 50, 500, false, 50)
     A_Admin.SetUnitThreatSituation("pet", "target", 3, 100, 100, 1000, true, 100)
     CompactUnitFrame_UpdateAggroHighlight(frame)
@@ -33,15 +33,15 @@ const THREAT_CONSUMER_CHECK: &str = r#"
     local secondText = TargetFrame.threatNumericIndicator.text:GetText()
     local secondR, secondG, secondB = TargetFrame.threatNumericIndicator.bg:GetVertexColor()
     assert(first == false and second == true, "Blizzard aggro highlight must change")
-    assert(isTanking == false and status == 0 and scaled == 50 and raw == 50 and value == 500)
-    assert(firstSituation == 0 and firstLead == 50)
-    assert(UnitDetailedThreatSituation("player", "target") == true)
-    assert(UnitThreatSituation("player") == 3)
-    assert(UnitThreatPercentageOfLead("player", "target") == 100)
-    assert(firstIndicator == false and firstNumeric and firstText == "50%")
-    assert(firstR == 0.69 and firstG == 0.69 and firstB == 0.69)
-    assert(secondIndicator and secondNumeric and secondText == "100%")
-    assert(secondR == 1 and secondG == 0 and secondB == 0)
+    assert(isTanking == false and status == 0 and scaled == 50 and raw == 50 and value == 500, "first detailed values")
+    assert(firstSituation == 0 and firstLead == 50, "first situation and lead")
+    assert(UnitDetailedThreatSituation("player", "target") == true, "second detailed tanking")
+    assert(UnitThreatSituation("player") == 3, "second situation")
+    assert(UnitThreatPercentageOfLead("player", "target") == 100, "second lead")
+    assert(firstIndicator == false and firstNumeric and firstText == "50%", "first indicator text and visibility")
+    assert(firstR == 0.69 and firstG == 0.69 and firstB == 0.69, "first indicator color")
+    assert(secondIndicator and secondNumeric and secondText == "100%", "second indicator text and visibility")
+    assert(secondR == 1 and secondG == 0 and secondB == 0, "second indicator color")
     return true
 "#;
 
