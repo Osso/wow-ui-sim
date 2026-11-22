@@ -17,11 +17,15 @@ C_Minimap = C_Minimap or {}
 C_PvP = C_PvP or {}
 C_PlayerInfo = C_PlayerInfo or {}
 C_QuestLog = C_QuestLog or {}
--- INFERRED-UNKNOWN: this fallback is constant false; context does not select a verified result.
-install(C_Minimap, "ShouldUseHybridMinimap", function() return false end)
 -- VERIFIED: absent from the incomplete recovered Retail C_QuestLog census; export status remains unknown.
 -- Ordinary quest/world-quest membership is not evidence of calling membership.
 install(C_QuestLog, "IsQuestCalling", function(questID) return false end)
+"#;
+
+const PTR: &str = r#"
+if rawget(C_Minimap, "ShouldUseHybridMinimap") == nil then
+    function C_Minimap.ShouldUseHybridMinimap() return false end
+end
 "#;
 
 const CLASSIC: &str = r#"
@@ -65,6 +69,9 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
         lua.exec(MODERN)?;
     } else {
         lua.exec(CLASSIC)?;
+    }
+    if ACTIVE == ClientProfile::Ptr {
+        lua.exec(PTR)?;
     }
     if ACTIVE == ClientProfile::WowForever {
         lua.exec(FOREVER)?;

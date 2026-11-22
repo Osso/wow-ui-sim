@@ -400,6 +400,8 @@ pub struct VoiceChannel {
 /// headset-check confirmation dialog has been accepted.
 #[derive(Debug, Clone)]
 pub struct VoiceChatState {
+    /// Supplied voice-service login state; independent of connection and readiness.
+    pub logged_in: bool,
     /// Host-supplied settings-access observation; None is unknown, not denied.
     pub can_access_settings: Option<bool>,
     /// Supplied device catalogs; None answers the documented nil result.
@@ -447,6 +449,9 @@ pub struct VoiceChatState {
 impl Default for VoiceChatState {
     fn default() -> Self {
         Self {
+            // INFERRED (R88eb (native evidence pending)): the simulator has no
+            // voice login session, so its supplied initial state is logged out.
+            logged_in: false,
             // Native evidence (PTR 12.1.7, Retail 12.1.5, Forever 1.60.1): the
             // query is the AND of voice-service readiness state and returns false
             // until the service reaches ready. The simulator has no voice service,
