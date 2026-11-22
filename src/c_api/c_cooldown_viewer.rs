@@ -5,8 +5,14 @@
 
 use super::helpers::{ensure_namespace, set_table_array};
 use crate::lua_api::methods::{borrow_state, create_table, table_set};
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+use crate::lua_api::methods::{borrow_state_mut, table_get, val_to_string};
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+use crate::lua_bridge::TableBuilder;
 use crate::lua_bridge::{FromStack, stack_val, table_set_rust_fn_static};
+use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
+use rilua::vm::table::Table;
 use rilua::{LuaResult, Val, runtime_error};
 
 /// One `CooldownViewerCooldown` (CooldownViewerDocumentation.lua).
@@ -35,11 +41,11 @@ pub struct CooldownViewerCooldown {
     pub valid_alert_types: Vec<u8>,
 }
 
-/// Supplied Forever `GroupBuffItem`; no rank or display-data derivation.
+/// Supplied `GroupBuffItem`; Retail omits `displaySpellID` from its records.
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct GroupBuffItem {
     pub spell_id: i32,
-    pub display_spell_id: i32,
+    pub display_spell_id: Option<i32>,
     pub name: String,
     pub icon_id: u32,
     pub flags: i32,
@@ -64,6 +70,11 @@ impl Default for CooldownViewerAvailability {
 
 pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
     let namespace = ensure_namespace(state, "C_CooldownViewer")?;
+    register_viewer_members(state, namespace)?;
+    register_cooldown_queries(state, namespace)
+}
+
+fn register_viewer_members(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
     if cfg!(any(
         feature = "retail-12-0-0",
         feature = "client-wowforever"
@@ -75,10 +86,19 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
             query_availability,
         )?;
     }
-    // Forever 70707 CooldownViewerDocumentation.lua:43-50,149-159.
-    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever {
+    // Retail and Forever CooldownViewerDocumentation.lua:43-50,149-159.
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
         table_set_rust_fn_static(state, namespace, "GetGroupBuffItems", get_group_buff_items)?;
+        register_group_buff_flags(state)?;
     }
+    Ok(())
+}
+
+fn register_cooldown_queries(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
     #[cfg(feature = "retail-12-0-0")]
     table_set_rust_fn_static(
         state,
@@ -106,13 +126,24 @@ fn get_group_buff_items(state: &mut LuaState) -> LuaResult<u32> {
     for (index, entry) in entries.iter().enumerate() {
         let row = create_table(state);
         for (key, value) in [
-            ("spellID", f64::from(entry.spell_id)),
-            ("displaySpellID", f64::from(entry.display_spell_id)),
-            ("iconID", f64::from(entry.icon_id)),
-            ("flags", f64::from(entry.flags)),
+            ("spellID", Some(entry.spell_id)),
+            ("flags", Some(entry.flags)),
         ] {
-            table_set(state, row, key, Val::Num(value));
+            if let Some(value) = value {
+                table_set(state, row, key, Val::Num(f64::from(value)));
+            }
         }
+        if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever {
+            if let Some(display_spell_id) = entry.display_spell_id {
+                table_set(
+                    state,
+                    row,
+                    "displaySpellID",
+                    Val::Num(f64::from(display_spell_id)),
+                );
+            }
+        }
+        table_set(state, row, "iconID", Val::Num(f64::from(entry.icon_id)));
         let name = crate::lua_api::methods::create_string(state, &entry.name);
         table_set(state, row, "name", name);
         table_set(state, row, "isKnown", Val::Bool(entry.is_known));
@@ -120,6 +151,137 @@ fn get_group_buff_items(state: &mut LuaState) -> LuaResult<u32> {
     }
     state.push(array);
     Ok(1)
+}
+
+fn register_group_buff_flags(state: &mut LuaState) -> LuaResult<()> {
+    let enums = ensure_namespace(state, "Enum")?;
+    let flags = crate::c_api::ensure_namespace_table_field(state, enums, "GroupBuffItemFlags")?;
+    crate::c_api::set_namespace_member(state, Val::Table(flags), "HideByDefault", Val::Num(1.0))
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
+    builder.set_function("SetGroupBuffItems", set_group_buff_items)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn set_group_buff_items(state: &mut LuaState) -> LuaResult<u32> {
+    let items = read_group_buff_items(state, stack_val(state, 1))?;
+    borrow_state_mut(state)?.cooldown_viewer_group_buffs = items;
+    Ok(0)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn read_group_buff_items(state: &mut LuaState, value: Val) -> LuaResult<Vec<GroupBuffItem>> {
+    let Val::Table(array_ref) = value else {
+        return Err(runtime_error(
+            "A_Admin.SetGroupBuffItems: expected an item array",
+        ));
+    };
+    let length = state
+        .gc
+        .tables
+        .get(array_ref)
+        .ok_or_else(|| runtime_error("A_Admin.SetGroupBuffItems: expected an item array"))?
+        .len(&state.gc.string_arena);
+    (1..=length)
+        .map(|index| {
+            let value = state
+                .gc
+                .tables
+                .get(array_ref)
+                .map(|array| array.get_int(index as i64))
+                .unwrap_or(Val::Nil);
+            read_group_buff_item(state, value)
+        })
+        .collect()
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn read_group_buff_item(state: &mut LuaState, value: Val) -> LuaResult<GroupBuffItem> {
+    let Val::Table(table) = value else {
+        return Err(invalid_group_buff_field("item"));
+    };
+    let display_spell_id = optional_group_buff_integer(state, table, "displaySpellID")?;
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever
+        && display_spell_id.is_none()
+    {
+        return Err(invalid_group_buff_field("displaySpellID"));
+    }
+    Ok(GroupBuffItem {
+        spell_id: group_buff_integer(state, table, "spellID")?,
+        display_spell_id,
+        name: group_buff_string(state, table, "name")?,
+        icon_id: group_buff_icon_id(state, table)?,
+        flags: group_buff_integer(state, table, "flags")?,
+        is_known: group_buff_bool(state, table, "isKnown")?,
+    })
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn group_buff_integer(state: &mut LuaState, table: GcRef<Table>, key: &str) -> LuaResult<i32> {
+    match table_get(state, Val::Table(table), key) {
+        Val::Num(value)
+            if value.is_finite()
+                && value.fract() == 0.0
+                && (i32::MIN as f64..=i32::MAX as f64).contains(&value) =>
+        {
+            Ok(value as i32)
+        }
+        _ => Err(invalid_group_buff_field(key)),
+    }
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn optional_group_buff_integer(
+    state: &mut LuaState,
+    table: GcRef<Table>,
+    key: &str,
+) -> LuaResult<Option<i32>> {
+    match table_get(state, Val::Table(table), key) {
+        Val::Nil => Ok(None),
+        Val::Num(value)
+            if value.is_finite()
+                && value.fract() == 0.0
+                && (i32::MIN as f64..=i32::MAX as f64).contains(&value) =>
+        {
+            Ok(Some(value as i32))
+        }
+        _ => Err(invalid_group_buff_field(key)),
+    }
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn group_buff_icon_id(state: &mut LuaState, table: GcRef<Table>) -> LuaResult<u32> {
+    match table_get(state, Val::Table(table), "iconID") {
+        Val::Num(value)
+            if value.is_finite()
+                && value.fract() == 0.0
+                && (0.0..=u32::MAX as f64).contains(&value) =>
+        {
+            Ok(value as u32)
+        }
+        _ => Err(invalid_group_buff_field("iconID")),
+    }
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn group_buff_string(state: &mut LuaState, table: GcRef<Table>, key: &str) -> LuaResult<String> {
+    let value = table_get(state, Val::Table(table), key);
+    val_to_string(state, value).ok_or_else(|| invalid_group_buff_field(key))
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn group_buff_bool(state: &mut LuaState, table: GcRef<Table>, key: &str) -> LuaResult<bool> {
+    match table_get(state, Val::Table(table), key) {
+        Val::Bool(value) => Ok(value),
+        _ => Err(invalid_group_buff_field(key)),
+    }
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn invalid_group_buff_field(key: &str) -> rilua::LuaError {
+    runtime_error(format!("A_Admin.SetGroupBuffItems: invalid {key}"))
 }
 
 fn query_availability(state: &mut LuaState) -> LuaResult<u32> {
