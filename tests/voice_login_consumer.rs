@@ -7,6 +7,28 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::toc::TocFile;
 
+const VOICE_TOGGLE_LOGIN_CASE: &str = r#"
+    local button = CreateFrame("Button", nil, UIParent, "ToggleVoiceMuteButtonTemplate")
+    assert(C_VoiceChat.IsLoggedIn() == false)
+    assert(button:UpdateVisibleState() == false)
+    assert(not button:IsShown())
+
+    A_Admin.SetVoiceChatLoggedIn(false)
+    assert(C_VoiceChat.IsLoggedIn() == false)
+    assert(button:UpdateVisibleState() == false)
+    assert(not button:IsShown())
+
+    A_Admin.SetVoiceChatLoggedIn(true)
+    assert(C_VoiceChat.IsLoggedIn() == true)
+    assert(C_VoiceChat.CanAccessSettings() == false)
+    assert(button:UpdateVisibleState() == true)
+    assert(button:IsShown())
+
+    A_Admin.SetVoiceChatLoggedIn(false)
+    assert(button:UpdateVisibleState() == false)
+    assert(not button:IsShown())
+"#;
+
 fn assert_voice_addon_selected() {
     let ui = blizzard_ui_dir();
     let toc_path = find_toc_file(&ui.join("Blizzard_VoiceToggleButton"))
@@ -23,30 +45,8 @@ fn assert_voice_addon_selected() {
 }
 
 fn assert_loaded_button_tracks_login(env: &WowLuaEnv) {
-    env.exec(
-        r#"
-        local button = CreateFrame("Button", nil, UIParent, "ToggleVoiceMuteButtonTemplate")
-        assert(C_VoiceChat.IsLoggedIn() == false)
-        assert(button:UpdateVisibleState() == false)
-        assert(not button:IsShown())
-
-        A_Admin.SetVoiceChatLoggedIn(false)
-        assert(C_VoiceChat.IsLoggedIn() == false)
-        assert(button:UpdateVisibleState() == false)
-        assert(not button:IsShown())
-
-        A_Admin.SetVoiceChatLoggedIn(true)
-        assert(C_VoiceChat.IsLoggedIn() == true)
-        assert(C_VoiceChat.CanAccessSettings() == false)
-        assert(button:UpdateVisibleState() == true)
-        assert(button:IsShown())
-
-        A_Admin.SetVoiceChatLoggedIn(false)
-        assert(button:UpdateVisibleState() == false)
-        assert(not button:IsShown())
-        "#,
-    )
-    .expect("loaded Blizzard voice toggle must follow supplied login state");
+    env.exec(VOICE_TOGGLE_LOGIN_CASE)
+        .expect("loaded Blizzard voice toggle must follow supplied login state");
 
     let state = env.state();
     let state = state.borrow();
