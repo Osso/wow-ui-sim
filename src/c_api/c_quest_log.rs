@@ -415,6 +415,7 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
     if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever) {
         table_set_rust_fn_static(state, namespace, "CanAbandonQuest", can_abandon_quest)?;
         // Retail QuestLogDocumentation.lua:675-689; Forever :693-707.
+        #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
         table_set_rust_fn_static(state, namespace, "GetZoneStoryInfo", get_zone_story_info)?;
     }
     // Retail/PTR/Forever QuestLogDocumentation.lua declare these queries
