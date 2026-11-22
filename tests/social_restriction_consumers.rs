@@ -23,11 +23,13 @@ fn supply_social_restrictions(env: &WowLuaEnv, muted: bool, age_restricted: bool
 #[test]
 fn original_social_settings_reads_chat_restrictions() {
     let env = load_original_addon("Blizzard_SettingsDefinitions_Frame");
-    env.exec(r#"
+    env.exec(
+        r#"
         local setting = Settings.GetSetting("PROXY_DISABLE_CHAT")
         assert(setting ~= nil, "original Social.lua registered the disable-chat setting")
         assert(setting:GetValue() == false, "unrestricted account can disable chat")
-    "#)
+    "#,
+    )
     .expect("original Social.lua disable-chat consumer");
     supply_social_restrictions(&env, true, false, false);
     assert_social_setting(&env, true);
@@ -58,7 +60,11 @@ fn supply_community(env: &WowLuaEnv) {
         invitations: Vec::new(),
         streams: Vec::new(),
     };
-    env.state().borrow_mut().clubs.clubs.insert(club.id.clone(), club);
+    env.state()
+        .borrow_mut()
+        .clubs
+        .clubs
+        .insert(club.id.clone(), club);
 }
 
 fn set_community_account_muted(env: &WowLuaEnv, muted: bool) {
@@ -104,4 +110,24 @@ fn original_communities_mode_reads_chat_restrictions() {
     validate_community(&env, false);
     supply_social_restrictions(&env, false, false, false);
     validate_community(&env, true);
+}
+
+#[test]
+fn original_communities_chat_editbox_hides_when_chat_disabled() {
+    let env = load_original_addon("Blizzard_Communities");
+    supply_community(&env);
+    env.exec(
+        r#"
+        A_Admin.SetChatDisabled(false)
+        CommunitiesFrame:SelectClub("club-test")
+        assert(CommunitiesFrame:GetDisplayMode() == COMMUNITIES_FRAME_DISPLAY_MODES.CHAT)
+        assert(CommunitiesFrame.ChatEditBox:IsShown(), "chat edit box is shown when chat is enabled")
+
+        A_Admin.SetChatDisabled(true)
+        CommunitiesFrame:ValidateDisplayMode()
+        assert(CommunitiesFrame:GetDisplayMode() == COMMUNITIES_FRAME_DISPLAY_MODES.ROSTER)
+        assert(not CommunitiesFrame.ChatEditBox:IsShown(), "disabled chat edit box is hidden")
+        "#,
+    )
+    .expect("original CommunitiesFrame prevents chat entry while chat is disabled");
 }

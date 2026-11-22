@@ -1,8 +1,8 @@
 //! Social restrictions supplied by this simulator environment, not account policy.
 
 use crate::client_profile::{ACTIVE, ClientProfile};
-use crate::lua_api::methods::borrow_state;
-use crate::lua_bridge::table_set_rust_fn_static;
+use crate::lua_api::methods::{borrow_state, borrow_state_mut};
+use crate::lua_bridge::{FromStack, TableBuilder, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 
@@ -34,6 +34,21 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
         table_set_rust_fn_static(state, namespace, "IsFriendsDisabled", is_friends_disabled)?;
     }
     Ok(())
+}
+
+pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
+    if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever) {
+        builder.set_function("SetChatDisabled", set_chat_disabled)
+    } else {
+        Ok(builder)
+    }
+}
+
+// INFERRED R88ek (native evidence pending): supply this host scenario, not account policy.
+fn set_chat_disabled(state: &mut LuaState) -> LuaResult<u32> {
+    let disabled = bool::from_stack(state, 1)?;
+    borrow_state_mut(state)?.social_restrictions.chat_disabled = disabled;
+    Ok(0)
 }
 
 fn is_muted(state: &mut LuaState) -> LuaResult<u32> {
