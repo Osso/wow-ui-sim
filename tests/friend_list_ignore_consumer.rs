@@ -13,7 +13,8 @@ const IGNORE_LIST_SETUP: &str = r#"
     assert(C_SocialRestrictions.IsFriendsDisabled() == false,
         "Forever should expose the modeled default friends-disabled state")
 
-    FriendsFrame:Show()
+    -- The panel manager supplies FriendsFrame's anchors; direct Show() does not.
+    ShowUIPanel(FriendsFrame)
     FriendsFrame.IgnoreListWindow:Show()
 "#;
 
