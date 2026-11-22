@@ -412,6 +412,35 @@ fn adventure_guide_availability_controls_original_encounter_map_pins() {
     assert_eq!(restored, shown);
 }
 
+#[cfg(feature = "client-wowforever")]
+#[test]
+fn forever_adventure_guide_availability_controls_original_microbutton() {
+    let ui = blizzard_ui_dir();
+    let (env, loaded) = build_blizzard_addon_closure_env(
+        &ui,
+        &["Blizzard_FrameXMLUtil", "Blizzard_MicroMenu"],
+        &[],
+    );
+    assert!(loaded.iter().any(|name| name == "Blizzard_FrameXMLUtil"));
+    assert!(loaded.iter().any(|name| name == "Blizzard_MicroMenu"));
+    env.exec(
+        r#"
+        assert(AdventureGuideUtil.IsAvailable())
+        EJMicroButton:UpdateDisplay()
+        assert(EJMicroButton:IsEnabled())
+        A_Admin.SetAdventureJournalCanBeShown(false)
+        assert(not AdventureGuideUtil.IsAvailable())
+        EJMicroButton:UpdateDisplay()
+        assert(not EJMicroButton:IsEnabled())
+        A_Admin.SetAdventureJournalCanBeShown(true)
+        assert(AdventureGuideUtil.IsAvailable())
+        EJMicroButton:UpdateDisplay()
+        assert(EJMicroButton:IsEnabled())
+    "#,
+    )
+    .expect("the original Forever microbutton follows Adventure Guide availability");
+}
+
 #[cfg(feature = "client-retail")]
 fn load_encounter_journal_map_addon_closure() -> WowLuaEnv {
     let ui = blizzard_ui_dir();
