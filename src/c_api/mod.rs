@@ -187,7 +187,7 @@ pub(crate) mod c_combat_audio_alert;
 #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
 pub(crate) mod c_combat_log;
 pub mod c_combat_text;
-mod c_commentator;
+pub(crate) mod c_commentator;
 pub(crate) mod c_console;
 pub mod c_content_tracking;
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
