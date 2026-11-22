@@ -482,9 +482,8 @@ fn apply_feature_progression_defaults(lua: &mut rilua::Lua) -> crate::Result<()>
     temporary::pvp_talent_defaults::apply_bootstrap(lua)?;
     temporary::quest_objective_defaults::apply_bootstrap(lua)?;
     temporary::quest_progress_requirements::apply_bootstrap(lua)?;
-    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::WowForever {
-        temporary::reincarnation_defaults::apply_bootstrap(lua)?;
-    }
+    #[cfg(not(feature = "client-wowforever"))]
+    temporary::reincarnation_defaults::apply_bootstrap(lua)?;
     temporary::scenario_defaults::apply_bootstrap(lua)?;
     temporary::scripted_animation_effect_defaults::apply_bootstrap(lua)?;
     temporary::shared_xml_utility_defaults::apply_bootstrap(lua)?;
