@@ -810,7 +810,6 @@ macro_rules! build_empty_sim_state {
             merchant_frame_open: false,
             // Inferred default scenario: no configured repair service.
             merchant_repair_capable: false,
-            #[cfg(feature = "client-wowforever")]
             merchant_sell_all_junk_feature_enabled: false,
             tabard_frame_open: false,
             trainer_frame_open: false,

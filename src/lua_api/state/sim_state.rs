@@ -997,8 +997,7 @@ pub struct SimState {
     pub guild_bank_tabs: Vec<GuildBankTab>,
     pub merchant_frame_open: bool,
     pub merchant_repair_capable: bool,
-    /// Forever feature-state input; false is the native image-load default, not a CVar.
-    #[cfg(feature = "client-wowforever")]
+    /// INFERRED R88dx host input; false is the sell-all-junk feature default.
     pub merchant_sell_all_junk_feature_enabled: bool,
     pub tabard_frame_open: bool,
     pub trainer_frame_open: bool,

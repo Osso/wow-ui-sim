@@ -2,7 +2,7 @@
 //!
 //! Retail 12.0.7 currency IDs read the explicit ordered host snapshot.
 
-#[cfg(feature = "client-wowforever")]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub mod junk;
 
 use crate::c_api::helpers::ensure_namespace;
@@ -13,7 +13,7 @@ use crate::lua_api::methods::{
 };
 use crate::lua_bridge::{FromStack, table_set_rust_fn_static};
 use rilua::LuaResult;
-#[cfg(feature = "client-wowforever")]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 use rilua::Val;
 use rilua::vm::state::LuaState;
 
@@ -31,9 +31,7 @@ pub(crate) fn register_c_merchant_frame_surface(state: &mut LuaState) -> LuaResu
             is_merchant_item_refundable,
         )?;
     }
-    register_patch_12_0_7_merchant_frame_surface(state, merchant)?;
-    // Forever MerchantFrameDocumentation.lua:77-83 declares this member.
-    #[cfg(feature = "client-wowforever")]
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     {
         table_set_rust_fn_static(state, merchant, "GetNumJunkItems", junk::get_num_junk_items)?;
         table_set_rust_fn_static(
@@ -43,10 +41,11 @@ pub(crate) fn register_c_merchant_frame_surface(state: &mut LuaState) -> LuaResu
             is_sell_all_junk_enabled,
         )?;
     }
+    register_patch_12_0_7_merchant_frame_surface(state, merchant)?;
     Ok(())
 }
 
-#[cfg(feature = "client-wowforever")]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn is_sell_all_junk_enabled(state: &mut LuaState) -> LuaResult<u32> {
     let enabled = borrow_state(state)?.merchant_sell_all_junk_feature_enabled;
     state.push(Val::Bool(enabled));
