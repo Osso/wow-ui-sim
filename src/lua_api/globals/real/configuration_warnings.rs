@@ -14,17 +14,30 @@ use rilua::{LuaApiMut, LuaResult, Val, runtime_error};
 pub(crate) struct ConfigurationWarning {
     warning: u32,
     text: String,
+    seen: bool,
 }
 
 pub(crate) fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
     let state = lua.state_mut();
     let namespace = ensure_namespace(state, "C_ConfigurationWarnings")?;
+    table_set_rust_fn_static(
+        state,
+        namespace,
+        "GetConfigurationWarningSeen",
+        get_warning_seen,
+    )?;
     table_set_rust_fn_static(state, namespace, "GetConfigurationWarnings", get_warnings)?;
     table_set_rust_fn_static(
         state,
         namespace,
         "GetConfigurationWarningString",
         get_warning_string,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        namespace,
+        "SetConfigurationWarningSeen",
+        set_warning_seen,
     )
 }
 
@@ -65,7 +78,12 @@ fn parse_warning(state: &mut LuaState, row: Val, index: usize) -> LuaResult<Conf
     let warning = read_warning_id(warning_value, index)?;
     let text_value = table_get(state, row, "text");
     let text = read_warning_text(state, text_value, index)?;
-    Ok(ConfigurationWarning { warning, text })
+    let seen = read_warning_seen(table_get(state, row, "seen"), index)?;
+    Ok(ConfigurationWarning {
+        warning,
+        text,
+        seen,
+    })
 }
 
 fn read_warning_id(value: Val, index: usize) -> LuaResult<u32> {
@@ -97,16 +115,39 @@ fn read_warning_text(state: &LuaState, value: Val, index: usize) -> LuaResult<St
     String::from_utf8(text.data().to_vec()).map_err(|_| invalid_warning(index))
 }
 
+fn read_warning_seen(value: Val, index: usize) -> LuaResult<bool> {
+    match value {
+        Val::Nil => Ok(false),
+        Val::Bool(seen) => Ok(seen),
+        _ => Err(runtime_error(format!(
+            "SetConfigurationWarnings: warnings[{index}].seen must be a boolean"
+        ))),
+    }
+}
+
 fn invalid_warning(index: usize) -> rilua::LuaError {
     runtime_error(format!(
         "SetConfigurationWarnings: warnings[{index}] must contain a warning ID and text"
     ))
 }
 
+fn get_warning_seen(state: &mut LuaState) -> LuaResult<u32> {
+    let warning = read_warning_id(stack_val(state, 1), 1)?;
+    let seen = borrow_state(state)?
+        .configuration_warnings
+        .iter()
+        .find(|entry| entry.warning == warning)
+        .is_some_and(|entry| entry.seen);
+    state.push(Val::Bool(seen));
+    Ok(1)
+}
+
 fn get_warnings(state: &mut LuaState) -> LuaResult<u32> {
+    let include_seen = matches!(stack_val(state, 1), Val::Bool(true));
     let warnings: Vec<u32> = borrow_state(state)?
         .configuration_warnings
         .iter()
+        .filter(|warning| include_seen || !warning.seen)
         .map(|warning| warning.warning)
         .collect();
     let output = create_table(state);
@@ -123,6 +164,18 @@ fn get_warnings(state: &mut LuaState) -> LuaResult<u32> {
         );
     }
     Ok(1)
+}
+
+fn set_warning_seen(state: &mut LuaState) -> LuaResult<u32> {
+    let warning = read_warning_id(stack_val(state, 1), 1)?;
+    if let Some(entry) = borrow_state_mut(state)?
+        .configuration_warnings
+        .iter_mut()
+        .find(|entry| entry.warning == warning)
+    {
+        entry.seen = true;
+    }
+    Ok(0)
 }
 
 fn get_warning_string(state: &mut LuaState) -> LuaResult<u32> {
