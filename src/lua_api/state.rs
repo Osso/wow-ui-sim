@@ -211,6 +211,8 @@ macro_rules! build_empty_sim_state {
             item_set_bonuses: crate::c_api::ItemSetBonuses::default(),
             #[cfg(feature = "retail-12-0-0")]
             ping_texture_kits: crate::c_api::PingTextureKits::default(),
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            ping_default_options: crate::c_api::PingDefaultOptions::default(),
             #[cfg(feature = "retail-12-0-0")]
             party_ai_guids: HashSet::new(),
             #[cfg(feature = "retail-12-0-5")]
