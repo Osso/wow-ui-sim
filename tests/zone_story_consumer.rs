@@ -1,6 +1,7 @@
 #![cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 
-use crate::common::keybinding_panel_fixtures;
+#[path = "common/keybinding_panel_fixtures.rs"]
+mod keybinding_panel_fixtures;
 
 #[test]
 fn zone_story_supplied_relations_drive_blizzard_header_and_tooltip() {
