@@ -478,6 +478,18 @@ fn load_original_transmog_frame(visible: bool) -> WowLuaEnv {
         .expect("set ranged-slot visibility input");
     let shared = load_blizzard_addon_closure_into_env(&env, &ui, &["Blizzard_SharedXML"], &[]);
     assert!(shared.iter().any(|name| name == "Blizzard_SharedXML"));
+    let startup = load_blizzard_addon_closure_into_env(
+        &env,
+        &ui,
+        &["Blizzard_UIParentPanelManager", "Blizzard_UIPanels_Game"],
+        &[],
+    );
+    assert!(
+        startup
+            .iter()
+            .any(|name| name == "Blizzard_UIParentPanelManager")
+    );
+    assert!(startup.iter().any(|name| name == "Blizzard_UIPanels_Game"));
     load_transmog_addon(&env, &ui);
     env
 }
