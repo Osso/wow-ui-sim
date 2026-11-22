@@ -2,7 +2,7 @@
 //! Native evidence is pending; the selected consumers establish the four fields.
 
 use crate::lua_api::methods::{borrow_state, borrow_state_mut, create_string};
-use crate::lua_bridge::{FromStack, TableBuilder, table_set_rust_fn_static};
+use crate::lua_bridge::{FromStack, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 
@@ -31,10 +31,6 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     table_set_rust_fn_static(state, namespace, "StartReincarnation", start_reincarnation)?;
     table_set_rust_fn_static(state, namespace, "GetReincarnatingCharacter", get_character)?;
     table_set_rust_fn_static(state, namespace, "IsReincarnating", is_reincarnating)
-}
-
-pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
-    builder.set_function("SetReincarnationCharacter", start_reincarnation)
 }
 
 fn start_reincarnation(state: &mut LuaState) -> LuaResult<u32> {

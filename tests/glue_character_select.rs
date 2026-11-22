@@ -382,27 +382,13 @@ local function assert_state(guid, name, class_name, level)
     assert(actual_class == class_name and actual_level == level)
 end
 
-local function start_character(guid, name, class_name, class_index, level)
-    local dialog = StaticPopupDialogs and StaticPopupDialogs.HARDCORE_DEATH
-    if dialog and dialog.OnButton3 then
-        A_Admin.SetPlayerName(name)
-        A_Admin.SetPlayerClass(class_index)
-        A_Admin.SetPlayerLevel(level)
-        local player_guid = UnitGUID("player")
-        dialog.OnButton3(StaticPopup1, nil)
-        return player_guid
-    end
-    C_Reincarnation.StartReincarnation(guid, name, class_name, level)
-    return guid
-end
+assert(not StaticPopupDialogs or not StaticPopupDialogs.HARDCORE_DEATH,
+    "HARDCORE_DEATH is not registered without the hardcore game rule")
+C_Reincarnation.StartReincarnation("Player-1", "Ari", "Paladin", 60)
+assert_state("Player-1", "Ari", "Paladin", 60)
 
-A_Admin.SetReincarnationCharacter("Player-1", "Ari", "PALADIN", 60)
-local first_guid = start_character("Player-1", "Ari", "Paladin", 2, 60)
-assert_state(first_guid, "Ari", "Paladin", 60)
-
-A_Admin.SetReincarnationCharacter("Player-2", "Bee", "MAGE", 42)
-local second_guid = start_character("Player-2", "Bee", "Mage", 8, 42)
-assert_state(second_guid, "Bee", "Mage", 42)
+C_Reincarnation.StartReincarnation("Player-2", "Bee", "Mage", 42)
+assert_state("Player-2", "Bee", "Mage", 42)
 "##;
 
 #[test]
