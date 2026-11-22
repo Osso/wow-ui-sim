@@ -108,7 +108,8 @@ fn request_items(state: &mut LuaState) -> LuaResult<u32> {
 
 fn item_place_bid(state: &mut LuaState) -> LuaResult<u32> {
     let market_id = u32::from_stack(state, 1)?;
-    let bid = u64::from_stack(state, 2)?;
+    let bid = u64::try_from(i64::from_stack(state, 2)?)
+        .map_err(|_| runtime_error("C_BlackMarket.ItemPlaceBid requires a nonnegative bid"))?;
     let mut sim = borrow_state_mut(state)?;
     let item = sim
         .black_market
@@ -158,7 +159,7 @@ fn get_item_info_by_id(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn get_item_info_by_index(state: &mut LuaState) -> LuaResult<u32> {
-    let index = usize::from_stack(state, 1)?;
+    let index = u32::from_stack(state, 1)? as usize;
     let item = borrow_state(state)?
         .black_market
         .items
