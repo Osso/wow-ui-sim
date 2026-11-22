@@ -3,7 +3,7 @@
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::startup::{fire_one_on_update_tick, fire_startup_events, process_pending_timers};
 
-const IGNORE_LIST_SCENARIO: &str = r#"
+const IGNORE_LIST_SETUP: &str = r#"
     A_Admin.SetSocialIgnoreName(1, "R88eh-IgnoreAlpha")
     A_Admin.SetSocialIgnoreName(2, "R88eh-IgnoreBeta")
     A_Admin.SetSocialBlockedEntry(1, 92001, "R88eh-BlockedAlpha")
@@ -12,9 +12,11 @@ const IGNORE_LIST_SCENARIO: &str = r#"
     assert(C_FriendList.GetIgnoreName(2) == "R88eh-IgnoreBeta", "second supplied ignore")
 
     FriendsFrame:Show()
-    local ignoreWindow = FriendsFrame.IgnoreListWindow
-    local scrollBox = ignoreWindow.ScrollBox
-    ignoreWindow:Show()
+    FriendsFrame.IgnoreListWindow:Show()
+"#;
+
+const IGNORE_LIST_ASSERTIONS: &str = r#"
+    local scrollBox = FriendsFrame.IgnoreListWindow.ScrollBox
     local width, height = scrollBox:GetSize()
     assert(width > 0 and height > 0,
         string.format("ignore ScrollBox size must be positive: %sx%s", width, height))
@@ -25,8 +27,6 @@ const IGNORE_LIST_SCENARIO: &str = r#"
         visibleFrames = visibleFrames + 1
     end
     assert(scrollBox:IsShown() and scrollBox:IsVisible(), "ignore ScrollBox must be visible")
-    assert(width > 0 and height > 0,
-        string.format("ignore ScrollBox size must be positive: %sx%s", width, height))
 
     local function check(squelchType, index, name)
         local row = assert(scrollBox:FindFrameByPredicate(function(_, elementData)
@@ -67,7 +67,11 @@ fn load_friends_frame() -> WowLuaEnv {
 
 #[test]
 fn real_friends_frame_ignore_scrollbox_uses_supplied_names_and_selection() {
-    load_friends_frame()
-        .exec(IGNORE_LIST_SCENARIO)
+    let env = load_friends_frame();
+    env.exec(IGNORE_LIST_SETUP)
+        .expect("original FriendsFrame ignore window should open");
+    env.fire_on_update(0.016)
+        .expect("post-open UI tick should resolve the original ScrollBox layout");
+    env.exec(IGNORE_LIST_ASSERTIONS)
         .expect("original FriendsFrame ignore ScrollBox should display supplied rows");
 }
