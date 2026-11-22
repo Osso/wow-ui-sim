@@ -670,6 +670,9 @@ pub struct SimState {
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     pub unit_threats:
         HashMap<(String, String), crate::lua_api::globals::real::unit_threat::ThreatEntry>,
+    /// INFERRED (R88dz (native evidence pending)): host-supplied effective tank aura state.
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub unit_effectively_tank_auras: HashMap<String, bool>,
     /// Host-supplied GUIDs for unit tokens not resolved by the built-in inputs.
     pub unit_guid_overrides: HashMap<String, String>,
     /// Host-supplied GUIDs owned or controlled by the player.
