@@ -8,25 +8,23 @@ use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::toc::TocFile;
 
 const VOICE_TOGGLE_LOGIN_CASE: &str = r#"
-    local button = CreateFrame("Button", nil, UIParent, "ToggleVoiceMuteButtonTemplate")
-    VoiceToggleButtonOnlyVisibleWhenLoggedInMixin.OnLoad(button)
+    local button = assert(ChatFrameToggleVoiceMuteButton)
     assert(C_VoiceChat.IsLoggedIn() == false, "default login state")
-    assert(button:UpdateVisibleState() == false, "default button visibility")
     assert(not button:IsShown(), "default button is hidden")
 
     A_Admin.SetVoiceChatLoggedIn(false)
+    A_Admin.FireEvent("VOICE_CHAT_LOGOUT")
     assert(C_VoiceChat.IsLoggedIn() == false, "supplied logged-out state")
-    assert(button:UpdateVisibleState() == false, "logged-out visibility")
     assert(not button:IsShown(), "logged-out button is hidden")
 
     A_Admin.SetVoiceChatLoggedIn(true)
+    A_Admin.FireEvent("VOICE_CHAT_LOGIN")
     assert(C_VoiceChat.IsLoggedIn() == true, "supplied logged-in state")
     assert(C_VoiceChat.CanAccessSettings() == false, "readiness remains independent")
-    assert(button:UpdateVisibleState() == true, "logged-in visibility")
     assert(button:IsShown(), "logged-in button is shown")
 
     A_Admin.SetVoiceChatLoggedIn(false)
-    assert(button:UpdateVisibleState() == false, "updated logged-out visibility")
+    A_Admin.FireEvent("VOICE_CHAT_LOGOUT")
     assert(not button:IsShown(), "updated logged-out button is hidden")
 "#;
 
@@ -37,12 +35,13 @@ fn assert_voice_addon_selected() {
     let toc = TocFile::from_file(&toc_path).expect("voice toggle TOC must parse");
     assert!(toc.allows_screen(ScreenKind::Game));
     assert!(!toc.is_game_type_restricted());
-    assert!(
-        discover_blizzard_addons_for_screen(&ui, ScreenKind::Game)
-            .iter()
-            .any(|(name, _)| name == "Blizzard_VoiceToggleButton"),
-        "Blizzard_VoiceToggleButton must be selected for the game screen"
-    );
+    let selected = discover_blizzard_addons_for_screen(&ui, ScreenKind::Game);
+    for addon in ["Blizzard_VoiceToggleButton", "Blizzard_ChatFrame"] {
+        assert!(
+            selected.iter().any(|(name, _)| name == addon),
+            "{addon} must be selected for the game screen"
+        );
+    }
 }
 
 fn assert_loaded_button_tracks_login(env: &WowLuaEnv) {
@@ -64,10 +63,11 @@ fn original_voice_toggle_buttons_follow_supplied_login_state() {
     assert_voice_addon_selected();
 
     with_blizzard_addon_startup_shape(
-        &["Blizzard_SharedXML", "Blizzard_VoiceToggleButton"],
+        &["Blizzard_SharedXML", "Blizzard_ChatFrame"],
         &[],
         |env, loaded| {
             assert!(loaded.iter().any(|name| name == "Blizzard_SharedXML"));
+            assert!(loaded.iter().any(|name| name == "Blizzard_ChatFrame"));
             assert!(
                 loaded
                     .iter()
