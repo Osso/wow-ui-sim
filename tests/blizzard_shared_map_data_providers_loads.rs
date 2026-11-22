@@ -353,6 +353,7 @@ CanShowEncounterJournal = function() return true end
 
 #[cfg(feature = "client-retail")]
 const ENCOUNTER_MAP_REFRESH_LUA: &str = r#"
+assert(CanShowEncounterJournal(), "encounter journal gate must be true")
 local provider = CreateFromMixins(EncounterJournalDataProviderMixin)
 WorldMapFrame:SetMapID(2248)
 WorldMapFrame:AddDataProvider(provider)
