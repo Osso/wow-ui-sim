@@ -152,6 +152,11 @@ pub struct EncounterJournalState {
     pub current_tab: u32,
     /// Zero-based carousel offset for `C_AdventureJournal` suggestions.
     pub adventure_primary_offset: u32,
+    /// INFERRED: R88dn (native evidence pending). The pinned
+    /// `AdventureGuideUtil.lua:10-11` consumer gates the Encounter Journal
+    /// on this supplied availability observation; normal characters default true.
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub adventure_can_be_shown: bool,
     /// INFERRED R88dj (native evidence pending): supplied encounter rows by UI map ID.
     #[cfg(feature = "client-retail")]
     pub(crate) map_encounters:
@@ -177,6 +182,8 @@ impl Default for EncounterJournalState {
             search_finished: true,
             current_tab: 3,
             adventure_primary_offset: 0,
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            adventure_can_be_shown: true,
             #[cfg(feature = "client-retail")]
             map_encounters: HashMap::new(),
             #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
