@@ -63,36 +63,37 @@ fn forever_character_create_uses_the_supplied_hardcore_rule() {
                     .iter()
                     .any(|addon| addon == "Blizzard_CharacterCreate")
             );
-            env.exec("CharacterCreateFrame:Hide(); A_Admin.SetGameRule(Enum.GameRule.HardcoreRuleset, 1); A_Admin.SetGameRule(Enum.GameRule.SelfFoundAllowed, 1); CharacterCreateFrame.ForwardButton:SetText('sentinel'); CharacterCreateFrame:Show()")
+            env.exec("A_Admin.SetGameRule(Enum.GameRule.SelfFoundAllowed, 1)")
                 .unwrap();
-            let (hardcore_active, hardcore_value, self_found): (bool, f64, bool) = env
-                .eval("return C_GameRules.IsGameRuleActive(Enum.GameRule.HardcoreRuleset), C_GameRules.GetGameRuleAsFloat(Enum.GameRule.HardcoreRuleset), C_GameRules.IsSelfFoundAllowed()")
-                .unwrap();
-            assert_eq!(
-                (hardcore_active, hardcore_value, self_found),
-                (true, 1.0, true)
-            );
-            let active_text: String = env
-                .eval("return CharacterCreateFrame.ForwardButton:GetText()")
-                .unwrap();
+            let active_text = show_character_create_with_hardcore(env, true);
+            assert_hardcore_rule_values(env, true);
             let expected_text: String = env.eval("return CHARACTER_CREATE_ACCEPT").unwrap();
             assert_eq!(active_text, expected_text);
 
-            env.exec("CharacterCreateFrame:Hide(); A_Admin.SetGameRule(Enum.GameRule.HardcoreRuleset, nil); CharacterCreateFrame.ForwardButton:SetText('sentinel'); CharacterCreateFrame:Show()")
-                .unwrap();
-            let (hardcore_active, hardcore_value, self_found): (bool, f64, bool) = env
-                .eval("return C_GameRules.IsGameRuleActive(Enum.GameRule.HardcoreRuleset), C_GameRules.GetGameRuleAsFloat(Enum.GameRule.HardcoreRuleset), C_GameRules.IsSelfFoundAllowed()")
-                .unwrap();
-            assert_eq!(
-                (hardcore_active, hardcore_value, self_found),
-                (false, 0.0, true)
-            );
-            let inactive_text: String = env
-                .eval("return CharacterCreateFrame.ForwardButton:GetText()")
-                .unwrap();
+            let inactive_text = show_character_create_with_hardcore(env, false);
+            assert_hardcore_rule_values(env, false);
             assert_eq!(inactive_text, "sentinel");
         },
     );
+}
+
+#[cfg(feature = "client-wowforever")]
+fn show_character_create_with_hardcore(env: &WowLuaEnv, active: bool) -> String {
+    let value = if active { "1" } else { "nil" };
+    env.exec(&format!("CharacterCreateFrame:Hide(); A_Admin.SetGameRule(Enum.GameRule.HardcoreRuleset, {value}); CharacterCreateFrame.ForwardButton:SetText('sentinel'); CharacterCreateFrame:Show()"))
+        .unwrap();
+    env.eval("return CharacterCreateFrame.ForwardButton:GetText()")
+        .unwrap()
+}
+
+#[cfg(feature = "client-wowforever")]
+fn assert_hardcore_rule_values(env: &WowLuaEnv, active: bool) {
+    let (is_active, value, self_found): (bool, f64, bool) = env
+        .eval("return C_GameRules.IsGameRuleActive(Enum.GameRule.HardcoreRuleset), C_GameRules.GetGameRuleAsFloat(Enum.GameRule.HardcoreRuleset), C_GameRules.IsSelfFoundAllowed()")
+        .unwrap();
+    assert_eq!(is_active, active);
+    assert_eq!(value, if active { 1.0 } else { 0.0 });
+    assert!(self_found);
 }
 
 #[test]
