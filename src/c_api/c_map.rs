@@ -178,7 +178,7 @@ pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn set_adventure_map_id(state: &mut LuaState) -> LuaResult<u32> {
-    let map_id = i32::from_stack(state, 1)?;
+    let map_id = i64::from_stack(state, 1)?;
     borrow_state_mut(state)?.adventure_map.map_id = map_id;
     Ok(0)
 }
