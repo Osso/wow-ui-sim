@@ -28,6 +28,7 @@ pub(crate) const BLIZZARD_ADDONS: &[&str] = &[
     "Blizzard_Flyout",
     "Blizzard_StoreUI",
     "Blizzard_MicroMenu",
+    "Blizzard_GameMenuEsc",
     "Blizzard_ManagedFrameSystem",
     "Blizzard_EditMode",
     "Blizzard_GarrisonBase",
