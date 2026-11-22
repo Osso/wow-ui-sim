@@ -83,7 +83,16 @@ fn supplied_missions_update_the_real_covenant_mission_list() {
     let env = load_full_game_ui_with_lod_deps();
     load_addon(&env.loader_env(), &garrison_ui_toc()).expect("load original Garrison UI");
     let errors_before_show = env.state().borrow().lua_errors.len();
-    let mission_ids: (i64, i64, i64, i64) = env
+    let (mission_count, mission_1, mission_2, mission_3, width_1, height_1, width_2, height_2): (
+        i64,
+        i64,
+        i64,
+        i64,
+        i32,
+        i32,
+        i32,
+        i32,
+    ) = env
         .eval(include_str!("fixtures/garrison_mission_lists.lua"))
         .expect("Covenant mission list consumes supplied missions");
     let new_errors = env.state().borrow().lua_errors[errors_before_show..].to_vec();
@@ -91,7 +100,12 @@ fn supplied_missions_update_the_real_covenant_mission_list() {
         new_errors.is_empty(),
         "CovenantMissionFrame:Show emitted Lua errors: {new_errors:#?}"
     );
+    let mission_ids = (mission_count, mission_1, mission_2, mission_3);
     assert_eq!(mission_ids, (3, 900001, 900003, 900002));
+    assert_eq!(
+        (width_1, height_1, width_2, height_2),
+        (3840, 2560, 1002, 668)
+    );
 }
 
 #[test]
