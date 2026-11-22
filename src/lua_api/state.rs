@@ -543,6 +543,8 @@ macro_rules! build_empty_sim_state {
             unit_threats: HashMap::new(),
             #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
             unit_effectively_tank_auras: HashMap::new(),
+            #[cfg(feature = "client-wowforever")]
+            specialization_system: 0,
             unit_guid_overrides: HashMap::new(),
             player_owned_or_controlled_unit_guids: HashSet::new(),
             previous_target: None,
