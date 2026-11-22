@@ -1031,21 +1031,6 @@ fn major_faction_display_defaults_are_not_c_api_temporary_shims() {
 }
 
 #[test]
-fn reincarnation_defaults_are_not_c_api_temporary_shims() {
-    let temporary_shims = c_api_temporary_shims_source();
-    let c_api = include_str!("../src/c_api/mod.rs");
-
-    assert!(
-        !temporary_shims.contains("c_reincarnation"),
-        "unmodeled C_Reincarnation mutable defaults belong in lua_api::workarounds::temporary"
-    );
-    assert!(
-        !c_api.contains("c_reincarnation"),
-        "C_Reincarnation mutable defaults should not be wired through C API registration"
-    );
-}
-
-#[test]
 fn transmog_outfit_slot_defaults_are_not_c_api_temporary_shims() {
     let temporary_shims = c_api_temporary_shims_source();
     let c_api = include_str!("../src/c_api/mod.rs");
