@@ -16,11 +16,19 @@ const IGNORE_LIST_SCENARIO: &str = r#"
     local scrollBox = FriendsFrame.IgnoreListWindow.ScrollBox
     local provider = scrollBox:GetDataProvider()
     assert(provider:GetSize() == 5, "provider must contain two headers and three rows")
+    local width, height = scrollBox:GetSize()
+    local visibleFrames = 0
+    for _ in scrollBox:EnumerateFrames() do
+        visibleFrames = visibleFrames + 1
+    end
+    assert(scrollBox:IsShown() and scrollBox:IsVisible(), "ignore ScrollBox must be visible")
+    assert(width > 0 and height > 0,
+        string.format("ignore ScrollBox size must be positive: %sx%s", width, height))
 
     local function check(squelchType, index, name)
         local row = assert(scrollBox:FindFrameByPredicate(function(_, elementData)
             return elementData.squelchType == squelchType and elementData.index == index
-        end), "original ignore row not materialized: " .. index)
+        end), "original ignore row not materialized: " .. index .. ", visible frames=" .. visibleFrames)
         assert(row.name:GetText() == name, "original row must display supplied name")
         assert(row.type == squelchType, "original row must retain its row type")
         return row
