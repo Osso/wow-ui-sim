@@ -53,6 +53,6 @@ fn assert_possess_buttons_show_supplied_slots(env: &WowLuaEnv) {
         .expect("original possess-button consumer should expose supplied state");
     assert_eq!(
         observed,
-        "Interface\\Icons\\Ability_Hunter_BeastCall|Interface\\Icons\\Spell_Shadow_MindControl|true|false|883|true|605|false|true|true|false|false"
+        "132161|Interface\\Icons\\Spell_Shadow_MindControl|true|false|883|true|605|false|true|true|false|false"
     );
 }
