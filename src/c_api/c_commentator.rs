@@ -1,17 +1,46 @@
-//! Shared mouse-disable setting used by the commentator consumer.
+//! Shared commentator state used by the original UI consumers.
 
 use crate::client_profile::{ACTIVE, ClientProfile};
-use crate::lua_api::methods::borrow_state_mut;
-use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
+use crate::lua_api::methods::{borrow_state, borrow_state_mut};
+use crate::lua_bridge::{FromStack, TableBuilder, stack_val, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val, runtime_error};
 
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
-    if !matches!(ACTIVE, ClientProfile::Retail | ClientProfile::Ptr) {
+    let mouse_disabled_profile = matches!(ACTIVE, ClientProfile::Retail | ClientProfile::Ptr);
+    let spectating_profile = matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever);
+    if !mouse_disabled_profile && !spectating_profile {
         return Ok(());
     }
     let namespace = super::ensure_namespace(state, "C_Commentator")?;
-    table_set_rust_fn_static(state, namespace, "SetMouseDisabled", set_mouse_disabled)
+    if mouse_disabled_profile {
+        table_set_rust_fn_static(state, namespace, "SetMouseDisabled", set_mouse_disabled)?;
+    }
+    if spectating_profile {
+        table_set_rust_fn_static(state, namespace, "IsSpectating", is_spectating)?;
+    }
+    Ok(())
+}
+
+pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
+    if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever) {
+        builder.set_function("SetSpectating", set_spectating)
+    } else {
+        Ok(builder)
+    }
+}
+
+// INFERRED R88ek (native evidence pending): reuse the supplied simulator scenario.
+fn is_spectating(state: &mut LuaState) -> LuaResult<u32> {
+    let spectating = borrow_state(state)?.spectating;
+    state.push(Val::Bool(spectating));
+    Ok(1)
+}
+
+fn set_spectating(state: &mut LuaState) -> LuaResult<u32> {
+    let spectating = bool::from_stack(state, 1)?;
+    borrow_state_mut(state)?.spectating = spectating;
+    Ok(0)
 }
 
 fn set_mouse_disabled(state: &mut LuaState) -> LuaResult<u32> {
