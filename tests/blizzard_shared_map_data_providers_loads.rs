@@ -344,9 +344,29 @@ fn gossip_map_provider_refreshes_the_supplied_poi_for_each_map() {
 const ENCOUNTER_MAP_INPUT_LUA: &str = r#"
 A_Admin.SetEncounterJournalMapEncounters(2248, {
     { encounterID = 301, mapX = 0.2, mapY = 0.8 },
+})
+A_Admin.SetEncounterJournalMapEncounters(84, {
     { encounterID = 302, mapX = 0.7, mapY = 0.3 },
 })
 CanShowEncounterJournal = function() return true end
+"#;
+
+#[cfg(feature = "client-retail")]
+const ENCOUNTER_MAP_REFRESH_LUA: &str = r#"
+local provider = CreateFromMixins(EncounterJournalDataProviderMixin)
+WorldMapFrame:SetMapID(2248)
+WorldMapFrame:AddDataProvider(provider)
+local function observe(mapID)
+    WorldMapFrame:SetMapID(mapID)
+    provider:RefreshAllData()
+    local pin = WorldMapFrame:EnumeratePinsByTemplate("EncounterJournalPinTemplate")()
+    if not pin then return 0, -1, -1 end
+    local x, y = pin:GetPosition()
+    return WorldMapFrame:GetNumActivePinsByTemplate("EncounterJournalPinTemplate"), x, y
+end
+local countA, xA, yA = observe(2248)
+local countB, xB, yB = observe(84)
+return countA, xA, yA, countB, xB, yB
 "#;
 
 #[cfg(feature = "client-retail")]
@@ -375,24 +395,10 @@ fn load_encounter_journal_map_addon_closure() -> WowLuaEnv {
 #[test]
 fn encounter_journal_provider_positions_supplied_encounter_pins() {
     let env = load_encounter_journal_map_addon_closure();
-    let pins: (i32, f64, f64, f64, f64) = env
-        .eval(
-            r#"
-            local provider = CreateFromMixins(EncounterJournalDataProviderMixin)
-            WorldMapFrame:SetMapID(2248)
-            WorldMapFrame:AddDataProvider(provider)
-            provider:RefreshAllData()
-            local positions = {}
-            for pin in WorldMapFrame:EnumeratePinsByTemplate("EncounterJournalPinTemplate") do
-                positions[pin.encounterID] = { pin:GetPosition() }
-            end
-            assert(positions[301] and positions[302], "both encounter pins must be acquired")
-            return WorldMapFrame:GetNumActivePinsByTemplate("EncounterJournalPinTemplate"),
-                   positions[301][1], positions[301][2], positions[302][1], positions[302][2]
-            "#,
-        )
+    let pins: (i32, f64, f64, i32, f64, f64) = env
+        .eval(ENCOUNTER_MAP_REFRESH_LUA)
         .expect("original encounter-journal provider should position map pins");
-    assert_eq!(pins, (2, 0.2, 0.8, 0.7, 0.3));
+    assert_eq!(pins, (1, 0.2, 0.8, 1, 0.7, 0.3));
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
