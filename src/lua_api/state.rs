@@ -511,6 +511,8 @@ macro_rules! build_empty_sim_state {
             party_members: $collections.party_members,
             party_group_active: $runtime.party_group_active,
             #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            instance_abandon_vote: Default::default(),
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
             party_is_raid: None,
             home_subgroup_roster: None,
             instance_subgroup_roster: None,

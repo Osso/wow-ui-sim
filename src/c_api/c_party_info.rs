@@ -17,10 +17,12 @@ use crate::lua_api::methods::create_table;
 #[cfg(not(feature = "retail-12-0-7"))]
 use crate::lua_api::state::SEEDED_LOCAL_CHARACTER_GUID;
 use crate::lua_bridge::FromStack;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+use crate::lua_bridge::TableBuilder;
 #[cfg(feature = "retail-12-0-7")]
 use crate::lua_bridge::stack_val;
 use crate::lua_bridge::table_set_rust_fn_static;
-#[cfg(feature = "retail-12-0-7")]
+#[cfg(any(feature = "retail-12-0-7", feature = "client-wowforever"))]
 use rilua::runtime_error;
 use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
@@ -41,6 +43,19 @@ pub(crate) mod roles_1207;
 pub(crate) mod solo_1207;
 
 const AVAILABLE_LOOT_METHODS: [i32; 5] = [0, 1, 2, 3, 4];
+
+/// Retail/Forever PartyInfoDocumentation.lua:196-201, 230-245, 338-344, 550-562.
+/// INFERRED (R88dt (native evidence pending)): supplied instance-abandon vote inputs.
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[derive(Default)]
+pub(crate) struct InstanceAbandonVoteState {
+    vote_duration: f64,
+    vote_time_left: f64,
+    shutdown_duration: f64,
+    shutdown_time_left: f64,
+    response: Option<bool>,
+    group_responses: Vec<bool>,
+}
 
 /// INFERRED (simulator mapping, R88bk pending): mark the supplied active group as a raid.
 /// PartySync confirmation and event emission are UNKNOWN and remain unmodeled.
@@ -67,6 +82,8 @@ pub(crate) fn register_c_party_info_surface(state: &mut LuaState) -> LuaResult<(
     pending_invites::register(state)?;
     register_group_membership_probes(state, table_ref)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    register_instance_abandon_vote_surface(state, table_ref)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     table_set_rust_fn_static(state, table_ref, "ConvertToRaid", convert_to_raid)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     table_set_rust_fn_static(state, table_ref, "InviteUnit", invite_unit)?;
@@ -86,6 +103,143 @@ pub(crate) fn register_c_party_info_surface(state: &mut LuaState) -> LuaResult<(
         countdown::register(state, table_ref)?;
     }
     Ok(())
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn register_instance_abandon_vote_surface(
+    state: &mut LuaState,
+    table_ref: GcRef<Table>,
+) -> LuaResult<()> {
+    table_set_rust_fn_static(state, table_ref, "GetInstanceAbandonVoteTime", vote_time)?;
+    table_set_rust_fn_static(
+        state,
+        table_ref,
+        "GetInstanceAbandonShutdownTime",
+        shutdown_time,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        table_ref,
+        "GetInstanceAbandonVoteResponse",
+        vote_response,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        table_ref,
+        "SetInstanceAbandonVoteResponse",
+        set_vote_response,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        table_ref,
+        "GetNumInstanceAbandonGroupVoteResponses",
+        group_vote_response_count,
+    )?;
+    Ok(())
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
+    builder.set_function(
+        "SetInstanceAbandonVoteState",
+        set_instance_abandon_vote_state,
+    )
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn vote_time(state: &mut LuaState) -> LuaResult<u32> {
+    let (duration, time_left) = {
+        let sim = borrow_state(state)?;
+        (
+            sim.instance_abandon_vote.vote_duration,
+            sim.instance_abandon_vote.vote_time_left,
+        )
+    };
+    state.push(Val::Num(duration));
+    state.push(Val::Num(time_left));
+    Ok(2)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn shutdown_time(state: &mut LuaState) -> LuaResult<u32> {
+    let (duration, time_left) = {
+        let sim = borrow_state(state)?;
+        (
+            sim.instance_abandon_vote.shutdown_duration,
+            sim.instance_abandon_vote.shutdown_time_left,
+        )
+    };
+    state.push(Val::Num(duration));
+    state.push(Val::Num(time_left));
+    Ok(2)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn vote_response(state: &mut LuaState) -> LuaResult<u32> {
+    let response = borrow_state(state)?.instance_abandon_vote.response;
+    state.push(response.map_or(Val::Nil, Val::Bool));
+    Ok(1)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn set_vote_response(state: &mut LuaState) -> LuaResult<u32> {
+    let response = bool::from_stack(state, 1)?;
+    crate::lua_api::methods::borrow_state_mut(state)?
+        .instance_abandon_vote
+        .response = Some(response);
+    Ok(0)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn group_vote_response_count(state: &mut LuaState) -> LuaResult<u32> {
+    let count = borrow_state(state)?
+        .instance_abandon_vote
+        .group_responses
+        .len();
+    state.push(Val::Num(count as f64));
+    Ok(1)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn set_instance_abandon_vote_state(state: &mut LuaState) -> LuaResult<u32> {
+    let vote_duration = f64::from_stack(state, 1)?;
+    let vote_time_left = f64::from_stack(state, 2)?;
+    let shutdown_duration = f64::from_stack(state, 3)?;
+    let shutdown_time_left = f64::from_stack(state, 4)?;
+    let response = Option::<bool>::from_stack(state, 5)?;
+    let group_responses = read_group_vote_responses(state)?;
+    let mut sim = crate::lua_api::methods::borrow_state_mut(state)?;
+    sim.instance_abandon_vote = InstanceAbandonVoteState {
+        vote_duration,
+        vote_time_left,
+        shutdown_duration,
+        shutdown_time_left,
+        response,
+        group_responses,
+    };
+    Ok(0)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn read_group_vote_responses(state: &mut LuaState) -> LuaResult<Vec<bool>> {
+    let Val::Table(table_ref) = Val::from_stack(state, 6)? else {
+        return Err(runtime_error("group vote responses must be an array"));
+    };
+    let Some(table) = state.gc.tables.get(table_ref) else {
+        return Err(runtime_error("group vote response table is unavailable"));
+    };
+    table
+        .array_slice()
+        .iter()
+        .enumerate()
+        .map(|(index, value)| match value {
+            Val::Bool(response) => Ok(*response),
+            _ => Err(runtime_error(format!(
+                "group vote response {} must be a boolean",
+                index + 1
+            ))),
+        })
+        .collect()
 }
 
 fn mists_supplied_min_level(state: &mut LuaState) -> LuaResult<u32> {
