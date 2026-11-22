@@ -117,9 +117,14 @@ fn covenant_mission_frame_show_hide_show_preserves_supplied_map_and_closes_npc()
     assert!(!cycle.0, "closing clears at-NPC state");
     assert!(!cycle.1, "the away state remains supplied");
     assert!(cycle.2, "the supplied true state shows the map tab");
-    assert!(!cycle.3, "the supplied false state hides the map tab");
-    assert_eq!((cycle.4, cycle.5), (3840, 2560));
-    assert_eq!((cycle.6, cycle.7), (3840, 2560));
+    assert!(
+        cycle.3 && !cycle.4,
+        "map tab hidden={} while ShouldShowMapTab={}",
+        cycle.3,
+        cycle.4
+    );
+    assert_eq!((cycle.5, cycle.6), (3840, 2560));
+    assert_eq!((cycle.7, cycle.8), (3840, 2560));
     assert!(
         new_errors.is_empty(),
         "Covenant mission Show/Hide/Show added Lua errors:\n{}",
@@ -130,7 +135,7 @@ fn covenant_mission_frame_show_hide_show_preserves_supplied_map_and_closes_npc()
 #[cfg(feature = "client-retail")]
 fn run_covenant_mission_show_hide_show(
     env: &WowLuaEnv,
-) -> (bool, bool, bool, bool, i32, i32, i32, i32) {
+) -> (bool, bool, bool, bool, bool, i32, i32, i32, i32) {
     env.eval(
         r#"
         CovenantMissionFrame:Hide()
@@ -145,12 +150,14 @@ fn run_covenant_mission_show_hide_show(
         A_Admin.SetShouldShowGarrisonMissionMapTab(false)
         CovenantMissionFrame:Show()
         local mapHidden = not CovenantMissionFrame.MapTab:IsShown()
+        local mapDecision = C_Garrison.ShouldShowMapTab(
+            GarrisonFollowerOptions[CovenantMissionFrame.followerTypeID].garrisonType)
         CovenantMissionFrame:Hide()
         A_Admin.SetShouldShowGarrisonMissionMapTab(true)
         CovenantMissionFrame:Show()
         local awayWidth, awayHeight = CovenantMissionFrame.MapTab:GetCanvas():GetSize()
         return atNpcAfterClose, C_Garrison.IsAtGarrisonMissionNPC(), mapShown, mapHidden,
-            shownWidth, shownHeight, awayWidth, awayHeight
+            mapDecision, shownWidth, shownHeight, awayWidth, awayHeight
         "#,
     )
     .expect("original Covenant mission frame completes Show/Hide/Show")
