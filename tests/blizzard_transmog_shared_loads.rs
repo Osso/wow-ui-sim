@@ -19,6 +19,12 @@ fn transmog_shared_toc() -> PathBuf {
     transmog_shared_dir().join("Blizzard_TransmogShared.toc")
 }
 
+fn transmog_toc() -> PathBuf {
+    blizzard_ui_dir()
+        .join("Blizzard_Transmog")
+        .join("Blizzard_Transmog.toc")
+}
+
 const GLUE_SCREENS: &[ScreenKind] = &[
     ScreenKind::Login,
     ScreenKind::CharacterSelect,
@@ -468,24 +474,28 @@ fn explicit_load_publishes_transmog_location_mixin() {
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 #[test]
-fn supplied_ranged_slot_visibility_controls_transmog_slot() {
+fn supplied_ranged_slot_visibility_controls_transmog_refresh() {
     for (visible, expected) in [(true, true), (false, false)] {
         let env = fresh_game_env();
-        env.exec(&format!(
-            "A_Admin.SetPlayerClass(3); A_Admin.SetRangedSlotShown({visible})"
-        ))
-        .expect("set hunter and ranged-slot visibility inputs");
-        load_addon(&env.loader_env(), &transmog_shared_toc())
-            .expect("Blizzard_TransmogShared must load via Rust loader");
+        env.exec(&format!("A_Admin.SetRangedSlotShown({visible})"))
+            .expect("set ranged-slot visibility input");
+        load_addon(&env.loader_env(), &transmog_toc())
+            .expect("Blizzard_Transmog must load via Rust loader");
 
         let actual: bool = env
             .eval(
                 r#"
-                local rangedSlotID = C_PaperDollInfo.GetInventorySlotInfo("RANGEDSLOT")
-                return TransmogUtil.IsValidTransmogSlotID(rangedSlotID)
+                local ranged = TransmogUtil.CreateTransmogLocation(
+                    "RANGEDSLOT", Enum.TransmogType.Appearance, false)
+                local mainHand = TransmogUtil.CreateTransmogLocation(
+                    "MAINHANDSLOT", Enum.TransmogType.Appearance, false)
+                TransmogFrame.selectedSlotData = { transmogLocation = ranged }
+                return TransmogFrame:ShouldForceRefreshOnSlotUpdate({
+                    transmogLocation = mainHand,
+                })
                 "#,
             )
-            .expect("query ranged transmog slot");
+            .expect("query TransmogFrame ranged-slot refresh behavior");
         assert_eq!(actual, expected, "ranged slot visibility: {visible}");
     }
 }
