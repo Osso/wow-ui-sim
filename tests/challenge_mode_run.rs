@@ -162,14 +162,10 @@ fn original_scenario_criteria_render_order_quantity_and_completion() {
 fn load_challenges_ui() -> WowLuaEnv {
     let ui = blizzard_ui_dir();
     let env = new_blizzard_addon_env(&ui);
-    // SharedXML is an eager startup addon; ChallengesUI uses its formatter without a TOC edge.
-    let loaded = load_blizzard_addon_closure_into_env(
-        &env,
-        &ui,
-        &["Blizzard_SharedXML", "Blizzard_ChallengesUI"],
-        &[],
-    );
-    assert!(loaded.iter().any(|name| name == "Blizzard_SharedXML"));
+    // SharedXML is eager at startup; load its TOC closure before ChallengesUI.
+    let startup = load_blizzard_addon_closure_into_env(&env, &ui, &["Blizzard_SharedXML"], &[]);
+    assert!(startup.iter().any(|name| name == "Blizzard_SharedXML"));
+    let loaded = load_blizzard_addon_closure_into_env(&env, &ui, &["Blizzard_ChallengesUI"], &[]);
     assert!(loaded.iter().any(|name| name == "Blizzard_ChallengesUI"));
     env
 }
