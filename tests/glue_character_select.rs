@@ -1135,6 +1135,47 @@ fn character_select_configuration_warnings_returns_a_table() {
     }
 }
 
+#[test]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn character_select_configuration_warning_popups_track_seen_records() {
+    test_timeout! {
+        let env = load_blizzard_screen(ScreenKind::CharacterSelect);
+        exercise_configuration_warning_popups(&env);
+    }
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn exercise_configuration_warning_popups(env: &common::LockedEnv) {
+    env.exec(
+        r#"
+        A_Admin.SetConfigurationWarnings({
+            { warning = 3, text = "Graphics driver is blocked" },
+            { warning = 4, text = "Graphics driver is out of date" },
+        })
+        CheckSystemRequirements(false)
+        StaticPopup_CheckQueuedDialogs()
+        local first = StaticPopup_FindVisible("CONFIGURATION_WARNING")
+        assert(first and first:IsShown(), "first configuration warning should show")
+        assert(first:GetHtmlText() == "Graphics driver is blocked", "first popup text")
+        assert(first.data.configurationWarning == 3, "first popup warning ID")
+        first:GetButton1():Click()
+        StaticPopup_CheckQueuedDialogs()
+        local second = StaticPopup_FindVisible("CONFIGURATION_WARNING")
+        assert(second and second:IsShown(), "second configuration warning should show")
+        assert(second:GetHtmlText() == "Graphics driver is out of date", "second popup text")
+        assert(second.data.configurationWarning == 4, "second popup warning ID")
+        second:GetButton1():Click()
+        StaticPopup_CheckQueuedDialogs()
+        CheckSystemRequirements(false)
+        StaticPopup_CheckQueuedDialogs()
+        assert(StaticPopup_FindVisible("CONFIGURATION_WARNING") == nil, "seen warnings must not be queued again")
+        CharacterSelect_CheckDialogStates()
+        assert(CharacterSelectUI.VisibilityFramesContainer.ConfigurationWarnings:IsShown(), "seen warnings remain visible in the character-select container")
+        "#,
+    )
+    .expect("original warning popup consumers should preserve and consume warning state");
+}
+
 character_select_tooltip_fixture! {
 #[test]
 fn character_select_tooltip_tolerates_missing_spec_id() {

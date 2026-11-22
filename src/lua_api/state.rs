@@ -66,6 +66,8 @@ macro_rules! build_empty_sim_state {
         let quest_log_entries = QuestLogState::seeded();
         Self {
             store_glue: Default::default(),
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            configuration_warnings: Vec::new(),
             pending_target_spell: Default::default(),
             loot_specialization: 0,
             loot_spec_window: None,

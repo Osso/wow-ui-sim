@@ -18,6 +18,10 @@ pub struct SimState {
     /// INFERRED host input for Retail talking-head consumers; native fields remain UNKNOWN.
     #[cfg(feature = "client-retail")]
     pub talking_head: crate::c_api::c_talking_head::TalkingHeadState,
+    /// INFERRED host-supplied warning records; native behavior is pending R88du.
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub(crate) configuration_warnings:
+        Vec<crate::lua_api::globals::real::configuration_warnings::ConfigurationWarning>,
     /// Explicit empty-default R88q host inputs; no automatic server records.
     pub store_glue: crate::c_api::store_glue_model::StoreGlueState,
     pub hyperlink_tooltip: crate::c_api::c_tooltip_info_hyperlink::inputs::HyperlinkTooltipInputs,

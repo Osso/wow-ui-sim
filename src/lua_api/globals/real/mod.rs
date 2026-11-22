@@ -18,6 +18,8 @@ pub(crate) mod break_up_large_numbers;
 pub mod combat_probes;
 pub mod combat_stats;
 pub mod combo_points;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) mod configuration_warnings;
 pub mod container_legacy;
 pub mod cursor_model;
 pub(crate) mod cursor_presentation;
