@@ -4,8 +4,8 @@
 
 ## What it must do
 
-- [x] On Retail and WoW Forever, return the supplied `(achievementID, storyMapID)` pair for a matching `uiMapID`; return no values when no relation was supplied. This is an INFERRED simulator contract (R88el (native evidence pending)).
-- [x] Accept explicit positive integer IDs through `A_Admin.SetZoneStoryInfo(uiMapID, achievementID, storyMapID)`.
+- [ ] On Retail and WoW Forever, return the supplied `(achievementID, storyMapID)` pair for a matching `uiMapID`; return no values when no relation was supplied. This is an INFERRED simulator contract (R88el (native evidence pending)).
+- [ ] Accept explicit positive integer IDs through `A_Admin.SetZoneStoryInfo(uiMapID, achievementID, storyMapID)`.
 - [ ] Establish native default and relationship data from native evidence.
 - [ ] Preserve the existing PTR default and registrations on other profiles.
 
