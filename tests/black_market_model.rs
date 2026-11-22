@@ -22,5 +22,30 @@ fn blizzard_black_market_displays_supplied_listings_and_hot_deal(env: &WowLuaEnv
     "#).expect("Blizzard Black Market rows should be readable");
     assert_eq!(rows, "Supplied Relic|Supplied Blade");
     assert_eq!(hot_name, "Hot Deal Supplied");
+
+    let (count, view_only, bid, high_bid, bid_count): (f64, bool, f64, bool, f64) =
+        env.eval(r#"
+            C_BlackMarket.ItemPlaceBid(701, 1200)
+            local _, _, _, _, _, _, _, _, _, _, currentBid, highBid, bids =
+                C_BlackMarket.GetItemInfoByID(701)
+            return C_BlackMarket.GetNumItems(), C_BlackMarket.IsViewOnly(),
+                currentBid, highBid, bids
+        "#).expect("Black Market state should reflect the supplied bid");
+    assert_eq!((count, view_only, bid, high_bid, bid_count), (2.0, false, 1200.0, true, 1.0));
+}
+}
+
+prefork_full_ui_case! {
+fn blizzard_black_market_view_only_hides_bid_controls(env: &WowLuaEnv) {
+    env.exec(r#"
+        A_Admin.SetBlackMarketState([[{"items":[],"hotItem":null,"viewOnly":true}]])
+        BlackMarket_LoadUI()
+        ShowUIPanel(BlackMarketFrame)
+    "#).expect("view-only Black Market data should open the Blizzard panel");
+
+    let (view_only, bid_button_shown): (bool, bool) = env
+        .eval("return C_BlackMarket.IsViewOnly(), BlackMarketFrame.BidButton:IsShown()")
+        .expect("view-only state and bid control should be queryable");
+    assert_eq!((view_only, bid_button_shown), (true, false));
 }
 }
