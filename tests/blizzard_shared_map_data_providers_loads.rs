@@ -375,12 +375,13 @@ fn encounter_journal_provider_positions_supplied_encounter_pins() {
             WorldMapFrame:SetMapID(2248)
             WorldMapFrame:AddDataProvider(provider)
             provider:RefreshAllData()
-            local iter = WorldMapFrame:EnumeratePinsByTemplate("EncounterJournalPinTemplate")
-            local first, second = iter(), iter()
-            local firstX, firstY = first:GetPosition()
-            local secondX, secondY = second:GetPosition()
+            local positions = {}
+            for pin in WorldMapFrame:EnumeratePinsByTemplate("EncounterJournalPinTemplate") do
+                positions[pin.encounterID] = { pin:GetPosition() }
+            end
+            assert(positions[301] and positions[302], "both encounter pins must be acquired")
             return WorldMapFrame:GetNumActivePinsByTemplate("EncounterJournalPinTemplate"),
-                   firstX, firstY, secondX, secondY
+                   positions[301][1], positions[301][2], positions[302][1], positions[302][2]
             "#,
         )
         .expect("original encounter-journal provider should position map pins");
