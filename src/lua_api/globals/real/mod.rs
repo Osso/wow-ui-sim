@@ -100,6 +100,7 @@ pub(crate) mod macro_getters;
 pub mod math_extensions;
 pub(crate) mod merchant_affordability;
 pub mod merchant_buyback;
+pub(crate) mod merchant_filter;
 pub mod merchant_item_link;
 #[cfg(feature = "client-wowforever")]
 pub mod merchant_repair;

@@ -826,6 +826,7 @@ macro_rules! build_empty_sim_state {
             #[cfg(feature = "client-wowforever")]
             stable_reads: crate::c_api::c_stable_info::forever::StableReadState::default(),
             merchant_items: Vec::new(),
+            merchant_filter: 0,
             purchase_inputs: Default::default(),
             inventory_candidates: Default::default(),
             merchant_links: Default::default(),

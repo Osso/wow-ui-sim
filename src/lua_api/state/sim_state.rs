@@ -1018,6 +1018,8 @@ pub struct SimState {
     #[cfg(feature = "client-wowforever")]
     pub stable_reads: crate::c_api::c_stable_info::forever::StableReadState,
     pub merchant_items: Vec<u32>,
+    /// INFERRED R88dx: selected legacy merchant filter; zero is the all-items default.
+    pub merchant_filter: i32,
     /// R88k.2 native item identities, counts and default-empty purchase records.
     pub purchase_inputs: crate::c_api::container_purchase::PurchaseInputs,
     /// R88k.1 accepted candidate/link inputs; native filter writers stay unknown.
