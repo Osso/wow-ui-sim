@@ -598,6 +598,11 @@ fn forever_queue_status_title_uses_first_visible_supplied_lfg_entry() {
             },
             {}
         )
+        local entries = C_LFGInfo.GetAllEntriesForCategory(LE_LFG_CATEGORY_BATTLEFIELD)
+        assert(#entries == 2 and entries[1] == 1203 and entries[2] == 1204,
+            'both distinct queue entries must reach the selected consumer')
+        assert(C_LFGInfo.HideNameFromUI(1203) and not C_LFGInfo.HideNameFromUI(1204),
+            'only the first supplied entry must hide its name')
         local description = MenuUtil.CreateRootMenuDescription(MenuVariants.GetDefaultContextMenuMixin())
         QueueStatusDropdown_AddLFGButtons(description, LE_LFG_CATEGORY_BATTLEFIELD)
         local title
