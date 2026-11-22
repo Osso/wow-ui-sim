@@ -339,6 +339,8 @@ macro_rules! build_empty_sim_state {
             possession_spell_id: None,
             possession_object: None,
             major_factions: HashMap::new(),
+            #[cfg(feature = "client-wowforever")]
+            reincarnation: Default::default(),
             major_faction_renown_levels: HashMap::new(),
             major_faction_renown_rewards: HashMap::new(),
             recent_allies: crate::c_api::c_recent_allies::RecentAlliesInput::default(),

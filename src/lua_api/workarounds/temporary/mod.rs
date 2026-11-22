@@ -164,6 +164,7 @@ pub(crate) mod quest_campaign_header_default;
 pub(crate) mod quest_log_mixin;
 pub(crate) mod quest_objective_defaults;
 pub(crate) mod quest_progress_requirements;
+#[cfg(not(feature = "client-wowforever"))]
 pub(crate) mod reincarnation_defaults;
 pub(crate) mod reputation_state;
 pub(crate) mod restricted_actions_protected;

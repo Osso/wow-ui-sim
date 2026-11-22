@@ -371,6 +371,36 @@ fn forever_name_reservation_default_is_false_on_glue() {
     assert!(!result);
 }
 
+#[cfg(feature = "client-wowforever")]
+const REINCARNATION_API_TEST: &str = r##"
+local function assert_state(guid, name, class_name, level)
+    assert(C_Reincarnation.IsReincarnating())
+    assert(select("#", C_Reincarnation.GetReincarnatingCharacter()) == 4)
+    local actual_guid, actual_name, actual_class, actual_level =
+        C_Reincarnation.GetReincarnatingCharacter()
+    assert(actual_guid == guid and actual_name == name)
+    assert(actual_class == class_name and actual_level == level)
+end
+
+assert(not StaticPopupDialogs or not StaticPopupDialogs.HARDCORE_DEATH,
+    "HARDCORE_DEATH is not registered without the hardcore game rule")
+C_Reincarnation.StartReincarnation("Player-1", "Ari", "Paladin", 60)
+assert_state("Player-1", "Ari", "Paladin", 60)
+
+C_Reincarnation.StartReincarnation("Player-2", "Bee", "Mage", 42)
+assert_state("Player-2", "Bee", "Mage", 42)
+"##;
+
+#[test]
+#[cfg(feature = "client-wowforever")]
+fn reincarnation_api_roundtrips_two_supplied_characters() {
+    test_timeout! {
+        let env = load_blizzard_screen(ScreenKind::Game);
+        env.exec(REINCARNATION_API_TEST)
+            .expect("reincarnation should return both supplied character records");
+    }
+}
+
 fn blizzard_ui_dir() -> std::path::PathBuf {
     default_blizzard_ui_addons_path().expect("Blizzard UI cache should be synced")
 }
