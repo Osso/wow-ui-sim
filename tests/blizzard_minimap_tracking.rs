@@ -16,14 +16,16 @@ const TRACKING_MENU_ASSERTIONS: &str = r#"
     assert(first and second and first.name ~= second.name, "tracking rows are not distinct")
     assert(type(first.texture) == "number" and type(second.texture) == "number", "tracking texture is missing")
 
-    C_Minimap.SetTracking(1, true)
+    A_Admin.SetMinimapTrackingMask(1)
+    A_Admin.SetPlayerClass(1)
+    C_Minimap.SetTracking(2, true)
     tracking:OnEvent("VARIABLES_LOADED")
     tracking:GenerateMenu()
 
-    assert(first.active == true, "selected tracking state is not active")
+    assert(first.active == true and C_Minimap.GetTrackingInfo(2).active == true, "tracked state is missing")
     local selected = MenuUtil.GetSelections(tracking.menuDescription)
-    assert(#selected == 1, "tracking menu selection count is wrong")
-    assert(selected[1].data.index == 1, "tracking menu selected the wrong row")
+    assert(#selected == 2, "tracking menu selection count is wrong")
+    assert(selected[1].data.index == 1 and selected[2].data.index == 2, "tracking menu rows are wrong")
 "#;
 
 #[test]
