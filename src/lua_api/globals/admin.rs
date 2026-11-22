@@ -120,6 +120,8 @@ pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
     let builder = register_world(builder)?;
     let builder = register_collections_pvp(builder)?;
     let builder = register_inventory_misc(builder)?;
+    #[cfg(feature = "client-retail")]
+    let builder = crate::c_api::c_encounter_journal_map::register_admin(builder)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     let builder = crate::c_api::c_gossip_info_poi::register_admin(builder)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]

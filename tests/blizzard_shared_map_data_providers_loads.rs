@@ -6,6 +6,11 @@ use crate::common::blizzard_addon_harness::{
 use wow_ui_sim::loader::{
     BlizzardAddonOverride, discover_blizzard_addons_for_screen, find_toc_file,
 };
+#[cfg(feature = "client-retail")]
+use wow_ui_sim::loader::{
+    discover_all_blizzard_addons, discover_blizzard_startup_addons_for_screen, load_startup_addon,
+    register_load_with_addons,
+};
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::toc::TocFile;
@@ -338,6 +343,100 @@ fn gossip_map_provider_refreshes_the_supplied_poi_for_each_map() {
             7
         )
     );
+}
+
+#[cfg(feature = "client-retail")]
+const ENCOUNTER_MAP_INPUT_LUA: &str = r#"
+A_Admin.SetEncounterJournalMapEncounters(2248, {
+    { encounterID = 2519, mapX = 0.2, mapY = 0.8, completed = true },
+})
+A_Admin.SetEncounterJournalMapEncounters(84, {
+    { encounterID = 2602, mapX = 0.7, mapY = 0.3, completed = false },
+})
+"#;
+
+#[cfg(feature = "client-retail")]
+const ENCOUNTER_MAP_REFRESH_LUA: &str = r#"
+assert(CanShowEncounterJournal(), "encounter journal gate must be true")
+assert(debug.getinfo(CanShowEncounterJournal, "S").source
+    :find("Blizzard_EncounterJournal_Bootstrap.lua", 1, true))
+assert(debug.getinfo(AdventureGuideUtil.IsAvailable, "S").source
+    :find("Blizzard_FrameXMLUtil/AdventureGuideUtil.lua", 1, true))
+assert(not Kiosk.IsEnabled() and C_AdventureJournal.CanBeShown())
+assert(AdventureGuideUtil.IsAvailable())
+local provider = CreateFromMixins(EncounterJournalDataProviderMixin)
+WorldMapFrame:SetMapID(2248)
+WorldMapFrame:AddDataProvider(provider)
+local function observe(mapID)
+    WorldMapFrame:SetMapID(mapID)
+    provider:RefreshAllData()
+    local pins = WorldMapFrame:EnumeratePinsByTemplate("EncounterJournalPinTemplate")
+    local pin = pins()
+    if not pin then return 0, -1, -1, false end
+    local x, y = pin:GetPosition()
+    return WorldMapFrame:GetNumActivePinsByTemplate("EncounterJournalPinTemplate"),
+           x, y, pin.DefeatedOpacity:IsShown()
+end
+local countA, xA, yA, completeA = observe(2248)
+local countB, xB, yB, completeB = observe(84)
+return countA, xA, yA, completeA, countB, xB, yB, completeB,
+       C_EncounterJournal.IsEncounterComplete(999999)
+"#;
+
+#[cfg(feature = "client-retail")]
+fn load_encounter_journal_map_addon_closure() -> WowLuaEnv {
+    let ui = blizzard_ui_dir();
+    let env = new_blizzard_addon_env(&ui);
+    env.exec(ENCOUNTER_MAP_INPUT_LUA)
+        .expect("supply encounter map rows before startup and provider loading");
+    load_normal_game_startup_addons(&env, &ui);
+    let loaded = load_blizzard_addon_closure_into_env(
+        &env,
+        &ui,
+        &[
+            "Blizzard_SharedMapDataProviders",
+            "Blizzard_WorldMap",
+            "Blizzard_ContentTracking",
+        ],
+        GOSSIP_MAP_OVERRIDES,
+    );
+    assert!(loaded.iter().any(|name| name == ROOT_ADDON));
+    assert!(loaded.iter().any(|name| name == "Blizzard_WorldMap"));
+    env.apply_post_load_workarounds();
+    env
+}
+
+#[cfg(feature = "client-retail")]
+fn load_normal_game_startup_addons(env: &WowLuaEnv, ui: &std::path::Path) {
+    let addons = discover_all_blizzard_addons(ui);
+    register_load_with_addons(&env.loader_env(), &addons);
+    let startup = discover_blizzard_startup_addons_for_screen(ui, ScreenKind::Game);
+    for addon in startup {
+        let loaded = env
+            .state()
+            .borrow()
+            .addons
+            .iter()
+            .any(|entry| entry.folder_name == addon.name && entry.loaded);
+        if !loaded {
+            load_startup_addon(&env.loader_env(), &addon.toc_path, addon.kind, None)
+                .unwrap_or_else(|error| panic!("startup {}: {error}", addon.name));
+        }
+        if addon.name == "Blizzard_EnvironmentCleanup" {
+            env.restore_post_cleanup_globals();
+        }
+    }
+    env.sync_string_metatable_to_global_string();
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn encounter_journal_provider_positions_supplied_encounter_pins() {
+    let env = load_encounter_journal_map_addon_closure();
+    let pins: (i32, f64, f64, bool, i32, f64, f64, bool, bool) = env
+        .eval(ENCOUNTER_MAP_REFRESH_LUA)
+        .expect("original encounter-journal provider should position map pins");
+    assert_eq!(pins, (1, 0.2, 0.8, true, 1, 0.7, 0.3, false, false));
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]

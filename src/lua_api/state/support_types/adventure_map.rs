@@ -1,4 +1,4 @@
-use super::*;
+use std::collections::HashMap;
 
 /// Zone-choice descriptor for the adventure map. A zone choice is one of
 /// the competing quests on the Broken Isles starting-zone selection
@@ -152,6 +152,10 @@ pub struct EncounterJournalState {
     pub current_tab: u32,
     /// Zero-based carousel offset for `C_AdventureJournal` suggestions.
     pub adventure_primary_offset: u32,
+    /// INFERRED R88dj (native evidence pending): supplied encounter rows by UI map ID.
+    #[cfg(feature = "client-retail")]
+    pub(crate) map_encounters:
+        HashMap<u32, Vec<crate::c_api::c_encounter_journal_map::EncounterJournalMapEncounter>>,
     /// INFERRED R88cm host-supplied item-set rows for Retail and Forever.
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     pub item_set_catalog: crate::c_api::c_loot_journal::ItemSetCatalog,
@@ -173,6 +177,8 @@ impl Default for EncounterJournalState {
             search_finished: true,
             current_tab: 3,
             adventure_primary_offset: 0,
+            #[cfg(feature = "client-retail")]
+            map_encounters: HashMap::new(),
             #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
             item_set_catalog: Default::default(),
         }
