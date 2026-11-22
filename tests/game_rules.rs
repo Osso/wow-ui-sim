@@ -53,37 +53,43 @@ fn game_rules_hardcore_flag_defaults_to_false() {
 
 #[test]
 #[cfg(feature = "client-wowforever")]
-fn forever_character_create_uses_the_supplied_hardcore_rule() {
-    crate::common::blizzard_addon_harness::with_blizzard_addon_glue_smoke_shape(
-        &["Blizzard_CharacterCreate"],
-        &[],
-        |env, loaded| {
-            assert!(
-                loaded
-                    .iter()
-                    .any(|addon| addon == "Blizzard_CharacterCreate")
-            );
-            env.exec("A_Admin.SetGameRule(Enum.GameRule.SelfFoundAllowed, 1)")
-                .unwrap();
-            let active_text = show_character_create_with_hardcore(env, true);
-            assert_hardcore_rule_values(env, true);
-            let expected_text: String = env.eval("return CHARACTER_CREATE_ACCEPT").unwrap();
-            assert_eq!(active_text, expected_text);
+fn forever_hardcore_popup_uses_the_supplied_game_rule() {
+    let active = load_hardcore_popup(true);
+    assert_hardcore_rule_values(&active, true);
+    let shown: bool = active
+        .eval("local popup = StaticPopup_Show('HARDCORE_DEATH'); return popup ~= nil and popup:IsShown()")
+        .unwrap();
+    assert!(shown);
 
-            let inactive_text = show_character_create_with_hardcore(env, false);
-            assert_hardcore_rule_values(env, false);
-            assert_eq!(inactive_text, "sentinel");
-        },
-    );
+    let inactive = load_hardcore_popup(false);
+    assert_hardcore_rule_values(&inactive, false);
+    let defined: bool = inactive
+        .eval("return StaticPopupDialogs.HARDCORE_DEATH ~= nil")
+        .unwrap();
+    assert!(!defined);
 }
 
 #[cfg(feature = "client-wowforever")]
-fn show_character_create_with_hardcore(env: &WowLuaEnv, active: bool) -> String {
-    let value = if active { "1" } else { "nil" };
-    env.exec(&format!("CharacterCreateFrame:Hide(); A_Admin.SetGameRule('HardcoreRuleset', {value}); CharacterCreateFrame.ForwardButton:SetText('sentinel'); CharacterCreateFrame:Show()"))
-        .unwrap();
-    env.eval("return CharacterCreateFrame.ForwardButton:GetText()")
-        .unwrap()
+fn load_hardcore_popup(hardcore: bool) -> WowLuaEnv {
+    use crate::common::blizzard_addon_harness::{
+        blizzard_ui_dir, load_blizzard_addon_closure_into_env, new_blizzard_addon_env,
+    };
+
+    let ui_dir = blizzard_ui_dir();
+    let env = new_blizzard_addon_env(&ui_dir);
+    let value = if hardcore { "1" } else { "nil" };
+    env.exec(&format!(
+        "A_Admin.SetGameRule('HardcoreRuleset', {value}); A_Admin.SetGameRule(22, 1)"
+    ))
+    .unwrap();
+    let loaded =
+        load_blizzard_addon_closure_into_env(&env, &ui_dir, &["Blizzard_StaticPopup_Game"], &[]);
+    assert!(
+        loaded
+            .iter()
+            .any(|addon| addon == "Blizzard_StaticPopup_Game")
+    );
+    env
 }
 
 #[cfg(feature = "client-wowforever")]
