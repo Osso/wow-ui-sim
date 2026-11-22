@@ -24,14 +24,15 @@ pub(crate) fn show_friends(state: &mut LuaState) -> rilua::LuaResult<u32> {
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub(crate) fn set_social_ignore_name(state: &mut LuaState) -> rilua::LuaResult<u32> {
-    let index = usize::from_stack(state, 1)?;
+    let index = i32::from_stack(state, 1)?;
     let name = String::from_stack(state, 2)?;
     let mut sim = borrow_state_mut(state)?;
-    if index == 0 || index > sim.social_ignores.len() + 1 {
+    if index < 1 || index as usize > sim.social_ignores.len() + 1 {
         return Err(rilua::runtime_error(
             "A_Admin.SetSocialIgnoreName: index must append or replace an existing entry",
         ));
     }
+    let index = index as usize;
     if index == sim.social_ignores.len() + 1 {
         sim.social_ignores.push(name);
     } else {
