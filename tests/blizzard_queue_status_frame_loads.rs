@@ -584,3 +584,35 @@ fn blizzard_queue_status_button_enters_searching_mode_after_lfd_join(env: &WowLu
     );
 }
 }
+
+#[cfg(feature = "client-wowforever")]
+#[test]
+fn forever_queue_status_title_uses_first_visible_supplied_lfg_entry() {
+    let env = load_full_game_ui();
+    env.exec(
+        r#"
+        A_Admin.SetLfgQueueData(
+            {
+                { categoryID = LE_LFG_CATEGORY_BATTLEFIELD, entryID = 1203, hideName = true },
+                { categoryID = LE_LFG_CATEGORY_BATTLEFIELD, entryID = 1204, hideName = false },
+            },
+            {}
+        )
+        local description = MenuUtil.CreateRootMenuDescription(MenuVariants.GetDefaultContextMenuMixin())
+        QueueStatusDropdown_AddLFGButtons(description, LE_LFG_CATEGORY_BATTLEFIELD)
+        local entries = C_LFGInfo.GetAllEntriesForCategory(LE_LFG_CATEGORY_BATTLEFIELD)
+        assert(#entries == 2 and entries[1] == 1203 and entries[2] == 1204,
+            'both distinct queue entries must reach the selected consumer')
+        assert(C_LFGInfo.HideNameFromUI(1203) and not C_LFGInfo.HideNameFromUI(1204),
+            'only the first supplied entry must hide its name')
+        local title
+        for _, row in description:EnumerateElementDescriptions() do
+            title = MenuUtil.GetElementText(row)
+            break
+        end
+        assert(title == GetLFGDungeonInfo(1204),
+            'the selected queue-status consumer must show the unhidden entry, not the hidden first entry')
+        "#,
+    )
+    .expect("Forever QueueStatusFrame must use the first visible supplied LFG entry");
+}
