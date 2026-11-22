@@ -50,6 +50,8 @@ fn synthesize_party_member(name: String) -> PartyMember {
     PartyMember {
         map_position: None,
         faction_group: None,
+        #[cfg(feature = "client-retail")]
+        pvp: None,
         name,
         name_cached: true,
         connected: true,

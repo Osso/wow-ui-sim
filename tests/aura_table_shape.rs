@@ -196,6 +196,8 @@ fn classification_party(helpful: AuraInfo, harmful: AuraInfo) -> PartyMember {
     PartyMember {
         map_position: None,
         faction_group: None,
+        #[cfg(feature = "client-retail")]
+        pvp: None,
         name: "Aura fixture party member".into(),
         name_cached: true,
         connected: true,

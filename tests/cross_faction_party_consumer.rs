@@ -36,3 +36,43 @@ fn retail_groupfinder_raidfinder_reports_cross_faction_party() {
         },
     );
 }
+
+#[test]
+fn retail_unitframe_pvp_consumer_reads_supplied_party_factions() {
+    crate::common::blizzard_addon_harness::with_blizzard_addon_startup_shape(
+        &["Blizzard_UnitFrame"],
+        &[],
+        |env, _loaded| {
+            env.exec(
+                r#"
+                assert(type(UnitFrameUtil.GetUnitPvPIndicatorDisplayInfo) == "function", "Retail UnitFrame PvP consumer is loaded")
+                A_Admin.SetPlayerRace(0)
+                A_Admin.SetPartySize(6)
+                for index = 1, 6 do
+                    A_Admin.SetPartyMember(index, "Faction Member " .. index, 1, 80)
+                end
+                A_Admin.SetPartyMemberFaction(1, "Alliance")
+                A_Admin.SetPartyMemberFaction(2, "Horde")
+                assert(not UnitIsPVP("party1"), "unsupplied party PvP must default false")
+                assert(not UnitIsPVP("raid2"), "unsupplied raid PvP must default false")
+                A_Admin.SetPartyMemberPvP(1, true)
+                A_Admin.SetPartyMemberPvP(2, true)
+
+                local allianceDisplay = UnitFrameUtil.GetUnitPvPIndicatorDisplayInfo("party1")
+                local hordeDisplay = UnitFrameUtil.GetUnitPvPIndicatorDisplayInfo("party2")
+                assert(allianceDisplay.showPvPIcon, "PvP consumer must show the Alliance member icon")
+                assert(allianceDisplay.pvpIconTexture == "UI-HUD-UnitFrame-Player-PVP-AllianceIcon", "PvP consumer must return the Alliance atlas")
+                assert(hordeDisplay.showPvPIcon, "PvP consumer must show the Horde member icon")
+                assert(hordeDisplay.pvpIconTexture == "UI-HUD-UnitFrame-Player-PVP-HordeIcon", "PvP consumer must return the Horde atlas")
+
+                local partyFaction = UnitFactionGroup("party1")
+                local raidFaction = UnitFactionGroup("raid2")
+                assert(partyFaction == "Alliance", "party faction must use supplied member state")
+                assert(raidFaction == "Horde", "raid faction must use supplied member state")
+                assert(C_PartyInfo.IsCrossFactionParty(LE_PARTY_CATEGORY_HOME), "party faction inputs must agree with cross-faction party state")
+                "#,
+            )
+            .expect("original UnitFrame PvP consumer must read supplied party factions");
+        },
+    );
+}

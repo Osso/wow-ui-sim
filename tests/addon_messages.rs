@@ -32,6 +32,8 @@ fn set_group(env: &WowLuaEnv, members: usize) {
         .map(|index| PartyMember {
             map_position: None,
             faction_group: None,
+            #[cfg(feature = "client-retail")]
+            pvp: None,
             name: format!("MessageMember{index}"),
             name_cached: true,
             connected: true,

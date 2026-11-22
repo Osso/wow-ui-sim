@@ -91,6 +91,8 @@ fn seed_party(env: &WowLuaEnv) {
     state.party_members = vec![PartyMember {
         map_position: None,
         faction_group: None,
+        #[cfg(feature = "client-retail")]
+        pvp: None,
         name: "RafFriend".into(),
         name_cached: true,
         connected: true,
