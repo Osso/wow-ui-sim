@@ -53,6 +53,32 @@ fn game_rules_hardcore_flag_defaults_to_false() {
 
 #[test]
 #[cfg(feature = "client-wowforever")]
+fn forever_character_create_uses_the_supplied_hardcore_rule() {
+    crate::common::blizzard_addon_harness::with_blizzard_addon_glue_smoke_shape(
+        &["Blizzard_CharacterCreate"],
+        &[],
+        |env, loaded| {
+            assert!(loaded.iter().any(|addon| addon == "Blizzard_CharacterCreate"));
+            env.exec("CharacterCreateFrame:Hide(); A_Admin.SetGameRule(Enum.GameRule.HardcoreRuleset, 1); CharacterCreateFrame.ForwardButton:SetText('sentinel'); CharacterCreateFrame:Show()")
+                .unwrap();
+            let active_text: String = env
+                .eval("return CharacterCreateFrame.ForwardButton:GetText()")
+                .unwrap();
+            let expected_text: String = env.eval("return CHARACTER_CREATE_ACCEPT").unwrap();
+            assert_eq!(active_text, expected_text);
+
+            env.exec("CharacterCreateFrame:Hide(); A_Admin.SetGameRule(Enum.GameRule.HardcoreRuleset, nil); CharacterCreateFrame.ForwardButton:SetText('sentinel'); CharacterCreateFrame:Show()")
+                .unwrap();
+            let inactive_text: String = env
+                .eval("return CharacterCreateFrame.ForwardButton:GetText()")
+                .unwrap();
+            assert_eq!(inactive_text, "sentinel");
+        },
+    );
+}
+
+#[test]
+#[cfg(feature = "client-wowforever")]
 fn forever_self_found_allowed_uses_rule_22_and_defaults_false() {
     const SELF_FOUND_ALLOWED_RULE_ID: i32 = 22;
 
