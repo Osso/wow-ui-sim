@@ -155,7 +155,7 @@ pub struct EncounterJournalState {
     pub adventure_primary_offset: u32,
     /// INFERRED R88dj (native evidence pending): supplied encounter rows by UI map ID.
     #[cfg(feature = "client-retail")]
-    pub map_encounters:
+    pub(crate) map_encounters:
         HashMap<u32, Vec<crate::c_api::c_encounter_journal_map::EncounterJournalMapEncounter>>,
     /// INFERRED R88cm host-supplied item-set rows for Retail and Forever.
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]

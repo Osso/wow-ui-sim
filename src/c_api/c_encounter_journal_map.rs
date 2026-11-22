@@ -1,4 +1,4 @@
-//! INFERRED R88dj (native evidence pending): return host-supplied encounter rows for one UI map.
+//! INFERRED R88dj (native evidence pending): return supplied map rows and use their completion flags; unknown encounters are incomplete.
 
 use crate::c_api::helpers::{ensure_namespace, set_table_array};
 use crate::lua_api::methods::{
@@ -18,6 +18,7 @@ pub(crate) struct EncounterJournalMapEncounter {
     pub(crate) encounter_id: u32,
     pub(crate) map_x: f64,
     pub(crate) map_y: f64,
+    pub(crate) completed: bool,
 }
 
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
@@ -27,6 +28,12 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
         namespace,
         "GetEncountersOnMap",
         get_encounters_on_map,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        namespace,
+        "IsEncounterComplete",
+        is_encounter_complete,
     )
 }
 
@@ -48,6 +55,18 @@ fn get_encounters_on_map(state: &mut LuaState) -> LuaResult<u32> {
         set_table_array(state, result, (index + 1) as i64, info);
     }
     state.push(result);
+    Ok(1)
+}
+
+fn is_encounter_complete(state: &mut LuaState) -> LuaResult<u32> {
+    let encounter_id = u32::from_stack(state, 1)?;
+    let completed = borrow_state(state)?
+        .encounter_journal
+        .map_encounters
+        .values()
+        .flatten()
+        .any(|row| row.encounter_id == encounter_id && row.completed);
+    state.push(Val::Bool(completed));
     Ok(1)
 }
 
@@ -108,6 +127,7 @@ fn read_encounter(state: &mut LuaState, value: Val) -> LuaResult<EncounterJourna
         encounter_id: read_encounter_id(state, table)?,
         map_x: read_coordinate(state, table, "mapX")?,
         map_y: read_coordinate(state, table, "mapY")?,
+        completed: read_boolean(state, table, "completed")?,
     })
 }
 
@@ -127,6 +147,13 @@ fn read_encounter_id(state: &mut LuaState, table: GcRef<Table>) -> LuaResult<u32
 fn read_coordinate(state: &mut LuaState, table: GcRef<Table>, key: &str) -> LuaResult<f64> {
     match field(state, table, key) {
         Val::Num(value) if value.is_finite() => Ok(value),
+        _ => Err(invalid_field(key)),
+    }
+}
+
+fn read_boolean(state: &mut LuaState, table: GcRef<Table>, key: &str) -> LuaResult<bool> {
+    match field(state, table, key) {
+        Val::Bool(value) => Ok(value),
         _ => Err(invalid_field(key)),
     }
 }
