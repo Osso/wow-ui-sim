@@ -57,6 +57,7 @@ fn load_friends_frame() -> WowLuaEnv {
     env.apply_post_load_workarounds();
     fire_startup_events(&env);
     env.apply_post_event_workarounds();
+    env.state().borrow_mut().widgets.rebuild_anchor_index();
     process_pending_timers(&env);
     fire_one_on_update_tick(&env);
     env
