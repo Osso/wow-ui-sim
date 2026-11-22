@@ -53,6 +53,8 @@ fn retail_unitframe_pvp_consumer_reads_supplied_party_factions() {
                 end
                 A_Admin.SetPartyMemberFaction(1, "Alliance")
                 A_Admin.SetPartyMemberFaction(2, "Horde")
+                assert(not UnitIsPVP("party1"), "unsupplied party PvP must default false")
+                assert(not UnitIsPVP("raid2"), "unsupplied raid PvP must default false")
                 A_Admin.SetPartyMemberPvP(1, true)
                 A_Admin.SetPartyMemberPvP(2, true)
 
