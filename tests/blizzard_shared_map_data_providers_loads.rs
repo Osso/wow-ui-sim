@@ -4,8 +4,11 @@ use crate::common::blizzard_addon_harness::{
     build_blizzard_addon_closure_env, load_blizzard_addon_closure_into_env, new_blizzard_addon_env,
 };
 use wow_ui_sim::loader::{
-    BlizzardAddonOverride, discover_all_blizzard_addons, discover_blizzard_addons_for_screen,
-    discover_blizzard_startup_addons_for_screen, find_toc_file, load_startup_addon,
+    BlizzardAddonOverride, discover_blizzard_addons_for_screen, find_toc_file,
+};
+#[cfg(feature = "client-retail")]
+use wow_ui_sim::loader::{
+    discover_all_blizzard_addons, discover_blizzard_startup_addons_for_screen, load_startup_addon,
     register_load_with_addons,
 };
 use wow_ui_sim::lua_api::WowLuaEnv;
