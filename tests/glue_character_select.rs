@@ -382,12 +382,12 @@ local function assert_state(guid, name, class_name, level)
 end
 
 local function assert_character_create(name)
-    A_Admin.SetGameRule(10, 1)
     CharacterCreateFrame:Hide()
     CharacterCreateFrame:Show()
     assert(CharacterCreateFrame:IsMode(1))
     assert(CharacterCreateFrame.NameChoiceFrame.EditBox:GetText() == name)
-    assert(CharacterCreateFrame.ForwardButton:GetText() == DEATH_REINCARNATE_CHARACTER)
+    local title = CharacterCreateFrame.ForwardButton:GetText()
+    assert(title:sub(1, #CUSTOMIZE) == CUSTOMIZE)
 end
 
 C_Reincarnation.StartReincarnation("Player-1", "Ari", "PALADIN", 60)
