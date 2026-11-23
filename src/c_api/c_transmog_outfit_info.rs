@@ -45,6 +45,8 @@ mod visuals;
 use super::helpers::ensure_namespace;
 #[cfg(not(feature = "client-wowforever"))]
 use crate::lua_api::methods::{borrow_state, borrow_state_mut};
+#[cfg(feature = "client-wowforever")]
+use crate::lua_bridge::TableBuilder;
 #[cfg(not(feature = "client-wowforever"))]
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
 use rilua::LuaResult;
@@ -56,6 +58,11 @@ use rilua::vm::state::LuaState;
 pub(super) fn register_forever(state: &mut LuaState) -> LuaResult<()> {
     let namespace = ensure_namespace(state, "C_TransmogOutfitInfo")?;
     lifecycle::register_forever(state, namespace)
+}
+
+#[cfg(feature = "client-wowforever")]
+pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
+    lifecycle::register_admin(builder)
 }
 
 #[cfg(not(feature = "client-wowforever"))]

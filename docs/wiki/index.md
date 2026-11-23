@@ -284,7 +284,7 @@ The [Round 7 getter contract](../specs/tooltip-r7-getters.md) and [Lua API](syst
 
 ## [2026-11-20] implementation | Shared Retail/Forever outfit catalog
 
-The [outfit catalog contract](../specs/outfit-catalog-lookups.md), [Forever spellbook contract](../specs/forever-camelot-spellbook.md), [Forever spellbook model](systems/forever-camelot-spellbook.md), and [tooltip contract](../specs/tooltip-outfit.md) now record one outfit-record store: `SimState.transmog_outfit_catalog`. Forever keeps only a three-state list marker for its strict list-query behavior. Proof is recorded in the lane handoff.
+The [outfit catalog contract](../specs/outfit-catalog-lookups.md), [Forever spellbook contract](../specs/forever-camelot-spellbook.md), [Forever spellbook model](systems/forever-camelot-spellbook.md), and [tooltip contract](../specs/tooltip-outfit.md) record one outfit-record store: `SimState.transmog_outfit_catalog`. Forever's empty catalog returns no values, inferred from its `MayReturnNothing` declaration and guarded UI consumers.
 
 ## [2026-11-14] implementation | Forever tooltip getter publication
 

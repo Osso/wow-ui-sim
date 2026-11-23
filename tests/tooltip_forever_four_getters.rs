@@ -124,10 +124,6 @@ fn forever_merchant_cost_getter_returns_no_values_without_an_offer() {
 #[test]
 fn forever_outfit_getter_handles_zero_and_missing_saved_names() {
     let env = WowLuaEnv::new().unwrap();
-    env.state()
-        .borrow_mut()
-        .transmog_outfit_catalog
-        .outfits_info_supplied = Some(true);
     env.exec(
         r#"
         local getter = C_TooltipInfo.GetOutfit

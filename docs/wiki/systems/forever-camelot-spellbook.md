@@ -1,18 +1,18 @@
 # Forever Camelot spellbook observations
 
-The [contract](../../specs/forever-camelot-spellbook.md) supplies only the two outfit reads used by the selected Forever Camelot spellbook. Availability reuses [the shared observation](transmog-availability.md); outfit-list observations are independent. Neither input infers native defaults.
+The [contract](../../specs/forever-camelot-spellbook.md) covers the two outfit reads used by the selected Forever Camelot spellbook. Availability reuses [the shared observation](transmog-availability.md); the outfit catalog is shared with outfit creation.
 
 ## Model
 
-`SimState.transmog_outfit_catalog.entries` is the single outfit-record store used by the Retail writer and Forever outfit queries. Forever's `outfits_info_supplied` marker distinguishes unset, explicit no-result and returned-list states; it stores no duplicate rows. The common OutfitEntry keeps the seven non-nil fields from pinned Forever 70532 `TransmogOutfitInfoDocumentation.lua:896–907`. Snapshot conversion copies rows and nested situationCategories.
+`SimState.transmog_outfit_catalog.entries` is the single outfit-record store used by the Retail writer and Forever outfit queries. The common OutfitEntry keeps the seven non-nil fields from pinned Forever 70532 `TransmogOutfitInfoDocumentation.lua:896–907`. Snapshot conversion copies rows and nested situationCategories. **INFERRED (R88ex; native evidence pending):** an empty catalog returns zero values from `GetOutfitsInfo`, matching its `MayReturnNothing` declaration and the selected Lua `or {}` consumers; a populated catalog returns one array.
 
-Only Forever publishes the supplied GetOutfitsInfo and GetOutfitInfo handlers. The other modern outfit queries remain unavailable on Forever; catalog defaults and mutations are unchanged.
+Only Forever publishes the supplied GetOutfitsInfo and GetOutfitInfo handlers. A_Admin.SetUnlockedOutfitSlots supplies outfit capacity for tests; `C_TransmogOutfitInfo.AddNewOutfit` creates records through the user API. The other modern outfit queries remain unavailable on Forever.
 
 ## Selected consumer and ordering
 
 Forever `Blizzard_PlayerSpells.toc` selects `[Game]` as Camelot and the shared SpellBook category. The selected Camelot CreateCategoryMixins:115 instantiates the transmog category at 67; its Init:422 calls original UpdateSpellGroups:483, which reads GetOutfitsInfo before later IsAvailable:506 reads availability at 507 and outfits at 508. Therefore constructor failure alone cannot prove availability publication. The independent original query in each availability test runs before explicit construction, then GREEN tests use the constructor-created category and original UpdateAllSpellData:487.
 
-The original PopulateSpellGroupsIndiciesByRange:463 reads GetOutfitsInfo without consulting availability. It rebuilds membership and ordered indices as 100000+outfitID, including the clear-outfit index 100000. Sparse replacement fixtures distinguish a live supplied list from empty/fixed/no-op producers.
+The original PopulateSpellGroupsIndiciesByRange:463 reads GetOutfitsInfo without consulting availability. It rebuilds membership and ordered indices as 100000+outfitID, including the clear-outfit index 100000. Sparse replacement fixtures distinguish a live supplied list from empty/fixed/no-op producers. The opening test calls ToggleClassTalentFrame with two records created through AddNewOutfit and checks the original projection.
 
 ## Proof status
 

@@ -356,16 +356,14 @@ pub fn load_profile_framexml(env: &WowLuaEnv) {
     }
 }
 
-/// Explicit Forever scenario: the player has no outfits. Unset is an error
-/// under docs/specs/forever-camelot-spellbook.md; Camelot's spellbook creates a
-/// transmog category (Camelot/SpellBook/Blizzard_SpellBookFrame.lua:138+).
+/// Explicit Forever scenario: the player has no outfits. Camelot's spellbook
+/// creates a transmog category (Camelot/SpellBook/Blizzard_SpellBookFrame.lua:138+).
 /// Transmog is unavailable in this scenario, explicitly supplied as required by
 /// transmog-availability.md and Blizzard_SpellBookCategory.lua:506+.
 #[cfg(feature = "client-wowforever")]
 pub fn supply_empty_forever_spellbook_outfits(env: &WowLuaEnv) {
     let mut state = env.state().borrow_mut();
     state.transmog_outfit_catalog.entries.clear();
-    state.transmog_outfit_catalog.outfits_info_supplied = Some(true);
     state.transmog_availability.enabled = Some(false);
 }
 

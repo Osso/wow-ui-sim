@@ -26,13 +26,11 @@ fn entries(ids: &[i64]) -> Vec<OutfitEntry> {
 fn supply(env: &WowLuaEnv, ids: Option<&[i64]>) {
     let mut state = env.state().borrow_mut();
     state.transmog_outfit_catalog.entries = ids.map(entries).unwrap_or_default();
-    state.transmog_outfit_catalog.outfits_info_supplied = Some(ids.is_some());
 }
 
 fn unset(env: &WowLuaEnv) {
     let mut state = env.state().borrow_mut();
     state.transmog_outfit_catalog.entries.clear();
-    state.transmog_outfit_catalog.outfits_info_supplied = None;
 }
 
 fn load_original(enabled: bool) -> WowLuaEnv {
@@ -211,6 +209,9 @@ fn player_spells_toggle_accepts_no_outfits_and_two_created_outfits() {
         env.state().borrow().lua_errors
     );
 
+    env.exec("PlayerSpellsUtil.ToggleClassTalentFrame()")
+        .expect("close Player Spells before supplying outfits");
+    crate::common::panel_fixtures::clear_recorded_lua_errors(&env);
     env.exec(
         r#"
         A_Admin.SetUnlockedOutfitSlots(2, 2)
@@ -276,7 +277,7 @@ fn assert_initial_outfit_snapshot(env: &WowLuaEnv) {
 fn assert_empty_and_unset_outfit_states(env: &WowLuaEnv) {
     supply(env, Some(&[]));
     assert_groups(env, &[]);
-    env.exec("assert(select('#', C_TransmogOutfitInfo.GetOutfitsInfo()) == 1)")
+    env.exec("assert(select('#', C_TransmogOutfitInfo.GetOutfitsInfo()) == 0)")
         .unwrap();
     supply(env, None);
     assert_groups(env, &[]);

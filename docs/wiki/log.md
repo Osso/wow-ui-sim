@@ -1,3 +1,7 @@
+## [2026-11-23] implementation | Forever Player Spells outfit list
+
+Updated the [Forever outfit contract](../specs/forever-camelot-spellbook.md), [shared catalog contract](../specs/outfit-catalog-lookups.md), and [outfit model](systems/forever-camelot-spellbook.md). **INFERRED (R88ex; native evidence pending):** an empty Forever outfit catalog returns no values, matching `MayReturnNothing` and guarded `GetOutfitsInfo() or {}` consumers. A_Admin can supply unlocked capacity for real `AddNewOutfit` test inputs.
+
 ## [2026-11-23] implementation | Script bucket throttle
 
 Updated the [throttle contract](../specs/script-bucket-throttle-limits.md) and linked it from the [watchdog system](../systems/script-execution-watchdog.md). **VERIFIED (R88bn):** Retail/Forever registered CVar defaults and Retail refill behavior. **INFERRED (R88bn):** tainted addon code uses a per-addon restricted bucket, initialized at burst capacity; Forever mirrors Retail refill. Normal-bucket execution classes and native balance ownership remain unknown.
