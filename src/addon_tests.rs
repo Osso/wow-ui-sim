@@ -315,6 +315,49 @@ fn read_test_results(env: &WowLuaEnv, file_name: &str) -> Result<(u32, u32), Str
     Ok((passed, failed))
 }
 
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn synchronous_tests_report_both_tests_passing() {
+        let env = WowLuaEnv::new().unwrap();
+        env.exec(
+            r#"
+            RunnerFrame = CreateFrame('Frame')
+            RunnerFrame:RegisterEvent('PLAYER_LOGIN')
+            Completed = 0
+            RunnerFrame:SetScript('OnEvent', function()
+                Completed = Completed + 1
+            end)
+        "#,
+        )
+        .unwrap();
+
+        let file = tempfile::NamedTempFile::new().unwrap();
+        std::fs::write(
+            file.path(),
+            r#"
+            test('first', function()
+                A_Admin.FireEvent('PLAYER_LOGIN')
+                assert(Completed == 1, 'first handler did not complete')
+            end)
+            test('second', function()
+                A_Admin.FireEvent('PLAYER_LOGIN')
+                assert(Completed == 2, 'second handler did not complete')
+            end)
+        "#,
+        )
+        .unwrap();
+        load_test_framework(&env);
+
+        assert_eq!(
+            run_test_file(&env, &file.path().to_path_buf()).unwrap(),
+            (2, 0)
+        );
+    }
+}
+
 /// Flush Lua print() output from console_output to stderr.
 fn flush_console(env: &WowLuaEnv) {
     let mut state = env.state().borrow_mut();
