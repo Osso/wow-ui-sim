@@ -1,3 +1,7 @@
+## [2026-11-23] implementation | EditBox host-boundary notifications and currency transfer queries
+
+Updated the [event system](systems/event-system.md), [Lua API system](systems/lua-api.md#retailforever-account-currency-transfer), and [EditBox contract](../specs/editbox-text-position-selection.md#cursor-geometry-follow-up); the [currency transfer contract](../specs/currency-transfer-eligibility.md) now covers amount/source queries. **INFERRED (R88et-c):** text-change handlers drain after the outermost Lua call returns, separately from cursor layout. **VERIFIED (simulator):** the exact Retail TokenFrame amount-selector path passes after real ScrollBox layout; the Retail/Forever startup captures contain only the approved CurrencyTransfer required-argument error and its ScriptErrors echo. Startup is not clean.
+
 ## [2026-11-20] implementation | Secure XML mixin environment
 
 [Addon loading](systems/addon-loading.md#secure-dependency-replay-and-library-allowlist) records the Retail `PrivateAuraMixin:OnEnter` failure, secure XML mixin resolution, Forever's `Blizzard_SharedXMLGame` replay, and the secure `RaidWarning.xml` skip. **VERIFIED (stock Retail/Forever):** exact original hover tests pass with two aura records, and `--no-addons --no-saved-vars lua-errors` returns `[]` on both. **INFERRED (R88cd):** native secure addons resolve XML mixins in their active environment.
