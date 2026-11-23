@@ -25,11 +25,11 @@ fn assert_navigation_observation(
     assert!(!observation.4, "targets are not clamped");
 }
 
-fn clear_navigation_target(env: &WowLuaEnv) -> (bool, i32) {
+fn clear_navigation_target(env: &WowLuaEnv) -> (bool, i32, i32) {
     env.exec("A_Admin.SetNavigationTarget(nil)")
         .expect("clear supplied navigation target");
     env.fire_on_update(0.016).expect("tick destroyed target consumer");
-    env.eval("return C_Navigation.GetFrame() == nil, C_Navigation.GetTargetState()")
+    env.eval("return C_Navigation.GetFrame() == nil, C_Navigation.GetTargetState(), SuperTrackedFrame:GetNumPoints()")
         .expect("read destroyed navigation state")
 }
 
@@ -49,6 +49,6 @@ fn navigation_target_drives_super_tracked_frame(env: &WowLuaEnv) {
     assert_ne!(first.0, second.0, "target distances must change consumer text");
 
     let destroyed = clear_navigation_target(env);
-    assert_eq!(destroyed, (true, 0), "cleared target is no longer navigable");
+    assert_eq!(destroyed, (true, 0, 0), "destroyed target clears its consumer anchors");
 }
 }
