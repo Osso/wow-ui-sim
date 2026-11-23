@@ -32,16 +32,22 @@ fn battlefield_queue_consumer_reads_each_supplied_queue_index() {
     let env = load_game_ui();
     env.exec(
         r#"
-        assert(GetMaxBattlefieldID() == 0, "unsupplied battlefield maximum defaults to zero")
-        A_Admin.SetMaxBattlefieldID(2)
+        assert(GetMaxBattlefieldID() == 3, "unsupplied battlefield maximum defaults to three")
         A_Admin.SetBattlefieldQueue(1, true)
         QueueStatusFrame:Update()
         assert(QueueStatusButton:IsShown(), "queue index 1 must appear")
+        assert(GetBattlefieldStatus(2) == "none", "unsupplied queue index 2 must be empty")
+        assert(GetBattlefieldStatus(3) == "none", "unsupplied queue index 3 must be empty")
 
         A_Admin.SetBattlefieldQueue(2, true)
         QueueStatusFrame:Update()
-        assert(GetMaxBattlefieldID() == 2, "maximum battlefield ID must use supplied state")
+        assert(GetMaxBattlefieldID() == 3, "maximum battlefield ID must not follow the active queue")
+        assert(GetBattlefieldStatus(1) == "none", "unsupplied queue index 1 must be empty")
+        assert(GetBattlefieldStatus(3) == "none", "unsupplied queue index 3 must remain empty")
         assert(QueueStatusButton:IsShown(), "queue index 2 must appear")
+
+        A_Admin.SetMaxBattlefieldID(2)
+        assert(GetMaxBattlefieldID() == 2, "host-supplied maximum must replace the default")
         "#,
     )
     .expect("original QueueStatusFrame consumer must read the supplied queue state");

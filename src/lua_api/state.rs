@@ -1015,7 +1015,7 @@ macro_rules! build_empty_sim_state {
             #[cfg(feature = "client-mists")]
             last_watched_reputation_slot_request: None,
             battlefield_vehicles: ::std::collections::HashMap::new(),
-            max_battlefield_id: 0,
+            max_battlefield_id: 3,
             battlefield_queue: BattlefieldQueue::default(),
             battlefield_minimap_visible: false,
             chat_channels: Vec::new(),

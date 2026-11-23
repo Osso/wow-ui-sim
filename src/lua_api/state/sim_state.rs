@@ -1270,7 +1270,7 @@ pub struct SimState {
         i32,
         Vec<crate::c_api::c_pvp::battlefield_vehicles::BattlefieldVehicle>,
     >,
-    /// INFERRED R88ei: zero until the host supplies a maximum; independent of active queues.
+    /// INFERRED R88ei: three slots by default (wiki/historical MAX_BATTLEFIELD_QUEUES).
     pub max_battlefield_id: i32,
     pub battlefield_queue: BattlefieldQueue,
     pub battlefield_minimap_visible: bool,
