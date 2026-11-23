@@ -119,8 +119,6 @@ pub(crate) fn set_frame_text_value(
     }
     if editbox_text_changed {
         fire_editbox_text_script(state, id, "OnTextSet", &[])?;
-        // VERIFIED direct dispatch (R88et, Retail); synchronous handler completion is INFERRED.
-        fire_editbox_text_script(state, id, "OnTextChanged", &[Val::Bool(false)])?;
     }
     Ok(0)
 }
@@ -283,6 +281,10 @@ fn update_text_frame(
         frame.text = text.clone();
         frame.text_stripped = stripped_text.clone();
         frame.text_segments.clear();
+        if editbox_text_changed {
+            // INFERRED (R88et): MoneyInputFrame reads its caller-updated counter later.
+            frame.mark_editbox_text_changed(Some(false));
+        }
         if editbox_text_storage_changed {
             let len = text.as_deref().unwrap_or("").chars().count() as i32;
             frame.editbox_cursor_pos = frame.editbox_cursor_pos.clamp(0, len);

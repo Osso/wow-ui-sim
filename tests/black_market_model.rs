@@ -127,33 +127,67 @@ fn setting_black_market_bid_enables_bid_button_after_selecting_listing() {
         "#,
     )
     .expect("selecting a listing should run the original Black Market handler");
+    env.fire_on_update(0.016).unwrap();
     let first_change: (f64, bool, bool) = env
         .eval(
             "return #BlackMarketTextChanges, BlackMarketTextChanges[1], BlackMarketFrame.BidButton:IsEnabled()",
         )
-        .expect("the first Black Market bid amount should notify the EditBox consumer inline");
+        .expect("the first Black Market bid amount should notify the EditBox consumer");
     assert_eq!(first_change, (1.0, false, true));
-    env.fire_on_update(0.016).unwrap();
-    let first_flush_count: f64 = env
-        .eval("return #BlackMarketTextChanges")
-        .expect("the first change should not dispatch again at the next update");
-    assert_eq!(first_flush_count, 1.0);
 
     env.exec("MoneyInputFrame_SetCopper(BlackMarketBidPrice, 40000)")
         .expect("setting a second bid amount should run Blizzard handlers");
+    env.fire_on_update(0.016).unwrap();
     let second_change: (f64, bool, bool) = env
         .eval(
             "return #BlackMarketTextChanges, BlackMarketTextChanges[2], BlackMarketFrame.BidButton:IsEnabled()",
         )
-        .expect("the second Black Market bid amount should notify the EditBox consumer inline");
+        .expect("the second Black Market bid amount should notify the EditBox consumer");
     assert_eq!(second_change, (2.0, false, true));
 
     env.exec("BlackMarketBidPrice.gold:SetNumber(4)")
         .expect("setting the current number again should remain valid");
+    env.fire_on_update(0.016).unwrap();
     let unchanged_change_count: f64 = env
         .eval("return #BlackMarketTextChanges")
-        .expect("the unchanged number callback count should be readable inline");
+        .expect("the unchanged number callback count should be readable");
     assert_eq!(unchanged_change_count, 2.0);
+}
+
+#[test]
+fn fresh_money_input_frame_set_copper_dispatches_after_return() {
+    let env = WowLuaEnv::new().expect("simulator should initialize");
+    env.set_screen_size(1024.0, 768.0);
+    env.set_screen_mode(ScreenKind::Game);
+    load_game_ui(&env);
+    env.fire_on_update(0.016).unwrap();
+    env.exec(
+        r#"
+            FreshMoneyInputFrame = CreateFrame("Frame", nil, UIParent, "MoneyInputFrameTemplate")
+            FreshMoneyInputFrame.changes = {}
+            FreshMoneyInputFrame.callReturned = false
+            FreshMoneyInputFrame.gold:HookScript("OnTextChanged", function()
+                table.insert(FreshMoneyInputFrame.changes, FreshMoneyInputFrame.callReturned)
+            end)
+            MoneyInputFrame_SetCopper(FreshMoneyInputFrame, 40000)
+            FreshMoneyInputFrame.callReturned = true
+        "#,
+    )
+    .expect("SetCopper on a new MoneyInputFrame should return without an error");
+    let before_update: (f64, f64, bool) = env
+        .eval(
+            "return #FreshMoneyInputFrame.changes, FreshMoneyInputFrame.expectChanges, FreshMoneyInputFrame.callReturned",
+        )
+        .expect("the MoneyInputFrame should retain the caller's expected-change count");
+    assert_eq!(before_update, (0.0, 3.0, true));
+
+    env.fire_on_update(0.016).unwrap();
+    let after_update: (f64, bool, bool) = env
+        .eval(
+            "return #FreshMoneyInputFrame.changes, FreshMoneyInputFrame.changes[1], FreshMoneyInputFrame.expectChanges == nil",
+        )
+        .expect("the queued text handler should run after SetCopper returns");
+    assert_eq!(after_update, (1.0, true, true));
 }
 
 #[test]
