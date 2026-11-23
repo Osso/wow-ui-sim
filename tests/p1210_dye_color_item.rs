@@ -2,7 +2,7 @@
 
 #[test]
 fn p1210_dye_colors_for_items_and_item_locations_use_supplied_lists() {
-    let env = crate::common::keybinding_panel_fixtures::setup_env();
+    let env = crate::common::panel_fixtures::setup_env();
     env.exec(
         r#"
         A_Admin.SetDyeColorsForItem(900001, '501,502')
