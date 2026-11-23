@@ -10,6 +10,9 @@ use crate::lua_bridge::{FromStack, TableBuilder, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val, runtime_error};
 
+/// INFERRED R88ep (native evidence pending): without host input, the simulator
+/// starts with no listed items or rewards and zero currency; this is not a claim
+/// about native account-state defaults.
 #[derive(Debug, Default)]
 pub(crate) struct PerksProgramState {
     vendor_items: Vec<serde_json::Value>,
@@ -23,15 +26,15 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
         state,
         namespace,
         "GetAvailableVendorItemIDs",
-        get_vendor_item_ids,
+        read_vendor_item_ids,
     )?;
-    table_set_rust_fn_static(state, namespace, "GetVendorItemInfo", get_vendor_item_info)?;
-    table_set_rust_fn_static(state, namespace, "GetCurrencyAmount", get_currency_amount)?;
+    table_set_rust_fn_static(state, namespace, "GetVendorItemInfo", find_vendor_item_info)?;
+    table_set_rust_fn_static(state, namespace, "GetCurrencyAmount", read_currency_amount)?;
     table_set_rust_fn_static(
         state,
         namespace,
         "GetPendingChestRewards",
-        get_pending_chest_rewards,
+        read_pending_chest_rewards,
     )?;
     table_set_rust_fn_static(
         state,
@@ -51,7 +54,7 @@ pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
         )
 }
 
-fn get_vendor_item_ids(state: &mut LuaState) -> LuaResult<u32> {
+fn read_vendor_item_ids(state: &mut LuaState) -> LuaResult<u32> {
     let vendor_items = borrow_state(state)?.perks_program.vendor_items.clone();
     let values = vendor_items
         .iter()
@@ -63,7 +66,7 @@ fn get_vendor_item_ids(state: &mut LuaState) -> LuaResult<u32> {
     push_sequence(state, values.collect())
 }
 
-fn get_vendor_item_info(state: &mut LuaState) -> LuaResult<u32> {
+fn find_vendor_item_info(state: &mut LuaState) -> LuaResult<u32> {
     let vendor_item_id = f64::from_stack(state, 1)?;
     let vendor_items = borrow_state(state)?.perks_program.vendor_items.clone();
     let info = vendor_items.iter().find(|item| {
@@ -72,7 +75,7 @@ fn get_vendor_item_info(state: &mut LuaState) -> LuaResult<u32> {
             == Some(vendor_item_id)
     });
     if let Some(info) = info {
-        let value = json_to_lua_value(state, info);
+        let value = allocate_lua_value_from_json(state, info);
         state.push(value);
         Ok(1)
     } else {
@@ -80,13 +83,13 @@ fn get_vendor_item_info(state: &mut LuaState) -> LuaResult<u32> {
     }
 }
 
-fn get_currency_amount(state: &mut LuaState) -> LuaResult<u32> {
+fn read_currency_amount(state: &mut LuaState) -> LuaResult<u32> {
     let amount = borrow_state(state)?.perks_program.currency_amount;
     state.push(Val::Num(amount));
     Ok(1)
 }
 
-fn get_pending_chest_rewards(state: &mut LuaState) -> LuaResult<u32> {
+fn read_pending_chest_rewards(state: &mut LuaState) -> LuaResult<u32> {
     let rewards = borrow_state(state)?
         .perks_program
         .pending_chest_rewards
@@ -166,43 +169,43 @@ fn push_json_sequence(state: &mut LuaState, values: &[serde_json::Value]) -> Lua
         unreachable!("new Lua table must be a table")
     };
     for (index, value) in values.iter().enumerate() {
-        let value = json_to_lua_value(state, value);
+        let value = allocate_lua_value_from_json(state, value);
         crate::lua_api::methods::table_set_num(state, table, (index + 1) as f64, value);
     }
     state.push(sequence);
     Ok(1)
 }
 
-fn json_to_lua_value(state: &mut LuaState, value: &serde_json::Value) -> Val {
+fn allocate_lua_value_from_json(state: &mut LuaState, value: &serde_json::Value) -> Val {
     match value {
         serde_json::Value::Null => Val::Nil,
         serde_json::Value::Bool(value) => Val::Bool(*value),
         serde_json::Value::Number(value) => Val::Num(value.as_f64().unwrap_or_default()),
         serde_json::Value::String(value) => create_string(state, value),
-        serde_json::Value::Array(values) => json_array_to_lua_table(state, values),
-        serde_json::Value::Object(values) => json_object_to_lua_table(state, values),
+        serde_json::Value::Array(values) => allocate_lua_table_from_json_array(state, values),
+        serde_json::Value::Object(values) => allocate_lua_table_from_json_object(state, values),
     }
 }
 
-fn json_array_to_lua_table(state: &mut LuaState, values: &[serde_json::Value]) -> Val {
+fn allocate_lua_table_from_json_array(state: &mut LuaState, values: &[serde_json::Value]) -> Val {
     let table = create_table(state);
     let Val::Table(reference) = table else {
         unreachable!("new Lua table must be a table")
     };
     for (index, value) in values.iter().enumerate() {
-        let value = json_to_lua_value(state, value);
+        let value = allocate_lua_value_from_json(state, value);
         crate::lua_api::methods::table_set_num(state, reference, (index + 1) as f64, value);
     }
     table
 }
 
-fn json_object_to_lua_table(
+fn allocate_lua_table_from_json_object(
     state: &mut LuaState,
     values: &serde_json::Map<String, serde_json::Value>,
 ) -> Val {
     let table = create_table(state);
     for (key, value) in values {
-        let value = json_to_lua_value(state, value);
+        let value = allocate_lua_value_from_json(state, value);
         table_set(state, table, key.as_str(), value);
     }
     table
