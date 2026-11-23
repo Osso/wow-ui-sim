@@ -71,6 +71,17 @@ fn with_player_spells_panel(assert_state: impl FnOnce(&WowLuaEnv)) {
 fn supply_selected_talent_state(env: &WowLuaEnv) {
     env.exec(
         r#"
+        local talentUpdates, inspectUpdates = 0, 0
+        local observer = CreateFrame("Frame")
+        observer:RegisterEvent("PLAYER_PVP_TALENT_UPDATE")
+        observer:RegisterEvent("INSPECT_HONOR_UPDATE")
+        observer:SetScript("OnEvent", function(_, event)
+            if event == "PLAYER_PVP_TALENT_UPDATE" then
+                talentUpdates = talentUpdates + 1
+            else
+                inspectUpdates = inspectUpdates + 1
+            end
+        end)
         A_Admin.SetPvpTalentInfo(123, "First", 111, true, true, 1001, true, true, false, false, nil)
         A_Admin.SetPvpTalentInfo(456, "Second", 222, true, true, 1002, true, true, false, false, nil)
         A_Admin.SetPvpTalentSlotUnlockLevel(2, 30)
@@ -80,6 +91,8 @@ fn supply_selected_talent_state(env: &WowLuaEnv) {
         assert(select('#', C_SpecializationInfo.SetPvpTalentLocked(123, true)) == 0)
         C_SpecializationInfo.SetPvpTalentLocked(456, true)
         C_SpecializationInfo.SetPvpTalentLocked(456, false)
+        assert(talentUpdates > 0)
+        assert(inspectUpdates == 1)
         "#,
     )
     .expect("supply selected, inspected and locked PvP talents");

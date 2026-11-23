@@ -10,8 +10,8 @@
 - [ ] Return a Boolean from `IsPvpTalentLocked`; its setter normally returns no values.
 - [ ] Return two Boolean alert values; their meanings remain unknown.
 - [ ] Let `A_Admin` supply test rows and state without writes to `env.state()`.
-- [ ] Keep Forever behavior INFERRED wherever R88eq does not prove its build-specific semantics.
-- [ ] Mark event dispatch INFERRED; native event names and order remain UNKNOWN.
+- [ ] Dispatch an inferred Player PvP talent refresh event when simulator state changes.
+- [ ] Dispatch an inferred Inspect Honor refresh event when inspect selection changes.
 
 ## How it works
 
@@ -48,6 +48,6 @@
 - **INFERRED (R88eq eq1, Retail 12.1.5.70688):** the lock setter truthy path inserts the talent ID and the false path erases it.
 - **VERIFIED (R88eq eq1, Retail 12.1.5.70688):** populated `PvpTalentInfo` and `PvpTalentSlotInfo` paths build records. The pinned API documentation cache lists their fields.
 - **VERIFIED (R88eq eq1, both builds):** `GetPvpTalentAlertStatus` publishes two Booleans. **UNKNOWN:** their meanings.
-- **UNKNOWN (R88eq eq2, both builds):** PvP talent event names, event order and update paths.
+- **UNKNOWN (R88eq eq2, both builds):** native PvP talent event names, event order and update paths. **INFERRED:** simulator state changes dispatch `PLAYER_PVP_TALENT_UPDATE`; inspect selection changes dispatch `INSPECT_HONOR_UPDATE` to refresh the selected consumers.
 - **VERIFIED (Retail and WoW Forever caches):** `Blizzard_PlayerSpells.toc` loads the PvP talent templates; the active profile TOCs select the Player Spells and Inspect consumers.
-- **INFERRED (R88eq eq1, Forever 1.60.1.70707):** the simulator mirrors Retail record and result behavior for the eight members whose Forever semantics are build-specific and UNKNOWN.
+- **INFERRED (R88eq eq1, Forever 1.60.1.70707):** the simulator mirrors Retail result behavior for the same registered PvP talent members; their native state and tables are build-specific and UNKNOWN.
