@@ -1,11 +1,13 @@
 //! Exact host-supplied ping kits; no native catalog or inferred substitute.
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 use crate::c_api::helpers::set_table_array;
-use crate::lua_api::methods::{
-    borrow_state, borrow_state_mut, create_string, create_table_with_capacity, table_get,
-    table_set_static, val_to_string,
-};
-use crate::lua_bridge::{TableBuilder, stack_val, table_set_rust_fn_static};
+use crate::lua_api::methods::{borrow_state, create_string, table_get, val_to_string};
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+use crate::lua_api::methods::{borrow_state_mut, create_table_with_capacity, table_set_static};
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+use crate::lua_bridge::TableBuilder;
+use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
 use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
 use rilua::vm::table::Table;
@@ -16,6 +18,7 @@ use std::collections::HashMap;
 #[cfg(feature = "retail-12-0-0")]
 const INVALID_PING_TYPE: &str =
     "C_Ping.GetTextureKitForType: ping type must be a finite i32 integer";
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 const INVALID_PING_OPTIONS: &str =
     "A_Admin.SetDefaultPingOptions: expected an array of option tables";
 
@@ -27,11 +30,13 @@ pub struct PingTextureKits {
 }
 
 /// Host-supplied rows used to build the default ping wheel.
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct PingDefaultOptions {
     pub rows: Vec<PingDefaultOption>,
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 #[derive(Clone, Debug, PartialEq)]
 pub struct PingDefaultOption {
     pub ping_type: i32,
@@ -56,6 +61,7 @@ pub(crate) fn register_default_options(state: &mut LuaState) -> LuaResult<()> {
     )
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
     builder.set_function("SetDefaultPingOptions", set_default_ping_options)
 }
@@ -81,12 +87,14 @@ fn get_default_ping_options(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn set_default_ping_options(state: &mut LuaState) -> LuaResult<u32> {
     let options = read_default_ping_options(state, stack_val(state, 1))?;
     borrow_state_mut(state)?.ping_default_options.rows = options;
     Ok(0)
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn read_default_ping_options(
     state: &mut LuaState,
     value: Val,
@@ -113,6 +121,7 @@ fn read_default_ping_options(
         .collect()
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn read_default_ping_option(state: &mut LuaState, value: Val) -> LuaResult<PingDefaultOption> {
     let Val::Table(table) = value else {
         return Err(runtime_error(INVALID_PING_OPTIONS));

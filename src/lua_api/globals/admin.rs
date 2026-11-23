@@ -208,6 +208,7 @@ pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
     let builder = crate::c_api::c_party_info::register_admin(builder)?;
     let builder = crate::c_api::c_stable_info::pet_spec_infos::register_admin(builder)?;
     let builder = crate::c_api::challenge_run::register_admin(builder)?;
+    let builder = crate::c_api::c_mythic_plus::register_admin(builder)?;
     let builder = if crate::c_api::restricted_actions::supported() {
         builder
             .set_function(

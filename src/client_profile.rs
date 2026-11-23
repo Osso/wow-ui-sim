@@ -94,6 +94,11 @@ impl ClientProfile {
         }
     }
 
+    /// Retail and Forever use the generated tracked Mythic+ season-map rows.
+    pub const fn uses_tracked_season_maps(self) -> bool {
+        matches!(self, Self::Retail | Self::WowForever)
+    }
+
     /// Forever Classic identity is an inferred cached-addon compatibility policy,
     /// not a native-client measurement. Preserve other profiles' existing values.
     pub const fn current_expansion_level(self) -> i32 {

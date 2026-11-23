@@ -89,8 +89,7 @@ pub struct MythicPlusState {
     pub current_affixes: Vec<MythicPlusAffix>,
     /// Current M+ season id (e.g. 14 = Dragonflight Season 4).
     pub current_season: i32,
-    /// `C_SeasonInfo` display season; 0 means no active display season.
-    /// The live value is server-supplied, so it stays unset until configured.
+    /// Retail/Forever default to the inferred newest season; other profiles keep 0.
     pub display_season_id: i32,
     /// Cached keystone context of the key the player currently owns.
     /// `None` = no context (nothing published); `Some` with a zero field models
@@ -120,7 +119,11 @@ impl Default for MythicPlusState {
                 season_id: 14,
             }],
             current_season: 14,
-            display_season_id: 0,
+            display_season_id: if crate::client_profile::ACTIVE.uses_tracked_season_maps() {
+                sim_data::mythic_plus_season_maps::NEWEST_DISPLAY_SEASON_ID as i32
+            } else {
+                0
+            },
             owned_keystone: None,
             run_history: Vec::new(),
             weekly_best_per_map: HashMap::new(),
