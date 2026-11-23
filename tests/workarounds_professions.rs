@@ -709,3 +709,40 @@ fn clicking_blacksmithing_button_in_professions_book_opens_panel() {
         env.state().borrow().lua_errors
     );
 }
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn profession_spec_consumer_uses_supplied_skill_line_config_and_tabs() {
+    let env = full_game_env();
+    env.exec(
+        r#"
+        A_Admin.SetProfessionSpecSkillLines({
+            {skillLineID = 164, configID = 8101, specTabIDs = {9101}},
+            {skillLineID = 186, configID = 8202, specTabIDs = {9202}},
+        })
+        A_Admin.SetProfessionSpecTabInfo(9101, {
+            rootNodeID = 90101, name = "Blacksmithing Spec",
+            description = "", rootIconID = 0, highlights = {},
+        })
+        A_Admin.SetProfessionSpecTabInfo(9202, {
+            rootNodeID = 90202, name = "Mining Spec",
+            description = "", rootIconID = 0, highlights = {},
+        })
+
+        assert(C_TradeSkillUI.OpenTradeSkill(164))
+        assert(ProfessionsFrame:IsShown())
+        assert(ProfessionsFrame.SpecPage.professionInfo.professionID == 164)
+        assert(ProfessionsFrame.SpecPage.configID == 8101)
+        assert(ProfessionsFrame.SpecPage.selectedTab.traitTreeID == 9101)
+        assert(ProfessionsFrame.SpecPage.tabInfo.rootNodeID == 90101)
+
+        assert(C_TradeSkillUI.OpenTradeSkill(186))
+        assert(ProfessionsFrame:IsShown())
+        assert(ProfessionsFrame.SpecPage.professionInfo.professionID == 186)
+        assert(ProfessionsFrame.SpecPage.configID == 8202)
+        assert(ProfessionsFrame.SpecPage.selectedTab.traitTreeID == 9202)
+        assert(ProfessionsFrame.SpecPage.tabInfo.rootNodeID == 90202)
+        "#,
+    )
+    .expect("the ProfessionsFrame open path should render each supplied specialization");
+}
