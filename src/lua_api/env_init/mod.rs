@@ -484,7 +484,7 @@ mod tests {
     use crate::lua_api::env::WowLuaAppData;
     use crate::lua_api::state::SimState;
     use rilua::{Lua, LuaApi, LuaApiMut};
-    use std::cell::RefCell;
+    use std::cell::{Cell, RefCell};
     use std::rc::Rc;
 
     #[test]
@@ -502,6 +502,7 @@ mod tests {
             sim_state: Rc::new(RefCell::new(SimState::default())),
             lua: None,
             font_system: None,
+            host_input_depth: Cell::new(0),
             on_update_cache_dirty: true,
             hot_literals: None,
             global_slots: None,
