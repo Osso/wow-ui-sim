@@ -175,7 +175,6 @@ fn supply_display_season_maps(env: &WowLuaEnv, season_id: u32) {
     env.exec(&format!(
         r#"
         A_Admin.SetCurrentDisplaySeasonID({season_id})
-        A_Admin.SetPlayerLevel(GetMaxLevelForPlayerExpansion())
         local mapIDs = C_ChallengeMode.GetMapTable()
         assert(#mapIDs == 8)
         for _, mapID in ipairs(mapIDs) do
@@ -207,13 +206,14 @@ fn load_pve_frame_addons(env: &WowLuaEnv, ui: &std::path::Path) {
 #[cfg(feature = "client-retail")]
 fn challenge_icon_map_ids_for_display_season(season_id: u32) -> String {
     let ui = blizzard_ui_dir();
-    let env = crate::common::panel_fixtures::setup_env_with_inputs(|env| {
-        supply_display_season_maps(env, season_id);
-    });
+    let env = new_blizzard_addon_env(&ui);
+    supply_display_season_maps(&env, season_id);
     load_pve_frame_addons(&env, &ui);
+    env.exec("A_Admin.SetPlayerLevel(GetMaxLevelForPlayerExpansion())")
+        .unwrap();
     env.eval(
         r#"
-        PVEFrame_ToggleFrame('ChallengesFrame')
+        PVEFrame_ShowFrame('ChallengesFrame')
         assert(PVEFrame:IsShown() and ChallengesFrame:IsShown())
         local ids = {}
         for _, icon in ipairs(ChallengesFrame.DungeonIcons) do
