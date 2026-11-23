@@ -159,7 +159,8 @@ fn get_nearest_party_member_token(state: &mut LuaState) -> LuaResult<u32> {
                     "C_Navigation.GetNearestPartyMemberToken has no host-selected party token",
                 )
             })?;
-        state.push(create_string(state, &token));
+        let value = create_string(state, &token);
+        state.push(value);
         return Ok(1);
     }
     #[cfg(not(feature = "retail-12-0-5"))]
