@@ -268,6 +268,8 @@ macro_rules! build_empty_sim_state {
             #[cfg(any(feature = "client-ptr", feature = "client-wowforever"))]
             glue_feature_status: Default::default(),
             is_logged_in: $runtime.is_logged_in,
+            startup_script_watchdog_phase: true,
+            script_watchdog_timeout_override: None,
             post_event_workarounds_applied: false,
             screen_first_display_state: $runtime.screen_first_display_state,
             account_save_enabled: $runtime.account_save_enabled,

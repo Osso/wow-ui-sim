@@ -1,6 +1,7 @@
 //! Mythic+, scenario, and death-recap substate types.
 
 use std::collections::HashMap;
+use std::time::Duration;
 
 /// One affix in the active Mythic+ season. Drives
 /// `C_MythicPlus.GetCurrentAffixes`.
@@ -101,6 +102,8 @@ pub struct MythicPlusState {
     #[cfg(feature = "retail-12-0-7")]
     pub season_best_per_map:
         HashMap<i32, (Option<MythicPlusWeeklyBest>, Option<MythicPlusWeeklyBest>)>,
+    /// INFERRED R88ev (native evidence pending): last admitted map-info request time.
+    pub(crate) last_map_info_request_at: Option<Duration>,
     /// Whether a Mythic+ run is currently in progress.
     pub is_active: bool,
     /// Whether the weekly Mythic+ reward is available to claim.
@@ -122,6 +125,7 @@ impl Default for MythicPlusState {
             weekly_best_per_map: HashMap::new(),
             #[cfg(feature = "retail-12-0-7")]
             season_best_per_map: HashMap::new(),
+            last_map_info_request_at: None,
             is_active: false,
             is_weekly_reward_available: false,
         }

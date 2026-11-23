@@ -130,7 +130,7 @@ const POST_LOAD_WORKAROUNDS: &[WorkaroundStep] = &[
         label: "patch_game_time_defaults",
         apply: patch_game_time_defaults,
     },
-    // The repair helper skips profiles whose tooltip templates provide NineSlice.
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     WorkaroundStep {
         label: "patch_tooltip_nineslice_surface",
         apply: patch_tooltip_nineslice_surface,

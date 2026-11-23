@@ -164,13 +164,65 @@ fn ensure_no_new_lua_errors(
     operation: &str,
 ) -> Result<(), String> {
     let state = env.state().borrow();
-    let new_errors = &state.lua_errors[previous_count..];
+    let approved = approved_baseline_headlines();
+    let new_errors: Vec<&String> = state.lua_errors[previous_count..]
+        .iter()
+        .filter(|error| !approved.contains(&error_headline(error)))
+        .collect();
     if new_errors.is_empty() {
         return Ok(());
     }
     Err(format!(
         "{operation} produced {} Lua error(s):\n{}",
         new_errors.len(),
-        new_errors.join("\n")
+        new_errors
+            .iter()
+            .map(|error| error.as_str())
+            .collect::<Vec<_>>()
+            .join("\n")
     ))
+}
+
+#[cfg(feature = "client-retail")]
+const APPROVED_BASELINE: Option<&str> =
+    Some(include_str!("../../docs/baselines/retail-lua-errors.json"));
+#[cfg(feature = "client-wowforever")]
+const APPROVED_BASELINE: Option<&str> = Some(include_str!(
+    "../../docs/baselines/wowforever-lua-errors.json"
+));
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+const APPROVED_BASELINE: Option<&str> = None;
+
+/// Approved Blizzard-side startup errors recorded in the profile's
+/// `docs/baselines/<profile>-lua-errors.json`; the preload accepts exactly
+/// those and still rejects every other startup error.
+fn approved_baseline_headlines() -> Vec<String> {
+    let Some(json) = APPROVED_BASELINE else {
+        return Vec::new();
+    };
+    let records: Vec<serde_json::Value> =
+        serde_json::from_str(json).expect("approved lua-errors baseline must be valid JSON");
+    records
+        .iter()
+        .filter_map(|record| record["message"].as_str())
+        .map(error_headline)
+        .collect()
+}
+
+/// First line of an error, with the generated template-handler digest removed
+/// because it changes whenever unrelated generated handlers change.
+fn error_headline(message: &str) -> String {
+    const DIGEST_PREFIX: &str = "template-method-handler-no-global-slots/";
+    let line = message.lines().next().unwrap_or_default();
+    let line = line.strip_prefix("Lua Error: ").unwrap_or(line);
+    match line.find(DIGEST_PREFIX) {
+        Some(start) => {
+            let digest_start = start + DIGEST_PREFIX.len();
+            let digest_end = line[digest_start..]
+                .find(':')
+                .map_or(line.len(), |offset| digest_start + offset);
+            format!("{}{}", &line[..digest_start], &line[digest_end..])
+        }
+        None => line.to_owned(),
+    }
 }
