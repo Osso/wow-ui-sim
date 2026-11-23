@@ -5,9 +5,9 @@ use crate::c_api::helpers::set_table_array;
 use crate::lua_api::methods::{borrow_state, create_string, table_get, val_to_string};
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 use crate::lua_api::methods::{borrow_state_mut, create_table_with_capacity, table_set_static};
-use crate::lua_bridge::table_set_rust_fn_static;
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
-use crate::lua_bridge::{TableBuilder, stack_val};
+use crate::lua_bridge::TableBuilder;
+use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
 use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
 use rilua::vm::table::Table;
