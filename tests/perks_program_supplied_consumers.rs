@@ -14,8 +14,8 @@ const SUPPLIED_CHEST_REWARDS: &str = r#"[
 
 fn supply_perks_program_state(env: &WowLuaEnv) {
     env.exec(&format!(
-        "A_Admin.SetPerksProgramVendorItems([[{SUPPLIED_VENDOR_ITEMS}]])\n\
-         A_Admin.SetPerksProgramPendingChestRewards([[{SUPPLIED_CHEST_REWARDS}]])"
+        "A_Admin.SetPerksProgramVendorItems([==[{SUPPLIED_VENDOR_ITEMS}]==])\n\
+         A_Admin.SetPerksProgramPendingChestRewards([==[{SUPPLIED_CHEST_REWARDS}]==])"
     ))
     .expect("A_Admin should accept supplied Perks Program catalog and rewards");
 }
