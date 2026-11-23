@@ -106,7 +106,8 @@ fn close(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn request_items(state: &mut LuaState) -> LuaResult<u32> {
-    if borrow_state(state)?.black_market.interaction_open {
+    let interaction_open = borrow_state(state)?.black_market.interaction_open;
+    if interaction_open {
         dispatch_event_now(state, "BLACK_MARKET_ITEM_UPDATE", &[])?;
     }
     Ok(0)
