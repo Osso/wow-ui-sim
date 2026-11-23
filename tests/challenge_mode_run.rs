@@ -188,9 +188,20 @@ fn supply_display_season_maps(env: &WowLuaEnv, season_id: u32) {
 }
 
 #[cfg(feature = "client-retail")]
-fn load_pve_frame_addon(env: &WowLuaEnv, ui: &std::path::Path) {
-    let loaded = load_blizzard_addon_closure_into_env(env, ui, &["Blizzard_GroupFinder"], &[]);
-    assert!(loaded.iter().any(|name| name == "Blizzard_GroupFinder"));
+fn load_pve_frame_addons(env: &WowLuaEnv, ui: &std::path::Path) {
+    wow_ui_sim::xml::register_intrinsic_templates();
+    crate::common::panel_fixtures::load_panel_addons(env);
+    let roots = [
+        "Blizzard_UIPanels_Game",
+        "Blizzard_GroupFinder",
+        "Blizzard_ChallengesUI",
+    ];
+    let loaded = load_blizzard_addon_closure_into_env(env, ui, &roots, &[]);
+    for root in roots {
+        assert!(loaded.iter().any(|name| name == root));
+    }
+    env.apply_post_load_workarounds();
+    wow_ui_sim::startup::fire_startup_events(env);
 }
 
 #[cfg(feature = "client-retail")]
@@ -199,7 +210,7 @@ fn challenge_icon_map_ids_for_display_season(season_id: u32) -> String {
     let env = crate::common::panel_fixtures::setup_env_with_inputs(|env| {
         supply_display_season_maps(env, season_id);
     });
-    load_pve_frame_addon(&env, &ui);
+    load_pve_frame_addons(&env, &ui);
     env.eval(
         r#"
         PVEFrame_ToggleFrame('ChallengesFrame')
