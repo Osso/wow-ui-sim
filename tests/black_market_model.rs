@@ -117,24 +117,41 @@ fn setting_black_market_bid_enables_bid_button_after_selecting_listing() {
     env.exec(
         r#"
             A_Admin.SetMoney(1000000)
-            local row
-            BlackMarketFrame.ScrollBox:ForEachFrame(function(button)
-                if button.marketID == 701 then row = button end
+            BlackMarketTextChanges = {}
+            BlackMarketBidPrice.gold:HookScript('OnTextChanged', function(_, userInput)
+                table.insert(BlackMarketTextChanges, userInput)
             end)
-            row:Click()
-            MoneyInputFrame_SetCopper(BlackMarketBidPrice, 40000)
+            BlackMarketFrame.ScrollBox:ForEachFrame(function(button)
+                if button.marketID == 701 then button:Click() end
+            end)
         "#,
     )
-    .expect("selecting a listing and setting its bid should run Blizzard handlers");
+    .expect("selecting a listing should run the original Black Market handler");
     env.fire_on_update(0.016).unwrap();
+    let first_change: (usize, bool, bool) = env
+        .eval(
+            "return #BlackMarketTextChanges, BlackMarketTextChanges[1], BlackMarketFrame.BidButton:IsEnabled()",
+        )
+        .expect("the first Black Market bid amount should notify the EditBox consumer");
+    assert_eq!(first_change, (1, false, true));
 
-    let enabled: bool = env
-        .eval("return BlackMarketFrame.BidButton:IsEnabled()")
-        .expect("Black Market bid button state should be readable");
-    assert!(
-        enabled,
-        "setting the bid should enable the selected listing's bid button"
-    );
+    env.exec("MoneyInputFrame_SetCopper(BlackMarketBidPrice, 40000)")
+        .expect("setting a second bid amount should run Blizzard handlers");
+    env.fire_on_update(0.016).unwrap();
+    let second_change: (usize, bool, bool) = env
+        .eval(
+            "return #BlackMarketTextChanges, BlackMarketTextChanges[2], BlackMarketFrame.BidButton:IsEnabled()",
+        )
+        .expect("the second Black Market bid amount should notify the EditBox consumer");
+    assert_eq!(second_change, (2, false, true));
+
+    env.exec("BlackMarketBidPrice.gold:SetNumber(4)")
+        .expect("setting the current number again should remain valid");
+    env.fire_on_update(0.016).unwrap();
+    let unchanged_change_count: usize = env
+        .eval("return #BlackMarketTextChanges")
+        .expect("the unchanged number callback count should be readable");
+    assert_eq!(unchanged_change_count, 2);
 }
 
 #[test]

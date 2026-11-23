@@ -608,8 +608,8 @@ pub(super) fn set_number(state: &mut LuaState) -> LuaResult<u32> {
         let text_changed = frame.text.as_deref() != Some(s.as_str());
         frame.text_stripped = Some(s.clone());
         frame.text = Some(s);
-        // INFERRED: R88er (native evidence pending): SetNumber is programmatic,
-        // and unchanged text does not fire OnTextChanged.
+        // VERIFIED (R88er, Retail): compare the formatted string; unchanged text is silent.
+        // INFERRED (R88er): SetNumber reports userInput=false.
         if text_changed {
             frame.mark_editbox_text_changed(Some(false));
         }
