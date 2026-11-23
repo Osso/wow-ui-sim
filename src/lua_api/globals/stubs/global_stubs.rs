@@ -56,6 +56,7 @@ static GLOBAL_NIL_STUBS: &[&str] = &[
     "RequestRatedInfo",
     "RemoveChatWindowChannel",
     // RequestPartyLootMethod is SimState-backed in globals::real::loot_method, not a stub.
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     "RequestRaidInfo",
     // QuestMapFrame::UpdatePOIs still calls this legacy helper after
     // QuestMapUpdateAllQuests; the sim's quest blob rendering is state-backed

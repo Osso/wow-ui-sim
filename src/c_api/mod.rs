@@ -11,6 +11,8 @@ pub(crate) mod c_black_market;
 pub(crate) mod c_gossip_info_poi;
 pub mod c_guild_info;
 pub mod c_heirloom;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) mod c_raid_locks;
 pub mod c_recruit_a_friend;
 pub(crate) mod c_tooltip_comparison;
 pub(crate) mod c_tooltip_info_artifact_item;
