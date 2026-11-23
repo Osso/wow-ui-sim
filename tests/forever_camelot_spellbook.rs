@@ -46,7 +46,7 @@ fn load_original_without_outfits(enabled: bool) -> WowLuaEnv {
 }
 
 fn load_original_with_admin_outfits(enabled: bool) -> WowLuaEnv {
-    load_original_with_setup(enabled, |env| {
+    let env = load_original_with_setup(enabled, |env| {
         env.exec(
             r#"
             A_Admin.SetUnlockedOutfitSlots(2, 2)
@@ -55,7 +55,9 @@ fn load_original_with_admin_outfits(enabled: bool) -> WowLuaEnv {
             "#,
         )
         .expect("create test outfits through the public API before loading Player Spells");
-    })
+    });
+    load_blizzard_addon_closure_into_env(&env, &blizzard_ui_dir(), &["Blizzard_ClickBindingUI"], &[]);
+    env
 }
 
 fn load_original_with_setup(
