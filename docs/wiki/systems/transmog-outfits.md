@@ -1,6 +1,6 @@
 # Transmog outfits
 
-Retail outfit editing and Forever outfit queries share catalog metadata in simulator state; Forever keeps a three-state list marker but no second row store. Saved contents and a pending overlay remain separate state. The [publication closure contract](../../specs/patch-12-0-0-publication-sweep.md#transmog-outfit-closure-contract) owns required behavior and proof boundaries.
+Retail outfit editing and Forever outfit queries share catalog metadata in simulator state. Forever returns zero values for an empty catalog (INFERRED from its `MayReturnNothing` declaration and guarded consumers) and one array for populated catalogs. Saved contents and a pending overlay remain separate state. The [publication closure contract](../../specs/patch-12-0-0-publication-sweep.md#transmog-outfit-closure-contract) owns required behavior and proof boundaries.
 
 ## State and API
 
@@ -24,6 +24,6 @@ Native prices/caps, artifact/spec restrictions, binding/race/form eligibility, a
 
 ## See Also
 
-- [Forever Camelot outfit queries](forever-camelot-spellbook.md) — shared outfit rows and Forever supplied-list state
+- [Forever Camelot outfit queries](forever-camelot-spellbook.md) — shared outfit rows and empty-catalog return behavior
 - [[transmog-inventory-slot-scope]] — previous cache/source mismatch, not a reason to monkey-patch vendor Lua
 - [[lua-api]] — runtime namespace registration

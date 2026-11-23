@@ -200,6 +200,56 @@ fn blizzard_guild_rename_excluded_from_all_glue_screen_auto_discovery_passes() {
 }
 
 prefork_full_ui_case! {
+fn npc_interaction_query_gates_guild_rename_status_updates(env: &WowLuaEnv) {
+    let guild_rename_status: rilua::Val = env
+        .eval(
+            "return {\
+                isNameChangeEnabled = true,\
+                isPlayerGuildMaster = true,\
+                refundEligibleEndTime = 0,\
+                nextRenameTime = 0,\
+                renamePrice = 500,\
+                refundAmount = 0,\
+                currentGuildMoney = 1000,\
+                result = Enum.GuildErrorType.Success,\
+                oldGuildName = 'Previous',\
+                reservedName = '',\
+                reservedNameExpirationTime = 0\
+            }",
+        )
+        .unwrap();
+
+    env.exec("A_Admin.OpenGuildRename()").unwrap();
+    env.fire_event_with_args(
+        "GUILD_RENAME_STATUS_UPDATE",
+        std::slice::from_ref(&guild_rename_status),
+    )
+    .unwrap();
+    let rename_flow_shown: bool = env
+        .eval("return GuildRenameFrame:IsShown() and GuildRenameFrame.RenameFlow:IsShown()")
+        .unwrap();
+    assert!(
+        rename_flow_shown,
+        "GuildRename interaction must apply the enabled rename status"
+    );
+
+    env.exec("C_PlayerInteractionManager.ClearInteraction(Enum.PlayerInteractionType.GuildRename)")
+        .unwrap();
+    env.exec("A_Admin.OpenMailbox()").unwrap();
+    env.fire_event_with_args(
+        "GUILD_RENAME_STATUS_UPDATE",
+        std::slice::from_ref(&guild_rename_status),
+    )
+    .unwrap();
+    let rename_frame_shown: bool = env.eval("return GuildRenameFrame:IsShown()").unwrap();
+    assert!(
+        !rename_frame_shown,
+        "MailInfo interaction must not enter GuildRename mode"
+    );
+}
+}
+
+prefork_full_ui_case! {
 fn blizzard_guild_rename_loads_without_addon_specific_lua_errors(env: &WowLuaEnv) {
 
     let lua_errors: Vec<String> = env.state().borrow().lua_errors.clone();

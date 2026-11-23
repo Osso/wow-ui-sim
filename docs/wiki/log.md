@@ -1,3 +1,7 @@
+## [2026-11-23] implementation | Forever Player Spells outfit list
+
+Updated the [Forever outfit contract](../specs/forever-camelot-spellbook.md), [shared catalog contract](../specs/outfit-catalog-lookups.md), and [outfit model](systems/forever-camelot-spellbook.md). **INFERRED (R88ex; native evidence pending):** an empty Forever outfit catalog returns no values, matching `MayReturnNothing` and guarded `GetOutfitsInfo() or {}` consumers. **VERIFIED (simulator):** exact Player Spells toggle proof passes with an empty catalog and with two AddNewOutfit records after A_Admin capacity input; Retail compile passes with zero warnings.
+
 ## [2026-11-23] investigation | Clicked first-install saved variables
 
 Added [the investigation](investigations/clicked-first-install-savedvariables.md) and linked it from the Mythic+ startup comparison. **VERIFIED (same Retail simulator binary and addon root):** two Clicked errors with SavedVariables disabled; zero with the current ClickedDB loaded in an isolated session. **INFERRED (bundled AceDB and Clicked source):** first-profile callback order reaches blacklist refresh before its local config is initialized. No simulator change was made.

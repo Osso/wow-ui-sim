@@ -83,13 +83,11 @@ fn assert_no_outfit_match(env: &WowLuaEnv) {
 fn seed_no_outfit_result(env: &WowLuaEnv) {
     let mut state = env.state().borrow_mut();
     state.transmog_outfit_catalog.entries.clear();
-    state.transmog_outfit_catalog.outfits_info_supplied = Some(false);
 }
 
 fn seed_outfit_catalog_entries(env: &WowLuaEnv) {
     use super::outfit_entry::OutfitEntry;
     let mut state = env.state().borrow_mut();
-    state.transmog_outfit_catalog.outfits_info_supplied = Some(true);
     state.transmog_outfit_catalog.entries = vec![
         OutfitEntry {
             outfit_id: 91,

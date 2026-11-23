@@ -9,9 +9,6 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 
 const AVAILABILITY_UNSET: &str =
     "C_TransmogOutfitInfo.IsTransmogEnabled: transmog availability has not been supplied";
-const OUTFITS_UNSET: &str =
-    "C_TransmogOutfitInfo.GetOutfitsInfo: outfit list has not been supplied";
-
 fn entries(ids: &[i64]) -> Vec<OutfitEntry> {
     ids.iter()
         .map(|&id| OutfitEntry {
@@ -29,25 +26,50 @@ fn entries(ids: &[i64]) -> Vec<OutfitEntry> {
 fn supply(env: &WowLuaEnv, ids: Option<&[i64]>) {
     let mut state = env.state().borrow_mut();
     state.transmog_outfit_catalog.entries = ids.map(entries).unwrap_or_default();
-    state.transmog_outfit_catalog.outfits_info_supplied = Some(ids.is_some());
 }
 
 fn unset(env: &WowLuaEnv) {
     let mut state = env.state().borrow_mut();
     state.transmog_outfit_catalog.entries.clear();
-    state.transmog_outfit_catalog.outfits_info_supplied = None;
 }
 
 fn load_original(enabled: bool) -> WowLuaEnv {
-    let ui = blizzard_ui_dir();
-    let env = new_blizzard_addon_env(&ui);
-    env.state().borrow_mut().transmog_availability.enabled = Some(enabled);
-    supply(&env, Some(&[23, 81]));
-    crate::common::panel_fixtures::load_panel_addons(&env);
-    load_blizzard_addon_closure_into_env(&env, &ui, &["Blizzard_PlayerSpells"], &[]);
+    let env = load_original_with_setup(enabled, |env| supply(env, Some(&[23, 81])));
     env.state()
         .borrow_mut()
         .set_input_interface_style(InputInterfaceStyle::Gamepad);
+    env
+}
+
+fn load_original_without_outfits(enabled: bool) -> WowLuaEnv {
+    load_original_with_setup(enabled, |_| {})
+}
+
+fn load_original_with_admin_outfits(enabled: bool) -> WowLuaEnv {
+    let env = load_original_with_setup(enabled, |env| {
+        env.exec(
+            r#"
+            A_Admin.SetUnlockedOutfitSlots(2, 2)
+            C_TransmogOutfitInfo.AddNewOutfit('Copper', 123)
+            C_TransmogOutfitInfo.AddNewOutfit('Silver', 456)
+            "#,
+        )
+        .expect("create test outfits through the public API before loading Player Spells");
+    });
+    load_blizzard_addon_closure_into_env(&env, &blizzard_ui_dir(), &["Blizzard_ClickBindingUI"], &[]);
+    env
+}
+
+fn load_original_with_setup(
+    enabled: bool,
+    prepare: impl FnOnce(&WowLuaEnv),
+) -> WowLuaEnv {
+    let ui = blizzard_ui_dir();
+    let env = new_blizzard_addon_env(&ui);
+    env.state().borrow_mut().transmog_availability.enabled = Some(enabled);
+    prepare(&env);
+    crate::common::panel_fixtures::load_panel_addons(&env);
+    load_blizzard_addon_closure_into_env(&env, &ui, &["Blizzard_PlayerSpells"], &[]);
     eprintln!(
         "unfiltered load diagnostics: {:?}",
         env.state().borrow().lua_errors
@@ -148,8 +170,7 @@ fn exercise_outfit_availability(first: &WowLuaEnv, second: &WowLuaEnv, initial: 
         .set_input_interface_style(InputInterfaceStyle::Gamepad);
     observe(first, true);
     unset(first);
-    let error = first.exec("Category:IsAvailable()").unwrap_err();
-    assert!(error.to_string().contains(OUTFITS_UNSET), "{error}");
+    observe(first, false);
     supply(first, Some(&[23]));
     observe(first, true);
     observe(second, !initial);
@@ -171,6 +192,10 @@ fn availability_disabled_first_transitions_and_prerequisites() {
 fn assert_groups(env: &WowLuaEnv, expected: &[i64]) {
     env.exec("Category:PopulateSpellGroupsIndiciesByRange()")
         .unwrap();
+    assert_group_indices(env, expected);
+}
+
+fn assert_group_indices(env: &WowLuaEnv, expected: &[i64]) {
     let indices: String = env
         .eval("return table.concat(Category.spellGroups[1].orderedSpellBookItemSlotIndices, ',')")
         .unwrap();
@@ -193,6 +218,49 @@ fn assert_groups(env: &WowLuaEnv, expected: &[i64]) {
     "#,
     )
     .unwrap();
+}
+
+#[test]
+fn player_spells_toggle_accepts_no_outfits_and_two_created_outfits() {
+    let empty = load_original_without_outfits(true);
+    let result_count: i32 = empty
+        .eval("return select('#', C_TransmogOutfitInfo.GetOutfitsInfo())")
+        .expect("an empty Forever outfit catalog returns no values");
+    assert_eq!(result_count, 0);
+    crate::common::panel_fixtures::clear_recorded_lua_errors(&empty);
+    empty
+        .exec("PlayerSpellsUtil.ToggleClassTalentFrame()")
+        .expect("Player Spells opens with no supplied outfits");
+    assert!(
+        empty.state().borrow().lua_errors.is_empty(),
+        "opening Player Spells with no outfits must record no OnLoad error: {:?}",
+        empty.state().borrow().lua_errors
+    );
+
+    let populated = load_original_with_admin_outfits(true);
+    crate::common::panel_fixtures::clear_recorded_lua_errors(&populated);
+    populated
+        .exec(
+            "PlayerSpellsUtil.ToggleClassTalentFrame(); PlayerSpellsUtil.ToggleSpellBookFrame()",
+        )
+        .expect("open Player Spells and switch to its Spell Book tab");
+    populated
+        .exec(
+            "Category = PlayerSpellsFrame.SpellBookFrame.categoryMixins[#PlayerSpellsFrame.SpellBookFrame.categoryMixins]",
+        )
+        .expect("read the category created by the open Player Spells panel");
+    assert_group_indices(&populated, &[1, 2]);
+    let actual: (String, i32, String, i32) = populated
+        .eval(
+            r#"
+            local outfits = C_TransmogOutfitInfo.GetOutfitsInfo()
+            return outfits[1].name, outfits[1].icon, outfits[2].name, outfits[2].icon
+            "#,
+        )
+        .expect("the original panel consumer can read both outfit records");
+    assert_eq!(actual, ("Copper".into(), 123, "Silver".into(), 456));
+    let errors = populated.state().borrow().lua_errors.clone();
+    assert!(errors.is_empty(), "Player Spells recorded Lua errors: {errors:?}");
 }
 
 #[test]
@@ -235,17 +303,21 @@ fn assert_initial_outfit_snapshot(env: &WowLuaEnv) {
 fn assert_empty_and_unset_outfit_states(env: &WowLuaEnv) {
     supply(env, Some(&[]));
     assert_groups(env, &[]);
-    env.exec("assert(select('#', C_TransmogOutfitInfo.GetOutfitsInfo()) == 1)")
+    env.exec("assert(select('#', C_TransmogOutfitInfo.GetOutfitsInfo()) == 0)")
         .unwrap();
     supply(env, None);
     assert_groups(env, &[]);
     env.exec("assert(select('#', C_TransmogOutfitInfo.GetOutfitsInfo()) == 0)")
         .unwrap();
     unset(env);
-    let error = env
-        .exec("Category:PopulateSpellGroupsIndiciesByRange()")
-        .unwrap_err();
-    assert!(error.to_string().contains(OUTFITS_UNSET), "{error}");
+    env.exec("Category:PopulateSpellGroupsIndiciesByRange()")
+        .expect("an unset outfit catalog behaves as an empty list");
+    let group_count: i32 = env.eval("return #Category.spellGroups").unwrap();
+    assert_eq!(group_count, 1);
+    let indices: i32 = env
+        .eval("return #Category.spellGroups[1].orderedSpellBookItemSlotIndices")
+        .unwrap();
+    assert_eq!(indices, 1);
     supply(env, Some(&[81, 23]));
     assert_groups(env, &[81, 23]);
 }

@@ -8,6 +8,7 @@
 use crate::common::blizzard_addon_harness::{
     blizzard_ui_dir, load_blizzard_addon_closure_into_env, new_blizzard_addon_env,
 };
+use wow_ui_sim::loader::load_addon;
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 fn load_tracker() -> WowLuaEnv {
@@ -168,6 +169,65 @@ fn load_challenges_ui() -> WowLuaEnv {
     let loaded = load_blizzard_addon_closure_into_env(&env, &ui, &["Blizzard_ChallengesUI"], &[]);
     assert!(loaded.iter().any(|name| name == "Blizzard_ChallengesUI"));
     env
+}
+
+#[cfg(feature = "client-retail")]
+fn supply_display_season_maps(env: &WowLuaEnv, season_id: u32) {
+    env.exec(&format!(
+        r#"
+        A_Admin.SetCurrentDisplaySeasonID({season_id})
+        assert(C_MythicPlus.GetCurrentUIDisplaySeason() == {season_id})
+        A_Admin.SetPlayerLevel(GetMaxLevelForPlayerExpansion())
+        local mapIDs = C_ChallengeMode.GetMapTable()
+        assert(#mapIDs == 8)
+        for _, mapID in ipairs(mapIDs) do
+            A_Admin.SetChallengeModeMapInfo(mapID, {{name='Season map '..mapID, id=mapID,
+                timeLimit=1500, texture=mapID + 1000, backgroundTexture=mapID + 2000, mapID=mapID}})
+        end
+    "#
+    ))
+    .unwrap();
+}
+
+#[cfg(feature = "client-retail")]
+fn challenge_icon_map_ids_for_display_season(env: &WowLuaEnv, season_id: u32) -> String {
+    supply_display_season_maps(env, season_id);
+    let ui = blizzard_ui_dir();
+    let challenges_ui_toc = ui.join("Blizzard_ChallengesUI/Blizzard_ChallengesUI_Mainline.toc");
+    load_addon(&env.loader_env(), &challenges_ui_toc).expect("Blizzard_ChallengesUI should load");
+    env.eval(
+        r#"
+        PVEFrame_ShowFrame('ChallengesFrame')
+        assert(PVEFrame:IsShown() and ChallengesFrame:IsShown())
+        local ids = {}
+        for _, icon in ipairs(ChallengesFrame.DungeonIcons) do
+            ids[#ids + 1] = icon.mapID
+        end
+        table.sort(ids)
+        return table.concat(ids, ',')
+    "#,
+    )
+    .unwrap()
+}
+
+#[cfg(feature = "client-retail")]
+prefork_full_ui_case! {
+fn original_challenges_panel_uses_display_season_34_maps(env: &WowLuaEnv) {
+    let ids = challenge_icon_map_ids_for_display_season(env, 34);
+    assert_eq!(ids, "161,239,402,556,557,558,559,560");
+}
+}
+
+#[cfg(feature = "client-retail")]
+prefork_full_ui_case! {
+fn original_challenges_panel_uses_display_season_37_maps(env: &WowLuaEnv) {
+    let default_season: i32 = env
+        .eval("return C_SeasonInfo.GetCurrentDisplaySeasonID()")
+        .unwrap();
+    assert_eq!(default_season, 37);
+    let ids = challenge_icon_map_ids_for_display_season(env, 37);
+    assert_eq!(ids, "249,250,399,584,585,586,587,588");
+}
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-ptr"))]

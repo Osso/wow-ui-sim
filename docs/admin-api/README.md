@@ -19,11 +19,13 @@ The `A_Admin` namespace provides administrative functions for controlling simula
 - [Loss of Control](../specs/active-loss-of-control.md) — AddLossOfControl, ClearLossOfControl
 - [Zone](zone.md) — SetZone, SetSubZone, SetInstanceInfo, SetInInstance
 - [Equipment locks](equipment.md) — SetEquipmentItemLock, ClearEquipmentItemLock
+- [Transmog outfits](transmog-outfits.md) — SetUnlockedOutfitSlots
 - [Economy](economy.md) — SetMoney, SetItemLevel, AddBagItem, RemoveBagItem
 - [Collections](collections.md) — AddTransmog, RemoveTransmog, CollectMount, UncollectMount, CollectPet, UncollectPet, CollectToy, UncollectToy, CollectCampsite, UncollectCampsite, SetAchievementEarned, EarnAchievement
 - [PvP](pvp.md) — SetPvPEnabled, SetHonorLevel
 - [Guild](guild.md) — SetGuildInfo, ClearGuild, JoinGuild, LeaveGuild
 - [Mail](mail.md) — AddMail, ClearInbox, SetInboxCount
+- [Interactions](interactions.md) — OpenGuildRename, OpenMailbox, CloseMailbox
 - [Premade Groups](premade-groups.md) — AddPremadeListing, ClearPremadeListings, UpdatePremadeListing
 - [Quests](quests.md) — simulator-only selected completed quest turn-in
 - [Events](events.md) — FireEvent
