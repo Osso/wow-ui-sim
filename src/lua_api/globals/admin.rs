@@ -29,7 +29,7 @@ use super::admin_actionbars_bags::set_possess_action_slot;
 use super::admin_actionbars_bags::{
     add_bag_item, add_guild_bank_item, add_guild_bank_tab, clear_action_bars, clear_action_slot,
     clear_bags, clear_guild_bank, clear_guild_bank_tabs, remove_bag_item, set_action_slot,
-    set_merchant_items, set_pet_action_slot,
+    set_merchant_items, set_pet_action_slot, set_possess_bar_visible,
 };
 use super::admin_addons::register_test_addon;
 use super::admin_auction_house::{
@@ -500,6 +500,7 @@ fn register_inventory_and_mail(b: TableBuilder) -> LuaResult<TableBuilder> {
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     let b = b.set_function("SetPossessActionSlot", set_possess_action_slot)?;
     let b = b
+        .set_function("SetPossessBarVisible", set_possess_bar_visible)?
         .set_function("SetActionSlot", set_action_slot)?
         .set_function(
             "SetActionRepeatActive",

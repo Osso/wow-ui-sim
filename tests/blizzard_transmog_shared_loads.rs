@@ -471,11 +471,13 @@ fn explicit_load_publishes_transmog_location_mixin() {
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
-fn load_original_transmog_frame(visible: bool) -> WowLuaEnv {
+fn load_original_transmog_frame(visible: Option<bool>) -> WowLuaEnv {
     let ui = blizzard_ui_dir();
     let env = new_blizzard_addon_env(&ui);
-    env.exec(&format!("A_Admin.SetRangedSlotShown({visible})"))
-        .expect("set ranged-slot visibility input");
+    if let Some(visible) = visible {
+        env.exec(&format!("A_Admin.SetRangedSlotShown({visible})"))
+            .expect("set ranged-slot visibility input");
+    }
     let shared = load_blizzard_addon_closure_into_env(&env, &ui, &["Blizzard_SharedXML"], &[]);
     assert!(shared.iter().any(|name| name == "Blizzard_SharedXML"));
     let startup = load_blizzard_addon_closure_into_env(
@@ -514,7 +516,11 @@ fn load_transmog_addon(env: &WowLuaEnv, ui: &std::path::Path) {
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 #[test]
 fn supplied_ranged_slot_visibility_controls_transmog_refresh() {
-    for (visible, expected) in [(true, true), (false, false)] {
+    for (visible, expected) in [
+        (None, cfg!(feature = "client-wowforever")),
+        (Some(true), true),
+        (Some(false), false),
+    ] {
         let env = load_original_transmog_frame(visible);
         let actual: bool = env
             .eval(
@@ -530,7 +536,7 @@ fn supplied_ranged_slot_visibility_controls_transmog_refresh() {
                 "#,
             )
             .expect("query original TransmogFrame refresh behavior");
-        assert_eq!(actual, expected, "ranged slot visibility: {visible}");
+        assert_eq!(actual, expected, "ranged slot visibility: {visible:?}");
     }
 }
 
