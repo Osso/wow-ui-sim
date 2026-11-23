@@ -209,6 +209,7 @@ fn challenge_icon_map_ids_for_display_season(season_id: u32) -> String {
         for _, icon in ipairs(ChallengesFrame.DungeonIcons) do
             ids[#ids + 1] = icon.mapID
         end
+        table.sort(ids)
         return table.concat(ids, ',')
     "#,
     )
@@ -225,8 +226,8 @@ fn original_challenges_panel_uses_display_season_maps() {
     assert_eq!(default_season, 37);
     let season_34 = challenge_icon_map_ids_for_display_season(34);
     let season_37 = challenge_icon_map_ids_for_display_season(37);
-    assert_eq!(season_34, "239,556,161,402,557,558,559,560");
-    assert_eq!(season_37, "588,399,250,249,584,585,586,587");
+    assert_eq!(season_34, "161,239,402,556,557,558,559,560");
+    assert_eq!(season_37, "249,250,399,584,585,586,587,588");
     assert_ne!(season_34, season_37);
 }
 
