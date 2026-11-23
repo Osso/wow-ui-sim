@@ -93,6 +93,8 @@ pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     let builder = super::real::configuration_warnings::register_admin(builder)?;
     let builder = register_player(builder)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let builder = crate::c_api::c_quest_log::register_zone_story_admin(builder)?;
     #[cfg(any(
         feature = "client-retail",
         feature = "client-ptr",
@@ -216,6 +218,8 @@ pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
     let builder = crate::c_api::specialization_system::register_admin(builder)?;
     #[cfg(feature = "client-wowforever")]
     let builder = crate::c_api::c_quest_log::register_admin(builder)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let builder = crate::c_api::c_class_trial::register_admin(builder)?;
     let builder = crate::lua_api::manual_clock::register_admin(builder)?;
     let builder = super::real::wrath_spell_slots::register_admin(builder)?;
     let admin_val = builder.build();

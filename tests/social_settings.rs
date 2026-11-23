@@ -4,6 +4,7 @@ use crate::common::blizzard_addon_harness::{
     blizzard_ui_dir, load_blizzard_addon_closure_into_env, new_blizzard_addon_env,
 };
 use wow_ui_sim::lua_api::WowLuaEnv;
+use wow_ui_sim::lua_api::state::{GameRuleKey, GameRuleValue};
 
 fn setup() -> WowLuaEnv {
     let ui = blizzard_ui_dir();
@@ -29,9 +30,18 @@ fn setup() -> WowLuaEnv {
 
 fn set_rule(env: &WowLuaEnv, value: Option<i64>, non_integer: bool) {
     let mut sim = env.state().borrow_mut();
-    sim.game_rules.rules_by_id.remove(&93);
+    let key = GameRuleKey::Id(93);
+    sim.game_rules.rules.remove(&key);
     if let Some(value) = value {
-        sim.game_rules.rules_by_id.insert(93, value);
+        sim.game_rules.rules.insert(
+            key,
+            GameRuleValue {
+                integer_value: Some(value),
+                as_float: value as f64,
+                as_int: value,
+                as_string: value.to_string(),
+            },
+        );
     }
     sim.game_rules.non_integer_rule_ids.clear();
     if non_integer {

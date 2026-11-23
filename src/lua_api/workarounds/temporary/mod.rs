@@ -49,6 +49,7 @@ pub(crate) mod character_select_selected_name;
 pub(crate) mod character_services_defaults;
 pub(crate) mod chat_voice_button_surface;
 pub(crate) mod chat_window_defaults;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod class_trial_defaults;
 pub(crate) mod click_bindings_defaults;
 pub(crate) mod client_info_defaults;

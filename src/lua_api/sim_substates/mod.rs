@@ -121,12 +121,16 @@ impl MouseButtons {
     }
 }
 
-/// Backing state for the `C_GameRules` namespace. WoW's retail client
-/// exposes a handful of named game rules (`"DISABLE_DUELS"`,
-/// `"ALLOW_PING_PARTY_MEMBERS"`, etc.) that the UI queries to decide which
-/// features to surface. Each rule has a float / int / string representation;
-/// we store all three on one entry so a single rule can satisfy all three
-/// getter variants without round-tripping strings.
+/// A game-rule key. Enum IDs are canonical on Forever; legacy names remain
+/// available for existing host fixtures and profiles that use name-based rules.
+#[derive(Debug, Clone, Eq, Hash, PartialEq)]
+pub enum GameRuleKey {
+    Id(i32),
+    Name(String),
+}
+
+/// Backing state for the `C_GameRules` namespace. Each rule has a float / int /
+/// string representation in one map entry so every getter reads the same value.
 #[derive(Debug, Clone, PartialEq)]
 pub struct GameRulesState {
     /// Currently active `Enum.GameMode` value.
@@ -137,10 +141,8 @@ pub struct GameRulesState {
     pub display: crate::c_api::game_mode_display::GameModeDisplayState,
     /// Server-supplied rule-set marker; zero means no current rule set.
     pub rule_set_marker: i32,
-    /// Sparse rule store keyed by rule name. Missing key = inactive.
-    pub rules: HashMap<String, GameRuleValue>,
-    /// Native numeric rule values keyed by rule ID; no name/Enum mapping is implied.
-    pub rules_by_id: HashMap<i32, i64>,
+    /// Sparse rules keyed by Enum ID or a required legacy name. Missing = inactive.
+    pub rules: HashMap<GameRuleKey, GameRuleValue>,
     /// INFERRED (simulator mapping): host type tags for numeric-ID rules; tags override integer storage.
     /// Native settings packet ingestion remains UNKNOWN (R88ap.3).
     #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
@@ -167,7 +169,6 @@ impl Default for GameRulesState {
             display: Default::default(),
             rule_set_marker: 0,
             rules: HashMap::new(),
-            rules_by_id: HashMap::new(),
             #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
             non_integer_rule_ids: Default::default(),
             hardcore_active: false,

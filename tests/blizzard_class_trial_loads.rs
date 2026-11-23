@@ -86,3 +86,35 @@ fn class_trial_timer_display_show_and_hide_run_without_errors(env: &WowLuaEnv) {
     );
 }
 }
+
+prefork_full_ui_case! {
+fn class_trial_timer_displays_supplied_deadline(env: &WowLuaEnv) {
+    env.exec(
+        r#"
+        A_Admin.SetManualClock(10)
+        A_Admin.SetClassTrialState(false, 0)
+        ClassTrialTimerDisplay:CheckShowTimer()
+        assert(not ClassTrialTimerDisplay:IsShown())
+
+        A_Admin.SetClassTrialState(true, 130)
+        ClassTrialTimerDisplay:CheckShowTimer()
+        assert(ClassTrialTimerDisplay:IsShown())
+        assert(ClassTrialTimerDisplay.TimerText:GetText() ==
+            CLASS_TRIAL_TIMER_DIALOG_TEXT_HAS_REMAINING_TIME:format(
+                SecondsToTime(120, false, true, 1, true)))
+
+        A_Admin.SetClassTrialState(true, 250)
+        ClassTrialTimerDisplay:CheckShowTimer()
+        assert(ClassTrialTimerDisplay.TimerText:GetText() ==
+            CLASS_TRIAL_TIMER_DIALOG_TEXT_HAS_REMAINING_TIME:format(
+                SecondsToTime(240, false, true, 1, true)))
+
+        A_Admin.AdvanceTime(10)
+        assert(ClassTrialTimerDisplay.TimerText:GetText() ==
+            CLASS_TRIAL_TIMER_DIALOG_TEXT_HAS_REMAINING_TIME:format(
+                SecondsToTime(230, false, true, 1, true)))
+        "#,
+    )
+    .expect("class-trial timer should use the supplied logout deadline");
+}
+}

@@ -250,6 +250,9 @@ pub struct SimState {
     pub quest_blobs: HashMap<u64, QuestBlobState>,
     /// Supplied per-quest minimap containment observations.
     pub minimap_quest_blob_inside: HashMap<i32, bool>,
+    /// INFERRED (R88el (native evidence pending)); only explicit map-story inputs are returned.
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub zone_story_info: HashMap<i32, (i32, i32)>,
     pub fog_of_war_frames: HashMap<u64, FogOfWarFrameState>,
     pub unit_position_frames: HashMap<u64, UnitPositionFrameState>,
     /// Scenario-supplied reporting eligibility; no target or account policy inference.
@@ -1242,6 +1245,9 @@ pub struct SimState {
     /// Currently selected superdistrict ID; native clear/start/reset value is zero.
     pub selected_super_district_id: i32,
     pub character_services: CharacterServicesState,
+    /// INFERRED GetTime-clock inputs for class-trial character consumers (R88en (native evidence pending)).
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub(crate) class_trial: crate::c_api::c_class_trial::ClassTrialState,
     pub shared_character_services:
         crate::c_api::c_shared_character_services::SharedCharacterServicesState,
     pub trial_boost_level: crate::c_api::c_character_creation_trial_boost::TrialBoostLevelState,

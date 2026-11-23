@@ -235,6 +235,8 @@ macro_rules! build_empty_sim_state {
             weapon_attack_power: ::std::collections::HashMap::new(),
             quest_blobs: $collections.quest_blobs,
             minimap_quest_blob_inside: HashMap::new(),
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            zone_story_info: HashMap::new(),
             fog_of_war_frames: $collections.fog_of_war_frames,
             unit_position_frames: $collections.unit_position_frames,
             report_player_eligible: false,
@@ -992,6 +994,8 @@ macro_rules! build_empty_sim_state {
             super_district_info_by_id: ::std::collections::HashMap::new(),
             selected_super_district_id: 0,
             character_services: CharacterServicesState::default(),
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            class_trial: crate::c_api::c_class_trial::ClassTrialState::default(),
             shared_character_services:
                 crate::c_api::c_shared_character_services::SharedCharacterServicesState::default(),
             trial_boost_level:
@@ -1206,13 +1210,14 @@ pub use super::sim_substates::{
     ArchaeologyArtifact, ArchaeologyRace, ArchaeologyState, ArrowCalloutInfo, ArrowCalloutState,
     ArtifactAppearanceInfo, ArtifactAppearanceSetInfo, ArtifactArtInfo, ArtifactPowerInfo,
     BattlefieldQueue, BattlefieldStatus, ChatChannel, ChatWindow, ColorRgb, FactionEntry,
-    GameClock, GameRuleValue, GameRulesState, GardenwealdState, GossipOption, GossipQuestRow,
-    GossipState, Keybindings, LfgListCounts, LootMethodState, MessageLogEntry, MetaPowerEntry,
-    ModifierKeys, MouseButtons, NetStats, PetBattlePet, PetBattleState, PetState, QuestBounty,
-    QuestLogEntry, QuestLogState, QuestRewardCurrency, QuestRewardItem, QuestRewardSpell,
-    RelicSlotInfo, SelectedArtifact, TorghastState, TradeState, ViewedArtifactState, VoiceChannel,
-    VoiceChatState, VoiceMember, WowLabsAreaInfo, WowLabsCircleInfo, WowLabsDataManagerState,
-    WowLabsMatchmakingState, WowLabsPartyInvite, WowLabsPartyMember, WowLabsPoint, WowLabsState,
+    GameClock, GameRuleKey, GameRuleValue, GameRulesState, GardenwealdState, GossipOption,
+    GossipQuestRow, GossipState, Keybindings, LfgListCounts, LootMethodState, MessageLogEntry,
+    MetaPowerEntry, ModifierKeys, MouseButtons, NetStats, PetBattlePet, PetBattleState, PetState,
+    QuestBounty, QuestLogEntry, QuestLogState, QuestRewardCurrency, QuestRewardItem,
+    QuestRewardSpell, RelicSlotInfo, SelectedArtifact, TorghastState, TradeState,
+    ViewedArtifactState, VoiceChannel, VoiceChatState, VoiceMember, WowLabsAreaInfo,
+    WowLabsCircleInfo, WowLabsDataManagerState, WowLabsMatchmakingState, WowLabsPartyInvite,
+    WowLabsPartyMember, WowLabsPoint, WowLabsState,
 };
 
 #[derive(Default)]

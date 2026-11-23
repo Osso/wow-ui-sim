@@ -53,44 +53,74 @@ fn game_rules_hardcore_flag_defaults_to_false() {
 
 #[test]
 #[cfg(feature = "client-wowforever")]
-fn forever_self_found_allowed_uses_rule_22_and_defaults_false() {
-    const SELF_FOUND_ALLOWED_RULE_ID: i32 = 22;
+fn forever_hardcore_popup_uses_the_supplied_game_rule() {
+    let active = load_hardcore_popup(true);
+    assert_hardcore_rule_values(&active, true);
+    let shown: bool = active
+        .eval("local popup = StaticPopup_Show('HARDCORE_DEATH'); return popup ~= nil and popup:IsShown()")
+        .unwrap();
+    assert!(shown);
 
-    let env = env();
+    let inactive = load_hardcore_popup(false);
+    assert_hardcore_rule_values(&inactive, false);
+    let defined: bool = inactive
+        .eval("return StaticPopupDialogs.HARDCORE_DEATH ~= nil")
+        .unwrap();
+    assert!(!defined);
+}
+
+#[cfg(feature = "client-wowforever")]
+fn load_hardcore_popup(hardcore: bool) -> WowLuaEnv {
+    use crate::common::blizzard_addon_harness::{
+        blizzard_ui_dir, load_blizzard_addon_closure_into_env, new_blizzard_addon_env,
+    };
+
+    let ui_dir = blizzard_ui_dir();
+    let env = new_blizzard_addon_env(&ui_dir);
+    let value = if hardcore { "1" } else { "nil" };
+    env.exec(&format!(
+        "A_Admin.SetGameRule(Enum.GameRule.HardcoreRuleset, {value}); A_Admin.SetGameRule(22, 1)"
+    ))
+    .unwrap();
+    let loaded =
+        load_blizzard_addon_closure_into_env(&env, &ui_dir, &["Blizzard_StaticPopup_Game"], &[]);
     assert!(
-        !env.state()
-            .borrow()
-            .game_rules
-            .rules_by_id
-            .contains_key(&SELF_FOUND_ALLOWED_RULE_ID)
+        loaded
+            .iter()
+            .any(|addon| addon == "Blizzard_StaticPopup_Game")
     );
+    env
+}
 
-    let (allowed, return_count): (bool, i64) = env
-        .eval(
-            r##"
-            local function pack(...) return { n = select("#", ...), ... } end
-            local result = pack(C_GameRules.IsSelfFoundAllowed())
-            return result[1], result.n
-            "##,
-        )
+#[cfg(feature = "client-wowforever")]
+fn assert_hardcore_rule_values(env: &WowLuaEnv, active: bool) {
+    let (is_active, value, self_found): (bool, f64, bool) = env
+        .eval("return C_GameRules.IsGameRuleActive(Enum.GameRule.HardcoreRuleset), C_GameRules.GetGameRuleAsFloat(Enum.GameRule.HardcoreRuleset), C_GameRules.IsSelfFoundAllowed()")
         .unwrap();
-    assert_eq!((allowed, return_count), (false, 1));
+    assert_eq!(is_active, active);
+    assert_eq!(value, if active { 1.0 } else { 0.0 });
+    assert!(self_found);
+}
 
-    env.state()
-        .borrow_mut()
-        .game_rules
-        .rules_by_id
-        .insert(SELF_FOUND_ALLOWED_RULE_ID, 1);
-    let (allowed, return_count): (bool, i64) = env
-        .eval(
-            r##"
-            local function pack(...) return { n = select("#", ...), ... } end
-            local result = pack(C_GameRules.IsSelfFoundAllowed())
-            return result[1], result.n
-            "##,
-        )
-        .unwrap();
-    assert_eq!((allowed, return_count), (true, 1));
+#[test]
+#[cfg(feature = "client-wowforever")]
+fn forever_self_found_allowed_uses_rule_22_and_defaults_false() {
+    let env = env();
+    assert_eq!(query_self_found_allowed(&env), (false, 1));
+    env.exec("A_Admin.SetGameRule(22, 1)").unwrap();
+    assert_eq!(query_self_found_allowed(&env), (true, 1));
+}
+
+#[cfg(feature = "client-wowforever")]
+fn query_self_found_allowed(env: &WowLuaEnv) -> (bool, i64) {
+    env.eval(
+        r##"
+        local function pack(...) return { n = select("#", ...), ... } end
+        local result = pack(C_GameRules.IsSelfFoundAllowed())
+        return result[1], result.n
+        "##,
+    )
+    .unwrap()
 }
 
 #[test]

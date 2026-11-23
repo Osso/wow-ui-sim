@@ -273,12 +273,7 @@ mod forever {
     #[test]
     fn hardcore_active_reads_nonzero_native_rule_10() {
         let env = WowLuaEnv::new().unwrap();
-        env.state()
-            .borrow_mut()
-            .game_rules
-            .rules_by_id
-            .insert(10, 1);
-        env.exec("assert(C_GameRules.IsHardcoreActive() == true)")
+        env.exec("A_Admin.SetGameRule(Enum.GameRule.HardcoreRuleset, 1); assert(C_GameRules.IsHardcoreActive() == true)")
             .unwrap();
     }
     contract!(

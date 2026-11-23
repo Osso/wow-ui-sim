@@ -287,6 +287,8 @@ fn register_social_namespace_surfaces(state: &mut LuaState) -> LuaResult<()> {
     c_api::c_auto_complete::register_c_auto_complete_surface(state)?;
     c_api::c_battle_net::register_c_battle_net_surface(state)?;
     c_api::c_character_services::register_c_character_services_surface(state)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    c_api::c_class_trial::register(state)?;
     c_api::c_chat_bubbles::register_c_chat_bubbles_surface(state)?;
     club_finder::register_club_finder_surface(state)?;
     c_api::c_club::register_club_info_surface(state)?;

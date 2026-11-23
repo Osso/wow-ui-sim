@@ -320,6 +320,7 @@ fn apply_core_foundation_catalog_defaults(lua: &mut rilua::Lua) -> crate::Result
     temporary::catalog_shop_inbound_globals::apply_bootstrap(lua)?;
     temporary::catalog_shop_product_card_defaults::apply_bootstrap(lua)?;
     temporary::character_create_defaults::apply_bootstrap(lua)?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::class_trial_defaults::apply_bootstrap(lua)?;
     temporary::startup_namespace_defaults::apply_bootstrap(lua)?;
     temporary::social_service_defaults::apply_bootstrap(lua)?;
