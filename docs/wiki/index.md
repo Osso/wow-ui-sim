@@ -1,3 +1,7 @@
+## [2026-11-22] system | Script execution watchdog
+
+[Script execution watchdog](systems/script-execution-watchdog.md) records the verified 10,001-dispatch VM poll and `script ran too long` error, the inferred 19,000/200 ms timeout mapping, tainted owner scope, and diagnostic fields.
+
 ## [2026-11-20] implementation | Secure XML mixin environment
 
 [Addon loading](systems/addon-loading.md#secure-dependency-replay-and-library-allowlist) records the Retail `PrivateAuraMixin:OnEnter` failure, secure XML mixin resolution, Forever's `Blizzard_SharedXMLGame` replay, and the secure `RaidWarning.xml` skip. **VERIFIED (stock Retail/Forever):** exact original hover tests pass with two aura records, and `--no-addons --no-saved-vars lua-errors` returns `[]` on both. **INFERRED (R88cd):** native secure addons resolve XML mixins in their active environment.

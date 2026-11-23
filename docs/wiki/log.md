@@ -1,3 +1,7 @@
+## [2026-11-22] system | Script execution watchdog
+
+Added [the watchdog system page](../systems/script-execution-watchdog.md) and updated the simulator contract and diagnostics docs. **VERIFIED (R88bn, Retail/Forever):** no native instruction-count quota; the VM polls elapsed time every 10,001 dispatch steps and raises `script ran too long`. **INFERRED (R88bn):** millisecond thresholds are 19,000 through initial world entry and 200 afterwards. Current runtime proof is tracked in the lt-50f6 handoff.
+
 ## [2026-11-21] implementation | Retail/Forever transmog set relations
 
 Updated the [Wardrobe API investigation](investigations/appearances-wardrobe-api.md) and [relation contract](../specs/transmog-set-relations.md). **VERIFIED (simulator):** the exact loaded `WardrobeSetsDataProviderMixin` test passes on Retail and Forever with two supplied records and distinct primary appearance IDs; both no-addons/no-saved-vars `lua-errors` runs return `[]`, and Forever→Mists→Wrath→Retail compile receipts report zero warnings. **INFERRED (R88cs pending):** catalog relation semantics beyond the tested consumer projection remain provisional; the temporary Lua body is byte-identical.
