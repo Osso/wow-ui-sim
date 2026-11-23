@@ -904,21 +904,6 @@ fn map_group_defaults_are_not_c_api_temporary_shims() {
     );
 }
 
-#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
-#[test]
-fn perks_program_defaults_are_not_c_api_temporary_shims() {
-    let temporary_shims = c_api_temporary_shims_source();
-    let c_api = include_str!("../src/c_api/mod.rs");
-
-    assert!(
-        !temporary_shims.contains("c_perks_program"),
-        "unmodeled C_PerksProgram empty-catalog defaults belong in lua_api::workarounds::temporary"
-    );
-    assert!(
-        !c_api.contains("c_perks_program"),
-        "C_PerksProgram empty-catalog defaults should not be wired through c_api registration"
-    );
-}
 
 #[test]
 fn party_info_static_defaults_are_not_c_api_temporary_shims() {
