@@ -238,8 +238,10 @@ fn player_spells_toggle_accepts_no_outfits_and_two_created_outfits() {
     let populated = load_original_with_admin_outfits(true);
     crate::common::panel_fixtures::clear_recorded_lua_errors(&populated);
     populated
-        .exec("PlayerSpellsUtil.ToggleClassTalentFrame()")
-        .expect("Player Spells opens with two created outfits");
+        .exec(
+            "PlayerSpellsUtil.ToggleClassTalentFrame(); PlayerSpellsUtil.ToggleSpellBookFrame()",
+        )
+        .expect("open Player Spells and switch to its Spell Book tab");
     populated
         .exec(
             "Category = PlayerSpellsFrame.SpellBookFrame.categoryMixins[#PlayerSpellsFrame.SpellBookFrame.categoryMixins]",
