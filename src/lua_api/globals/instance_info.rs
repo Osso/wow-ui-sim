@@ -25,7 +25,9 @@
 //! - `IsInLFGDungeon()` → true only when the seeded world state is inside an
 //!   instance with an LFG dungeon id.
 
-use crate::lua_api::methods::{borrow_state, create_string, create_string_static, val_to_string};
+use crate::lua_api::methods::{
+    borrow_state, borrow_state_mut, create_string, create_string_static, val_to_string,
+};
 use crate::lua_bridge::stack_val;
 use rilua::vm::state::LuaState;
 use rilua::{LuaApiMut, LuaResult, Val};
