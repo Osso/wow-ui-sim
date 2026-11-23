@@ -1,6 +1,6 @@
 ## [2026-11-23] implementation | Script bucket throttle
 
-Updated the [throttle contract](../specs/script-bucket-throttle-limits.md) and linked it from the [watchdog system](../systems/script-execution-watchdog.md). **VERIFIED (R88bn):** Retail/Forever registered CVar defaults and Retail refill behavior. **INFERRED (R88bn):** tainted addon code uses a per-addon restricted bucket, initialized at burst capacity; Forever mirrors Retail refill. Normal-bucket execution classes and native balance ownership remain unknown.
+Updated the [throttle contract](../specs/script-bucket-throttle-limits.md) and linked it from the [watchdog system](../systems/script-execution-watchdog.md). **VERIFIED (R88bn):** Retail/Forever registered CVar defaults and Retail refill behavior. **INFERRED (R88bn; native evidence pending):** restricted charging pauses during the existing startup watchdog phase and starts at burst capacity after it ends; tainted addon code uses a per-addon bucket, and Forever mirrors Retail refill. Normal-bucket execution classes and native balance ownership remain unknown.
 
 ## [2026-11-23] investigation | Mythic+ map request reentrancy
 
