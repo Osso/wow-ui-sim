@@ -91,10 +91,7 @@ fn get_pending_chest_rewards(state: &mut LuaState) -> LuaResult<u32> {
         .perks_program
         .pending_chest_rewards
         .clone();
-    let values = rewards
-        .iter()
-        .map(|reward| json_to_lua_value(state, reward));
-    push_sequence(state, values.collect())
+    push_json_sequence(state, &rewards)
 }
 
 fn request_pending_chest_rewards(state: &mut LuaState) -> LuaResult<u32> {
@@ -157,6 +154,19 @@ fn push_sequence(state: &mut LuaState, values: Vec<Val>) -> LuaResult<u32> {
         unreachable!("new Lua table must be a table")
     };
     for (index, value) in values.into_iter().enumerate() {
+        crate::lua_api::methods::table_set_num(state, table, (index + 1) as f64, value);
+    }
+    state.push(sequence);
+    Ok(1)
+}
+
+fn push_json_sequence(state: &mut LuaState, values: &[serde_json::Value]) -> LuaResult<u32> {
+    let sequence = create_table(state);
+    let Val::Table(table) = sequence else {
+        unreachable!("new Lua table must be a table")
+    };
+    for (index, value) in values.iter().enumerate() {
+        let value = json_to_lua_value(state, value);
         crate::lua_api::methods::table_set_num(state, table, (index + 1) as f64, value);
     }
     state.push(sequence);
