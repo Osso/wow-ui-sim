@@ -18,6 +18,7 @@
 ## Implementation inventory
 
 - `src/c_api/c_spec.rs` — PvP state queries, mutation, and host input registration.
+- `src/c_api/helpers.rs` — shares Retail untainted truthiness conversion with WoW Forever.
 - `src/lua_api/globals/admin.rs` — publishes the PvP state setters on Retail and WoW Forever.
 - `src/lua_api/workarounds/temporary/pvp_talent_defaults.rs` — retains defaults only on profiles without the Rust model.
 

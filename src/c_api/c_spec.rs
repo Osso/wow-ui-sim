@@ -305,16 +305,16 @@ fn register_c_specialization_info_ptr_talent_point(
 #[cfg(feature = "client-retail")]
 const GET_PVP_TALENT_INFO_USAGE: &str =
     "Usage: local talentInfo = C_SpecializationInfo.GetPvpTalentInfo(talentID)";
-#[cfg(feature = "client-retail")]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 const GET_PVP_TALENT_SLOT_UNLOCK_LEVEL_USAGE: &str =
     "Usage: local requiredLevel = C_SpecializationInfo.GetPvpTalentSlotUnlockLevel(talentIndex)";
 #[cfg(feature = "client-retail")]
 const GET_PVP_TALENT_UNLOCK_LEVEL_USAGE: &str =
     "Usage: local requiredLevel = C_SpecializationInfo.GetPvpTalentUnlockLevel(talentID)";
-#[cfg(feature = "client-retail")]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 const IS_PVP_TALENT_LOCKED_USAGE: &str =
     "Usage: local locked = C_SpecializationInfo.IsPvpTalentLocked(talentID)";
-#[cfg(feature = "client-retail")]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 const SET_PVP_TALENT_LOCKED_USAGE: &str =
     "Usage: C_SpecializationInfo.SetPvpTalentLocked(talentID, locked)";
 
@@ -456,12 +456,12 @@ fn get_all_selected_pvp_talent_ids(state: &mut LuaState) -> LuaResult<u32> {
     for (index, talent_id) in selected.iter().enumerate() {
         super::helpers::set_table_array(
             state,
-            Val::Table(result),
+            result,
             index as i64 + 1,
             Val::Num(f64::from(*talent_id)),
         );
     }
-    state.push(Val::Table(result));
+    state.push(result);
     Ok(1)
 }
 
