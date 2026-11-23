@@ -97,6 +97,11 @@ fn assert_inspect_pvp_slot_icon(env: &WowLuaEnv) {
         local slot = InspectPVPFrame.Slots[2]
         slot:Update()
         assert(slot.talentID == 456 and slot.Texture:GetTexture() == 222)
+        local talentID, name, icon, selected, available, spellID, unlocked, known, grantedByAura =
+            GetPvpTalentInfoByID(456)
+        assert(talentID == 456 and name == "Second" and icon == 222 and selected
+            and available and spellID == 1002 and unlocked and known and not grantedByAura)
+        assert(select('#', GetPvpTalentInfoByID(2147483647)) == 0)
         "#,
     )
     .expect("read the inspected talent from the original Inspect PvP slot");

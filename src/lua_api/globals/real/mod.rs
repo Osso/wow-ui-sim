@@ -137,6 +137,8 @@ pub(crate) mod protected_globals;
 pub mod publication_12_0_0;
 #[cfg(feature = "retail-12-0-0")]
 pub(crate) mod publication_unit_12_0_0;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub mod pvp_talent_info;
 pub(crate) mod quest_dialog;
 #[cfg(any(
     feature = "client-retail",
