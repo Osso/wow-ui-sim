@@ -3,10 +3,9 @@
     any(feature = "client-retail", feature = "client-wowforever")
 ))]
 
-use crate::common::blizzard_addon_harness::with_blizzard_addon_closure;
 use wow_ui_sim::lua_api::WowLuaEnv;
 
-type TalentStateSnapshot = (bool, bool, i32, i32, i32, Option<i32>, Option<i32>);
+type TalentStateSnapshot = (bool, bool, bool, i32, i32, i32, Option<i32>, Option<i32>);
 
 #[cfg(feature = "client-retail")]
 #[test]
@@ -15,7 +14,7 @@ fn retail_supplied_pvp_talent_state_reaches_open_player_spells_panel() {
         supply_selected_talent_state(env);
         assert_eq!(
             read_talent_state(env),
-            (true, true, 2, 123, 456, Some(456), None)
+            (true, true, false, 2, 123, 456, Some(456), None)
         );
     });
 }
@@ -29,23 +28,23 @@ fn forever_supplied_pvp_talent_state_reaches_open_player_spells_panel() {
             .expect("supply the Forever slot unlock level");
         assert_eq!(
             read_talent_state(env),
-            (true, true, 2, 123, 456, Some(456), Some(30))
+            (true, true, false, 2, 123, 456, Some(456), Some(30))
         );
     });
 }
 
 fn with_player_spells_panel(assert_state: impl FnOnce(&WowLuaEnv)) {
-    with_blizzard_addon_closure(
-        &["Blizzard_PlayerSpells", "Blizzard_InspectUI"],
-        &[],
-        |env, loaded| {
-            assert!(loaded.iter().any(|name| name == "Blizzard_PlayerSpells"));
-            assert!(loaded.iter().any(|name| name == "Blizzard_InspectUI"));
-            env.exec("PlayerSpellsFrame_LoadUI(); ShowUIPanel(PlayerSpellsFrame)")
-                .expect("open the original Player Spells panel");
-            assert_state(env);
-        },
-    );
+    let env = crate::common::panel_fixtures::setup_env();
+    env.exec(
+        r#"
+        assert(PlayerSpellsUtil and PlayerSpellsUtil.ToggleClassTalentFrame)
+        PlayerSpellsUtil.ToggleClassTalentFrame()
+        assert(PlayerSpellsFrame and PlayerSpellsFrame:IsShown())
+        assert(PlayerSpellsFrame.TalentsFrame:IsShown())
+        "#,
+    )
+    .expect("open the original Player Spells talents panel");
+    assert_state(&env);
 }
 
 fn supply_selected_talent_state(env: &WowLuaEnv) {
@@ -64,7 +63,7 @@ fn read_talent_state(env: &WowLuaEnv) -> TalentStateSnapshot {
         r#"
         local selected = C_SpecializationInfo.GetAllSelectedPvpTalentIDs()
         return PlayerSpellsFrame:IsShown(), C_SpecializationInfo.IsPvpTalentLocked(123),
-            #selected, selected[1], selected[2],
+            C_SpecializationInfo.IsPvpTalentLocked(456), #selected, selected[1], selected[2],
             C_SpecializationInfo.GetInspectSelectedPvpTalent("target", 2),
             C_SpecializationInfo.GetPvpTalentSlotUnlockLevel(2)
         "#,
