@@ -66,6 +66,8 @@ macro_rules! build_empty_sim_state {
         let quest_log_entries = QuestLogState::seeded();
         Self {
             #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            kiosk_session: Default::default(),
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
             ranged_slot: crate::c_api::ranged_slot::RangedSlotState::default(),
             store_glue: Default::default(),
             #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]

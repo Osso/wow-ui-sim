@@ -26,6 +26,9 @@ pub struct SimState {
     pub(crate) configuration_warnings:
         Vec<crate::lua_api::globals::real::configuration_warnings::ConfigurationWarning>,
     /// Supplied visibility for the Retail/Forever ranged transmog slot.
+    /// INFERRED (R88fd (native evidence pending)): host-supplied kiosk session.
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub kiosk_session: crate::c_api::kiosk::KioskSession,
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     pub ranged_slot: crate::c_api::ranged_slot::RangedSlotState,
     #[cfg(feature = "client-wowforever")]

@@ -107,7 +107,15 @@ fn original_lfd_consumer_hides_panel_for_supplied_kiosk_session() {
         NavigationOriginalSource(ToggleLFDParentFrame, 'Blizzard_GroupFinder/Mainline/PVEFrame.lua')
         assert(not PVEFrame:IsShown())
         assert(C_LFGInfo.CanPlayerUseGroupFinder())
-        A_Admin.SetKioskSession({enabled=true, competitive=false})
+        assert(not Kiosk.IsEnabled() and not Kiosk.IsCompetitiveModeEnabled())
+        assert(select('#', Kiosk.GetKioskLoginInfo()) == 0)
+        A_Admin.SetKioskSession({
+            enabled=true, competitive=true,
+            accountName='account', password='secret', realmAddress='realm'
+        })
+        assert(Kiosk.IsEnabled() and Kiosk.IsCompetitiveModeEnabled())
+        local account, password, realm = Kiosk.GetKioskLoginInfo()
+        assert(account == 'account' and password == 'secret' and realm == 'realm')
         LinkUtil.ProcessLink('lfd', 'Group Finder', {})
         assert(not PVEFrame:IsShown(), 'kiosk session must keep the original LFD panel closed')
         A_Admin.SetKioskSession({enabled=false, competitive=false})
