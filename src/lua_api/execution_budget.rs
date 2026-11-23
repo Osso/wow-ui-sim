@@ -62,6 +62,9 @@ fn restricted_bucket_limits(state: &LuaState, restricted: bool) -> LuaResult<Opt
         return Ok(None);
     }
     let sim = borrow_state(state)?;
+    if sim.startup_script_watchdog_phase {
+        return Ok(None);
+    }
     if !sim.cvars.get_bool("luaScriptBucketThrottleEnabled") {
         return Ok(None);
     }
