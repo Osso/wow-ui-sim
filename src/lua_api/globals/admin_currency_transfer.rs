@@ -12,7 +12,10 @@ pub(super) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
             "SetAccountCharacterCurrencyData",
             set_account_character_currency_data,
         )?
-        .set_function("SetCurrencyTransferEnabled", set_currency_transfer_enabled)?
+        .set_function(
+            "SetAccountCurrencyTransferEnabled",
+            set_currency_transfer_enabled,
+        )?
         .set_function("SetCurrencyTransferRules", set_currency_transfer_rules)
 }
 

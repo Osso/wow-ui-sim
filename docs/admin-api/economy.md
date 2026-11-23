@@ -32,7 +32,7 @@ A_Admin.SetAccountCharacterCurrencyData(1792, {
 })
 ```
 
-### A_Admin.SetCurrencyTransferEnabled(enabled)
+### A_Admin.SetAccountCurrencyTransferEnabled(enabled)
 
 Sets whether account currency transfer is enabled by the server.
 

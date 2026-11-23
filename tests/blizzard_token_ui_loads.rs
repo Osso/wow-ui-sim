@@ -119,7 +119,7 @@ fn currency_transfer_menu_clamps_to_account_source_quantity_and_cost() {
     assert_eq!(rate_examples, (76.0, 99.0, 101.0));
     env.exec(
         r#"
-            A_Admin.SetCurrencyTransferEnabled(true)
+            A_Admin.SetAccountCurrencyTransferEnabled(true)
             A_Admin.SetCurrencyTransferRules(1792, {
                 award_condition_met = true,
                 quantity_cap_reached = false,
