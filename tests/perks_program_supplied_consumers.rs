@@ -30,8 +30,6 @@ fn supply_pending_chest_rewards(env: &WowLuaEnv) {
 #[test]
 fn supplied_catalog_and_chest_state_are_visible() {
     let env = crate::common::panel_fixtures::setup_env();
-    supply_perks_program_catalog(&env);
-    supply_pending_chest_rewards(&env);
     env.exec("A_Admin.SetPerksProgramClientAvailable(true)")
         .expect("A_Admin should mark the Perks Program client available");
     let addons = wow_ui_sim::paths::default_blizzard_ui_addons_path()
@@ -41,6 +39,8 @@ fn supplied_catalog_and_chest_state_are_visible() {
         .expect("the original Perks Program addon should load");
     env.exec("ShowUIPanel(PerksProgramFrame)")
         .expect("the original Perks Program panel should open through ShowUIPanel");
+    supply_perks_program_catalog(&env);
+    supply_pending_chest_rewards(&env);
     env.exec("A_Admin.SetPerksProgramCurrencyAmount(777)")
         .expect("A_Admin should supply Trader's Tender");
 

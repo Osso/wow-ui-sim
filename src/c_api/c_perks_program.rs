@@ -23,8 +23,8 @@ pub(crate) struct PerksProgramState {
 }
 
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
-    // INFERRED R88ep: these members use documented table result shapes. Forever
-    // declares vendor IDs, although no matching handler was found in the corpus.
+    // INFERRED R88ep: API documentation declares table results, but native result
+    // shapes remain unknown. Forever declares vendor IDs; no handler was found.
     let namespace = super::ensure_namespace(state, "C_PerksProgram")?;
     table_set_rust_fn_static(
         state,
@@ -61,15 +61,18 @@ pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
 }
 
 fn read_vendor_item_ids(state: &mut LuaState) -> LuaResult<u32> {
+    // VERIFIED R88ep (Retail): no arguments; IDs come from runtime Perks state.
+    // INFERRED R88ep: expose them with the documented table result shape.
     let vendor_items = borrow_state(state)?.perks_program.vendor_items.clone();
     let values = vendor_items
         .iter()
-        .map(|item| {
+        .filter_map(|item| {
             item.get("perksVendorItemID")
                 .and_then(serde_json::Value::as_f64)
         })
-        .map(|id| Val::Num(id.unwrap_or_default()));
-    push_sequence(state, values.collect())
+        .map(Val::Num)
+        .collect();
+    push_sequence(state, values)
 }
 
 fn find_vendor_item_info(state: &mut LuaState) -> LuaResult<u32> {
@@ -97,6 +100,8 @@ fn read_currency_amount(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn read_pending_chest_rewards(state: &mut LuaState) -> LuaResult<u32> {
+    // VERIFIED R88ep: the getter reads runtime state; the exact Lua payload is unknown.
+    // INFERRED R88ep: use the documented table shape for supplied records.
     let rewards = borrow_state(state)?
         .perks_program
         .pending_chest_rewards
@@ -130,6 +135,7 @@ fn request_pending_chest_rewards(state: &mut LuaState) -> LuaResult<u32> {
 fn set_vendor_items(state: &mut LuaState) -> LuaResult<u32> {
     let items = read_json_array(state, 1, "Perks Program vendor items")?;
     borrow_state_mut(state)?.perks_program.vendor_items = items;
+    // INFERRED R88ep: notify the vendor consumer after supplied catalog changes.
     dispatch_event(state, "PERKS_PROGRAM_DATA_REFRESH")?;
     Ok(0)
 }
@@ -142,6 +148,7 @@ fn set_currency_amount(state: &mut LuaState) -> LuaResult<u32> {
         sim.perks_program.currency_amount = amount;
         previous
     };
+    // INFERRED R88ep: update the currency consumer with old and new amounts.
     crate::lua_api::globals::lfg_list::fire_event_with_args(
         state,
         "PERKS_PROGRAM_CURRENCY_REFRESH",
@@ -165,6 +172,7 @@ fn set_client_available(state: &mut LuaState) -> LuaResult<u32> {
 fn set_pending_chest_rewards(state: &mut LuaState) -> LuaResult<u32> {
     let rewards = read_json_array(state, 1, "Perks Program pending chest rewards")?;
     borrow_state_mut(state)?.perks_program.pending_chest_rewards = rewards;
+    // INFERRED R88ep: notify the pending reward consumer after supplied data changes.
     dispatch_event(state, "CHEST_REWARDS_UPDATED_FROM_SERVER")?;
     Ok(0)
 }
@@ -216,7 +224,11 @@ fn allocate_lua_value_from_json(state: &mut LuaState, value: &serde_json::Value)
     match value {
         serde_json::Value::Null => Val::Nil,
         serde_json::Value::Bool(value) => Val::Bool(*value),
-        serde_json::Value::Number(value) => Val::Num(value.as_f64().unwrap_or_default()),
+        serde_json::Value::Number(value) => Val::Num(
+            value
+                .as_f64()
+                .expect("serde_json numbers must convert to Lua numbers"),
+        ),
         serde_json::Value::String(value) => create_string(state, value),
         serde_json::Value::Array(values) => allocate_lua_table_from_json_array(state, values),
         serde_json::Value::Object(values) => allocate_lua_table_from_json_object(state, values),
