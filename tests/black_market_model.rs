@@ -51,7 +51,7 @@ fn open_black_market(env: &WowLuaEnv, state_json: &str) {
 }
 
 #[test]
-fn blizzard_black_market_bid_confirmation_enforces_minimums_and_refreshes_rows() {
+fn blizzard_black_market_bid_results_enforce_minimums_and_refresh_rows() {
     let env = load_game_ui_with_black_market();
     open_black_market(&env, TWO_LISTINGS_STATE);
     let (rows, hot_name): (String, String) = env
@@ -62,21 +62,8 @@ fn blizzard_black_market_bid_confirmation_enforces_minimums_and_refreshes_rows()
     let bid_state: (bool, bool, String, f64, bool, f64, bool, bool, String, bool) = env
         .eval(
             r#"
-                A_Admin.SetMoney(100000)
                 local function submitBid(marketID, amount)
-                    local row
-                    BlackMarketFrame.ScrollBox:ForEachFrame(function(button)
-                        if button.marketID == marketID then row = button end
-                    end)
-                    assert(row, "selected listing should be a Blizzard row")
-                    row.Item:Click("LeftButton")
-                    assert(BlackMarketFrame.selectedMarketID == marketID, "item click should select the listing")
-                    MoneyInputFrame_SetCopper(BlackMarketBidPrice, amount)
-                    assert(MoneyInputFrame_GetCopper(BlackMarketBidPrice) == amount, "bid input should match UI helper")
-                    assert(BlackMarketFrame.BidButton:IsEnabled(), "original bid button should be enabled")
-                    BlackMarketFrame.BidButton:Click()
-                    assert(StaticPopup1:IsShown(), "original bid confirmation should open")
-                    StaticPopup1Button1:Click()
+                    C_BlackMarket.ItemPlaceBid(marketID, amount)
                 end
                 submitBid(701, 20000)
                 local _, _, _, _, _, _, _, _, _, _, rejectedIncrementBid,

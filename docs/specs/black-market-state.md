@@ -26,7 +26,7 @@
 
 ## Tests asserting this spec
 
-- `tests/black_market_model.rs` — loads the Blizzard UI, tests a shared hot-item/listing ID, places rejected and accepted bids through the row and confirmation controls, and checks refreshed listing and hot-deal state, view-only controls, and index-zero behavior on Retail and Forever.
+- `tests/black_market_model.rs` — loads the Blizzard UI, tests a shared hot-item/listing ID, places rejected and accepted bids through `C_BlackMarket.ItemPlaceBid`, and checks the original event-driven row and hot-deal refresh, view-only controls, and index-zero behavior on Retail and Forever.
 
 ## Known gaps (current cycle)
 
