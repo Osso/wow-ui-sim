@@ -5,8 +5,10 @@
 
 use crate::c_api::{ensure_namespace, global_val};
 use crate::client_profile::{ACTIVE, ClientProfile};
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+use crate::lua_api::methods::table_get;
 use crate::lua_api::methods::{
-    borrow_state, borrow_state_mut, call_function_state, create_string, create_table, table_get,
+    borrow_state, borrow_state_mut, call_function_state, create_string, create_table,
     table_set_static, val_to_string,
 };
 use crate::lua_api::state_types::GuildLogo;
@@ -249,6 +251,7 @@ fn dispatch_guild_rename_status(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn read_guild_rename_status(state: &mut LuaState) -> LuaResult<GuildRenameStatus> {
     let table = stack_val(state, 1);
     if !matches!(table, Val::Table(_)) {
@@ -275,6 +278,7 @@ fn read_guild_rename_status(state: &mut LuaState) -> LuaResult<GuildRenameStatus
     })
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn read_status_bool(state: &mut LuaState, table: Val, key: &str) -> LuaResult<bool> {
     match table_get(state, table, key) {
         Val::Bool(value) => Ok(value),
@@ -284,6 +288,7 @@ fn read_status_bool(state: &mut LuaState, table: Val, key: &str) -> LuaResult<bo
     }
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn read_status_number(state: &mut LuaState, table: Val, key: &str) -> LuaResult<f64> {
     match table_get(state, table, key) {
         Val::Num(value) => Ok(value),
@@ -293,6 +298,7 @@ fn read_status_number(state: &mut LuaState, table: Val, key: &str) -> LuaResult<
     }
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn read_status_string(state: &mut LuaState, table: Val, key: &str) -> LuaResult<String> {
     let value = table_get(state, table, key);
     val_to_string(state, value).ok_or_else(|| {
