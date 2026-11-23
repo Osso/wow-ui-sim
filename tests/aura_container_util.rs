@@ -328,3 +328,64 @@ fn retail_aura_container_apply_icon_accepts_tainted_secret_nil() {
         },
     );
 }
+
+#[cfg(all(feature = "optional-tests", feature = "client-retail"))]
+fn load_texture_hook_probe(env: &WowLuaEnv) {
+    let root = tempfile::tempdir().unwrap();
+    let addon = root.path().join("TextureSetHookProbe");
+    std::fs::create_dir(&addon).unwrap();
+    std::fs::write(
+        addon.join("TextureSetHookProbe.toc"),
+        "## Interface: 120105\nTextureSetHookProbe.lua\n",
+    )
+    .unwrap();
+    std::fs::write(
+        addon.join("TextureSetHookProbe.lua"),
+        "AuraTextureHookProbe = { calls = 0 }\nlocal texture = CreateFrame('Frame'):CreateTexture()\nlocal methods = getmetatable(texture).__index\nhooksecurefunc(methods, 'SetTexture', function()\n AuraTextureHookProbe.calls = AuraTextureHookProbe.calls + 1\n AuraTextureHookProbe.callbackTaint = debug.getstacktaint()\nend)\n",
+    )
+    .unwrap();
+    wow_ui_sim::loader::load_addon(
+        &env.loader_env(),
+        &addon.join("TextureSetHookProbe.toc"),
+    )
+    .unwrap();
+}
+
+#[cfg(all(feature = "optional-tests", feature = "client-retail"))]
+fn aura_container_env() -> WowLuaEnv {
+    let ui = wow_ui_sim::blizzard_ui_sync::default_cache_addons_path().unwrap();
+    let (env, loaded) = crate::common::blizzard_addon_harness::build_blizzard_addon_closure_env(
+        &ui,
+        &["Blizzard_AuraContainer"],
+        &[],
+    );
+    assert!(loaded.iter().any(|name| name == "Blizzard_AuraContainer"));
+    env
+}
+
+#[cfg(all(feature = "optional-tests", feature = "client-retail"))]
+#[test]
+fn retail_aura_container_secret_icons_survive_addon_texture_hook() {
+    let env = aura_container_env();
+    env.exec("A_Admin.ClearBuffs(); A_Admin.AddBuff(99001, 'Hook Aura One', 135907, 60, 1); A_Admin.AddBuff(99002, 'Hook Aura Two', 136243, 60, 1)")
+        .unwrap();
+    load_texture_hook_probe(&env);
+    env.exec_maybe_secure(
+        r#"
+        local mixin = assert(CustomAuraButtonPrivateMixin)
+        local first = assert(C_UnitAuras.GetAuraDataBySpellID(99001))
+        local second = assert(C_UnitAuras.GetAuraDataBySpellID(99002))
+        assert(first.icon == 135907 and second.icon == 136243)
+        local firstTexture = CreateFrame('Frame'):CreateTexture()
+        local secondTexture = CreateFrame('Frame'):CreateTexture()
+        mixin.ApplyIcon({icon = {element = firstTexture}}, 'player', first)
+        mixin.ApplyIcon({icon = {element = secondTexture}}, 'player', second)
+        assert(firstTexture:GetTextureFileID() == 135907)
+        assert(secondTexture:GetTextureFileID() == 136243)
+        assert(AuraTextureHookProbe.calls == 2)
+        assert(AuraTextureHookProbe.callbackTaint == 'TextureSetHookProbe')
+        "#,
+        true,
+    )
+    .expect("AuraContainer must apply both supplied secret icons before its addon hook runs");
+}
