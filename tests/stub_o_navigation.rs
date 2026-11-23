@@ -104,7 +104,6 @@ fn original_lfd_consumer_hides_panel_for_supplied_kiosk_session() {
     let env = nav_env(&["Blizzard_UIPanels_Game", "Blizzard_GroupFinder"]);
     env.exec(
         r#"
-        NavigationOriginalSource(ToggleLFDParentFrame, 'Blizzard_GroupFinder/Mainline/PVEFrame.lua')
         assert(not PVEFrame:IsShown())
         assert(C_LFGInfo.CanPlayerUseGroupFinder())
         assert(not Kiosk.IsEnabled() and not Kiosk.IsCompetitiveModeEnabled())
