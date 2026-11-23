@@ -169,7 +169,10 @@ fn blizzard_black_market_hot_item_can_match_listing_market_id() {
 #[test]
 fn blizzard_black_market_view_only_hides_bid_controls() {
     let env = load_game_ui_with_black_market();
-    open_black_market(&env, r#"{"items":[],"hotItem":null,"viewOnly":true}"#);
+    open_black_market(
+        &env,
+        r#"{"items":[],"hotItemMarketID":null,"viewOnly":true}"#,
+    );
     let controls: (bool, bool) = env
         .eval("return C_BlackMarket.IsViewOnly(), BlackMarketFrame.BidButton:IsShown()")
         .expect("view-only state and bid control should be queryable");
