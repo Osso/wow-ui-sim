@@ -320,6 +320,8 @@ fn register_group_activity_surfaces(state: &mut LuaState) -> LuaResult<()> {
     c_api::c_guild_info::register(state)?;
     player_info::register_player_info_surface(state)?;
     c_api::c_lfg_info::register_c_lfg_info_surface(state)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    c_api::c_black_market::register(state)?;
     c_api::c_pet_battles::register_c_pet_battles_surface(state)?;
     pet_battles::register_pet_battles_surface(state)?;
     c_api::c_account_services::register_c_account_services_surface(state)?;
