@@ -341,7 +341,7 @@ fn load_texture_hook_probe(env: &WowLuaEnv) {
     .unwrap();
     std::fs::write(
         addon.join("TextureSetHookProbe.lua"),
-        "AuraTextureHookProbe = { calls = 0 }\nlocal texture = CreateFrame('Frame'):CreateTexture()\nlocal methods = getmetatable(texture).__index\nhooksecurefunc(methods, 'SetTexture', function()\n AuraTextureHookProbe.calls = AuraTextureHookProbe.calls + 1\n AuraTextureHookProbe.callbackTaint = debug.getstacktaint()\nend)\n",
+        "_G.AuraTextureHookProbe = { calls = 0 }\nlocal texture = CreateFrame('Frame'):CreateTexture()\nlocal methods = getmetatable(texture).__index\nhooksecurefunc(methods, 'SetTexture', function()\n _G.AuraTextureHookProbe.calls = _G.AuraTextureHookProbe.calls + 1\n _G.AuraTextureHookProbe.callbackTaint = debug.getstacktaint()\nend)\n",
     )
     .unwrap();
     wow_ui_sim::loader::load_addon(
@@ -382,8 +382,8 @@ fn retail_aura_container_secret_icons_survive_addon_texture_hook() {
         mixin.ApplyIcon({icon = {element = secondTexture}}, 'player', second)
         assert(firstTexture:GetTextureFileID() == 135907)
         assert(secondTexture:GetTextureFileID() == 136243)
-        assert(AuraTextureHookProbe.calls == 2)
-        assert(AuraTextureHookProbe.callbackTaint == 'TextureSetHookProbe')
+        assert(_G.AuraTextureHookProbe.calls == 2)
+        assert(_G.AuraTextureHookProbe.callbackTaint == 'TextureSetHookProbe')
         "#,
         true,
     )
