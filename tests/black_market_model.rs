@@ -86,17 +86,16 @@ fn open_black_market(env: &WowLuaEnv, state_json: &str) {
         .expect("supplied Black Market data should open the Blizzard panel");
 }
 
-#[test]
-fn blizzard_black_market_bid_results_enforce_minimums_and_refresh_rows() {
-    let env = load_game_ui_with_black_market();
-    open_black_market(&env, TWO_LISTINGS_STATE);
+fn assert_black_market_rows(env: &WowLuaEnv) {
     let (rows, hot_name): (String, String) = env
         .eval("local n = {}; BlackMarketFrame.ScrollBox:ForEachFrame(function(b) n[#n + 1] = b.Name:GetText() end); return table.concat(n, '|'), BlackMarketFrame.HotDeal.Name:GetText()")
         .expect("Blizzard Black Market rows should be readable");
     assert_eq!(rows, "Supplied Relic|Supplied Blade|Expired Artifact");
     assert_eq!(hot_name, "Supplied Blade");
+}
 
-    let bid_state: (
+fn assert_black_market_bid_state(env: &WowLuaEnv) {
+    let state: (
         bool,
         bool,
         String,
@@ -112,7 +111,7 @@ fn blizzard_black_market_bid_results_enforce_minimums_and_refresh_rows() {
         .eval(BID_STATE_QUERY)
         .expect("Blizzard bids should update accepted rows and reject invalid bids");
     assert_eq!(
-        bid_state,
+        state,
         (
             true,
             true,
@@ -127,6 +126,14 @@ fn blizzard_black_market_bid_results_enforce_minimums_and_refresh_rows() {
             true
         )
     );
+}
+
+#[test]
+fn blizzard_black_market_bid_results_enforce_minimums_and_refresh_rows() {
+    let env = load_game_ui_with_black_market();
+    open_black_market(&env, TWO_LISTINGS_STATE);
+    assert_black_market_rows(&env);
+    assert_black_market_bid_state(&env);
 }
 
 #[test]
