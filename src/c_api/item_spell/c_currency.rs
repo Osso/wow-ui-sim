@@ -486,6 +486,11 @@ fn push_account_character_currency_source(
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+const MAX_TRANSFERABLE_AMOUNT_USAGE: &str = "Usage: local maxTransferableAmount = C_CurrencyInfo.GetMaxTransferableAmountFromQuantity(currencyID, requestedQuantity)";
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+const COST_TO_TRANSFER_CURRENCY_USAGE: &str = "Usage: local totalQuantityConsumed = C_CurrencyInfo.GetCostToTransferCurrency(currencyID, quantity)";
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn transfer_percentage(currency_id: i32) -> Option<f32> {
     let (_, _, percentage) = sim_data::currency_transfer::get(currency_id)?;
     let percentage = percentage as f32;
@@ -494,7 +499,12 @@ fn transfer_percentage(currency_id: i32) -> Option<f32> {
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn get_max_transferable_amount_from_quantity(state: &mut LuaState) -> LuaResult<u32> {
-    let currency_id = i32::from_stack(state, 1)?;
+    let currency_id = crate::c_api::helpers::read_untainted_signed32_argument(
+        state,
+        1,
+        "C_CurrencyInfo.GetMaxTransferableAmountFromQuantity",
+        MAX_TRANSFERABLE_AMOUNT_USAGE,
+    )?;
     let quantity = u32::from_stack(state, 2)?;
     // INFERRED (R88es): multiply the kept share by the quantity in f32, then truncate.
     let amount = transfer_percentage(currency_id)
@@ -505,7 +515,12 @@ fn get_max_transferable_amount_from_quantity(state: &mut LuaState) -> LuaResult<
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn get_cost_to_transfer_currency(state: &mut LuaState) -> LuaResult<u32> {
-    let currency_id = i32::from_stack(state, 1)?;
+    let currency_id = crate::c_api::helpers::read_untainted_signed32_argument(
+        state,
+        1,
+        "C_CurrencyInfo.GetCostToTransferCurrency",
+        COST_TO_TRANSFER_CURRENCY_USAGE,
+    )?;
     let quantity = u32::from_stack(state, 2)?;
     // INFERRED (R88es): gross quantity is ceil((100 / kept share) * requested amount) in f32.
     let cost = transfer_percentage(currency_id)
