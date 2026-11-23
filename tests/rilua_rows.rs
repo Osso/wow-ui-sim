@@ -197,23 +197,32 @@ fn rilua_rows_owner_watchdog_loads_file_then_rejects_dispatch_overrun() {
 }
 
 #[test]
-fn rilua_rows_restricted_addon_bucket_exhaustion_reports_owner() {
+fn rilua_rows_bucket_skips_loading_and_throttles_after_world_entry() {
     let directory = tempfile::tempdir().unwrap();
     let toc = create_script_probe(
         directory.path(),
         "ThrottleProbe",
-        "local frame = CreateFrame('Frame'); frame:RegisterEvent('PLAYER_LOGIN'); \
-         frame:SetScript('OnEvent', function() while true do end end)",
+        "local frame = CreateFrame('Frame'); frame:RegisterEvent('PLAYER_ENTERING_WORLD'); \
+         frame:SetScript('OnEvent', function() \
+             ThrottleCalls = (ThrottleCalls or 0) + 1; \
+             local total = 0; \
+             for i = 1, 200000 do total = total + i end; \
+             ThrottleTotal = total \
+         end)",
     );
     let env = WowLuaEnv::new().unwrap();
-    env.exec("SetCVar('luaScriptBucketThrottleEnabled', '0')")
+    env.exec("SetCVar('luaScriptBucketThrottleEnabled', '0'); seterrorhandler(function(err) ThrottleError = err end)")
         .unwrap();
     let loader = env.loader_env();
     wow_ui_sim::loader::load_addon(&loader, &toc).unwrap();
-    env.exec("SetCVar('luaScriptBucketThrottleEnabled', '1'); SetCVar('luaScriptBucketThrottleMaxMsPerSecondRestricted', '0'); SetCVar('luaScriptBucketThrottleMaxMsBurstRestricted', '0'); seterrorhandler(function(err) ThrottleError = err end)")
+    env.exec("SetCVar('luaScriptBucketThrottleEnabled', '1'); SetCVar('luaScriptBucketThrottleMaxMsPerSecondRestricted', '0'); SetCVar('luaScriptBucketThrottleMaxMsBurstRestricted', '1'); ThrottleCalls = 0")
         .unwrap();
-    env.fire_event("PLAYER_LOGIN").unwrap();
-    env.exec("assert(string.find(ThrottleError, 'insecure scripts exceeded execution limit for addon ThrottleProbe', 1, true))")
+
+    env.fire_event("PLAYER_ENTERING_WORLD").unwrap();
+    env.exec("assert(ThrottleCalls == 1 and ThrottleError == nil)")
+        .unwrap();
+    env.fire_event("PLAYER_ENTERING_WORLD").unwrap();
+    env.exec("assert(ThrottleCalls == 2 and string.find(ThrottleError, 'insecure scripts exceeded execution limit for addon ThrottleProbe', 1, true))")
         .unwrap();
 }
 
