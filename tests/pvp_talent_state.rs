@@ -56,6 +56,26 @@ fn forever_supplied_pvp_talent_state_reaches_open_player_spells_panel() {
     });
 }
 
+#[test]
+fn locked_talent_mutations_dispatch_inferred_refresh_events() {
+    let env = WowLuaEnv::new().expect("create PvP talent API environment");
+    env.exec(
+        r#"
+        local updates = 0
+        local observer = CreateFrame("Frame")
+        observer:RegisterEvent("PLAYER_PVP_TALENT_UPDATE")
+        observer:SetScript("OnEvent", function() updates = updates + 1 end)
+        local before = updates
+        assert(select('#', C_SpecializationInfo.SetPvpTalentLocked(123, true)) == 0)
+        assert(updates == before + 1)
+        before = updates
+        C_SpecializationInfo.SetPvpTalentLocked(123, false)
+        assert(updates == before + 1)
+        "#,
+    )
+    .expect("lock changes dispatch the inferred PvP refresh event");
+}
+
 fn with_player_spells_panel(assert_state: impl FnOnce(&WowLuaEnv)) {
     let env = crate::common::panel_fixtures::setup_env();
     env.exec(

@@ -29,6 +29,7 @@
 
 - `tests/pvp_talent_state.rs::retail_supplied_pvp_talent_state_reaches_open_player_spells_panel`
 - `tests/pvp_talent_state.rs::forever_supplied_pvp_talent_state_reaches_open_player_spells_panel`
+- `tests/pvp_talent_state.rs::locked_talent_mutations_dispatch_inferred_refresh_events`
 - `tests/pvp_talent_native_consumers.rs` — existing Retail consumers and row behavior.
 
 ## Known gaps (current cycle)
