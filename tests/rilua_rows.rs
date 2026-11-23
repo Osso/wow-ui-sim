@@ -157,35 +157,63 @@ fn rilua_rows_chat_expressions_replace_icons_and_reject_secret_flags() {
     "#).unwrap();
 }
 
+fn create_script_probe(
+    root: &std::path::Path,
+    addon_name: &str,
+    source: &str,
+) -> std::path::PathBuf {
+    let addon_dir = root.join(addon_name);
+    std::fs::create_dir_all(&addon_dir).unwrap();
+    let toc_path = addon_dir.join(format!("{addon_name}.toc"));
+    std::fs::write(
+        &toc_path,
+        format!("## Interface: 120000\n{addon_name}.lua\n"),
+    )
+    .unwrap();
+    std::fs::write(addon_dir.join(format!("{addon_name}.lua")), source).unwrap();
+    toc_path
+}
+
 #[test]
 fn rilua_rows_owner_watchdog_loads_file_then_rejects_dispatch_overrun() {
     let directory = tempfile::tempdir().unwrap();
-    let addon_dir = directory.path().join("WatchdogProbe");
-    std::fs::create_dir_all(&addon_dir).unwrap();
-    std::fs::write(
-        addon_dir.join("WatchdogProbe.toc"),
-        "## Interface: 120000\nWatchdogProbe.lua\n",
-    )
-    .unwrap();
-    std::fs::write(
-        addon_dir.join("WatchdogProbe.lua"),
+    let toc = create_script_probe(
+        directory.path(),
+        "WatchdogProbe",
         "local frame = CreateFrame('Frame'); frame:RegisterEvent('PLAYER_LOGIN'); \
          frame:SetScript('OnEvent', function() while true do end end)",
-    )
-    .unwrap();
-
+    );
     let env = WowLuaEnv::new().unwrap();
     env.set_script_watchdog_timeout_for_tests(std::time::Duration::from_secs(60));
-    env.exec("seterrorhandler(function(err) WatchdogError = err end)")
+    env.exec("SetCVar('luaScriptBucketThrottleEnabled', '0'); seterrorhandler(function(err) WatchdogError = err end)")
         .unwrap();
     let loader = env.loader_env();
-    let loaded =
-        wow_ui_sim::loader::load_addon(&loader, &addon_dir.join("WatchdogProbe.toc")).unwrap();
+    let loaded = wow_ui_sim::loader::load_addon(&loader, &toc).unwrap();
     assert_eq!(loaded.lua_files, 1);
-
     env.set_script_watchdog_timeout_for_tests(std::time::Duration::ZERO);
     env.fire_event("PLAYER_LOGIN").unwrap();
     env.exec("assert(string.find(WatchdogError, 'script ran too long', 1, true))")
+        .unwrap();
+}
+
+#[test]
+fn rilua_rows_restricted_addon_bucket_exhaustion_reports_owner() {
+    let directory = tempfile::tempdir().unwrap();
+    let toc = create_script_probe(
+        directory.path(),
+        "ThrottleProbe",
+        "local frame = CreateFrame('Frame'); frame:RegisterEvent('PLAYER_LOGIN'); \
+         frame:SetScript('OnEvent', function() while true do end end)",
+    );
+    let env = WowLuaEnv::new().unwrap();
+    env.exec("SetCVar('luaScriptBucketThrottleEnabled', '0')")
+        .unwrap();
+    let loader = env.loader_env();
+    wow_ui_sim::loader::load_addon(&loader, &toc).unwrap();
+    env.exec("SetCVar('luaScriptBucketThrottleEnabled', '1'); SetCVar('luaScriptBucketThrottleMaxMsPerSecondRestricted', '0'); SetCVar('luaScriptBucketThrottleMaxMsBurstRestricted', '0'); seterrorhandler(function(err) ThrottleError = err end)")
+        .unwrap();
+    env.fire_event("PLAYER_LOGIN").unwrap();
+    env.exec("assert(string.find(ThrottleError, 'insecure scripts exceeded execution limit for addon ThrottleProbe', 1, true))")
         .unwrap();
 }
 

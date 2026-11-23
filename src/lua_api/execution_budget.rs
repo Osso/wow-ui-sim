@@ -26,11 +26,58 @@ pub(crate) fn with_addon_watchdog<T>(
     state: &mut LuaState,
     owner: &str,
     timeout: Duration,
+    restricted: bool,
     operation: impl FnOnce(&mut LuaState) -> LuaResult<T>,
 ) -> LuaResult<T> {
+    with_addon_execution_limits(state, owner, timeout, restricted, operation)
+}
+
+fn with_addon_execution_limits<T>(
+    state: &mut LuaState,
+    owner: &str,
+    timeout: Duration,
+    restricted: bool,
+    operation: impl FnOnce(&mut LuaState) -> LuaResult<T>,
+) -> LuaResult<T> {
+    let throttle = restricted_bucket_limits(state, restricted)?;
     state.with_instruction_owner(owner, |state| {
-        state.with_execution_watchdog(timeout, DEFAULT_WATCHDOG_DISPATCH_INTERVAL, operation)
+        let execute = |state: &mut LuaState| {
+            state.with_execution_watchdog(timeout, DEFAULT_WATCHDOG_DISPATCH_INTERVAL, operation)
+        };
+        match throttle {
+            Some((rate, burst)) => state.with_script_bucket_throttle(
+                owner,
+                rate,
+                burst,
+                DEFAULT_WATCHDOG_DISPATCH_INTERVAL,
+                execute,
+            ),
+            None => execute(state),
+        }
     })
+}
+
+fn restricted_bucket_limits(state: &LuaState, restricted: bool) -> LuaResult<Option<(u64, u64)>> {
+    if !restricted {
+        return Ok(None);
+    }
+    let sim = borrow_state(state)?;
+    if !sim.cvars.get_bool("luaScriptBucketThrottleEnabled") {
+        return Ok(None);
+    }
+    let rate = parse_bucket_limit(
+        &sim.cvars,
+        "luaScriptBucketThrottleMaxMsPerSecondRestricted",
+    )?;
+    let burst = parse_bucket_limit(&sim.cvars, "luaScriptBucketThrottleMaxMsBurstRestricted")?;
+    Ok(Some((rate, burst)))
+}
+
+fn parse_bucket_limit(cvars: &crate::cvars::CVarStorage, name: &str) -> LuaResult<u64> {
+    cvars
+        .get(name)
+        .and_then(|value| value.parse().ok())
+        .ok_or_else(|| rilua::runtime_error(format!("{name}: invalid script bucket limit")))
 }
 
 pub(crate) fn call_frame_handler(
@@ -46,10 +93,8 @@ pub(crate) fn call_frame_handler(
     };
     let timeout = watchdog_timeout(state).map_err(|error| error.to_string())?;
     let started = Instant::now();
-    let result = state.with_instruction_owner(&owner, |state| {
-        state.with_execution_watchdog(timeout, DEFAULT_WATCHDOG_DISPATCH_INTERVAL, |state| {
-            call_handler(state, handler, args)
-        })
+    let result = with_addon_execution_limits(state, &owner, timeout, true, |state| {
+        call_handler(state, handler, args)
     });
     if result.is_err() && super::handler_timing::is_enabled() {
         eprintln!(

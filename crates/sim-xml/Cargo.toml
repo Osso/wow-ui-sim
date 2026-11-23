@@ -13,4 +13,4 @@ serde = { version = "1.0", features = ["derive"] }
 regex = "1"
 thiserror = "2.0"
 tracing = "0.1"
-rilua = { git = "https://github.com/Osso/rilua.git", rev = "95ec157c085217f207f4ef6feaceade01fc5f691" }
+rilua = { git = "https://github.com/Osso/rilua.git", rev = "dfb33a0df6e0e3d085c461e1506bec27ac0f642e" }

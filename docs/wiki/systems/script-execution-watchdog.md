@@ -18,7 +18,7 @@ The simulator applies a host-owned, per-invocation elapsed-time watchdog to tain
 
 **VERIFIED (simulator source):** with `WOW_SIM_LOG_HANDLER_TIMINGS` present, tainted file execution emits `[file-budget-success]` or `[file-budget-error]`; failed owner frame callbacks emit `[handler-budget-error]`. The duration filter does not suppress these records. They contain owner/frame/event or owner/file identity plus `timeout_ms` and `elapsed_ms`. An error record can represent a non-watchdog failure. The elapsed timer includes synchronous nested work and is not an exclusive cost. Metadata is escaped, but non-addon chunk paths can remain absolute.
 
-The per-invocation watchdog is separate from the CVar-driven script bucket throttle.
+The per-invocation watchdog is separate from the CVar-driven script bucket throttle. The restricted-addon bucket implementation and its inferred ownership/refill assumptions are specified in [script bucket throttle limits](../../specs/script-bucket-throttle-limits.md).
 
 ## Sources
 
