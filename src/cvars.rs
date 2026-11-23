@@ -366,6 +366,19 @@ fn insert_social_ui_cvar(
 fn parse_default_cvars() -> (HashMap<String, String>, HashMap<String, String>) {
     let (mut defaults, mut original_names) = parse_cvar_yaml(include_str!("cvars.yaml"));
     insert_collected_journal_cvar(&mut defaults, &mut original_names);
+    insert_preset_and_forever_cvars(&mut defaults, &mut original_names);
+    #[cfg(any(feature = "retail-12-0-0", feature = "client-wrath"))]
+    insert_legacy_profile_cvars(&mut defaults, &mut original_names);
+    insert_profile_cvars(&mut defaults, &mut original_names);
+    insert_script_bucket_cvars(&mut defaults, &mut original_names);
+    remove_profile_cvars(&mut defaults, &mut original_names);
+    (defaults, original_names)
+}
+
+fn insert_preset_and_forever_cvars(
+    defaults: &mut HashMap<String, String>,
+    original_names: &mut HashMap<String, String>,
+) {
     // R47: real registered local CVar, with distinct PTR/Forever declarations.
     let preset_default = match crate::client_profile::ACTIVE {
         crate::client_profile::ClientProfile::Ptr => Some("1"),
@@ -381,7 +394,24 @@ fn parse_default_cvars() -> (HashMap<String, String>, HashMap<String, String>) {
         // Forever 1.60.1.70707 WM77b native registration.
         defaults.insert("minimaptrackedinfov4".into(), "2162728".into());
     }
+}
+
+#[cfg(any(feature = "retail-12-0-0", feature = "client-wrath"))]
+fn insert_legacy_profile_cvars(
+    defaults: &mut HashMap<String, String>,
+    original_names: &mut HashMap<String, String>,
+) {
     #[cfg(feature = "retail-12-0-0")]
+    insert_retail_fog_cvars(defaults, original_names);
+    #[cfg(feature = "client-wrath")]
+    insert_wrath_legacy_cvars(defaults, original_names);
+}
+
+#[cfg(feature = "retail-12-0-0")]
+fn insert_retail_fog_cvars(
+    defaults: &mut HashMap<String, String>,
+    original_names: &mut HashMap<String, String>,
+) {
     for name in [
         "minimapTrackedInfov2",
         "useCompactPartyFrames",
@@ -395,19 +425,19 @@ fn parse_default_cvars() -> (HashMap<String, String>, HashMap<String, String>) {
         defaults.insert(key.clone(), "0".to_owned());
         original_names.insert(key, name.to_owned());
     }
-    #[cfg(feature = "client-wrath")]
-    {
-        // Blizzard Wrath FrameXML/InterfaceOptionsFrame.lua:319 UI default.
-        defaults.insert("targetoftargetmode".into(), "5".into());
-        original_names.insert("targetoftargetmode".into(), "targetOfTargetMode".into());
-        // User-approved Wrath simulator policy (2026-10-17), not a native default.
-        defaults.insert("basemip".into(), "0".into());
-        original_names.insert("basemip".into(), "BaseMip".into());
-    }
-    insert_profile_cvars(&mut defaults, &mut original_names);
-    insert_script_bucket_cvars(&mut defaults, &mut original_names);
-    remove_profile_cvars(&mut defaults, &mut original_names);
-    (defaults, original_names)
+}
+
+#[cfg(feature = "client-wrath")]
+fn insert_wrath_legacy_cvars(
+    defaults: &mut HashMap<String, String>,
+    original_names: &mut HashMap<String, String>,
+) {
+    // Blizzard Wrath FrameXML/InterfaceOptionsFrame.lua:319 UI default.
+    defaults.insert("targetoftargetmode".into(), "5".into());
+    original_names.insert("targetoftargetmode".into(), "targetOfTargetMode".into());
+    // User-approved Wrath simulator policy (2026-10-17), not a native default.
+    defaults.insert("basemip".into(), "0".into());
+    original_names.insert("basemip".into(), "BaseMip".into());
 }
 
 fn insert_script_bucket_cvars(
