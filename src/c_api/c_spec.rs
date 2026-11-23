@@ -566,10 +566,10 @@ pub(crate) fn register_admin(
 fn register_forever_pvp_admin(
     builder: crate::lua_bridge::TableBuilder,
 ) -> LuaResult<crate::lua_bridge::TableBuilder> {
-    builder.set_function(
+    Ok(builder.set_function(
         "SetPvpTalentUnlockLevel",
         admin_set_forever_pvp_talent_unlock_level,
-    )?
+    )?)
 }
 
 #[cfg(feature = "client-retail")]
