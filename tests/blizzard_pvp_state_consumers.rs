@@ -32,6 +32,7 @@ fn battlefield_queue_consumer_reads_each_supplied_queue_index() {
     let env = load_game_ui();
     env.exec(
         r#"
+        assert(GetMaxBattlefieldID() == 0, "unsupplied battlefield maximum defaults to zero")
         A_Admin.SetMaxBattlefieldID(2)
         A_Admin.SetBattlefieldQueue(1, true)
         QueueStatusFrame:Update()
