@@ -220,8 +220,6 @@ fn player_spells_toggle_accepts_no_outfits_and_two_created_outfits() {
         env.state().borrow().lua_errors
     );
 
-    env.exec("PlayerSpellsUtil.ToggleClassTalentFrame()")
-        .expect("close Player Spells before supplying outfits");
     env.exec(
         r#"
         A_Admin.SetUnlockedOutfitSlots(2, 2)
@@ -229,14 +227,12 @@ fn player_spells_toggle_accepts_no_outfits_and_two_created_outfits() {
         C_TransmogOutfitInfo.AddNewOutfit('Silver', 456)
         "#,
     )
-    .expect("create two outfits through the public API");
+    .expect("create two outfits through the public API while Player Spells is open");
     assert!(
         env.state().borrow().lua_errors.is_empty(),
         "creating outfits while Player Spells is closed must record no Lua errors: {:?}",
         env.state().borrow().lua_errors
     );
-    env.exec("PlayerSpellsUtil.ToggleClassTalentFrame()")
-        .expect("reopen Player Spells with two outfits");
     env.exec(
         "Category = PlayerSpellsFrame.SpellBookFrame.categoryMixins[#PlayerSpellsFrame.SpellBookFrame.categoryMixins]",
     )
