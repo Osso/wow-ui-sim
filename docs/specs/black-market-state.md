@@ -5,7 +5,9 @@
 ## What it must do
 
 - [x] Show two distinct supplied listings and the supplied hot deal in the original Blizzard panel.
-- [x] Return the supplied listing count and update the selected listing's bid, high-bid flag, and bid count after `ItemPlaceBid`. **INFERRED (R88em; native evidence pending).**
+- [x] Allow `hotItem.marketID` to match a listing while keeping listing IDs unique; bids update both copies.
+- [x] Reject bids below `max(minBid, currBid + minIncrement)` without changing the listing state.
+- [x] Dispatch `BLACK_MARKET_BID_RESULT(marketID, resultCode)` for each bid. **INFERRED (R88em; native evidence pending):** `0` means success, `1` means below minimum, and `2` means the market ID is unknown.
 - [x] Respect the supplied view-only flag by hiding the Blizzard bid controls.
 - [x] Treat index zero as invalid; it must not return the first listing.
 
@@ -24,7 +26,7 @@
 
 ## Tests asserting this spec
 
-- `tests/black_market_model.rs` — loads the Blizzard UI and checks two rows, hot deal, bid state, view-only controls, and index-zero behavior on Retail and Forever.
+- `tests/black_market_model.rs` — loads the Blizzard UI, tests a shared hot-item/listing ID, places rejected and accepted bids through the row and confirmation controls, and checks refreshed listing and hot-deal state, view-only controls, and index-zero behavior on Retail and Forever.
 
 ## Known gaps (current cycle)
 

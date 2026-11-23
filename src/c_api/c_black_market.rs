@@ -43,6 +43,11 @@ pub(crate) struct BlackMarketState {
     view_only: bool,
 }
 
+// INFERRED (R88em; native evidence pending): simulator bid-result codes.
+const BID_RESULT_SUCCESS: u32 = 0;
+const BID_RESULT_BELOW_MINIMUM: u32 = 1;
+const BID_RESULT_MARKET_NOT_FOUND: u32 = 2;
+
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     let namespace = ensure_namespace(state, "C_BlackMarket")?;
     table_set_rust_fn_static(state, namespace, "Close", close)?;
@@ -84,15 +89,6 @@ fn validate_state(supplied: &BlackMarketState) -> LuaResult<()> {
             ));
         }
     }
-    if supplied
-        .hot_item
-        .as_ref()
-        .is_some_and(|item| market_ids.contains(&item.market_id))
-    {
-        return Err(runtime_error(
-            "A_Admin.SetBlackMarketState requires a distinct hot-item marketID",
-        ));
-    }
     Ok(())
 }
 
@@ -110,23 +106,50 @@ fn item_place_bid(state: &mut LuaState) -> LuaResult<u32> {
     let market_id = u32::from_stack(state, 1)?;
     let bid = u64::try_from(i64::from_stack(state, 2)?)
         .map_err(|_| runtime_error("C_BlackMarket.ItemPlaceBid requires a nonnegative bid"))?;
-    let mut sim = borrow_state_mut(state)?;
-    let item = sim
-        .black_market
-        .items
-        .iter_mut()
-        .find(|item| item.market_id == market_id);
-    if let Some(item) = item {
-        apply_bid(item, bid);
-    } else if let Some(item) = sim
-        .black_market
-        .hot_item
-        .as_mut()
-        .filter(|item| item.market_id == market_id)
-    {
-        apply_bid(item, bid);
-    }
+    let result_code = {
+        let mut sim = borrow_state_mut(state)?;
+        let black_market = &mut sim.black_market;
+        let minimum_bid = black_market
+            .items
+            .iter()
+            .chain(black_market.hot_item.iter())
+            .find(|item| item.market_id == market_id)
+            .map(minimum_accepted_bid);
+
+        match minimum_bid {
+            None => BID_RESULT_MARKET_NOT_FOUND,
+            Some(minimum_bid) if bid < minimum_bid => BID_RESULT_BELOW_MINIMUM,
+            Some(_) => {
+                for item in black_market
+                    .items
+                    .iter_mut()
+                    .filter(|item| item.market_id == market_id)
+                {
+                    apply_bid(item, bid);
+                }
+                if let Some(item) = black_market
+                    .hot_item
+                    .as_mut()
+                    .filter(|item| item.market_id == market_id)
+                {
+                    apply_bid(item, bid);
+                }
+                BID_RESULT_SUCCESS
+            }
+        }
+    };
+
+    dispatch_event_now(
+        state,
+        "BLACK_MARKET_BID_RESULT",
+        &[Val::Num(market_id as f64), Val::Num(result_code as f64)],
+    )?;
     Ok(0)
+}
+
+fn minimum_accepted_bid(item: &BlackMarketItem) -> u64 {
+    item.min_bid
+        .max(item.curr_bid.saturating_add(item.min_increment))
 }
 
 fn apply_bid(item: &mut BlackMarketItem, bid: u64) {
