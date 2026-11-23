@@ -373,8 +373,8 @@ fn retail_aura_container_secret_icons_survive_addon_texture_hook() {
     env.exec_maybe_secure(
         r#"
         local mixin = assert(CustomAuraButtonPrivateMixin)
-        local first = assert(C_UnitAuras.GetAuraDataBySpellID(99001))
-        local second = assert(C_UnitAuras.GetAuraDataBySpellID(99002))
+        local first = assert(C_UnitAuras.GetAuraDataByIndex('player', 1, 'HELPFUL'))
+        local second = assert(C_UnitAuras.GetAuraDataByIndex('player', 2, 'HELPFUL'))
         assert(first.icon == 135907 and second.icon == 136243)
         local firstTexture = CreateFrame('Frame'):CreateTexture()
         local secondTexture = CreateFrame('Frame'):CreateTexture()
