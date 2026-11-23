@@ -37,7 +37,8 @@ prefork_full_ui_case! {
 fn navigation_target_drives_super_tracked_frame(env: &WowLuaEnv) {
     let first = update_navigation_target(
         env,
-        r#"C_SuperTrack.SetSuperTrackedQuestID(987654)
+        r#"assert(A_Admin.SetQuestObjectives(987654, {{text='Navigate',type='progress',finished=false,numFulfilled=0,numRequired=1}}, 0))
+        C_SuperTrack.SetSuperTrackedQuestID(987654)
         A_Admin.SetNavigationTarget({state=Enum.NavigationState.InRange,distance=125,clamped=false,screenX=0.0000002384185791015625,screenY=0})"#,
     );
     let second = update_navigation_target(
