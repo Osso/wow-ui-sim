@@ -8,6 +8,7 @@
 use crate::common::blizzard_addon_harness::{
     blizzard_ui_dir, load_blizzard_addon_closure_into_env, new_blizzard_addon_env,
 };
+use wow_ui_sim::loader::load_addon;
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 fn load_tracker() -> WowLuaEnv {
@@ -199,6 +200,8 @@ fn load_pve_frame_addons(env: &WowLuaEnv, ui: &std::path::Path) {
     for root in roots {
         assert!(loaded.iter().any(|name| name == root));
     }
+    let challenges_ui_toc = ui.join("Blizzard_ChallengesUI/Blizzard_ChallengesUI_Mainline.toc");
+    load_addon(&env.loader_env(), &challenges_ui_toc).expect("Blizzard_ChallengesUI should load");
     env.apply_post_load_workarounds();
     wow_ui_sim::startup::fire_startup_events(env);
 }
