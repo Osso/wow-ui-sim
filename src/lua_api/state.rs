@@ -352,6 +352,8 @@ macro_rules! build_empty_sim_state {
             account_wide_reputation_factions: HashSet::new(),
             reputation: Default::default(),
             perks_activities: Default::default(),
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            perks_program: Default::default(),
             faction_paragon: HashMap::new(),
             #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
             active_brawl: None,

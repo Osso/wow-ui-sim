@@ -146,6 +146,7 @@ pub(crate) mod party_info_static_defaults;
 pub(crate) mod patch_12_1_inert_defaults;
 pub(crate) mod performance_metric_defaults;
 pub(crate) mod perks_activities_state;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod perks_program_defaults;
 pub(crate) mod pet_battle_action_legality_defaults;
 pub(crate) mod pet_battle_runtime_state;

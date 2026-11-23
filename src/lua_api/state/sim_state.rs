@@ -420,6 +420,8 @@ pub struct SimState {
     pub account_wide_reputation_factions: HashSet<i64>,
     pub reputation: crate::c_api::reputation_model::ReputationModel,
     pub perks_activities: crate::c_api::perks_activities::PerksActivities,
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub(crate) perks_program: crate::c_api::c_perks_program::PerksProgramState,
     pub faction_paragon: HashMap<i64, FactionParagonInfo>,
     /// Explicit active-brawl input only; no native default record is assumed.
     #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
