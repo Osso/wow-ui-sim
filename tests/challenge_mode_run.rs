@@ -170,6 +170,37 @@ fn load_challenges_ui() -> WowLuaEnv {
     env
 }
 
+#[cfg(feature = "client-retail")]
+#[test]
+fn original_challenges_panel_uses_supplied_current_season_maps() {
+    let ui = blizzard_ui_dir();
+    let env = new_blizzard_addon_env(&ui);
+    env.exec(
+        r#"
+        A_Admin.SetMythicPlusSeasonMaps({9001, 9002})
+        A_Admin.SetChallengeModeMapInfo(9001, {name='First supplied dungeon', id=9001,
+            timeLimit=1500, texture=123, backgroundTexture=456, mapID=789})
+        A_Admin.SetChallengeModeMapInfo(9002, {name='Second supplied dungeon', id=9002,
+            timeLimit=1800, texture=321, backgroundTexture=654, mapID=987})
+    "#,
+    )
+    .unwrap();
+    for addon in ["Blizzard_SharedXML", "Blizzard_GroupFinder"] {
+        let loaded = load_blizzard_addon_closure_into_env(&env, &ui, &[addon], &[]);
+        assert!(loaded.iter().any(|name| name == addon));
+    }
+    env.exec(
+        r#"
+        PVEFrame_ShowFrame("ChallengesFrame")
+        assert(PVEFrame:IsShown() and ChallengesFrame:IsShown())
+        assert(#ChallengesFrame.DungeonIcons == 2)
+        assert(ChallengesFrame.DungeonIcons[1].Name:GetText() == 'First supplied dungeon')
+        assert(ChallengesFrame.DungeonIcons[2].Name:GetText() == 'Second supplied dungeon')
+    "#,
+    )
+    .unwrap();
+}
+
 #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
 #[test]
 fn original_challenges_dungeon_icon_reads_supplied_map_metadata() {
