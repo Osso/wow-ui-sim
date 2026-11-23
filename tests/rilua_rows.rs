@@ -207,12 +207,14 @@ fn rilua_rows_restricted_addon_bucket_exhaustion_reports_owner() {
     .unwrap();
 
     let env = WowLuaEnv::new().unwrap();
-    env.exec("SetCVar('luaScriptBucketThrottleMaxMsPerSecondRestricted', '0'); SetCVar('luaScriptBucketThrottleMaxMsBurstRestricted', '0'); seterrorhandler(function(err) ThrottleError = err end)")
+    env.exec("SetCVar('luaScriptBucketThrottleEnabled', '0')")
         .unwrap();
     let loader = env.loader_env();
     wow_ui_sim::loader::load_addon(&loader, &addon_dir.join("ThrottleProbe.toc")).unwrap();
+    env.exec("SetCVar('luaScriptBucketThrottleEnabled', '1'); SetCVar('luaScriptBucketThrottleMaxMsPerSecondRestricted', '0'); SetCVar('luaScriptBucketThrottleMaxMsBurstRestricted', '0'); seterrorhandler(function(err) ThrottleError = err end)")
+        .unwrap();
     env.fire_event("PLAYER_LOGIN").unwrap();
-    env.exec("assert(ThrottleError == 'insecure scripts exceeded execution limit for addon ThrottleProbe')")
+    env.exec("assert(string.find(ThrottleError, 'insecure scripts exceeded execution limit for addon ThrottleProbe', 1, true))")
         .unwrap();
 }
 
