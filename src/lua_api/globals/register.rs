@@ -284,6 +284,8 @@ fn register_core_surfaces(lua: &mut rilua::Lua) -> crate::Result<()> {
     super::missing_surface::register_all(lua)?;
     #[cfg(feature = "client-retail")]
     super::real::specialization_system::register(lua)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    super::real::pvp_talent_info::register(lua)?;
     #[cfg(feature = "client-wowforever")]
     crate::c_api::specialization_system::register(lua)?;
     #[cfg(feature = "client-retail")]

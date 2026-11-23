@@ -131,7 +131,7 @@ pub(crate) fn read_low_byte_enum_argument(
     Ok(low_byte)
 }
 
-#[cfg(feature = "client-retail")]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub(crate) fn read_untainted_truthy_argument(
     state: &LuaState,
     index: i32,
