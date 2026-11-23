@@ -71,7 +71,7 @@ const AFFIX_NAMES: &[(i32, &str)] = &[
 ];
 
 pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
-    if uses_display_seasons() {
+    if uses_tracked_season_maps() {
         builder.set_function("SetCurrentDisplaySeasonID", set_display_season_id)
     } else {
         Ok(builder)
@@ -91,13 +91,15 @@ pub(crate) fn register_mythic_plus_surface(state: &mut LuaState) -> LuaResult<()
     register_mythic_plus_status_handlers(state, ns)?;
     register_mythic_plus_request_handlers(state, ns)?;
     register_challenge_mode_surface(state)?;
-    if uses_display_seasons() {
+    if uses_tracked_season_maps() {
         table_set_rust_fn_static(
             state,
             ns,
             "GetCurrentUIDisplaySeason",
             get_current_display_season_id,
         )?;
+    }
+    if uses_display_seasons() {
         let seasons = ensure_namespace(state, "C_SeasonInfo")?;
         table_set_rust_fn_static(
             state,
@@ -115,6 +117,10 @@ fn uses_display_seasons() -> bool {
         ACTIVE,
         ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever
     )
+}
+
+fn uses_tracked_season_maps() -> bool {
+    crate::client_profile::ACTIVE.uses_tracked_season_maps()
 }
 
 fn get_current_display_season_id(state: &mut LuaState) -> LuaResult<u32> {
@@ -241,8 +247,13 @@ fn register_challenge_map_handlers(state: &mut LuaState, ns: GcRef<Table>) -> Lu
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Wrath {
         table_set_rust_fn_static(state, ns, "GetMapTable", challenge_get_map_table)?;
         table_set_rust_fn_static(state, ns, "GetMapUIInfo", challenge_get_map_ui_info)?;
-    } else if uses_display_seasons() {
-        table_set_rust_fn_static(state, ns, "GetMapTable", challenge_get_map_table)?;
+    } else if uses_tracked_season_maps() {
+        table_set_rust_fn_static(
+            state,
+            ns,
+            "GetMapTable",
+            challenge_get_tracked_season_map_table,
+        )?;
         crate::c_api::challenge_run::register_map_ui_info(state, ns)?;
     } else {
         crate::c_api::challenge_run::register_maps(state, ns)?;
@@ -292,6 +303,13 @@ fn register_challenge_request_handlers(state: &mut LuaState, ns: GcRef<Table>) -
 }
 
 fn challenge_get_map_table(state: &mut LuaState) -> LuaResult<u32> {
+    let maps = create_table(state);
+    set_table_array(state, maps, 1, Val::Num(2.0));
+    state.push(maps);
+    Ok(1)
+}
+
+fn challenge_get_tracked_season_map_table(state: &mut LuaState) -> LuaResult<u32> {
     let season_id = borrow_state(state)?.mythic_plus.display_season_id as u32;
     let maps = create_table(state);
     state.push(maps);

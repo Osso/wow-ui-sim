@@ -26,9 +26,9 @@ The already-present elapsed-timer globals keep their publication scope. Wrath is
 
 **VERIFIED (R88ew):** Retail `C_ChallengeMode.GetMapTable()` returns a dense, 1-based array of `MapChallengeModeID` values from `MythicPlusSeasonTrackedMap`, filtered only by the current `DisplaySeasonID`; it does not wait for map-info events or depend on player state. The tracked rows come from the pinned Retail 12.1.5.70391 CSV through `tools/gen_mythic_plus_season_maps.py` and `crates/sim-data/data/mythic_plus_season_maps.rs`.
 
-**INFERRED (R88ew):** The default display season is the highest `DisplaySeasonID` in that data (37). `A_Admin.SetCurrentDisplaySeasonID(id)` supplies another display season for tests. The 1.60.1.70707 tracked-map export was unavailable, so Forever uses the Retail rows as an inferred data source; its declaration of `GetMapTable` is present.
+**INFERRED (R88ew):** Retail and Forever default to the highest `DisplaySeasonID` in the Retail data (37). `A_Admin.SetCurrentDisplaySeasonID(id)` supplies another display season for tests on those profiles. The 1.60.1.70707 tracked-map export was unavailable, so Forever uses the Retail rows as an inferred data source; its declaration of `GetMapTable` is present.
 
-The Retail ChallengesFrame title reads the optional numeric `C_MythicPlus.GetCurrentUIDisplaySeason()` result (pinned `MythicPlusInfoDocumentation.lua:41-47`). The simulator serves it from the same display-season state as the map table, so both consumers stay aligned.
+**VERIFIED (current simulator code):** Tracked-season map rows, the Retail ChallengesFrame title query, the admin setter, and the season-37 default apply only to Retail and Forever. PTR keeps its existing `C_SeasonInfo.GetCurrentDisplaySeasonID` registration and legacy map-table path with display-season state `0`; Wrath keeps its seeded one-element `{2}` map table. Retail's title reads the optional numeric `C_MythicPlus.GetCurrentUIDisplaySeason()` result (pinned `MythicPlusInfoDocumentation.lua:41-47`), served from the same state as its map table.
 
 ## Map metadata validation
 
