@@ -825,7 +825,7 @@ pub fn protected_lua_pcall_state(
     }
 }
 
-/// Host frame identity, not Lua-editable taint, selects the instruction owner.
+/// Host frame identity, not Lua-editable taint, selects the watchdog owner.
 pub(crate) fn call_frame_handler_state(
     state: &mut LuaState,
     frame_id: u64,
@@ -833,13 +833,7 @@ pub(crate) fn call_frame_handler_state(
     args: &[Val],
     event: Option<&str>,
 ) -> Result<Vec<Val>, String> {
-    #[cfg(feature = "retail-12-0-5")]
-    return super::execution_budget::call_frame_handler(state, frame_id, func, args, event);
-    #[cfg(not(feature = "retail-12-0-5"))]
-    {
-        let _ = (frame_id, event);
-        protected_lua_pcall_state(state, func, args)
-    }
+    super::execution_budget::call_frame_handler(state, frame_id, func, args, event)
 }
 
 pub fn call_void_function_state(

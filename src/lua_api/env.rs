@@ -94,6 +94,11 @@ impl WowLuaEnv {
         Self::new_with_session_storage(None, crate::screen::ScreenKind::Game)
     }
 
+    /// Set a deterministic script-watchdog timeout for behavioral tests.
+    pub fn set_script_watchdog_timeout_for_tests(&self, timeout: std::time::Duration) {
+        self.state.borrow_mut().script_watchdog_timeout_override = Some(timeout);
+    }
+
     /// Prepare screen-specific bootstrap defaults before `set_screen_mode` runs.
     /// This does not change the runtime screen state.
     pub fn new_for_screen(screen: crate::screen::ScreenKind) -> Result<Self> {
