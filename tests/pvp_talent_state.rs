@@ -153,6 +153,7 @@ fn supply_selected_talent_state(env: &WowLuaEnv) {
         A_Admin.SetPvpTalentInfo(123, "First", 111, true, true, 1001, true, true, false, false, nil, 2, 3)
         A_Admin.SetPvpTalentInfo(456, "Second", 222, true, true, 1002, true, true, false, false, nil, 4, 5)
         A_Admin.SetPvpTalentInfo(789, "Nullable", nil, false, false, 1003, nil, false, false, false, nil)
+        A_Admin.SetPvpTalentInfo(0, "Zero", 999, false, false, 1000, false, false, false, false, nil)
         A_Admin.SetPvpTalentSlotUnlockLevel(2, 30)
         A_Admin.SetPvpTalentAlertStatus(true, false)
         A_Admin.SetSelectedPvpTalentIDs({ 123, 456 })
