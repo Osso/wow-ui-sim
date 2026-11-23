@@ -43,7 +43,7 @@ pub(crate) fn call_frame_handler(
     let owner = frame_addon_owner(state, frame_id).map_err(|error| error.to_string())?;
     let Some(owner) = owner else {
         return call_handler(state, handler, args).map_err(|error| error.to_string());
-    }
+    };
     let timeout = watchdog_timeout(state).map_err(|error| error.to_string())?;
     let started = Instant::now();
     let result = state.with_instruction_owner(&owner, |state| {
