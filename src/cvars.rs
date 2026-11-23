@@ -436,7 +436,7 @@ fn insert_script_bucket_cvars(
 }
 
 /// Collections journal CVar shipped by the PTR and WowForever pins only.
-
+///
 /// The pinned CVar dumps list it with `default=1` and `scope=Account`:
 /// `data/patch-api/source-cache/legacy-2026-10-09/1.60.1-wikitext.txt:2046`
 /// and `data/patch-api/sources/12.1.7-inherited-1.60.1.wikitext:1986`. The
