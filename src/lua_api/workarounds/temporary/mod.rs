@@ -116,6 +116,7 @@ pub(crate) mod legacy_talent_skill_defaults;
 pub(crate) mod level_link_spell_lock_state;
 pub(crate) mod lfg_legacy_defaults;
 pub(crate) mod lfg_lock_list;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod loot_journal_defaults;
 pub(crate) mod macro_defaults;
 #[cfg(not(feature = "client-retail"))]
