@@ -283,7 +283,7 @@ pub mod c_mythic_plus;
 pub mod c_mythic_plus_calendar;
 #[cfg(feature = "retail-12-0-0")]
 pub(crate) mod c_nameplate_manager;
-#[cfg(feature = "retail-12-0-5")]
+#[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 pub(crate) mod c_navigation;
 pub mod c_neighborhood_initiative;
 pub mod c_paper_doll_info;
@@ -703,7 +703,7 @@ pub(crate) fn register_utility_bootstrap_tables(state: &mut LuaState) -> LuaResu
     if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Wrath {
         addon_message_prefixes::register(state)?;
     }
-    #[cfg(feature = "retail-12-0-5")]
+    #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
     c_navigation::register(state)?;
     c_weather::register(state)?;
     if supports_super_tracking() {

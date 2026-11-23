@@ -49,14 +49,22 @@ end
 "#;
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     lua.exec(NAVIGATION_DEFAULTS_LUA)?;
-    if !cfg!(feature = "retail-12-0-5") {
+    if !cfg!(any(
+        feature = "client-retail",
+        feature = "client-wowforever"
+    )) && !cfg!(feature = "retail-12-0-5")
+    {
         lua.exec(LEGACY_NEAREST_PARTY_TOKEN_LUA)?;
     }
     Ok(())
 }
 
-#[cfg(test)]
+#[cfg(all(
+    test,
+    not(any(feature = "client-retail", feature = "client-wowforever"))
+))]
 mod tests {
     use crate::lua_api::WowLuaEnv;
 
