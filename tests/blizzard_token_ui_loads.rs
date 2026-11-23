@@ -173,9 +173,11 @@ fn currency_transfer_menu_clamps_to_account_source_quantity_and_cost() {
         .eval(
             r#"
                 local input = CurrencyTransferMenu.Content.AmountSelector.InputBox
+                local maxButton = CurrencyTransferMenu.Content.AmountSelector.MaxQuantityButton
                 local dropdown = CurrencyTransferMenu.Content.SourceSelector.Dropdown
                 dropdown:OpenMenu()
-                local firstAmount = input:GetClampedInputAmount(1000000)
+                maxButton:Click()
+                local firstAmount = input:GetNumber()
                 local firstCost = CurrencyTransferMenu:GetTotalCurrencyTransferCost()
                 for _, entry in dropdown:GetMenuDescription():EnumerateElementDescriptions() do
                     local source = entry:GetData()
@@ -183,13 +185,14 @@ fn currency_transfer_menu_clamps_to_account_source_quantity_and_cost() {
                         entry:Pick({})
                     end
                 end
-                local secondAmount = input:GetClampedInputAmount(1000000)
+                maxButton:Click()
+                local secondAmount = input:GetNumber()
                 local secondCost = CurrencyTransferMenu:GetTotalCurrencyTransferCost()
                 return firstAmount, firstCost, secondAmount, secondCost
             "#,
         )
         .expect("the original source dropdown should apply each account source");
-    assert_eq!(amounts, (160.0, 200.0, 80.0, 100.0));
+    assert_eq!(amounts, (159.0, 199.0, 79.0, 99.0));
 }
 
 #[test]
