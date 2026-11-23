@@ -93,7 +93,6 @@ fn currency_transfer_button_refreshes_original_consumer_for_nontransferable_curr
             let mut state = env.state().borrow_mut();
             let list = &mut state.currency_list;
             list.server_enabled = true;
-            list.current_character_guid = Some("player-guid".into());
             list.transfer_rules.insert(
                 1166,
                 wow_ui_sim::c_api::currency_list::CurrencyTransferRules {
@@ -129,7 +128,6 @@ fn currency_transfer_eligibility_uses_supplied_policy_and_account_sources() {
         let mut state = env.state().borrow_mut();
         let list = &mut state.currency_list;
         list.server_enabled = false;
-        list.current_character_guid = Some("self".into());
         list.transfer_rules.insert(
             1166,
             CurrencyTransferRules {
@@ -160,7 +158,7 @@ fn currency_transfer_eligibility_uses_supplied_policy_and_account_sources() {
             1166,
             vec![
                 wow_ui_sim::c_api::currency_list::CurrencyAccountSource {
-                    character_guid: "self".into(),
+                    character_guid: wow_ui_sim::lua_api::state::SEEDED_LOCAL_CHARACTER_GUID.into(),
                     character_name: "Self".into(),
                     full_character_name: "Self-Realm".into(),
                     quantity: 99,

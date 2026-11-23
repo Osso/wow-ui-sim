@@ -3,7 +3,7 @@ use crate::lua_api::globals::currency_data;
 use crate::lua_api::methods::borrow_state_mut;
 use crate::lua_api::methods::{
     borrow_state, create_string, create_table, create_table_with_capacity, table_set,
-    table_set_static, val_to_string,
+    table_set_num, table_set_static, val_to_string,
 };
 use crate::lua_api::state::CurrencyInfo;
 use crate::lua_bridge::{FromStack, stack_val, table_set_rust_fn_static};
@@ -39,6 +39,18 @@ const CURRENCY_INFO_METHODS: &[(&str, rilua::RustFn)] = &[
     ),
     #[cfg(feature = "client-retail")]
     ("CanTransferCurrency", can_transfer_currency),
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    (
+        "FetchCurrencyDataFromAccountCharacters",
+        fetch_currency_data_from_account_characters,
+    ),
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    (
+        "GetMaxTransferableAmountFromQuantity",
+        get_max_transferable_amount_from_quantity,
+    ),
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    ("GetCostToTransferCurrency", get_cost_to_transfer_currency),
     #[cfg(feature = "client-retail")]
     ("ExpandCurrencyList", expand_currency_list),
     #[cfg(feature = "client-retail")]
@@ -320,9 +332,7 @@ fn currency_transfer_rejection(
     {
         return Ok(Some(Some(4)));
     }
-    let current = list
-        .current_character_guid
-        .as_ref()
+    let current = crate::lua_api::globals::unit_misc::existing_guid_for_unit(sim, "player")
         .ok_or_else(|| rilua::runtime_error("currency current character GUID not modeled"))?;
     let valid_source = list
         .account_currency_sources
@@ -330,7 +340,7 @@ fn currency_transfer_rejection(
         .is_some_and(|sources| {
             sources
                 .iter()
-                .any(|source| source.character_guid != *current && source.quantity > 0)
+                .any(|source| source.character_guid != current && source.quantity > 0)
         });
     Ok((!valid_source).then_some(Some(6)))
 }
@@ -364,6 +374,83 @@ fn request_account_currency_data(state: &mut LuaState) -> LuaResult<u32> {
         .currency_list
         .request_account_data();
     Ok(0)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn fetch_currency_data_from_account_characters(state: &mut LuaState) -> LuaResult<u32> {
+    let currency_id = i32::from_stack(state, 1)?;
+    let sources = {
+        let sim = borrow_state(state)?;
+        let account_data_ready = sim.currency_list.account_data_ready();
+        account_data_ready.then(|| {
+            sim.currency_list
+                .account_currency_sources
+                .get(&currency_id)
+                .cloned()
+                .unwrap_or_default()
+        })
+    };
+    let Some(sources) = sources else {
+        state.push(Val::Nil);
+        return Ok(1);
+    };
+
+    let data = create_table_with_capacity(state, sources.len());
+    for (index, source) in sources.iter().enumerate() {
+        let row = create_table_with_capacity(state, 5);
+        table_set_static(
+            state,
+            row,
+            "characterGUID",
+            create_string(state, &source.character_guid),
+        );
+        table_set_static(
+            state,
+            row,
+            "characterName",
+            create_string(state, &source.character_name),
+        );
+        table_set_static(
+            state,
+            row,
+            "fullCharacterName",
+            create_string(state, &source.full_character_name),
+        );
+        table_set_static(state, row, "currencyID", Val::Num(f64::from(currency_id)));
+        table_set_static(state, row, "quantity", Val::Num(source.quantity as f64));
+        table_set_num(state, data, (index + 1) as f64, row);
+    }
+    state.push(data);
+    Ok(1)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn transfer_percentage(currency_id: i32) -> Option<f32> {
+    let (_, _, percentage) = sim_data::currency_transfer::get(currency_id)?;
+    let percentage = percentage as f32;
+    (percentage > 0.0).then_some(percentage)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn get_max_transferable_amount_from_quantity(state: &mut LuaState) -> LuaResult<u32> {
+    let currency_id = i32::from_stack(state, 1)?;
+    let quantity = u32::from_stack(state, 2)?;
+    // INFERRED (R88es): multiply the kept share by the quantity in f32, then truncate.
+    let amount = transfer_percentage(currency_id)
+        .map(|percentage| (percentage * 0.01_f32 * quantity as f32) as u32);
+    state.push(amount.map_or(Val::Nil, |value| Val::Num(f64::from(value))));
+    Ok(1)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn get_cost_to_transfer_currency(state: &mut LuaState) -> LuaResult<u32> {
+    let currency_id = i32::from_stack(state, 1)?;
+    let quantity = u32::from_stack(state, 2)?;
+    // INFERRED (R88es): gross quantity is ceil((100 / kept share) * requested amount) in f32.
+    let cost = transfer_percentage(currency_id)
+        .map(|percentage| ((100.0_f32 / percentage) * quantity as f32).ceil() as u32);
+    state.push(cost.map_or(Val::Nil, |value| Val::Num(f64::from(value))));
+    Ok(1)
 }
 
 #[cfg(feature = "client-retail")]
