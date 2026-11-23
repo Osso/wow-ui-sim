@@ -1,17 +1,19 @@
 //! Temporary PvP talent defaults for `C_SpecializationInfo`.
 //!
-//! Core specialization data and Retail lock state are modeled by `c_api::c_spec`;
-//! PvP talent rows and selections are not seeded yet. These defaults keep
-//! Blizzard talent code loadable while those data sources remain unmodeled.
+//! Core specialization and PvP talent selection state is modeled by `c_api::c_spec`.
+//! These defaults keep unsupported profiles loadable.
 
-const PVP_TALENT_DEFAULTS_LUA: &str = r#"
+const PVP_TALENT_UNLOCK_LEVEL_DEFAULT_LUA: &str = r#"
 C_SpecializationInfo = C_SpecializationInfo or __wow_namespace()
-
 if rawget(C_SpecializationInfo, "GetPvpTalentUnlockLevel") == nil then
     function C_SpecializationInfo.GetPvpTalentUnlockLevel()
         return 20
     end
 end
+"#;
+
+const PVP_TALENT_DEFAULTS_LUA: &str = r#"
+C_SpecializationInfo = C_SpecializationInfo or __wow_namespace()
 
 if rawget(C_SpecializationInfo, "GetInspectSelectedPvpTalent") == nil then
     function C_SpecializationInfo.GetInspectSelectedPvpTalent()
@@ -81,23 +83,40 @@ end
 "#;
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
-    lua.exec(PVP_TALENT_DEFAULTS_LUA)?;
-    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail {
+    if !pvp_talents_are_modeled() {
+        lua.exec(PVP_TALENT_DEFAULTS_LUA)?;
         lua.exec(PVP_TALENT_SLOT_UNLOCK_LEVEL_DEFAULTS_LUA)?;
+    }
+    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail {
+        lua.exec(PVP_TALENT_UNLOCK_LEVEL_DEFAULT_LUA)?;
         lua.exec(PVP_SLOT_DEFAULTS_LUA)?;
     }
     Ok(())
 }
 
 pub(crate) fn patch_loader(env: &crate::lua_api::LoaderEnv<'_>) {
-    let _ = env.exec(PVP_TALENT_DEFAULTS_LUA);
-    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail {
+    if !pvp_talents_are_modeled() {
+        let _ = env.exec(PVP_TALENT_DEFAULTS_LUA);
         let _ = env.exec(PVP_TALENT_SLOT_UNLOCK_LEVEL_DEFAULTS_LUA);
+    }
+    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail {
+        let _ = env.exec(PVP_TALENT_UNLOCK_LEVEL_DEFAULT_LUA);
         let _ = env.exec(PVP_SLOT_DEFAULTS_LUA);
     }
 }
 
-#[cfg(test)]
+fn pvp_talents_are_modeled() -> bool {
+    matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever
+    )
+}
+
+#[cfg(all(
+    test,
+    not(any(feature = "client-retail", feature = "client-wowforever"))
+))]
 mod tests {
     use crate::lua_api::WowLuaEnv;
 
