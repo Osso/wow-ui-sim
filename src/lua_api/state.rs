@@ -1081,6 +1081,12 @@ macro_rules! build_empty_sim_state {
             bnet_presence: Default::default(),
             #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
             voice_chat_speak_requests: Vec::new(),
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            combat_audio_speak_requests: Vec::new(),
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            next_combat_audio_utterance_id: 1,
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            pending_combat_audio_utterance_ids: Default::default(),
             voice_chat_speak_stop_count: 0,
             achievement_telemetry: Vec::new(),
             item_search_text: String::new(),

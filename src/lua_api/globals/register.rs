@@ -112,6 +112,8 @@ fn register_bootstrap_shared_apis(lua: &mut rilua::Lua) -> crate::Result<()> {
     // Forever 1.60.1 VoiceChatDocumentation declares these with the retail signature.
     #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
     crate::c_api::c_voice_chat_speak::register(lua.state_mut())?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    crate::c_api::c_voice_chat_speak::register_combat_audio_alert(lua.state_mut())?;
     crate::c_api::c_achievement_telemetry::register(lua.state_mut())?;
     crate::c_api::c_social_contract_glue::register(lua.state_mut())?;
     #[cfg(feature = "maw-power-model")]

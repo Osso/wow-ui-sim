@@ -3,20 +3,16 @@
 //! The simulator does not model selectable audio devices. These defaults keep
 //! options UI probes inert while making the unsupported device list explicit.
 
-const SOUND_DRIVER_DEFAULTS_LUA: &str = r#"
+const SOUND_DRIVER_DEFAULTS_BEFORE_SPEAK_TEXT_LUA: &str = r#"
 if type(C_CombatAudioAlert) ~= "table" then
     C_CombatAudioAlert = {}
 end
 if type(C_Sound) ~= "table" then
     C_Sound = {}
 end
-if type(GetBuildInfo) == "function" and select(4, GetBuildInfo()) >= 120100 then
-    if rawget(C_CombatAudioAlert, "SpeakText") == nil then
-        function C_CombatAudioAlert.SpeakText()
-            return 0
-        end
-    end
-end
+"#;
+
+const SOUND_DRIVER_DEFAULTS_AFTER_SPEAK_TEXT_LUA: &str = r#"
 if MuteSoundFile == nil then
     function MuteSoundFile()
         return true
@@ -95,8 +91,24 @@ if Sound_GameSystem_RestartSoundSystem == nil then
 end
 "#;
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+const COMBAT_AUDIO_SPEAK_TEXT_DEFAULT_LUA: &str = r#"
+if type(GetBuildInfo) == "function" and select(4, GetBuildInfo()) >= 120100 then
+    if rawget(C_CombatAudioAlert, "SpeakText") == nil then
+        function C_CombatAudioAlert.SpeakText()
+            return 0
+        end
+    end
+end
+"#;
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+const COMBAT_AUDIO_SPEAK_TEXT_DEFAULT_LUA: &str = "";
+
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
-    lua.exec(SOUND_DRIVER_DEFAULTS_LUA)?;
+    lua.exec(SOUND_DRIVER_DEFAULTS_BEFORE_SPEAK_TEXT_LUA)?;
+    lua.exec(COMBAT_AUDIO_SPEAK_TEXT_DEFAULT_LUA)?;
+    lua.exec(SOUND_DRIVER_DEFAULTS_AFTER_SPEAK_TEXT_LUA)?;
     Ok(())
 }
 

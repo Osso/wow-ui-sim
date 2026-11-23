@@ -1353,6 +1353,16 @@ pub struct SimState {
     /// Accepted public SpeakText requests in call order; no audio playback.
     #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
     pub voice_chat_speak_requests: Vec<crate::c_api::c_voice_chat_speak::SpeakTextRequest>,
+    /// Accepted CAA speech requests; no synthesized audio is produced.
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub combat_audio_speak_requests:
+        Vec<crate::c_api::c_voice_chat_speak::CombatAudioAlertSpeakTextRequest>,
+    /// Next CAA utterance identity, local to this simulated environment.
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub next_combat_audio_utterance_id: u32,
+    /// Completion events held until a later `process_timers` tick.
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub pending_combat_audio_utterance_ids: std::collections::VecDeque<u32>,
     /// `C_VoiceChat.StopSpeakingText` calls; no playback is modeled to stop.
     pub voice_chat_speak_stop_count: u32,
     /// Whether the account accepted the social contract (default: established account).
