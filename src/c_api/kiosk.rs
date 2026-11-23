@@ -91,19 +91,16 @@ fn read_boolean(state: &mut LuaState, table: GcRef<Table>, key: &str) -> LuaResu
 }
 
 fn read_login_info(state: &mut LuaState, table: GcRef<Table>) -> LuaResult<Option<KioskLoginInfo>> {
-    let values = ["accountName", "password", "realmAddress"]
-        .map(|key| read_optional_string(state, table, key));
-    match values {
-        [
-            Ok(Some(account_name)),
-            Ok(Some(password)),
-            Ok(Some(realm_address)),
-        ] => Ok(Some(KioskLoginInfo {
+    let account_name = read_optional_string(state, table, "accountName")?;
+    let password = read_optional_string(state, table, "password")?;
+    let realm_address = read_optional_string(state, table, "realmAddress")?;
+    match (account_name, password, realm_address) {
+        (None, None, None) => Ok(None),
+        (Some(account_name), Some(password), Some(realm_address)) => Ok(Some(KioskLoginInfo {
             account_name,
             password,
             realm_address,
         })),
-        [Ok(None), Ok(None), Ok(None)] => Ok(None),
         _ => Err(runtime_error(
             "A_Admin.SetKioskSession: login fields must be supplied together",
         )),
