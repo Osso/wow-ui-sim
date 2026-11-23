@@ -652,7 +652,7 @@ macro_rules! build_empty_sim_state {
             spell_max_cumulative_aura_applications: ::std::collections::HashMap::new(),
             pvp_match_active: false,
             pvp_timer_running: false,
-            pvp_timer_remaining_ms: 0.0,
+            pvp_timer_deadline_ms: 0,
             pvp_request_transport: Default::default(),
             aura_filter_facts: Default::default(),
             #[cfg(feature = "aura-instance-enumeration")]
@@ -1015,6 +1015,7 @@ macro_rules! build_empty_sim_state {
             #[cfg(feature = "client-mists")]
             last_watched_reputation_slot_request: None,
             battlefield_vehicles: ::std::collections::HashMap::new(),
+            max_battlefield_id: 0,
             battlefield_queue: BattlefieldQueue::default(),
             battlefield_minimap_visible: false,
             chat_channels: Vec::new(),

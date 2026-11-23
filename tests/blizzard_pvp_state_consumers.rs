@@ -1,7 +1,7 @@
 #![cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 
 use std::path::PathBuf;
-use wow_ui_sim::loader::{discover_blizzard_addons_for_screen, load_addon};
+use wow_ui_sim::loader::discover_blizzard_addons_for_screen;
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::screen::ScreenKind;
 
@@ -14,13 +14,7 @@ fn load_game_ui() -> WowLuaEnv {
 
     let env = WowLuaEnv::new().expect("Failed to create Lua environment");
     env.set_screen_size(1024.0, 768.0);
-    env.set_screen_mode(ScreenKind::Game);
-    env.state().borrow_mut().addon_base_paths = vec![root];
-    wow_ui_sim::xml::register_intrinsic_templates();
-    for (name, toc) in addons {
-        load_addon(&env.loader_env(), &toc)
-            .unwrap_or_else(|error| panic!("[load {name}] FAILED: {error}"));
-    }
+    crate::common::load_game_startup_inventory(&env);
     env.apply_post_load_workarounds();
     wow_ui_sim::startup::fire_startup_events_for_screen(&env, ScreenKind::Game);
     env

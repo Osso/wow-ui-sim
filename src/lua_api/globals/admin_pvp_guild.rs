@@ -26,6 +26,12 @@ pub(super) fn set_honor_level(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
+pub(super) fn set_battlefield_max_id(state: &mut LuaState) -> LuaResult<u32> {
+    let max_id = i32::from_stack(state, 1)?;
+    borrow_state_mut(state)?.max_battlefield_id = max_id;
+    Ok(0)
+}
+
 pub(super) fn set_battlefield_queue(state: &mut LuaState) -> LuaResult<u32> {
     let index = i32::from_stack(state, 1)?;
     let queued = bool::from_stack(state, 2)?;
@@ -46,16 +52,25 @@ pub(super) fn set_battlefield_queue(state: &mut LuaState) -> LuaResult<u32> {
 
 pub(super) fn set_battlefield_arena(state: &mut LuaState) -> LuaResult<u32> {
     let active = bool::from_stack(state, 1)?;
-    borrow_state_mut(state)?.world.battlefield_arena = active;
+    let record_flag = bool::from_stack(state, 2)?;
+    let mut sim = borrow_state_mut(state)?;
+    sim.world.battlefield_arena = active;
+    sim.world.current_arena_record_flag = record_flag;
+    Ok(0)
+}
+
+pub(super) fn set_player_present(state: &mut LuaState) -> LuaResult<u32> {
+    let present = bool::from_stack(state, 1)?;
+    borrow_state_mut(state)?.player.present = present;
     Ok(0)
 }
 
 pub(super) fn set_pvp_timer(state: &mut LuaState) -> LuaResult<u32> {
     let running = bool::from_stack(state, 1)?;
-    let remaining_ms = f64::from_stack(state, 2)?;
+    let deadline_ms = u32::from_stack(state, 2)?;
     let mut sim = borrow_state_mut(state)?;
     sim.pvp_timer_running = running;
-    sim.pvp_timer_remaining_ms = remaining_ms;
+    sim.pvp_timer_deadline_ms = deadline_ms;
     Ok(0)
 }
 

@@ -96,7 +96,7 @@ fn get_num_online_friends(state: &mut LuaState) -> LuaResult<u32> {
 
 fn get_num_ignores(state: &mut LuaState) -> LuaResult<u32> {
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
-    let count = borrow_state(state)?.social_ignores.len();
+    let count = borrow_state(state)?.social_ignores.len().min(50);
     #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     let count = 0;
     state.push(Val::Num(count as f64));

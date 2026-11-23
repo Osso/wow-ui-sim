@@ -1,5 +1,5 @@
 //! Legacy Battle.net block-list queries for the FriendsFrame ignore window.
-//! INFERRED supplied-list behavior; R88eh (native evidence pending).
+//! R88eh: one-based rows, identifier-backed selection, and native invalid-index errors.
 
 use crate::lua_api::methods::{borrow_state, borrow_state_mut, create_string};
 use crate::lua_bridge::FromStack;
@@ -34,22 +34,32 @@ fn get_blocked_info(state: &mut LuaState) -> LuaResult<u32> {
             state.push(Val::Num(entry.blocked_id as f64));
             state.push(name);
         }
-        None => {
-            state.push(Val::Nil);
-            state.push(Val::Nil);
-        }
+        None => return Err(rilua::runtime_error("BNGetBlockedInfo: invalid index")),
     }
     Ok(2)
 }
 
 fn get_selected_block(state: &mut LuaState) -> LuaResult<u32> {
-    let selected = borrow_state(state)?.selected_bnet_block;
-    state.push(selected.map_or(Val::Nil, |index| Val::Num(index as f64)));
+    let sim = borrow_state(state)?;
+    let selected_index = sim
+        .selected_bnet_block
+        .and_then(|identity| {
+            sim.bnet_blocked_entries
+                .iter()
+                .position(|entry| entry.blocked_id == identity)
+        })
+        .map_or(0, |index| index + 1);
+    state.push(Val::Num(selected_index as f64));
     Ok(1)
 }
 
 fn set_selected_block(state: &mut LuaState) -> LuaResult<u32> {
     let index = i32::from_stack(state, 1)?;
-    borrow_state_mut(state)?.selected_bnet_block = Some(index);
+    let mut sim = borrow_state_mut(state)?;
+    sim.selected_bnet_block = index
+        .checked_sub(1)
+        .and_then(|index| usize::try_from(index).ok())
+        .and_then(|index| sim.bnet_blocked_entries.get(index))
+        .map(|entry| entry.blocked_id);
     Ok(0)
 }
