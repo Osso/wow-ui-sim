@@ -105,6 +105,59 @@ fn find_toc_file_resolves_bare_toc() {
     );
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn currency_transfer_menu_clamps_to_account_source_quantity_and_cost() {
+    let env = load_full_game_ui();
+    env.exec(
+        r#"
+            A_Admin.SetCurrencyTransferEnabled(true)
+            A_Admin.SetCurrencyTransferRules(1792, {
+                award_condition_met = true,
+                quantity_cap_reached = false,
+                weekly_cap_reached = false,
+            })
+            C_CurrencyInfo.SetCurrencyFilter(Enum.CurrencyFilterType.DiscoveredAndAllAccountTransferable)
+            TokenFrame:Show()
+            TokenFrame:Update()
+            TokenFrame.ScrollBox:ForEachFrame(function(button)
+                if button.elementData.currencyID == 1792 then
+                    button:Click()
+                end
+            end)
+            A_Admin.SetAccountCharacterCurrencyData(1792, {
+                { characterGUID = 'Player-2-00000002', characterName = 'SourceA', fullCharacterName = 'SourceA-Realm', quantity = 100 },
+                { characterGUID = 'Player-3-00000003', characterName = 'SourceB', fullCharacterName = 'SourceB-Realm', quantity = 200 },
+            })
+        "#,
+    )
+    .expect("the original TokenFrame should request account currency data");
+    env.complete_account_currency_request(Vec::new())
+        .expect("account currency completion should publish supplied sources");
+    env.exec("TokenFramePopup.CurrencyTransferToggleButton:Click()")
+        .expect("the original TokenFrame toggle should open CurrencyTransferMenu");
+
+    let amounts: (f64, f64) = env
+        .eval(
+            r#"
+                local input = CurrencyTransferMenu.Content.AmountSelector.InputBox
+                local dropdown = CurrencyTransferMenu.Content.SourceSelector.Dropdown
+                dropdown:OpenMenu()
+                local firstAmount = input:GetClampedInputAmount(1000000)
+                for _, entry in dropdown:GetMenuDescription():EnumerateElementDescriptions() do
+                    local source = entry:GetData()
+                    if source.characterGUID == 'Player-3-00000003' then
+                        entry:Pick({})
+                    end
+                end
+                local secondAmount = input:GetClampedInputAmount(1000000)
+                return firstAmount, secondAmount
+            "#,
+        )
+        .expect("the original source dropdown should apply each account source");
+    assert_eq!(amounts, (83.0, 166.0));
+}
+
 #[test]
 fn toc_has_only_title_directive_with_no_dependencies() {
     let toc = TocFile::from_file(&token_ui_toc()).expect("TOC parses");
