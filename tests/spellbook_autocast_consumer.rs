@@ -32,7 +32,6 @@ fn supply_forever_spellbook_inputs(env: &WowLuaEnv) {
     let mut state = env.state().borrow_mut();
     state.transmog_availability.enabled = Some(false);
     state.transmog_outfit_catalog.entries.clear();
-    state.transmog_outfit_catalog.outfits_info_supplied = Some(false);
 }
 
 fn load_startup_addons(env: &WowLuaEnv, ui: &std::path::Path) {

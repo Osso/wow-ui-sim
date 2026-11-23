@@ -4,6 +4,8 @@ use crate::lua_api::globals::state_backed_queries::dispatch_event_now;
 #[cfg(not(feature = "client-wowforever"))]
 use crate::lua_api::methods::borrow_state;
 use crate::lua_api::methods::borrow_state_mut;
+#[cfg(feature = "client-wowforever")]
+use crate::lua_bridge::TableBuilder;
 use crate::lua_bridge::{FromStack, table_set_rust_fn_static};
 use rilua::vm::{gc::arena::GcRef, state::LuaState, table::Table};
 use rilua::{LuaResult, Val};
@@ -39,6 +41,29 @@ pub(super) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResu
     Ok(())
 }
 
+#[cfg(feature = "client-wowforever")]
+pub(super) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
+    builder.set_function("SetUnlockedOutfitSlots", set_unlocked_outfit_slots)
+}
+
+#[cfg(feature = "client-wowforever")]
+fn set_unlocked_outfit_slots(state: &mut LuaState) -> LuaResult<u32> {
+    let source = u32::from_stack(state, 1)?;
+    let count = u32::from_stack(state, 2)?;
+    let mut sim = borrow_state_mut(state)?;
+    let Some(unlocked) = sim
+        .transmog_outfits
+        .unlocked_by_source
+        .get_mut(source as usize)
+    else {
+        return Err(rilua::runtime_error(
+            "A_Admin.SetUnlockedOutfitSlots source must be 0, 1, or 2",
+        ));
+    };
+    *unlocked = count;
+    Ok(0)
+}
+
 fn read_metadata(state: &LuaState, index: i32) -> LuaResult<(String, i64)> {
     let name = String::from_stack(state, index)?;
     let icon = i64::from_stack(state, index + 1)?;
@@ -64,10 +89,6 @@ fn insert_outfit(state: &LuaState, name: String, icon: i64) -> LuaResult<i64> {
     let id = append_outfit_entry(&mut sim.transmog_outfit_catalog.entries, name, icon);
 
     sim.transmog_outfits.saved.insert(id, Default::default());
-    #[cfg(feature = "client-wowforever")]
-    {
-        sim.transmog_outfit_catalog.outfits_info_supplied = Some(true);
-    }
     Ok(id)
 }
 
