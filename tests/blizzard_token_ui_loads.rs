@@ -117,7 +117,6 @@ fn currency_transfer_menu_clamps_to_account_source_quantity_and_cost() {
                 quantity_cap_reached = false,
                 weekly_cap_reached = false,
             })
-            C_CurrencyInfo.SetCurrencyFilter(Enum.CurrencyFilterType.DiscoveredAndAllAccountTransferable)
             TokenFrame:Show()
             TokenFrame:Update()
             TokenFrame.ScrollBox:ForEachFrame(function(button)
@@ -126,8 +125,8 @@ fn currency_transfer_menu_clamps_to_account_source_quantity_and_cost() {
                 end
             end)
             A_Admin.SetAccountCharacterCurrencyData(1792, {
-                { characterGUID = 'Player-2-00000002', characterName = 'SourceA', fullCharacterName = 'SourceA-Realm', quantity = 100 },
                 { characterGUID = 'Player-3-00000003', characterName = 'SourceB', fullCharacterName = 'SourceB-Realm', quantity = 200 },
+                { characterGUID = 'Player-2-00000002', characterName = 'SourceA', fullCharacterName = 'SourceA-Realm', quantity = 100 },
             })
         "#,
     )
@@ -137,25 +136,27 @@ fn currency_transfer_menu_clamps_to_account_source_quantity_and_cost() {
     env.exec("TokenFramePopup.CurrencyTransferToggleButton:Click()")
         .expect("the original TokenFrame toggle should open CurrencyTransferMenu");
 
-    let amounts: (f64, f64) = env
+    let amounts: (f64, f64, f64, f64) = env
         .eval(
             r#"
                 local input = CurrencyTransferMenu.Content.AmountSelector.InputBox
                 local dropdown = CurrencyTransferMenu.Content.SourceSelector.Dropdown
                 dropdown:OpenMenu()
                 local firstAmount = input:GetClampedInputAmount(1000000)
+                local firstCost = CurrencyTransferMenu:GetTotalCurrencyTransferCost()
                 for _, entry in dropdown:GetMenuDescription():EnumerateElementDescriptions() do
                     local source = entry:GetData()
-                    if source.characterGUID == 'Player-3-00000003' then
+                    if source.characterGUID == 'Player-2-00000002' then
                         entry:Pick({})
                     end
                 end
                 local secondAmount = input:GetClampedInputAmount(1000000)
-                return firstAmount, secondAmount
+                local secondCost = CurrencyTransferMenu:GetTotalCurrencyTransferCost()
+                return firstAmount, firstCost, secondAmount, secondCost
             "#,
         )
         .expect("the original source dropdown should apply each account source");
-    assert_eq!(amounts, (83.0, 166.0));
+    assert_eq!(amounts, (160.0, 200.0, 80.0, 100.0));
 }
 
 #[test]
