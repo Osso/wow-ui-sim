@@ -56,4 +56,118 @@ fn encounter_journal_renders_supplied_item_sets_and_items(env: &WowLuaEnv) {
         "Supplied Alpha:41001:91001|Supplied Beta:41002:91002"
     );
 }
+
+fn encounter_journal_boss_list_uses_supplied_raid_locks(env: &WowLuaEnv) {
+    load_addon(&env.loader_env(), &encounter_journal_toc())
+        .expect("selected Encounter Journal TOC should load");
+    env.apply_post_load_workarounds();
+
+    let (instance_id, map_id, journal_a, encounter_a, journal_b, encounter_b): (
+        u32, u32, u32, u32, u32, u32,
+    ) = env
+        .eval(
+            r#"
+            local selected
+            for instanceIndex = 1, 500 do
+                local instanceID = EJ_GetInstanceByIndex(instanceIndex, true)
+                if not instanceID then break end
+                local encounters = {}
+                for bossIndex = 1, 100 do
+                    local _, _, journalID = EJ_GetEncounterInfoByIndex(bossIndex, instanceID)
+                    if not journalID then break end
+                    local _, _, _, _, _, _, encounterID, mapID = EJ_GetEncounterInfo(journalID)
+                    if encounterID and encounterID > 0 and mapID and mapID > 0 then
+                        encounters[#encounters + 1] = {
+                            journalID = journalID,
+                            encounterID = encounterID,
+                            mapID = mapID,
+                        }
+                    end
+                end
+                if #encounters >= 2
+                    and encounters[1].mapID == encounters[2].mapID then
+                    selected = {
+                        instanceID = instanceID,
+                        mapID = encounters[1].mapID,
+                        first = encounters[1],
+                        second = encounters[2],
+                    }
+                    break
+                end
+            end
+            assert(selected, "Encounter Journal must contain two raid bosses with map data")
+            EJ_SelectInstance(selected.instanceID)
+            assert(EJ_InstanceIsRaid(), "selected Encounter Journal instance must be a raid")
+            A_Admin.SetCompletedEncounters({
+                {
+                    mapID = selected.mapID,
+                    encounterID = selected.first.encounterID,
+                    difficultyID = 14,
+                },
+            })
+            EncounterJournal_OpenJournal(14, selected.instanceID)
+            assert(EncounterJournal:IsShown(), "the client path must open Encounter Journal")
+            return selected.instanceID, selected.mapID,
+                selected.first.journalID, selected.first.encounterID,
+                selected.second.journalID, selected.second.encounterID
+            "#,
+        )
+        .expect("a raid instance with two mapped Encounter Journal bosses should exist");
+
+    let initial: (bool, bool, bool, bool, bool, bool) = env
+        .eval(&format!(
+            r#"
+            local overlays = {{}}
+            EncounterJournal.encounter.info.BossesScrollBox:ForEachFrame(function(button)
+                if button.encounterID then
+                    overlays[button.encounterID] = button.DefeatedOverlay:IsShown()
+                end
+            end)
+            return EncounterJournal.instanceID == {instance_id},
+                overlays[{journal_a}] == true,
+                overlays[{journal_b}] == false,
+                C_RaidLocks.IsEncounterComplete({map_id}, {encounter_a}, 14),
+                C_RaidLocks.IsEncounterComplete({map_id}, {encounter_a}),
+                C_RaidLocks.IsEncounterComplete({map_id}, {encounter_b}, 14)
+            "#
+        ))
+        .expect("Encounter Journal boss overlays should read supplied raid-lock state");
+    assert_eq!(initial, (true, true, true, true, true, false));
+
+    env.exec(&format!(
+        r#"
+        A_Admin.SetCompletedEncounters({{
+            {{ mapID = {map_id}, encounterID = {encounter_a}, difficultyID = 14 }},
+            {{ mapID = {map_id}, encounterID = {encounter_b}, difficultyID = 14 }},
+        }})
+        RequestRaidInfo()
+        local overlays = {{}}
+        EncounterJournal.encounter.info.BossesScrollBox:ForEachFrame(function(button)
+            if button.encounterID then
+                overlays[button.encounterID] = button.DefeatedOverlay:IsShown()
+            end
+        end)
+        assert(overlays[{journal_b}] == false,
+            "RequestRaidInfo must not publish UPDATE_INSTANCE_INFO synchronously")
+        "#
+    ))
+    .expect("the second supplied completion should wait for the raid-info reply tick");
+
+    env.process_timers()
+        .expect("the queued raid-info reply should dispatch on the next timer tick");
+    let updated: bool = env
+        .eval(&format!(
+            r#"
+            local shown
+            EncounterJournal.encounter.info.BossesScrollBox:ForEachFrame(function(button)
+                if button.encounterID == {journal_b} then
+                    shown = button.DefeatedOverlay:IsShown()
+                end
+            end)
+            return shown == true
+            "#
+        ))
+        .expect("UPDATE_INSTANCE_INFO should refresh the second boss overlay");
+    assert!(updated, "the second boss overlay should show after the reply tick");
+}
 }
