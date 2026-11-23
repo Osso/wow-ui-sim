@@ -5,6 +5,14 @@ use crate::lua_api::globals::currency_data::{self, CurrencyEntry};
 
 pub(crate) type CurrencyListRow = (i32, CurrencyEntry);
 
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct CurrencyAccountSource {
+    pub character_guid: String,
+    pub character_name: String,
+    pub full_character_name: String,
+    pub quantity: u64,
+}
+
 #[derive(Default)]
 pub struct CurrencyTransferRules {
     pub faction_key_0: Option<bool>,
@@ -24,7 +32,7 @@ pub struct CurrencyListState {
     pub cached_transaction_count: usize,
     pub transfer_rules: HashMap<i32, CurrencyTransferRules>,
     pub current_character_guid: Option<String>,
-    pub account_currency_sources: HashMap<i32, Vec<(String, u64)>>,
+    pub account_currency_sources: HashMap<i32, Vec<CurrencyAccountSource>>,
     pub account_loading: bool,
     pub transaction_loading: bool,
     pub pending_character_requests: usize,
@@ -93,7 +101,6 @@ impl CurrencyListState {
     pub fn complete_account_request(&mut self, rows: Vec<CurrencyEntry>) {
         self.account_loading = false;
         self.account_rows = rows;
-        self.account_currency_sources.clear();
         if self.filter == 2 && self.account_data_ready() {
             self.projected_account_rows.clone_from(&self.account_rows);
         }

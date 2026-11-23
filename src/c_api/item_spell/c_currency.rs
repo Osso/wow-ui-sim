@@ -330,7 +330,7 @@ fn currency_transfer_rejection(
         .is_some_and(|sources| {
             sources
                 .iter()
-                .any(|(guid, quantity)| guid != current && *quantity > 0)
+                .any(|source| source.character_guid != *current && source.quantity > 0)
         });
     Ok((!valid_source).then_some(Some(6)))
 }

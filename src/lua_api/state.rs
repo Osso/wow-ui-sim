@@ -876,7 +876,7 @@ macro_rules! build_empty_sim_state {
             currency_info: super::globals::currency_data::seeded_currency_info_map(),
             currency_tooltip_inputs: HashMap::new(),
             wrath_currency: super::globals::real::wrath_currency::CurrencyListState::default(),
-            #[cfg(feature = "client-retail")]
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
             currency_list: crate::c_api::currency_list::CurrencyListState::default(),
             #[cfg(feature = "client-mists")]
             mists_currency_watch_overrides: HashMap::new(),
