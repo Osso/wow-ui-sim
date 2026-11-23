@@ -1,6 +1,7 @@
 #![cfg(all(feature = "gui", feature = "client-retail"))]
 
 use crate::common;
+use wow_ui_sim::lua_api::WowLuaEnv;
 
 fn update_navigation_target(env: &WowLuaEnv, target: &str) -> (String, i32, bool) {
     env.exec(target).expect("supply selected navigation target");
