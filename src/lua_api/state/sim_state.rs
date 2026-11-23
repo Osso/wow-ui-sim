@@ -801,10 +801,10 @@ pub struct SimState {
     /// Explicit unit-aura output policy input, independent of cooldowns and unit stats.
     /// INFERRED host input: active PvP match, not queue/instance presence.
     pub pvp_match_active: bool,
-    /// INFERRED R88ei (native evidence pending): supplied PvP timer state.
+    /// R88ei: supplied PvP status flag used by both timer queries.
     pub pvp_timer_running: bool,
-    /// Remaining PvP timer milliseconds, returned as supplied without a clock model.
-    pub pvp_timer_remaining_ms: f64,
+    /// R88ei: absolute deadline on the simulator's millisecond clock.
+    pub pvp_timer_deadline_ms: u32,
     pub pvp_request_transport: crate::c_api::c_pvp::PvpRequestTransport,
     /// Explicit aura-filter classification and raid dispel capabilities.
     pub aura_filter_facts: crate::lua_api::game_data::AuraFilterFacts,
@@ -1177,10 +1177,10 @@ pub struct SimState {
     /// INFERRED host-supplied Battle.net block rows for Retail/Forever FriendsFrame.
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     pub bnet_blocked_entries: Vec<BnetBlockedEntry>,
-    /// Selected one-based ignore row; None means no supplied selection.
+    /// Selected ignore identity; None means no supplied selection.
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
-    pub selected_social_ignore: Option<i32>,
-    /// Selected one-based Battle.net block row; None means no supplied selection.
+    pub selected_social_ignore: Option<String>,
+    /// Selected Battle.net block identity; None means no supplied selection.
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     pub selected_bnet_block: Option<i32>,
     pub social_restrictions: SocialRestrictionsState,
@@ -1270,6 +1270,8 @@ pub struct SimState {
         i32,
         Vec<crate::c_api::c_pvp::battlefield_vehicles::BattlefieldVehicle>,
     >,
+    /// INFERRED R88ei: three slots by default (wiki/historical MAX_BATTLEFIELD_QUEUES).
+    pub max_battlefield_id: i32,
     pub battlefield_queue: BattlefieldQueue,
     pub battlefield_minimap_visible: bool,
     pub chat_channels: Vec<ChatChannel>,

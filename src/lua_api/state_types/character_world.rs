@@ -516,6 +516,8 @@ pub struct WorldState {
     /// Whether the current instance is an arena battleground. Drives
     /// `IsBattlefieldArena`.
     pub battlefield_arena: bool,
+    /// R88ei: whether the current arena record exists.
+    pub current_arena_record_flag: bool,
     /// Numeric active-player guild identity; zero means no guild.
     pub guild_id: u64,
     /// Zero-based active-player rank into the existing guild_ranks rights cache.
