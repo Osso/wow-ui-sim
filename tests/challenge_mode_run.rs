@@ -219,7 +219,7 @@ fn challenge_icon_map_ids_for_display_season(season_id: u32) -> String {
 #[test]
 fn original_challenges_panel_uses_display_season_maps() {
     let env = WowLuaEnv::new().unwrap();
-    let default_season: u32 = env
+    let default_season: i32 = env
         .eval("return C_SeasonInfo.GetCurrentDisplaySeasonID()")
         .unwrap();
     assert_eq!(default_season, 37);
