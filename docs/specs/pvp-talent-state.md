@@ -4,14 +4,14 @@
 
 ## What it must do
 
-- [ ] Return selected talent IDs as a list and inspected selections as an ID or nil.
-- [ ] Return integer unlock levels for matching talent/slot rows and nil for missing rows.
-- [ ] Return supplied `PvpTalentInfo` and `PvpTalentSlotInfo` records through their original consumers.
-- [ ] Return a Boolean from `IsPvpTalentLocked`; its setter normally returns no values.
-- [ ] Return two Boolean alert values; their meanings remain unknown.
-- [ ] Let `A_Admin` supply test rows and state without writes to `env.state()`.
-- [ ] Dispatch an inferred Player PvP talent refresh event when simulator state changes.
-- [ ] Dispatch an inferred Inspect Honor refresh event when inspect selection changes.
+- [x] Return selected talent IDs as a list and inspected selections as an ID or nil.
+- [x] Return integer unlock levels for matching talent/slot rows and nil for missing rows.
+- [x] Return supplied `PvpTalentInfo` and `PvpTalentSlotInfo` records through their original consumers.
+- [x] Return a Boolean from `IsPvpTalentLocked`; its setter normally returns no values.
+- [x] Return two Boolean alert values; their meanings remain unknown.
+- [x] Let `A_Admin` supply test rows and state without writes to `env.state()`.
+- [x] Dispatch an inferred Player PvP talent refresh event when simulator state changes.
+- [x] Dispatch an inferred Inspect Honor refresh event when inspect selection changes.
 
 ## How it works
 
