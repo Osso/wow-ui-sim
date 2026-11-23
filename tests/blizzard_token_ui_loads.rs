@@ -125,16 +125,30 @@ fn currency_transfer_menu_clamps_to_account_source_quantity_and_cost() {
                 quantity_cap_reached = false,
                 weekly_cap_reached = false,
             })
-            TokenFrame:Show()
-            TokenFrame:Update()
+            ToggleCharacter("TokenFrame")
+        "#,
+    )
+    .expect("the original CharacterFrame path should open TokenFrame");
+    env.fire_on_update(0.016)
+        .expect("the first update should lay out the TokenFrame ScrollBox");
+    env.fire_on_update(0.016)
+        .expect("the second update should materialize the TokenFrame rows");
+    env.exec(
+        r#"
+            local scrollBox = TokenFrame.ScrollBox
+            assert(TokenFrame:IsShown(), "ToggleCharacter should show TokenFrame")
+            assert(scrollBox:GetWidth() > 0 and scrollBox:GetHeight() > 0,
+                "TokenFrame ScrollBox should have its laid-out size")
+            local provider = assert(scrollBox:GetDataProvider())
+            assert(provider:GetSize() > 0, "TokenFrame provider should contain currency rows")
             local foundCurrency = false
-            TokenFrame.ScrollBox:ForEachFrame(function(button)
+            scrollBox:ForEachFrame(function(button)
                 if button.elementData.currencyID == 1792 then
                     foundCurrency = true
                     button:Click()
                 end
             end)
-            assert(foundCurrency, "TokenFrame should materialize the supplied currency row")
+            assert(foundCurrency, "the laid-out ScrollBox should materialize currency 1792")
             assert(TokenFramePopup:IsShown(), "selecting the currency should open its popup")
             A_Admin.SetAccountCharacterCurrencyData(1792, {
                 { characterGUID = 'Player-3-00000003', characterName = 'SourceB', fullCharacterName = 'SourceB-Realm', quantity = 200 },
