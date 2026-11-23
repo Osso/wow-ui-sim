@@ -4,9 +4,12 @@
 
 ## What it must do
 
-- [x] Show two distinct supplied listings and the supplied hot deal in the original Blizzard panel.
-- [x] Allow `hotItem.marketID` to match a listing while keeping listing IDs unique; bids update both copies.
-- [x] Reject bids below `max(minBid, currBid + minIncrement)` without changing the listing state.
+- [x] Show supplied listings in the original Blizzard panel.
+- [x] VERIFIED (R88em): `GetHotItem` returns one of the current listings; the supplied `hotItemMarketID` selects that listing by its market ID.
+- [x] VERIFIED (R88em; Retail consumer `Blizzard_BlackMarketUI.lua:171, 228, 236-244`): the original UI carries `marketID` through its `selectedMarketID`/`auctionID` fields into `GetItemInfoByID` and `ItemPlaceBid`, so the simulator resolves those calls by `marketID` despite the native reconstruction's generic “item ID” wording.
+- [x] VERIFIED (R88em): reject bids for missing listings, nonpositive remaining-time status, or amounts below `max(minBid, currBid + minIncrement)` without changing listing state.
+- [x] VERIFIED (R88em): outside a market interaction, `GetNumItems`, `IsViewOnly`, and item getters return no values; `RequestItems` requires an interaction and returns no values.
+- [x] INFERRED (R88em): `A_Admin.SetBlackMarketState` simulates `BLACK_MARKET_OPEN` and starts the interaction, which remains open until `Close`.
 - [x] Dispatch `BLACK_MARKET_BID_RESULT(marketID, resultCode)` for each bid. **INFERRED (R88em; native evidence pending):** `0` means success, `1` means below minimum, and `2` means the market ID is unknown.
 - [x] Respect the supplied view-only flag by hiding the Blizzard bid controls.
 - [x] Treat index zero as invalid; it must not return the first listing.
@@ -30,7 +33,7 @@
 
 ## Known gaps (current cycle)
 
-- [ ] **INFERRED (R88em; native evidence pending):** confirm native bid-result, close, and getter return semantics.
+- [ ] INFERRED (R88em): bid-result codes and dispatch timing remain unknown; the simulator maps an expired listing to its existing market-not-found result code.
 
 ## Out of scope
 

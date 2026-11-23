@@ -54,7 +54,13 @@ fn read_rule_name(
 
 pub fn is_game_rule_active(state: &mut LuaState) -> LuaResult<u32> {
     let active = match read_rule_key(state)? {
-        Some(key) => borrow_state(state)?.game_rules.rules.contains_key(&key),
+        Some(key) => {
+            let rules = &borrow_state(state)?.game_rules.rules;
+            rules.get(&key).is_some_and(|value| {
+                ACTIVE != ClientProfile::WowForever
+                    || crate::c_api::c_game_rules::is_rule_value_active(value)
+            })
+        }
         None => false,
     };
     state.push(Val::Bool(active));

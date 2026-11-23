@@ -6,7 +6,7 @@
 
 - [x] Forever registers `C_GameRules.IsSelfFoundAllowed` and returns exactly one Boolean value.
 - [x] A missing rule-22 entry returns `false`.
-- [x] **INFERRED:** a nonzero numeric rule-22 value returns `true`.
+- [x] VERIFIED (R88ej): a present integer or float rule-22 value returns `true` only when it is nonzero and, for floats, not NaN.
 
 ## How it works
 
