@@ -281,11 +281,16 @@ fn execute_watchdog_addon_file(
     let timeout = crate::lua_api::execution_budget::watchdog_timeout(state)
         .map_err(|error| LoadError::Lua(error.to_string()))?;
     let started = Instant::now();
-    let result =
-        crate::lua_api::execution_budget::with_addon_watchdog(state, ctx.name, timeout, |state| {
+    let result = crate::lua_api::execution_budget::with_addon_watchdog(
+        state,
+        ctx.name,
+        timeout,
+        ctx.taint,
+        |state| {
             exec_addon_func(state, func, ctx)
                 .map_err(|error| rilua::runtime_error(error.to_string()))
-        });
+        },
+    );
     log_file_watchdog_result(ctx.name, chunk_name, timeout, started, result.is_ok());
     result.map_err(|error| LoadError::Lua(error.to_string()))
 }

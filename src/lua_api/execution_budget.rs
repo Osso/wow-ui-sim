@@ -26,18 +26,20 @@ pub(crate) fn with_addon_watchdog<T>(
     state: &mut LuaState,
     owner: &str,
     timeout: Duration,
+    restricted: bool,
     operation: impl FnOnce(&mut LuaState) -> LuaResult<T>,
 ) -> LuaResult<T> {
-    with_addon_execution_limits(state, owner, timeout, operation)
+    with_addon_execution_limits(state, owner, timeout, restricted, operation)
 }
 
 fn with_addon_execution_limits<T>(
     state: &mut LuaState,
     owner: &str,
     timeout: Duration,
+    restricted: bool,
     operation: impl FnOnce(&mut LuaState) -> LuaResult<T>,
 ) -> LuaResult<T> {
-    let throttle = restricted_bucket_limits(state)?;
+    let throttle = restricted_bucket_limits(state, restricted)?;
     state.with_instruction_owner(owner, |state| {
         let execute = |state: &mut LuaState| {
             state.with_execution_watchdog(timeout, DEFAULT_WATCHDOG_DISPATCH_INTERVAL, operation)
@@ -55,7 +57,10 @@ fn with_addon_execution_limits<T>(
     })
 }
 
-fn restricted_bucket_limits(state: &LuaState) -> LuaResult<Option<(u64, u64)>> {
+fn restricted_bucket_limits(state: &LuaState, restricted: bool) -> LuaResult<Option<(u64, u64)>> {
+    if !restricted {
+        return Ok(None);
+    }
     let sim = borrow_state(state)?;
     if !sim.cvars.get_bool("luaScriptBucketThrottleEnabled") {
         return Ok(None);
@@ -88,7 +93,7 @@ pub(crate) fn call_frame_handler(
     };
     let timeout = watchdog_timeout(state).map_err(|error| error.to_string())?;
     let started = Instant::now();
-    let result = with_addon_execution_limits(state, &owner, timeout, |state| {
+    let result = with_addon_execution_limits(state, &owner, timeout, true, |state| {
         call_handler(state, handler, args)
     });
     if result.is_err() && super::handler_timing::is_enabled() {
