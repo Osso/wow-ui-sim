@@ -281,6 +281,7 @@ fn execute_watchdog_addon_file(
     let result =
         crate::lua_api::execution_budget::with_addon_watchdog(state, ctx.name, timeout, |state| {
             exec_addon_func(state, func, ctx)
+                .map_err(|error| rilua::runtime_error(error.to_string()))
         });
     if crate::lua_api::handler_timing::is_enabled() {
         let line = match &result {

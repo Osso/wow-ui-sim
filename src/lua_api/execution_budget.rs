@@ -42,8 +42,8 @@ pub(crate) fn call_frame_handler(
 ) -> Result<Vec<Val>, String> {
     let owner = frame_addon_owner(state, frame_id).map_err(|error| error.to_string())?;
     let Some(owner) = owner else {
-        return call_handler(state, handler, args);
-    };
+        return call_handler(state, handler, args).map_err(|error| error.to_string());
+    }
     let timeout = watchdog_timeout(state).map_err(|error| error.to_string())?;
     let started = Instant::now();
     let result = state.with_instruction_owner(&owner, |state| {
@@ -60,7 +60,7 @@ pub(crate) fn call_frame_handler(
     result.map_err(|error| error.to_string())?
 }
 
-fn call_handler(state: &mut LuaState, handler: Val, args: &[Val]) -> Result<Vec<Val>, String> {
+fn call_handler(state: &mut LuaState, handler: Val, args: &[Val]) -> LuaResult<Vec<Val>> {
     super::script_helpers::protected_lua_pcall_state(state, handler, args)
         .map_err(rilua::runtime_error)
 }
