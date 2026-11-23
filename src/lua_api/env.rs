@@ -30,6 +30,7 @@ pub(crate) struct WowLuaAppData {
     pub(crate) sim_state: Rc<RefCell<SimState>>,
     pub(crate) lua: Option<Rc<RefCell<rilua::Lua>>>,
     pub(crate) font_system: Option<Rc<RefCell<WowFontSystem>>>,
+    pub(crate) host_input_depth: Cell<usize>,
     /// Sticky dirty bit for rebuilding `SimState::on_update_frames` from
     /// registry handler caches when incremental sync could not borrow state.
     pub(crate) on_update_cache_dirty: bool,
@@ -50,6 +51,7 @@ impl WowLuaAppData {
             sim_state,
             lua: None,
             font_system: None,
+            host_input_depth: Cell::new(0),
             on_update_cache_dirty: true,
             hot_literals: None,
             global_slots: None,
@@ -62,7 +64,6 @@ impl WowLuaAppData {
 pub struct WowLuaEnv {
     pub(crate) lua: Rc<RefCell<rilua::Lua>>,
     pub(crate) state: Rc<RefCell<SimState>>,
-    pub(crate) host_input_depth: Cell<usize>,
     reload_loader: Option<Rc<ReloadLoader>>,
     bootstrap_kind: BootstrapKind,
     host_world_entry_identity: bool,
@@ -158,7 +159,6 @@ impl WowLuaEnv {
         let env = Self {
             lua,
             state,
-            host_input_depth: Cell::new(0),
             reload_loader: None,
             bootstrap_kind: BootstrapKind::Initial,
             host_world_entry_identity: false,

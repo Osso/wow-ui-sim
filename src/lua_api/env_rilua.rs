@@ -86,10 +86,9 @@ impl WowLuaEnv {
         &self,
         operation: impl FnOnce() -> crate::Result<T>,
     ) -> crate::Result<T> {
-        self.host_input_depth.set(self.host_input_depth.get() + 1);
+        self.change_host_input_depth(true)?;
         let result = operation();
-        self.host_input_depth.set(self.host_input_depth.get() - 1);
-        if self.host_input_depth.get() > 0 {
+        if self.change_host_input_depth(false)? > 0 {
             return result;
         }
         let flush = super::editbox_update::flush_at_host_boundary(self);
@@ -100,6 +99,21 @@ impl WowLuaEnv {
                 Ok(value)
             }
         }
+    }
+
+    fn change_host_input_depth(&self, increase: bool) -> crate::Result<usize> {
+        let mut lua = self.rilua_mut();
+        let app_data = lua
+            .state_mut()
+            .app_data::<super::env::WowLuaAppData>()
+            .ok_or_else(|| crate::Error::Other("missing WowLuaAppData".to_string()))?;
+        let depth = if increase {
+            app_data.host_input_depth.get() + 1
+        } else {
+            app_data.host_input_depth.get() - 1
+        };
+        app_data.host_input_depth.set(depth);
+        Ok(depth)
     }
 
     fn finish_host_lua_call<T>(&self, result: rilua::LuaResult<T>) -> rilua::LuaResult<T> {
