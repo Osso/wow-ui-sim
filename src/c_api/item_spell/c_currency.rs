@@ -379,22 +379,10 @@ fn request_account_currency_data(state: &mut LuaState) -> LuaResult<u32> {
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn fetch_currency_data_from_account_characters(state: &mut LuaState) -> LuaResult<u32> {
     let currency_id = i32::from_stack(state, 1)?;
-    let sources = {
-        let sim = borrow_state(state)?;
-        let account_data_ready = sim.currency_list.account_data_ready();
-        account_data_ready.then(|| {
-            sim.currency_list
-                .account_currency_sources
-                .get(&currency_id)
-                .cloned()
-                .unwrap_or_default()
-        })
-    };
-    let Some(sources) = sources else {
+    let Some(sources) = read_account_character_currency_sources(state, currency_id)? else {
         state.push(Val::Nil);
         return Ok(1);
     };
-
     let Val::Table(data) = create_table_with_capacity(state, sources.len()) else {
         return Err(rilua::runtime_error(
             "FetchCurrencyDataFromAccountCharacters: table allocation failed",
@@ -411,6 +399,24 @@ fn fetch_currency_data_from_account_characters(state: &mut LuaState) -> LuaResul
     }
     state.push(Val::Table(data));
     Ok(1)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn read_account_character_currency_sources(
+    state: &LuaState,
+    currency_id: i32,
+) -> LuaResult<Option<Vec<crate::c_api::currency_list::CurrencyAccountSource>>> {
+    let sim = borrow_state(state)?;
+    if !sim.currency_list.account_data_ready() {
+        return Ok(None);
+    }
+    Ok(Some(
+        sim.currency_list
+            .account_currency_sources
+            .get(&currency_id)
+            .cloned()
+            .unwrap_or_default(),
+    ))
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
