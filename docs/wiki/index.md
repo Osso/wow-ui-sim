@@ -12,7 +12,7 @@ Updated the [event system](systems/event-system.md), [Lua API system](systems/lu
 
 ## [2026-11-23] implementation | Script bucket throttle
 
-Updated the [throttle contract](../specs/script-bucket-throttle-limits.md) and linked it from the [watchdog system](systems/script-execution-watchdog.md). **VERIFIED (R88bn):** Retail/Forever registered CVar defaults and Retail whole-second refill rule. **INFERRED (R88bn):** addon code uses a per-addon restricted bucket, starts at burst capacity, and Forever mirrors Retail refill; normal-bucket execution classes remain unknown and unmodeled.
+Updated the [throttle contract](../specs/script-bucket-throttle-limits.md) and linked it from the [watchdog system](systems/script-execution-watchdog.md). **VERIFIED (R88bn):** Retail/Forever registered CVar defaults and Retail whole-second refill rule. **INFERRED (R88bn; native evidence pending):** the restricted bucket is not charged during the existing startup watchdog phase; the first post-phase addon invocation starts at burst capacity. Per-addon ownership and Forever refill remain inferred; normal-bucket execution classes remain unknown and unmodeled.
 
 ## [2026-11-22] system | Script execution watchdog
 
