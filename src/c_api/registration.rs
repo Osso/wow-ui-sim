@@ -104,6 +104,7 @@ pub(crate) fn register_character_progression_tables(state: &mut LuaState) -> Lua
     super::quest_difficulty::register(state)?;
     super::c_pet_talent_tree::register(state)?;
     super::c_prof_specs_reminders::register(state)?;
+    super::c_prof_specs_skill_lines::register(state)?;
     super::c_prof_specs_tab_state::register(state)?;
     #[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
     super::c_prof_specs_get_children_for_path::register(state)?;

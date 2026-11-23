@@ -718,7 +718,13 @@ fn profession_spec_consumer_uses_supplied_skill_line_config_and_tabs() {
         r#"
         A_Admin.SetProfessionSpecSkillLines({
             {skillLineID = 164, configID = 8101, specTabIDs = {9101}},
-            {skillLineID = 186, configID = 8202, specTabIDs = {9202}},
+            {
+                skillLineID = 186,
+                configID = 8202,
+                specTabIDs = {9202},
+                currency = {numAvailable = 12, currencyName = "Mining Marks"},
+                specTabInfo = {enabled = false, errorReason = "not available"},
+            },
         })
         A_Admin.SetProfessionSpecTabInfo(9101, {
             rootNodeID = 90101, name = "Blacksmithing Spec",
@@ -732,6 +738,15 @@ fn profession_spec_consumer_uses_supplied_skill_line_config_and_tabs() {
         assert(C_TradeSkillUI.OpenTradeSkill(164))
         assert(ProfessionsFrame:IsShown())
         assert(ProfessionsFrame.SpecPage.professionInfo.professionID == 164)
+        assert(C_ProfSpecs.GetDefaultSpecSkillLine() == 164)
+        assert(C_ProfSpecs.ShouldShowSpecTab())
+        assert(C_ProfSpecs.SkillLineHasSpecialization(164))
+        assert(C_ProfSpecs.GetConfigIDForSkillLine(164) == 8101)
+        assert(C_ProfSpecs.GetSpecTabIDsForSkillLine(164)[1] == 9101)
+        local currency = C_ProfSpecs.GetCurrencyInfoForSkillLine(164)
+        assert(currency.numAvailable == 0 and currency.currencyName == "")
+        local specTabInfo = C_ProfSpecs.GetSpecTabInfo()
+        assert(specTabInfo.enabled and specTabInfo.errorReason == "")
         assert(ProfessionsFrame.SpecPage.configID == 8101)
         assert(ProfessionsFrame.SpecPage.selectedTab.traitTreeID == 9101)
         assert(ProfessionsFrame.SpecPage.tabInfo.rootNodeID == 90101)
@@ -739,9 +754,19 @@ fn profession_spec_consumer_uses_supplied_skill_line_config_and_tabs() {
         assert(C_TradeSkillUI.OpenTradeSkill(186))
         assert(ProfessionsFrame:IsShown())
         assert(ProfessionsFrame.SpecPage.professionInfo.professionID == 186)
+        assert(C_ProfSpecs.GetDefaultSpecSkillLine() == 186)
+        assert(C_ProfSpecs.GetConfigIDForSkillLine(186) == 8202)
+        assert(C_ProfSpecs.GetSpecTabIDsForSkillLine(186)[1] == 9202)
+        assert(C_ProfSpecs.SkillLineHasSpecialization(186))
+        local currency = C_ProfSpecs.GetCurrencyInfoForSkillLine(186)
+        assert(currency.numAvailable == 12 and currency.currencyName == "Mining Marks")
+        local specTabInfo = C_ProfSpecs.GetSpecTabInfo()
+        assert(not specTabInfo.enabled and specTabInfo.errorReason == "not available")
         assert(ProfessionsFrame.SpecPage.configID == 8202)
         assert(ProfessionsFrame.SpecPage.selectedTab.traitTreeID == 9202)
         assert(ProfessionsFrame.SpecPage.tabInfo.rootNodeID == 90202)
+        assert(C_ProfSpecs.GetTabInfo(9202).rootNodeID == 90202)
+        assert(C_ProfSpecs.GetTabInfo(9999) == nil)
         "#,
     )
     .expect("the ProfessionsFrame open path should render each supplied specialization");
