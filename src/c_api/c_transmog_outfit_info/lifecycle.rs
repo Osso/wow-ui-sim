@@ -50,7 +50,8 @@ pub(super) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
 fn set_unlocked_outfit_slots(state: &mut LuaState) -> LuaResult<u32> {
     let source = u32::from_stack(state, 1)?;
     let count = u32::from_stack(state, 2)?;
-    let Some(unlocked) = borrow_state_mut(state)?
+    let mut sim = borrow_state_mut(state)?;
+    let Some(unlocked) = sim
         .transmog_outfits
         .unlocked_by_source
         .get_mut(source as usize)
