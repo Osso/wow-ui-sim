@@ -34,7 +34,11 @@ fn unset(env: &WowLuaEnv) {
 }
 
 fn load_original(enabled: bool) -> WowLuaEnv {
-    load_original_with_outfits(enabled, Some(&[23, 81]))
+    let env = load_original_with_outfits(enabled, Some(&[23, 81]));
+    env.state()
+        .borrow_mut()
+        .set_input_interface_style(InputInterfaceStyle::Gamepad);
+    env
 }
 
 fn load_original_without_outfits(enabled: bool) -> WowLuaEnv {
@@ -50,9 +54,6 @@ fn load_original_with_outfits(enabled: bool, outfits: Option<&[i64]>) -> WowLuaE
     }
     crate::common::panel_fixtures::load_panel_addons(&env);
     load_blizzard_addon_closure_into_env(&env, &ui, &["Blizzard_PlayerSpells"], &[]);
-    env.state()
-        .borrow_mut()
-        .set_input_interface_style(InputInterfaceStyle::Gamepad);
     eprintln!(
         "unfiltered load diagnostics: {:?}",
         env.state().borrow().lua_errors
@@ -206,8 +207,6 @@ fn assert_group_indices(env: &WowLuaEnv, expected: &[i64]) {
 #[test]
 fn player_spells_toggle_accepts_no_outfits_and_two_created_outfits() {
     let env = load_original_without_outfits(true);
-    env.exec("A_Admin.SetInputInterfaceStyle(Enum.InputDeviceInterfaceType.Mkb)")
-        .expect("use the MKB input-interface style before opening Player Spells");
     let result_count: i32 = env
         .eval("return select('#', C_TransmogOutfitInfo.GetOutfitsInfo())")
         .expect("an empty Forever outfit catalog returns no values");
