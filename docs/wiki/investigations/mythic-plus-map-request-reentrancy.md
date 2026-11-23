@@ -22,7 +22,7 @@ Synchronous `C_MythicPlus.RequestMapInfo` response dispatch can re-enter addon e
 - **VERIFIED (same-root branch output):** one `Blizzard_ChallengesUI` error stack ends at the simulator's deferred `Mythic+ map info response event` and reports a nil map-row access.
 - **INFERRED:** the nil map-row error is consistent with the run's empty challenge-map input; the evidence does not prove whether native Retail would emit the response event with an empty map catalogue.
 - **VERIFIED (same-root branch output):** the other five errors are the two approved TokenUI records, two `Clicked` errors, one secret-texture error, and one Baganator missing-API error.
-- **UNVERIFIED:** the two branch `Clicked` errors report a nil `ClickCastHeader`; the comparison does not establish a causal link to the watchdog or Mythic+ changes.
+- **VERIFIED (same binary and addon root; SavedVariables condition changed):** the no-SavedVariables run reported two Clicked errors; loading the real ClickedDB in an isolated session reported zero. **INFERRED:** the first-install Clicked callback ordering explains the difference; see [Clicked first-install saved variables](clicked-first-install-savedvariables.md). This is separate from the Mythic+ request change.
 
 ## Sources
 

@@ -35,11 +35,12 @@ R88bn verifies the registered throttle CVars and Retail refill rule for Retail 1
 
 - VERIFIED (R88bn): Retail refills each bucket by whole elapsed seconds multiplied by its rate, capped at its burst value. Fractional elapsed time accumulates; a bucket already at cap advances its timestamp without adding credit.
 - INFERRED (R88bn): Forever uses the same refill rule.
-- INFERRED (R88bn): tainted addon execution uses the restricted bucket. Rilua stores one bucket per addon, initializes it at burst capacity, charges elapsed execution time at the 10,001-dispatch polling interval and invocation end, and raises `insecure scripts exceeded execution limit for addon <name>` when exhausted.
+- INFERRED (R88bn; native evidence pending): do not charge the restricted bucket while `startup_script_watchdog_phase` is active. This reuses the existing phase that selects the startup watchdog threshold and remains active through the initial `PLAYER_ENTERING_WORLD` dispatch. The first post-phase addon invocation starts with the full burst.
+- INFERRED (R88bn): tainted addon execution uses the restricted bucket. Rilua stores one bucket per addon, charges elapsed execution time at the 10,001-dispatch polling interval and invocation end, and raises `insecure scripts exceeded execution limit for addon <name>` when exhausted.
 - VERIFIED (R88bn): `hardcoreScriptThrottlingEnabled` is registered as enabled. Its relation to the per-invocation watchdog is UNKNOWN, so the simulator does not use it to select or change watchdog limits.
 
 ## Known gaps
 
-- UNKNOWN (R88bn): which execution classes use normal versus restricted buckets, initial bucket balance, balance ownership, and exact charge points. The addon-restricted mapping, per-addon bucket, initial burst balance, and Forever refill mirror are simulator inferences.
+- UNKNOWN (R88bn): which execution classes use normal versus restricted buckets, native balance ownership, whether charging is exempt during loading, native initial bucket balance, and exact charge points. The addon-restricted mapping, per-addon bucket, loading-phase exemption, post-loading burst initialization, and Forever refill mirror are simulator inferences.
 - Normal-bucket enforcement is not modeled. Do not treat the CVar's presence as proof that normal execution is charged.
 - The per-invocation elapsed-time watchdog is separate. It does not read or change bucket values.

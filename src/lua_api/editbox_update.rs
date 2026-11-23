@@ -40,12 +40,27 @@ pub(crate) fn flush(env: &WowLuaEnv) -> crate::Result<()> {
     })
 }
 
+/// INFERRED R88et-c: defer host-input changes until keyboard dispatch completes.
 pub(crate) fn flush_at_host_boundary(env: &WowLuaEnv) -> crate::Result<()> {
     let mut lua = env.rilua_mut();
-    flush_state_at_host_boundary(lua.state_mut())
+    let state = lua.state_mut();
+    let defer_user_input = state
+        .app_data::<WowLuaAppData>()
+        .ok_or_else(|| crate::Error::Other("missing WowLuaAppData".to_string()))?
+        .host_input_depth
+        .get()
+        > 0;
+    flush_state_at_host_boundary_with_mode(state, defer_user_input)
 }
 
 pub(crate) fn flush_state_at_host_boundary(state: &mut LuaState) -> crate::Result<()> {
+    flush_state_at_host_boundary_with_mode(state, false)
+}
+
+fn flush_state_at_host_boundary_with_mode(
+    state: &mut LuaState,
+    defer_user_input: bool,
+) -> crate::Result<()> {
     if state.call_depth != 0 {
         return Ok(());
     }
@@ -55,7 +70,7 @@ pub(crate) fn flush_state_at_host_boundary(state: &mut LuaState) -> crate::Resul
         .sim_state
         .clone();
     loop {
-        let pending = take_pending_text_changes(&sim);
+        let pending = take_pending_text_changes(&sim, defer_user_input);
         if pending.is_empty() {
             return Ok(());
         }
@@ -70,14 +85,20 @@ pub(crate) fn flush_state_at_host_boundary(state: &mut LuaState) -> crate::Resul
     }
 }
 
-fn take_pending_text_changes(sim: &Rc<RefCell<SimState>>) -> Vec<(u64, bool)> {
+fn take_pending_text_changes(
+    sim: &Rc<RefCell<SimState>>,
+    defer_user_input: bool,
+) -> Vec<(u64, bool)> {
     let mut sim = sim.borrow_mut();
     let mut ids = sim.widgets.iter_editbox_ids().collect::<Vec<_>>();
     ids.sort_unstable();
     ids.into_iter()
         .filter_map(|id| {
             let frame = sim.widgets.get_mut(id)?;
-            let user_input = frame.editbox_presentation.as_mut()?.take_text_change()?;
+            let user_input = frame
+                .editbox_presentation
+                .as_mut()?
+                .take_text_change(defer_user_input)?;
             Some((id, user_input))
         })
         .collect()
@@ -234,7 +255,7 @@ fn commit_presentation(
     presentation.input = Some(input);
     presentation.shaped_text = layout.map(|layout| layout.buffer);
     presentation.cursor_geometry = cursor;
-    let text_changed = presentation.take_text_change();
+    let text_changed = presentation.take_text_change(false);
     sim.widgets.mark_visual_dirty(id);
     Some(EditBoxUpdate {
         cursor,
@@ -245,7 +266,7 @@ fn commit_presentation(
 fn take_text_change(sim: &Rc<RefCell<SimState>>, id: u64) -> Option<EditBoxUpdate> {
     let mut sim = sim.borrow_mut();
     let frame = sim.widgets.get_mut(id)?;
-    let text_changed = frame.editbox_presentation.as_mut()?.take_text_change();
+    let text_changed = frame.editbox_presentation.as_mut()?.take_text_change(false);
     Some(EditBoxUpdate {
         cursor: None,
         text_changed,
