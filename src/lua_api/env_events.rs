@@ -345,6 +345,8 @@ impl WowLuaEnv {
     }
 
     fn apply_rooted_event_producers(&self, event: &str, args: &[Val]) -> Result<()> {
+        #[cfg(not(feature = "retail-12-0-0"))]
+        let _ = args;
         #[cfg(feature = "client-wrath")]
         if event == "QUEST_LOG_UPDATE" {
             self.state
