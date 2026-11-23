@@ -374,8 +374,8 @@ impl WowLuaEnv {
         }
         trace_event_phase(event, "dispatch-listeners", dispatch_started);
         if event == "PLAYER_ENTERING_WORLD" {
-            self.apply_post_event_workarounds();
             self.state.borrow_mut().startup_script_watchdog_phase = false;
+            self.apply_post_event_workarounds();
         }
         Ok(())
     }
