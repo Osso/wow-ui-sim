@@ -15,7 +15,6 @@ fn load_tooltip_screen(screen: ScreenKind) -> WowLuaEnv {
         "CARGO_MANIFEST_DIR"
     )));
     load_tooltip_addons(&env, &ui, screen);
-    env.apply_post_load_workarounds();
     settle_headless_startup(&env);
     env
 }
