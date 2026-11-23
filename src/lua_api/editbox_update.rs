@@ -1,4 +1,4 @@
-//! EditBox presentation and coalesced text notifications at dirty-state flushes.
+//! EditBox presentation at dirty flushes and text notifications at host boundaries.
 
 use std::cell::RefCell;
 use std::rc::Rc;
@@ -36,8 +36,51 @@ pub(crate) fn flush(env: &WowLuaEnv) -> crate::Result<()> {
             .and_then(|data| data.font_system.clone())
     };
     flush_updates(env.state(), fonts.as_ref(), |id, name, args| {
-        env.fire_script_handler(id, name, args)
+        env.dispatch_script_handler(id, name, args).map(|_| ())
     })
+}
+
+pub(crate) fn flush_at_host_boundary(env: &WowLuaEnv) -> crate::Result<()> {
+    let mut lua = env.rilua_mut();
+    flush_state_at_host_boundary(lua.state_mut())
+}
+
+pub(crate) fn flush_state_at_host_boundary(state: &mut LuaState) -> crate::Result<()> {
+    if state.call_depth != 0 {
+        return Ok(());
+    }
+    let sim = state
+        .app_data::<WowLuaAppData>()
+        .ok_or_else(|| crate::Error::Other("missing WowLuaAppData".to_string()))?
+        .sim_state
+        .clone();
+    loop {
+        let pending = take_pending_text_changes(&sim);
+        if pending.is_empty() {
+            return Ok(());
+        }
+        for (id, user_input) in pending {
+            super::env_events::fire_script_handler_state(
+                state,
+                id,
+                "OnTextChanged",
+                vec![Val::Bool(user_input)],
+            )?;
+        }
+    }
+}
+
+fn take_pending_text_changes(sim: &Rc<RefCell<SimState>>) -> Vec<(u64, bool)> {
+    let mut sim = sim.borrow_mut();
+    let mut ids = sim.widgets.iter_editbox_ids().collect::<Vec<_>>();
+    ids.sort_unstable();
+    ids.into_iter()
+        .filter_map(|id| {
+            let frame = sim.widgets.get_mut(id)?;
+            let user_input = frame.editbox_presentation.as_mut()?.take_text_change()?;
+            Some((id, user_input))
+        })
+        .collect()
 }
 
 /// The loader may already be executing inside Lua. Never borrow its owning cell.
@@ -123,7 +166,7 @@ fn refresh_editbox(
     fonts: Option<&FontSystem>,
 ) -> Option<EditBoxUpdate> {
     match read_layout_refresh(sim, id) {
-        LayoutRefresh::Unavailable => None,
+        LayoutRefresh::Unavailable => take_text_change(sim, id),
         LayoutRefresh::Unchanged => take_text_change(sim, id),
         LayoutRefresh::Changed(input) => {
             let layout = prepare_layout(fonts, &input);

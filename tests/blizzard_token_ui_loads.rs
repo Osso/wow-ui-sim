@@ -105,6 +105,103 @@ fn find_toc_file_resolves_bare_toc() {
     );
 }
 
+#[cfg(feature = "client-retail")]
+#[test]
+fn currency_transfer_menu_clamps_to_account_source_quantity_and_cost() {
+    let env = load_full_game_ui();
+    let rate_examples: (f64, f64, f64) = env
+        .eval(
+            "return C_CurrencyInfo.GetMaxTransferableAmountFromQuantity(1560, 100), \
+             C_CurrencyInfo.GetCostToTransferCurrency(1560, 76), \
+             C_CurrencyInfo.GetCostToTransferCurrency(1560, 77)",
+        )
+        .expect("currency transfer APIs should use the supplied rate row");
+    assert_eq!(rate_examples, (76.0, 99.0, 101.0));
+    env.exec(
+        r#"
+            A_Admin.SetAccountCurrencyTransferEnabled(true)
+            A_Admin.SetCurrencyTransferRules(1792, {
+                award_condition_met = true,
+                quantity_cap_reached = false,
+                weekly_cap_reached = false,
+            })
+            ToggleCharacter("TokenFrame")
+        "#,
+    )
+    .expect("the original CharacterFrame path should open TokenFrame");
+    env.fire_on_update(0.016)
+        .expect("the first update should lay out the TokenFrame ScrollBox");
+    env.fire_on_update(0.016)
+        .expect("the second update should materialize the TokenFrame rows");
+    env.exec(
+        r#"
+            local scrollBox = TokenFrame.ScrollBox
+            assert(TokenFrame:IsShown(), "ToggleCharacter should show TokenFrame")
+            assert(scrollBox:GetWidth() > 0 and scrollBox:GetHeight() > 0,
+                "TokenFrame ScrollBox should have its laid-out size")
+            local provider = assert(scrollBox:GetDataProvider())
+            assert(provider:GetSize() > 0, "TokenFrame provider should contain currency rows")
+            local foundCurrency = false
+            scrollBox:ForEachFrame(function(button)
+                if button.elementData.currencyID == 1792 then
+                    foundCurrency = true
+                    button:Click()
+                end
+            end)
+            assert(foundCurrency, "the laid-out ScrollBox should materialize currency 1792")
+            assert(TokenFramePopup:IsShown(), "selecting the currency should open its popup")
+            A_Admin.SetAccountCharacterCurrencyData(1792, {
+                { characterGUID = 'Player-3-00000003', characterName = 'SourceB', fullCharacterName = 'SourceB-Realm', quantity = 200 },
+                { characterGUID = 'Player-2-00000002', characterName = 'SourceA', fullCharacterName = 'SourceA-Realm', quantity = 100 },
+            })
+        "#,
+    )
+    .expect("the original TokenFrame should request account currency data");
+    env.complete_account_currency_request(Vec::new())
+        .expect("account currency completion should publish supplied sources");
+    env.exec("TokenFramePopup.CurrencyTransferToggleButton:Click()")
+        .expect("the original TokenFrame toggle should open CurrencyTransferMenu");
+    let menu_state: (bool, bool, Option<i32>) = env
+        .eval(
+            "return TokenFramePopup.CurrencyTransferToggleButton:IsEnabled(), \
+             CurrencyTransferMenu:IsShown(), CurrencyTransferMenu:GetCurrencyID()",
+        )
+        .expect("the original toggle should open the selected currency menu");
+    assert_eq!(menu_state, (true, true, Some(1792)));
+
+    env.exec("CurrencyTransferMenu.Content.SourceSelector.Dropdown:OpenMenu()")
+        .expect("the original source dropdown should open");
+    env.exec("CurrencyTransferMenu.Content.AmountSelector.MaxQuantityButton:Click()")
+        .expect("the original max button should request the first source maximum");
+    let first_amount_and_cost: (f64, f64) = env
+        .eval(
+            "return CurrencyTransferMenu.Content.AmountSelector.InputBox:GetNumber(), \
+             CurrencyTransferMenu:GetTotalCurrencyTransferCost()",
+        )
+        .expect("the first deferred clamp should publish its amount and cost");
+    env.exec(
+        r#"
+            for _, entry in CurrencyTransferMenu.Content.SourceSelector.Dropdown:GetMenuDescription():EnumerateElementDescriptions() do
+                local source = entry:GetData()
+                if source.characterGUID == 'Player-2-00000002' then
+                    entry:Pick({})
+                end
+            end
+        "#,
+    )
+    .expect("the original source dropdown should select the second account source");
+    env.exec("CurrencyTransferMenu.Content.AmountSelector.MaxQuantityButton:Click()")
+        .expect("the original max button should request the second source maximum");
+    let second_amount_and_cost: (f64, f64) = env
+        .eval(
+            "return CurrencyTransferMenu.Content.AmountSelector.InputBox:GetNumber(), \
+             CurrencyTransferMenu:GetTotalCurrencyTransferCost()",
+        )
+        .expect("the second deferred clamp should publish its amount and cost");
+    assert_eq!(first_amount_and_cost, (159.0, 199.0));
+    assert_eq!(second_amount_and_cost, (79.0, 99.0));
+}
+
 #[test]
 fn toc_has_only_title_directive_with_no_dependencies() {
     let toc = TocFile::from_file(&token_ui_toc()).expect("TOC parses");

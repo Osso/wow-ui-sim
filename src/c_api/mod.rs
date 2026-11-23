@@ -58,7 +58,7 @@ pub(crate) mod class_catalog;
 pub(crate) mod classic_startup_data;
 pub(crate) mod collections_availability;
 pub mod credits;
-#[cfg(feature = "client-retail")]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub mod currency_list;
 pub mod forever_talents;
 pub(crate) mod game_mode;

@@ -93,6 +93,8 @@ pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
     let builder = TableBuilder::new(lua.state_mut());
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     let builder = super::real::configuration_warnings::register_admin(builder)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let builder = super::admin_currency_transfer::register_admin(builder)?;
     let builder = register_player(builder)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     let builder = crate::c_api::c_quest_log::register_zone_story_admin(builder)?;

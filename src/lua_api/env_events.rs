@@ -334,7 +334,9 @@ impl WowLuaEnv {
         // Individual calls unroot their arguments before invoking error handlers.
         let result = self.fire_rooted_event(event, args);
         self.lua.borrow_mut().state_mut().top = saved_top;
-        result
+        let flush = super::editbox_update::flush_at_host_boundary(self);
+        result?;
+        flush
     }
 
     fn fire_rooted_event(&self, event: &str, args: &[Val]) -> Result<()> {
@@ -526,8 +528,12 @@ impl WowLuaEnv {
         handler_name: &str,
         extra_args: Vec<Val>,
     ) -> Result<()> {
-        self.dispatch_script_handler(widget_id, handler_name, extra_args)
-            .map(|_| ())
+        let result = self
+            .dispatch_script_handler(widget_id, handler_name, extra_args)
+            .map(|_| ());
+        let flush = super::editbox_update::flush_at_host_boundary(self);
+        result?;
+        flush
     }
 
     pub(crate) fn dispatch_script_handler(

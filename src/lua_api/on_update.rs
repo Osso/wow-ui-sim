@@ -52,6 +52,7 @@ pub(crate) fn fire_state(
     let started = Instant::now();
     LuaApiMut::gc_step(state, ON_UPDATE_GC_BUDGET)?;
     timings.gc_step = started.elapsed();
+    super::editbox_update::flush_state_at_host_boundary(state)?;
     timings.total = total_started.elapsed();
     Ok(timings)
 }

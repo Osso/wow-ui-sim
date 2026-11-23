@@ -1088,7 +1088,7 @@ pub struct SimState {
         HashMap<i32, crate::c_api::c_tooltip_info_currency::CurrencyTooltipInputs>,
     /// Explicit Wrath-only legacy categories; modern currency queries do not read this.
     pub wrath_currency: super::super::globals::real::wrath_currency::CurrencyListState,
-    #[cfg(feature = "client-retail")]
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     pub currency_list: crate::c_api::currency_list::CurrencyListState,
     #[cfg(feature = "client-mists")]
     pub mists_currency_watch_overrides: HashMap<i32, bool>,

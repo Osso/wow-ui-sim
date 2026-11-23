@@ -32,4 +32,4 @@
 
 ## Out of scope
 
-Transfer requests, account roster, balances, costs, transaction log, readiness, timers, completion/failure/events and persistence require separate contracts. A supplied boolean does not implement transfer lifecycle or prove native semantics. Native activity derivation and secret-return classification remain unknown. Executed bounded cached-consumer assertions cover immediate spinner methods, not full addon or timer behavior.
+Transfer requests, transaction history, timers, completion/failure events and persistence remain out of scope. Account roster, balances and transfer costs are covered by the [account currency transfer contract](currency-transfer-eligibility.md). A supplied activity boolean does not implement the transfer lifecycle or prove native semantics. Native activity derivation and secret-return classification remain unknown. Executed bounded cached-consumer assertions cover immediate spinner methods, not full addon or timer behavior.
