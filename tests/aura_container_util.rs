@@ -341,7 +341,7 @@ fn load_texture_hook_probe(env: &WowLuaEnv) {
     .unwrap();
     std::fs::write(
         addon.join("TextureSetHookProbe.lua"),
-        "TextureHookProbeState = { calls = 0 }\nlocal texture = CreateFrame('Frame'):CreateTexture()\nlocal methods = getmetatable(texture).__index\nhooksecurefunc(methods, 'SetTexture', function()\n TextureHookProbeState.calls = TextureHookProbeState.calls + 1\n TextureHookProbeState.callbackTaint = debug.getstacktaint()\nend)\n",
+        "local _, addonTable = ...\naddonTable.TextureHookProbeState = { calls = 0 }\nlocal texture = CreateFrame('Frame'):CreateTexture()\nlocal methods = getmetatable(texture).__index\nhooksecurefunc(methods, 'SetTexture', function()\n addonTable.TextureHookProbeState.calls = addonTable.TextureHookProbeState.calls + 1\n addonTable.TextureHookProbeState.callbackTaint = debug.getstacktaint()\nend)\n",
     )
     .unwrap();
     wow_ui_sim::loader::load_addon(
