@@ -1,8 +1,12 @@
 //! Currency display-list state. Catalog positions identify headers; Lua indices do not.
-use std::collections::{HashMap, HashSet};
+use std::collections::HashMap;
+#[cfg(feature = "client-retail")]
+use std::collections::HashSet;
 
+#[cfg(feature = "client-retail")]
 use crate::lua_api::globals::currency_data::{self, CurrencyEntry};
 
+#[cfg(feature = "client-retail")]
 pub(crate) type CurrencyListRow = (i32, CurrencyEntry);
 
 #[derive(Clone, Debug, PartialEq, Eq)]
@@ -23,44 +27,59 @@ pub struct CurrencyTransferRules {
 }
 
 pub struct CurrencyListState {
+    #[cfg(feature = "client-retail")]
     collapsed_headers: HashSet<i32>,
+    #[cfg(feature = "client-retail")]
     watched_overrides: HashMap<i32, bool>,
+    #[cfg(feature = "client-retail")]
     filter: i32,
     pub server_enabled: bool,
     pub account_context_present: bool,
+    #[cfg(feature = "client-retail")]
     pub account_cache_invalidated: bool,
+    #[cfg(feature = "client-retail")]
     pub cached_transaction_count: usize,
     pub transfer_rules: HashMap<i32, CurrencyTransferRules>,
     pub account_currency_sources: HashMap<i32, Vec<CurrencyAccountSource>>,
     pub account_loading: bool,
     pub transaction_loading: bool,
     pub pending_character_requests: usize,
+    #[cfg(feature = "client-retail")]
     account_rows: Vec<CurrencyEntry>,
+    #[cfg(feature = "client-retail")]
     projected_account_rows: Vec<CurrencyEntry>,
 }
 
 impl Default for CurrencyListState {
     fn default() -> Self {
         Self {
+            #[cfg(feature = "client-retail")]
             collapsed_headers: HashSet::new(),
+            #[cfg(feature = "client-retail")]
             watched_overrides: HashMap::new(),
+            #[cfg(feature = "client-retail")]
             filter: 1,
             server_enabled: false,
             account_context_present: true,
+            #[cfg(feature = "client-retail")]
             account_cache_invalidated: false,
+            #[cfg(feature = "client-retail")]
             cached_transaction_count: 0,
             transfer_rules: HashMap::new(),
             account_currency_sources: HashMap::new(),
             account_loading: false,
             transaction_loading: false,
             pending_character_requests: 0,
+            #[cfg(feature = "client-retail")]
             account_rows: Vec::new(),
+            #[cfg(feature = "client-retail")]
             projected_account_rows: Vec::new(),
         }
     }
 }
 
 impl CurrencyListState {
+    #[cfg(feature = "client-retail")]
     pub fn filter(&self) -> i32 {
         self.filter
     }
@@ -69,6 +88,7 @@ impl CurrencyListState {
         !self.account_loading && !self.transaction_loading && self.pending_character_requests == 0
     }
 
+    #[cfg(feature = "client-retail")]
     pub(crate) fn set_filter(&mut self, filter: i32) {
         self.filter = filter;
         if filter == 2 {
@@ -81,6 +101,7 @@ impl CurrencyListState {
         }
     }
 
+    #[cfg(feature = "client-retail")]
     pub(crate) fn request_account_data(&mut self) {
         if !self.server_enabled || !self.account_context_present || self.account_loading {
             return;
@@ -96,6 +117,7 @@ impl CurrencyListState {
         }
     }
 
+    #[cfg(feature = "client-retail")]
     pub fn complete_account_request(&mut self, rows: Vec<CurrencyEntry>) {
         self.account_loading = false;
         self.account_rows = rows;
@@ -104,6 +126,7 @@ impl CurrencyListState {
         }
     }
 
+    #[cfg(feature = "client-retail")]
     pub(crate) fn is_watched(&self, entry: &CurrencyEntry) -> bool {
         self.watched_overrides
             .get(&entry.currency_id)
@@ -111,10 +134,12 @@ impl CurrencyListState {
             .unwrap_or(entry.is_show_in_backpack)
     }
 
+    #[cfg(feature = "client-retail")]
     pub(crate) fn set_watched(&mut self, currency_id: i32, watched: bool) {
         self.watched_overrides.insert(currency_id, watched);
     }
 
+    #[cfg(feature = "client-retail")]
     pub(crate) fn displayed_entries(&self) -> Vec<CurrencyListRow> {
         let mut hidden_below_depth = None;
         self.ordered_entries()
@@ -133,6 +158,7 @@ impl CurrencyListState {
             .collect()
     }
 
+    #[cfg(feature = "client-retail")]
     fn ordered_entries(&self) -> Vec<CurrencyListRow> {
         let mut rows: Vec<_> = (1..=currency_data::currency_list_size())
             .filter_map(|index| {
@@ -148,16 +174,19 @@ impl CurrencyListState {
         rows
     }
 
+    #[cfg(feature = "client-retail")]
     pub(crate) fn displayed_entry(&self, index: i32) -> Option<CurrencyListRow> {
         let offset = usize::try_from(index.checked_sub(1)?).ok()?;
         self.displayed_entries().get(offset).copied()
     }
 
+    #[cfg(feature = "client-retail")]
     pub(crate) fn header_expanded(&self, index: i32) -> bool {
         self.displayed_entry(index)
             .is_some_and(|(key, entry)| entry.is_header && !self.collapsed_headers.contains(&key))
     }
 
+    #[cfg(feature = "client-retail")]
     pub(crate) fn set_header_expanded(&mut self, index: i32, expanded: bool) {
         let Some((key, entry)) = self.displayed_entry(index) else {
             return;
