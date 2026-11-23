@@ -169,30 +169,37 @@ fn currency_transfer_menu_clamps_to_account_source_quantity_and_cost() {
         .expect("the original toggle should open the selected currency menu");
     assert_eq!(menu_state, (true, true, Some(1792)));
 
-    let amounts: (f64, f64, f64, f64) = env
+    env.exec("CurrencyTransferMenu.Content.SourceSelector.Dropdown:OpenMenu()")
+        .expect("the original source dropdown should open");
+    env.exec("CurrencyTransferMenu.Content.AmountSelector.MaxQuantityButton:Click()")
+        .expect("the original max button should request the first source maximum");
+    let first_amount_and_cost: (f64, f64) = env
         .eval(
-            r#"
-                local input = CurrencyTransferMenu.Content.AmountSelector.InputBox
-                local maxButton = CurrencyTransferMenu.Content.AmountSelector.MaxQuantityButton
-                local dropdown = CurrencyTransferMenu.Content.SourceSelector.Dropdown
-                dropdown:OpenMenu()
-                maxButton:Click()
-                local firstAmount = input:GetNumber()
-                local firstCost = CurrencyTransferMenu:GetTotalCurrencyTransferCost()
-                for _, entry in dropdown:GetMenuDescription():EnumerateElementDescriptions() do
-                    local source = entry:GetData()
-                    if source.characterGUID == 'Player-2-00000002' then
-                        entry:Pick({})
-                    end
-                end
-                maxButton:Click()
-                local secondAmount = input:GetNumber()
-                local secondCost = CurrencyTransferMenu:GetTotalCurrencyTransferCost()
-                return firstAmount, firstCost, secondAmount, secondCost
-            "#,
+            "return CurrencyTransferMenu.Content.AmountSelector.InputBox:GetNumber(), \
+             CurrencyTransferMenu:GetTotalCurrencyTransferCost()",
         )
-        .expect("the original source dropdown should apply each account source");
-    assert_eq!(amounts, (159.0, 199.0, 79.0, 99.0));
+        .expect("the first deferred clamp should publish its amount and cost");
+    env.exec(
+        r#"
+            for _, entry in CurrencyTransferMenu.Content.SourceSelector.Dropdown:GetMenuDescription():EnumerateElementDescriptions() do
+                local source = entry:GetData()
+                if source.characterGUID == 'Player-2-00000002' then
+                    entry:Pick({})
+                end
+            end
+        "#,
+    )
+    .expect("the original source dropdown should select the second account source");
+    env.exec("CurrencyTransferMenu.Content.AmountSelector.MaxQuantityButton:Click()")
+        .expect("the original max button should request the second source maximum");
+    let second_amount_and_cost: (f64, f64) = env
+        .eval(
+            "return CurrencyTransferMenu.Content.AmountSelector.InputBox:GetNumber(), \
+             CurrencyTransferMenu:GetTotalCurrencyTransferCost()",
+        )
+        .expect("the second deferred clamp should publish its amount and cost");
+    assert_eq!(first_amount_and_cost, (159.0, 199.0));
+    assert_eq!(second_amount_and_cost, (79.0, 99.0));
 }
 
 #[test]
