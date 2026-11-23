@@ -220,7 +220,7 @@ fn test_editbox_set_get_number() {
 }
 
 #[test]
-fn editbox_set_text_and_number_defer_changed_notifications() {
+fn editbox_set_text_and_number_dispatch_after_host_return() {
     let env = WowLuaEnv::new().unwrap();
     env.exec(
         r#"
@@ -228,34 +228,61 @@ fn editbox_set_text_and_number_defer_changed_notifications() {
             EditBoxChangeProbe:SetSize(200, 20)
             EditBoxChangeProbe:Show()
             EditBoxChangeProbe.changes = {}
+            EditBoxChangeProbe.callReturned = false
             EditBoxChangeProbe:HookScript("OnTextChanged", function(_, userInput)
-                table.insert(EditBoxChangeProbe.changes, userInput)
+                table.insert(EditBoxChangeProbe.changes,
+                    tostring(userInput) .. ":" .. tostring(EditBoxChangeProbe.callReturned))
             end)
             EditBoxChangeProbe:SetText("alpha")
             EditBoxChangeProbe:SetText("alpha")
             assert(#EditBoxChangeProbe.changes == 0)
+            EditBoxChangeProbe.callReturned = true
         "#,
     )
     .unwrap();
-
-    env.fire_on_update(0.016).unwrap();
-    let after_set_text: (f64, bool) = env
+    let after_set_text: (f64, String) = env
         .eval("return #EditBoxChangeProbe.changes, EditBoxChangeProbe.changes[1]")
         .unwrap();
-    assert_eq!(after_set_text, (1.0, false));
+    assert_eq!(after_set_text, (1.0, "false:true".into()));
 
-    env.exec("EditBoxChangeProbe:SetNumber(4)").unwrap();
-    let before_number_update: f64 = env.eval("return #EditBoxChangeProbe.changes").unwrap();
-    assert_eq!(before_number_update, 1.0);
-    env.fire_on_update(0.016).unwrap();
-    env.exec("EditBoxChangeProbe:SetNumber(4)").unwrap();
-    env.fire_on_update(0.016).unwrap();
-    let after_set_number: (f64, bool, bool) = env
-        .eval(
-            "return #EditBoxChangeProbe.changes, EditBoxChangeProbe.changes[2], EditBoxChangeProbe.changes[3] == nil",
-        )
+    env.exec(
+        r#"
+            EditBoxChangeProbe.callReturned = false
+            EditBoxChangeProbe:SetNumber(4)
+            assert(#EditBoxChangeProbe.changes == 1)
+            EditBoxChangeProbe.callReturned = true
+        "#,
+    )
+    .unwrap();
+    let after_set_number: (f64, String) = env
+        .eval("return #EditBoxChangeProbe.changes, EditBoxChangeProbe.changes[2]")
         .unwrap();
-    assert_eq!(after_set_number, (2.0, false, true));
+    assert_eq!(after_set_number, (2.0, "false:true".into()));
+
+    env.exec(
+        r#"
+            EditBoxChangeProbe.callReturned = false
+            EditBoxChangeProbe:SetFormattedText("%s", "omega")
+            assert(#EditBoxChangeProbe.changes == 2)
+            EditBoxChangeProbe.callReturned = true
+        "#,
+    )
+    .unwrap();
+    let after_formatted_text: (f64, String) = env
+        .eval("return #EditBoxChangeProbe.changes, EditBoxChangeProbe.changes[3]")
+        .unwrap();
+    assert_eq!(after_formatted_text, (3.0, "false:true".into()));
+
+    env.exec(
+        r#"
+            EditBoxChangeProbe.callReturned = false
+            EditBoxChangeProbe:SetNumber(4)
+            EditBoxChangeProbe.callReturned = true
+        "#,
+    )
+    .unwrap();
+    let after_unchanged_number: f64 = env.eval("return #EditBoxChangeProbe.changes").unwrap();
+    assert_eq!(after_unchanged_number, 3.0);
 }
 
 #[test]

@@ -119,10 +119,10 @@ fn process_completed_top_level_element(
         return process_element(env, element, xml_dir, ctx, timing, warnings);
     }
     let constructed = process_timed_frame(env, element, ctx, timing)?;
-    if constructed && crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Wrath {
-        // Children, bindings, lifecycle and the loading-addon-table guard have
-        // completed. Lua may still be active above a nested LoadAddOn call.
-        env.with_state(crate::lua_api::editbox_update::flush_state)
+    if constructed {
+        // Children, bindings and lifecycle handlers have returned to this host.
+        // A nested LoadAddOn remains inside its caller's Lua execution.
+        env.with_state(crate::lua_api::editbox_update::flush_state_at_host_boundary)
             .map_err(|error| LoadError::Lua(error.to_string()))?;
     }
     Ok(0)

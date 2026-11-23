@@ -127,7 +127,6 @@ fn setting_black_market_bid_enables_bid_button_after_selecting_listing() {
         "#,
     )
     .expect("selecting a listing should run the original Black Market handler");
-    env.fire_on_update(0.016).unwrap();
     let first_change: (f64, bool, bool) = env
         .eval(
             "return #BlackMarketTextChanges, BlackMarketTextChanges[1], BlackMarketFrame.BidButton:IsEnabled()",
@@ -137,7 +136,6 @@ fn setting_black_market_bid_enables_bid_button_after_selecting_listing() {
 
     env.exec("MoneyInputFrame_SetCopper(BlackMarketBidPrice, 40000)")
         .expect("setting a second bid amount should run Blizzard handlers");
-    env.fire_on_update(0.016).unwrap();
     let second_change: (f64, bool, bool) = env
         .eval(
             "return #BlackMarketTextChanges, BlackMarketTextChanges[2], BlackMarketFrame.BidButton:IsEnabled()",
@@ -147,7 +145,6 @@ fn setting_black_market_bid_enables_bid_button_after_selecting_listing() {
 
     env.exec("BlackMarketBidPrice.gold:SetNumber(4)")
         .expect("setting the current number again should remain valid");
-    env.fire_on_update(0.016).unwrap();
     let unchanged_change_count: f64 = env
         .eval("return #BlackMarketTextChanges")
         .expect("the unchanged number callback count should be readable");
@@ -161,6 +158,7 @@ fn fresh_money_input_frame_set_copper_dispatches_after_return() {
     env.set_screen_mode(ScreenKind::Game);
     load_game_ui(&env);
     env.fire_on_update(0.016).unwrap();
+    let errors_before = env.state().borrow().lua_errors.len();
     env.exec(
         r#"
             FreshMoneyInputFrame = CreateFrame("Frame", nil, UIParent, "MoneyInputFrameTemplate")
@@ -174,20 +172,13 @@ fn fresh_money_input_frame_set_copper_dispatches_after_return() {
         "#,
     )
     .expect("SetCopper on a new MoneyInputFrame should return without an error");
-    let before_update: (f64, f64, bool) = env
-        .eval(
-            "return #FreshMoneyInputFrame.changes, FreshMoneyInputFrame.expectChanges, FreshMoneyInputFrame.callReturned",
-        )
-        .expect("the MoneyInputFrame should retain the caller's expected-change count");
-    assert_eq!(before_update, (0.0, 1.0, true));
-
-    env.fire_on_update(0.016).unwrap();
-    let after_update: (f64, bool, bool) = env
+    let after_return: (f64, bool, bool) = env
         .eval(
             "return #FreshMoneyInputFrame.changes, FreshMoneyInputFrame.changes[1], FreshMoneyInputFrame.expectChanges == nil",
         )
-        .expect("the queued text handler should run after SetCopper returns");
-    assert_eq!(after_update, (1.0, true, true));
+        .expect("the text handler should run after SetCopper returns");
+    assert_eq!(after_return, (1.0, true, true));
+    assert_eq!(env.state().borrow().lua_errors.len(), errors_before);
 }
 
 #[test]
