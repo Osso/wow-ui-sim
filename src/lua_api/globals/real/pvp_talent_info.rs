@@ -4,9 +4,9 @@
 //! native evidence is pending. Optional context arguments are not modeled.
 
 use crate::lua_api::methods::borrow_state;
-use crate::lua_bridge::table_set_rust_fn_static;
+use crate::lua_bridge::{FromStack, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
-use rilua::{FromStack, LuaResult, Val};
+use rilua::{LuaResult, Val};
 
 const PVP_TALENT_INFO_BY_ID_RETURN_COUNT: u32 = 9;
 
