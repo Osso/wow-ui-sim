@@ -441,20 +441,21 @@ pub(super) fn unit_is_ghost(state: &mut LuaState) -> LuaResult<u32> {
 
 /// `UnitIsConnected(unit)` — party tokens read modeled connection state;
 /// other known unit tokens retain their existing presence-based behavior.
+pub(crate) fn unit_is_connected_in_state(st: &SimState, unit: &str) -> bool {
+    match unit {
+        "player" | "pet" | "vehicle" => true,
+        "target" => st.current_target.is_some(),
+        "focus" => st.current_focus.is_some(),
+        other if crate::lua_api::globals::unit_api::parse_party_index(other).is_some() => {
+            visible_party_member(st, other).is_some_and(|member| member.connected)
+        }
+        other => visible_party_member(st, other).is_some(),
+    }
+}
+
 pub(super) fn unit_is_connected(state: &mut LuaState) -> LuaResult<u32> {
     let unit = Option::<String>::from_stack(state, 1)?.unwrap_or_default();
-    let connected = {
-        let st = borrow_state(state)?;
-        match unit.as_str() {
-            "player" | "pet" | "vehicle" => true,
-            "target" => st.current_target.is_some(),
-            "focus" => st.current_focus.is_some(),
-            other if crate::lua_api::globals::unit_api::parse_party_index(other).is_some() => {
-                visible_party_member(&st, other).is_some_and(|member| member.connected)
-            }
-            other => visible_party_member(&st, other).is_some(),
-        }
-    };
+    let connected = unit_is_connected_in_state(&borrow_state(state)?, &unit);
     state.push(Val::Bool(connected));
     Ok(1)
 }
