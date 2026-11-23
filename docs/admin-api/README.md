@@ -23,6 +23,7 @@ The `A_Admin` namespace provides administrative functions for controlling simula
 - [PvP](pvp.md) — SetPvPEnabled, SetHonorLevel
 - [Guild](guild.md) — SetGuildInfo, ClearGuild, JoinGuild, LeaveGuild
 - [Mail](mail.md) — AddMail, ClearInbox, SetInboxCount
+- [Interactions](interactions.md) — OpenGuildRename, OpenMailbox, CloseMailbox
 - [Premade Groups](premade-groups.md) — AddPremadeListing, ClearPremadeListings, UpdatePremadeListing
 - [Quests](quests.md) — simulator-only selected completed quest turn-in
 - [Events](events.md) — FireEvent

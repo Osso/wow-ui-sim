@@ -57,6 +57,8 @@ use super::admin_encounter::{
 };
 use super::admin_equipment::{equip_item, unequip_item};
 use super::admin_events::{fire_event_admin, toggle_debug_anchors, toggle_debug_borders};
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+use super::admin_interactions::open_guild_rename;
 use super::admin_interactions::{close_mailbox, open_mailbox};
 use super::admin_mail::{add_mail, clear_inbox, set_inbox_count, set_stationery_catalog};
 use super::admin_movement::{set_falling, set_flying, set_mounted, set_moving, set_swimming};
@@ -502,6 +504,8 @@ fn register_query_catalog_inputs(b: TableBuilder) -> LuaResult<TableBuilder> {
 fn register_inventory_and_mail(b: TableBuilder) -> LuaResult<TableBuilder> {
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     let b = b.set_function("SetPossessActionSlot", set_possess_action_slot)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let b = b.set_function("OpenGuildRename", open_guild_rename)?;
     let b = b
         .set_function("SetPossessBarVisible", set_possess_bar_visible)?
         .set_function("SetActionSlot", set_action_slot)?
