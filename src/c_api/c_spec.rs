@@ -554,6 +554,7 @@ pub(crate) fn register_admin(
             "SetInspectSelectedPvpTalent",
             admin_set_inspect_selected_pvp_talent,
         )?
+        .set_function("SetPvpTalentSlotInfo", admin_set_pvp_talent_slot_info)?
         .set_function(
             "SetPvpTalentSlotUnlockLevel",
             admin_set_pvp_talent_slot_unlock_level,
@@ -565,15 +566,10 @@ pub(crate) fn register_admin(
 fn register_forever_pvp_admin(
     builder: crate::lua_bridge::TableBuilder,
 ) -> LuaResult<crate::lua_bridge::TableBuilder> {
-    builder
-        .set_function(
-            "SetPvpTalentUnlockLevel",
-            admin_set_forever_pvp_talent_unlock_level,
-        )?
-        .set_function(
-            "SetPvpTalentSlotInfo",
-            admin_set_forever_pvp_talent_slot_info,
-        )
+    builder.set_function(
+        "SetPvpTalentUnlockLevel",
+        admin_set_forever_pvp_talent_unlock_level,
+    )?
 }
 
 #[cfg(feature = "client-retail")]
@@ -721,8 +717,8 @@ fn admin_set_forever_pvp_talent_unlock_level(state: &mut LuaState) -> LuaResult<
     dispatch_pvp_talent_update(state)
 }
 
-#[cfg(feature = "client-wowforever")]
-fn admin_set_forever_pvp_talent_slot_info(state: &mut LuaState) -> LuaResult<u32> {
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn admin_set_pvp_talent_slot_info(state: &mut LuaState) -> LuaResult<u32> {
     use crate::lua_bridge::FromStack;
     let slot_index = i32::from_stack(state, 1)?;
     let slot = super::c_tooltip_info_pvp_talent::PvpTalentSlotInput {
@@ -730,10 +726,23 @@ fn admin_set_forever_pvp_talent_slot_info(state: &mut LuaState) -> LuaResult<u32
         level: i32::from_stack(state, 3)?,
         available_talent_ids: read_pvp_talent_id_array(state, 4, "A_Admin.SetPvpTalentSlotInfo")?,
     };
-    borrow_state_mut(state)?
-        .pvp_talents
-        .slot_infos
-        .insert(slot_index, slot);
+    #[cfg(feature = "client-retail")]
+    {
+        let slot_index = usize::try_from(slot_index).map_err(|_| {
+            rilua::runtime_error("A_Admin.SetPvpTalentSlotInfo: slot index must be nonnegative")
+        })?;
+        borrow_state_mut(state)?
+            .pvp_talent_tooltip
+            .slots
+            .insert(slot_index, slot);
+    }
+    #[cfg(feature = "client-wowforever")]
+    {
+        borrow_state_mut(state)?
+            .pvp_talents
+            .slot_infos
+            .insert(slot_index, slot);
+    }
     dispatch_pvp_talent_update(state)
 }
 

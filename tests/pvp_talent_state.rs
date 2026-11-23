@@ -35,8 +35,6 @@ fn forever_supplied_pvp_talent_state_reaches_open_player_spells_panel() {
         env.exec(
             r#"
             A_Admin.SetPvpTalentUnlockLevel(123, 25)
-            A_Admin.SetPvpTalentSlotInfo(1, true, 60, { 123, 456 })
-            A_Admin.SetPvpTalentSlotInfo(2, true, 60, { 456, 123 })
             assert(C_SpecializationInfo.GetPvpTalentUnlockLevel(123) == 25)
             assert(C_SpecializationInfo.GetPvpTalentUnlockLevel(999) == nil)
             assert(C_SpecializationInfo.GetPvpTalentSlotUnlockLevel(99) == nil)
@@ -151,6 +149,8 @@ fn supply_selected_talent_state(env: &WowLuaEnv) {
         A_Admin.SetPvpTalentSlotUnlockLevel(2, 30)
         A_Admin.SetPvpTalentAlertStatus(true, false)
         A_Admin.SetSelectedPvpTalentIDs({ 123, 456 })
+        A_Admin.SetPvpTalentSlotInfo(1, true, 60, { 123, 456 })
+        A_Admin.SetPvpTalentSlotInfo(2, true, 60, { 456, 123 })
         A_Admin.SetInspectSelectedPvpTalent("target", 2, 456)
         assert(select('#', C_SpecializationInfo.SetPvpTalentLocked(123, true)) == 0)
         C_SpecializationInfo.SetPvpTalentLocked(456, true)
