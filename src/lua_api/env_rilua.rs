@@ -82,6 +82,26 @@ impl WowLuaEnv {
         self.finish_host_lua_call(result)
     }
 
+    pub(crate) fn with_host_input_operation<T>(
+        &self,
+        operation: impl FnOnce() -> crate::Result<T>,
+    ) -> crate::Result<T> {
+        self.host_input_depth.set(self.host_input_depth.get() + 1);
+        let result = operation();
+        self.host_input_depth.set(self.host_input_depth.get() - 1);
+        if self.host_input_depth.get() > 0 {
+            return result;
+        }
+        let flush = super::editbox_update::flush_at_host_boundary(self);
+        match result {
+            Err(error) => Err(error),
+            Ok(value) => {
+                flush?;
+                Ok(value)
+            }
+        }
+    }
+
     fn finish_host_lua_call<T>(&self, result: rilua::LuaResult<T>) -> rilua::LuaResult<T> {
         let flush =
             super::editbox_update::flush_at_host_boundary(self).map_err(|error| match error {

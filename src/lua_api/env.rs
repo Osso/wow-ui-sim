@@ -11,7 +11,7 @@ use crate::lua_api::methods::{
 use crate::xml::{clear_templates, register_intrinsic_templates};
 use rilua::vm::state::LuaState;
 use rilua::{LuaApi, LuaApiMut, LuaResult, Val};
-use std::cell::RefCell;
+use std::cell::{Cell, RefCell};
 use std::rc::Rc;
 
 const EVAL_RESULTS_REGISTRY_KEY: &str = "__wow_eval_results";
@@ -62,6 +62,7 @@ impl WowLuaAppData {
 pub struct WowLuaEnv {
     pub(crate) lua: Rc<RefCell<rilua::Lua>>,
     pub(crate) state: Rc<RefCell<SimState>>,
+    pub(crate) host_input_depth: Cell<usize>,
     reload_loader: Option<Rc<ReloadLoader>>,
     bootstrap_kind: BootstrapKind,
     host_world_entry_identity: bool,
@@ -152,6 +153,7 @@ impl WowLuaEnv {
         let env = Self {
             lua,
             state,
+            host_input_depth: Cell::new(0),
             reload_loader: None,
             bootstrap_kind: BootstrapKind::Initial,
             host_world_entry_identity: false,

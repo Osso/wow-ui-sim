@@ -41,6 +41,9 @@ pub(crate) fn flush(env: &WowLuaEnv) -> crate::Result<()> {
 }
 
 pub(crate) fn flush_at_host_boundary(env: &WowLuaEnv) -> crate::Result<()> {
+    if env.host_input_depth.get() > 0 {
+        return Ok(());
+    }
     let mut lua = env.rilua_mut();
     flush_state_at_host_boundary(lua.state_mut())
 }
