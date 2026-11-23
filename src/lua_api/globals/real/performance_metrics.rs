@@ -1,4 +1,6 @@
 //! Supplied inputs for legacy performance globals consumed by Blizzard UI.
+//!
+//! GetFramerate defaults are R88fg VERIFIED; sample inputs and publication are inferred.
 
 use crate::lua_api::methods::{borrow_state, borrow_state_mut};
 use crate::lua_bridge::{FromStack, TableBuilder, table_set_rust_fn_static};
@@ -21,10 +23,15 @@ pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
 }
 
 fn get_framerate(state: &mut LuaState) -> LuaResult<u32> {
+    let default_fps = if cfg!(feature = "client-wowforever") {
+        240.0
+    } else {
+        60.0
+    };
     let fps = borrow_state(state)?
         .app_frame_metrics
         .supplied_framerate
-        .unwrap_or(60.0);
+        .unwrap_or(default_fps);
     state.push(Val::Num(fps));
     Ok(1)
 }

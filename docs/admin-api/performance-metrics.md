@@ -4,7 +4,7 @@ Retail and WoW Forever expose simulator inputs for the legacy performance global
 
 ## SetFramerate(fps)
 
-Supplies the number returned by `GetFramerate()`. The scenario default is `60` FPS when no value is supplied.
+Supplies the already-smoothed number returned by `GetFramerate()`. **R88fg VERIFIED:** the default is `60` FPS on Retail and `240` FPS on WoW Forever.
 
 ```lua
 A_Admin.SetFramerate(47.5)
@@ -12,7 +12,7 @@ A_Admin.SetFramerate(47.5)
 
 ## SetAddOnUsage(name, memoryKB, cpuMilliseconds)
 
-Supplies per-addon memory and CPU values. Memory is in KB; CPU is in milliseconds. `UpdateAddOnMemoryUsage()` and `UpdateAddOnCPUUsage()` copy the supplied values into their respective published snapshots. Getters return the last published value, or `0` before the first update. `ResetCPUUsage()` clears the supplied and published CPU values.
+Supplies per-addon memory and CPU values. **INFERRED (R88fg, native evidence pending):** memory is in KB, CPU is in milliseconds, and each Update function publishes a snapshot of the supplied values. **R88fg VERIFIED:** `GetAddOnMemoryUsage` reads stored per-addon values rather than measuring live; `GetAddOnCPUUsage` returns `0` when an addon has no record; both Update functions return no values. `ResetCPUUsage()` clears the supplied and published per-addon CPU values.
 
 ```lua
 A_Admin.SetAddOnUsage("MyAddon", 240, 7.5)
@@ -21,4 +21,4 @@ UpdateAddOnCPUUsage()
 print(GetAddOnMemoryUsage("MyAddon"), GetAddOnCPUUsage("MyAddon"))
 ```
 
-The sampling and reset behavior is **INFERRED (R88fg, native evidence pending)**. `GetFrameCPUUsage` remains an unmodeled compatibility default because the audited runtime-selected Retail and Forever UI consumers do not call it.
+The sample units and snapshot publication behavior are **INFERRED (R88fg, native evidence pending)**. **R88fg VERIFIED:** `GetFrameCPUUsage` returns time then count; it remains an unmodeled compatibility default because the audited runtime-selected Retail and Forever UI consumers do not call it.

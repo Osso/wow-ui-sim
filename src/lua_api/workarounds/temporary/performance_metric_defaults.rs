@@ -106,8 +106,10 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
 
 #[cfg(test)]
 mod tests {
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     use crate::lua_api::WowLuaEnv;
 
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     const PERFORMANCE_METRIC_DEFAULTS_PROBE_LUA: &str = r#"
         if GetFramerate() ~= 60 then return "framerate" end
         if UpdateAddOnMemoryUsage() ~= 0 then return "update_memory" end

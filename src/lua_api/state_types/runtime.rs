@@ -108,7 +108,7 @@ impl Default for AddonRuntimeMetrics {
 /// Application-level frame timing for profiler (total frame time, not just addon time).
 #[derive(Debug, Clone, Default)]
 pub struct AppFrameMetrics {
-    /// INFERRED (R88fg, native evidence pending): optional host-supplied FPS.
+    /// R88fg VERIFIED: optional host-supplied already-smoothed FPS; absent input uses the profile default.
     pub supplied_framerate: Option<f64>,
     /// Rolling window of total frame times in ms (last 60 frames).
     pub recent_frame_ms: VecDeque<f64>,
