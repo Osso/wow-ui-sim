@@ -56,7 +56,7 @@ fn submit_playsound_slash(env: &WowLuaEnv, sound_enum: &str) -> f64 {
     let script = format!(
         r#"
         local soundEnum = {sound_enum}
-        ChatFrame1EditBox:SetText("/" .. SLASH_COMMAND.COMBATAUDIOALERTS .. " " .. SLASH_CAA_PLAY_SOUND .. " " .. soundEnum)
+        ChatFrame1EditBox:SetText(SLASH_CAA1 .. " " .. SLASH_CAA_PLAY_SOUND .. " " .. soundEnum)
         ChatEdit_SendText(ChatFrame1EditBox, false)
         local queuedID, count = nil, 0
         for id, queuedEnum in pairs(CombatAudioAlertManager.queuedSounds) do
