@@ -4,8 +4,9 @@
 
 ## What it must do
 
-- [x] Show two distinct supplied listings and the supplied hot deal in the original Blizzard panel.
-- [x] Allow `hotItem.marketID` to match a listing while keeping listing IDs unique; bids update both copies.
+- [x] Show supplied listings in the original Blizzard panel.
+- [x] VERIFIED (R88em): `GetHotItem` returns one of the current listings; the supplied `hotItemMarketID` selects that listing by its market ID.
+- [x] VERIFIED (R88em; Retail consumer `Blizzard_BlackMarketUI.lua:171, 228, 236-244`): the original UI carries `marketID` through its `selectedMarketID`/`auctionID` fields into `GetItemInfoByID` and `ItemPlaceBid`, so the simulator resolves those calls by `marketID` despite the native reconstruction's generic “item ID” wording.
 - [x] Reject bids below `max(minBid, currBid + minIncrement)` without changing the listing state.
 - [x] Dispatch `BLACK_MARKET_BID_RESULT(marketID, resultCode)` for each bid. **INFERRED (R88em; native evidence pending):** `0` means success, `1` means below minimum, and `2` means the market ID is unknown.
 - [x] Respect the supplied view-only flag by hiding the Blizzard bid controls.

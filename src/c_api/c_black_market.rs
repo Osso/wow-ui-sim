@@ -1,4 +1,5 @@
-//! INFERRED (R88em (native evidence pending)): supplied Black Market listings.
+//! VERIFIED (R88em): current Black Market listings and hot-item lookup share entries.
+//! INFERRED (R88em): supplied-state and bid-result event modeling.
 
 use std::collections::HashSet;
 
@@ -39,7 +40,8 @@ pub(crate) struct BlackMarketItem {
 #[serde(rename_all = "camelCase")]
 pub(crate) struct BlackMarketState {
     items: Vec<BlackMarketItem>,
-    hot_item: Option<BlackMarketItem>,
+    #[serde(rename = "hotItemMarketID")]
+    hot_item_market_id: Option<u32>,
     view_only: bool,
 }
 
@@ -112,7 +114,6 @@ fn item_place_bid(state: &mut LuaState) -> LuaResult<u32> {
         let minimum_bid = black_market
             .items
             .iter()
-            .chain(black_market.hot_item.iter())
             .find(|item| item.market_id == market_id)
             .map(minimum_accepted_bid);
 
@@ -123,13 +124,6 @@ fn item_place_bid(state: &mut LuaState) -> LuaResult<u32> {
                 for item in black_market
                     .items
                     .iter_mut()
-                    .filter(|item| item.market_id == market_id)
-                {
-                    apply_bid(item, bid);
-                }
-                if let Some(item) = black_market
-                    .hot_item
-                    .as_mut()
                     .filter(|item| item.market_id == market_id)
                 {
                     apply_bid(item, bid);
@@ -171,7 +165,15 @@ fn get_num_items(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn get_hot_item(state: &mut LuaState) -> LuaResult<u32> {
-    let item = borrow_state(state)?.black_market.hot_item.clone();
+    let item = {
+        let sim = borrow_state(state)?;
+        let market = &sim.black_market;
+        market
+            .items
+            .iter()
+            .find(|item| Some(item.market_id) == market.hot_item_market_id)
+            .cloned()
+    };
     let Some(item) = item else { return Ok(0) };
     push_item_info(state, &item);
     Ok(17)
@@ -184,7 +186,6 @@ fn get_item_info_by_id(state: &mut LuaState) -> LuaResult<u32> {
         sim.black_market
             .items
             .iter()
-            .chain(sim.black_market.hot_item.iter())
             .find(|item| item.market_id == market_id)
             .cloned()
     };
