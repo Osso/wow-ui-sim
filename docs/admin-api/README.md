@@ -10,6 +10,7 @@ The `A_Admin` namespace provides administrative functions for controlling simula
 - [Combat](combat.md) — SetInCombat, SetCasting, StopCasting, SetGCD, SetSpellCooldown
 - [Loot Journal](loot-journal.md) — SetLootJournalItemSets
 - [Raid locks](raid-locks.md) — SetCompletedEncounters
+- [Kiosk session](kiosk.md) — SetKioskSession
 - [Health & Power](health-power.md) — SetPlayerHealth, SetPlayerPower, SetTargetHealth
 - [Targeting](targeting.md) — SetTarget, ClearTarget, SetFocus, ClearFocus
 - [Party](party.md) — SetPartySize, SetPartyMember, SetPartyMemberHealth, KillPartyMember, ResPartyMember, SetRotDamage

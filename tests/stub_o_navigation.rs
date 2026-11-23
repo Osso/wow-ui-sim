@@ -100,6 +100,33 @@ fn original_lfd_link_consumer_respects_toggle_lock_and_selects_lfd_panel() {
 }
 
 #[test]
+fn original_lfd_consumer_hides_panel_for_supplied_kiosk_session() {
+    let env = nav_env(&["Blizzard_UIPanels_Game", "Blizzard_GroupFinder"]);
+    env.exec(
+        r#"
+        NavigationOriginalSource(ToggleLFDParentFrame, 'Blizzard_GroupFinder/Mainline/PVEFrame.lua')
+        assert(not PVEFrame:IsShown())
+        assert(C_LFGInfo.CanPlayerUseGroupFinder())
+        assert(not Kiosk.IsEnabled() and not Kiosk.IsCompetitiveModeEnabled())
+        assert(select('#', Kiosk.GetKioskLoginInfo()) == 0)
+        A_Admin.SetKioskSession({
+            enabled=true, competitive=true,
+            accountName='account', password='secret', realmAddress='realm'
+        })
+        assert(Kiosk.IsEnabled() and Kiosk.IsCompetitiveModeEnabled())
+        local account, password, realm = Kiosk.GetKioskLoginInfo()
+        assert(account == 'account' and password == 'secret' and realm == 'realm')
+        LinkUtil.ProcessLink('lfd', 'Group Finder', {})
+        assert(not PVEFrame:IsShown(), 'kiosk session must keep the original LFD panel closed')
+        A_Admin.SetKioskSession({enabled=false, competitive=false})
+        LinkUtil.ProcessLink('lfd', 'Group Finder', {})
+        assert(PVEFrame:IsShown(), 'non-kiosk session must open the original LFD panel')
+    "#,
+    )
+    .unwrap();
+}
+
+#[test]
 fn original_group_roster_consumer_refreshes_compact_manager_from_group_model() {
     let env = nav_env(&[
         "Blizzard_RaidFrame",
