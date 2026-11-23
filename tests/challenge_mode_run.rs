@@ -171,34 +171,48 @@ fn load_challenges_ui() -> WowLuaEnv {
 }
 
 #[cfg(feature = "client-retail")]
-#[test]
-fn original_challenges_panel_uses_supplied_current_season_maps() {
+fn challenge_icon_map_ids_for_display_season(season_id: u32) -> String {
     let ui = blizzard_ui_dir();
     let env = new_blizzard_addon_env(&ui);
-    env.exec(
+    env.exec(&format!(
         r#"
-        A_Admin.SetMythicPlusSeasonMaps({9001, 9002})
-        A_Admin.SetChallengeModeMapInfo(9001, {name='First supplied dungeon', id=9001,
-            timeLimit=1500, texture=123, backgroundTexture=456, mapID=789})
-        A_Admin.SetChallengeModeMapInfo(9002, {name='Second supplied dungeon', id=9002,
-            timeLimit=1800, texture=321, backgroundTexture=654, mapID=987})
-    "#,
-    )
+        A_Admin.SetCurrentDisplaySeasonID({season_id})
+        A_Admin.SetPlayerLevel(GetMaxLevelForPlayerExpansion())
+        local mapIDs = C_ChallengeMode.GetMapTable()
+        assert(#mapIDs == 8)
+        for _, mapID in ipairs(mapIDs) do
+            A_Admin.SetChallengeModeMapInfo(mapID, {{name='Season map '..mapID, id=mapID,
+                timeLimit=1500, texture=mapID + 1000, backgroundTexture=mapID + 2000, mapID=mapID}})
+        end
+    "#
+    ))
     .unwrap();
     for addon in ["Blizzard_SharedXML", "Blizzard_GroupFinder"] {
         let loaded = load_blizzard_addon_closure_into_env(&env, &ui, &[addon], &[]);
         assert!(loaded.iter().any(|name| name == addon));
     }
-    env.exec(
+    env.eval(
         r#"
-        PVEFrame_ShowFrame("ChallengesFrame")
+        PVEFrame_ToggleFrame('ChallengesFrame')
         assert(PVEFrame:IsShown() and ChallengesFrame:IsShown())
-        assert(#ChallengesFrame.DungeonIcons == 2)
-        assert(ChallengesFrame.DungeonIcons[1].Name:GetText() == 'First supplied dungeon')
-        assert(ChallengesFrame.DungeonIcons[2].Name:GetText() == 'Second supplied dungeon')
+        local ids = {}
+        for _, icon in ipairs(ChallengesFrame.DungeonIcons) do
+            ids[#ids + 1] = icon.mapID
+        end
+        return table.concat(ids, ',')
     "#,
     )
-    .unwrap();
+    .unwrap()
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn original_challenges_panel_uses_display_season_maps() {
+    let season_34 = challenge_icon_map_ids_for_display_season(34);
+    let season_37 = challenge_icon_map_ids_for_display_season(37);
+    assert_eq!(season_34, "239,556,161,402,557,558,559,560");
+    assert_eq!(season_37, "588,399,250,249,584,585,586,587");
+    assert_ne!(season_34, season_37);
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
