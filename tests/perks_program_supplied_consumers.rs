@@ -25,8 +25,8 @@ fn supply_perks_program_state(env: &WowLuaEnv) {
 fn supplied_catalog_and_chest_state_are_visible() {
     let env = crate::common::panel_fixtures::setup_env();
     supply_perks_program_state(&env);
-    env.exec("ShowPerksProgramFrame()")
-        .expect("Blizzard's Perks Program open helper should show the original panel");
+    env.exec("LoadAddOn('Blizzard_PerksProgram'); ShowUIPanel(PerksProgramFrame)")
+        .expect("the original Perks Program panel should load and open through ShowUIPanel");
     env.exec("A_Admin.SetPerksProgramCurrencyAmount(777)")
         .expect("A_Admin should supply Trader's Tender");
 
