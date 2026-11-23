@@ -6,16 +6,16 @@
 
 ### API and request queue
 
-- [ ] Retail declares `SpeakText(text, category, allowOverlap = true) -> utteranceID:number`, non-nil (VERIFIED: `Blizzard_APIDocumentationGenerated/CombatAudioAlertDocumentation.lua:233-247`).
-- [ ] An accepted call records `text`, `category`, and `allowOverlap` in order. An omitted `allowOverlap` uses `true` (INFERRED, R88fc, native evidence pending).
-- [ ] Each environment returns increasing utterance IDs starting at `1` (INFERRED, R88fc, native evidence pending).
-- [ ] A completion event is sent on a later timer tick with exactly one numeric `utteranceID` payload (VERIFIED event shape: `Blizzard_APIDocumentationGenerated/VoiceChatDocumentation.lua:1298-1306`; timing INFERRED, R88fc, native evidence pending).
-- [ ] Speech is not synthesized. The Blizzard consumer can play its queued combat sound after the completion event.
+- [x] Retail declares `SpeakText(text, category, allowOverlap = true) -> utteranceID:number`, non-nil (VERIFIED: `Blizzard_APIDocumentationGenerated/CombatAudioAlertDocumentation.lua:233-247`).
+- [x] An accepted call records `text`, `category`, and `allowOverlap` in order. An omitted `allowOverlap` uses `true` (INFERRED, R88fc, native evidence pending).
+- [x] Each environment returns increasing utterance IDs starting at `1` (INFERRED, R88fc, native evidence pending).
+- [x] A completion event is sent on a later timer tick with exactly one numeric `utteranceID` payload (VERIFIED event shape: `Blizzard_APIDocumentationGenerated/VoiceChatDocumentation.lua:1298-1306`; timing INFERRED, R88fc, native evidence pending).
+- [x] The provider records a request without synthesizing speech; the selected consumer plays its queued combat sound after the completion event.
 
 ### Profile scope
 
-- [ ] The Rust registration and replacement of the temporary `SpeakText` fallback apply only to Retail and WoW Forever.
-- [ ] Other sound-driver defaults and other profile fallbacks remain unchanged.
+- [x] The Rust registration and replacement of the temporary `SpeakText` fallback apply only to Retail and WoW Forever.
+- [ ] Other sound-driver defaults and other profile fallbacks remain unchanged at runtime on profiles outside Retail and WoW Forever.
 
 ## How it works
 
@@ -37,6 +37,7 @@
 ## Known gaps (current cycle)
 
 - [ ] Native execution evidence is pending (R88fc); argument validation and completion timing remain inferred.
+- [ ] Non-Retail and non-Forever fallback runtime behavior was not exercised; lane proof is compile-only on Mists and Wrath.
 
 ## Out of scope
 
