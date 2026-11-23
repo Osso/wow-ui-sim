@@ -15,8 +15,10 @@ fn p1210_dye_colors_for_items_and_item_locations_use_supplied_lists() {
         assert(table.concat(C_DyeColor.GetDyeColorsForItem(900001), ',') == '501,502')
         assert(table.concat(C_DyeColor.GetDyeColorsForItem(900002), ',') == '601')
         assert(table.concat(C_DyeColor.GetDyeColorsForItem(900003), ',') == '')
-        assert(table.concat(C_DyeColor.GetDyeColorsForItemLocation({bagID = 1, slotIndex = 1}), ',') == '501,502')
-        assert(table.concat(C_DyeColor.GetDyeColorsForItemLocation({bagID = 1, slotIndex = 2}), ',') == '601')
+        local first = ItemLocation:CreateFromBagAndSlot(0, 1)
+        local second = ItemLocation:CreateFromBagAndSlot(0, 2)
+        assert(table.concat(C_DyeColor.GetDyeColorsForItemLocation(first), ',') == '501,502')
+        assert(table.concat(C_DyeColor.GetDyeColorsForItemLocation(second), ',') == '601')
     "#,
     )
     .unwrap();
