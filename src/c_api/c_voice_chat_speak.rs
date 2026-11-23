@@ -20,10 +20,24 @@ pub struct SpeakTextRequest {
     pub overlap: bool,
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[derive(Clone, Debug, PartialEq)]
+pub struct CombatAudioAlertSpeakTextRequest {
+    pub text: String,
+    pub category: f64,
+    pub allow_overlap: bool,
+}
+
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     let namespace = super::ensure_namespace(state, "C_VoiceChat")?;
     table_set_rust_fn_static(state, namespace, "SpeakText", speak_text)?;
     table_set_rust_fn_static(state, namespace, "StopSpeakingText", stop_speaking_text)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) fn register_combat_audio_alert(state: &mut LuaState) -> LuaResult<()> {
+    let namespace = super::ensure_namespace(state, "C_CombatAudioAlert")?;
+    table_set_rust_fn_static(state, namespace, "SpeakText", combat_audio_speak_text)
 }
 
 fn stop_speaking_text(state: &mut LuaState) -> LuaResult<u32> {
@@ -38,6 +52,65 @@ fn speak_text(state: &mut LuaState) -> LuaResult<u32> {
         .voice_chat_speak_requests
         .push(request);
     Ok(0)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+// INFERRED (R88fc, native evidence pending): queue speech and finish on a later tick.
+fn combat_audio_speak_text(state: &mut LuaState) -> LuaResult<u32> {
+    let request = read_combat_audio_request(state)?;
+    let utterance_id = {
+        let mut sim = borrow_state_mut(state)?;
+        let id = sim.next_combat_audio_utterance_id;
+        sim.next_combat_audio_utterance_id = id
+            .checked_add(1)
+            .ok_or_else(|| runtime_error("C_CombatAudioAlert.SpeakText IDs exhausted"))?;
+        sim.combat_audio_speak_requests.push(request);
+        sim.pending_combat_audio_utterance_ids.push_back(id);
+        id
+    };
+    state.push(Val::Num(f64::from(utterance_id)));
+    Ok(1)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn read_combat_audio_request(state: &LuaState) -> LuaResult<CombatAudioAlertSpeakTextRequest> {
+    Ok(CombatAudioAlertSpeakTextRequest {
+        text: read_combat_audio_text(state)?,
+        category: read_combat_audio_category(state)?,
+        allow_overlap: read_combat_audio_overlap(state)?,
+    })
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn read_combat_audio_text(state: &LuaState) -> LuaResult<String> {
+    match stack_val(state, 1) {
+        Val::Str(_) => val_to_string(state, stack_val(state, 1))
+            .ok_or_else(|| runtime_error("C_CombatAudioAlert.SpeakText text must be a string")),
+        _ => Err(runtime_error(
+            "C_CombatAudioAlert.SpeakText text must be a string",
+        )),
+    }
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn read_combat_audio_category(state: &LuaState) -> LuaResult<f64> {
+    match stack_val(state, 2) {
+        Val::Num(value) if value.is_finite() => Ok(value),
+        _ => Err(runtime_error(
+            "C_CombatAudioAlert.SpeakText category must be a number",
+        )),
+    }
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn read_combat_audio_overlap(state: &LuaState) -> LuaResult<bool> {
+    match stack_val(state, 3) {
+        Val::Nil => Ok(true),
+        Val::Bool(value) => Ok(value),
+        _ => Err(runtime_error(
+            "C_CombatAudioAlert.SpeakText allowOverlap must be a boolean",
+        )),
+    }
 }
 
 fn reject_secret_arguments(state: &LuaState) -> LuaResult<()> {

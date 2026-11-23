@@ -855,7 +855,7 @@ fn test_patch_12_1_safe_global_bridges() {
             if r ~= 1 or g ~= 1 or b ~= 1 or a ~= 1 then return "duration-color-rgba" end
             durationBinding:ClearTextColorCurve()
             if durationBinding:GetTextColorCurve() ~= nil then return "duration-color-cleared" end
-            if C_CombatAudioAlert.SpeakText("test") ~= 0 then return "combat-audio" end
+            if type(C_CombatAudioAlert.SpeakText) ~= "function" then return "combat-audio" end
             if #C_CooldownViewer.GetGroupBuffItems() ~= 0 then return "cooldown-group-buffs" end
             if #C_DyeColor.GetDyeColorsForItem(1) ~= 0 then return "dye-item" end
             if #C_DyeColor.GetDyeColorsForItemLocation({}) ~= 0 then return "dye-location" end

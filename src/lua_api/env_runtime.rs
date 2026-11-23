@@ -349,28 +349,59 @@ impl WowLuaEnv {
     /// Run ready timers and return how many callbacks fired.
     pub fn process_timers(&self) -> Result<usize> {
         #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
-        let raid_info_replies = {
-            let mut state = self.state.borrow_mut();
-            std::mem::take(&mut state.pending_raid_info_replies).len()
+        let raid_info_replies =
+            std::mem::take(&mut self.state.borrow_mut().pending_raid_info_replies).len();
+        #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+        let pending_completions = self.state.borrow().pending_combat_audio_utterance_ids.len();
+        let timer_fired = if self.state.borrow().manual_clock.is_some() {
+            super::manual_timers::drain(self.lua.borrow_mut().state_mut())?
+        } else {
+            self.process_regular_timers()
         };
-        if self.state.borrow().manual_clock.is_some() {
-            let fired = super::manual_timers::drain(self.lua.borrow_mut().state_mut())?;
-            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+        #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+        {
             self.fire_raid_info_replies(raid_info_replies)?;
-            return Ok(fired);
+            return Ok(timer_fired + self.dispatch_combat_audio_completions(pending_completions)?);
         }
-        let signal_fired = self.process_due_timed_signals();
+        #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+        Ok(timer_fired)
+    }
 
+    fn process_regular_timers(&self) -> usize {
+        let signal_fired = self.process_due_timed_signals();
         let now = self.state.borrow().clock_now();
         let timers = take_pending_timers(self);
         let (timer_fired, mut requeue) = process_timer_queue(self, timers, now);
         let mut state = self.state.borrow_mut();
         requeue.append(&mut state.rilua_timers);
         state.rilua_timers = requeue;
-        drop(state);
-        #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
-        self.fire_raid_info_replies(raid_info_replies)?;
-        Ok(signal_fired + timer_fired)
+        signal_fired + timer_fired
+    }
+
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    fn dispatch_combat_audio_completions(&self, count: usize) -> Result<usize> {
+        let mut fired = 0;
+        for _ in 0..count {
+            let Some(utterance_id) = self
+                .state
+                .borrow_mut()
+                .pending_combat_audio_utterance_ids
+                .pop_front()
+            else {
+                break;
+            };
+            let args = [Val::Num(f64::from(utterance_id))];
+            if let Err(error) = self.fire_event_with_args("VOICE_CHAT_TTS_PLAYBACK_FINISHED", &args)
+            {
+                self.state
+                    .borrow_mut()
+                    .pending_combat_audio_utterance_ids
+                    .push_front(utterance_id);
+                return Err(error);
+            }
+            fired += 1;
+        }
+        Ok(fired)
     }
 
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
