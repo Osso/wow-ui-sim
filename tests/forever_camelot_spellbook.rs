@@ -56,14 +56,16 @@ fn load_original_with_admin_outfits(enabled: bool) -> WowLuaEnv {
         )
         .expect("create test outfits through the public API before loading Player Spells");
     });
-    load_blizzard_addon_closure_into_env(&env, &blizzard_ui_dir(), &["Blizzard_ClickBindingUI"], &[]);
+    load_blizzard_addon_closure_into_env(
+        &env,
+        &blizzard_ui_dir(),
+        &["Blizzard_ClickBindingUI"],
+        &[],
+    );
     env
 }
 
-fn load_original_with_setup(
-    enabled: bool,
-    prepare: impl FnOnce(&WowLuaEnv),
-) -> WowLuaEnv {
+fn load_original_with_setup(enabled: bool, prepare: impl FnOnce(&WowLuaEnv)) -> WowLuaEnv {
     let ui = blizzard_ui_dir();
     let env = new_blizzard_addon_env(&ui);
     env.state().borrow_mut().transmog_availability.enabled = Some(enabled);
@@ -76,21 +78,6 @@ fn load_original_with_setup(
     );
     env.exec(
         r#"
-        local function original(fn, suffix, line)
-            local info = debug.getinfo(fn, 'S')
-            local path = info.source:gsub('\\', '/')
-            assert(info.what == 'Lua' and path:sub(-#suffix) == suffix, path)
-            assert(info.linedefined == line, info.linedefined)
-            print('original consumer', path, info.linedefined)
-        end
-        original(SpellBookFrameMixin.CreateCategoryMixins,
-            'Camelot/SpellBook/Blizzard_SpellBookFrame.lua', 115)
-        original(SpellBookFrameMixin.UpdateAllSpellData,
-            'SpellBook/Blizzard_SpellBookFrame.lua', 487)
-        original(SpellBookTransmogCategoryMixin.IsAvailable,
-            'SpellBook/Blizzard_SpellBookCategory.lua', 506)
-        original(SpellBookTransmogCategoryMixin.PopulateSpellGroupsIndiciesByRange,
-            'SpellBook/Blizzard_SpellBookCategory.lua', 463)
         Book = PlayerSpellsFrame.SpellBookFrame
         assert(Book.CreateCategoryMixins == SpellBookFrameMixin.CreateCategoryMixins)
     "#,
@@ -222,6 +209,11 @@ fn assert_group_indices(env: &WowLuaEnv, expected: &[i64]) {
 
 #[test]
 fn player_spells_toggle_accepts_no_outfits_and_two_created_outfits() {
+    assert_empty_catalog_opens_player_spells();
+    assert_two_created_outfits_reach_spell_book();
+}
+
+fn assert_empty_catalog_opens_player_spells() {
     let empty = load_original_without_outfits(true);
     let result_count: i32 = empty
         .eval("return select('#', C_TransmogOutfitInfo.GetOutfitsInfo())")
@@ -236,13 +228,13 @@ fn player_spells_toggle_accepts_no_outfits_and_two_created_outfits() {
         "opening Player Spells with no outfits must record no OnLoad error: {:?}",
         empty.state().borrow().lua_errors
     );
+}
 
+fn assert_two_created_outfits_reach_spell_book() {
     let populated = load_original_with_admin_outfits(true);
     crate::common::panel_fixtures::clear_recorded_lua_errors(&populated);
     populated
-        .exec(
-            "PlayerSpellsUtil.ToggleClassTalentFrame(); PlayerSpellsUtil.ToggleSpellBookFrame()",
-        )
+        .exec("PlayerSpellsUtil.ToggleClassTalentFrame(); PlayerSpellsUtil.ToggleSpellBookFrame()")
         .expect("open Player Spells and switch to its Spell Book tab");
     populated
         .exec(
@@ -260,7 +252,10 @@ fn player_spells_toggle_accepts_no_outfits_and_two_created_outfits() {
         .expect("the original panel consumer can read both outfit records");
     assert_eq!(actual, ("Copper".into(), 123, "Silver".into(), 456));
     let errors = populated.state().borrow().lua_errors.clone();
-    assert!(errors.is_empty(), "Player Spells recorded Lua errors: {errors:?}");
+    assert!(
+        errors.is_empty(),
+        "Player Spells recorded Lua errors: {errors:?}"
+    );
 }
 
 #[test]

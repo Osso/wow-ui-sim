@@ -20,8 +20,17 @@ fn encounter_journal_renders_supplied_item_sets_and_items(env: &WowLuaEnv) {
     env.apply_post_load_workarounds();
 
     let rendered: String = env
-        .eval(
-            r#"
+        .eval(RENDER_SUPPLIED_ITEM_SETS)
+        .expect("Encounter Journal loot item-set consumer should render supplied values");
+
+    assert_eq!(
+        rendered,
+        "Supplied Alpha:41001:91001|Supplied Beta:41002:91002"
+    );
+}
+}
+
+const RENDER_SUPPLIED_ITEM_SETS: &str = r#"
             A_Admin.SetLootJournalItemSets({
                 { setID=501, name="Supplied Alpha", itemLevel=620, classID=2, specID=70,
                   items={{ itemID=41001, icon=91001, slot=1, invType=13 }} },
@@ -47,15 +56,16 @@ fn encounter_journal_renders_supplied_item_sets_and_items(env: &WowLuaEnv) {
             end)
             table.sort(rendered)
             return table.concat(rendered, "|")
-            "#,
-        )
-        .expect("Encounter Journal loot item-set consumer should render supplied values");
+            "#;
 
-    assert_eq!(
-        rendered,
-        "Supplied Alpha:41001:91001|Supplied Beta:41002:91002"
-    );
-}
+/// Supplied raid-lock fixture: one raid instance and two of its mapped bosses.
+struct RaidLockBosses {
+    instance_id: i32,
+    map_id: i32,
+    journal_a: i32,
+    encounter_a: i32,
+    journal_b: i32,
+    encounter_b: i32,
 }
 
 prefork_full_ui_case! {
@@ -63,12 +73,37 @@ fn encounter_journal_boss_list_uses_supplied_raid_locks(env: &WowLuaEnv) {
     load_addon(&env.loader_env(), &encounter_journal_toc())
         .expect("selected Encounter Journal TOC should load");
     env.apply_post_load_workarounds();
+    let bosses = open_raid_with_first_boss_complete(env);
+    assert_initial_raid_lock_overlays(env, &bosses);
+    complete_second_boss_and_request_raid_info(env, &bosses);
+    env.process_timers()
+        .expect("the queued raid-info reply should dispatch on the next timer tick");
+    assert_second_boss_overlay_shown(env, &bosses);
+}
+}
 
+fn open_raid_with_first_boss_complete(env: &WowLuaEnv) -> RaidLockBosses {
     let (instance_id, map_id, journal_a, encounter_a, journal_b, encounter_b): (
-        i32, i32, i32, i32, i32, i32,
+        i32,
+        i32,
+        i32,
+        i32,
+        i32,
+        i32,
     ) = env
-        .eval(
-            r#"
+        .eval(SELECT_RAID_AND_OPEN_JOURNAL)
+        .expect("a raid instance with two mapped Encounter Journal bosses should exist");
+    RaidLockBosses {
+        instance_id,
+        map_id,
+        journal_a,
+        encounter_a,
+        journal_b,
+        encounter_b,
+    }
+}
+
+const SELECT_RAID_AND_OPEN_JOURNAL: &str = r#"
             local selected
             for instanceIndex = 1, 500 do
                 local instanceID = EJ_GetInstanceByIndex(instanceIndex, true)
@@ -112,10 +147,17 @@ fn encounter_journal_boss_list_uses_supplied_raid_locks(env: &WowLuaEnv) {
             return selected.instanceID, selected.mapID,
                 selected.first.journalID, selected.first.encounterID,
                 selected.second.journalID, selected.second.encounterID
-            "#,
-        )
-        .expect("a raid instance with two mapped Encounter Journal bosses should exist");
+            "#;
 
+fn assert_initial_raid_lock_overlays(env: &WowLuaEnv, b: &RaidLockBosses) {
+    let RaidLockBosses {
+        instance_id,
+        map_id,
+        journal_a,
+        encounter_a,
+        journal_b,
+        encounter_b,
+    } = b;
     let initial: (bool, bool, bool, bool, bool, bool) = env
         .eval(&format!(
             r#"
@@ -135,7 +177,16 @@ fn encounter_journal_boss_list_uses_supplied_raid_locks(env: &WowLuaEnv) {
         ))
         .expect("Encounter Journal boss overlays should read supplied raid-lock state");
     assert_eq!(initial, (true, true, true, true, true, false));
+}
 
+fn complete_second_boss_and_request_raid_info(env: &WowLuaEnv, b: &RaidLockBosses) {
+    let RaidLockBosses {
+        map_id,
+        encounter_a,
+        journal_b,
+        encounter_b,
+        ..
+    } = b;
     env.exec(&format!(
         r#"
         A_Admin.SetCompletedEncounters({{
@@ -154,9 +205,10 @@ fn encounter_journal_boss_list_uses_supplied_raid_locks(env: &WowLuaEnv) {
         "#
     ))
     .expect("the second supplied completion should wait for the raid-info reply tick");
+}
 
-    env.process_timers()
-        .expect("the queued raid-info reply should dispatch on the next timer tick");
+fn assert_second_boss_overlay_shown(env: &WowLuaEnv, b: &RaidLockBosses) {
+    let journal_b = b.journal_b;
     let updated: bool = env
         .eval(&format!(
             r#"
@@ -170,6 +222,8 @@ fn encounter_journal_boss_list_uses_supplied_raid_locks(env: &WowLuaEnv) {
             "#
         ))
         .expect("UPDATE_INSTANCE_INFO should refresh the second boss overlay");
-    assert!(updated, "the second boss overlay should show after the reply tick");
-}
+    assert!(
+        updated,
+        "the second boss overlay should show after the reply tick"
+    );
 }

@@ -133,6 +133,7 @@ fn read_default_ping_option(state: &mut LuaState, value: Val) -> LuaResult<PingD
     })
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn read_option_integer(state: &mut LuaState, table: GcRef<Table>, key: &str) -> LuaResult<i32> {
     let Val::Num(value) = table_get(state, Val::Table(table), key) else {
         return Err(invalid_option_field(key));
@@ -144,11 +145,13 @@ fn read_option_integer(state: &mut LuaState, table: GcRef<Table>, key: &str) -> 
     Ok(value as i32)
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn read_option_string(state: &mut LuaState, table: GcRef<Table>, key: &str) -> LuaResult<String> {
     let value = table_get(state, Val::Table(table), key);
     val_to_string(state, value).ok_or_else(|| invalid_option_field(key))
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn invalid_option_field(key: &str) -> rilua::LuaError {
     runtime_error(format!("A_Admin.SetDefaultPingOptions: invalid {key}"))
 }
