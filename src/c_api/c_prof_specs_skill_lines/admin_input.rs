@@ -54,18 +54,8 @@ fn read_skill_line_record(
         .into_iter()
         .map(|id| id as u32)
         .collect();
-    let currency_table = table_field(state, row, "currency");
-    let currency_info = ProfessionSpecializationCurrencyInfo {
-        num_available: number_field(state, currency_table, "numAvailable") as i32,
-        currency_name: string_field(state, currency_table, "currencyName"),
-    };
-    let spec_tab_info = match table_field(state, row, "specTabInfo") {
-        value @ Val::Table(_) => Some(ProfessionSpecializationTabInfo {
-            enabled: bool_field(state, value, "enabled"),
-            error_reason: string_field(state, value, "errorReason"),
-        }),
-        _ => None,
-    };
+    let currency_info = read_currency_info(state, row);
+    let spec_tab_info = read_spec_tab_info(state, row);
     Ok(ProfessionSpecSkillLine {
         skill_line_id,
         config_id,
@@ -73,6 +63,30 @@ fn read_skill_line_record(
         currency_info,
         spec_tab_info,
     })
+}
+
+fn read_currency_info(
+    state: &mut LuaState,
+    row: rilua::vm::gc::arena::GcRef<rilua::vm::table::Table>,
+) -> ProfessionSpecializationCurrencyInfo {
+    let currency = table_field(state, row, "currency");
+    ProfessionSpecializationCurrencyInfo {
+        num_available: number_field(state, currency, "numAvailable") as i32,
+        currency_name: string_field(state, currency, "currencyName"),
+    }
+}
+
+fn read_spec_tab_info(
+    state: &mut LuaState,
+    row: rilua::vm::gc::arena::GcRef<rilua::vm::table::Table>,
+) -> Option<ProfessionSpecializationTabInfo> {
+    match table_field(state, row, "specTabInfo") {
+        value @ Val::Table(_) => Some(ProfessionSpecializationTabInfo {
+            enabled: bool_field(state, value, "enabled"),
+            error_reason: string_field(state, value, "errorReason"),
+        }),
+        _ => None,
+    }
 }
 
 fn set_profession_spec_tab_info(state: &mut LuaState) -> LuaResult<u32> {
@@ -187,8 +201,7 @@ fn read_string_array_field(
     table: rilua::vm::gc::arena::GcRef<rilua::vm::table::Table>,
     key: &str,
 ) -> LuaResult<Vec<String>> {
-    let value = table_field(state, table, key);
-    let Val::Table(array) = value else {
+    let Val::Table(array) = table_field(state, table, key) else {
         return Ok(Vec::new());
     };
     let length = state
@@ -197,20 +210,21 @@ fn read_string_array_field(
         .get(array)
         .map_or(0, |array| array.len(&state.gc.string_arena));
     (1..=length)
-        .map(|index| {
-            match state
-                .gc
-                .tables
-                .get(array)
-                .map(|array| array.get_int(index as i64))
-            {
-                Some(value @ Val::Str(_)) => {
-                    Ok(crate::lua_api::methods::val_to_string(state, value).unwrap_or_default())
-                }
-                _ => Err(runtime_error(
-                    "profession spec highlight descriptions must be strings",
-                )),
-            }
-        })
+        .map(|index| read_string_array_entry(state, array, index as i64))
         .collect()
+}
+
+fn read_string_array_entry(
+    state: &LuaState,
+    array: rilua::vm::gc::arena::GcRef<rilua::vm::table::Table>,
+    index: i64,
+) -> LuaResult<String> {
+    match state.gc.tables.get(array).map(|array| array.get_int(index)) {
+        Some(value @ Val::Str(_)) => {
+            Ok(crate::lua_api::methods::val_to_string(state, value).unwrap_or_default())
+        }
+        _ => Err(runtime_error(
+            "profession spec highlight descriptions must be strings",
+        )),
+    }
 }

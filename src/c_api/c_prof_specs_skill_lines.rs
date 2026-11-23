@@ -2,14 +2,16 @@
 //!
 //! Query defaults are INFERRED (R88ez, native evidence pending).
 
-use super::profession_spec_inputs::ProfessionSpecializationTabInfo;
+use super::profession_spec_inputs::{ProfessionSpecTabInfo, ProfessionSpecializationTabInfo};
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 mod admin_input;
 use crate::lua_api::methods::{borrow_state, create_string, create_table, table_set_static};
 use crate::lua_bridge::table_set_rust_fn_static;
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub(crate) use admin_input::register_admin;
+use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
+use rilua::vm::table::Table;
 use rilua::{LuaResult, Val, runtime_error};
 
 const CONFIG_ID_USAGE: &str =
@@ -32,6 +34,11 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     }
 
     let namespace = super::ensure_namespace(state, "C_ProfSpecs")?;
+    register_skill_line_queries(state, namespace)?;
+    register_tab_queries(state, namespace)
+}
+
+fn register_skill_line_queries(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
     table_set_rust_fn_static(state, namespace, "GetConfigIDForSkillLine", get_config_id)?;
     table_set_rust_fn_static(
         state,
@@ -42,24 +49,27 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     table_set_rust_fn_static(
         state,
         namespace,
-        "GetDefaultSpecSkillLine",
-        get_default_skill_line,
-    )?;
-    table_set_rust_fn_static(
-        state,
-        namespace,
         "GetSpecTabIDsForSkillLine",
         get_spec_tab_ids,
     )?;
-    table_set_rust_fn_static(state, namespace, "GetSpecTabInfo", get_spec_tab_info)?;
-    table_set_rust_fn_static(state, namespace, "GetTabInfo", get_tab_info)?;
-    table_set_rust_fn_static(state, namespace, "ShouldShowSpecTab", should_show_spec_tab)?;
     table_set_rust_fn_static(
         state,
         namespace,
         "SkillLineHasSpecialization",
         skill_line_has_specialization,
     )
+}
+
+fn register_tab_queries(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
+    table_set_rust_fn_static(
+        state,
+        namespace,
+        "GetDefaultSpecSkillLine",
+        get_default_skill_line,
+    )?;
+    table_set_rust_fn_static(state, namespace, "GetSpecTabInfo", get_spec_tab_info)?;
+    table_set_rust_fn_static(state, namespace, "GetTabInfo", get_tab_info)?;
+    table_set_rust_fn_static(state, namespace, "ShouldShowSpecTab", should_show_spec_tab)
 }
 
 fn read_skill_line_id(state: &LuaState, api: &'static str, usage: &'static str) -> LuaResult<u32> {
@@ -168,18 +178,24 @@ fn get_spec_tab_info(state: &mut LuaState) -> LuaResult<u32> {
 fn get_tab_info(state: &mut LuaState) -> LuaResult<u32> {
     let tab_id =
         super::helpers::read_untainted_signed32_argument(state, 1, "GetTabInfo", TAB_INFO_USAGE)?;
-    let tab_info = match u32::try_from(tab_id) {
-        Ok(id) => borrow_state(state)?
-            .profession_spec_inputs
-            .tab_infos
-            .get(&id)
-            .cloned(),
-        Err(_) => None,
+    let tab_info = supplied_tab_info(state, tab_id)?;
+    let value = tab_info.map_or(Val::Nil, |info| build_tab_info(state, info));
+    state.push(value);
+    Ok(1)
+}
+
+fn supplied_tab_info(state: &LuaState, tab_id: i32) -> LuaResult<Option<ProfessionSpecTabInfo>> {
+    let Ok(tab_id) = u32::try_from(tab_id) else {
+        return Ok(None);
     };
-    let Some(tab_info) = tab_info else {
-        state.push(Val::Nil);
-        return Ok(1);
-    };
+    Ok(borrow_state(state)?
+        .profession_spec_inputs
+        .tab_infos
+        .get(&tab_id)
+        .cloned())
+}
+
+fn build_tab_info(state: &mut LuaState, tab_info: ProfessionSpecTabInfo) -> Val {
     let table = create_table(state);
     table_set_static(
         state,
@@ -197,10 +213,16 @@ fn get_tab_info(state: &mut LuaState) -> LuaResult<u32> {
         "rootIconID",
         Val::Num(f64::from(tab_info.root_icon_id)),
     );
+    let highlights = build_tab_highlights(state, tab_info.highlights);
+    table_set_static(state, table, "highlights", highlights);
+    table
+}
+
+fn build_tab_highlights(state: &mut LuaState, descriptions: Vec<String>) -> Val {
     let Val::Table(highlights) = create_table(state) else {
         unreachable!("create_table returns a table");
     };
-    for (index, description) in tab_info.highlights.into_iter().enumerate() {
+    for (index, description) in descriptions.into_iter().enumerate() {
         let Val::Table(highlight) = create_table(state) else {
             unreachable!("create_table returns a table");
         };
@@ -213,9 +235,7 @@ fn get_tab_info(state: &mut LuaState) -> LuaResult<u32> {
             Val::Table(highlight),
         );
     }
-    table_set_static(state, table, "highlights", Val::Table(highlights));
-    state.push(table);
-    Ok(1)
+    Val::Table(highlights)
 }
 
 fn should_show_spec_tab(state: &mut LuaState) -> LuaResult<u32> {

@@ -473,6 +473,85 @@ fn blizzard_professions_loads_explicitly_after_dependencies(env: &WowLuaEnv) {
 }
 
 prefork_full_ui_case! {
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn profession_spec_consumer_uses_supplied_skill_line_config_and_tabs(env: &WowLuaEnv) {
+    let ui = blizzard_ui_dir();
+    let templates_toc = ui
+        .join("Blizzard_ProfessionsTemplates")
+        .join("Blizzard_ProfessionsTemplates.toc");
+    let shared_talent_toc = ui
+        .join("Blizzard_SharedTalentUI")
+        .join("Blizzard_SharedTalentUI.toc");
+    load_addon(&env.loader_env(), &templates_toc)
+        .expect("Blizzard_ProfessionsTemplates should load");
+    load_addon(&env.loader_env(), &shared_talent_toc)
+        .expect("Blizzard_SharedTalentUI should load");
+    load_addon(&env.loader_env(), &professions_toc())
+        .expect("Blizzard_Professions should load");
+
+    env.exec(
+        r#"
+        A_Admin.SetProfessionSpecSkillLines({
+            {skillLineID = 164, configID = 8101, specTabIDs = {9101}},
+            {
+                skillLineID = 186,
+                configID = 8202,
+                specTabIDs = {9202},
+                currency = {numAvailable = 12, currencyName = "Mining Marks"},
+            },
+        })
+        A_Admin.SetProfessionSpecTabInfo(9101, {
+            rootNodeID = 90101, name = "Blacksmithing Spec",
+            description = "", rootIconID = 0, highlights = {},
+        })
+        A_Admin.SetProfessionSpecTabInfo(9202, {
+            rootNodeID = 90202, name = "Mining Spec",
+            description = "", rootIconID = 0, highlights = {},
+        })
+
+        assert(C_TradeSkillUI.OpenTradeSkill(164))
+        assert(ProfessionsFrame:IsShown())
+        ProfessionsFrame.TabSystem.tabs[ProfessionsFrame.specializationsTabID]:Click("LeftButton")
+        assert(ProfessionsFrame.SpecPage:IsShown())
+        assert(ProfessionsFrame.SpecPage.professionInfo.professionID == 164)
+        assert(C_ProfSpecs.GetDefaultSpecSkillLine() == 164)
+        assert(C_ProfSpecs.ShouldShowSpecTab())
+        assert(C_ProfSpecs.SkillLineHasSpecialization(164))
+        assert(C_ProfSpecs.GetConfigIDForSkillLine(164) == 8101)
+        assert(C_ProfSpecs.GetSpecTabIDsForSkillLine(164)[1] == 9101)
+        local currency = C_ProfSpecs.GetCurrencyInfoForSkillLine(164)
+        assert(currency.numAvailable == 0 and currency.currencyName == "")
+        local specTabInfo = C_ProfSpecs.GetSpecTabInfo()
+        assert(specTabInfo.enabled and specTabInfo.errorReason == "")
+        assert(ProfessionsFrame.SpecPage.configID == 8101)
+        assert(ProfessionsFrame.SpecPage.selectedTab.traitTreeID == 9101)
+        assert(ProfessionsFrame.SpecPage.tabInfo.rootNodeID == 90101)
+
+        assert(C_TradeSkillUI.OpenTradeSkill(186))
+        assert(ProfessionsFrame:IsShown())
+        ProfessionsFrame.TabSystem.tabs[ProfessionsFrame.specializationsTabID]:Click("LeftButton")
+        assert(ProfessionsFrame.SpecPage:IsShown())
+        assert(ProfessionsFrame.SpecPage.professionInfo.professionID == 186)
+        assert(C_ProfSpecs.GetDefaultSpecSkillLine() == 186)
+        assert(C_ProfSpecs.GetConfigIDForSkillLine(186) == 8202)
+        assert(C_ProfSpecs.GetSpecTabIDsForSkillLine(186)[1] == 9202)
+        assert(C_ProfSpecs.SkillLineHasSpecialization(186))
+        local currency = C_ProfSpecs.GetCurrencyInfoForSkillLine(186)
+        assert(currency.numAvailable == 12 and currency.currencyName == "Mining Marks")
+        local specTabInfo = C_ProfSpecs.GetSpecTabInfo()
+        assert(specTabInfo.enabled and specTabInfo.errorReason == "")
+        assert(ProfessionsFrame.SpecPage.configID == 8202)
+        assert(ProfessionsFrame.SpecPage.selectedTab.traitTreeID == 9202)
+        assert(ProfessionsFrame.SpecPage.tabInfo.rootNodeID == 90202)
+        assert(C_ProfSpecs.GetTabInfo(9202).rootNodeID == 90202)
+        assert(C_ProfSpecs.GetTabInfo(9999) == nil)
+        "#,
+    )
+    .expect("the ProfessionsFrame open path should render each supplied specialization");
+}
+}
+
+prefork_full_ui_case! {
 fn blizzard_professions_publishes_ten_top_level_mixin_globals(env: &WowLuaEnv) {
 
     let ui = blizzard_ui_dir();
