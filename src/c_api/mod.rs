@@ -213,7 +213,7 @@ pub(crate) mod c_delves_entrance;
 pub mod c_discord;
 pub mod c_district_utils;
 mod c_dungeon_score_rarity;
-#[cfg(feature = "retail-12-0-0")]
+#[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
 pub mod c_dye_color;
 #[cfg(feature = "client-wowforever")]
 mod c_edit_mode;
