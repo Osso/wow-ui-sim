@@ -40,13 +40,18 @@ pub(crate) fn flush(env: &WowLuaEnv) -> crate::Result<()> {
     })
 }
 
+/// INFERRED R88et-c: defer host-input changes until keyboard dispatch completes.
 pub(crate) fn flush_at_host_boundary(env: &WowLuaEnv) -> crate::Result<()> {
     let defer_user_input = env.host_input_depth.get() > 0;
     let mut lua = env.rilua_mut();
-    flush_state_at_host_boundary(lua.state_mut(), defer_user_input)
+    flush_state_at_host_boundary_with_mode(lua.state_mut(), defer_user_input)
 }
 
-pub(crate) fn flush_state_at_host_boundary(
+pub(crate) fn flush_state_at_host_boundary(state: &mut LuaState) -> crate::Result<()> {
+    flush_state_at_host_boundary_with_mode(state, false)
+}
+
+fn flush_state_at_host_boundary_with_mode(
     state: &mut LuaState,
     defer_user_input: bool,
 ) -> crate::Result<()> {
