@@ -1,10 +1,8 @@
 #![cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
 
-use wow_ui_sim::lua_api::WowLuaEnv;
-
 #[test]
 fn p1210_dye_colors_for_items_and_item_locations_use_supplied_lists() {
-    let env = WowLuaEnv::new().unwrap();
+    let env = crate::common::keybinding_panel_fixtures::setup_env();
     env.exec(
         r#"
         A_Admin.SetDyeColorsForItem(900001, '501,502')
