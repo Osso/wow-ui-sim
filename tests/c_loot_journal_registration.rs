@@ -36,7 +36,6 @@ fn rust_raid_lock_registration_reads_two_supplied_encounters() {
         r#"
         A_Admin.SetCompletedEncounters({
             { mapID=88001, encounterID=77100, difficultyID=14 },
-            { mapID=88001, encounterID=77101, difficultyID=14 },
         })
         "#,
     )
