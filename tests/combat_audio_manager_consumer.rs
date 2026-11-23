@@ -94,7 +94,9 @@ fn finish_playsound(env: &WowLuaEnv, expected_sound_kit: i32) {
         .eval("return next(CombatAudioAlertManager.queuedSounds) == nil")
         .expect("consumer queue should be readable");
     assert!(cleared, "completion should consume the queued sound enum");
-    let played = env.state().borrow().last_sound_request.as_ref().map(|request| request.sound_kit_id);
+    let sim = env.state();
+    let state = sim.borrow();
+    let played = state.last_sound_request.as_ref().map(|request| request.sound_kit_id);
     assert_eq!(played, Some(expected_sound_kit as u32));
 }
 
