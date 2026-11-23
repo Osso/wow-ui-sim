@@ -189,10 +189,14 @@ fn supply_display_season_maps(env: &WowLuaEnv, season_id: u32) {
 
 #[cfg(feature = "client-retail")]
 fn load_pve_frame_addons(env: &WowLuaEnv, ui: &std::path::Path) {
-    for addon in ["Blizzard_SharedXML", "Blizzard_GroupFinder"] {
-        let loaded = load_blizzard_addon_closure_into_env(env, ui, &[addon], &[]);
-        assert!(loaded.iter().any(|name| name == addon));
-    }
+    let loaded = load_blizzard_addon_closure_into_env(
+        env,
+        ui,
+        &["Blizzard_SharedXMLBase", "Blizzard_GroupFinder"],
+        &[],
+    );
+    assert!(loaded.iter().any(|name| name == "Blizzard_SharedXMLBase"));
+    assert!(loaded.iter().any(|name| name == "Blizzard_GroupFinder"));
 }
 
 #[cfg(feature = "client-retail")]
