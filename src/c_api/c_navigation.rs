@@ -6,9 +6,9 @@
 use crate::c_api::c_super_track::NavigationTarget;
 use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::globals::state_backed_queries::dispatch_event_now;
-use crate::lua_api::methods::{
-    borrow_state, borrow_state_mut, create_string, frame_ref, table_get,
-};
+#[cfg(feature = "retail-12-0-5")]
+use crate::lua_api::methods::create_string;
+use crate::lua_api::methods::{borrow_state, borrow_state_mut, frame_ref, table_get};
 use crate::lua_bridge::{TableBuilder, stack_val, table_set_rust_fn_static};
 use crate::widget::AnchorPoint;
 use rilua::vm::state::LuaState;
@@ -148,18 +148,25 @@ fn get_next_waypoint_for_map(_state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn get_nearest_party_member_token(state: &mut LuaState) -> LuaResult<u32> {
-    authorize_navigation_caller(state)?;
-    let token = borrow_state(state)?
-        .nearest_party_member_token
-        .clone()
-        .ok_or_else(|| {
-            runtime_error(
-                "C_Navigation.GetNearestPartyMemberToken has no host-selected party token",
-            )
-        })?;
-    let value = create_string(state, &token);
-    state.push(value);
-    Ok(1)
+    #[cfg(feature = "retail-12-0-5")]
+    {
+        authorize_navigation_caller(state)?;
+        let token = borrow_state(state)?
+            .nearest_party_member_token
+            .clone()
+            .ok_or_else(|| {
+                runtime_error(
+                    "C_Navigation.GetNearestPartyMemberToken has no host-selected party token",
+                )
+            })?;
+        state.push(create_string(state, &token));
+        return Ok(1);
+    }
+    #[cfg(not(feature = "retail-12-0-5"))]
+    {
+        state.push(Val::Nil);
+        Ok(1)
+    }
 }
 
 fn set_navigation_target(state: &mut LuaState) -> LuaResult<u32> {
@@ -256,6 +263,7 @@ fn place_navigation_frame(state: &mut LuaState, target: NavigationTarget) -> Lua
 }
 
 /// Preserve the simulator's untainted-caller restriction for this native query.
+#[cfg(feature = "retail-12-0-5")]
 fn authorize_navigation_caller(state: &LuaState) -> LuaResult<()> {
     let active_depth = state.ci.saturating_add(1);
     let addon_caller = state
