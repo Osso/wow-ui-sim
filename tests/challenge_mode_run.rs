@@ -188,23 +188,18 @@ fn supply_display_season_maps(env: &WowLuaEnv, season_id: u32) {
 }
 
 #[cfg(feature = "client-retail")]
-fn load_pve_frame_addons(env: &WowLuaEnv, ui: &std::path::Path) {
-    let loaded = load_blizzard_addon_closure_into_env(
-        env,
-        ui,
-        &["Blizzard_SharedXMLBase", "Blizzard_GroupFinder"],
-        &[],
-    );
-    assert!(loaded.iter().any(|name| name == "Blizzard_SharedXMLBase"));
+fn load_pve_frame_addon(env: &WowLuaEnv, ui: &std::path::Path) {
+    let loaded = load_blizzard_addon_closure_into_env(env, ui, &["Blizzard_GroupFinder"], &[]);
     assert!(loaded.iter().any(|name| name == "Blizzard_GroupFinder"));
 }
 
 #[cfg(feature = "client-retail")]
 fn challenge_icon_map_ids_for_display_season(season_id: u32) -> String {
     let ui = blizzard_ui_dir();
-    let env = new_blizzard_addon_env(&ui);
-    supply_display_season_maps(&env, season_id);
-    load_pve_frame_addons(&env, &ui);
+    let env = crate::common::panel_fixtures::setup_env_with_inputs(|env| {
+        supply_display_season_maps(env, season_id);
+    });
+    load_pve_frame_addon(&env, &ui);
     env.eval(
         r#"
         PVEFrame_ToggleFrame('ChallengesFrame')
