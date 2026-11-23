@@ -70,19 +70,19 @@ fn submit_playsound_slash(env: &WowLuaEnv, sound_enum: &str) -> f64 {
     env.eval(&script).expect("CAA slash command should queue its utterance")
 }
 
-fn sound_kit_for(env: &WowLuaEnv, sound_enum: &str) -> u32 {
+fn sound_kit_for(env: &WowLuaEnv, sound_enum: &str) -> i32 {
     env.eval(&format!("return CooldownViewerUtil.GetSoundTypeSoundKit({sound_enum})"))
         .expect("sound enum should resolve to a sound kit")
 }
 
-fn finish_playsound(env: &WowLuaEnv, expected_sound_kit: u32) {
+fn finish_playsound(env: &WowLuaEnv, expected_sound_kit: i32) {
     env.process_timers().expect("process later timer tick");
     let cleared: bool = env
         .eval("return next(CombatAudioAlertManager.queuedSounds) == nil")
         .expect("consumer queue should be readable");
     assert!(cleared, "completion should consume the queued sound enum");
     let played = env.state().borrow().last_sound_request.as_ref().map(|request| request.sound_kit_id);
-    assert_eq!(played, Some(expected_sound_kit));
+    assert_eq!(played, Some(expected_sound_kit as u32));
 }
 
 #[cfg(feature = "client-retail")]
