@@ -56,7 +56,9 @@ fn encounter_journal_renders_supplied_item_sets_and_items(env: &WowLuaEnv) {
         "Supplied Alpha:41001:91001|Supplied Beta:41002:91002"
     );
 }
+}
 
+prefork_full_ui_case! {
 fn encounter_journal_boss_list_uses_supplied_raid_locks(env: &WowLuaEnv) {
     load_addon(&env.loader_env(), &encounter_journal_toc())
         .expect("selected Encounter Journal TOC should load");
