@@ -257,8 +257,8 @@ fn mythic_plus_requests_publish_update_events() {
         "#,
     )
     .expect("RequestMapInfo should defer its response event");
-    env.fire_on_update(0.016)
-        .expect("deferred map-info response should dispatch on the next tick");
+    env.process_timers()
+        .expect("deferred map-info response should dispatch on the next timer boundary");
     env.exec("assert(MythicPlusSeen.CHALLENGE_MODE_MAPS_UPDATE)")
         .expect("Mythic+ map-info consumers should receive the response event");
 }
@@ -306,7 +306,7 @@ fn request_map_info_coalesces_and_delivers_supplied_data_after_handler() {
     env.fire_event("PLAYER_LOGIN").unwrap();
     env.exec("assert(MapInfoEventCount == 0 and MapInfoHandlerReturned)")
         .unwrap();
-    env.fire_on_update(0.016).unwrap();
+    env.process_timers().unwrap();
     env.exec(
         "assert(MapInfoEventCount == 1 and MapInfoObservedName == 'Supplied map' and MapInfoObservedId == 2 and MapInfoObservedMapId == 429)",
     )
