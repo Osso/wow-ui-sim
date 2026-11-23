@@ -82,6 +82,8 @@ pub(crate) fn register_item_power_tables(state: &mut LuaState) -> LuaResult<()> 
     super::c_garrison_combat_log_spell::register(state)?;
     super::c_scrapping_machine::register(state)?;
     super::c_perks_categories::register(state)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    super::c_perks_program::register(state)?;
     super::perks_activities::register(state)?;
     super::c_legendary_crafting::register(state)?;
     super::c_transmog_latest::register(state)?;

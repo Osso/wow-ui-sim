@@ -283,6 +283,8 @@ pub mod c_neighborhood_initiative;
 pub mod c_paper_doll_info;
 pub mod c_party_info;
 mod c_perks_categories;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) mod c_perks_program;
 pub mod c_pet_battles;
 pub(crate) mod c_pet_item;
 pub mod c_pet_journal_hover;

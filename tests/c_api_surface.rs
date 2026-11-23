@@ -904,6 +904,7 @@ fn map_group_defaults_are_not_c_api_temporary_shims() {
     );
 }
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn perks_program_defaults_are_not_c_api_temporary_shims() {
     let temporary_shims = c_api_temporary_shims_source();

@@ -533,6 +533,7 @@ fn perks_activities_monthly_accessors_return_stable_shapes() {
     assert_eq!(pending_count, 0, "pendingIDs should default to empty");
 }
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn perks_program_pending_chest_rewards_return_empty_table() {
     let env = env();
