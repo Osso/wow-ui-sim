@@ -9,9 +9,6 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 
 const AVAILABILITY_UNSET: &str =
     "C_TransmogOutfitInfo.IsTransmogEnabled: transmog availability has not been supplied";
-const OUTFITS_UNSET: &str =
-    "C_TransmogOutfitInfo.GetOutfitsInfo: outfit list has not been supplied";
-
 fn entries(ids: &[i64]) -> Vec<OutfitEntry> {
     ids.iter()
         .map(|&id| OutfitEntry {
@@ -148,8 +145,7 @@ fn exercise_outfit_availability(first: &WowLuaEnv, second: &WowLuaEnv, initial: 
         .set_input_interface_style(InputInterfaceStyle::Gamepad);
     observe(first, true);
     unset(first);
-    let error = first.exec("Category:IsAvailable()").unwrap_err();
-    assert!(error.to_string().contains(OUTFITS_UNSET), "{error}");
+    observe(first, false);
     supply(first, Some(&[23]));
     observe(first, true);
     observe(second, !initial);
@@ -193,6 +189,51 @@ fn assert_groups(env: &WowLuaEnv, expected: &[i64]) {
     "#,
     )
     .unwrap();
+}
+
+#[test]
+fn player_spells_toggle_accepts_no_outfits_and_two_created_outfits() {
+    let env = load_original(true);
+    unset(&env);
+    env.state()
+        .borrow_mut()
+        .set_input_interface_style(InputInterfaceStyle::Mkb);
+    let result_count: i32 = env
+        .eval("return select('#', C_TransmogOutfitInfo.GetOutfitsInfo())")
+        .expect("an empty Forever outfit catalog returns no values");
+    assert_eq!(result_count, 0);
+    crate::common::panel_fixtures::clear_recorded_lua_errors(&env);
+    env.exec("PlayerSpellsUtil.ToggleClassTalentFrame()")
+        .expect("Player Spells opens with no supplied outfits");
+    assert!(
+        env.state().borrow().lua_errors.is_empty(),
+        "opening Player Spells with no outfits must record no OnLoad error: {:?}",
+        env.state().borrow().lua_errors
+    );
+
+    env.exec(
+        r#"
+        A_Admin.SetUnlockedOutfitSlots(2, 2)
+        C_TransmogOutfitInfo.AddNewOutfit('Copper', 123)
+        C_TransmogOutfitInfo.AddNewOutfit('Silver', 456)
+        PlayerSpellsUtil.ToggleClassTalentFrame()
+        "#,
+    )
+    .expect("Player Spells opens with two outfits created through the public API");
+    env.exec("Book:UpdateAllSpellData(false); Category = Book.categoryMixins[#Book.categoryMixins]")
+        .expect("the original spellbook refresh consumes the supplied outfits");
+    assert_groups(&env, &[1, 2]);
+    let actual: (String, i32, String, i32) = env
+        .eval(
+            r#"
+            local outfits = C_TransmogOutfitInfo.GetOutfitsInfo()
+            return outfits[1].name, outfits[1].icon, outfits[2].name, outfits[2].icon
+            "#,
+        )
+        .expect("the original panel consumer can read both outfit records");
+    assert_eq!(actual, ("Copper".into(), 123, "Silver".into(), 456));
+    let errors = env.state().borrow().lua_errors.clone();
+    assert!(errors.is_empty(), "Player Spells recorded Lua errors: {errors:?}");
 }
 
 #[test]
@@ -242,10 +283,14 @@ fn assert_empty_and_unset_outfit_states(env: &WowLuaEnv) {
     env.exec("assert(select('#', C_TransmogOutfitInfo.GetOutfitsInfo()) == 0)")
         .unwrap();
     unset(env);
-    let error = env
-        .exec("Category:PopulateSpellGroupsIndiciesByRange()")
-        .unwrap_err();
-    assert!(error.to_string().contains(OUTFITS_UNSET), "{error}");
+    env.exec("Category:PopulateSpellGroupsIndiciesByRange()")
+        .expect("an unset outfit catalog behaves as an empty list");
+    let group_count: i32 = env.eval("return #Category.spellGroups").unwrap();
+    assert_eq!(group_count, 1);
+    let indices: i32 = env
+        .eval("return #Category.spellGroups[1].orderedSpellBookItemSlotIndices")
+        .unwrap();
+    assert_eq!(indices, 1);
     supply(env, Some(&[81, 23]));
     assert_groups(env, &[81, 23]);
 }
