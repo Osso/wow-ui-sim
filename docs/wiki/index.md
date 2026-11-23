@@ -1,3 +1,7 @@
+## [2026-11-23] investigation | Clicked first-install saved variables
+
+[Clicked first-install saved variables](investigations/clicked-first-install-savedvariables.md) records the first-profile `OnNewProfile` → blacklist refresh ordering. **VERIFIED (same Retail simulator binary and addon root):** two Clicked errors with SavedVariables disabled; zero with the current ClickedDB loaded. The source-level native behavior remains **INFERRED**.
+
 ## [2026-11-23] investigation | Mythic+ map request reentrancy
 
 [Mythic+ map request reentrancy](investigations/mythic-plus-map-request-reentrancy.md) records the inferred R88ev request gate, deferred events, and same-root Retail comparison. **VERIFIED:** master and branch each discovered 78 addons and loaded 49; master recorded 10 unique errors / 159,423 occurrences, while the branch recorded 7 / 7 with no recursion, stack-overflow, instruction-budget, or watchdog error. AllTheThings loaded on both; only master reported its instruction-budget errors.
@@ -4685,6 +4689,7 @@ The sixteen retail 12.0.0 `Enum.EditModeDamageMeterSetting.*` and `Enum.EditMode
 
 | Page | Summary |
 |------|---------|
+| [[clicked-first-install-savedvariables]] | Clicked's first-profile `OnNewProfile` refresh reaches the blacklist before its config is initialized; two no-SavedVariables errors disappear when the current ClickedDB loads. The addon-source explanation is inferred, not native-client evidence. |
 | [[att-unit-hyperlink-tooltip]] | ATT NPC first-line failure came from an empty Item tooltip for unit links; modeled GUIDs now return Unit lines and unknown links nil. Grouped regression committed; build and GUI replay pending. |
 | [[animated-status-bar-atlas-visibility]] | Atlas assignment on a non-button XML-hidden animated status-bar texture incorrectly showed it; recognized Button/CheckButton slots alone update visibility. Actual Forever template RED/GREEN proof; full UI visual pending. |
 | [[final-unit-frame-click-aura-proof]] | Bounded local Forever release evidence: PlayerFrame target click, Aura tooltip hover, Combo reset, no CharCustomizeFrame, hidden status-bar animation textures, panel state transitions, zero errors, and an explicitly non-green accidental broad test batch. |

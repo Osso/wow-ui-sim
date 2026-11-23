@@ -1,3 +1,7 @@
+## [2026-11-23] investigation | Clicked first-install saved variables
+
+Added [the investigation](investigations/clicked-first-install-savedvariables.md) and linked it from the Mythic+ startup comparison. **VERIFIED (same Retail simulator binary and addon root):** two Clicked errors with SavedVariables disabled; zero with the current ClickedDB loaded in an isolated session. **INFERRED (bundled AceDB and Clicked source):** first-profile callback order reaches blacklist refresh before its local config is initialized. No simulator change was made.
+
 ## [2026-11-23] implementation | Script bucket throttle
 
 Updated the [throttle contract](../specs/script-bucket-throttle-limits.md) and linked it from the [watchdog system](../systems/script-execution-watchdog.md). **VERIFIED (R88bn):** Retail/Forever registered CVar defaults and Retail refill behavior. **INFERRED (R88bn):** tainted addon code uses a per-addon restricted bucket, initialized at burst capacity; Forever mirrors Retail refill. Normal-bucket execution classes and native balance ownership remain unknown.
