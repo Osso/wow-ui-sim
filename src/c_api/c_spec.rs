@@ -374,6 +374,16 @@ fn get_pvp_talent_info(state: &mut LuaState) -> LuaResult<u32> {
 fn push_pvp_talent_info(state: &mut LuaState, record: &PvpTalentInfoRecord) {
     let result = create_table(state);
     state.push(result);
+    for (key, value) in pvp_talent_info_fields(state, record) {
+        table_set(state, result, key, value);
+    }
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn pvp_talent_info_fields(
+    state: &mut LuaState,
+    record: &PvpTalentInfoRecord,
+) -> [(&'static str, Val); 11] {
     let name = Val::Str(state.gc.intern_string(record.name.as_bytes()));
     let reason = record
         .dependencies_unmet_reason
@@ -381,15 +391,13 @@ fn push_pvp_talent_info(state: &mut LuaState, record: &PvpTalentInfoRecord) {
         .map_or(Val::Nil, |text| {
             Val::Str(state.gc.intern_string(text.as_bytes()))
         });
-    for (key, value) in [
+    let icon = record
+        .icon
+        .map_or(Val::Nil, |icon| Val::Num(f64::from(icon)));
+    [
         ("talentID", Val::Num(f64::from(record.talent_id))),
         ("name", name),
-        (
-            "icon",
-            record
-                .icon
-                .map_or(Val::Nil, |icon| Val::Num(f64::from(icon))),
-        ),
+        ("icon", icon),
         ("selected", Val::Bool(record.selected)),
         ("available", Val::Bool(record.available)),
         ("spellID", Val::Num(f64::from(record.spell_id))),
@@ -398,9 +406,7 @@ fn push_pvp_talent_info(state: &mut LuaState, record: &PvpTalentInfoRecord) {
         ("grantedByAura", Val::Bool(record.granted_by_aura)),
         ("dependenciesUnmet", Val::Bool(record.dependencies_unmet)),
         ("dependenciesUnmetReason", reason),
-    ] {
-        table_set(state, result, key, value);
-    }
+    ]
 }
 
 // VERIFIED: a matching row returns its integer; a miss returns nil. R88eq eq1.
