@@ -626,7 +626,19 @@ fn admin_set_pvp_talent_info(state: &mut LuaState) -> LuaResult<u32> {
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn admin_set_selected_pvp_talent_ids(state: &mut LuaState) -> LuaResult<u32> {
     let selected = read_pvp_talent_id_array(state, 1, "A_Admin.SetSelectedPvpTalentIDs")?;
-    borrow_state_mut(state)?.pvp_talents.selected_talent_ids = selected;
+    // INFERRED host input: Retail slot buttons read their selections from the active group.
+    #[cfg(feature = "client-retail")]
+    {
+        let mut sim = borrow_state_mut(state)?;
+        sim.pvp_talents.selected_talent_ids = selected.clone();
+        let group = std::array::from_fn(|position| selected.get(position).copied());
+        let active_group = sim.pvp_talent_tooltip.active_group_index;
+        sim.pvp_talent_tooltip.groups.insert(active_group, group);
+    }
+    #[cfg(feature = "client-wowforever")]
+    {
+        borrow_state_mut(state)?.pvp_talents.selected_talent_ids = selected;
+    }
     dispatch_pvp_talent_update(state)
 }
 

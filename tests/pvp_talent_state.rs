@@ -1,7 +1,4 @@
-#![cfg(all(
-    feature = "optional-tests",
-    any(feature = "client-retail", feature = "client-wowforever")
-))]
+#![cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 
 use wow_ui_sim::lua_api::WowLuaEnv;
 
@@ -12,6 +9,9 @@ type TalentStateSnapshot = (bool, bool, bool, i32, i32, i32, Option<i32>, Option
 fn retail_supplied_pvp_talent_state_reaches_open_player_spells_panel() {
     with_player_spells_panel(|env| {
         supply_selected_talent_state(env);
+        assert_player_spells_slot_icons(env);
+        assert_inspect_pvp_slot_icon(env);
+        assert_locked_talent_refresh_event(env);
         assert_eq!(
             read_talent_state(env),
             (true, true, false, 2, 123, 456, Some(456), Some(30))
@@ -49,6 +49,9 @@ fn forever_supplied_pvp_talent_state_reaches_open_player_spells_panel() {
             "#,
         )
         .expect("supply Forever talent unlock and slot records");
+        assert_player_spells_slot_icons(env);
+        assert_inspect_pvp_slot_icon(env);
+        assert_locked_talent_refresh_event(env);
         assert_eq!(
             read_talent_state(env),
             (true, true, false, 2, 123, 456, Some(456), Some(30))
@@ -56,9 +59,41 @@ fn forever_supplied_pvp_talent_state_reaches_open_player_spells_panel() {
     });
 }
 
-#[test]
-fn locked_talent_mutations_dispatch_inferred_refresh_events() {
-    let env = WowLuaEnv::new().expect("create PvP talent API environment");
+fn assert_player_spells_slot_icons(env: &WowLuaEnv) {
+    env.exec(
+        r#"
+        local tray = PlayerSpellsFrame.TalentsFrame.PvPTalentSlotTray
+        assert(tray and tray:IsShown(), "real Player Spells PvP slot tray is visible")
+        local first, second = tray.Slots[1], tray.Slots[2]
+        assert(first:GetSelectedTalent() == 123 and first.Texture:GetTexture() == 111)
+        assert(second:GetSelectedTalent() == 456 and second.Texture:GetTexture() == 222)
+        "#,
+    )
+    .expect("read supplied selected talents from the original Player Spells slot tray");
+}
+
+fn assert_inspect_pvp_slot_icon(env: &WowLuaEnv) {
+    env.exec("A_Admin.SetInspectSelectedPvpTalent('player', 2, 456)")
+        .expect("supply the player inspect selection");
+    let ui = crate::common::panel_fixtures::blizzard_ui_dir();
+    crate::common::load_required_blizzard_addon(env, &ui, "Blizzard_InspectUI");
+    env.exec(
+        r#"
+        InspectFrame_Show("player")
+        assert(INSPECTED_UNIT == "player")
+        ShowUIPanel(InspectFrame)
+        FireEvent("INSPECT_READY", UnitGUID("player"))
+        InspectSwitchTabs(2)
+        assert(InspectFrame:IsShown() and InspectPVPFrame:IsShown())
+        local slot = InspectPVPFrame.Slots[2]
+        slot:Update()
+        assert(slot.talentID == 456 and slot.Texture:GetTexture() == 222)
+        "#,
+    )
+    .expect("read the inspected talent from the original Inspect PvP slot");
+}
+
+fn assert_locked_talent_refresh_event(env: &WowLuaEnv) {
     env.exec(
         r#"
         local updates = 0
