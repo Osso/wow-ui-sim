@@ -3,7 +3,7 @@
 //! The native return tuple and missing-row behavior are INFERRED under R88eu;
 //! native evidence is pending. Optional context arguments are not modeled.
 
-use crate::c_api::helpers::read_untainted_signed32_argument;
+use crate::c_api::read_untainted_signed32_argument;
 use crate::lua_api::methods::borrow_state;
 use crate::lua_bridge::table_set_rust_fn_static;
 use rilua::vm::state::LuaState;
@@ -11,13 +11,14 @@ use rilua::{LuaResult, Val};
 
 const GET_PVP_TALENT_INFO_BY_ID_USAGE: &str =
     "Usage: GetPvpTalentInfoByID(talentID [, specGroupIndex, isInspect, inspectUnit])";
+const PVP_TALENT_INFO_BY_ID_RETURN_COUNT: u32 = 9;
 
 /// `GetPvpTalentInfoByID(talentID [, specGroupIndex, isInspect, inspectUnit])`.
 ///
 /// INFERRED R88eu (native evidence pending): return the supplied record as
 /// `(talentID, name, icon, selected, available, spellID, unlocked, known,
 /// grantedByAura)`. A missing record returns no values.
-pub fn get_pvp_talent_info_by_id(state: &mut LuaState) -> LuaResult<u32> {
+pub fn publish_pvp_talent_info_by_id(state: &mut LuaState) -> LuaResult<u32> {
     let talent_id = read_untainted_signed32_argument(
         state,
         1,
@@ -47,7 +48,7 @@ pub fn get_pvp_talent_info_by_id(state: &mut LuaState) -> LuaResult<u32> {
     ] {
         state.push(value);
     }
-    Ok(9)
+    Ok(PVP_TALENT_INFO_BY_ID_RETURN_COUNT)
 }
 
 pub fn register(lua: &mut rilua::Lua) -> LuaResult<()> {
@@ -57,7 +58,7 @@ pub fn register(lua: &mut rilua::Lua) -> LuaResult<()> {
         state,
         state.global,
         "GetPvpTalentInfoByID",
-        get_pvp_talent_info_by_id,
+        publish_pvp_talent_info_by_id,
     )?;
     Ok(())
 }
