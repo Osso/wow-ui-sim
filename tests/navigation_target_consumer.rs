@@ -2,9 +2,19 @@
 
 use crate::common;
 
+fn update_navigation_target(env: &WowLuaEnv, target: &str) -> (String, i32, bool) {
+    env.exec(target).expect("supply selected navigation target");
+    env.fire_on_update(0.016).expect("tick navigation consumer");
+    env.eval(
+        "return SuperTrackedFrame.DistanceText:GetText(), C_Navigation.GetTargetState(), C_Navigation.GetFrame() ~= nil",
+    )
+    .expect("read navigation consumer")
+}
+
 prefork_full_ui_case! {
 fn navigation_target_drives_super_tracked_frame(env: &WowLuaEnv) {
-    env.exec(
+    let first = update_navigation_target(
+        env,
         r#"
         C_SuperTrack.SetSuperTrackedQuestID(987654)
         A_Admin.SetNavigationTarget({
@@ -16,16 +26,9 @@ fn navigation_target_drives_super_tracked_frame(env: &WowLuaEnv) {
             screenY = 240,
         })
         "#,
-    )
-    .expect("supply first selected navigation target");
-    env.fire_on_update(0.016).expect("tick first target consumer");
-    let first: (String, i32, bool) = env
-        .eval(
-            "return SuperTrackedFrame.DistanceText:GetText(), C_Navigation.GetTargetState(), C_Navigation.GetFrame() ~= nil",
-        )
-        .expect("read first navigation consumer state");
-
-    env.exec(
+    );
+    let second = update_navigation_target(
+        env,
         r#"
         A_Admin.SetNavigationTarget({
             state = Enum.NavigationState.Occluded,
@@ -36,15 +39,7 @@ fn navigation_target_drives_super_tracked_frame(env: &WowLuaEnv) {
             screenY = 100,
         })
         "#,
-    )
-    .expect("supply second selected navigation target");
-    env.fire_on_update(0.016).expect("tick second target consumer");
-    let second: (String, i32, bool) = env
-        .eval(
-            "return SuperTrackedFrame.DistanceText:GetText(), C_Navigation.GetTargetState(), C_Navigation.GetFrame() ~= nil",
-        )
-        .expect("read second navigation consumer state");
-
+    );
     assert!(first.0.contains("125"), "first distance text: {:?}", first.0);
     assert!(second.0.contains("40"), "second distance text: {:?}", second.0);
     assert_ne!(first.0, second.0, "target distances must change consumer text");
