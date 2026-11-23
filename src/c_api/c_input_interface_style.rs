@@ -2,8 +2,12 @@
 //! Keyboard/mouse is existing simulator policy, not a documented native default.
 use crate::event::{Event, EventArg};
 use crate::lua_api::methods::borrow_state;
+#[cfg(feature = "client-wowforever")]
+use crate::lua_api::methods::borrow_state_mut;
 use crate::lua_api::state::SimState;
 use crate::lua_bridge::table_set_rust_fn_static;
+#[cfg(feature = "client-wowforever")]
+use crate::lua_bridge::{FromStack, TableBuilder};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 
@@ -29,6 +33,26 @@ fn get_current_style(state: &mut LuaState) -> LuaResult<u32> {
     let style = borrow_state(state)?.input_interface_style;
     state.push(Val::Num(style as u8 as f64));
     Ok(1)
+}
+
+#[cfg(feature = "client-wowforever")]
+pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
+    builder.set_function("SetInputInterfaceStyle", set_input_interface_style_admin)
+}
+
+#[cfg(feature = "client-wowforever")]
+fn set_input_interface_style_admin(state: &mut LuaState) -> LuaResult<u32> {
+    let style = match i32::from_stack(state, 1)? {
+        0 => InputInterfaceStyle::Mkb,
+        1 => InputInterfaceStyle::Gamepad,
+        _ => {
+            return Err(rilua::runtime_error(
+                "A_Admin.SetInputInterfaceStyle requires Mkb (0) or Gamepad (1)",
+            ));
+        }
+    };
+    borrow_state_mut(state)?.set_input_interface_style(style);
+    Ok(0)
 }
 
 impl SimState {

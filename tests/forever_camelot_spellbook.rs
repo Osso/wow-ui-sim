@@ -34,10 +34,20 @@ fn unset(env: &WowLuaEnv) {
 }
 
 fn load_original(enabled: bool) -> WowLuaEnv {
+    load_original_with_outfits(enabled, Some(&[23, 81]))
+}
+
+fn load_original_without_outfits(enabled: bool) -> WowLuaEnv {
+    load_original_with_outfits(enabled, None)
+}
+
+fn load_original_with_outfits(enabled: bool, outfits: Option<&[i64]>) -> WowLuaEnv {
     let ui = blizzard_ui_dir();
     let env = new_blizzard_addon_env(&ui);
     env.state().borrow_mut().transmog_availability.enabled = Some(enabled);
-    supply(&env, Some(&[23, 81]));
+    if let Some(ids) = outfits {
+        supply(&env, Some(ids));
+    }
     crate::common::panel_fixtures::load_panel_addons(&env);
     load_blizzard_addon_closure_into_env(&env, &ui, &["Blizzard_PlayerSpells"], &[]);
     env.state()
@@ -165,6 +175,10 @@ fn availability_disabled_first_transitions_and_prerequisites() {
 fn assert_groups(env: &WowLuaEnv, expected: &[i64]) {
     env.exec("Category:PopulateSpellGroupsIndiciesByRange()")
         .unwrap();
+    assert_group_indices(env, expected);
+}
+
+fn assert_group_indices(env: &WowLuaEnv, expected: &[i64]) {
     let indices: String = env
         .eval("return table.concat(Category.spellGroups[1].orderedSpellBookItemSlotIndices, ',')")
         .unwrap();
@@ -191,11 +205,9 @@ fn assert_groups(env: &WowLuaEnv, expected: &[i64]) {
 
 #[test]
 fn player_spells_toggle_accepts_no_outfits_and_two_created_outfits() {
-    let env = load_original(true);
-    unset(&env);
-    env.state()
-        .borrow_mut()
-        .set_input_interface_style(InputInterfaceStyle::Mkb);
+    let env = load_original_without_outfits(true);
+    env.exec("A_Admin.SetInputInterfaceStyle(Enum.InputDeviceInterfaceType.Mkb)")
+        .expect("use the MKB input-interface style before opening Player Spells");
     let result_count: i32 = env
         .eval("return select('#', C_TransmogOutfitInfo.GetOutfitsInfo())")
         .expect("an empty Forever outfit catalog returns no values");
@@ -211,19 +223,26 @@ fn player_spells_toggle_accepts_no_outfits_and_two_created_outfits() {
 
     env.exec("PlayerSpellsUtil.ToggleClassTalentFrame()")
         .expect("close Player Spells before supplying outfits");
-    crate::common::panel_fixtures::clear_recorded_lua_errors(&env);
     env.exec(
         r#"
         A_Admin.SetUnlockedOutfitSlots(2, 2)
         C_TransmogOutfitInfo.AddNewOutfit('Copper', 123)
         C_TransmogOutfitInfo.AddNewOutfit('Silver', 456)
-        PlayerSpellsUtil.ToggleClassTalentFrame()
         "#,
     )
-    .expect("Player Spells opens with two outfits created through the public API");
-    env.exec("Book:UpdateAllSpellData(false); Category = Book.categoryMixins[#Book.categoryMixins]")
-        .expect("the original spellbook refresh consumes the supplied outfits");
-    assert_groups(&env, &[1, 2]);
+    .expect("create two outfits through the public API");
+    assert!(
+        env.state().borrow().lua_errors.is_empty(),
+        "creating outfits while Player Spells is closed must record no Lua errors: {:?}",
+        env.state().borrow().lua_errors
+    );
+    env.exec("PlayerSpellsUtil.ToggleClassTalentFrame()")
+        .expect("reopen Player Spells with two outfits");
+    env.exec(
+        "Category = PlayerSpellsFrame.SpellBookFrame.categoryMixins[#PlayerSpellsFrame.SpellBookFrame.categoryMixins]",
+    )
+    .expect("read the category created by the open Player Spells panel");
+    assert_group_indices(&env, &[1, 2]);
     let actual: (String, i32, String, i32) = env
         .eval(
             r#"

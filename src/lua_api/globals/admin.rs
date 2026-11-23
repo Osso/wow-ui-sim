@@ -157,6 +157,8 @@ pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
     let builder = crate::c_api::c_transmog_sets::register_admin(builder)?;
     #[cfg(feature = "client-wowforever")]
     let builder = crate::c_api::c_transmog_outfit_info::register_admin(builder)?;
+    #[cfg(feature = "client-wowforever")]
+    let builder = crate::c_api::c_input_interface_style::register_admin(builder)?;
     #[cfg(feature = "client-retail")]
     let builder = crate::c_api::c_major_factions::register_admin(builder)?;
     let builder = crate::c_api::item_upgrade_eligibility::register_admin(builder)?;
