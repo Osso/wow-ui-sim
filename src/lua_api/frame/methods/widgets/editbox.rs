@@ -601,14 +601,13 @@ pub(super) fn on_text_scale_updated(state: &mut LuaState) -> LuaResult<u32> {
 
 pub(super) fn set_number(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
-    let n = val_to_f64(stack_val(state, 2));
-    let s = n.to_string();
-    let mut sim = borrow_state_mut(state)?;
-    if let Some(f) = sim.widgets.get_mut_visual(id) {
-        f.text_stripped = Some(s.clone());
-        f.text = Some(s);
-    }
-    Ok(0)
+    let text = val_to_f64(stack_val(state, 2)).to_string();
+    crate::lua_api::frame::methods::text_attribute_event::set_frame_text_value(
+        state,
+        id,
+        Some(text),
+        false,
+    )
 }
 
 pub(super) fn get_number(state: &mut LuaState) -> LuaResult<u32> {

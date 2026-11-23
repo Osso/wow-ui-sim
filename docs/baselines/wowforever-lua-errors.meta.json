@@ -1,29 +1,29 @@
 {
   "schema": 1,
   "profile": "wowforever",
-  "capture_time_utc": "2026-11-14T15:44:54Z",
-  "runtime_source_revision": "2ea03fb7123d79525ca9ee6bde8db0feedb286c4",
-  "features": "sound,gui,casc,client-wowforever,optional-tests",
+  "capture_time_utc": "2026-11-23T08:21:30Z",
+  "runtime_source_revision": "df41e068133cec90c19b68f6695e81059d764479",
+  "features": "sound,gui,casc,client-wowforever",
   "target": "x86_64-unknown-linux-gnu",
   "command": [
     "timeout",
     "90",
-    "wow-sim",
+    "<home>/.cache/wow-ui-sim-targets/slot-3/debug/wow-sim",
     "--no-addons",
     "--no-saved-vars",
     "lua-errors"
   ],
-  "binary_sha256": "8eb825f9dc7ff5a28802d99b3d5f383692cd403c5d79c459df5420d912205b83",
-  "cargo_stdout_sha256": "59b6eb3f034b50459b93743c62b9f733407b4f51eb359ba8b75e63b1d23489ff",
-  "baseline_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+  "binary_sha256": "4a3ce04a3fc84c0fc54956af962db135e9999dabaf92715c148eb8bc11198d33",
+  "cargo_stdout_sha256": "6137664a03e62430781676767019b91d2f9c28ac5269be9c4fa3408ba6502896",
+  "baseline_sha256": "c75a2fb7564960db23ee1d67cb434aed5973f189c54e5a965c5559a5fbbdf467",
   "baseline_transform": "none; byte-identical captured stdout including trailing LF",
-  "messages": 0,
-  "occurrences": 0,
+  "messages": 2,
+  "occurrences": 2,
   "result": {
-    "exit_code": 0
+    "exit_code": 1
   },
-  "startup_clean": true,
-  "disposition": "CLEAN 70707 stock startup only; no native, rendered, full-suite, enabled audio, populated single-criterion or addon acceptance claim.",
+  "startup_clean": false,
+  "disposition": "VERIFIED (stock simulator capture): the only records are the approved CurrencyTransfer required-argument failure and its ScriptErrors echo; no unrelated startup error was observed. This is not a clean-startup, native, rendered, or full-suite acceptance.",
   "provenance": {
     "schema": "1",
     "profile": "wowforever",
@@ -42,7 +42,7 @@
   "provenance_sha256": "b3081ac30a20fcb3cb5657b46dfaafda990cc6efcfddbec976490174eb3e0dba",
   "owner_ui_checksum_manifest_sha256": "53d7a3ab9cb2e4139d3b4b69ae9b7d76592ca71b9dcf715130ebe8505d65a61b",
   "owner_spell_cache_sha256": "baafb9369a8214a5d793fba12cadec875f7f4a0c4ff8e569d6faac21b2bcac7b",
-  "cvar_isolation": "Fresh isolated XDG data/config; byte-exact copy of cvars.json; no sound override or runtime cache downloads.",
+  "cvar_isolation": "Fresh isolated XDG data/config; byte-exact copy of current cvars.json; no runtime cache downloads or sound override.",
   "source_entries_verified": 4493,
   "before_after": {
     "before_runtime_source_revision": "b6a1079940a25527adb0544a0db3d0d52a747aa1",
@@ -62,5 +62,98 @@
     "note": "Historical and separate 70707 Windows capture; the pet errors were absent from the immediate lt-b573 baseline before any edits."
   },
   "runtime_source_tree": "b1651bd3042b687dd59ee5fe48bea0540c6de1af",
-  "equivalent_source_commit_on_branch": "a6b43c5c65b87279081f6fc61f2572ee3397dea7"
+  "equivalent_source_commit_on_branch": "a6b43c5c65b87279081f6fc61f2572ee3397dea7",
+  "historical_before_after_2026_11_14": {
+    "before_runtime_source_revision": "b6a1079940a25527adb0544a0db3d0d52a747aa1",
+    "before_raw_sha256": "61de54109c39e77d9ae739adaf1d637f94c1062c23ad443c231cfa4e8c5ea1fe",
+    "before_messages": 18,
+    "before_occurrences": 262,
+    "after_messages": 0,
+    "after_occurrences": 0,
+    "scope": "Exact raw diagnostic keys/counts, treating ScriptErrors echoes as separate records."
+  },
+  "branch_head_at_capture": "df41e068133cec90c19b68f6695e81059d764479",
+  "raw_stdout_sha256": "c75a2fb7564960db23ee1d67cb434aed5973f189c54e5a965c5559a5fbbdf467",
+  "cvar_source": {
+    "path": "~/.local/share/wow-sim/cvars.json",
+    "before": {
+      "sha256": "0b65106721c91490447c50d70121ea6599dcec334643de02d982bb17804305b5",
+      "size": 811,
+      "mtime_ns": 1795171919943023520,
+      "ctime_ns": 1795171919943023520,
+      "atime_ns": 1795344896034066063,
+      "inode": 130973869,
+      "mode": 33188
+    },
+    "after": {
+      "sha256": "0b65106721c91490447c50d70121ea6599dcec334643de02d982bb17804305b5",
+      "size": 811,
+      "mtime_ns": 1795171919943023520,
+      "ctime_ns": 1795171919943023520,
+      "atime_ns": 1795344896034066063,
+      "inode": 130973869,
+      "mode": 33188
+    },
+    "unchanged": true
+  },
+  "profile_cache": {
+    "provenance_file": "<home>/.cache/wow-ui-sim/blizzard-ui/wowforever/AddOns/.wow-ui-sim-blizzard-ui-provenance",
+    "provenance_sha256": "b3081ac30a20fcb3cb5657b46dfaafda990cc6efcfddbec976490174eb3e0dba",
+    "completion_marker": "<home>/.cache/wow-ui-sim/blizzard-ui/wowforever/AddOns/.wow-ui-sim-blizzard-ui-complete",
+    "completion_marker_sha256": "dc51b8c96c2d745df3bd5590d990230a482fd247123599548e0632fdbf97fc22",
+    "provenance": {
+      "schema": "1",
+      "profile": "wowforever",
+      "product": "wowf",
+      "version": "1.60.1.70707",
+      "build_key": "7feb61f3c994bcb168526b8db521514a",
+      "install_key": "",
+      "manifest_sha256": "55e3e3846c9dc112f4a593d2d854ba78f210739e5ada9a176785883b4d735264",
+      "locale": "enUS",
+      "content_filter": "none",
+      "source": "casc-local-or-gethe-md5",
+      "fallback": "none",
+      "gethe_version": "1.60.1.70707",
+      "gethe_revision": "aff0d8cd53bf4d9ef1c1dd2786b94461a276fb16",
+      "gethe_file": "{\"path\":\"Blizzard_ZoneAbility/ZoneAbility.lua\",\"fdid\":5613414,\"ckey\":\"1365d1f0e3577b89381156f52de0810d\",\"gethe_revision\":\"aff0d8cd53bf4d9ef1c1dd2786b94461a276fb16\",\"source\":\"gethe\"}"
+    }
+  },
+  "compile_receipt": {
+    "path": "<home>/.cache/wow-ui-sim-targets/slot-3/receipts/lt-a607-frv-df41-no-run.json",
+    "sha256": "ac5ab8c30b798f001b601b91566ec267df22d99e4867b0ac569bada6628d5adb",
+    "cargo_stdout_sha256": "6137664a03e62430781676767019b91d2f9c28ac5269be9c4fa3408ba6502896",
+    "cargo_stderr_sha256": "745271a0a7d15dd3c414e47a2f4a365c6c9d013968a591973cdfec0123fe53c9",
+    "warnings": 0,
+    "result": "success"
+  },
+  "capture_artifact": {
+    "path": "<home>/.local/state/wow-ui-sim/handoff/dots/lt-a607/isolated/forever-lua-errors-df41/capture.json",
+    "sha256": "30ab8d3efa0b48ff71d425998f9b2a5627320b74ecd939cc227f5c17c25b1861",
+    "isolated_xdg": "<home>/.local/state/wow-ui-sim/handoff/dots/lt-a607/isolated/forever-lua-errors-df41",
+    "binary_path": "<home>/.cache/wow-ui-sim-targets/slot-3/debug/wow-sim"
+  },
+  "current_baseline_delta": {
+    "prior_tracked_baseline_commit": "bc7d5350d10c8e0f9ecad68258520189fe019312",
+    "prior_file_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "prior_messages": 0,
+    "prior_occurrences": 0,
+    "current_messages": 2,
+    "current_occurrences": 2,
+    "scope": "The two exact raw records are the direct TokenUI OnTextChanged Usage error and its Blizzard_ScriptErrors echo."
+  },
+  "approved_exception": {
+    "evidence": "INFERRED (captured stack plus pinned Blizzard_CurrencyTransfer.lua:488 and CurrencyTransferMenuMixin:GetCurrencyID): the initial CurrencyTransfer OnTextChanged path reaches GetClampedInputAmount before a currency ID is set, so the required-ID API reports its Usage error.",
+    "records": [
+      {
+        "count": 1,
+        "role": "direct OnTextChanged error"
+      },
+      {
+        "count": 1,
+        "role": "Blizzard_ScriptErrors echo"
+      }
+    ],
+    "approved_scope": "Only this CurrencyTransfer nil-currencyID error and its echo are allowed; unrelated records are not."
+  },
+  "blizzard_addons_loaded": 272
 }

@@ -7,7 +7,16 @@ const IGNORE_LIST_SETUP: &str = r#"
     A_Admin.SetSocialIgnoreName(1, "R88eh-IgnoreAlpha")
     A_Admin.SetSocialIgnoreName(2, "R88eh-IgnoreBeta")
     A_Admin.SetSocialBlockedEntry(1, 92001, "R88eh-BlockedAlpha")
+    A_Admin.SetSocialBlockedEntry(2, 92002, "R88eh-BlockedBeta")
     assert(C_FriendList.GetNumIgnores() == 2, "both supplied ignores must be counted")
+    assert(BNGetNumBlocked() == 2, "both supplied block rows must be counted")
+    assert(BNGetSelectedBlock() == 0, "no selected block row must return zero")
+    local firstBlockID, firstBlockName = BNGetBlockedInfo(1)
+    local secondBlockID, secondBlockName = BNGetBlockedInfo(2)
+    assert(firstBlockID == 92001 and firstBlockName == "R88eh-BlockedAlpha",
+        "first valid block row must return its identifier and name")
+    assert(secondBlockID == 92002 and secondBlockName == "R88eh-BlockedBeta",
+        "second valid block row must return its identifier and name")
     assert(C_FriendList.GetIgnoreName(1) == "R88eh-IgnoreAlpha", "first supplied ignore")
     assert(C_FriendList.GetIgnoreName(2) == "R88eh-IgnoreBeta", "second supplied ignore")
     assert(C_SocialRestrictions.IsFriendsDisabled() == false,
@@ -33,7 +42,7 @@ const IGNORE_LIST_ASSERTIONS: &str = r#"
         tostring(point1), tostring(relativeTo1 and relativeTo1:GetName()), tostring(relativePoint1), x1, y1,
         tostring(point2), tostring(relativeTo2 and relativeTo2:GetName()), tostring(relativePoint2), x2, y2))
     local provider = scrollBox:GetDataProvider()
-    assert(provider:GetSize() == 5, "provider must contain two headers and three rows")
+    assert(provider:GetSize() == 6, "provider must contain two headers and four rows")
     local visibleFrames = 0
     for _ in scrollBox:EnumerateFrames() do
         visibleFrames = visibleFrames + 1
@@ -52,6 +61,7 @@ const IGNORE_LIST_ASSERTIONS: &str = r#"
     local firstIgnore = check(SQUELCH_TYPE_IGNORE, 1, "R88eh-IgnoreAlpha")
     check(SQUELCH_TYPE_IGNORE, 2, "R88eh-IgnoreBeta")
     local blocked = check(SQUELCH_TYPE_BLOCK_INVITE, 1, "R88eh-BlockedAlpha")
+    local secondBlocked = check(SQUELCH_TYPE_BLOCK_INVITE, 2, "R88eh-BlockedBeta")
 
     local selectedType, selectedIndex = IgnoreList_GetSelected()
     assert(selectedType == SQUELCH_TYPE_IGNORE and selectedIndex == 1,
@@ -63,6 +73,24 @@ const IGNORE_LIST_ASSERTIONS: &str = r#"
     assert(selectedType == SQUELCH_TYPE_BLOCK_INVITE and selectedIndex == 1,
         "original selector must select the blocked row")
     assert(blocked:IsHighlightLocked(), "selected blocked row must be highlighted")
+
+    FriendsFrame_SelectSquelched(SQUELCH_TYPE_BLOCK_INVITE, 2)
+    assert(BNGetSelectedBlock() == 2, "selected block identifier must resolve to its row")
+    assert(secondBlocked:IsHighlightLocked(), "second blocked row must be highlighted")
+    A_Admin.SetSocialBlockedEntry(1, 92002, "R88eh-BlockedBeta")
+    A_Admin.SetSocialBlockedEntry(2, 92001, "R88eh-BlockedAlpha")
+    assert(BNGetSelectedBlock() == 1, "selected block must follow its identifier after reordering")
+
+    C_FriendList.SetSelectedIgnore(2)
+    A_Admin.SetSocialIgnoreName(1, "R88eh-IgnoreBeta")
+    A_Admin.SetSocialIgnoreName(2, "R88eh-IgnoreAlpha")
+    assert(C_FriendList.GetSelectedIgnore() == 1,
+        "selected ignore must follow its identifier after reordering")
+
+    for index = 1, 51 do
+        A_Admin.SetSocialIgnoreName(index, "R88eh-Ignore" .. index)
+    end
+    assert(C_FriendList.GetNumIgnores() == 50, "ignore count must stop at fifty entries")
 "#;
 
 fn load_friends_frame() -> WowLuaEnv {

@@ -163,6 +163,77 @@ fn black_market_queries_return_no_values_without_interaction() {
 }
 
 #[test]
+fn setting_black_market_bid_enables_bid_button_after_selecting_listing() {
+    let env = load_game_ui_with_black_market();
+    open_black_market(&env, TWO_LISTINGS_STATE);
+    env.exec(
+        r#"
+            A_Admin.SetMoney(1000000)
+            BlackMarketTextChanges = {}
+            BlackMarketBidPrice.gold:HookScript('OnTextChanged', function(_, userInput)
+                table.insert(BlackMarketTextChanges, userInput)
+            end)
+            BlackMarketFrame.ScrollBox:ForEachFrame(function(button)
+                if button.marketID == 701 then button:Click() end
+            end)
+        "#,
+    )
+    .expect("selecting a listing should run the original Black Market handler");
+    let first_change: (f64, bool, bool) = env
+        .eval(
+            "return #BlackMarketTextChanges, BlackMarketTextChanges[1], BlackMarketFrame.BidButton:IsEnabled()",
+        )
+        .expect("the first Black Market bid amount should notify the EditBox consumer");
+    assert_eq!(first_change, (1.0, false, true));
+
+    env.exec("MoneyInputFrame_SetCopper(BlackMarketBidPrice, 40000)")
+        .expect("setting a second bid amount should run Blizzard handlers");
+    let second_change: (f64, bool, bool) = env
+        .eval(
+            "return #BlackMarketTextChanges, BlackMarketTextChanges[2], BlackMarketFrame.BidButton:IsEnabled()",
+        )
+        .expect("the second Black Market bid amount should notify the EditBox consumer");
+    assert_eq!(second_change, (2.0, false, true));
+
+    env.exec("BlackMarketBidPrice.gold:SetNumber(4)")
+        .expect("setting the current number again should remain valid");
+    let unchanged_change_count: f64 = env
+        .eval("return #BlackMarketTextChanges")
+        .expect("the unchanged number callback count should be readable");
+    assert_eq!(unchanged_change_count, 2.0);
+}
+
+#[test]
+fn fresh_money_input_frame_set_copper_dispatches_after_return() {
+    let env = WowLuaEnv::new().expect("simulator should initialize");
+    env.set_screen_size(1024.0, 768.0);
+    env.set_screen_mode(ScreenKind::Game);
+    load_game_ui(&env);
+    env.fire_on_update(0.016).unwrap();
+    let errors_before = env.state().borrow().lua_errors.len();
+    env.exec(
+        r#"
+            FreshMoneyInputFrame = CreateFrame("Frame", nil, UIParent, "MoneyInputFrameTemplate")
+            FreshMoneyInputFrame.changes = {}
+            FreshMoneyInputFrame.callReturned = false
+            FreshMoneyInputFrame.gold:HookScript("OnTextChanged", function()
+                table.insert(FreshMoneyInputFrame.changes, FreshMoneyInputFrame.callReturned)
+            end)
+            MoneyInputFrame_SetCopper(FreshMoneyInputFrame, 40000)
+            FreshMoneyInputFrame.callReturned = true
+        "#,
+    )
+    .expect("SetCopper on a new MoneyInputFrame should return without an error");
+    let after_return: (f64, bool, bool) = env
+        .eval(
+            "return #FreshMoneyInputFrame.changes, FreshMoneyInputFrame.changes[1], FreshMoneyInputFrame.expectChanges == nil",
+        )
+        .expect("the text handler should run after SetCopper returns");
+    assert_eq!(after_return, (1.0, true, true));
+    assert_eq!(env.state().borrow().lua_errors.len(), errors_before);
+}
+
+#[test]
 fn blizzard_black_market_hot_item_can_match_listing_market_id() {
     let env = load_game_ui_with_black_market();
     open_black_market(&env, DUPLICATE_HOT_ITEM_STATE);

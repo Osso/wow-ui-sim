@@ -73,16 +73,9 @@ fn is_default_lfd_enabled(d: &LfdDungeonInfo, player_level: i32) -> bool {
         && player_level <= d.max_level
 }
 
-/// INFERRED R88ei (native evidence pending): the highest supplied active queue index.
+/// R88ei: returns the supplied maximum queue slot, independent of active queues.
 fn get_max_battlefield_id(state: &mut LuaState) -> LuaResult<u32> {
-    let max_id = {
-        let sim = borrow_state(state)?;
-        if sim.battlefield_queue.status == BattlefieldStatus::None {
-            0
-        } else {
-            sim.battlefield_queue.index.max(0)
-        }
-    };
+    let max_id = borrow_state(state)?.max_battlefield_id;
     state.push(Val::Num(max_id as f64));
     Ok(1)
 }

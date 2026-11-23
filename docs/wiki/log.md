@@ -1,3 +1,7 @@
+## [2026-11-23] implementation | EditBox host-boundary notifications and currency transfer queries
+
+Updated the [event system](systems/event-system.md), [Lua API system](systems/lua-api.md#retailforever-account-currency-transfer), and [EditBox contract](../specs/editbox-text-position-selection.md#cursor-geometry-follow-up); the [currency transfer contract](../specs/currency-transfer-eligibility.md) now covers amount/source queries. **INFERRED (R88et-c):** text-change handlers drain after the outermost Lua call returns, separately from cursor layout. **VERIFIED (simulator):** the exact Retail TokenFrame amount-selector path passes after real ScrollBox layout; the Retail/Forever startup captures contain only the approved CurrencyTransfer required-argument error and its ScriptErrors echo. Startup is not clean.
+
 ## [2026-11-21] implementation | Retail/Forever transmog set relations
 
 Updated the [Wardrobe API investigation](investigations/appearances-wardrobe-api.md) and [relation contract](../specs/transmog-set-relations.md). **VERIFIED (simulator):** the exact loaded `WardrobeSetsDataProviderMixin` test passes on Retail and Forever with two supplied records and distinct primary appearance IDs; both no-addons/no-saved-vars `lua-errors` runs return `[]`, and Forever→Mists→Wrath→Retail compile receipts report zero warnings. **INFERRED (R88cs pending):** catalog relation semantics beyond the tested consumer projection remain provisional; the temporary Lua body is byte-identical.

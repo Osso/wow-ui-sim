@@ -1,6 +1,8 @@
 use crate::c_api::ensure_namespace;
 use crate::lua_api::globals::currency_data;
 use crate::lua_api::methods::borrow_state_mut;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+use crate::lua_api::methods::table_set_num;
 use crate::lua_api::methods::{
     borrow_state, create_string, create_table, create_table_with_capacity, table_set,
     table_set_static, val_to_string,
@@ -39,6 +41,18 @@ const CURRENCY_INFO_METHODS: &[(&str, rilua::RustFn)] = &[
     ),
     #[cfg(feature = "client-retail")]
     ("CanTransferCurrency", can_transfer_currency),
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    (
+        "FetchCurrencyDataFromAccountCharacters",
+        fetch_currency_data_from_account_characters,
+    ),
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    (
+        "GetMaxTransferableAmountFromQuantity",
+        get_max_transferable_amount_from_quantity,
+    ),
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    ("GetCostToTransferCurrency", get_cost_to_transfer_currency),
     #[cfg(feature = "client-retail")]
     ("ExpandCurrencyList", expand_currency_list),
     #[cfg(feature = "client-retail")]
@@ -271,15 +285,8 @@ fn currency_transfer_rejection(
     sim: &crate::lua_api::state::SimState,
     id: i32,
 ) -> LuaResult<Option<Option<i32>>> {
-    let list = &sim.currency_list;
-    if !list.server_enabled {
-        return Ok(Some(Some(10)));
-    }
-    if sim.currency_transfer_in_progress {
-        return Ok(Some(Some(9)));
-    }
-    if !list.account_context_present {
-        return Ok(Some(None));
+    if let Some(reason) = currency_transfer_context_rejection(sim) {
+        return Ok(Some(reason));
     }
     let Some((flags, category, percentage)) = sim_data::currency_transfer::get(id) else {
         return Ok(Some(Some(5)));
@@ -287,52 +294,101 @@ fn currency_transfer_rejection(
     if percentage <= 0.0 || percentage.is_nan() || category & 12 != 0 {
         return Ok(Some(Some(5)));
     }
+    let list = &sim.currency_list;
     let rules = list
         .transfer_rules
         .get(&id)
         .ok_or_else(|| rilua::runtime_error("currency transfer eligibility not modeled"))?;
+    if let Some(reason) = currency_transfer_rules_rejection(rules, flags)? {
+        return Ok(Some(Some(reason)));
+    }
+    let current = crate::lua_api::globals::unit_misc::existing_guid_for_unit(sim, "player")
+        .ok_or_else(|| rilua::runtime_error("currency current character GUID not modeled"))?;
+    let valid_source = has_valid_currency_transfer_source(list, id, &current);
+    Ok((!valid_source).then_some(Some(6)))
+}
+
+#[cfg(feature = "client-retail")]
+fn has_valid_currency_transfer_source(
+    list: &crate::c_api::currency_list::CurrencyListState,
+    id: i32,
+    current: &str,
+) -> bool {
+    list.account_currency_sources
+        .get(&id)
+        .is_some_and(|sources| {
+            sources
+                .iter()
+                .any(|source| source.character_guid != current && source.quantity > 0)
+        })
+}
+
+#[cfg(feature = "client-retail")]
+fn currency_transfer_context_rejection(
+    sim: &crate::lua_api::state::SimState,
+) -> Option<Option<i32>> {
+    let list = &sim.currency_list;
+    if !list.server_enabled {
+        return Some(Some(10));
+    }
+    if sim.currency_transfer_in_progress {
+        return Some(Some(9));
+    }
+    (!list.account_context_present).then_some(None)
+}
+
+#[cfg(feature = "client-retail")]
+fn currency_transfer_rules_rejection(
+    rules: &crate::c_api::currency_list::CurrencyTransferRules,
+    flags: u32,
+) -> LuaResult<Option<i32>> {
+    if currency_transfer_faction_rejection(rules, flags)? {
+        return Ok(Some(5));
+    }
+    if !rules
+        .award_condition_met
+        .ok_or_else(|| rilua::runtime_error("currency award condition not modeled"))?
+    {
+        return Ok(Some(8));
+    }
+    if currency_transfer_cap_reached(rules)? {
+        return Ok(Some(4));
+    }
+    Ok(None)
+}
+
+#[cfg(feature = "client-retail")]
+fn currency_transfer_faction_rejection(
+    rules: &crate::c_api::currency_list::CurrencyTransferRules,
+    flags: u32,
+) -> LuaResult<bool> {
     if flags & (1 << 29) != 0
         && !rules
             .faction_key_0
             .ok_or_else(|| rilua::runtime_error("currency faction key 0 not modeled"))?
     {
-        return Ok(Some(Some(5)));
+        return Ok(true);
     }
     if flags & (1 << 28) != 0
         && !rules
             .faction_key_1
             .ok_or_else(|| rilua::runtime_error("currency faction key 1 not modeled"))?
     {
-        return Ok(Some(Some(5)));
+        return Ok(true);
     }
-    if !rules
-        .award_condition_met
-        .ok_or_else(|| rilua::runtime_error("currency award condition not modeled"))?
-    {
-        return Ok(Some(Some(8)));
-    }
-    if rules
+    Ok(false)
+}
+
+#[cfg(feature = "client-retail")]
+fn currency_transfer_cap_reached(
+    rules: &crate::c_api::currency_list::CurrencyTransferRules,
+) -> LuaResult<bool> {
+    Ok(rules
         .quantity_cap_reached
         .ok_or_else(|| rilua::runtime_error("currency quantity cap not modeled"))?
         || rules
             .weekly_cap_reached
-            .ok_or_else(|| rilua::runtime_error("currency weekly cap not modeled"))?
-    {
-        return Ok(Some(Some(4)));
-    }
-    let current = list
-        .current_character_guid
-        .as_ref()
-        .ok_or_else(|| rilua::runtime_error("currency current character GUID not modeled"))?;
-    let valid_source = list
-        .account_currency_sources
-        .get(&id)
-        .is_some_and(|sources| {
-            sources
-                .iter()
-                .any(|(guid, quantity)| guid != current && *quantity > 0)
-        });
-    Ok((!valid_source).then_some(Some(6)))
+            .ok_or_else(|| rilua::runtime_error("currency weekly cap not modeled"))?)
 }
 
 // Retail CurrencyInfoDocumentation.lua:27-33,225-231,555-563.
@@ -364,6 +420,113 @@ fn request_account_currency_data(state: &mut LuaState) -> LuaResult<u32> {
         .currency_list
         .request_account_data();
     Ok(0)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn fetch_currency_data_from_account_characters(state: &mut LuaState) -> LuaResult<u32> {
+    let currency_id = i32::from_stack(state, 1)?;
+    let Some(sources) = read_account_character_currency_sources(state, currency_id)? else {
+        state.push(Val::Nil);
+        return Ok(1);
+    };
+    let Val::Table(data) = create_table_with_capacity(state, sources.len()) else {
+        return Err(rilua::runtime_error(
+            "FetchCurrencyDataFromAccountCharacters: table allocation failed",
+        ));
+    };
+    for (index, source) in sources.iter().enumerate() {
+        push_account_character_currency_source(
+            state,
+            data,
+            (index + 1) as f64,
+            currency_id,
+            source,
+        );
+    }
+    state.push(Val::Table(data));
+    Ok(1)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn read_account_character_currency_sources(
+    state: &LuaState,
+    currency_id: i32,
+) -> LuaResult<Option<Vec<crate::c_api::currency_list::CurrencyAccountSource>>> {
+    let sim = borrow_state(state)?;
+    if !sim.currency_list.account_data_ready() {
+        return Ok(None);
+    }
+    Ok(Some(
+        sim.currency_list
+            .account_currency_sources
+            .get(&currency_id)
+            .cloned()
+            .unwrap_or_default(),
+    ))
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn push_account_character_currency_source(
+    state: &mut LuaState,
+    data: rilua::vm::gc::arena::GcRef<rilua::vm::table::Table>,
+    index: f64,
+    currency_id: i32,
+    source: &crate::c_api::currency_list::CurrencyAccountSource,
+) {
+    let row = create_table_with_capacity(state, 5);
+    let character_guid = create_string(state, &source.character_guid);
+    let character_name = create_string(state, &source.character_name);
+    let full_character_name = create_string(state, &source.full_character_name);
+    table_set_static(state, row, "characterGUID", character_guid);
+    table_set_static(state, row, "characterName", character_name);
+    table_set_static(state, row, "fullCharacterName", full_character_name);
+    table_set_static(state, row, "currencyID", Val::Num(f64::from(currency_id)));
+    table_set_static(state, row, "quantity", Val::Num(source.quantity as f64));
+    table_set_num(state, data, index, row);
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+const MAX_TRANSFERABLE_AMOUNT_USAGE: &str = "Usage: local maxTransferableAmount = C_CurrencyInfo.GetMaxTransferableAmountFromQuantity(currencyID, requestedQuantity)";
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+const COST_TO_TRANSFER_CURRENCY_USAGE: &str = "Usage: local totalQuantityConsumed = C_CurrencyInfo.GetCostToTransferCurrency(currencyID, quantity)";
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn transfer_percentage(currency_id: i32) -> Option<f32> {
+    let (_, _, percentage) = sim_data::currency_transfer::get(currency_id)?;
+    let percentage = percentage as f32;
+    (percentage > 0.0).then_some(percentage)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn get_max_transferable_amount_from_quantity(state: &mut LuaState) -> LuaResult<u32> {
+    let currency_id = crate::c_api::helpers::read_untainted_signed32_argument(
+        state,
+        1,
+        "C_CurrencyInfo.GetMaxTransferableAmountFromQuantity",
+        MAX_TRANSFERABLE_AMOUNT_USAGE,
+    )?;
+    let quantity = u32::from_stack(state, 2)?;
+    // INFERRED (R88es): multiply the kept share by the quantity in f32, then truncate.
+    let amount = transfer_percentage(currency_id)
+        .map(|percentage| (percentage * 0.01_f32 * quantity as f32) as u32);
+    state.push(amount.map_or(Val::Nil, |value| Val::Num(f64::from(value))));
+    Ok(1)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn get_cost_to_transfer_currency(state: &mut LuaState) -> LuaResult<u32> {
+    let currency_id = crate::c_api::helpers::read_untainted_signed32_argument(
+        state,
+        1,
+        "C_CurrencyInfo.GetCostToTransferCurrency",
+        COST_TO_TRANSFER_CURRENCY_USAGE,
+    )?;
+    let quantity = u32::from_stack(state, 2)?;
+    // INFERRED (R88es): gross quantity is ceil((100 / kept share) * requested amount) in f32.
+    let cost = transfer_percentage(currency_id)
+        .map(|percentage| ((100.0_f32 / percentage) * quantity as f32).ceil() as u32);
+    state.push(cost.map_or(Val::Nil, |value| Val::Num(f64::from(value))));
+    Ok(1)
 }
 
 #[cfg(feature = "client-retail")]

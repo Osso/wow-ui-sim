@@ -136,9 +136,7 @@ fn with_player_spells_panel(assert_state: impl FnOnce(&WowLuaEnv)) {
     assert_state(&env);
 }
 
-fn supply_selected_talent_state(env: &WowLuaEnv) {
-    env.exec(
-        r#"
+const SUPPLY_SELECTED_TALENT_STATE_LUA: &str = r#"
         local talentUpdates, inspectUpdates = 0, 0
         local observer = CreateFrame("Frame")
         observer:RegisterEvent("PLAYER_PVP_TALENT_UPDATE")
@@ -165,9 +163,11 @@ fn supply_selected_talent_state(env: &WowLuaEnv) {
         C_SpecializationInfo.SetPvpTalentLocked(456, false)
         assert(talentUpdates > 0)
         assert(inspectUpdates == 1)
-        "#,
-    )
-    .expect("supply selected, inspected and locked PvP talents");
+        "#;
+
+fn supply_selected_talent_state(env: &WowLuaEnv) {
+    env.exec(SUPPLY_SELECTED_TALENT_STATE_LUA)
+        .expect("supply selected, inspected and locked PvP talents");
 }
 
 fn assert_pvp_talent_info_by_id(env: &WowLuaEnv) {
