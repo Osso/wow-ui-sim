@@ -12,19 +12,25 @@ const SUPPLIED_CHEST_REWARDS: &str = r#"[
     {"rewardTypeID":1,"perksVendorItemID":202,"rewardAmount":1,"monthRewarded":"2026-11","activityMonthID":11,"thresholdOrderIndex":2}
 ]"#;
 
-fn supply_perks_program_state(env: &WowLuaEnv) {
+fn supply_perks_program_catalog(env: &WowLuaEnv) {
     env.exec(&format!(
-        "A_Admin.SetPerksProgramVendorItems([==[{SUPPLIED_VENDOR_ITEMS}]==])\n\
-         A_Admin.SetPerksProgramPendingChestRewards([==[{SUPPLIED_CHEST_REWARDS}]==])"
+        "A_Admin.SetPerksProgramVendorItems([==[{SUPPLIED_VENDOR_ITEMS}]==])"
     ))
-    .expect("A_Admin should accept supplied Perks Program catalog and rewards");
+    .expect("A_Admin should accept the supplied Perks Program catalog");
+}
+
+fn supply_pending_chest_rewards(env: &WowLuaEnv) {
+    env.exec(&format!(
+        "A_Admin.SetPerksProgramPendingChestRewards([==[{SUPPLIED_CHEST_REWARDS}]==])"
+    ))
+    .expect("A_Admin should accept supplied pending chest rewards");
 }
 
 #[cfg(feature = "client-retail")]
 #[test]
 fn supplied_catalog_and_chest_state_are_visible() {
     let env = crate::common::panel_fixtures::setup_env();
-    supply_perks_program_state(&env);
+    supply_perks_program_catalog(&env);
     let addons = wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("Blizzard UI cache should be available");
     let toc = addons.join("Blizzard_PerksProgram/Blizzard_PerksProgram.toc");
@@ -32,6 +38,7 @@ fn supplied_catalog_and_chest_state_are_visible() {
         .expect("the original Perks Program addon should load");
     env.exec("ShowUIPanel(PerksProgramFrame)")
         .expect("the original Perks Program panel should open through ShowUIPanel");
+    supply_pending_chest_rewards(&env);
     env.exec("A_Admin.SetPerksProgramCurrencyAmount(777)")
         .expect("A_Admin should supply Trader's Tender");
 
@@ -52,7 +59,8 @@ fn supplied_catalog_and_chest_state_are_visible() {
 #[test]
 fn supplied_catalog_and_chest_state_are_visible() {
     let env = crate::common::panel_fixtures::setup_env();
-    supply_perks_program_state(&env);
+    supply_perks_program_catalog(&env);
+    supply_pending_chest_rewards(&env);
 
     let observed: (i64, i64, i64, i64, i64, i64, i64) = env
         .eval(
