@@ -11,7 +11,7 @@ use wow_ui_sim::startup::fire_startup_events_for_screen;
 const TWO_LISTINGS_STATE: &str = r#"{"items":[
     {"marketID":701,"itemID":19019,"name":"Supplied Relic","texture":"Interface\\Icons\\INV_Misc_Gem_01","quantity":1,"itemType":"Armor","usable":true,"level":80,"levelType":"item level","sellerName":"Seller One","minBid":1000,"minIncrement":100,"currBid":0,"youHaveHighBid":false,"numBids":0,"timeLeft":4,"link":"item:19019","quality":4},
     {"marketID":702,"itemID":19020,"name":"Supplied Blade","texture":"Interface\\Icons\\INV_Sword_04","quantity":2,"itemType":"Weapon","usable":true,"level":90,"levelType":"item level","sellerName":"Seller Two","minBid":2000,"minIncrement":200,"currBid":1500,"youHaveHighBid":false,"numBids":1,"timeLeft":3,"link":"item:19020","quality":3}
-],"hotItem":{"marketID":703,"itemID":19021,"name":"Hot Deal Supplied","texture":"Interface\\Icons\\INV_Misc_QuestionMark","quantity":1,"itemType":"Misc","usable":true,"level":1,"levelType":"item level","sellerName":"Hot Seller","minBid":3000,"minIncrement":300,"currBid":0,"youHaveHighBid":false,"numBids":0,"timeLeft":2,"link":"item:19021","quality":2},"viewOnly":false}"#;
+],"hotItem":{"marketID":701,"itemID":19019,"name":"Supplied Relic","texture":"Interface\\Icons\\INV_Misc_Gem_01","quantity":1,"itemType":"Armor","usable":true,"level":80,"levelType":"item level","sellerName":"Seller One","minBid":1000,"minIncrement":100,"currBid":0,"youHaveHighBid":false,"numBids":0,"timeLeft":4,"link":"item:19019","quality":4},"viewOnly":false}"#;
 
 fn blizzard_ui_dir() -> PathBuf {
     default_blizzard_ui_addons_path().expect("Blizzard UI cache should be available")
@@ -56,11 +56,44 @@ fn blizzard_black_market_displays_supplied_listings_and_hot_deal() {
         .eval("local n = {}; BlackMarketFrame.ScrollBox:ForEachFrame(function(b) n[#n + 1] = b.Name:GetText() end); return table.concat(n, '|'), BlackMarketFrame.HotDeal.Name:GetText()")
         .expect("Blizzard Black Market rows should be readable");
     assert_eq!(rows, "Supplied Relic|Supplied Blade");
-    assert_eq!(hot_name, "Hot Deal Supplied");
-    let bid_state: (f64, bool, f64, bool, f64, bool) = env
-        .eval("C_BlackMarket.ItemPlaceBid(701, 1200); local _,_,_,_,_,_,_,_,_,_,bid,high,bids=C_BlackMarket.GetItemInfoByID(701); local invalid=C_BlackMarket.GetItemInfoByIndex(0); return C_BlackMarket.GetNumItems(),C_BlackMarket.IsViewOnly(),bid,high,bids,invalid==nil")
-        .expect("Black Market state should reflect the supplied bid");
-    assert_eq!(bid_state, (2.0, false, 1200.0, true, 1.0, true));
+    assert_eq!(hot_name, "Supplied Relic");
+    let bid_state: (bool, bool, String, f64, bool, bool, bool) = env
+        .eval(
+            r#"
+                A_Admin.SetMoney(50000)
+                local row
+                BlackMarketFrame.ScrollBox:ForEachFrame(function(button)
+                    if button.marketID == 701 then row = button end
+                end)
+                assert(row, "selected listing should be a Blizzard row")
+                row:Click("LeftButton")
+                MoneyInputFrame_SetCopper(BlackMarketBidPrice, 999)
+                BlackMarketFrame.BidButton:Click()
+                StaticPopup1Button1:Click()
+                local _, _, _, _, _, _, _, _, _, _, rejectedBid, rejectedHighBid, rejectedBids =
+                    C_BlackMarket.GetItemInfoByID(701)
+                MoneyInputFrame_SetCopper(BlackMarketBidPrice, 20000)
+                BlackMarketFrame.BidButton:Click()
+                StaticPopup1Button1:Click()
+                local updatedRow
+                BlackMarketFrame.ScrollBox:ForEachFrame(function(button)
+                    if button.marketID == 701 then updatedRow = button end
+                end)
+                local _, _, _, _, _, _, _, _, _, _, currentBid, highBid =
+                    C_BlackMarket.GetItemInfoByID(701)
+                local invalidIndex = C_BlackMarket.GetItemInfoByIndex(0)
+                return rejectedBid == 0 and not rejectedHighBid and rejectedBids == 0,
+                    updatedRow.YourBid:IsShown(), updatedRow.CurrentBid.GoldButton.Text:GetText(),
+                    currentBid, highBid,
+                    BlackMarketFrame.HotDeal.BlackMarketHotItemBidPrice.YourBid:IsShown(),
+                    invalidIndex == nil
+            "#,
+        )
+        .expect("Blizzard bid confirmation should update the listing and hot deal");
+    assert_eq!(
+        bid_state,
+        (true, true, "2".to_string(), 20000.0, true, true, true)
+    );
 }
 
 #[test]
