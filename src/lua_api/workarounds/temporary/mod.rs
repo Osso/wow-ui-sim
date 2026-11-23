@@ -33,6 +33,7 @@ pub(crate) mod auth_challenge_frame_parent;
 pub(crate) mod auto_complete_defaults;
 pub(crate) mod battle_net_account_defaults;
 pub(crate) mod behavioral_messaging_defaults;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod black_market_defaults;
 pub(crate) mod c_chat_info_defaults;
 pub(crate) mod calendar_defaults;
