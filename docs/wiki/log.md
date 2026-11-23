@@ -1,6 +1,6 @@
 ## [2026-11-23] investigation | Mythic+ map request reentrancy
 
-Added [the investigation](investigations/mythic-plus-map-request-reentrancy.md) and linked it from the [request contract](../specs/mythic-plus-map-info-request.md). **VERIFIED (same-root Retail runs):** master and branch discovered 78 addons and loaded 49; master recorded 8 unique errors / 159,655 occurrences, while the branch recorded 5 / 5 with no recursion, stack-overflow, instruction-budget, or watchdog error. AllTheThings appears in the branch load summary with no branch error. One `Blizzard_ChallengesUI` nil-map-row error and two `Clicked` errors remain in the branch output; their scope and evidence labels are in the investigation.
+Added [the investigation](investigations/mythic-plus-map-request-reentrancy.md) and linked it from the [request contract](../specs/mythic-plus-map-info-request.md). **VERIFIED (same-root Retail runs after merging master `e6407a379`):** both revisions discovered 78 addons and loaded 49; master recorded 10 unique errors / 159,423 occurrences, while the branch recorded 7 / 7 with no recursion, stack-overflow, instruction-budget, or watchdog error. AllTheThings loaded on both; only master reported its instruction-budget errors. The branch still reports one `Blizzard_ChallengesUI` nil-map-row error and two `Clicked` errors; their scope and evidence labels are in the investigation.
 
 ## [2026-11-23] implementation | EditBox host-boundary notifications and currency transfer queries
 

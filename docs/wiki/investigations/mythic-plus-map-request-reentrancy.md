@@ -7,8 +7,8 @@ Synchronous `C_MythicPlus.RequestMapInfo` response dispatch can re-enter addon e
 ### Root cause
 
 - **VERIFIED (simulator source):** the old `RequestMapInfo` path dispatched `CHALLENGE_MODE_MAPS_UPDATE` inside the request call.
-- **VERIFIED (same-root Retail run at `15417213e7799bffae5ebd5cb6e396656300cbcc`):** the explicit addon-root run discovered 78 addons, loaded 49, and recorded 8 unique errors with 159,655 total occurrences, including repeated `RequestMapInfo` recursion, stack overflow, and instruction-budget errors.
-- **VERIFIED (same-root Retail run at `71a13c2e0c4938b0ad774045247fd7970a591cf8`):** the same command discovered 78 addons, loaded 49, and recorded 5 unique errors with 5 total occurrences; it recorded no stack overflow or instruction-budget/watchdog error.
+- **VERIFIED (same-root Retail run at master `e6407a379e2f22703426b56ed285862751788b3c`):** the explicit addon-root run discovered 78 addons, loaded 49, and recorded 10 unique errors with 159,423 total occurrences, including repeated `RequestMapInfo` recursion, stack overflow, and instruction-budget errors.
+- **VERIFIED (same-root Retail run at branch `ce192415b406914145c394ac5ef40ecdf8a9c41c`):** the same command discovered 78 addons, loaded 49, and recorded 7 unique errors with 7 total occurrences; it recorded no stack overflow, instruction-budget, or watchdog error.
 
 ### Current inferred request behavior
 
@@ -18,10 +18,11 @@ Synchronous `C_MythicPlus.RequestMapInfo` response dispatch can re-enter addon e
 
 ### Comparison limits
 
-- **VERIFIED (same-root branch output):** `AllTheThings` appears in the addon loading summary, and no AllTheThings error or instruction-budget/watchdog error appears in the branch JSON output.
+- **VERIFIED (same-root Retail outputs):** AllTheThings loaded on both revisions (master 3.4 seconds; branch 5.4 seconds); the master output has four AllTheThings instruction-budget errors, while the branch output has none.
 - **VERIFIED (same-root branch output):** one `Blizzard_ChallengesUI` error stack ends at the simulator's deferred `Mythic+ map info response event` and reports a nil map-row access.
 - **INFERRED:** the nil map-row error is consistent with the run's empty challenge-map input; the evidence does not prove whether native Retail would emit the response event with an empty map catalogue.
-- **UNVERIFIED:** two branch `Clicked` errors report a nil `ClickCastHeader`; the comparison does not establish a causal link to the watchdog or Mythic+ changes.
+- **VERIFIED (same-root branch output):** the other five errors are the two approved TokenUI records, two `Clicked` errors, one secret-texture error, and one Baganator missing-API error.
+- **UNVERIFIED:** the two branch `Clicked` errors report a nil `ClickCastHeader`; the comparison does not establish a causal link to the watchdog or Mythic+ changes.
 
 ## Sources
 

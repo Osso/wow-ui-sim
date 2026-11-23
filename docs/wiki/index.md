@@ -1,6 +1,6 @@
 ## [2026-11-23] investigation | Mythic+ map request reentrancy
 
-[Mythic+ map request reentrancy](investigations/mythic-plus-map-request-reentrancy.md) records the inferred R88ev request gate, deferred events, and same-root Retail comparison. **VERIFIED:** both revisions discovered 78 addons and loaded 49; the branch has no `script ran too long` or instruction-budget errors, and AllTheThings appears in its load summary without an error.
+[Mythic+ map request reentrancy](investigations/mythic-plus-map-request-reentrancy.md) records the inferred R88ev request gate, deferred events, and same-root Retail comparison. **VERIFIED:** master and branch each discovered 78 addons and loaded 49; master recorded 10 unique errors / 159,423 occurrences, while the branch recorded 7 / 7 with no recursion, stack-overflow, instruction-budget, or watchdog error. AllTheThings loaded on both; only master reported its instruction-budget errors.
 
 ## [2026-11-23] implementation | EditBox host-boundary notifications and currency transfer queries
 
