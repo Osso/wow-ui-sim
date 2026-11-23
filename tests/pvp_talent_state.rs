@@ -42,7 +42,9 @@ fn forever_supplied_pvp_talent_state_reaches_open_player_spells_panel() {
             assert(C_SpecializationInfo.GetPvpTalentSlotUnlockLevel(99) == nil)
             local firstSlot = C_SpecializationInfo.GetPvpTalentSlotInfo(1)
             local secondSlot = C_SpecializationInfo.GetPvpTalentSlotInfo(2)
+            assert(firstSlot.enabled and firstSlot.level == 60)
             assert(firstSlot.selectedTalentID == 123 and #firstSlot.availableTalentIDs == 2)
+            assert(secondSlot.enabled and secondSlot.level == 60)
             assert(secondSlot.selectedTalentID == 456 and #secondSlot.availableTalentIDs == 2)
             "#,
         )
