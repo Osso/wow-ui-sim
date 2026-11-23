@@ -25,8 +25,13 @@ fn supply_perks_program_state(env: &WowLuaEnv) {
 fn supplied_catalog_and_chest_state_are_visible() {
     let env = crate::common::panel_fixtures::setup_env();
     supply_perks_program_state(&env);
-    env.exec("LoadAddOn('Blizzard_PerksProgram'); ShowUIPanel(PerksProgramFrame)")
-        .expect("the original Perks Program panel should load and open through ShowUIPanel");
+    let addons = wow_ui_sim::paths::default_blizzard_ui_addons_path()
+        .expect("Blizzard UI cache should be available");
+    let toc = addons.join("Blizzard_PerksProgram/Blizzard_PerksProgram.toc");
+    wow_ui_sim::loader::load_addon(&env.loader_env(), &toc)
+        .expect("the original Perks Program addon should load");
+    env.exec("ShowUIPanel(PerksProgramFrame)")
+        .expect("the original Perks Program panel should open through ShowUIPanel");
     env.exec("A_Admin.SetPerksProgramCurrencyAmount(777)")
         .expect("A_Admin should supply Trader's Tender");
 
