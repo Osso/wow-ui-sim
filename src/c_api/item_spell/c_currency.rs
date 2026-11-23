@@ -395,7 +395,11 @@ fn fetch_currency_data_from_account_characters(state: &mut LuaState) -> LuaResul
         return Ok(1);
     };
 
-    let data = create_table_with_capacity(state, sources.len());
+    let Val::Table(data) = create_table_with_capacity(state, sources.len()) else {
+        return Err(rilua::runtime_error(
+            "FetchCurrencyDataFromAccountCharacters: table allocation failed",
+        ));
+    };
     for (index, source) in sources.iter().enumerate() {
         let row = create_table_with_capacity(state, 5);
         table_set_static(
@@ -420,7 +424,7 @@ fn fetch_currency_data_from_account_characters(state: &mut LuaState) -> LuaResul
         table_set_static(state, row, "quantity", Val::Num(source.quantity as f64));
         table_set_num(state, data, (index + 1) as f64, row);
     }
-    state.push(data);
+    state.push(Val::Table(data));
     Ok(1)
 }
 
