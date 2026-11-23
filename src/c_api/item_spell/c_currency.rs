@@ -402,24 +402,12 @@ fn fetch_currency_data_from_account_characters(state: &mut LuaState) -> LuaResul
     };
     for (index, source) in sources.iter().enumerate() {
         let row = create_table_with_capacity(state, 5);
-        table_set_static(
-            state,
-            row,
-            "characterGUID",
-            create_string(state, &source.character_guid),
-        );
-        table_set_static(
-            state,
-            row,
-            "characterName",
-            create_string(state, &source.character_name),
-        );
-        table_set_static(
-            state,
-            row,
-            "fullCharacterName",
-            create_string(state, &source.full_character_name),
-        );
+        let character_guid = create_string(state, &source.character_guid);
+        let character_name = create_string(state, &source.character_name);
+        let full_character_name = create_string(state, &source.full_character_name);
+        table_set_static(state, row, "characterGUID", character_guid);
+        table_set_static(state, row, "characterName", character_name);
+        table_set_static(state, row, "fullCharacterName", full_character_name);
         table_set_static(state, row, "currencyID", Val::Num(f64::from(currency_id)));
         table_set_static(state, row, "quantity", Val::Num(source.quantity as f64));
         table_set_num(state, data, (index + 1) as f64, row);
