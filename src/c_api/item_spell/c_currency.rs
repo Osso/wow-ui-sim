@@ -283,15 +283,8 @@ fn currency_transfer_rejection(
     sim: &crate::lua_api::state::SimState,
     id: i32,
 ) -> LuaResult<Option<Option<i32>>> {
-    let list = &sim.currency_list;
-    if !list.server_enabled {
-        return Ok(Some(Some(10)));
-    }
-    if sim.currency_transfer_in_progress {
-        return Ok(Some(Some(9)));
-    }
-    if !list.account_context_present {
-        return Ok(Some(None));
+    if let Some(reason) = currency_transfer_context_rejection(sim) {
+        return Ok(Some(reason));
     }
     let Some((flags, category, percentage)) = sim_data::currency_transfer::get(id) else {
         return Ok(Some(Some(5)));
@@ -299,50 +292,101 @@ fn currency_transfer_rejection(
     if percentage <= 0.0 || percentage.is_nan() || category & 12 != 0 {
         return Ok(Some(Some(5)));
     }
+    let list = &sim.currency_list;
     let rules = list
         .transfer_rules
         .get(&id)
         .ok_or_else(|| rilua::runtime_error("currency transfer eligibility not modeled"))?;
+    if let Some(reason) = currency_transfer_rules_rejection(rules, flags)? {
+        return Ok(Some(Some(reason)));
+    }
+    let current = crate::lua_api::globals::unit_misc::existing_guid_for_unit(sim, "player")
+        .ok_or_else(|| rilua::runtime_error("currency current character GUID not modeled"))?;
+    let valid_source = has_valid_currency_transfer_source(list, id, &current);
+    Ok((!valid_source).then_some(Some(6)))
+}
+
+#[cfg(feature = "client-retail")]
+fn has_valid_currency_transfer_source(
+    list: &crate::c_api::currency_list::CurrencyListState,
+    id: i32,
+    current: &str,
+) -> bool {
+    list.account_currency_sources
+        .get(&id)
+        .is_some_and(|sources| {
+            sources
+                .iter()
+                .any(|source| source.character_guid != current && source.quantity > 0)
+        })
+}
+
+#[cfg(feature = "client-retail")]
+fn currency_transfer_context_rejection(
+    sim: &crate::lua_api::state::SimState,
+) -> Option<Option<i32>> {
+    let list = &sim.currency_list;
+    if !list.server_enabled {
+        return Some(Some(10));
+    }
+    if sim.currency_transfer_in_progress {
+        return Some(Some(9));
+    }
+    (!list.account_context_present).then_some(None)
+}
+
+#[cfg(feature = "client-retail")]
+fn currency_transfer_rules_rejection(
+    rules: &crate::c_api::currency_list::CurrencyTransferRules,
+    flags: u32,
+) -> LuaResult<Option<i32>> {
+    if currency_transfer_faction_rejection(rules, flags)? {
+        return Ok(Some(5));
+    }
+    if !rules
+        .award_condition_met
+        .ok_or_else(|| rilua::runtime_error("currency award condition not modeled"))?
+    {
+        return Ok(Some(8));
+    }
+    if currency_transfer_cap_reached(rules)? {
+        return Ok(Some(4));
+    }
+    Ok(None)
+}
+
+#[cfg(feature = "client-retail")]
+fn currency_transfer_faction_rejection(
+    rules: &crate::c_api::currency_list::CurrencyTransferRules,
+    flags: u32,
+) -> LuaResult<bool> {
     if flags & (1 << 29) != 0
         && !rules
             .faction_key_0
             .ok_or_else(|| rilua::runtime_error("currency faction key 0 not modeled"))?
     {
-        return Ok(Some(Some(5)));
+        return Ok(true);
     }
     if flags & (1 << 28) != 0
         && !rules
             .faction_key_1
             .ok_or_else(|| rilua::runtime_error("currency faction key 1 not modeled"))?
     {
-        return Ok(Some(Some(5)));
+        return Ok(true);
     }
-    if !rules
-        .award_condition_met
-        .ok_or_else(|| rilua::runtime_error("currency award condition not modeled"))?
-    {
-        return Ok(Some(Some(8)));
-    }
-    if rules
+    Ok(false)
+}
+
+#[cfg(feature = "client-retail")]
+fn currency_transfer_cap_reached(
+    rules: &crate::c_api::currency_list::CurrencyTransferRules,
+) -> LuaResult<bool> {
+    Ok(rules
         .quantity_cap_reached
         .ok_or_else(|| rilua::runtime_error("currency quantity cap not modeled"))?
         || rules
             .weekly_cap_reached
-            .ok_or_else(|| rilua::runtime_error("currency weekly cap not modeled"))?
-    {
-        return Ok(Some(Some(4)));
-    }
-    let current = crate::lua_api::globals::unit_misc::existing_guid_for_unit(sim, "player")
-        .ok_or_else(|| rilua::runtime_error("currency current character GUID not modeled"))?;
-    let valid_source = list
-        .account_currency_sources
-        .get(&id)
-        .is_some_and(|sources| {
-            sources
-                .iter()
-                .any(|source| source.character_guid != current && source.quantity > 0)
-        });
-    Ok((!valid_source).then_some(Some(6)))
+            .ok_or_else(|| rilua::runtime_error("currency weekly cap not modeled"))?)
 }
 
 // Retail CurrencyInfoDocumentation.lua:27-33,225-231,555-563.
