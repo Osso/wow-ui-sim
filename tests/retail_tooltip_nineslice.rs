@@ -1,4 +1,4 @@
-#![cfg(feature = "client-retail")]
+#![cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 
 use std::path::Path;
 
@@ -8,60 +8,75 @@ use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::startup::settle_headless_startup;
 
 fn load_tooltip_screen(screen: ScreenKind) -> WowLuaEnv {
-    let env = WowLuaEnv::new().expect("create Retail tooltip environment");
+    let env = WowLuaEnv::new().expect("create tooltip environment");
     env.set_screen_size(1024.0, 768.0);
     env.set_screen_mode(screen);
     let ui = wow_ui_sim::client_profile::blizzard_ui_addons_dir_under(Path::new(env!(
         "CARGO_MANIFEST_DIR"
     )));
-    env.state().borrow_mut().addon_base_paths = vec![ui.clone()];
-    for (name, toc) in discover_blizzard_addons_for_screen(&ui, screen) {
-        load_addon(&env.loader_env(), &toc).unwrap_or_else(|error| panic!("load {name}: {error}"));
-    }
+    load_tooltip_addons(&env, &ui, screen);
     env.apply_post_load_workarounds();
     settle_headless_startup(&env);
     env
 }
 
-const TOOLTIP_NINESLICE_ASSERTIONS: &str = r#"
-    local tooltip = assert(%s)
-    local nineSlice = assert(tooltip.NineSlice)
-    assert(nineSlice:GetParent() == tooltip)
-    tooltip:SetOwner(UIParent, 'ANCHOR_NONE')
-    tooltip:SetText('NineSlice preservation probe')
-    tooltip:Show()
-    assert(nineSlice:IsShown())
-    local r, g, b = nineSlice:GetCenterColor()
-    local er, eg, eb = TOOLTIP_DEFAULT_BACKGROUND_COLOR:GetRGB()
-    assert(r == er and g == eg and b == eb)
-    for _, pieceName in ipairs({
-        'TopLeftCorner', 'TopRightCorner', 'BottomLeftCorner', 'BottomRightCorner',
-        'TopEdge', 'BottomEdge', 'LeftEdge', 'RightEdge', 'Center',
-    }) do
-        local piece = assert(nineSlice[pieceName], pieceName)
-        assert(piece:GetNumPoints() > 0, pieceName .. ' must use the tooltip layout')
-        assert(piece:GetTexelSnappingBias() == 0, pieceName .. ' texel bias')
-        assert(not piece:IsSnappingToPixelGrid(), pieceName .. ' pixel snapping')
-    end
-"#;
+fn load_tooltip_addons(env: &WowLuaEnv, ui: &Path, screen: ScreenKind) {
+    if wow_ui_sim::client_profile::ACTIVE == wow_ui_sim::client_profile::ClientProfile::WowForever {
+        load_forever_tooltip_addons(env, ui, screen);
+        return;
+    }
 
-fn assert_tooltip_nineslice(tooltip: &str) {
-    let code = TOOLTIP_NINESLICE_ASSERTIONS.replace("%s", tooltip);
-    let env = load_tooltip_screen(if tooltip == "GlueTooltip" {
-        ScreenKind::CharacterSelect
-    } else {
-        ScreenKind::Game
-    });
+    for (name, toc) in discover_blizzard_addons_for_screen(ui, screen) {
+        load_addon(&env.loader_env(), &toc).unwrap_or_else(|error| panic!("load {name}: {error}"));
+    }
+}
+
+fn load_forever_tooltip_addons(env: &WowLuaEnv, ui: &Path, screen: ScreenKind) {
+    use wow_ui_sim::loader::{discover_all_blizzard_addons, register_load_with_addons};
+
+    register_load_with_addons(&env.loader_env(), &discover_all_blizzard_addons(ui));
+    if screen == ScreenKind::Game {
+        crate::common::supply_empty_forever_spellbook_outfits(env);
+        crate::common::load_game_startup_inventory(env);
+        return;
+    }
+
+    for (name, toc) in discover_blizzard_addons_for_screen(ui, screen) {
+        load_addon(&env.loader_env(), &toc).unwrap_or_else(|error| panic!("load {name}: {error}"));
+    }
+}
+
+fn verify_tooltip_layout(screen: ScreenKind, tooltip: &str) {
+    let env = load_tooltip_screen(screen);
+    let code = format!(
+        r#"
+        local tooltip = assert({tooltip})
+        local nineSlice = assert(tooltip.NineSlice)
+        assert(tooltip.layoutType == "TooltipDefaultLayout")
+        assert(nineSlice:GetParent() == tooltip)
+        tooltip:SetOwner(UIParent, "ANCHOR_NONE")
+        tooltip:SetText("Default tooltip contents")
+        tooltip:Show()
+        assert(nineSlice.TopLeftCorner:GetAtlas() == "Tooltip-NineSlice-CornerTopLeft")
+        assert(nineSlice.TopRightCorner:GetAtlas() == "Tooltip-NineSlice-CornerTopRight")
+        tooltip:SetText("Azerite tooltip contents")
+        SharedTooltip_SetBackdropStyle(tooltip, GAME_TOOLTIP_BACKDROP_STYLE_AZERITE_ITEM, false)
+        tooltip:Show()
+        assert(nineSlice.TopLeftCorner:GetAtlas() == "Tooltip-Azerite-NineSlice-CornerTopLeft")
+        assert(nineSlice.TopRightCorner:GetAtlas() == "Tooltip-Azerite-NineSlice-CornerTopRight")
+        assert(nineSlice:IsShown())
+        "#
+    );
     env.exec(&code)
-        .unwrap_or_else(|error| panic!("original Retail {tooltip} provider should work: {error}"));
+        .unwrap_or_else(|error| panic!("original {tooltip} tooltip layout should work: {error}"));
 }
 
 #[test]
-fn retail_game_tooltip_uses_original_nineslice_provider() {
-    assert_tooltip_nineslice("GameTooltip");
+fn game_tooltip_uses_xml_nineslice_for_default_and_azerite_styles() {
+    verify_tooltip_layout(ScreenKind::Game, "GameTooltip");
 }
 
 #[test]
-fn retail_glue_tooltip_uses_original_nineslice_provider() {
-    assert_tooltip_nineslice("GlueTooltip");
+fn glue_tooltip_uses_xml_nineslice_for_default_and_azerite_styles() {
+    verify_tooltip_layout(ScreenKind::CharacterSelect, "GlueTooltip");
 }
