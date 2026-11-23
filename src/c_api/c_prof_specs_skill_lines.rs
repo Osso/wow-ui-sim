@@ -132,7 +132,9 @@ fn get_spec_tab_ids(state: &mut LuaState) -> LuaResult<u32> {
         .skill_line(skill_line)
         .map(|record| record.spec_tab_ids.clone())
         .unwrap_or_default();
-    let table = create_table(state);
+    let Val::Table(table) = create_table(state) else {
+        unreachable!("create_table returns a table");
+    };
     for (index, tab_id) in tab_ids.into_iter().enumerate() {
         crate::lua_api::methods::table_set_num(
             state,
@@ -141,7 +143,7 @@ fn get_spec_tab_ids(state: &mut LuaState) -> LuaResult<u32> {
             Val::Num(f64::from(tab_id)),
         );
     }
-    state.push(table);
+    state.push(Val::Table(table));
     Ok(1)
 }
 
@@ -206,14 +208,23 @@ fn get_tab_info(state: &mut LuaState) -> LuaResult<u32> {
         "rootIconID",
         Val::Num(f64::from(tab_info.root_icon_id)),
     );
-    let highlights = create_table(state);
+    let Val::Table(highlights) = create_table(state) else {
+        unreachable!("create_table returns a table");
+    };
     for (index, description) in tab_info.highlights.into_iter().enumerate() {
-        let highlight = create_table(state);
+        let Val::Table(highlight) = create_table(state) else {
+            unreachable!("create_table returns a table");
+        };
         let description = create_string(state, &description);
-        table_set_static(state, highlight, "description", description);
-        crate::lua_api::methods::table_set_num(state, highlights, (index + 1) as f64, highlight);
+        table_set_static(state, Val::Table(highlight), "description", description);
+        crate::lua_api::methods::table_set_num(
+            state,
+            highlights,
+            (index + 1) as f64,
+            Val::Table(highlight),
+        );
     }
-    table_set_static(state, table, "highlights", highlights);
+    table_set_static(state, table, "highlights", Val::Table(highlights));
     state.push(table);
     Ok(1)
 }
@@ -330,14 +341,14 @@ fn table_argument(
 }
 
 fn table_field(
-    state: &LuaState,
+    state: &mut LuaState,
     table: rilua::vm::gc::arena::GcRef<rilua::vm::table::Table>,
     key: &str,
 ) -> Val {
     crate::lua_api::methods::table_get(state, Val::Table(table), key)
 }
 
-fn number_field(state: &LuaState, table: Val, key: &str) -> f64 {
+fn number_field(state: &mut LuaState, table: Val, key: &str) -> f64 {
     match table {
         Val::Table(table) => {
             match crate::lua_api::methods::table_get(state, Val::Table(table), key) {
@@ -349,11 +360,13 @@ fn number_field(state: &LuaState, table: Val, key: &str) -> f64 {
     }
 }
 
-fn string_field(state: &LuaState, table: Val, key: &str) -> String {
+fn string_field(state: &mut LuaState, table: Val, key: &str) -> String {
     match table {
         Val::Table(table) => {
             match crate::lua_api::methods::table_get(state, Val::Table(table), key) {
-                Val::Str(value) => value.to_string(),
+                value @ Val::Str(_) => {
+                    crate::lua_api::methods::val_to_string(state, value).unwrap_or_default()
+                }
                 _ => String::new(),
             }
         }
@@ -361,7 +374,7 @@ fn string_field(state: &LuaState, table: Val, key: &str) -> String {
     }
 }
 
-fn bool_field(state: &LuaState, table: Val, key: &str) -> bool {
+fn bool_field(state: &mut LuaState, table: Val, key: &str) -> bool {
     match table {
         Val::Table(table) => matches!(
             crate::lua_api::methods::table_get(state, Val::Table(table), key),
@@ -372,7 +385,7 @@ fn bool_field(state: &LuaState, table: Val, key: &str) -> bool {
 }
 
 fn read_number_array(
-    state: &LuaState,
+    state: &mut LuaState,
     table: rilua::vm::gc::arena::GcRef<rilua::vm::table::Table>,
     key: &str,
 ) -> LuaResult<Vec<f64>> {
@@ -401,7 +414,7 @@ fn read_number_array(
 }
 
 fn read_string_array_field(
-    state: &LuaState,
+    state: &mut LuaState,
     table: rilua::vm::gc::arena::GcRef<rilua::vm::table::Table>,
     key: &str,
 ) -> LuaResult<Vec<String>> {
@@ -422,7 +435,9 @@ fn read_string_array_field(
                 .get(array)
                 .map(|array| array.get_int(index as i64))
             {
-                Some(Val::Str(value)) => Ok(value.to_string()),
+                Some(value @ Val::Str(_)) => {
+                    Ok(crate::lua_api::methods::val_to_string(state, value).unwrap_or_default())
+                }
                 _ => Err(runtime_error(
                     "profession spec highlight descriptions must be strings",
                 )),
