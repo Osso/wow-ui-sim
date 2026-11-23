@@ -31,20 +31,23 @@ use crate::lua_bridge::stack_val;
 use rilua::vm::state::LuaState;
 use rilua::{LuaApiMut, LuaResult, Val};
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+const POSSESS_SLOT_TWO_ICON_FILE_ID: u32 = 136_190;
+
 /// Retail behavior is VERIFIED by R88ea; the same projection is INFERRED for Forever.
 /// Selectors 1 and 2 return the native slot shapes; other selectors return no values.
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn get_possess_info(state: &mut LuaState) -> LuaResult<u32> {
     let selector = i32::from_stack(state, 1)?;
-    let Some(index) = selector
-        .checked_sub(1)
-        .and_then(|value| usize::try_from(value).ok())
-        .filter(|_| matches!(selector, 1 | 2))
-    else {
-        return Ok(0);
+    let index = match selector {
+        1 => 0,
+        2 => 1,
+        _ => return Ok(0),
     };
     let possess_slot = {
-        let sim = borrow_state(state)?;
+        let Ok(sim) = borrow_state(state) else {
+            return Ok(0);
+        };
         sim.action_bar_state.possess_slots[index].clone()
     };
     push_possess_info(state, selector, possess_slot)
@@ -85,7 +88,7 @@ fn push_second_possess_slot(
     state: &mut LuaState,
     slot: Option<&PossessActionSlot>,
 ) -> LuaResult<u32> {
-    state.push(Val::Num(136190.0));
+    state.push(Val::Num(POSSESS_SLOT_TWO_ICON_FILE_ID as f64));
     state.push(slot.map_or(Val::Nil, |slot| Val::Num(slot.spell_id as f64)));
     state.push(Val::Bool(slot.is_some_and(|slot| slot.enabled)));
     Ok(3)
