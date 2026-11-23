@@ -316,6 +316,17 @@ fn request_current_affixes(state: &mut LuaState) -> LuaResult<u32> {
 
 // INFERRED R88ev (native evidence pending): enforce the saved-request cooldown.
 fn request_map_info(state: &mut LuaState) -> LuaResult<u32> {
+    if !admit_map_info_request(state)? {
+        return Ok(0);
+    }
+    defer_mythic_plus_event(
+        state,
+        dispatch_map_info_update,
+        "Mythic+ map info response event",
+    )
+}
+
+fn admit_map_info_request(state: &mut LuaState) -> LuaResult<bool> {
     let (player_exists, now) = {
         let sim = borrow_state(state)?;
         (
@@ -324,7 +335,7 @@ fn request_map_info(state: &mut LuaState) -> LuaResult<u32> {
         )
     };
     if !player_exists {
-        return Ok(0);
+        return Ok(false);
     }
     let request_allowed = {
         let mut sim = borrow_state_mut(state)?;
@@ -339,14 +350,10 @@ fn request_map_info(state: &mut LuaState) -> LuaResult<u32> {
         }
         elapsed
     };
-    if !request_allowed || !player_is_connected(state)? {
-        return Ok(0);
+    if !request_allowed {
+        return Ok(false);
     }
-    defer_mythic_plus_event(
-        state,
-        dispatch_map_info_update,
-        "Mythic+ map info response event",
-    )
+    player_is_connected(state)
 }
 
 // INFERRED R88ev (native evidence pending): no server send; retain the async event.
