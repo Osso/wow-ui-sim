@@ -47,13 +47,8 @@ fn read_skill_line_record(
             "profession spec skill-line entries must be tables",
         ));
     };
-    let row_value = Val::Table(row);
-    let skill_line_id = number_field(state, row_value, "skillLineID") as u32;
-    let config_id = number_field(state, row_value, "configID") as i32;
-    let spec_tab_ids = read_number_array(state, row, "specTabIDs")?
-        .into_iter()
-        .map(|id| id as u32)
-        .collect();
+    let (skill_line_id, config_id) = read_skill_line_ids(state, row);
+    let spec_tab_ids = read_spec_tab_ids(state, row)?;
     let currency_info = read_currency_info(state, row);
     let spec_tab_info = read_spec_tab_info(state, row);
     Ok(ProfessionSpecSkillLine {
@@ -63,6 +58,26 @@ fn read_skill_line_record(
         currency_info,
         spec_tab_info,
     })
+}
+
+fn read_skill_line_ids(
+    state: &mut LuaState,
+    row: rilua::vm::gc::arena::GcRef<rilua::vm::table::Table>,
+) -> (u32, i32) {
+    let row_value = Val::Table(row);
+    let skill_line_id = number_field(state, row_value, "skillLineID") as u32;
+    let config_id = number_field(state, row_value, "configID") as i32;
+    (skill_line_id, config_id)
+}
+
+fn read_spec_tab_ids(
+    state: &mut LuaState,
+    row: rilua::vm::gc::arena::GcRef<rilua::vm::table::Table>,
+) -> LuaResult<Vec<u32>> {
+    Ok(read_number_array(state, row, "specTabIDs")?
+        .into_iter()
+        .map(|id| id as u32)
+        .collect())
 }
 
 fn read_currency_info(
