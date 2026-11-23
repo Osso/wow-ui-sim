@@ -111,6 +111,33 @@ fn blizzard_black_market_bid_results_enforce_minimums_and_refresh_rows() {
 }
 
 #[test]
+fn setting_black_market_bid_enables_bid_button_after_selecting_listing() {
+    let env = load_game_ui_with_black_market();
+    open_black_market(&env, TWO_LISTINGS_STATE);
+    env.exec(
+        r#"
+            A_Admin.SetMoney(1000000)
+            local row
+            BlackMarketFrame.ScrollBox:ForEachFrame(function(button)
+                if button.marketID == 701 then row = button end
+            end)
+            row:Click()
+            MoneyInputFrame_SetCopper(BlackMarketBidPrice, 40000)
+        "#,
+    )
+    .expect("selecting a listing and setting its bid should run Blizzard handlers");
+    env.fire_on_update(0.016).unwrap();
+
+    let enabled: bool = env
+        .eval("return BlackMarketFrame.BidButton:IsEnabled()")
+        .expect("Black Market bid button state should be readable");
+    assert!(
+        enabled,
+        "setting the bid should enable the selected listing's bid button"
+    );
+}
+
+#[test]
 fn blizzard_black_market_hot_item_can_match_listing_market_id() {
     let env = load_game_ui_with_black_market();
     open_black_market(&env, DUPLICATE_HOT_ITEM_STATE);
