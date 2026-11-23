@@ -46,8 +46,8 @@ pub struct PvpTalentState {
     /// Host-supplied selected talent IDs in slot order.
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     pub selected_talent_ids: Vec<i32>,
-    /// Host-supplied slot unlock levels, keyed by talent slot.
-    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    /// Host-supplied Forever slot unlock levels, keyed by talent slot.
+    #[cfg(feature = "client-wowforever")]
     pub slot_unlock_levels: std::collections::HashMap<i32, i32>,
     /// Host-supplied inspected talent IDs, keyed by unit token and slot.
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
@@ -170,17 +170,26 @@ fn register_c_specialization_info_pvp_selection_methods(
         "GetInspectSelectedPvpTalent",
         get_inspect_selected_pvp_talent,
     )?;
-    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever {
-        table_set_rust_fn_static(
-            state,
-            t_ref,
-            "GetPvpTalentSlotUnlockLevel",
-            get_pvp_talent_slot_unlock_level,
-        )?;
-        table_set_rust_fn_static(state, t_ref, "IsPvpTalentLocked", is_pvp_talent_locked)?;
-        table_set_rust_fn_static(state, t_ref, "SetPvpTalentLocked", set_pvp_talent_locked)?;
-    }
+    #[cfg(feature = "client-wowforever")]
+    register_forever_pvp_methods(state, t_ref)?;
     Ok(())
+}
+
+#[cfg(feature = "client-wowforever")]
+fn register_forever_pvp_methods(state: &mut LuaState, t_ref: GcRef<Table>) -> LuaResult<()> {
+    table_set_rust_fn_static(
+        state,
+        t_ref,
+        "GetPvpTalentSlotUnlockLevel",
+        get_forever_pvp_talent_slot_unlock_level,
+    )?;
+    table_set_rust_fn_static(state, t_ref, "IsPvpTalentLocked", is_pvp_talent_locked)?;
+    table_set_rust_fn_static(
+        state,
+        t_ref,
+        "SetPvpTalentLocked",
+        set_forever_pvp_talent_locked,
+    )
 }
 
 fn register_c_specialization_info_retail_methods(
@@ -366,9 +375,21 @@ fn push_pvp_talent_info(state: &mut LuaState, record: &PvpTalentInfoRecord) {
     }
 }
 
-#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[cfg(feature = "client-retail")]
 fn get_pvp_talent_slot_unlock_level(state: &mut LuaState) -> LuaResult<u32> {
-    let talent_index = read_untainted_signed32_argument(
+    read_untainted_signed32_argument(
+        state,
+        1,
+        "C_SpecializationInfo.GetPvpTalentSlotUnlockLevel",
+        GET_PVP_TALENT_SLOT_UNLOCK_LEVEL_USAGE,
+    )?;
+    state.push(Val::Nil);
+    Ok(1)
+}
+
+#[cfg(feature = "client-wowforever")]
+fn get_forever_pvp_talent_slot_unlock_level(state: &mut LuaState) -> LuaResult<u32> {
+    let slot = read_untainted_signed32_argument(
         state,
         1,
         "C_SpecializationInfo.GetPvpTalentSlotUnlockLevel",
@@ -377,7 +398,7 @@ fn get_pvp_talent_slot_unlock_level(state: &mut LuaState) -> LuaResult<u32> {
     let level = borrow_state(state)?
         .pvp_talents
         .slot_unlock_levels
-        .get(&talent_index)
+        .get(&slot)
         .copied();
     state.push(level.map_or(Val::Nil, |level| Val::Num(f64::from(level))));
     Ok(1)
@@ -432,15 +453,19 @@ fn set_pvp_talent_locked(state: &mut LuaState) -> LuaResult<u32> {
         "C_SpecializationInfo.SetPvpTalentLocked",
         SET_PVP_TALENT_LOCKED_USAGE,
     )?;
-    {
-        let mut sim = borrow_state_mut(state)?;
-        if locked {
-            sim.pvp_talents.locked_talent_ids.insert(talent_id);
-        } else {
-            sim.pvp_talents.locked_talent_ids.remove(&talent_id);
-        }
+    let mut sim = borrow_state_mut(state)?;
+    if locked {
+        sim.pvp_talents.locked_talent_ids.insert(talent_id);
+    } else {
+        sim.pvp_talents.locked_talent_ids.remove(&talent_id);
     }
-    // INFERRED: Player Spells refreshes PvP talent consumers on this event. R88eq (native evidence pending).
+    Ok(0)
+}
+
+#[cfg(feature = "client-wowforever")]
+fn set_forever_pvp_talent_locked(state: &mut LuaState) -> LuaResult<u32> {
+    set_pvp_talent_locked(state)?;
+    // INFERRED event for the Forever consumer. R88eq (native evidence pending).
     crate::lua_api::globals::state_backed_queries::dispatch_event_now(
         state,
         "PLAYER_PVP_TALENT_UPDATE",
@@ -483,16 +508,18 @@ fn get_inspect_selected_pvp_talent(state: &mut LuaState) -> LuaResult<u32> {
 pub(crate) fn register_admin(
     builder: crate::lua_bridge::TableBuilder,
 ) -> LuaResult<crate::lua_bridge::TableBuilder> {
-    builder
+    let builder = builder
         .set_function("SetSelectedPvpTalentIDs", admin_set_selected_pvp_talent_ids)?
         .set_function(
             "SetInspectSelectedPvpTalent",
             admin_set_inspect_selected_pvp_talent,
-        )?
-        .set_function(
-            "SetPvpTalentSlotUnlockLevel",
-            admin_set_pvp_talent_slot_unlock_level,
-        )
+        )?;
+    #[cfg(feature = "client-wowforever")]
+    let builder = builder.set_function(
+        "SetPvpTalentSlotUnlockLevel",
+        admin_set_pvp_talent_slot_unlock_level,
+    )?;
+    Ok(builder)
 }
 
 // INFERRED: host-supplied PvP talent state follows observed slot consumers. R88eq (native evidence pending).
@@ -543,7 +570,7 @@ fn admin_set_inspect_selected_pvp_talent(state: &mut LuaState) -> LuaResult<u32>
     Ok(0)
 }
 
-#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[cfg(feature = "client-wowforever")]
 fn admin_set_pvp_talent_slot_unlock_level(state: &mut LuaState) -> LuaResult<u32> {
     use crate::lua_bridge::FromStack;
     let slot = i32::from_stack(state, 1)?;

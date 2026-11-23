@@ -1,15 +1,15 @@
 # PvP talent state
 
-`C_SpecializationInfo` exposes supplied selected PvP talent IDs, inspected selections, slot unlock levels and lock state on Retail and WoW Forever. **INFERRED (R88eq, native evidence pending):** state is empty until the host supplies it; writes notify the original UI consumers.
+`C_SpecializationInfo` exposes supplied selected PvP talent IDs and inspected selections on Retail and WoW Forever. Retail keeps its existing verified lock and slot-unlock behavior. **INFERRED (R88eq, native evidence pending):** WoW Forever accepts supplied slot unlock levels and refreshes UI consumers after state writes.
 
 ## What it must do
 
 - [x] Return selected talent IDs in supplied slot order from `GetAllSelectedPvpTalentIDs`.
 - [x] Return an inspected talent ID only for its supplied unit token and slot.
-- [x] Return a supplied slot unlock level; return nil when no level was supplied.
-- [x] Preserve lock state per talent ID through `IsPvpTalentLocked` and `SetPvpTalentLocked`.
-- [x] Let `A_Admin` supply selected IDs, inspected selection and slot unlock level without test writes to simulator state.
-- [ ] Dispatch the native refresh events after mutations; event parity is inferred, not verified.
+- [x] Preserve Retail `GetPvpTalentSlotUnlockLevel` absent-row behavior; expose host-supplied slot unlock levels on WoW Forever.
+- [x] Preserve Retail lock behavior; expose lock state on WoW Forever through `IsPvpTalentLocked` and `SetPvpTalentLocked`.
+- [x] Let `A_Admin` supply selected IDs and inspected selections on both profiles, and Forever slot unlock levels, without test writes to simulator state.
+- [ ] Dispatch the inferred refresh events after WoW Forever mutations; native event parity is not verified.
 
 ## How it works
 
@@ -24,7 +24,8 @@
 
 ## Tests asserting this spec
 
-- `tests/pvp_talent_state.rs::supplied_pvp_talent_state_reaches_the_open_player_spells_panel`
+- `tests/pvp_talent_state.rs::retail_supplied_pvp_talent_state_reaches_open_player_spells_panel`
+- `tests/pvp_talent_state.rs::forever_supplied_pvp_talent_state_reaches_open_player_spells_panel`
 
 ## Known gaps (current cycle)
 
