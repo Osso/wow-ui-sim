@@ -23,11 +23,15 @@ use super::helpers::{read_untainted_signed32_argument, read_untainted_truthy_arg
 pub struct PvpTalentInfoRecord {
     pub talent_id: i32,
     pub name: String,
-    pub icon: u32,
+    pub icon: Option<u32>,
     pub selected: bool,
     pub available: bool,
     pub spell_id: u32,
-    pub unlocked: bool,
+    pub unlocked: Option<bool>,
+    /// INFERRED R88eu: the legacy global returns tier; absent host input defaults to zero.
+    pub tier: i32,
+    /// INFERRED R88eu: the legacy global returns column; absent host input defaults to zero.
+    pub column: i32,
     pub known: bool,
     pub granted_by_aura: bool,
     pub dependencies_unmet: bool,
@@ -378,11 +382,16 @@ fn push_pvp_talent_info(state: &mut LuaState, record: &PvpTalentInfoRecord) {
     for (key, value) in [
         ("talentID", Val::Num(f64::from(record.talent_id))),
         ("name", name),
-        ("icon", Val::Num(f64::from(record.icon))),
+        (
+            "icon",
+            record
+                .icon
+                .map_or(Val::Nil, |icon| Val::Num(f64::from(icon))),
+        ),
         ("selected", Val::Bool(record.selected)),
         ("available", Val::Bool(record.available)),
         ("spellID", Val::Num(f64::from(record.spell_id))),
-        ("unlocked", Val::Bool(record.unlocked)),
+        ("unlocked", record.unlocked.map_or(Val::Nil, Val::Bool)),
         ("known", Val::Bool(record.known)),
         ("grantedByAura", Val::Bool(record.granted_by_aura)),
         ("dependenciesUnmet", Val::Bool(record.dependencies_unmet)),
@@ -600,11 +609,13 @@ fn admin_set_pvp_talent_info(state: &mut LuaState) -> LuaResult<u32> {
     let record = PvpTalentInfoRecord {
         talent_id: i32::from_stack(state, 1)?,
         name: String::from_stack(state, 2)?,
-        icon: u32::from_stack(state, 3)?,
+        icon: Option::<u32>::from_stack(state, 3)?,
         selected: bool::from_stack(state, 4)?,
         available: bool::from_stack(state, 5)?,
         spell_id: u32::from_stack(state, 6)?,
-        unlocked: bool::from_stack(state, 7)?,
+        unlocked: Option::<bool>::from_stack(state, 7)?,
+        tier: Option::<i32>::from_stack(state, 12)?.unwrap_or_default(),
+        column: Option::<i32>::from_stack(state, 13)?.unwrap_or_default(),
         known: bool::from_stack(state, 8)?,
         granted_by_aura: bool::from_stack(state, 9)?,
         dependencies_unmet: bool::from_stack(state, 10)?,

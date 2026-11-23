@@ -1,22 +1,31 @@
 //! Global PvP talent info lookup used by Blizzard talent and inspect frames.
 //!
-//! The native return tuple and missing-row behavior are INFERRED under R88eu;
-//! native evidence is pending. Optional context arguments are not modeled.
+//! R88eu verifies the tuple count, types, missing-row result, and zero-ID result.
+//! Its tuple order is inferred. Optional context arguments are not modeled.
 
+use crate::c_api::bad_argument;
 use crate::lua_api::methods::borrow_state;
 use crate::lua_bridge::{FromStack, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 
-const PVP_TALENT_INFO_BY_ID_RETURN_COUNT: u32 = 9;
+const PVP_TALENT_INFO_BY_ID: &str = "GetPvpTalentInfoByID";
+const PVP_TALENT_INFO_BY_ID_USAGE: &str =
+    "Usage: GetPvpTalentInfoByID(talentID [, specGroupIndex, isInspect, inspectUnit])";
+const PVP_TALENT_INFO_BY_ID_RETURN_COUNT: u32 = 11;
 
 /// `GetPvpTalentInfoByID(talentID [, specGroupIndex, isInspect, inspectUnit])`.
 ///
-/// INFERRED R88eu (native evidence pending): return the supplied record as
-/// `(talentID, name, icon, selected, available, spellID, unlocked, known,
-/// grantedByAura)`. A missing record returns no values.
+/// VERIFIED R88eu: return eleven values with the established field types;
+/// missing rows and talent ID zero return no values. INFERRED R88eu: the order
+/// is `(talentID, name, icon, selected, available, spellID, unlocked, tier,
+/// column, known, grantedByAura)`; tier and column default to zero.
 pub fn publish_pvp_talent_info_by_id(state: &mut LuaState) -> LuaResult<u32> {
-    let talent_id = i32::from_stack(state, 1)?;
+    let talent_id = i32::from_stack(state, 1)
+        .map_err(|_| bad_argument(1, PVP_TALENT_INFO_BY_ID, PVP_TALENT_INFO_BY_ID_USAGE))?;
+    if talent_id == 0 {
+        return Ok(0);
+    }
     let record = borrow_state(state)?
         .pvp_talents
         .info_by_id
@@ -30,11 +39,15 @@ pub fn publish_pvp_talent_info_by_id(state: &mut LuaState) -> LuaResult<u32> {
     for value in [
         Val::Num(f64::from(record.talent_id)),
         name,
-        Val::Num(f64::from(record.icon)),
+        record
+            .icon
+            .map_or(Val::Nil, |icon| Val::Num(f64::from(icon))),
         Val::Bool(record.selected),
         Val::Bool(record.available),
         Val::Num(f64::from(record.spell_id)),
-        Val::Bool(record.unlocked),
+        record.unlocked.map_or(Val::Nil, Val::Bool),
+        Val::Num(f64::from(record.tier)),
+        Val::Num(f64::from(record.column)),
         Val::Bool(record.known),
         Val::Bool(record.granted_by_aura),
     ] {
@@ -49,7 +62,7 @@ pub fn register(lua: &mut rilua::Lua) -> LuaResult<()> {
     table_set_rust_fn_static(
         state,
         state.global,
-        "GetPvpTalentInfoByID",
+        PVP_TALENT_INFO_BY_ID,
         publish_pvp_talent_info_by_id,
     )?;
     Ok(())

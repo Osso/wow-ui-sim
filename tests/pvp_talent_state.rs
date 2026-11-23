@@ -14,6 +14,7 @@ fn retail_supplied_pvp_talent_state_reaches_open_player_spells_panel() {
             read_talent_state(env),
             (true, true, false, 2, 123, 456, Some(456), Some(30))
         );
+        assert_pvp_talent_info_by_id(env);
         assert_inspect_pvp_slot_icon(env);
         assert_locked_talent_refresh_event(env);
         let level: Option<i32> = env
@@ -29,11 +30,11 @@ fn retail_supplied_pvp_talent_state_reaches_open_player_spells_panel() {
 
 #[cfg(feature = "client-wowforever")]
 #[test]
-fn forever_supplied_pvp_talent_state_reaches_open_player_spells_panel() {
-    with_player_spells_panel(|env| {
-        supply_selected_talent_state(env);
-        env.exec(
-            r#"
+fn forever_supplied_pvp_talent_state_reaches_legacy_lua_api() {
+    let env = crate::common::panel_fixtures::setup_env();
+    supply_selected_talent_state(&env);
+    env.exec(
+        r#"
             A_Admin.SetPvpTalentUnlockLevel(123, 25)
             assert(C_SpecializationInfo.GetPvpTalentUnlockLevel(123) == 25)
             assert(C_SpecializationInfo.GetPvpTalentUnlockLevel(999) == nil)
@@ -45,18 +46,17 @@ fn forever_supplied_pvp_talent_state_reaches_open_player_spells_panel() {
             assert(secondSlot.enabled and secondSlot.level == 60)
             assert(secondSlot.selectedTalentID == 456 and #secondSlot.availableTalentIDs == 2)
             "#,
-        )
-        .expect("supply Forever talent unlock and slot records");
-        assert_player_spells_slot_icons(env);
-        assert_eq!(
-            read_talent_state(env),
-            (true, true, false, 2, 123, 456, Some(456), Some(30))
-        );
-        assert_inspect_pvp_slot_icon(env);
-        assert_locked_talent_refresh_event(env);
-    });
+    )
+    .expect("supply Forever talent unlock and slot records");
+    assert_eq!(
+        read_talent_state(&env),
+        (false, true, false, 2, 123, 456, Some(456), Some(30))
+    );
+    assert_pvp_talent_info_by_id(&env);
+    assert_locked_talent_refresh_event(&env);
 }
 
+#[cfg(feature = "client-retail")]
 fn assert_player_spells_slot_icons(env: &WowLuaEnv) {
     env.exec(
         r#"
@@ -81,6 +81,7 @@ fn assert_player_spells_slot_icons(env: &WowLuaEnv) {
     .expect("read supplied selected talents from the original Player Spells slot tray");
 }
 
+#[cfg(feature = "client-retail")]
 fn assert_inspect_pvp_slot_icon(env: &WowLuaEnv) {
     env.exec("A_Admin.SetInspectSelectedPvpTalent('player', 2, 456)")
         .expect("supply the player inspect selection");
@@ -97,11 +98,6 @@ fn assert_inspect_pvp_slot_icon(env: &WowLuaEnv) {
         local slot = InspectPVPFrame.Slots[2]
         slot:Update()
         assert(slot.talentID == 456 and slot.Texture:GetTexture() == 222)
-        local talentID, name, icon, selected, available, spellID, unlocked, known, grantedByAura =
-            GetPvpTalentInfoByID(456)
-        assert(talentID == 456 and name == "Second" and icon == 222 and selected
-            and available and spellID == 1002 and unlocked and known and not grantedByAura)
-        assert(select('#', GetPvpTalentInfoByID(2147483647)) == 0)
         "#,
     )
     .expect("read the inspected talent from the original Inspect PvP slot");
@@ -125,15 +121,9 @@ fn assert_locked_talent_refresh_event(env: &WowLuaEnv) {
     .expect("lock changes dispatch the inferred PvP refresh event");
 }
 
+#[cfg(feature = "client-retail")]
 fn with_player_spells_panel(assert_state: impl FnOnce(&WowLuaEnv)) {
     let env = crate::common::panel_fixtures::setup_env();
-    #[cfg(feature = "client-wowforever")]
-    {
-        env.state()
-            .borrow_mut()
-            .transmog_outfit_catalog
-            .outfits_info_supplied = Some(true);
-    }
     env.exec(
         r#"
         assert(PlayerSpellsUtil and PlayerSpellsUtil.ToggleClassTalentFrame)
@@ -160,8 +150,9 @@ fn supply_selected_talent_state(env: &WowLuaEnv) {
                 inspectUpdates = inspectUpdates + 1
             end
         end)
-        A_Admin.SetPvpTalentInfo(123, "First", 111, true, true, 1001, true, true, false, false, nil)
-        A_Admin.SetPvpTalentInfo(456, "Second", 222, true, true, 1002, true, true, false, false, nil)
+        A_Admin.SetPvpTalentInfo(123, "First", 111, true, true, 1001, true, true, false, false, nil, 2, 3)
+        A_Admin.SetPvpTalentInfo(456, "Second", 222, true, true, 1002, true, true, false, false, nil, 4, 5)
+        A_Admin.SetPvpTalentInfo(789, "Nullable", nil, false, false, 1003, nil, false, false, false, nil)
         A_Admin.SetPvpTalentSlotUnlockLevel(2, 30)
         A_Admin.SetPvpTalentAlertStatus(true, false)
         A_Admin.SetSelectedPvpTalentIDs({ 123, 456 })
@@ -178,6 +169,32 @@ fn supply_selected_talent_state(env: &WowLuaEnv) {
     .expect("supply selected, inspected and locked PvP talents");
 }
 
+fn assert_pvp_talent_info_by_id(env: &WowLuaEnv) {
+    env.exec(
+        r#"
+        local count = select('#', GetPvpTalentInfoByID(456))
+        local talentID, name, icon, selected, available, spellID, unlocked, tier, column, known, grantedByAura =
+            GetPvpTalentInfoByID(456)
+        assert(count == 11)
+        assert(talentID == 456 and name == "Second" and icon == 222 and selected
+            and available and spellID == 1002 and unlocked and tier == 4 and column == 5
+            and known and not grantedByAura)
+        assert(select('#', GetPvpTalentInfoByID(0)) == 0)
+        assert(select('#', GetPvpTalentInfoByID(2147483647)) == 0)
+        local ok, err = pcall(GetPvpTalentInfoByID, "456")
+        assert(not ok and tostring(err):find("Usage: GetPvpTalentInfoByID", 1, true))
+        local nullID, nullName, nullIcon, nullSelected, nullAvailable, nullSpellID,
+            nullUnlocked, defaultTier, defaultColumn, nullKnown, nullGranted = GetPvpTalentInfoByID(789)
+        assert(nullID == 789 and nullName == "Nullable" and nullIcon == nil
+            and not nullSelected and not nullAvailable and nullSpellID == 1003
+            and nullUnlocked == nil and defaultTier == 0 and defaultColumn == 0
+            and not nullKnown and not nullGranted)
+        assert(select('#', GetPvpTalentInfoByID(789)) == 11)
+        "#,
+    )
+    .expect("read the R88eu PvP talent info tuple");
+}
+
 fn read_talent_state(env: &WowLuaEnv) -> TalentStateSnapshot {
     env.eval(
         r#"
@@ -192,7 +209,8 @@ fn read_talent_state(env: &WowLuaEnv) -> TalentStateSnapshot {
         assert(type(alertOne) == "boolean" and type(alertTwo) == "boolean")
         assert(alertOne == true and alertTwo == false)
         assert(C_SpecializationInfo.GetPvpTalentSlotUnlockLevel(99) == nil)
-        return PlayerSpellsFrame:IsShown(), C_SpecializationInfo.IsPvpTalentLocked(123),
+        return PlayerSpellsFrame and PlayerSpellsFrame:IsShown() or false,
+            C_SpecializationInfo.IsPvpTalentLocked(123),
             C_SpecializationInfo.IsPvpTalentLocked(456), #selected, selected[1], selected[2],
             C_SpecializationInfo.GetInspectSelectedPvpTalent("target", 2),
             C_SpecializationInfo.GetPvpTalentSlotUnlockLevel(2)

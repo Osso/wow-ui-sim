@@ -14,9 +14,11 @@
 ## Related global lookup
 
 - [x] Register `GetPvpTalentInfoByID(talentID [, specGroupIndex, isInspect, inspectUnit])` for Retail and WoW Forever.
-- [x] For a supplied row, return nine values in order: `talentID`, `name`, `icon`, `selected`, `available`, `spellID`, `unlocked`, `known`, and `grantedByAura`.
-- [x] Return no values when the talent ID has no supplied row.
+- [x] **VERIFIED (R88eu):** For a supplied row, return eleven values with these types: numeric `talentID`, string `name`, number-or-nil `icon`, boolean `selected`, boolean `available`, numeric `spellID`, boolean-or-nil `unlocked`, numeric `tier`, numeric `column`, boolean `known`, and boolean `grantedByAura`.
+- [x] **VERIFIED (R88eu):** Return no values when the talent ID is zero or has no supplied row.
+- [x] **VERIFIED (R88eu):** Reject non-number `talentID` arguments with an argument error that includes the Usage text.
 - [ ] Optional context arguments are accepted but their native effects are not modeled.
+- **INFERRED (R88eu):** Tuple order is `talentID`, `name`, `icon`, `selected`, `available`, `spellID`, `unlocked`, `tier`, `column`, `known`, `grantedByAura`; absent `tier` and `column` host inputs default to zero.
 
 ## How it works
 
@@ -28,7 +30,7 @@
 - `src/lua_api/workarounds/temporary/pvp_talent_defaults.rs` — remaining temporary PvP talent defaults; the static `GetPvpTalentInfo` placeholder is removed.
 - `src/lua_api/globals/real/pvp_talent_info.rs` — inferred `GetPvpTalentInfoByID` tuple backed by the supplied record map.
 - `tests/pvp_talent_native_consumers.rs` — locked/unlocked list-button consumer and absent-host-row tests.
-- `tests/pvp_talent_state.rs` — original Player Spells and Inspect consumers for host-supplied talent state.
+- `tests/pvp_talent_state.rs` — Retail original Player Spells and Inspect consumers; Retail and Forever global tuple checks.
 
 ## Tests asserting this spec
 
@@ -51,6 +53,7 @@
 
 - **VERIFIED (R88f.A.51):** Retail 12.1.5.70688 publishes the eleven named fields above in one table after an ID-keyed lookup; the exact Usage text is recorded in the decomp answer.
 - **UNKNOWN (R88f.A.51):** Field providers, native miss behavior, default state, wrapper forwarding, extra arguments, invalidation, and events for `C_SpecializationInfo.GetPvpTalentInfo` are not established.
-- **INFERRED R88eu (native evidence pending):** `GetPvpTalentInfoByID` returns the nine-value tuple above and returns no values for an absent row; its optional context arguments remain unverified.
+- **VERIFIED (R88eu):** `GetPvpTalentInfoByID` returns eleven values with the types listed above; a missing row or `talentID` zero returns no values, and a non-number ID raises an argument error.
+- **INFERRED (R88eu):** The eleven-value order is listed above. The supplied record model defaults `tier` and `column` to zero. The effects of optional context arguments remain UNKNOWN.
 - **VERIFIED (Retail 12.1.5.70783 cache):** `Blizzard_PlayerSpells/Blizzard_PlayerSpells.toc` loads `PvPTalents/Blizzard_PvPTalentListTemplates.xml`, which loads `Blizzard_PvPTalentListTemplates.lua`; its `PvPTalentListButtonMixin:Update` reads `unlocked`, `name`, `icon`, and dependency fields.
 - Decomp citation: `pr46-49-decomp-answers.md`, section `R88f.A.51`.
