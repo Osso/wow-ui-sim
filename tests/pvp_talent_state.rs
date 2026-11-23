@@ -10,12 +10,12 @@ fn retail_supplied_pvp_talent_state_reaches_open_player_spells_panel() {
     with_player_spells_panel(|env| {
         supply_selected_talent_state(env);
         assert_player_spells_slot_icons(env);
-        assert_inspect_pvp_slot_icon(env);
-        assert_locked_talent_refresh_event(env);
         assert_eq!(
             read_talent_state(env),
             (true, true, false, 2, 123, 456, Some(456), Some(30))
         );
+        assert_inspect_pvp_slot_icon(env);
+        assert_locked_talent_refresh_event(env);
         let level: Option<i32> = env
             .eval("return C_SpecializationInfo.GetPvpTalentUnlockLevel(5573)")
             .expect("query the Retail catalog unlock level");
@@ -48,12 +48,12 @@ fn forever_supplied_pvp_talent_state_reaches_open_player_spells_panel() {
         )
         .expect("supply Forever talent unlock and slot records");
         assert_player_spells_slot_icons(env);
-        assert_inspect_pvp_slot_icon(env);
-        assert_locked_talent_refresh_event(env);
         assert_eq!(
             read_talent_state(env),
             (true, true, false, 2, 123, 456, Some(456), Some(30))
         );
+        assert_inspect_pvp_slot_icon(env);
+        assert_locked_talent_refresh_event(env);
     });
 }
 
