@@ -209,7 +209,7 @@ fn push_tabard_info(
 pub(crate) fn admin_set_guild_rename_status(state: &mut LuaState) -> LuaResult<u32> {
     let status = read_guild_rename_status(state)?;
     let mut sim = borrow_state_mut(state)?;
-    sim.guild_rename_status = status;
+    sim.guild_rename_status = Some(status);
     Ok(0)
 }
 
@@ -304,7 +304,7 @@ fn read_status_string(state: &mut LuaState, table: Val, key: &str) -> LuaResult<
 
 fn push_guild_rename_status(state: &mut LuaState, status: &GuildRenameStatus) -> Val {
     let table = create_table(state);
-    state.push(Val::Table(table));
+    state.push(table);
     for (key, value) in [
         (
             "isNameChangeEnabled",
@@ -333,7 +333,7 @@ fn push_guild_rename_status(state: &mut LuaState, status: &GuildRenameStatus) ->
         table_set_static(state, table, key, value);
     }
     state.pop();
-    Val::Table(table)
+    table
 }
 
 pub(crate) fn admin_set_tabard_metadata(state: &mut LuaState) -> LuaResult<u32> {
