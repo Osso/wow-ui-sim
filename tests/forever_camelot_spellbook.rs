@@ -34,7 +34,7 @@ fn unset(env: &WowLuaEnv) {
 }
 
 fn load_original(enabled: bool) -> WowLuaEnv {
-    let env = load_original_with_outfits(enabled, Some(&[23, 81]));
+    let env = load_original_with_setup(enabled, |env| supply(env, Some(&[23, 81])));
     env.state()
         .borrow_mut()
         .set_input_interface_style(InputInterfaceStyle::Gamepad);
@@ -42,16 +42,30 @@ fn load_original(enabled: bool) -> WowLuaEnv {
 }
 
 fn load_original_without_outfits(enabled: bool) -> WowLuaEnv {
-    load_original_with_outfits(enabled, None)
+    load_original_with_setup(enabled, |_| {})
 }
 
-fn load_original_with_outfits(enabled: bool, outfits: Option<&[i64]>) -> WowLuaEnv {
+fn load_original_with_admin_outfits(enabled: bool) -> WowLuaEnv {
+    load_original_with_setup(enabled, |env| {
+        env.exec(
+            r#"
+            A_Admin.SetUnlockedOutfitSlots(2, 2)
+            C_TransmogOutfitInfo.AddNewOutfit('Copper', 123)
+            C_TransmogOutfitInfo.AddNewOutfit('Silver', 456)
+            "#,
+        )
+        .expect("create test outfits through the public API before loading Player Spells");
+    })
+}
+
+fn load_original_with_setup(
+    enabled: bool,
+    prepare: impl FnOnce(&WowLuaEnv),
+) -> WowLuaEnv {
     let ui = blizzard_ui_dir();
     let env = new_blizzard_addon_env(&ui);
     env.state().borrow_mut().transmog_availability.enabled = Some(enabled);
-    if let Some(ids) = outfits {
-        supply(&env, Some(ids));
-    }
+    prepare(&env);
     crate::common::panel_fixtures::load_panel_addons(&env);
     load_blizzard_addon_closure_into_env(&env, &ui, &["Blizzard_PlayerSpells"], &[]);
     eprintln!(
@@ -221,22 +235,8 @@ fn player_spells_toggle_accepts_no_outfits_and_two_created_outfits() {
         empty.state().borrow().lua_errors
     );
 
-    let populated = load_original_without_outfits(true);
+    let populated = load_original_with_admin_outfits(true);
     crate::common::panel_fixtures::clear_recorded_lua_errors(&populated);
-    populated
-        .exec(
-            r#"
-            A_Admin.SetUnlockedOutfitSlots(2, 2)
-            C_TransmogOutfitInfo.AddNewOutfit('Copper', 123)
-            C_TransmogOutfitInfo.AddNewOutfit('Silver', 456)
-            "#,
-        )
-        .expect("create two outfits through the public API before opening Player Spells");
-    assert!(
-        populated.state().borrow().lua_errors.is_empty(),
-        "creating outfits before opening Player Spells must record no Lua errors: {:?}",
-        populated.state().borrow().lua_errors
-    );
     populated
         .exec("PlayerSpellsUtil.ToggleClassTalentFrame()")
         .expect("Player Spells opens with two created outfits");
