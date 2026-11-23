@@ -377,12 +377,13 @@ fn push_pvp_talent_info(state: &mut LuaState, record: &PvpTalentInfoRecord) {
 
 #[cfg(feature = "client-retail")]
 fn get_pvp_talent_slot_unlock_level(state: &mut LuaState) -> LuaResult<u32> {
-    read_untainted_signed32_argument(
+    let _talent_index = read_untainted_signed32_argument(
         state,
         1,
         "C_SpecializationInfo.GetPvpTalentSlotUnlockLevel",
         GET_PVP_TALENT_SLOT_UNLOCK_LEVEL_USAGE,
     )?;
+    // No PvpTalentSlotUnlock rows are modeled; the verified absent-row path returns nil.
     state.push(Val::Nil);
     Ok(1)
 }
