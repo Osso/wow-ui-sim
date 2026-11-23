@@ -249,8 +249,8 @@ pub struct ActionBarStateInfo {
     /// (when true and not currently shown) or `:Hide()` it (when false
     /// and currently shown). Default false — no possession active.
     pub possess_bar_visible: bool,
-    /// INFERRED: supplied slot data read by Retail/Forever `GetPossessInfo`.
-    /// R88ea (native evidence pending).
+    /// Supplies Retail/Forever `GetPossessInfo`; R88ea is VERIFIED for Retail
+    /// and INFERRED for Forever.
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     pub possess_slots: [Option<PossessActionSlot>; 2],
 }
