@@ -69,7 +69,7 @@ fn blizzard_black_market_bid_confirmation_enforces_minimums_and_refreshes_rows()
                         if button.marketID == marketID then row = button end
                     end)
                     assert(row, "selected listing should be a Blizzard row")
-                    row:Click("LeftButton")
+                    row.Item:Click("LeftButton")
                     MoneyInputFrame_SetCopper(BlackMarketBidPrice, amount)
                     BlackMarketFrame.BidButton:Click()
                     StaticPopup1Button1:Click()
