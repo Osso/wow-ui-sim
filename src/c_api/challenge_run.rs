@@ -105,6 +105,13 @@ pub(crate) fn register_maps(
     ns: rilua::vm::gc::arena::GcRef<rilua::vm::table::Table>,
 ) -> LuaResult<()> {
     table_set_rust_fn_static(state, ns, "GetMapTable", map_table)?;
+    register_map_ui_info(state, ns)
+}
+
+pub(crate) fn register_map_ui_info(
+    state: &mut LuaState,
+    ns: rilua::vm::gc::arena::GcRef<rilua::vm::table::Table>,
+) -> LuaResult<()> {
     table_set_rust_fn_static(state, ns, "GetMapUIInfo", map_info)
 }
 

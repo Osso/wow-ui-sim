@@ -63,6 +63,8 @@ pub mod map_art;
 pub mod map_challenge_modes;
 #[path = "../data/model_scenes.rs"]
 pub mod model_scenes;
+#[path = "../data/mythic_plus_season_maps.rs"]
+pub mod mythic_plus_season_maps;
 #[path = "../data/perks_categories.rs"]
 pub mod perks_categories;
 #[path = "../data/pet_talent_trees.rs"]

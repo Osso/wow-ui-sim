@@ -23,14 +23,17 @@
 //! - `IsWeeklyRewardAvailable()` — returns the `is_weekly_reward_available` bool.
 //! - `GetLastWeeklyChest()` — returns the supplied cached challenge map ID and level.
 //! - `RequestCurrentAffixes()` / `RequestMapInfo()` / `RequestRewards()` — publish update events.
-//! - `C_ChallengeMode.GetMapTable()` / `GetMapUIInfo()` — seeded Mists-era
-//!   challenge dungeon rows for the legacy ChallengesFrame.
+//! - `C_ChallengeMode.GetMapTable()` — season-filtered tracked rows (Retail
+//!   VERIFIED R88ew; Forever INFERRED from the Retail 70391 export).
+//! - `C_ChallengeMode.GetMapUIInfo()` — returns supplied challenge-map metadata.
 
 use super::helpers::{ensure_namespace, set_table_array};
-use crate::lua_api::methods::{borrow_state, create_string, create_table, table_set};
+use crate::lua_api::methods::{
+    borrow_state, borrow_state_mut, create_string, create_table, table_set,
+};
 #[cfg(not(feature = "retail-12-0-7"))]
 use crate::lua_api::state::MythicPlusWeeklyBest;
-use crate::lua_bridge::{FromStack, table_set_rust_fn_static};
+use crate::lua_bridge::{FromStack, TableBuilder, table_set_rust_fn_static};
 use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
 use rilua::vm::table::Table;
@@ -63,6 +66,20 @@ const AFFIX_NAMES: &[(i32, &str)] = &[
     (160, "Xal'atath's Bargain: Devour"),
     (162, "Xal'atath's Bargain: Pulsar"),
 ];
+
+pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
+    if uses_display_seasons() {
+        builder.set_function("SetCurrentDisplaySeasonID", set_display_season_id)
+    } else {
+        Ok(builder)
+    }
+}
+
+fn set_display_season_id(state: &mut LuaState) -> LuaResult<u32> {
+    let season_id = i32::from_stack(state, 1)?;
+    borrow_state_mut(state)?.mythic_plus.display_season_id = season_id;
+    Ok(0)
+}
 
 pub(crate) fn register_mythic_plus_surface(state: &mut LuaState) -> LuaResult<()> {
     table_set_rust_fn_static(state, state.global, "GetAffixInfo", get_affix_info)?;
@@ -180,6 +197,9 @@ fn register_challenge_map_handlers(state: &mut LuaState, ns: GcRef<Table>) -> Lu
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Wrath {
         table_set_rust_fn_static(state, ns, "GetMapTable", challenge_get_map_table)?;
         table_set_rust_fn_static(state, ns, "GetMapUIInfo", challenge_get_map_ui_info)?;
+    } else if uses_display_seasons() {
+        table_set_rust_fn_static(state, ns, "GetMapTable", challenge_get_map_table)?;
+        crate::c_api::challenge_run::register_map_ui_info(state, ns)?;
     } else {
         crate::c_api::challenge_run::register_maps(state, ns)?;
     }
@@ -228,9 +248,16 @@ fn register_challenge_request_handlers(state: &mut LuaState, ns: GcRef<Table>) -
 }
 
 fn challenge_get_map_table(state: &mut LuaState) -> LuaResult<u32> {
+    let season_id = borrow_state(state)?.mythic_plus.display_season_id as u32;
     let maps = create_table(state);
-    set_table_array(state, maps, 1, Val::Num(2.0));
     state.push(maps);
+    for (index, &(_, map_id)) in sim_data::mythic_plus_season_maps::MAPS
+        .iter()
+        .filter(|(display_season_id, _)| *display_season_id == season_id)
+        .enumerate()
+    {
+        set_table_array(state, maps, index as i64 + 1, Val::Num(f64::from(map_id)));
+    }
     Ok(1)
 }
 
