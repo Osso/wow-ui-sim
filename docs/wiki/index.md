@@ -1,3 +1,7 @@
+## [2026-11-23] investigation | Forever Encounter Journal selection
+
+[Addon loading](systems/addon-loading.md#addon-discovery-and-toc-parsing) records the TOC filter that excludes Forever's Encounter Journal before its Mainline files load; Retail selects the Mainline consumer.
+
 ## [2026-11-23] investigation | Clicked first-install saved variables
 
 [Clicked first-install saved variables](investigations/clicked-first-install-savedvariables.md) records the first-profile `OnNewProfile` → blacklist refresh ordering. **VERIFIED (same Retail simulator binary and addon root):** two Clicked errors with SavedVariables disabled; zero with the current ClickedDB loaded. The source-level native behavior remains **INFERRED**.

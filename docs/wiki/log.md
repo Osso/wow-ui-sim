@@ -1,3 +1,7 @@
+## [2026-11-23] investigation | Forever Encounter Journal selection
+
+Updated [addon loading](systems/addon-loading.md#addon-discovery-and-toc-parsing). **VERIFIED (simulator selection logic and pinned TOCs):** Forever's Encounter Journal root TOC is restricted before its Mainline entries load; Retail selects the Mainline TOC and boss-list consumer.
+
 ## [2026-11-23] implementation | Forever Player Spells outfit list
 
 Updated the [Forever outfit contract](../specs/forever-camelot-spellbook.md), [shared catalog contract](../specs/outfit-catalog-lookups.md), and [outfit model](systems/forever-camelot-spellbook.md). **INFERRED (R88ex; native evidence pending):** an empty Forever outfit catalog returns no values, matching `MayReturnNothing` and guarded `GetOutfitsInfo() or {}` consumers. **VERIFIED (simulator):** exact Player Spells toggle proof passes with an empty catalog and with two AddNewOutfit records after A_Admin capacity input; Retail compile passes with zero warnings.
