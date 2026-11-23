@@ -20,6 +20,7 @@ fn supply_possess_slots_and_show_bar(env: &WowLuaEnv) {
         r#"
         A_Admin.SetPossessActionSlot(1, "Interface\\Icons\\Ability_Hunter_BeastCall", 883, false)
         A_Admin.SetPossessActionSlot(2, "Interface\\Icons\\Spell_Shadow_MindControl", 605, false)
+        A_Admin.SetPossessBarVisible(true)
         "#,
     )
     .expect("possess slots should be supplied through the admin model");
