@@ -1,6 +1,6 @@
 ## [2026-11-23] implementation | Forever Player Spells outfit list
 
-Updated the [Forever outfit contract](../specs/forever-camelot-spellbook.md), [shared catalog contract](../specs/outfit-catalog-lookups.md), and [outfit model](systems/forever-camelot-spellbook.md). **INFERRED (R88ex; native evidence pending):** an empty Forever outfit catalog returns no values, matching `MayReturnNothing` and guarded `GetOutfitsInfo() or {}` consumers. A_Admin can supply unlocked capacity for real `AddNewOutfit` test inputs.
+Updated the [Forever outfit contract](../specs/forever-camelot-spellbook.md), [shared catalog contract](../specs/outfit-catalog-lookups.md), and [outfit model](systems/forever-camelot-spellbook.md). **INFERRED (R88ex; native evidence pending):** an empty Forever outfit catalog returns no values, matching `MayReturnNothing` and guarded `GetOutfitsInfo() or {}` consumers. **VERIFIED (simulator):** exact Player Spells toggle proof passes with an empty catalog and with two AddNewOutfit records after A_Admin capacity input; Retail compile passes with zero warnings.
 
 ## [2026-11-23] implementation | Script bucket throttle
 

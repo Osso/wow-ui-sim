@@ -36,9 +36,10 @@ entries as the Retail lookup and outfit-creation path. **INFERRED (R88ex; native
 evidence pending):** an empty catalog returns zero values for both missing
 singular queries and `GetOutfitsInfo()`, matching the declaration's
 `MayReturnNothing` and the selected `GetOutfitsInfo() or {}` consumers. Non-empty
-enumeration returns one table. Supplied records and the empty-state behavior are
-exercised by `src/c_api/forever_lib_baseline_tests.rs` and
-`tests/forever_camelot_spellbook.rs`.
+enumeration returns one table. Supplied records and empty-state behavior are exercised by
+`src/c_api/forever_lib_baseline_tests.rs` and
+`tests/forever_camelot_spellbook.rs`. `A_Admin.SetUnlockedOutfitSlots` supplies
+capacity for tests that create records through the public AddNewOutfit path.
 
 ## Known gaps (current cycle)
 

@@ -1,6 +1,6 @@
 # Forever supplied spellbook outfit observations
 
-Forever 1.60.1.70532 uses the shared transmog availability observation and a separately supplied outfit-list observation. See [shared availability](transmog-availability.md) and [model and proof](../wiki/systems/forever-camelot-spellbook.md).
+Forever 1.60.1.70532 uses the shared transmog availability observation and the shared outfit catalog for the Player Spells panel. See [shared availability](transmog-availability.md) and [model and proof](../wiki/systems/forever-camelot-spellbook.md).
 
 ## What it must do
 
@@ -17,18 +17,21 @@ Forever 1.60.1.70532 uses the shared transmog availability observation and a sep
 ## Implementation inventory
 
 - `src/c_api/transmog_availability.rs`: shared availability registrar and observation.
-- `src/c_api/forever_outfits.rs`: Forever-only supplied query.
+- `src/c_api/forever_outfits.rs`: Forever-only empty-default queries.
 - `src/c_api/outfit_entry.rs`: complete shared record and fresh snapshot conversion.
 - `src/lua_api/state/sim_state.rs` and `state.rs`: shared outfit catalog.
-- `tests/forever_camelot_spellbook.rs`: original selected consumers.
+- `src/c_api/c_transmog_outfit_info/lifecycle.rs`: Forever A_Admin capacity input and public AddNewOutfit writer.
+- `tests/forever_camelot_spellbook.rs`: original selected consumers and two-outfit panel fixture.
 
 ## Tests asserting this spec
 
-Three exact selectors in `tests/forever_camelot_spellbook.rs` cover enabled-first availability, disabled-first availability, and independent sparse catalog projection.
+Four exact selectors in `tests/forever_camelot_spellbook.rs` cover enabled-first availability, disabled-first availability, independent sparse catalog projection, and Player Spells opening with no outfits and then two created outfits. `src/c_api/forever_lib_baseline_tests.rs` also checks the catalog query against supplied entries.
 
 ## Known gaps (current cycle)
 
-None within the approved bounded slice. Three exact RED/GREEN pairs, paired raw stock and seven zero-warning all-target checks pass; the compile gate is recorded in the [wiki](../wiki/systems/forever-camelot-spellbook.md#proof-status).
+- [ ] Native default return arity for an empty outfit catalog remains unverified; current zero-value behavior is INFERRED (R88ex) from the pinned `MayReturnNothing` declaration and guarded Blizzard consumers.
+
+The selected original Player Spells toggle and supplied two-outfit projection pass in this lane. This does not establish clean full-addon startup or native behavior.
 
 ## Out of scope
 
