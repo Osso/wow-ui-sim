@@ -62,7 +62,7 @@ fn read_account_character_source(
             "SetAccountCharacterCurrencyData: each source must be a table",
         ));
     }
-    let character_guid = read_field(state, value, "characterGUID")?;
+    let character_guid: String = read_field(state, value, "characterGUID")?;
     if character_guid.is_empty() {
         return Err(runtime_error(
             "SetAccountCharacterCurrencyData: characterGUID must not be empty",
