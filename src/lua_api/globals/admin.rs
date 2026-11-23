@@ -114,6 +114,8 @@ fn register_admin_player_services(builder: TableBuilder) -> LuaResult<TableBuild
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     let builder = super::admin_currency_transfer::register_admin(builder)?;
     let builder = register_player(builder)?;
+    #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
+    let builder = crate::c_api::c_navigation::register_admin(builder)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     let builder = crate::c_api::c_quest_log::register_zone_story_admin(builder)?;
     #[cfg(any(

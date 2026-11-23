@@ -998,6 +998,8 @@ pub struct SimState {
     pub quest_log: Vec<u32>,
     pub quest_log_entries: QuestLogState,
     pub super_track: crate::c_api::c_super_track::SuperTrackState,
+    /// Whether the supplied navigation frame is currently available to the UI.
+    pub navigation_frame_active: bool,
     /// Explicit ordinary-watch metadata; seeded once, not derived on every query.
     pub quest_watch_types: HashMap<i32, crate::c_api::QuestWatchType>,
     /// Explicit eligible IDs, independent of world-quest classification.

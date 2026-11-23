@@ -812,6 +812,7 @@ macro_rules! build_empty_sim_state {
             quest_watch_types: crate::c_api::seed_quest_watch_types(&quest_log_entries.entries),
             quest_log_entries,
             super_track: Default::default(),
+            navigation_frame_active: false,
             quest_war_mode_eligibility: HashSet::new(),
             pending_quest_offer: None,
             quest_choice_id: None,
