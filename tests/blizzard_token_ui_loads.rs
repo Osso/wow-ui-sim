@@ -105,10 +105,18 @@ fn find_toc_file_resolves_bare_toc() {
     );
 }
 
-#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[cfg(feature = "client-retail")]
 #[test]
 fn currency_transfer_menu_clamps_to_account_source_quantity_and_cost() {
     let env = load_full_game_ui();
+    let rate_examples: (f64, f64, f64) = env
+        .eval(
+            "return C_CurrencyInfo.GetMaxTransferableAmountFromQuantity(1560, 100), \
+             C_CurrencyInfo.GetCostToTransferCurrency(1560, 76), \
+             C_CurrencyInfo.GetCostToTransferCurrency(1560, 77)",
+        )
+        .expect("currency transfer APIs should use the supplied rate row");
+    assert_eq!(rate_examples, (76.0, 99.0, 101.0));
     env.exec(
         r#"
             A_Admin.SetCurrencyTransferEnabled(true)
