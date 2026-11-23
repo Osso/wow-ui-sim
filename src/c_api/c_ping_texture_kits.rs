@@ -2,14 +2,18 @@
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 use crate::c_api::helpers::set_table_array;
-use crate::lua_api::methods::{borrow_state, create_string, table_get, val_to_string};
+use crate::lua_api::methods::{borrow_state, create_string};
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 use crate::lua_api::methods::{borrow_state_mut, create_table_with_capacity, table_set_static};
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+use crate::lua_api::methods::{table_get, val_to_string};
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 use crate::lua_bridge::TableBuilder;
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 use rilua::vm::table::Table;
 use rilua::{LuaResult, Val, runtime_error};
 #[cfg(feature = "retail-12-0-0")]
