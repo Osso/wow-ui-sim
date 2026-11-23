@@ -387,12 +387,18 @@ fn register_modifier_keys(b: TableBuilder) -> LuaResult<TableBuilder> {
 }
 
 fn register_guild_and_game_rules(b: TableBuilder) -> LuaResult<TableBuilder> {
-    b.set_function("SetGuildEmblem", set_guild_emblem)?
+    let b = b
+        .set_function("SetGuildEmblem", set_guild_emblem)?
         .set_function(
             "SetGuildTabardMetadata",
             crate::c_api::c_guild_info::admin_set_tabard_metadata,
-        )?
-        .set_function("SetGuildRanks", set_guild_ranks)?
+        )?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let b = b.set_function(
+        "SetGuildRenameStatus",
+        crate::c_api::c_guild_info::admin_set_guild_rename_status,
+    )?;
+    b.set_function("SetGuildRanks", set_guild_ranks)?
         .set_function("SetGuildRoster", set_guild_roster)?
         .set_function("SetGameRule", super::game_rules::admin_set_game_rule)?
         .set_function(
