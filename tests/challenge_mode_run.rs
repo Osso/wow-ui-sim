@@ -218,6 +218,11 @@ fn challenge_icon_map_ids_for_display_season(season_id: u32) -> String {
 #[cfg(feature = "client-retail")]
 #[test]
 fn original_challenges_panel_uses_display_season_maps() {
+    let env = WowLuaEnv::new().unwrap();
+    let default_season: u32 = env
+        .eval("return C_SeasonInfo.GetCurrentDisplaySeasonID()")
+        .unwrap();
+    assert_eq!(default_season, 37);
     let season_34 = challenge_icon_map_ids_for_display_season(34);
     let season_37 = challenge_icon_map_ids_for_display_season(37);
     assert_eq!(season_34, "239,556,161,402,557,558,559,560");
