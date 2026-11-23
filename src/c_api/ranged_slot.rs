@@ -9,10 +9,19 @@ use rilua::vm::state::LuaState;
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 use rilua::{LuaResult, Val};
 
-#[derive(Clone, Copy, Debug, Default)]
+#[derive(Clone, Copy, Debug)]
 pub struct RangedSlotState {
-    /// INFERRED R88dv (native evidence pending): the seeded Paladin hides this slot.
+    /// INFERRED R88dv: Forever defaults to shown; Retail defaults to hidden.
     pub shown: bool,
+}
+
+impl Default for RangedSlotState {
+    fn default() -> Self {
+        Self {
+            shown: crate::client_profile::ACTIVE
+                == crate::client_profile::ClientProfile::WowForever,
+        }
+    }
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]

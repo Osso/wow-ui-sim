@@ -31,39 +31,63 @@ use crate::lua_bridge::stack_val;
 use rilua::vm::state::LuaState;
 use rilua::{LuaApiMut, LuaResult, Val};
 
-/// INFERRED from `PossessActionBar.lua:32,114,120`: project a supplied slot
-/// as `(texture, spellID, enabled)`. R88ea (native evidence pending).
+/// Retail behavior is VERIFIED by R88ea; the same projection is INFERRED for Forever.
+/// Selectors 1 and 2 return the native slot shapes; other selectors return no values.
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn get_possess_info(state: &mut LuaState) -> LuaResult<u32> {
-    let slot = i32::from_stack(state, 1)?;
-    let index = slot
+    let selector = i32::from_stack(state, 1)?;
+    let Some(index) = selector
         .checked_sub(1)
-        .and_then(|value| usize::try_from(value).ok());
+        .and_then(|value| usize::try_from(value).ok())
+        .filter(|_| matches!(selector, 1 | 2))
+    else {
+        return Ok(0);
+    };
     let possess_slot = {
         let sim = borrow_state(state)?;
-        index
-            .and_then(|index| sim.action_bar_state.possess_slots.get(index))
-            .and_then(Option::as_ref)
-            .cloned()
+        sim.action_bar_state.possess_slots[index].clone()
     };
-    push_possess_info(state, possess_slot)
+    push_possess_info(state, selector, possess_slot)
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
-fn push_possess_info(state: &mut LuaState, slot: Option<PossessActionSlot>) -> LuaResult<u32> {
-    match slot {
-        Some(slot) => {
-            let texture = create_string(state, &slot.texture);
-            state.push(texture);
-            state.push(Val::Num(slot.spell_id as f64));
-            state.push(Val::Bool(slot.enabled));
-        }
-        None => {
-            state.push(Val::Nil);
-            state.push(Val::Nil);
-            state.push(Val::Bool(false));
-        }
+fn push_possess_info(
+    state: &mut LuaState,
+    selector: i32,
+    slot: Option<PossessActionSlot>,
+) -> LuaResult<u32> {
+    match selector {
+        1 => push_first_possess_slot(state, slot.as_ref()),
+        2 => push_second_possess_slot(state, slot.as_ref()),
+        _ => Ok(0),
     }
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn push_first_possess_slot(
+    state: &mut LuaState,
+    slot: Option<&PossessActionSlot>,
+) -> LuaResult<u32> {
+    if let Some(slot) = slot {
+        let texture = create_string(state, &slot.texture);
+        state.push(texture);
+        state.push(Val::Num(slot.spell_id as f64));
+    } else {
+        state.push(Val::Nil);
+        state.push(Val::Nil);
+    }
+    state.push(Val::Bool(true));
+    Ok(3)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn push_second_possess_slot(
+    state: &mut LuaState,
+    slot: Option<&PossessActionSlot>,
+) -> LuaResult<u32> {
+    state.push(Val::Num(136190.0));
+    state.push(slot.map_or(Val::Nil, |slot| Val::Num(slot.spell_id as f64)));
+    state.push(Val::Bool(slot.is_some_and(|slot| slot.enabled)));
     Ok(3)
 }
 
