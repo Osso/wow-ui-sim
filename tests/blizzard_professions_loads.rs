@@ -472,8 +472,8 @@ fn blizzard_professions_loads_explicitly_after_dependencies(env: &WowLuaEnv) {
 }
 }
 
-prefork_full_ui_case! {
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+prefork_full_ui_case! {
 fn profession_spec_consumer_uses_supplied_skill_line_config_and_tabs(env: &WowLuaEnv) {
     let ui = blizzard_ui_dir();
     let templates_toc = ui
