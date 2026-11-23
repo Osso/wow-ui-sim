@@ -31,6 +31,9 @@ fn supply_pending_chest_rewards(env: &WowLuaEnv) {
 fn supplied_catalog_and_chest_state_are_visible() {
     let env = crate::common::panel_fixtures::setup_env();
     supply_perks_program_catalog(&env);
+    supply_pending_chest_rewards(&env);
+    env.exec("A_Admin.SetPerksProgramClientAvailable(true)")
+        .expect("A_Admin should mark the Perks Program client available");
     let addons = wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("Blizzard UI cache should be available");
     let toc = addons.join("Blizzard_PerksProgram/Blizzard_PerksProgram.toc");
@@ -38,21 +41,21 @@ fn supplied_catalog_and_chest_state_are_visible() {
         .expect("the original Perks Program addon should load");
     env.exec("ShowUIPanel(PerksProgramFrame)")
         .expect("the original Perks Program panel should open through ShowUIPanel");
-    supply_pending_chest_rewards(&env);
     env.exec("A_Admin.SetPerksProgramCurrencyAmount(777)")
         .expect("A_Admin should supply Trader's Tender");
 
-    let observed: (bool, i64, i64, i64, i64, i64, i64) = env
+    let observed: (i64, bool, i64, i64, i64, i64, i64, i64) = env
         .eval(
-            "local frame = PerksProgramFrame\n\
+            "local requestReturns = select('#', C_PerksProgram.RequestPendingChestRewards())\n\
+             local frame = PerksProgramFrame\n\
              local currency = frame.ProductsFrame.PerksProgramCurrencyFrame\n\
-             return frame:IsShown(), frame.vendorItemIDs[1], frame.vendorItemIDs[2],\n\
+             return requestReturns, frame:IsShown(), frame.vendorItemIDs[1], frame.vendorItemIDs[2],\n\
                     C_PerksProgram.GetVendorItemInfo(101).price,\n\
                     C_PerksProgram.GetVendorItemInfo(202).price,\n\
                     currency.currencyAmount, #currency.pendingChestRewards",
         )
         .expect("original Perks Program frame should read the supplied state");
-    assert_eq!(observed, (true, 101, 202, 100, 200, 777, 2));
+    assert_eq!(observed, (0, true, 101, 202, 100, 200, 777, 2));
 }
 
 #[cfg(feature = "client-wowforever")]
@@ -61,15 +64,20 @@ fn supplied_catalog_and_chest_state_are_visible() {
     let env = crate::common::panel_fixtures::setup_env();
     supply_perks_program_catalog(&env);
     supply_pending_chest_rewards(&env);
+    env.exec(
+        "A_Admin.SetPerksProgramFeatureEnabled(true); A_Admin.SetPerksProgramClientAvailable(true)",
+    )
+    .expect("A_Admin should enable the Forever Perks Program client");
 
-    let observed: (i64, i64, i64, i64, i64, i64, i64) = env
+    let observed: (i64, i64, i64, i64, i64, i64, i64, i64) = env
         .eval(
-            "local ids = C_PerksProgram.GetAvailableVendorItemIDs()\n\
+            "local requestReturns = select('#', C_PerksProgram.RequestPendingChestRewards())\n\
+             local ids = C_PerksProgram.GetAvailableVendorItemIDs()\n\
              local rewards = C_PerksProgram.GetPendingChestRewards()\n\
-             return ids[1], ids[2], C_PerksProgram.GetVendorItemInfo(101).price,\n\
+             return requestReturns, ids[1], ids[2], C_PerksProgram.GetVendorItemInfo(101).price,\n\
                     C_PerksProgram.GetVendorItemInfo(202).price,\n\
                     C_PerksProgram.GetCurrencyAmount(), #rewards, rewards[2].thresholdOrderIndex",
         )
         .expect("Perks Program should read the supplied state on Forever");
-    assert_eq!(observed, (101, 202, 100, 200, 0, 2, 2));
+    assert_eq!(observed, (0, 101, 202, 100, 200, 0, 2, 2));
 }

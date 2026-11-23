@@ -1,8 +1,9 @@
 //! Supplied Perks Program catalog, currency, and chest reward state.
 //!
-//! INFERRED R88ep (native evidence pending): requests deliver the current
-//! supplied snapshot through the events consumed by the Blizzard UI.
+//! INFERRED R88ep: response event names and order are unknown; eligible
+//! simulator requests emit the consumer refresh events.
 
+use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::methods::{
     borrow_state, borrow_state_mut, create_string, create_table, table_set,
 };
@@ -10,17 +11,20 @@ use crate::lua_bridge::{FromStack, TableBuilder, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val, runtime_error};
 
-/// INFERRED R88ep (native evidence pending): without host input, the simulator
-/// starts with no listed items or rewards and zero currency; this is not a claim
-/// about native account-state defaults.
+/// INFERRED R88ep: the unsupplied account state is unknown. The simulator uses
+/// an empty catalog, zero currency, and disabled request conditions by default.
 #[derive(Debug, Default)]
 pub(crate) struct PerksProgramState {
     vendor_items: Vec<serde_json::Value>,
-    currency_amount: f64,
+    currency_amount: i64,
     pending_chest_rewards: Vec<serde_json::Value>,
+    feature_enabled: bool,
+    client_available: bool,
 }
 
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
+    // INFERRED R88ep: these members use documented table result shapes. Forever
+    // declares vendor IDs, although no matching handler was found in the corpus.
     let namespace = super::ensure_namespace(state, "C_PerksProgram")?;
     table_set_rust_fn_static(
         state,
@@ -48,6 +52,8 @@ pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
     builder
         .set_function("SetPerksProgramVendorItems", set_vendor_items)?
         .set_function("SetPerksProgramCurrencyAmount", set_currency_amount)?
+        .set_function("SetPerksProgramFeatureEnabled", set_feature_enabled)?
+        .set_function("SetPerksProgramClientAvailable", set_client_available)?
         .set_function(
             "SetPerksProgramPendingChestRewards",
             set_pending_chest_rewards,
@@ -84,8 +90,9 @@ fn find_vendor_item_info(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn read_currency_amount(state: &mut LuaState) -> LuaResult<u32> {
+    // VERIFIED R88ep: no arguments; publish one integer, or zero without an owner/player.
     let amount = borrow_state(state)?.perks_program.currency_amount;
-    state.push(Val::Num(amount));
+    state.push(Val::Num(amount as f64));
     Ok(1)
 }
 
@@ -98,6 +105,23 @@ fn read_pending_chest_rewards(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn request_pending_chest_rewards(state: &mut LuaState) -> LuaResult<u32> {
+    // VERIFIED R88ep: no arguments and zero returns. Retail requires a connection;
+    // Forever also requires the Perks feature to be enabled.
+    let (feature_enabled, client_available) = {
+        let state = borrow_state(state)?;
+        (
+            state.perks_program.feature_enabled,
+            state.perks_program.client_available,
+        )
+    };
+    if !client_available {
+        return Ok(0);
+    }
+    if ACTIVE == ClientProfile::WowForever && !feature_enabled {
+        return Ok(0);
+    }
+
+    // INFERRED R88ep: native response event and order are unknown.
     dispatch_event(state, "CHEST_REWARDS_UPDATED_FROM_SERVER")?;
     dispatch_event(state, "PERKS_PROGRAM_DATA_REFRESH")?;
     Ok(0)
@@ -111,7 +135,7 @@ fn set_vendor_items(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn set_currency_amount(state: &mut LuaState) -> LuaResult<u32> {
-    let amount = f64::from_stack(state, 1)?;
+    let amount = i64::from_stack(state, 1)?;
     let previous = {
         let mut sim = borrow_state_mut(state)?;
         let previous = sim.perks_program.currency_amount;
@@ -121,8 +145,20 @@ fn set_currency_amount(state: &mut LuaState) -> LuaResult<u32> {
     crate::lua_api::globals::lfg_list::fire_event_with_args(
         state,
         "PERKS_PROGRAM_CURRENCY_REFRESH",
-        vec![Val::Num(previous), Val::Num(amount)],
+        vec![Val::Num(previous as f64), Val::Num(amount as f64)],
     )?;
+    Ok(0)
+}
+
+fn set_feature_enabled(state: &mut LuaState) -> LuaResult<u32> {
+    let enabled = bool::from_stack(state, 1)?;
+    borrow_state_mut(state)?.perks_program.feature_enabled = enabled;
+    Ok(0)
+}
+
+fn set_client_available(state: &mut LuaState) -> LuaResult<u32> {
+    let available = bool::from_stack(state, 1)?;
+    borrow_state_mut(state)?.perks_program.client_available = available;
     Ok(0)
 }
 
