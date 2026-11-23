@@ -723,7 +723,6 @@ fn profession_spec_consumer_uses_supplied_skill_line_config_and_tabs() {
                 configID = 8202,
                 specTabIDs = {9202},
                 currency = {numAvailable = 12, currencyName = "Mining Marks"},
-                specTabInfo = {enabled = false, errorReason = "not available"},
             },
         })
         A_Admin.SetProfessionSpecTabInfo(9101, {
@@ -737,6 +736,8 @@ fn profession_spec_consumer_uses_supplied_skill_line_config_and_tabs() {
 
         assert(C_TradeSkillUI.OpenTradeSkill(164))
         assert(ProfessionsFrame:IsShown())
+        ProfessionsFrame.TabSystem.tabs[ProfessionsFrame.specializationsTabID]:Click("LeftButton")
+        assert(ProfessionsFrame.SpecPage:IsShown())
         assert(ProfessionsFrame.SpecPage.professionInfo.professionID == 164)
         assert(C_ProfSpecs.GetDefaultSpecSkillLine() == 164)
         assert(C_ProfSpecs.ShouldShowSpecTab())
@@ -753,6 +754,8 @@ fn profession_spec_consumer_uses_supplied_skill_line_config_and_tabs() {
 
         assert(C_TradeSkillUI.OpenTradeSkill(186))
         assert(ProfessionsFrame:IsShown())
+        ProfessionsFrame.TabSystem.tabs[ProfessionsFrame.specializationsTabID]:Click("LeftButton")
+        assert(ProfessionsFrame.SpecPage:IsShown())
         assert(ProfessionsFrame.SpecPage.professionInfo.professionID == 186)
         assert(C_ProfSpecs.GetDefaultSpecSkillLine() == 186)
         assert(C_ProfSpecs.GetConfigIDForSkillLine(186) == 8202)
@@ -761,7 +764,7 @@ fn profession_spec_consumer_uses_supplied_skill_line_config_and_tabs() {
         local currency = C_ProfSpecs.GetCurrencyInfoForSkillLine(186)
         assert(currency.numAvailable == 12 and currency.currencyName == "Mining Marks")
         local specTabInfo = C_ProfSpecs.GetSpecTabInfo()
-        assert(not specTabInfo.enabled and specTabInfo.errorReason == "not available")
+        assert(specTabInfo.enabled and specTabInfo.errorReason == "")
         assert(ProfessionsFrame.SpecPage.configID == 8202)
         assert(ProfessionsFrame.SpecPage.selectedTab.traitTreeID == 9202)
         assert(ProfessionsFrame.SpecPage.tabInfo.rootNodeID == 90202)

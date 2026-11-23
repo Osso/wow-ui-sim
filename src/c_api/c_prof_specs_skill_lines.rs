@@ -13,8 +13,15 @@ use crate::lua_bridge::{FromStack, TableBuilder, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val, runtime_error};
 
-const SKILL_LINE_USAGE: &str = "Usage: local value = C_ProfSpecs query(skillLineID)";
-const TAB_INFO_USAGE: &str = "Usage: local info = C_ProfSpecs.GetTabInfo(tabTreeID)";
+const CONFIG_ID_USAGE: &str =
+    "Usage: local configID = C_ProfSpecs.GetConfigIDForSkillLine(skillLineID)";
+const CURRENCY_INFO_USAGE: &str =
+    "Usage: local info = C_ProfSpecs.GetCurrencyInfoForSkillLine(skillLineID)";
+const SPEC_TAB_IDS_USAGE: &str =
+    "Usage: local specTabIDs = C_ProfSpecs.GetSpecTabIDsForSkillLine(skillLineID)";
+const HAS_SPECIALIZATION_USAGE: &str =
+    "Usage: local hasSpecialization = C_ProfSpecs.SkillLineHasSpecialization(skillLineID)";
+const TAB_INFO_USAGE: &str = "Usage: local tabInfo = C_ProfSpecs.GetTabInfo(tabTreeID)";
 
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     if !matches!(
@@ -66,13 +73,8 @@ pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
     Ok(builder)
 }
 
-fn read_skill_line_id(state: &LuaState) -> LuaResult<u32> {
-    let value = super::helpers::read_untainted_signed32_argument(
-        state,
-        1,
-        "C_ProfSpecs",
-        SKILL_LINE_USAGE,
-    )?;
+fn read_skill_line_id(state: &LuaState, api: &'static str, usage: &'static str) -> LuaResult<u32> {
+    let value = super::helpers::read_untainted_signed32_argument(state, 1, api, usage)?;
     u32::try_from(value).map_err(|_| runtime_error("skillLineID must be non-negative"))
 }
 
@@ -88,7 +90,7 @@ fn default_skill_line(state: &LuaState) -> LuaResult<Option<u32>> {
 }
 
 fn get_config_id(state: &mut LuaState) -> LuaResult<u32> {
-    let skill_line = read_skill_line_id(state)?;
+    let skill_line = read_skill_line_id(state, "GetConfigIDForSkillLine", CONFIG_ID_USAGE)?;
     let config_id = borrow_state(state)?
         .profession_spec_inputs
         .skill_line(skill_line)
@@ -99,7 +101,7 @@ fn get_config_id(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn get_currency_info(state: &mut LuaState) -> LuaResult<u32> {
-    let skill_line = read_skill_line_id(state)?;
+    let skill_line = read_skill_line_id(state, "GetCurrencyInfoForSkillLine", CURRENCY_INFO_USAGE)?;
     let currency = borrow_state(state)?
         .profession_spec_inputs
         .skill_line(skill_line)
@@ -124,7 +126,7 @@ fn get_default_skill_line(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn get_spec_tab_ids(state: &mut LuaState) -> LuaResult<u32> {
-    let skill_line = read_skill_line_id(state)?;
+    let skill_line = read_skill_line_id(state, "GetSpecTabIDsForSkillLine", SPEC_TAB_IDS_USAGE)?;
     let tab_ids = borrow_state(state)?
         .profession_spec_inputs
         .skill_line(skill_line)
@@ -175,14 +177,14 @@ fn get_spec_tab_info(state: &mut LuaState) -> LuaResult<u32> {
 fn get_tab_info(state: &mut LuaState) -> LuaResult<u32> {
     let tab_id =
         super::helpers::read_untainted_signed32_argument(state, 1, "GetTabInfo", TAB_INFO_USAGE)?;
-    let tab_info = u32::try_from(tab_id).ok().and_then(|id| {
-        borrow_state(state)
-            .ok()?
+    let tab_info = match u32::try_from(tab_id) {
+        Ok(id) => borrow_state(state)?
             .profession_spec_inputs
             .tab_infos
             .get(&id)
-            .cloned()
-    });
+            .cloned(),
+        Err(_) => None,
+    };
     let Some(tab_info) = tab_info else {
         state.push(Val::Nil);
         return Ok(1);
@@ -222,7 +224,11 @@ fn should_show_spec_tab(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn skill_line_has_specialization(state: &mut LuaState) -> LuaResult<u32> {
-    let skill_line = read_skill_line_id(state)?;
+    let skill_line = read_skill_line_id(
+        state,
+        "SkillLineHasSpecialization",
+        HAS_SPECIALIZATION_USAGE,
+    )?;
     let has_specialization = borrow_state(state)?
         .profession_spec_inputs
         .skill_line(skill_line)
