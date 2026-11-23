@@ -1,41 +1,39 @@
-# Startup file instruction diagnostics
+# Startup file watchdog diagnostics
 
-Simulator diagnostics expose successful tainted Lua-file owner-budget snapshots without changing execution or quota policy. Source: `src/loader/lua_file.rs` and `src/lua_api/execution_budget.rs`; [loading architecture](../addon-loading-pipeline.md#top-level-file-budget-diagnostics) describes the path. This is diagnostic attribution, not a startup-error repair or native quota contract.
+The loader reports successful and failed tainted Lua-file invocations through the elapsed-time watchdog in `src/loader/lua_file.rs` and `src/lua_api/execution_budget.rs`.
 
 ## What it must do
 
-- [x] Under `retail-12-0-5` and existing `WOW_SIM_LOG_HANDLER_TIMINGS` opt-in, emit one `[file-budget-success]` record per successfully executed tainted top-level Lua chunk; preserve existing `[file-budget-error]` records for failed execution. Duration threshold does not filter these records.
-- [x] Report debug-escaped owner/chunk identities, limit and cumulative `used_before`/`used_after`; label unavailable snapshots `unavailable` and unlimited limit `none`. No arguments, payloads or error text.
-- [x] Preserve successful return values, private-table effects and cumulative owner-meter continuity between files: the same concrete sequential loader fixture passed with instrumentation opt-in on and off.
-- [x] Preserve tested sequential owner limits, error propagation and opt-in-off behavior. Broader quota initialization/reset/exemption preservation and excluded untainted/compilation/setup/Rust-work boundaries have unchanged-source audit evidence, not comprehensive runtime re-execution.
-
-Timer records under the same opt-in have a separate [callback provenance contract](timer-callback-provenance.md): unthresholded `[handler-entry]` plus additive original-source/ID/outcome fields on thresholded `[handler]` returns. These are not file-budget records or instruction counters.
+- [ ] Apply the watchdog to each tainted top-level Lua-file invocation, with a new deadline for every file. Do not apply it to untainted secure Blizzard execution.
+- [ ] VERIFIED (R88bn, both builds): check elapsed time every 10,001 VM dispatch steps and raise `script ran too long` when the threshold is exceeded; the dispatch counter is only the polling trigger, not a quota.
+- [ ] INFERRED (R88bn): interpret thresholds as milliseconds. Use 19,000 ms for file loading and startup callbacks through the initial `PLAYER_ENTERING_WORLD`; use 200 ms afterwards. `WowLuaEnv` provides a test-only timeout override.
+- [ ] Under the existing `WOW_SIM_LOG_HANDLER_TIMINGS` opt-in, emit one `[file-budget-success]` record for a successful invocation and `[file-budget-error]` for a failed invocation, regardless of the duration-record filter.
+- [ ] Include debug-escaped owner/file identities and `timeout_ms`/`elapsed_ms`; do not add Lua arguments, payloads or error text. A file error record means execution failed, not that the watchdog caused it.
+- [ ] Preserve file return values, private-table effects and error propagation.
 
 ## How it works
 
-- [Addon loading pipeline](../addon-loading-pipeline.md#top-level-file-budget-diagnostics)
-- [Startup evidence boundaries](../wiki/investigations/integrated-source-and-factory-proof-2026-10-09.md)
+- [Addon loading pipeline](../addon-loading-pipeline.md#top-level-file-watchdog-diagnostics)
+- [Rilua watchdog contract](rilua-capability-rows.md)
 
 ## Implementation inventory
 
-Source audit of `0e4bf4161` (2026-10-10; not runtime proof): environment presence opts in via a once-cached Unicode environment read; non-Unicode values count as absent. The value filters duration records only. Snapshots bracket `exec_addon_func` after owner-meter initialization, without resetting existing usage. Their difference is cumulative owner charges during the invocation's dynamic scope, including synchronous nested Lua charged to that owner, not instructions charged to other owners. Nested records can overlap; summing them is not exclusive attribution.
-
-- `src/loader/lua_file.rs`: existing budgeted execution path selects success/error diagnostics without changing the result. Non-quota execution failures also emit `[file-budget-error]`; existing error conversion/contextualization remains in place. Untainted execution and pre-call taint/secure-environment/loading-environment setup failures do not enter this diagnostic path.
-- `src/lua_api/execution_budget.rs`: success formatter reuses the existing counter encoding; `limit` comes from the before snapshot, usage from each respective snapshot. Debug escaping protects record structure, not privacy: owner/chunk metadata remains visible. `wow_chunk_name` normalizes paths containing `AddOns/`; other paths can retain an absolute path. No source text, arguments, payloads or error text is added to these records; other stderr/error reporting is not sanitized by this formatter.
+- `src/loader/lua_file.rs`: wraps tainted file execution and emits success/error records.
+- `src/lua_api/execution_budget.rs`: selects the phase timeout and formats file/handler records.
+- `src/lua_api/state/sim_state.rs`: tracks the initial startup phase and deterministic test override.
+- `src/lua_api/env_events.rs`: ends the initial startup phase after the first `PLAYER_ENTERING_WORLD` dispatch.
 
 ## Tests asserting this spec
 
-- `loader::lua_file::tests::startup_file_budget_success_preserves_meter_continuity_returns_and_effects`: returns19/42, final private total42, nested call and meter continuity.
-- Adjacent original error/exhaustion loader test and `execution_budget::tests`: preserved failure semantics, escaped metadata, unavailable/unlimited counters.
-- Actual GREEN receipts at epoch `20261010T183607Z`, independently audited for `0e4bf4161d58cbbf6572a5be08cac7f5019e316f`: 12 passing executions / 11 distinct tests across four subprocess invocations (the same success loader fixture runs opt-in on and off). Opt-in1000 emits exactly two success records, limit1000, cumulative counters0→4→16; opt-in off emits no file-budget records. Original error fixture: 1PASS, one prior success0→2 and exactly two error records2→100 and100→100, limit100. Nine formatter/error controls pass, covering escaped metadata, unavailable snapshots and unlimited meters.
-- Independent receipt audit: fmt/default-check exit0; compile exit0; source and invoked artifact sealed and matched. Six vendor `iced_wgpu` manifest deprecation warnings remain; this is not warning-free proof. Preservation of quota rules and excluded logging boundaries is source-audit evidence, not comprehensive runtime quota-policy coverage.
-- Evidence: private actual receipt `/home/osso/.local/state/wow-ui-sim/verification/success-file-budget-green-current/independent-report.md`, epoch `20261010T183607Z`. [Tracked independent report](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/success-file-budget-green/independent-report.md) and [receipt hashes](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/success-file-budget-green/retention-manifest.json) retain the bounded evidence. Provenance is bounded local source/receipt binding, not hermetic attestation or full-addon attribution.
+- `tests/rilua_rows.rs::rilua_rows_owner_watchdog_loads_file_then_rejects_dispatch_overrun`: actual addon loading below a test-set timeout, followed by a tainted frame callback over a test-set timeout.
+- `src/loader/lua_file.rs::tests::startup_file_watchdog_allows_a_short_owner_invocation`: successful file effects and return value.
+- `src/lua_api/execution_budget.rs::tests`: watchdog diagnostic field and escaping contracts.
 
 ## Known gaps (current cycle)
 
-- [x] Execute current success/error/formatter controls and independent fmt/default-check proof: actual GREEN receipt above covers this bounded diagnostic gate.
-- [x] Capture full-addon startup and verify exact file-record attribution: epoch `20261010T183739Z`, submission `b048251f38b2d53e33b3365590cd227d40fc07d0` with diagnostic code `0e4bf4161`, binds source/artifact and 4,044 vendor-cache paths. [Independent report](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/success-file-budget-full-addon/independent-report.md): 3,064 file-success, four file-error and 91 handler-error records; exact private file joins across 50 owners, zero rejected records and zero observed continuity gaps. Gate covers bounded capture/parser attribution, not sealed third-party inputs or exclusive file costs. Historical105 actual error occurrences remain distinct from current95 diagnostic error records; no count-reduction or startup-fix claim.
+- [ ] Native timer units and the mapping of 19,000/200 values to simulator phases are inferred, not verified.
+- [ ] Full-addon Retail `lua-errors` still needs to confirm whether the AllTheThings `PLAYER_LOGIN` error is gone.
 
 ## Out of scope
 
-Quota changes, vendor optimization, per-line profiling, exclusive/self instruction costs, elapsed-time/Rust-work attribution and native quota/reset parity. Logged identities can contain paths; raw full-addon output remains private.
+The separate CVar-driven script bucket throttle, its accounting period and its limits are not implemented by this watchdog. Full timer, slash-command and key-binding ownership coverage is not established here.

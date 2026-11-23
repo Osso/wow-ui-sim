@@ -1,6 +1,6 @@
 # Retail AllTheThings name lookups
 
-**VERIFIED (Retail 12.1.5.70783 full-addon runs):** AllTheThings exposed missing simulator spell and area names; the full pinned indexes remove the original four errors. A separate AllTheThings instruction-budget error remains.
+**VERIFIED (historical Retail 12.1.5.70783 full-addon runs):** AllTheThings exposed missing simulator spell and area names; the full pinned indexes removed the original four errors. The same historical run then reported an instruction-budget error, under the simulator policy that has since been replaced by the [script execution watchdog](../systems/script-execution-watchdog.md). The post-watchdog full-addon result is pending.
 
 ## Content
 
@@ -37,4 +37,5 @@
 ## See Also
 
 - [[generated-data-crates]] — generated crate boundary and build measurements
-- [[event-system]] — frame event dispatch and owner instruction budgets
+- [[event-system]] — frame event dispatch
+- [[script-execution-watchdog]] — current per-invocation timeout behavior

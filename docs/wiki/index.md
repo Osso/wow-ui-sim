@@ -1,6 +1,15 @@
+## [2026-11-23] investigation | Mythic+ map request reentrancy
+
+[Mythic+ map request reentrancy](investigations/mythic-plus-map-request-reentrancy.md) records the inferred R88ev request gate, deferred events, and same-root Retail comparison. **VERIFIED:** master and branch each discovered 78 addons and loaded 49; master recorded 10 unique errors / 159,423 occurrences, while the branch recorded 7 / 7 with no recursion, stack-overflow, instruction-budget, or watchdog error. AllTheThings loaded on both; only master reported its instruction-budget errors.
+
 ## [2026-11-23] implementation | EditBox host-boundary notifications and currency transfer queries
 
 Updated the [event system](systems/event-system.md), [Lua API system](systems/lua-api.md#retailforever-account-currency-transfer), and [EditBox contract](../specs/editbox-text-position-selection.md#cursor-geometry-follow-up); the [currency transfer contract](../specs/currency-transfer-eligibility.md) now covers amount/source queries. **INFERRED (R88et-c):** text-change handlers drain after the outermost Lua call returns, separately from cursor layout. **VERIFIED (simulator):** the exact Retail TokenFrame amount-selector path passes after real ScrollBox layout; the Retail/Forever startup captures contain only the approved CurrencyTransfer required-argument error and its ScriptErrors echo. Startup is not clean.
+
+## [2026-11-22] system | Script execution watchdog
+
+[Script execution watchdog](systems/script-execution-watchdog.md) records the verified 10,001-dispatch VM poll and `script ran too long` error, the inferred 19,000/200 ms timeout mapping, tainted owner scope, and diagnostic fields.
+
 
 ## [2026-11-20] implementation | Secure XML mixin environment
 

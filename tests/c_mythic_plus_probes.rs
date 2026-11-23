@@ -2,13 +2,46 @@
 
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::lua_api::state::{
-    MythicPlusAffix, MythicPlusLastWeeklyChest, MythicPlusRun, MythicPlusWeeklyBest,
-    OwnedKeystone,
+    MythicPlusAffix, MythicPlusLastWeeklyChest, MythicPlusRun, MythicPlusWeeklyBest, OwnedKeystone,
 };
 
 fn env() -> WowLuaEnv {
     WowLuaEnv::new().expect("Failed to create Lua environment")
 }
+
+const MAP_INFO_OBSERVER_SETUP: &str = r#"
+    A_Admin.SetManualClock(0)
+    A_Admin.SetChallengeModeMapInfo(2, {name='Supplied map', id=2,
+        timeLimit=1530, texture=321, backgroundTexture=654, mapID=429})
+    MapInfoEventCount = 0
+    MapInfoHandlerActive = false
+    MapInfoHandlerReturned = false
+    MapInfoObservedName = nil
+    MapInfoObservedId = nil
+    MapInfoObservedMapId = nil
+    local frame = CreateFrame("Frame")
+    frame:RegisterEvent("PLAYER_LOGIN")
+    frame:RegisterEvent("CHALLENGE_MODE_MAPS_UPDATE")
+    frame:SetScript("OnEvent", function(_, event)
+        if event == "PLAYER_LOGIN" then
+            MapInfoHandlerActive = true
+            C_MythicPlus.RequestMapInfo()
+            C_MythicPlus.RequestMapInfo()
+            assert(MapInfoEventCount == 0)
+            MapInfoHandlerActive = false
+            MapInfoHandlerReturned = true
+            return
+        end
+        assert(event == "CHALLENGE_MODE_MAPS_UPDATE")
+        assert(not MapInfoHandlerActive and MapInfoHandlerReturned)
+        MapInfoEventCount = MapInfoEventCount + 1
+        local maps = C_ChallengeMode.GetMapTable()
+        local name, id, _, _, _, mapId = C_ChallengeMode.GetMapUIInfo(maps[1])
+        MapInfoObservedName = name
+        MapInfoObservedId = id
+        MapInfoObservedMapId = mapId
+    end)
+    "#;
 
 // ── GetCurrentAffixes ────────────────────────────────────────────────────────
 
@@ -217,8 +250,10 @@ fn request_helpers_are_callable_noops() {
 fn get_last_weekly_chest_returns_supplied_cache_values() {
     let env = env();
     for (challenge_map_id, level) in [(399, 12), (501, 17)] {
-        env.state().borrow_mut().mythic_plus.last_weekly_chest =
-            Some(MythicPlusLastWeeklyChest { challenge_map_id, level });
+        env.state().borrow_mut().mythic_plus.last_weekly_chest = Some(MythicPlusLastWeeklyChest {
+            challenge_map_id,
+            level,
+        });
         let result: (i32, i32) = env
             .eval("return C_MythicPlus.GetLastWeeklyChest()")
             .expect("last weekly chest should publish its cached values");
@@ -228,35 +263,73 @@ fn get_last_weekly_chest_returns_supplied_cache_values() {
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 #[test]
-fn mythic_plus_requests_publish_update_events() {
+fn mythic_plus_request_events_are_deferred() {
     let env = env();
-    let addons = wow_ui_sim::paths::default_blizzard_ui_addons_path()
-        .expect("Blizzard UI cache should be available");
-    let source = std::fs::read_to_string(
-        addons.join("Blizzard_WeeklyRewards/Blizzard_WeeklyRewards.lua"),
-    )
-    .expect("selected Blizzard Weekly Rewards consumer should be readable");
-    env.exec(&source)
-        .expect("original WeeklyRewards consumer should load");
+    env.exec("A_Admin.SetManualClock(0)").unwrap();
     env.exec(
         r#"
-        local seen = {}
+        MythicPlusEventCounts = {}
         local frame = CreateFrame("Frame")
         frame:RegisterEvent("MYTHIC_PLUS_CURRENT_AFFIX_UPDATE")
         frame:RegisterEvent("CHALLENGE_MODE_MAPS_UPDATE")
         frame:RegisterEvent("WEEKLY_REWARDS_UPDATE")
         frame:SetScript("OnEvent", function(_, event)
-            seen[event] = true
+            MythicPlusEventCounts[event] = (MythicPlusEventCounts[event] or 0) + 1
         end)
+        assert(select('#', C_MythicPlus.RequestCurrentAffixes()) == 0)
         C_MythicPlus.RequestCurrentAffixes()
+        assert(select('#', C_MythicPlus.RequestRewards()) == 0)
         C_MythicPlus.RequestRewards()
-        WeeklyRewardsMixin.OnEvent({}, "CHALLENGE_MODE_COMPLETED")
-        assert(seen.MYTHIC_PLUS_CURRENT_AFFIX_UPDATE)
-        assert(seen.CHALLENGE_MODE_MAPS_UPDATE)
-        assert(seen.WEEKLY_REWARDS_UPDATE)
+        C_MythicPlus.RequestMapInfo()
+        C_MythicPlus.RequestMapInfo()
+        assert(next(MythicPlusEventCounts) == nil)
         "#,
     )
-    .expect("Mythic+ requests should notify registered update consumers");
+    .expect("request APIs should not dispatch response events inline");
+    env.process_timers()
+        .expect("deferred request responses should dispatch at the next timer boundary");
+    env.exec(
+        "assert(MythicPlusEventCounts.MYTHIC_PLUS_CURRENT_AFFIX_UPDATE == 2 and MythicPlusEventCounts.CHALLENGE_MODE_MAPS_UPDATE == 1 and MythicPlusEventCounts.WEEKLY_REWARDS_UPDATE == 2)",
+    )
+    .expect("request throttles and deferred response counts should match R88ev policy");
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn request_map_info_coalesces_and_delivers_supplied_data_after_handler() {
+    let env = env();
+    install_map_info_observer(&env);
+    assert_initial_map_info_response_is_deferred(&env);
+    assert_map_info_request_cooldown(&env);
+}
+
+fn install_map_info_observer(env: &WowLuaEnv) {
+    env.exec(MAP_INFO_OBSERVER_SETUP).unwrap();
+}
+
+fn assert_initial_map_info_response_is_deferred(env: &WowLuaEnv) {
+    env.fire_event("PLAYER_LOGIN").unwrap();
+    env.exec("assert(MapInfoEventCount == 0 and MapInfoHandlerReturned)")
+        .unwrap();
+    env.exec("A_Admin.AdvanceTime(0)").unwrap();
+    env.exec(
+        "assert(MapInfoEventCount == 1 and MapInfoObservedName == 'Supplied map' and MapInfoObservedId == 2 and MapInfoObservedMapId == 429)",
+    )
+    .unwrap();
+}
+
+fn assert_map_info_request_cooldown(env: &WowLuaEnv) {
+    env.exec("C_MythicPlus.RequestMapInfo(); assert(MapInfoEventCount == 1)")
+        .unwrap();
+    env.exec("A_Admin.AdvanceTime(60); C_MythicPlus.RequestMapInfo()")
+        .unwrap();
+    env.exec("assert(MapInfoEventCount == 1)").unwrap();
+    env.exec("A_Admin.AdvanceTime(0.01); C_MythicPlus.RequestMapInfo()")
+        .unwrap();
+    env.exec("assert(MapInfoEventCount == 1)").unwrap();
+    env.exec("A_Admin.AdvanceTime(0)").unwrap();
+    env.exec("assert(MapInfoEventCount == 2 and MapInfoObservedMapId == 429)")
+        .unwrap();
 }
 
 // ── GetRunHistory ─────────────────────────────────────────────────────────────

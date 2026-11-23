@@ -340,6 +340,15 @@ impl WowLuaEnv {
     }
 
     fn fire_rooted_event(&self, event: &str, args: &[Val]) -> Result<()> {
+        self.apply_rooted_event_producers(event, args)?;
+        self.dispatch_rooted_event_listeners(event, args)?;
+        self.finish_rooted_event(event);
+        Ok(())
+    }
+
+    fn apply_rooted_event_producers(&self, event: &str, args: &[Val]) -> Result<()> {
+        #[cfg(not(feature = "retail-12-0-0"))]
+        let _ = args;
         #[cfg(feature = "client-wrath")]
         if event == "QUEST_LOG_UPDATE" {
             self.state
@@ -359,6 +368,10 @@ impl WowLuaEnv {
             event,
             args,
         )?;
+        Ok(())
+    }
+
+    fn dispatch_rooted_event_listeners(&self, event: &str, args: &[Val]) -> Result<()> {
         let collect_started = Instant::now();
         let listeners = {
             let mut lua = self.lua.borrow_mut();
@@ -375,10 +388,14 @@ impl WowLuaEnv {
             }
         }
         trace_event_phase(event, "dispatch-listeners", dispatch_started);
+        Ok(())
+    }
+
+    fn finish_rooted_event(&self, event: &str) {
         if event == "PLAYER_ENTERING_WORLD" {
+            self.state.borrow_mut().startup_script_watchdog_phase = false;
             self.apply_post_event_workarounds();
         }
-        Ok(())
     }
 
     fn handler_owner_addon(&self, widget_id: u64) -> Option<u16> {

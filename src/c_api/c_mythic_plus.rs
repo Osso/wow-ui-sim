@@ -22,12 +22,16 @@
 //! - `IsMythicPlusActive()` — returns the `is_active` bool.
 //! - `IsWeeklyRewardAvailable()` — returns the `is_weekly_reward_available` bool.
 //! - `GetLastWeeklyChest()` — returns the supplied cached challenge map ID and level.
-//! - `RequestCurrentAffixes()` / `RequestMapInfo()` / `RequestRewards()` — publish update events.
+//! - `RequestCurrentAffixes()` / `RequestMapInfo()` / `RequestRewards()` — queue inferred response events.
 //! - `C_ChallengeMode.GetMapTable()` / `GetMapUIInfo()` — seeded Mists-era
 //!   challenge dungeon rows for the legacy ChallengesFrame.
 
+use std::time::Duration;
+
 use super::helpers::{ensure_namespace, set_table_array};
-use crate::lua_api::methods::{borrow_state, create_string, create_table, table_set};
+use crate::lua_api::methods::{
+    borrow_state, borrow_state_mut, create_string, create_table, table_set,
+};
 #[cfg(not(feature = "retail-12-0-7"))]
 use crate::lua_api::state::MythicPlusWeeklyBest;
 use crate::lua_bridge::{FromStack, table_set_rust_fn_static};
@@ -98,12 +102,26 @@ fn get_current_display_season_id(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn register_mythic_plus_probe_handlers(state: &mut LuaState, ns: GcRef<Table>) -> LuaResult<()> {
+    register_mythic_plus_season_handlers(state, ns)?;
+    register_mythic_plus_score_handlers(state, ns)?;
+    register_mythic_plus_keystone_level_handler(state, ns)?;
+    register_mythic_plus_keystone_map_handlers(state, ns)?;
+    #[cfg(not(feature = "retail-12-0-7"))]
+    register_mythic_plus_weekly_best_handler(state, ns)?;
+    Ok(())
+}
+
+fn register_mythic_plus_season_handlers(state: &mut LuaState, ns: GcRef<Table>) -> LuaResult<()> {
     table_set_rust_fn_static(state, ns, "GetCurrentAffixes", get_current_affixes)?;
     table_set_rust_fn_static(state, ns, "GetCurrentSeason", get_current_season)?;
     #[cfg(not(feature = "retail-12-0-7"))]
     table_set_rust_fn_static(state, ns, "GetRunHistory", get_run_history)?;
     #[cfg(feature = "retail-12-0-7")]
     crate::c_api::c_mythic_plus_calendar::register(state, ns)?;
+    Ok(())
+}
+
+fn register_mythic_plus_score_handlers(state: &mut LuaState, ns: GcRef<Table>) -> LuaResult<()> {
     table_set_rust_fn_static(
         state,
         ns,
@@ -116,7 +134,21 @@ fn register_mythic_plus_probe_handlers(state: &mut LuaState, ns: GcRef<Table>) -
         "GetWeeklyChestRewardLevel",
         get_weekly_chest_reward_level,
     )?;
+    Ok(())
+}
+
+fn register_mythic_plus_keystone_level_handler(
+    state: &mut LuaState,
+    ns: GcRef<Table>,
+) -> LuaResult<()> {
     table_set_rust_fn_static(state, ns, "GetOwnedKeystoneLevel", get_owned_keystone_level)?;
+    Ok(())
+}
+
+fn register_mythic_plus_keystone_map_handlers(
+    state: &mut LuaState,
+    ns: GcRef<Table>,
+) -> LuaResult<()> {
     // MythicPlusInfoDocumentation.lua:76-84 (Retail, PTR, Forever) and 75-83
     // (Mists, Era, Anniversary); Wrath pins no generated documentation.
     if !matches!(
@@ -137,7 +169,14 @@ fn register_mythic_plus_probe_handlers(state: &mut LuaState, ns: GcRef<Table>) -
             get_owned_keystone_map_id,
         )?;
     }
-    #[cfg(not(feature = "retail-12-0-7"))]
+    Ok(())
+}
+
+#[cfg(not(feature = "retail-12-0-7"))]
+fn register_mythic_plus_weekly_best_handler(
+    state: &mut LuaState,
+    ns: GcRef<Table>,
+) -> LuaResult<()> {
     table_set_rust_fn_static(state, ns, "GetWeeklyBestForMap", get_weekly_best_for_map)?;
     Ok(())
 }
@@ -298,20 +337,100 @@ fn get_last_weekly_chest(state: &mut LuaState) -> LuaResult<u32> {
     Ok(2)
 }
 
-// INFERRED pending R88cc: each refresh request publishes its cache update.
+// INFERRED R88ev (native evidence pending): no throttle; reply arrives later.
 fn request_current_affixes(state: &mut LuaState) -> LuaResult<u32> {
-    publish_mythic_plus_update(state, "MYTHIC_PLUS_CURRENT_AFFIX_UPDATE")
+    if !player_is_connected(state)? {
+        return Ok(0);
+    }
+    defer_mythic_plus_event(
+        state,
+        dispatch_current_affixes_update,
+        "Mythic+ current-affixes response event",
+    )
 }
 
+// INFERRED R88ev (native evidence pending): enforce the saved-request cooldown.
 fn request_map_info(state: &mut LuaState) -> LuaResult<u32> {
-    publish_mythic_plus_update(state, "CHALLENGE_MODE_MAPS_UPDATE")
+    if !admit_map_info_request(state)? {
+        return Ok(0);
+    }
+    defer_mythic_plus_event(
+        state,
+        dispatch_map_info_update,
+        "Mythic+ map info response event",
+    )
 }
 
+fn admit_map_info_request(state: &mut LuaState) -> LuaResult<bool> {
+    let (player_exists, now) = {
+        let sim = borrow_state(state)?;
+        (
+            crate::lua_api::globals::group_queries::unit_exists_in_state(&sim, "player"),
+            sim.clock_elapsed(),
+        )
+    };
+    if !player_exists {
+        return Ok(false);
+    }
+    let request_allowed = {
+        let mut sim = borrow_state_mut(state)?;
+        let elapsed = sim
+            .mythic_plus
+            .last_map_info_request_at
+            .map_or(true, |last| {
+                now.saturating_sub(last) > Duration::from_secs(60)
+            });
+        if elapsed {
+            sim.mythic_plus.last_map_info_request_at = Some(now);
+        }
+        elapsed
+    };
+    if !request_allowed {
+        return Ok(false);
+    }
+    player_is_connected(state)
+}
+
+// INFERRED R88ev (native evidence pending): no server send; retain the async event.
 fn request_rewards(state: &mut LuaState) -> LuaResult<u32> {
-    publish_mythic_plus_update(state, "WEEKLY_REWARDS_UPDATE")
+    defer_mythic_plus_event(
+        state,
+        dispatch_rewards_update,
+        "Mythic+ rewards response event",
+    )
 }
 
-fn publish_mythic_plus_update(state: &mut LuaState, event: &str) -> LuaResult<u32> {
+fn player_is_connected(state: &LuaState) -> LuaResult<bool> {
+    let sim = borrow_state(state)?;
+    Ok(
+        crate::lua_api::globals::group_queries::relationships::unit_is_connected_in_state(
+            &sim, "player",
+        ),
+    )
+}
+
+fn defer_mythic_plus_event(
+    state: &mut LuaState,
+    dispatch: rilua::RustFn,
+    label: &'static str,
+) -> LuaResult<u32> {
+    crate::lua_api::timer_layout::defer_rust_event(state, dispatch, label)?;
+    Ok(0)
+}
+
+fn dispatch_current_affixes_update(state: &mut LuaState) -> LuaResult<u32> {
+    dispatch_mythic_plus_event(state, "MYTHIC_PLUS_CURRENT_AFFIX_UPDATE")
+}
+
+fn dispatch_map_info_update(state: &mut LuaState) -> LuaResult<u32> {
+    dispatch_mythic_plus_event(state, "CHALLENGE_MODE_MAPS_UPDATE")
+}
+
+fn dispatch_rewards_update(state: &mut LuaState) -> LuaResult<u32> {
+    dispatch_mythic_plus_event(state, "WEEKLY_REWARDS_UPDATE")
+}
+
+fn dispatch_mythic_plus_event(state: &mut LuaState, event: &str) -> LuaResult<u32> {
     crate::lua_api::globals::state_backed_queries::dispatch_event_now(state, event, &[])?;
     Ok(0)
 }

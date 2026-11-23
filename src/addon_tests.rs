@@ -213,10 +213,6 @@ fn run_test_file(env: &WowLuaEnv, path: &PathBuf) -> Result<(u32, u32), String> 
         if is_async {
             continue;
         }
-        #[cfg(feature = "retail-12-0-5")]
-        env.loader_env()
-            .with_state(crate::lua_api::execution_budget::reset_frame_budgets)
-            .map_err(|e| format!("budget reset error: {e}"))?;
         env.exec(&format!("local idx = {idx}\n{SYNC_RUNNER}"))
             .map_err(|e| format!("runner error: {e}"))?;
     }
@@ -319,43 +315,35 @@ fn read_test_results(env: &WowLuaEnv, file_name: &str) -> Result<(u32, u32), Str
     Ok((passed, failed))
 }
 
-#[cfg(all(test, feature = "retail-12-0-5"))]
+#[cfg(test)]
 mod tests {
     use super::*;
-    use crate::lua_api::AddonInfo;
 
     #[test]
-    fn synchronous_tests_reset_addon_instruction_usage() {
+    fn synchronous_tests_report_both_tests_passing() {
+        let env = create_synchronous_runner_env();
+        let file = write_synchronous_test_file();
+        load_test_framework(&env);
+        assert_synchronous_tests_pass(&env, &file);
+    }
+
+    fn create_synchronous_runner_env() -> WowLuaEnv {
         let env = WowLuaEnv::new().unwrap();
-        {
-            let mut sim = env.state().borrow_mut();
-            let index = sim.addons.len() as u16;
-            sim.addons.push(AddonInfo {
-                folder_name: "BudgetAddon".into(),
-                ..Default::default()
-            });
-            sim.loading_addon_index = Some(index);
-        }
         env.exec(
             r#"
-            BudgetFrame = CreateFrame('Frame')
-            BudgetFrame:RegisterEvent('PLAYER_LOGIN')
+            RunnerFrame = CreateFrame('Frame')
+            RunnerFrame:RegisterEvent('PLAYER_LOGIN')
             Completed = 0
-            BudgetFrame:SetScript('OnEvent', function()
-                local n = 0
-                for i = 1, 300 do n = n + i end
+            RunnerFrame:SetScript('OnEvent', function()
                 Completed = Completed + 1
             end)
         "#,
         )
         .unwrap();
-        env.state().borrow_mut().loading_addon_index = None;
-        env.loader_env()
-            .with_state(|state| {
-                state.set_instruction_budget("BudgetAddon", Some(1000));
-                Ok::<_, rilua::LuaError>(())
-            })
-            .unwrap();
+        env
+    }
+
+    fn write_synchronous_test_file() -> tempfile::NamedTempFile {
         let file = tempfile::NamedTempFile::new().unwrap();
         std::fs::write(
             file.path(),
@@ -371,9 +359,12 @@ mod tests {
         "#,
         )
         .unwrap();
-        load_test_framework(&env);
+        file
+    }
+
+    fn assert_synchronous_tests_pass(env: &WowLuaEnv, file: &tempfile::NamedTempFile) {
         assert_eq!(
-            run_test_file(&env, &file.path().to_path_buf()).unwrap(),
+            run_test_file(env, &file.path().to_path_buf()).unwrap(),
             (2, 0)
         );
     }

@@ -33,4 +33,4 @@ PTR `GetScriptBucketThrottleLimits()` is an explicit temporary mock in `src/lua_
 
 ## Out of scope
 
-Per explicit user override, throttling enforcement is out of scope, not a pending completion gate. No setters, mode selectors, configuration, accounting, budget state, or VM changes are introduced.
+Per explicit user override, bucket-throttling enforcement is out of scope, not a pending completion gate. The per-invocation elapsed-time watchdog is a separate VM control and does not read or change these bucket values. No setters, mode selectors, configuration, bucket accounting, or bucket-budget state are introduced here.
