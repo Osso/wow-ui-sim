@@ -108,6 +108,7 @@ pub(crate) mod item_button_helper_defaults;
 pub(crate) mod item_quality_color_data_methods;
 pub(crate) mod item_targeting_defaults;
 pub(crate) mod item_upgrade_availability_defaults;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod kiosk_namespace_defaults;
 pub(crate) mod legacy_action_bar_globals;
 pub(crate) mod legacy_container_globals;
