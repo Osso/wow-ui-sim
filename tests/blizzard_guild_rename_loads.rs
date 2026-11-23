@@ -200,6 +200,31 @@ fn blizzard_guild_rename_excluded_from_all_glue_screen_auto_discovery_passes() {
 }
 
 prefork_full_ui_case! {
+fn npc_interaction_query_tracks_open_mailbox_for_blizzard_guild_rename_consumer(env: &WowLuaEnv) {
+    env.exec("A_Admin.OpenMailbox()").unwrap();
+
+    let interacting_with_mailbox: bool = env
+        .eval("return C_PlayerInteractionManager.IsInteractingWithNpcOfType(Enum.PlayerInteractionType.MailInfo)")
+        .unwrap();
+    let interacting_with_merchant: bool = env
+        .eval("return C_PlayerInteractionManager.IsInteractingWithNpcOfType(Enum.PlayerInteractionType.Merchant)")
+        .unwrap();
+    assert!(interacting_with_mailbox);
+    assert!(!interacting_with_merchant);
+
+    let was_shown: bool = env.eval("return GuildRenameFrame:IsShown()").unwrap();
+    env.exec(
+        "GuildRenameFrameMixin.OnGuildRenameStatusUpdate(GuildRenameFrame, Enum.GuildErrorType.Success)",
+    )
+    .unwrap();
+    let shown_after_foreign_interaction: bool =
+        env.eval("return GuildRenameFrame:IsShown()").unwrap();
+    assert!(!was_shown);
+    assert!(!shown_after_foreign_interaction);
+}
+}
+
+prefork_full_ui_case! {
 fn blizzard_guild_rename_loads_without_addon_specific_lua_errors(env: &WowLuaEnv) {
 
     let lua_errors: Vec<String> = env.state().borrow().lua_errors.clone();
