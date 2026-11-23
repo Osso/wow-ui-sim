@@ -1,7 +1,7 @@
 //! Global PvP talent info lookup used by Blizzard talent and inspect frames.
 //!
-//! R88eu verifies the tuple count, types, missing-row result, and zero-ID result.
-//! Its tuple order is inferred. Optional context arguments are not modeled.
+//! VERIFIED (R88eu): tuple count, types, missing-row result, and zero-ID result.
+//! INFERRED (R88eu): tuple order. Optional context arguments are not modeled.
 
 use crate::c_api::bad_argument;
 use crate::lua_api::methods::borrow_state;
@@ -35,6 +35,14 @@ pub fn publish_pvp_talent_info_by_id(state: &mut LuaState) -> LuaResult<u32> {
         return Ok(0);
     };
 
+    push_pvp_talent_info_by_id_result(state, &record);
+    Ok(PVP_TALENT_INFO_BY_ID_RETURN_COUNT)
+}
+
+fn push_pvp_talent_info_by_id_result(
+    state: &mut LuaState,
+    record: &crate::c_api::c_spec::PvpTalentInfoRecord,
+) {
     let name = Val::Str(state.gc.intern_string(record.name.as_bytes()));
     for value in [
         Val::Num(f64::from(record.talent_id)),
@@ -53,7 +61,6 @@ pub fn publish_pvp_talent_info_by_id(state: &mut LuaState) -> LuaResult<u32> {
     ] {
         state.push(value);
     }
-    Ok(PVP_TALENT_INFO_BY_ID_RETURN_COUNT)
 }
 
 pub fn register(lua: &mut rilua::Lua) -> LuaResult<()> {

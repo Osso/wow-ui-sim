@@ -23,10 +23,12 @@ use super::helpers::{read_untainted_signed32_argument, read_untainted_truthy_arg
 pub struct PvpTalentInfoRecord {
     pub talent_id: i32,
     pub name: String,
+    /// VERIFIED (R88eu): the legacy global returns an icon value or nil.
     pub icon: Option<u32>,
     pub selected: bool,
     pub available: bool,
     pub spell_id: u32,
+    /// VERIFIED (R88eu): the legacy global returns an unlocked flag or nil.
     pub unlocked: Option<bool>,
     /// INFERRED R88eu: the legacy global returns tier; absent host input defaults to zero.
     pub tier: i32,
