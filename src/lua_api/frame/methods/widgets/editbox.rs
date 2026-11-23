@@ -604,9 +604,15 @@ pub(super) fn set_number(state: &mut LuaState) -> LuaResult<u32> {
     let n = val_to_f64(stack_val(state, 2));
     let s = n.to_string();
     let mut sim = borrow_state_mut(state)?;
-    if let Some(f) = sim.widgets.get_mut_visual(id) {
-        f.text_stripped = Some(s.clone());
-        f.text = Some(s);
+    if let Some(frame) = sim.widgets.get_mut_visual(id) {
+        let text_changed = frame.text.as_deref() != Some(s.as_str());
+        frame.text_stripped = Some(s.clone());
+        frame.text = Some(s);
+        // INFERRED: R88er (native evidence pending): SetNumber is programmatic,
+        // and unchanged text does not fire OnTextChanged.
+        if text_changed {
+            frame.mark_editbox_text_changed(Some(false));
+        }
     }
     Ok(0)
 }
