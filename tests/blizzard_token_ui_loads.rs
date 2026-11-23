@@ -127,11 +127,15 @@ fn currency_transfer_menu_clamps_to_account_source_quantity_and_cost() {
             })
             TokenFrame:Show()
             TokenFrame:Update()
+            local foundCurrency = false
             TokenFrame.ScrollBox:ForEachFrame(function(button)
                 if button.elementData.currencyID == 1792 then
+                    foundCurrency = true
                     button:Click()
                 end
             end)
+            assert(foundCurrency, "TokenFrame should materialize the supplied currency row")
+            assert(TokenFramePopup:IsShown(), "selecting the currency should open its popup")
             A_Admin.SetAccountCharacterCurrencyData(1792, {
                 { characterGUID = 'Player-3-00000003', characterName = 'SourceB', fullCharacterName = 'SourceB-Realm', quantity = 200 },
                 { characterGUID = 'Player-2-00000002', characterName = 'SourceA', fullCharacterName = 'SourceA-Realm', quantity = 100 },
