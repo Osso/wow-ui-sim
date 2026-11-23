@@ -287,6 +287,7 @@ pub struct SimState {
     pub(crate) glue_feature_status:
         crate::lua_api::globals::real::glue_feature_status::GlueFeatureStatus,
     pub is_logged_in: bool,
+    /// INFERRED (R88bn): the 19,000 ms phase ends after initial PLAYER_ENTERING_WORLD.
     pub(crate) startup_script_watchdog_phase: bool,
     pub(crate) script_watchdog_timeout_override: Option<std::time::Duration>,
     pub post_event_workarounds_applied: bool,

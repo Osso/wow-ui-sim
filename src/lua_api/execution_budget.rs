@@ -6,15 +6,20 @@ use super::methods::borrow_state;
 use rilua::vm::state::{DEFAULT_WATCHDOG_DISPATCH_INTERVAL, LuaState};
 use rilua::{LuaResult, Val};
 
+// INFERRED (R88bn): timer units are milliseconds and the phase mapping is simulator policy.
+const STARTUP_WATCHDOG_TIMEOUT_MS: u64 = 19_000;
+const RUNTIME_WATCHDOG_TIMEOUT_MS: u64 = 200;
+
 pub(crate) fn watchdog_timeout(state: &LuaState) -> LuaResult<Duration> {
     let sim = borrow_state(state)?;
-    Ok(sim.script_watchdog_timeout_override.unwrap_or_else(|| {
-        if sim.startup_script_watchdog_phase {
-            Duration::from_millis(19_000)
-        } else {
-            Duration::from_millis(200)
-        }
-    }))
+    let timeout_ms = if sim.startup_script_watchdog_phase {
+        STARTUP_WATCHDOG_TIMEOUT_MS
+    } else {
+        RUNTIME_WATCHDOG_TIMEOUT_MS
+    };
+    Ok(sim
+        .script_watchdog_timeout_override
+        .unwrap_or(Duration::from_millis(timeout_ms)))
 }
 
 pub(crate) fn with_addon_watchdog<T>(
