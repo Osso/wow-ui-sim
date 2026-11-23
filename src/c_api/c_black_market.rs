@@ -79,9 +79,10 @@ fn set_black_market_state(state: &mut LuaState) -> LuaResult<u32> {
         runtime_error("A_Admin.SetBlackMarketState requires a Black Market JSON object")
     })?;
     validate_state(&supplied)?;
-    // INFERRED (R88em): host-supplied market data represents an open interaction.
+    // INFERRED (R88em): state injection represents the native interaction-open event.
     supplied.interaction_open = true;
     borrow_state_mut(state)?.black_market = supplied;
+    dispatch_event_now(state, "BLACK_MARKET_OPEN", &[])?;
     dispatch_event_now(state, "BLACK_MARKET_ITEM_UPDATE", &[])?;
     Ok(0)
 }
