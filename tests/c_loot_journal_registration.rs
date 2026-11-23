@@ -36,20 +36,25 @@ fn rust_raid_lock_registration_reads_two_supplied_encounters() {
         r#"
         A_Admin.SetCompletedEncounters({
             { mapID=88001, encounterID=77100, difficultyID=14 },
+            { mapID=88001, encounterID=77101, difficultyID=15 },
         })
         "#,
     )
     .expect("host-supplied raid-lock entries should be accepted");
 
-    let (complete, incomplete): (bool, bool) = env
+    let (complete_a, complete_b, unknown, wrong_difficulty): (bool, bool, bool, bool) = env
         .eval(
             r#"
             return C_RaidLocks.IsEncounterComplete(88001, 77100, 14),
-                C_RaidLocks.IsEncounterComplete(88001, 77101, 14)
+                C_RaidLocks.IsEncounterComplete(88001, 77101, 15),
+                C_RaidLocks.IsEncounterComplete(88001, 77102, 14),
+                C_RaidLocks.IsEncounterComplete(88001, 77100, 15)
             "#,
         )
         .expect("C_RaidLocks should query supplied Forever encounter locks");
 
-    assert!(complete);
-    assert!(!incomplete);
+    assert!(complete_a);
+    assert!(complete_b);
+    assert!(!unknown);
+    assert!(!wrong_difficulty);
 }
