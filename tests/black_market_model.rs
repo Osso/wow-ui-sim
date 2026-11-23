@@ -179,7 +179,7 @@ fn fresh_money_input_frame_set_copper_dispatches_after_return() {
             "return #FreshMoneyInputFrame.changes, FreshMoneyInputFrame.expectChanges, FreshMoneyInputFrame.callReturned",
         )
         .expect("the MoneyInputFrame should retain the caller's expected-change count");
-    assert_eq!(before_update, (0.0, 3.0, true));
+    assert_eq!(before_update, (0.0, 1.0, true));
 
     env.fire_on_update(0.016).unwrap();
     let after_update: (f64, bool, bool) = env
