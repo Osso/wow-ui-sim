@@ -40,14 +40,28 @@ WOW_SIM_NO_SAVED_VARS=1 WOW_SIM_NO_ADDONS=1 timeout 90 "${CARGO_TARGET_DIR}/debu
 ```
 
 Set `CARGO_TARGET_DIR` to the approved shared cache before building. Keep CASC
-and sound at their stock settings. Refresh only after a verified clean capture;
-do not bless new startup errors. This baseline is not full-suite, GUI or native
-parity acceptance.
+and sound at their stock settings. Refresh after a verified capture. The only
+approved non-clean exception is the exact CurrencyTransfer nil-currencyID Usage
+error and its ScriptErrors echo described below; reject unrelated records. The
+baseline is not full-suite, GUI or native parity acceptance.
 
 Verified on 2026-10-19 at runtime source `a150e228591da3c97179b606b23082d9cff9b07a`:
 **0 records / 0 occurrences, exit0 (`[]` plus LF)**; 282 Blizzard addons loaded.
 Original persisted CVar hash/stat remained unchanged. The host had no audio
 device; this is not audio-device acceptance.
+
+### Approved CurrencyTransfer exception — 2026-11-23
+
+**VERIFIED (Retail simulator capture at `8b518705a`):** the byte-exact stock
+stdout contains **2 records / 2 occurrences, exit 1**: the TokenUI
+`OnTextChanged` `GetMaxTransferableAmountFromQuantity` required-argument Usage
+error and its `Blizzard_ScriptErrors` echo. The original CVar file was unchanged;
+no unrelated record appeared. See [`retail-lua-errors.meta.json`](retail-lua-errors.meta.json).
+
+**INFERRED (R88et-c and pinned TokenUI source):** initialization delivers the
+queued `OnTextChanged` before `CurrencyTransferMenu:GetCurrencyID()` is set, so
+the call in `GetClampedInputAmount` supplies nil. This is the only approved
+Retail baseline exception.
 
 ### Mists
 
@@ -171,7 +185,11 @@ That capture's historical metadata bound the observation to source, manifest has
 
 The 2026-11-14 capture records the owner-pinned Linux Game-screen run for `wowf 1.60.1.70707` at `2ea03fb7123d79525ca9ee6bde8db0feedb286c4` (lt-b573), whose tree is exactly reproduced by the retained per-API commit `a6b43c5c65b87279081f6fc61f2572ee3397dea7`. [Raw JSON](wowforever-lua-errors.json) and [metadata](wowforever-lua-errors.meta.json) bind the exact stock command, copied CVars, verified cache and artifacts.
 
-**CLEAN stock: 0 records / 0 occurrences, exit 0.** Immediate baseline `b6a1079940a25527adb0544a0db3d0d52a747aa1` had 18 records / 262 occurrences, including ScriptErrors echoes. The existing honor reward, tracked content, combat audio availability and spell visibility APIs are now published on Forever from pinned declarations. This is not enabled combat audio, populated single-criterion, native, rendered or full-suite acceptance.
+**HISTORICAL CLEAN stock (2026-11-14): 0 records / 0 occurrences, exit 0.** Immediate baseline `b6a1079940a25527adb0544a0db3d0d52a747aa1` had 18 records / 262 occurrences, including ScriptErrors echoes. The existing honor reward, tracked content, combat audio availability and spell visibility APIs are now published on Forever from pinned declarations. This historical capture is not current startup acceptance.
+
+**VERIFIED (WoW Forever simulator capture at `df41e0681`):** the byte-exact current stdout contains **2 records / 2 occurrences, exit 1**: the TokenUI `OnTextChanged` `GetMaxTransferableAmountFromQuantity` required-argument Usage error and its `Blizzard_ScriptErrors` echo. The original CVar file was unchanged; no unrelated record appeared. See [`wowforever-lua-errors.meta.json`](wowforever-lua-errors.meta.json).
+
+**INFERRED (R88et-c and pinned TokenUI source):** initialization delivers the queued `OnTextChanged` before `CurrencyTransferMenu:GetCurrencyID()` is set, so the call in `GetClampedInputAmount` supplies nil. This is the only approved Forever baseline exception. It is not native, rendered, or full-suite acceptance.
 
 ### Historical 70707 Windows capture
 
