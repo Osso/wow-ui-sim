@@ -262,6 +262,17 @@ fn editbox_set_text_and_number_dispatch_after_host_return() {
     env.exec(
         r#"
             EditBoxChangeProbe.callReturned = false
+            EditBoxChangeProbe:SetNumber(4)
+            EditBoxChangeProbe.callReturned = true
+        "#,
+    )
+    .unwrap();
+    let after_unchanged_number: f64 = env.eval("return #EditBoxChangeProbe.changes").unwrap();
+    assert_eq!(after_unchanged_number, 2.0);
+
+    env.exec(
+        r#"
+            EditBoxChangeProbe.callReturned = false
             EditBoxChangeProbe:SetFormattedText("%s", "omega")
             assert(#EditBoxChangeProbe.changes == 2)
             EditBoxChangeProbe.callReturned = true
@@ -272,17 +283,6 @@ fn editbox_set_text_and_number_dispatch_after_host_return() {
         .eval("return #EditBoxChangeProbe.changes, EditBoxChangeProbe.changes[3]")
         .unwrap();
     assert_eq!(after_formatted_text, (3.0, "false:true".into()));
-
-    env.exec(
-        r#"
-            EditBoxChangeProbe.callReturned = false
-            EditBoxChangeProbe:SetNumber(4)
-            EditBoxChangeProbe.callReturned = true
-        "#,
-    )
-    .unwrap();
-    let after_unchanged_number: f64 = env.eval("return #EditBoxChangeProbe.changes").unwrap();
-    assert_eq!(after_unchanged_number, 3.0);
 }
 
 #[test]
