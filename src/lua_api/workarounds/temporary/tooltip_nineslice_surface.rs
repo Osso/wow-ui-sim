@@ -40,7 +40,10 @@ pub(crate) fn patch(env: &WowLuaEnv) {
     let _ = env.exec(TOOLTIP_NINESLICE_SURFACE_LUA);
 }
 
-#[cfg(test)]
+#[cfg(all(
+    test,
+    not(any(feature = "client-retail", feature = "client-wowforever"))
+))]
 mod tests {
     use super::*;
 
