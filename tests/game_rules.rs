@@ -77,7 +77,7 @@ fn load_hardcore_popup(hardcore: bool) -> WowLuaEnv {
 
     let ui_dir = blizzard_ui_dir();
     let env = new_blizzard_addon_env(&ui_dir);
-    let value = if hardcore { "1" } else { "nil" };
+    let value = if hardcore { "1" } else { "0" };
     env.exec(&format!(
         "A_Admin.SetGameRule(Enum.GameRule.HardcoreRuleset, {value}); A_Admin.SetGameRule(22, 1)"
     ))
@@ -107,8 +107,29 @@ fn assert_hardcore_rule_values(env: &WowLuaEnv, active: bool) {
 fn forever_self_found_allowed_uses_rule_22_and_defaults_false() {
     let env = env();
     assert_eq!(query_self_found_allowed(&env), (false, 1));
+    env.exec("A_Admin.SetGameRule(22, 0)").unwrap();
+    assert_eq!(query_self_found_allowed(&env), (false, 1));
     env.exec("A_Admin.SetGameRule(22, 1)").unwrap();
     assert_eq!(query_self_found_allowed(&env), (true, 1));
+}
+
+#[test]
+#[cfg(feature = "client-wowforever")]
+fn forever_game_rule_activity_uses_numeric_payload_truthiness() {
+    let env = env();
+    env.exec("A_Admin.SetGameRule(10, 0); A_Admin.SetGameRule(22, 0 / 0)")
+        .unwrap();
+    let zeros: (bool, bool, bool, bool) = env
+        .eval("return C_GameRules.IsGameRuleActive(10), C_GameRules.IsHardcoreActive(), C_GameRules.IsGameRuleActive(22), C_GameRules.IsSelfFoundAllowed()")
+        .unwrap();
+    assert_eq!(zeros, (false, false, false, false));
+
+    env.exec("A_Admin.SetGameRule(10, 0.5); A_Admin.SetGameRule(22, 1)")
+        .unwrap();
+    let nonzero: (bool, bool, bool, bool) = env
+        .eval("return C_GameRules.IsGameRuleActive(10), C_GameRules.IsHardcoreActive(), C_GameRules.IsGameRuleActive(22), C_GameRules.IsSelfFoundAllowed()")
+        .unwrap();
+    assert_eq!(nonzero, (true, true, true, true));
 }
 
 #[cfg(feature = "client-wowforever")]

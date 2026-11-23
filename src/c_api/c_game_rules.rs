@@ -2,7 +2,7 @@
 
 use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::methods::borrow_state;
-use crate::lua_api::state::GameRuleKey;
+use crate::lua_api::state::{GameRuleKey, GameRuleValue};
 use crate::lua_bridge::table_set_rust_fn_static;
 use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
@@ -122,28 +122,32 @@ pub(crate) fn register_self_found_allowed(
     )
 }
 
-/// VERIFIED: Forever 70707 reads native rule ID 10; an absent rule is false.
-/// INFERRED: any nonzero numeric value makes the rule active.
+/// VERIFIED (R88ej): Forever 70707 reads rule ID 10; zero and NaN are inactive.
 fn is_hardcore_active(state: &mut LuaState) -> LuaResult<u32> {
-    let value = read_numeric_rule_value(state, HARDCORE_RULE_ID)?;
-    state.push(Val::Bool(value != 0));
+    let active = read_numeric_rule_active(state, HARDCORE_RULE_ID)?;
+    state.push(Val::Bool(active));
     Ok(1)
 }
 
-/// VERIFIED: Forever 70707 queries native rule ID 22; an absent rule is false.
-/// INFERRED: a nonzero numeric value publishes true.
+/// VERIFIED (R88ej): Forever 70707 reads rule ID 22; zero and NaN are inactive.
 fn is_self_found_allowed(state: &mut LuaState) -> LuaResult<u32> {
-    let value = read_numeric_rule_value(state, SELF_FOUND_ALLOWED_RULE_ID)?;
-    state.push(Val::Bool(value != 0));
+    let active = read_numeric_rule_active(state, SELF_FOUND_ALLOWED_RULE_ID)?;
+    state.push(Val::Bool(active));
     Ok(1)
 }
 
-fn read_numeric_rule_value(state: &mut LuaState, rule_id: i32) -> LuaResult<i64> {
-    let value = borrow_state(state)?
+pub(crate) fn is_rule_value_active(value: &GameRuleValue) -> bool {
+    value
+        .integer_value
+        .map(|integer| integer != 0)
+        .unwrap_or(value.as_float != 0.0 && !value.as_float.is_nan())
+}
+
+fn read_numeric_rule_active(state: &mut LuaState, rule_id: i32) -> LuaResult<bool> {
+    let active = borrow_state(state)?
         .game_rules
         .rules
         .get(&GameRuleKey::Id(rule_id))
-        .map(|value| value.as_int)
-        .unwrap_or_default();
-    Ok(value)
+        .is_some_and(is_rule_value_active);
+    Ok(active)
 }
