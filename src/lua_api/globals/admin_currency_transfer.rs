@@ -68,22 +68,26 @@ fn read_account_character_source(
             "SetAccountCharacterCurrencyData: characterGUID must not be empty",
         ));
     }
+    Ok(CurrencyAccountSource {
+        character_guid,
+        character_name: read_field(state, value, "characterName")?,
+        full_character_name: read_field(state, value, "fullCharacterName")?,
+        quantity: read_account_character_quantity(state, value)?,
+    })
+}
+
+fn read_account_character_quantity(state: &mut LuaState, value: Val) -> LuaResult<u64> {
     let quantity = read_field::<f64>(state, value, "quantity")?;
     if !quantity.is_finite()
         || quantity < 0.0
         || quantity.fract() != 0.0
-        || quantity > u64::MAX as f64
+        || quantity >= u64::MAX as f64
     {
         return Err(runtime_error(
             "SetAccountCharacterCurrencyData: quantity must be a nonnegative integer",
         ));
     }
-    Ok(CurrencyAccountSource {
-        character_guid,
-        character_name: read_field(state, value, "characterName")?,
-        full_character_name: read_field(state, value, "fullCharacterName")?,
-        quantity: quantity as u64,
-    })
+    Ok(quantity as u64)
 }
 
 fn set_currency_transfer_enabled(state: &mut LuaState) -> LuaResult<u32> {
