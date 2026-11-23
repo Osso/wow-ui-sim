@@ -65,8 +65,12 @@ fn assert_player_spells_slot_icons(env: &WowLuaEnv) {
         local tray = PlayerSpellsFrame.TalentsFrame.PvPTalentSlotTray
         assert(tray and tray:IsShown(), "real Player Spells PvP slot tray is visible")
         local first, second = tray.Slots[1], tray.Slots[2]
-        assert(first:GetSelectedTalent() == 123 and first.Texture:GetTexture() == 111)
-        assert(second:GetSelectedTalent() == 456 and second.Texture:GetTexture() == 222)
+        local firstTalent, firstIcon = first:GetSelectedTalent(), first.Texture:GetTexture()
+        local secondTalent, secondIcon = second:GetSelectedTalent(), second.Texture:GetTexture()
+        assert(firstTalent == 123, "first slot talent: " .. tostring(firstTalent))
+        assert(firstIcon == 111, "first slot icon: " .. tostring(firstIcon))
+        assert(secondTalent == 456, "second slot talent: " .. tostring(secondTalent))
+        assert(secondIcon == 222, "second slot icon: " .. tostring(secondIcon))
         "#,
     )
     .expect("read supplied selected talents from the original Player Spells slot tray");
