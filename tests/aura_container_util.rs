@@ -378,24 +378,21 @@ fn aura_container_env() -> WowLuaEnv {
 #[test]
 fn retail_aura_container_secret_icons_survive_addon_texture_hook() {
     let env = aura_container_env();
-    env.exec("A_Admin.ClearBuffs(); A_Admin.AddBuff(99001, 'Hook Aura One', 135907, 60, 1); A_Admin.AddBuff(99002, 'Hook Aura Two', 136243, 60, 1)")
-        .unwrap();
     load_texture_hook_probe(&env);
-    env.exec_maybe_secure(
-        r#"
-        local mixin = assert(CustomAuraButtonPrivateMixin)
-        local first = assert(C_UnitAuras.GetAuraDataByIndex('player', 1, 'HELPFUL'))
-        local second = assert(C_UnitAuras.GetAuraDataByIndex('player', 2, 'HELPFUL'))
-        assert(first.icon == 135907 and second.icon == 136243)
-        local firstTexture = CreateFrame('Frame'):CreateTexture()
-        local secondTexture = CreateFrame('Frame'):CreateTexture()
-        mixin.ApplyIcon({icon = {element = firstTexture}}, 'player', first)
-        mixin.ApplyIcon({icon = {element = secondTexture}}, 'player', second)
-        assert(firstTexture:GetTextureFileID() == 135907)
-        assert(secondTexture:GetTextureFileID() == 136243)
-        "#,
-        true,
-    )
-    .expect("AuraContainer must apply both supplied secret icons before its addon hook runs");
+    env.exec("AuditLive = AuditContainer({{'buffs', 'HELPFUL'}})")
+        .unwrap();
+    crate::common::aura_container_harness::set_player_auras(
+        &env,
+        vec![
+            crate::common::aura_container_harness::aura(135907),
+            crate::common::aura_container_harness::aura(136243),
+        ],
+    );
+    crate::common::aura_container_harness::settle(&env);
+    assert_eq!(
+        crate::common::aura_container_harness::icons(&env, "AuditLive", "buffs"),
+        "135907,136243",
+    );
     assert_texture_hook_count(&env);
+    crate::common::aura_container_harness::assert_no_lua_errors(&env);
 }
