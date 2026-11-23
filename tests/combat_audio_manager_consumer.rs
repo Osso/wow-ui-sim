@@ -75,6 +75,19 @@ fn sound_kit_for(env: &WowLuaEnv, sound_enum: &str) -> i32 {
         .expect("sound enum should resolve to a sound kit")
 }
 
+fn assert_recorded_speech_request(env: &WowLuaEnv, index: usize, sound_enum: &str) {
+    let expected_text: String = env
+        .eval(&format!("return CooldownViewerUtil.GetSoundTypeText({sound_enum})"))
+        .expect("sound enum should resolve to its speech text");
+    let expected_category: f64 = env
+        .eval("return Enum.CombatAudioAlertCategory.General")
+        .expect("general category should be a numeric enum");
+    let request = env.state().borrow().combat_audio_speak_requests[index].clone();
+    assert_eq!(request.text, expected_text);
+    assert_eq!(request.category, expected_category);
+    assert!(request.allow_overlap);
+}
+
 fn finish_playsound(env: &WowLuaEnv, expected_sound_kit: i32) {
     env.process_timers().expect("process later timer tick");
     let cleared: bool = env
@@ -91,12 +104,16 @@ fn combat_audio_speak_text_completes_two_play_sound_slashes(env: &WowLuaEnv) {
     let first_kit = sound_kit_for(env, "Enum.CooldownViewerSound.War3Bell");
     let second_kit = sound_kit_for(env, "Enum.CooldownViewerSound.War3CrunchyBell");
     assert_ne!(first_kit, second_kit);
+    let request_count = env.state().borrow().combat_audio_speak_requests.len();
+    assert_eq!(request_count, 0, "fresh environment has no prior CAA speech");
     let first_id = submit_playsound_slash(env, "Enum.CooldownViewerSound.War3Bell");
     assert_eq!(first_id, 1.0);
+    assert_recorded_speech_request(env, request_count, "Enum.CooldownViewerSound.War3Bell");
     finish_playsound(env, first_kit);
     let second_id = submit_playsound_slash(env, "Enum.CooldownViewerSound.War3CrunchyBell");
     assert_eq!(second_id, 2.0);
     assert_ne!(first_id, second_id);
+    assert_recorded_speech_request(env, request_count + 1, "Enum.CooldownViewerSound.War3CrunchyBell");
     finish_playsound(env, second_kit);
 }
 }
