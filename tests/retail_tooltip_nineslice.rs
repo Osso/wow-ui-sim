@@ -49,21 +49,21 @@ fn verify_tooltip_layout(screen: ScreenKind, tooltip: &str) {
     let env = load_tooltip_screen(screen);
     let code = format!(
         r#"
-        local tooltip = assert({tooltip})
-        local nineSlice = assert(tooltip.NineSlice)
-        assert(tooltip.layoutType == "TooltipDefaultLayout")
-        assert(nineSlice:GetParent() == tooltip)
+        local tooltip = assert({tooltip}, "tooltip should load")
+        local nineSlice = assert(tooltip.NineSlice, "XML template should create NineSlice")
+        assert(tooltip.layoutType == "TooltipDefaultLayout", "template should apply TooltipDefaultLayout")
+        assert(nineSlice:GetParent() == tooltip, "NineSlice should be parented to the tooltip")
         tooltip:SetOwner(UIParent, "ANCHOR_NONE")
         tooltip:SetText("Default tooltip contents")
         tooltip:Show()
-        assert(nineSlice.TopLeftCorner:GetAtlas() == "Tooltip-NineSlice-CornerTopLeft")
-        assert(nineSlice.TopRightCorner:GetAtlas() == "Tooltip-NineSlice-CornerTopRight")
+        assert(nineSlice.TopLeftCorner:GetAtlas() == "Tooltip-NineSlice-CornerTopLeft", "default left corner atlas")
+        assert(nineSlice.TopRightCorner:GetAtlas() == "Tooltip-NineSlice-CornerTopRight", "default right corner atlas")
         tooltip:SetText("Azerite tooltip contents")
         SharedTooltip_SetBackdropStyle(tooltip, GAME_TOOLTIP_BACKDROP_STYLE_AZERITE_ITEM, false)
         tooltip:Show()
-        assert(nineSlice.TopLeftCorner:GetAtlas() == "Tooltip-Azerite-NineSlice-CornerTopLeft")
-        assert(nineSlice.TopRightCorner:GetAtlas() == "Tooltip-Azerite-NineSlice-CornerTopRight")
-        assert(nineSlice:IsShown())
+        assert(nineSlice.TopLeftCorner:GetAtlas() == "Tooltip-Azerite-NineSlice-CornerTopLeft", "Azerite left corner atlas")
+        assert(nineSlice.TopRightCorner:GetAtlas() == "Tooltip-Azerite-NineSlice-CornerTopRight", "Azerite right corner atlas")
+        assert(nineSlice:IsShown(), "style should leave the NineSlice shown")
         "#
     );
     env.exec(&code)
