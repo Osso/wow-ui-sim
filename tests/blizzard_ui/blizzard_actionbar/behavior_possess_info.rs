@@ -30,7 +30,7 @@ fn supply_possess_slots_and_show_bar(env: &WowLuaEnv) {
 fn assert_possess_info_returns_native_shapes(env: &WowLuaEnv) {
     let observed: String = env
         .eval(
-            r#"
+            r##"
             local firstIcon, firstSpell, firstState = GetPossessInfo(1)
             local secondIcon, secondSpell, secondState = GetPossessInfo(2)
             return table.concat({
@@ -39,7 +39,7 @@ fn assert_possess_info_returns_native_shapes(env: &WowLuaEnv) {
                 tostring(select("#", GetPossessInfo(0))),
                 tostring(select("#", GetPossessInfo(3)))
             }, "|")
-            "#,
+            "##,
         )
         .expect("original GetPossessInfo selectors should return their native shapes");
     assert_eq!(
