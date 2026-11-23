@@ -98,8 +98,8 @@ impl EditBoxPresentation {
         }
     }
 
-    pub(crate) fn take_text_change(&mut self) -> Option<bool> {
-        if !self.text_changed {
+    pub(crate) fn take_text_change(&mut self, defer_user_input: bool) -> Option<bool> {
+        if !self.text_changed || (defer_user_input && self.user_input) {
             return None;
         }
         self.text_changed = false;
