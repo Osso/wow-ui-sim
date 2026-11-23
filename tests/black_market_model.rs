@@ -11,7 +11,7 @@ use wow_ui_sim::startup::fire_startup_events_for_screen;
 const TWO_LISTINGS_STATE: &str = r#"{"items":[
     {"marketID":701,"itemID":19019,"name":"Supplied Relic","texture":"Interface\\Icons\\INV_Misc_Gem_01","quantity":1,"itemType":"Armor","usable":true,"level":80,"levelType":"item level","sellerName":"Seller One","minBid":10000,"minIncrement":10000,"currBid":20000,"youHaveHighBid":false,"numBids":1,"timeLeft":4,"link":"item:19019","quality":4},
     {"marketID":702,"itemID":19020,"name":"Supplied Blade","texture":"Interface\\Icons\\INV_Sword_04","quantity":2,"itemType":"Weapon","usable":true,"level":90,"levelType":"item level","sellerName":"Seller Two","minBid":30000,"minIncrement":5000,"currBid":10000,"youHaveHighBid":false,"numBids":1,"timeLeft":3,"link":"item:19020","quality":3},
-    {"marketID":703,"itemID":19021,"name":"Expired Artifact","texture":"Interface\\Icons\\INV_Misc_QuestionMark","quantity":1,"itemType":"Misc","usable":true,"level":1,"levelType":"item level","sellerName":"Seller Three","minBid":1000,"minIncrement":100,"currBid":500,"youHaveHighBid":false,"numBids":2,"timeLeft":0,"link":"item:19021","quality":2}
+    {"marketID":704,"itemID":19021,"name":"Expired Artifact","texture":"Interface\\Icons\\INV_Misc_QuestionMark","quantity":1,"itemType":"Misc","usable":true,"level":1,"levelType":"item level","sellerName":"Seller Three","minBid":1000,"minIncrement":100,"currBid":500,"youHaveHighBid":false,"numBids":2,"timeLeft":0,"link":"item:19021","quality":2}
 ],"hotItemMarketID":702,"viewOnly":false}"#;
 
 const DUPLICATE_HOT_ITEM_STATE: &str = r#"{"items":[{"marketID":711,"itemID":19022,"name":"Shared Relic","texture":"Interface\\Icons\\INV_Misc_Gem_01","quantity":1,"itemType":"Armor","usable":true,"level":80,"levelType":"item level","sellerName":"Shared Seller","minBid":20000,"minIncrement":10000,"currBid":10000,"youHaveHighBid":false,"numBids":1,"timeLeft":4,"link":"item:19022","quality":4}],"hotItemMarketID":711,"viewOnly":false}"#;
@@ -83,9 +83,9 @@ fn blizzard_black_market_bid_results_enforce_minimums_and_refresh_rows() {
                 BlackMarketFrame.ScrollBox:ForEachFrame(function(button)
                     if button.marketID == 702 then row702 = button end
                 end)
-                submitBid(703, 100000)
+                submitBid(704, 100000)
                 local _, _, _, _, _, _, _, _, _, _, expiredBid, expiredHigh, expiredCount =
-                    C_BlackMarket.GetItemInfoByID(703)
+                    C_BlackMarket.GetItemInfoByID(704)
                 return rejectedIncrementBid == 20000 and not rejectedIncrementHigh
                         and rejectedIncrementCount == 1,
                     row701.YourBid:IsShown(), row701.CurrentBid.GoldButton.Text:GetText(),
