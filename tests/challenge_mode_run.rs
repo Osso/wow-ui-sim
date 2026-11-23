@@ -171,9 +171,7 @@ fn load_challenges_ui() -> WowLuaEnv {
 }
 
 #[cfg(feature = "client-retail")]
-fn challenge_icon_map_ids_for_display_season(season_id: u32) -> String {
-    let ui = blizzard_ui_dir();
-    let env = new_blizzard_addon_env(&ui);
+fn supply_display_season_maps(env: &WowLuaEnv, season_id: u32) {
     env.exec(&format!(
         r#"
         A_Admin.SetCurrentDisplaySeasonID({season_id})
@@ -187,10 +185,22 @@ fn challenge_icon_map_ids_for_display_season(season_id: u32) -> String {
     "#
     ))
     .unwrap();
+}
+
+#[cfg(feature = "client-retail")]
+fn load_pve_frame_addons(env: &WowLuaEnv, ui: &std::path::Path) {
     for addon in ["Blizzard_SharedXML", "Blizzard_GroupFinder"] {
-        let loaded = load_blizzard_addon_closure_into_env(&env, &ui, &[addon], &[]);
+        let loaded = load_blizzard_addon_closure_into_env(env, ui, &[addon], &[]);
         assert!(loaded.iter().any(|name| name == addon));
     }
+}
+
+#[cfg(feature = "client-retail")]
+fn challenge_icon_map_ids_for_display_season(season_id: u32) -> String {
+    let ui = blizzard_ui_dir();
+    let env = new_blizzard_addon_env(&ui);
+    supply_display_season_maps(&env, season_id);
+    load_pve_frame_addons(&env, &ui);
     env.eval(
         r#"
         PVEFrame_ToggleFrame('ChallengesFrame')
