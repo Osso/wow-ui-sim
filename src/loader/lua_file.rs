@@ -8,7 +8,7 @@ use crate::lua_api::taint::stamp_addon_taint_state;
 use rilua::LuaApiMut;
 use rilua::vm::state::LuaState;
 use std::path::Path;
-use std::time::Instant;
+use std::time::{Duration, Instant};
 
 use super::addon::AddonContext;
 use super::bytecode_cache;
@@ -286,24 +286,31 @@ fn execute_watchdog_addon_file(
             exec_addon_func(state, func, ctx)
                 .map_err(|error| rilua::runtime_error(error.to_string()))
         });
-    if crate::lua_api::handler_timing::is_enabled() {
-        let line = match &result {
-            Ok(_) => crate::lua_api::execution_budget::format_file_watchdog_success(
-                ctx.name,
-                chunk_name,
-                timeout,
-                started.elapsed(),
-            ),
-            Err(_) => crate::lua_api::execution_budget::format_file_watchdog_error(
-                ctx.name,
-                chunk_name,
-                timeout,
-                started.elapsed(),
-            ),
-        };
-        eprintln!("{line}");
-    }
+    log_file_watchdog_result(ctx.name, chunk_name, timeout, started, result.is_ok());
     result.map_err(|error| LoadError::Lua(error.to_string()))
+}
+
+fn log_file_watchdog_result(
+    addon_name: &str,
+    chunk_name: &str,
+    timeout: Duration,
+    started: Instant,
+    succeeded: bool,
+) {
+    if !crate::lua_api::handler_timing::is_enabled() {
+        return;
+    }
+    let elapsed = started.elapsed();
+    let line = if succeeded {
+        crate::lua_api::execution_budget::format_file_watchdog_success(
+            addon_name, chunk_name, timeout, elapsed,
+        )
+    } else {
+        crate::lua_api::execution_budget::format_file_watchdog_error(
+            addon_name, chunk_name, timeout, elapsed,
+        )
+    };
+    eprintln!("{line}");
 }
 
 fn contextual_lua_load_error(

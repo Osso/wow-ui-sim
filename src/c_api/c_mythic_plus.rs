@@ -102,12 +102,26 @@ fn get_current_display_season_id(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn register_mythic_plus_probe_handlers(state: &mut LuaState, ns: GcRef<Table>) -> LuaResult<()> {
+    register_mythic_plus_season_handlers(state, ns)?;
+    register_mythic_plus_score_handlers(state, ns)?;
+    register_mythic_plus_keystone_level_handler(state, ns)?;
+    register_mythic_plus_keystone_map_handlers(state, ns)?;
+    #[cfg(not(feature = "retail-12-0-7"))]
+    register_mythic_plus_weekly_best_handler(state, ns)?;
+    Ok(())
+}
+
+fn register_mythic_plus_season_handlers(state: &mut LuaState, ns: GcRef<Table>) -> LuaResult<()> {
     table_set_rust_fn_static(state, ns, "GetCurrentAffixes", get_current_affixes)?;
     table_set_rust_fn_static(state, ns, "GetCurrentSeason", get_current_season)?;
     #[cfg(not(feature = "retail-12-0-7"))]
     table_set_rust_fn_static(state, ns, "GetRunHistory", get_run_history)?;
     #[cfg(feature = "retail-12-0-7")]
     crate::c_api::c_mythic_plus_calendar::register(state, ns)?;
+    Ok(())
+}
+
+fn register_mythic_plus_score_handlers(state: &mut LuaState, ns: GcRef<Table>) -> LuaResult<()> {
     table_set_rust_fn_static(
         state,
         ns,
@@ -120,7 +134,21 @@ fn register_mythic_plus_probe_handlers(state: &mut LuaState, ns: GcRef<Table>) -
         "GetWeeklyChestRewardLevel",
         get_weekly_chest_reward_level,
     )?;
+    Ok(())
+}
+
+fn register_mythic_plus_keystone_level_handler(
+    state: &mut LuaState,
+    ns: GcRef<Table>,
+) -> LuaResult<()> {
     table_set_rust_fn_static(state, ns, "GetOwnedKeystoneLevel", get_owned_keystone_level)?;
+    Ok(())
+}
+
+fn register_mythic_plus_keystone_map_handlers(
+    state: &mut LuaState,
+    ns: GcRef<Table>,
+) -> LuaResult<()> {
     // MythicPlusInfoDocumentation.lua:76-84 (Retail, PTR, Forever) and 75-83
     // (Mists, Era, Anniversary); Wrath pins no generated documentation.
     if !matches!(
@@ -141,7 +169,14 @@ fn register_mythic_plus_probe_handlers(state: &mut LuaState, ns: GcRef<Table>) -
             get_owned_keystone_map_id,
         )?;
     }
-    #[cfg(not(feature = "retail-12-0-7"))]
+    Ok(())
+}
+
+#[cfg(not(feature = "retail-12-0-7"))]
+fn register_mythic_plus_weekly_best_handler(
+    state: &mut LuaState,
+    ns: GcRef<Table>,
+) -> LuaResult<()> {
     table_set_rust_fn_static(state, ns, "GetWeeklyBestForMap", get_weekly_best_for_map)?;
     Ok(())
 }

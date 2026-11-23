@@ -321,6 +321,13 @@ mod tests {
 
     #[test]
     fn synchronous_tests_report_both_tests_passing() {
+        let env = create_synchronous_runner_env();
+        let file = write_synchronous_test_file();
+        load_test_framework(&env);
+        assert_synchronous_tests_pass(&env, &file);
+    }
+
+    fn create_synchronous_runner_env() -> WowLuaEnv {
         let env = WowLuaEnv::new().unwrap();
         env.exec(
             r#"
@@ -333,7 +340,10 @@ mod tests {
         "#,
         )
         .unwrap();
+        env
+    }
 
+    fn write_synchronous_test_file() -> tempfile::NamedTempFile {
         let file = tempfile::NamedTempFile::new().unwrap();
         std::fs::write(
             file.path(),
@@ -349,10 +359,12 @@ mod tests {
         "#,
         )
         .unwrap();
-        load_test_framework(&env);
+        file
+    }
 
+    fn assert_synchronous_tests_pass(env: &WowLuaEnv, file: &tempfile::NamedTempFile) {
         assert_eq!(
-            run_test_file(&env, &file.path().to_path_buf()).unwrap(),
+            run_test_file(env, &file.path().to_path_buf()).unwrap(),
             (2, 0)
         );
     }

@@ -9,6 +9,40 @@ fn env() -> WowLuaEnv {
     WowLuaEnv::new().expect("Failed to create Lua environment")
 }
 
+const MAP_INFO_OBSERVER_SETUP: &str = r#"
+    A_Admin.SetManualClock(0)
+    A_Admin.SetChallengeModeMapInfo(2, {name='Supplied map', id=2,
+        timeLimit=1530, texture=321, backgroundTexture=654, mapID=429})
+    MapInfoEventCount = 0
+    MapInfoHandlerActive = false
+    MapInfoHandlerReturned = false
+    MapInfoObservedName = nil
+    MapInfoObservedId = nil
+    MapInfoObservedMapId = nil
+    local frame = CreateFrame("Frame")
+    frame:RegisterEvent("PLAYER_LOGIN")
+    frame:RegisterEvent("CHALLENGE_MODE_MAPS_UPDATE")
+    frame:SetScript("OnEvent", function(_, event)
+        if event == "PLAYER_LOGIN" then
+            MapInfoHandlerActive = true
+            C_MythicPlus.RequestMapInfo()
+            C_MythicPlus.RequestMapInfo()
+            assert(MapInfoEventCount == 0)
+            MapInfoHandlerActive = false
+            MapInfoHandlerReturned = true
+            return
+        end
+        assert(event == "CHALLENGE_MODE_MAPS_UPDATE")
+        assert(not MapInfoHandlerActive and MapInfoHandlerReturned)
+        MapInfoEventCount = MapInfoEventCount + 1
+        local maps = C_ChallengeMode.GetMapTable()
+        local name, id, _, _, _, mapId = C_ChallengeMode.GetMapUIInfo(maps[1])
+        MapInfoObservedName = name
+        MapInfoObservedId = id
+        MapInfoObservedMapId = mapId
+    end)
+    "#;
+
 // ── GetCurrentAffixes ────────────────────────────────────────────────────────
 
 #[test]
@@ -264,43 +298,16 @@ fn mythic_plus_request_events_are_deferred() {
 #[test]
 fn request_map_info_coalesces_and_delivers_supplied_data_after_handler() {
     let env = env();
-    env.exec(
-        r#"
-        A_Admin.SetManualClock(0)
-        A_Admin.SetChallengeModeMapInfo(2, {name='Supplied map', id=2,
-            timeLimit=1530, texture=321, backgroundTexture=654, mapID=429})
-        MapInfoEventCount = 0
-        MapInfoHandlerActive = false
-        MapInfoHandlerReturned = false
-        MapInfoObservedName = nil
-        MapInfoObservedId = nil
-        MapInfoObservedMapId = nil
-        local frame = CreateFrame("Frame")
-        frame:RegisterEvent("PLAYER_LOGIN")
-        frame:RegisterEvent("CHALLENGE_MODE_MAPS_UPDATE")
-        frame:SetScript("OnEvent", function(_, event)
-            if event == "PLAYER_LOGIN" then
-                MapInfoHandlerActive = true
-                C_MythicPlus.RequestMapInfo()
-                C_MythicPlus.RequestMapInfo()
-                assert(MapInfoEventCount == 0)
-                MapInfoHandlerActive = false
-                MapInfoHandlerReturned = true
-                return
-            end
-            assert(event == "CHALLENGE_MODE_MAPS_UPDATE")
-            assert(not MapInfoHandlerActive and MapInfoHandlerReturned)
-            MapInfoEventCount = MapInfoEventCount + 1
-            local maps = C_ChallengeMode.GetMapTable()
-            local name, id, _, _, _, mapId = C_ChallengeMode.GetMapUIInfo(maps[1])
-            MapInfoObservedName = name
-            MapInfoObservedId = id
-            MapInfoObservedMapId = mapId
-        end)
-        "#,
-    )
-    .unwrap();
+    install_map_info_observer(&env);
+    assert_initial_map_info_response_is_deferred(&env);
+    assert_map_info_request_cooldown(&env);
+}
 
+fn install_map_info_observer(env: &WowLuaEnv) {
+    env.exec(MAP_INFO_OBSERVER_SETUP).unwrap();
+}
+
+fn assert_initial_map_info_response_is_deferred(env: &WowLuaEnv) {
     env.fire_event("PLAYER_LOGIN").unwrap();
     env.exec("assert(MapInfoEventCount == 0 and MapInfoHandlerReturned)")
         .unwrap();
@@ -309,7 +316,9 @@ fn request_map_info_coalesces_and_delivers_supplied_data_after_handler() {
         "assert(MapInfoEventCount == 1 and MapInfoObservedName == 'Supplied map' and MapInfoObservedId == 2 and MapInfoObservedMapId == 429)",
     )
     .unwrap();
+}
 
+fn assert_map_info_request_cooldown(env: &WowLuaEnv) {
     env.exec("C_MythicPlus.RequestMapInfo(); assert(MapInfoEventCount == 1)")
         .unwrap();
     env.exec("A_Admin.AdvanceTime(60); C_MythicPlus.RequestMapInfo()")
