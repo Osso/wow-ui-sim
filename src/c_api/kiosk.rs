@@ -39,12 +39,14 @@ pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
 }
 
 fn is_enabled(state: &mut LuaState) -> LuaResult<u32> {
-    state.push(Val::Bool(borrow_state(state)?.kiosk_session.enabled));
+    let enabled = borrow_state(state)?.kiosk_session.enabled;
+    state.push(Val::Bool(enabled));
     Ok(1)
 }
 
 fn is_competitive_mode_enabled(state: &mut LuaState) -> LuaResult<u32> {
-    state.push(Val::Bool(borrow_state(state)?.kiosk_session.competitive));
+    let enabled = borrow_state(state)?.kiosk_session.competitive;
+    state.push(Val::Bool(enabled));
     Ok(1)
 }
 
@@ -54,7 +56,8 @@ fn get_kiosk_login_info(state: &mut LuaState) -> LuaResult<u32> {
         return Ok(0);
     };
     for value in [&info.account_name, &info.password, &info.realm_address] {
-        state.push(Val::Str(state.gc.intern_string(value.as_bytes())));
+        let value = Val::Str(state.gc.intern_string(value.as_bytes()));
+        state.push(value);
     }
     Ok(3)
 }
@@ -78,7 +81,7 @@ fn read_kiosk_session(state: &mut LuaState, value: Val) -> LuaResult<KioskSessio
     })
 }
 
-fn read_boolean(state: &LuaState, table: GcRef<Table>, key: &str) -> LuaResult<bool> {
+fn read_boolean(state: &mut LuaState, table: GcRef<Table>, key: &str) -> LuaResult<bool> {
     match table_get(state, Val::Table(table), key) {
         Val::Bool(value) => Ok(value),
         _ => Err(runtime_error(format!(
@@ -87,7 +90,7 @@ fn read_boolean(state: &LuaState, table: GcRef<Table>, key: &str) -> LuaResult<b
     }
 }
 
-fn read_login_info(state: &LuaState, table: GcRef<Table>) -> LuaResult<Option<KioskLoginInfo>> {
+fn read_login_info(state: &mut LuaState, table: GcRef<Table>) -> LuaResult<Option<KioskLoginInfo>> {
     let values = ["accountName", "password", "realmAddress"]
         .map(|key| read_optional_string(state, table, key));
     match values {
@@ -108,7 +111,7 @@ fn read_login_info(state: &LuaState, table: GcRef<Table>) -> LuaResult<Option<Ki
 }
 
 fn read_optional_string(
-    state: &LuaState,
+    state: &mut LuaState,
     table: GcRef<Table>,
     key: &str,
 ) -> LuaResult<Option<String>> {
