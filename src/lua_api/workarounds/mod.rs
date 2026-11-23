@@ -482,6 +482,7 @@ fn apply_feature_tool_defaults(lua: &mut rilua::Lua) -> crate::Result<()> {
 }
 
 fn apply_feature_progression_defaults(lua: &mut rilua::Lua) -> crate::Result<()> {
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::profession_specs_defaults::apply_bootstrap(lua)?;
     temporary::prototype_dialog_state::apply_bootstrap(lua)?;
     temporary::proxy_object_factories::apply_bootstrap(lua)?;
