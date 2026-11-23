@@ -388,7 +388,9 @@ fn apply_core_foundation_journal_defaults(lua: &mut rilua::Lua) -> crate::Result
     temporary::adventure_journal_fallbacks::apply_bootstrap(lua)?;
     #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::perks_program_defaults::apply_bootstrap(lua)?;
-    temporary::loot_journal_defaults::apply_bootstrap(lua)
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+    temporary::loot_journal_defaults::apply_bootstrap(lua)?;
+    Ok(())
 }
 
 fn apply_core_foundation_state_defaults(lua: &mut rilua::Lua) -> crate::Result<()> {
