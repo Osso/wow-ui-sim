@@ -405,12 +405,38 @@ fn parse_default_cvars() -> (HashMap<String, String>, HashMap<String, String>) {
         original_names.insert("basemip".into(), "BaseMip".into());
     }
     insert_profile_cvars(&mut defaults, &mut original_names);
+    insert_script_bucket_cvars(&mut defaults, &mut original_names);
     remove_profile_cvars(&mut defaults, &mut original_names);
     (defaults, original_names)
 }
 
+fn insert_script_bucket_cvars(
+    defaults: &mut HashMap<String, String>,
+    original_names: &mut HashMap<String, String>,
+) {
+    if !matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
+        return;
+    }
+    for (name, value) in [
+        ("luaScriptBucketThrottleEnabled", "1"),
+        ("luaScriptBucketThrottleMaxMsPerSecondNormal", "800"),
+        ("luaScriptBucketThrottleMaxMsPerSecondRestricted", "500"),
+        ("luaScriptBucketThrottleMaxMsBurstNormal", "20000"),
+        ("luaScriptBucketThrottleMaxMsBurstRestricted", "1000"),
+        ("hardcoreScriptThrottlingEnabled", "1"),
+    ] {
+        let key = name.to_lowercase();
+        defaults.insert(key.clone(), value.to_owned());
+        original_names.insert(key, name.to_owned());
+    }
+}
+
 /// Collections journal CVar shipped by the PTR and WowForever pins only.
-///
+
 /// The pinned CVar dumps list it with `default=1` and `scope=Account`:
 /// `data/patch-api/source-cache/legacy-2026-10-09/1.60.1-wikitext.txt:2046`
 /// and `data/patch-api/sources/12.1.7-inherited-1.60.1.wikitext:1986`. The
@@ -846,6 +872,27 @@ mod tests {
             original_names.get("plainvar"),
             Some(&"plainVar".to_string())
         );
+    }
+
+    #[test]
+    fn script_bucket_cvars_match_the_registered_defaults() {
+        use crate::client_profile::{ACTIVE, ClientProfile};
+
+        let storage = CVarStorage::new();
+        let expected = matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever);
+        for (name, value) in [
+            ("luaScriptBucketThrottleEnabled", "1"),
+            ("luaScriptBucketThrottleMaxMsPerSecondNormal", "800"),
+            ("luaScriptBucketThrottleMaxMsPerSecondRestricted", "500"),
+            ("luaScriptBucketThrottleMaxMsBurstNormal", "20000"),
+            ("luaScriptBucketThrottleMaxMsBurstRestricted", "1000"),
+            ("hardcoreScriptThrottlingEnabled", "1"),
+        ] {
+            assert_eq!(
+                storage.get_default(name).as_deref(),
+                expected.then_some(value)
+            );
+        }
     }
 
     #[test]

@@ -30,7 +30,8 @@ Bounded Retail 12.0.0/12.0.5 contracts unlocked by rilua `842e4d3`. Source decla
 
 ## Known gaps (current cycle)
 
-- [ ] Native bucket-throttle accounting, complete timer/slash/key/callback ownership, and event-wide coverage outside the tainted loader/frame paths remain unproven. The 19,000/200 millisecond phase mapping is an inference, not a native fact.
+- [ ] Native bucket-throttle ownership and normal/restricted execution-class mapping remain unknown. The simulator's restricted-addon bucket policy, burst initialization, and Forever refill mirror are inferred; see [script bucket throttle limits](script-bucket-throttle-limits.md).
+- [ ] Timer, slash-command, key-binding, and other execution ownership outside tainted loader/frame paths remain unproven. The 19,000/200 millisecond watchdog mapping is an inference, not a native fact.
 
 ## Verification — 2026-10-07
 

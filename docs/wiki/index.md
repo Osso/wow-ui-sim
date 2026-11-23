@@ -6,6 +6,10 @@
 
 Updated the [event system](systems/event-system.md), [Lua API system](systems/lua-api.md#retailforever-account-currency-transfer), and [EditBox contract](../specs/editbox-text-position-selection.md#cursor-geometry-follow-up); the [currency transfer contract](../specs/currency-transfer-eligibility.md) now covers amount/source queries. **INFERRED (R88et-c):** text-change handlers drain after the outermost Lua call returns, separately from cursor layout. **VERIFIED (simulator):** the exact Retail TokenFrame amount-selector path passes after real ScrollBox layout; the Retail/Forever startup captures contain only the approved CurrencyTransfer required-argument error and its ScriptErrors echo. Startup is not clean.
 
+## [2026-11-23] implementation | Script bucket throttle
+
+Updated the [throttle contract](../specs/script-bucket-throttle-limits.md) and linked it from the [watchdog system](systems/script-execution-watchdog.md). **VERIFIED (R88bn):** Retail/Forever registered CVar defaults and Retail whole-second refill rule. **INFERRED (R88bn):** addon code uses a per-addon restricted bucket, starts at burst capacity, and Forever mirrors Retail refill; normal-bucket execution classes remain unknown and unmodeled.
+
 ## [2026-11-22] system | Script execution watchdog
 
 [Script execution watchdog](systems/script-execution-watchdog.md) records the verified 10,001-dispatch VM poll and `script ran too long` error, the inferred 19,000/200 ms timeout mapping, tainted owner scope, and diagnostic fields.
@@ -4036,7 +4040,7 @@ Verified four metadata-only credits for the namespace cooldown query and observe
 
 ## [2026-09-11] audit | Credit PTR script-bucket throttle mock output
 
-`ec51f3a7e` and `6a6244864` credit exactly six added rows as bounded mock output: the getter, its return structure, and four fields. Proof is limited to PTR publication, earlier-retail absence, one fresh table, and four numeric-zero placeholders. No native values, disabled-mode semantics, normal/restricted selection, accounting, enforcement, or setter is claimed. See [script bucket throttle mock](../specs/script-bucket-throttle-limits.md) and [[patch-12-1-5-api-audit]].
+`ec51f3a7e` and `6a6244864` credit exactly six added rows as bounded mock output: the getter, its return structure, and four fields. Proof is limited to PTR publication, earlier-retail absence, one fresh table, and four numeric-zero placeholders. Native values and normal/restricted selection remain unknown; the separate CVar and inferred restricted-addon enforcement model is tracked in [script bucket throttle limits](../specs/script-bucket-throttle-limits.md) and [[patch-12-1-5-api-audit]].
 
 ## [2026-09-11] audit | Credit PTR EncounterWarnings Edit Mode preview rows
 

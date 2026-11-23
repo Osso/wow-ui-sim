@@ -1,6 +1,6 @@
-# Script bucket throttle limit mock
+# Script bucket throttle limits
 
-PTR `GetScriptBucketThrottleLimits()` is an explicit temporary mock in `src/lua_api/workarounds/temporary/script_bucket_throttle_limits.rs`. The [pinned register](../../data/patch-api/sources/12.1.5-register.json) specifies the return fields, not their values. Zero placeholders are the user-requested policy, not native limits or an indication that throttling is disabled.
+R88bn verifies the registered throttle CVars and Retail refill rule for Retail 12.1.5.70688 and Forever 1.60.1.70707. The simulator registers the values in both profiles. `GetScriptBucketThrottleLimits()` remains a PTR-only temporary mock; its zero fields are placeholders, not native limits or an indication that throttling is disabled.
 
 ## What it must do
 
@@ -21,16 +21,25 @@ PTR `GetScriptBucketThrottleLimits()` is an explicit temporary mock in `src/lua_
 
 - `src/lua_api/workarounds/temporary/script_bucket_throttle_limits.rs`: fresh zero-valued mock result, gated by `retail-12-1-5`.
 - `src/lua_api/workarounds/{mod.rs,temporary/mod.rs}`: temporary bootstrap wiring.
+- `src/cvars.rs`: Retail and WowForever CVar defaults from R88bn.
+- `src/lua_api/execution_budget.rs` and rilua `vm/state/execution_watchdog.rs`: inferred restricted-addon bucket accounting and exhaustion error.
 
 ## Tests asserting this spec
 
 - `src/loader/tests/wow_api_globals/patch_12_1_5_script_throttle_mock.rs`: exact keys, numeric zeros, arity, independent results, and profile behavior before/after bootstrap.
+- `src/cvars.rs` tests: registered defaults by profile.
+- `tests/rilua_rows.rs`: exhaustion through a loaded addon event callback.
 - Focused development proof at `ec51f3a7e`: one PTR test and one retail test passed using `cargo test --lib --offline --no-default-features --features sound,gui,client-<profile> script_throttle_mock_ -- --nocapture`.
 
-## Known gaps (current cycle)
+## Bucket enforcement
 
-- Native values are unknown. Replace placeholders only when authoritative return values are available.
+- VERIFIED (R88bn): Retail refills each bucket by whole elapsed seconds multiplied by its rate, capped at its burst value. Fractional elapsed time accumulates; a bucket already at cap advances its timestamp without adding credit.
+- INFERRED (R88bn): Forever uses the same refill rule.
+- INFERRED (R88bn): tainted addon execution uses the restricted bucket. Rilua stores one bucket per addon, initializes it at burst capacity, charges elapsed execution time at the 10,001-dispatch polling interval and invocation end, and raises `insecure scripts exceeded execution limit for addon <name>` when exhausted.
+- VERIFIED (R88bn): `hardcoreScriptThrottlingEnabled` is registered as enabled. Its relation to the per-invocation watchdog is UNKNOWN, so the simulator does not use it to select or change watchdog limits.
 
-## Out of scope
+## Known gaps
 
-Per explicit user override, bucket-throttling enforcement is out of scope, not a pending completion gate. The per-invocation elapsed-time watchdog is a separate VM control and does not read or change these bucket values. No setters, mode selectors, configuration, bucket accounting, or bucket-budget state are introduced here.
+- UNKNOWN (R88bn): which execution classes use normal versus restricted buckets, initial bucket balance, balance ownership, and exact charge points. The addon-restricted mapping, per-addon bucket, initial burst balance, and Forever refill mirror are simulator inferences.
+- Normal-bucket enforcement is not modeled. Do not treat the CVar's presence as proof that normal execution is charged.
+- The per-invocation elapsed-time watchdog is separate. It does not read or change bucket values.

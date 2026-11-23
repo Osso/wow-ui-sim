@@ -1,3 +1,7 @@
+## [2026-11-23] implementation | Script bucket throttle
+
+Updated the [throttle contract](../specs/script-bucket-throttle-limits.md) and linked it from the [watchdog system](../systems/script-execution-watchdog.md). **VERIFIED (R88bn):** Retail/Forever registered CVar defaults and Retail refill behavior. **INFERRED (R88bn):** tainted addon code uses a per-addon restricted bucket, initialized at burst capacity; Forever mirrors Retail refill. Normal-bucket execution classes and native balance ownership remain unknown.
+
 ## [2026-11-23] investigation | Mythic+ map request reentrancy
 
 Added [the investigation](investigations/mythic-plus-map-request-reentrancy.md) and linked it from the [request contract](../specs/mythic-plus-map-info-request.md). **VERIFIED (same-root Retail runs after merging master `e6407a379`):** both revisions discovered 78 addons and loaded 49; master recorded 10 unique errors / 159,423 occurrences, while the branch recorded 7 / 7 with no recursion, stack-overflow, instruction-budget, or watchdog error. AllTheThings loaded on both; only master reported its instruction-budget errors. The branch still reports one `Blizzard_ChallengesUI` nil-map-row error and two `Clicked` errors; their scope and evidence labels are in the investigation.
