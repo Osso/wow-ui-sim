@@ -64,12 +64,20 @@ fn update_registration(state: &mut LuaState) -> LuaResult<u32> {
         );
         return Ok(0);
     }
-    let registrations = &mut sim.action_combat_range.registrations;
+    apply_registration_delta(&mut sim.action_combat_range.registrations, key, enable);
+    Ok(0)
+}
+
+fn apply_registration_delta(
+    registrations: &mut HashMap<i32, CombatRangeRegistration>,
+    key: i32,
+    enable: bool,
+) {
     let previous = registrations.get(&key).map_or(0, |entry| entry.references);
     let references = previous.wrapping_add(if enable { 1 } else { -1 });
     if references < 0 {
         unknown_policy::report_native_diagnostic("EnableRangeCheck underflow.");
-        return Ok(0);
+        return;
     }
     if references == 0 {
         registrations.remove(&key);
@@ -82,7 +90,6 @@ fn update_registration(state: &mut LuaState) -> LuaResult<u32> {
             })
             .references = references;
     }
-    Ok(0)
 }
 
 fn collect_updates(
