@@ -176,6 +176,7 @@ fn supply_display_season_maps(env: &WowLuaEnv, season_id: u32) {
     env.exec(&format!(
         r#"
         A_Admin.SetCurrentDisplaySeasonID({season_id})
+        A_Admin.SetPlayerLevel(GetMaxLevelForPlayerExpansion())
         local mapIDs = C_ChallengeMode.GetMapTable()
         assert(#mapIDs == 8)
         for _, mapID in ipairs(mapIDs) do
@@ -189,19 +190,7 @@ fn supply_display_season_maps(env: &WowLuaEnv, season_id: u32) {
 
 #[cfg(feature = "client-retail")]
 fn challenge_icon_map_ids_for_display_season(env: &WowLuaEnv, season_id: u32) -> String {
-    env.exec(&format!(
-        r#"
-        A_Admin.SetCurrentDisplaySeasonID({season_id})
-        A_Admin.SetPlayerLevel(GetMaxLevelForPlayerExpansion())
-        local mapIDs = C_ChallengeMode.GetMapTable()
-        assert(#mapIDs == 8)
-        for _, mapID in ipairs(mapIDs) do
-            A_Admin.SetChallengeModeMapInfo(mapID, {{name='Season map '..mapID, id=mapID,
-                timeLimit=1500, texture=mapID + 1000, backgroundTexture=mapID + 2000, mapID=mapID}})
-        end
-    "#
-    ))
-    .unwrap();
+    supply_display_season_maps(env, season_id);
     let ui = blizzard_ui_dir();
     let challenges_ui_toc = ui.join("Blizzard_ChallengesUI/Blizzard_ChallengesUI_Mainline.toc");
     load_addon(&env.loader_env(), &challenges_ui_toc).expect("Blizzard_ChallengesUI should load");
