@@ -128,6 +128,8 @@ macro_rules! build_empty_sim_state {
             legacy_gamma: 0.0,
             guild_roster_selection: 0,
             guild_request_inputs: Default::default(),
+            guild_rename_status: None,
+            pending_guild_rename_status: Default::default(),
             runeforge_interaction: Default::default(),
             restriction_report_active: false,
             ping_radial_frame: None,

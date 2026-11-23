@@ -201,46 +201,72 @@ fn blizzard_guild_rename_excluded_from_all_glue_screen_auto_discovery_passes() {
 
 prefork_full_ui_case! {
 fn npc_interaction_query_gates_guild_rename_status_updates(env: &WowLuaEnv) {
-    let guild_rename_status: rilua::Val = env
-        .eval(
-            "return {\
-                isNameChangeEnabled = true,\
-                isPlayerGuildMaster = true,\
-                refundEligibleEndTime = 0,\
-                nextRenameTime = 0,\
-                renamePrice = 500,\
-                refundAmount = 0,\
-                currentGuildMoney = 1000,\
-                result = Enum.GuildErrorType.Success,\
-                oldGuildName = 'Previous',\
-                reservedName = '',\
-                reservedNameExpirationTime = 0\
-            }",
-        )
-        .unwrap();
-
-    env.exec("A_Admin.OpenGuildRename()").unwrap();
-    env.fire_event_with_args(
-        "GUILD_RENAME_STATUS_UPDATE",
-        std::slice::from_ref(&guild_rename_status),
+    env.exec(
+        r#"
+        A_Admin.SetGuildRenameStatus({
+            isNameChangeEnabled = true,
+            isPlayerGuildMaster = true,
+            refundEligibleEndTime = 0,
+            nextRenameTime = 0,
+            renamePrice = 500,
+            refundAmount = 0,
+            currentGuildMoney = 1000,
+            result = Enum.GuildErrorType.Success,
+            oldGuildName = 'Previous',
+            reservedName = '',
+            reservedNameExpirationTime = 0,
+        })
+        A_Admin.OpenGuildRename()
+        assert(GuildRenameFrame.status == nil, 'status reply must not be synchronous')
+        "#,
     )
     .unwrap();
+    env.process_timers()
+        .expect("supplied guild rename status should arrive at the next timer boundary");
     let rename_flow_shown: bool = env
         .eval("return GuildRenameFrame:IsShown() and GuildRenameFrame.RenameFlow:IsShown()")
         .unwrap();
     assert!(
         rename_flow_shown,
-        "GuildRename interaction must apply the enabled rename status"
+        "GuildRename interaction must apply the enabled guild-master status"
+    );
+
+    env.exec(
+        r#"
+        C_PlayerInteractionManager.ClearInteraction(Enum.PlayerInteractionType.GuildRename)
+        A_Admin.SetGuildRenameStatus({
+            isNameChangeEnabled = true,
+            isPlayerGuildMaster = false,
+            refundEligibleEndTime = 0,
+            nextRenameTime = 0,
+            renamePrice = 500,
+            refundAmount = 0,
+            currentGuildMoney = 1000,
+            result = Enum.GuildErrorType.Success,
+            oldGuildName = 'Previous',
+            reservedName = '',
+            reservedNameExpirationTime = 0,
+        })
+        A_Admin.OpenGuildRename()
+        "#,
+    )
+    .unwrap();
+    env.process_timers()
+        .expect("second supplied guild rename status should reach the consumer");
+    let title_flow_shown: bool = env
+        .eval("return GuildRenameFrame:IsShown() and GuildRenameFrame.TitleFlow:IsShown() and not GuildRenameFrame.RenameFlow:IsShown()")
+        .unwrap();
+    assert!(
+        title_flow_shown,
+        "non-guild-master status must render the permission title flow"
     );
 
     env.exec("C_PlayerInteractionManager.ClearInteraction(Enum.PlayerInteractionType.GuildRename)")
         .unwrap();
-    env.exec("A_Admin.OpenMailbox()").unwrap();
-    env.fire_event_with_args(
-        "GUILD_RENAME_STATUS_UPDATE",
-        std::slice::from_ref(&guild_rename_status),
-    )
-    .unwrap();
+    env.exec("A_Admin.OpenMailbox(); C_GuildInfo.RequestRenameStatus()")
+        .unwrap();
+    env.process_timers()
+        .expect("mail interaction status reply should be processed");
     let rename_frame_shown: bool = env.eval("return GuildRenameFrame:IsShown()").unwrap();
     assert!(
         !rename_frame_shown,

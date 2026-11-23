@@ -1,5 +1,28 @@
 # Guild
 
+### A_Admin.SetGuildRenameStatus(status)
+
+Supplies the status record returned asynchronously by `C_GuildInfo.RequestRenameStatus()` on Retail and WoW Forever. The next request emits `GUILD_RENAME_STATUS_UPDATE` on a later timer tick. If no status is supplied, the request emits no reply.
+
+`status` uses the `GuildRenameStatus` fields: `isNameChangeEnabled`, `isPlayerGuildMaster`, `refundEligibleEndTime`, `nextRenameTime`, `renamePrice`, `refundAmount`, `currentGuildMoney`, `result`, `oldGuildName`, `reservedName`, and `reservedNameExpirationTime`.
+
+- **Example:**
+```lua
+A_Admin.SetGuildRenameStatus({
+    isNameChangeEnabled = true,
+    isPlayerGuildMaster = true,
+    refundEligibleEndTime = 0,
+    nextRenameTime = 0,
+    renamePrice = 500,
+    refundAmount = 0,
+    currentGuildMoney = 1000,
+    result = Enum.GuildErrorType.Success,
+    oldGuildName = "Previous",
+    reservedName = "",
+    reservedNameExpirationTime = 0,
+})
+```
+
 ### A_Admin.SetGuildInfo(name, rank, numMembers)
 
 Configures the player's guild membership.

@@ -5,9 +5,11 @@
 
 use crate::c_api::{ensure_namespace, global_val};
 use crate::client_profile::{ACTIVE, ClientProfile};
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+use crate::lua_api::methods::table_get;
 use crate::lua_api::methods::{
-    borrow_state, borrow_state_mut, call_function_state, create_table, table_set_static,
-    val_to_string,
+    borrow_state, borrow_state_mut, call_function_state, create_string, create_table,
+    table_set_static, val_to_string,
 };
 use crate::lua_api::state_types::GuildLogo;
 use crate::lua_bridge::{FromStack, stack_val, table_set_rust_fn_static};
@@ -34,6 +36,21 @@ pub struct GuildTabardMetadata {
     pub emblem_style: u32,
 }
 
+#[derive(Debug, Clone, PartialEq)]
+pub struct GuildRenameStatus {
+    pub is_name_change_enabled: bool,
+    pub is_player_guild_master: bool,
+    pub refund_eligible_end_time: f64,
+    pub next_rename_time: f64,
+    pub rename_price: f64,
+    pub refund_amount: f64,
+    pub current_guild_money: f64,
+    pub result: f64,
+    pub old_guild_name: String,
+    pub reserved_name: String,
+    pub reserved_name_expiration_time: f64,
+}
+
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     if ACTIVE == ClientProfile::Wrath {
         return Ok(());
@@ -45,6 +62,14 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
         "GetGuildTabardInfo",
         get_guild_tabard_info,
     )?;
+    if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever) {
+        table_set_rust_fn_static(
+            state,
+            namespace,
+            "RequestRenameStatus",
+            request_rename_status,
+        )?;
+    }
     if ACTIVE == ClientProfile::Retail && cfg!(feature = "retail-12-1-5") {
         table_set_rust_fn_static(state, namespace, "Demote", demote)?;
         table_set_rust_fn_static(state, namespace, "SetLeader", set_leader)?;
@@ -180,6 +205,141 @@ fn push_tabard_info(
         table_set_static(state, row, field, color);
     }
     Ok(())
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) fn admin_set_guild_rename_status(state: &mut LuaState) -> LuaResult<u32> {
+    let status = read_guild_rename_status(state)?;
+    let mut sim = borrow_state_mut(state)?;
+    sim.guild_rename_status = Some(status);
+    Ok(0)
+}
+
+fn request_rename_status(state: &mut LuaState) -> LuaResult<u32> {
+    let status = borrow_state(state)?.guild_rename_status.clone();
+    if let Some(status) = status {
+        borrow_state_mut(state)?
+            .pending_guild_rename_status
+            .push_back(status);
+        crate::lua_api::timer_layout::defer_rust_event(
+            state,
+            dispatch_guild_rename_status,
+            "Guild rename status response event",
+        )?;
+    }
+    state.push(Val::Bool(true));
+    Ok(1)
+}
+
+// INFERRED (R88fa (native evidence pending)): supplied replies arrive on a later tick and are not dropped.
+fn dispatch_guild_rename_status(state: &mut LuaState) -> LuaResult<u32> {
+    let status = borrow_state_mut(state)?
+        .pending_guild_rename_status
+        .pop_front();
+    let Some(status) = status else {
+        return Ok(0);
+    };
+    let status = push_guild_rename_status(state, &status);
+    state.push(status);
+    let result = crate::lua_api::globals::state_backed_queries::dispatch_event_now(
+        state,
+        "GUILD_RENAME_STATUS_UPDATE",
+        &[status],
+    );
+    state.pop();
+    result?;
+    Ok(0)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn read_guild_rename_status(state: &mut LuaState) -> LuaResult<GuildRenameStatus> {
+    let table = stack_val(state, 1);
+    if !matches!(table, Val::Table(_)) {
+        return Err(runtime_error(
+            "A_Admin.SetGuildRenameStatus requires a GuildRenameStatus table",
+        ));
+    }
+    Ok(GuildRenameStatus {
+        is_name_change_enabled: read_status_bool(state, table, "isNameChangeEnabled")?,
+        is_player_guild_master: read_status_bool(state, table, "isPlayerGuildMaster")?,
+        refund_eligible_end_time: read_status_number(state, table, "refundEligibleEndTime")?,
+        next_rename_time: read_status_number(state, table, "nextRenameTime")?,
+        rename_price: read_status_number(state, table, "renamePrice")?,
+        refund_amount: read_status_number(state, table, "refundAmount")?,
+        current_guild_money: read_status_number(state, table, "currentGuildMoney")?,
+        result: read_status_number(state, table, "result")?,
+        old_guild_name: read_status_string(state, table, "oldGuildName")?,
+        reserved_name: read_status_string(state, table, "reservedName")?,
+        reserved_name_expiration_time: read_status_number(
+            state,
+            table,
+            "reservedNameExpirationTime",
+        )?,
+    })
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn read_status_bool(state: &mut LuaState, table: Val, key: &str) -> LuaResult<bool> {
+    match table_get(state, table, key) {
+        Val::Bool(value) => Ok(value),
+        _ => Err(runtime_error(format!(
+            "A_Admin.SetGuildRenameStatus requires boolean {key}"
+        ))),
+    }
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn read_status_number(state: &mut LuaState, table: Val, key: &str) -> LuaResult<f64> {
+    match table_get(state, table, key) {
+        Val::Num(value) => Ok(value),
+        _ => Err(runtime_error(format!(
+            "A_Admin.SetGuildRenameStatus requires numeric {key}"
+        ))),
+    }
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn read_status_string(state: &mut LuaState, table: Val, key: &str) -> LuaResult<String> {
+    let value = table_get(state, table, key);
+    val_to_string(state, value).ok_or_else(|| {
+        runtime_error(format!(
+            "A_Admin.SetGuildRenameStatus requires string {key}"
+        ))
+    })
+}
+
+fn push_guild_rename_status(state: &mut LuaState, status: &GuildRenameStatus) -> Val {
+    let table = create_table(state);
+    state.push(table);
+    for (key, value) in [
+        (
+            "isNameChangeEnabled",
+            Val::Bool(status.is_name_change_enabled),
+        ),
+        (
+            "isPlayerGuildMaster",
+            Val::Bool(status.is_player_guild_master),
+        ),
+        (
+            "refundEligibleEndTime",
+            Val::Num(status.refund_eligible_end_time),
+        ),
+        ("nextRenameTime", Val::Num(status.next_rename_time)),
+        ("renamePrice", Val::Num(status.rename_price)),
+        ("refundAmount", Val::Num(status.refund_amount)),
+        ("currentGuildMoney", Val::Num(status.current_guild_money)),
+        ("result", Val::Num(status.result)),
+        ("oldGuildName", create_string(state, &status.old_guild_name)),
+        ("reservedName", create_string(state, &status.reserved_name)),
+        (
+            "reservedNameExpirationTime",
+            Val::Num(status.reserved_name_expiration_time),
+        ),
+    ] {
+        table_set_static(state, table, key, value);
+    }
+    state.pop();
+    table
 }
 
 pub(crate) fn admin_set_tabard_metadata(state: &mut LuaState) -> LuaResult<u32> {

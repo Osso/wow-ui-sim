@@ -178,6 +178,9 @@ pub struct SimState {
     /// Zero means none; other values are one-based guild roster indexes.
     pub guild_roster_selection: usize,
     pub guild_request_inputs: crate::c_api::c_guild_info::GuildRequestInputs,
+    pub guild_rename_status: Option<crate::c_api::c_guild_info::GuildRenameStatus>,
+    pub pending_guild_rename_status:
+        std::collections::VecDeque<crate::c_api::c_guild_info::GuildRenameStatus>,
     pub runeforge_interaction: crate::c_api::c_legendary_crafting::RuneforgeInteraction,
     /// Set while a restriction report dispatches; nested refusals are not reported.
     pub restriction_report_active: bool,
