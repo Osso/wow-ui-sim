@@ -57,7 +57,7 @@ pub(crate) fn call_frame_handler(
             format_handler_watchdog_error(&owner, frame_id, event, timeout, started.elapsed(),)
         );
     }
-    result.map_err(|error| error.to_string())?
+    result.map_err(|error| error.to_string())
 }
 
 fn call_handler(state: &mut LuaState, handler: Val, args: &[Val]) -> LuaResult<Vec<Val>> {
