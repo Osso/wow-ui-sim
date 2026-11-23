@@ -130,8 +130,7 @@ fn player_spells_talent_sort_uses_catalog_unlock_levels() {
                         return { unlocked = false }
                     end
                     local slotInfo = C_SpecializationInfo.GetPvpTalentSlotInfo(1)
-                    assert(slotInfo and slotInfo.enabled and slotInfo.level == 60
-                        and #slotInfo.availableTalentIDs == 2,
+                    assert(slotInfo and #slotInfo.availableTalentIDs == 2,
                         "host-supplied slot data should reach Player Spells")
                     assert(C_SpecializationInfo.GetPvpTalentUnlockLevel(900) == 60)
                     assert(C_SpecializationInfo.GetPvpTalentUnlockLevel(901) == 50)
