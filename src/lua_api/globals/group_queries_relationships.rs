@@ -455,7 +455,8 @@ pub(crate) fn unit_is_connected_in_state(st: &SimState, unit: &str) -> bool {
 
 pub(super) fn unit_is_connected(state: &mut LuaState) -> LuaResult<u32> {
     let unit = Option::<String>::from_stack(state, 1)?.unwrap_or_default();
-    let connected = unit_is_connected_in_state(&borrow_state(state)?, &unit);
+    let sim = borrow_state(state)?;
+    let connected = unit_is_connected_in_state(&sim, &unit);
     state.push(Val::Bool(connected));
     Ok(1)
 }
