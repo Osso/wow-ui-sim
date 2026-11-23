@@ -58,6 +58,12 @@ pub enum CursorItemOrigin {
 pub struct AddonRuntimeMetrics {
     /// Time spent in this addon's handlers during the current frame (accumulator).
     pub current_frame_ms: f64,
+    /// INFERRED (R88fg, native evidence pending): supplied memory input and published snapshot.
+    pub supplied_memory_kb: f64,
+    pub memory_snapshot_kb: f64,
+    /// INFERRED (R88fg, native evidence pending): supplied CPU input and published snapshot.
+    pub supplied_cpu_ms: f64,
+    pub cpu_snapshot_ms: f64,
     /// Rolling window of per-frame times (last 60 frames) for RecentAverageTime.
     pub recent_frames: VecDeque<f64>,
     /// Peak time ever recorded in a single frame.
@@ -80,6 +86,10 @@ impl Default for AddonRuntimeMetrics {
     fn default() -> Self {
         Self {
             current_frame_ms: 0.0,
+            supplied_memory_kb: 0.0,
+            memory_snapshot_kb: 0.0,
+            supplied_cpu_ms: 0.0,
+            cpu_snapshot_ms: 0.0,
             recent_frames: VecDeque::with_capacity(60),
             peak_ms: 0.0,
             session_total_ms: 0.0,
@@ -98,6 +108,8 @@ impl Default for AddonRuntimeMetrics {
 /// Application-level frame timing for profiler (total frame time, not just addon time).
 #[derive(Debug, Clone, Default)]
 pub struct AppFrameMetrics {
+    /// INFERRED (R88fg, native evidence pending): optional host-supplied FPS.
+    pub supplied_framerate: Option<f64>,
     /// Rolling window of total frame times in ms (last 60 frames).
     pub recent_frame_ms: VecDeque<f64>,
     /// Peak frame time ever recorded.

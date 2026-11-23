@@ -932,6 +932,7 @@ const PERFORMANCE_BAR_TOOLTIP_ASSERTIONS: &str = r#"
     local bandwidth = string.format(MAINMENUBAR_BANDWIDTH_LABEL, 0)
     assert(has_tooltip_line(protocol), "original tooltip protocol row: " .. protocol)
     assert(has_tooltip_line(bandwidth), "original tooltip bandwidth row must show zero")
+    A_Admin.SetFramerate(48.5)
     A_Admin.SetAddOnUsage("Blizzard_MicroMenu", 240, 7)
     A_Admin.SetAddOnUsage("Blizzard_UIParent", 80, 2)
     GameTooltip:Hide()
@@ -943,6 +944,8 @@ const PERFORMANCE_BAR_TOOLTIP_ASSERTIONS: &str = r#"
         if text:find("Blizzard_MicroMenu", 1, true) then first = index end
         if text:find("Blizzard_UIParent", 1, true) then second = index end
     end
+    assert(has_tooltip_line(string.format(MAINMENUBAR_FPS_LABEL, 48.5)),
+        "original PerformanceBar tooltip must display the supplied framerate")
     assert(first and second and first < second,
         "original PerformanceBar tooltip must order addons by supplied memory usage")
     local count, home, world = capture_results(GetProtocolTypes())

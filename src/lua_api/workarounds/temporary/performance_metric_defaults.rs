@@ -1,9 +1,7 @@
-//! Temporary framerate and performance metric globals.
-//!
-//! The simulator does not model addon CPU/memory accounting yet. These globals
-//! are safe startup defaults for Blizzard performance UI callers.
+//! Temporary compatibility defaults for profiling globals without a modeled consumer.
 
-const PERFORMANCE_METRIC_DEFAULTS_LUA: &str = r#"
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+const LEGACY_PERFORMANCE_METRICS_LUA: &str = r#"
 if GetFramerate == nil then
   function GetFramerate()
     return 60
@@ -39,7 +37,9 @@ if GetAddOnCPUUsage == nil then
     return 0
   end
 end
+"#;
 
+const PERFORMANCE_METRIC_DEFAULTS_LUA: &str = r#"
 if GetFrameCPUUsage == nil then
   function GetFrameCPUUsage(_frame, _includeChildren)
     return 0, 0
@@ -94,6 +94,8 @@ end
 "#;
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+    lua.exec(LEGACY_PERFORMANCE_METRICS_LUA)?;
     lua.exec(PERFORMANCE_METRIC_DEFAULTS_LUA)?;
     #[cfg(not(all(feature = "client-retail", feature = "retail-12-1-5")))]
     lua.exec(PROTOCOL_TYPES_DEFAULT_LUA)?;
@@ -129,6 +131,7 @@ mod tests {
         return "ok"
         "#;
 
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     #[test]
     fn installs_performance_metric_defaults() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
