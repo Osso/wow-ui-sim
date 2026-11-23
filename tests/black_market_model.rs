@@ -16,6 +16,20 @@ const TWO_LISTINGS_STATE: &str = r#"{"items":[
 
 const DUPLICATE_HOT_ITEM_STATE: &str = r#"{"items":[{"marketID":711,"itemID":19022,"name":"Shared Relic","texture":"Interface\\Icons\\INV_Misc_Gem_01","quantity":1,"itemType":"Armor","usable":true,"level":80,"levelType":"item level","sellerName":"Shared Seller","minBid":20000,"minIncrement":10000,"currBid":10000,"youHaveHighBid":false,"numBids":1,"timeLeft":4,"link":"item:19022","quality":4}],"hotItemMarketID":711,"viewOnly":false}"#;
 
+type BidState = (
+    bool,
+    bool,
+    String,
+    f64,
+    bool,
+    f64,
+    bool,
+    bool,
+    String,
+    bool,
+    bool,
+);
+
 const BID_STATE_QUERY: &str = r#"
     local function submitBid(marketID, amount)
         C_BlackMarket.ItemPlaceBid(marketID, amount)
@@ -95,19 +109,7 @@ fn assert_black_market_rows(env: &WowLuaEnv) {
 }
 
 fn assert_black_market_bid_state(env: &WowLuaEnv) {
-    let state: (
-        bool,
-        bool,
-        String,
-        f64,
-        bool,
-        f64,
-        bool,
-        bool,
-        String,
-        bool,
-        bool,
-    ) = env
+    let state: BidState = env
         .eval(BID_STATE_QUERY)
         .expect("Blizzard bids should update accepted rows and reject invalid bids");
     assert_eq!(
