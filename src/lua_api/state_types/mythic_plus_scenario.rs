@@ -102,6 +102,8 @@ pub struct MythicPlusState {
     #[cfg(feature = "retail-12-0-7")]
     pub season_best_per_map:
         HashMap<i32, (Option<MythicPlusWeeklyBest>, Option<MythicPlusWeeklyBest>)>,
+    /// INFERRED R88ev (native evidence pending): one map-info response is queued.
+    pub(crate) pending_map_info_request: bool,
     /// Whether a Mythic+ run is currently in progress.
     pub is_active: bool,
     /// Whether the weekly Mythic+ reward is available to claim.
@@ -123,6 +125,7 @@ impl Default for MythicPlusState {
             weekly_best_per_map: HashMap::new(),
             #[cfg(feature = "retail-12-0-7")]
             season_best_per_map: HashMap::new(),
+            pending_map_info_request: false,
             is_active: false,
             is_weekly_reward_available: false,
         }

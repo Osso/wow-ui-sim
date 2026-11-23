@@ -27,7 +27,9 @@
 //!   challenge dungeon rows for the legacy ChallengesFrame.
 
 use super::helpers::{ensure_namespace, set_table_array};
-use crate::lua_api::methods::{borrow_state, create_string, create_table, table_set};
+use crate::lua_api::methods::{
+    borrow_state, borrow_state_mut, create_string, create_table, table_set,
+};
 #[cfg(not(feature = "retail-12-0-7"))]
 use crate::lua_api::state::MythicPlusWeeklyBest;
 use crate::lua_bridge::{FromStack, table_set_rust_fn_static};
@@ -304,6 +306,35 @@ fn request_current_affixes(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn request_map_info(state: &mut LuaState) -> LuaResult<u32> {
+    let should_defer = {
+        let mut sim = borrow_state_mut(state)?;
+        if sim.mythic_plus.pending_map_info_request {
+            false
+        } else {
+            sim.mythic_plus.pending_map_info_request = true;
+            true
+        }
+    };
+    if !should_defer {
+        return Ok(0);
+    }
+    if let Err(error) = crate::lua_api::timer_layout::defer_rust_event(
+        state,
+        dispatch_map_info_update,
+        "Mythic+ map info response event",
+    ) {
+        borrow_state_mut(state)?
+            .mythic_plus
+            .pending_map_info_request = false;
+        return Err(error);
+    }
+    Ok(0)
+}
+
+fn dispatch_map_info_update(state: &mut LuaState) -> LuaResult<u32> {
+    borrow_state_mut(state)?
+        .mythic_plus
+        .pending_map_info_request = false;
     publish_mythic_plus_update(state, "CHALLENGE_MODE_MAPS_UPDATE")
 }
 
