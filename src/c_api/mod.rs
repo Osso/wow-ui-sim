@@ -58,7 +58,7 @@ pub(crate) mod class_catalog;
 pub(crate) mod classic_startup_data;
 pub(crate) mod collections_availability;
 pub mod credits;
-#[cfg(feature = "client-retail")]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub mod currency_list;
 pub mod forever_talents;
 pub(crate) mod game_mode;
@@ -630,12 +630,14 @@ pub(crate) mod c_tts_settings;
 mod helpers;
 mod secure_publication;
 mod secure_publication_data;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) use helpers::bad_argument;
 pub(crate) use helpers::parse_numeric_string;
 #[cfg(feature = "client-ptr")]
 pub(crate) use helpers::read_untainted_signed32_argument;
 #[cfg(feature = "client-retail")]
 pub(crate) use helpers::{
-    bad_argument, read_untainted_signed32_argument, read_untainted_string_argument,
+    read_untainted_signed32_argument, read_untainted_string_argument,
     read_untainted_truthy_argument, read_untainted_value,
 };
 #[cfg(feature = "retail-12-0-0")]

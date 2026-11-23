@@ -29,7 +29,7 @@ use super::admin_actionbars_bags::set_possess_action_slot;
 use super::admin_actionbars_bags::{
     add_bag_item, add_guild_bank_item, add_guild_bank_tab, clear_action_bars, clear_action_slot,
     clear_bags, clear_guild_bank, clear_guild_bank_tabs, remove_bag_item, set_action_slot,
-    set_merchant_items, set_pet_action_slot,
+    set_merchant_items, set_pet_action_slot, set_possess_bar_visible,
 };
 use super::admin_addons::register_test_addon;
 use super::admin_auction_house::{
@@ -70,8 +70,9 @@ use super::admin_party_target_helpers::{
 use super::admin_party_target_helpers::{set_party_member_faction, set_party_member_pvp};
 use super::admin_premade::{add_premade_listing, clear_premade_listings, update_premade_listing};
 use super::admin_pvp_guild::{
-    clear_guild, join_guild, leave_guild, set_battlefield_arena, set_battlefield_queue,
-    set_guild_info, set_honor_level, set_pvp_enabled, set_pvp_timer,
+    clear_guild, join_guild, leave_guild, set_battlefield_arena, set_battlefield_max_id,
+    set_battlefield_queue, set_guild_info, set_honor_level, set_player_present, set_pvp_enabled,
+    set_pvp_timer,
 };
 use super::admin_spec::{reset_talents, set_spec, set_talent_rank, set_talent_selection};
 use super::admin_vault::{clear_vault, set_vault_activity, set_vault_rewards};
@@ -92,6 +93,8 @@ pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
     let builder = TableBuilder::new(lua.state_mut());
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     let builder = super::real::configuration_warnings::register_admin(builder)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let builder = super::admin_currency_transfer::register_admin(builder)?;
     let builder = register_player(builder)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     let builder = crate::c_api::c_quest_log::register_zone_story_admin(builder)?;
@@ -500,6 +503,7 @@ fn register_inventory_and_mail(b: TableBuilder) -> LuaResult<TableBuilder> {
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     let b = b.set_function("SetPossessActionSlot", set_possess_action_slot)?;
     let b = b
+        .set_function("SetPossessBarVisible", set_possess_bar_visible)?
         .set_function("SetActionSlot", set_action_slot)?
         .set_function(
             "SetActionRepeatActive",
@@ -563,14 +567,18 @@ fn register_vault_and_premade(b: TableBuilder) -> LuaResult<TableBuilder> {
 
 fn register_collections_pvp<'lua>(b: TableBuilder<'lua>) -> LuaResult<TableBuilder<'lua>> {
     let b = register_functions(b, COLLECTIONS_PVP_FUNCTIONS)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let b = crate::c_api::c_spec::register_admin(b)?;
     if matches!(
         crate::client_profile::ACTIVE,
         crate::client_profile::ClientProfile::Retail
             | crate::client_profile::ClientProfile::WowForever
     ) {
         return b
+            .set_function("SetMaxBattlefieldID", set_battlefield_max_id)?
             .set_function("SetBattlefieldQueue", set_battlefield_queue)?
             .set_function("SetBattlefieldArena", set_battlefield_arena)?
+            .set_function("SetPlayerPresent", set_player_present)?
             .set_function("SetPVPTimer", set_pvp_timer);
     }
     Ok(b)

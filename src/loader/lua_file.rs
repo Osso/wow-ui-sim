@@ -237,7 +237,10 @@ fn execute_compiled_lua_file_with_environment(
             exec_addon_func(state, func, ctx)
         })
     };
-    result.map_err(|e| contextual_lua_load_error(state, e, chunk_name))
+    let result = result.map_err(|error| contextual_lua_load_error(state, error, chunk_name));
+    crate::lua_api::editbox_update::flush_state_at_host_boundary(state)
+        .map_err(|error| LoadError::Lua(error.to_string()))?;
+    result
 }
 
 pub(crate) fn prepare_addon_function(

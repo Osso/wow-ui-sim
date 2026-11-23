@@ -8,6 +8,8 @@ pub mod admin_auction_house;
 pub mod admin_buffs;
 pub mod admin_collections;
 pub mod admin_crafting;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub mod admin_currency_transfer;
 pub mod admin_encounter;
 pub mod admin_equipment;
 pub mod admin_events;

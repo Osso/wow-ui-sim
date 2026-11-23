@@ -16,6 +16,14 @@ use rilua::{LuaResult, Val};
 
 // ── Action bars ───────────────────────────────────────────────────────────────
 
+pub(super) fn set_possess_bar_visible(state: &mut LuaState) -> LuaResult<u32> {
+    let visible = bool::from_stack(state, 1)?;
+    borrow_state_mut(state)?
+        .action_bar_state
+        .possess_bar_visible = visible;
+    Ok(0)
+}
+
 pub(super) fn set_action_slot(state: &mut LuaState) -> LuaResult<u32> {
     let slot = u32::from_stack(state, 1)?;
     let spell_id = u32::from_stack(state, 2)?;

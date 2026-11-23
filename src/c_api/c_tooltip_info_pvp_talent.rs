@@ -16,11 +16,11 @@ use crate::lua_api::globals::missing_surface::tooltip_info::{
     append_line, format_global_numeric, format_global_text, global_text, named_color,
 };
 use crate::lua_api::methods::borrow_state;
-#[cfg(feature = "client-retail")]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 use crate::lua_api::methods::table_set;
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
 use rilua::LuaResult;
-#[cfg(feature = "client-retail")]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 use rilua::Val;
 use rilua::vm::{gc::arena::GcRef, state::LuaState, table::Table};
 #[cfg(feature = "client-retail")]
@@ -65,9 +65,8 @@ pub struct PvpTalentTooltipRecord {
     pub eligibility_level_failed: bool,
 }
 
-#[cfg(feature = "client-retail")]
-/// Host-supplied values with the pinned Retail PvpTalentSlotInfo shape.
-/// SpecializationInfoDocumentation.lua:491-499; no native defaults are inferred.
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+/// Host-supplied values with the pinned PvpTalentSlotInfo shape.
 #[derive(Clone, Debug)]
 pub struct PvpTalentSlotInput {
     pub enabled: bool,
@@ -620,6 +619,77 @@ fn append_blank_line(state: &mut LuaState, tooltip: Val) {
 #[cfg(feature = "client-retail")]
 pub(crate) fn register_slot_info(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
     table_set_rust_fn_static(state, namespace, "GetPvpTalentSlotInfo", get_slot_info)
+}
+
+#[cfg(feature = "client-wowforever")]
+pub(crate) fn register_forever_slot_info(
+    state: &mut LuaState,
+    namespace: GcRef<Table>,
+) -> LuaResult<()> {
+    table_set_rust_fn_static(
+        state,
+        namespace,
+        "GetPvpTalentSlotInfo",
+        get_forever_slot_info,
+    )
+}
+
+// INFERRED Forever record and missing-row behavior mirrors Retail. R88eq eq1.
+#[cfg(feature = "client-wowforever")]
+fn get_forever_slot_info(state: &mut LuaState) -> LuaResult<u32> {
+    let slot_index = super::helpers::read_untainted_signed32_argument(
+        state,
+        1,
+        "C_SpecializationInfo.GetPvpTalentSlotInfo",
+        "Usage: local slotInfo = C_SpecializationInfo.GetPvpTalentSlotInfo(talentIndex)",
+    )?;
+    let (slot, selected) = {
+        let sim = borrow_state(state)?;
+        let selected_index = slot_index
+            .checked_sub(1)
+            .and_then(|index| usize::try_from(index).ok());
+        let selected = selected_index
+            .and_then(|index| sim.pvp_talents.selected_talent_ids.get(index).copied());
+        (
+            sim.pvp_talents.slot_infos.get(&slot_index).cloned(),
+            selected,
+        )
+    };
+    let result = if let Some(slot) = slot {
+        push_forever_slot_info(state, &slot, selected)
+    } else {
+        crate::lua_api::workarounds::pvp_slot_default(
+            state,
+            usize::try_from(slot_index).unwrap_or(0),
+        )
+    };
+    state.push(result);
+    Ok(1)
+}
+
+#[cfg(feature = "client-wowforever")]
+fn push_forever_slot_info(
+    state: &mut LuaState,
+    slot: &PvpTalentSlotInput,
+    selected: Option<i32>,
+) -> Val {
+    let result = crate::lua_api::methods::create_table(state);
+    table_set(state, result, "enabled", Val::Bool(slot.enabled));
+    table_set(state, result, "level", Val::Num(f64::from(slot.level)));
+    if let Some(id) = selected {
+        table_set(state, result, "selectedTalentID", Val::Num(f64::from(id)));
+    }
+    let available = crate::lua_api::methods::create_table(state);
+    for (position, id) in slot.available_talent_ids.iter().enumerate() {
+        super::helpers::set_table_array(
+            state,
+            available,
+            (position + 1) as i64,
+            Val::Num(f64::from(*id)),
+        );
+    }
+    table_set(state, result, "availableTalentIDs", available);
+    result
 }
 
 #[cfg(feature = "client-retail")]

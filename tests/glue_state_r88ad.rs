@@ -123,13 +123,12 @@ fn account_login_writes_saved_account_settings() {
     }
 }
 
-/// Edit the account field; OnTextChanged is delivered at the next update flush.
+/// Edit the account field; OnTextChanged is delivered before the script returns to host.
 fn edit_account(env: &WowLuaEnv, text: &str) {
     lua(
         env,
         &format!("AccountLogin.UI.AccountEditBox:SetText({text:?}) return ''"),
     );
-    env.fire_on_update(0.0).expect("deliver OnTextChanged");
 }
 
 // R88ad.7: ClearSavedAccountList empties a present `accountList` setting only.

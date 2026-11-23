@@ -164,11 +164,14 @@ impl WowLuaEnv {
             .borrow_mut()
             .pressed_keys
             .insert(unmodified_key_name(key).to_string());
-        if key == "ESCAPE" {
+        let result = if key == "ESCAPE" {
             self.dispatch_escape()
         } else {
             self.dispatch_key(key, text)
-        }
+        };
+        let flush = super::editbox_update::flush_at_host_boundary(self);
+        result?;
+        flush
     }
 
     /// Release a physical key without dispatching another key-down event.
