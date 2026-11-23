@@ -143,6 +143,13 @@ fn currency_transfer_menu_clamps_to_account_source_quantity_and_cost() {
         .expect("account currency completion should publish supplied sources");
     env.exec("TokenFramePopup.CurrencyTransferToggleButton:Click()")
         .expect("the original TokenFrame toggle should open CurrencyTransferMenu");
+    let menu_state: (bool, bool, Option<i32>) = env
+        .eval(
+            "return TokenFramePopup.CurrencyTransferToggleButton:IsEnabled(), \
+             CurrencyTransferMenu:IsShown(), CurrencyTransferMenu:GetCurrencyID()",
+        )
+        .expect("the original toggle should open the selected currency menu");
+    assert_eq!(menu_state, (true, true, Some(1792)));
 
     let amounts: (f64, f64, f64, f64) = env
         .eval(
