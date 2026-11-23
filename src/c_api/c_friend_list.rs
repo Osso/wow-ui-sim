@@ -80,13 +80,15 @@ pub(crate) mod selected_ignore {
     }
 
     fn get_selected(state: &mut LuaState) -> LuaResult<u32> {
-        let sim = borrow_state(state)?;
-        let selected = sim.selected_social_ignore.as_ref().and_then(|identity| {
-            sim.social_ignores
-                .iter()
-                .position(|name| name == identity)
-                .map(|index| index + 1)
-        });
+        let selected = {
+            let sim = borrow_state(state)?;
+            sim.selected_social_ignore.as_ref().and_then(|identity| {
+                sim.social_ignores
+                    .iter()
+                    .position(|name| name == identity)
+                    .map(|index| index + 1)
+            })
+        };
         state.push(selected.map_or(Val::Nil, |index| Val::Num(index as f64)));
         Ok(1)
     }

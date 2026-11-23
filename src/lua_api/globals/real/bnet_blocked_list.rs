@@ -40,15 +40,16 @@ fn get_blocked_info(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn get_selected_block(state: &mut LuaState) -> LuaResult<u32> {
-    let sim = borrow_state(state)?;
-    let selected_index = sim
-        .selected_bnet_block
-        .and_then(|identity| {
-            sim.bnet_blocked_entries
-                .iter()
-                .position(|entry| entry.blocked_id == identity)
-        })
-        .map_or(0, |index| index + 1);
+    let selected_index = {
+        let sim = borrow_state(state)?;
+        sim.selected_bnet_block
+            .and_then(|identity| {
+                sim.bnet_blocked_entries
+                    .iter()
+                    .position(|entry| entry.blocked_id == identity)
+            })
+            .map_or(0, |index| index + 1)
+    };
     state.push(Val::Num(selected_index as f64));
     Ok(1)
 }
