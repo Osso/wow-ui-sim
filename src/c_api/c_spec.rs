@@ -576,7 +576,7 @@ fn register_forever_pvp_admin(
         )
 }
 
-#[cfg(not(feature = "client-wowforever"))]
+#[cfg(feature = "client-retail")]
 fn register_forever_pvp_admin(
     builder: crate::lua_bridge::TableBuilder,
 ) -> LuaResult<crate::lua_bridge::TableBuilder> {
