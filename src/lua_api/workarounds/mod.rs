@@ -7,7 +7,7 @@ mod temporary;
 pub(crate) use temporary::legacy_talent_skill_defaults::get_legacy_talent_info;
 pub(crate) use temporary::lfg_encounters::get_search_result_encounter_info;
 pub(crate) use temporary::minimap_tracking_defaults::RETAIL_TRACKING_DEFAULT_MASK;
-#[cfg(feature = "client-retail")]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub(crate) use temporary::pvp_talent_defaults::pvp_slot_default;
 pub(crate) use temporary::quest_campaign_header_default::update_campaign_headers;
 pub(crate) use temporary::secure_env_global_snapshot::{
