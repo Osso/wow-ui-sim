@@ -65,7 +65,7 @@ fn encounter_journal_boss_list_uses_supplied_raid_locks(env: &WowLuaEnv) {
     env.apply_post_load_workarounds();
 
     let (instance_id, map_id, journal_a, encounter_a, journal_b, encounter_b): (
-        u32, u32, u32, u32, u32, u32,
+        i32, i32, i32, i32, i32, i32,
     ) = env
         .eval(
             r#"
