@@ -365,11 +365,10 @@ const DIRTY_FLUSH_OBSERVERS: &str = r#"
     CursorBox:SetScript('OnTextChanged', function(self, ...)
         local entry = RecordDirtyEntry('changed', self, ..., select('#', ...))
         assert(entry.arity == 1 and type(entry.value) == 'boolean')
-        local cursor = CursorRecords[entry.cursorCount]
-        assert(cursor ~= nil, 'changed follows an actual cursor presentation')
-        assert(cursor.text == entry.text, 'presentation contains current text')
-        assert(cursor.byte == entry.byte and cursor.scalar == entry.scalar,
-            'presentation contains current public UTF-8 cursor')
+        assert(entry.text == self:GetText(), 'notification sees current text')
+        assert(entry.byte == self:GetCursorPosition(), 'notification sees byte cursor')
+        assert(entry.scalar == self:GetUTF8CursorPosition(),
+            'notification sees scalar cursor')
     end)
 
     function AssertDirtyTrace(expected)
