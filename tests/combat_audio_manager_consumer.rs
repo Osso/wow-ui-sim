@@ -51,3 +51,52 @@ fn manager_announces_once_and_rearms_after_target_changes(env: &WowLuaEnv) {
     "#).unwrap();
 }
 }
+
+fn submit_playsound_slash(env: &WowLuaEnv, sound_enum: &str) -> f64 {
+    let script = format!(
+        r#"
+        local soundEnum = {sound_enum}
+        ChatFrame1EditBox:SetText("/" .. SLASH_COMMAND.COMBATAUDIOALERTS .. " " .. SLASH_CAA_PLAY_SOUND .. " " .. soundEnum)
+        ChatEdit_SendText(ChatFrame1EditBox, false)
+        local queuedID, count = nil, 0
+        for id, queuedEnum in pairs(CombatAudioAlertManager.queuedSounds) do
+            count = count + 1
+            if queuedEnum == soundEnum then queuedID = tonumber(id) end
+        end
+        if count ~= 1 then return nil end
+        return queuedID
+        "#
+    );
+    env.eval(&script).expect("CAA slash command should queue its utterance")
+}
+
+fn sound_kit_for(env: &WowLuaEnv, sound_enum: &str) -> u32 {
+    env.eval(&format!("return CooldownViewerUtil.GetSoundTypeSoundKit({sound_enum})"))
+        .expect("sound enum should resolve to a sound kit")
+}
+
+fn finish_playsound(env: &WowLuaEnv, expected_sound_kit: u32) {
+    env.process_timers().expect("process later timer tick");
+    let cleared: bool = env
+        .eval("return next(CombatAudioAlertManager.queuedSounds) == nil")
+        .expect("consumer queue should be readable");
+    assert!(cleared, "completion should consume the queued sound enum");
+    let played = env.state().borrow().last_sound_request.as_ref().map(|request| request.sound_kit_id);
+    assert_eq!(played, Some(expected_sound_kit));
+}
+
+#[cfg(feature = "client-retail")]
+prefork_full_ui_case! {
+fn combat_audio_speak_text_completes_two_play_sound_slashes(env: &WowLuaEnv) {
+    let first_kit = sound_kit_for(env, "Enum.CooldownViewerSound.War3Bell");
+    let second_kit = sound_kit_for(env, "Enum.CooldownViewerSound.War3CrunchyBell");
+    assert_ne!(first_kit, second_kit);
+    let first_id = submit_playsound_slash(env, "Enum.CooldownViewerSound.War3Bell");
+    assert_eq!(first_id, 1.0);
+    finish_playsound(env, first_kit);
+    let second_id = submit_playsound_slash(env, "Enum.CooldownViewerSound.War3CrunchyBell");
+    assert_eq!(second_id, 2.0);
+    assert_ne!(first_id, second_id);
+    finish_playsound(env, second_kit);
+}
+}
