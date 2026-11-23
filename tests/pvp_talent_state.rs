@@ -127,6 +127,13 @@ fn assert_locked_talent_refresh_event(env: &WowLuaEnv) {
 
 fn with_player_spells_panel(assert_state: impl FnOnce(&WowLuaEnv)) {
     let env = crate::common::panel_fixtures::setup_env();
+    #[cfg(feature = "client-wowforever")]
+    {
+        env.state()
+            .borrow_mut()
+            .transmog_outfit_catalog
+            .outfits_info_supplied = Some(true);
+    }
     env.exec(
         r#"
         assert(PlayerSpellsUtil and PlayerSpellsUtil.ToggleClassTalentFrame)
