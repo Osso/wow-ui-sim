@@ -9,7 +9,7 @@
   "command": [
     "timeout",
     "90",
-    "/home/osso/.cache/wow-ui-sim-targets/slot-3/debug/wow-sim",
+    "<home>/.cache/wow-ui-sim-targets/slot-3/debug/wow-sim",
     "--no-addons",
     "--no-saved-vars",
     "lua-errors"
@@ -50,9 +50,9 @@
     "unchanged": true
   },
   "profile_cache": {
-    "provenance_file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/.wow-ui-sim-blizzard-ui-provenance",
+    "provenance_file": "<home>/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/.wow-ui-sim-blizzard-ui-provenance",
     "provenance_sha256": "8d2c3963fa0fec99941db9a250f7d9c0614b81b1633ea73068e2f78bc8bd8d4b",
-    "completion_marker": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/.wow-ui-sim-blizzard-ui-complete",
+    "completion_marker": "<home>/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/.wow-ui-sim-blizzard-ui-complete",
     "completion_marker_sha256": "dc51b8c96c2d745df3bd5590d990230a482fd247123599548e0632fdbf97fc22",
     "provenance": {
       "schema": "2",
@@ -70,7 +70,7 @@
     }
   },
   "compile_receipt": {
-    "path": "/home/osso/.cache/wow-ui-sim-targets/slot-3/receipts/lt-a607-retail-8b518-no-run.json",
+    "path": "<home>/.cache/wow-ui-sim-targets/slot-3/receipts/lt-a607-retail-8b518-no-run.json",
     "sha256": "e5488a43d1260b4a178e11c13d3d9a6ae9dc6ab85a73edc5c28f228f700b344a",
     "cargo_stdout_sha256": "693df88b47bb5b1dc5b5ae008b3bdabd05496ab21e70199d7cff2ffb0e9e43bd",
     "cargo_stderr_sha256": "e2b89e4d523a7deaed498636ad34dcbcff30acd7e9806f2a0567e50eec2ca26b",
@@ -78,10 +78,10 @@
     "result": "success"
   },
   "capture_artifact": {
-    "path": "/home/osso/.local/state/wow-ui-sim/handoff/dots/lt-a607/isolated/retail-lua-errors-8b518/capture.json",
+    "path": "<home>/.local/state/wow-ui-sim/handoff/dots/lt-a607/isolated/retail-lua-errors-8b518/capture.json",
     "sha256": "3acb0a06de167f860ad9fbdd50db2d6d916ecbc6681bad604be255e6b769d593",
-    "isolated_xdg": "/home/osso/.local/state/wow-ui-sim/handoff/dots/lt-a607/isolated/retail-lua-errors-8b518",
-    "binary_path": "/home/osso/.cache/wow-ui-sim-targets/slot-3/debug/wow-sim"
+    "isolated_xdg": "<home>/.local/state/wow-ui-sim/handoff/dots/lt-a607/isolated/retail-lua-errors-8b518",
+    "binary_path": "<home>/.cache/wow-ui-sim-targets/slot-3/debug/wow-sim"
   },
   "current_baseline_delta": {
     "prior_tracked_baseline_commit": "bc7d5350d10c8e0f9ecad68258520189fe019312",
