@@ -163,22 +163,26 @@ fn apply_bid(item: &mut BlackMarketItem, bid: u64) {
 }
 
 fn is_view_only(state: &mut LuaState) -> LuaResult<u32> {
-    let sim = borrow_state(state)?;
-    let market = &sim.black_market;
-    if !market.interaction_open {
-        return Ok(0);
-    }
-    state.push(Val::Bool(market.view_only));
+    let view_only = {
+        let market = &borrow_state(state)?.black_market;
+        if !market.interaction_open {
+            return Ok(0);
+        }
+        market.view_only
+    };
+    state.push(Val::Bool(view_only));
     Ok(1)
 }
 
 fn get_num_items(state: &mut LuaState) -> LuaResult<u32> {
-    let sim = borrow_state(state)?;
-    let market = &sim.black_market;
-    if !market.interaction_open {
-        return Ok(0);
-    }
-    state.push(Val::Num(market.items.len() as f64));
+    let item_count = {
+        let market = &borrow_state(state)?.black_market;
+        if !market.interaction_open {
+            return Ok(0);
+        }
+        market.items.len()
+    };
+    state.push(Val::Num(item_count as f64));
     Ok(1)
 }
 
