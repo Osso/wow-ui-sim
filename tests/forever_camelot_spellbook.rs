@@ -206,39 +206,47 @@ fn assert_group_indices(env: &WowLuaEnv, expected: &[i64]) {
 
 #[test]
 fn player_spells_toggle_accepts_no_outfits_and_two_created_outfits() {
-    let env = load_original_without_outfits(true);
-    let result_count: i32 = env
+    let empty = load_original_without_outfits(true);
+    let result_count: i32 = empty
         .eval("return select('#', C_TransmogOutfitInfo.GetOutfitsInfo())")
         .expect("an empty Forever outfit catalog returns no values");
     assert_eq!(result_count, 0);
-    crate::common::panel_fixtures::clear_recorded_lua_errors(&env);
-    env.exec("PlayerSpellsUtil.ToggleClassTalentFrame()")
+    crate::common::panel_fixtures::clear_recorded_lua_errors(&empty);
+    empty
+        .exec("PlayerSpellsUtil.ToggleClassTalentFrame()")
         .expect("Player Spells opens with no supplied outfits");
     assert!(
-        env.state().borrow().lua_errors.is_empty(),
+        empty.state().borrow().lua_errors.is_empty(),
         "opening Player Spells with no outfits must record no OnLoad error: {:?}",
-        env.state().borrow().lua_errors
+        empty.state().borrow().lua_errors
     );
 
-    env.exec(
-        r#"
-        A_Admin.SetUnlockedOutfitSlots(2, 2)
-        C_TransmogOutfitInfo.AddNewOutfit('Copper', 123)
-        C_TransmogOutfitInfo.AddNewOutfit('Silver', 456)
-        "#,
-    )
-    .expect("create two outfits through the public API while Player Spells is open");
+    let populated = load_original_without_outfits(true);
+    crate::common::panel_fixtures::clear_recorded_lua_errors(&populated);
+    populated
+        .exec(
+            r#"
+            A_Admin.SetUnlockedOutfitSlots(2, 2)
+            C_TransmogOutfitInfo.AddNewOutfit('Copper', 123)
+            C_TransmogOutfitInfo.AddNewOutfit('Silver', 456)
+            "#,
+        )
+        .expect("create two outfits through the public API before opening Player Spells");
     assert!(
-        env.state().borrow().lua_errors.is_empty(),
-        "creating outfits while Player Spells is closed must record no Lua errors: {:?}",
-        env.state().borrow().lua_errors
+        populated.state().borrow().lua_errors.is_empty(),
+        "creating outfits before opening Player Spells must record no Lua errors: {:?}",
+        populated.state().borrow().lua_errors
     );
-    env.exec(
-        "Category = PlayerSpellsFrame.SpellBookFrame.categoryMixins[#PlayerSpellsFrame.SpellBookFrame.categoryMixins]",
-    )
-    .expect("read the category created by the open Player Spells panel");
-    assert_group_indices(&env, &[1, 2]);
-    let actual: (String, i32, String, i32) = env
+    populated
+        .exec("PlayerSpellsUtil.ToggleClassTalentFrame()")
+        .expect("Player Spells opens with two created outfits");
+    populated
+        .exec(
+            "Category = PlayerSpellsFrame.SpellBookFrame.categoryMixins[#PlayerSpellsFrame.SpellBookFrame.categoryMixins]",
+        )
+        .expect("read the category created by the open Player Spells panel");
+    assert_group_indices(&populated, &[1, 2]);
+    let actual: (String, i32, String, i32) = populated
         .eval(
             r#"
             local outfits = C_TransmogOutfitInfo.GetOutfitsInfo()
@@ -247,7 +255,7 @@ fn player_spells_toggle_accepts_no_outfits_and_two_created_outfits() {
         )
         .expect("the original panel consumer can read both outfit records");
     assert_eq!(actual, ("Copper".into(), 123, "Silver".into(), 456));
-    let errors = env.state().borrow().lua_errors.clone();
+    let errors = populated.state().borrow().lua_errors.clone();
     assert!(errors.is_empty(), "Player Spells recorded Lua errors: {errors:?}");
 }
 
