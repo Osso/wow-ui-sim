@@ -1,3 +1,7 @@
+## [2026-11-23] investigation | Mythic+ map request reentrancy
+
+[Mythic+ map request reentrancy](investigations/mythic-plus-map-request-reentrancy.md) records the inferred R88ev request gate, deferred events, and same-root Retail comparison. **VERIFIED:** both revisions discovered 78 addons and loaded 49; the branch has no `script ran too long` or instruction-budget errors, and AllTheThings appears in its load summary without an error.
+
 ## [2026-11-22] system | Script execution watchdog
 
 [Script execution watchdog](systems/script-execution-watchdog.md) records the verified 10,001-dispatch VM poll and `script ran too long` error, the inferred 19,000/200 ms timeout mapping, tainted owner scope, and diagnostic fields.

@@ -1,3 +1,7 @@
+## [2026-11-23] investigation | Mythic+ map request reentrancy
+
+Added [the investigation](investigations/mythic-plus-map-request-reentrancy.md) and linked it from the [request contract](../specs/mythic-plus-map-info-request.md). **VERIFIED (same-root Retail runs):** master and branch discovered 78 addons and loaded 49; master recorded 8 unique errors / 159,655 occurrences, while the branch recorded 5 / 5 with no recursion, stack-overflow, instruction-budget, or watchdog error. AllTheThings appears in the branch load summary with no branch error. One `Blizzard_ChallengesUI` nil-map-row error and two `Clicked` errors remain in the branch output; their scope and evidence labels are in the investigation.
+
 ## [2026-11-22] system | Script execution watchdog
 
 Added [the watchdog system page](../systems/script-execution-watchdog.md) and updated the simulator contract and diagnostics docs. **VERIFIED (R88bn, Retail/Forever):** no native instruction-count quota; the VM polls elapsed time every 10,001 dispatch steps and raises `script ran too long`. **INFERRED (R88bn):** millisecond thresholds are 19,000 through initial world entry and 200 afterwards. Current runtime proof is tracked in the lt-50f6 handoff.
