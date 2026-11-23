@@ -3,6 +3,7 @@
 //! Quest/navigation target state is not modeled yet. These inert defaults keep
 //! Blizzard navigation UI callable until a real navigation backend owns them.
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 const NAVIGATION_DEFAULTS_LUA: &str = r#"
 C_Navigation = C_Navigation or __wow_namespace()
 
