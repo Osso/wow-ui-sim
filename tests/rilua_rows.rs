@@ -162,7 +162,11 @@ fn rilua_rows_owner_watchdog_loads_file_then_rejects_dispatch_overrun() {
     let directory = tempfile::tempdir().unwrap();
     let addon_dir = directory.path().join("WatchdogProbe");
     std::fs::create_dir_all(&addon_dir).unwrap();
-    std::fs::write(addon_dir.join("WatchdogProbe.toc"), "## Interface: 120000\nWatchdogProbe.lua\n").unwrap();
+    std::fs::write(
+        addon_dir.join("WatchdogProbe.toc"),
+        "## Interface: 120000\nWatchdogProbe.lua\n",
+    )
+    .unwrap();
     std::fs::write(
         addon_dir.join("WatchdogProbe.lua"),
         "local frame = CreateFrame('Frame'); frame:RegisterEvent('PLAYER_LOGIN'); \
@@ -172,15 +176,17 @@ fn rilua_rows_owner_watchdog_loads_file_then_rejects_dispatch_overrun() {
 
     let env = WowLuaEnv::new().unwrap();
     env.set_script_watchdog_timeout_for_tests(std::time::Duration::from_secs(60));
-    env.exec("seterrorhandler(function(err) WatchdogError = err end)").unwrap();
-    let loader = env.loader_env();
-    let loaded = wow_ui_sim::loader::load_addon(&loader, &addon_dir.join("WatchdogProbe.toc"))
+    env.exec("seterrorhandler(function(err) WatchdogError = err end)")
         .unwrap();
+    let loader = env.loader_env();
+    let loaded =
+        wow_ui_sim::loader::load_addon(&loader, &addon_dir.join("WatchdogProbe.toc")).unwrap();
     assert_eq!(loaded.lua_files, 1);
 
     env.set_script_watchdog_timeout_for_tests(std::time::Duration::ZERO);
     env.fire_event("PLAYER_LOGIN").unwrap();
-    env.exec("assert(string.find(WatchdogError, 'script ran too long', 1, true))").unwrap();
+    env.exec("assert(string.find(WatchdogError, 'script ran too long', 1, true))")
+        .unwrap();
 }
 
 #[cfg(feature = "retail-12-0-5")]
