@@ -1,8 +1,8 @@
 {
   "schema": 1,
   "profile": "wowforever",
-  "capture_time_utc": "2026-11-23T12:27:44.936868Z",
-  "runtime_source_revision": "9bef75547c1f988faefa3928bf276fc43f02029d",
+  "capture_time_utc": "2026-11-23T13:32:41.676350Z",
+  "runtime_source_revision": "9b531a0ab10370ee87626419e90f7b597ecf9764",
   "features": "sound,gui,casc,client-wowforever",
   "target": "x86_64-unknown-linux-gnu",
   "command": [
@@ -13,8 +13,8 @@
     "--no-saved-vars",
     "lua-errors"
   ],
-  "binary_sha256": "f3d842ac518f5293b8a1acfaa16aec9b411841e8188f3368dc4ea0304f07577e",
-  "cargo_stdout_sha256": "33238839df059adbec0d0bff96a12f9da4ef7c382d5b3fe32d7b2e92f7ba37ca",
+  "binary_sha256": "4ac57af5a6daf9dd70f7db28fd86a033a671c380363f90bb327b3bf21d4c30ba",
+  "cargo_stdout_sha256": "63286045c53332bbbdda395de3217060f079c27fa480820aade5fa070faf58ce",
   "baseline_sha256": "bd6e7b75a0f3d9e7bb73ce67694a293964c6d06bea3b79832c6c5d8d3a06b3cd",
   "baseline_transform": "none; byte-identical captured stdout including trailing LF",
   "messages": 2,
@@ -61,8 +61,8 @@
     "occurrences": 4,
     "note": "Historical and separate 70707 Windows capture; the pet errors were absent from the immediate lt-b573 baseline before any edits."
   },
-  "runtime_source_tree": "9bef75547c1f988faefa3928bf276fc43f02029d",
-  "equivalent_source_commit_on_branch": "9bef75547c1f988faefa3928bf276fc43f02029d",
+  "runtime_source_tree": "9b531a0ab10370ee87626419e90f7b597ecf9764",
+  "equivalent_source_commit_on_branch": "9b531a0ab10370ee87626419e90f7b597ecf9764",
   "historical_before_after_2026_11_14": {
     "before_runtime_source_revision": "b6a1079940a25527adb0544a0db3d0d52a747aa1",
     "before_raw_sha256": "61de54109c39e77d9ae739adaf1d637f94c1062c23ad443c231cfa4e8c5ea1fe",
@@ -72,7 +72,7 @@
     "after_occurrences": 0,
     "scope": "Exact raw diagnostic keys/counts, treating ScriptErrors echoes as separate records."
   },
-  "branch_head_at_capture": "9bef75547c1f988faefa3928bf276fc43f02029d",
+  "branch_head_at_capture": "9b531a0ab10370ee87626419e90f7b597ecf9764",
   "raw_stdout_sha256": "bd6e7b75a0f3d9e7bb73ce67694a293964c6d06bea3b79832c6c5d8d3a06b3cd",
   "cvar_source": {
     "path": "~/.local/share/wow-sim/cvars.json",
@@ -119,16 +119,16 @@
     }
   },
   "compile_receipt": {
-    "path": "<home>/.cache/wow-ui-sim-targets/slot-1/receipts/lt-5522-forever-cli-merged-r2.json",
-    "sha256": "acb927e3e78389fe388419ea6b63c67b0a94bb89b1923e3b67bd240f9e41842a",
-    "cargo_stdout_sha256": "33238839df059adbec0d0bff96a12f9da4ef7c382d5b3fe32d7b2e92f7ba37ca",
-    "cargo_stderr_sha256": "b249d5ddff87604c597a4ce52ea682f268865fd2e1a8e13d7db7fdff2e268379",
+    "path": "<home>/.cache/wow-ui-sim-targets/slot-1/receipts/lt-5522-forever-cli-final-r2.json",
+    "sha256": "dac4c5c91d2f54de53beb4c98b9f4237f9865ceedba21cf70d4acb17ef465f2d",
+    "cargo_stdout_sha256": "63286045c53332bbbdda395de3217060f079c27fa480820aade5fa070faf58ce",
+    "cargo_stderr_sha256": "3156491040ea218d12fe21c2a11c9029be05fdb235ec0bcfeba8fd520b5fa9cc",
     "warnings": 0,
     "result": "success"
   },
   "capture_artifact": {
     "path": "<home>/.local/state/wow-ui-sim/handoff/dots/lt-5522/lua-errors/wowforever-capture.json",
-    "sha256": "d10af0eb509936038eae748c036866dadc77995101bed041978598ff96096aab",
+    "sha256": "e8532a17c9f2605825b83b90d3f3b760bc76cfc5b4479aa75c14a0c8bd11ddf2",
     "isolated_xdg": "<ephemeral; removed after capture>",
     "binary_path": "<home>/.cache/wow-ui-sim-targets/slot-1/debug/wow-sim",
     "raw_stdout_path": "<home>/.local/state/wow-ui-sim/handoff/dots/lt-5522/lua-errors/wowforever-raw.stdout.json",
@@ -158,5 +158,5 @@
     "approved_scope": "Only this CurrencyTransfer nil-currencyID error and its echo are allowed; unrelated records are not."
   },
   "blizzard_addons_loaded": 272,
-  "refresh_reason": "VERIFIED (captured stdout): both profile outputs contain the same two error records and counts as before the merge. INFERRED: the merge changed only the generated template-handler source hash; after replacing that hash, all bytes match. The committed JSON is byte-identical to this capture."
+  "refresh_reason": "VERIFIED (captured stdout): the final merged-tree capture contains the same two records and counts as the committed baseline. INFERRED: the only earlier mismatch after merging current master was the generated template-handler source hash; the raw baseline now matches this capture byte for byte."
 }
