@@ -336,12 +336,12 @@ fn load_texture_hook_probe(env: &WowLuaEnv) {
     std::fs::create_dir(&addon).unwrap();
     std::fs::write(
         addon.join("TextureSetHookProbe.toc"),
-        "## Interface: 120105\n## AllowAddOnTableAccess: 1\nTextureSetHookProbe.lua\n",
+        "## Interface: 120105\nTextureSetHookProbe.lua\n",
     )
     .unwrap();
     std::fs::write(
         addon.join("TextureSetHookProbe.lua"),
-        "local _, addonTable = ...\naddonTable.TextureHookProbeState = { calls = 0 }\nlocal texture = CreateFrame('Frame'):CreateTexture()\nlocal methods = getmetatable(texture).__index\nhooksecurefunc(methods, 'SetTexture', function()\n addonTable.TextureHookProbeState.calls = addonTable.TextureHookProbeState.calls + 1\n addonTable.TextureHookProbeState.callbackTaint = debug.getstacktaint()\nend)\n",
+        "local counter = CreateFrame('Frame', 'TextureHookProbeCounter')\ncounter:SetSize(0, 0)\nlocal texture = CreateFrame('Frame'):CreateTexture()\nlocal methods = getmetatable(texture).__index\nhooksecurefunc(methods, 'SetTexture', function()\n local calls = counter:GetWidth()\n if debug.getstacktaint() ~= 'TextureSetHookProbe' then calls = 100 else calls = calls + 1 end\n counter:SetSize(calls, calls)\nend)\n",
     )
     .unwrap();
     wow_ui_sim::loader::load_addon(
@@ -382,9 +382,8 @@ fn retail_aura_container_secret_icons_survive_addon_texture_hook() {
         mixin.ApplyIcon({icon = {element = secondTexture}}, 'player', second)
         assert(firstTexture:GetTextureFileID() == 135907)
         assert(secondTexture:GetTextureFileID() == 136243)
-        local hookState = C_AddOns.GetAddOnLocalTable('TextureSetHookProbe').TextureHookProbeState
-        assert(hookState.calls == 2)
-        assert(hookState.callbackTaint == 'TextureSetHookProbe')
+        assert(TextureHookProbeCounter:GetWidth() == 2)
+        assert(TextureHookProbeCounter:GetHeight() == 2)
         "#,
         true,
     )
