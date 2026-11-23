@@ -352,6 +352,17 @@ fn load_texture_hook_probe(env: &WowLuaEnv) {
 }
 
 #[cfg(all(feature = "optional-tests", feature = "client-retail"))]
+fn assert_texture_hook_count(env: &WowLuaEnv) {
+    let state = env.state().borrow();
+    let counter = state
+        .widgets
+        .get_by_name("TextureHookProbeCounter")
+        .expect("real addon hook callback created its counter frame");
+    assert_eq!(counter.width, 2.0);
+    assert_eq!(counter.height, 2.0);
+}
+
+#[cfg(all(feature = "optional-tests", feature = "client-retail"))]
 fn aura_container_env() -> WowLuaEnv {
     let ui = wow_ui_sim::blizzard_ui_sync::default_cache_addons_path().unwrap();
     let (env, loaded) = crate::common::blizzard_addon_harness::build_blizzard_addon_closure_env(
@@ -382,10 +393,9 @@ fn retail_aura_container_secret_icons_survive_addon_texture_hook() {
         mixin.ApplyIcon({icon = {element = secondTexture}}, 'player', second)
         assert(firstTexture:GetTextureFileID() == 135907)
         assert(secondTexture:GetTextureFileID() == 136243)
-        assert(TextureHookProbeCounter:GetWidth() == 2)
-        assert(TextureHookProbeCounter:GetHeight() == 2)
         "#,
         true,
     )
     .expect("AuraContainer must apply both supplied secret icons before its addon hook runs");
+    assert_texture_hook_count(&env);
 }
