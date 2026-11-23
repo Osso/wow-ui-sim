@@ -601,20 +601,13 @@ pub(super) fn on_text_scale_updated(state: &mut LuaState) -> LuaResult<u32> {
 
 pub(super) fn set_number(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
-    let n = val_to_f64(stack_val(state, 2));
-    let s = n.to_string();
-    let mut sim = borrow_state_mut(state)?;
-    if let Some(frame) = sim.widgets.get_mut_visual(id) {
-        let text_changed = frame.text.as_deref() != Some(s.as_str());
-        frame.text_stripped = Some(s.clone());
-        frame.text = Some(s);
-        // VERIFIED (R88er, Retail): compare the formatted string; unchanged text is silent.
-        // INFERRED (R88er): SetNumber reports userInput=false.
-        if text_changed {
-            frame.mark_editbox_text_changed(Some(false));
-        }
-    }
-    Ok(0)
+    let text = val_to_f64(stack_val(state, 2)).to_string();
+    crate::lua_api::frame::methods::text_attribute_event::set_frame_text_value(
+        state,
+        id,
+        Some(text),
+        false,
+    )
 }
 
 pub(super) fn get_number(state: &mut LuaState) -> LuaResult<u32> {
