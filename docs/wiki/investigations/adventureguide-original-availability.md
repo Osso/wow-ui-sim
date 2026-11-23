@@ -40,13 +40,7 @@ requested journal-instance selection is claimed. It repeatedly disables the
 real XML button and invokes its original callback to restore enabled state.
 The before-change selector passed with empty startup diagnostics.
 
-Current C_AdventureJournal.CanBeShown is constant true and Kiosk.IsEnabled
-is constant false. This proof covers that existing default state only. It
-rejects a no-op consumer but does not reject a constant availability producer,
-so it is PRESERVATION, not RED or native state coverage. No fake provider,
-manual owner load, or synthetic availability state is used. Final build and
-runtime receipts must be checked for the exact candidate; historical baseline
-success is not final-candidate acceptance.
+Current C_AdventureJournal.CanBeShown remains constant true. Retail Kiosk.IsEnabled now reads the supplied kiosk session; no session defaults to false under INFERRED (R88fd (native evidence pending)). This proof supplies no kiosk session and covers only that default state. It rejects a no-op consumer but does not reject a constant availability producer, so it remains PRESERVATION, not RED or native state coverage. No fake provider, manual owner load, or synthetic availability state is used. See [[kiosk-session]] for the separate original LFD consumer proof.
 
 Bootstrap tests check the Retail helper is absent before original loading,
 with other-profile behavior retained. Boundary tests preserve Login,

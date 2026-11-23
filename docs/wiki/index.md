@@ -1,3 +1,7 @@
+## [2026-11-23] implementation | Retail/Forever Kiosk session input
+
+[Kiosk session](systems/kiosk-session.md) records the pinned namespace ownership, inferred Retail/Forever session defaults, and the original Retail LFD consumer. **VERIFIED (simulator):** the exact kiosk-gated LFD test passes 1/1; startup also emits the existing CurrencyTransfer required-argument error.
+
 ## [2026-11-23] investigation | Forever Encounter Journal selection
 
 [Addon loading](systems/addon-loading.md#addon-discovery-and-toc-parsing) records the TOC filter that excludes Forever's Encounter Journal before its Mainline files load; Retail selects the Mainline consumer.

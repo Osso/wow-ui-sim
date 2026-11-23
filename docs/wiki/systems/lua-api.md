@@ -970,7 +970,7 @@ The [owning contract](../../specs/wrath-friends-legacy.md) records static12340 p
 - [widget_methods_model.rs](../../../tests/widget_methods_model.rs) — `ClearFog` publication and no-op behavior proof
 - [simple_window.rs](../../../src/lua_api/globals/create_frame/simple_window.rs) — frame-backed `CreateWindow` compatibility contract
 - [render_layers.rs](../../../src/lua_api/frame/methods/misc/render_layers.rs) — `SetWindow`/`GetWindow` owner attachment
-- [kiosk_namespace_defaults.rs](../../../src/lua_api/workarounds/temporary/kiosk_namespace_defaults.rs) — inert Kiosk defaults
+- [kiosk_namespace_defaults.rs](../../../src/lua_api/workarounds/temporary/kiosk_namespace_defaults.rs) — legacy-profile Kiosk defaults; Retail and Forever use the [Kiosk session model](kiosk-session.md)
 - [targeting_verbs.rs](../../../src/lua_api/globals/targeting_verbs.rs) — state-backed targeting globals, including `ClearTarget()`'s boolean result
 - [panel_toggle_verbs.rs](../../../src/lua_api/globals/panel_toggle_verbs.rs) — profile-scoped panel toggles, including retail `ToggleGuildFrame()` ownership
 - [math_extensions.rs](../../../src/lua_api/globals/real/math_extensions.rs) — PTR 12.1.5 native `math` extensions
@@ -987,6 +987,7 @@ The [owning contract](../../specs/wrath-friends-legacy.md) records static12340 p
 - [[frame-data-flow]] — method lookup order, __index/__newindex, Mixin() application
 - [[addon-loading]] — addon execution, idempotent loaded-addon handling, and environment boundaries
 - [[taint-system]] — secure/public environments and secure-button publication boundaries
+- [[kiosk-session]] — Retail/Forever supplied Kiosk session state
 - [[post-load-workaround-audit]] — explicit post-cleanup restoration hooks
 - [[event-system]] — fire_event, SetScript, OnUpdate tick mechanism
 - [[xml-template-system]] — XML script declaration and optimized installation paths

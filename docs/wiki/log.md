@@ -1,3 +1,7 @@
+## [2026-11-23] implementation | Retail/Forever Kiosk session input
+
+Added [the Kiosk session system page](../systems/kiosk-session.md) and [admin API contract](../../admin-api/kiosk.md). **VERIFIED (pinned caches):** Retail and Forever generated API docs have no Kiosk/C_Kiosk declaration; Blizzard_Kiosk assigns fields to an existing Kiosk namespace. **INFERRED (R88fd (native evidence pending)):** the empty-session defaults and host-supplied fields are simulator scenario behavior. **VERIFIED (simulator):** exact Retail original LFD consumer test passes 1/1; its startup emits the existing CurrencyTransfer required-argument error.
+
 ## [2026-11-23] investigation | Forever Encounter Journal selection
 
 Updated [addon loading](systems/addon-loading.md#addon-discovery-and-toc-parsing). **VERIFIED (simulator selection logic and pinned TOCs):** Forever's Encounter Journal root TOC is restricted before its Mainline entries load; Retail selects the Mainline TOC and boss-list consumer.
