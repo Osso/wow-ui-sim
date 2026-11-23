@@ -1,23 +1,23 @@
 {
   "schema": 1,
   "profile": "retail",
-  "capture_time_utc": "2026-11-23T08:42:29Z",
-  "runtime_source_revision": "8b518705aac15722b82ce7f061ce1fd54320375e",
-  "branch_head_at_capture": "8b518705aac15722b82ce7f061ce1fd54320375e",
+  "capture_time_utc": "2026-11-23T13:08:22.872800Z",
+  "runtime_source_revision": "9bef75547c1f988faefa3928bf276fc43f02029d",
+  "branch_head_at_capture": "9bef75547c1f988faefa3928bf276fc43f02029d",
   "features": "sound,gui,casc,client-retail",
   "target": "x86_64-unknown-linux-gnu",
   "command": [
     "timeout",
     "90",
-    "<home>/.cache/wow-ui-sim-targets/slot-3/debug/wow-sim",
+    "<home>/.cache/wow-ui-sim-targets/slot-1/debug/wow-sim",
     "--no-addons",
     "--no-saved-vars",
     "lua-errors"
   ],
-  "binary_sha256": "6663d9c18a107803b635fd60a888714a5f0eb3975fff66e615762432f971bae4",
-  "cargo_stdout_sha256": "693df88b47bb5b1dc5b5ae008b3bdabd05496ab21e70199d7cff2ffb0e9e43bd",
-  "baseline_sha256": "87b1fa2ad1d4458385e59f3dcabd3663cec7652083266e9122cee11fe2bf15af",
-  "raw_stdout_sha256": "87b1fa2ad1d4458385e59f3dcabd3663cec7652083266e9122cee11fe2bf15af",
+  "binary_sha256": "d36f082a9069a13495ee10d745586f1038e91a302cc17f791744d66dc6e6c801",
+  "cargo_stdout_sha256": "ea42455fcc1550fdc0e9e3979f2c98c496468f1fa274df3bea18ad968e0bdee3",
+  "baseline_sha256": "c8d6d0c83445ff1f709577a57674778c1a6a3d8b9cc78071e34a953d4dba1274",
+  "raw_stdout_sha256": "c8d6d0c83445ff1f709577a57674778c1a6a3d8b9cc78071e34a953d4dba1274",
   "baseline_transform": "none; byte-identical captured stdout including trailing LF",
   "messages": 2,
   "occurrences": 2,
@@ -26,7 +26,7 @@
   },
   "startup_clean": false,
   "disposition": "VERIFIED (stock simulator capture): the only records are the approved CurrencyTransfer required-argument failure and its ScriptErrors echo; no unrelated startup error was observed. This is not a clean-startup, native, rendered, or full-suite acceptance.",
-  "cvar_isolation": "Fresh isolated XDG data/config; byte-exact copy of current cvars.json; no runtime cache downloads or sound override.",
+  "cvar_isolation": "Fresh child-only XDG_DATA_HOME; byte-exact current cvars.json copy; original file unchanged under O_NOATIME guard.",
   "cvar_source": {
     "path": "~/.local/share/wow-sim/cvars.json",
     "before": {
@@ -34,7 +34,7 @@
       "size": 811,
       "mtime_ns": 1795171919943023520,
       "ctime_ns": 1795171919943023520,
-      "atime_ns": 1795344896034066063,
+      "atime_ns": 1795431327823635394,
       "inode": 130973869,
       "mode": 33188
     },
@@ -43,7 +43,7 @@
       "size": 811,
       "mtime_ns": 1795171919943023520,
       "ctime_ns": 1795171919943023520,
-      "atime_ns": 1795344896034066063,
+      "atime_ns": 1795431327823635394,
       "inode": 130973869,
       "mode": 33188
     },
@@ -70,18 +70,20 @@
     }
   },
   "compile_receipt": {
-    "path": "<home>/.cache/wow-ui-sim-targets/slot-3/receipts/lt-a607-retail-8b518-no-run.json",
-    "sha256": "e5488a43d1260b4a178e11c13d3d9a6ae9dc6ab85a73edc5c28f228f700b344a",
-    "cargo_stdout_sha256": "693df88b47bb5b1dc5b5ae008b3bdabd05496ab21e70199d7cff2ffb0e9e43bd",
-    "cargo_stderr_sha256": "e2b89e4d523a7deaed498636ad34dcbcff30acd7e9806f2a0567e50eec2ca26b",
+    "path": "<home>/.cache/wow-ui-sim-targets/slot-1/receipts/lt-5522-retail-cli-merged-r2.json",
+    "sha256": "94103801ddb1332959031c4cb3997290c0d6d5c9f359ae13b418c53d3c445000",
+    "cargo_stdout_sha256": "ea42455fcc1550fdc0e9e3979f2c98c496468f1fa274df3bea18ad968e0bdee3",
+    "cargo_stderr_sha256": "eb4cd2f5b5cade3700b07ec8c8ee45e926a1b24a70962a0031fcc2b25062d6c9",
     "warnings": 0,
     "result": "success"
   },
   "capture_artifact": {
-    "path": "<home>/.local/state/wow-ui-sim/handoff/dots/lt-a607/isolated/retail-lua-errors-8b518/capture.json",
-    "sha256": "3acb0a06de167f860ad9fbdd50db2d6d916ecbc6681bad604be255e6b769d593",
-    "isolated_xdg": "<home>/.local/state/wow-ui-sim/handoff/dots/lt-a607/isolated/retail-lua-errors-8b518",
-    "binary_path": "<home>/.cache/wow-ui-sim-targets/slot-3/debug/wow-sim"
+    "path": "<home>/.local/state/wow-ui-sim/handoff/dots/lt-5522/lua-errors/retail-capture.json",
+    "sha256": "9597de47153d4f0404e079f1fcf6d1778ce22327350e883c93cfb5ac74cb7c33",
+    "isolated_xdg": "<ephemeral; removed after capture>",
+    "binary_path": "<home>/.cache/wow-ui-sim-targets/slot-1/debug/wow-sim",
+    "raw_stdout_path": "<home>/.local/state/wow-ui-sim/handoff/dots/lt-5522/lua-errors/retail-raw.stdout.json",
+    "raw_stderr_path": "<home>/.local/state/wow-ui-sim/handoff/dots/lt-5522/lua-errors/retail-raw.stderr.txt"
   },
   "current_baseline_delta": {
     "prior_tracked_baseline_commit": "bc7d5350d10c8e0f9ecad68258520189fe019312",
@@ -114,5 +116,6 @@
     "occurrences": 0,
     "exit_code": 0,
     "note": "Historical clean capture; superseded by this approved exception baseline."
-  }
+  },
+  "refresh_reason": "VERIFIED (captured stdout): both profile outputs contain the same two error records and counts as before the merge. INFERRED: the merge changed only the generated template-handler source hash; after replacing that hash, all bytes match. The committed JSON is byte-identical to this capture."
 }

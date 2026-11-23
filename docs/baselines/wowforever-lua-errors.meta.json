@@ -1,21 +1,21 @@
 {
   "schema": 1,
   "profile": "wowforever",
-  "capture_time_utc": "2026-11-23T08:21:30Z",
-  "runtime_source_revision": "df41e068133cec90c19b68f6695e81059d764479",
+  "capture_time_utc": "2026-11-23T12:27:44.936868Z",
+  "runtime_source_revision": "9bef75547c1f988faefa3928bf276fc43f02029d",
   "features": "sound,gui,casc,client-wowforever",
   "target": "x86_64-unknown-linux-gnu",
   "command": [
     "timeout",
     "90",
-    "<home>/.cache/wow-ui-sim-targets/slot-3/debug/wow-sim",
+    "<home>/.cache/wow-ui-sim-targets/slot-1/debug/wow-sim",
     "--no-addons",
     "--no-saved-vars",
     "lua-errors"
   ],
-  "binary_sha256": "4a3ce04a3fc84c0fc54956af962db135e9999dabaf92715c148eb8bc11198d33",
-  "cargo_stdout_sha256": "6137664a03e62430781676767019b91d2f9c28ac5269be9c4fa3408ba6502896",
-  "baseline_sha256": "c75a2fb7564960db23ee1d67cb434aed5973f189c54e5a965c5559a5fbbdf467",
+  "binary_sha256": "f3d842ac518f5293b8a1acfaa16aec9b411841e8188f3368dc4ea0304f07577e",
+  "cargo_stdout_sha256": "33238839df059adbec0d0bff96a12f9da4ef7c382d5b3fe32d7b2e92f7ba37ca",
+  "baseline_sha256": "bd6e7b75a0f3d9e7bb73ce67694a293964c6d06bea3b79832c6c5d8d3a06b3cd",
   "baseline_transform": "none; byte-identical captured stdout including trailing LF",
   "messages": 2,
   "occurrences": 2,
@@ -42,7 +42,7 @@
   "provenance_sha256": "b3081ac30a20fcb3cb5657b46dfaafda990cc6efcfddbec976490174eb3e0dba",
   "owner_ui_checksum_manifest_sha256": "53d7a3ab9cb2e4139d3b4b69ae9b7d76592ca71b9dcf715130ebe8505d65a61b",
   "owner_spell_cache_sha256": "baafb9369a8214a5d793fba12cadec875f7f4a0c4ff8e569d6faac21b2bcac7b",
-  "cvar_isolation": "Fresh isolated XDG data/config; byte-exact copy of current cvars.json; no runtime cache downloads or sound override.",
+  "cvar_isolation": "Fresh child-only XDG_DATA_HOME; byte-exact current cvars.json copy; original file unchanged under O_NOATIME guard.",
   "source_entries_verified": 4493,
   "before_after": {
     "before_runtime_source_revision": "b6a1079940a25527adb0544a0db3d0d52a747aa1",
@@ -61,8 +61,8 @@
     "occurrences": 4,
     "note": "Historical and separate 70707 Windows capture; the pet errors were absent from the immediate lt-b573 baseline before any edits."
   },
-  "runtime_source_tree": "b1651bd3042b687dd59ee5fe48bea0540c6de1af",
-  "equivalent_source_commit_on_branch": "a6b43c5c65b87279081f6fc61f2572ee3397dea7",
+  "runtime_source_tree": "9bef75547c1f988faefa3928bf276fc43f02029d",
+  "equivalent_source_commit_on_branch": "9bef75547c1f988faefa3928bf276fc43f02029d",
   "historical_before_after_2026_11_14": {
     "before_runtime_source_revision": "b6a1079940a25527adb0544a0db3d0d52a747aa1",
     "before_raw_sha256": "61de54109c39e77d9ae739adaf1d637f94c1062c23ad443c231cfa4e8c5ea1fe",
@@ -72,8 +72,8 @@
     "after_occurrences": 0,
     "scope": "Exact raw diagnostic keys/counts, treating ScriptErrors echoes as separate records."
   },
-  "branch_head_at_capture": "df41e068133cec90c19b68f6695e81059d764479",
-  "raw_stdout_sha256": "c75a2fb7564960db23ee1d67cb434aed5973f189c54e5a965c5559a5fbbdf467",
+  "branch_head_at_capture": "9bef75547c1f988faefa3928bf276fc43f02029d",
+  "raw_stdout_sha256": "bd6e7b75a0f3d9e7bb73ce67694a293964c6d06bea3b79832c6c5d8d3a06b3cd",
   "cvar_source": {
     "path": "~/.local/share/wow-sim/cvars.json",
     "before": {
@@ -81,7 +81,7 @@
       "size": 811,
       "mtime_ns": 1795171919943023520,
       "ctime_ns": 1795171919943023520,
-      "atime_ns": 1795344896034066063,
+      "atime_ns": 1795431327823635394,
       "inode": 130973869,
       "mode": 33188
     },
@@ -90,7 +90,7 @@
       "size": 811,
       "mtime_ns": 1795171919943023520,
       "ctime_ns": 1795171919943023520,
-      "atime_ns": 1795344896034066063,
+      "atime_ns": 1795431327823635394,
       "inode": 130973869,
       "mode": 33188
     },
@@ -119,18 +119,20 @@
     }
   },
   "compile_receipt": {
-    "path": "<home>/.cache/wow-ui-sim-targets/slot-3/receipts/lt-a607-frv-df41-no-run.json",
-    "sha256": "ac5ab8c30b798f001b601b91566ec267df22d99e4867b0ac569bada6628d5adb",
-    "cargo_stdout_sha256": "6137664a03e62430781676767019b91d2f9c28ac5269be9c4fa3408ba6502896",
-    "cargo_stderr_sha256": "745271a0a7d15dd3c414e47a2f4a365c6c9d013968a591973cdfec0123fe53c9",
+    "path": "<home>/.cache/wow-ui-sim-targets/slot-1/receipts/lt-5522-forever-cli-merged-r2.json",
+    "sha256": "acb927e3e78389fe388419ea6b63c67b0a94bb89b1923e3b67bd240f9e41842a",
+    "cargo_stdout_sha256": "33238839df059adbec0d0bff96a12f9da4ef7c382d5b3fe32d7b2e92f7ba37ca",
+    "cargo_stderr_sha256": "b249d5ddff87604c597a4ce52ea682f268865fd2e1a8e13d7db7fdff2e268379",
     "warnings": 0,
     "result": "success"
   },
   "capture_artifact": {
-    "path": "<home>/.local/state/wow-ui-sim/handoff/dots/lt-a607/isolated/forever-lua-errors-df41/capture.json",
-    "sha256": "30ab8d3efa0b48ff71d425998f9b2a5627320b74ecd939cc227f5c17c25b1861",
-    "isolated_xdg": "<home>/.local/state/wow-ui-sim/handoff/dots/lt-a607/isolated/forever-lua-errors-df41",
-    "binary_path": "<home>/.cache/wow-ui-sim-targets/slot-3/debug/wow-sim"
+    "path": "<home>/.local/state/wow-ui-sim/handoff/dots/lt-5522/lua-errors/wowforever-capture.json",
+    "sha256": "d10af0eb509936038eae748c036866dadc77995101bed041978598ff96096aab",
+    "isolated_xdg": "<ephemeral; removed after capture>",
+    "binary_path": "<home>/.cache/wow-ui-sim-targets/slot-1/debug/wow-sim",
+    "raw_stdout_path": "<home>/.local/state/wow-ui-sim/handoff/dots/lt-5522/lua-errors/wowforever-raw.stdout.json",
+    "raw_stderr_path": "<home>/.local/state/wow-ui-sim/handoff/dots/lt-5522/lua-errors/wowforever-raw.stderr.txt"
   },
   "current_baseline_delta": {
     "prior_tracked_baseline_commit": "bc7d5350d10c8e0f9ecad68258520189fe019312",
@@ -155,5 +157,6 @@
     ],
     "approved_scope": "Only this CurrencyTransfer nil-currencyID error and its echo are allowed; unrelated records are not."
   },
-  "blizzard_addons_loaded": 272
+  "blizzard_addons_loaded": 272,
+  "refresh_reason": "VERIFIED (captured stdout): both profile outputs contain the same two error records and counts as before the merge. INFERRED: the merge changed only the generated template-handler source hash; after replacing that hash, all bytes match. The committed JSON is byte-identical to this capture."
 }
