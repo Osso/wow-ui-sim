@@ -122,6 +122,8 @@ const EJ_GLOBAL_FUNCTIONS: &[(&str, RustFn)] = &[
 
 pub(super) fn register_encounter_journal_surface(state: &mut LuaState) -> LuaResult<()> {
     register_encounter_journal_functions(state)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    crate::c_api::c_raid_locks::register(state)?;
     adventure::register_adventure_journal_surface(state)?;
     Ok(())
 }

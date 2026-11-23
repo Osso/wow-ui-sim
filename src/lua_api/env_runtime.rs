@@ -348,10 +348,16 @@ impl WowLuaEnv {
 
     /// Run ready timers and return how many callbacks fired.
     pub fn process_timers(&self) -> Result<usize> {
+        #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+        let raid_info_replies = {
+            let mut state = self.state.borrow_mut();
+            std::mem::take(&mut state.pending_raid_info_replies).len()
+        };
         if self.state.borrow().manual_clock.is_some() {
-            return Ok(super::manual_timers::drain(
-                self.lua.borrow_mut().state_mut(),
-            )?);
+            let fired = super::manual_timers::drain(self.lua.borrow_mut().state_mut())?;
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            self.fire_raid_info_replies(raid_info_replies)?;
+            return Ok(fired);
         }
         let signal_fired = self.process_due_timed_signals();
 
@@ -361,7 +367,26 @@ impl WowLuaEnv {
         let mut state = self.state.borrow_mut();
         requeue.append(&mut state.rilua_timers);
         state.rilua_timers = requeue;
+        drop(state);
+        #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+        self.fire_raid_info_replies(raid_info_replies)?;
         Ok(signal_fired + timer_fired)
+    }
+
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    fn fire_raid_info_replies(&self, count: usize) -> Result<()> {
+        let mut first_error = None;
+        for _ in 0..count {
+            if let Err(error) = self.fire_event("UPDATE_INSTANCE_INFO")
+                && first_error.is_none()
+            {
+                first_error = Some(error);
+            }
+        }
+        match first_error {
+            Some(error) => Err(error),
+            None => Ok(()),
+        }
     }
 
     #[cfg(feature = "timed-signal-maps")]

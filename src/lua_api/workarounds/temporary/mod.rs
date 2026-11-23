@@ -128,6 +128,7 @@ pub(crate) mod map_exploration_pin;
 pub(crate) mod map_group_defaults;
 pub(crate) mod map_runtime_state;
 pub(crate) mod merchant_filter_state;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod merchant_raid_defaults;
 pub(crate) mod minimap_tracking_defaults;
 pub(crate) mod misc_global_frame_defaults;

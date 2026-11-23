@@ -177,6 +177,10 @@ macro_rules! build_empty_sim_state {
             talking_head: Default::default(),
             adventure_map: AdventureMapState::default(),
             encounter_journal: EncounterJournalState::default(),
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            completed_encounters: Vec::new(),
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            pending_raid_info_replies: VecDeque::new(),
             pet_journal_hover: crate::c_api::c_pet_journal_hover::PetJournalHoverState::default(),
             anima_diversion: AnimaDiversionState::default(),
             garrison_talents: GarrisonTalentState::default(),

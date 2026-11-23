@@ -25,6 +25,8 @@
 //! - `IsInLFGDungeon()` → true only when the seeded world state is inside an
 //!   instance with an LFG dungeon id.
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+use crate::lua_api::methods::borrow_state_mut;
 use crate::lua_api::methods::{borrow_state, create_string, create_string_static, val_to_string};
 use crate::lua_bridge::stack_val;
 use rilua::vm::state::LuaState;
@@ -192,6 +194,14 @@ fn get_world_elapsed_time(state: &mut LuaState) -> LuaResult<u32> {
     crate::c_api::challenge_run::timers::query(state)
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn request_raid_info(state: &mut LuaState) -> LuaResult<u32> {
+    borrow_state_mut(state)?
+        .pending_raid_info_replies
+        .push_back(());
+    Ok(0)
+}
+
 fn get_num_saved_instances(state: &mut LuaState) -> LuaResult<u32> {
     state.push(Val::Num(0.0));
     Ok(1)
@@ -230,6 +240,8 @@ pub fn register_all(lua: &mut rilua::Lua) -> crate::Result<()> {
     LuaApiMut::register_function(lua, "GetMirrorTimerProgress", get_mirror_timer_progress)?;
     LuaApiMut::register_function(lua, "GetWorldElapsedTimers", get_world_elapsed_timers)?;
     LuaApiMut::register_function(lua, "GetWorldElapsedTime", get_world_elapsed_time)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    LuaApiMut::register_function(lua, "RequestRaidInfo", request_raid_info)?;
     LuaApiMut::register_function(lua, "GetNumSavedInstances", get_num_saved_instances)?;
     LuaApiMut::register_function(lua, "GetNumSavedWorldBosses", get_num_saved_world_bosses)?;
     LuaApiMut::register_function(lua, "GetSavedInstanceInfo", get_saved_instance_info)?;
