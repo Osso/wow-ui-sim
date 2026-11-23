@@ -128,30 +128,30 @@ fn setting_black_market_bid_enables_bid_button_after_selecting_listing() {
     )
     .expect("selecting a listing should run the original Black Market handler");
     env.fire_on_update(0.016).unwrap();
-    let first_change: (usize, bool, bool) = env
+    let first_change: (f64, bool, bool) = env
         .eval(
             "return #BlackMarketTextChanges, BlackMarketTextChanges[1], BlackMarketFrame.BidButton:IsEnabled()",
         )
         .expect("the first Black Market bid amount should notify the EditBox consumer");
-    assert_eq!(first_change, (1, false, true));
+    assert_eq!(first_change, (1.0, false, true));
 
     env.exec("MoneyInputFrame_SetCopper(BlackMarketBidPrice, 40000)")
         .expect("setting a second bid amount should run Blizzard handlers");
     env.fire_on_update(0.016).unwrap();
-    let second_change: (usize, bool, bool) = env
+    let second_change: (f64, bool, bool) = env
         .eval(
             "return #BlackMarketTextChanges, BlackMarketTextChanges[2], BlackMarketFrame.BidButton:IsEnabled()",
         )
         .expect("the second Black Market bid amount should notify the EditBox consumer");
-    assert_eq!(second_change, (2, false, true));
+    assert_eq!(second_change, (2.0, false, true));
 
     env.exec("BlackMarketBidPrice.gold:SetNumber(4)")
         .expect("setting the current number again should remain valid");
     env.fire_on_update(0.016).unwrap();
-    let unchanged_change_count: usize = env
+    let unchanged_change_count: f64 = env
         .eval("return #BlackMarketTextChanges")
         .expect("the unchanged number callback count should be readable");
-    assert_eq!(unchanged_change_count, 2);
+    assert_eq!(unchanged_change_count, 2.0);
 }
 
 #[test]
