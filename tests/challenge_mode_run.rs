@@ -176,6 +176,7 @@ fn supply_display_season_maps(env: &WowLuaEnv, season_id: u32) {
     env.exec(&format!(
         r#"
         A_Admin.SetCurrentDisplaySeasonID({season_id})
+        assert(C_MythicPlus.GetCurrentUIDisplaySeason() == {season_id})
         A_Admin.SetPlayerLevel(GetMaxLevelForPlayerExpansion())
         local mapIDs = C_ChallengeMode.GetMapTable()
         assert(#mapIDs == 8)

@@ -28,6 +28,8 @@ The already-present elapsed-timer globals keep their publication scope. Wrath is
 
 **INFERRED (R88ew):** The default display season is the highest `DisplaySeasonID` in that data (37). `A_Admin.SetCurrentDisplaySeasonID(id)` supplies another display season for tests. The 1.60.1.70707 tracked-map export was unavailable, so Forever uses the Retail rows as an inferred data source; its declaration of `GetMapTable` is present.
 
+The Retail ChallengesFrame title reads the optional numeric `C_MythicPlus.GetCurrentUIDisplaySeason()` result (pinned `MythicPlusInfoDocumentation.lua:41-47`). The simulator serves it from the same display-season state as the map table, so both consumers stay aligned.
+
 ## Map metadata validation
 
 `SetChallengeModeMapInfo` accepts a supplied table. `name`, `id`, `timeLimit`, `backgroundTexture`, and `mapID` are required. Only `texture` can be omitted or nil; the getter returns nil in its fourth result without substituting an asset. The fifth result is the supplied numeric `backgroundTexture`. Retail 70448, PTR 70493 and Forever declare these two numeric results at `ChallengeModeInfoDocumentation.lua:178-179`; Mists, Era and Anniversary declare the same nilability at lines 152-153.

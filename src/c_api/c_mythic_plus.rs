@@ -92,6 +92,12 @@ pub(crate) fn register_mythic_plus_surface(state: &mut LuaState) -> LuaResult<()
     register_mythic_plus_request_handlers(state, ns)?;
     register_challenge_mode_surface(state)?;
     if uses_display_seasons() {
+        table_set_rust_fn_static(
+            state,
+            ns,
+            "GetCurrentUIDisplaySeason",
+            get_current_display_season_id,
+        )?;
         let seasons = ensure_namespace(state, "C_SeasonInfo")?;
         table_set_rust_fn_static(
             state,
