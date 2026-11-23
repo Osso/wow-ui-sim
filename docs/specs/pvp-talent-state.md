@@ -1,15 +1,17 @@
 # PvP talent state
 
-`C_SpecializationInfo` exposes supplied selected PvP talent IDs and inspected selections on Retail and WoW Forever. Retail keeps its existing verified lock and slot-unlock behavior. **INFERRED (R88eq, native evidence pending):** WoW Forever accepts supplied slot unlock levels and refreshes UI consumers after state writes.
+`C_SpecializationInfo` exposes PvP talent records, selected IDs, inspected selections, unlock levels, lock state and alert flags. **VERIFIED (R88eq eq1):** Retail returns the documented row values, list and Boolean outputs. **INFERRED (R88eq eq1):** WoW Forever uses host-supplied records with the same result shapes.
 
 ## What it must do
 
-- [x] Return selected talent IDs in supplied slot order from `GetAllSelectedPvpTalentIDs`.
-- [x] Return an inspected talent ID only for its supplied unit token and slot.
-- [x] Preserve Retail `GetPvpTalentSlotUnlockLevel` absent-row behavior; expose host-supplied slot unlock levels on WoW Forever.
-- [x] Preserve Retail lock behavior; expose lock state on WoW Forever through `IsPvpTalentLocked` and `SetPvpTalentLocked`.
-- [x] Let `A_Admin` supply selected IDs and inspected selections on both profiles, and Forever slot unlock levels, without test writes to simulator state.
-- [ ] Dispatch the inferred refresh events after WoW Forever mutations; native event parity is not verified.
+- [ ] Return selected talent IDs as a list and inspected selections as an ID or nil.
+- [ ] Return integer unlock levels for matching talent/slot rows and nil for missing rows.
+- [ ] Return supplied `PvpTalentInfo` and `PvpTalentSlotInfo` records through their original consumers.
+- [ ] Return a Boolean from `IsPvpTalentLocked`; its setter normally returns no values.
+- [ ] Return two Boolean alert values; their meanings remain unknown.
+- [ ] Let `A_Admin` supply test rows and state without writes to `env.state()`.
+- [ ] Keep Forever behavior INFERRED wherever R88eq does not prove its build-specific semantics.
+- [ ] Mark event dispatch INFERRED; native event names and order remain UNKNOWN.
 
 ## How it works
 
@@ -17,27 +19,35 @@
 
 ## Implementation inventory
 
-- `src/c_api/c_spec.rs` — PvP state queries, mutation, and host input registration.
-- `src/c_api/helpers.rs` — shares Retail untainted truthiness conversion with WoW Forever.
-- `src/lua_api/globals/admin.rs` — publishes the PvP state setters on Retail and WoW Forever.
-- `src/lua_api/workarounds/temporary/pvp_talent_defaults.rs` — retains defaults only on profiles without the Rust model.
+- `src/c_api/c_spec.rs` — PvP state queries, mutations, row publication and host inputs.
+- `src/c_api/c_tooltip_info_pvp_talent.rs` — Retail tooltip/slot source and Forever supplied slot records.
+- `src/c_api/helpers.rs` — shared untainted-value conversions.
+- `src/lua_api/globals/admin.rs` — publishes the PvP host setters.
+- `src/lua_api/workarounds/temporary/pvp_talent_defaults.rs` — keeps defaults on profiles without the Rust model.
 
 ## Tests asserting this spec
 
 - `tests/pvp_talent_state.rs::retail_supplied_pvp_talent_state_reaches_open_player_spells_panel`
 - `tests/pvp_talent_state.rs::forever_supplied_pvp_talent_state_reaches_open_player_spells_panel`
+- `tests/pvp_talent_native_consumers.rs` — existing Retail consumers and row behavior.
 
 ## Known gaps (current cycle)
 
-- [ ] Native default state, mutation effects and event semantics remain pending R88eq.
+- [ ] `GetPvpTalentInfo` missing-row public arity is UNKNOWN.
+- [ ] Native no-host `GetPvpTalentSlotInfo` results remain UNKNOWN.
+- [ ] Alert flag meanings and event/update semantics remain UNKNOWN.
+- [ ] Forever result details are build-specific and UNKNOWN; the simulator mirrors Retail as INFERRED.
 
 ## Out of scope
 
-- PvP talent catalog rows, eligibility rules, learning and persistence.
-- Retail `GetPvpTalentUnlockLevel`, which uses the existing catalog model.
+- Talent learning, progression, persistence, and server-authoritative updates.
 
 ## Evidence
 
-- **VERIFIED (Retail cache):** `Blizzard_PlayerSpells.toc` loads PvP talent slot and list templates; the slot consumer listens for `PLAYER_PVP_TALENT_UPDATE`, and `Blizzard_InspectUI/Mainline/InspectPVPFrame.lua` listens for `INSPECT_HONOR_UPDATE`.
-- **VERIFIED (Retail and WoW Forever API documentation caches):** `SpecializationInfoDocumentation.lua` declares `GetAllSelectedPvpTalentIDs`, `GetInspectSelectedPvpTalent`, and `GetPvpTalentSlotUnlockLevel`.
-- **INFERRED (R88eq, native evidence pending):** host-supplied mutation notifications use the events read by the corresponding Blizzard consumers.
+- **VERIFIED (R88eq eq1, Retail 12.1.5.70688):** matching unlock rows return integer levels and missing rows return nil; selected IDs are a list; inspect selection is nil or a cached ID; lock query returns a Boolean; the lock setter normally returns no values.
+- **INFERRED (R88eq eq1, Retail 12.1.5.70688):** the lock setter truthy path inserts the talent ID and the false path erases it.
+- **VERIFIED (R88eq eq1, Retail 12.1.5.70688):** populated `PvpTalentInfo` and `PvpTalentSlotInfo` paths build records. The pinned API documentation cache lists their fields.
+- **VERIFIED (R88eq eq1, both builds):** `GetPvpTalentAlertStatus` publishes two Booleans. **UNKNOWN:** their meanings.
+- **UNKNOWN (R88eq eq2, both builds):** PvP talent event names, event order and update paths.
+- **VERIFIED (Retail and WoW Forever caches):** `Blizzard_PlayerSpells.toc` loads the PvP talent templates; the active profile TOCs select the Player Spells and Inspect consumers.
+- **INFERRED (R88eq eq1, Forever 1.60.1.70707):** the simulator mirrors Retail record and result behavior for the eight members whose Forever semantics are build-specific and UNKNOWN.

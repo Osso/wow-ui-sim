@@ -86,8 +86,6 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     if !pvp_talents_are_modeled() {
         lua.exec(PVP_TALENT_DEFAULTS_LUA)?;
         lua.exec(PVP_TALENT_SLOT_UNLOCK_LEVEL_DEFAULTS_LUA)?;
-    }
-    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail {
         lua.exec(PVP_TALENT_UNLOCK_LEVEL_DEFAULT_LUA)?;
         lua.exec(PVP_SLOT_DEFAULTS_LUA)?;
     }
@@ -98,8 +96,6 @@ pub(crate) fn patch_loader(env: &crate::lua_api::LoaderEnv<'_>) {
     if !pvp_talents_are_modeled() {
         let _ = env.exec(PVP_TALENT_DEFAULTS_LUA);
         let _ = env.exec(PVP_TALENT_SLOT_UNLOCK_LEVEL_DEFAULTS_LUA);
-    }
-    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail {
         let _ = env.exec(PVP_TALENT_UNLOCK_LEVEL_DEFAULT_LUA);
         let _ = env.exec(PVP_SLOT_DEFAULTS_LUA);
     }
@@ -147,9 +143,8 @@ mod tests {
     }
 }
 
-/// Preserve the pre-R73 unmodelled Retail slot result, not a native default.
-/// Retire when native no-host slot behavior is established.
-#[cfg(feature = "client-retail")]
+/// Preserve the pre-R73 Retail fallback; Forever mirrors it as INFERRED (R88eq eq1).
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub(crate) fn pvp_slot_default(state: &mut rilua::vm::state::LuaState, index: usize) -> rilua::Val {
     use crate::lua_api::methods::{create_table, table_set};
     use rilua::Val;
