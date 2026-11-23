@@ -1,4 +1,5 @@
-//! INFERRED (R88em (native evidence pending)): supplied Black Market listings.
+//! VERIFIED (R88em): current Black Market listings and hot-item lookup share entries.
+//! INFERRED (R88em): supplied-state and bid-result event modeling.
 
 use std::collections::HashSet;
 
@@ -30,7 +31,7 @@ pub(crate) struct BlackMarketItem {
     curr_bid: u64,
     you_have_high_bid: bool,
     num_bids: u32,
-    time_left: u32,
+    time_left: i32,
     link: String,
     quality: u32,
 }
@@ -39,8 +40,11 @@ pub(crate) struct BlackMarketItem {
 #[serde(rename_all = "camelCase")]
 pub(crate) struct BlackMarketState {
     items: Vec<BlackMarketItem>,
-    hot_item: Option<BlackMarketItem>,
+    #[serde(rename = "hotItemMarketID")]
+    hot_item_market_id: Option<u32>,
     view_only: bool,
+    #[serde(skip)]
+    interaction_open: bool,
 }
 
 // INFERRED (R88em; native evidence pending): simulator bid-result codes.
@@ -71,11 +75,14 @@ pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
 
 fn set_black_market_state(state: &mut LuaState) -> LuaResult<u32> {
     let json = String::from_stack(state, 1)?;
-    let supplied: BlackMarketState = serde_json::from_str(&json).map_err(|_| {
+    let mut supplied: BlackMarketState = serde_json::from_str(&json).map_err(|_| {
         runtime_error("A_Admin.SetBlackMarketState requires a Black Market JSON object")
     })?;
     validate_state(&supplied)?;
+    // INFERRED (R88em): state injection represents the native interaction-open event.
+    supplied.interaction_open = true;
     borrow_state_mut(state)?.black_market = supplied;
+    dispatch_event_now(state, "BLACK_MARKET_OPEN", &[])?;
     dispatch_event_now(state, "BLACK_MARKET_ITEM_UPDATE", &[])?;
     Ok(0)
 }
@@ -93,58 +100,55 @@ fn validate_state(supplied: &BlackMarketState) -> LuaResult<()> {
 }
 
 fn close(state: &mut LuaState) -> LuaResult<u32> {
+    borrow_state_mut(state)?.black_market.interaction_open = false;
     dispatch_event_now(state, "BLACK_MARKET_CLOSE", &[])?;
     Ok(0)
 }
 
 fn request_items(state: &mut LuaState) -> LuaResult<u32> {
-    dispatch_event_now(state, "BLACK_MARKET_ITEM_UPDATE", &[])?;
+    let interaction_open = borrow_state(state)?.black_market.interaction_open;
+    if interaction_open {
+        dispatch_event_now(state, "BLACK_MARKET_ITEM_UPDATE", &[])?;
+    }
     Ok(0)
 }
 
 fn item_place_bid(state: &mut LuaState) -> LuaResult<u32> {
+    if !borrow_state(state)?.black_market.interaction_open {
+        return Ok(0);
+    }
     let market_id = u32::from_stack(state, 1)?;
     let bid = u64::try_from(i64::from_stack(state, 2)?)
         .map_err(|_| runtime_error("C_BlackMarket.ItemPlaceBid requires a nonnegative bid"))?;
     let result_code = {
         let mut sim = borrow_state_mut(state)?;
-        let black_market = &mut sim.black_market;
-        let minimum_bid = black_market
-            .items
-            .iter()
-            .chain(black_market.hot_item.iter())
-            .find(|item| item.market_id == market_id)
-            .map(minimum_accepted_bid);
-
-        match minimum_bid {
-            None => BID_RESULT_MARKET_NOT_FOUND,
-            Some(minimum_bid) if bid < minimum_bid => BID_RESULT_BELOW_MINIMUM,
-            Some(_) => {
-                for item in black_market
-                    .items
-                    .iter_mut()
-                    .filter(|item| item.market_id == market_id)
-                {
-                    apply_bid(item, bid);
-                }
-                if let Some(item) = black_market
-                    .hot_item
-                    .as_mut()
-                    .filter(|item| item.market_id == market_id)
-                {
-                    apply_bid(item, bid);
-                }
-                BID_RESULT_SUCCESS
-            }
-        }
+        place_bid(&mut sim.black_market, market_id, bid)
     };
-
     dispatch_event_now(
         state,
         "BLACK_MARKET_BID_RESULT",
         &[Val::Num(market_id as f64), Val::Num(result_code as f64)],
     )?;
     Ok(0)
+}
+
+fn place_bid(market: &mut BlackMarketState, market_id: u32, bid: u64) -> u32 {
+    let listing_index = market
+        .items
+        .iter()
+        .position(|item| item.market_id == market_id);
+    match listing_index {
+        None => BID_RESULT_MARKET_NOT_FOUND,
+        Some(index) if market.items[index].time_left <= 0 => {
+            // INFERRED (R88em): expired listings use the existing not-found result code.
+            BID_RESULT_MARKET_NOT_FOUND
+        }
+        Some(index) if bid < minimum_accepted_bid(&market.items[index]) => BID_RESULT_BELOW_MINIMUM,
+        Some(index) => {
+            apply_bid(&mut market.items[index], bid);
+            BID_RESULT_SUCCESS
+        }
+    }
 }
 
 fn minimum_accepted_bid(item: &BlackMarketItem) -> u64 {
@@ -159,19 +163,42 @@ fn apply_bid(item: &mut BlackMarketItem, bid: u64) {
 }
 
 fn is_view_only(state: &mut LuaState) -> LuaResult<u32> {
-    let view_only = borrow_state(state)?.black_market.view_only;
+    let view_only = {
+        let market = &borrow_state(state)?.black_market;
+        if !market.interaction_open {
+            return Ok(0);
+        }
+        market.view_only
+    };
     state.push(Val::Bool(view_only));
     Ok(1)
 }
 
 fn get_num_items(state: &mut LuaState) -> LuaResult<u32> {
-    let count = borrow_state(state)?.black_market.items.len();
-    state.push(Val::Num(count as f64));
+    let item_count = {
+        let market = &borrow_state(state)?.black_market;
+        if !market.interaction_open {
+            return Ok(0);
+        }
+        market.items.len()
+    };
+    state.push(Val::Num(item_count as f64));
     Ok(1)
 }
 
 fn get_hot_item(state: &mut LuaState) -> LuaResult<u32> {
-    let item = borrow_state(state)?.black_market.hot_item.clone();
+    let item = {
+        let sim = borrow_state(state)?;
+        let market = &sim.black_market;
+        if !market.interaction_open {
+            return Ok(0);
+        }
+        market
+            .items
+            .iter()
+            .find(|item| Some(item.market_id) == market.hot_item_market_id)
+            .cloned()
+    };
     let Some(item) = item else { return Ok(0) };
     push_item_info(state, &item);
     Ok(17)
@@ -181,10 +208,13 @@ fn get_item_info_by_id(state: &mut LuaState) -> LuaResult<u32> {
     let market_id = u32::from_stack(state, 1)?;
     let item = {
         let sim = borrow_state(state)?;
-        sim.black_market
+        let market = &sim.black_market;
+        if !market.interaction_open {
+            return Ok(0);
+        }
+        market
             .items
             .iter()
-            .chain(sim.black_market.hot_item.iter())
             .find(|item| item.market_id == market_id)
             .cloned()
     };
@@ -193,14 +223,16 @@ fn get_item_info_by_id(state: &mut LuaState) -> LuaResult<u32> {
 
 fn get_item_info_by_index(state: &mut LuaState) -> LuaResult<u32> {
     let index = u32::from_stack(state, 1)?;
-    let item = if let Some(zero_based_index) = index.checked_sub(1) {
-        borrow_state(state)?
-            .black_market
-            .items
-            .get(zero_based_index as usize)
+    let item = {
+        let sim = borrow_state(state)?;
+        let market = &sim.black_market;
+        if !market.interaction_open {
+            return Ok(0);
+        }
+        index
+            .checked_sub(1)
+            .and_then(|index| market.items.get(index as usize))
             .cloned()
-    } else {
-        None
     };
     push_optional_item_info(state, item)
 }

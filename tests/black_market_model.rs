@@ -10,10 +10,60 @@ use wow_ui_sim::startup::fire_startup_events_for_screen;
 
 const TWO_LISTINGS_STATE: &str = r#"{"items":[
     {"marketID":701,"itemID":19019,"name":"Supplied Relic","texture":"Interface\\Icons\\INV_Misc_Gem_01","quantity":1,"itemType":"Armor","usable":true,"level":80,"levelType":"item level","sellerName":"Seller One","minBid":10000,"minIncrement":10000,"currBid":20000,"youHaveHighBid":false,"numBids":1,"timeLeft":4,"link":"item:19019","quality":4},
-    {"marketID":702,"itemID":19020,"name":"Supplied Blade","texture":"Interface\\Icons\\INV_Sword_04","quantity":2,"itemType":"Weapon","usable":true,"level":90,"levelType":"item level","sellerName":"Seller Two","minBid":30000,"minIncrement":5000,"currBid":10000,"youHaveHighBid":false,"numBids":1,"timeLeft":3,"link":"item:19020","quality":3}
-],"hotItem":{"marketID":703,"itemID":19021,"name":"Hot Deal Supplied","texture":"Interface\\Icons\\INV_Misc_QuestionMark","quantity":1,"itemType":"Misc","usable":true,"level":1,"levelType":"item level","sellerName":"Hot Seller","minBid":3000,"minIncrement":300,"currBid":0,"youHaveHighBid":false,"numBids":0,"timeLeft":2,"link":"item:19021","quality":2},"viewOnly":false}"#;
+    {"marketID":702,"itemID":19020,"name":"Supplied Blade","texture":"Interface\\Icons\\INV_Sword_04","quantity":2,"itemType":"Weapon","usable":true,"level":90,"levelType":"item level","sellerName":"Seller Two","minBid":30000,"minIncrement":5000,"currBid":10000,"youHaveHighBid":false,"numBids":1,"timeLeft":3,"link":"item:19020","quality":3},
+    {"marketID":704,"itemID":19021,"name":"Expired Artifact","texture":"Interface\\Icons\\INV_Misc_QuestionMark","quantity":1,"itemType":"Misc","usable":true,"level":1,"levelType":"item level","sellerName":"Seller Three","minBid":1000,"minIncrement":100,"currBid":500,"youHaveHighBid":false,"numBids":2,"timeLeft":0,"link":"item:19021","quality":2}
+],"hotItemMarketID":702,"viewOnly":false}"#;
 
-const DUPLICATE_HOT_ITEM_STATE: &str = r#"{"items":[{"marketID":711,"itemID":19022,"name":"Shared Relic","texture":"Interface\\Icons\\INV_Misc_Gem_01","quantity":1,"itemType":"Armor","usable":true,"level":80,"levelType":"item level","sellerName":"Shared Seller","minBid":20000,"minIncrement":10000,"currBid":10000,"youHaveHighBid":false,"numBids":1,"timeLeft":4,"link":"item:19022","quality":4}],"hotItem":{"marketID":711,"itemID":19022,"name":"Shared Relic","texture":"Interface\\Icons\\INV_Misc_Gem_01","quantity":1,"itemType":"Armor","usable":true,"level":80,"levelType":"item level","sellerName":"Shared Seller","minBid":20000,"minIncrement":10000,"currBid":10000,"youHaveHighBid":false,"numBids":1,"timeLeft":4,"link":"item:19022","quality":4},"viewOnly":false}"#;
+const DUPLICATE_HOT_ITEM_STATE: &str = r#"{"items":[{"marketID":711,"itemID":19022,"name":"Shared Relic","texture":"Interface\\Icons\\INV_Misc_Gem_01","quantity":1,"itemType":"Armor","usable":true,"level":80,"levelType":"item level","sellerName":"Shared Seller","minBid":20000,"minIncrement":10000,"currBid":10000,"youHaveHighBid":false,"numBids":1,"timeLeft":4,"link":"item:19022","quality":4}],"hotItemMarketID":711,"viewOnly":false}"#;
+
+type BidState = (
+    bool,
+    bool,
+    String,
+    f64,
+    bool,
+    f64,
+    bool,
+    bool,
+    String,
+    bool,
+    bool,
+);
+
+const BID_STATE_QUERY: &str = r#"
+    local function submitBid(marketID, amount)
+        C_BlackMarket.ItemPlaceBid(marketID, amount)
+    end
+    submitBid(701, 20000)
+    local _, _, _, _, _, _, _, _, _, _, rejectedIncrementBid,
+        rejectedIncrementHigh, rejectedIncrementCount = C_BlackMarket.GetItemInfoByID(701)
+    submitBid(701, 40000)
+    local _, _, _, _, _, _, _, _, _, _, currentBid, highBid, bidCount =
+        C_BlackMarket.GetItemInfoByID(701)
+    local row701
+    BlackMarketFrame.ScrollBox:ForEachFrame(function(button)
+        if button.marketID == 701 then row701 = button end
+    end)
+    submitBid(702, 20000)
+    local _, _, _, _, _, _, _, _, _, _, rejectedMinimumBid,
+        rejectedMinimumHigh, rejectedMinimumCount = C_BlackMarket.GetItemInfoByID(702)
+    local row702
+    BlackMarketFrame.ScrollBox:ForEachFrame(function(button)
+        if button.marketID == 702 then row702 = button end
+    end)
+    submitBid(704, 100000)
+    local _, _, _, _, _, _, _, _, _, _, expiredBid, expiredHigh, expiredCount =
+        C_BlackMarket.GetItemInfoByID(704)
+    return rejectedIncrementBid == 20000 and not rejectedIncrementHigh
+            and rejectedIncrementCount == 1,
+        row701.YourBid:IsShown(), row701.CurrentBid.GoldButton.Text:GetText(),
+        currentBid, highBid, bidCount,
+        rejectedMinimumBid == 10000 and not rejectedMinimumHigh
+            and rejectedMinimumCount == 1,
+        row702.YourBid:IsShown(), row702.CurrentBid.GoldButton.Text:GetText(),
+        C_BlackMarket.GetItemInfoByIndex(0) == nil,
+        expiredBid == 500 and not expiredHigh and expiredCount == 2
+"#;
 
 fn blizzard_ui_dir() -> PathBuf {
     default_blizzard_ui_addons_path().expect("Blizzard UI cache should be available")
@@ -50,64 +100,66 @@ fn open_black_market(env: &WowLuaEnv, state_json: &str) {
         .expect("supplied Black Market data should open the Blizzard panel");
 }
 
-#[test]
-fn blizzard_black_market_bid_results_enforce_minimums_and_refresh_rows() {
-    let env = load_game_ui_with_black_market();
-    open_black_market(&env, TWO_LISTINGS_STATE);
+fn assert_black_market_rows(env: &WowLuaEnv) {
     let (rows, hot_name): (String, String) = env
         .eval("local n = {}; BlackMarketFrame.ScrollBox:ForEachFrame(function(b) n[#n + 1] = b.Name:GetText() end); return table.concat(n, '|'), BlackMarketFrame.HotDeal.Name:GetText()")
         .expect("Blizzard Black Market rows should be readable");
-    assert_eq!(rows, "Supplied Relic|Supplied Blade");
-    assert_eq!(hot_name, "Hot Deal Supplied");
-    let bid_state: (bool, bool, String, f64, bool, f64, bool, bool, String, bool) = env
-        .eval(
-            r#"
-                local function submitBid(marketID, amount)
-                    C_BlackMarket.ItemPlaceBid(marketID, amount)
-                end
-                submitBid(701, 20000)
-                local _, _, _, _, _, _, _, _, _, _, rejectedIncrementBid,
-                    rejectedIncrementHigh, rejectedIncrementCount = C_BlackMarket.GetItemInfoByID(701)
-                submitBid(701, 40000)
-                local _, _, _, _, _, _, _, _, _, _, currentBid, highBid, bidCount =
-                    C_BlackMarket.GetItemInfoByID(701)
-                local row701
-                BlackMarketFrame.ScrollBox:ForEachFrame(function(button)
-                    if button.marketID == 701 then row701 = button end
-                end)
-                submitBid(702, 20000)
-                local _, _, _, _, _, _, _, _, _, _, rejectedMinimumBid,
-                    rejectedMinimumHigh, rejectedMinimumCount = C_BlackMarket.GetItemInfoByID(702)
-                local row702
-                BlackMarketFrame.ScrollBox:ForEachFrame(function(button)
-                    if button.marketID == 702 then row702 = button end
-                end)
-                return rejectedIncrementBid == 20000 and not rejectedIncrementHigh
-                        and rejectedIncrementCount == 1,
-                    row701.YourBid:IsShown(), row701.CurrentBid.GoldButton.Text:GetText(),
-                    currentBid, highBid, bidCount,
-                    rejectedMinimumBid == 10000 and not rejectedMinimumHigh
-                        and rejectedMinimumCount == 1,
-                    row702.YourBid:IsShown(), row702.CurrentBid.GoldButton.Text:GetText(),
-                    C_BlackMarket.GetItemInfoByIndex(0) == nil
-            "#,
-        )
-        .expect("Blizzard bid confirmation should enforce minimums and refresh rows");
+    assert_eq!(rows, "Supplied Relic|Supplied Blade|Expired Artifact");
+    assert_eq!(hot_name, "Supplied Blade");
+}
+
+fn assert_black_market_bid_state(env: &WowLuaEnv) {
+    let state: BidState = env
+        .eval(BID_STATE_QUERY)
+        .expect("Blizzard bids should update accepted rows and reject invalid bids");
     assert_eq!(
-        bid_state,
+        state,
         (
             true,
             true,
-            "4".to_string(),
+            "4".into(),
             40000.0,
             true,
             2.0,
             true,
             false,
-            "1".to_string(),
+            "1".into(),
+            true,
             true
         )
     );
+}
+
+#[test]
+fn blizzard_black_market_bid_results_enforce_minimums_and_refresh_rows() {
+    let env = load_game_ui_with_black_market();
+    open_black_market(&env, TWO_LISTINGS_STATE);
+    assert_black_market_rows(&env);
+    assert_black_market_bid_state(&env);
+}
+
+#[test]
+fn black_market_queries_return_no_values_without_interaction() {
+    let env = load_game_ui_with_black_market();
+    let closed: (i64, i64, i64, i64, i64, i64) = env
+        .eval("return select('#', C_BlackMarket.GetNumItems()), select('#', C_BlackMarket.IsViewOnly()), select('#', C_BlackMarket.GetHotItem()), select('#', C_BlackMarket.GetItemInfoByID(701)), select('#', C_BlackMarket.GetItemInfoByIndex(1)), select('#', C_BlackMarket.RequestItems())")
+        .unwrap();
+    assert_eq!(closed, (0, 0, 0, 0, 0, 0));
+
+    open_black_market(&env, TWO_LISTINGS_STATE);
+    let open: (i64, i64, i64, i64, i64) = env
+        .eval("return select('#', C_BlackMarket.GetNumItems()), select('#', C_BlackMarket.IsViewOnly()), select('#', C_BlackMarket.GetHotItem()), select('#', C_BlackMarket.GetItemInfoByID(701)), select('#', C_BlackMarket.GetItemInfoByIndex(2))")
+        .unwrap();
+    assert_eq!(open, (1, 1, 17, 17, 17));
+
+    let close_values: i64 = env
+        .eval("return select('#', C_BlackMarket.Close())")
+        .unwrap();
+    assert_eq!(close_values, 0);
+    let closed_again: (i64, i64) = env
+        .eval("return select('#', C_BlackMarket.GetNumItems()), select('#', C_BlackMarket.GetHotItem())")
+        .unwrap();
+    assert_eq!(closed_again, (0, 0));
 }
 
 #[test]
@@ -210,7 +262,10 @@ fn blizzard_black_market_hot_item_can_match_listing_market_id() {
 #[test]
 fn blizzard_black_market_view_only_hides_bid_controls() {
     let env = load_game_ui_with_black_market();
-    open_black_market(&env, r#"{"items":[],"hotItem":null,"viewOnly":true}"#);
+    open_black_market(
+        &env,
+        r#"{"items":[],"hotItemMarketID":null,"viewOnly":true}"#,
+    );
     let controls: (bool, bool) = env
         .eval("return C_BlackMarket.IsViewOnly(), BlackMarketFrame.BidButton:IsShown()")
         .expect("view-only state and bid control should be queryable");

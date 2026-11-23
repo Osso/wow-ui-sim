@@ -208,6 +208,7 @@ pub(crate) mod talent_edge_frame_level_sync;
 #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod taxi_map_defaults;
 pub(crate) mod texture_file_data_defaults;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod tooltip_nineslice_surface;
 pub(crate) mod tracking_namespace_defaults;
 pub(crate) mod trade_info_defaults;
