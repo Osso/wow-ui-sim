@@ -237,18 +237,33 @@ fn push_item_colors(state: &mut LuaState, item_id: Option<u32>) -> LuaResult<u32
 // INFERRED best-guess scenario input; R88eo (native evidence pending).
 fn set_item_colors(state: &mut LuaState) -> LuaResult<u32> {
     let item_id = u32::from_stack(state, 1)?;
-    let ids = String::from_stack(state, 2)?
-        .split(',')
-        .map(str::parse::<i32>)
-        .collect::<Result<Vec<_>, _>>()
-        .map_err(|_| {
-            rilua::runtime_error("A_Admin.SetDyeColorsForItem: expected comma-separated dye IDs")
-        })?;
+    let ids = read_color_ids(state, stack_val(state, 2))?;
     borrow_state_mut(state)?
         .dye_colors
         .item_colors
         .insert(item_id, ids);
     Ok(0)
+}
+
+fn read_color_ids(state: &LuaState, value: Val) -> LuaResult<Vec<i32>> {
+    let Val::Table(table_ref) = rilua::table_security::unwrap_secret(state, value)? else {
+        return Err(rilua::runtime_error(
+            "A_Admin.SetDyeColorsForItem: expected a dye ID array",
+        ));
+    };
+    let table = state.gc.tables.get(table_ref).expect("live Lua table");
+    (1..=table.array_len())
+        .map(
+            |index| match table.get(Val::Num(index as f64), &state.gc.string_arena) {
+                Val::Num(id) if id.fract() == 0.0 && id > 0.0 && id <= f64::from(i32::MAX) => {
+                    Ok(id as i32)
+                }
+                _ => Err(rilua::runtime_error(
+                    "A_Admin.SetDyeColorsForItem: dye IDs must be positive integers",
+                )),
+            },
+        )
+        .collect()
 }
 
 fn is_owned(state: &mut LuaState) -> LuaResult<u32> {

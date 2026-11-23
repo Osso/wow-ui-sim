@@ -5,8 +5,8 @@ fn p1210_dye_colors_for_items_and_item_locations_use_supplied_lists() {
     let env = crate::common::panel_fixtures::setup_env();
     env.exec(
         r#"
-        A_Admin.SetDyeColorsForItem(900001, '501,502')
-        A_Admin.SetDyeColorsForItem(900002, '601')
+        A_Admin.SetDyeColorsForItem(900001, {501, 502})
+        A_Admin.SetDyeColorsForItem(900002, {601})
         A_Admin.AddBagItem(0, 1, 900001, 1)
         A_Admin.AddBagItem(0, 2, 900002, 1)
 
