@@ -636,7 +636,10 @@ fn dirty_flush_settext_inside_keydown_then_keyboard_insert_sets_user_origin() {
         "#,
     );
     tick_dirty_flush(&env);
-    assert_dirty_flush_stable(&env, "key:X:é\\n猫z|set:ab|char:x:abx|changed:true:abx");
+    assert_dirty_flush_stable(
+        &env,
+        "key:X:é\\n猫z|set:ab|changed:false:ab|char:x:abx|changed:true:abx",
+    );
 }
 
 #[cfg(feature = "gui")]
