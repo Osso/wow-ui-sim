@@ -739,6 +739,7 @@ macro_rules! build_empty_sim_state {
             #[cfg(feature = "client-wowforever")]
             forever_pvp_talent_spell_ids: HashMap::new(),
             player_xp: PlayerXpState::default(),
+            account_type: crate::lua_api::state_types::AccountTypeState::default(),
             bind_location: "Stormwind City".into(),
             pvp_honor: PvpHonorState::default(),
             world: super::state_types::seeded_world_state(),

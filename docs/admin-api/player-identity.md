@@ -98,3 +98,33 @@ Sets the player's displayed sex for localization purposes.
 A_Admin.SetPlayerSex(3)     -- female
 print(UnitSex("player"))    -- 3
 ```
+
+## A_Admin.SetAccountType(account)
+
+Supplies one account-type snapshot for the Retail and WoW Forever profiles. **INFERRED (R88fw; native evidence is pending):** the five account queries and `GetRestrictedAccountData()` read this same snapshot.
+
+- **account** `table` -- All fields are required:
+  - `trial` `boolean`
+  - `veteranTrial` `boolean`
+  - `restricted` `boolean`
+  - `expansionTrial` `boolean`
+  - `expansionTrialRemaining` `number` -- Remaining expansion-trial seconds; must be finite and nonnegative
+  - `restrictedLevel` `number` -- Level limit; must be nonnegative
+  - `restrictedMoney` `number` -- Copper limit; must be nonnegative
+  - `restrictedProfession` `number` -- Profession-skill limit; must be nonnegative
+- **Affects:** `IsTrialAccount()`, `IsVeteranTrialAccount()`, `IsRestrictedAccount()`, `IsExpansionTrial()`, `GetExpansionTrialInfo()`, `GetRestrictedAccountData()`
+- **Example:**
+```lua
+A_Admin.SetAccountType({
+    trial = true,
+    veteranTrial = false,
+    restricted = true,
+    expansionTrial = true,
+    expansionTrialRemaining = 3600,
+    restrictedLevel = 20,
+    restrictedMoney = 100000,
+    restrictedProfession = 100,
+})
+local isTrial, remaining = GetExpansionTrialInfo()
+local level, money, profession = GetRestrictedAccountData()
+```

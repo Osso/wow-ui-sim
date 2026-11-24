@@ -373,10 +373,40 @@ impl PlayerState {
     }
 }
 
+/// Account type and the limits reported to restricted-account consumers.
+/// Defaults are an unrestricted account; the historical cap values remain
+/// available until a host supplies a different account snapshot.
+#[derive(Debug, Clone)]
+pub struct AccountTypeState {
+    pub trial: bool,
+    pub veteran_trial: bool,
+    pub restricted: bool,
+    pub expansion_trial: bool,
+    pub expansion_trial_remaining: f64,
+    pub restricted_level: i32,
+    pub restricted_money: i64,
+    pub restricted_profession: i32,
+}
+
+impl Default for AccountTypeState {
+    fn default() -> Self {
+        Self {
+            trial: false,
+            veteran_trial: false,
+            restricted: false,
+            expansion_trial: false,
+            expansion_trial_remaining: 0.0,
+            restricted_level: 20,
+            restricted_money: 0,
+            restricted_profession: 0,
+        }
+    }
+}
+
 /// XP / honor / rest globals consumed by `Blizzard_ActionBar/Shared/ExpBar.lua`
 /// and `Mainline/HonorBar.lua`. Default values mirror "level 70 paladin in a
 /// rested inn, no Trial restrictions": no exhaustion XP, rest state 1
-/// ("Rested", 1.5x multiplier), no honor banked, no trial cap. The basic
+/// ("Rested", 1.5x multiplier), no honor banked, no trial cap.
 /// XP totals (`xp` / `xp_max`) live on [`PlayerState`] alongside health
 /// because many existing readers (UnitXP / UnitXPMax / IsXPUserDisabled /
 /// IsResting / UnitHonorLevel) already key off it.
@@ -404,19 +434,11 @@ pub struct PlayerXpState {
     /// `UnitTrialBankedLevels("player")` — banked levels held for trial
     /// accounts that have not subscribed yet.
     pub trial_banked_levels: i32,
-    /// `GetRestrictedAccountData()` first return — the level cap a
-    /// limited account is locked at. 20 matches the historical Trial cap
-    /// and the previous custom-stub return.
-    pub restricted_level: i32,
-    /// `GetRestrictedAccountData()` second return — copper cap.
-    pub restricted_money: i64,
-    /// `GetRestrictedAccountData()` third return — profession-skill cap.
-    pub restricted_profession: i32,
     /// `GameLimitedMode_IsBankedXPActive()` — true while the trial cap is
     /// armed (the player has stopped earning XP toward the next level).
     pub banked_xp_active: bool,
     /// `GameLimitedMode_GetLevelLimit()` — the level the trial cap
-    /// enforces. Defaults to the same value as `restricted_level`.
+    /// enforces. Defaults to the historical level cap of 20.
     pub level_limit: i32,
 }
 
@@ -432,9 +454,6 @@ impl Default for PlayerXpState {
             honor_max: 0,
             trial_xp: 0,
             trial_banked_levels: 0,
-            restricted_level: 20,
-            restricted_money: 0,
-            restricted_profession: 0,
             banked_xp_active: false,
             level_limit: 20,
         }
