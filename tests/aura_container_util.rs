@@ -377,7 +377,10 @@ fn assert_texture_hook_count(env: &WowLuaEnv) {
 #[test]
 fn retail_aura_container_secret_icons_survive_addon_texture_hook() {
     let env = tooltip_full_env_helpers::setup_full_env();
-    env.exec("A_Admin.ClearBuffs()").unwrap();
+    env.exec(
+        "A_Admin.ClearBuffs(); if BuffFrame and BuffFrame.SetBuffsExpandedState then BuffFrame:SetBuffsExpandedState(true) end",
+    )
+    .unwrap();
     tooltip_full_env_helpers::refresh_aura_frames(&env);
     load_texture_hook_probe(&env);
     env.exec(
@@ -396,8 +399,7 @@ fn retail_aura_container_secret_icons_survive_addon_texture_hook() {
                 if button:IsShown() and button.buttonInfo
                     and button.buttonInfo.auraType == 'Buff' and button.Icon then
                     local icon = button.Icon:GetTexture()
-                    if not issecretvalue(icon) then return 'public_icon' end
-                    icon = secretunwrap(icon)
+                    if issecretvalue(icon) then icon = secretunwrap(icon) end
                     icons[#icons + 1] = tostring(icon)
                 end
             end
