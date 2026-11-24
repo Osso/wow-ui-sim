@@ -436,6 +436,24 @@ fn blizzard_friends_frame_publishes_friend_button_type_enum(env: &WowLuaEnv) {
 }
 
 prefork_full_ui_case! {
+fn friends_frame_displays_supplied_battle_tags(env: &WowLuaEnv) {
+    let tags: (String, String) = env
+        .eval(
+            r#"
+            A_Admin.SetPlayerBattleNetInfo("Malfurion#1234")
+            FriendsFrame_CheckBattlenetStatus()
+            local first = FriendsFrameBattlenetFrame.Tag:GetText()
+            A_Admin.SetPlayerBattleNetInfo("Tyrande#5678")
+            FriendsFrame_CheckBattlenetStatus()
+            return first, FriendsFrameBattlenetFrame.Tag:GetText()
+            "#,
+        )
+        .expect("FriendsFrame should display supplied Battle.net account tags");
+    assert_eq!(tags, ("Malfurion#1234".into(), "Tyrande#5678".into()));
+}
+}
+
+prefork_full_ui_case! {
 fn blizzard_friends_frame_publishes_friend_tab_enum(env: &WowLuaEnv) {
 
     let tabs: (i64, i64, i64, i64, i64) = env
