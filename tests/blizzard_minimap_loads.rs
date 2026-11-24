@@ -108,27 +108,24 @@ const GARRISON_FUNCTIONS: &[&str] = &[
 
 fn load_full_game_ui() -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("Failed to create Lua environment");
+    load_full_game_ui_into(&env);
+    env
+}
+
+fn load_full_game_ui_into(env: &WowLuaEnv) {
     env.set_screen_size(1024.0, 768.0);
     env.set_screen_mode(ScreenKind::Game);
-
-    {
-        let mut state = env.state().borrow_mut();
-        state.addon_base_paths = vec![blizzard_ui_dir()];
-    }
+    env.state().borrow_mut().addon_base_paths = vec![blizzard_ui_dir()];
 
     wow_ui_sim::xml::register_intrinsic_templates();
-
     let ui = blizzard_ui_dir();
-    let addons = discover_blizzard_addons_for_screen(&ui, ScreenKind::Game);
-    for (name, toc_path) in &addons {
-        load_addon(&env.loader_env(), toc_path)
+    for (name, toc_path) in discover_blizzard_addons_for_screen(&ui, ScreenKind::Game) {
+        load_addon(&env.loader_env(), &toc_path)
             .unwrap_or_else(|err| panic!("[load {name}] FAILED: {err}"));
     }
 
     env.apply_post_load_workarounds();
-    fire_startup_events_for_screen(&env, ScreenKind::Game);
-
-    env
+    fire_startup_events_for_screen(env, ScreenKind::Game);
 }
 
 #[test]
@@ -265,7 +262,13 @@ fn blizzard_minimap_toc_lists_six_files_all_under_mainline_subdir() {
 
 #[test]
 fn blizzard_minimap_compartment_displays_loaded_addon_registrations() {
-    let env = load_full_game_ui();
+    let env = WowLuaEnv::new().expect("create bare environment");
+    let absent: bool = env
+        .eval("return rawget(_G, 'AddonCompartmentFrame') == nil")
+        .expect("inspect pre-addon compartment global");
+    assert!(absent, "Blizzard_Minimap must own the compartment frame");
+    load_full_game_ui_into(&env);
+
     let fixture = tempfile::tempdir().expect("create addon-compartment fixtures");
 
     for (name, title) in [("CompartmentOne", "Compartment One"), ("CompartmentTwo", "Compartment Two")] {
