@@ -1,7 +1,15 @@
 #![cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 
+#[path = "common/prefork_full_ui_preload.rs"]
+mod prefork_full_ui_preload;
+
 use crate::common::blizzard_addon_harness::{blizzard_ui_dir, build_blizzard_addon_closure_env};
 use wow_ui_sim::lua_api::WowLuaEnv;
+
+fn load_full_game_ui() -> WowLuaEnv {
+    prefork_full_ui_preload::preload_full_game_ui()
+        .expect("full Blizzard UI should load for the normal CommunitiesFrame path")
+}
 
 fn load_original_communities() -> WowLuaEnv {
     let ui = blizzard_ui_dir();
@@ -54,7 +62,7 @@ fn original_social_settings_reads_chat_restrictions() {
 
 #[test]
 fn original_communities_frame_reads_chat_accessibility_inputs() {
-    let env = load_original_communities();
+    let env = load_full_game_ui();
     env.exec(
         r#"
         local addedClubs = {}
@@ -70,21 +78,23 @@ fn original_communities_frame_reads_chat_accessibility_inputs() {
         assert(mutedClubId ~= availableClubId, "club IDs are distinct")
         assert(C_Club.GetClubInfo(mutedClubId).name == "Muted community")
         assert(C_Club.GetClubInfo(availableClubId).name == "Available community")
-        A_Admin.SetAccountMutedClub(mutedClubId, true)
         A_Admin.SetChatDisabled(true)
-
         ToggleCommunitiesFrame()
-        CommunitiesFrame:SelectClub(mutedClubId, true)
+        local selectedClubId = CommunitiesFrame:GetSelectedClubId()
+        assert(selectedClubId == mutedClubId or selectedClubId == availableClubId)
+
+        A_Admin.SetAccountMutedClub(selectedClubId, true)
+        CommunitiesFrame:ValidateDisplayMode()
         assert(not CommunitiesFrame:IsChatAccessible(), "account-muted club blocks chat")
         assert(CommunitiesFrame:GetDisplayMode() == COMMUNITIES_FRAME_DISPLAY_MODES.ROSTER)
 
-        A_Admin.SetAccountMutedClub(availableClubId, false)
-        CommunitiesFrame:SelectClub(availableClubId, true)
+        A_Admin.SetAccountMutedClub(selectedClubId, false)
+        CommunitiesFrame:ValidateDisplayMode()
         assert(not CommunitiesFrame:IsChatAccessible(), "chat-disabled account blocks chat")
         assert(CommunitiesFrame:GetDisplayMode() == COMMUNITIES_FRAME_DISPLAY_MODES.ROSTER)
 
         A_Admin.SetChatDisabled(false)
-        CommunitiesFrame:SelectClub(availableClubId, true)
+        CommunitiesFrame:ValidateDisplayMode()
         assert(CommunitiesFrame:IsChatAccessible(), "unrestricted community chat is accessible")
         assert(CommunitiesFrame:GetDisplayMode() == COMMUNITIES_FRAME_DISPLAY_MODES.CHAT)
         "#,
