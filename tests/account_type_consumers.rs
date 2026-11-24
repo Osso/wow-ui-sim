@@ -12,6 +12,7 @@ const ADDON_ROOTS: &[&str] = &["Blizzard_MicroMenu"];
 #[cfg(feature = "client-retail")]
 const LFG_ACCOUNT_SCRIPT: &str = r#"
     assert(C_AddOns.IsAddOnLoaded("Blizzard_GroupFinder"))
+    A_Admin.SetManualClock(0)
     A_Admin.SetAccountType({ accountType = 0, restricted = false,
         expansionTrial = false, expansionTrialExpiry = 0, restrictedLevel = 20,
         restrictedMoney = 0 })
