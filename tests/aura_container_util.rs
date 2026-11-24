@@ -371,7 +371,7 @@ fn retail_aura_container_secret_icons_survive_addon_texture_hook() {
     )
     .unwrap();
     load_texture_hook_probe(&env);
-    env.exec_maybe_secure(
+    env.exec(
         r#"
         HookOriginalState:Call()
         assert(HookOriginalState.taint == 'secure', 'hook must preserve original caller taint')
@@ -389,7 +389,6 @@ fn retail_aura_container_secret_icons_survive_addon_texture_hook() {
         assert(firstResult and secondResult and firstResult ~= secondResult,
             tostring(firstResult) .. ':' .. tostring(secondResult))
         "#,
-        true,
     )
     .expect("AuraContainer must apply both secret icon paths before its addon hook runs");
     assert_texture_hook_count(&env);
