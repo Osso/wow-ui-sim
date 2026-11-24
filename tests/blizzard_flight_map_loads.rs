@@ -364,6 +364,7 @@ fn flight_map_open_path_places_click_to_zoom_labels_from_uimap_positions(env: &W
         (true, true, 14, 14, "BOTTOMLEFT".into(), "TOPLEFT".into())
     );
 }
+}
 
 fn assert_flight_map_is_unloaded_and_taxi_map_id_is_zero_values(env: &WowLuaEnv) {
     let loaded: bool = env
@@ -372,7 +373,10 @@ fn assert_flight_map_is_unloaded_and_taxi_map_id_is_zero_values(env: &WowLuaEnv)
     let map_id_values: i32 = env
         .eval("return select('#', GetTaxiMapID())")
         .expect("zero taxi-map ID should produce no Lua values");
-    assert!(!loaded, "FlightMap must be LoadOnDemand before TAXIMAP_OPENED");
+    assert!(
+        !loaded,
+        "FlightMap must be LoadOnDemand before TAXIMAP_OPENED"
+    );
     assert_eq!(map_id_values, 0);
 }
 
@@ -387,12 +391,9 @@ fn open_flight_map_for_taxi_map(env: &WowLuaEnv, map_id: i32) {
         .expect("World-system TAXIMAP_OPENED should load and open FlightMapFrame");
 }
 
-fn observe_flight_map_label_anchors(
-    env: &WowLuaEnv,
-) -> (bool, bool, i32, i32, String, String) {
+fn observe_flight_map_label_anchors(env: &WowLuaEnv) -> (bool, bool, i32, i32, String, String) {
     env.eval(FLIGHT_MAP_LABEL_ANCHORS)
         .expect("original FlightMap consumer should place both click-to-zoom labels")
-}
 }
 
 prefork_full_ui_case! {
