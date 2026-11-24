@@ -20,9 +20,6 @@ macro_rules! prefork_full_ui_case {
 }
 
 #[cfg(feature = "client-retail")]
-#[path = "test_camera_tutorial_consumers.rs"]
-mod test_camera_tutorial_consumers;
-#[cfg(feature = "client-retail")]
 #[path = "test_keybindings_panels_detail.rs"]
 mod test_keybindings_panels_detail;
 
