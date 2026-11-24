@@ -8,12 +8,8 @@ fn load_account_consumers() -> WowLuaEnv {
     let ui = crate::common::blizzard_addon_harness::blizzard_ui_dir();
     let (env, loaded) = crate::common::blizzard_addon_harness::build_blizzard_addon_closure_env(
         &ui,
-        &["Blizzard_GroupFinder", "Blizzard_MicroMenu"],
+        &["Blizzard_MicroMenu"],
         &[] as &[BlizzardAddonOverride<'_>],
-    );
-    assert!(
-        loaded.iter().any(|name| name == "Blizzard_GroupFinder"),
-        "selected GroupFinder addon missing from loaded closure: {loaded:?}"
     );
     assert!(
         loaded.iter().any(|name| name == "Blizzard_MicroMenu"),
@@ -30,6 +26,9 @@ fn account_type_controls_restricted_lfg_panel() {
         let env = load_account_consumers();
         env.exec(
             r#"
+            local loaded, reason = C_AddOns.LoadAddOn("Blizzard_GroupFinder")
+            assert(loaded, "mainline GroupFinder must load for this client: " .. tostring(reason))
+            assert(C_AddOns.IsAddOnLoaded("Blizzard_GroupFinder"))
             A_Admin.SetAccountType({
                 trial = false,
                 veteranTrial = false,
