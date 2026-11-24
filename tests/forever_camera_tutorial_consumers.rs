@@ -46,14 +46,14 @@ fn forever_tutorial_enable_state_controls_npe_bootstrap() {
     env.exec(
         r#"
         local addon = "Blizzard_NewPlayerExperience"
-        assert(not C_AddOns.IsAddOnLoaded(addon))
+        assert(not C_AddOns.IsAddOnLoaded(addon), "NPE starts unloaded")
         A_Admin.SetPlayerNPERestricted(true)
         A_Admin.SetTutorialsEnabled(false)
         NPE_LoadUI()
-        assert(not C_AddOns.IsAddOnLoaded(addon))
+        assert(not C_AddOns.IsAddOnLoaded(addon), "disabled tutorials keep NPE unloaded")
         A_Admin.SetTutorialsEnabled(true)
         NPE_LoadUI()
-        assert(C_AddOns.IsAddOnLoaded(addon))
+        assert(C_AddOns.IsAddOnLoaded(addon), "enabled tutorials load NPE for a restricted player")
     "#,
     )
     .expect("Forever NPE bootstrap should obey supplied tutorial enable state");
@@ -78,6 +78,12 @@ fn forever_tutorial_frame_reads_supplied_flags() {
 #[test]
 fn forever_settings_reset_clears_flags_seen_by_tutorial_frame() {
     let env = load_panel_consumers();
+    load_blizzard_addon_closure_into_env(
+        &env,
+        &blizzard_ui_dir(),
+        &["Blizzard_TutorialManager"],
+        &[],
+    );
     env.exec(
         r#"
         A_Admin.SetTutorialFlag(17, true)
