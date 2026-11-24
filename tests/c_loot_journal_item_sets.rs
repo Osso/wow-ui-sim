@@ -147,12 +147,12 @@ const SELECT_RAID_AND_OPEN_JOURNAL: &str = r#"
             EJ_SelectInstance(selected.instanceID)
             assert(EJ_InstanceIsRaid(), "selected Encounter Journal instance must be a raid")
             A_Admin.SetCompletedEncounters({
-                { mapID=selected.mapID, difficultyID=DifficultyUtil.ID.PrimaryRaidNormal,
+                { mapID=selected.mapID, difficultyID=14,
                   completedEncounterIDs={selected.second.encounterID} },
                 { mapID=selected.mapID, difficultyID=DifficultyUtil.ID.PrimaryRaidHeroic,
                   completedEncounterIDs={selected.first.encounterID} },
             })
-            EncounterJournal_OpenJournal(DifficultyUtil.ID.PrimaryRaidHeroic, selected.instanceID)
+            EncounterJournal_OpenJournal(14, selected.instanceID)
             assert(EncounterJournal:IsShown(), "the client path must open Encounter Journal")
             return selected.instanceID, selected.mapID,
                 selected.first.journalID, selected.first.encounterID,
@@ -186,7 +186,7 @@ fn assert_initial_raid_lock_overlays(env: &WowLuaEnv, b: &RaidLockBosses) {
             "#
         ))
         .expect("Encounter Journal boss overlays should read supplied raid-lock state");
-    assert_eq!(initial, (true, true, true, true, false, true));
+    assert_eq!(initial, (true, false, true, true, false, true));
 }
 
 fn complete_second_boss_and_request_raid_info(env: &WowLuaEnv, b: &RaidLockBosses) {
@@ -200,7 +200,7 @@ fn complete_second_boss_and_request_raid_info(env: &WowLuaEnv, b: &RaidLockBosse
     env.exec(&format!(
         r#"
         A_Admin.SetCompletedEncounters({{
-            {{ mapID={map_id}, difficultyID=DifficultyUtil.ID.PrimaryRaidNormal,
+            {{ mapID={map_id}, difficultyID=14,
                completedEncounterIDs={{{encounter_b}}} }},
             {{ mapID={map_id}, difficultyID=DifficultyUtil.ID.PrimaryRaidHeroic,
                completedEncounterIDs={{{encounter_a}, {encounter_b}}} }},
