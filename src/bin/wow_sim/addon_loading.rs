@@ -295,6 +295,7 @@ pub fn load_third_party_addons(
     addon_paths: &[PathBuf],
     skip_addons: bool,
     is_test: bool,
+    test_addon: Option<&str>,
     env: &WowLuaEnv,
     saved_vars: &mut Option<SavedVariablesManager>,
     screen: ScreenKind,
@@ -305,7 +306,10 @@ pub fn load_third_party_addons(
     }
 
     let tocs = env.toc_cache();
-    let addons = discover_third_party_addons(&tocs, addon_paths, skip_addons, is_test, screen);
+    let mut addons = discover_third_party_addons(&tocs, addon_paths, skip_addons, is_test, screen);
+    if let Some(name) = test_addon {
+        include_addon_under_test(&mut addons, addon_paths, name);
+    }
     if addons.is_empty() {
         return;
     }
@@ -332,6 +336,27 @@ fn discover_third_party_addons(
         addons.retain(|(name, _)| TEST_ADDONS.iter().any(|t| t == name));
     }
     addons
+}
+
+/// `run-tests` always loads the addon it tests, even when its TOC is out of
+/// date or `--no-addons` is set; the warning keeps the skip rule visible.
+fn include_addon_under_test(
+    addons: &mut Vec<(String, PathBuf)>,
+    addon_paths: &[PathBuf],
+    name: &str,
+) {
+    if addons.iter().any(|(loaded, _)| loaded == name) {
+        return;
+    }
+    let toc = addon_paths
+        .iter()
+        .find_map(|base| wow_ui_sim::loader::find_toc_file(&base.join(name)));
+    if let Some(toc_path) = toc {
+        logging::println_elapsed(&format!(
+            "Warning: {name} would be skipped (out-of-date ## Interface or --no-addons); loading it because run-tests targets it"
+        ));
+        addons.push((name.to_string(), toc_path));
+    }
 }
 
 fn merged_addon_enable_overrides(

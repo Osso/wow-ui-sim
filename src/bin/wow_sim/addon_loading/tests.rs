@@ -908,3 +908,38 @@ fn scan_addons_accepts_mists_interface_version() {
 
     assert_eq!(names, ["ElvUI"]);
 }
+
+fn write_outdated_addon(root: &Path, name: &str) {
+    let addon_dir = root.join(name);
+    std::fs::create_dir_all(&addon_dir).expect("create addon dir");
+    std::fs::write(
+        addon_dir.join(format!("{name}.toc")),
+        "## Interface: 110100\nmain.lua\n",
+    )
+    .expect("write toc");
+    let lua = format!("{name}Loaded = (({name}Loaded) or 0) + 1");
+    std::fs::write(addon_dir.join("main.lua"), lua).expect("write lua");
+}
+
+fn load_with_test_target(roots: &[PathBuf], skip: bool, target: Option<&str>) -> WowLuaEnv {
+    let env = WowLuaEnv::new().unwrap();
+    env.state().borrow_mut().addon_base_paths = roots.to_vec();
+    load_third_party_addons(roots, skip, true, target, &env, &mut None, ScreenKind::Game);
+    env
+}
+
+#[test]
+fn run_tests_loads_its_out_of_date_target_addon_only() {
+    let temp = tempfile::tempdir().unwrap();
+    write_outdated_addon(temp.path(), "OldTarget");
+    write_outdated_addon(temp.path(), "OldOther");
+    let roots = [temp.path().to_path_buf()];
+    let loaded = "return OldTargetLoaded or 0, OldOtherLoaded or 0";
+
+    let env = load_with_test_target(&roots, false, Some("OldTarget"));
+    assert_eq!(env.eval::<(i64, i64)>(loaded).unwrap(), (1, 0));
+    let skipped = load_with_test_target(&roots, true, Some("OldTarget"));
+    assert_eq!(skipped.eval::<(i64, i64)>(loaded).unwrap(), (1, 0));
+    let untargeted = load_with_test_target(&roots, false, None);
+    assert_eq!(untargeted.eval::<(i64, i64)>(loaded).unwrap(), (0, 0));
+}

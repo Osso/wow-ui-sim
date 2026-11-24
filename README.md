@@ -232,6 +232,12 @@ docker run --rm -v "$(pwd)/screenshots:/out" \
   ghcr.io/osso/wow-ui-sim screenshot -o /out/screenshot.webp
 ```
 
+`run-tests MyAddon` loads `MyAddon` from its `.toc` before the test files run, so
+tests call the addon's globals directly. Other addons whose `## Interface` does
+not list the simulator's client version are skipped as out of date, as in the
+game; the addon under test is loaded anyway, with a warning, and also under
+`--no-addons`. `WOW_SIM_LOAD_OUT_OF_DATE_ADDONS=1` loads every out-of-date addon.
+
 For deterministic timing in addon tests, see the [manual clock example](docs/admin-api/challenge-mode.md#phase-b-explicit-manual-clock).
 
 The image does not include WoW game assets; screenshots may omit textures unless

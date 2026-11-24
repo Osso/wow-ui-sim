@@ -444,6 +444,7 @@ fn load_startup_addons(
             &args.read_addon_paths(),
             args.skip_addons(),
             args.is_test_command(),
+            args.run_tests_addon(),
             env,
             saved_vars,
             screen,

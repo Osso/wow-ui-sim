@@ -51,7 +51,15 @@ fn warm_process_caches() {
     write_large_addon_with_keys(temp.path(), "Warmup", "", "WarmupRuns = 1", 1);
     let env = WowLuaEnv::new().unwrap();
     let roots = [temp.path().to_path_buf()];
-    load_third_party_addons(&roots, false, false, &env, &mut None, ScreenKind::Game);
+    load_third_party_addons(
+        &roots,
+        false,
+        false,
+        None,
+        &env,
+        &mut None,
+        ScreenKind::Game,
+    );
 }
 
 const CHECK_STARTUP_LUA: &str = r#"
@@ -89,7 +97,15 @@ fn startup_and_load_on_demand_read_each_large_toc_once() {
     let roots = [temp.path().to_path_buf()];
 
     let startup_read = bytes_read_during(|| {
-        load_third_party_addons(&roots, false, false, &env, &mut None, ScreenKind::Game)
+        load_third_party_addons(
+            &roots,
+            false,
+            false,
+            None,
+            &env,
+            &mut None,
+            ScreenKind::Game,
+        )
     });
     env.exec(CHECK_STARTUP_LUA).unwrap();
     let load_read = bytes_read_during(|| env.exec(LOAD_LOD_LUA).unwrap());
