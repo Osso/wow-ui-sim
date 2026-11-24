@@ -153,6 +153,7 @@ pub struct BnetGameAccount {
 /// One supplied Battle.net blocked-account row for the legacy friends UI.
 /// INFERRED input fields; live blocked-account identity and native defaults are unknown.
 /// Supplied local Battle.net account identity for legacy `BNGetInfo` reads.
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 #[derive(Debug, Clone)]
 pub struct PlayerBattleNetInfo {
     pub battle_tag: String,
@@ -164,6 +165,7 @@ pub struct PlayerBattleNetInfo {
     pub is_appear_offline: bool,
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 impl Default for PlayerBattleNetInfo {
     fn default() -> Self {
         Self {
@@ -179,6 +181,7 @@ impl Default for PlayerBattleNetInfo {
 }
 
 /// Supplied account feature values consumed by Retail/Forever social UI.
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 #[derive(Debug, Clone)]
 pub struct BattleNetAccountFeatures {
     pub friend_tags: bool,
@@ -188,6 +191,7 @@ pub struct BattleNetAccountFeatures {
     pub friends_list_supported: bool,
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 impl Default for BattleNetAccountFeatures {
     fn default() -> Self {
         Self {
