@@ -156,6 +156,7 @@ fn is_multisample_anti_aliasing_supported(state: &mut LuaState) -> LuaResult<u32
     Ok(1)
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
     if ACTIVE == ClientProfile::WowForever {
         builder
@@ -169,6 +170,7 @@ pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
     }
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn set_anti_aliasing_supported(state: &mut LuaState) -> LuaResult<u32> {
     let supported = bool::from_stack(state, 1)?;
     borrow_state_mut(state)?
@@ -177,6 +179,7 @@ fn set_anti_aliasing_supported(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn set_multisample_anti_aliasing_supported(state: &mut LuaState) -> LuaResult<u32> {
     let supported = bool::from_stack(state, 1)?;
     borrow_state_mut(state)?
