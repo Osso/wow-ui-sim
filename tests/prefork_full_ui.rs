@@ -10,15 +10,6 @@ mod prefork;
 mod prefork_full_ui_preload;
 #[path = "common/workload_gate_core.rs"]
 mod prefork_workload_gate;
-macro_rules! prefork_full_ui_case {
-    (fn $name:ident($env:ident: &WowLuaEnv) $body:block) => {
-        pub(crate) mod $name {
-            use super::*;
-            pub(crate) fn run($env: &WowLuaEnv) $body
-        }
-    };
-}
-
 #[cfg(feature = "client-retail")]
 #[path = "test_keybindings_panels_detail.rs"]
 mod test_keybindings_panels_detail;
