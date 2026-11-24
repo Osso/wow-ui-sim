@@ -13,9 +13,9 @@
 
 use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::methods::{borrow_state, borrow_state_mut};
-use crate::lua_bridge::{TableBuilder, table_set_rust_fn_static};
+use crate::lua_bridge::{FromStack, TableBuilder, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
-use rilua::{FromStack, LuaResult, Val};
+use rilua::{LuaResult, Val};
 
 /// Explicit, environment-local video capability inputs. MSAA is a runtime/device
 /// capability separate from R60 high-resolution textures.
