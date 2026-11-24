@@ -46,6 +46,7 @@ pub(crate) fn register_club_info_surface(state: &mut LuaState) -> LuaResult<()> 
     let table_ref = ensure_namespace(state, "C_Club")?;
     super::club_members::register(state)?;
     register_club_status_methods(state, table_ref)?;
+    register_club_stream_focus_methods(state, table_ref)?;
     register_club_profile_methods(state, table_ref)
 }
 
@@ -151,6 +152,55 @@ fn c_club_is_account_muted(state: &mut LuaState) -> LuaResult<u32> {
         .contains(&club_id);
     state.push(Val::Bool(muted));
     Ok(1)
+}
+
+fn register_club_stream_focus_methods(
+    state: &mut LuaState,
+    table_ref: GcRef<Table>,
+) -> LuaResult<()> {
+    if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever) {
+        table_set_rust_fn_static(state, table_ref, "FocusStream", focus_stream)?;
+        table_set_rust_fn_static(state, table_ref, "UnfocusStream", unfocus_stream)?;
+    }
+    Ok(())
+}
+
+// VERIFIED (Retail/Forever ClubDocumentation.lua:339-354): this query returns a bool.
+// INFERRED R88fq (native evidence pending): focus succeeds when the supplied club has the stream.
+fn focus_stream(state: &mut LuaState) -> LuaResult<u32> {
+    let club_id = super::club_members::string_arg(state, 1)?;
+    let requested_stream_id = f64::from_stack(state, 2)?;
+    let mut sim = borrow_state_mut(state)?;
+    let stream_id = sim
+        .clubs
+        .clubs
+        .get(&club_id)
+        .and_then(|club| {
+            club.streams
+                .iter()
+                .find(|stream| stream.id as f64 == requested_stream_id)
+        })
+        .map(|stream| stream.id);
+    if let Some(stream_id) = stream_id {
+        sim.clubs.focused_streams.insert((club_id, stream_id));
+        state.push(Val::Bool(true));
+    } else {
+        state.push(Val::Bool(false));
+    }
+    Ok(1)
+}
+
+// VERIFIED (Retail/Forever ClubDocumentation.lua:1193-1203): this function returns no values.
+fn unfocus_stream(state: &mut LuaState) -> LuaResult<u32> {
+    let club_id = super::club_members::string_arg(state, 1)?;
+    let requested_stream_id = f64::from_stack(state, 2)?;
+    let mut sim = borrow_state_mut(state)?;
+    sim.clubs
+        .focused_streams
+        .retain(|(focused_club_id, stream_id)| {
+            focused_club_id != &club_id || *stream_id as f64 != requested_stream_id
+        });
+    Ok(0)
 }
 
 fn register_club_message_methods(state: &mut LuaState, table_ref: GcRef<Table>) -> LuaResult<()> {

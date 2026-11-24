@@ -475,6 +475,7 @@ macro_rules! build_empty_sim_state {
             title_friend_requests: Vec::new(),
             club_battle_tag_friend_requests: Vec::new(),
             clubs: crate::c_api::club_model::ClubState::default(),
+            club_finder: crate::c_api::c_club_finder::ClubFinderState::default(),
             spell_cooldown_categories: HashMap::new(),
             spellbook_auto_cast: HashMap::new(),
             spellbook_low_rank: HashSet::new(),

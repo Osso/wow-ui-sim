@@ -308,6 +308,7 @@ fn register_social_namespace_surfaces(state: &mut LuaState) -> LuaResult<()> {
     c_api::c_class_trial::register(state)?;
     c_api::c_chat_bubbles::register_c_chat_bubbles_surface(state)?;
     club_finder::register_club_finder_surface(state)?;
+    c_api::c_club_finder::register(state)?;
     c_api::c_club::register_club_info_surface(state)?;
     friend_list::register_friend_list_surface(state)?;
     #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
