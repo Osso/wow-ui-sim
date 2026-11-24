@@ -112,13 +112,7 @@ fn register_admin_player_services(builder: TableBuilder) -> LuaResult<TableBuild
     #[cfg(feature = "client-retail")]
     let builder = crate::c_api::c_housing::register_admin(builder)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
-    let builder = super::real::performance_metrics::register_admin(builder)?;
-    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
-    let builder = super::real::configuration_warnings::register_admin(builder)?;
-    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
-    let builder = super::admin_currency_transfer::register_admin(builder)?;
-    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
-    let builder = super::real::camera_fov_defaults::register_admin(builder)?;
+    let builder = register_admin_client_metrics(builder)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     let builder = builder
         .set_function(
@@ -141,6 +135,14 @@ fn register_admin_player_services(builder: TableBuilder) -> LuaResult<TableBuild
     #[cfg(feature = "client-retail")]
     let builder = crate::c_api::scripted_animations::register_admin(builder)?;
     Ok(builder)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn register_admin_client_metrics(builder: TableBuilder) -> LuaResult<TableBuilder> {
+    let builder = super::real::performance_metrics::register_admin(builder)?;
+    let builder = super::real::configuration_warnings::register_admin(builder)?;
+    let builder = super::admin_currency_transfer::register_admin(builder)?;
+    super::real::camera_fov_defaults::register_admin(builder)
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
