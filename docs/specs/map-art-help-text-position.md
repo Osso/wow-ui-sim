@@ -1,6 +1,6 @@
 # Map art help-text position
 
-Retail `C_Map.GetMapArtHelpTextPosition(uiMapID)` reads `HelpTextPosition` from the matching `UiMap` record (**VERIFIED — Retail 12.1.5.70688**). An unknown numeric map ID returns `0` (**INFERRED — Retail 12.1.5.70688**; the full entry-to-publisher path is unresolved). Retail data comes from the pinned local-CASC export in `data/db2/retail-12.1.5.70961/UiMap.csv`.
+Retail `C_Map.GetMapArtHelpTextPosition(uiMapID)` reads `HelpTextPosition` from the matching `UiMap` record (**VERIFIED — Retail 12.1.5.70688**). An unknown numeric map ID returns `0` (**INFERRED — Retail 12.1.5.70688 and Forever 1.60.1.70707**; the full entry-to-publisher path is unresolved). Retail data comes from the pinned local-CASC export in `data/db2/retail-12.1.5.70961/UiMap.csv`.
 
 ## What it must do
 
@@ -8,12 +8,11 @@ Retail `C_Map.GetMapArtHelpTextPosition(uiMapID)` reads `HelpTextPosition` from 
 - [x] **INFERRED — Retail 12.1.5.70688:** Retail returns `0` for an unknown numeric map ID; the API test asserts this simulator output.
 - [x] Retail's original `FlightMapFrame` consumer uses the returned value to place its ClickToZoom labels after the normal taxi-map open event.
 - [x] PTR keeps its existing temporary value; this change does not register the Retail producer on PTR.
-- [ ] **INFERRED — Retail 12.1.5.70688 and Forever 1.60.1.70707:** a missing or non-integer argument follows the required-integer parser's error path.
 - [ ] Forever remains on its temporary default until Forever UiMap data is available from a working local CASC source.
 
-**Native evidence:** **VERIFIED — Retail 12.1.5.70688:** the handler reads `UiMap.HelpTextPosition` for a matching `UiMap` row and sets the result to zero when the numeric map ID has no row. **INFERRED — Retail 12.1.5.70688 and Forever 1.60.1.70707:** the complete API returns `0` for an unknown numeric map ID because the documented result is non-nil and the handler sets the byte to zero; the full entry-to-publisher path is unresolved. See `pr46-49-decomp-answers.md`, `R88fu`.
+**Native evidence:** **VERIFIED — Retail 12.1.5.70688:** the handler reads `UiMap.HelpTextPosition` for a matching `UiMap` row and sets the result byte to zero when the numeric map ID has no row. **INFERRED — Retail 12.1.5.70688 and Forever 1.60.1.70707:** the complete API returns `0` for an unknown numeric map ID because the documented result is non-nil and the separately recovered publisher returns the byte; the full entry-to-publisher path is unresolved. See `pr46-49-decomp-answers.md`, `R88fu`.
 
-**Supporting FlightMap input:** **VERIFIED (R88fx — Retail 12.1.5.70688):** `GetTaxiMapID()` checks the stored value, returns no Lua values when it is zero, and returns one integer when it is nonzero. **INFERRED (R88fx; native evidence pending):** the simulator supplies the map ID before it dispatches `TAXIMAP_OPENED`; native event ordering is unknown. The simulator does not clear this value on close because native clearing behavior is UNKNOWN. See `pr46-49-decomp-answers.md`, `R88fx`.
+**Supporting FlightMap input:** **VERIFIED (Retail 12.1.5.70688 and Forever 1.60.1.70707):** `GetTaxiMapID()` checks the stored value, returns no Lua values when it is zero, and returns one integer when it is nonzero. **INFERRED (R88fx; native evidence pending):** the simulator supplies the map ID before it dispatches `TAXIMAP_OPENED`; native event ordering is UNKNOWN. **UNKNOWN (R88fx):** native close-time clearing is unknown; the simulator retains its last supplied map ID. See `pr46-49-decomp-answers.md`, `R88fx`.
 
 ## How it works
 

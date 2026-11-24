@@ -7,6 +7,25 @@ use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
+const FLIGHT_MAP_LABEL_ANCHORS: &str = r#"
+    local provider
+    for candidate in pairs(FlightMapFrame.dataProviders) do
+        if candidate.MapLabel then
+            provider = candidate
+            break
+        end
+    end
+    assert(provider, "FlightMap must register ClickToZoomDataProviderMixin")
+    local openedMapID = FlightMapFrame:GetMapID()
+    FlightMapFrame:SetMapID(14)
+    local bottomLeft = select(1, provider.MapLabel:GetPoint())
+    FlightMapFrame:SetMapID(994)
+    local topLeft = select(1, provider.MapLabel:GetPoint())
+    return C_AddOns.IsAddOnLoaded("Blizzard_FlightMap"),
+           FlightMapFrame:IsShown(), GetTaxiMapID(), openedMapID,
+           bottomLeft, topLeft
+"#;
+
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::client_profile::blizzard_ui_addons_dir_under(std::path::Path::new(env!(
         "CARGO_MANIFEST_DIR"
@@ -337,47 +356,42 @@ fn blizzard_flight_map_singleton_starts_hidden_after_load(env: &WowLuaEnv) {
 
 prefork_full_ui_case! {
 fn flight_map_open_path_places_click_to_zoom_labels_from_uimap_positions(env: &WowLuaEnv) {
-    let loaded_before: bool = env
+    assert_flight_map_is_unloaded_and_taxi_map_id_is_zero_values(env);
+    open_flight_map_for_taxi_map(env, 14);
+    let observed = observe_flight_map_label_anchors(env);
+    assert_eq!(
+        observed,
+        (true, true, 14, 14, "BOTTOMLEFT".into(), "TOPLEFT".into())
+    );
+}
+
+fn assert_flight_map_is_unloaded_and_taxi_map_id_is_zero_values(env: &WowLuaEnv) {
+    let loaded: bool = env
         .eval("return C_AddOns.IsAddOnLoaded('Blizzard_FlightMap')")
         .expect("FlightMap load-state query should succeed");
-    assert!(!loaded_before, "FlightMap is LoadOnDemand before TAXIMAP_OPENED");
-    let no_map_id_values: i32 = env
+    let map_id_values: i32 = env
         .eval("return select('#', GetTaxiMapID())")
-        .expect("GetTaxiMapID should return no values for a zero map ID");
-    assert_eq!(no_map_id_values, 0);
-    env.exec("A_Admin.SetTaxiMapID(14)")
-        .expect("supply the map selected by the flight-master interaction");
+        .expect("zero taxi-map ID should produce no Lua values");
+    assert!(!loaded, "FlightMap must be LoadOnDemand before TAXIMAP_OPENED");
+    assert_eq!(map_id_values, 0);
+}
 
+fn open_flight_map_for_taxi_map(env: &WowLuaEnv, map_id: i32) {
+    let set_map_id = format!("A_Admin.SetTaxiMapID({map_id})");
+    env.exec(&set_map_id)
+        .expect("supply the map selected by the flight-master interaction");
     let world_system: f64 = env
         .eval("return Enum.UIMapSystem.World")
         .expect("World UIMapSystem enum should be available");
     env.fire_event_with_args("TAXIMAP_OPENED", &[rilua::Val::Num(world_system)])
         .expect("World-system TAXIMAP_OPENED should load and open FlightMapFrame");
+}
 
-    let observed: (bool, bool, i32, String, String) = env
-        .eval(
-            r#"
-            local provider
-            for candidate in pairs(FlightMapFrame.dataProviders) do
-                if candidate.MapLabel then
-                    provider = candidate
-                    break
-                end
-            end
-            assert(provider, "FlightMap must register ClickToZoomDataProviderMixin")
-            FlightMapFrame:SetMapID(14)
-            local bottomLeft = select(1, provider.MapLabel:GetPoint())
-            FlightMapFrame:SetMapID(994)
-            local topLeft = select(1, provider.MapLabel:GetPoint())
-            return C_AddOns.IsAddOnLoaded("Blizzard_FlightMap"),
-                   FlightMapFrame:IsShown(), GetTaxiMapID(), bottomLeft, topLeft
-            "#,
-        )
-        .expect("original FlightMap consumer should place both click-to-zoom labels");
-    assert_eq!(
-        observed,
-        (true, true, 14, "BOTTOMLEFT".into(), "TOPLEFT".into())
-    );
+fn observe_flight_map_label_anchors(
+    env: &WowLuaEnv,
+) -> (bool, bool, i32, i32, String, String) {
+    env.eval(FLIGHT_MAP_LABEL_ANCHORS)
+        .expect("original FlightMap consumer should place both click-to-zoom labels")
 }
 }
 
