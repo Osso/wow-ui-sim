@@ -12,8 +12,12 @@
 //! claimed. These bytes are neither CVars nor renderer/device probes.
 
 use crate::client_profile::{ACTIVE, ClientProfile};
-use crate::lua_api::methods::{borrow_state, borrow_state_mut};
-use crate::lua_bridge::{FromStack, TableBuilder, table_set_rust_fn_static};
+use crate::lua_api::methods::borrow_state;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+use crate::lua_api::methods::borrow_state_mut;
+use crate::lua_bridge::table_set_rust_fn_static;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+use crate::lua_bridge::{FromStack, TableBuilder};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 
