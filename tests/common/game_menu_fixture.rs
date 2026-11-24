@@ -19,8 +19,12 @@ const BLIZZARD_ADDONS: &[&str] = &[
     "Blizzard_LoadLocale",
     "Blizzard_Fonts_Shared",
     "Blizzard_HelpPlate",
-    // Retail GameMenuFrame.lua:70 and PTR OnShow both call NarrationUtil.
-    #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+    // Retail, PTR and Forever GameMenu OnShow handlers call NarrationUtil.
+    #[cfg(any(
+        feature = "client-retail",
+        feature = "client-ptr",
+        feature = "client-wowforever"
+    ))]
     "Blizzard_Narration",
     "Blizzard_Menu",
     "Blizzard_AccessibilityTemplates",
