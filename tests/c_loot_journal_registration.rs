@@ -93,4 +93,3 @@ fn rust_raid_lock_registration_uses_first_map_row_without_difficulty() {
     assert!(explicit);
     assert!(overlay_shown);
 }
-
