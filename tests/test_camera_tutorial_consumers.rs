@@ -5,7 +5,11 @@ fn camera_fov_defaults_drive_blizzard_slider_options(env: &WowLuaEnv) {
     env.exec(r#"
         local _, minValue, maxValue = GetCameraFOVDefaults()
         local options = Settings.CreateSliderOptions(minValue, maxValue, 5)
-        assert(options.minValue == 50 and options.maxValue == 90)
+        local getValue = Settings.CreateCVarAccessorClosures("cameraFov", Settings.VarType.Number)
+        A_Admin.SetCameraFOV(60)
+        assert(options.minValue == 50 and options.maxValue == 90 and getValue() == 60)
+        A_Admin.SetCameraFOV(80)
+        assert(options.minValue == 50 and options.maxValue == 90 and getValue() == 80)
     "#).expect("Blizzard Graphics slider options should use native FOV bounds");
 }
 }
@@ -36,6 +40,9 @@ fn tutorial_flags_reach_blizzard_tutorial_consumer(env: &WowLuaEnv) {
         A_Admin.SetTutorialFlag(tutorialID, false)
         TutorialFrame_NewTutorial(tutorialID)
         assert(#TUTORIALFRAME_QUEUE == before + 1)
+        A_Admin.SetTutorialFlag(tutorialID, true)
+        InterfaceOverrides.ShowTutorialsOnButtonClick()
+        assert(not IsTutorialFlagged(tutorialID))
     "#).expect("TutorialFrame should respect the supplied tutorial flag set");
 }
 }
