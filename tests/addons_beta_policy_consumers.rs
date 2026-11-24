@@ -7,6 +7,53 @@
 use crate::common;
 use wow_ui_sim::lua_api::WowLuaEnv;
 
+const RETAIL_AND_FOREVER_CASE: &str = r#"
+    A_Admin.SetKioskSession({ enabled = false, competitive = false })
+    A_Admin.SetScriptsDisallowedForBeta(false)
+    SetAllowDangerousScripts(false)
+    betaPolicyRunExecuted = nil
+    ChatFrame1EditBox:SetText("/run betaPolicyRunExecuted = true")
+    ChatEdit_SendText(ChatFrame1EditBox, false)
+    assert(betaPolicyRunExecuted == nil, "dangerous script warning blocks /run")
+    local warning = StaticPopup_FindVisible("DANGEROUS_SCRIPTS_WARNING")
+    assert(warning and warning:IsShown(), "original /run path shows warning")
+    warning.button1:Click()
+    assert(AreDangerousScriptsAllowed(), "original warning acceptance enables scripts")
+    ChatFrame1EditBox:SetText("/run betaPolicyRunExecuted = true")
+    ChatEdit_SendText(ChatFrame1EditBox, false)
+    assert(betaPolicyRunExecuted == true, "accepted /run executes supplied code")
+
+    A_Admin.SetScriptsDisallowedForBeta(true)
+    GameMenuFrame_Show()
+    local addonsButton
+    for button in GameMenuFrame.buttonPool:EnumerateActive() do
+        if button:GetText() == ADDONS then addonsButton = button end
+    end
+    assert(addonsButton and not addonsButton:IsEnabled(), "beta policy disables AddOns button")
+    GameMenuFrame_EscapePressed()
+    betaPolicyRunExecuted = nil
+    ChatFrame1EditBox:SetText("/run betaPolicyRunExecuted = true")
+    ChatEdit_SendText(ChatFrame1EditBox, false)
+    assert(betaPolicyRunExecuted == nil, "beta policy blocks /run")
+    assert(StaticPopup_FindVisible("DANGEROUS_SCRIPTS_WARNING") == nil, "beta policy skips warning")
+
+    A_Admin.SetScriptsDisallowedForBeta(false)
+    GameMenuFrame_Show()
+    for button in GameMenuFrame.buttonPool:EnumerateActive() do
+        if button:GetText() == ADDONS then addonsButton = button end
+    end
+    assert(addonsButton and addonsButton:IsEnabled(), "cleared beta policy enables AddOns button")
+"#;
+
+const PTR_CASE: &str = r#"
+    GameMenuFrame_Show()
+    local addonsButton
+    for button in GameMenuFrame.buttonPool:EnumerateActive() do
+        if button:GetText() == ADDONS then addonsButton = button end
+    end
+    assert(addonsButton and addonsButton:IsEnabled(), "PTR AddOns button remains enabled")
+"#;
+
 fn load_game_ui() -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("Lua environment");
     env.set_screen_size(1024.0, 768.0);
@@ -22,52 +69,15 @@ fn load_game_ui() -> WowLuaEnv {
 fn beta_policy_controls_original_game_menu_and_run_consumers() {
     test_timeout! {
         let env = load_game_ui();
-        env.exec(r#"
-            A_Admin.SetKioskSession({ enabled = false, competitive = false })
-            A_Admin.SetScriptsDisallowedForBeta(true)
-            GameMenuFrame_Show()
-            local function find_addons_button()
-                for button in GameMenuFrame.buttonPool:EnumerateActive() do
-                    if button:GetText() == ADDONS then return button end
-                end
-            end
-            local button = find_addons_button()
-            assert(button and not button:IsEnabled(), "beta policy disables AddOns menu button")
-            GameMenuFrame_EscapePressed()
-            betaPolicyRunExecuted = nil
-            ChatFrame1EditBox:SetText("/run betaPolicyRunExecuted = true")
-            ChatEdit_SendText(ChatFrame1EditBox, false)
-            assert(betaPolicyRunExecuted == nil, "/run is blocked by beta policy")
-
-            A_Admin.SetScriptsDisallowedForBeta(false)
-            GameMenuFrame_Show()
-            button = find_addons_button()
-            assert(button and button:IsEnabled(), "cleared beta policy enables AddOns menu button")
-            GameMenuFrame_EscapePressed()
-            ChatFrame1EditBox:SetText("/run betaPolicyRunExecuted = true")
-            ChatEdit_SendText(ChatFrame1EditBox, false)
-            assert(betaPolicyRunExecuted == true, "/run executes after beta policy clears")
-        "#).expect("original beta-policy menu and slash consumers");
+        env.exec(RETAIL_AND_FOREVER_CASE).expect("original beta-policy consumers");
     }
 }
 
 #[cfg(feature = "client-ptr")]
 #[test]
-fn ptr_original_menu_and_run_consumers_keep_default_policy() {
+fn ptr_original_game_menu_keeps_default_policy() {
     test_timeout! {
         let env = load_game_ui();
-        env.exec(r#"
-            GameMenuFrame_Show()
-            local addonsButton
-            for button in GameMenuFrame.buttonPool:EnumerateActive() do
-                if button:GetText() == ADDONS then addonsButton = button end
-            end
-            assert(addonsButton and addonsButton:IsEnabled(), "PTR AddOns button remains enabled")
-            GameMenuFrame_EscapePressed()
-            ptrBetaPolicyRunExecuted = nil
-            ChatFrame1EditBox:SetText("/run ptrBetaPolicyRunExecuted = true")
-            ChatEdit_SendText(ChatFrame1EditBox, false)
-            assert(ptrBetaPolicyRunExecuted == true, "PTR /run keeps executing")
-        "#).expect("unchanged PTR menu and slash consumers");
+        env.exec(PTR_CASE).expect("unchanged PTR game-menu consumer");
     }
 }
