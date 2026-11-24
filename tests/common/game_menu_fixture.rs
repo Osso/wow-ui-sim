@@ -59,6 +59,10 @@ const BLIZZARD_ADDONS: &[&str] = &[
     "Blizzard_AutoComplete",
     "Blizzard_StaticPopup_Game",
     "Blizzard_MacroUI",
+    #[cfg(feature = "client-wowforever")]
+    "Blizzard_GamepadSmartNavigation",
+    #[cfg(feature = "client-wowforever")]
+    "Blizzard_GamepadSharedUtility",
     "Blizzard_GameMenu",
     "Blizzard_HelpFrame",
 ];
