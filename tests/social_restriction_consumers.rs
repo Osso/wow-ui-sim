@@ -66,16 +66,22 @@ const COMMUNITIES_CHAT_ACCESSIBILITY_SCRIPT: &str = r#"
         ToggleCommunitiesFrame()
 
         CommunitiesFrame:SelectClub(mutedClubId)
-        assert(CommunitiesFrame:GetSelectedClubId() == mutedClubId)
+        assert(CommunitiesFrame:GetSelectedClubId() == mutedClubId, "muted club selected")
         assert(not CommunitiesFrame:IsChatAccessible(), "account-muted club blocks chat")
-        assert(CommunitiesFrame:GetDisplayMode() == COMMUNITIES_FRAME_DISPLAY_MODES.ROSTER)
+        assert(
+            CommunitiesFrame:GetDisplayMode() == COMMUNITIES_FRAME_DISPLAY_MODES.ROSTER,
+            "account-muted club stays in roster display mode"
+        )
 
         A_Admin.SetAccountMutedClub(mutedClubId, false)
         A_Admin.SetChatDisabled(true)
         CommunitiesFrame:SelectClub(availableClubId)
-        assert(CommunitiesFrame:GetSelectedClubId() == availableClubId)
+        assert(CommunitiesFrame:GetSelectedClubId() == availableClubId, "available club selected")
         assert(not CommunitiesFrame:IsChatAccessible(), "chat-disabled account blocks chat")
-        assert(CommunitiesFrame:GetDisplayMode() == COMMUNITIES_FRAME_DISPLAY_MODES.ROSTER)
+        assert(
+            CommunitiesFrame:GetDisplayMode() == COMMUNITIES_FRAME_DISPLAY_MODES.ROSTER,
+            "chat-disabled account stays in roster display mode"
+        )
 
         A_Admin.SetChatDisabled(false)
         CommunitiesFrame:SelectClub(mutedClubId)
