@@ -363,21 +363,9 @@ fn assert_texture_hook_count(env: &WowLuaEnv) {
 }
 
 #[cfg(all(feature = "optional-tests", feature = "client-retail"))]
-fn aura_container_env() -> WowLuaEnv {
-    let ui = wow_ui_sim::blizzard_ui_sync::default_cache_addons_path().unwrap();
-    let (env, loaded) = crate::common::blizzard_addon_harness::build_blizzard_addon_closure_env(
-        &ui,
-        &["Blizzard_AuraContainer"],
-        &[],
-    );
-    assert!(loaded.iter().any(|name| name == "Blizzard_AuraContainer"));
-    env
-}
-
-#[cfg(all(feature = "optional-tests", feature = "client-retail"))]
 #[test]
 fn retail_aura_container_secret_icons_survive_addon_texture_hook() {
-    let env = aura_container_env();
+    let env = crate::common::aura_container_harness::load_env();
     load_texture_hook_probe(&env);
     env.exec("AuditLive = AuditContainer({{'buffs', 'HELPFUL'}})")
         .unwrap();
