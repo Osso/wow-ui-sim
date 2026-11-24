@@ -52,12 +52,12 @@ fn is_encounter_complete(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn set_completed_encounters(state: &mut LuaState) -> LuaResult<u32> {
-    let encounters = read_completed_encounters(state, stack_val(state, 1))?;
-    borrow_state_mut(state)?.completed_encounters = encounters;
+    let rows = read_raid_lock_rows(state, stack_val(state, 1))?;
+    borrow_state_mut(state)?.completed_encounters = rows;
     Ok(0)
 }
 
-fn read_completed_encounters(state: &mut LuaState, value: Val) -> LuaResult<Vec<RaidLockRow>> {
+fn read_raid_lock_rows(state: &mut LuaState, value: Val) -> LuaResult<Vec<RaidLockRow>> {
     let Val::Table(array) = value else {
         return Err(runtime_error(INPUT_ERROR));
     };
@@ -75,12 +75,12 @@ fn read_completed_encounters(state: &mut LuaState, value: Val) -> LuaResult<Vec<
                 .get(array)
                 .map(|table| table.get_int(index as i64))
                 .unwrap_or(Val::Nil);
-            read_completed_encounter(state, row)
+            read_raid_lock_row(state, row)
         })
         .collect()
 }
 
-fn read_completed_encounter(state: &mut LuaState, value: Val) -> LuaResult<RaidLockRow> {
+fn read_raid_lock_row(state: &mut LuaState, value: Val) -> LuaResult<RaidLockRow> {
     let Val::Table(table) = value else {
         return Err(runtime_error(INPUT_ERROR));
     };
