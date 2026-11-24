@@ -298,7 +298,10 @@ fn contribution_panel_uses_supplied_result_and_currency_through_interaction(env:
     assert_eq!(button_cost.0, Some(2245));
     assert_eq!(button_cost.1, Some(5.0));
     assert_eq!(button_cost.2.as_deref(), Some("Contribute %s"));
-    assert_ne!(result.4, result.5, "distinct supplied costs should produce distinct button text");
+    let button_state: String = env
+        .eval("local b = ContributionCollectionFrame:FindContribution(501).ContributeButton; return tostring(b.contributionID)..'/'..tostring(b.requiredCurrencyID)..'/'..tostring(b.currencyID)..'/'..tostring(b.amount)..'/'..tostring(b.formatString)..'/'..tostring(b:GetText())")
+        .expect("contribution button diagnostic state should be readable");
+    assert_ne!(result.4, result.5, "distinct supplied costs should produce distinct button text; {button_state}");
     let details_valid: bool = env
         .eval(
             "return C_ContributionCollector.GetDescription(501) == 'Ready description' and C_ContributionCollector.GetOrderIndex(502) == 2 and C_ContributionCollector.GetRewardQuestID(502) == 0 and #C_ContributionCollector.GetAtlases(501) == 1 and #C_ContributionCollector.GetBuffs(502) == 1 and select(1, C_ContributionCollector.GetRequiredContributionItem(502)) == 6948",
