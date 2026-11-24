@@ -1233,6 +1233,14 @@ fn load_texture_hook_probe_addons(env: &WowLuaEnv) {
 }
 
 #[cfg(feature = "client-retail")]
+fn texture_hook_probe_aura(id: i32, icon: &str) -> AuraInfo {
+    AuraInfo {
+        icon: AuraIcon::Path(icon.to_string()),
+        ..crate::common::aura_container_harness::aura(id)
+    }
+}
+
+#[cfg(feature = "client-retail")]
 fn assert_texture_hook_probe_counter(env: &WowLuaEnv, name: &str) {
     let state = env.state().borrow();
     let counter = state
@@ -1253,10 +1261,13 @@ fn retail_aura_container_hook_dispatcher_preserves_secure_consumer(env: &WowLuaE
     crate::common::aura_container_harness::install_helpers(env);
     env.exec("AuditLive = AuditContainer({{'buffs', 'HELPFUL'}})")
         .unwrap();
-    env.exec(
-        r#"A_Admin.ClearBuffs(); A_Admin.AddBuff(99021, 'Hook Aura One', 'Interface\\Icons\\INV_Misc_QuestionMark', 60, 1)"#,
-    )
-    .unwrap();
+    crate::common::aura_container_harness::set_player_auras(
+        env,
+        vec![texture_hook_probe_aura(
+            99021,
+            "Interface\\Icons\\INV_Misc_QuestionMark",
+        )],
+    );
     crate::common::aura_container_harness::settle(env);
     assert_eq!(
         crate::common::aura_container_harness::icons(env, "AuditLive", "buffs"),
@@ -1265,10 +1276,13 @@ fn retail_aura_container_hook_dispatcher_preserves_secure_consumer(env: &WowLuaE
     env.exec("TextureHookProbeTarget = AuditLive:GetAuraGroupFrame('buffs', 1):GetIcon()")
         .unwrap();
     load_texture_hook_probe_addons(env);
-    env.exec(
-        r#"A_Admin.AddBuff(99022, 'Hook Aura Two', 'Interface\\Icons\\Spell_Holy_FlashHeal', 60, 1)"#,
-    )
-    .unwrap();
+    crate::common::aura_container_harness::set_player_auras(
+        env,
+        vec![
+            texture_hook_probe_aura(99021, "Interface\\Icons\\INV_Misc_QuestionMark"),
+            texture_hook_probe_aura(99022, "Interface\\Icons\\Spell_Holy_FlashHeal"),
+        ],
+    );
     crate::common::aura_container_harness::settle(env);
     assert_eq!(
         crate::common::aura_container_harness::icons(env, "AuditLive", "buffs"),
