@@ -767,6 +767,7 @@ fn gamepad_cursor_control_tracks_game_menu_lifecycle() {
             local active = IsUsingGamepad()
             ToggleGameMenu()
             local opened = A_Admin.GetGamePadCursorControlEnabled()
+            A_Admin.SetUsingGamepad(true)
             ToggleGameMenu()
             local closed = A_Admin.GetGamePadCursorControlEnabled()
             A_Admin.SetUsingGamepad(false)
