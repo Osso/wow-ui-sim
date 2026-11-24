@@ -374,20 +374,24 @@ fn retail_aura_container_secret_icons_survive_addon_texture_hook() {
     env.exec(
         r#"
         HookOriginalState:Call()
-        assert(HookOriginalState.taint == 'secure', tostring(HookOriginalState.taint))
-        local mixin = assert(CustomAuraButtonPrivateMixin)
+        if HookOriginalState.taint ~= 'secure' then
+            error('original taint: ' .. tostring(HookOriginalState.taint))
+        end
+        local mixin = CustomAuraButtonPrivateMixin
+        if not mixin then error('missing CustomAuraButtonPrivateMixin') end
         local firstIcon = secretwrap("Interface\\Icons\\INV_Misc_QuestionMark")
         local secondIcon = secretwrap("Interface\\Icons\\Ability_Warrior_Charge")
-        assert(issecretvalue(firstIcon), 'first icon must be secret')
-        assert(issecretvalue(secondIcon), 'second icon must be secret')
+        if not issecretvalue(firstIcon) then error('first icon is public') end
+        if not issecretvalue(secondIcon) then error('second icon is public') end
         local firstTexture = CreateFrame('Frame'):CreateTexture()
         local secondTexture = CreateFrame('Frame'):CreateTexture()
         mixin.ApplyIcon({icon = {element = firstTexture}}, 'player', {icon = firstIcon})
         mixin.ApplyIcon({icon = {element = secondTexture}}, 'player', {icon = secondIcon})
         local firstResult = secretunwrap(firstTexture:GetTexture())
         local secondResult = secretunwrap(secondTexture:GetTexture())
-        assert(firstResult and secondResult and firstResult ~= secondResult,
-            tostring(firstResult) .. ':' .. tostring(secondResult))
+        if not firstResult or not secondResult or firstResult == secondResult then
+            error(tostring(firstResult) .. ':' .. tostring(secondResult))
+        end
         "#,
     )
     .expect("AuraContainer must apply both secret icon paths before its addon hook runs");
