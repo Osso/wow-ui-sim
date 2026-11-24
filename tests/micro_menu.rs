@@ -962,9 +962,10 @@ const PERFORMANCE_BAR_TOOLTIP_ASSERTIONS: &str = r##"
     assert(has_tooltip_line(protocol), "original tooltip protocol row: " .. protocol)
     assert(has_tooltip_line(bandwidth), "original tooltip bandwidth row must show zero")
     A_Admin.SetFramerate(48.5)
+    local oldMemory = GetAddOnMemoryUsage("Blizzard_MicroMenu")
     A_Admin.SetAddOnUsage("Blizzard_MicroMenu", 240, 7)
     A_Admin.SetAddOnUsage("Blizzard_UIParent", 80, 2)
-    assert(GetAddOnMemoryUsage("Blizzard_MicroMenu") == 0,
+    assert(GetAddOnMemoryUsage("Blizzard_MicroMenu") == oldMemory,
         "memory getter must keep the old snapshot until update")
     assert(select("#", UpdateAddOnMemoryUsage()) == 0,
         "UpdateAddOnMemoryUsage must return no values")
