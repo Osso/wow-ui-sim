@@ -831,7 +831,7 @@ fn blizzard_housing_dashboard_renders_supplied_owned_houses(env: &WowLuaEnv) {
         .expect("open the original housing dashboard");
     env.process_timers().expect("deliver owned-house response");
 
-    let (count, first, second, shown): (usize, String, String, bool) = env
+    let (count, first, second, shown): (f64, String, String, bool) = env
         .eval(
             r#"
             local dropdown = HousingDashboardFrame.HouseDropdown
@@ -841,7 +841,7 @@ fn blizzard_housing_dashboard_renders_supplied_owned_houses(env: &WowLuaEnv) {
             "#,
         )
         .expect("read the original dashboard's rendered house entries");
-    assert_eq!(count, 2);
+    assert_eq!(count, 2.0);
     assert_eq!(first, "North House");
     assert_eq!(second, "South House");
     assert!(shown, "dashboard must show distinct supplied houses");
