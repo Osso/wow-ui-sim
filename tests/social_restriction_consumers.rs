@@ -49,32 +49,47 @@ fn original_social_settings_reads_chat_restrictions() {
 }
 
 const COMMUNITIES_CHAT_ACCESSIBILITY_SCRIPT: &str = r#"
-        local addedClubId
+        local addedClubs = {}
         local listener = CreateFrame("Frame")
         listener:RegisterEvent("CLUB_ADDED")
-        listener:SetScript("OnEvent", function(_, _, clubId) addedClubId = clubId end)
+        listener:SetScript("OnEvent", function(_, _, clubId)
+            addedClubs[#addedClubs + 1] = clubId
+        end)
+        C_Club.CreateClub("Muted community", "", "Muted", 1, 0)
         C_Club.CreateClub("Available community", "", "Available", 1, 0)
-        assert(addedClubId and addedClubId ~= "guild-0", "two distinct clubs exist")
-        assert(C_Club.GetClubInfo(addedClubId).name == "Available community")
-        assert(C_Club.GetClubInfo("guild-0") ~= nil, "guild club is supplied by the Rust model")
-
-        A_Admin.SetAccountMutedClub("guild-0", true)
+        local mutedClubId, availableClubId = addedClubs[1], addedClubs[2]
+        assert(mutedClubId and availableClubId and mutedClubId ~= availableClubId)
+        assert(C_Club.GetClubInfo(mutedClubId).name == "Muted community")
+        assert(C_Club.GetClubInfo(availableClubId).name == "Available community")
+        A_Admin.SetAccountMutedClub(mutedClubId, true)
         A_Admin.SetChatDisabled(false)
         ToggleCommunitiesFrame()
-        assert(CommunitiesFrame:GetSelectedClubId() == "guild-0")
+
+        local function clickClub(clubId)
+            local entry
+            CommunitiesFrame.CommunitiesList.ScrollBox:ForEachFrame(function(frame, elementData)
+                if elementData.clubInfo and elementData.clubInfo.clubId == clubId then
+                    entry = frame
+                end
+            end)
+            assert(entry, "community entry is rendered")
+            entry:Click("LeftButton")
+        end
+
+        clickClub(mutedClubId)
+        assert(CommunitiesFrame:GetSelectedClubId() == mutedClubId)
         assert(not CommunitiesFrame:IsChatAccessible(), "account-muted club blocks chat")
         assert(CommunitiesFrame:GetDisplayMode() == COMMUNITIES_FRAME_DISPLAY_MODES.ROSTER)
 
-        ToggleCommunitiesFrame()
-        A_Admin.SetAccountMutedClub("guild-0", false)
+        A_Admin.SetAccountMutedClub(mutedClubId, false)
         A_Admin.SetChatDisabled(true)
-        ToggleCommunitiesFrame()
+        clickClub(availableClubId)
+        assert(CommunitiesFrame:GetSelectedClubId() == availableClubId)
         assert(not CommunitiesFrame:IsChatAccessible(), "chat-disabled account blocks chat")
         assert(CommunitiesFrame:GetDisplayMode() == COMMUNITIES_FRAME_DISPLAY_MODES.ROSTER)
 
-        ToggleCommunitiesFrame()
         A_Admin.SetChatDisabled(false)
-        ToggleCommunitiesFrame()
+        clickClub(mutedClubId)
         assert(CommunitiesFrame:IsChatAccessible(), "unrestricted community chat is accessible")
         assert(CommunitiesFrame:GetDisplayMode() == COMMUNITIES_FRAME_DISPLAY_MODES.CHAT)
         "#;
