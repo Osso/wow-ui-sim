@@ -1234,7 +1234,7 @@ fn generated_registry_lists_post_start_housing_batch(state: &ConformanceState) {
     const MODULE_COUNTS: &[(&str, usize)] = &[
         ("blizzard_housing_bulletin_board_loads::", 15),
         ("blizzard_housing_create_neighborhood_loads::", 18),
-        ("blizzard_housing_dashboard_loads::", 26),
+        ("blizzard_housing_dashboard_loads::", 27),
         ("blizzard_housing_house_finder_loads::", 20),
         ("blizzard_house_editor_loads::", 14),
         ("blizzard_house_list_loads::", 10),
