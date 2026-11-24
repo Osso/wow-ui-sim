@@ -142,10 +142,12 @@ fn is_restricted_account(state: &mut LuaState) -> LuaResult<u32> {
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn is_expansion_trial(state: &mut LuaState) -> LuaResult<u32> {
-    let sim = borrow_state(state)?;
-    let account = &sim.account_type;
-    let active = account.expansion_trial
-        && account.expansion_trial_expiry > sim.clock_elapsed().as_secs_f64();
+    let active = {
+        let sim = borrow_state(state)?;
+        let account = &sim.account_type;
+        account.expansion_trial
+            && account.expansion_trial_expiry > sim.clock_elapsed().as_secs_f64()
+    };
     state.push(Val::Bool(active));
     Ok(1)
 }
