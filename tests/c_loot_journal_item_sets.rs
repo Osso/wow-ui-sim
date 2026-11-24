@@ -180,13 +180,13 @@ fn assert_initial_raid_lock_overlays(env: &WowLuaEnv, b: &RaidLockBosses) {
             return EncounterJournal.instanceID == {instance_id},
                 overlays[{journal_a}] == true,
                 overlays[{journal_b}] == false,
-                C_RaidLocks.IsEncounterComplete({map_id}, {encounter_a}, 14),
+                C_RaidLocks.IsEncounterComplete({map_id}, {encounter_a}, 15),
                 C_RaidLocks.IsEncounterComplete({map_id}, {encounter_a}),
                 C_RaidLocks.IsEncounterComplete({map_id}, {encounter_b}, 14)
             "#
         ))
         .expect("Encounter Journal boss overlays should read supplied raid-lock state");
-    assert_eq!(initial, (true, true, true, false, true, false));
+    assert_eq!(initial, (true, true, true, true, false, true));
 }
 
 fn complete_second_boss_and_request_raid_info(env: &WowLuaEnv, b: &RaidLockBosses) {

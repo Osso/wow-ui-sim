@@ -30,7 +30,7 @@ fn rust_item_set_registration_survives_bootstrap() {
 
 #[cfg(feature = "client-wowforever")]
 #[test]
-fn rust_raid_lock_registration_reads_two_supplied_encounters() {
+fn rust_raid_lock_registration_uses_first_map_row_without_difficulty() {
     let env = WowLuaEnv::new().expect("Lua environment should initialize");
     env.exec(
         r#"
@@ -53,8 +53,8 @@ fn rust_raid_lock_registration_reads_two_supplied_encounters() {
         )
         .expect("C_RaidLocks should query supplied Forever encounter locks");
 
-    assert!(complete_a);
+    assert!(!complete_a);
     assert!(!complete_b);
     assert!(!unknown);
-    assert!(!wrong_difficulty);
+    assert!(wrong_difficulty);
 }
