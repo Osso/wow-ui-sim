@@ -18,6 +18,12 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
         namespace,
         "CanPlayerUseVoiceChat",
         query_can_use_voice_chat,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        namespace,
+        "GetJoinClubVoiceChannelError",
+        get_join_club_voice_channel_error,
     )
 }
 
@@ -27,7 +33,11 @@ pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
     }
     builder
         .set_function("SetVoiceChatLoggedIn", set_logged_in)?
-        .set_function("SetCanPlayerUseVoiceChat", set_can_use_voice_chat)
+        .set_function("SetCanPlayerUseVoiceChat", set_can_use_voice_chat)?
+        .set_function(
+            "SetJoinClubVoiceChannelError",
+            set_join_club_voice_channel_error,
+        )
 }
 
 fn publishes_login_state() -> bool {
@@ -53,6 +63,40 @@ fn set_can_use_voice_chat(state: &mut LuaState) -> LuaResult<u32> {
         ));
     };
     borrow_state_mut(state)?.voice_chat.can_use_voice_chat = can_use;
+    Ok(0)
+}
+
+fn get_join_club_voice_channel_error(state: &mut LuaState) -> LuaResult<u32> {
+    let club_id = String::from_stack(state, 1)?;
+    let reason = borrow_state(state)?
+        .voice_chat
+        .join_club_voice_channel_errors
+        .get(&club_id)
+        .copied();
+    state.push(reason.map_or(Val::Nil, |reason| Val::Num(f64::from(reason))));
+    Ok(1)
+}
+
+fn set_join_club_voice_channel_error(state: &mut LuaState) -> LuaResult<u32> {
+    let club_id = String::from_stack(state, 1)?;
+    let value = unwrap_secret(state, stack_val(state, 2))?;
+    let reason = match value {
+        Val::Nil => None,
+        _ => Some(i32::from_stack(state, 2)?),
+    };
+    let mut sim = borrow_state_mut(state)?;
+    match reason {
+        Some(reason) => {
+            sim.voice_chat
+                .join_club_voice_channel_errors
+                .insert(club_id, reason);
+        }
+        None => {
+            sim.voice_chat
+                .join_club_voice_channel_errors
+                .remove(&club_id);
+        }
+    }
     Ok(0)
 }
 

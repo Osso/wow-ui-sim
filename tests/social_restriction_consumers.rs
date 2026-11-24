@@ -104,6 +104,21 @@ fn admin_supplies_voice_chat_accessibility() {
 }
 
 #[test]
+fn admin_supplies_community_voice_channel_errors() {
+    let env = WowLuaEnv::new().expect("Lua environment should initialize");
+    env.exec(
+        r#"
+        assert(C_VoiceChat.GetJoinClubVoiceChannelError("club") == nil)
+        A_Admin.SetJoinClubVoiceChannelError("club", 7)
+        assert(C_VoiceChat.GetJoinClubVoiceChannelError("club") == 7)
+        A_Admin.SetJoinClubVoiceChannelError("club", nil)
+        assert(C_VoiceChat.GetJoinClubVoiceChannelError("club") == nil)
+        "#,
+    )
+    .expect("admin supplies community voice-channel error state");
+}
+
+#[test]
 fn admin_supplies_allowed_community_types() {
     let env = WowLuaEnv::new().expect("Lua environment should initialize");
     env.exec(
