@@ -65,6 +65,8 @@ pub(crate) fn register_c_battle_net_surface(state: &mut LuaState) -> LuaResult<(
     if crate::client_profile::ACTIVE_INTERFACE_VERSION >= 120100 {
         register_account_feature_methods(state, table_ref)?;
     }
+    #[cfg(feature = "client-ptr")]
+    register_ptr_account_feature_methods(state, table_ref)?;
     Ok(())
 }
 
@@ -203,7 +205,10 @@ fn register_account_feature_methods(
 ) -> LuaResult<()> {
     let methods: [(&str, fn(&mut LuaState) -> LuaResult<u32>); 5] = [
         ("AreFriendTagsEnabled", are_friend_tags_enabled),
-        ("AreTitleFriendCustomNamesEnabled", are_title_friend_custom_names_enabled),
+        (
+            "AreTitleFriendCustomNamesEnabled",
+            are_title_friend_custom_names_enabled,
+        ),
         ("AreTitleFriendsEnabled", are_title_friends_enabled),
         ("IsBattleNetFriendsListEnabled", is_friends_list_enabled),
         ("IsBattleNetFriendsListSupported", is_friends_list_supported),
@@ -212,6 +217,30 @@ fn register_account_feature_methods(
         table_set_rust_fn_static(state, table_ref, name, method)?;
     }
     Ok(())
+}
+
+/// PTR keeps its pre-model constant-true registrations (unchanged PTR surface).
+#[cfg(feature = "client-ptr")]
+fn register_ptr_account_feature_methods(
+    state: &mut LuaState,
+    table_ref: BattleNetTable,
+) -> LuaResult<()> {
+    for name in [
+        "AreFriendTagsEnabled",
+        "AreTitleFriendCustomNamesEnabled",
+        "AreTitleFriendsEnabled",
+        "IsBattleNetFriendsListEnabled",
+        "IsBattleNetFriendsListSupported",
+    ] {
+        table_set_rust_fn_static(state, table_ref, name, c_bnet_feature_enabled)?;
+    }
+    Ok(())
+}
+
+#[cfg(feature = "client-ptr")]
+fn c_bnet_feature_enabled(state: &mut LuaState) -> LuaResult<u32> {
+    state.push(Val::Bool(true));
+    Ok(1)
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
