@@ -20,6 +20,7 @@ const INPUT_ERROR: &str =
 pub struct ContributionCollectorState {
     collectors: Vec<Collector>,
     contributions: HashMap<u32, Contribution>,
+    active_contributions: Vec<u32>,
 }
 
 #[derive(Clone, Debug)]
@@ -41,7 +42,21 @@ struct Contribution {
     amount: f64,
     next_state_time: Option<f64>,
     start_time: f64,
+    details: ContributionDetails,
     appearance: Option<Appearance>,
+}
+
+#[derive(Clone, Debug)]
+struct ContributionDetails {
+    description: String,
+    result: i32,
+    order_index: i32,
+    active: bool,
+    required_currency: Option<(i32, f64)>,
+    required_item: Option<(i32, i32)>,
+    reward_quest_id: i32,
+    atlases: Vec<String>,
+    buffs: Vec<u32>,
 }
 
 #[derive(Clone, Debug)]
@@ -70,7 +85,31 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
         managed_contributions,
     )?;
     table_set_rust_fn_static(state, namespace, "GetName", contribution_name)?;
+    table_set_rust_fn_static(state, namespace, "GetDescription", contribution_description)?;
     table_set_rust_fn_static(state, namespace, "GetState", contribution_state)?;
+    table_set_rust_fn_static(
+        state,
+        namespace,
+        "GetContributionResult",
+        contribution_result,
+    )?;
+    table_set_rust_fn_static(state, namespace, "GetOrderIndex", contribution_order_index)?;
+    table_set_rust_fn_static(
+        state,
+        namespace,
+        "GetRequiredContributionCurrency",
+        required_currency,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        namespace,
+        "GetRequiredContributionItem",
+        required_item,
+    )?;
+    table_set_rust_fn_static(state, namespace, "GetRewardQuestID", reward_quest_id)?;
+    table_set_rust_fn_static(state, namespace, "GetActive", active_contributions)?;
+    table_set_rust_fn_static(state, namespace, "GetAtlases", contribution_atlases)?;
+    table_set_rust_fn_static(state, namespace, "GetBuffs", contribution_buffs)?;
     table_set_rust_fn_static(
         state,
         namespace,
@@ -92,10 +131,16 @@ fn set_collectors(state: &mut LuaState) -> LuaResult<u32> {
             contributions.insert(contribution.0, contribution.1.clone());
         }
     }
+    let active_contributions = records
+        .iter()
+        .flat_map(|record| &record.contributions)
+        .filter_map(|(id, contribution)| contribution.details.active.then_some(*id))
+        .collect();
     let collectors = records.into_iter().map(|record| record.collector).collect();
     borrow_state_mut(state)?.contribution_collectors = ContributionCollectorState {
         collectors,
         contributions,
+        active_contributions,
     };
     Ok(0)
 }
@@ -183,6 +228,7 @@ fn read_contribution(state: &mut LuaState, value: Val) -> LuaResult<(u32, Contri
     let id = read_integer(state, table, "contributionID")? as u32;
     let appearance_value = field(state, table, "appearance");
     let appearance = read_appearance(state, appearance_value)?;
+    let details = read_contribution_details(state, table)?;
     let contribution = Contribution {
         name: read_string(state, table, "name")?,
         state: read_integer(state, table, "state")? as i32,
@@ -193,9 +239,119 @@ fn read_contribution(state: &mut LuaState, value: Val) -> LuaResult<(u32, Contri
             _ => return Err(invalid_field("nextStateTime")),
         },
         start_time: read_number(state, table, "startTime")?,
+        details,
         appearance,
     };
     Ok((id, contribution))
+}
+
+fn read_contribution_details(
+    state: &mut LuaState,
+    table: GcRef<Table>,
+) -> LuaResult<ContributionDetails> {
+    let required_currency = field(state, table, "requiredCurrency");
+    let required_item = field(state, table, "requiredItem");
+    let atlases = field(state, table, "atlases");
+    let buffs = field(state, table, "buffs");
+    Ok(ContributionDetails {
+        description: read_string(state, table, "description")?,
+        result: read_integer(state, table, "result")? as i32,
+        order_index: read_integer(state, table, "orderIndex")? as i32,
+        active: read_bool(state, table, "active")?,
+        required_currency: read_currency_cost(state, required_currency)?,
+        required_item: read_item_cost(state, required_item)?,
+        reward_quest_id: read_integer(state, table, "rewardQuestID")? as i32,
+        atlases: read_string_array(state, atlases, "atlases")?,
+        buffs: read_id_array(state, buffs, "buffs")?,
+    })
+}
+
+fn read_currency_cost(state: &mut LuaState, value: Val) -> LuaResult<Option<(i32, f64)>> {
+    let Val::Table(table) = value else {
+        return match value {
+            Val::Nil => Ok(None),
+            _ => Err(invalid_field("requiredCurrency")),
+        };
+    };
+    Ok(Some((
+        read_integer(state, table, "id")? as i32,
+        read_number(state, table, "amount")?,
+    )))
+}
+
+fn read_item_cost(state: &mut LuaState, value: Val) -> LuaResult<Option<(i32, i32)>> {
+    let Val::Table(table) = value else {
+        return match value {
+            Val::Nil => Ok(None),
+            _ => Err(invalid_field("requiredItem")),
+        };
+    };
+    Ok(Some((
+        read_integer(state, table, "id")? as i32,
+        read_integer(state, table, "count")? as i32,
+    )))
+}
+
+fn read_string_array(state: &mut LuaState, value: Val, field_name: &str) -> LuaResult<Vec<String>> {
+    let Val::Table(array) = value else {
+        return match value {
+            Val::Nil => Ok(Vec::new()),
+            _ => Err(invalid_field(field_name)),
+        };
+    };
+    let length = state
+        .gc
+        .tables
+        .get(array)
+        .map_or(0, |table| table.len(&state.gc.string_arena));
+    (1..=length)
+        .map(|index| {
+            let value = state
+                .gc
+                .tables
+                .get(array)
+                .map_or(Val::Nil, |table| table.get_int(index as i64));
+            val_to_string(state, value).ok_or_else(|| invalid_field(field_name))
+        })
+        .collect()
+}
+
+fn read_id_array(state: &mut LuaState, value: Val, field_name: &str) -> LuaResult<Vec<u32>> {
+    let Val::Table(array) = value else {
+        return match value {
+            Val::Nil => Ok(Vec::new()),
+            _ => Err(invalid_field(field_name)),
+        };
+    };
+    let length = state
+        .gc
+        .tables
+        .get(array)
+        .map_or(0, |table| table.len(&state.gc.string_arena));
+    (1..=length)
+        .map(|index| {
+            let value = state
+                .gc
+                .tables
+                .get(array)
+                .map_or(Val::Nil, |table| table.get_int(index as i64));
+            integer_value(value, field_name).map(|id| id as u32)
+        })
+        .collect()
+}
+
+fn integer_value(value: Val, field_name: &str) -> LuaResult<i64> {
+    match value {
+        Val::Num(number)
+            if number.is_finite()
+                && number.fract() == 0.0
+                && number >= 0.0
+                && number <= i32::MAX as f64 =>
+        {
+            Ok(number as i64)
+        }
+        _ => Err(invalid_field(field_name)),
+    }
 }
 
 fn read_appearance(state: &mut LuaState, value: Val) -> LuaResult<Option<Appearance>> {
@@ -331,6 +487,134 @@ fn contribution_name(state: &mut LuaState) -> LuaResult<u32> {
     let name = create_string(state, &name);
     state.push(name);
     Ok(1)
+}
+
+fn contribution_description(state: &mut LuaState) -> LuaResult<u32> {
+    let id = u32::from_stack(state, 1)?;
+    let description = borrow_state(state)?
+        .contribution_collectors
+        .contributions
+        .get(&id)
+        .map(|value| value.details.description.clone())
+        .unwrap_or_default();
+    let description = create_string(state, &description);
+    state.push(description);
+    Ok(1)
+}
+
+fn contribution_result(state: &mut LuaState) -> LuaResult<u32> {
+    let id = u32::from_stack(state, 1)?;
+    let result = borrow_state(state)?
+        .contribution_collectors
+        .contributions
+        .get(&id)
+        .map_or(3, |value| value.details.result);
+    state.push(Val::Num(f64::from(result)));
+    Ok(1)
+}
+
+fn contribution_order_index(state: &mut LuaState) -> LuaResult<u32> {
+    let id = u32::from_stack(state, 1)?;
+    let order = borrow_state(state)?
+        .contribution_collectors
+        .contributions
+        .get(&id)
+        .map_or(0, |value| value.details.order_index);
+    state.push(Val::Num(f64::from(order)));
+    Ok(1)
+}
+
+fn reward_quest_id(state: &mut LuaState) -> LuaResult<u32> {
+    let id = u32::from_stack(state, 1)?;
+    let quest_id = borrow_state(state)?
+        .contribution_collectors
+        .contributions
+        .get(&id)
+        .map_or(0, |value| value.details.reward_quest_id);
+    state.push(Val::Num(f64::from(quest_id)));
+    Ok(1)
+}
+
+fn active_contributions(state: &mut LuaState) -> LuaResult<u32> {
+    let ids = borrow_state(state)?
+        .contribution_collectors
+        .active_contributions
+        .clone();
+    for id in &ids {
+        state.push(Val::Num(f64::from(*id)));
+    }
+    Ok(ids.len() as u32)
+}
+
+fn required_currency(state: &mut LuaState) -> LuaResult<u32> {
+    let id = u32::from_stack(state, 1)?;
+    let cost = contribution_cost(state, id, |value| value.required_currency)?;
+    if let Some((currency_id, amount)) = cost {
+        state.push(Val::Num(f64::from(currency_id)));
+        state.push(Val::Num(amount));
+        return Ok(2);
+    }
+    Ok(0)
+}
+
+fn required_item(state: &mut LuaState) -> LuaResult<u32> {
+    let id = u32::from_stack(state, 1)?;
+    let cost = contribution_cost(state, id, |value| value.required_item)?;
+    if let Some((item_id, count)) = cost {
+        state.push(Val::Num(f64::from(item_id)));
+        state.push(Val::Num(f64::from(count)));
+        return Ok(2);
+    }
+    Ok(0)
+}
+
+fn contribution_cost<T: Copy>(
+    state: &mut LuaState,
+    id: u32,
+    select: impl FnOnce(&ContributionDetails) -> Option<T>,
+) -> LuaResult<Option<T>> {
+    Ok(borrow_state(state)?
+        .contribution_collectors
+        .contributions
+        .get(&id)
+        .and_then(|value| select(&value.details)))
+}
+
+fn contribution_atlases(state: &mut LuaState) -> LuaResult<u32> {
+    let id = u32::from_stack(state, 1)?;
+    let atlases = contribution_values(state, id, |value| value.atlases.clone())?;
+    let table = create_table_with_capacity(state, atlases.len());
+    for (index, atlas) in atlases.iter().enumerate() {
+        let atlas = create_string(state, atlas);
+        set_table_array(state, table, (index + 1) as i64, atlas);
+    }
+    state.push(table);
+    Ok(1)
+}
+
+fn contribution_buffs(state: &mut LuaState) -> LuaResult<u32> {
+    let id = u32::from_stack(state, 1)?;
+    let buffs = contribution_values(state, id, |value| value.buffs.clone())?;
+    for spell_id in &buffs {
+        state.push(Val::Num(f64::from(*spell_id)));
+    }
+    Ok(buffs.len() as u32)
+}
+
+fn contribution_values<T>(
+    state: &mut LuaState,
+    id: u32,
+    select: impl FnOnce(&ContributionDetails) -> T,
+) -> LuaResult<T>
+where
+    T: Default,
+{
+    Ok(borrow_state(state)?
+        .contribution_collectors
+        .contributions
+        .get(&id)
+        .map(|value| select(&value.details))
+        .unwrap_or_default())
 }
 
 fn contribution_state(state: &mut LuaState) -> LuaResult<u32> {

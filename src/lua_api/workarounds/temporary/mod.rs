@@ -67,6 +67,7 @@ pub(crate) mod container_default_shapes;
 pub(crate) mod container_frame_token_tracker;
 pub(crate) mod container_portrait_texture;
 pub(crate) mod content_tracking_defaults;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod contribution_collector_defaults;
 pub(crate) mod cooldown_viewer_defaults;
 pub(crate) mod cpp_mixin_stubs;
