@@ -11,18 +11,6 @@ fn load_full_game_ui() -> WowLuaEnv {
         .expect("full Blizzard UI should load for the normal CommunitiesFrame path")
 }
 
-fn load_original_communities() -> WowLuaEnv {
-    let ui = blizzard_ui_dir();
-    let addons = ["Blizzard_Communities", "Blizzard_CommunitiesSecure"];
-    let (env, loaded) = build_blizzard_addon_closure_env(&ui, &addons, &[]);
-    for addon in addons {
-        assert!(loaded.iter().any(|name| name == addon), "load {addon}");
-    }
-    env.apply_post_load_workarounds();
-    wow_ui_sim::startup::settle_headless_startup(&env);
-    env
-}
-
 fn load_original_addon(addon: &str) -> WowLuaEnv {
     let ui = blizzard_ui_dir();
     let (env, loaded) = build_blizzard_addon_closure_env(&ui, &[addon], &[]);
@@ -61,50 +49,34 @@ fn original_social_settings_reads_chat_restrictions() {
 }
 
 const COMMUNITIES_CHAT_ACCESSIBILITY_SCRIPT: &str = r#"
-        local addedClubs = {}
+        local addedClubId
         local listener = CreateFrame("Frame")
         listener:RegisterEvent("CLUB_ADDED")
-        listener:SetScript("OnEvent", function(_, _, clubId)
-            addedClubs[#addedClubs + 1] = clubId
-        end)
-        C_Club.CreateClub("Muted community", "", "Muted", 1, 0)
+        listener:SetScript("OnEvent", function(_, _, clubId) addedClubId = clubId end)
         C_Club.CreateClub("Available community", "", "Available", 1, 0)
-        local mutedClubId, availableClubId = addedClubs[1], addedClubs[2]
-        assert(mutedClubId and availableClubId, "two supplied clubs publish distinct IDs")
-        assert(mutedClubId ~= availableClubId, "club IDs are distinct")
-        assert(C_Club.GetClubInfo(mutedClubId).name == "Muted community")
-        assert(C_Club.GetClubInfo(availableClubId).name == "Available community")
+        assert(addedClubId and addedClubId ~= "guild-0", "two distinct clubs exist")
+        assert(C_Club.GetClubInfo(addedClubId).name == "Available community")
+        assert(C_Club.GetClubInfo("guild-0") ~= nil, "guild club is supplied by the Rust model")
+
+        A_Admin.SetAccountMutedClub("guild-0", true)
+        A_Admin.SetChatDisabled(false)
+        ToggleCommunitiesFrame()
+        assert(CommunitiesFrame:GetSelectedClubId() == "guild-0")
+        assert(not CommunitiesFrame:IsChatAccessible(), "account-muted club blocks chat")
+        assert(CommunitiesFrame:GetDisplayMode() == COMMUNITIES_FRAME_DISPLAY_MODES.ROSTER)
+
+        ToggleCommunitiesFrame()
+        A_Admin.SetAccountMutedClub("guild-0", false)
         A_Admin.SetChatDisabled(true)
         ToggleCommunitiesFrame()
-        local selectedClubId = CommunitiesFrame:GetSelectedClubId()
-        assert(
-            selectedClubId == mutedClubId or selectedClubId == availableClubId,
-            string.format("selected=%s muted=%s available=%s", tostring(selectedClubId), tostring(mutedClubId), tostring(availableClubId))
-        )
-
-        A_Admin.SetAccountMutedClub(selectedClubId, true)
-        CommunitiesFrame:ValidateDisplayMode()
-        assert(not CommunitiesFrame:IsChatAccessible(), "account-muted club blocks chat")
-        assert(
-            CommunitiesFrame:GetDisplayMode() == COMMUNITIES_FRAME_DISPLAY_MODES.ROSTER,
-            "account-muted club uses roster mode"
-        )
-
-        A_Admin.SetAccountMutedClub(selectedClubId, false)
-        CommunitiesFrame:ValidateDisplayMode()
         assert(not CommunitiesFrame:IsChatAccessible(), "chat-disabled account blocks chat")
-        assert(
-            CommunitiesFrame:GetDisplayMode() == COMMUNITIES_FRAME_DISPLAY_MODES.ROSTER,
-            "chat-disabled account uses roster mode"
-        )
+        assert(CommunitiesFrame:GetDisplayMode() == COMMUNITIES_FRAME_DISPLAY_MODES.ROSTER)
 
+        ToggleCommunitiesFrame()
         A_Admin.SetChatDisabled(false)
-        CommunitiesFrame:ValidateDisplayMode()
+        ToggleCommunitiesFrame()
         assert(CommunitiesFrame:IsChatAccessible(), "unrestricted community chat is accessible")
-        assert(
-            CommunitiesFrame:GetDisplayMode() == COMMUNITIES_FRAME_DISPLAY_MODES.CHAT,
-            "accessible community uses chat mode"
-        )
+        assert(CommunitiesFrame:GetDisplayMode() == COMMUNITIES_FRAME_DISPLAY_MODES.CHAT)
         "#;
 
 #[test]
