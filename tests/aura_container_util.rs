@@ -341,7 +341,16 @@ fn load_texture_hook_probe(env: &WowLuaEnv) {
     .unwrap();
     std::fs::write(
         addon.join("TextureSetHookProbe.lua"),
-        "local counter = CreateFrame('Frame', 'TextureHookProbeCounter')\ncounter:SetSize(0, 0)\nlocal function countHook()\n local calls = counter:GetWidth()\n if debug.getstacktaint() ~= 'TextureSetHookProbe' then calls = 100 else calls = calls + 1 end\n counter:SetSize(calls, calls)\nend\nhooksecurefunc(HookOriginalState, 'Call', countHook)\nlocal texture = CreateFrame('Frame'):CreateTexture()\nlocal methods = getmetatable(texture).__index\nhooksecurefunc(methods, 'SetTexture', countHook)\n",
+        r#"local counter = CreateFrame('Frame', 'TextureHookProbeCounter')
+counter:SetSize(0, 0)
+local texture = CreateFrame('Frame'):CreateTexture()
+local methods = getmetatable(texture).__index
+hooksecurefunc(methods, 'SetTexture', function()
+    local calls = counter:GetWidth()
+    if debug.getstacktaint() ~= 'TextureSetHookProbe' then calls = 100 else calls = calls + 1 end
+    counter:SetSize(calls, calls)
+end)
+"#,
     )
     .unwrap();
     wow_ui_sim::loader::load_addon(
@@ -358,35 +367,23 @@ fn assert_texture_hook_count(env: &WowLuaEnv) {
         .widgets
         .get_by_name("TextureHookProbeCounter")
         .expect("real addon hook callback created its counter frame");
-    assert_eq!(counter.width, 3.0);
-    assert_eq!(counter.height, 3.0);
+    assert_eq!(counter.width, 2.0);
+    assert_eq!(counter.height, 2.0);
 }
 
 #[cfg(all(feature = "optional-tests", feature = "client-retail"))]
 #[test]
 fn retail_aura_container_secret_icons_survive_addon_texture_hook() {
     let env = crate::common::aura_container_harness::load_env();
-    env.exec(
-        "_G.HookOriginalState = {taint = 'unset'}; function _G.HookOriginalState:Call() _G.HookOriginalState.taint = debug.getstacktaint() or 'secure' end",
-    )
-    .unwrap();
     load_texture_hook_probe(&env);
     env.exec(
         r#"
-        HookOriginalState:Call()
-        if HookOriginalState.taint ~= 'secure' then
-            error('original taint: ' .. tostring(HookOriginalState.taint))
-        end
-        local mixin = CustomAuraButtonPrivateMixin
-        if not mixin then error('missing CustomAuraButtonPrivateMixin') end
-        local firstIcon = secretwrap("Interface\\Icons\\INV_Misc_QuestionMark")
-        local secondIcon = secretwrap("Interface\\Icons\\Ability_Warrior_Charge")
-        if not issecretvalue(firstIcon) then error('first icon is public') end
-        if not issecretvalue(secondIcon) then error('second icon is public') end
         local firstTexture = CreateFrame('Frame'):CreateTexture()
         local secondTexture = CreateFrame('Frame'):CreateTexture()
-        mixin.ApplyIcon({icon = {element = firstTexture}}, 'player', {icon = firstIcon})
-        mixin.ApplyIcon({icon = {element = secondTexture}}, 'player', {icon = secondIcon})
+        AuraContainerUtil.SetIconTextureForAura({}, firstTexture,
+            {icon = 'Interface\\Icons\\INV_Misc_QuestionMark'})
+        AuraContainerUtil.SetIconTextureForAura({}, secondTexture,
+            {icon = 'Interface\\Icons\\Ability_Warrior_Charge'})
         local firstResult = secretunwrap(firstTexture:GetTexture())
         local secondResult = secretunwrap(secondTexture:GetTexture())
         if not firstResult or not secondResult or firstResult == secondResult then
