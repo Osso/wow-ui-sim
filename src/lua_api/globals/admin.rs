@@ -109,6 +109,8 @@ pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
 }
 
 fn register_admin_player_services(builder: TableBuilder) -> LuaResult<TableBuilder> {
+    #[cfg(feature = "client-retail")]
+    let builder = crate::c_api::c_housing::register_admin(builder)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     let builder = super::real::performance_metrics::register_admin(builder)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]

@@ -183,6 +183,8 @@ macro_rules! build_empty_sim_state {
             completed_encounters: Vec::new(),
             #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
             pending_raid_info_replies: VecDeque::new(),
+            #[cfg(feature = "client-retail")]
+            pending_owned_house_replies: VecDeque::new(),
             pet_journal_hover: crate::c_api::c_pet_journal_hover::PetJournalHoverState::default(),
             anima_diversion: AnimaDiversionState::default(),
             garrison_talents: GarrisonTalentState::default(),

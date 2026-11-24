@@ -23,6 +23,7 @@ The `A_Admin` namespace provides administrative functions for controlling simula
 - [Buffs](buffs.md) — AddBuff, RemoveBuff, ClearBuffs
 - [Loss of Control](../specs/active-loss-of-control.md) — AddLossOfControl, ClearLossOfControl
 - [Zone](zone.md) — SetZone, SetSubZone, SetInstanceInfo, SetInInstance
+- [Housing](housing.md) — SetPlayerOwnedHouses
 - [Equipment locks](equipment.md) — SetEquipmentItemLock, ClearEquipmentItemLock
 - [Transmog outfits](transmog-outfits.md) — SetUnlockedOutfitSlots
 - [Economy](economy.md) — SetMoney, SetItemLevel, AddBagItem, RemoveBagItem

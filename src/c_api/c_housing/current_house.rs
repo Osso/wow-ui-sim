@@ -33,7 +33,7 @@ fn current_house_info(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-fn encode_house_info(state: &mut LuaState, info: HouseInfo) -> Val {
+pub(crate) fn encode_house_info(state: &mut LuaState, info: HouseInfo) -> Val {
     let table = create_table(state);
     table_set(state, table, "plotID", Val::Num(info.plot_id));
     for (key, value) in [

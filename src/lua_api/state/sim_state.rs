@@ -140,6 +140,10 @@ pub struct SimState {
     /// Preserve each asynchronous RequestRaidInfo reply until a later timer tick.
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     pub(crate) pending_raid_info_replies: VecDeque<()>,
+    /// Preserve every asynchronous GetPlayerOwnedHouses response until a timer tick.
+    #[cfg(feature = "client-retail")]
+    pub(crate) pending_owned_house_replies:
+        VecDeque<Vec<crate::c_api::c_housing::current_house::HouseInfo>>,
     pub pet_journal_hover: crate::c_api::c_pet_journal_hover::PetJournalHoverState,
     pub anima_diversion: AnimaDiversionState,
     pub garrison_talents: GarrisonTalentState,

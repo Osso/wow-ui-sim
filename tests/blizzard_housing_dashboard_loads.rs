@@ -829,6 +829,10 @@ fn blizzard_housing_dashboard_renders_supplied_owned_houses(env: &WowLuaEnv) {
     load_housing_dashboard(env);
     env.exec("ShowUIPanel(HousingDashboardFrame)")
         .expect("open the original housing dashboard");
+    let response_is_pending: bool = env
+        .eval("return HousingDashboardFrame.HouseDropdown.playerHouseList == nil")
+        .expect("owned-house reply must wait for a timer tick");
+    assert!(response_is_pending, "request must not update the dropdown synchronously");
     env.process_timers().expect("deliver owned-house response");
 
     let (count, first, second, shown): (f64, String, String, bool) = env

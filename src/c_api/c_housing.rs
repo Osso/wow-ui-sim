@@ -35,6 +35,8 @@ pub(crate) mod patch_12_0_7;
 mod presence;
 
 pub mod current_house;
+#[cfg(feature = "client-retail")]
+pub(crate) mod owned_houses;
 
 use crate::c_api::helpers::ensure_namespace;
 #[cfg(feature = "retail-12-1-0")]
@@ -72,6 +74,13 @@ const BUDGET_TYPE_DECOR: i32 = 1;
 #[cfg(feature = "retail-12-1-0")]
 const BUDGET_TYPE_PET_DECOR: i32 = 2;
 
+#[cfg(feature = "client-retail")]
+pub(crate) fn register_admin(
+    builder: crate::lua_bridge::TableBuilder,
+) -> LuaResult<crate::lua_bridge::TableBuilder> {
+    owned_houses::register_admin(builder)
+}
+
 pub(crate) fn register_c_housing_surface(state: &mut LuaState) -> LuaResult<()> {
     // Replaces an unconditional temporary surface, including non-retail profiles.
     catalog::register(state)?;
@@ -83,6 +92,10 @@ pub(crate) fn register_c_housing_surface(state: &mut LuaState) -> LuaResult<()> 
         crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
     ) {
         current_house::register(state)?;
+    }
+    #[cfg(feature = "client-retail")]
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+        owned_houses::register(state)?;
     }
     #[cfg(feature = "retail-12-0-0")]
     editor::register(state)?;
