@@ -518,6 +518,11 @@ fn register_guild_basics(b: TableBuilder) -> LuaResult<TableBuilder> {
         "SetGuildReputationEnabled",
         crate::c_api::c_guild_info::admin_set_guild_reputation_enabled,
     )?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let b = b.set_function(
+        "SetGuildPreferredPlaySettingsFeatures",
+        crate::c_api::c_guild_info::admin_set_guild_preferred_play_settings_features,
+    )?;
     b.set_function("SetGuildRanks", set_guild_ranks)?
         .set_function("SetGuildRoster", set_guild_roster)
 }

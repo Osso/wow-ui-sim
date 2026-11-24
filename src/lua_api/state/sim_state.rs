@@ -197,6 +197,10 @@ pub struct SimState {
     pub guild_events_enabled: bool,
     /// INFERRED R88fq (native evidence pending): supplied guild-reputation capability; false by default.
     pub guild_reputation_enabled: bool,
+    /// INFERRED R88fq (native evidence pending): supplied guild locale-change capability.
+    pub guild_can_change_locale: bool,
+    /// INFERRED R88fq (native evidence pending): supplied guild datacenter-change capability.
+    pub guild_can_change_datacenter_locality: bool,
     pub guild_request_inputs: crate::c_api::c_guild_info::GuildRequestInputs,
     pub guild_rename_status: Option<crate::c_api::c_guild_info::GuildRenameStatus>,
     pub pending_guild_rename_status:

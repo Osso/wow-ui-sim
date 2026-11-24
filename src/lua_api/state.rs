@@ -133,6 +133,8 @@ macro_rules! build_empty_sim_state {
             guild_roster_selection: 0,
             guild_events_enabled: false,
             guild_reputation_enabled: false,
+            guild_can_change_locale: false,
+            guild_can_change_datacenter_locality: false,
             guild_request_inputs: Default::default(),
             guild_rename_status: None,
             pending_guild_rename_status: Default::default(),

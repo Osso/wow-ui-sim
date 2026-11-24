@@ -78,6 +78,12 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
         table_set_rust_fn_static(
             state,
             namespace,
+            "GetPreferredPlaySettingsFeatures",
+            get_preferred_play_settings_features,
+        )?;
+        table_set_rust_fn_static(
+            state,
+            namespace,
             "RequestRenameStatus",
             request_rename_status,
         )?;
@@ -90,6 +96,13 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     Ok(())
 }
 
+fn get_preferred_play_settings_features(state: &mut LuaState) -> LuaResult<u32> {
+    let sim = borrow_state(state)?;
+    state.push(Val::Bool(sim.guild_can_change_locale));
+    state.push(Val::Bool(sim.guild_can_change_datacenter_locality));
+    Ok(2)
+}
+
 fn is_guild_reputation_enabled(state: &mut LuaState) -> LuaResult<u32> {
     let enabled = borrow_state(state)?.guild_reputation_enabled;
     state.push(Val::Bool(enabled));
@@ -100,6 +113,18 @@ fn are_guild_events_enabled(state: &mut LuaState) -> LuaResult<u32> {
     let enabled = borrow_state(state)?.guild_events_enabled;
     state.push(Val::Bool(enabled));
     Ok(1)
+}
+
+// INFERRED R88fq (native evidence pending): supply guild preference-editing capabilities.
+pub(crate) fn admin_set_guild_preferred_play_settings_features(
+    state: &mut LuaState,
+) -> LuaResult<u32> {
+    let can_change_locale = bool::from_stack(state, 1)?;
+    let can_change_datacenter_locality = bool::from_stack(state, 2)?;
+    let mut sim = borrow_state_mut(state)?;
+    sim.guild_can_change_locale = can_change_locale;
+    sim.guild_can_change_datacenter_locality = can_change_datacenter_locality;
+    Ok(0)
 }
 
 // INFERRED R88fq (native evidence pending): supply guild-reputation feature availability.

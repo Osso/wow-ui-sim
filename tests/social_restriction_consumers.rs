@@ -104,6 +104,21 @@ fn admin_supplies_guild_calendar_availability() {
 }
 
 #[test]
+fn admin_supplies_guild_preferred_play_settings_features() {
+    let env = WowLuaEnv::new().expect("Lua environment should initialize");
+    env.exec(
+        r#"
+        local canLocale, canDatacenter = C_GuildInfo.GetPreferredPlaySettingsFeatures()
+        assert(not canLocale and not canDatacenter)
+        A_Admin.SetGuildPreferredPlaySettingsFeatures(true, true)
+        canLocale, canDatacenter = C_GuildInfo.GetPreferredPlaySettingsFeatures()
+        assert(canLocale and canDatacenter)
+        "#,
+    )
+    .expect("admin supplies guild preferred-play-setting features");
+}
+
+#[test]
 fn admin_supplies_guild_reputation_availability() {
     let env = WowLuaEnv::new().expect("Lua environment should initialize");
     env.exec(
