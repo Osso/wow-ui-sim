@@ -4,7 +4,7 @@ use wow_ui_sim::c_api::private_aura_data::PrivateAuraEntry;
 use wow_ui_sim::loader::{discover_all_blizzard_addons, discover_blizzard_addons_for_screen};
 use wow_ui_sim::loader::{find_toc_file, load_addon};
 use wow_ui_sim::lua_api::WowLuaEnv;
-use wow_ui_sim::lua_api::state::AuraInfo;
+use wow_ui_sim::lua_api::{game_data::AuraIcon, state::AuraInfo};
 use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
@@ -1262,7 +1262,7 @@ fn private_aura_entry(
     let aura = AuraInfo {
         name: format!("Private {id}"),
         spell_id: id,
-        icon: id,
+        icon: AuraIcon::FileId(id),
         duration,
         expiration_time: now + duration,
         applications,

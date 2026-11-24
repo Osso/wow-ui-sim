@@ -5,7 +5,7 @@
 //! `UNIT_AURA` dispatch. Containers are created by addon-tainted Lua through
 //! the cached `CustomAuraContainerTemplate`; nothing calls Blizzard internals.
 
-use wow_ui_sim::lua_api::{WowLuaEnv, state::AuraInfo};
+use wow_ui_sim::lua_api::{WowLuaEnv, game_data::AuraIcon, state::AuraInfo};
 
 /// Lua helpers shared by every harness test.
 ///
@@ -106,7 +106,7 @@ pub fn aura(id: i32) -> AuraInfo {
     AuraInfo {
         name: format!("Audit Aura {id}"),
         spell_id: id,
-        icon: id,
+        icon: AuraIcon::FileId(id),
         duration: 30.0,
         expiration_time: 30.0,
         applications: 1,
