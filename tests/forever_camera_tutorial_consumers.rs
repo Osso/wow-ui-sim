@@ -36,11 +36,13 @@ fn forever_camera_fov_defaults_drive_graphics_slider() {
 
 #[test]
 fn forever_tutorial_enable_state_controls_npe_bootstrap() {
-    let env = new_blizzard_addon_env(&blizzard_ui_dir());
+    let ui = blizzard_ui_dir();
+    let env = new_blizzard_addon_env(&ui);
     crate::common::panel_fixtures::seed_addon_search_paths(&env);
+    load_blizzard_addon_closure_into_env(&env, &ui, &["Blizzard_SharedXML"], &[]);
     crate::common::load_blizzard_addon_bootstrap(
         &env,
-        &blizzard_ui_dir(),
+        &ui,
         "Blizzard_NewPlayerExperience",
         "Blizzard_NewPlayerExperience_Bootstrap.lua",
     );
