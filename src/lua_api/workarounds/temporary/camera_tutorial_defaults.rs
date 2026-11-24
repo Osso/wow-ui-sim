@@ -1,9 +1,6 @@
-//! Temporary camera and tutorial setting defaults.
-//!
-//! The simulator does not model camera console defaults or tutorial account
-//! settings yet. Keep these startup defaults explicit until those settings have
-//! a backing state model.
+//! Temporary camera and tutorial defaults for profiles that still need shims.
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 const CAMERA_TUTORIAL_DEFAULTS_LUA: &str = r#"
 if GetCameraFOVDefaults == nil then
   function GetCameraFOVDefaults()
@@ -38,19 +35,44 @@ for _, __wow_camera_verb in ipairs({
 end
 "#;
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+const CAMERA_TUTORIAL_DEFAULTS_LUA: &str = r#"
+if GetTutorialsEnabled == nil then
+  function GetTutorialsEnabled()
+    return false
+  end
+end
+
+for _, __wow_camera_verb in ipairs({
+  "MoveViewOutStart", "MoveViewOutStop",
+  "MoveViewInStart", "MoveViewInStop",
+  "MoveViewLeftStart", "MoveViewLeftStop",
+  "MoveViewRightStart", "MoveViewRightStop",
+  "MoveViewUpStart", "MoveViewUpStop",
+  "MoveViewDownStart", "MoveViewDownStop",
+}) do
+  if _G[__wow_camera_verb] == nil then
+    _G[__wow_camera_verb] = function()
+    end
+  end
+end
+"#;
+
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(CAMERA_TUTORIAL_DEFAULTS_LUA)?;
     Ok(())
 }
 
-#[cfg(test)]
+#[cfg(all(
+    test,
+    not(any(feature = "client-retail", feature = "client-wowforever"))
+))]
 mod tests {
     use crate::lua_api::WowLuaEnv;
 
     #[test]
     fn installs_camera_tutorial_defaults() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
-
         let result: String = env
             .eval(
                 r#"
@@ -73,7 +95,6 @@ mod tests {
                 "#,
             )
             .expect("camera/tutorial defaults probe should run");
-
         assert_eq!(result, "ok");
     }
 }
