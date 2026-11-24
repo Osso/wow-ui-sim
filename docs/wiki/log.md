@@ -1,3 +1,7 @@
+## [2026-11-24] implementation | Retail hooksecurefunc dispatcher taint
+
+Updated the [taint system](../systems/taint-system.md#retail-hooksecurefunc-dispatcher). **VERIFIED (Retail exact prefork test and full-addon run):** the `securecall` factory keeps the AuraContainer hook dispatcher secure, the target secret-texture error count is zero, and no new errors appear; direct tainted secret-string rejection remains enabled.
+
 ## [2026-11-23] investigation | Forever Encounter Journal selection
 
 Updated [addon loading](systems/addon-loading.md#addon-discovery-and-toc-parsing). **VERIFIED (simulator selection logic and pinned TOCs):** Forever's Encounter Journal root TOC is restricted before its Mainline entries load; Retail selects the Mainline TOC and boss-list consumer.

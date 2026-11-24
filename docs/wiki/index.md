@@ -1,3 +1,7 @@
+## [2026-11-24] investigation | Retail hooksecurefunc dispatcher taint
+
+[Taint system](systems/taint-system.md#retail-hooksecurefunc-dispatcher) records the post-load Retail `securecallfunction` override ordering, the dispatcher taint leak, and the full-UI AuraContainer regression. **VERIFIED (Retail full-addon run):** the secret-texture error is gone; the five remaining errors match the pre-fix baseline.
+
 ## [2026-11-23] investigation | Forever Encounter Journal selection
 
 [Addon loading](systems/addon-loading.md#addon-discovery-and-toc-parsing) records the TOC filter that excludes Forever's Encounter Journal before its Mainline files load; Retail selects the Mainline consumer.
