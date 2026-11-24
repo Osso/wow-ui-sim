@@ -495,6 +495,7 @@ fn apply_feature_progression_defaults(lua: &mut rilua::Lua) -> crate::Result<()>
     #[cfg(not(feature = "client-wowforever"))]
     temporary::reincarnation_defaults::apply_bootstrap(lua)?;
     temporary::scenario_defaults::apply_bootstrap(lua)?;
+    #[cfg(not(feature = "client-retail"))]
     temporary::scripted_animation_effect_defaults::apply_bootstrap(lua)?;
     temporary::shared_xml_utility_defaults::apply_bootstrap(lua)?;
     temporary::spell_book_static_defaults::apply_bootstrap(lua)
