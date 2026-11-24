@@ -374,7 +374,7 @@ fn retail_aura_container_secret_icons_survive_addon_texture_hook() {
     env.exec(
         r#"
         HookOriginalState:Call()
-        assert(HookOriginalState.taint == 'secure', 'hook must preserve original caller taint')
+        assert(HookOriginalState.taint == 'secure', tostring(HookOriginalState.taint))
         local mixin = assert(CustomAuraButtonPrivateMixin)
         local firstIcon = secretwrap("Interface\\Icons\\INV_Misc_QuestionMark")
         local secondIcon = secretwrap("Interface\\Icons\\Ability_Warrior_Charge")
