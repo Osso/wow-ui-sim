@@ -152,9 +152,9 @@ pub struct SimState {
     pub system_chat_log: Vec<String>,
     pub adventure_map: AdventureMapState,
     pub encounter_journal: EncounterJournalState,
-    /// INFERRED R88fb (native evidence pending): host-supplied completed raid locks.
+    /// VERIFIED (Forever 1.60.1.70707) / INFERRED (Retail 12.1.5.70688) R88fb: host-supplied raid-lock rows.
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
-    pub(crate) completed_encounters: Vec<crate::c_api::c_raid_locks::CompletedEncounter>,
+    pub(crate) completed_encounters: Vec<crate::c_api::c_raid_locks::RaidLockRow>,
     /// Preserve each asynchronous RequestRaidInfo reply until a later timer tick.
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     pub(crate) pending_raid_info_replies: VecDeque<()>,
