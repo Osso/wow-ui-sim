@@ -367,7 +367,7 @@ fn assert_texture_hook_count(env: &WowLuaEnv) {
 fn retail_aura_container_secret_icons_survive_addon_texture_hook() {
     let env = crate::common::aura_container_harness::load_env();
     env.exec(
-        "HookOriginalState = {taint = 'unset'}; function HookOriginalState:Call() HookOriginalState.taint = debug.getstacktaint() or 'secure' end",
+        "_G.HookOriginalState = {taint = 'unset'}; function _G.HookOriginalState:Call() _G.HookOriginalState.taint = debug.getstacktaint() or 'secure' end",
     )
     .unwrap();
     load_texture_hook_probe(&env);
