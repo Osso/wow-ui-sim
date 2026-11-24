@@ -115,6 +115,7 @@ fn forever_graphics_settings_load_with_first_host_capability_fixture() {
             secondary_lighting_supported: 0,
             spell_visual_density_supported: 0,
             multisample_anti_aliasing_supported: false,
+            anti_aliasing_supported: false,
         }));
         env.exec(r#"
             -- Separate unchanged simulator MSAA policy, not a native false claim.
@@ -157,6 +158,7 @@ fn forever_graphics_settings_load_with_alternate_host_capability_fixture() {
             secondary_lighting_supported: 255,
             spell_visual_density_supported: 3,
             multisample_anti_aliasing_supported: false,
+            anti_aliasing_supported: false,
         }));
         env.exec(r#"
             assert(Settings.GetSetting("Gamma") ~= nil)

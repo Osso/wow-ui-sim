@@ -27,6 +27,7 @@ pub struct VideoCapabilityBytes {
     pub secondary_lighting_supported: u8,
     pub spell_visual_density_supported: u8,
     pub multisample_anti_aliasing_supported: bool,
+    pub anti_aliasing_supported: bool,
 }
 
 impl Default for VideoCapabilityBytes {
@@ -39,6 +40,7 @@ impl Default for VideoCapabilityBytes {
             secondary_lighting_supported: forever,
             spell_visual_density_supported: u8::from(publishes_capabilities()),
             multisample_anti_aliasing_supported: false,
+            anti_aliasing_supported: false,
         }
         // Unpublished fields are inert zero host inputs, not native evidence.
     }
@@ -71,6 +73,12 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
             state.global,
             "MultiSampleAntiAliasingSupported",
             is_multisample_anti_aliasing_supported,
+        )?;
+        table_set_rust_fn_static(
+            state,
+            state.global,
+            "AntiAliasingSupported",
+            is_anti_aliasing_supported,
         )?;
     }
     table_set_rust_fn_static(
@@ -132,6 +140,14 @@ fn is_secondary_lighting_supported(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+fn is_anti_aliasing_supported(state: &mut LuaState) -> LuaResult<u32> {
+    let supported = borrow_state(state)?
+        .video_capability_bytes
+        .anti_aliasing_supported;
+    state.push(Val::Bool(supported));
+    Ok(1)
+}
+
 fn is_multisample_anti_aliasing_supported(state: &mut LuaState) -> LuaResult<u32> {
     let supported = borrow_state(state)?
         .video_capability_bytes
@@ -142,13 +158,23 @@ fn is_multisample_anti_aliasing_supported(state: &mut LuaState) -> LuaResult<u32
 
 pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
     if ACTIVE == ClientProfile::WowForever {
-        builder.set_function(
-            "SetMultiSampleAntiAliasingSupported",
-            set_multisample_anti_aliasing_supported,
-        )
+        builder
+            .set_function(
+                "SetMultiSampleAntiAliasingSupported",
+                set_multisample_anti_aliasing_supported,
+            )?
+            .set_function("SetAntiAliasingSupported", set_anti_aliasing_supported)
     } else {
         Ok(builder)
     }
+}
+
+fn set_anti_aliasing_supported(state: &mut LuaState) -> LuaResult<u32> {
+    let supported = bool::from_stack(state, 1)?;
+    borrow_state_mut(state)?
+        .video_capability_bytes
+        .anti_aliasing_supported = supported;
+    Ok(0)
 }
 
 fn set_multisample_anti_aliasing_supported(state: &mut LuaState) -> LuaResult<u32> {
