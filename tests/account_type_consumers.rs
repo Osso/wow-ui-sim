@@ -4,11 +4,16 @@ use wow_ui_sim::loader::BlizzardAddonOverride;
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::screen::ScreenKind;
 
+#[cfg(feature = "client-retail")]
+const ADDON_ROOTS: &[&str] = &["Blizzard_GroupFinder", "Blizzard_MicroMenu"];
+#[cfg(feature = "client-wowforever")]
+const ADDON_ROOTS: &[&str] = &["Blizzard_MicroMenu"];
+
 fn load_account_consumers() -> WowLuaEnv {
     let ui = crate::common::blizzard_addon_harness::blizzard_ui_dir();
     let (env, loaded) = crate::common::blizzard_addon_harness::build_blizzard_addon_closure_env(
         &ui,
-        &["Blizzard_MicroMenu"],
+        ADDON_ROOTS,
         &[] as &[BlizzardAddonOverride<'_>],
     );
     assert!(
@@ -20,14 +25,13 @@ fn load_account_consumers() -> WowLuaEnv {
     env
 }
 
+#[cfg(feature = "client-retail")]
 #[test]
 fn account_type_controls_restricted_lfg_panel() {
     crate::common::with_timeout(120, || {
         let env = load_account_consumers();
         env.exec(
             r#"
-            local loaded, reason = C_AddOns.LoadAddOn("Blizzard_GroupFinder")
-            assert(loaded, "mainline GroupFinder must load for this client: " .. tostring(reason))
             assert(C_AddOns.IsAddOnLoaded("Blizzard_GroupFinder"))
             A_Admin.SetAccountType({
                 trial = false,
@@ -107,7 +111,12 @@ fn account_type_controls_trial_store_alert() {
             SetCVarBitfield("closedInfoFrames", LE_FRAME_TUTORIAL_TRIAL_BANKED_XP, false)
             local trialAlert = StoreMicroButton:EvaluateAlertVisibility(UnitLevel("player"))
             assert(trialAlert, "trial account at its supplied level cap must show the alert")
-            assert(IsVeteranTrialAccount(), "veteran trial status must come from account state")
+            assert(IsTrialAccount() and IsVeteranTrialAccount() and IsRestrictedAccount())
+            assert(not IsExpansionTrial())
+            local expansionTrial, remaining = GetExpansionTrialInfo()
+            assert(not expansionTrial and remaining == 0)
+            local level, money, profession = GetRestrictedAccountData()
+            assert(level == 20 and money == 100000 and profession == 100)
             assert(GetCVarBitfield("closedInfoFrames", LE_FRAME_TUTORIAL_TRIAL_BANKED_XP))
             "#,
         )
