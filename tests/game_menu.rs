@@ -764,8 +764,10 @@ const ACTIVE_GAMEPAD_GAME_MENU_CASE: &str = r#"
     GameMenuFrame_Show()
     local opened = A_Admin.GetGamePadCursorControlEnabled()
     A_Admin.SetUsingGamepad(true)
+    local usingAtClose = IsUsingGamepad()
+    local canDisable = CanAutoSetGamePadCursorControl(false)
     GameMenuFrame:CloseMenu()
-    return active, GameMenuFrame:IsShown(), opened,
+    return active, usingAtClose, canDisable, not GameMenuFrame:IsShown(), opened,
         A_Admin.GetGamePadCursorControlEnabled()
 "#;
 
@@ -782,8 +784,9 @@ fn gamepad_cursor_control_tracks_game_menu_lifecycle() {
     test_timeout! {
         let active_env = setup_game_menu_env();
         active_env.exec("SetCVar('GamePadOverlapMouseMs', '60000')").unwrap();
-        let active: (bool, bool, bool, bool) = active_env.eval(ACTIVE_GAMEPAD_GAME_MENU_CASE).unwrap();
-        assert_eq!(active, (true, false, true, false));
+        let active: (bool, bool, bool, bool, bool, bool) =
+            active_env.eval(ACTIVE_GAMEPAD_GAME_MENU_CASE).unwrap();
+        assert_eq!(active, (true, true, true, true, true, false));
         let inactive_env = setup_game_menu_env();
         let inactive: (bool, bool) = inactive_env.eval(INACTIVE_GAMEPAD_GAME_MENU_CASE).unwrap();
         assert_eq!(inactive, (false, true));
