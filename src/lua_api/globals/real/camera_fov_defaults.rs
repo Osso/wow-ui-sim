@@ -1,6 +1,5 @@
 //! Retail and Forever camera values used by Blizzard Settings Graphics.
 
-use crate::lua_api::methods::borrow_state_mut;
 use crate::lua_bridge::{FromStack, TableBuilder};
 use rilua::vm::state::LuaState;
 use rilua::{LuaApiMut, LuaResult, Val};
@@ -23,8 +22,5 @@ fn get_camera_fov_defaults(state: &mut LuaState) -> LuaResult<u32> {
 
 fn set_camera_fov(state: &mut LuaState) -> LuaResult<u32> {
     let value = f64::from_stack(state, 1)?;
-    borrow_state_mut(state)?
-        .cvars
-        .set_temporary("cameraFov", &value.to_string());
-    Ok(0)
+    super::super::set_cvar_verb::set_admin_cvar(state, "cameraFov", &value.to_string())
 }

@@ -93,21 +93,6 @@ fn tutorial_id(state: &mut LuaState) -> LuaResult<Option<u32>> {
     Ok(Some(value as u32))
 }
 
-// INFERRED (R88fh (native evidence pending)): the UI cache maps the stored setting to this CVar.
-pub(super) fn get_tutorials_enabled(state: &mut LuaState) -> LuaResult<u32> {
-    let enabled = borrow_state(state)?.cvars.get("showTutorials").as_deref() == Some("1");
-    state.push(Val::Bool(enabled));
-    Ok(1)
-}
-
-pub(crate) fn set_tutorials_enabled(state: &mut LuaState) -> LuaResult<u32> {
-    let enabled = bool::from_stack(state, 1)?;
-    borrow_state_mut(state)?
-        .cvars
-        .set_temporary("showTutorials", if enabled { "1" } else { "0" });
-    Ok(0)
-}
-
 pub(crate) fn set_tutorial_flag(state: &mut LuaState) -> LuaResult<u32> {
     let Some(tutorial_id) = tutorial_id(state)? else {
         return Ok(0);
