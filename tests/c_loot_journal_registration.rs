@@ -56,7 +56,12 @@ fn rust_raid_lock_registration_uses_first_map_row_without_difficulty() {
                     if not journalID then break end
                     local _, _, _, _, _, _, encounterID, mapID = EJ_GetEncounterInfo(journalID)
                     if encounterID and encounterID > 0 and mapID and mapID > 0 then
-                        selected = { journalID=journalID, encounterID=encounterID, mapID=mapID }
+                        selected = {
+                            instanceID=instanceID,
+                            journalID=journalID,
+                            encounterID=encounterID,
+                            mapID=mapID,
+                        }
                         break
                     end
                 end
