@@ -122,6 +122,7 @@ fn are_guild_events_enabled(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 // INFERRED R88fq (native evidence pending): supply guild preference-editing capabilities.
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub(crate) fn admin_set_guild_preferred_play_settings_features(
     state: &mut LuaState,
 ) -> LuaResult<u32> {
@@ -134,6 +135,7 @@ pub(crate) fn admin_set_guild_preferred_play_settings_features(
 }
 
 // INFERRED R88fq (native evidence pending): supply guild-reputation feature availability.
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub(crate) fn admin_set_guild_reputation_enabled(state: &mut LuaState) -> LuaResult<u32> {
     let enabled = bool::from_stack(state, 1)?;
     borrow_state_mut(state)?.guild_reputation_enabled = enabled;
@@ -141,6 +143,7 @@ pub(crate) fn admin_set_guild_reputation_enabled(state: &mut LuaState) -> LuaRes
 }
 
 // INFERRED R88fq (native evidence pending): supply guild-calendar feature availability.
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub(crate) fn admin_set_guild_events_enabled(state: &mut LuaState) -> LuaResult<u32> {
     let enabled = bool::from_stack(state, 1)?;
     borrow_state_mut(state)?.guild_events_enabled = enabled;
