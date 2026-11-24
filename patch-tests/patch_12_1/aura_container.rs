@@ -1,6 +1,9 @@
 use super::{blizzard_ui_dir, new_game_env};
 use wow_ui_sim::loader::{discover_blizzard_addon_closure_for_screen, load_addon};
-use wow_ui_sim::lua_api::{WowLuaEnv, game_data::AuraIcon, state::AuraInfo};
+use wow_ui_sim::lua_api::{
+    WowLuaEnv,
+    state::{AuraIcon, AuraInfo},
+};
 use wow_ui_sim::screen::ScreenKind;
 
 fn load_aura_container_ui() -> WowLuaEnv {

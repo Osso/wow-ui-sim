@@ -121,7 +121,7 @@ fn seed_aura(env: &WowLuaEnv, helpful: bool) {
     let aura = wow_ui_sim::lua_api::state::AuraInfo {
         name: "Residual aura".into(),
         spell_id: 465,
-        icon: wow_ui_sim::lua_api::game_data::AuraIcon::FileId(135940),
+        icon: wow_ui_sim::lua_api::state::AuraIcon::FileId(135940),
         duration: 30.0,
         expiration_time: state.start_time.elapsed().as_secs_f64() + 12.0,
         applications: 3,

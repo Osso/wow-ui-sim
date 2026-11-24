@@ -12,7 +12,7 @@ fn aura(id: i32, dispel: Option<&str>, helpful: bool) -> AuraInfo {
     AuraInfo {
         name: format!("Dispel fixture {id}"),
         spell_id: 99001,
-        icon: 134973,
+        icon: wow_ui_sim::lua_api::state::AuraIcon::FileId(134973),
         duration: 30.0,
         expiration_time: 45.0,
         applications: 2,
@@ -500,7 +500,7 @@ fn assert_records_unchanged(actual: &[AuraInfo], expected: &[AuraInfo]) {
                 (
                     &actual.name,
                     actual.spell_id,
-                    actual.icon,
+                    &actual.icon,
                     actual.applications
                 ),
                 (actual.duration, actual.expiration_time, &actual.source_unit),
@@ -516,7 +516,7 @@ fn assert_records_unchanged(actual: &[AuraInfo], expected: &[AuraInfo]) {
                 (
                     &expected.name,
                     expected.spell_id,
-                    expected.icon,
+                    &expected.icon,
                     expected.applications
                 ),
                 (

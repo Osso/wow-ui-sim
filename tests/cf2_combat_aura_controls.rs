@@ -97,7 +97,7 @@ fn fixture_aura(id: i32) -> AuraInfo {
     AuraInfo {
         name: format!("CF-2 blocked aura {id}"),
         spell_id: 99000 + id,
-        icon: 134973,
+        icon: wow_ui_sim::lua_api::state::AuraIcon::FileId(134973),
         duration: 30.0,
         expiration_time: 45.0,
         applications: 1,

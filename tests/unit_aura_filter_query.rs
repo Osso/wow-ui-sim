@@ -11,7 +11,7 @@ fn fixture_aura(id: i32, helpful: bool, from_player: bool) -> AuraInfo {
     AuraInfo {
         name: format!("Filter fixture {id}"),
         spell_id: 99000 + id,
-        icon: 134973,
+        icon: wow_ui_sim::lua_api::state::AuraIcon::FileId(134973),
         duration: 30.0,
         expiration_time: 45.0,
         applications: 3,
@@ -34,7 +34,7 @@ fn assert_aura_records(actual: &[AuraInfo], expected: &[AuraInfo]) {
             (
                 &actual.name,
                 actual.spell_id,
-                actual.icon,
+                &actual.icon,
                 actual.duration,
                 actual.expiration_time,
                 actual.applications,
@@ -44,7 +44,7 @@ fn assert_aura_records(actual: &[AuraInfo], expected: &[AuraInfo]) {
             (
                 &expected.name,
                 expected.spell_id,
-                expected.icon,
+                &expected.icon,
                 expected.duration,
                 expected.expiration_time,
                 expected.applications,

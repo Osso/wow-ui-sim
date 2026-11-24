@@ -11,7 +11,7 @@ fn fixture_aura(spell_id: i32, instance_id: i32, helpful: bool) -> AuraInfo {
     AuraInfo {
         name: format!("Fixture aura {instance_id}"),
         spell_id,
-        icon: 134973,
+        icon: wow_ui_sim::lua_api::state::AuraIcon::FileId(134973),
         duration: 30.0,
         expiration_time: 45.0,
         applications: 3,

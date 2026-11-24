@@ -25,7 +25,7 @@ fn aura(id: i32, name: &str, helpful: bool, player_source: bool) -> AuraInfo {
     AuraInfo {
         name: name.into(),
         spell_id: 19750,
-        icon: wow_ui_sim::lua_api::game_data::AuraIcon::FileId(135987),
+        icon: wow_ui_sim::lua_api::state::AuraIcon::FileId(135987),
         duration: 3600.0,
         expiration_time: 3600.0,
         applications: 2,
@@ -324,7 +324,7 @@ fn assert_auras_unchanged(actual: &[Vec<AuraInfo>], expected: &[Vec<AuraInfo>]) 
                 (
                     &a.name,
                     a.spell_id,
-                    a.icon,
+                    &a.icon,
                     a.duration,
                     a.expiration_time,
                     a.applications,
@@ -334,7 +334,7 @@ fn assert_auras_unchanged(actual: &[Vec<AuraInfo>], expected: &[Vec<AuraInfo>]) 
                 (
                     &b.name,
                     b.spell_id,
-                    b.icon,
+                    &b.icon,
                     b.duration,
                     b.expiration_time,
                     b.applications,

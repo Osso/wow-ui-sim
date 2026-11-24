@@ -91,7 +91,7 @@ fn patch_12_1_0_aura_group_options_sort_direction_changes_actual_icon_positions(
         .map(|id| AuraInfo {
             name: format!("Audit {id}"),
             spell_id: 1000 + id,
-            icon: id,
+            icon: wow_ui_sim::lua_api::state::AuraIcon::FileId(id),
             duration: 30.0,
             expiration_time: 30.0,
             applications: 1,
