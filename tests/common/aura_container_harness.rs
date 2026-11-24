@@ -5,7 +5,7 @@
 //! `UNIT_AURA` dispatch. Containers are created by addon-tainted Lua through
 //! the cached `CustomAuraContainerTemplate`; nothing calls Blizzard internals.
 
-use wow_ui_sim::lua_api::{WowLuaEnv, game_data::AuraIcon, state::AuraInfo};
+use wow_ui_sim::lua_api::{WowLuaEnv, state::{AuraIcon, AuraInfo}};
 
 /// Lua helpers shared by every harness test.
 ///
