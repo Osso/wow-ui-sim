@@ -232,47 +232,42 @@ fn register_account_feature_methods(
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn are_friend_tags_enabled(state: &mut LuaState) -> LuaResult<u32> {
-    state.push(Val::Bool(
-        borrow_state(state)?.bnet_account_features.friend_tags,
-    ));
+    let enabled = borrow_state(state)?.bnet_account_features.friend_tags;
+    state.push(Val::Bool(enabled));
     Ok(1)
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn are_title_friend_custom_names_enabled(state: &mut LuaState) -> LuaResult<u32> {
-    state.push(Val::Bool(
-        borrow_state(state)?
-            .bnet_account_features
-            .title_friend_custom_names,
-    ));
+    let enabled = borrow_state(state)?
+        .bnet_account_features
+        .title_friend_custom_names;
+    state.push(Val::Bool(enabled));
     Ok(1)
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn are_title_friends_enabled(state: &mut LuaState) -> LuaResult<u32> {
-    state.push(Val::Bool(
-        borrow_state(state)?.bnet_account_features.title_friends,
-    ));
+    let enabled = borrow_state(state)?.bnet_account_features.title_friends;
+    state.push(Val::Bool(enabled));
     Ok(1)
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn is_friends_list_enabled(state: &mut LuaState) -> LuaResult<u32> {
-    state.push(Val::Bool(
-        borrow_state(state)?
-            .bnet_account_features
-            .friends_list_enabled,
-    ));
+    let enabled = borrow_state(state)?
+        .bnet_account_features
+        .friends_list_enabled;
+    state.push(Val::Bool(enabled));
     Ok(1)
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn is_friends_list_supported(state: &mut LuaState) -> LuaResult<u32> {
-    state.push(Val::Bool(
-        borrow_state(state)?
-            .bnet_account_features
-            .friends_list_supported,
-    ));
+    let enabled = borrow_state(state)?
+        .bnet_account_features
+        .friends_list_supported;
+    state.push(Val::Bool(enabled));
     Ok(1)
 }
 
