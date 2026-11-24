@@ -119,6 +119,22 @@ fn admin_supplies_community_voice_channel_errors() {
 }
 
 #[test]
+fn admin_supplies_pending_community_voice_joins() {
+    let env = WowLuaEnv::new().expect("Lua environment should initialize");
+    env.exec(
+        r#"
+        local channelType = Enum.ChatChannelType.Communities
+        assert(not C_VoiceChat.IsChannelJoinPending(channelType, "club", 20))
+        A_Admin.SetChannelJoinPending(channelType, "club", 20, true)
+        assert(C_VoiceChat.IsChannelJoinPending(channelType, "club", 20))
+        A_Admin.SetChannelJoinPending(channelType, "club", 20, false)
+        assert(not C_VoiceChat.IsChannelJoinPending(channelType, "club", 20))
+        "#,
+    )
+    .expect("admin supplies pending community voice joins");
+}
+
+#[test]
 fn admin_supplies_allowed_community_types() {
     let env = WowLuaEnv::new().expect("Lua environment should initialize");
     env.exec(

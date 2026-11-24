@@ -8,6 +8,12 @@ Supply or clear the error reason returned by `C_VoiceChat.GetJoinClubVoiceChanne
 
 This per-club input is INFERRED R88fv (native evidence pending).
 
+### `A_Admin.SetChannelJoinPending(channelType, clubId, streamId, pending)`
+
+Set whether a voice-channel join is pending for the specified chat-channel type and optional club/stream IDs. The getter returns `false` when no matching pending join exists.
+
+This input is INFERRED R88fv (native evidence pending).
+
 ```lua
 A_Admin.SetCanPlayerUseVoiceChat(false)
 assert(C_VoiceChat.CanPlayerUseVoiceChat() == false)

@@ -449,6 +449,8 @@ pub struct VoiceChatState {
     pub can_use_voice_chat: bool,
     /// INFERRED R88fv (native evidence pending): supplied per-club join error reasons.
     pub join_club_voice_channel_errors: HashMap<String, i32>,
+    /// INFERRED R88fv (native evidence pending): community voice joins in progress.
+    pub pending_channel_joins: HashSet<(i32, Option<String>, Option<String>)>,
 }
 
 impl Default for VoiceChatState {
@@ -495,6 +497,7 @@ impl Default for VoiceChatState {
             is_parental_disabled: false,
             can_use_voice_chat: true,
             join_club_voice_channel_errors: HashMap::new(),
+            pending_channel_joins: HashSet::new(),
         }
     }
 }

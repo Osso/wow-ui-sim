@@ -24,6 +24,12 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
         namespace,
         "GetJoinClubVoiceChannelError",
         get_join_club_voice_channel_error,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        namespace,
+        "IsChannelJoinPending",
+        is_channel_join_pending,
     )
 }
 
@@ -37,7 +43,8 @@ pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
         .set_function(
             "SetJoinClubVoiceChannelError",
             set_join_club_voice_channel_error,
-        )
+        )?
+        .set_function("SetChannelJoinPending", set_channel_join_pending)
 }
 
 fn publishes_login_state() -> bool {
@@ -64,6 +71,53 @@ fn set_can_use_voice_chat(state: &mut LuaState) -> LuaResult<u32> {
     };
     borrow_state_mut(state)?.voice_chat.can_use_voice_chat = can_use;
     Ok(0)
+}
+
+fn is_channel_join_pending(state: &mut LuaState) -> LuaResult<u32> {
+    let key = pending_channel_join_key(state)?;
+    let pending = borrow_state(state)?
+        .voice_chat
+        .pending_channel_joins
+        .contains(&key);
+    state.push(Val::Bool(pending));
+    Ok(1)
+}
+
+fn set_channel_join_pending(state: &mut LuaState) -> LuaResult<u32> {
+    let key = pending_channel_join_key(state)?;
+    let pending = bool::from_stack(state, 4)?;
+    let mut sim = borrow_state_mut(state)?;
+    if pending {
+        sim.voice_chat.pending_channel_joins.insert(key);
+    } else {
+        sim.voice_chat.pending_channel_joins.remove(&key);
+    }
+    Ok(0)
+}
+
+fn pending_channel_join_key(
+    state: &mut LuaState,
+) -> LuaResult<(i32, Option<String>, Option<String>)> {
+    let channel_type = i32::from_stack(state, 1)?;
+    let club_id = optional_string_arg(state, 2)?;
+    let stream_id = optional_stream_id_arg(state, 3)?;
+    Ok((channel_type, club_id, stream_id))
+}
+
+fn optional_string_arg(state: &mut LuaState, index: usize) -> LuaResult<Option<String>> {
+    if matches!(stack_val(state, index), Val::Nil) {
+        Ok(None)
+    } else {
+        String::from_stack(state, index).map(Some)
+    }
+}
+
+fn optional_stream_id_arg(state: &mut LuaState, index: usize) -> LuaResult<Option<String>> {
+    if matches!(stack_val(state, index), Val::Nil) {
+        Ok(None)
+    } else {
+        f64::from_stack(state, index).map(|stream_id| Some(stream_id.to_string()))
+    }
 }
 
 fn get_join_club_voice_channel_error(state: &mut LuaState) -> LuaResult<u32> {
