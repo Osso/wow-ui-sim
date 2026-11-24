@@ -576,7 +576,7 @@ pub struct SimState {
     /// Guild club member names sent a Battle.net friend request via `C_Club`.
     pub club_battle_tag_friend_requests: Vec<String>,
     pub clubs: crate::c_api::club_model::ClubState,
-    pub club_finder: crate::c_api::c_club_finder::ClubFinderState,
+    pub(crate) club_finder: crate::c_api::c_club_finder::ClubFinderState,
     /// Host spell data: cooldown category of each spell that has one.
     pub spell_cooldown_categories: HashMap<u32, i32>,
     /// Supplied autocast flags, keyed by spellbook slot and bank.
