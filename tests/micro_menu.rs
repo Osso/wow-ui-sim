@@ -886,7 +886,7 @@ fn main_menu_performance_bar_uses_seeded_network_stats() {
     );
 }
 
-#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn load_performance_bar_tooltip(env: &WowLuaEnv) {
     env.exec(
         r#"
