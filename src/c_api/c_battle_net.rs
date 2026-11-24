@@ -49,18 +49,7 @@ pub(crate) fn register_c_battle_net_surface(state: &mut LuaState) -> LuaResult<(
     let table_ref = ensure_namespace(state, "C_BattleNet")?;
     register_texture_methods(state, table_ref)?;
     #[cfg(feature = "retail-12-0-5")]
-    {
-        table_set_rust_fn_static(state, table_ref, "SetAFK", |s| {
-            let flag = Option::<bool>::from_stack(s, 1)?.unwrap_or(true);
-            borrow_state_mut(s)?.bnet_presence.is_afk = flag;
-            Ok(0)
-        })?;
-        table_set_rust_fn_static(state, table_ref, "SetDND", |s| {
-            let flag = Option::<bool>::from_stack(s, 1)?.unwrap_or(true);
-            borrow_state_mut(s)?.bnet_presence.is_dnd = flag;
-            Ok(0)
-        })?;
-    }
+    register_presence_methods(state, table_ref)?;
     // Pinned Forever BattleNetDocumentation.lua:303 declares `SendGameData`.
     #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
     table_set_rust_fn_static(
@@ -77,6 +66,20 @@ pub(crate) fn register_c_battle_net_surface(state: &mut LuaState) -> LuaResult<(
         register_account_feature_methods(state, table_ref)?;
     }
     Ok(())
+}
+
+#[cfg(feature = "retail-12-0-5")]
+fn register_presence_methods(state: &mut LuaState, table_ref: BattleNetTable) -> LuaResult<()> {
+    table_set_rust_fn_static(state, table_ref, "SetAFK", |s| {
+        let flag = Option::<bool>::from_stack(s, 1)?.unwrap_or(true);
+        borrow_state_mut(s)?.bnet_presence.is_afk = flag;
+        Ok(0)
+    })?;
+    table_set_rust_fn_static(state, table_ref, "SetDND", |s| {
+        let flag = Option::<bool>::from_stack(s, 1)?.unwrap_or(true);
+        borrow_state_mut(s)?.bnet_presence.is_dnd = flag;
+        Ok(0)
+    })
 }
 
 /// Records an outgoing in-game friend request once per character name.
@@ -198,36 +201,17 @@ fn register_account_feature_methods(
     state: &mut LuaState,
     table_ref: BattleNetTable,
 ) -> LuaResult<()> {
-    table_set_rust_fn_static(
-        state,
-        table_ref,
-        "AreFriendTagsEnabled",
-        are_friend_tags_enabled,
-    )?;
-    table_set_rust_fn_static(
-        state,
-        table_ref,
-        "AreTitleFriendCustomNamesEnabled",
-        are_title_friend_custom_names_enabled,
-    )?;
-    table_set_rust_fn_static(
-        state,
-        table_ref,
-        "AreTitleFriendsEnabled",
-        are_title_friends_enabled,
-    )?;
-    table_set_rust_fn_static(
-        state,
-        table_ref,
-        "IsBattleNetFriendsListEnabled",
-        is_friends_list_enabled,
-    )?;
-    table_set_rust_fn_static(
-        state,
-        table_ref,
-        "IsBattleNetFriendsListSupported",
-        is_friends_list_supported,
-    )
+    let methods: [(&str, fn(&mut LuaState) -> LuaResult<u32>); 5] = [
+        ("AreFriendTagsEnabled", are_friend_tags_enabled),
+        ("AreTitleFriendCustomNamesEnabled", are_title_friend_custom_names_enabled),
+        ("AreTitleFriendsEnabled", are_title_friends_enabled),
+        ("IsBattleNetFriendsListEnabled", is_friends_list_enabled),
+        ("IsBattleNetFriendsListSupported", is_friends_list_supported),
+    ];
+    for (name, method) in methods {
+        table_set_rust_fn_static(state, table_ref, name, method)?;
+    }
+    Ok(())
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
