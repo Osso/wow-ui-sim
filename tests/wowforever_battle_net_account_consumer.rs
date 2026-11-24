@@ -10,9 +10,10 @@ fn friends_frame_displays_two_supplied_battle_tags() {
     let ui = closure::blizzard_ui_dir();
     let (env, loaded) = closure::build_blizzard_addon_closure_env(
         &ui,
-        &["Blizzard_FriendsFrame"],
+        &["Blizzard_QuickJoin", "Blizzard_FriendsFrame"],
         &[],
     );
+    assert!(loaded.iter().any(|name| name == "Blizzard_QuickJoin"));
     assert!(loaded.iter().any(|name| name == "Blizzard_FriendsFrame"));
     assert_two_battle_tags(&env);
 }
