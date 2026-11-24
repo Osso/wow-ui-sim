@@ -130,10 +130,10 @@ prefork_full_ui_case! {
     }
 }
 
-prefork_full_ui_case! {
-    fn supplied_notifications_render_and_record_consumer_receipts(env: &WowLuaEnv) {
-        load_behavioral_messaging_chain(env);
-        env.exec(include_str!("blizzard_behavioral_messaging_notifications.lua"))
-            .expect("supplied notifications should render and be acknowledged");
-    }
+#[test]
+fn supplied_notifications_render_and_record_consumer_receipts() {
+    let env = load_full_game_ui();
+    load_behavioral_messaging_chain(&env);
+    env.exec(include_str!("blizzard_behavioral_messaging_notifications.lua"))
+        .expect("supplied notifications should render and be acknowledged");
 }
