@@ -292,6 +292,12 @@ fn contribution_panel_uses_supplied_result_and_currency_through_interaction(env:
     assert_eq!(currency.1, Some(5.0));
     assert!(currency.2, "fixture currency should have display metadata");
     assert!(!currency.3.is_empty(), "fixture currency should format as text");
+    let button_cost: (Option<i32>, Option<f64>, Option<String>) = env
+        .eval("local b = ContributionCollectionFrame:FindContribution(501).ContributeButton; return b.currencyID, b.amount, b.formatString")
+        .expect("original consumer should retain its formatted cost inputs");
+    assert_eq!(button_cost.0, Some(2245));
+    assert_eq!(button_cost.1, Some(5.0));
+    assert_eq!(button_cost.2.as_deref(), Some("Contribute %s"));
     assert_ne!(result.4, result.5, "distinct supplied costs should produce distinct button text");
     let details_valid: bool = env
         .eval(
