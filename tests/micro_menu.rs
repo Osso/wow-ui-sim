@@ -964,6 +964,20 @@ const PERFORMANCE_BAR_TOOLTIP_ASSERTIONS: &str = r#"
     A_Admin.SetFramerate(48.5)
     A_Admin.SetAddOnUsage("Blizzard_MicroMenu", 240, 7)
     A_Admin.SetAddOnUsage("Blizzard_UIParent", 80, 2)
+    assert(GetAddOnMemoryUsage("Blizzard_MicroMenu") == 0,
+        "memory getter must keep the old snapshot until update")
+    assert(select("#", UpdateAddOnMemoryUsage()) == 0,
+        "UpdateAddOnMemoryUsage must return no values")
+    assert(GetAddOnMemoryUsage("Blizzard_MicroMenu") == 240,
+        "memory update must publish supplied sample")
+    assert(GetAddOnCPUUsage("Blizzard_MicroMenu") == 0,
+        "CPU getter must keep the old snapshot until update")
+    assert(select("#", UpdateAddOnCPUUsage()) == 0,
+        "UpdateAddOnCPUUsage must return no values")
+    assert(GetAddOnCPUUsage("Blizzard_MicroMenu") == 7,
+        "CPU update must publish supplied sample")
+    assert(select("#", ResetCPUUsage()) == 0 and GetAddOnCPUUsage("Blizzard_MicroMenu") == 0,
+        "CPU reset must clear the supplied addon sample")
     GameTooltip:Hide()
     MainMenuBarPerformanceBarFrame_OnEnter(MainMenuMicroButton.MainMenuBarPerformanceBar)
     local first, second
