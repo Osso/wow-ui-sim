@@ -35,8 +35,8 @@ fn rust_raid_lock_registration_reads_two_supplied_encounters() {
     env.exec(
         r#"
         A_Admin.SetCompletedEncounters({
-            { mapID=88001, encounterID=77100, difficultyID=14 },
-            { mapID=88001, encounterID=77101, difficultyID=15 },
+            { mapID=88001, difficultyID=14, completedEncounterIDs={77101} },
+            { mapID=88001, difficultyID=15, completedEncounterIDs={77100} },
         })
         "#,
     )
@@ -46,7 +46,7 @@ fn rust_raid_lock_registration_reads_two_supplied_encounters() {
         .eval(
             r#"
             return C_RaidLocks.IsEncounterComplete(88001, 77100, 14),
-                C_RaidLocks.IsEncounterComplete(88001, 77101, 15),
+                C_RaidLocks.IsEncounterComplete(88001, 77100),
                 C_RaidLocks.IsEncounterComplete(88001, 77102, 14),
                 C_RaidLocks.IsEncounterComplete(88001, 77100, 15)
             "#,
@@ -54,7 +54,7 @@ fn rust_raid_lock_registration_reads_two_supplied_encounters() {
         .expect("C_RaidLocks should query supplied Forever encounter locks");
 
     assert!(complete_a);
-    assert!(complete_b);
+    assert!(!complete_b);
     assert!(!unknown);
     assert!(!wrong_difficulty);
 }

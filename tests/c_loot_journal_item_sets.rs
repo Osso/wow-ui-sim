@@ -1,4 +1,4 @@
-#![cfg(feature = "client-retail")]
+#![cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 
 use std::path::PathBuf;
 use wow_ui_sim::loader::load_addon;
@@ -8,7 +8,18 @@ fn encounter_journal_toc() -> PathBuf {
     wow_ui_sim::client_profile::blizzard_ui_addons_dir_under(std::path::Path::new(env!(
         "CARGO_MANIFEST_DIR"
     )))
-    .join("Blizzard_EncounterJournal/Blizzard_EncounterJournal_Mainline.toc")
+    .join(format!(
+        "Blizzard_EncounterJournal/{}",
+        match wow_ui_sim::client_profile::ACTIVE {
+            wow_ui_sim::client_profile::ClientProfile::Retail => {
+                "Blizzard_EncounterJournal_Mainline.toc"
+            }
+            wow_ui_sim::client_profile::ClientProfile::WowForever => {
+                "Blizzard_EncounterJournal.toc"
+            }
+            _ => unreachable!("this test is limited to Retail and WoW Forever"),
+        }
+    ))
 }
 
 prefork_full_ui_case! {
@@ -136,13 +147,12 @@ const SELECT_RAID_AND_OPEN_JOURNAL: &str = r#"
             EJ_SelectInstance(selected.instanceID)
             assert(EJ_InstanceIsRaid(), "selected Encounter Journal instance must be a raid")
             A_Admin.SetCompletedEncounters({
-                {
-                    mapID = selected.mapID,
-                    encounterID = selected.first.encounterID,
-                    difficultyID = 14,
-                },
+                { mapID=selected.mapID, difficultyID=14,
+                  completedEncounterIDs={selected.second.encounterID} },
+                { mapID=selected.mapID, difficultyID=15,
+                  completedEncounterIDs={selected.first.encounterID} },
             })
-            EncounterJournal_OpenJournal(14, selected.instanceID)
+            EncounterJournal_OpenJournal(15, selected.instanceID)
             assert(EncounterJournal:IsShown(), "the client path must open Encounter Journal")
             return selected.instanceID, selected.mapID,
                 selected.first.journalID, selected.first.encounterID,
@@ -176,7 +186,7 @@ fn assert_initial_raid_lock_overlays(env: &WowLuaEnv, b: &RaidLockBosses) {
             "#
         ))
         .expect("Encounter Journal boss overlays should read supplied raid-lock state");
-    assert_eq!(initial, (true, true, true, true, true, false));
+    assert_eq!(initial, (true, true, true, false, true, false));
 }
 
 fn complete_second_boss_and_request_raid_info(env: &WowLuaEnv, b: &RaidLockBosses) {
@@ -190,8 +200,9 @@ fn complete_second_boss_and_request_raid_info(env: &WowLuaEnv, b: &RaidLockBosse
     env.exec(&format!(
         r#"
         A_Admin.SetCompletedEncounters({{
-            {{ mapID = {map_id}, encounterID = {encounter_a}, difficultyID = 14 }},
-            {{ mapID = {map_id}, encounterID = {encounter_b}, difficultyID = 14 }},
+            {{ mapID={map_id}, difficultyID=14, completedEncounterIDs={{{encounter_b}}} }},
+            {{ mapID={map_id}, difficultyID=15,
+               completedEncounterIDs={{{encounter_a}, {encounter_b}}} }},
         }})
         RequestRaidInfo()
         local overlays = {{}}
