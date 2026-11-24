@@ -19,12 +19,13 @@ fn tutorials_enabled_controls_new_player_experience_bootstrap(env: &WowLuaEnv) {
     env.exec(r#"
         local addon = "Blizzard_NewPlayerExperience"
         assert(not C_AddOns.IsAddOnLoaded(addon))
+        A_Admin.SetPlayerNPERestricted(true)
         A_Admin.SetTutorialsEnabled(false)
         NPE_LoadUI()
         assert(not C_AddOns.IsAddOnLoaded(addon))
         A_Admin.SetTutorialsEnabled(true)
         NPE_LoadUI()
-        assert(C_AddOns.IsAddOnLoaded(addon) == C_PlayerInfo.IsPlayerNPERestricted())
+        assert(C_AddOns.IsAddOnLoaded(addon))
     "#).expect("NPE bootstrap should use the supplied tutorials-enabled flag");
 }
 }
