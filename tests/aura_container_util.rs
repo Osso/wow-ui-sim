@@ -376,7 +376,7 @@ fn assert_texture_hook_count(env: &WowLuaEnv) {
 fn retail_aura_container_secret_icons_survive_addon_texture_hook() {
     let env = crate::common::aura_container_harness::load_env();
     load_texture_hook_probe(&env);
-    env.exec(
+    env.exec_maybe_secure(
         r#"
         local firstTexture = CreateFrame('Frame'):CreateTexture()
         local secondTexture = CreateFrame('Frame'):CreateTexture()
@@ -390,6 +390,7 @@ fn retail_aura_container_secret_icons_survive_addon_texture_hook() {
             error(tostring(firstResult) .. ':' .. tostring(secondResult))
         end
         "#,
+        true,
     )
     .expect("AuraContainer must apply both secret icon paths before its addon hook runs");
     assert_texture_hook_count(&env);
