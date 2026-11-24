@@ -40,6 +40,43 @@ fn original_social_settings_reads_chat_restrictions() {
     assert_social_setting(&env, false);
 }
 
+#[test]
+fn original_communities_frame_reads_chat_accessibility_inputs() {
+    let env = load_original_addon("Blizzard_Communities");
+    env.exec(
+        r#"
+        C_Club.CreateClub("Muted community", "", "Muted", 1, 0)
+        C_Club.CreateClub("Available community", "", "Available", 1, 0)
+        local clubs = C_Club.GetSubscribedClubs()
+        assert(#clubs == 2, "two distinct supplied clubs exist")
+        local mutedClubId, availableClubId
+        for _, club in ipairs(clubs) do
+            if club.name == "Muted community" then mutedClubId = club.clubId end
+            if club.name == "Available community" then availableClubId = club.clubId end
+        end
+        assert(mutedClubId ~= availableClubId, "club IDs are distinct")
+        A_Admin.SetAccountMutedClub(mutedClubId, true)
+        A_Admin.SetChatDisabled(true)
+
+        ToggleCommunitiesFrame()
+        CommunitiesFrame:SelectClub(mutedClubId, true)
+        assert(not CommunitiesFrame:IsChatAccessible(), "account-muted club blocks chat")
+        assert(CommunitiesFrame:GetDisplayMode() == COMMUNITIES_FRAME_DISPLAY_MODES.ROSTER)
+
+        A_Admin.SetAccountMutedClub(availableClubId, false)
+        CommunitiesFrame:SelectClub(availableClubId, true)
+        assert(not CommunitiesFrame:IsChatAccessible(), "chat-disabled account blocks chat")
+        assert(CommunitiesFrame:GetDisplayMode() == COMMUNITIES_FRAME_DISPLAY_MODES.ROSTER)
+
+        A_Admin.SetChatDisabled(false)
+        CommunitiesFrame:SelectClub(availableClubId, true)
+        assert(CommunitiesFrame:IsChatAccessible(), "unrestricted community chat is accessible")
+        assert(CommunitiesFrame:GetDisplayMode() == COMMUNITIES_FRAME_DISPLAY_MODES.CHAT)
+        "#,
+    )
+    .expect("original CommunitiesFrame follows supplied club and chat restrictions");
+}
+
 fn assert_social_setting(env: &WowLuaEnv, expected: bool) {
     env.exec(&format!(
         "assert(Settings.GetSetting('PROXY_DISABLE_CHAT'):GetValue() == {expected})"
