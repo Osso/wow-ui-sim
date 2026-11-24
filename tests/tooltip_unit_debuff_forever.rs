@@ -12,7 +12,7 @@ fn aura(id: i32, name: &str) -> AuraInfo {
     AuraInfo {
         name: name.into(),
         spell_id: 19750,
-        icon: 135987,
+        icon: wow_ui_sim::lua_api::state::AuraIcon::FileId(135987),
         duration: 30.0,
         expiration_time: 30.0,
         applications: 1,

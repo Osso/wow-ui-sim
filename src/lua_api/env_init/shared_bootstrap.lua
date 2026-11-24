@@ -855,7 +855,8 @@ tWipe = tWipe or table.wipe
 __wow_hooksecurefunc_registry = __wow_hooksecurefunc_registry or {}
 __wow_hooksecurefunc_wrapper_ids = __wow_hooksecurefunc_wrapper_ids or {}
 
-local callSecureHookFactory = securecallfunction
+-- Retail securecallfunction preserves caller taint for secret-value flows.
+local callSecureHookFactory = securecall
 local function installSecureHookWrapper(object, key, hookId)
   local function wrapper(...)
     local entry = __wow_hooksecurefunc_registry[hookId]

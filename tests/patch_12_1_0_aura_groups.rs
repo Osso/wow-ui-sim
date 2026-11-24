@@ -15,7 +15,7 @@ fn patch_12_1_0_aura_groups_filter_limit_and_refresh_actual_frames() {
         .map(|(id, source)| AuraInfo {
             name: format!("Audit Aura {id}"),
             spell_id: 1000 + id,
-            icon: 1,
+            icon: wow_ui_sim::lua_api::state::AuraIcon::FileId(1),
             duration: 30.0,
             expiration_time: 30.0,
             applications: 1,

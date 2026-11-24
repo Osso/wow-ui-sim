@@ -18,7 +18,7 @@ fn fixture() -> WowLuaEnv {
         sim.player.buffs = vec![AuraInfo {
             name: "Caster fixture".into(),
             spell_id: 19750,
-            icon: 134973,
+            icon: wow_ui_sim::lua_api::state::AuraIcon::FileId(134973),
             duration: 99.0,
             expiration_time: 600.0,
             applications: 1,

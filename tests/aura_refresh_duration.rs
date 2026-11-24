@@ -12,7 +12,7 @@ fn fixture_aura(spell_id: i32, instance_id: i32, helpful: bool, expiration: f64)
     AuraInfo {
         name: format!("Duration fixture {instance_id}"),
         spell_id,
-        icon: 134973,
+        icon: wow_ui_sim::lua_api::state::AuraIcon::FileId(134973),
         duration: 99.0,
         expiration_time: expiration,
         applications: 1,

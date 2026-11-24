@@ -1166,8 +1166,8 @@ pub use crate::c_api::c_transmog_collection::AppearanceSourceInfo;
 pub use crate::c_api::c_transmog_outfit_info::ViewedOutfitSlotInfo;
 
 // Re-export game data types so existing `crate::lua_api::state::X` imports keep working.
-pub use super::game_data::AuraInfo;
 pub use super::game_data::SpellCooldownState;
+pub use super::game_data::{AuraIcon, AuraInfo};
 pub use super::game_data::{
     CLASS_LABELS, CastTargetSnapshot, CastingState, EmpowerTiming, PartyMember, RACE_DATA,
     ROT_DAMAGE_LEVELS, SubgroupMemberRecord, SubgroupOwnerRoster, TargetInfo, XP_LEVELS,

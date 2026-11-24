@@ -4,7 +4,7 @@ use wow_ui_sim::c_api::private_aura_data::PrivateAuraEntry;
 use wow_ui_sim::loader::{discover_all_blizzard_addons, discover_blizzard_addons_for_screen};
 use wow_ui_sim::loader::{find_toc_file, load_addon};
 use wow_ui_sim::lua_api::WowLuaEnv;
-use wow_ui_sim::lua_api::state::AuraInfo;
+use wow_ui_sim::lua_api::state::{AuraIcon, AuraInfo};
 use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
@@ -1219,6 +1219,80 @@ fn blizzard_private_auras_ui_loads_without_addon_specific_lua_errors(env: &WowLu
 }
 }
 
+#[cfg(feature = "client-retail")]
+fn load_texture_hook_probe_addons(env: &WowLuaEnv) {
+    let fixtures = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("tests/fixtures");
+    env.state()
+        .borrow_mut()
+        .addon_base_paths
+        .push(fixtures.clone());
+    for addon in ["TextureSetHookProbeFirst", "TextureSetHookProbeSecond"] {
+        let toc = fixtures.join(addon).join(format!("{addon}.toc"));
+        load_addon(&env.loader_env(), &toc).expect("texture hook probe addon should load");
+    }
+}
+
+#[cfg(feature = "client-retail")]
+fn texture_hook_probe_aura(id: i32, icon: &str) -> AuraInfo {
+    AuraInfo {
+        icon: AuraIcon::Path(icon.to_string()),
+        ..crate::common::aura_container_harness::aura(id)
+    }
+}
+
+#[cfg(feature = "client-retail")]
+fn assert_texture_hook_probe_counter(env: &WowLuaEnv, name: &str) {
+    let state = env.state().borrow();
+    let counter = state
+        .widgets
+        .get_by_name(name)
+        .expect("addon hook callback created its counter frame");
+    assert!(counter.width >= 1.0 && counter.width < 100.0);
+    assert_eq!(counter.width, counter.height);
+}
+
+#[cfg(feature = "client-retail")]
+prefork_full_ui_case! {
+fn retail_aura_container_hook_dispatcher_preserves_secure_consumer(env: &WowLuaEnv) {
+    assert!(
+        env.eval::<bool>("return C_AddOns.IsAddOnLoaded('Blizzard_AuraContainer')")
+            .unwrap()
+    );
+    crate::common::aura_container_harness::install_helpers(env);
+    env.exec("AuditLive = AuditContainer({{'buffs', 'HELPFUL'}})")
+        .unwrap();
+    crate::common::aura_container_harness::set_player_auras(
+        env,
+        vec![texture_hook_probe_aura(
+            99021,
+            "Interface\\Icons\\INV_Misc_QuestionMark",
+        )],
+    );
+    crate::common::aura_container_harness::settle(env);
+    assert_eq!(
+        crate::common::aura_container_harness::icons(env, "AuditLive", "buffs"),
+        r"134400"
+    );
+    env.exec("TextureHookProbeTarget = AuditLive:GetAuraGroupFrame('buffs', 1):GetIcon()")
+        .unwrap();
+    load_texture_hook_probe_addons(env);
+    crate::common::aura_container_harness::set_player_auras(
+        env,
+        vec![
+            texture_hook_probe_aura(99021, "Interface\\Icons\\INV_Misc_QuestionMark"),
+            texture_hook_probe_aura(99022, "Interface\\Icons\\INV_Misc_QuestionMark"),
+        ],
+    );
+    crate::common::aura_container_harness::settle(env);
+    assert_eq!(
+        crate::common::aura_container_harness::icons(env, "AuditLive", "buffs"),
+        r"134400,134400"
+    );
+    assert_texture_hook_probe_counter(env, "TextureSetHookProbeFirstCounter");
+    assert_texture_hook_probe_counter(env, "TextureSetHookProbeSecondCounter");
+}
+}
+
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 const PRIVATE_AURA_CONSUMER_PROBE: &str = r#"
     local privateUI = rawget(__secureenv, 'PrivateAuraAnchorContainerMixin')
@@ -1262,7 +1336,7 @@ fn private_aura_entry(
     let aura = AuraInfo {
         name: format!("Private {id}"),
         spell_id: id,
-        icon: id,
+        icon: AuraIcon::FileId(id),
         duration,
         expiration_time: now + duration,
         applications,

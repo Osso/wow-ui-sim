@@ -98,11 +98,17 @@ pub struct SubgroupOwnerRoster {
 }
 
 /// A simulated aura (buff or debuff).
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub enum AuraIcon {
+    FileId(i32),
+    Path(String),
+}
+
 #[derive(Debug, Clone)]
 pub struct AuraInfo {
     pub name: String,
     pub spell_id: i32,
-    pub icon: i32,
+    pub icon: AuraIcon,
     /// Total duration in seconds (0 = permanent/no duration).
     pub duration: f64,
     /// Absolute GetTime() value at which this aura expires (0 = permanent).
@@ -280,7 +286,7 @@ fn apply_player_aura_spell(
     sim.player.buffs.push(AuraInfo {
         name: spell.name.to_string(),
         spell_id: spell_id as i32,
-        icon: spell.icon_file_data_id as i32,
+        icon: AuraIcon::FileId(spell.icon_file_data_id as i32),
         duration: 0.0,
         expiration_time: 0.0,
         applications: 0,
@@ -462,7 +468,7 @@ fn make_party_buff(
     AuraInfo {
         name: name.to_string(),
         spell_id,
-        icon,
+        icon: AuraIcon::FileId(icon),
         duration: 3600.0,
         expiration_time: 3600.0,
         applications: 0,
@@ -489,7 +495,7 @@ fn make_party_debuff(
     AuraInfo {
         name: name.to_string(),
         spell_id,
-        icon,
+        icon: AuraIcon::FileId(icon),
         duration: 30.0,
         expiration_time: 30.0,
         applications: 1,
@@ -687,7 +693,7 @@ fn build_auras_from_indices(indices: &[usize]) -> Vec<AuraInfo> {
             AuraInfo {
                 name: name.to_string(),
                 spell_id,
-                icon,
+                icon: AuraIcon::FileId(icon),
                 duration,
                 expiration_time,
                 applications: 0,

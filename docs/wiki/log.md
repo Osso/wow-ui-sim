@@ -1,3 +1,7 @@
+## [2026-11-24] implementation | Retail hooksecurefunc dispatcher taint
+
+Updated the [taint system](../systems/taint-system.md#retail-hooksecurefunc-dispatcher). **VERIFIED (Retail exact prefork test and full-addon run):** the `securecall` factory keeps the AuraContainer hook dispatcher secure, the target secret-texture error count is zero, and no new errors appear; direct tainted secret-string rejection remains enabled.
+
 ## [2026-11-24] implementation | Retail/Forever supplied owned-house replies
 
 Updated the [Lua API system](systems/lua-api.md) and [M5 service contract](../specs/c-factory-m5-services.md); documented `A_Admin.SetPlayerOwnedHouses` in [admin API housing inputs](../../admin-api/housing.md). **VERIFIED (pinned Retail/PTR UI caches):** the standard-game Housing Dashboard TOC selects a `GetPlayerOwnedHouses()` consumer and the API documentation defines `HouseInfo` fields and the `PLAYER_HOUSE_LIST_UPDATED` payload. **VERIFIED (Forever TOC and simulator game-type filter):** Forever excludes `standard`, so it does not select this consumer. **INFERRED (R88fj; native evidence pending):** Retail requests queue one event per call for a later timer tick; PTR retains its temporary empty-list response.

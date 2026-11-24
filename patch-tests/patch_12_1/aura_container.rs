@@ -1,6 +1,9 @@
 use super::{blizzard_ui_dir, new_game_env};
 use wow_ui_sim::loader::{discover_blizzard_addon_closure_for_screen, load_addon};
-use wow_ui_sim::lua_api::{WowLuaEnv, state::AuraInfo};
+use wow_ui_sim::lua_api::{
+    WowLuaEnv,
+    state::{AuraIcon, AuraInfo},
+};
 use wow_ui_sim::screen::ScreenKind;
 
 fn load_aura_container_ui() -> WowLuaEnv {
@@ -225,7 +228,7 @@ fn aura_info(
     AuraInfo {
         name: name.into(),
         spell_id: id,
-        icon: id,
+        icon: AuraIcon::FileId(id),
         duration: 30.0,
         expiration_time: 30.0,
         applications: 1,

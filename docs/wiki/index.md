@@ -1,3 +1,7 @@
+## [2026-11-24] investigation | Retail hooksecurefunc dispatcher taint
+
+[Taint system](systems/taint-system.md#retail-hooksecurefunc-dispatcher) records the post-load Retail `securecallfunction` override ordering, the dispatcher taint leak, and the full-UI AuraContainer regression. **VERIFIED (Retail full-addon run):** the secret-texture error is gone; the five remaining errors match the pre-fix baseline.
+
 ## [2026-11-23] implementation | Retail/Forever Kiosk session input
 
 [Kiosk session](systems/kiosk-session.md) records the pinned namespace ownership, inferred Retail/Forever session defaults, and the original Retail LFD consumer. **VERIFIED (simulator):** the exact kiosk-gated LFD test passes 1/1; startup also emits the existing CurrencyTransfer required-argument error.

@@ -289,7 +289,7 @@ fn generic_buff_and_cooldown_association_do_not_classify_a_spell() {
         state.player.buffs = vec![AuraInfo {
             name: "Unrelated generic buff".into(),
             spell_id: 101,
-            icon: 134973,
+            icon: wow_ui_sim::lua_api::state::AuraIcon::FileId(134973),
             duration: 30.0,
             expiration_time: 45.0,
             applications: 2,
