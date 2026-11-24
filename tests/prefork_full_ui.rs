@@ -13,6 +13,9 @@ mod prefork_workload_gate;
 #[cfg(feature = "client-retail")]
 #[path = "test_keybindings_panels_detail.rs"]
 mod test_keybindings_panels_detail;
+#[cfg(feature = "client-retail")]
+#[path = "test_camera_tutorial_consumers.rs"]
+mod test_camera_tutorial_consumers;
 
 wow_ui_sim_test_harness::integration_tests!();
 

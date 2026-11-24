@@ -657,51 +657,6 @@ fn is_addon_loaded_after_eager_sweep(env: &WowLuaEnv) {
 }
 
 prefork_full_ui_case! {
-fn camera_fov_defaults_drive_blizzard_slider_options(env: &WowLuaEnv) {
-    env.exec(r#"
-        A_Admin.SetCameraFOVDefaults(85, 35, 105)
-        local _, minValue, maxValue = GetCameraFOVDefaults()
-        local options = Settings.CreateSliderOptions(minValue, maxValue, 5)
-        assert(options.minValue == 35 and options.maxValue == 105)
-        A_Admin.SetCameraFOVDefaults(90, 40, 120)
-        _, minValue, maxValue = GetCameraFOVDefaults()
-        options = Settings.CreateSliderOptions(minValue, maxValue, 5)
-        assert(options.minValue == 40 and options.maxValue == 120)
-    "#).expect("Blizzard Graphics slider options should use supplied FOV bounds");
-}
-}
-
-prefork_full_ui_case! {
-fn tutorials_enabled_controls_new_player_experience_bootstrap(env: &WowLuaEnv) {
-    env.exec(r#"
-        local addon = "Blizzard_NewPlayerExperience"
-        assert(not C_AddOns.IsAddOnLoaded(addon))
-        A_Admin.SetTutorialsEnabled(false)
-        NPE_LoadUI()
-        assert(not C_AddOns.IsAddOnLoaded(addon))
-        A_Admin.SetTutorialsEnabled(true)
-        NPE_LoadUI()
-        assert(C_AddOns.IsAddOnLoaded(addon) == C_PlayerInfo.IsPlayerNPERestricted())
-    "#).expect("NPE bootstrap should use the supplied tutorials-enabled flag");
-}
-}
-
-prefork_full_ui_case! {
-fn tutorial_flags_reach_blizzard_tutorial_consumer(env: &WowLuaEnv) {
-    env.exec(r#"
-        local tutorialID = 4
-        A_Admin.SetTutorialFlag(tutorialID, true)
-        local before = #TUTORIALFRAME_QUEUE
-        TutorialFrame_NewTutorial(tutorialID)
-        assert(#TUTORIALFRAME_QUEUE == before)
-        A_Admin.SetTutorialFlag(tutorialID, false)
-        TutorialFrame_NewTutorial(tutorialID)
-        assert(#TUTORIALFRAME_QUEUE == before + 1)
-    "#).expect("TutorialFrame should respect the supplied tutorial flag set");
-}
-}
-
-prefork_full_ui_case! {
 fn publishes_settings_namespace_with_enum_subtables(env: &WowLuaEnv) {
 
     let kind: String = env
