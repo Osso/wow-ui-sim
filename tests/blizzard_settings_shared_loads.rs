@@ -1065,7 +1065,12 @@ fn forever_graphics_antialiasing_options_follow_host_capability() {
     test_timeout! {
         let env = load_full_game_ui();
         env.exec(r#"
-            local category = Settings.GetCategory("Graphics")
+            local category
+            for _, group in ipairs(SettingsPanel:GetCategoryList().groups) do
+                for _, candidate in ipairs(group.categories) do
+                    if candidate:GetName() == GRAPHICS_LABEL then category = candidate end
+                end
+            end
             assert(category ~= nil, "original Graphics category must register")
             A_Admin.SetMultiSampleAntiAliasingSupported(true)
             Settings.OpenToCategory(category:GetID())
@@ -1073,7 +1078,7 @@ fn forever_graphics_antialiasing_options_follow_host_capability() {
             local layout = SettingsPanel:GetLayout(category)
             local getOptions
             for _, initializer in layout:EnumerateInitializers() do
-                local setting = initializer:GetSetting()
+                local setting = initializer.GetSetting and initializer:GetSetting()
                 if setting and setting:GetVariable() == "PROXY_ANTIALIASING" then
                     getOptions = initializer:GetOptions()
                 end
