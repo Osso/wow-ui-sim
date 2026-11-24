@@ -164,12 +164,15 @@ const CONTRIBUTION_COLLECTOR_INPUT_LUA: &str = r#"
 A_Admin.SetContributionCollectors({
     { mapID=2248, areaPoiID=901, collectorCreatureID=301, name="Collector Alpha", atlasName="TaxiNode", x=0.2, y=0.3,
       contributions={{ contributionID=401, name="Contribution Alpha", state=1, amount=0.5,
-        nextStateTime=123.5, startTime=100,
+        nextStateTime=123.5, startTime=100, description="Alpha description",
+        result=Enum.ContributionResult.Success, orderIndex=1, active=false, rewardQuestID=0,
         appearance={ stateName="Progress", stateColor={r=0.2, g=0.4, b=0.6}, tooltipLine="%.0f%%",
           tooltipUseTimeRemaining=false, statusBarAtlas="Status", borderAtlas="Border", bannerAtlas="Banner" } }} },
     { mapID=2248, areaPoiID=902, collectorCreatureID=302, name="Collector Beta", atlasName="TaxiNode", x=0.7, y=0.8,
       contributions={{ contributionID=402, name="Contribution Beta", state=2, amount=0.75,
-        nextStateTime=234.5, startTime=200 }} },
+        nextStateTime=234.5, startTime=200, description="Beta description",
+        result=Enum.ContributionResult.FailedConditionCheck, orderIndex=2, active=false,
+        rewardQuestID=0 }} },
     { mapID=9999, areaPoiID=903, collectorCreatureID=303, name="Other Map", atlasName="TaxiNode", x=0.5, y=0.5 },
 })
 "#;

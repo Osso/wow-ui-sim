@@ -259,13 +259,14 @@ fn contribution_panel_uses_supplied_result_and_currency_through_interaction(env:
                 { contributionID=501, name="Ready", state=1, amount=0.5, startTime=100,
                   description="Ready description", result=Enum.ContributionResult.Success,
                   orderIndex=1, rewardQuestID=0, active=true,
-                  requiredCurrency={id=2032, amount=5},
+                  requiredCurrency={id=2032, amount=5}, atlases={""}, buffs={12345},
                   appearance={ stateName="", stateColor={r=1, g=1, b=1}, tooltipLine="",
                     tooltipUseTimeRemaining=false, statusBarAtlas="", borderAtlas="", bannerAtlas="" } },
                 { contributionID=502, name="Blocked", state=1, amount=0.5, startTime=100,
                   description="Blocked description", result=Enum.ContributionResult.FailedConditionCheck,
                   orderIndex=2, rewardQuestID=0, active=true,
-                  requiredCurrency={id=2032, amount=11},
+                  requiredCurrency={id=2032, amount=11}, requiredItem={id=6948, count=2},
+                  atlases={""}, buffs={23456},
                   appearance={ stateName="", stateColor={r=1, g=1, b=1}, tooltipLine="",
                     tooltipUseTimeRemaining=false, statusBarAtlas="", borderAtlas="", bannerAtlas="" } },
               } }
@@ -285,5 +286,11 @@ fn contribution_panel_uses_supplied_result_and_currency_through_interaction(env:
     assert!(result.2, "Success result should enable its contribution button");
     assert!(!result.3, "FailedConditionCheck should disable its contribution button");
     assert_ne!(result.4, result.5, "distinct supplied costs should produce distinct button text");
+    let details_valid: bool = env
+        .eval(
+            "return C_ContributionCollector.GetDescription(501) == 'Ready description' and C_ContributionCollector.GetOrderIndex(502) == 2 and C_ContributionCollector.GetRewardQuestID(502) == 0 and #C_ContributionCollector.GetAtlases(501) == 1 and #C_ContributionCollector.GetBuffs(502) == 1 and select(1, C_ContributionCollector.GetRequiredContributionItem(502)) == 6948",
+        )
+        .expect("supplied contribution details should be readable");
+    assert!(details_valid, "all supplied contribution fields should reach their getters");
 }
 }
