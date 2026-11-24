@@ -372,6 +372,7 @@ fn retail_aura_container_secret_icons_survive_addon_texture_hook() {
         local mixin = assert(CustomAuraButtonPrivateMixin)
         local firstIcon = secretwrap("Interface\\Icons\\INV_Misc_QuestionMark")
         local secondIcon = secretwrap("Interface\\Icons\\Ability_Warrior_Charge")
+        assert(issecretvalue(firstIcon) and issecretvalue(secondIcon))
         local firstTexture = CreateFrame('Frame'):CreateTexture()
         local secondTexture = CreateFrame('Frame'):CreateTexture()
         mixin.ApplyIcon({icon = {element = firstTexture}}, 'player', {icon = firstIcon})
