@@ -129,7 +129,10 @@ fn communities_finder_queries_report_unmodeled_postings() {
     env.exec(
         r#"
         assert(C_ClubFinder.GetRecruitingClubInfoFromClubID("guild-0") == nil)
-        assert(type(C_ClubFinder.GetPlayerApplicantLocaleFlags()) == "number")
+        C_ClubFinder.SetPlayerApplicantLocaleFlags(5)
+        assert(C_ClubFinder.GetPlayerApplicantLocaleFlags() == 5)
+        C_ClubFinder.SetPlayerApplicantLocaleFlags(9)
+        assert(C_ClubFinder.GetPlayerApplicantLocaleFlags() == 9)
         "#,
     )
     .expect("C_ClubFinder returns supplied posting state or its empty default");
