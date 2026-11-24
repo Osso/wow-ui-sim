@@ -352,7 +352,7 @@ fn include_addon_under_test(
         .iter()
         .find_map(|base| wow_ui_sim::loader::find_toc_file(&base.join(name)));
     if let Some(toc_path) = toc {
-        logging::println_elapsed(&format!(
+        logging::eprintln_elapsed(&format!(
             "Warning: {name} would be skipped (out-of-date ## Interface or --no-addons); loading it because run-tests targets it"
         ));
         addons.push((name.to_string(), toc_path));
