@@ -1,10 +1,12 @@
 # Behavioral messaging
 
-`A_Admin.QueueBehavioralNotification(notificationType, dbId)` supplies one scenario notification and synchronously fires `BEHAVIORAL_NOTIFICATION` with `notificationType` and `dbId`. The original Blizzard consumer supports `ComplaintWarning_Social` and `ComplaintThankYou_Social`; their labels and detail text come from the active client locale. This supplied-input model is **INFERRED (R88fm (native evidence pending))**.
+**VERIFIED (Retail/Forever `BehavioralMessagingDocumentation.lua:27-34`):** `BEHAVIORAL_NOTIFICATION` carries a non-nil `notificationType` string and `dbId` value. **INFERRED (R88fm (native evidence pending)):** `A_Admin.QueueBehavioralNotification(notificationType, dbId)` supplies this event payload synchronously.
 
-`C_BehavioralMessaging.SendNotificationReceipt(dbId, openTimeSeconds, readTimeSeconds)` stores the values sent by the Blizzard consumer. Retail and Forever API documentation declares these three arguments; it does not declare a `receiptType` argument.
+**VERIFIED (Retail/Forever `Blizzard_BehavioralMessaging.lua:17-21`):** the original consumer maps `ComplaintWarning_Social` and `ComplaintThankYou_Social` to different locale labels and detail text. The values come from the active client locale.
 
-`A_Admin.GetBehavioralNotificationReceipts()` returns a fresh dense array of records. Each record has `dbId`, `openTimeSeconds`, and `readTimeSeconds`. The getter exposes acknowledgements made by the loaded behavioral messaging consumer. Receipt storage and the scenario notification producer are **INFERRED (R88fm (native evidence pending))**.
+**VERIFIED (Retail/Forever `BehavioralMessagingDocumentation.lua:11-19`):** `C_BehavioralMessaging.SendNotificationReceipt(dbId, openTimeSeconds, readTimeSeconds)` takes these three arguments; the declaration has no `receiptType` argument. **INFERRED (R88fm (native evidence pending)):** the simulator stores the arguments sent by the Blizzard consumer.
+
+**INFERRED (R88fm (native evidence pending)):** `A_Admin.GetBehavioralNotificationReceipts()` returns a fresh dense array of stored records. Each record has `dbId`, `openTimeSeconds`, and `readTimeSeconds`.
 
 ```lua
 A_Admin.QueueBehavioralNotification("ComplaintWarning_Social", 87001)
@@ -12,4 +14,4 @@ A_Admin.QueueBehavioralNotification("ComplaintWarning_Social", 87001)
 local receipts = A_Admin.GetBehavioralNotificationReceipts()
 ```
 
-API declarations: Retail and Forever `Blizzard_APIDocumentationGenerated/BehavioralMessagingDocumentation.lua` (`SendNotificationReceipt`, `BEHAVIORAL_NOTIFICATION`). Consumer: `Blizzard_BehavioralMessaging/Blizzard_BehavioralMessaging.lua`.
+The original consumer calls `SendNotificationReceipt` when it acknowledges a notification (`Blizzard_BehavioralMessaging.lua:162-166`).
