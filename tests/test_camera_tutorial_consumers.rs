@@ -36,12 +36,12 @@ fn tutorial_flags_reach_blizzard_tutorial_consumer(env: &WowLuaEnv) {
     env.exec(r#"
         local tutorialID = 4
         A_Admin.SetTutorialFlag(tutorialID, true)
-        local before = #TUTORIALFRAME_QUEUE
+        local before = TutorialFrameAlertButton.id
         TutorialFrame_NewTutorial(tutorialID)
-        assert(#TUTORIALFRAME_QUEUE == before)
+        assert(TutorialFrameAlertButton.id == before)
         A_Admin.SetTutorialFlag(tutorialID, false)
         TutorialFrame_NewTutorial(tutorialID)
-        assert(#TUTORIALFRAME_QUEUE == before + 1)
+        assert(TutorialFrameAlertButton.id == tutorialID)
         A_Admin.SetTutorialFlag(tutorialID, true)
         InterfaceOverrides.ShowTutorialsOnButtonClick()
         assert(not IsTutorialFlagged(tutorialID))
