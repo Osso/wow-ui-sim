@@ -65,31 +65,20 @@ const COMMUNITIES_CHAT_ACCESSIBILITY_SCRIPT: &str = r#"
         A_Admin.SetChatDisabled(false)
         ToggleCommunitiesFrame()
 
-        local function clickClub(clubId)
-            local entry
-            CommunitiesFrame.CommunitiesList.ScrollBox:ForEachFrame(function(frame, elementData)
-                if elementData.clubInfo and elementData.clubInfo.clubId == clubId then
-                    entry = frame
-                end
-            end)
-            assert(entry, "community entry is rendered")
-            entry:Click("LeftButton")
-        end
-
-        clickClub(mutedClubId)
+        CommunitiesFrame:SelectClub(mutedClubId)
         assert(CommunitiesFrame:GetSelectedClubId() == mutedClubId)
         assert(not CommunitiesFrame:IsChatAccessible(), "account-muted club blocks chat")
         assert(CommunitiesFrame:GetDisplayMode() == COMMUNITIES_FRAME_DISPLAY_MODES.ROSTER)
 
         A_Admin.SetAccountMutedClub(mutedClubId, false)
         A_Admin.SetChatDisabled(true)
-        clickClub(availableClubId)
+        CommunitiesFrame:SelectClub(availableClubId)
         assert(CommunitiesFrame:GetSelectedClubId() == availableClubId)
         assert(not CommunitiesFrame:IsChatAccessible(), "chat-disabled account blocks chat")
         assert(CommunitiesFrame:GetDisplayMode() == COMMUNITIES_FRAME_DISPLAY_MODES.ROSTER)
 
         A_Admin.SetChatDisabled(false)
-        clickClub(mutedClubId)
+        CommunitiesFrame:SelectClub(mutedClubId)
         assert(CommunitiesFrame:IsChatAccessible(), "unrestricted community chat is accessible")
         assert(CommunitiesFrame:GetDisplayMode() == COMMUNITIES_FRAME_DISPLAY_MODES.CHAT)
         "#;
