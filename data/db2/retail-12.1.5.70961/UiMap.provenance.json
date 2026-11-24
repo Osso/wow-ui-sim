@@ -1,0 +1,64 @@
+{
+  "profile": "retail",
+  "product": "wow",
+  "build": "12.1.5.70961",
+  "build_key": "505802ef9c3ac9cfbaea9006ce9e464c",
+  "source": "local CASC via wow-cli casc extract-fdid",
+  "table": "UiMap",
+  "file_data_id": 1957206,
+  "layout": "DB51D55F",
+  "db2_sha256": "2b4623e3274e139ca9e95e92f210877011603fb7a4f05d25b81efcf129d8d819",
+  "row_count": 1967,
+  "unreadable_rows": 0,
+  "csv_sha256": "e3936be9e5a2335a3e964e376b53b3247df993c6d18ea47009175d2e815428f7",
+  "exporter": "game-engine/scripts/export_db2_csv.py",
+  "exporter_sha256": "765bdea5805ebeacf75e45388ff393062151ed7f53e27a8ccd6033b81861a02a",
+  "schema_repository": "wowdev/WoWDBDefs",
+  "schema_commit": "d6f50d4f351193e84226aa62a36faa0f58528afa",
+  "schema_file_sha256": "f956a064d6d88da7df3e31886a3689f29724d63e3ecca191b5380f7c39b67530",
+  "listfile": "community-listfile.csv",
+  "listfile_line": 942769,
+  "listfile_sha256": "486bb1d1c5a87cc136c7824857a391ab0b07c6f50bbc724e104fc5f18e320741",
+  "field_order": [
+    "Name_lang",
+    "ID",
+    "ParentUiMapID",
+    "Flags",
+    "System",
+    "Type",
+    "BountySetID",
+    "BountyDisplayLocation",
+    "VisibilityPlayerConditionID",
+    "HelpTextPosition",
+    "BkgAtlasID",
+    "AlternateUiMapGroup",
+    "ContentTuningID",
+    "AdventureMapTextureKitID",
+    "MapArtZoneTextPosition"
+  ],
+  "help_text_position_counts": {
+    "0": 1946,
+    "1": 11,
+    "2": 2,
+    "3": 2,
+    "4": 6
+  },
+  "comparison_12_1_5_70391": {
+    "row_count": 1967,
+    "help_text_position_counts": {
+      "0": 1946,
+      "1": 11,
+      "2": 2,
+      "3": 2,
+      "4": 6
+    },
+    "row_count_delta": 0,
+    "help_text_position_count_deltas": {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0
+    }
+  }
+}
