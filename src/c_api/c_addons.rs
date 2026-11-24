@@ -5,6 +5,8 @@ use crate::lua_api::methods::{
     borrow_state, borrow_state_mut, create_string, create_table, registry_get, registry_set,
     val_to_string,
 };
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+use crate::lua_bridge::TableBuilder;
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
 use rilua::{LuaResult, Val, vm::state::LuaState};
 use std::path::{Path, PathBuf};
@@ -558,8 +560,31 @@ fn c_addons_is_addon_default_enabled(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn c_addons_get_scripts_disallowed_for_beta(state: &mut LuaState) -> LuaResult<u32> {
-    state.push(Val::Bool(false));
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let disallowed = borrow_state(state)?.scripts_disallowed_for_beta;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+    let disallowed = false;
+    state.push(Val::Bool(disallowed));
     Ok(1)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
+    builder.set_function(
+        "SetScriptsDisallowedForBeta",
+        set_scripts_disallowed_for_beta,
+    )
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn set_scripts_disallowed_for_beta(state: &mut LuaState) -> LuaResult<u32> {
+    let Val::Bool(disallowed) = stack_val(state, 1) else {
+        return Err(rilua::runtime_error(
+            "A_Admin.SetScriptsDisallowedForBeta: expected a boolean",
+        ));
+    };
+    borrow_state_mut(state)?.scripts_disallowed_for_beta = disallowed;
+    Ok(0)
 }
 
 fn c_addons_is_addon_version_check_enabled(state: &mut LuaState) -> LuaResult<u32> {

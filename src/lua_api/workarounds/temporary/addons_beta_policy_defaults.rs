@@ -1,8 +1,7 @@
-//! Temporary `C_AddOns` beta-policy defaults.
+//! Temporary `C_AddOns` beta-policy default for profiles without modeled inputs.
 //!
-//! The simulator has no beta-realm script policy state yet. Retail startup only
-//! needs the non-beta answer, so keep this inert compatibility default outside
-//! the state-backed `C_AddOns` API implementation.
+//! Retail and WoW Forever use the state-backed C_AddOns implementation. Keep
+//! this constant compatibility default only on the other client profiles.
 
 const ADDONS_BETA_POLICY_DEFAULTS_LUA: &str = r#"
 C_AddOns = C_AddOns or __wow_namespace()

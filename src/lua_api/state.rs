@@ -66,6 +66,8 @@ macro_rules! build_empty_sim_state {
         let quest_log_entries = QuestLogState::seeded();
         Self {
             #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            scripts_disallowed_for_beta: false,
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
             kiosk_session: Default::default(),
             #[cfg(feature = "client-retail")]
             scripted_animation_effects: None,

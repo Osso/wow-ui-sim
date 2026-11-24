@@ -23,6 +23,7 @@ pub(crate) mod achievement_search_preview;
 pub(crate) mod achievement_ui_access_defaults;
 #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod addon_compartment_defaults;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod addons_beta_policy_defaults;
 pub(crate) mod adventure_journal_fallbacks;
 pub(crate) mod adventure_map_frame_surface;
