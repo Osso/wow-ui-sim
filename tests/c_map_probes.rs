@@ -247,6 +247,21 @@ fn get_map_art_help_text_position_reads_retail_uimap_records() {
     assert_eq!(positions, (1, 1, 3, 4, 0, 0));
 }
 
+#[cfg(feature = "client-ptr")]
+#[test]
+fn ptr_map_art_help_text_position_keeps_existing_temporary_default() {
+    let env = env();
+    let positions: (i32, i32) = env
+        .eval(
+            r#"
+            return C_Map.GetMapArtHelpTextPosition(14),
+                   C_Map.GetMapArtHelpTextPosition(994)
+            "#,
+        )
+        .unwrap();
+    assert_eq!(positions, (2, 2));
+}
+
 #[test]
 fn get_map_children_info_returns_direct_children() {
     let env = env();

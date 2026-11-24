@@ -341,15 +341,21 @@ fn flight_map_open_path_places_click_to_zoom_labels_from_uimap_positions(env: &W
         .eval("return C_AddOns.IsAddOnLoaded('Blizzard_FlightMap')")
         .expect("FlightMap load-state query should succeed");
     assert!(!loaded_before, "FlightMap is LoadOnDemand before TAXIMAP_OPENED");
+    let map_id_unset: bool = env
+        .eval("return GetTaxiMapID() == nil")
+        .expect("GetTaxiMapID should be nil before a taxi interaction");
+    assert!(map_id_unset);
+    env.exec("A_Admin.SetTaxiMapID(14)")
+        .expect("supply the map selected by the flight-master interaction");
 
     env.fire_event_with_args("TAXIMAP_OPENED", &[rilua::Val::Num(0.0)])
         .expect("World-system TAXIMAP_OPENED should load and open FlightMapFrame");
 
-    let observed: (bool, bool, String, String) = env
+    let observed: (bool, bool, i32, String, String) = env
         .eval(
             r#"
             local provider
-            for _, candidate in pairs(FlightMapFrame.dataProviders) do
+            for candidate in pairs(FlightMapFrame.dataProviders) do
                 if candidate.MapLabel then
                     provider = candidate
                     break
@@ -361,11 +367,14 @@ fn flight_map_open_path_places_click_to_zoom_labels_from_uimap_positions(env: &W
             FlightMapFrame:SetMapID(994)
             local topLeft = select(1, provider.MapLabel:GetPoint())
             return C_AddOns.IsAddOnLoaded("Blizzard_FlightMap"),
-                   FlightMapFrame:IsShown(), bottomLeft, topLeft
+                   FlightMapFrame:IsShown(), GetTaxiMapID(), bottomLeft, topLeft
             "#,
         )
         .expect("original FlightMap consumer should place both click-to-zoom labels");
-    assert_eq!(observed, (true, true, "BOTTOMLEFT".into(), "TOPLEFT".into()));
+    assert_eq!(
+        observed,
+        (true, true, 14, "BOTTOMLEFT".into(), "TOPLEFT".into())
+    );
 }
 }
 
