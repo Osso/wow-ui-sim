@@ -451,7 +451,7 @@ pub(crate) mod target_spell;
 pub(crate) mod c_transmog_collection;
 mod c_transmog_latest;
 pub(crate) mod c_voice_chat_activity;
-#[cfg(feature = "retail-12-0-5")]
+#[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 pub mod c_voice_chat_channels;
 pub mod c_voice_chat_devices;
 pub(crate) mod c_voice_chat_login;
