@@ -336,6 +336,40 @@ fn blizzard_flight_map_singleton_starts_hidden_after_load(env: &WowLuaEnv) {
 }
 
 prefork_full_ui_case! {
+fn flight_map_open_path_places_click_to_zoom_labels_from_uimap_positions(env: &WowLuaEnv) {
+    let loaded_before: bool = env
+        .eval("return C_AddOns.IsAddOnLoaded('Blizzard_FlightMap')")
+        .expect("FlightMap load-state query should succeed");
+    assert!(!loaded_before, "FlightMap is LoadOnDemand before TAXIMAP_OPENED");
+
+    env.fire_event_with_args("TAXIMAP_OPENED", &[rilua::Val::Num(0.0)])
+        .expect("World-system TAXIMAP_OPENED should load and open FlightMapFrame");
+
+    let observed: (bool, bool, String, String) = env
+        .eval(
+            r#"
+            local provider
+            for _, candidate in pairs(FlightMapFrame.dataProviders) do
+                if candidate.MapLabel then
+                    provider = candidate
+                    break
+                end
+            end
+            assert(provider, "FlightMap must register ClickToZoomDataProviderMixin")
+            FlightMapFrame:SetMapID(14)
+            local bottomLeft = select(1, provider.MapLabel:GetPoint())
+            FlightMapFrame:SetMapID(994)
+            local topLeft = select(1, provider.MapLabel:GetPoint())
+            return C_AddOns.IsAddOnLoaded("Blizzard_FlightMap"),
+                   FlightMapFrame:IsShown(), bottomLeft, topLeft
+            "#,
+        )
+        .expect("original FlightMap consumer should place both click-to-zoom labels");
+    assert_eq!(observed, (true, true, "BOTTOMLEFT".into(), "TOPLEFT".into()));
+}
+}
+
+prefork_full_ui_case! {
 fn blizzard_flight_map_border_frame_and_scroll_container_publish(env: &WowLuaEnv) {
     load_addon(&env.loader_env(), &flight_map_toc())
         .expect("Blizzard_FlightMap should load via Rust loader");
