@@ -147,8 +147,7 @@ const SELECT_RAID_AND_OPEN_JOURNAL: &str = r#"
             EJ_SelectInstance(selected.instanceID)
             assert(EJ_InstanceIsRaid(), "selected Encounter Journal instance must be a raid")
             A_Admin.SetCompletedEncounters({
-                { mapID=selected.mapID, difficultyID=14,
-                  completedEncounterIDs={selected.second.encounterID} },
+                { mapID=selected.mapID, difficultyID=14, completedEncounterIDs={} },
                 { mapID=selected.mapID, difficultyID=DifficultyUtil.ID.PrimaryRaidHeroic,
                   completedEncounterIDs={selected.first.encounterID} },
             })
@@ -186,7 +185,7 @@ fn assert_initial_raid_lock_overlays(env: &WowLuaEnv, b: &RaidLockBosses) {
             "#
         ))
         .expect("Encounter Journal boss overlays should read supplied raid-lock state");
-    assert_eq!(initial, (true, false, false, true, false, true));
+    assert_eq!(initial, (true, false, true, true, false, false));
 }
 
 fn complete_second_boss_and_request_raid_info(env: &WowLuaEnv, b: &RaidLockBosses) {
