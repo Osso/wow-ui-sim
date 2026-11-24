@@ -104,6 +104,21 @@ fn admin_supplies_voice_chat_accessibility() {
 }
 
 #[test]
+fn admin_supplies_allowed_community_types() {
+    let env = WowLuaEnv::new().expect("Lua environment should initialize");
+    env.exec(
+        r#"
+        assert(C_Club.ShouldAllowClubType(Enum.ClubType.BattleNet))
+        assert(C_Club.ShouldAllowClubType(Enum.ClubType.Character))
+        assert(not C_Club.ShouldAllowClubType(Enum.ClubType.Other))
+        A_Admin.SetClubTypeAllowed(Enum.ClubType.Character, false)
+        assert(not C_Club.ShouldAllowClubType(Enum.ClubType.Character))
+        "#,
+    )
+    .expect("admin supplies the allowed community types");
+}
+
+#[test]
 fn unmatched_community_voice_stream_accepts_numeric_stream_id() {
     let env = WowLuaEnv::new().expect("Lua environment should initialize");
     env.exec(

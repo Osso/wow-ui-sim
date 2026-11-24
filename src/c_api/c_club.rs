@@ -23,7 +23,9 @@ const INVITATION_CANDIDATES_USAGE: &str = "Usage: local candidates = C_Club.GetI
 
 pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
     if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever) {
-        builder.set_function("SetAccountMutedClub", set_account_muted_club)
+        builder
+            .set_function("SetAccountMutedClub", set_account_muted_club)?
+            .set_function("SetClubTypeAllowed", set_club_type_allowed)
     } else {
         Ok(builder)
     }
@@ -38,6 +40,19 @@ fn set_account_muted_club(state: &mut LuaState) -> LuaResult<u32> {
         sim.clubs.account_muted_club_ids.insert(club_id);
     } else {
         sim.clubs.account_muted_club_ids.remove(&club_id);
+    }
+    Ok(0)
+}
+
+// INFERRED R88fq (native evidence pending): supply the client policy for each club type.
+fn set_club_type_allowed(state: &mut LuaState) -> LuaResult<u32> {
+    let club_type = i32::from_stack(state, 1)?;
+    let allowed = bool::from_stack(state, 2)?;
+    let mut sim = borrow_state_mut(state)?;
+    if allowed {
+        sim.clubs.allowed_club_types.insert(club_type);
+    } else {
+        sim.clubs.allowed_club_types.remove(&club_type);
     }
     Ok(0)
 }
@@ -140,8 +155,21 @@ fn register_club_privilege_methods(state: &mut LuaState, table_ref: GcRef<Table>
     table_set_rust_fn_static(state, table_ref, "IsEnabled", c_club_is_enabled)?;
     if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever) {
         table_set_rust_fn_static(state, table_ref, "IsAccountMuted", c_club_is_account_muted)?;
+        table_set_rust_fn_static(
+            state,
+            table_ref,
+            "ShouldAllowClubType",
+            should_allow_club_type,
+        )?;
     }
     Ok(())
+}
+
+fn should_allow_club_type(state: &mut LuaState) -> LuaResult<u32> {
+    let club_type = i32::from_stack(state, 1)?;
+    let allowed = borrow_state(state)?.clubs.allowed_club_types.contains(&club_type);
+    state.push(Val::Bool(allowed));
+    Ok(1)
 }
 
 fn c_club_is_account_muted(state: &mut LuaState) -> LuaResult<u32> {
