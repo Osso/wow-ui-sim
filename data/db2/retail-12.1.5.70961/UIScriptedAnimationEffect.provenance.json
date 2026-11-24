@@ -11,7 +11,7 @@
   "row_count": 163,
   "unreadable_rows": 0,
   "csv_sha256": "b35098b8fd915a732fdb9ac37eadb545104b39c04e5e4c583bc06e86edbd7118",
-  "exporter": "/home/osso/Projects/world-of-osso/game-engine/scripts/export_db2_csv.py",
+  "exporter": "game-engine/scripts/export_db2_csv.py",
   "exporter_sha256": "765bdea5805ebeacf75e45388ff393062151ed7f53e27a8ccd6033b81861a02a",
   "field_order": [
     "ID",

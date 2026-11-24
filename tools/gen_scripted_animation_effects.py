@@ -153,7 +153,7 @@ def write_provenance(path, args, data, rows, csv_path, exporter_path):
         "row_count": len(rows),
         "unreadable_rows": 0,
         "csv_sha256": hashlib.sha256(csv_path.read_bytes()).hexdigest(),
-        "exporter": str(exporter_path),
+        "exporter": "game-engine/scripts/export_db2_csv.py",
         "exporter_sha256": exporter_hash,
         "field_order": ["ID", *FIELD_NAMES],
         "mapping": "DB2 values are retained in source units; conversion to the Lua API is inferred separately (R88fl, native evidence pending).",
