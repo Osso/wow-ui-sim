@@ -98,6 +98,7 @@ fn register_legacy_global_shims(lua: &mut rilua::Lua) -> LuaResult<()> {
             | crate::client_profile::ClientProfile::WowForever
     ) {
         LuaApiMut::register_function(lua, "IsTutorialFlagged", tutorial::is_tutorial_flagged)?;
+        LuaApiMut::register_function(lua, "GetTutorialsEnabled", tutorial::get_tutorials_enabled)?;
         LuaApiMut::register_function(lua, "FlagTutorial", tutorial::flag_tutorial)?;
         LuaApiMut::register_function(lua, "ResetTutorials", tutorial::reset_tutorials)?;
     }

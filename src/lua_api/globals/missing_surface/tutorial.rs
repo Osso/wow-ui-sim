@@ -58,6 +58,16 @@ fn acknowledge_tutorial(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
+// INFERRED, R88fh (native evidence pending): use showTutorials for its stored setting.
+pub(super) fn get_tutorials_enabled(state: &mut LuaState) -> LuaResult<u32> {
+    let enabled = borrow_state(state)?
+        .cvars
+        .get("showTutorials")
+        .is_none_or(|value| value == "1");
+    state.push(Val::Bool(enabled));
+    Ok(1)
+}
+
 // R88fh VERIFIED: IDs 1–65 read one supplied bit; other IDs return no values.
 pub(super) fn is_tutorial_flagged(state: &mut LuaState) -> LuaResult<u32> {
     let Some(tutorial_id) = tutorial_id(state)? else {

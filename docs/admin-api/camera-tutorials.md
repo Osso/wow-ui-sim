@@ -1,19 +1,22 @@
 # Camera and tutorial inputs
 
-Retail and WoW Forever expose simulator inputs for the Blizzard Graphics and tutorial consumers. Retail and Forever `Blizzard_SettingsDefinitions_Shared.toc` uses `## AllowLoad: Both`; the graphics Lua loads the FOV consumer. `Blizzard_FrameXML.toc` selects `[Family]\\TutorialFrame.lua` without an `AllowLoadGameType` filter for Retail mainline and Forever mainline.
+Retail and WoW Forever expose simulator inputs for the Blizzard Graphics and tutorial consumers. `Blizzard_SettingsDefinitions_Shared.toc` uses `## AllowLoad: Both`; its Graphics file creates the camera-FOV proxy setting. `Blizzard_FrameXML.toc` selects `[Family]\\TutorialFrame.lua` without a game-type filter in the Retail and Forever caches.
 
-- `A_Admin.SetCameraFOV(value)` supplies the current `cameraFov` CVar value read by the Graphics setting. `GetCameraFOVDefaults()` returns the native verified values `90, 50, 90` and has no scenario override.
-- `A_Admin.SetTutorialFlag(id, flagged?)` adds or removes one ID in the simulator's supplied tutorial set. The omitted `flagged` value means `true`; the set is empty by default. IDs outside 1–65 are ignored. `IsTutorialFlagged` reads the set with native 1-based ID and range semantics; native account-versus-character scope is unknown.
-- `FlagTutorial(id)` adds an in-range ID to the same set. `ResetTutorials()` clears that set. The specific native tutorial settings that ResetTutorials also resets are unknown and are not modeled.
-- `GetTutorialsEnabled()` stays a compatibility default. Runtime-selected consumers exist in Retail/Forever `Blizzard_NewPlayerExperience_Bootstrap.lua:4` and `Blizzard_SettingsDefinitions_Frame/Mainline/InterfaceOverrides.lua` (Retail line 258; Forever line 285). R88fh proves the native master gate and stored setting, but their simulator backing is not modeled here. The `showTutorials` CVar mapping is inferred from the cache. The shim stays active on Retail and Forever until the missing setting and master-gate state are modeled.
+- `A_Admin.SetCameraFOV(value)` changes the `cameraFov` CVar and dispatches its update, so the original Graphics proxy setting refreshes. `GetCameraFOVDefaults()` returns the native verified values `90, 50, 90`; it has no scenario override.
+- `A_Admin.SetTutorialFlag(id, flagged?)` adds or removes one ID in the simulator tutorial set. Omitted `flagged` means `true`; the set is empty by default. IDs outside 1–65 are ignored. `IsTutorialFlagged` uses the verified native 1-based range and returns no values outside that range. Native account-versus-character scope is unknown.
+- `FlagTutorial(id)` adds an in-range ID to the set. `ResetTutorials()` clears it. R88fh verifies that ResetTutorials also resets tutorial settings, but the setting identities are unknown and are not modeled.
+- `A_Admin.SetTutorialsEnabled(enabled)` changes the inferred `showTutorials` setting through the CVar model. The setting identity is inferred from the Blizzard UI cache. `GetTutorialsEnabled()` uses this stored setting; the simulator defaults to enabled when no CVar value is available. Native master-gate state is not modeled.
+- `A_Admin.SetPlayerNPERestricted(restricted)` supplies the New Player Experience restriction state used by its bootstrap consumer.
 
 ## Audit-only globals
 
-- `MoveView*Start` and `MoveView*Stop` stay no-op shims. Retail `Bindings_Standard.xml:1509,1516` calls the in/out start verbs and Forever includes those calls in its Standard and Camelot binding XML. These are runtime-selected binding actions, not evidence for a simulator camera-move model or consumer-backed output; the task's no-op audit requirement keeps them unchanged.
+- `MoveView*Start` and `MoveView*Stop` remain no-op shims. Their names occur in `Bindings_Standard.xml` and Forever's `Bindings_Camelot.xml`, but those files are not listed in either profile's `Blizzard_FrameXML.toc`. The task's no-op audit rule keeps them unchanged because the cache TOC does not establish a runtime-selected consumer.
 
 Example:
 
 ```lua
 A_Admin.SetCameraFOV(70)
 A_Admin.SetTutorialFlag(10, true)
+A_Admin.SetTutorialsEnabled(true)
+A_Admin.SetPlayerNPERestricted(true)
 ```
