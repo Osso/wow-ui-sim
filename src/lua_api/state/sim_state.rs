@@ -24,6 +24,10 @@ pub struct SimState {
     /// INFERRED (R88ee (native evidence pending)): active Forever specialization system; TalentTab by default.
     #[cfg(feature = "client-wowforever")]
     pub specialization_system: u32,
+    /// INFERRED receipt records supplied through behavioral notification consumers (R88fm).
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub(crate) behavioral_messaging_receipts:
+        Vec<crate::c_api::c_behavioral_messaging::BehavioralMessagingReceipt>,
     /// INFERRED host-supplied warning records; native behavior is pending R88du.
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     pub(crate) configuration_warnings:
