@@ -770,12 +770,13 @@ fn gamepad_cursor_control_tracks_game_menu_lifecycle() {
             A_Admin.SetUsingGamepad(true)
             ToggleGameMenu()
             local closed = A_Admin.GetGamePadCursorControlEnabled()
+            local menuClosed = not GameMenuFrame:IsShown()
             A_Admin.SetUsingGamepad(false)
             ToggleGameMenu()
             local inactive = A_Admin.GetGamePadCursorControlEnabled()
-            return active, opened, closed, inactive, GameMenuFrame:IsShown()
+            return active, opened, closed, menuClosed, inactive, GameMenuFrame:IsShown()
         "#).unwrap();
-        assert_eq!(result, (true, true, false, false, true));
+        assert_eq!(result, (true, true, false, true, false, true));
     }
 }
 
