@@ -61,10 +61,17 @@ const COMMUNITIES_CHAT_ACCESSIBILITY_SCRIPT: &str = r#"
         assert(mutedClubId and availableClubId and mutedClubId ~= availableClubId, "two clubs were created")
         assert(C_Club.GetClubInfo(mutedClubId).name == "Muted community", "muted club data is available")
         assert(C_Club.GetClubInfo(availableClubId).name == "Available community", "available club data is available")
-        A_Admin.SetAccountMutedClub(mutedClubId, true)
         A_Admin.SetChatDisabled(false)
         ToggleCommunitiesFrame()
+        CommunitiesFrame:SelectClub(availableClubId)
+        assert(CommunitiesFrame:GetSelectedClubId() == availableClubId, "unrestricted club selected")
+        assert(CommunitiesFrame:IsChatAccessible(), "unrestricted club chat is accessible")
+        assert(
+            CommunitiesFrame:GetDisplayMode() == COMMUNITIES_FRAME_DISPLAY_MODES.CHAT,
+            "unrestricted club opens in chat display mode"
+        )
 
+        A_Admin.SetAccountMutedClub(mutedClubId, true)
         CommunitiesFrame:SelectClub(mutedClubId)
         assert(CommunitiesFrame:GetSelectedClubId() == mutedClubId, "muted club selected")
         assert(not CommunitiesFrame:IsChatAccessible(), "account-muted club blocks chat")
@@ -84,12 +91,9 @@ const COMMUNITIES_CHAT_ACCESSIBILITY_SCRIPT: &str = r#"
         )
 
         A_Admin.SetChatDisabled(false)
+        A_Admin.SetAccountMutedClub(mutedClubId, false)
         CommunitiesFrame:SelectClub(mutedClubId)
         assert(CommunitiesFrame:IsChatAccessible(), "unrestricted community chat is accessible")
-        assert(
-            CommunitiesFrame:GetDisplayMode() == COMMUNITIES_FRAME_DISPLAY_MODES.CHAT,
-            "unrestricted club enters chat display mode"
-        )
         "#;
 
 #[test]
