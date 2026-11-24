@@ -1059,6 +1059,37 @@ fn retail_settings_startup_keeps_registered_canvas_visibility() {
     }
 }
 
+#[cfg(feature = "client-wowforever")]
+#[test]
+fn forever_graphics_antialiasing_options_follow_host_capability() {
+    test_timeout! {
+        let env = load_full_game_ui();
+        env.exec(r#"
+            local category = Settings.GetCategory("Graphics")
+            assert(category ~= nil, "original Graphics category must register")
+            A_Admin.SetMultiSampleAntiAliasingSupported(true)
+            Settings.OpenToCategory(category:GetID())
+            assert(SettingsPanel:IsShown(), "original Settings panel must open")
+            local layout = SettingsPanel:GetLayout(category)
+            local getOptions
+            for _, initializer in layout:EnumerateInitializers() do
+                local setting = initializer:GetSetting()
+                if setting and setting:GetVariable() == "PROXY_ANTIALIASING" then
+                    getOptions = initializer:GetOptions()
+                end
+            end
+            assert(getOptions ~= nil, "original antialiasing dropdown must initialize")
+            local included = {}
+            for _, option in ipairs(getOptions()) do included[option.value] = true end
+            assert(included[2] and included[3], "supported MSAA options must appear")
+            A_Admin.SetMultiSampleAntiAliasingSupported(false)
+            local omitted = {}
+            for _, option in ipairs(getOptions()) do omitted[option.value] = true end
+            assert(not omitted[2] and not omitted[3], "unsupported MSAA options must be omitted")
+        "#).expect("original graphics dropdown options should follow supplied MSAA capability");
+    }
+}
+
 #[cfg(feature = "client-retail")]
 #[test]
 fn retail_settings_original_groups_register_in_game_and_glue() {
