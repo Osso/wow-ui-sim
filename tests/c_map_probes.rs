@@ -234,7 +234,14 @@ fn get_map_art_help_text_position_reads_retail_uimap_records() {
     let env = env();
     let positions: (i32, i32, i32, i32, i32, i32) = env
         .eval(
-            "return C_Map.GetMapArtHelpTextPosition(14), \\\n                    C_Map.GetMapArtHelpTextPosition(62), \\\n                    C_Map.GetMapArtHelpTextPosition(994), \\\n                    C_Map.GetMapArtHelpTextPosition(1532), \\\n                    C_Map.GetMapArtHelpTextPosition(1), \\\n                    C_Map.GetMapArtHelpTextPosition(999999)",
+            r#"
+            return C_Map.GetMapArtHelpTextPosition(14),
+                   C_Map.GetMapArtHelpTextPosition(62),
+                   C_Map.GetMapArtHelpTextPosition(994),
+                   C_Map.GetMapArtHelpTextPosition(1532),
+                   C_Map.GetMapArtHelpTextPosition(1),
+                   C_Map.GetMapArtHelpTextPosition(999999)
+            "#,
         )
         .unwrap();
     assert_eq!(positions, (1, 1, 3, 4, 0, 0));
