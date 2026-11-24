@@ -311,7 +311,19 @@ fn read_status_string(state: &mut LuaState, table: Val, key: &str) -> LuaResult<
 fn push_guild_rename_status(state: &mut LuaState, status: &GuildRenameStatus) -> Val {
     let table = create_table(state);
     state.push(table);
-    for (key, value) in [
+    let old_name = create_string(state, &status.old_guild_name);
+    let reserved_name = create_string(state, &status.reserved_name);
+    table_set_static(state, table, "oldGuildName", old_name);
+    table_set_static(state, table, "reservedName", reserved_name);
+    for (key, value) in guild_rename_scalar_fields(status) {
+        table_set_static(state, table, key, value);
+    }
+    state.pop();
+    table
+}
+
+fn guild_rename_scalar_fields(status: &GuildRenameStatus) -> [(&'static str, Val); 9] {
+    [
         (
             "isNameChangeEnabled",
             Val::Bool(status.is_name_change_enabled),
@@ -329,17 +341,11 @@ fn push_guild_rename_status(state: &mut LuaState, status: &GuildRenameStatus) ->
         ("refundAmount", Val::Num(status.refund_amount)),
         ("currentGuildMoney", Val::Num(status.current_guild_money)),
         ("result", Val::Num(status.result)),
-        ("oldGuildName", create_string(state, &status.old_guild_name)),
-        ("reservedName", create_string(state, &status.reserved_name)),
         (
             "reservedNameExpirationTime",
             Val::Num(status.reserved_name_expiration_time),
         ),
-    ] {
-        table_set_static(state, table, key, value);
-    }
-    state.pop();
-    table
+    ]
 }
 
 pub(crate) fn admin_set_tabard_metadata(state: &mut LuaState) -> LuaResult<u32> {

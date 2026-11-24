@@ -79,6 +79,8 @@ fn register_bootstrap_time_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
 fn register_bootstrap_runtime_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
     super::strings::register_all_ui_strings(lua)?;
     super::security::register_all(lua)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    super::real::camera_fov_defaults::register_all(lua)?;
     super::real::source_location::register_all(lua)?;
     super::keybindings::register_all(lua)?;
     super::permanent_shims::register_all(lua.state_mut());
@@ -112,6 +114,8 @@ fn register_bootstrap_shared_apis(lua: &mut rilua::Lua) -> crate::Result<()> {
     // Forever 1.60.1 VoiceChatDocumentation declares these with the retail signature.
     #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
     crate::c_api::c_voice_chat_speak::register(lua.state_mut())?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    crate::c_api::c_voice_chat_speak::register_combat_audio_alert(lua.state_mut())?;
     crate::c_api::c_achievement_telemetry::register(lua.state_mut())?;
     crate::c_api::c_social_contract_glue::register(lua.state_mut())?;
     #[cfg(feature = "maw-power-model")]

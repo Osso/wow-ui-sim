@@ -719,7 +719,7 @@ C_Timer (After, NewTimer, NewTicker), C_Map (stub), C_Item (`IsConsumableItem`, 
 
 **Pet-battle breed quality boundary** — Temporary Lua-owned `C_PetBattles` sample state seeds the five displayed pets with `Enum.BattlePetBreedQuality.Rare` (`3`). `GetBreedQuality(owner, petIndex)` returns that numeric seed or `0` for an absent pet, letting current `PetBattleFrame` OnLoad render rarity without a nil value. This is not a pet-battle model: ownership, breeding, capture, combat outcomes, and live battle data remain unmodeled.
 
-**Housing dashboard service boundary** — The temporary preload bridge supplies only an absent `C_Housing.GetPlayerOwnedHouses`. It schedules `PLAYER_HOUSE_LIST_UPDATED` with an empty table through `C_Timer.After(0)`, so dashboard consumers receive the empty-owned-house response on the next timer tick rather than during the request call. Owned-house state, service errors, and response payload semantics remain unmodeled; retire this bridge when a housing service model owns that request.
+**Housing owned-house list boundary** — Retail exposes a supplied `HouseInfo` list through `C_Housing.GetPlayerOwnedHouses`; every call queues its own `PLAYER_HOUSE_LIST_UPDATED` response for a later timer tick. The host input is `A_Admin.SetPlayerOwnedHouses`. Event timing and request behavior are **INFERRED (R88fj; native evidence pending)**; the list and event payload use the pinned API shapes. PTR retains its existing temporary empty-list bridge. Forever does not select the dashboard TOC: it allows only `standard`, while `active_game_types()` admits `camelot` and `mainline` for Forever.
 
 ### `C_PlayerChoice` (PTR 12.1)
 
@@ -917,7 +917,7 @@ The [owning contract](../../specs/wrath-friends-legacy.md) records static12340 p
 - [container_portrait_texture.rs](../../../src/lua_api/workarounds/temporary/container_portrait_texture.rs) — retail texture fileDataID proof
 - [item_button_helper_defaults.rs](../../../src/lua_api/workarounds/temporary/item_button_helper_defaults.rs) — item-button texture fileDataID proof
 - [settings_surface_defaults.rs](../../../src/lua_api/workarounds/temporary/settings_surface_defaults.rs) — additive-only Settings defaults and replacement-surface reconciliation
-- [housing_dashboard_preload.rs](../../../src/lua_api/workarounds/temporary/housing_dashboard_preload.rs) — deferred empty owned-house response bridge
+- [housing_owned_house_requests.rs](../../../src/lua_api/workarounds/temporary/housing_owned_house_requests.rs) — PTR-only empty owned-house response bridge; Retail service model: [owned_houses.rs](../../../src/c_api/c_housing/owned_houses.rs)
 - [c_settings_util.rs](../../../src/c_api/c_settings_util.rs) — `C_SettingsUtil.OpenSettingsPanel` forwarding boundary
 - [c_string_util.rs](../../../src/c_api/c_string_util.rs) — C_StringUtil helper implementation
 - [math_extensions.rs](../../../src/lua_api/globals/real/math_extensions.rs) — PTR 12.1.5 native math registration
@@ -970,7 +970,7 @@ The [owning contract](../../specs/wrath-friends-legacy.md) records static12340 p
 - [widget_methods_model.rs](../../../tests/widget_methods_model.rs) — `ClearFog` publication and no-op behavior proof
 - [simple_window.rs](../../../src/lua_api/globals/create_frame/simple_window.rs) — frame-backed `CreateWindow` compatibility contract
 - [render_layers.rs](../../../src/lua_api/frame/methods/misc/render_layers.rs) — `SetWindow`/`GetWindow` owner attachment
-- [kiosk_namespace_defaults.rs](../../../src/lua_api/workarounds/temporary/kiosk_namespace_defaults.rs) — inert Kiosk defaults
+- [kiosk_namespace_defaults.rs](../../../src/lua_api/workarounds/temporary/kiosk_namespace_defaults.rs) — legacy-profile Kiosk defaults; Retail and Forever use the [Kiosk session model](kiosk-session.md)
 - [targeting_verbs.rs](../../../src/lua_api/globals/targeting_verbs.rs) — state-backed targeting globals, including `ClearTarget()`'s boolean result
 - [panel_toggle_verbs.rs](../../../src/lua_api/globals/panel_toggle_verbs.rs) — profile-scoped panel toggles, including retail `ToggleGuildFrame()` ownership
 - [math_extensions.rs](../../../src/lua_api/globals/real/math_extensions.rs) — PTR 12.1.5 native `math` extensions
@@ -987,6 +987,7 @@ The [owning contract](../../specs/wrath-friends-legacy.md) records static12340 p
 - [[frame-data-flow]] — method lookup order, __index/__newindex, Mixin() application
 - [[addon-loading]] — addon execution, idempotent loaded-addon handling, and environment boundaries
 - [[taint-system]] — secure/public environments and secure-button publication boundaries
+- [[kiosk-session]] — Retail/Forever supplied Kiosk session state
 - [[post-load-workaround-audit]] — explicit post-cleanup restoration hooks
 - [[event-system]] — fire_event, SetScript, OnUpdate tick mechanism
 - [[xml-template-system]] — XML script declaration and optimized installation paths

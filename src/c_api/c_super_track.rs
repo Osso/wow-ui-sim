@@ -1,5 +1,19 @@
 //! Supplied SuperTrack targets. Priority order is inferred pending R88dw evidence.
 
+/// INFERRED, R88ff (native evidence pending): supplied engine navigation data.
+#[derive(Debug, Clone, Copy)]
+pub struct NavigationTarget {
+    /// INFERRED, R88ff (native evidence pending): value reported by the target.
+    pub state: i32,
+    /// INFERRED, R88ff (native evidence pending): scenario distance in yards.
+    pub distance: f64,
+    /// R88ff VERIFIED: the query returns this stored Boolean.
+    pub clamped: bool,
+    /// INFERRED, R88ff (native evidence pending): supplied screen coordinates.
+    pub screen_x: f64,
+    pub screen_y: f64,
+}
+
 #[derive(Debug, Clone, Default)]
 pub struct SuperTrackState {
     /// INFERRED (simulator mapping): absent item text means no return values.
@@ -24,6 +38,8 @@ pub struct SuperTrackState {
     pub user_waypoint: bool,
     /// INFERRED simulator default false; VERIFIED preserved when waypoint tracking starts.
     pub corpse: bool,
+    /// Supplied navigation data is usable only while some target is super-tracked.
+    pub navigation_target: Option<NavigationTarget>,
 }
 
 use super::helpers::{
@@ -241,6 +257,8 @@ fn anything(state: &mut LuaState) -> LuaResult<u32> {
 /// effect is UNKNOWN (R88j.5).
 fn publish_change(state: &mut LuaState) -> LuaResult<u32> {
     dispatch_event_now(state, "SUPER_TRACKING_CHANGED", &[])?;
+    #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
+    super::c_navigation::update_navigation_frame(state)?;
     Ok(0)
 }
 

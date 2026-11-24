@@ -399,16 +399,35 @@ pub fn is_public_build(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-/// BNFeaturesEnabled() — always false (no Battle.net in sim).
+/// BNFeaturesEnabled() follows the supplied local account identity on Retail/Forever.
 pub fn bn_features_enabled(state: &mut LuaState) -> LuaResult<u32> {
-    state.push(Val::Bool(false));
+    let enabled = player_bnet_features_enabled(state)?;
+    state.push(Val::Bool(enabled));
     Ok(1)
 }
 
-/// BNFeaturesEnabledAndConnected() — always false.
+/// BNFeaturesEnabledAndConnected() uses the simulator's connected identity projection.
 pub fn bn_features_enabled_and_connected(state: &mut LuaState) -> LuaResult<u32> {
-    state.push(Val::Bool(false));
+    let enabled = player_bnet_features_enabled(state)?;
+    state.push(Val::Bool(enabled));
     Ok(1)
+}
+
+/// INFERRED from the supplied identity scenario; native evidence is pending (R88fi (native evidence pending)).
+fn player_bnet_features_enabled(state: &mut LuaState) -> LuaResult<bool> {
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    {
+        let has_identity = !crate::lua_api::methods::borrow_state(state)?
+            .player_bnet_info
+            .battle_tag
+            .is_empty();
+        return Ok(has_identity);
+    }
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+    {
+        let _ = state;
+        Ok(false)
+    }
 }
 
 /// BNConnected() — always true (sim pretends connected).

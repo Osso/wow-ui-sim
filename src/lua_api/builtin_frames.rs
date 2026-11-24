@@ -125,6 +125,7 @@ fn create_engine_frame_children(
 ) {
     set_ui_parent_panel_attributes(widgets, ui_parent_id);
     create_world_frame(widgets, screen_width, screen_height, owner);
+    create_navigation_frame(widgets, owner);
     create_minimap_cluster(widgets, ui_parent_id, owner);
     create_tooltip_frames(widgets, ui_parent_id, owner);
     create_default_chat_frame(widgets, ui_parent_id, owner);
@@ -159,6 +160,23 @@ fn create_world_frame(
         None,
         Some((screen_width, screen_height)),
         owner,
+    );
+}
+
+fn create_navigation_frame(widgets: &mut WidgetRegistry, owner: u16) {
+    use crate::client_profile::{ACTIVE, ClientProfile};
+    if !matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever) {
+        return;
+    }
+    let world_frame = widgets.get_id_by_name("WorldFrame");
+    register_hidden_frame_with_strata(
+        widgets,
+        WidgetType::Frame,
+        "NavigationFrame",
+        world_frame,
+        Some((1.0, 1.0)),
+        owner,
+        FrameStrata::Background,
     );
 }
 

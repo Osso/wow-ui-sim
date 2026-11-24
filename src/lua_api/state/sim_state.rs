@@ -26,6 +26,9 @@ pub struct SimState {
     pub(crate) configuration_warnings:
         Vec<crate::lua_api::globals::real::configuration_warnings::ConfigurationWarning>,
     /// Supplied visibility for the Retail/Forever ranged transmog slot.
+    /// INFERRED (R88fd (native evidence pending)): host-supplied kiosk session.
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub(crate) kiosk_session: crate::c_api::kiosk::KioskSession,
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     pub ranged_slot: crate::c_api::ranged_slot::RangedSlotState,
     #[cfg(feature = "client-wowforever")]
@@ -137,6 +140,10 @@ pub struct SimState {
     /// Preserve each asynchronous RequestRaidInfo reply until a later timer tick.
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     pub(crate) pending_raid_info_replies: VecDeque<()>,
+    /// Preserve every asynchronous GetPlayerOwnedHouses response until a timer tick.
+    #[cfg(feature = "client-retail")]
+    pub(crate) pending_owned_house_replies:
+        VecDeque<Vec<crate::c_api::c_housing::current_house::HouseInfo>>,
     pub pet_journal_hover: crate::c_api::c_pet_journal_hover::PetJournalHoverState,
     pub anima_diversion: AnimaDiversionState,
     pub garrison_talents: GarrisonTalentState,
@@ -995,6 +1002,8 @@ pub struct SimState {
     pub quest_log: Vec<u32>,
     pub quest_log_entries: QuestLogState,
     pub super_track: crate::c_api::c_super_track::SuperTrackState,
+    /// Whether the supplied navigation frame is currently available to the UI.
+    pub navigation_frame_active: bool,
     /// Explicit ordinary-watch metadata; seeded once, not derived on every query.
     pub quest_watch_types: HashMap<i32, crate::c_api::QuestWatchType>,
     /// Explicit eligible IDs, independent of world-quest classification.
@@ -1174,9 +1183,12 @@ pub struct SimState {
     #[cfg(any(feature = "retail-12-0-7", feature = "retail-12-1-0"))]
     pub quest_hub_dragonriding_races: HashMap<i32, Vec<i32>>,
     pub bnet_friends: Vec<BnetFriend>,
-    /// Forever feature-state input; false is the native image-load default, not a CVar.
-    #[cfg(feature = "client-wowforever")]
-    pub bnet_friend_tags_enabled: bool,
+    /// INFERRED local identity supplied to legacy `BNGetInfo` consumers.
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub player_bnet_info: crate::lua_api::state_types::PlayerBattleNetInfo,
+    /// INFERRED account feature state supplied to Retail/Forever social consumers.
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub bnet_account_features: crate::lua_api::state_types::BattleNetAccountFeatures,
     pub bnet_friend_invites: Vec<BnetFriendInvite>,
     pub bnet_appear_offline: bool,
     /// INFERRED local broadcast input; no network service or persistence.
@@ -1359,6 +1371,16 @@ pub struct SimState {
     /// Accepted public SpeakText requests in call order; no audio playback.
     #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
     pub voice_chat_speak_requests: Vec<crate::c_api::c_voice_chat_speak::SpeakTextRequest>,
+    /// Accepted CAA speech requests; no synthesized audio is produced.
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub combat_audio_speak_requests:
+        Vec<crate::c_api::c_voice_chat_speak::CombatAudioAlertSpeakTextRequest>,
+    /// Next CAA utterance identity, local to this simulated environment.
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub next_combat_audio_utterance_id: u32,
+    /// Completion events held until a later `process_timers` tick.
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub pending_combat_audio_utterance_ids: std::collections::VecDeque<u32>,
     /// `C_VoiceChat.StopSpeakingText` calls; no playback is modeled to stop.
     pub voice_chat_speak_stop_count: u32,
     /// Whether the account accepted the social contract (default: established account).

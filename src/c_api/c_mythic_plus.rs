@@ -244,20 +244,7 @@ fn register_challenge_mode_surface(state: &mut LuaState) -> LuaResult<()> {
 }
 
 fn register_challenge_map_handlers(state: &mut LuaState, ns: GcRef<Table>) -> LuaResult<()> {
-    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Wrath {
-        table_set_rust_fn_static(state, ns, "GetMapTable", challenge_get_map_table)?;
-        table_set_rust_fn_static(state, ns, "GetMapUIInfo", challenge_get_map_ui_info)?;
-    } else if uses_tracked_season_maps() {
-        table_set_rust_fn_static(
-            state,
-            ns,
-            "GetMapTable",
-            challenge_get_tracked_season_map_table,
-        )?;
-        crate::c_api::challenge_run::register_map_ui_info(state, ns)?;
-    } else {
-        crate::c_api::challenge_run::register_maps(state, ns)?;
-    }
+    register_challenge_map_table(state, ns)?;
     table_set_rust_fn_static(state, ns, "GetAffixInfo", get_affix_info)?;
     table_set_rust_fn_static(
         state,
@@ -272,6 +259,24 @@ fn register_challenge_map_handlers(state: &mut LuaState, ns: GcRef<Table>) -> Lu
         challenge_get_challenge_mode_map_times,
     )?;
     table_set_rust_fn_static(state, ns, "GetNumMedals", challenge_get_num_medals)?;
+    Ok(())
+}
+
+fn register_challenge_map_table(state: &mut LuaState, ns: GcRef<Table>) -> LuaResult<()> {
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Wrath {
+        table_set_rust_fn_static(state, ns, "GetMapTable", challenge_get_map_table)?;
+        table_set_rust_fn_static(state, ns, "GetMapUIInfo", challenge_get_map_ui_info)?;
+    } else if uses_tracked_season_maps() {
+        table_set_rust_fn_static(
+            state,
+            ns,
+            "GetMapTable",
+            challenge_get_tracked_season_map_table,
+        )?;
+        crate::c_api::challenge_run::register_map_ui_info(state, ns)?;
+    } else {
+        crate::c_api::challenge_run::register_maps(state, ns)?;
+    }
     Ok(())
 }
 

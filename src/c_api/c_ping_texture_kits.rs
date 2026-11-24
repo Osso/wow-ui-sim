@@ -2,14 +2,18 @@
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 use crate::c_api::helpers::set_table_array;
-use crate::lua_api::methods::{borrow_state, create_string, table_get, val_to_string};
+use crate::lua_api::methods::{borrow_state, create_string};
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 use crate::lua_api::methods::{borrow_state_mut, create_table_with_capacity, table_set_static};
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+use crate::lua_api::methods::{table_get, val_to_string};
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 use crate::lua_bridge::TableBuilder;
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 use rilua::vm::table::Table;
 use rilua::{LuaResult, Val, runtime_error};
 #[cfg(feature = "retail-12-0-0")]
@@ -133,6 +137,7 @@ fn read_default_ping_option(state: &mut LuaState, value: Val) -> LuaResult<PingD
     })
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn read_option_integer(state: &mut LuaState, table: GcRef<Table>, key: &str) -> LuaResult<i32> {
     let Val::Num(value) = table_get(state, Val::Table(table), key) else {
         return Err(invalid_option_field(key));
@@ -144,11 +149,13 @@ fn read_option_integer(state: &mut LuaState, table: GcRef<Table>, key: &str) -> 
     Ok(value as i32)
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn read_option_string(state: &mut LuaState, table: GcRef<Table>, key: &str) -> LuaResult<String> {
     let value = table_get(state, Val::Table(table), key);
     val_to_string(state, value).ok_or_else(|| invalid_option_field(key))
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn invalid_option_field(key: &str) -> rilua::LuaError {
     runtime_error(format!("A_Admin.SetDefaultPingOptions: invalid {key}"))
 }

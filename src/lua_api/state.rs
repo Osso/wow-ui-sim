@@ -66,6 +66,8 @@ macro_rules! build_empty_sim_state {
         let quest_log_entries = QuestLogState::seeded();
         Self {
             #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            kiosk_session: Default::default(),
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
             ranged_slot: crate::c_api::ranged_slot::RangedSlotState::default(),
             store_glue: Default::default(),
             #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
@@ -181,6 +183,8 @@ macro_rules! build_empty_sim_state {
             completed_encounters: Vec::new(),
             #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
             pending_raid_info_replies: VecDeque::new(),
+            #[cfg(feature = "client-retail")]
+            pending_owned_house_replies: VecDeque::new(),
             pet_journal_hover: crate::c_api::c_pet_journal_hover::PetJournalHoverState::default(),
             anima_diversion: AnimaDiversionState::default(),
             garrison_talents: GarrisonTalentState::default(),
@@ -810,6 +814,7 @@ macro_rules! build_empty_sim_state {
             quest_watch_types: crate::c_api::seed_quest_watch_types(&quest_log_entries.entries),
             quest_log_entries,
             super_track: Default::default(),
+            navigation_frame_active: false,
             quest_war_mode_eligibility: HashSet::new(),
             pending_quest_offer: None,
             quest_choice_id: None,
@@ -937,8 +942,10 @@ macro_rules! build_empty_sim_state {
             #[cfg(any(feature = "retail-12-0-7", feature = "retail-12-1-0"))]
             quest_hub_dragonriding_races: ::std::collections::HashMap::new(),
             bnet_friends: default_bnet_friends(),
-            #[cfg(feature = "client-wowforever")]
-            bnet_friend_tags_enabled: false,
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            player_bnet_info: Default::default(),
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            bnet_account_features: Default::default(),
             bnet_friend_invites: Vec::new(),
             bnet_appear_offline: false,
             #[cfg(feature = "retail-12-0-0")]
@@ -1085,6 +1092,12 @@ macro_rules! build_empty_sim_state {
             bnet_presence: Default::default(),
             #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
             voice_chat_speak_requests: Vec::new(),
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            combat_audio_speak_requests: Vec::new(),
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            next_combat_audio_utterance_id: 1,
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            pending_combat_audio_utterance_ids: Default::default(),
             voice_chat_speak_stop_count: 0,
             achievement_telemetry: Vec::new(),
             item_search_text: String::new(),

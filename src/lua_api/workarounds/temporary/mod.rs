@@ -21,6 +21,7 @@ pub(crate) mod wrath_startup_defaults;
 pub(crate) mod account_store_set_storefront;
 pub(crate) mod achievement_search_preview;
 pub(crate) mod achievement_ui_access_defaults;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod addon_compartment_defaults;
 pub(crate) mod addons_beta_policy_defaults;
 pub(crate) mod adventure_journal_fallbacks;
@@ -31,6 +32,7 @@ pub(crate) mod assisted_combat_manager_defaults;
 pub(crate) mod auction_house_search_context_aliases;
 pub(crate) mod auth_challenge_frame_parent;
 pub(crate) mod auto_complete_defaults;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod battle_net_account_defaults;
 pub(crate) mod behavioral_messaging_defaults;
 #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
@@ -108,6 +110,7 @@ pub(crate) mod item_button_helper_defaults;
 pub(crate) mod item_quality_color_data_methods;
 pub(crate) mod item_targeting_defaults;
 pub(crate) mod item_upgrade_availability_defaults;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod kiosk_namespace_defaults;
 pub(crate) mod legacy_action_bar_globals;
 pub(crate) mod legacy_container_globals;

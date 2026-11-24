@@ -14,7 +14,7 @@ end
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     use crate::client_profile::{ACTIVE, ClientProfile};
-    if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::Ptr) {
+    if ACTIVE == ClientProfile::Ptr {
         lua.exec(OWNED_HOUSE_REQUESTS_LUA)?;
     }
     Ok(())

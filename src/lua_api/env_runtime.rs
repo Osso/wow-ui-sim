@@ -349,28 +349,68 @@ impl WowLuaEnv {
     /// Run ready timers and return how many callbacks fired.
     pub fn process_timers(&self) -> Result<usize> {
         #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
-        let raid_info_replies = {
-            let mut state = self.state.borrow_mut();
-            std::mem::take(&mut state.pending_raid_info_replies).len()
+        let raid_info_replies =
+            std::mem::take(&mut self.state.borrow_mut().pending_raid_info_replies).len();
+        #[cfg(feature = "client-retail")]
+        let owned_house_replies =
+            std::mem::take(&mut self.state.borrow_mut().pending_owned_house_replies);
+        #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+        let pending_completions = self.state.borrow().pending_combat_audio_utterance_ids.len();
+        let timer_fired = if self.state.borrow().manual_clock.is_some() {
+            super::manual_timers::drain(self.lua.borrow_mut().state_mut())?
+        } else {
+            self.process_regular_timers()
         };
-        if self.state.borrow().manual_clock.is_some() {
-            let fired = super::manual_timers::drain(self.lua.borrow_mut().state_mut())?;
-            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+        #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+        {
+            #[cfg(feature = "client-retail")]
+            let house_replies = self.fire_owned_house_replies(owned_house_replies)?;
             self.fire_raid_info_replies(raid_info_replies)?;
-            return Ok(fired);
+            #[cfg(not(feature = "client-retail"))]
+            let house_replies = 0;
+            return Ok(timer_fired
+                + house_replies
+                + self.dispatch_combat_audio_completions(pending_completions)?);
         }
-        let signal_fired = self.process_due_timed_signals();
+        #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+        Ok(timer_fired)
+    }
 
+    fn process_regular_timers(&self) -> usize {
+        let signal_fired = self.process_due_timed_signals();
         let now = self.state.borrow().clock_now();
         let timers = take_pending_timers(self);
         let (timer_fired, mut requeue) = process_timer_queue(self, timers, now);
         let mut state = self.state.borrow_mut();
         requeue.append(&mut state.rilua_timers);
         state.rilua_timers = requeue;
-        drop(state);
-        #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
-        self.fire_raid_info_replies(raid_info_replies)?;
-        Ok(signal_fired + timer_fired)
+        signal_fired + timer_fired
+    }
+
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    fn dispatch_combat_audio_completions(&self, count: usize) -> Result<usize> {
+        let mut fired = 0;
+        for _ in 0..count {
+            let Some(utterance_id) = self
+                .state
+                .borrow_mut()
+                .pending_combat_audio_utterance_ids
+                .pop_front()
+            else {
+                break;
+            };
+            let args = [Val::Num(f64::from(utterance_id))];
+            if let Err(error) = self.fire_event_with_args("VOICE_CHAT_TTS_PLAYBACK_FINISHED", &args)
+            {
+                self.state
+                    .borrow_mut()
+                    .pending_combat_audio_utterance_ids
+                    .push_front(utterance_id);
+                return Err(error);
+            }
+            fired += 1;
+        }
+        Ok(fired)
     }
 
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
@@ -387,6 +427,29 @@ impl WowLuaEnv {
             Some(error) => Err(error),
             None => Ok(()),
         }
+    }
+
+    #[cfg(feature = "client-retail")]
+    fn fire_owned_house_replies(
+        &self,
+        mut replies: std::collections::VecDeque<
+            Vec<crate::c_api::c_housing::current_house::HouseInfo>,
+        >,
+    ) -> Result<usize> {
+        let count = replies.len();
+        while let Some(houses) = replies.pop_front() {
+            let payload = crate::c_api::c_housing::owned_houses::encode_house_list(
+                self.lua.borrow_mut().state_mut(),
+                houses.clone(),
+            );
+            if let Err(error) = self.fire_event_with_args("PLAYER_HOUSE_LIST_UPDATED", &[payload]) {
+                let mut state = self.state.borrow_mut();
+                state.pending_owned_house_replies.push_front(houses);
+                state.pending_owned_house_replies.append(&mut replies);
+                return Err(error);
+            }
+        }
+        Ok(count)
     }
 
     #[cfg(feature = "timed-signal-maps")]

@@ -249,6 +249,7 @@ fn apply_runtime_state_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
 }
 
 fn apply_account_and_social_state_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::battle_net_account_defaults::apply_bootstrap(lua)?;
     #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::social_queue_defaults::apply_bootstrap(lua)?;
@@ -372,6 +373,7 @@ fn apply_core_foundation_tracking_defaults(lua: &mut rilua::Lua) -> crate::Resul
 }
 
 fn apply_core_foundation_addon_defaults(lua: &mut rilua::Lua) -> crate::Result<()> {
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::addon_compartment_defaults::apply_bootstrap(lua)?;
     temporary::addons_beta_policy_defaults::apply_bootstrap(lua)?;
     temporary::auth_challenge_frame_parent::apply_bootstrap(lua)?;
@@ -447,6 +449,7 @@ fn apply_inventory_and_spell_defaults(lua: &mut rilua::Lua) -> crate::Result<()>
 }
 
 fn apply_core_legacy_defaults(lua: &mut rilua::Lua) -> crate::Result<()> {
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::kiosk_namespace_defaults::apply_bootstrap(lua)?;
     temporary::level_link_spell_lock_state::apply_bootstrap(lua)?;
     temporary::lfg_legacy_defaults::apply_bootstrap(lua)?;

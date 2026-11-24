@@ -65,9 +65,9 @@ Retail 12.1 removes public `GetInventorySlotInfo`. Current `Blizzard_TransmogSha
 
 `src/lua_api/workarounds/temporary/pet_battle_runtime_state.rs` seeds sample allied and enemy pets for compatibility. `C_PetBattles.GetBreedQuality(owner, petIndex)` returns seeded `Enum.BattlePetBreedQuality.Rare` (`3`) or numeric fallback `0` for an absent pet, allowing current `PetBattleFrame` OnLoad rarity rendering. It does not model pet ownership, breeding, capture, combat outcomes, or live battle data.
 
-### Temporary housing dashboard service response
+### Owned-house list service
 
-`housing_dashboard_preload.rs` supplies only absent `C_Housing.GetPlayerOwnedHouses`. It schedules `PLAYER_HOUSE_LIST_UPDATED` with an empty table through `C_Timer.After(0)` rather than firing synchronously, so dashboard consumers observe the empty-owned-house response on the next timer tick. This remains a temporary preload bridge, not a model of owned-house service state, request failure, or payload semantics.
+`src/c_api/c_housing/owned_houses.rs` exposes the supplied Retail owned-house list through `C_Housing.GetPlayerOwnedHouses`. Each request queues a `PLAYER_HOUSE_LIST_UPDATED` event for a later timer tick. The host supplies the list with `A_Admin.SetPlayerOwnedHouses`; the timing and request semantics are **INFERRED (R88fj; native evidence pending)**.
 
 ### Timer System (lines 382-506)
 

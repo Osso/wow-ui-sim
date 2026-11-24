@@ -3,6 +3,7 @@
 //! Quest/navigation target state is not modeled yet. These inert defaults keep
 //! Blizzard navigation UI callable until a real navigation backend owns them.
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 const NAVIGATION_DEFAULTS_LUA: &str = r#"
 C_Navigation = C_Navigation or __wow_namespace()
 
@@ -49,14 +50,22 @@ end
 "#;
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     lua.exec(NAVIGATION_DEFAULTS_LUA)?;
-    if !cfg!(feature = "retail-12-0-5") {
+    if !cfg!(any(
+        feature = "client-retail",
+        feature = "client-wowforever"
+    )) && !cfg!(feature = "retail-12-0-5")
+    {
         lua.exec(LEGACY_NEAREST_PARTY_TOKEN_LUA)?;
     }
     Ok(())
 }
 
-#[cfg(test)]
+#[cfg(all(
+    test,
+    not(any(feature = "client-retail", feature = "client-wowforever"))
+))]
 mod tests {
     use crate::lua_api::WowLuaEnv;
 
