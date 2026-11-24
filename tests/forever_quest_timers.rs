@@ -8,7 +8,7 @@ fn load_quest_timer_consumer() -> WowLuaEnv {
     let loaded = crate::common::blizzard_addon_harness::load_blizzard_addon_closure_into_env(
         &env,
         &ui_dir,
-        &["Blizzard_QuestTimer"],
+        &["Blizzard_FrameXMLBase", "Blizzard_QuestTimer"],
         &[],
     );
     assert!(loaded.iter().any(|name| name == "Blizzard_QuestTimer"));
