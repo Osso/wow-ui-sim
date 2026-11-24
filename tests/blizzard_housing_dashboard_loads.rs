@@ -841,7 +841,8 @@ fn blizzard_housing_dashboard_renders_supplied_owned_houses(env: &WowLuaEnv) {
             local dropdown = HousingDashboardFrame.HouseDropdown
             local houses = dropdown.playerHouseList
             return #houses, houses[1].houseName, houses[2].houseName,
-                dropdown:IsShown() and houses[1].houseGUID ~= houses[2].houseGUID
+                dropdown:IsShown() and dropdown.Dropdown:HasElements()
+                    and houses[1].houseGUID ~= houses[2].houseGUID
             "#,
         )
         .expect("read the original dashboard's rendered house entries");
