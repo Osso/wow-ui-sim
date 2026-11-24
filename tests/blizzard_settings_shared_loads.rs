@@ -1059,6 +1059,42 @@ fn retail_settings_startup_keeps_registered_canvas_visibility() {
     }
 }
 
+#[cfg(feature = "client-wowforever")]
+#[test]
+fn forever_graphics_antialiasing_options_follow_host_capability() {
+    test_timeout! {
+        let env = load_full_game_ui();
+        env.exec(r#"
+            local category
+            for _, group in ipairs(SettingsPanel:GetCategoryList().groups) do for _, candidate in ipairs(group.categories) do if candidate:GetName() == GRAPHICS_LABEL then category = candidate end end end
+            assert(category ~= nil, "original Graphics category must register")
+            A_Admin.SetMultiSampleAntiAliasingSupported(true)
+            local layout = SettingsPanel:GetLayout(category)
+            local getOptions
+            for _, initializer in layout:EnumerateInitializers() do
+                local setting = initializer.GetSetting and initializer:GetSetting()
+                if setting and setting:GetVariable() == "PROXY_ANTIALIASING" then
+                    getOptions = initializer:GetOptions()
+                end
+            end
+            assert(getOptions ~= nil, "original antialiasing dropdown must initialize")
+            local function optionPresence(msaa, antiAliasing)
+                A_Admin.SetMultiSampleAntiAliasingSupported(msaa)
+                A_Admin.SetAntiAliasingSupported(antiAliasing)
+                local found = {}
+                for _, option in ipairs(getOptions()) do found[option.value] = true end
+                return found[2], found[3]
+            end
+            local multisample, advanced = optionPresence(true, false)
+            assert(multisample and not advanced, "MSAA support alone must add only MSAA")
+            multisample, advanced = optionPresence(true, true)
+            assert(multisample and advanced, "both capabilities must add both options")
+            multisample, advanced = optionPresence(false, true)
+            assert(not multisample and not advanced, "advanced AA requires MSAA support")
+        "#).expect("original graphics dropdown options should follow supplied MSAA capability");
+    }
+}
+
 #[cfg(feature = "client-retail")]
 #[test]
 fn retail_settings_original_groups_register_in_game_and_glue() {
