@@ -363,7 +363,17 @@ fn flight_map_open_path_places_click_to_zoom_labels_from_uimap_positions(env: &W
         observed,
         (true, true, 14, 14, "BOTTOMLEFT".into(), "TOPLEFT".into())
     );
+    assert_taxi_map_id_survives_flight_map_close(env);
 }
+}
+
+fn assert_taxi_map_id_survives_flight_map_close(env: &WowLuaEnv) {
+    env.fire_event("TAXIMAP_CLOSED")
+        .expect("FlightMap should receive its client close event");
+    let (shown, map_id): (bool, i32) = env
+        .eval("return FlightMapFrame:IsShown(), GetTaxiMapID()")
+        .expect("taxi map ID should remain readable after close");
+    assert_eq!((shown, map_id), (false, 14));
 }
 
 fn assert_flight_map_is_unloaded_and_taxi_map_id_is_zero_values(env: &WowLuaEnv) {
