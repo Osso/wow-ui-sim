@@ -443,9 +443,9 @@ impl WowLuaEnv {
                 houses.clone(),
             );
             if let Err(error) = self.fire_event_with_args("PLAYER_HOUSE_LIST_UPDATED", &[payload]) {
-                let mut pending = self.state.borrow_mut().pending_owned_house_replies;
-                pending.push_front(houses);
-                pending.append(&mut replies);
+                let mut state = self.state.borrow_mut();
+                state.pending_owned_house_replies.push_front(houses);
+                state.pending_owned_house_replies.append(&mut replies);
                 return Err(error);
             }
         }
