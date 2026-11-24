@@ -75,9 +75,14 @@ fn register_club_profile_methods(state: &mut LuaState, table_ref: GcRef<Table>) 
             c_club_get_invitation_candidates,
         )?;
     }
+    register_friend_request_methods(state, table_ref)?;
     if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever) {
         table_set_rust_fn_static(state, table_ref, "SetAvatarTexture", set_avatar_texture)?;
     }
+    Ok(())
+}
+
+fn register_friend_request_methods(state: &mut LuaState, table_ref: GcRef<Table>) -> LuaResult<()> {
     if matches!(
         ACTIVE,
         ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever

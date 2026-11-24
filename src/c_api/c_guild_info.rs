@@ -13,7 +13,7 @@ use crate::lua_api::methods::{
 };
 use crate::lua_api::state_types::GuildLogo;
 use crate::lua_bridge::{FromStack, stack_val, table_set_rust_fn_static};
-use rilua::vm::state::LuaState;
+use rilua::vm::{gc::arena::GcRef, state::LuaState, table::Table};
 use rilua::{LuaResult, Val, runtime_error};
 
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -63,37 +63,45 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
         get_guild_tabard_info,
     )?;
     if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever) {
-        table_set_rust_fn_static(
-            state,
-            namespace,
-            "AreGuildEventsEnabled",
-            are_guild_events_enabled,
-        )?;
-        table_set_rust_fn_static(
-            state,
-            namespace,
-            "IsGuildReputationEnabled",
-            is_guild_reputation_enabled,
-        )?;
-        table_set_rust_fn_static(
-            state,
-            namespace,
-            "GetPreferredPlaySettingsFeatures",
-            get_preferred_play_settings_features,
-        )?;
-        table_set_rust_fn_static(
-            state,
-            namespace,
-            "RequestRenameStatus",
-            request_rename_status,
-        )?;
+        register_retail_forever_methods(state, namespace)?;
     }
     if ACTIVE == ClientProfile::Retail && cfg!(feature = "retail-12-1-5") {
-        table_set_rust_fn_static(state, namespace, "Demote", demote)?;
-        table_set_rust_fn_static(state, namespace, "SetLeader", set_leader)?;
-        table_set_rust_fn_static(state, namespace, "Disband", disband)?;
+        register_retail_1215_methods(state, namespace)?;
     }
     Ok(())
+}
+
+fn register_retail_forever_methods(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
+    table_set_rust_fn_static(
+        state,
+        namespace,
+        "AreGuildEventsEnabled",
+        are_guild_events_enabled,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        namespace,
+        "IsGuildReputationEnabled",
+        is_guild_reputation_enabled,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        namespace,
+        "GetPreferredPlaySettingsFeatures",
+        get_preferred_play_settings_features,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        namespace,
+        "RequestRenameStatus",
+        request_rename_status,
+    )
+}
+
+fn register_retail_1215_methods(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
+    table_set_rust_fn_static(state, namespace, "Demote", demote)?;
+    table_set_rust_fn_static(state, namespace, "SetLeader", set_leader)?;
+    table_set_rust_fn_static(state, namespace, "Disband", disband)
 }
 
 fn get_preferred_play_settings_features(state: &mut LuaState) -> LuaResult<u32> {
