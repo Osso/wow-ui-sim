@@ -908,6 +908,7 @@ pub struct SimState {
     #[cfg(feature = "client-wowforever")]
     pub forever_pvp_talent_spell_ids: HashMap<i32, u32>,
     pub player_xp: PlayerXpState,
+    pub account_type: crate::lua_api::state_types::AccountTypeState,
     pub bind_location: String,
     pub pvp_honor: PvpHonorState,
     pub world: WorldState,

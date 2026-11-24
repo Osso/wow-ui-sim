@@ -376,14 +376,18 @@ fn register_player_modern_fields(b: TableBuilder) -> LuaResult<TableBuilder> {
 }
 
 fn register_player_identity(b: TableBuilder) -> LuaResult<TableBuilder> {
-    b.set_function("SetPlayerName", set_player_name)?
+    let builder = b
+        .set_function("SetPlayerName", set_player_name)?
         .set_function("SetPlayerClass", set_player_class)?
         .set_function("SetPlayerRace", set_player_race)?
         .set_function("SetPlayerLevel", set_player_level)?
         .set_function("SetPlayerEffectiveLevel", set_player_effective_level)?
         .set_function("SetPlayerSex", set_player_sex)?
         .set_function("SetPlayerHealth", set_player_health)?
-        .set_function("SetPlayerPower", set_player_power)
+        .set_function("SetPlayerPower", set_player_power)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let builder = super::admin_account_type::register_admin(builder)?;
+    Ok(builder)
 }
 
 fn register_player_progression(b: TableBuilder) -> LuaResult<TableBuilder> {
