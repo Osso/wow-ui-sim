@@ -378,27 +378,26 @@ impl PlayerState {
 /// available until a host supplies a different account snapshot.
 #[derive(Debug, Clone)]
 pub struct AccountTypeState {
-    pub trial: bool,
-    pub veteran_trial: bool,
+    /// INFERRED (R88fw; Retail 12.1.5.70688 / Forever 1.60.1.70707): shared connection account-type word.
+    pub account_type: i32,
+    /// INFERRED (R88fw; Retail 12.1.5.70688 / Forever 1.60.1.70707): dedicated restricted-account byte.
     pub restricted: bool,
+    /// INFERRED (R88fw; Retail 12.1.5.70688 / Forever 1.60.1.70707): expansion-trial flag and absolute GetTime expiry.
     pub expansion_trial: bool,
-    pub expansion_trial_remaining: f64,
+    pub expansion_trial_expiry: f64,
     pub restricted_level: i32,
     pub restricted_money: i64,
-    pub restricted_profession: i32,
 }
 
 impl Default for AccountTypeState {
     fn default() -> Self {
         Self {
-            trial: false,
-            veteran_trial: false,
+            account_type: 0,
             restricted: false,
             expansion_trial: false,
-            expansion_trial_remaining: 0.0,
+            expansion_trial_expiry: 0.0,
             restricted_level: 20,
             restricted_money: 0,
-            restricted_profession: 0,
         }
     }
 }

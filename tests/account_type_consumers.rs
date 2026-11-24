@@ -12,44 +12,54 @@ const ADDON_ROOTS: &[&str] = &["Blizzard_MicroMenu"];
 #[cfg(feature = "client-retail")]
 const LFG_ACCOUNT_SCRIPT: &str = r#"
     assert(C_AddOns.IsAddOnLoaded("Blizzard_GroupFinder"))
-    A_Admin.SetAccountType({ trial = false, veteranTrial = false, restricted = false,
-        expansionTrial = false, expansionTrialRemaining = 0, restrictedLevel = 20,
-        restrictedMoney = 0, restrictedProfession = 0 })
+    A_Admin.SetAccountType({ accountType = 0, restricted = false,
+        expansionTrial = false, expansionTrialExpiry = 0, restrictedLevel = 20,
+        restrictedMoney = 0 })
     local normalValid = LFGListFrame_IsPanelValid(LFGListFrame, LFGListFrame.NothingAvailable)
     assert(not normalValid, "normal account must reject the restricted-account panel")
-    A_Admin.SetAccountType({ trial = true, veteranTrial = false, restricted = true,
-        expansionTrial = true, expansionTrialRemaining = 3600, restrictedLevel = 20,
-        restrictedMoney = 100000, restrictedProfession = 100 })
-    assert(IsTrialAccount() and IsRestrictedAccount() and IsExpansionTrial())
+    A_Admin.SetAccountType({ accountType = 4, restricted = true,
+        expansionTrial = true, expansionTrialExpiry = 3600, restrictedLevel = 20,
+        restrictedMoney = 100000 })
+    assert(not IsTrialAccount() and IsVeteranTrialAccount())
+    A_Admin.SetAccountType({ accountType = 5, restricted = true,
+        expansionTrial = true, expansionTrialExpiry = 3600, restrictedLevel = 20,
+        restrictedMoney = 100000 })
+    assert(IsTrialAccount() and not IsVeteranTrialAccount())
+    assert(IsRestrictedAccount() and IsExpansionTrial())
     local expansionTrial, remaining = GetExpansionTrialInfo()
     assert(expansionTrial and remaining == 3600)
     local level, money, profession = GetRestrictedAccountData()
-    assert(level == 20 and money == 100000 and profession == 100)
+    assert(level == 20 and money == 100000 and profession == 0)
     assert(LFGListFrame_IsPanelValid(LFGListFrame, LFGListFrame.NothingAvailable),
         "restricted account must accept the original panel")
 "#;
 
 const STORE_ACCOUNT_SCRIPT: &str = r#"
     assert(StoreMicroButton ~= nil)
+    A_Admin.SetManualClock(0)
     A_Admin.SetPlayerLevel(20)
     SetCVarBitfield("closedInfoFrames", LE_FRAME_TUTORIAL_TRIAL_BANKED_XP, false)
-    A_Admin.SetAccountType({ trial = false, veteranTrial = false, restricted = false,
-        expansionTrial = false, expansionTrialRemaining = 0, restrictedLevel = 20,
-        restrictedMoney = 0, restrictedProfession = 0 })
+    A_Admin.SetAccountType({ accountType = 0, restricted = false,
+        expansionTrial = false, expansionTrialExpiry = 0, restrictedLevel = 20,
+        restrictedMoney = 0 })
     local normalAlert = StoreMicroButton:EvaluateAlertVisibility(UnitLevel("player"))
     assert(not normalAlert, "normal account must not show the trial-cap alert")
-    A_Admin.SetAccountType({ trial = true, veteranTrial = true, restricted = true,
-        expansionTrial = false, expansionTrialRemaining = 0, restrictedLevel = 20,
-        restrictedMoney = 100000, restrictedProfession = 100 })
+    A_Admin.SetAccountType({ accountType = 5, restricted = true,
+        expansionTrial = true, expansionTrialExpiry = 3600, restrictedLevel = 20,
+        restrictedMoney = 100000 })
     SetCVarBitfield("closedInfoFrames", LE_FRAME_TUTORIAL_TRIAL_BANKED_XP, false)
     local trialAlert = StoreMicroButton:EvaluateAlertVisibility(UnitLevel("player"))
     assert(trialAlert, "trial account at its supplied level cap must show the alert")
-    assert(IsTrialAccount() and IsVeteranTrialAccount() and IsRestrictedAccount())
-    assert(not IsExpansionTrial())
+    assert(IsTrialAccount() and not IsVeteranTrialAccount() and IsRestrictedAccount())
+    assert(IsExpansionTrial())
     local expansionTrial, remaining = GetExpansionTrialInfo()
-    assert(not expansionTrial and remaining == 0)
+    assert(expansionTrial and remaining == 3600)
+    AdvanceTime(3601)
+    assert(not IsExpansionTrial(), "expired expansion trial must be inactive")
+    local expired, noRemaining = GetExpansionTrialInfo()
+    assert(not expired and noRemaining == nil, "expired trial must return false, nil")
     local level, money, profession = GetRestrictedAccountData()
-    assert(level == 20 and money == 100000 and profession == 100)
+    assert(level == 20 and money == 100000 and profession == 0)
     assert(GetCVarBitfield("closedInfoFrames", LE_FRAME_TUTORIAL_TRIAL_BANKED_XP))
 "#;
 
