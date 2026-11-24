@@ -18,25 +18,15 @@ fn camera_fov_defaults_drive_blizzard_slider_options(env: &WowLuaEnv) {
 
 prefork_full_ui_case! {
 fn tutorials_enabled_controls_original_npe_bootstrap(env: &WowLuaEnv) {
-    let env = WowLuaEnv::new().expect("isolated NPE bootstrap environment");
-    crate::common::panel_fixtures::seed_addon_search_paths(&env);
-    crate::common::load_blizzard_addon_bootstrap(
-        &env,
-        &crate::common::blizzard_addon_harness::blizzard_ui_dir(),
-        "Blizzard_NewPlayerExperience",
-        "Blizzard_NewPlayerExperience_Bootstrap.lua",
-    );
     env.exec(r#"
-        local addon = "Blizzard_NewPlayerExperience"
-        assert(not C_AddOns.IsAddOnLoaded(addon))
         A_Admin.SetPlayerNPERestricted(true)
         A_Admin.SetTutorialsEnabled(false)
         NPE_LoadUI()
-        assert(not C_AddOns.IsAddOnLoaded(addon))
+        assert(not C_AddOns.IsAddOnLoaded("Blizzard_NewPlayerExperience"))
         A_Admin.SetTutorialsEnabled(true)
         NPE_LoadUI()
-        assert(C_AddOns.IsAddOnLoaded(addon))
-    "#).expect("NPE bootstrap should obey supplied tutorial enable state");
+        assert(C_AddOns.IsAddOnLoaded("Blizzard_NewPlayerExperience"))
+    "#).expect("NPE bootstrap should use the stored tutorial enable state");
 }
 }
 
