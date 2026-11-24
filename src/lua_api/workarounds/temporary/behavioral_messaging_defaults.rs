@@ -24,6 +24,27 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
 mod tests {
     use crate::lua_api::WowLuaEnv;
 
+    #[cfg(feature = "client-ptr")]
+    #[test]
+    fn preserves_ptr_behavioral_messaging_surface() {
+        let env = WowLuaEnv::new().expect("lua env should initialize");
+        let surface: String = env
+            .eval(
+                r##"
+                local members = {}
+                for name, value in pairs(C_BehavioralMessaging) do
+                    table.insert(members, name .. ":" .. type(value))
+                end
+                table.sort(members)
+                local returns = select("#", C_BehavioralMessaging.SendNotificationReceipt(87001, 0, 0))
+                return table.concat(members, ",") .. ":" .. tostring(returns)
+                "##,
+            )
+            .expect("PTR namespace query should succeed");
+
+        assert_eq!(surface, "SendNotificationReceipt:function:0");
+    }
+
     #[test]
     fn installs_receipt_acknowledgement_noop() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
