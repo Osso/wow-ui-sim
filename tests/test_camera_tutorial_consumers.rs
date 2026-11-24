@@ -53,5 +53,10 @@ fn reset_tutorials_clears_flags_in_settings_consumer(env: &WowLuaEnv) {
         TutorialFrame_NewTutorial(18)
         assert(not TutorialFrame:IsShown())
     "#).expect("Settings reset should clear tutorial bits observed by TutorialFrame");
+    assert_eq!(
+        env.state().borrow().tutorial_requests.last(),
+        Some(&1),
+        "the original settings consumer should record its TriggerTutorial request"
+    );
 }
 }

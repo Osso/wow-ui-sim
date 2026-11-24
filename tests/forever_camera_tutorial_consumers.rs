@@ -107,4 +107,9 @@ fn forever_settings_reset_clears_flags_seen_by_tutorial_frame() {
     "#,
     )
     .expect("Forever settings reset should clear tutorial bits observed by TutorialFrame");
+    assert_eq!(
+        env.state().borrow().tutorial_requests.last(),
+        Some(&1),
+        "the Forever settings consumer should record its TriggerTutorial request"
+    );
 }
