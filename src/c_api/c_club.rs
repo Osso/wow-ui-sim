@@ -161,6 +161,12 @@ fn register_club_stream_focus_methods(
     if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever) {
         table_set_rust_fn_static(state, table_ref, "FocusStream", focus_stream)?;
         table_set_rust_fn_static(state, table_ref, "UnfocusStream", unfocus_stream)?;
+        table_set_rust_fn_static(
+            state,
+            table_ref,
+            "SetAutoAdvanceStreamViewMarker",
+            set_auto_advance_stream_view_marker,
+        )?;
     }
     Ok(())
 }
@@ -170,6 +176,7 @@ fn register_club_stream_focus_methods(
 fn focus_stream(state: &mut LuaState) -> LuaResult<u32> {
     let club_id = super::club_members::string_arg(state, 1)?;
     let requested_stream_id = f64::from_stack(state, 2)?;
+    super::club_members::sync_guild(state)?;
     let focused = {
         let mut sim = borrow_state_mut(state)?;
         let stream_id = sim
@@ -191,6 +198,29 @@ fn focus_stream(state: &mut LuaState) -> LuaResult<u32> {
     };
     state.push(Val::Bool(focused));
     Ok(1)
+}
+
+// VERIFIED (Retail/Forever ClubDocumentation.lua:1054-1064): selects one stream for auto-advance.
+// INFERRED R88fq: the selected stream ID is retained as host model state.
+fn set_auto_advance_stream_view_marker(state: &mut LuaState) -> LuaResult<u32> {
+    let club_id = super::club_members::string_arg(state, 1)?;
+    let requested_stream_id = f64::from_stack(state, 2)?;
+    super::club_members::sync_guild(state)?;
+    let mut sim = borrow_state_mut(state)?;
+    let stream_id = sim
+        .clubs
+        .clubs
+        .get(&club_id)
+        .and_then(|club| {
+            club.streams
+                .iter()
+                .find(|stream| stream.id as f64 == requested_stream_id)
+        })
+        .map(|stream| stream.id);
+    if let Some(stream_id) = stream_id {
+        sim.clubs.auto_advance_stream = Some((club_id, stream_id));
+    }
+    Ok(0)
 }
 
 // VERIFIED (Retail/Forever ClubDocumentation.lua:1193-1203): this function returns no values.

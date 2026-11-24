@@ -181,6 +181,8 @@ pub struct ClubState {
     pub account_muted_club_ids: BTreeSet<String>,
     /// Club streams currently focused by Communities.
     pub focused_streams: BTreeSet<(String, u64)>,
+    /// The stream whose view marker advances while focused.
+    pub auto_advance_stream: Option<(String, u64)>,
     next_id: u64,
     pub(crate) guild_message_authors: BTreeMap<String, Member>,
     pub(crate) guild_seed_author_ids: Vec<String>,
@@ -195,6 +197,7 @@ impl Default for ClubState {
             restriction_reason: 0,
             account_muted_club_ids: BTreeSet::new(),
             focused_streams: BTreeSet::new(),
+            auto_advance_stream: None,
             next_id: 0,
             guild_message_authors: BTreeMap::new(),
             guild_seed_author_ids: Vec::new(),
