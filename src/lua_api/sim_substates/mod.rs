@@ -445,6 +445,8 @@ pub struct VoiceChatState {
     /// Whether parental controls have disabled voice chat.
     /// Drives `IsParentalDisabled`.
     pub is_parental_disabled: bool,
+    /// INFERRED R88fv (native evidence pending): supplied permission for voice-chat UI access.
+    pub can_use_voice_chat: bool,
 }
 
 impl Default for VoiceChatState {
@@ -489,6 +491,7 @@ impl Default for VoiceChatState {
             connection_status: 2,
             master_volume_scale: 1.0,
             is_parental_disabled: false,
+            can_use_voice_chat: true,
         }
     }
 }

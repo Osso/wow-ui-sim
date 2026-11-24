@@ -102,6 +102,19 @@ fn original_communities_frame_reads_chat_accessibility_inputs() {
 }
 
 #[test]
+fn admin_supplies_voice_chat_accessibility() {
+    let env = WowLuaEnv::new().expect("Lua environment should initialize");
+    env.exec(
+        r#"
+        assert(C_VoiceChat.CanPlayerUseVoiceChat() == true)
+        A_Admin.SetCanPlayerUseVoiceChat(false)
+        assert(C_VoiceChat.CanPlayerUseVoiceChat() == false)
+        "#,
+    )
+    .expect("admin supplies the voice-chat accessibility result");
+}
+
+#[test]
 fn unmatched_community_voice_stream_accepts_numeric_stream_id() {
     let env = WowLuaEnv::new().expect("Lua environment should initialize");
     env.exec(

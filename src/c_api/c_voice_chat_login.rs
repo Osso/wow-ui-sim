@@ -12,14 +12,22 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
         return Ok(());
     }
     let namespace = super::ensure_namespace(state, "C_VoiceChat")?;
-    table_set_rust_fn_static(state, namespace, "IsLoggedIn", query_logged_in)
+    table_set_rust_fn_static(state, namespace, "IsLoggedIn", query_logged_in)?;
+    table_set_rust_fn_static(
+        state,
+        namespace,
+        "CanPlayerUseVoiceChat",
+        query_can_use_voice_chat,
+    )
 }
 
 pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
     if !publishes_login_state() {
         return Ok(builder);
     }
-    builder.set_function("SetVoiceChatLoggedIn", set_logged_in)
+    builder
+        .set_function("SetVoiceChatLoggedIn", set_logged_in)?
+        .set_function("SetCanPlayerUseVoiceChat", set_can_use_voice_chat)
 }
 
 fn publishes_login_state() -> bool {
@@ -30,6 +38,22 @@ fn query_logged_in(state: &mut LuaState) -> LuaResult<u32> {
     let logged_in = borrow_state(state)?.voice_chat.logged_in;
     state.push(Val::Bool(logged_in));
     Ok(1)
+}
+
+fn query_can_use_voice_chat(state: &mut LuaState) -> LuaResult<u32> {
+    let can_use = borrow_state(state)?.voice_chat.can_use_voice_chat;
+    state.push(Val::Bool(can_use));
+    Ok(1)
+}
+
+fn set_can_use_voice_chat(state: &mut LuaState) -> LuaResult<u32> {
+    let Val::Bool(can_use) = unwrap_secret(state, stack_val(state, 1))? else {
+        return Err(runtime_error(
+            "A_Admin.SetCanPlayerUseVoiceChat: expected boolean",
+        ));
+    };
+    borrow_state_mut(state)?.voice_chat.can_use_voice_chat = can_use;
+    Ok(0)
 }
 
 fn set_logged_in(state: &mut LuaState) -> LuaResult<u32> {
