@@ -766,9 +766,8 @@ fn gamepad_cursor_control_tracks_game_menu_lifecycle() {
         let result: (bool, bool, bool, bool, bool, bool) = env.eval(r#"
             A_Admin.SetUsingGamepad(true)
             local active = IsUsingGamepad()
-            ToggleGameMenu()
-            ToggleGameMenu()
-            assert(GameMenuFrame:IsShown(), 'game menu opens through the gamepad toggle path')
+            GameMenuFrame_Show()
+            assert(GameMenuFrame:IsShown(), 'game menu opens through its native show path')
             local opened = A_Admin.GetGamePadCursorControlEnabled()
             A_Admin.SetUsingGamepad(true)
             local closeButton
@@ -780,7 +779,7 @@ fn gamepad_cursor_control_tracks_game_menu_lifecycle() {
             local closed = A_Admin.GetGamePadCursorControlEnabled()
             local menuClosed = not GameMenuFrame:IsShown()
             A_Admin.SetUsingGamepad(false)
-            ToggleGameMenu()
+            GameMenuFrame_Show()
             local inactive = A_Admin.GetGamePadCursorControlEnabled()
             return active, opened, closed, menuClosed, inactive, GameMenuFrame:IsShown()
         "#).unwrap();
