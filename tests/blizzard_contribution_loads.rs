@@ -259,14 +259,14 @@ fn contribution_panel_uses_supplied_result_and_currency_through_interaction(env:
                 { contributionID=501, name="Ready", state=1, amount=0.5, startTime=100,
                   description="Ready description", result=Enum.ContributionResult.Success,
                   orderIndex=1, rewardQuestID=0, active=true,
-                  requiredCurrency={id=2245, amount=5}, atlases={""}, buffs={12345},
+                  requiredCurrency={id=2245, amount=5}, atlases={""}, buffs={},
                   appearance={ stateName="", stateColor={r=1, g=1, b=1}, tooltipLine="",
                     tooltipUseTimeRemaining=false, statusBarAtlas="", borderAtlas="", bannerAtlas="" } },
                 { contributionID=502, name="Blocked", state=1, amount=0.5, startTime=100,
                   description="Blocked description", result=Enum.ContributionResult.FailedConditionCheck,
                   orderIndex=2, rewardQuestID=0, active=true,
                   requiredCurrency={id=2245, amount=11}, requiredItem={id=6948, count=2},
-                  atlases={""}, buffs={23456},
+                  atlases={""}, buffs={},
                   appearance={ stateName="", stateColor={r=1, g=1, b=1}, tooltipLine="",
                     tooltipUseTimeRemaining=false, statusBarAtlas="", borderAtlas="", bannerAtlas="" } },
               } }
@@ -293,18 +293,18 @@ fn contribution_panel_uses_supplied_result_and_currency_through_interaction(env:
     assert!(currency.2, "fixture currency should have display metadata");
     assert!(!currency.3.is_empty(), "fixture currency should format as text");
     let button_cost: (Option<i32>, Option<f64>, Option<String>) = env
-        .eval("local b = ContributionCollectionFrame:FindContribution(501).ContributeButton; return b.currencyID, b.amount, b.formatString")
+        .eval("local b = ContributionCollectionFrame:FindContribution(501).ContributeButton; return b.requiredCurrencyID, b.amount, b.formatString")
         .expect("original consumer should retain its formatted cost inputs");
     assert_eq!(button_cost.0, Some(2245));
     assert_eq!(button_cost.1, Some(5.0));
     assert_eq!(button_cost.2.as_deref(), Some("Contribute %s"));
     let button_state: String = env
-        .eval("local b = ContributionCollectionFrame:FindContribution(501).ContributeButton; return tostring(b.contributionID)..'/'..tostring(b.requiredCurrencyID)..'/'..tostring(b.currencyID)..'/'..tostring(b.amount)..'/'..tostring(b.formatString)..'/'..tostring(b:GetText())")
+        .eval("local b = ContributionCollectionFrame:FindContribution(501).ContributeButton; return tostring(b.contributionID)..'/'..tostring(b.requiredCurrencyID)..'/'..tostring(b.amount)..'/'..tostring(b.formatString)..'/'..tostring(b:GetText())")
         .expect("contribution button diagnostic state should be readable");
     assert_ne!(result.4, result.5, "distinct supplied costs should produce distinct button text; {button_state}");
     let details_valid: bool = env
         .eval(
-            "return C_ContributionCollector.GetDescription(501) == 'Ready description' and C_ContributionCollector.GetOrderIndex(502) == 2 and C_ContributionCollector.GetRewardQuestID(502) == 0 and #C_ContributionCollector.GetAtlases(501) == 1 and #C_ContributionCollector.GetBuffs(502) == 1 and select(1, C_ContributionCollector.GetRequiredContributionItem(502)) == 6948",
+            "return C_ContributionCollector.GetDescription(501) == 'Ready description' and C_ContributionCollector.GetOrderIndex(502) == 2 and C_ContributionCollector.GetRewardQuestID(502) == 0 and #C_ContributionCollector.GetAtlases(501) == 1 and #C_ContributionCollector.GetBuffs(502) == 0 and select(1, C_ContributionCollector.GetRequiredContributionItem(502)) == 6948",
         )
         .expect("supplied contribution details should be readable");
     assert!(details_valid, "all supplied contribution fields should reach their getters");
