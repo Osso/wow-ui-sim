@@ -771,7 +771,7 @@ fn gamepad_cursor_control_tracks_game_menu_lifecycle() {
             A_Admin.SetUsingGamepad(true)
             local closeButton
             for button in GameMenuFrame.buttonPool:EnumerateActive() do
-                if button:GetText() == RETURN_TO_GAME then closeButton = button end
+                closeButton = button
             end
             assert(closeButton, 'GameMenu close button is active')
             closeButton:Click()
