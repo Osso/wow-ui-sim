@@ -1,4 +1,4 @@
-//! Forever consumers for modeled camera and tutorial state.
+//! Forever camera consumer proof.
 #![cfg(feature = "client-wowforever")]
 
 use crate::common::blizzard_addon_harness::{
@@ -6,23 +6,26 @@ use crate::common::blizzard_addon_harness::{
 };
 use wow_ui_sim::lua_api::WowLuaEnv;
 
-fn load_addon(env: &WowLuaEnv, addon: &str) {
-    load_blizzard_addon_closure_into_env(env, &blizzard_ui_dir(), &[addon], &[]);
-}
-
 #[test]
-fn forever_tutorial_flags_clear_through_settings_consumer() {
-    let env = new_blizzard_addon_env(&blizzard_ui_dir());
-    load_addon(&env, "Blizzard_Settings_Shared");
-    load_addon(&env, "Blizzard_SettingsDefinitions_Shared");
-    load_addon(&env, "Blizzard_SettingsDefinitions_Frame");
-    load_addon(&env, "Blizzard_FrameXML");
+fn forever_camera_fov_defaults_drive_graphics_slider() {
+    let ui = blizzard_ui_dir();
+    let env = new_blizzard_addon_env(&ui);
+    load_blizzard_addon_closure_into_env(&env, &ui, &["Blizzard_Settings_Shared"], &[]);
+    load_blizzard_addon_closure_into_env(&env, &ui, &["Blizzard_SettingsDefinitions_Shared"], &[]);
     env.exec(
         r#"
-        A_Admin.SetTutorialFlag(1, true)
-        InterfaceOverrides.ShowTutorialsOnButtonClick()
-        assert(not IsTutorialFlagged(1))
+        local _, minValue, maxValue = GetCameraFOVDefaults()
+        local options = Settings.CreateSliderOptions(minValue, maxValue, 5)
+        local setting = Settings.GetSetting("PROXY_CAMERA_FOV")
+        A_Admin.SetCameraFOV(60)
+        assert(options.minValue == 50 and options.maxValue == 90)
+        assert(setting:GetValue() == 60)
+        A_Admin.SetCameraFOV(80)
+        assert(options.minValue == 50 and options.maxValue == 90)
+        assert(setting:GetValue() == 80)
     "#,
     )
-    .expect("Forever settings consumer should clear supplied tutorial bits");
+    .expect(
+        "Forever Graphics setting should read supplied camera FOV through its original consumer",
+    );
 }

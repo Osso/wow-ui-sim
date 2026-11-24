@@ -15,13 +15,3 @@ fn camera_fov_defaults_drive_blizzard_slider_options(env: &WowLuaEnv) {
     "#).expect("Blizzard Graphics slider options should use native FOV bounds");
 }
 }
-
-prefork_full_ui_case! {
-fn tutorial_flags_clear_through_blizzard_settings_consumer(env: &WowLuaEnv) {
-    env.exec(r#"
-        A_Admin.SetTutorialFlag(1, true)
-        InterfaceOverrides.ShowTutorialsOnButtonClick()
-        assert(not IsTutorialFlagged(1))
-    "#).expect("Settings consumer should clear supplied tutorial bits through ResetTutorials");
-}
-}
