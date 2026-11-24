@@ -77,6 +77,8 @@ pub(crate) fn register_secure_environment_base_globals(lua: &mut rilua::Lua) -> 
 pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
     register_legacy_global_shims(lua)?;
     let state = lua.state_mut();
+    #[cfg(feature = "client-retail")]
+    c_api::scripted_animations::register(state)?;
     register_item_trait_surfaces(state)?;
     #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
     c_api::combat_log_history::register(state)?;

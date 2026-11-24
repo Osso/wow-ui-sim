@@ -59,6 +59,10 @@ pub mod cvar_info;
 )]
 pub mod item_effects;
 
+#[cfg(all(feature = "profile-retail", not(feature = "client-ptr")))]
+#[path = "../data/scripted_animation_effects_retail.rs"]
+pub mod scripted_animation_effects;
+
 #[rustfmt::skip]
 #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
 #[path = "../data/ui_map_assignments_retail.rs"]

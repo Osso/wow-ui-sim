@@ -144,6 +144,8 @@ fn register_admin_player_services(builder: TableBuilder) -> LuaResult<TableBuild
     let builder = crate::c_api::register_ping_defaults_admin(builder)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     let builder = crate::c_api::kiosk::register_admin(builder)?;
+    #[cfg(feature = "client-retail")]
+    let builder = crate::c_api::scripted_animations::register_admin(builder)?;
     Ok(builder)
 }
 

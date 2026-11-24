@@ -179,6 +179,7 @@ pub(crate) mod reputation_state;
 pub(crate) mod restricted_actions_protected;
 pub(crate) mod scenario_defaults;
 pub(crate) mod script_bucket_throttle_limits;
+#[cfg(not(feature = "client-retail"))]
 pub(crate) mod scripted_animation_effect_defaults;
 pub(crate) mod secure_env_global_snapshot;
 pub(crate) mod secure_legacy_unit_globals;

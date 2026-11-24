@@ -36,5 +36,6 @@ The `A_Admin` namespace provides administrative functions for controlling simula
 - [Premade Groups](premade-groups.md) — AddPremadeListing, ClearPremadeListings, UpdatePremadeListing
 - [Quests](quests.md) — simulator-only selected completed quest turn-in
 - [Events](events.md) — FireEvent
+- [Scripted animations](scripted-animations.md) — SetScriptedAnimationEffects
 - [Performance metrics](performance-metrics.md) — SetFramerate, SetAddOnUsage
 - [Examples](examples.md) — Usage examples (raid healing, combat testing, transmog)
