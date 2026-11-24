@@ -250,17 +250,17 @@ fn battle_net_globals_follow_supplied_connection_and_account_state() {
         assert(BNFeaturesEnabled() == true)
         assert(BNConnected() == false)
         assert(BNFeaturesEnabledAndConnected() == false)
-        assert(select("#", BNGetInfo()) == 0)
+        assert(select(string.char(35), BNGetInfo()) == 0)
 
         A_Admin.SetPlayerBattleNetInfo("Malfurion#1234", 42, nil, false, false, true, false, true, true)
         assert(BNConnected() == true)
         assert(BNFeaturesEnabledAndConnected() == true)
-        assert(select("#", BNGetInfo()) == 8)
+        assert(select(string.char(35), BNGetInfo()) == 8)
         local _, tag = BNGetInfo()
         assert(tag == "Malfurion#1234")
 
         A_Admin.SetPlayerBattleNetInfo(nil, 42, nil, false, false, true, false, true, true)
-        local count, _, tag = select("#", BNGetInfo()), BNGetInfo()
+        local count, _, tag = select(string.char(35), BNGetInfo()), BNGetInfo()
         assert(count == 8 and tag == nil)
         A_Admin.SetPlayerBattleNetInfo("", 42, nil, false, false, true, false, true, true)
         local _, emptyTag = BNGetInfo()
@@ -269,7 +269,7 @@ fn battle_net_globals_follow_supplied_connection_and_account_state() {
         A_Admin.SetPlayerBattleNetInfo("Malfurion#1234", 42, nil, false, false, true, false, true, false)
         assert(BNFeaturesEnabled() == false)
         assert(BNConnected() == false)
-        assert(select("#", BNGetInfo()) == 0)
+        assert(select(string.char(35), BNGetInfo()) == 0)
         "#,
     )
     .expect("Battle.net globals follow supplied account and connection state");
