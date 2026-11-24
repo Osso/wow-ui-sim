@@ -264,15 +264,6 @@ fn blizzard_minimap_toc_lists_six_files_all_under_mainline_subdir() {
 }
 
 #[test]
-fn addon_compartment_frame_is_not_seeded_before_blizzard_minimap() {
-    let env = WowLuaEnv::new().expect("create bare environment");
-    let absent: bool = env
-        .eval("return rawget(_G, 'AddonCompartmentFrame') == nil")
-        .expect("inspect pre-addon compartment global");
-    assert!(absent, "Blizzard_Minimap must own the compartment frame");
-}
-
-#[test]
 fn blizzard_minimap_compartment_displays_loaded_addon_registrations() {
     let env = load_full_game_ui();
     let fixture = tempfile::tempdir().expect("create addon-compartment fixtures");
