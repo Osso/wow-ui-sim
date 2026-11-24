@@ -285,6 +285,13 @@ fn contribution_panel_uses_supplied_result_and_currency_through_interaction(env:
     assert_eq!(result.1, 2, "both supplied active contributions should render");
     assert!(result.2, "Success result should enable its contribution button");
     assert!(!result.3, "FailedConditionCheck should disable its contribution button");
+    let currency: (Option<i32>, Option<f64>, bool, String) = env
+        .eval("local id, amount = C_ContributionCollector.GetRequiredContributionCurrency(501); return id, amount, C_CurrencyInfo.GetCurrencyInfo(2245) ~= nil, GetCurrencyString(2245, 5)")
+        .expect("supplied currency cost should be readable");
+    assert_eq!(currency.0, Some(2245));
+    assert_eq!(currency.1, Some(5.0));
+    assert!(currency.2, "fixture currency should have display metadata");
+    assert!(!currency.3.is_empty(), "fixture currency should format as text");
     assert_ne!(result.4, result.5, "distinct supplied costs should produce distinct button text");
     let details_valid: bool = env
         .eval(
