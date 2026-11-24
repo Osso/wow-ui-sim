@@ -66,12 +66,14 @@ fn set_gamepad_cursor_control(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn get_gamepad_cursor_control_enabled(state: &mut LuaState) -> LuaResult<u32> {
     let enabled = borrow_state(state)?.gamepad_cursor_control_enabled;
     state.push(Val::Bool(enabled));
     Ok(1)
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn set_using_gamepad_admin(state: &mut LuaState) -> LuaResult<u32> {
     let enabled = bool::from_stack(state, 1)?;
     let mut sim = borrow_state_mut(state)?;
@@ -94,6 +96,7 @@ fn set_using_gamepad_admin(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
     if !matches!(
         crate::client_profile::ACTIVE,
