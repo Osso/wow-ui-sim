@@ -3,7 +3,9 @@
 #[cfg(feature = "client-wowforever")]
 use crate::c_api::c_input_interface_style::InputInterfaceStyle;
 use crate::lua_api::methods::{borrow_state, borrow_state_mut};
-use crate::lua_bridge::{FromStack, TableBuilder};
+use crate::lua_bridge::FromStack;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+use crate::lua_bridge::TableBuilder;
 use rilua::vm::state::LuaState;
 use rilua::{LuaApiMut, LuaResult, Val};
 
@@ -72,10 +74,11 @@ fn get_gamepad_cursor_control_enabled(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn set_using_gamepad_admin(state: &mut LuaState) -> LuaResult<u32> {
     let enabled = bool::from_stack(state, 1)?;
     let mut sim = borrow_state_mut(state)?;
-    #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+    #[cfg(feature = "client-retail")]
     {
         let timestamp = sim.cached_clock_ms().wrapping_sub(1);
         sim.last_gamepad_input_timestamp = Some(if timestamp == 0 { u32::MAX } else { timestamp });
@@ -94,14 +97,8 @@ fn set_using_gamepad_admin(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
-    if !matches!(
-        crate::client_profile::ACTIVE,
-        crate::client_profile::ClientProfile::Retail
-            | crate::client_profile::ClientProfile::WowForever
-    ) {
-        return Ok(builder);
-    }
     builder
         .set_function("SetUsingGamepad", set_using_gamepad_admin)?
         .set_function(
