@@ -11,8 +11,14 @@ fn load_account_consumers() -> WowLuaEnv {
         &["Blizzard_GroupFinder", "Blizzard_MicroMenu"],
         &[] as &[BlizzardAddonOverride<'_>],
     );
-    assert!(loaded.iter().any(|name| name == "Blizzard_GroupFinder"));
-    assert!(loaded.iter().any(|name| name == "Blizzard_MicroMenu"));
+    assert!(
+        loaded.iter().any(|name| name == "Blizzard_GroupFinder"),
+        "selected GroupFinder addon missing from loaded closure: {loaded:?}"
+    );
+    assert!(
+        loaded.iter().any(|name| name == "Blizzard_MicroMenu"),
+        "selected MicroMenu addon missing from loaded closure: {loaded:?}"
+    );
     env.apply_post_load_workarounds();
     wow_ui_sim::startup::fire_startup_events_for_screen(&env, ScreenKind::Game);
     env
