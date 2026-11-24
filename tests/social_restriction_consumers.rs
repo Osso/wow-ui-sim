@@ -1,5 +1,8 @@
 #![cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 
+#[path = "common/prefork_full_ui_preload.rs"]
+mod prefork_full_ui_preload;
+
 use crate::common::blizzard_addon_harness::{blizzard_ui_dir, build_blizzard_addon_closure_env};
 use wow_ui_sim::lua_api::WowLuaEnv;
 
@@ -42,7 +45,7 @@ fn original_social_settings_reads_chat_restrictions() {
 
 #[test]
 fn original_communities_frame_reads_chat_accessibility_inputs() {
-    let env = crate::common::prefork_full_ui_preload::preload_full_game_ui()
+    let env = prefork_full_ui_preload::preload_full_game_ui()
         .expect("full Blizzard UI should load for the normal CommunitiesFrame path");
     env.exec(
         r#"
