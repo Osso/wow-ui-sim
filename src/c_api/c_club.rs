@@ -3,8 +3,8 @@ pub use super::club_inputs::{receive_member, receive_member_removal};
 use super::helpers::{ensure_namespace, set_table_array};
 use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::methods::{
-    borrow_state, borrow_state_mut, create_string, create_table, table_get, table_set,
-    val_to_string,
+    borrow_state, borrow_state_mut, call_function_state, create_string, create_table, table_get,
+    table_set, val_to_string,
 };
 use crate::lua_api::script_helpers::fire_named_event_state;
 use crate::lua_api::state_types::character_world::GuildChatMessage;
@@ -20,6 +20,7 @@ const GUILD_STREAM_ID: f64 = 1.0;
 const FIRST_MESSAGE_EPOCH: i64 = 1_700_000_000_000_000;
 const MESSAGE_EPOCH_STEP: i64 = 120_000_000;
 const INVITATION_CANDIDATES_USAGE: &str = "Usage: local candidates = C_Club.GetInvitationCandidates([filter, maxResults, cursorPosition, allowFullMatch], clubId)";
+const DEFAULT_COMMUNITY_AVATAR_FILE_ID: f64 = 134400.0;
 
 pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
     if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever) {
@@ -74,6 +75,9 @@ fn register_club_profile_methods(state: &mut LuaState, table_ref: GcRef<Table>) 
             c_club_get_invitation_candidates,
         )?;
     }
+    if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever) {
+        table_set_rust_fn_static(state, table_ref, "SetAvatarTexture", set_avatar_texture)?;
+    }
     if matches!(
         ACTIVE,
         ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever
@@ -93,6 +97,27 @@ fn register_club_profile_methods(state: &mut LuaState, table_ref: GcRef<Table>) 
             c_club_send_battle_tag_friend_request,
         )?;
     }
+    Ok(())
+}
+
+/// INFERRED R88fq (native evidence pending): no avatar file mapping is supplied, so use the default community icon.
+fn set_avatar_texture(state: &mut LuaState) -> LuaResult<u32> {
+    let texture = stack_val(state, 1);
+    let _avatar_id = f64::from_stack(state, 2)?;
+    let _club_type = i32::from_stack(state, 3)?;
+    call_method(
+        state,
+        texture,
+        "SetTexture",
+        Val::Num(DEFAULT_COMMUNITY_AVATAR_FILE_ID),
+    )?;
+    Ok(0)
+}
+
+fn call_method(state: &mut LuaState, object: Val, method: &str, argument: Val) -> LuaResult<()> {
+    let key = state.gc.intern_string(method.as_bytes());
+    let function = state.gettable(object, Val::Str(key))?;
+    call_function_state(state, function, &[object, argument])?;
     Ok(())
 }
 
