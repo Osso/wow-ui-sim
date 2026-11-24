@@ -153,9 +153,12 @@ fn is_expansion_trial(state: &mut LuaState) -> LuaResult<u32> {
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn get_expansion_trial_info(state: &mut LuaState) -> LuaResult<u32> {
-    let account = &borrow_state(state)?.account_type;
-    state.push(Val::Bool(account.expansion_trial));
-    state.push(Val::Num(account.expansion_trial_remaining));
+    let (is_trial, remaining) = {
+        let account = &borrow_state(state)?.account_type;
+        (account.expansion_trial, account.expansion_trial_remaining)
+    };
+    state.push(Val::Bool(is_trial));
+    state.push(Val::Num(remaining));
     Ok(2)
 }
 
