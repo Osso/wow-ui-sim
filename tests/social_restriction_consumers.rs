@@ -112,13 +112,13 @@ fn assert_social_setting(env: &WowLuaEnv, expected: bool) {
 fn club_stream_focus_requires_a_supplied_club_stream() {
     let env = WowLuaEnv::new().expect("Lua environment should initialize");
     env.exec(
-        r#"
+        r##"
         assert(C_Club.FocusStream("guild-0", 1) == true)
         assert(C_Club.FocusStream("guild-0", 999) == false)
         assert(C_Club.FocusStream("missing-club", 1) == false)
         assert(select("#", C_Club.UnfocusStream("guild-0", 1)) == 0)
         assert(C_Club.FocusStream("guild-0", 1) == true)
-        "#,
+        "##,
     )
     .expect("C_Club stream focus follows the supplied Rust club model");
 }
