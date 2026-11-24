@@ -799,12 +799,14 @@ fn set_guild_faction_group_flags(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn set_player_npe_restricted(state: &mut LuaState) -> LuaResult<u32> {
     let restricted = bool::from_stack(state, 1)?;
     borrow_state_mut(state)?.player.is_npe_restricted = restricted;
     Ok(0)
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn set_tutorials_enabled(state: &mut LuaState) -> LuaResult<u32> {
     let enabled = bool::from_stack(state, 1)?;
     crate::lua_api::globals::set_cvar_verb::set_admin_cvar(

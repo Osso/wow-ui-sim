@@ -87,6 +87,7 @@ pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
     c_api::forever_startup::register(state)
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub(crate) fn set_admin_tutorial_flag(state: &mut LuaState) -> LuaResult<u32> {
     tutorial::set_tutorial_flag(state)
 }
