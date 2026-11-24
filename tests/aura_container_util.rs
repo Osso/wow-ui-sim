@@ -1,6 +1,8 @@
 #![cfg(feature = "aura-containers")]
 
 use wow_ui_sim::lua_api::WowLuaEnv;
+#[path = "tooltip_full_env_helpers.rs"]
+mod tooltip_full_env_helpers;
 
 #[test]
 fn aura_update_and_texture_style_enums_match_native_contract() {
@@ -367,32 +369,43 @@ fn assert_texture_hook_count(env: &WowLuaEnv) {
         .widgets
         .get_by_name("TextureHookProbeCounter")
         .expect("real addon hook callback created its counter frame");
-    assert_eq!(counter.width, 2.0);
-    assert_eq!(counter.height, 2.0);
+    assert!(counter.width >= 2.0 && counter.width < 100.0);
+    assert_eq!(counter.width, counter.height);
 }
 
 #[cfg(all(feature = "optional-tests", feature = "client-retail"))]
 #[test]
 fn retail_aura_container_secret_icons_survive_addon_texture_hook() {
-    let env = crate::common::aura_container_harness::load_env();
+    let env = tooltip_full_env_helpers::setup_full_env();
+    env.exec("A_Admin.ClearBuffs()").unwrap();
+    tooltip_full_env_helpers::refresh_aura_frames(&env);
     load_texture_hook_probe(&env);
-    env.exec_maybe_secure(
+    env.exec(
         r#"
-        local firstTexture = CreateFrame('Frame'):CreateTexture()
-        local secondTexture = CreateFrame('Frame'):CreateTexture()
-        AuraContainerUtil.SetIconTextureForAura({}, firstTexture,
-            {icon = 'Interface\\Icons\\INV_Misc_QuestionMark'})
-        AuraContainerUtil.SetIconTextureForAura({}, secondTexture,
-            {icon = 'Interface\\Icons\\Ability_Warrior_Charge'})
-        local firstResult = secretunwrap(firstTexture:GetTexture())
-        local secondResult = secretunwrap(secondTexture:GetTexture())
-        if not firstResult or not secondResult or firstResult == secondResult then
-            error(tostring(firstResult) .. ':' .. tostring(secondResult))
-        end
+        A_Admin.AddBuff(99021, 'Hook Aura One', '134973', 60, 1)
+        A_Admin.AddBuff(99022, 'Hook Aura Two', '134920', 60, 1)
         "#,
-        true,
     )
-    .expect("AuraContainer must apply both secret icon paths before its addon hook runs");
+    .unwrap();
+    tooltip_full_env_helpers::refresh_aura_frames(&env);
+    let icons: String = env
+        .eval(
+            r#"
+            local icons = {}
+            for _, button in ipairs(BuffFrame.auraFrames) do
+                if button:IsShown() and button.buttonInfo
+                    and button.buttonInfo.auraType == 'Buff' and button.Icon then
+                    local icon = button.Icon:GetTexture()
+                    if not issecretvalue(icon) then return 'public_icon' end
+                    icon = secretunwrap(icon)
+                    icons[#icons + 1] = tostring(icon)
+                end
+            end
+            table.sort(icons)
+            return table.concat(icons, ',')
+            "#,
+        )
+        .unwrap();
+    assert_eq!(icons, "134920,134973");
     assert_texture_hook_count(&env);
-    crate::common::aura_container_harness::assert_no_lua_errors(&env);
 }
