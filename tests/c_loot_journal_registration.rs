@@ -1,5 +1,8 @@
 #![cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 
+use std::path::PathBuf;
+
+use wow_ui_sim::loader::load_addon;
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 #[test]
@@ -32,29 +35,54 @@ fn rust_item_set_registration_survives_bootstrap() {
 #[test]
 fn rust_raid_lock_registration_uses_first_map_row_without_difficulty() {
     let env = WowLuaEnv::new().expect("Lua environment should initialize");
-    env.exec(
-        r#"
-        A_Admin.SetCompletedEncounters({
-            { mapID=88001, difficultyID=14, completedEncounterIDs={77101} },
-            { mapID=88001, difficultyID=15, completedEncounterIDs={77100} },
-        })
-        "#,
-    )
-    .expect("host-supplied raid-lock entries should be accepted");
+    load_addon(&env.loader_env(), &encounter_journal_toc())
+        .expect("Forever Encounter Journal should load from its selected TOC");
+    env.apply_post_load_workarounds();
 
-    let (complete_a, complete_b, unknown, wrong_difficulty): (bool, bool, bool, bool) = env
+    let (omitted, explicit, overlay_shown): (bool, bool, bool) = env
         .eval(
             r#"
-            return C_RaidLocks.IsEncounterComplete(88001, 77100, 14),
-                C_RaidLocks.IsEncounterComplete(88001, 77100),
-                C_RaidLocks.IsEncounterComplete(88001, 77102, 14),
-                C_RaidLocks.IsEncounterComplete(88001, 77100, 15)
+            local selected
+            for instanceIndex = 1, 500 do
+                local instanceID = EJ_GetInstanceByIndex(instanceIndex, true)
+                if not instanceID then break end
+                for bossIndex = 1, 100 do
+                    local _, _, journalID = EJ_GetEncounterInfoByIndex(bossIndex, instanceID)
+                    if not journalID then break end
+                    local _, _, _, _, _, _, encounterID, mapID = EJ_GetEncounterInfo(journalID)
+                    if encounterID and encounterID > 0 and mapID and mapID > 0 then
+                        selected = { journalID=journalID, encounterID=encounterID, mapID=mapID }
+                        break
+                    end
+                end
+                if selected then break end
+            end
+            assert(selected, "Encounter Journal must contain an encounter with map data")
+            A_Admin.SetCompletedEncounters({
+                { mapID=selected.mapID, difficultyID=14, completedEncounterIDs={} },
+                { mapID=selected.mapID, difficultyID=DifficultyUtil.ID.PrimaryRaidHeroic,
+                  completedEncounterIDs={selected.encounterID} },
+            })
+            EJ_SetDifficulty(DifficultyUtil.ID.PrimaryRaidHeroic)
+            local button = CreateFrame("Button")
+            button.encounterID = selected.journalID
+            button.DefeatedOverlay = CreateFrame("Frame", nil, button)
+            EncounterJournalBossButton_UpdateDifficultyOverlay(button)
+            return C_RaidLocks.IsEncounterComplete(selected.mapID, selected.encounterID),
+                C_RaidLocks.IsEncounterComplete(selected.mapID, selected.encounterID,
+                    DifficultyUtil.ID.PrimaryRaidHeroic),
+                button.DefeatedOverlay:IsShown()
             "#,
         )
-        .expect("C_RaidLocks should query supplied Forever encounter locks");
+        .expect("the loaded Encounter Journal consumer should read supplied raid locks");
 
-    assert!(!complete_a);
-    assert!(!complete_b);
-    assert!(!unknown);
-    assert!(wrong_difficulty);
+    assert!(!omitted);
+    assert!(explicit);
+    assert!(overlay_shown);
+}
+
+fn encounter_journal_toc() -> PathBuf {
+    wow_ui_sim::paths::default_blizzard_ui_addons_path()
+        .expect("Blizzard UI cache should be available")
+        .join("Blizzard_EncounterJournal/Blizzard_EncounterJournal.toc")
 }
