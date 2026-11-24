@@ -348,7 +348,10 @@ fn flight_map_open_path_places_click_to_zoom_labels_from_uimap_positions(env: &W
     env.exec("A_Admin.SetTaxiMapID(14)")
         .expect("supply the map selected by the flight-master interaction");
 
-    env.fire_event_with_args("TAXIMAP_OPENED", &[rilua::Val::Num(0.0)])
+    let world_system: f64 = env
+        .eval("return Enum.UIMapSystem.World")
+        .expect("World UIMapSystem enum should be available");
+    env.fire_event_with_args("TAXIMAP_OPENED", &[rilua::Val::Num(world_system)])
         .expect("World-system TAXIMAP_OPENED should load and open FlightMapFrame");
 
     let observed: (bool, bool, i32, String, String) = env
