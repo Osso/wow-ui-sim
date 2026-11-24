@@ -143,6 +143,10 @@ macro_rules! build_empty_sim_state {
             #[cfg(feature = "client-wrath")]
             legacy_gamma: 0.0,
             guild_roster_selection: 0,
+            guild_events_enabled: false,
+            guild_reputation_enabled: false,
+            guild_can_change_locale: false,
+            guild_can_change_datacenter_locality: false,
             guild_request_inputs: Default::default(),
             guild_rename_status: None,
             pending_guild_rename_status: Default::default(),
@@ -487,6 +491,7 @@ macro_rules! build_empty_sim_state {
             title_friend_requests: Vec::new(),
             club_battle_tag_friend_requests: Vec::new(),
             clubs: crate::c_api::club_model::ClubState::default(),
+            club_finder: crate::c_api::c_club_finder::ClubFinderState::default(),
             spell_cooldown_categories: HashMap::new(),
             spellbook_auto_cast: HashMap::new(),
             spellbook_low_rank: HashSet::new(),
@@ -1094,7 +1099,7 @@ macro_rules! build_empty_sim_state {
             voice_chat: VoiceChatState::default(),
             #[cfg(feature = "client-wrath")]
             legacy_unit_voice: HashMap::new(),
-            #[cfg(feature = "retail-12-0-5")]
+            #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
             voice_channels: Vec::new(),
             #[cfg(feature = "retail-12-0-5")]
             lfg_endgame_policy: Default::default(),

@@ -293,6 +293,7 @@ fn register_admin_social(builder: TableBuilder) -> LuaResult<TableBuilder> {
     let builder = crate::c_api::c_social_queue::register_admin(builder)?;
     let builder = crate::c_api::c_commentator::register_admin(builder)?;
     let builder = crate::c_api::c_social_restrictions::register_admin(builder)?;
+    let builder = crate::c_api::c_club::register_admin(builder)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     let builder = crate::c_api::c_party_info::pending_invites::register_admin(builder)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
@@ -513,6 +514,21 @@ fn register_guild_basics(b: TableBuilder) -> LuaResult<TableBuilder> {
     let b = b.set_function(
         "SetGuildRenameStatus",
         crate::c_api::c_guild_info::admin_set_guild_rename_status,
+    )?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let b = b.set_function(
+        "SetGuildEventsEnabled",
+        crate::c_api::c_guild_info::admin_set_guild_events_enabled,
+    )?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let b = b.set_function(
+        "SetGuildReputationEnabled",
+        crate::c_api::c_guild_info::admin_set_guild_reputation_enabled,
+    )?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let b = b.set_function(
+        "SetGuildPreferredPlaySettingsFeatures",
+        crate::c_api::c_guild_info::admin_set_guild_preferred_play_settings_features,
     )?;
     b.set_function("SetGuildRanks", set_guild_ranks)?
         .set_function("SetGuildRoster", set_guild_roster)

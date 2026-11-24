@@ -196,6 +196,7 @@ pub(crate) mod c_click_bindings;
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) mod c_click_bindings_spell;
 pub mod c_club;
+pub(crate) mod c_club_finder;
 #[cfg(feature = "retail-12-0-0")]
 pub(crate) mod c_combat_audio_alert;
 #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
@@ -452,7 +453,7 @@ pub(crate) mod target_spell;
 pub(crate) mod c_transmog_collection;
 mod c_transmog_latest;
 pub(crate) mod c_voice_chat_activity;
-#[cfg(feature = "retail-12-0-5")]
+#[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 pub mod c_voice_chat_channels;
 pub mod c_voice_chat_devices;
 pub(crate) mod c_voice_chat_login;

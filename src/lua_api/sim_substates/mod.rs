@@ -445,6 +445,12 @@ pub struct VoiceChatState {
     /// Whether parental controls have disabled voice chat.
     /// Drives `IsParentalDisabled`.
     pub is_parental_disabled: bool,
+    /// INFERRED R88fv (native evidence pending): supplied permission for voice-chat UI access.
+    pub can_use_voice_chat: bool,
+    /// INFERRED R88fv (native evidence pending): supplied per-club join error reasons.
+    pub join_club_voice_channel_errors: HashMap<String, i32>,
+    /// INFERRED R88fv (native evidence pending): community voice joins in progress.
+    pub pending_channel_joins: HashSet<(i32, Option<String>, Option<String>)>,
 }
 
 impl Default for VoiceChatState {
@@ -489,6 +495,9 @@ impl Default for VoiceChatState {
             connection_status: 2,
             master_volume_scale: 1.0,
             is_parental_disabled: false,
+            can_use_voice_chat: true,
+            join_club_voice_channel_errors: HashMap::new(),
+            pending_channel_joins: HashSet::new(),
         }
     }
 }

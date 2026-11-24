@@ -208,6 +208,14 @@ pub struct SimState {
     pub legacy_gamma: f64,
     /// Zero means none; other values are one-based guild roster indexes.
     pub guild_roster_selection: usize,
+    /// INFERRED R88fq (native evidence pending): supplied guild-calendar capability; false by default.
+    pub guild_events_enabled: bool,
+    /// INFERRED R88fq (native evidence pending): supplied guild-reputation capability; false by default.
+    pub guild_reputation_enabled: bool,
+    /// INFERRED R88fq (native evidence pending): supplied guild locale-change capability.
+    pub guild_can_change_locale: bool,
+    /// INFERRED R88fq (native evidence pending): supplied guild datacenter-change capability.
+    pub guild_can_change_datacenter_locality: bool,
     pub guild_request_inputs: crate::c_api::c_guild_info::GuildRequestInputs,
     pub guild_rename_status: Option<crate::c_api::c_guild_info::GuildRenameStatus>,
     pub pending_guild_rename_status:
@@ -591,6 +599,7 @@ pub struct SimState {
     /// Guild club member names sent a Battle.net friend request via `C_Club`.
     pub club_battle_tag_friend_requests: Vec<String>,
     pub clubs: crate::c_api::club_model::ClubState,
+    pub(crate) club_finder: crate::c_api::c_club_finder::ClubFinderState,
     /// Host spell data: cooldown category of each spell that has one.
     pub spell_cooldown_categories: HashMap<u32, i32>,
     /// Supplied autocast flags, keyed by spellbook slot and bank.
@@ -1376,7 +1385,8 @@ pub struct SimState {
     #[cfg(feature = "client-wrath")]
     pub legacy_unit_voice:
         HashMap<(String, String), crate::lua_api::globals::real::wrath_voice::LegacyUnitVoice>,
-    #[cfg(feature = "retail-12-0-5")]
+    /// Supplied community voice channels; Forever uses the documented empty default.
+    #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
     pub voice_channels: Vec<crate::c_api::c_voice_chat_channels::VoiceChannel>,
     #[cfg(feature = "retail-12-0-5")]
     pub lfg_endgame_policy: crate::c_api::c_lfg_list_policy::EndgameEditPolicy,

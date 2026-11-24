@@ -13,7 +13,7 @@ use crate::lua_api::methods::{
 };
 use crate::lua_api::state_types::GuildLogo;
 use crate::lua_bridge::{FromStack, stack_val, table_set_rust_fn_static};
-use rilua::vm::state::LuaState;
+use rilua::vm::{gc::arena::GcRef, state::LuaState, table::Table};
 use rilua::{LuaResult, Val, runtime_error};
 
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -63,19 +63,99 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
         get_guild_tabard_info,
     )?;
     if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever) {
-        table_set_rust_fn_static(
-            state,
-            namespace,
-            "RequestRenameStatus",
-            request_rename_status,
-        )?;
+        register_retail_forever_methods(state, namespace)?;
     }
     if ACTIVE == ClientProfile::Retail && cfg!(feature = "retail-12-1-5") {
-        table_set_rust_fn_static(state, namespace, "Demote", demote)?;
-        table_set_rust_fn_static(state, namespace, "SetLeader", set_leader)?;
-        table_set_rust_fn_static(state, namespace, "Disband", disband)?;
+        register_retail_1215_methods(state, namespace)?;
     }
     Ok(())
+}
+
+fn register_retail_forever_methods(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
+    table_set_rust_fn_static(
+        state,
+        namespace,
+        "AreGuildEventsEnabled",
+        are_guild_events_enabled,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        namespace,
+        "IsGuildReputationEnabled",
+        is_guild_reputation_enabled,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        namespace,
+        "GetPreferredPlaySettingsFeatures",
+        get_preferred_play_settings_features,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        namespace,
+        "RequestRenameStatus",
+        request_rename_status,
+    )
+}
+
+fn register_retail_1215_methods(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
+    table_set_rust_fn_static(state, namespace, "Demote", demote)?;
+    table_set_rust_fn_static(state, namespace, "SetLeader", set_leader)?;
+    table_set_rust_fn_static(state, namespace, "Disband", disband)
+}
+
+fn get_preferred_play_settings_features(state: &mut LuaState) -> LuaResult<u32> {
+    let (can_change_locale, can_change_datacenter_locality) = {
+        let sim = borrow_state(state)?;
+        (
+            sim.guild_can_change_locale,
+            sim.guild_can_change_datacenter_locality,
+        )
+    };
+    state.push(Val::Bool(can_change_locale));
+    state.push(Val::Bool(can_change_datacenter_locality));
+    Ok(2)
+}
+
+fn is_guild_reputation_enabled(state: &mut LuaState) -> LuaResult<u32> {
+    let enabled = borrow_state(state)?.guild_reputation_enabled;
+    state.push(Val::Bool(enabled));
+    Ok(1)
+}
+
+fn are_guild_events_enabled(state: &mut LuaState) -> LuaResult<u32> {
+    let enabled = borrow_state(state)?.guild_events_enabled;
+    state.push(Val::Bool(enabled));
+    Ok(1)
+}
+
+// INFERRED R88fq (native evidence pending): supply guild preference-editing capabilities.
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) fn admin_set_guild_preferred_play_settings_features(
+    state: &mut LuaState,
+) -> LuaResult<u32> {
+    let can_change_locale = bool::from_stack(state, 1)?;
+    let can_change_datacenter_locality = bool::from_stack(state, 2)?;
+    let mut sim = borrow_state_mut(state)?;
+    sim.guild_can_change_locale = can_change_locale;
+    sim.guild_can_change_datacenter_locality = can_change_datacenter_locality;
+    Ok(0)
+}
+
+// INFERRED R88fq (native evidence pending): supply guild-reputation feature availability.
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) fn admin_set_guild_reputation_enabled(state: &mut LuaState) -> LuaResult<u32> {
+    let enabled = bool::from_stack(state, 1)?;
+    borrow_state_mut(state)?.guild_reputation_enabled = enabled;
+    Ok(0)
+}
+
+// INFERRED R88fq (native evidence pending): supply guild-calendar feature availability.
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) fn admin_set_guild_events_enabled(state: &mut LuaState) -> LuaResult<u32> {
+    let enabled = bool::from_stack(state, 1)?;
+    borrow_state_mut(state)?.guild_events_enabled = enabled;
+    Ok(0)
 }
 
 fn read_guild_name(state: &LuaState, usage: &str) -> LuaResult<String> {

@@ -308,6 +308,7 @@ fn register_social_namespace_surfaces(state: &mut LuaState) -> LuaResult<()> {
     c_api::c_class_trial::register(state)?;
     c_api::c_chat_bubbles::register_c_chat_bubbles_surface(state)?;
     club_finder::register_club_finder_surface(state)?;
+    c_api::c_club_finder::register(state)?;
     c_api::c_club::register_club_info_surface(state)?;
     friend_list::register_friend_list_surface(state)?;
     #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
@@ -316,7 +317,8 @@ fn register_social_namespace_surfaces(state: &mut LuaState) -> LuaResult<()> {
     c_api::c_friend_list::selected_ignore::register(state)?;
     recruit_a_friend::register_recruit_a_friend_surface(state)?;
     voice_chat::register_voice_chat_surface(state)?;
-    #[cfg(feature = "retail-12-0-5")]
+    // Forever VoiceChatDocumentation.lua:177-191 declares GetChannelForCommunityStream.
+    #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
     c_api::c_voice_chat_channels::register(state)?;
     #[cfg(feature = "retail-12-0-5")]
     c_api::c_lfg_list_policy::register(state)?;
