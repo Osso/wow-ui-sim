@@ -1068,6 +1068,11 @@ fn forever_graphics_antialiasing_options_follow_host_capability() {
             local category
             for _, group in ipairs(SettingsPanel:GetCategoryList().groups) do for _, candidate in ipairs(group.categories) do if candidate:GetName() == GRAPHICS_LABEL then category = candidate end end end
             assert(category ~= nil, "original Graphics category must register")
+            A_Admin.SetAntiAliasingSupported(false, false)
+            A_Admin.SetMultiSampleAntiAliasingSupported({
+                { msaaQuality = "1,0", sampleCount = 4, coverageCount = 0 },
+                { msaaQuality = "2,2", sampleCount = 8, coverageCount = 2 },
+            })
             local layout = SettingsPanel:GetLayout(category)
             local getFxaaOptions, getMsaaOptions
             for _, initializer in layout:EnumerateInitializers() do
