@@ -279,7 +279,7 @@ fn contribution_panel_uses_supplied_result_and_currency_through_interaction(env:
     env.exec("A_Admin.FireEvent(\"PLAYER_INTERACTION_MANAGER_FRAME_SHOW\", Enum.PlayerInteractionType.ContributionCollector)")
         .expect("contribution interaction event should dispatch");
     let result: (bool, i32, bool, bool, String, String) = env
-        .eval("local ids={C_ContributionCollector.GetActive()}; local a=ContributionCollectionFrame:FindContribution(501); local b=ContributionCollectionFrame:FindContribution(502); return ContributionCollectionFrame:IsShown(), #ids, a and a.ContributeButton:IsEnabled() or false, b and b.ContributeButton:IsEnabled() or false, a and a.ContributeButton:GetText() or '', b and b.ContributeButton:GetText() or ''")
+        .eval("local ids={C_ContributionCollector.GetActive()}; local a=ContributionCollectionFrame:FindContribution(501); local b=ContributionCollectionFrame:FindContribution(502); return ContributionCollectionFrame:IsShown(), #ids, a and a.ContributeButton:IsEnabled() or false, b and b.ContributeButton:IsEnabled() or false, a and a.ContributeButton.Text:GetText() or '', b and b.ContributeButton.Text:GetText() or ''")
         .expect("contribution button state should be observable");
     assert!(result.0, "interaction manager should show ContributionCollectionFrame");
     assert_eq!(result.1, 2, "both supplied active contributions should render");
