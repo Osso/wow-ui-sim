@@ -127,6 +127,8 @@ pub mod net_stats;
 pub(crate) mod party_ai;
 #[cfg(feature = "retail-12-0-7")]
 pub(crate) mod performance_inputs;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) mod performance_metrics;
 pub mod pet_bar;
 pub mod pet_stats;
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]

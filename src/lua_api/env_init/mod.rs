@@ -157,6 +157,8 @@ fn register_runtime_api_functions(lua: &mut rilua::Lua) -> crate::Result<()> {
     crate::c_api::kiosk::register(lua.state_mut())?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     super::globals::real::battle_net_account::register(lua)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    super::globals::real::performance_metrics::register(lua.state_mut())?;
     super::globals::real::heal_prediction::register(lua)?;
     super::globals::real::secure_helpers::register(lua)?;
     super::globals::real::totems::register(lua)?;
