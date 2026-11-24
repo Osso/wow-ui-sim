@@ -113,9 +113,10 @@ fn club_stream_focus_requires_a_supplied_club_stream() {
     let env = WowLuaEnv::new().expect("Lua environment should initialize");
     env.exec(
         r##"
-        assert(C_Club.FocusStream("guild-0", 1) == true)
-        assert(C_Club.FocusStream("guild-0", 999) == false)
-        assert(C_Club.FocusStream("missing-club", 1) == false)
+        assert(C_Club.FocusStream("guild-0", 1) == true, "supplied guild stream focuses")
+        assert(C_Club.FocusStream("guild-0", 999) == false, "missing stream does not focus")
+        assert(C_Club.FocusStream("missing-club", 1) == false, "missing club does not focus")
+        assert(select("#", C_Club.SetAutoAdvanceStreamViewMarker("guild-0", 1)) == 0)
         assert(select("#", C_Club.UnfocusStream("guild-0", 1)) == 0)
         assert(C_Club.FocusStream("guild-0", 1) == true)
         "##,
