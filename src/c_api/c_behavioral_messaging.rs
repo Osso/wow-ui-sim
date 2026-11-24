@@ -40,14 +40,9 @@ pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
 fn queue_behavioral_notification(state: &mut LuaState) -> LuaResult<u32> {
     let notification_type = String::from_stack(state, 1)?;
     let db_id = u32::from_stack(state, 2)?;
-    dispatch_event_now(
-        state,
-        "BEHAVIORAL_NOTIFICATION",
-        &[
-            Val::Str(state.gc.intern_string(notification_type.as_bytes())),
-            Val::Num(f64::from(db_id)),
-        ],
-    )?;
+    let notification_type = Val::Str(state.gc.intern_string(notification_type.as_bytes()));
+    let payload = [notification_type, Val::Num(f64::from(db_id))];
+    dispatch_event_now(state, "BEHAVIORAL_NOTIFICATION", &payload)?;
     Ok(0)
 }
 
