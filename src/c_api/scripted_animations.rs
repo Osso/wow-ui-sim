@@ -12,6 +12,8 @@ use crate::lua_bridge::{FromStack, TableBuilder, stack_val, table_set_rust_fn_st
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val, runtime_error};
 
+const DB2_PERCENT_SCALE: f64 = 100.0;
+const DB2_MILLISECONDS_PER_SECOND: f64 = 1000.0;
 const USE_TARGET_AS_SOURCE: u32 = 1;
 
 #[derive(Clone, Debug, Default)]
@@ -189,8 +191,8 @@ fn effect_from_db2(
     let mut effect = ScriptedAnimationEffect {
         id: row.id,
         visual: row.visual,
-        visual_scale: f64::from(row.visual_scale) / 100.0,
-        duration: f64::from(row.duration) / 1000.0,
+        visual_scale: f64::from(row.visual_scale) / DB2_PERCENT_SCALE,
+        duration: f64::from(row.duration) / DB2_MILLISECONDS_PER_SECOND,
         trajectory: row.trajectory,
         yaw_radians: f64::from(row.yaw_radians),
         pitch_radians: f64::from(row.pitch_radians),
@@ -200,7 +202,7 @@ fn effect_from_db2(
         offset_z: f64::from(row.offset_z),
         animation: row.animation,
         animation_speed: f64::from(row.animation_speed),
-        alpha: f64::from(row.alpha) / 100.0,
+        alpha: f64::from(row.alpha) / DB2_PERCENT_SCALE,
         use_target_as_source: row.flags & USE_TARGET_AS_SOURCE != 0,
         ..ScriptedAnimationEffect::default()
     };
@@ -231,11 +233,11 @@ fn nonzero(value: u32) -> Option<u32> {
 }
 
 fn optional_percent(value: i32) -> Option<f64> {
-    (value != 0).then_some(f64::from(value) / 100.0)
+    (value != 0).then_some(f64::from(value) / DB2_PERCENT_SCALE)
 }
 
 fn optional_milliseconds(value: i32) -> Option<f64> {
-    (value != 0).then_some(f64::from(value) / 1000.0)
+    (value != 0).then_some(f64::from(value) / DB2_MILLISECONDS_PER_SECOND)
 }
 
 fn encode_effects(state: &mut LuaState, effects: Vec<ScriptedAnimationEffect>) -> Val {
