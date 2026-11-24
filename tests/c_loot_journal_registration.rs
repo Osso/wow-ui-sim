@@ -60,20 +60,28 @@ fn rust_raid_lock_registration_uses_first_map_row_without_difficulty() {
                 if selected then break end
             end
             assert(selected, "Encounter Journal must contain an encounter with map data")
+            EJ_SelectInstance(selected.instanceID)
             A_Admin.SetCompletedEncounters({
                 { mapID=selected.mapID, difficultyID=14, completedEncounterIDs={} },
                 { mapID=selected.mapID, difficultyID=DifficultyUtil.ID.PrimaryRaidHeroic,
                   completedEncounterIDs={selected.encounterID} },
             })
-            EJ_SetDifficulty(DifficultyUtil.ID.PrimaryRaidHeroic)
-            local button = CreateFrame("Button")
-            button.encounterID = selected.journalID
-            button.DefeatedOverlay = CreateFrame("Frame", nil, button)
-            EncounterJournalBossButton_UpdateDifficultyOverlay(button)
+            EncounterJournal_OpenJournal(
+                DifficultyUtil.ID.PrimaryRaidHeroic, selected.instanceID)
+            assert(EncounterJournal:IsShown(), "the client path must open Encounter Journal")
+            assert(EJ_GetDifficulty() == DifficultyUtil.ID.PrimaryRaidHeroic,
+                "Encounter Journal must select the Heroic difficulty")
+            local overlayShown
+            EncounterJournal.encounter.info.BossesScrollBox:ForEachFrame(function(button)
+                if button.encounterID == selected.journalID then
+                    overlayShown = button.DefeatedOverlay:IsShown()
+                end
+            end)
+            assert(overlayShown ~= nil, "Encounter Journal must create the selected boss button")
             return C_RaidLocks.IsEncounterComplete(selected.mapID, selected.encounterID),
                 C_RaidLocks.IsEncounterComplete(selected.mapID, selected.encounterID,
                     DifficultyUtil.ID.PrimaryRaidHeroic),
-                button.DefeatedOverlay:IsShown()
+                overlayShown
             "#,
         )
         .expect("the loaded Encounter Journal consumer should read supplied raid locks");
