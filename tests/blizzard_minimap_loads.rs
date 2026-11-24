@@ -108,24 +108,27 @@ const GARRISON_FUNCTIONS: &[&str] = &[
 
 fn load_full_game_ui() -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("Failed to create Lua environment");
-    load_full_game_ui_into(&env);
-    env
-}
-
-fn load_full_game_ui_into(env: &WowLuaEnv) {
     env.set_screen_size(1024.0, 768.0);
     env.set_screen_mode(ScreenKind::Game);
-    env.state().borrow_mut().addon_base_paths = vec![blizzard_ui_dir()];
+
+    {
+        let mut state = env.state().borrow_mut();
+        state.addon_base_paths = vec![blizzard_ui_dir()];
+    }
 
     wow_ui_sim::xml::register_intrinsic_templates();
+
     let ui = blizzard_ui_dir();
-    for (name, toc_path) in discover_blizzard_addons_for_screen(&ui, ScreenKind::Game) {
-        load_addon(&env.loader_env(), &toc_path)
+    let addons = discover_blizzard_addons_for_screen(&ui, ScreenKind::Game);
+    for (name, toc_path) in &addons {
+        load_addon(&env.loader_env(), toc_path)
             .unwrap_or_else(|err| panic!("[load {name}] FAILED: {err}"));
     }
 
     env.apply_post_load_workarounds();
-    fire_startup_events_for_screen(env, ScreenKind::Game);
+    fire_startup_events_for_screen(&env, ScreenKind::Game);
+
+    env
 }
 
 #[test]
@@ -261,17 +264,23 @@ fn blizzard_minimap_toc_lists_six_files_all_under_mainline_subdir() {
 }
 
 #[test]
-fn blizzard_minimap_compartment_displays_loaded_addon_registrations() {
+fn addon_compartment_frame_is_not_seeded_before_blizzard_minimap() {
     let env = WowLuaEnv::new().expect("create bare environment");
     let absent: bool = env
         .eval("return rawget(_G, 'AddonCompartmentFrame') == nil")
         .expect("inspect pre-addon compartment global");
     assert!(absent, "Blizzard_Minimap must own the compartment frame");
-    load_full_game_ui_into(&env);
+}
 
+#[test]
+fn blizzard_minimap_compartment_displays_loaded_addon_registrations() {
+    let env = load_full_game_ui();
     let fixture = tempfile::tempdir().expect("create addon-compartment fixtures");
 
-    for (name, title) in [("CompartmentOne", "Compartment One"), ("CompartmentTwo", "Compartment Two")] {
+    for (name, title) in [
+        ("CompartmentOne", "Compartment One"),
+        ("CompartmentTwo", "Compartment Two"),
+    ] {
         let toc = write_compartment_addon(fixture.path(), name, title);
         load_addon(&env.loader_env(), &toc)
             .unwrap_or_else(|error| panic!("load test addon {name}: {error}"));
@@ -280,7 +289,10 @@ fn blizzard_minimap_compartment_displays_loaded_addon_registrations() {
     let count: String = env
         .eval("return AddonCompartmentFrame.Text:GetText()")
         .expect("read original addon-compartment count text");
-    assert_eq!(count, "2", "both loaded addons must appear in the compartment");
+    assert_eq!(
+        count, "2",
+        "both loaded addons must appear in the compartment"
+    );
 }
 
 fn write_compartment_addon(root: &std::path::Path, name: &str, title: &str) -> PathBuf {
