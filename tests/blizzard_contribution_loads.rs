@@ -248,3 +248,42 @@ fn blizzard_contribution_xml_templates_are_registered(env: &WowLuaEnv) {
     }
 }
 }
+
+prefork_full_ui_case! {
+fn contribution_panel_uses_supplied_result_and_currency_through_interaction(env: &WowLuaEnv) {
+    env.exec(
+        r#"
+        A_Admin.SetContributionCollectors({
+            { mapID=2248, areaPoiID=901, collectorCreatureID=301, name="Collector", atlasName="",
+              x=0.2, y=0.3, contributions={
+                { contributionID=501, name="Ready", state=1, amount=0.5, startTime=100,
+                  description="Ready description", result=Enum.ContributionResult.Success,
+                  orderIndex=1, rewardQuestID=0, active=true,
+                  requiredCurrency={id=2032, amount=5},
+                  appearance={ stateName="", stateColor={r=1, g=1, b=1}, tooltipLine="",
+                    tooltipUseTimeRemaining=false, statusBarAtlas="", borderAtlas="", bannerAtlas="" } },
+                { contributionID=502, name="Blocked", state=1, amount=0.5, startTime=100,
+                  description="Blocked description", result=Enum.ContributionResult.FailedConditionCheck,
+                  orderIndex=2, rewardQuestID=0, active=true,
+                  requiredCurrency={id=2032, amount=11},
+                  appearance={ stateName="", stateColor={r=1, g=1, b=1}, tooltipLine="",
+                    tooltipUseTimeRemaining=false, statusBarAtlas="", borderAtlas="", bannerAtlas="" } },
+              } }
+        })
+        "#,
+    )
+    .expect("contribution scenario should load");
+    load_addon(&env.loader_env(), &contribution_toc())
+        .expect("Contribution bootstrap should register its interaction");
+    env.exec("A_Admin.FireEvent(\"PLAYER_INTERACTION_MANAGER_FRAME_SHOW\", Enum.PlayerInteractionType.ContributionCollector)")
+        .expect("contribution interaction event should dispatch");
+    let result: (bool, i32, bool, bool, String, String) = env
+        .eval("local ids={C_ContributionCollector.GetActive()}; local a=ContributionCollectionFrame:FindContribution(501); local b=ContributionCollectionFrame:FindContribution(502); return ContributionCollectionFrame:IsShown(), #ids, a and a.ContributeButton:IsEnabled() or false, b and b.ContributeButton:IsEnabled() or false, a and a.ContributeButton:GetText() or '', b and b.ContributeButton:GetText() or ''")
+        .expect("contribution button state should be observable");
+    assert!(result.0, "interaction manager should show ContributionCollectionFrame");
+    assert_eq!(result.1, 2, "both supplied active contributions should render");
+    assert!(result.2, "Success result should enable its contribution button");
+    assert!(!result.3, "FailedConditionCheck should disable its contribution button");
+    assert_ne!(result.4, result.5, "distinct supplied costs should produce distinct button text");
+}
+}
