@@ -286,6 +286,7 @@ fn register_admin_social(builder: TableBuilder) -> LuaResult<TableBuilder> {
     let builder = crate::c_api::c_social_queue::register_admin(builder)?;
     let builder = crate::c_api::c_commentator::register_admin(builder)?;
     let builder = crate::c_api::c_social_restrictions::register_admin(builder)?;
+    let builder = crate::c_api::c_club::register_admin(builder)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     let builder = crate::c_api::c_party_info::pending_invites::register_admin(builder)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]

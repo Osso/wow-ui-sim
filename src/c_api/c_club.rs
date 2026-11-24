@@ -8,7 +8,7 @@ use crate::lua_api::methods::{
 };
 use crate::lua_api::script_helpers::fire_named_event_state;
 use crate::lua_api::state_types::character_world::GuildChatMessage;
-use crate::lua_bridge::{FromStack, stack_val, table_set_rust_fn_static};
+use crate::lua_bridge::{FromStack, TableBuilder, stack_val, table_set_rust_fn_static};
 use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
 use rilua::vm::table::Table;
@@ -20,6 +20,27 @@ const GUILD_STREAM_ID: f64 = 1.0;
 const FIRST_MESSAGE_EPOCH: i64 = 1_700_000_000_000_000;
 const MESSAGE_EPOCH_STEP: i64 = 120_000_000;
 const INVITATION_CANDIDATES_USAGE: &str = "Usage: local candidates = C_Club.GetInvitationCandidates([filter, maxResults, cursorPosition, allowFullMatch], clubId)";
+
+pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
+    if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever) {
+        builder.set_function("SetAccountMutedClub", set_account_muted_club)
+    } else {
+        Ok(builder)
+    }
+}
+
+// INFERRED R88fq (native evidence pending): supply account-muted club IDs as host scenario state.
+fn set_account_muted_club(state: &mut LuaState) -> LuaResult<u32> {
+    let club_id = super::club_members::string_arg(state, 1)?;
+    let muted = bool::from_stack(state, 2)?;
+    let mut sim = borrow_state_mut(state)?;
+    if muted {
+        sim.clubs.account_muted_club_ids.insert(club_id);
+    } else {
+        sim.clubs.account_muted_club_ids.remove(&club_id);
+    }
+    Ok(0)
+}
 
 pub(crate) fn register_club_info_surface(state: &mut LuaState) -> LuaResult<()> {
     let table_ref = ensure_namespace(state, "C_Club")?;
