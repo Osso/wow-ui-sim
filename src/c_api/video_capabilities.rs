@@ -240,7 +240,8 @@ fn read_multisample_group(
     state: &mut LuaState,
     group: Val,
 ) -> LuaResult<MultisampleAntialiasingGroup> {
-    let msaa_quality = val_to_string(state, table_get_static(state, group, "msaaQuality"))
+    let quality_value = table_get_static(state, group, "msaaQuality");
+    let msaa_quality = val_to_string(state, quality_value)
         .ok_or_else(|| input_error("MSAA group msaaQuality must be a string"))?;
     let sample_count = read_group_integer(state, group, "sampleCount")?;
     let coverage_count = read_group_integer(state, group, "coverageCount")?;
