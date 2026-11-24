@@ -129,26 +129,28 @@ fn register_admin_player_services(builder: TableBuilder) -> LuaResult<TableBuild
         .set_function("SetPlayerNPERestricted", set_player_npe_restricted)?;
     let builder = register_player(builder)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
-    let builder = crate::c_api::c_behavioral_messaging::register_admin(builder)?;
+    let builder = register_admin_modeled_services(builder)?;
     #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
     let builder = crate::c_api::c_navigation::register_admin(builder)?;
-    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
-    let builder = crate::c_api::c_quest_log::register_zone_story_admin(builder)?;
     #[cfg(any(
         feature = "client-retail",
         feature = "client-ptr",
         feature = "client-wowforever"
     ))]
     let builder = crate::c_api::c_trade_info::register_admin(builder)?;
-    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
-    let builder = crate::c_api::c_prof_specs_skill_lines::register_admin(builder)?;
-    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
-    let builder = crate::c_api::register_ping_defaults_admin(builder)?;
-    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
-    let builder = crate::c_api::kiosk::register_admin(builder)?;
     #[cfg(feature = "client-retail")]
     let builder = crate::c_api::scripted_animations::register_admin(builder)?;
     Ok(builder)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn register_admin_modeled_services(builder: TableBuilder) -> LuaResult<TableBuilder> {
+    let builder = crate::c_api::c_behavioral_messaging::register_admin(builder)?;
+    let builder = super::real::input_interface::register_admin(builder)?;
+    let builder = crate::c_api::c_quest_log::register_zone_story_admin(builder)?;
+    let builder = crate::c_api::c_prof_specs_skill_lines::register_admin(builder)?;
+    let builder = crate::c_api::register_ping_defaults_admin(builder)?;
+    crate::c_api::kiosk::register_admin(builder)
 }
 
 fn register_admin_calendar_services(builder: TableBuilder) -> LuaResult<TableBuilder> {

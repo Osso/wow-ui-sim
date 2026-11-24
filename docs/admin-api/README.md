@@ -11,6 +11,7 @@ The `A_Admin` namespace provides administrative functions for controlling simula
 - [Behavioral messaging](behavioral-messaging.md) — QueueBehavioralNotification, GetBehavioralNotificationReceipts
 - [Combat](combat.md) — SetInCombat, SetCasting, StopCasting, SetGCD, SetSpellCooldown
 - [Camera and tutorials](camera-tutorials.md) — SetCameraFOV, SetTutorialFlag, SetTutorialsEnabled, SetPlayerNPERestricted
+- [Gamepad input](gamepad.md) — SetUsingGamepad, GetGamePadCursorControlEnabled
 - [Loot Journal](loot-journal.md) — SetLootJournalItemSets
 - [Raid locks](raid-locks.md) — SetCompletedEncounters
 - [Kiosk session](kiosk.md) — SetKioskSession
