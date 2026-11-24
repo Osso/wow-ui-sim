@@ -3,9 +3,6 @@ compile_error!("prefork_full_ui is Linux-only");
 #[cfg(not(any(feature = "client-retail", feature = "client-mists")))]
 compile_error!("prefork_full_ui requires client-retail or client-mists");
 
-#[path = "common/mod.rs"]
-mod common;
-use crate::prefork_full_ui_case;
 #[path = "common/prefork.rs"]
 mod prefork;
 #[cfg(feature = "client-retail")]
@@ -13,6 +10,15 @@ mod prefork;
 mod prefork_full_ui_preload;
 #[path = "common/workload_gate_core.rs"]
 mod prefork_workload_gate;
+macro_rules! prefork_full_ui_case {
+    (fn $name:ident($env:ident: &WowLuaEnv) $body:block) => {
+        pub(crate) mod $name {
+            use super::*;
+            pub(crate) fn run($env: &WowLuaEnv) $body
+        }
+    };
+}
+
 #[cfg(feature = "client-retail")]
 #[path = "test_camera_tutorial_consumers.rs"]
 mod test_camera_tutorial_consumers;
