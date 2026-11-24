@@ -1,6 +1,8 @@
 # Voice chat
 
-`A_Admin` can supply whether the player and client can use voice chat. This input drives `C_VoiceChat.CanPlayerUseVoiceChat()` on Retail and WoW Forever. It defaults to `true`.
+### `A_Admin.SetCanPlayerUseVoiceChat(canUse)`
+
+Supplies whether the player and client can use voice chat. This input drives `C_VoiceChat.CanPlayerUseVoiceChat()` on Retail and WoW Forever. It defaults to `true`. The setter supplies the result directly; it does not calculate parental-control, Kiosk, server, or CVar policy.
 
 ### `A_Admin.SetJoinClubVoiceChannelError(clubId, reason)`
 
@@ -19,4 +21,4 @@ A_Admin.SetCanPlayerUseVoiceChat(false)
 assert(C_VoiceChat.CanPlayerUseVoiceChat() == false)
 ```
 
-`CanPlayerUseVoiceChat` is INFERRED R88fv (native evidence pending). Its setter supplies the result directly; it does not calculate parental-control, Kiosk, server, or CVar policy.
+This result is INFERRED R88fv (native evidence pending).
