@@ -23,6 +23,45 @@ fn encounter_journal_toc() -> PathBuf {
 }
 
 prefork_full_ui_case! {
+fn encounter_journal_difficulty_queries_use_selected_map(env: &WowLuaEnv) {
+    load_addon(&env.loader_env(), &encounter_journal_toc())
+        .expect("selected Encounter Journal TOC should load");
+    env.apply_post_load_workarounds();
+    env.exec("EJ_SelectInstance(63)")
+        .expect("the Deadmines journal instance should be selectable");
+    let dungeon: (bool, bool, bool, bool) = env
+        .eval(r#"
+            return C_EncounterJournal.InstanceHasDifficultyID(1),
+                C_EncounterJournal.InstanceHasDifficultyID(2),
+                C_EncounterJournal.InstanceHasDifficultyID(14),
+                EJ_IsValidInstanceDifficulty(2)
+        "#)
+        .expect("dungeon difficulty queries should use the selected map");
+    assert_eq!(dungeon, (true, true, false, true));
+
+    env.exec("EJ_SelectInstance(72)")
+        .expect("the Bastion of Twilight journal instance should be selectable");
+    let raid: (bool, bool, bool) = env
+        .eval(r#"
+            return C_EncounterJournal.InstanceHasDifficultyID(3),
+                C_EncounterJournal.InstanceHasDifficultyID(1),
+                EJ_IsValidInstanceDifficulty(3)
+        "#)
+        .expect("raid difficulty queries should use the selected map");
+    assert_eq!(raid, (true, false, true));
+
+    let bases: (i32, i32, i32) = env
+        .eval(r#"
+            return C_EncounterJournal.GetBaseDifficultyID(233),
+                C_EncounterJournal.GetBaseDifficultyID(250),
+                C_EncounterJournal.GetBaseDifficultyID(63)
+        "#)
+        .expect("base difficulty queries should accept difficulty IDs");
+    assert_eq!(bases, (16, 17, 63));
+}
+}
+
+prefork_full_ui_case! {
 fn encounter_journal_renders_supplied_item_sets_and_items(env: &WowLuaEnv) {
     env.exec("A_Admin.SetPlayerClass(2); A_Admin.SetSpec(3)")
         .expect("the player scenario should select the Paladin specialization");

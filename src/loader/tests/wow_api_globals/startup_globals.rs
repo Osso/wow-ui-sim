@@ -914,13 +914,15 @@ fn test_patch_12_1_lfg_pvp_encounter_bridges() {
             local lfgInfo = C_LFGList.GetSearchResultInfo(7)
             if type(lfgInfo) == "table" and lfgInfo.censored ~= false then return "lfg-censored-field" end
             if C_PvP.CanSurrenderArena() ~= false then return "pvp" end
-            if C_EncounterJournal.GetBaseDifficultyID(63) ~= 1 then return "ej-base-difficulty-dungeon" end
-            if C_EncounterJournal.GetBaseDifficultyID(72) ~= 14 then return "ej-base-difficulty-raid" end
-            if C_EncounterJournal.GetBaseDifficultyID(999999) ~= nil then return "ej-base-difficulty-invalid" end
-            if C_EncounterJournal.InstanceHasDifficultyID(63, 1) ~= true then return "ej-instance-difficulty-dungeon" end
-            if C_EncounterJournal.InstanceHasDifficultyID(63, 14) ~= false then return "ej-instance-difficulty-dungeon-raid" end
-            if C_EncounterJournal.InstanceHasDifficultyID(72, 14) ~= true then return "ej-instance-difficulty-raid" end
-            if C_EncounterJournal.InstanceHasDifficultyID(999999, 14) ~= false then return "ej-instance-difficulty-invalid" end
+            if C_EncounterJournal.GetBaseDifficultyID(233) ~= 16 then return "ej-base-difficulty-raid-233" end
+            if C_EncounterJournal.GetBaseDifficultyID(250) ~= 17 then return "ej-base-difficulty-raid-250" end
+            if C_EncounterJournal.GetBaseDifficultyID(63) ~= 63 then return "ej-base-difficulty-identity" end
+            EJ_SelectInstance(63)
+            if C_EncounterJournal.InstanceHasDifficultyID(1) ~= true then return "ej-instance-difficulty-dungeon" end
+            if C_EncounterJournal.InstanceHasDifficultyID(2) ~= true then return "ej-instance-difficulty-dungeon-heroic" end
+            if C_EncounterJournal.InstanceHasDifficultyID(14) ~= false then return "ej-instance-difficulty-dungeon-raid" end
+            if EJ_IsValidInstanceDifficulty(2) ~= true then return "ej-valid-instance-difficulty-dungeon" end
+            if EJ_IsValidInstanceDifficulty(14) ~= false then return "ej-invalid-instance-difficulty-dungeon" end
             if C_QuestHub.IsAreaPOICurrentlyRelatedToHub(1, 2) ~= false then return "quest-hub" end
             return "ok"
         "#,
