@@ -3,6 +3,9 @@ compile_error!("prefork_full_ui is Linux-only");
 #[cfg(not(any(feature = "client-retail", feature = "client-mists")))]
 compile_error!("prefork_full_ui requires client-retail or client-mists");
 
+#[macro_use]
+#[path = "common/mod.rs"]
+mod common;
 #[path = "common/prefork.rs"]
 mod prefork;
 #[cfg(feature = "client-retail")]
