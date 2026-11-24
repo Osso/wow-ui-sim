@@ -10,6 +10,8 @@ pub mod action_bar_state;
 pub mod action_highlights;
 pub(crate) mod ambiguate;
 pub(crate) mod bank_reagents;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) mod battle_net_account;
 pub(crate) mod bit_library;
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub(crate) mod bnet_blocked_list;

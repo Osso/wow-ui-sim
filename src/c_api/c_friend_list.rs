@@ -45,6 +45,44 @@ pub(crate) fn set_social_ignore_name(state: &mut LuaState) -> rilua::LuaResult<u
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) fn set_player_battle_net_info(state: &mut LuaState) -> rilua::LuaResult<u32> {
+    use crate::lua_api::state_types::PlayerBattleNetInfo;
+    let battle_tag = String::from_stack(state, 1)?;
+    let account_id = Option::<i32>::from_stack(state, 2)?.unwrap_or_default();
+    let broadcast_text = Option::<String>::from_stack(state, 3)?.unwrap_or_default();
+    let is_afk = Option::<bool>::from_stack(state, 4)?.unwrap_or(false);
+    let is_dnd = Option::<bool>::from_stack(state, 5)?.unwrap_or(false);
+    let is_real_id_enabled = Option::<bool>::from_stack(state, 6)?.unwrap_or(false);
+    let is_appear_offline = Option::<bool>::from_stack(state, 7)?.unwrap_or(false);
+    borrow_state_mut(state)?.player_bnet_info = PlayerBattleNetInfo {
+        battle_tag,
+        account_id,
+        broadcast_text,
+        is_afk,
+        is_dnd,
+        is_real_id_enabled,
+        is_appear_offline,
+    };
+    Ok(0)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) fn set_battle_net_account_features(state: &mut LuaState) -> rilua::LuaResult<u32> {
+    use crate::lua_api::state_types::BattleNetAccountFeatures;
+    let feature =
+        |index| Option::<bool>::from_stack(state, index).map(|value| value.unwrap_or(true));
+    let features = BattleNetAccountFeatures {
+        friend_tags: feature(1)?,
+        title_friend_custom_names: feature(2)?,
+        title_friends: feature(3)?,
+        friends_list_enabled: feature(4)?,
+        friends_list_supported: feature(5)?,
+    };
+    borrow_state_mut(state)?.bnet_account_features = features;
+    Ok(0)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub(crate) fn set_social_blocked_entry(state: &mut LuaState) -> rilua::LuaResult<u32> {
     let index = i32::from_stack(state, 1)?;
     let blocked_id = i32::from_stack(state, 2)?;

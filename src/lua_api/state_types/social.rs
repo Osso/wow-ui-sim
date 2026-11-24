@@ -152,6 +152,58 @@ pub struct BnetGameAccount {
 
 /// One supplied Battle.net blocked-account row for the legacy friends UI.
 /// INFERRED input fields; live blocked-account identity and native defaults are unknown.
+/// Supplied local Battle.net account identity for legacy `BNGetInfo` reads.
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[derive(Debug, Clone)]
+pub struct PlayerBattleNetInfo {
+    pub battle_tag: String,
+    pub account_id: i32,
+    pub broadcast_text: String,
+    pub is_afk: bool,
+    pub is_dnd: bool,
+    pub is_real_id_enabled: bool,
+    pub is_appear_offline: bool,
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+impl Default for PlayerBattleNetInfo {
+    fn default() -> Self {
+        Self {
+            battle_tag: String::new(),
+            account_id: 0,
+            broadcast_text: String::new(),
+            is_afk: false,
+            is_dnd: false,
+            is_real_id_enabled: false,
+            is_appear_offline: false,
+        }
+    }
+}
+
+/// Supplied account feature values consumed by Retail/Forever social UI.
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[derive(Debug, Clone)]
+pub struct BattleNetAccountFeatures {
+    pub friend_tags: bool,
+    pub title_friend_custom_names: bool,
+    pub title_friends: bool,
+    pub friends_list_enabled: bool,
+    pub friends_list_supported: bool,
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+impl Default for BattleNetAccountFeatures {
+    fn default() -> Self {
+        Self {
+            friend_tags: true,
+            title_friend_custom_names: true,
+            title_friends: true,
+            friends_list_enabled: true,
+            friends_list_supported: true,
+        }
+    }
+}
+
 #[derive(Debug, Clone)]
 pub struct BnetBlockedEntry {
     pub blocked_id: i32,

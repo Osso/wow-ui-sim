@@ -72,14 +72,10 @@ pub(crate) fn register_c_battle_net_surface(state: &mut LuaState) -> LuaResult<(
     #[cfg(feature = "retail-12-0-0")]
     super::addon_messages::register_bnet_chat(state, table_ref)?;
     register_friend_query_methods(state, table_ref)?;
-    // Forever BattleNetDocumentation.lua:11-15; F4 Q1 feature-state result.
-    #[cfg(feature = "client-wowforever")]
-    table_set_rust_fn_static(
-        state,
-        table_ref,
-        "AreFriendTagsEnabled",
-        c_bnet_are_friend_tags_enabled,
-    )?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    if crate::client_profile::ACTIVE_INTERFACE_VERSION >= 120100 {
+        register_account_feature_methods(state, table_ref)?;
+    }
     Ok(())
 }
 
@@ -161,36 +157,6 @@ fn register_patch_12_1_friend_query_methods(
     table_set_rust_fn_static(
         state,
         table_ref,
-        "AreFriendTagsEnabled",
-        c_bnet_feature_enabled,
-    )?;
-    table_set_rust_fn_static(
-        state,
-        table_ref,
-        "AreTitleFriendCustomNamesEnabled",
-        c_bnet_feature_enabled,
-    )?;
-    table_set_rust_fn_static(
-        state,
-        table_ref,
-        "AreTitleFriendsEnabled",
-        c_bnet_feature_enabled,
-    )?;
-    table_set_rust_fn_static(
-        state,
-        table_ref,
-        "IsBattleNetFriendsListEnabled",
-        c_bnet_feature_enabled,
-    )?;
-    table_set_rust_fn_static(
-        state,
-        table_ref,
-        "IsBattleNetFriendsListSupported",
-        c_bnet_feature_enabled,
-    )?;
-    table_set_rust_fn_static(
-        state,
-        table_ref,
         "GetCustomTitleFriendName",
         c_bnet_get_custom_title_friend_name,
     )?;
@@ -227,15 +193,80 @@ fn register_patch_12_1_friend_query_methods(
     )
 }
 
-#[cfg(feature = "retail-12-1-0")]
-fn c_bnet_feature_enabled(state: &mut LuaState) -> LuaResult<u32> {
-    state.push(Val::Bool(true));
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn register_account_feature_methods(
+    state: &mut LuaState,
+    table_ref: BattleNetTable,
+) -> LuaResult<()> {
+    table_set_rust_fn_static(
+        state,
+        table_ref,
+        "AreFriendTagsEnabled",
+        are_friend_tags_enabled,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        table_ref,
+        "AreTitleFriendCustomNamesEnabled",
+        are_title_friend_custom_names_enabled,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        table_ref,
+        "AreTitleFriendsEnabled",
+        are_title_friends_enabled,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        table_ref,
+        "IsBattleNetFriendsListEnabled",
+        is_friends_list_enabled,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        table_ref,
+        "IsBattleNetFriendsListSupported",
+        is_friends_list_supported,
+    )
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn are_friend_tags_enabled(state: &mut LuaState) -> LuaResult<u32> {
+    let enabled = borrow_state(state)?.bnet_account_features.friend_tags;
+    state.push(Val::Bool(enabled));
     Ok(1)
 }
 
-#[cfg(feature = "client-wowforever")]
-fn c_bnet_are_friend_tags_enabled(state: &mut LuaState) -> LuaResult<u32> {
-    let enabled = borrow_state(state)?.bnet_friend_tags_enabled;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn are_title_friend_custom_names_enabled(state: &mut LuaState) -> LuaResult<u32> {
+    let enabled = borrow_state(state)?
+        .bnet_account_features
+        .title_friend_custom_names;
+    state.push(Val::Bool(enabled));
+    Ok(1)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn are_title_friends_enabled(state: &mut LuaState) -> LuaResult<u32> {
+    let enabled = borrow_state(state)?.bnet_account_features.title_friends;
+    state.push(Val::Bool(enabled));
+    Ok(1)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn is_friends_list_enabled(state: &mut LuaState) -> LuaResult<u32> {
+    let enabled = borrow_state(state)?
+        .bnet_account_features
+        .friends_list_enabled;
+    state.push(Val::Bool(enabled));
+    Ok(1)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn is_friends_list_supported(state: &mut LuaState) -> LuaResult<u32> {
+    let enabled = borrow_state(state)?
+        .bnet_account_features
+        .friends_list_supported;
     state.push(Val::Bool(enabled));
     Ok(1)
 }
