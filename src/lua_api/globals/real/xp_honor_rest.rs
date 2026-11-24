@@ -109,30 +109,26 @@ fn unit_trial_banked_levels(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn get_restricted_account_data(state: &mut LuaState) -> LuaResult<u32> {
-    let (level, money, profession) = {
+    let (level, money) = {
         let account = &borrow_state(state)?.account_type;
-        (
-            account.restricted_level,
-            account.restricted_money,
-            account.restricted_profession,
-        )
+        (account.restricted_level, account.restricted_money)
     };
     state.push(Val::Num(level as f64));
     state.push(Val::Num(money as f64));
-    state.push(Val::Num(profession as f64));
+    state.push(Val::Num(0.0));
     Ok(3)
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn is_trial_account(state: &mut LuaState) -> LuaResult<u32> {
-    let value = borrow_state(state)?.account_type.trial;
+    let value = borrow_state(state)?.account_type.account_type == 5;
     state.push(Val::Bool(value));
     Ok(1)
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn is_veteran_trial_account(state: &mut LuaState) -> LuaResult<u32> {
-    let value = borrow_state(state)?.account_type.veteran_trial;
+    let value = borrow_state(state)?.account_type.account_type == 4;
     state.push(Val::Bool(value));
     Ok(1)
 }
@@ -146,19 +142,33 @@ fn is_restricted_account(state: &mut LuaState) -> LuaResult<u32> {
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn is_expansion_trial(state: &mut LuaState) -> LuaResult<u32> {
-    let value = borrow_state(state)?.account_type.expansion_trial;
-    state.push(Val::Bool(value));
+    let active = {
+        let sim = borrow_state(state)?;
+        let account = &sim.account_type;
+        account.expansion_trial
+            && account.expansion_trial_expiry > sim.clock_elapsed().as_secs_f64()
+    };
+    state.push(Val::Bool(active));
     Ok(1)
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn get_expansion_trial_info(state: &mut LuaState) -> LuaResult<u32> {
-    let (is_trial, remaining) = {
-        let account = &borrow_state(state)?.account_type;
-        (account.expansion_trial, account.expansion_trial_remaining)
+    let (enabled, expiry, now) = {
+        let sim = borrow_state(state)?;
+        (
+            sim.account_type.expansion_trial,
+            sim.account_type.expansion_trial_expiry,
+            sim.clock_elapsed().as_secs_f64(),
+        )
     };
-    state.push(Val::Bool(is_trial));
-    state.push(Val::Num(remaining));
+    if enabled && expiry > now {
+        state.push(Val::Bool(true));
+        state.push(Val::Num(expiry - now));
+    } else {
+        state.push(Val::Bool(false));
+        state.push(Val::Nil);
+    }
     Ok(2)
 }
 

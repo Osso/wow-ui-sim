@@ -22,25 +22,22 @@ fn set_account_type(state: &mut LuaState) -> LuaResult<u32> {
 
 fn read_account_type(state: &mut LuaState, value: Val) -> LuaResult<AccountTypeState> {
     let account_type = AccountTypeState {
-        trial: read_field(state, value, "trial")?,
-        veteran_trial: read_field(state, value, "veteranTrial")?,
+        account_type: read_field(state, value, "accountType")?,
         restricted: read_field(state, value, "restricted")?,
         expansion_trial: read_field(state, value, "expansionTrial")?,
-        expansion_trial_remaining: read_field(state, value, "expansionTrialRemaining")?,
+        expansion_trial_expiry: read_field(state, value, "expansionTrialExpiry")?,
         restricted_level: read_field(state, value, "restrictedLevel")?,
         restricted_money: read_field(state, value, "restrictedMoney")?,
-        restricted_profession: read_field(state, value, "restrictedProfession")?,
     };
     validate_account_type(&account_type)?;
     Ok(account_type)
 }
 
 fn validate_account_type(account_type: &AccountTypeState) -> LuaResult<()> {
-    if !account_type.expansion_trial_remaining.is_finite()
-        || account_type.expansion_trial_remaining < 0.0
+    if !account_type.expansion_trial_expiry.is_finite() || account_type.expansion_trial_expiry < 0.0
     {
         return Err(runtime_error(
-            "SetAccountType: expansionTrialRemaining must be finite and nonnegative",
+            "SetAccountType: expansionTrialExpiry must be finite and nonnegative",
         ));
     }
     if account_type.restricted_level < 0 {
@@ -51,11 +48,6 @@ fn validate_account_type(account_type: &AccountTypeState) -> LuaResult<()> {
     if account_type.restricted_money < 0 {
         return Err(runtime_error(
             "SetAccountType: restrictedMoney must be nonnegative",
-        ));
-    }
-    if account_type.restricted_profession < 0 {
-        return Err(runtime_error(
-            "SetAccountType: restrictedProfession must be nonnegative",
         ));
     }
     Ok(())

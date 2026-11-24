@@ -127,9 +127,9 @@ fn unit_trial_xp_and_banked_levels_read_state() {
     assert!(other_levels.abs() < 1e-6);
 }
 
-const RESTRICTED_ACCOUNT_STATE: &str = "A_Admin.SetAccountType({ trial = false, veteranTrial = false, \
-    restricted = true, expansionTrial = false, expansionTrialRemaining = 0, \
-    restrictedLevel = 60, restrictedMoney = 250000, restrictedProfession = 100 })";
+const RESTRICTED_ACCOUNT_STATE: &str = "A_Admin.SetAccountType({ accountType = 0, \
+    restricted = true, expansionTrial = false, expansionTrialExpiry = 0, \
+    restrictedLevel = 60, restrictedMoney = 250000 })";
 
 fn read_restricted_account_data(env: &WowLuaEnv) -> (f64, f64, f64) {
     env.exec("lvl, money, prof = GetRestrictedAccountData()")
@@ -149,7 +149,7 @@ fn get_restricted_account_data_returns_three_values() {
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     {
         env.exec(RESTRICTED_ACCOUNT_STATE).unwrap();
-        assert_eq!(read_restricted_account_data(&env), (60.0, 250_000.0, 100.0));
+        assert_eq!(read_restricted_account_data(&env), (60.0, 250_000.0, 0.0));
     }
 }
 
