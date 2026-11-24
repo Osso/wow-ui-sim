@@ -1066,11 +1066,7 @@ fn forever_graphics_antialiasing_options_follow_host_capability() {
         let env = load_full_game_ui();
         env.exec(r#"
             local category
-            for _, group in ipairs(SettingsPanel:GetCategoryList().groups) do
-                for _, candidate in ipairs(group.categories) do
-                    if candidate:GetName() == GRAPHICS_LABEL then category = candidate end
-                end
-            end
+            for _, group in ipairs(SettingsPanel:GetCategoryList().groups) do for _, candidate in ipairs(group.categories) do if candidate:GetName() == GRAPHICS_LABEL then category = candidate end end end
             assert(category ~= nil, "original Graphics category must register")
             A_Admin.SetMultiSampleAntiAliasingSupported(true)
             Settings.OpenToCategory(category:GetID())
@@ -1084,12 +1080,10 @@ fn forever_graphics_antialiasing_options_follow_host_capability() {
                 end
             end
             assert(getOptions ~= nil, "original antialiasing dropdown must initialize")
-            local included = {}
-            for _, option in ipairs(getOptions()) do included[option.value] = true end
+            local included = {}; for _, option in ipairs(getOptions()) do included[option.value] = true end
             assert(included[2] and included[3], "supported MSAA options must appear")
             A_Admin.SetMultiSampleAntiAliasingSupported(false)
-            local omitted = {}
-            for _, option in ipairs(getOptions()) do omitted[option.value] = true end
+            local omitted = {}; for _, option in ipairs(getOptions()) do omitted[option.value] = true end
             assert(not omitted[2] and not omitted[3], "unsupported MSAA options must be omitted")
         "#).expect("original graphics dropdown options should follow supplied MSAA capability");
     }

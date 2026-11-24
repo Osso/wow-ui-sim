@@ -129,19 +129,6 @@ if rawget(C_VideoOptions, "IsSpellVisualDensitySystemSupported") == nil then
 end
 "#;
 
-// Separate temporary runtime/device policy, not an R63 static capability byte.
-// Native MSAA is a runtime/device query on Retail and Forever; PTR publication
-// remains UNKNOWN. This existing Forever workaround does not assert native false.
-const FOREVER_MSAA_CAPABILITY_LUA: &str = r#"
--- The UI renderer uses single-sample targets. Replace this unsupported capability
--- when multisample render targets and MSAA mode enumeration are implemented.
-if rawget(_G, "MultiSampleAntiAliasingSupported") == nil then
-    function MultiSampleAntiAliasingSupported()
-        return false
-    end
-end
-"#;
-
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     if !matches!(
         crate::client_profile::ACTIVE,
@@ -152,9 +139,6 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     }
     if !crate::c_api::video_capabilities::publishes_capabilities() {
         lua.exec(LEGACY_VIDEO_CAPABILITIES_LUA)?;
-    }
-    if cfg!(feature = "client-wowforever") {
-        lua.exec(FOREVER_MSAA_CAPABILITY_LUA)?;
     }
     Ok(())
 }

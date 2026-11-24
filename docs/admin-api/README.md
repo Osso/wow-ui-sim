@@ -43,4 +43,5 @@ The `A_Admin` namespace provides administrative functions for controlling simula
 - [Events](events.md) — FireEvent
 - [Scripted animations](scripted-animations.md) — SetScriptedAnimationEffects
 - [Performance metrics](performance-metrics.md) — SetFramerate, SetAddOnUsage
+- [Video capabilities](video-capabilities.md) — SetMultiSampleAntiAliasingSupported
 - [Examples](examples.md) — Usage examples (raid healing, combat testing, transmog)

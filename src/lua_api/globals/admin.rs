@@ -153,6 +153,7 @@ fn register_admin_modeled_services(builder: TableBuilder) -> LuaResult<TableBuil
     let builder = crate::c_api::c_prof_specs_skill_lines::register_admin(builder)?;
     let builder = crate::c_api::register_ping_defaults_admin(builder)?;
     let builder = crate::c_api::c_addons::register_admin(builder)?;
+    let builder = crate::c_api::video_capabilities::register_admin(builder)?;
     crate::c_api::kiosk::register_admin(builder)
 }
 
