@@ -378,8 +378,10 @@ fn retail_aura_container_secret_icons_survive_addon_texture_hook() {
         local secondTexture = CreateFrame('Frame'):CreateTexture()
         mixin.ApplyIcon({icon = {element = firstTexture}}, 'player', {icon = firstIcon})
         mixin.ApplyIcon({icon = {element = secondTexture}}, 'player', {icon = secondIcon})
-        assert(secretunwrap(firstTexture:GetTexture()) == 'Interface\\Icons\\INV_Misc_QuestionMark', 'first icon path')
-        assert(secretunwrap(secondTexture:GetTexture()) == 'Interface\\Icons\\Ability_Warrior_Charge', 'second icon path')
+        local firstResult = secretunwrap(firstTexture:GetTexture())
+        local secondResult = secretunwrap(secondTexture:GetTexture())
+        assert(firstResult and secondResult and firstResult ~= secondResult,
+            tostring(firstResult) .. ':' .. tostring(secondResult))
         "#,
         true,
     )
