@@ -5,17 +5,19 @@ use crate::common::blizzard_addon_harness::{
     blizzard_ui_dir, load_blizzard_addon_closure_into_env, new_blizzard_addon_env,
 };
 use wow_ui_sim::lua_api::WowLuaEnv;
+use wow_ui_sim::screen::ScreenKind;
+use wow_ui_sim::startup::fire_startup_events_for_screen;
 
-fn load_addon(env: &WowLuaEnv, addon: &str) {
-    load_blizzard_addon_closure_into_env(env, &blizzard_ui_dir(), &[addon], &[]);
+fn load_panel_consumers() -> WowLuaEnv {
+    let env = new_blizzard_addon_env(&blizzard_ui_dir());
+    crate::common::panel_fixtures::load_panel_addons(&env);
+    fire_startup_events_for_screen(&env, ScreenKind::Game);
+    env
 }
 
 #[test]
 fn forever_camera_fov_defaults_drive_graphics_slider() {
-    let ui = blizzard_ui_dir();
-    let env = new_blizzard_addon_env(&ui);
-    load_addon(&env, "Blizzard_Settings_Shared");
-    load_addon(&env, "Blizzard_SettingsDefinitions_Shared");
+    let env = load_panel_consumers();
     env.exec(
         r#"
         local _, minValue, maxValue = GetCameraFOVDefaults()
@@ -34,9 +36,13 @@ fn forever_camera_fov_defaults_drive_graphics_slider() {
 
 #[test]
 fn forever_tutorial_enable_state_controls_npe_bootstrap() {
-    let ui = blizzard_ui_dir();
-    let env = new_blizzard_addon_env(&ui);
-    load_addon(&env, "Blizzard_NewPlayerExperience");
+    let env = load_panel_consumers();
+    load_blizzard_addon_closure_into_env(
+        &env,
+        &blizzard_ui_dir(),
+        &["Blizzard_NewPlayerExperience"],
+        &[],
+    );
     env.exec(
         r#"
         local addon = "Blizzard_NewPlayerExperience"
@@ -55,9 +61,7 @@ fn forever_tutorial_enable_state_controls_npe_bootstrap() {
 
 #[test]
 fn forever_tutorial_frame_reads_supplied_flags() {
-    let ui = blizzard_ui_dir();
-    let env = new_blizzard_addon_env(&ui);
-    load_addon(&env, "Blizzard_FrameXML");
+    let env = load_panel_consumers();
     env.exec(
         r#"
         A_Admin.SetTutorialFlag(17, true)
@@ -73,12 +77,7 @@ fn forever_tutorial_frame_reads_supplied_flags() {
 
 #[test]
 fn forever_settings_reset_clears_flags_seen_by_tutorial_frame() {
-    let ui = blizzard_ui_dir();
-    let env = new_blizzard_addon_env(&ui);
-    load_addon(&env, "Blizzard_Settings_Shared");
-    load_addon(&env, "Blizzard_SettingsDefinitions_Shared");
-    load_addon(&env, "Blizzard_SettingsDefinitions_Frame");
-    load_addon(&env, "Blizzard_FrameXML");
+    let env = load_panel_consumers();
     env.exec(
         r#"
         A_Admin.SetTutorialFlag(17, true)
