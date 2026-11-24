@@ -5,11 +5,12 @@ fn camera_fov_defaults_drive_blizzard_slider_options(env: &WowLuaEnv) {
     env.exec(r#"
         local _, minValue, maxValue = GetCameraFOVDefaults()
         local options = Settings.CreateSliderOptions(minValue, maxValue, 5)
-        local getValue = Settings.CreateCVarAccessorClosures("cameraFov", Settings.VarType.Number)
         A_Admin.SetCameraFOV(60)
-        assert(options.minValue == 50 and options.maxValue == 90 and getValue() == 60)
+        assert(options.minValue == 50 and options.maxValue == 90)
+        assert(Settings.GetValue("PROXY_CAMERA_FOV") == 60)
         A_Admin.SetCameraFOV(80)
-        assert(options.minValue == 50 and options.maxValue == 90 and getValue() == 80)
+        assert(options.minValue == 50 and options.maxValue == 90)
+        assert(Settings.GetValue("PROXY_CAMERA_FOV") == 80)
     "#).expect("Blizzard Graphics slider options should use native FOV bounds");
 }
 }
