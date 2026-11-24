@@ -11,14 +11,35 @@ use crate::lua_api::methods::create_string;
 use crate::lua_api::methods::{borrow_state, borrow_state_mut, frame_ref, table_get};
 use crate::lua_bridge::{TableBuilder, stack_val, table_set_rust_fn_static};
 use crate::widget::AnchorPoint;
+use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
+use rilua::vm::table::Table;
 use rilua::{LuaResult, Val, runtime_error};
 
 const INVALID: i32 = 0;
 const MIN_VALID_SCREEN_COORDINATE: f64 = 1.0 / 4_194_304.0;
 
+/// The supplied-target model applies to Retail and Forever only; PTR keeps its
+/// prior registrations (nearest-party token in Rust, the rest from the Lua shim).
+fn models_navigation_targets() -> bool {
+    matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever)
+}
+
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     let namespace = super::ensure_namespace(state, "C_Navigation")?;
+    table_set_rust_fn_static(
+        state,
+        namespace,
+        "GetNearestPartyMemberToken",
+        get_nearest_party_member_token,
+    )?;
+    if models_navigation_targets() {
+        register_target_queries(state, namespace)?;
+    }
+    Ok(())
+}
+
+fn register_target_queries(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
     table_set_rust_fn_static(state, namespace, "GetDistance", get_distance)?;
     table_set_rust_fn_static(state, namespace, "GetFrame", get_frame)?;
     table_set_rust_fn_static(state, namespace, "GetTargetState", get_target_state)?;
@@ -29,12 +50,6 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
         has_valid_screen_position,
     )?;
     table_set_rust_fn_static(state, namespace, "WasClampedToScreen", was_clamped)?;
-    table_set_rust_fn_static(
-        state,
-        namespace,
-        "GetNearestPartyMemberToken",
-        get_nearest_party_member_token,
-    )?;
     #[cfg(any(feature = "retail-12-1-0", feature = "client-wowforever"))]
     table_set_rust_fn_static(
         state,
@@ -46,10 +61,16 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
 }
 
 pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
+    if !models_navigation_targets() {
+        return Ok(builder);
+    }
     builder.set_function("SetNavigationTarget", set_navigation_target)
 }
 
 pub(crate) fn update_navigation_frame(state: &mut LuaState) -> LuaResult<()> {
+    if !models_navigation_targets() {
+        return Ok(());
+    }
     let available = navigation_target(state)?.is_some();
     let changed = {
         let mut sim = borrow_state_mut(state)?;
