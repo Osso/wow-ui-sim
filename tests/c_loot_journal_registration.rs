@@ -1,10 +1,5 @@
 #![cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 
-#[cfg(feature = "client-wowforever")]
-use std::path::PathBuf;
-
-#[cfg(feature = "client-wowforever")]
-use wow_ui_sim::loader::load_addon;
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 #[test]
@@ -37,9 +32,17 @@ fn rust_item_set_registration_survives_bootstrap() {
 #[test]
 fn rust_raid_lock_registration_uses_first_map_row_without_difficulty() {
     let env = WowLuaEnv::new().expect("Lua environment should initialize");
-    load_addon(&env.loader_env(), &encounter_journal_toc())
-        .expect("Forever Encounter Journal should load from its selected TOC");
+    let ui = wow_ui_sim::client_profile::blizzard_ui_addons_dir_under(std::path::Path::new(
+        env!("CARGO_MANIFEST_DIR"),
+    ));
+    env.set_screen_mode(wow_ui_sim::screen::ScreenKind::Game);
+    env.state().borrow_mut().addon_base_paths = vec![ui];
+    crate::common::load_game_startup_inventory(&env);
     env.apply_post_load_workarounds();
+    env.exec(
+        "assert(EncounterJournal_LoadUI(), 'Encounter Journal should load on demand')",
+    )
+    .expect("load Encounter Journal through its normal bootstrap");
 
     let (omitted, explicit, overlay_shown): (bool, bool, bool) = env
         .eval(
@@ -91,9 +94,3 @@ fn rust_raid_lock_registration_uses_first_map_row_without_difficulty() {
     assert!(overlay_shown);
 }
 
-#[cfg(feature = "client-wowforever")]
-fn encounter_journal_toc() -> PathBuf {
-    wow_ui_sim::paths::default_blizzard_ui_addons_path()
-        .expect("Blizzard UI cache should be available")
-        .join("Blizzard_EncounterJournal/Blizzard_EncounterJournal.toc")
-}
