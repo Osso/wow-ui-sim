@@ -42,7 +42,8 @@ fn original_social_settings_reads_chat_restrictions() {
 
 #[test]
 fn original_communities_frame_reads_chat_accessibility_inputs() {
-    let env = load_original_addon("Blizzard_Communities");
+    let env = crate::common::prefork_full_ui_preload::preload_full_game_ui()
+        .expect("full Blizzard UI should load for the normal CommunitiesFrame path");
     env.exec(
         r#"
         C_Club.CreateClub("Muted community", "", "Muted", 1, 0)
