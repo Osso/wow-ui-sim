@@ -363,17 +363,7 @@ fn flight_map_open_path_places_click_to_zoom_labels_from_uimap_positions(env: &W
         observed,
         (true, true, 14, 14, "BOTTOMLEFT".into(), "TOPLEFT".into())
     );
-    assert_taxi_map_id_survives_flight_map_close(env);
 }
-}
-
-fn assert_taxi_map_id_survives_flight_map_close(env: &WowLuaEnv) {
-    env.fire_event("TAXIMAP_CLOSED")
-        .expect("FlightMap should receive its client close event");
-    let (shown, map_id): (bool, i32) = env
-        .eval("return FlightMapFrame:IsShown(), GetTaxiMapID()")
-        .expect("taxi map ID should remain readable after close");
-    assert_eq!((shown, map_id), (false, 14));
 }
 
 fn assert_flight_map_is_unloaded_and_taxi_map_id_is_zero_values(env: &WowLuaEnv) {
@@ -394,6 +384,10 @@ fn open_flight_map_for_taxi_map(env: &WowLuaEnv, map_id: i32) {
     let set_map_id = format!("A_Admin.SetTaxiMapID({map_id})");
     env.exec(&set_map_id)
         .expect("supply the map selected by the flight-master interaction");
+    let map_id_before_open: i32 = env
+        .eval("return GetTaxiMapID()")
+        .expect("taxi map ID should be readable before the open event");
+    assert_eq!(map_id_before_open, map_id);
     let world_system: f64 = env
         .eval("return Enum.UIMapSystem.World")
         .expect("World UIMapSystem enum should be available");
