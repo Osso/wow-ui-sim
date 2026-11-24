@@ -104,7 +104,7 @@ fn pending_channel_join_key(
     Ok((channel_type, club_id, stream_id))
 }
 
-fn optional_string_arg(state: &mut LuaState, index: usize) -> LuaResult<Option<String>> {
+fn optional_string_arg(state: &mut LuaState, index: i32) -> LuaResult<Option<String>> {
     if matches!(stack_val(state, index), Val::Nil) {
         Ok(None)
     } else {
@@ -112,7 +112,7 @@ fn optional_string_arg(state: &mut LuaState, index: usize) -> LuaResult<Option<S
     }
 }
 
-fn optional_stream_id_arg(state: &mut LuaState, index: usize) -> LuaResult<Option<String>> {
+fn optional_stream_id_arg(state: &mut LuaState, index: i32) -> LuaResult<Option<String>> {
     if matches!(stack_val(state, index), Val::Nil) {
         Ok(None)
     } else {
