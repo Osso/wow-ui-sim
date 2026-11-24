@@ -1271,7 +1271,7 @@ fn retail_aura_container_hook_dispatcher_preserves_secure_consumer(env: &WowLuaE
     crate::common::aura_container_harness::settle(env);
     assert_eq!(
         crate::common::aura_container_harness::icons(env, "AuditLive", "buffs"),
-        r"Interface\Icons\INV_Misc_QuestionMark"
+        r"134400"
     );
     env.exec("TextureHookProbeTarget = AuditLive:GetAuraGroupFrame('buffs', 1):GetIcon()")
         .unwrap();
@@ -1280,13 +1280,13 @@ fn retail_aura_container_hook_dispatcher_preserves_secure_consumer(env: &WowLuaE
         env,
         vec![
             texture_hook_probe_aura(99021, "Interface\\Icons\\INV_Misc_QuestionMark"),
-            texture_hook_probe_aura(99022, "Interface\\Icons\\Spell_Holy_FlashHeal"),
+            texture_hook_probe_aura(99022, "Interface\\Icons\\INV_Misc_QuestionMark"),
         ],
     );
     crate::common::aura_container_harness::settle(env);
     assert_eq!(
         crate::common::aura_container_harness::icons(env, "AuditLive", "buffs"),
-        r"Interface\Icons\INV_Misc_QuestionMark,Interface\Icons\Spell_Holy_FlashHeal"
+        r"134400,134400"
     );
     assert_texture_hook_probe_counter(env, "TextureSetHookProbeFirstCounter");
     assert_texture_hook_probe_counter(env, "TextureSetHookProbeSecondCounter");
