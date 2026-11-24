@@ -762,7 +762,7 @@ fn ptr_store_disabled_without_override_leaves_game_menu_and_stores_unchanged() {
 fn gamepad_cursor_control_tracks_game_menu_lifecycle() {
     test_timeout! {
         let env = setup_game_menu_env();
-        let result: (bool, bool, bool, bool, bool) = env.eval(r#"
+        let result: (bool, bool, bool, bool, bool, bool) = env.eval(r#"
             A_Admin.SetUsingGamepad(true)
             local active = IsUsingGamepad()
             ToggleGameMenu()
