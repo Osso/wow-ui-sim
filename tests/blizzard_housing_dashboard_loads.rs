@@ -814,3 +814,44 @@ fn blizzard_housing_dashboard_registers_left_panel_with_extra_width_func(env: &W
     );
 }
 }
+
+fn dashboard_owned_house_entries(env: &WowLuaEnv) -> (f64, String, String, bool) {
+    env.eval(
+        r#"
+        local dropdown = HousingDashboardFrame.HouseDropdown
+        local houses = dropdown.playerHouseList
+        return #houses, houses[1].houseName, houses[2].houseName,
+            dropdown:IsShown() and dropdown.Dropdown:HasElements()
+                and houses[1].houseGUID ~= houses[2].houseGUID
+        "#,
+    )
+    .expect("read the original dashboard's rendered house entries")
+}
+
+prefork_full_ui_case! {
+fn blizzard_housing_dashboard_renders_supplied_owned_houses(env: &WowLuaEnv) {
+    env.exec(
+        r#"
+        A_Admin.SetPlayerOwnedHouses({
+            { plotID = 101, houseName = "North House", houseGUID = "House-101" },
+            { plotID = 202, houseName = "South House", houseGUID = "House-202" },
+        })
+        "#,
+    )
+    .expect("supply two owned houses");
+    load_housing_dashboard(env);
+    env.exec("ShowUIPanel(HousingDashboardFrame)")
+        .expect("open the original housing dashboard");
+    let pending: bool = env
+        .eval("return HousingDashboardFrame.HouseDropdown.playerHouseList == nil")
+        .expect("owned-house reply must wait for a timer tick");
+    assert!(pending, "request must not update the dropdown synchronously");
+    env.process_timers().expect("deliver owned-house response");
+
+    let (count, first, second, shown) = dashboard_owned_house_entries(env);
+    assert_eq!(count, 2.0);
+    assert_eq!(first, "North House");
+    assert_eq!(second, "South House");
+    assert!(shown, "dashboard must show distinct supplied houses");
+}
+}

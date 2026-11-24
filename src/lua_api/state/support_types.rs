@@ -389,6 +389,9 @@ pub struct HousingState {
     pub tracked_house_guid: Option<String>,
     /// Supplied nullable API snapshot; native acquisition/location coherence is unknown.
     pub current_house_info: Option<crate::c_api::c_housing::current_house::HouseInfo>,
+    /// Host-supplied owned-house records for asynchronous list requests.
+    #[cfg(feature = "client-retail")]
+    pub owned_houses: Vec<crate::c_api::c_housing::current_house::HouseInfo>,
     /// No housing area is supplied in an empty world; ownership is separate.
     pub current_housing_area: Option<crate::c_api::c_housing::HousingArea>,
     pub inside_owned_house: bool,

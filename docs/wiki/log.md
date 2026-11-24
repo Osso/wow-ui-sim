@@ -1,3 +1,7 @@
+## [2026-11-24] implementation | Retail/Forever supplied owned-house replies
+
+Updated the [Lua API system](systems/lua-api.md) and [M5 service contract](../specs/c-factory-m5-services.md); documented `A_Admin.SetPlayerOwnedHouses` in [admin API housing inputs](../../admin-api/housing.md). **VERIFIED (pinned Retail/PTR UI caches):** the standard-game Housing Dashboard TOC selects a `GetPlayerOwnedHouses()` consumer and the API documentation defines `HouseInfo` fields and the `PLAYER_HOUSE_LIST_UPDATED` payload. **VERIFIED (Forever TOC and simulator game-type filter):** Forever excludes `standard`, so it does not select this consumer. **INFERRED (R88fj; native evidence pending):** Retail requests queue one event per call for a later timer tick; PTR retains its temporary empty-list response.
+
 ## [2026-11-23] implementation | Retail/Forever Kiosk session input
 
 Added [the Kiosk session system page](../systems/kiosk-session.md) and [admin API contract](../../admin-api/kiosk.md). **VERIFIED (pinned caches):** Retail and Forever generated API docs have no Kiosk/C_Kiosk declaration; Blizzard_Kiosk assigns fields to an existing Kiosk namespace. **INFERRED (R88fd (native evidence pending)):** the empty-session defaults and host-supplied fields are simulator scenario behavior. **VERIFIED (simulator):** exact Retail original LFD consumer test passes 1/1; its startup emits the existing CurrencyTransfer required-argument error.
