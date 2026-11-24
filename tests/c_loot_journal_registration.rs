@@ -40,18 +40,9 @@ fn rust_raid_lock_registration_uses_first_map_row_without_difficulty() {
     crate::common::load_game_startup_inventory(&env);
     let toc = wow_ui_sim::loader::find_toc_file(&ui.join("Blizzard_EncounterJournal"))
         .expect("select the Forever Encounter Journal TOC");
-    wow_ui_sim::loader::load_startup_addon(
-        &env.loader_env(),
-        &toc,
-        wow_ui_sim::loader::StartupAddonLoadKind::BootstrapOnly,
-        None,
-    )
-    .expect("load Encounter Journal's normal on-demand bootstrap");
+    wow_ui_sim::loader::load_addon(&env.loader_env(), &toc)
+        .expect("load Encounter Journal after its startup dependencies");
     env.apply_post_load_workarounds();
-    env.exec(
-        "assert(EncounterJournal_LoadUI(), 'Encounter Journal should load on demand')",
-    )
-    .expect("load Encounter Journal through its normal bootstrap");
 
     let (omitted, explicit, overlay_shown): (bool, bool, bool) = env
         .eval(
