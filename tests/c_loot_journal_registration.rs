@@ -1,7 +1,9 @@
 #![cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 
+#[cfg(feature = "client-wowforever")]
 use std::path::PathBuf;
 
+#[cfg(feature = "client-wowforever")]
 use wow_ui_sim::loader::load_addon;
 use wow_ui_sim::lua_api::WowLuaEnv;
 
@@ -81,6 +83,7 @@ fn rust_raid_lock_registration_uses_first_map_row_without_difficulty() {
     assert!(overlay_shown);
 }
 
+#[cfg(feature = "client-wowforever")]
 fn encounter_journal_toc() -> PathBuf {
     wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("Blizzard UI cache should be available")
