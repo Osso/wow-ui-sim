@@ -61,10 +61,7 @@ fn original_social_settings_reads_chat_restrictions() {
 }
 
 #[test]
-fn original_communities_frame_reads_chat_accessibility_inputs() {
-    let env = load_full_game_ui();
-    env.exec(
-        r#"
+const COMMUNITIES_CHAT_ACCESSIBILITY_SCRIPT: &str = r#"
         local addedClubs = {}
         local listener = CreateFrame("Frame")
         listener:RegisterEvent("CLUB_ADDED")
@@ -81,25 +78,41 @@ fn original_communities_frame_reads_chat_accessibility_inputs() {
         A_Admin.SetChatDisabled(true)
         ToggleCommunitiesFrame()
         local selectedClubId = CommunitiesFrame:GetSelectedClubId()
-        assert(selectedClubId == mutedClubId or selectedClubId == availableClubId)
+        assert(
+            selectedClubId == mutedClubId or selectedClubId == availableClubId,
+            string.format("selected=%s muted=%s available=%s", tostring(selectedClubId), tostring(mutedClubId), tostring(availableClubId))
+        )
 
         A_Admin.SetAccountMutedClub(selectedClubId, true)
         CommunitiesFrame:ValidateDisplayMode()
         assert(not CommunitiesFrame:IsChatAccessible(), "account-muted club blocks chat")
-        assert(CommunitiesFrame:GetDisplayMode() == COMMUNITIES_FRAME_DISPLAY_MODES.ROSTER)
+        assert(
+            CommunitiesFrame:GetDisplayMode() == COMMUNITIES_FRAME_DISPLAY_MODES.ROSTER,
+            "account-muted club uses roster mode"
+        )
 
         A_Admin.SetAccountMutedClub(selectedClubId, false)
         CommunitiesFrame:ValidateDisplayMode()
         assert(not CommunitiesFrame:IsChatAccessible(), "chat-disabled account blocks chat")
-        assert(CommunitiesFrame:GetDisplayMode() == COMMUNITIES_FRAME_DISPLAY_MODES.ROSTER)
+        assert(
+            CommunitiesFrame:GetDisplayMode() == COMMUNITIES_FRAME_DISPLAY_MODES.ROSTER,
+            "chat-disabled account uses roster mode"
+        )
 
         A_Admin.SetChatDisabled(false)
         CommunitiesFrame:ValidateDisplayMode()
         assert(CommunitiesFrame:IsChatAccessible(), "unrestricted community chat is accessible")
-        assert(CommunitiesFrame:GetDisplayMode() == COMMUNITIES_FRAME_DISPLAY_MODES.CHAT)
-        "#,
-    )
-    .expect("original CommunitiesFrame follows supplied club and chat restrictions");
+        assert(
+            CommunitiesFrame:GetDisplayMode() == COMMUNITIES_FRAME_DISPLAY_MODES.CHAT,
+            "accessible community uses chat mode"
+        )
+        "#;
+
+#[test]
+fn original_communities_frame_reads_chat_accessibility_inputs() {
+    load_full_game_ui()
+        .exec(COMMUNITIES_CHAT_ACCESSIBILITY_SCRIPT)
+        .expect("original CommunitiesFrame follows supplied club and chat restrictions");
 }
 
 fn assert_social_setting(env: &WowLuaEnv, expected: bool) {
