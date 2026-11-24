@@ -49,16 +49,19 @@ fn original_communities_frame_reads_chat_accessibility_inputs() {
         .expect("full Blizzard UI should load for the normal CommunitiesFrame path");
     env.exec(
         r#"
+        local addedClubs = {}
+        local listener = CreateFrame("Frame")
+        listener:RegisterEvent("CLUB_ADDED")
+        listener:SetScript("OnEvent", function(_, _, clubId)
+            addedClubs[#addedClubs + 1] = clubId
+        end)
         C_Club.CreateClub("Muted community", "", "Muted", 1, 0)
         C_Club.CreateClub("Available community", "", "Available", 1, 0)
-        local clubs = C_Club.GetSubscribedClubs()
-        assert(#clubs == 2, "two distinct supplied clubs exist")
-        local mutedClubId, availableClubId
-        for _, club in ipairs(clubs) do
-            if club.name == "Muted community" then mutedClubId = club.clubId end
-            if club.name == "Available community" then availableClubId = club.clubId end
-        end
+        local mutedClubId, availableClubId = addedClubs[1], addedClubs[2]
+        assert(mutedClubId and availableClubId, "two supplied clubs publish distinct IDs")
         assert(mutedClubId ~= availableClubId, "club IDs are distinct")
+        assert(C_Club.GetClubInfo(mutedClubId).name == "Muted community")
+        assert(C_Club.GetClubInfo(availableClubId).name == "Available community")
         A_Admin.SetAccountMutedClub(mutedClubId, true)
         A_Admin.SetChatDisabled(true)
 
