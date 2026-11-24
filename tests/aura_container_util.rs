@@ -350,6 +350,12 @@ hooksecurefunc(methods, 'SetTexture', function()
     if debug.getstacktaint() ~= 'TextureSetHookProbe' then calls = 100 else calls = calls + 1 end
     counter:SetSize(calls, calls)
 end)
+_G.TextureHookProbeSeed = function()
+    A_Admin.ClearBuffs()
+    A_Admin.AddBuff(99021, 'Hook Aura One', 'Interface\\Icons\\INV_Misc_QuestionMark', 60, 1)
+    A_Admin.AddBuff(99022, 'Hook Aura Two', '134920', 60, 1)
+end
+debug.setobjecttaint(_G.TextureHookProbeSeed, 'TextureSetHookProbe')
 "#,
     )
     .unwrap();
@@ -377,8 +383,7 @@ fn retail_aura_container_secret_icons_survive_addon_texture_hook() {
     let env = crate::common::aura_container_harness::load_env();
     load_texture_hook_probe(&env);
     env.exec("AuditLive = AuditContainer({{'buffs', 'HELPFUL'}})").unwrap();
-    env.exec("A_Admin.ClearBuffs(); A_Admin.AddBuff(99021, 'Hook Aura One', 'Interface\\\\Icons\\\\INV_Misc_QuestionMark', 60, 1); A_Admin.AddBuff(99022, 'Hook Aura Two', '134920', 60, 1)")
-        .unwrap();
+    env.exec("TextureHookProbeSeed()").unwrap();
     crate::common::aura_container_harness::settle(&env);
     assert_eq!(
         crate::common::aura_container_harness::icons(&env, "AuditLive", "buffs"),
