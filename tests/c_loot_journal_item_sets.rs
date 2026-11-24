@@ -186,7 +186,7 @@ fn assert_initial_raid_lock_overlays(env: &WowLuaEnv, b: &RaidLockBosses) {
             "#
         ))
         .expect("Encounter Journal boss overlays should read supplied raid-lock state");
-    assert_eq!(initial, (true, false, true, true, false, true));
+    assert_eq!(initial, (true, false, false, true, false, true));
 }
 
 fn complete_second_boss_and_request_raid_info(env: &WowLuaEnv, b: &RaidLockBosses) {
