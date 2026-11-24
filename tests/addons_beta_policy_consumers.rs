@@ -57,9 +57,8 @@ const PTR_CASE: &str = r#"
 "#;
 
 fn load_game_ui() -> WowLuaEnv {
-    let env = WowLuaEnv::new().expect("Lua environment");
-    env.set_screen_size(1024.0, 768.0);
-    env.state().borrow_mut().addon_base_paths = vec![common::blizzard_ui_dir()];
+    let ui = common::blizzard_ui_dir();
+    let env = common::blizzard_addon_harness::new_blizzard_addon_env(&ui);
     common::load_game_startup_inventory(&env);
     env.apply_post_load_workarounds();
     wow_ui_sim::startup::settle_headless_startup(&env);
