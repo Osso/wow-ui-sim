@@ -15,7 +15,10 @@ fn is_using_gamepad_state(sim: &crate::lua_api::state::SimState) -> LuaResult<bo
 }
 
 fn is_using_gamepad(state: &mut LuaState) -> LuaResult<u32> {
-    let is_using_gamepad = is_using_gamepad_state(&borrow_state(state)?)?;
+    let is_using_gamepad = {
+        let sim = borrow_state(state)?;
+        is_using_gamepad_state(&sim)?
+    };
     state.push(Val::Bool(is_using_gamepad));
     Ok(1)
 }
@@ -43,14 +46,16 @@ fn is_using_gamepad_with_overlap_window(sim: &crate::lua_api::state::SimState) -
 
 fn can_auto_set_gamepad_cursor_control(state: &mut LuaState) -> LuaResult<u32> {
     let enabled = bool::from_stack(state, 1)?;
-    let sim = borrow_state(state)?;
-    let auto_enable = sim
-        .cvars
-        .get("GamePadCursorAutoEnable")
-        .ok_or_else(|| rilua::runtime_error("GamePadCursorAutoEnable CVar is unavailable"))?
-        .parse::<u32>()
-        .map_err(|_| rilua::runtime_error("GamePadCursorAutoEnable CVar must be an integer"))?;
-    let can_auto_set = is_using_gamepad_state(&sim)? && (!enabled || auto_enable != 0);
+    let can_auto_set = {
+        let sim = borrow_state(state)?;
+        let auto_enable = sim
+            .cvars
+            .get("GamePadCursorAutoEnable")
+            .ok_or_else(|| rilua::runtime_error("GamePadCursorAutoEnable CVar is unavailable"))?
+            .parse::<u32>()
+            .map_err(|_| rilua::runtime_error("GamePadCursorAutoEnable CVar must be an integer"))?;
+        is_using_gamepad_state(&sim)? && (!enabled || auto_enable != 0)
+    };
     state.push(Val::Bool(can_auto_set));
     Ok(1)
 }
