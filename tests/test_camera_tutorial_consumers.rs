@@ -18,6 +18,14 @@ fn camera_fov_defaults_drive_blizzard_slider_options(env: &WowLuaEnv) {
 
 prefork_full_ui_case! {
 fn tutorials_enabled_controls_original_npe_bootstrap(env: &WowLuaEnv) {
+    let env = WowLuaEnv::new().expect("isolated NPE bootstrap environment");
+    crate::common::panel_fixtures::seed_addon_search_paths(&env);
+    crate::common::load_blizzard_addon_bootstrap(
+        &env,
+        &crate::common::blizzard_addon_harness::blizzard_ui_dir(),
+        "Blizzard_NewPlayerExperience",
+        "Blizzard_NewPlayerExperience_Bootstrap.lua",
+    );
     env.exec(r#"
         local addon = "Blizzard_NewPlayerExperience"
         assert(not C_AddOns.IsAddOnLoaded(addon))
