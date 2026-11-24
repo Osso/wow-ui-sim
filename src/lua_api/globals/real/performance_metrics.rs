@@ -1,11 +1,12 @@
 //! Supplied inputs for legacy performance globals consumed by Blizzard UI.
 //!
-//! GetFramerate defaults are R88fg VERIFIED; sample inputs and publication are inferred.
+//! INFERRED (R88fg, native evidence pending): omitted frame-rate input keeps the retired 60 FPS default;
+//! the Forever helper's 240 values are sample count, not FPS.
 
 use crate::lua_api::methods::{borrow_state, borrow_state_mut};
 use crate::lua_bridge::{FromStack, TableBuilder, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
-use rilua::{LuaResult, Val};
+use rilua::{LuaResult, Val, runtime_error};
 
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     table_set_rust_fn_static(state, state.global, "GetFramerate", get_framerate)?;
@@ -23,15 +24,10 @@ pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
 }
 
 fn get_framerate(state: &mut LuaState) -> LuaResult<u32> {
-    let default_fps = if cfg!(feature = "client-wowforever") {
-        240.0
-    } else {
-        60.0
-    };
     let fps = borrow_state(state)?
         .app_frame_metrics
         .supplied_framerate
-        .unwrap_or(default_fps);
+        .unwrap_or(60.0);
     state.push(Val::Num(fps));
     Ok(1)
 }
@@ -48,14 +44,14 @@ fn set_addon_usage(state: &mut LuaState) -> LuaResult<u32> {
     let name = String::from_stack(state, 1)?;
     let memory = f64::from_stack(state, 2)?;
     let cpu = f64::from_stack(state, 3)?;
-    if let Some(addon) = borrow_state_mut(state)?
+    let mut sim = borrow_state_mut(state)?;
+    let addon = sim
         .addons
         .iter_mut()
         .find(|addon| addon.folder_name == name)
-    {
-        addon.runtime.supplied_memory_kb = memory;
-        addon.runtime.supplied_cpu_ms = cpu;
-    }
+        .ok_or_else(|| runtime_error(format!("unknown addon '{name}' in A_Admin.SetAddOnUsage")))?;
+    addon.runtime.supplied_memory_kb = memory;
+    addon.runtime.supplied_cpu_ms = cpu;
     Ok(0)
 }
 
@@ -94,33 +90,31 @@ fn get_cpu(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn addon_usage(state: &mut LuaState, memory: bool) -> LuaResult<f64> {
-    let key = Val::from_stack(state, 1)?;
-    let index = match key {
-        Val::Num(index) => (index >= 1.0).then_some(index as usize - 1),
+    let index = resolve_addon_index(state)?;
+    let sim = borrow_state(state)?;
+    Ok(index
+        .and_then(|index| sim.addons.get(index))
+        .map_or(0.0, |addon| snapshot_value(&addon.runtime, memory)))
+}
+
+fn resolve_addon_index(state: &mut LuaState) -> LuaResult<Option<usize>> {
+    match Val::from_stack(state, 1)? {
+        Val::Num(index) => Ok((index >= 1.0).then_some(index as usize - 1)),
         Val::Str(_) => {
             let name = String::from_stack(state, 1)?;
-            let sim = borrow_state(state)?;
-            return Ok(sim
+            Ok(borrow_state(state)?
                 .addons
                 .iter()
-                .find(|addon| addon.folder_name == name)
-                .map_or(0.0, |addon| {
-                    if memory {
-                        addon.runtime.memory_snapshot_kb
-                    } else {
-                        addon.runtime.cpu_snapshot_ms
-                    }
-                }));
+                .position(|addon| addon.folder_name == name))
         }
-        _ => None,
-    };
-    let sim = borrow_state(state)?;
-    let addon = index.and_then(|index| sim.addons.get(index));
-    Ok(addon.map_or(0.0, |addon| {
-        if memory {
-            addon.runtime.memory_snapshot_kb
-        } else {
-            addon.runtime.cpu_snapshot_ms
-        }
-    }))
+        _ => Ok(None),
+    }
+}
+
+fn snapshot_value(runtime: &crate::lua_api::state_types::AddonRuntimeMetrics, memory: bool) -> f64 {
+    if memory {
+        runtime.memory_snapshot_kb
+    } else {
+        runtime.cpu_snapshot_ms
+    }
 }

@@ -917,10 +917,13 @@ fn performance_bar_fallbacks_preserve_other_profile_values() {
 fn performance_bar_tooltip_displays_supplied_metrics() {
     let env = setup_env();
     let default_fps: f64 = env.eval("return GetFramerate()").expect("GetFramerate");
-    assert_eq!(default_fps, 240.0);
+    assert_eq!(default_fps, 60.0);
     load_performance_bar_tooltip(&env);
     let shown: bool = env
         .eval(r#"
+            local ok, message = pcall(A_Admin.SetAddOnUsage, "MissingPerformanceAddon", 1, 2)
+            assert(not ok and tostring(message):find("MissingPerformanceAddon", 1, true),
+                "unknown addon usage input must fail with its addon name")
             A_Admin.SetFramerate(48.5)
             A_Admin.SetAddOnUsage("Blizzard_MicroMenu", 240, 7)
             A_Admin.SetAddOnUsage("Blizzard_UIParent", 80, 2)
@@ -961,6 +964,9 @@ const PERFORMANCE_BAR_TOOLTIP_ASSERTIONS: &str = r##"
     local bandwidth = string.format(MAINMENUBAR_BANDWIDTH_LABEL, 0)
     assert(has_tooltip_line(protocol), "original tooltip protocol row: " .. protocol)
     assert(has_tooltip_line(bandwidth), "original tooltip bandwidth row must show zero")
+    local ok, message = pcall(A_Admin.SetAddOnUsage, "MissingPerformanceAddon", 1, 2)
+    assert(not ok and tostring(message):find("MissingPerformanceAddon", 1, true),
+        "unknown addon usage input must fail with its addon name")
     A_Admin.SetFramerate(48.5)
     local oldMemory = GetAddOnMemoryUsage("Blizzard_MicroMenu")
     A_Admin.SetAddOnUsage("Blizzard_MicroMenu", 240, 7)
