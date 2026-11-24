@@ -1,4 +1,4 @@
-#![cfg(feature = "client-retail")]
+#![cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 use std::path::PathBuf;
 
 use wow_ui_sim::loader::{discover_blizzard_addons_for_screen, load_addon};
@@ -131,26 +131,9 @@ prefork_full_ui_case! {
 }
 
 prefork_full_ui_case! {
-    fn behavioral_notification_event_does_not_error(env: &WowLuaEnv) {
-        load_behavioral_messaging_chain(&env);
-
-        {
-            let mut state = env.state().borrow_mut();
-            state.lua_errors.clear();
-            state.lua_error_records.clear();
-            state.lua_error_counts.clear();
-        }
-
-        env.exec(
-            "BehavioralMessagingTray:OnEvent('BEHAVIORAL_NOTIFICATION', 'ComplaintWarning_Social', 1)",
-        )
-        .expect("OnEvent dispatch should run");
-
-        let errors: Vec<String> = env.state().borrow().lua_errors.clone();
-        assert!(
-            errors.is_empty(),
-            "BehavioralMessagingTray:OnEvent emitted Lua errors:\n  {}",
-            errors.join("\n  ")
-        );
+    fn supplied_notifications_render_and_record_consumer_receipts(env: &WowLuaEnv) {
+        load_behavioral_messaging_chain(env);
+        env.exec(include_str!("blizzard_behavioral_messaging_notifications.lua"))
+            .expect("supplied notifications should render and be acknowledged");
     }
 }
