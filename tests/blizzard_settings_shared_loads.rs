@@ -1068,30 +1068,48 @@ fn forever_graphics_antialiasing_options_follow_host_capability() {
             local category
             for _, group in ipairs(SettingsPanel:GetCategoryList().groups) do for _, candidate in ipairs(group.categories) do if candidate:GetName() == GRAPHICS_LABEL then category = candidate end end end
             assert(category ~= nil, "original Graphics category must register")
-            A_Admin.SetMultiSampleAntiAliasingSupported(true)
             local layout = SettingsPanel:GetLayout(category)
-            local getOptions
+            local getFxaaOptions, getMsaaOptions
             for _, initializer in layout:EnumerateInitializers() do
                 local setting = initializer.GetSetting and initializer:GetSetting()
-                if setting and setting:GetVariable() == "PROXY_ANTIALIASING" then
-                    getOptions = initializer:GetOptions()
+                if setting and setting:GetVariable() == "PROXY_FXAA" then
+                    getFxaaOptions = initializer:GetOptions()
+                elseif setting and setting:GetVariable() == "PROXY_MSAA" then
+                    getMsaaOptions = initializer:GetOptions()
                 end
             end
-            assert(getOptions ~= nil, "original antialiasing dropdown must initialize")
-            local function optionPresence(msaa, antiAliasing)
-                A_Admin.SetMultiSampleAntiAliasingSupported(msaa)
-                A_Admin.SetAntiAliasingSupported(antiAliasing)
+            assert(getFxaaOptions ~= nil, "original image-based AA dropdown must initialize")
+            assert(getMsaaOptions ~= nil, "original MSAA dropdown must initialize")
+
+            local function optionMap(getOptions)
                 local found = {}
-                for _, option in ipairs(getOptions()) do found[option.value] = true end
-                return found[2], found[3]
+                for _, option in ipairs(getOptions()) do found[option.value] = option.label end
+                return found
             end
-            local multisample, advanced = optionPresence(true, false)
-            assert(multisample and not advanced, "MSAA support alone must add only MSAA")
-            multisample, advanced = optionPresence(true, true)
-            assert(multisample and advanced, "both capabilities must add both options")
-            multisample, advanced = optionPresence(false, true)
-            assert(not multisample and not advanced, "advanced AA requires MSAA support")
-        "#).expect("original graphics dropdown options should follow supplied MSAA capability");
+            A_Admin.SetAntiAliasingSupported(false, false)
+            local fxaa = optionMap(getFxaaOptions)
+            assert(fxaa[3] == nil and fxaa[4] == nil, "unsupplied CMAA options must be absent")
+            A_Admin.SetAntiAliasingSupported(true, false)
+            fxaa = optionMap(getFxaaOptions)
+            assert(fxaa[3] == ANTIALIASING_CMAA and fxaa[4] == nil, "CMAA support must add only CMAA")
+            A_Admin.SetAntiAliasingSupported(false, true)
+            fxaa = optionMap(getFxaaOptions)
+            assert(fxaa[3] == nil and fxaa[4] == ANTIALIASING_CMAA2, "CMAA2 support must add only CMAA2")
+
+            local msaa = optionMap(getMsaaOptions)
+            assert(msaa[0] == VIDEO_OPTIONS_NONE and msaa[1] == nil, "empty MSAA groups must add no MSAA levels")
+            A_Admin.SetMultiSampleAntiAliasingSupported({
+                { msaaQuality = "1,0", sampleCount = 4, coverageCount = 0 },
+                { msaaQuality = "2,2", sampleCount = 8, coverageCount = 2 },
+            })
+            msaa = optionMap(getMsaaOptions)
+            assert(msaa[0] == VIDEO_OPTIONS_NONE, "MSAA options must retain the disabled value")
+            assert(msaa[1] == ADVANCED_ANTIALIASING_MSAA_FORMAT:format(4, 0), "first supplied MSAA group must format its label")
+            assert(msaa[2] == ADVANCED_ANTIALIASING_MSAA_FORMAT:format(8, 2), "second supplied MSAA group must format its label")
+            local count = 0
+            for _ in pairs(msaa) do count = count + 1 end
+            assert(count == 3, "MSAA dropdown must contain exactly the two supplied levels")
+        "#).expect("original graphics dropdowns should expose supplied CMAA and MSAA groups");
     }
 }
 
