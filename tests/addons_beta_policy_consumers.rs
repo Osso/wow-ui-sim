@@ -8,6 +8,8 @@ use crate::common;
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 const RETAIL_AND_FOREVER_CASE: &str = r#"
+    assert(not C_AddOns.GetScriptsDisallowedForBeta(), "beta policy defaults false")
+    assert(not AreDangerousScriptsAllowed(), "dangerous scripts default to disallowed")
     A_Admin.SetKioskSession({ enabled = false, competitive = false })
     A_Admin.SetScriptsDisallowedForBeta(false)
     SetAllowDangerousScripts(false)
