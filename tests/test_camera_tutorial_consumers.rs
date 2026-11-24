@@ -34,7 +34,7 @@ fn tutorials_enabled_controls_new_player_experience_bootstrap(env: &WowLuaEnv) {
 prefork_full_ui_case! {
 fn tutorial_flags_reach_blizzard_tutorial_consumer(env: &WowLuaEnv) {
     env.exec(r#"
-        local tutorialID = 4
+        local tutorialID = 17
         A_Admin.SetTutorialFlag(tutorialID, true)
         local before = TutorialFrameAlertButton.id
         TutorialFrame_NewTutorial(tutorialID)
@@ -42,9 +42,9 @@ fn tutorial_flags_reach_blizzard_tutorial_consumer(env: &WowLuaEnv) {
         A_Admin.SetTutorialFlag(tutorialID, false)
         TutorialFrame_NewTutorial(tutorialID)
         assert(TutorialFrameAlertButton.id == tutorialID)
-        A_Admin.SetTutorialFlag(tutorialID, true)
+        A_Admin.SetTutorialFlag(18, true)
         InterfaceOverrides.ShowTutorialsOnButtonClick()
-        assert(not IsTutorialFlagged(tutorialID))
+        assert(not IsTutorialFlagged(18))
     "#).expect("TutorialFrame should respect the supplied tutorial flag set");
 }
 }
