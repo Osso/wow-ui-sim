@@ -971,7 +971,7 @@ fn admin_aura_expiration_time(st: &crate::lua_api::state::SimState, duration: f6
 }
 
 #[allow(clippy::too_many_arguments)]
-fn build_admin_aura(
+pub(super) fn build_admin_aura(
     st: &crate::lua_api::state::SimState,
     spell_id: i32,
     name: String,
