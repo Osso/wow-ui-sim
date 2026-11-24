@@ -264,6 +264,57 @@ fn blizzard_minimap_toc_lists_six_files_all_under_mainline_subdir() {
 }
 
 #[test]
+fn addon_compartment_frame_is_not_seeded_before_blizzard_minimap() {
+    let env = WowLuaEnv::new().expect("create bare environment");
+    let absent: bool = env
+        .eval("return rawget(_G, 'AddonCompartmentFrame') == nil")
+        .expect("inspect pre-addon compartment global");
+    assert!(absent, "Blizzard_Minimap must own the compartment frame");
+}
+
+#[test]
+fn blizzard_minimap_compartment_displays_loaded_addon_registrations() {
+    let env = load_full_game_ui();
+    let fixture = tempfile::tempdir().expect("create addon-compartment fixtures");
+
+    for (name, title) in [
+        ("CompartmentOne", "Compartment One"),
+        ("CompartmentTwo", "Compartment Two"),
+    ] {
+        let toc = write_compartment_addon(fixture.path(), name, title);
+        load_addon(&env.loader_env(), &toc)
+            .unwrap_or_else(|error| panic!("load test addon {name}: {error}"));
+    }
+
+    let count: String = env
+        .eval("return AddonCompartmentFrame.Text:GetText()")
+        .expect("read original addon-compartment count text");
+    assert_eq!(
+        count, "2",
+        "both loaded addons must appear in the compartment"
+    );
+}
+
+fn write_compartment_addon(root: &std::path::Path, name: &str, title: &str) -> PathBuf {
+    let directory = root.join(name);
+    std::fs::create_dir_all(&directory).expect("create test addon directory");
+    let toc = directory.join(format!("{name}.toc"));
+    std::fs::write(
+        &toc,
+        format!("## Interface: 120107\n## Title: {title}\nCompartment.lua\n"),
+    )
+    .expect("write test addon TOC");
+    std::fs::write(
+        directory.join("Compartment.lua"),
+        format!(
+            "AddonCompartmentFrame:RegisterAddon({{ text = '{title}', func = function() end }})"
+        ),
+    )
+    .expect("write test addon registration");
+    toc
+}
+
+#[test]
 fn blizzard_minimap_appears_only_on_game_screen_discovery() {
     let game_addons = discover_blizzard_addons_for_screen(&blizzard_ui_dir(), ScreenKind::Game);
     let in_game = game_addons

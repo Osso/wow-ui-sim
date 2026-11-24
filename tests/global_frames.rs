@@ -369,18 +369,6 @@ fn test_buff_frame_aura_container_icon_scale() {
     assert!((scale - 1.0).abs() < f64::EPSILON);
 }
 
-#[test]
-fn test_addon_compartment_frame_methods() {
-    let env = env();
-    // RegisterAddon and UnregisterAddon should be callable without error
-    env.exec("AddonCompartmentFrame:RegisterAddon()").unwrap();
-    env.exec("AddonCompartmentFrame:UnregisterAddon()").unwrap();
-    let is_table: bool = env
-        .eval("return type(AddonCompartmentFrame.registeredAddons) == 'table'")
-        .unwrap();
-    assert!(is_table);
-}
-
 // Forever Blizzard_GroupFinder.toc:10 excludes camelot.
 group_finder_ui_fixture! {
 #[test]
