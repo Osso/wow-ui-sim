@@ -942,7 +942,7 @@ fn performance_bar_tooltip_displays_supplied_metrics() {
 }
 
 #[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
-const PERFORMANCE_BAR_TOOLTIP_ASSERTIONS: &str = r#"
+const PERFORMANCE_BAR_TOOLTIP_ASSERTIONS: &str = r##"
     local function capture_results(...)
         return select('#', ...), ...
     end
@@ -999,7 +999,7 @@ const PERFORMANCE_BAR_TOOLTIP_ASSERTIONS: &str = r#"
     assert(bandwidth_count == 1 and type(available) == "number" and available == 0,
         "GetAvailableBandwidth must return exactly one numeric zero")
     return "ok"
-    "#;
+    "##;
 
 #[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
 fn assert_performance_bar_tooltip_consumer(env: &WowLuaEnv) {
