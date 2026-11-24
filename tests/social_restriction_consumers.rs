@@ -101,6 +101,15 @@ fn original_communities_frame_reads_chat_accessibility_inputs() {
         .expect("original CommunitiesFrame follows supplied club and chat restrictions");
 }
 
+#[test]
+fn unmatched_community_voice_stream_accepts_numeric_stream_id() {
+    let env = WowLuaEnv::new().expect("Lua environment should initialize");
+    env.exec(
+        r#"assert(C_VoiceChat.GetChannelForCommunityStream("club", 20) == nil)"#,
+    )
+    .expect("unmatched community voice stream returns nil");
+}
+
 fn assert_social_setting(env: &WowLuaEnv, expected: bool) {
     env.exec(&format!(
         "assert(Settings.GetSetting('PROXY_DISABLE_CHAT'):GetValue() == {expected})"

@@ -59,11 +59,17 @@ fn by_type(state: &mut LuaState) -> LuaResult<u32> {
 
 fn by_stream(state: &mut LuaState) -> LuaResult<u32> {
     let club = String::from_stack(state, 1)?;
-    let stream = String::from_stack(state, 2)?;
+    let stream = f64::from_stack(state, 2)?;
     let channel = borrow_state(state)?
         .voice_channels
         .iter()
-        .find(|channel| channel.club_id == club && channel.stream_id == stream)
+        .find(|channel| {
+            channel.club_id == club
+                && channel
+                    .stream_id
+                    .parse::<f64>()
+                    .is_ok_and(|id| id == stream)
+        })
         .cloned();
     push_channel(state, channel)
 }
