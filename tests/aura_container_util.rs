@@ -367,20 +367,21 @@ fn assert_texture_hook_count(env: &WowLuaEnv) {
 fn retail_aura_container_secret_icons_survive_addon_texture_hook() {
     let env = crate::common::aura_container_harness::load_env();
     load_texture_hook_probe(&env);
-    env.exec("AuditLive = AuditContainer({{'buffs', 'HELPFUL'}})")
-        .unwrap();
-    crate::common::aura_container_harness::set_player_auras(
-        &env,
-        vec![
-            crate::common::aura_container_harness::aura(135907),
-            crate::common::aura_container_harness::aura(136243),
-        ],
-    );
-    crate::common::aura_container_harness::settle(&env);
-    assert_eq!(
-        crate::common::aura_container_harness::icons(&env, "AuditLive", "buffs"),
-        "135907,136243",
-    );
+    env.exec_maybe_secure(
+        r#"
+        local mixin = assert(CustomAuraButtonPrivateMixin)
+        local firstIcon = secretwrap("Interface\\Icons\\INV_Misc_QuestionMark")
+        local secondIcon = secretwrap("Interface\\Icons\\Ability_Warrior_Charge")
+        local firstTexture = CreateFrame('Frame'):CreateTexture()
+        local secondTexture = CreateFrame('Frame'):CreateTexture()
+        mixin.ApplyIcon({icon = {element = firstTexture}}, 'player', {icon = firstIcon})
+        mixin.ApplyIcon({icon = {element = secondTexture}}, 'player', {icon = secondIcon})
+        assert(firstTexture:GetTexture() == firstIcon)
+        assert(secondTexture:GetTexture() == secondIcon)
+        "#,
+        true,
+    )
+    .expect("AuraContainer must apply both secret icon paths before its addon hook runs");
     assert_texture_hook_count(&env);
     crate::common::aura_container_harness::assert_no_lua_errors(&env);
 }
