@@ -1,10 +1,19 @@
 #![cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 
-#[path = "common/prefork_full_ui_preload.rs"]
-mod prefork_full_ui_preload;
-
 use crate::common::blizzard_addon_harness::{blizzard_ui_dir, build_blizzard_addon_closure_env};
 use wow_ui_sim::lua_api::WowLuaEnv;
+
+fn load_original_communities() -> WowLuaEnv {
+    let ui = blizzard_ui_dir();
+    let addons = ["Blizzard_Communities", "Blizzard_CommunitiesSecure"];
+    let (env, loaded) = build_blizzard_addon_closure_env(&ui, &addons, &[]);
+    for addon in addons {
+        assert!(loaded.iter().any(|name| name == addon), "load {addon}");
+    }
+    env.apply_post_load_workarounds();
+    wow_ui_sim::startup::settle_headless_startup(&env);
+    env
+}
 
 fn load_original_addon(addon: &str) -> WowLuaEnv {
     let ui = blizzard_ui_dir();
@@ -45,8 +54,7 @@ fn original_social_settings_reads_chat_restrictions() {
 
 #[test]
 fn original_communities_frame_reads_chat_accessibility_inputs() {
-    let env = prefork_full_ui_preload::preload_full_game_ui()
-        .expect("full Blizzard UI should load for the normal CommunitiesFrame path");
+    let env = load_original_communities();
     env.exec(
         r#"
         local addedClubs = {}
