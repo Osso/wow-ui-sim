@@ -2,7 +2,7 @@
 
 `A_Admin.SetContributionCollectors(collectors)` supplies contribution-collector data for Retail and WoW Forever. It replaces the full collector snapshot. It does not infer server state or grant rewards.
 
-Each collector row uses `mapID`, `areaPoiID`, `collectorCreatureID`, `name`, `atlasName`, `x`, `y`, and optional `contributions`. Each contribution row uses `contributionID`, `name`, `state`, `amount`, `startTime`, `description`, `result`, `orderIndex`, `active`, and `rewardQuestID`. `nextStateTime` and `appearance` are optional. `requiredCurrency` is optional and has `id` and `amount`; `requiredItem` is optional and has `id` and `count`. `atlases` is an optional ordered list of atlas names, and `buffs` is an optional ordered list of spell IDs.
+Each collector row uses `mapID`, `areaPoiID`, `collectorCreatureID`, `name`, `atlasName`, `x`, `y`, and optional `contributions`. Each contribution row uses `contributionID`, `name`, `state`, `amount`, `startTime`, `description`, `result`, `orderIndex`, `active`, and `rewardQuestID`. `nextStateTime` and `appearance` are optional. `requiredCurrency` is optional and has `id` and `amount`; `requiredItem` is optional and has `id` and `count`. `atlases` is an optional ordered list of atlas names. `buffs` is an optional ordered list of spell IDs; `C_ContributionCollector.GetBuffs` returns those IDs as separate values in order.
 
 `active=true` includes the contribution in `C_ContributionCollector.GetActive()`. The remaining supplied fields feed the matching `C_ContributionCollector` getters. The original `Blizzard_Contribution.lua` consumer uses the result and cost to update its Contribute button, and uses description, order, reward quest, atlases, and buffs while building contribution entries.
 

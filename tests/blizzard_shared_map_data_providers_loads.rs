@@ -166,6 +166,7 @@ A_Admin.SetContributionCollectors({
       contributions={{ contributionID=401, name="Contribution Alpha", state=1, amount=0.5,
         nextStateTime=123.5, startTime=100, description="Alpha description",
         result=Enum.ContributionResult.Success, orderIndex=1, active=false, rewardQuestID=0,
+        buffs={12345},
         appearance={ stateName="Progress", stateColor={r=0.2, g=0.4, b=0.6}, tooltipLine="%.0f%%",
           tooltipUseTimeRemaining=false, statusBarAtlas="Status", borderAtlas="Border", bannerAtlas="Banner" } }} },
     { mapID=2248, areaPoiID=902, collectorCreatureID=302, name="Collector Beta", atlasName="TaxiNode", x=0.7, y=0.8,
@@ -198,8 +199,9 @@ const CONTRIBUTION_COLLECTOR_GETTERS_LUA: &str = r#"
 local ids = { C_ContributionCollector.GetManagedContributionsForCreatureID(301) }
 local state, amount, nextStateTime, startTime = C_ContributionCollector.GetState(ids[1])
 local appearance = C_ContributionCollector.GetContributionAppearance(ids[1], state)
+local buffs = { C_ContributionCollector.GetBuffs(ids[1]) }
 return ids[1], C_ContributionCollector.GetName(ids[1]), state, amount, nextStateTime, startTime,
-       appearance.stateName, appearance.tooltipLine
+       appearance.stateName, appearance.tooltipLine, #buffs, buffs[1]
 "#;
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
@@ -528,7 +530,7 @@ fn contribution_collector_provider_refreshes_pins_from_supplied_records() {
         .eval(CONTRIBUTION_COLLECTOR_REFRESH_LUA)
         .expect("original contribution collector provider should refresh on WorldMapFrame");
     assert_eq!(pins, (2, 301, 302, false, 901, 902));
-    let getters: (i32, String, i32, f64, f64, f64, String, String) = env
+    let getters: (i32, String, i32, f64, f64, f64, String, String, i32, i32) = env
         .eval(CONTRIBUTION_COLLECTOR_GETTERS_LUA)
         .expect("supplied contribution getters should expose the collector records");
     assert_eq!(
@@ -542,6 +544,8 @@ fn contribution_collector_provider_refreshes_pins_from_supplied_records() {
             100.0,
             "Progress".to_string(),
             "%.0f%%".to_string(),
+            1,
+            12345,
         )
     );
 }

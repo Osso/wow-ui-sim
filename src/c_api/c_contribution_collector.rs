@@ -595,17 +595,10 @@ fn contribution_atlases(state: &mut LuaState) -> LuaResult<u32> {
 fn contribution_buffs(state: &mut LuaState) -> LuaResult<u32> {
     let id = u32::from_stack(state, 1)?;
     let buffs = contribution_values(state, id, |value| value.buffs.clone())?;
-    let table = create_table_with_capacity(state, buffs.len());
-    for (index, spell_id) in buffs.iter().enumerate() {
-        set_table_array(
-            state,
-            table,
-            (index + 1) as i64,
-            Val::Num(f64::from(*spell_id)),
-        );
+    for spell_id in &buffs {
+        state.push(Val::Num(f64::from(*spell_id)));
     }
-    state.push(table);
-    Ok(1)
+    Ok(buffs.len() as u32)
 }
 
 fn contribution_values<T>(
