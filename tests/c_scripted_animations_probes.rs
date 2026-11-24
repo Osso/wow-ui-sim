@@ -7,9 +7,9 @@ const SCRIPTED_ANIMATION_CONSUMER_CASE: &str = r#"
     local second = ScriptedAnimationEffectsUtil.GetEffectByID(2)
     assert(first and second, 'original consumer must resolve both DB2 effect IDs')
     assert(first.id == 1 and first.visual == 166128 and first.visualScale == 1)
-    assert(first.duration == 0.4 and first.animationSpeed == 1 and first.animation == 0)
+    assert(first.duration == 0.4 and first.animationSpeed == 1 and first.animation == 0 and first.alpha == 1)
     assert(second.id == 2 and second.visual == 1327007 and second.visualScale == 0.8)
-    assert(second.duration == 0.3 and second.animationSpeed == 1 and second.animation == 0)
+    assert(second.duration == 0.3 and second.animationSpeed == 1 and second.animation == 0 and second.alpha == 1)
     assert(first.visual ~= second.visual, 'distinct effect IDs must retain distinct visuals')
 
     A_Admin.SetScriptedAnimationEffects({
@@ -32,7 +32,8 @@ const SCRIPTED_ANIMATION_CONSUMER_CASE: &str = r#"
 fn original_consumer_resolves_distinct_scripted_animation_effects() {
     with_blizzard_addon_closure(&["Blizzard_SharedXML"], &[], |env, loaded| {
         assert!(loaded.iter().any(|name| name == "Blizzard_SharedXML"));
-        env.exec(SCRIPTED_ANIMATION_CONSUMER_CASE)
-            .expect("the loaded Blizzard consumer must resolve generated and supplied effect records");
+        env.exec(SCRIPTED_ANIMATION_CONSUMER_CASE).expect(
+            "the loaded Blizzard consumer must resolve generated and supplied effect records",
+        );
     });
 }
