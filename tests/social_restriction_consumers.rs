@@ -60,7 +60,6 @@ fn original_social_settings_reads_chat_restrictions() {
     assert_social_setting(&env, false);
 }
 
-#[test]
 const COMMUNITIES_CHAT_ACCESSIBILITY_SCRIPT: &str = r#"
         local addedClubs = {}
         local listener = CreateFrame("Frame")
