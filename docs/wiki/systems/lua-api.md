@@ -917,7 +917,7 @@ The [owning contract](../../specs/wrath-friends-legacy.md) records static12340 p
 - [container_portrait_texture.rs](../../../src/lua_api/workarounds/temporary/container_portrait_texture.rs) — retail texture fileDataID proof
 - [item_button_helper_defaults.rs](../../../src/lua_api/workarounds/temporary/item_button_helper_defaults.rs) — item-button texture fileDataID proof
 - [settings_surface_defaults.rs](../../../src/lua_api/workarounds/temporary/settings_surface_defaults.rs) — additive-only Settings defaults and replacement-surface reconciliation
-- [housing_dashboard_preload.rs](../../../src/lua_api/workarounds/temporary/housing_dashboard_preload.rs) — deferred empty owned-house response bridge
+- [housing_owned_house_requests.rs](../../../src/lua_api/workarounds/temporary/housing_owned_house_requests.rs) — PTR-only empty owned-house response bridge; Retail service model: [owned_houses.rs](../../../src/c_api/c_housing/owned_houses.rs)
 - [c_settings_util.rs](../../../src/c_api/c_settings_util.rs) — `C_SettingsUtil.OpenSettingsPanel` forwarding boundary
 - [c_string_util.rs](../../../src/c_api/c_string_util.rs) — C_StringUtil helper implementation
 - [math_extensions.rs](../../../src/lua_api/globals/real/math_extensions.rs) — PTR 12.1.5 native math registration
