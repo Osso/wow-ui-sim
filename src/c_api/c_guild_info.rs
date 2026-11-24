@@ -97,9 +97,15 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
 }
 
 fn get_preferred_play_settings_features(state: &mut LuaState) -> LuaResult<u32> {
-    let sim = borrow_state(state)?;
-    state.push(Val::Bool(sim.guild_can_change_locale));
-    state.push(Val::Bool(sim.guild_can_change_datacenter_locality));
+    let (can_change_locale, can_change_datacenter_locality) = {
+        let sim = borrow_state(state)?;
+        (
+            sim.guild_can_change_locale,
+            sim.guild_can_change_datacenter_locality,
+        )
+    };
+    state.push(Val::Bool(can_change_locale));
+    state.push(Val::Bool(can_change_datacenter_locality));
     Ok(2)
 }
 
