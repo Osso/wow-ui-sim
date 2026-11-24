@@ -4,6 +4,7 @@
     feature = "client-wowforever"
 ))]
 
+use crate::common;
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 fn load_game_ui() -> WowLuaEnv {
