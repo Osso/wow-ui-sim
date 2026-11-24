@@ -3,7 +3,9 @@
 #[cfg(feature = "client-wowforever")]
 use crate::c_api::c_input_interface_style::InputInterfaceStyle;
 use crate::lua_api::methods::{borrow_state, borrow_state_mut};
-use crate::lua_bridge::{FromStack, TableBuilder};
+use crate::lua_bridge::FromStack;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+use crate::lua_bridge::TableBuilder;
 use rilua::vm::state::LuaState;
 use rilua::{LuaApiMut, LuaResult, Val};
 
@@ -66,7 +68,6 @@ fn set_gamepad_cursor_control(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
-#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn get_gamepad_cursor_control_enabled(state: &mut LuaState) -> LuaResult<u32> {
     let enabled = borrow_state(state)?.gamepad_cursor_control_enabled;
     state.push(Val::Bool(enabled));
