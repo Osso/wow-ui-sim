@@ -84,6 +84,14 @@ fn original_social_settings_reads_chat_restrictions() {
 const COMMUNITIES_CHAT_ACCESSIBILITY_SCRIPT: &str = r#"
         assert(C_AddOns.IsAddOnLoaded("Blizzard_Communities"), "profile TOC selected Communities")
         assert(C_AddOns.IsAddOnLoaded("Blizzard_CommunitiesSecure"), "profile TOC selected create-club dialog")
+        A_Admin.SetClubTypeAllowed(Enum.ClubType.BattleNet, false)
+        CommunitiesAddDialog:SetAttribute("setshown", true)
+        assert(not CommunitiesAddDialog.CreateBattleNetGroupButton:IsEnabled())
+        A_Admin.SetClubTypeAllowed(Enum.ClubType.BattleNet, true)
+        CommunitiesAddDialog:SetAttribute("setshown", false)
+        CommunitiesAddDialog:SetAttribute("setshown", true)
+        assert(CommunitiesAddDialog.CreateBattleNetGroupButton:IsEnabled())
+        CommunitiesAddDialog:SetAttribute("setshown", false)
         local addedClubs = {}
         local listener = CreateFrame("Frame")
         listener:RegisterEvent("CLUB_ADDED")
@@ -237,6 +245,8 @@ fn admin_supplies_allowed_community_types() {
         assert(C_Club.ShouldAllowClubType(Enum.ClubType.Guild))
         A_Admin.SetClubTypeAllowed(Enum.ClubType.Other, true)
         assert(not C_Club.ShouldAllowClubType(Enum.ClubType.Other))
+        A_Admin.SetClubTypeAllowed(9999, true)
+        assert(not C_Club.ShouldAllowClubType(9999))
         "#,
     )
     .expect("Guild and Other policy overrides supplied club-type state");
