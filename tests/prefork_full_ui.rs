@@ -3,9 +3,9 @@ compile_error!("prefork_full_ui is Linux-only");
 #[cfg(not(any(feature = "client-retail", feature = "client-mists")))]
 compile_error!("prefork_full_ui requires client-retail or client-mists");
 
-#[macro_use]
 #[path = "common/mod.rs"]
 mod common;
+use crate::prefork_full_ui_case;
 #[path = "common/prefork.rs"]
 mod prefork;
 #[cfg(feature = "client-retail")]
@@ -14,11 +14,11 @@ mod prefork_full_ui_preload;
 #[path = "common/workload_gate_core.rs"]
 mod prefork_workload_gate;
 #[cfg(feature = "client-retail")]
-#[path = "test_keybindings_panels_detail.rs"]
-mod test_keybindings_panels_detail;
-#[cfg(feature = "client-retail")]
 #[path = "test_camera_tutorial_consumers.rs"]
 mod test_camera_tutorial_consumers;
+#[cfg(feature = "client-retail")]
+#[path = "test_keybindings_panels_detail.rs"]
+mod test_keybindings_panels_detail;
 
 wow_ui_sim_test_harness::integration_tests!();
 
