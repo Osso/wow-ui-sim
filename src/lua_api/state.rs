@@ -1083,7 +1083,7 @@ macro_rules! build_empty_sim_state {
             voice_chat: VoiceChatState::default(),
             #[cfg(feature = "client-wrath")]
             legacy_unit_voice: HashMap::new(),
-            #[cfg(feature = "retail-12-0-5")]
+            #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
             voice_channels: Vec::new(),
             #[cfg(feature = "retail-12-0-5")]
             lfg_endgame_policy: Default::default(),

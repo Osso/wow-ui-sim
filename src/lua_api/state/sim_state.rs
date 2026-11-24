@@ -1362,7 +1362,8 @@ pub struct SimState {
     #[cfg(feature = "client-wrath")]
     pub legacy_unit_voice:
         HashMap<(String, String), crate::lua_api::globals::real::wrath_voice::LegacyUnitVoice>,
-    #[cfg(feature = "retail-12-0-5")]
+    /// Supplied community voice channels; Forever uses the documented empty default.
+    #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
     pub voice_channels: Vec<crate::c_api::c_voice_chat_channels::VoiceChannel>,
     #[cfg(feature = "retail-12-0-5")]
     pub lfg_endgame_policy: crate::c_api::c_lfg_list_policy::EndgameEditPolicy,
