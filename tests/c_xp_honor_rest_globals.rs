@@ -127,34 +127,29 @@ fn unit_trial_xp_and_banked_levels_read_state() {
     assert!(other_levels.abs() < 1e-6);
 }
 
+const RESTRICTED_ACCOUNT_STATE: &str = "A_Admin.SetAccountType({ trial = false, veteranTrial = false, \
+    restricted = true, expansionTrial = false, expansionTrialRemaining = 0, \
+    restrictedLevel = 60, restrictedMoney = 250000, restrictedProfession = 100 })";
+
+fn read_restricted_account_data(env: &WowLuaEnv) -> (f64, f64, f64) {
+    env.exec("lvl, money, prof = GetRestrictedAccountData()")
+        .unwrap();
+    (
+        env.eval("return lvl").unwrap(),
+        env.eval("return money").unwrap(),
+        env.eval("return prof").unwrap(),
+    )
+}
+
 #[test]
 fn get_restricted_account_data_returns_three_values() {
     let env = WowLuaEnv::new().expect("env");
-    env.exec("lvl, money, prof = GetRestrictedAccountData()")
-        .unwrap();
-    let lvl: f64 = env.eval("return lvl").unwrap();
-    let money: f64 = env.eval("return money").unwrap();
-    let prof: f64 = env.eval("return prof").unwrap();
-    assert!((lvl - 20.0).abs() < 1e-6);
-    assert!(money.abs() < 1e-6);
-    assert!(prof.abs() < 1e-6);
+    assert_eq!(read_restricted_account_data(&env), (20.0, 0.0, 0.0));
 
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     {
-        env.exec(
-            "A_Admin.SetAccountType({ trial = false, veteranTrial = false, \
-             restricted = true, expansionTrial = false, expansionTrialRemaining = 0, \
-             restrictedLevel = 60, restrictedMoney = 250000, restrictedProfession = 100 })",
-        )
-        .unwrap();
-        env.exec("lvl, money, prof = GetRestrictedAccountData()")
-            .unwrap();
-        let lvl: f64 = env.eval("return lvl").unwrap();
-        let money: f64 = env.eval("return money").unwrap();
-        let prof: f64 = env.eval("return prof").unwrap();
-        assert!((lvl - 60.0).abs() < 1e-6);
-        assert!((money - 250_000.0).abs() < 1e-6);
-        assert!((prof - 100.0).abs() < 1e-6);
+        env.exec(RESTRICTED_ACCOUNT_STATE).unwrap();
+        assert_eq!(read_restricted_account_data(&env), (60.0, 250_000.0, 100.0));
     }
 }
 
