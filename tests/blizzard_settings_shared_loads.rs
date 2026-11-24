@@ -1078,11 +1078,19 @@ fn forever_graphics_antialiasing_options_follow_host_capability() {
                 end
             end
             assert(getOptions ~= nil, "original antialiasing dropdown must initialize")
-            local included = {}; for _, option in ipairs(getOptions()) do included[option.value] = true end
-            assert(included[2] and included[3], "supported MSAA options must appear")
-            A_Admin.SetMultiSampleAntiAliasingSupported(false)
-            local omitted = {}; for _, option in ipairs(getOptions()) do omitted[option.value] = true end
-            assert(not omitted[2] and not omitted[3], "unsupported MSAA options must be omitted")
+            local function optionPresence(msaa, antiAliasing)
+                A_Admin.SetMultiSampleAntiAliasingSupported(msaa)
+                A_Admin.SetAntiAliasingSupported(antiAliasing)
+                local found = {}
+                for _, option in ipairs(getOptions()) do found[option.value] = true end
+                return found[2], found[3]
+            end
+            local multisample, advanced = optionPresence(true, false)
+            assert(multisample and not advanced, "MSAA support alone must add only MSAA")
+            multisample, advanced = optionPresence(true, true)
+            assert(multisample and advanced, "both capabilities must add both options")
+            multisample, advanced = optionPresence(false, true)
+            assert(not multisample and not advanced, "advanced AA requires MSAA support")
         "#).expect("original graphics dropdown options should follow supplied MSAA capability");
     }
 }
