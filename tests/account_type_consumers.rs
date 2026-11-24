@@ -20,16 +20,16 @@ const LFG_ACCOUNT_SCRIPT: &str = r#"
     A_Admin.SetAccountType({ accountType = 4, restricted = true,
         expansionTrial = true, expansionTrialExpiry = 3600, restrictedLevel = 20,
         restrictedMoney = 100000 })
-    assert(not IsTrialAccount() and IsVeteranTrialAccount())
+    assert(not IsTrialAccount() and IsVeteranTrialAccount(), "account type 4 must be veteran trial only")
     A_Admin.SetAccountType({ accountType = 5, restricted = true,
         expansionTrial = true, expansionTrialExpiry = 3600, restrictedLevel = 20,
         restrictedMoney = 100000 })
-    assert(IsTrialAccount() and not IsVeteranTrialAccount())
-    assert(IsRestrictedAccount() and IsExpansionTrial())
+    assert(IsTrialAccount() and not IsVeteranTrialAccount(), "account type 5 must be trial only")
+    assert(IsRestrictedAccount() and IsExpansionTrial(), "restricted and active expansion flags must be visible")
     local expansionTrial, remaining = GetExpansionTrialInfo()
-    assert(expansionTrial and remaining == 3600)
+    assert(expansionTrial and remaining == 3600, "active expiry must report remaining seconds")
     local level, money, profession = GetRestrictedAccountData()
-    assert(level == 20 and money == 100000 and profession == 0)
+    assert(level == 20 and money == 100000 and profession == 0, "profession cap must be zero")
     assert(LFGListFrame_IsPanelValid(LFGListFrame, LFGListFrame.NothingAvailable),
         "restricted account must accept the original panel")
 "#;
@@ -54,7 +54,7 @@ const STORE_ACCOUNT_SCRIPT: &str = r#"
     assert(IsExpansionTrial())
     local expansionTrial, remaining = GetExpansionTrialInfo()
     assert(expansionTrial and remaining == 3600)
-    AdvanceTime(3601)
+    A_Admin.AdvanceTime(3601)
     assert(not IsExpansionTrial(), "expired expansion trial must be inactive")
     local expired, noRemaining = GetExpansionTrialInfo()
     assert(not expired and noRemaining == nil, "expired trial must return false, nil")
