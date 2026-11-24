@@ -240,7 +240,7 @@ fn generic_player_aura_with_same_spell_id_is_not_an_association() {
     env.state().borrow_mut().player.buffs = vec![AuraInfo {
         name: "Unrelated generic buff".into(),
         spell_id: 101,
-        icon: 134973,
+        icon: wow_ui_sim::lua_api::game_data::AuraIcon::FileId(134973),
         duration: 30.0,
         expiration_time: 45.0,
         applications: 2,

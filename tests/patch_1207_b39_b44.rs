@@ -463,7 +463,7 @@ fn b43_legacy_aura_defaults_do_not_delete_populated_host_aura() {
     env.state().borrow_mut().player.buffs = vec![AuraInfo {
         name: "Audit Blessing".into(),
         spell_id: 99039,
-        icon: 134973,
+        icon: wow_ui_sim::lua_api::game_data::AuraIcon::FileId(134973),
         duration: 30.0,
         expiration_time: 45.0,
         applications: 3,

@@ -6,6 +6,7 @@
 //! them into the A_Admin TableBuilder chain.
 
 use super::admin::{build_admin_aura, build_admin_buff, opt_string_stack};
+use crate::lua_api::game_data::AuraIcon;
 use crate::lua_api::methods::{borrow_state_mut, create_string};
 use crate::lua_api::script_helpers::fire_named_event_state;
 use crate::lua_bridge::FromStack;
@@ -14,14 +15,15 @@ use rilua::vm::state::LuaState;
 
 // ── Buffs ─────────────────────────────────────────────────────────────────────
 
-/// Read the icon argument as a string fileDataID, accepting both `"136207"`
-/// and `136207` (the documented numeric form).
+/// Read a numeric or string icon. Preserve non-numeric texture paths.
 fn icon_string_from_stack(state: &mut LuaState, index: i32) -> LuaResult<String> {
-    if let Ok(icon) = String::from_stack(state, index) {
-        return Ok(icon);
-    }
-    let icon = f64::from_stack(state, index)?;
-    Ok(format!("{}", icon as i64))
+    let icon = if let Ok(icon) = String::from_stack(state, index) {
+        icon
+    } else {
+        let icon = f64::from_stack(state, index)?;
+        format!("{}", icon as i64)
+    };
+    Ok(icon)
 }
 
 /// Fire `UNIT_AURA` for the player with a full-update payload, matching the
@@ -69,7 +71,7 @@ pub(super) fn add_debuff(state: &mut LuaState) -> LuaResult<u32> {
             &st,
             spell_id,
             name,
-            icon,
+            AuraIcon::FileId(icon.parse::<i32>().unwrap_or(0)),
             duration,
             stacks,
             is_helpful,

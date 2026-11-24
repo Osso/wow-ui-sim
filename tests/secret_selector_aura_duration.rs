@@ -17,7 +17,7 @@ fn fixture() -> WowLuaEnv {
         sim.player.buffs = vec![AuraInfo {
             name: "Pandemic fixture".into(),
             spell_id: 19750,
-            icon: 134973,
+            icon: wow_ui_sim::lua_api::game_data::AuraIcon::FileId(134973),
             duration: 99.0,
             expiration_time: 4.0,
             applications: 1,

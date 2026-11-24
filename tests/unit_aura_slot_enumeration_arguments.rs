@@ -11,7 +11,7 @@ fn aura(id: i32, helpful: bool, from_player: bool) -> AuraInfo {
     AuraInfo {
         name: "Duplicate enumeration name".into(),
         spell_id: 88000 + id,
-        icon: 134973,
+        icon: wow_ui_sim::lua_api::game_data::AuraIcon::FileId(134973),
         duration: 30.0,
         expiration_time: 45.0,
         applications: 3,

@@ -4,7 +4,7 @@ pub(super) fn flash_of_light_aura() -> crate::lua_api::game_data::AuraInfo {
     crate::lua_api::game_data::AuraInfo {
         name: "Flash of Light".to_string(),
         spell_id: 19750,
-        icon: 135987,
+        icon: crate::lua_api::game_data::AuraIcon::FileId(135987),
         duration: 3600.0,
         expiration_time: 3600.0,
         applications: 0,

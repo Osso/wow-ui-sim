@@ -91,7 +91,7 @@ fn admin_aura(name: &str, spell_id: i32, aura_instance_id: i32, is_helpful: bool
     AuraInfo {
         name: name.into(),
         spell_id,
-        icon: 135841,
+        icon: wow_ui_sim::lua_api::game_data::AuraIcon::FileId(135841),
         duration: 60.0,
         expiration_time: 60.0,
         applications: 1,

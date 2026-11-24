@@ -13,7 +13,7 @@
 
 mod cast_inputs;
 
-use crate::lua_api::game_data::{AuraInfo, CastingState, SpellCooldownState};
+use crate::lua_api::game_data::{AuraIcon, AuraInfo, CastingState, SpellCooldownState};
 use crate::lua_api::methods::{borrow_state, borrow_state_mut};
 use crate::lua_api::state::DEFAULT_LFG_QUEUE_POP_DELAY_SECONDS;
 use crate::lua_api::state_types::SecondaryPowerState;
@@ -942,30 +942,50 @@ pub(super) fn build_admin_buff(
     duration: f64,
     stacks: i32,
 ) -> AuraInfo {
-    build_admin_aura(st, spell_id, name, icon, duration, stacks, true, None)
+    build_admin_aura(
+        st,
+        spell_id,
+        name,
+        parse_admin_aura_icon(icon),
+        duration,
+        stacks,
+        true,
+        None,
+    )
 }
 
-/// Build an AuraInfo for admin-added auras (buffs or debuffs).
+/// Parse a file data ID or retain a texture path.
+pub(super) fn parse_admin_aura_icon(icon: String) -> AuraIcon {
+    match icon.parse::<i32>() {
+        Ok(file_id) => AuraIcon::FileId(file_id),
+        Err(_) => AuraIcon::Path(icon),
+    }
+}
+
+fn admin_aura_expiration_time(st: &crate::lua_api::state::SimState, duration: f64) -> f64 {
+    if duration > 0.0 {
+        st.clock_elapsed().as_secs_f64() + duration
+    } else {
+        0.0
+    }
+}
+
 #[allow(clippy::too_many_arguments)]
-pub(super) fn build_admin_aura(
+fn build_admin_aura(
     st: &crate::lua_api::state::SimState,
     spell_id: i32,
     name: String,
-    icon: String,
+    icon: AuraIcon,
     duration: f64,
     stacks: i32,
     is_helpful: bool,
     dispel_type: Option<String>,
 ) -> AuraInfo {
-    let expiration_time = if duration > 0.0 {
-        st.clock_elapsed().as_secs_f64() + duration
-    } else {
-        0.0
-    };
+    let expiration_time = admin_aura_expiration_time(st, duration);
     AuraInfo {
         name,
         spell_id,
-        icon: icon.parse::<i32>().unwrap_or(0),
+        icon,
         duration,
         expiration_time,
         applications: stacks,

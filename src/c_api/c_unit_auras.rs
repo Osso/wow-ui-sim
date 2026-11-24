@@ -1,6 +1,6 @@
 //! Aura instance enumeration backed by the existing public/private aura stores.
 
-use crate::lua_api::game_data::AuraInfo;
+use crate::lua_api::game_data::{AuraIcon, AuraInfo};
 use crate::lua_api::globals::auras::{
     GroupBuffAlert as GroupBuffVisualAlert, collect_filtered_unit_auras,
 };
@@ -404,7 +404,7 @@ fn private_aura_info(state: &mut LuaState, unit: &str, instance_id: i32) -> Opti
     Some(AuraInfo {
         name: record_string(state, record, "name").unwrap_or_default(),
         spell_id: record_number(state, record, "spellId") as i32,
-        icon: record_number(state, record, "icon") as i32,
+        icon: record_aura_icon(state, record),
         duration: record_number(state, record, "duration"),
         expiration_time: record_number(state, record, "expirationTime"),
         applications: record_number(state, record, "applications") as i32,
@@ -425,6 +425,15 @@ fn record_number(state: &mut LuaState, record: Val, key: &str) -> f64 {
     match table_get(state, record, key) {
         Val::Num(number) => number,
         _ => 0.0,
+    }
+}
+
+#[cfg(feature = "aura-containers")]
+fn record_aura_icon(state: &mut LuaState, record: Val) -> AuraIcon {
+    match table_get(state, record, "icon") {
+        Val::Num(file_id) => AuraIcon::FileId(file_id as i32),
+        Val::Str(_) => AuraIcon::Path(record_string(state, record, "icon").unwrap_or_default()),
+        _ => AuraIcon::FileId(0),
     }
 }
 

@@ -25,7 +25,7 @@ fn aura_rows() -> Vec<AuraInfo> {
     let helpful = AuraInfo {
         name: "Flash of Light".into(),
         spell_id: 19750,
-        icon: 135987,
+        icon: wow_ui_sim::lua_api::game_data::AuraIcon::FileId(135987),
         duration: 3600.0,
         expiration_time: 3600.0,
         applications: 0,
@@ -42,7 +42,7 @@ fn aura_rows() -> Vec<AuraInfo> {
     let harmful = AuraInfo {
         name: "Corruption".into(),
         spell_id: 172,
-        icon: 136118,
+        icon: wow_ui_sim::lua_api::game_data::AuraIcon::FileId(136118),
         is_helpful: false,
         dispel_type: Some("Magic".into()),
         aura_instance_id: 2,

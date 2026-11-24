@@ -145,7 +145,10 @@ fn private_aura_icon_at_index(
             .then_with(|| b.aura.can_apply_aura.cmp(&a.aura.can_apply_aura))
             .then_with(|| a.aura.aura_instance_id.cmp(&b.aura.aura_instance_id))
     });
-    sorted.get(index).map(|entry| entry.aura.icon)
+    sorted.get(index).and_then(|entry| match &entry.aura.icon {
+        crate::lua_api::game_data::AuraIcon::FileId(file_id) => Some(*file_id),
+        crate::lua_api::game_data::AuraIcon::Path(_) => None,
+    })
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]

@@ -302,7 +302,7 @@ fn test_c_unit_auras_filters_aura_instances_by_polarity_and_player_source() {
         AuraInfo {
             name: "Player Helpful Aura".into(),
             spell_id: 1001,
-            icon: 1,
+            icon: wow_ui_sim::lua_api::game_data::AuraIcon::FileId(1),
             duration: 30.0,
             expiration_time: 30.0,
             applications: 1,
@@ -319,7 +319,7 @@ fn test_c_unit_auras_filters_aura_instances_by_polarity_and_player_source() {
         AuraInfo {
             name: "Party Helpful Aura".into(),
             spell_id: 1002,
-            icon: 2,
+            icon: wow_ui_sim::lua_api::game_data::AuraIcon::FileId(2),
             duration: 30.0,
             expiration_time: 30.0,
             applications: 1,
