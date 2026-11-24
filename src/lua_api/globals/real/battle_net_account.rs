@@ -15,9 +15,9 @@ fn get_info(state: &mut LuaState) -> LuaResult<u32> {
     let battle_tag = create_string(state, &info.battle_tag);
     let broadcast_text = create_string(state, &info.broadcast_text);
     state.push(Val::Nil);
-    state.push(Val::Str(battle_tag));
+    state.push(battle_tag);
     state.push(Val::Num(info.account_id as f64));
-    state.push(Val::Str(broadcast_text));
+    state.push(broadcast_text);
     state.push(Val::Bool(info.is_afk));
     state.push(Val::Bool(info.is_dnd));
     state.push(Val::Bool(info.is_real_id_enabled));
