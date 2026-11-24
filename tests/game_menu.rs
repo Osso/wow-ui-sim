@@ -767,6 +767,8 @@ fn gamepad_cursor_control_tracks_game_menu_lifecycle() {
             A_Admin.SetUsingGamepad(true)
             local active = IsUsingGamepad()
             ToggleGameMenu()
+            ToggleGameMenu()
+            assert(GameMenuFrame:IsShown(), 'game menu opens through the gamepad toggle path')
             local opened = A_Admin.GetGamePadCursorControlEnabled()
             A_Admin.SetUsingGamepad(true)
             local closeButton
