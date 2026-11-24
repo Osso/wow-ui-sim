@@ -940,8 +940,10 @@ macro_rules! build_empty_sim_state {
             #[cfg(any(feature = "retail-12-0-7", feature = "retail-12-1-0"))]
             quest_hub_dragonriding_races: ::std::collections::HashMap::new(),
             bnet_friends: default_bnet_friends(),
-            #[cfg(feature = "client-wowforever")]
-            bnet_friend_tags_enabled: false,
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            player_bnet_info: Default::default(),
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            bnet_account_features: Default::default(),
             bnet_friend_invites: Vec::new(),
             bnet_appear_offline: false,
             #[cfg(feature = "retail-12-0-0")]

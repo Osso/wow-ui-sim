@@ -449,7 +449,13 @@ fn friends_frame_displays_supplied_battle_tags(env: &WowLuaEnv) {
             "#,
         )
         .expect("FriendsFrame should display supplied Battle.net account tags");
-    assert_eq!(tags, ("Malfurion#1234".into(), "Tyrande#5678".into()));
+    assert_eq!(
+        tags,
+        (
+            "Malfurion|cff416380#1234|r".into(),
+            "Tyrande|cff416380#5678|r".into(),
+        )
+    );
 }
 }
 

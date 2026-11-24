@@ -231,6 +231,16 @@ fn register_admin_social_names(builder: TableBuilder) -> LuaResult<TableBuilder>
         "SetSocialBlockedEntry",
         crate::c_api::c_friend_list::set_social_blocked_entry,
     )?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let builder = builder
+        .set_function(
+            "SetPlayerBattleNetInfo",
+            crate::c_api::c_friend_list::set_player_battle_net_info,
+        )?
+        .set_function(
+            "SetBattleNetAccountFeatures",
+            crate::c_api::c_friend_list::set_battle_net_account_features,
+        )?;
     Ok(builder)
 }
 

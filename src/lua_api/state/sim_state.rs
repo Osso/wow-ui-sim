@@ -1179,9 +1179,12 @@ pub struct SimState {
     #[cfg(any(feature = "retail-12-0-7", feature = "retail-12-1-0"))]
     pub quest_hub_dragonriding_races: HashMap<i32, Vec<i32>>,
     pub bnet_friends: Vec<BnetFriend>,
-    /// Forever feature-state input; false is the native image-load default, not a CVar.
-    #[cfg(feature = "client-wowforever")]
-    pub bnet_friend_tags_enabled: bool,
+    /// INFERRED local identity supplied to legacy `BNGetInfo` consumers.
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub player_bnet_info: crate::lua_api::state_types::PlayerBattleNetInfo,
+    /// INFERRED account feature state supplied to Retail/Forever social consumers.
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub bnet_account_features: crate::lua_api::state_types::BattleNetAccountFeatures,
     pub bnet_friend_invites: Vec<BnetFriendInvite>,
     pub bnet_appear_offline: bool,
     /// INFERRED local broadcast input; no network service or persistence.
