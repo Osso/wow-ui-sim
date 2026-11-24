@@ -211,6 +211,14 @@ fn load_full_game_ui_with_addon_registration(register: impl FnOnce(&WowLuaEnv)) 
 }
 
 fn load_settings_ui(screen: ScreenKind, register: impl FnOnce(&WowLuaEnv)) -> WowLuaEnv {
+    load_settings_ui_with_preload(screen, |_| {}, register)
+}
+
+fn load_settings_ui_with_preload(
+    screen: ScreenKind,
+    configure: impl FnOnce(&WowLuaEnv),
+    register: impl FnOnce(&WowLuaEnv),
+) -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("Failed to create Lua environment");
     env.set_screen_size(1024.0, 768.0);
     env.set_screen_mode(screen);
@@ -219,6 +227,7 @@ fn load_settings_ui(screen: ScreenKind, register: impl FnOnce(&WowLuaEnv)) -> Wo
         let mut state = env.state().borrow_mut();
         state.addon_base_paths = vec![blizzard_ui_dir()];
     }
+    configure(&env);
 
     wow_ui_sim::xml::register_intrinsic_templates();
 
@@ -1063,16 +1072,23 @@ fn retail_settings_startup_keeps_registered_canvas_visibility() {
 #[test]
 fn forever_graphics_antialiasing_options_follow_host_capability() {
     test_timeout! {
-        let env = load_full_game_ui();
+        let env = load_settings_ui_with_preload(
+            ScreenKind::Game,
+            |env| {
+                env.exec(r#"
+                    A_Admin.SetAntiAliasingSupported(false, false)
+                    A_Admin.SetMultiSampleAntiAliasingSupported({
+                        { msaaQuality = "1,0", sampleCount = 4, coverageCount = 0 },
+                        { msaaQuality = "2,2", sampleCount = 8, coverageCount = 2 },
+                    })
+                "#).expect("preload host antialiasing capability inputs");
+            },
+            |_| {},
+        );
         env.exec(r#"
             local category
             for _, group in ipairs(SettingsPanel:GetCategoryList().groups) do for _, candidate in ipairs(group.categories) do if candidate:GetName() == GRAPHICS_LABEL then category = candidate end end end
             assert(category ~= nil, "original Graphics category must register")
-            A_Admin.SetAntiAliasingSupported(false, false)
-            A_Admin.SetMultiSampleAntiAliasingSupported({
-                { msaaQuality = "1,0", sampleCount = 4, coverageCount = 0 },
-                { msaaQuality = "2,2", sampleCount = 8, coverageCount = 2 },
-            })
             local layout = SettingsPanel:GetLayout(category)
             local getFxaaOptions, getMsaaOptions
             for _, initializer in layout:EnumerateInitializers() do
