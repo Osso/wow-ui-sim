@@ -757,6 +757,27 @@ fn ptr_store_disabled_without_override_leaves_game_menu_and_stores_unchanged() {
     }
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn gamepad_cursor_control_tracks_game_menu_lifecycle() {
+    test_timeout! {
+        let env = setup_game_menu_env();
+        let result: (bool, bool, bool, bool, bool) = env.eval(r#"
+            A_Admin.SetUsingGamepad(true)
+            local active = IsUsingGamepad()
+            ToggleGameMenu()
+            local opened = A_Admin.GetGamePadCursorControlEnabled()
+            ToggleGameMenu()
+            local closed = A_Admin.GetGamePadCursorControlEnabled()
+            A_Admin.SetUsingGamepad(false)
+            ToggleGameMenu()
+            local inactive = A_Admin.GetGamePadCursorControlEnabled()
+            return active, opened, closed, inactive, GameMenuFrame:IsShown()
+        "#).unwrap();
+        assert_eq!(result, (true, true, false, false, true));
+    }
+}
+
 #[cfg(feature = "client-ptr")]
 #[test]
 fn ptr_store_override_toggle_requires_a_matching_native_catalog_session() {
