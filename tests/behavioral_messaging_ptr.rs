@@ -7,7 +7,7 @@ fn ptr_behavioral_messaging_surface_is_unchanged() {
     let env = WowLuaEnv::new().expect("Lua environment should initialize");
     let surface: String = env
         .eval(
-            r#"
+            r##"
             local members = {}
             for name, value in pairs(C_BehavioralMessaging) do
                 table.insert(members, name .. ":" .. type(value))
@@ -15,7 +15,7 @@ fn ptr_behavioral_messaging_surface_is_unchanged() {
             table.sort(members)
             local returns = select("#", C_BehavioralMessaging.SendNotificationReceipt(87001, 0, 0))
             return table.concat(members, ",") .. ":" .. tostring(returns)
-            "#,
+            "##,
         )
         .expect("PTR namespace query should succeed");
 
