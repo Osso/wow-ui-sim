@@ -104,6 +104,19 @@ fn admin_supplies_guild_calendar_availability() {
 }
 
 #[test]
+fn admin_supplies_guild_reputation_availability() {
+    let env = WowLuaEnv::new().expect("Lua environment should initialize");
+    env.exec(
+        r#"
+        assert(C_GuildInfo.IsGuildReputationEnabled() == false)
+        A_Admin.SetGuildReputationEnabled(true)
+        assert(C_GuildInfo.IsGuildReputationEnabled() == true)
+        "#,
+    )
+    .expect("admin supplies guild reputation availability");
+}
+
+#[test]
 fn admin_supplies_voice_chat_accessibility() {
     let env = WowLuaEnv::new().expect("Lua environment should initialize");
     env.exec(

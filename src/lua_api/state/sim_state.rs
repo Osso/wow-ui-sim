@@ -195,6 +195,8 @@ pub struct SimState {
     pub guild_roster_selection: usize,
     /// INFERRED R88fq (native evidence pending): supplied guild-calendar capability; false by default.
     pub guild_events_enabled: bool,
+    /// INFERRED R88fq (native evidence pending): supplied guild-reputation capability; false by default.
+    pub guild_reputation_enabled: bool,
     pub guild_request_inputs: crate::c_api::c_guild_info::GuildRequestInputs,
     pub guild_rename_status: Option<crate::c_api::c_guild_info::GuildRenameStatus>,
     pub pending_guild_rename_status:

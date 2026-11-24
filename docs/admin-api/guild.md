@@ -6,6 +6,12 @@ Sets the Boolean returned by `C_GuildInfo.AreGuildEventsEnabled()` on Retail and
 
 This default is INFERRED R88fq (native evidence pending).
 
+### A_Admin.SetGuildReputationEnabled(enabled)
+
+Sets the Boolean returned by `C_GuildInfo.IsGuildReputationEnabled()` on Retail and WoW Forever. It defaults to `false` until the host supplies availability.
+
+This default is INFERRED R88fq (native evidence pending).
+
 ### A_Admin.SetGuildRenameStatus(status)
 
 Supplies the status record returned asynchronously by `C_GuildInfo.RequestRenameStatus()` on Retail and WoW Forever. The next request emits `GUILD_RENAME_STATUS_UPDATE` on a later timer tick. If no status is supplied, the request emits no reply.
