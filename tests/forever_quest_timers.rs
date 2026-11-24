@@ -24,15 +24,16 @@ fn assert_timer_consumer_updates(env: &WowLuaEnv) {
         local rows = QuestTimerFrame.activeElements
         assert(QuestTimerFrame:IsShown(), "timer consumer did not show its frame")
         assert(#rows == 2, "timer consumer did not create two rows")
-        assert(rows[1].Name:GetText() == "2:05", "first timer text was not 2:05")
-        assert(rows[2].Name:GetText() == "5:05", "second timer text was not 5:05")
+        assert(rows[1].Name:GetText() == SecondsToTime(125), "first timer text mismatch")
+        assert(rows[2].Name:GetText() == SecondsToTime(305), "second timer text mismatch")
+        assert(rows[1].Name:GetText() ~= rows[2].Name:GetText(), "timer rows were not distinct")
         A_Admin.AdvanceTime(61)
         A_Admin.FireEvent("QUEST_LOG_UPDATE")
-        assert(rows[1].Name:GetText() == "1:04", "first timer did not decrease")
-        assert(rows[2].Name:GetText() == "4:04", "second timer did not decrease")
+        assert(rows[1].Name:GetText() == SecondsToTime(64), "first timer did not decrease")
+        assert(rows[2].Name:GetText() == SecondsToTime(244), "second timer did not decrease")
         A_Admin.SetQuestTimer(101, nil)
         assert(#QuestTimerFrame.activeElements == 1, "clearing a timer did not remove one row")
-        assert(QuestTimerFrame.activeElements[1].Name:GetText() == "4:04")
+        assert(QuestTimerFrame.activeElements[1].Name:GetText() == SecondsToTime(244))
         "#,
     )
     .unwrap();
