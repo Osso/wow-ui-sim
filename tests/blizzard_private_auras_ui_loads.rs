@@ -1219,6 +1219,66 @@ fn blizzard_private_auras_ui_loads_without_addon_specific_lua_errors(env: &WowLu
 }
 }
 
+#[cfg(feature = "client-retail")]
+fn load_texture_hook_probe_addons(env: &WowLuaEnv) {
+    let fixtures = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("tests/fixtures");
+    env.state()
+        .borrow_mut()
+        .addon_base_paths
+        .push(fixtures.clone());
+    for addon in ["TextureSetHookProbeFirst", "TextureSetHookProbeSecond"] {
+        let toc = fixtures.join(addon).join(format!("{addon}.toc"));
+        load_addon(&env.loader_env(), &toc).expect("texture hook probe addon should load");
+    }
+}
+
+#[cfg(feature = "client-retail")]
+fn assert_texture_hook_probe_counter(env: &WowLuaEnv, name: &str) {
+    let state = env.state().borrow();
+    let counter = state
+        .widgets
+        .get_by_name(name)
+        .expect("addon hook callback created its counter frame");
+    assert!(counter.width >= 1.0 && counter.width < 100.0);
+    assert_eq!(counter.width, counter.height);
+}
+
+#[cfg(feature = "client-retail")]
+prefork_full_ui_case! {
+fn retail_aura_container_hook_dispatcher_preserves_secure_consumer(env: &WowLuaEnv) {
+    assert!(
+        env.eval::<bool>("return C_AddOns.IsAddOnLoaded('Blizzard_AuraContainer')")
+            .unwrap()
+    );
+    crate::common::aura_container_harness::install_helpers(env);
+    env.exec("AuditLive = AuditContainer({{'buffs', 'HELPFUL'}})")
+        .unwrap();
+    env.exec(
+        r#"A_Admin.ClearBuffs(); A_Admin.AddBuff(99021, 'Hook Aura One', 'Interface\\Icons\\INV_Misc_QuestionMark', 60, 1)"#,
+    )
+    .unwrap();
+    crate::common::aura_container_harness::settle(env);
+    assert_eq!(
+        crate::common::aura_container_harness::icons(env, "AuditLive", "buffs"),
+        r"Interface\Icons\INV_Misc_QuestionMark"
+    );
+    env.exec("TextureHookProbeTarget = AuditLive:GetAuraGroupFrame('buffs', 1):GetIcon()")
+        .unwrap();
+    load_texture_hook_probe_addons(env);
+    env.exec(
+        r#"A_Admin.AddBuff(99022, 'Hook Aura Two', 'Interface\\Icons\\Spell_Holy_FlashHeal', 60, 1)"#,
+    )
+    .unwrap();
+    crate::common::aura_container_harness::settle(env);
+    assert_eq!(
+        crate::common::aura_container_harness::icons(env, "AuditLive", "buffs"),
+        r"Interface\Icons\INV_Misc_QuestionMark,Interface\Icons\Spell_Holy_FlashHeal"
+    );
+    assert_texture_hook_probe_counter(env, "TextureSetHookProbeFirstCounter");
+    assert_texture_hook_probe_counter(env, "TextureSetHookProbeSecondCounter");
+}
+}
+
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 const PRIVATE_AURA_CONSUMER_PROBE: &str = r#"
     local privateUI = rawget(__secureenv, 'PrivateAuraAnchorContainerMixin')

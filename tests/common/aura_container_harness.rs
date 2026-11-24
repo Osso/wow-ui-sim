@@ -5,7 +5,10 @@
 //! `UNIT_AURA` dispatch. Containers are created by addon-tainted Lua through
 //! the cached `CustomAuraContainerTemplate`; nothing calls Blizzard internals.
 
-use wow_ui_sim::lua_api::{WowLuaEnv, state::{AuraIcon, AuraInfo}};
+use wow_ui_sim::lua_api::{
+    WowLuaEnv,
+    state::{AuraIcon, AuraInfo},
+};
 
 /// Lua helpers shared by every harness test.
 ///
@@ -96,8 +99,14 @@ pub fn load_env() -> WowLuaEnv {
         &["Blizzard_AuraContainer"],
         &[],
     );
-    env.exec(PRELUDE).unwrap();
+    install_helpers(&env);
     env
+}
+
+/// Install Lua helpers into an environment that already loaded AuraContainer.
+pub fn install_helpers(env: &WowLuaEnv) {
+    env.exec(PRELUDE)
+        .expect("install AuraContainer harness helpers");
 }
 
 /// A helpful 30-second player-cast aura whose spell ID, icon, and instance ID
