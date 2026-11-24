@@ -74,29 +74,39 @@ fn set_quest_timer(state: &mut LuaState) -> LuaResult<u32> {
     }
     let timer = read_supplied_timer(state)?;
     let now = borrow_state(state)?.clock_elapsed();
-    let mut sim = borrow_state_mut(state)?;
-    let timers = &mut sim.quest_log_entries.timers;
-    if let Some(seconds) = timer {
-        if let Some(existing) = timers.iter_mut().find(|timer| timer.quest_id == quest_id) {
-            existing.initial_seconds = seconds;
-            existing.supplied_at = now;
-        } else {
-            timers.push(QuestTimer {
-                quest_id,
-                initial_seconds: seconds,
-                supplied_at: now,
-            });
-        }
-    } else {
-        timers.retain(|timer| timer.quest_id != quest_id);
-    }
-    drop(sim);
+    store_quest_timer(state, quest_id, timer, now)?;
     crate::lua_api::globals::state_backed_queries::dispatch_event_now(
         state,
         "QUEST_LOG_UPDATE",
         &[],
     )?;
     Ok(0)
+}
+
+#[cfg(feature = "client-wowforever")]
+fn store_quest_timer(
+    state: &LuaState,
+    quest_id: i32,
+    seconds: Option<f64>,
+    supplied_at: Duration,
+) -> LuaResult<()> {
+    let mut sim = borrow_state_mut(state)?;
+    let timers = &mut sim.quest_log_entries.timers;
+    if let Some(seconds) = seconds {
+        if let Some(existing) = timers.iter_mut().find(|timer| timer.quest_id == quest_id) {
+            existing.initial_seconds = seconds;
+            existing.supplied_at = supplied_at;
+        } else {
+            timers.push(QuestTimer {
+                quest_id,
+                initial_seconds: seconds,
+                supplied_at,
+            });
+        }
+    } else {
+        timers.retain(|timer| timer.quest_id != quest_id);
+    }
+    Ok(())
 }
 
 #[cfg(feature = "client-wowforever")]
@@ -131,7 +141,7 @@ pub(crate) fn register_info_queries(state: &mut LuaState) -> LuaResult<()> {
     Ok(())
 }
 
-// INFERRED (R88ct; native evidence pending): questTimer is a remaining-seconds
+// INFERRED (R88fr; native evidence pending): questTimer is a remaining-seconds
 // countdown and decreases against the simulator clock after the host supplies it.
 #[cfg(feature = "client-wowforever")]
 fn get_quest_timers(state: &mut LuaState) -> LuaResult<u32> {
