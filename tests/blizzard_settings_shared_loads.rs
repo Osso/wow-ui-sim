@@ -1117,6 +1117,7 @@ fn forever_graphics_antialiasing_options_follow_host_capability() {
             fxaa = optionMap(getFxaaOptions)
             assert(fxaa[3] == nil and fxaa[4] == ANTIALIASING_CMAA2, "CMAA2 support must add only CMAA2")
 
+            A_Admin.SetMultiSampleAntiAliasingSupported({})
             local msaa = optionMap(getMsaaOptions)
             assert(msaa[0] == VIDEO_OPTIONS_NONE and msaa[1] == nil, "empty MSAA groups must add no MSAA levels")
             A_Admin.SetMultiSampleAntiAliasingSupported({
