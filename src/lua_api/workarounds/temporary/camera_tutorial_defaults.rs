@@ -35,14 +35,9 @@ for _, __wow_camera_verb in ipairs({
 end
 "#;
 
+/// Retail/Forever keep only the camera movement verbs, which have no modeled consumer.
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 const CAMERA_TUTORIAL_DEFAULTS_LUA: &str = r#"
-if GetTutorialsEnabled == nil then
-  function GetTutorialsEnabled()
-    return false
-  end
-end
-
 for _, __wow_camera_verb in ipairs({
   "MoveViewOutStart", "MoveViewOutStop",
   "MoveViewInStart", "MoveViewInStop",
