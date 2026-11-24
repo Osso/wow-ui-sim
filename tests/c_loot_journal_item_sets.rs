@@ -147,12 +147,12 @@ const SELECT_RAID_AND_OPEN_JOURNAL: &str = r#"
             EJ_SelectInstance(selected.instanceID)
             assert(EJ_InstanceIsRaid(), "selected Encounter Journal instance must be a raid")
             A_Admin.SetCompletedEncounters({
-                { mapID=selected.mapID, difficultyID=14,
+                { mapID=selected.mapID, difficultyID=DifficultyUtil.ID.PrimaryRaidNormal,
                   completedEncounterIDs={selected.second.encounterID} },
-                { mapID=selected.mapID, difficultyID=15,
+                { mapID=selected.mapID, difficultyID=DifficultyUtil.ID.PrimaryRaidHeroic,
                   completedEncounterIDs={selected.first.encounterID} },
             })
-            EncounterJournal_OpenJournal(15, selected.instanceID)
+            EncounterJournal_OpenJournal(DifficultyUtil.ID.PrimaryRaidHeroic, selected.instanceID)
             assert(EncounterJournal:IsShown(), "the client path must open Encounter Journal")
             return selected.instanceID, selected.mapID,
                 selected.first.journalID, selected.first.encounterID,
@@ -180,9 +180,9 @@ fn assert_initial_raid_lock_overlays(env: &WowLuaEnv, b: &RaidLockBosses) {
             return EncounterJournal.instanceID == {instance_id},
                 overlays[{journal_a}] == true,
                 overlays[{journal_b}] == false,
-                C_RaidLocks.IsEncounterComplete({map_id}, {encounter_a}, 15),
+                C_RaidLocks.IsEncounterComplete({map_id}, {encounter_a}, DifficultyUtil.ID.PrimaryRaidHeroic),
                 C_RaidLocks.IsEncounterComplete({map_id}, {encounter_a}),
-                C_RaidLocks.IsEncounterComplete({map_id}, {encounter_b}, 14)
+                C_RaidLocks.IsEncounterComplete({map_id}, {encounter_b}, DifficultyUtil.ID.PrimaryRaidNormal)
             "#
         ))
         .expect("Encounter Journal boss overlays should read supplied raid-lock state");
@@ -200,8 +200,9 @@ fn complete_second_boss_and_request_raid_info(env: &WowLuaEnv, b: &RaidLockBosse
     env.exec(&format!(
         r#"
         A_Admin.SetCompletedEncounters({{
-            {{ mapID={map_id}, difficultyID=14, completedEncounterIDs={{{encounter_b}}} }},
-            {{ mapID={map_id}, difficultyID=15,
+            {{ mapID={map_id}, difficultyID=DifficultyUtil.ID.PrimaryRaidNormal,
+               completedEncounterIDs={{{encounter_b}}} }},
+            {{ mapID={map_id}, difficultyID=DifficultyUtil.ID.PrimaryRaidHeroic,
                completedEncounterIDs={{{encounter_a}, {encounter_b}}} }},
         }})
         RequestRaidInfo()
