@@ -139,20 +139,23 @@ fn get_restricted_account_data_returns_three_values() {
     assert!(money.abs() < 1e-6);
     assert!(prof.abs() < 1e-6);
 
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     {
-        let mut state = env.state().borrow_mut();
-        state.player_xp.restricted_level = 60;
-        state.player_xp.restricted_money = 250_000;
-        state.player_xp.restricted_profession = 100;
-    }
-    env.exec("lvl, money, prof = GetRestrictedAccountData()")
+        env.exec(
+            "A_Admin.SetAccountType({ trial = false, veteranTrial = false, \
+             restricted = true, expansionTrial = false, expansionTrialRemaining = 0, \
+             restrictedLevel = 60, restrictedMoney = 250000, restrictedProfession = 100 })",
+        )
         .unwrap();
-    let lvl: f64 = env.eval("return lvl").unwrap();
-    let money: f64 = env.eval("return money").unwrap();
-    let prof: f64 = env.eval("return prof").unwrap();
-    assert!((lvl - 60.0).abs() < 1e-6);
-    assert!((money - 250_000.0).abs() < 1e-6);
-    assert!((prof - 100.0).abs() < 1e-6);
+        env.exec("lvl, money, prof = GetRestrictedAccountData()")
+            .unwrap();
+        let lvl: f64 = env.eval("return lvl").unwrap();
+        let money: f64 = env.eval("return money").unwrap();
+        let prof: f64 = env.eval("return prof").unwrap();
+        assert!((lvl - 60.0).abs() < 1e-6);
+        assert!((money - 250_000.0).abs() < 1e-6);
+        assert!((prof - 100.0).abs() < 1e-6);
+    }
 }
 
 #[test]
