@@ -17,6 +17,8 @@ pub(crate) mod bnet_blocked_list;
 pub(crate) mod bnet_friend_index;
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) mod break_up_large_numbers;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) mod camera_fov_defaults;
 pub mod combat_probes;
 pub mod combat_stats;
 pub mod combo_points;

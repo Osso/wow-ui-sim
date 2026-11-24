@@ -8,6 +8,7 @@ The `A_Admin` namespace provides administrative functions for controlling simula
 
 - [Player Identity](player-identity.md) — SetPlayerName, SetPlayerClass, SetPlayerRace, SetPlayerLevel, SetPlayerSex
 - [Combat](combat.md) — SetInCombat, SetCasting, StopCasting, SetGCD, SetSpellCooldown
+- [Camera and tutorials](camera-tutorials.md) — SetCameraFOV, SetTutorialFlag, SetTutorialsEnabled, SetPlayerNPERestricted
 - [Loot Journal](loot-journal.md) — SetLootJournalItemSets
 - [Raid locks](raid-locks.md) — SetCompletedEncounters
 - [Kiosk session](kiosk.md) — SetKioskSession

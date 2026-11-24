@@ -113,6 +113,19 @@ fn register_admin_player_services(builder: TableBuilder) -> LuaResult<TableBuild
     let builder = super::real::configuration_warnings::register_admin(builder)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     let builder = super::admin_currency_transfer::register_admin(builder)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let builder = super::real::camera_fov_defaults::register_admin(builder)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let builder = builder
+        .set_function(
+            "SetTutorialFlag",
+            super::missing_surface::set_admin_tutorial_flag,
+        )?
+        .set_function(
+            "SetTutorialsEnabled",
+            super::missing_surface::set_admin_tutorials_enabled,
+        )?
+        .set_function("SetPlayerNPERestricted", set_player_npe_restricted)?;
     let builder = register_player(builder)?;
     #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
     let builder = crate::c_api::c_navigation::register_admin(builder)?;
@@ -792,6 +805,12 @@ fn set_guild_faction_group_flags(state: &mut LuaState) -> LuaResult<u32> {
 fn set_player_level(state: &mut LuaState) -> LuaResult<u32> {
     let level = i32::from_stack(state, 1)?;
     borrow_state_mut(state)?.player.level = level;
+    Ok(0)
+}
+
+fn set_player_npe_restricted(state: &mut LuaState) -> LuaResult<u32> {
+    let restricted = bool::from_stack(state, 1)?;
+    borrow_state_mut(state)?.player.is_npe_restricted = restricted;
     Ok(0)
 }
 
