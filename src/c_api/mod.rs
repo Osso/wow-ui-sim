@@ -6,6 +6,8 @@
 pub(crate) mod azerite_essence_spell_selector;
 mod c_account_info;
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) mod c_behavioral_messaging;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub(crate) mod c_black_market;
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub(crate) mod c_gossip_info_poi;
@@ -716,6 +718,8 @@ pub(crate) fn register_utility_bootstrap_tables(state: &mut LuaState) -> LuaResu
     c_achievement_info_relations::register(state)?;
     c_minimap_tracking::register(state)?;
     c_calendar::register(state)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    c_behavioral_messaging::register(state)?;
     if matches!(
         crate::client_profile::ACTIVE,
         crate::client_profile::ClientProfile::Retail

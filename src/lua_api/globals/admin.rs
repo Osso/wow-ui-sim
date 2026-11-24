@@ -128,6 +128,8 @@ fn register_admin_player_services(builder: TableBuilder) -> LuaResult<TableBuild
         .set_function("SetTutorialsEnabled", set_tutorials_enabled)?
         .set_function("SetPlayerNPERestricted", set_player_npe_restricted)?;
     let builder = register_player(builder)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let builder = crate::c_api::c_behavioral_messaging::register_admin(builder)?;
     #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
     let builder = crate::c_api::c_navigation::register_admin(builder)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
