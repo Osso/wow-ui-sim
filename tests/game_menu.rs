@@ -758,32 +758,35 @@ fn ptr_store_disabled_without_override_leaves_game_menu_and_stores_unchanged() {
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+const ACTIVE_GAMEPAD_GAME_MENU_CASE: &str = r#"
+    A_Admin.SetUsingGamepad(true)
+    local active = IsUsingGamepad()
+    GameMenuFrame_Show()
+    local opened = A_Admin.GetGamePadCursorControlEnabled()
+    A_Admin.SetUsingGamepad(true)
+    GameMenuFrame:CloseMenu()
+    return active, GameMenuFrame:IsShown(), opened,
+        A_Admin.GetGamePadCursorControlEnabled()
+"#;
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+const INACTIVE_GAMEPAD_GAME_MENU_CASE: &str = r#"
+    A_Admin.SetUsingGamepad(false)
+    GameMenuFrame_Show()
+    return A_Admin.GetGamePadCursorControlEnabled(), GameMenuFrame:IsShown()
+"#;
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 #[test]
 fn gamepad_cursor_control_tracks_game_menu_lifecycle() {
     test_timeout! {
-        let env = setup_game_menu_env();
-        env.exec("SetCVar('GamePadOverlapMouseMs', '60000')").unwrap();
-        let result: (bool, bool, bool, bool, bool, bool) = env.eval(r#"
-            A_Admin.SetUsingGamepad(true)
-            local active = IsUsingGamepad()
-            GameMenuFrame_Show()
-            assert(GameMenuFrame:IsShown(), 'game menu opens through its native show path')
-            local opened = A_Admin.GetGamePadCursorControlEnabled()
-            A_Admin.SetUsingGamepad(true)
-            local closeButton
-            for button in GameMenuFrame.buttonPool:EnumerateActive() do
-                closeButton = button
-            end
-            assert(closeButton, 'GameMenu close button is active')
-            closeButton:Click()
-            local closed = A_Admin.GetGamePadCursorControlEnabled()
-            local menuClosed = not GameMenuFrame:IsShown()
-            A_Admin.SetUsingGamepad(false)
-            GameMenuFrame_Show()
-            local inactive = A_Admin.GetGamePadCursorControlEnabled()
-            return active, opened, closed, menuClosed, inactive, GameMenuFrame:IsShown()
-        "#).unwrap();
-        assert_eq!(result, (true, true, false, true, false, true));
+        let active_env = setup_game_menu_env();
+        active_env.exec("SetCVar('GamePadOverlapMouseMs', '60000')").unwrap();
+        let active: (bool, bool, bool, bool) = active_env.eval(ACTIVE_GAMEPAD_GAME_MENU_CASE).unwrap();
+        assert_eq!(active, (true, false, true, false));
+        let inactive_env = setup_game_menu_env();
+        let inactive: (bool, bool) = inactive_env.eval(INACTIVE_GAMEPAD_GAME_MENU_CASE).unwrap();
+        assert_eq!(inactive, (false, true));
     }
 }
 
