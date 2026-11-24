@@ -14,12 +14,16 @@
 use crate::client_profile::{ACTIVE, ClientProfile};
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 use crate::lua_api::methods::borrow_state_mut;
-use crate::lua_api::methods::{borrow_state, create_string, table_get_static, val_to_string};
+use crate::lua_api::methods::{borrow_state, create_string};
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+use crate::lua_api::methods::{table_get_static, val_to_string};
 use crate::lua_bridge::table_set_rust_fn_static;
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 use crate::lua_bridge::{FromStack, TableBuilder};
 use rilua::vm::state::LuaState;
-use rilua::{LuaError, LuaResult, RuntimeError, Val};
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+use rilua::{LuaError, RuntimeError};
+use rilua::{LuaResult, Val};
 
 /// A supported Forever multisample antialiasing option.
 #[derive(Clone, Debug, PartialEq, Eq)]
