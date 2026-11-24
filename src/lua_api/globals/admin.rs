@@ -1129,14 +1129,6 @@ pub(super) fn build_admin_aura(
     }
 }
 
-fn admin_aura_expiration_time(st: &crate::lua_api::state::SimState, duration: f64) -> f64 {
-    if duration > 0.0 {
-        st.clock_elapsed().as_secs_f64() + duration
-    } else {
-        0.0
-    }
-}
-
 /// Build a MailMessage for admin inbox functions.
 pub(crate) fn build_mail(
     id: u64,
