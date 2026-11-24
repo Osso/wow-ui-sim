@@ -2,61 +2,45 @@
 
 use wow_ui_sim::lua_api::WowLuaEnv;
 
-fn quest_timer_env() -> (WowLuaEnv, Vec<String>) {
-    let ui = wow_ui_sim::paths::default_blizzard_ui_addons_path()
-        .expect("Forever Blizzard UI cache should be available");
-    crate::common::blizzard_addon_harness::build_blizzard_addon_closure_env(
-        &ui,
+fn load_quest_timer_consumer() -> WowLuaEnv {
+    let ui_dir = crate::common::blizzard_addon_harness::blizzard_ui_dir();
+    let env = crate::common::blizzard_addon_harness::new_blizzard_addon_env(&ui_dir);
+    let loaded = crate::common::blizzard_addon_harness::load_blizzard_addon_closure_into_env(
+        &env,
+        &ui_dir,
         &["Blizzard_FrameXMLBase", "Blizzard_QuestTimer"],
         &[],
-    )
-}
-
-fn assert_initial_timer_rows(env: &WowLuaEnv) {
-    let (count, first, second, first_id, second_id, first_expected, second_expected): (
-        i32,
-        String,
-        String,
-        i32,
-        i32,
-        String,
-        String,
-    ) = env
-        .eval(
-            "local first, second = QuestTimerFrame.activeElements[1], QuestTimerFrame.activeElements[2]; return QuestTimerFrame.numTimers, first and first.Name:GetText() or '', second and second.Name:GetText() or '', first and first.questID or 0, second and second.questID or 0, SecondsToTime(90), SecondsToTime(150)",
-        )
-        .expect("read rendered timer rows");
-    assert_eq!(count, 2, "both supplied timers must render as rows");
-    assert_eq!((first_id, second_id), (41001, 41002));
-    assert_eq!((first, second), (first_expected, second_expected));
-}
-
-fn assert_timer_rows_decrease_after_clock_advance(env: &WowLuaEnv) {
-    let (first, second, first_expected, second_expected): (String, String, String, String) = env
-        .eval(
-            "return QuestTimerFrame.activeElements[1].Name:GetText(), QuestTimerFrame.activeElements[2].Name:GetText(), SecondsToTime(80), SecondsToTime(140)",
-        )
-        .expect("read timer rows after clock update");
-    assert_eq!((first, second), (first_expected, second_expected));
-}
-
-#[test]
-fn forever_quest_timer_frame_renders_supplied_countdowns() {
-    let (env, loaded) = quest_timer_env();
+    );
     assert!(loaded.iter().any(|name| name == "Blizzard_QuestTimer"));
+    env
+}
+
+fn assert_timer_consumer_updates(env: &WowLuaEnv) {
     env.exec(
         r#"
         A_Admin.SetManualClock(0)
-        A_Admin.SetQuestTimers({
-            { questID = 41001, questTimer = 90 },
-            { questID = 41002, questTimer = 150 },
-        })
-        QuestTimerFrame:Update()
+        A_Admin.SetQuestTimer(101, 125)
+        A_Admin.SetQuestTimer(202, 305)
+        local rows = QuestTimerFrame.activeElements
+        assert(QuestTimerFrame:IsShown(), "timer consumer did not show its frame")
+        assert(#rows == 2, "timer consumer did not create two rows")
+        assert(rows[1].Name:GetText() == SecondsToTime(125), "first timer text mismatch")
+        assert(rows[2].Name:GetText() == SecondsToTime(305), "second timer text mismatch")
+        assert(rows[1].Name:GetText() ~= rows[2].Name:GetText(), "timer rows were not distinct")
+        A_Admin.AdvanceTime(61)
+        A_Admin.FireEvent("QUEST_LOG_UPDATE")
+        assert(rows[1].Name:GetText() == SecondsToTime(64), "first timer did not decrease")
+        assert(rows[2].Name:GetText() == SecondsToTime(244), "second timer did not decrease")
+        A_Admin.SetQuestTimer(101, nil)
+        assert(#QuestTimerFrame.activeElements == 1, "clearing a timer did not remove one row")
+        assert(QuestTimerFrame.activeElements[1].Name:GetText() == SecondsToTime(244))
         "#,
     )
-    .expect("supply timers to the original QuestTimerFrame");
-    assert_initial_timer_rows(&env);
-    env.exec("A_Admin.AdvanceTime(10)")
-        .expect("advance the simulator clock");
-    assert_timer_rows_decrease_after_clock_advance(&env);
+    .unwrap();
+}
+
+#[test]
+fn forever_quest_timer_consumer_shows_countdowns_that_advance_and_clear() {
+    let env = load_quest_timer_consumer();
+    assert_timer_consumer_updates(&env);
 }

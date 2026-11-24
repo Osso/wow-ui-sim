@@ -1,12 +1,11 @@
-//! Empty legacy timed-quest domain until a timed-quest model exists.
-//! QuestLogState and quest_surface catalog rows have no countdown/expiry inputs;
-//! GetQuestLogTimeLeft's seeded world-quest constant is not a legacy timer model.
-//! Retire when quest-log state can supply active legacy quest countdowns.
+//! Empty legacy global on profiles outside Forever's modeled C_QuestLog timer API.
 use rilua::vm::state::LuaState;
 use rilua::{LuaApiMut, LuaResult};
 
 pub(crate) fn register_all(lua: &mut rilua::Lua) -> crate::Result<()> {
-    LuaApiMut::register_function(lua, "GetQuestTimers", empty_quest_timers)?;
+    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::WowForever {
+        LuaApiMut::register_function(lua, "GetQuestTimers", empty_quest_timers)?;
+    }
     Ok(())
 }
 
