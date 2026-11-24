@@ -66,6 +66,12 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
         table_set_rust_fn_static(
             state,
             namespace,
+            "AreGuildEventsEnabled",
+            are_guild_events_enabled,
+        )?;
+        table_set_rust_fn_static(
+            state,
+            namespace,
             "RequestRenameStatus",
             request_rename_status,
         )?;
@@ -76,6 +82,19 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
         table_set_rust_fn_static(state, namespace, "Disband", disband)?;
     }
     Ok(())
+}
+
+fn are_guild_events_enabled(state: &mut LuaState) -> LuaResult<u32> {
+    let enabled = borrow_state(state)?.guild_events_enabled;
+    state.push(Val::Bool(enabled));
+    Ok(1)
+}
+
+// INFERRED R88fq (native evidence pending): supply guild-calendar feature availability.
+pub(crate) fn admin_set_guild_events_enabled(state: &mut LuaState) -> LuaResult<u32> {
+    let enabled = bool::from_stack(state, 1)?;
+    borrow_state_mut(state)?.guild_events_enabled = enabled;
+    Ok(0)
 }
 
 fn read_guild_name(state: &LuaState, usage: &str) -> LuaResult<String> {

@@ -91,6 +91,19 @@ fn original_communities_frame_reads_chat_accessibility_inputs() {
 }
 
 #[test]
+fn admin_supplies_guild_calendar_availability() {
+    let env = WowLuaEnv::new().expect("Lua environment should initialize");
+    env.exec(
+        r#"
+        assert(C_GuildInfo.AreGuildEventsEnabled() == false)
+        A_Admin.SetGuildEventsEnabled(true)
+        assert(C_GuildInfo.AreGuildEventsEnabled() == true)
+        "#,
+    )
+    .expect("admin supplies guild calendar availability");
+}
+
+#[test]
 fn admin_supplies_voice_chat_accessibility() {
     let env = WowLuaEnv::new().expect("Lua environment should initialize");
     env.exec(

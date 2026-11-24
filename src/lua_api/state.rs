@@ -131,6 +131,7 @@ macro_rules! build_empty_sim_state {
             #[cfg(feature = "client-wrath")]
             legacy_gamma: 0.0,
             guild_roster_selection: 0,
+            guild_events_enabled: false,
             guild_request_inputs: Default::default(),
             guild_rename_status: None,
             pending_guild_rename_status: Default::default(),
