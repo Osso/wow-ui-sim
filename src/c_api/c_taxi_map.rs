@@ -36,6 +36,7 @@ pub struct TaxiMapNode {
 
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct TaxiMapState {
+    pub ui_map_id: i32,
     pub nodes: Vec<TaxiMapNode>,
 }
 
@@ -58,7 +59,12 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
 }
 
 pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
-    builder.set_function("SetTaxiMapNodes", set_taxi_map_nodes)
+    let builder = builder.set_function("SetTaxiMapNodes", set_taxi_map_nodes)?;
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+        builder.set_function("SetTaxiMapID", set_taxi_map_id)
+    } else {
+        Ok(builder)
+    }
 }
 
 fn get_all_taxi_nodes(state: &mut LuaState) -> LuaResult<u32> {
@@ -100,6 +106,12 @@ fn should_map_show_nodes(state: &mut LuaState) -> LuaResult<u32> {
 fn set_taxi_map_nodes(state: &mut LuaState) -> LuaResult<u32> {
     let nodes = read_taxi_map_nodes(state, stack_val(state, 1))?;
     borrow_state_mut(state)?.taxi_map.nodes = nodes;
+    Ok(0)
+}
+
+fn set_taxi_map_id(state: &mut LuaState) -> LuaResult<u32> {
+    let map_id = i32::from_stack(state, 1)?;
+    borrow_state_mut(state)?.taxi_map.ui_map_id = map_id;
     Ok(0)
 }
 

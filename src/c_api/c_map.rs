@@ -103,6 +103,11 @@ const C_MAP_METHODS: &[(&str, RustLuaFn)] = &[
         c_map_get_map_art_background_atlas,
     ),
     ("GetMapArtID", c_map_get_map_art_id),
+    #[cfg(feature = "client-retail")]
+    (
+        "GetMapArtHelpTextPosition",
+        c_map_get_map_art_help_text_position,
+    ),
     ("GetMapArtLayerTextures", c_map_get_map_art_layer_textures),
     ("GetMapArtLayers", c_map_get_map_art_layers),
     #[cfg(feature = "retail-12-1-0")]
@@ -341,6 +346,18 @@ fn c_map_get_map_art_id(state: &mut LuaState) -> LuaResult<u32> {
         return Ok(0);
     };
     state.push(Val::Num(art_id as f64));
+    Ok(1)
+}
+
+#[cfg(feature = "client-retail")]
+fn c_map_get_map_art_help_text_position(state: &mut LuaState) -> LuaResult<u32> {
+    let map_id = read_scalar_map_id(state)?;
+    let position = u32::try_from(map_id)
+        .ok()
+        .and_then(sim_data::ui_map_help_text_positions::get_ui_map_help_text_position)
+        .map(u32::from)
+        .unwrap_or(0);
+    state.push(Val::Num(f64::from(position)));
     Ok(1)
 }
 

@@ -341,10 +341,10 @@ fn flight_map_open_path_places_click_to_zoom_labels_from_uimap_positions(env: &W
         .eval("return C_AddOns.IsAddOnLoaded('Blizzard_FlightMap')")
         .expect("FlightMap load-state query should succeed");
     assert!(!loaded_before, "FlightMap is LoadOnDemand before TAXIMAP_OPENED");
-    let map_id_unset: bool = env
-        .eval("return GetTaxiMapID() == nil")
-        .expect("GetTaxiMapID should be nil before a taxi interaction");
-    assert!(map_id_unset);
+    let no_map_id_values: i32 = env
+        .eval("return select('#', GetTaxiMapID())")
+        .expect("GetTaxiMapID should return no values for a zero map ID");
+    assert_eq!(no_map_id_values, 0);
     env.exec("A_Admin.SetTaxiMapID(14)")
         .expect("supply the map selected by the flight-master interaction");
 
