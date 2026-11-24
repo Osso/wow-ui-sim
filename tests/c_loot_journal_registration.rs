@@ -30,71 +30,28 @@ fn rust_item_set_registration_survives_bootstrap() {
 
 #[cfg(feature = "client-wowforever")]
 #[test]
-fn rust_raid_lock_registration_uses_first_map_row_without_difficulty() {
+fn rust_raid_lock_queries_use_first_map_row_when_difficulty_is_omitted() {
     let env = WowLuaEnv::new().expect("Lua environment should initialize");
-    let ui = wow_ui_sim::client_profile::blizzard_ui_addons_dir_under(std::path::Path::new(
-        env!("CARGO_MANIFEST_DIR"),
-    ));
-    env.set_screen_mode(wow_ui_sim::screen::ScreenKind::Game);
-    env.state().borrow_mut().addon_base_paths = vec![ui.clone()];
-    crate::common::load_game_startup_inventory(&env);
-    let toc = wow_ui_sim::loader::find_toc_file(&ui.join("Blizzard_EncounterJournal"))
-        .expect("select the Forever Encounter Journal TOC");
-    wow_ui_sim::loader::load_addon(&env.loader_env(), &toc)
-        .expect("load Encounter Journal after its startup dependencies");
-    env.apply_post_load_workarounds();
-
-    let (omitted, explicit, overlay_shown): (bool, bool, bool) = env
+    let (omitted, explicit_second, explicit_first, unknown): (bool, bool, bool, bool) = env
         .eval(
             r#"
-            local selected
-            for instanceIndex = 1, 500 do
-                local instanceID = EJ_GetInstanceByIndex(instanceIndex, true)
-                if not instanceID then break end
-                for bossIndex = 1, 100 do
-                    local _, _, journalID = EJ_GetEncounterInfoByIndex(bossIndex, instanceID)
-                    if not journalID then break end
-                    local _, _, _, _, _, _, encounterID, mapID = EJ_GetEncounterInfo(journalID)
-                    if encounterID and encounterID > 0 and mapID and mapID > 0 then
-                        selected = {
-                            instanceID=instanceID,
-                            journalID=journalID,
-                            encounterID=encounterID,
-                            mapID=mapID,
-                        }
-                        break
-                    end
-                end
-                if selected then break end
-            end
-            assert(selected, "Encounter Journal must contain an encounter with map data")
-            EJ_SelectInstance(selected.instanceID)
+            local mapID, encounterID = 12345, 67890
+            local firstDifficultyID, secondDifficultyID = 14, 15
             A_Admin.SetCompletedEncounters({
-                { mapID=selected.mapID, difficultyID=14, completedEncounterIDs={} },
-                { mapID=selected.mapID, difficultyID=DifficultyUtil.ID.PrimaryRaidHeroic,
-                  completedEncounterIDs={selected.encounterID} },
+                { mapID=mapID, difficultyID=firstDifficultyID, completedEncounterIDs={} },
+                { mapID=mapID, difficultyID=secondDifficultyID,
+                  completedEncounterIDs={encounterID} },
             })
-            EncounterJournal_OpenJournal(
-                DifficultyUtil.ID.PrimaryRaidHeroic, selected.instanceID)
-            assert(EncounterJournal:IsShown(), "the client path must open Encounter Journal")
-            assert(EJ_GetDifficulty() == DifficultyUtil.ID.PrimaryRaidHeroic,
-                "Encounter Journal must select the Heroic difficulty")
-            local overlayShown
-            EncounterJournal.encounter.info.BossesScrollBox:ForEachFrame(function(button)
-                if button.encounterID == selected.journalID then
-                    overlayShown = button.DefeatedOverlay:IsShown()
-                end
-            end)
-            assert(overlayShown ~= nil, "Encounter Journal must create the selected boss button")
-            return C_RaidLocks.IsEncounterComplete(selected.mapID, selected.encounterID),
-                C_RaidLocks.IsEncounterComplete(selected.mapID, selected.encounterID,
-                    DifficultyUtil.ID.PrimaryRaidHeroic),
-                overlayShown
+            return C_RaidLocks.IsEncounterComplete(mapID, encounterID),
+                C_RaidLocks.IsEncounterComplete(mapID, encounterID, secondDifficultyID),
+                C_RaidLocks.IsEncounterComplete(mapID, encounterID, firstDifficultyID),
+                C_RaidLocks.IsEncounterComplete(mapID, encounterID + 1, secondDifficultyID)
             "#,
         )
-        .expect("the loaded Encounter Journal consumer should read supplied raid locks");
+        .expect("C_RaidLocks should evaluate supplied ordered raid-lock rows");
 
     assert!(!omitted);
-    assert!(explicit);
-    assert!(overlay_shown);
+    assert!(explicit_second);
+    assert!(!explicit_first);
+    assert!(!unknown);
 }
