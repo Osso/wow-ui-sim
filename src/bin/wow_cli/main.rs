@@ -296,6 +296,8 @@ enum GenerateTarget {
     Zones,
     /// Generate crates/sim-data/data/ui_maps.rs and Retail UiMapAssignment data
     UiMaps,
+    /// Generate Retail UiMap.HelpTextPosition data from the pinned UiMap CSV
+    UiMapHelpTextPositions,
     /// Regenerate Retail UiMapAssignment rows from data/db2/retail-12.1.5.70783
     UiMapAssignments,
     /// Generate the Retail AreaTable ID/u16 lookup from the pinned DB2 CSV
@@ -417,6 +419,7 @@ fn run_generator(target: GenerateTarget) {
         GenerateTarget::Traits => gen_traits::run(),
         GenerateTarget::Zones => gen_zones::run(),
         GenerateTarget::UiMaps => gen_ui_maps::run(),
+        GenerateTarget::UiMapHelpTextPositions => gen_ui_maps::run_help_text_positions(),
         GenerateTarget::UiMapAssignments => gen_ui_maps::run_assignments(),
         GenerateTarget::AreaTable => gen_area_table::run(),
         GenerateTarget::MapArt => gen_map_art::run(),

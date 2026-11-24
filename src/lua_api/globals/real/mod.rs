@@ -184,6 +184,8 @@ pub mod spell_tabs;
 pub mod string_extensions;
 pub mod table_extensions;
 pub mod table_freeze;
+#[cfg(feature = "client-retail")]
+pub(crate) mod taxi_map;
 pub mod template_queries;
 pub mod timerunning;
 pub mod totems;
