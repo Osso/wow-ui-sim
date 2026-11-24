@@ -9,6 +9,7 @@ The `A_Admin` namespace provides administrative functions for controlling simula
 - [Player Identity](player-identity.md) — SetPlayerName, SetPlayerClass, SetPlayerRace, SetPlayerLevel, SetPlayerSex
 - [Battle.net Account State](battle-net.md) — SetPlayerBattleNetInfo, SetBattleNetAccountFeatures
 - [Behavioral messaging](behavioral-messaging.md) — QueueBehavioralNotification, GetBehavioralNotificationReceipts
+- [Beta script policy](beta-script-policy.md) — SetScriptsDisallowedForBeta
 - [Combat](combat.md) — SetInCombat, SetCasting, StopCasting, SetGCD, SetSpellCooldown
 - [Camera and tutorials](camera-tutorials.md) — SetCameraFOV, SetTutorialFlag, SetTutorialsEnabled, SetPlayerNPERestricted
 - [Gamepad input](gamepad.md) — SetUsingGamepad, GetGamePadCursorControlEnabled

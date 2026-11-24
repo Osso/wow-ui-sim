@@ -32,8 +32,13 @@ pub struct SimState {
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     pub(crate) configuration_warnings:
         Vec<crate::lua_api::globals::real::configuration_warnings::ConfigurationWarning>,
-    /// Supplied visibility for the Retail/Forever ranged transmog slot.
-    /// INFERRED (R88fd (native evidence pending)): host-supplied kiosk session.
+    /// INFERRED (R88ft (native evidence pending)): per-account script permission, session-only here.
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub(crate) dangerous_scripts_allowed: bool,
+    /// INFERRED (R88fs (native evidence pending)): host-supplied beta script policy.
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub(crate) scripts_disallowed_for_beta: bool,
+    /// INFERRED (R88fd; native evidence pending): host-supplied kiosk session.
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     pub(crate) kiosk_session: crate::c_api::kiosk::KioskSession,
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]

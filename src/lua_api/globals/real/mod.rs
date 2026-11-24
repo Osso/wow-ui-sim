@@ -29,6 +29,8 @@ pub(crate) mod configuration_warnings;
 pub mod container_legacy;
 pub mod cursor_model;
 pub(crate) mod cursor_presentation;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) mod dangerous_scripts;
 pub(crate) mod display_scale;
 #[cfg(feature = "retail-12-0-0")]
 pub mod event_callbacks;
