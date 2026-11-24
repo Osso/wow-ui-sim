@@ -341,7 +341,7 @@ fn load_texture_hook_probe(env: &WowLuaEnv) {
     .unwrap();
     std::fs::write(
         addon.join("TextureSetHookProbe.lua"),
-        "local counter = CreateFrame('Frame', 'TextureHookProbeCounter')\ncounter:SetSize(0, 0)\nlocal texture = CreateFrame('Frame'):CreateTexture()\nlocal methods = getmetatable(texture).__index\nhooksecurefunc(methods, 'SetTexture', function()\n local calls = counter:GetWidth()\n if debug.getstacktaint() ~= 'TextureSetHookProbe' then calls = 100 else calls = calls + 1 end\n counter:SetSize(calls, calls)\nend)\n",
+        "local counter = CreateFrame('Frame', 'TextureHookProbeCounter')\ncounter:SetSize(0, 0)\nlocal function countHook()\n local calls = counter:GetWidth()\n if debug.getstacktaint() ~= 'TextureSetHookProbe' then calls = 100 else calls = calls + 1 end\n counter:SetSize(calls, calls)\nend\nhooksecurefunc(HookOriginalState, 'Call', countHook)\nlocal texture = CreateFrame('Frame'):CreateTexture()\nlocal methods = getmetatable(texture).__index\nhooksecurefunc(methods, 'SetTexture', countHook)\n",
     )
     .unwrap();
     wow_ui_sim::loader::load_addon(
@@ -358,17 +358,23 @@ fn assert_texture_hook_count(env: &WowLuaEnv) {
         .widgets
         .get_by_name("TextureHookProbeCounter")
         .expect("real addon hook callback created its counter frame");
-    assert_eq!(counter.width, 2.0);
-    assert_eq!(counter.height, 2.0);
+    assert_eq!(counter.width, 3.0);
+    assert_eq!(counter.height, 3.0);
 }
 
 #[cfg(all(feature = "optional-tests", feature = "client-retail"))]
 #[test]
 fn retail_aura_container_secret_icons_survive_addon_texture_hook() {
     let env = crate::common::aura_container_harness::load_env();
+    env.exec(
+        "HookOriginalState = {taint = 'unset'}; function HookOriginalState:Call() HookOriginalState.taint = debug.getstacktaint() or 'secure' end",
+    )
+    .unwrap();
     load_texture_hook_probe(&env);
     env.exec_maybe_secure(
         r#"
+        HookOriginalState:Call()
+        assert(HookOriginalState.taint == 'secure', 'hook must preserve original caller taint')
         local mixin = assert(CustomAuraButtonPrivateMixin)
         local firstIcon = secretwrap("Interface\\Icons\\INV_Misc_QuestionMark")
         local secondIcon = secretwrap("Interface\\Icons\\Ability_Warrior_Charge")
