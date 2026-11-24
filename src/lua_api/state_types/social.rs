@@ -156,7 +156,7 @@ pub struct BnetGameAccount {
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 #[derive(Debug, Clone)]
 pub struct PlayerBattleNetInfo {
-    pub battle_tag: String,
+    pub battle_tag: Option<String>,
     pub account_id: i32,
     pub broadcast_text: String,
     pub is_afk: bool,
@@ -169,13 +169,33 @@ pub struct PlayerBattleNetInfo {
 impl Default for PlayerBattleNetInfo {
     fn default() -> Self {
         Self {
-            battle_tag: String::new(),
+            battle_tag: None,
             account_id: 0,
             broadcast_text: String::new(),
             is_afk: false,
             is_dnd: false,
             is_real_id_enabled: false,
             is_appear_offline: false,
+        }
+    }
+}
+
+/// Supplied Battle.net connection gates for Retail/Forever legacy globals.
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[derive(Debug, Clone, Copy)]
+pub struct BattleNetConnectionState {
+    /// INFERRED: false represents the native excluded connection mode.
+    pub features_enabled: bool,
+    /// INFERRED host-supplied connection/service availability.
+    pub connected: bool,
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+impl Default for BattleNetConnectionState {
+    fn default() -> Self {
+        Self {
+            features_enabled: true,
+            connected: false,
         }
     }
 }

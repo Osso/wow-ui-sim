@@ -11,8 +11,20 @@ pub(crate) fn register(lua: &mut rilua::Lua) -> LuaResult<()> {
 }
 
 fn get_info(state: &mut LuaState) -> LuaResult<u32> {
-    let info = borrow_state(state)?.player_bnet_info.clone();
-    let battle_tag = create_string(state, &info.battle_tag);
+    let (info, eligible) = {
+        let sim = borrow_state(state)?;
+        (
+            sim.player_bnet_info.clone(),
+            sim.bnet_connection.features_enabled && sim.player_bnet_account_present,
+        )
+    };
+    if !eligible {
+        return Ok(0);
+    }
+    let battle_tag = info
+        .battle_tag
+        .as_deref()
+        .map_or(Val::Nil, |value| create_string(state, value));
     let broadcast_text = create_string(state, &info.broadcast_text);
     state.push(Val::Nil);
     state.push(battle_tag);

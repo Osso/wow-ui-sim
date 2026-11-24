@@ -10,9 +10,13 @@ Set whether the account cannot use chat in one club. `clubId` is an opaque club 
 
 Set whether a club type is allowed in community flows. `clubType` is an `Enum.ClubType` value; `allowed` is a boolean.
 
-The default allowed types are BattleNet and Character. Retail also allows Guild. Other is not allowed. This default policy is INFERRED R88fq (native evidence pending).
+BattleNet and Character follow the supplied allowed-type set. Guild is always allowed and Other is always rejected, regardless of the set. This policy is INFERRED — R88fq, Retail 12.1.5.70688 and Forever 1.60.1.70707.
 
 ```lua
 A_Admin.SetClubTypeAllowed(Enum.ClubType.Character, false)
 assert(not C_Club.ShouldAllowClubType(Enum.ClubType.Character))
+A_Admin.SetClubTypeAllowed(Enum.ClubType.Guild, false)
+assert(C_Club.ShouldAllowClubType(Enum.ClubType.Guild))
+A_Admin.SetClubTypeAllowed(Enum.ClubType.Other, true)
+assert(not C_Club.ShouldAllowClubType(Enum.ClubType.Other))
 ```

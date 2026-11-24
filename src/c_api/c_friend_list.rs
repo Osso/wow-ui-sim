@@ -47,14 +47,17 @@ pub(crate) fn set_social_ignore_name(state: &mut LuaState) -> rilua::LuaResult<u
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub(crate) fn set_player_battle_net_info(state: &mut LuaState) -> rilua::LuaResult<u32> {
     use crate::lua_api::state_types::PlayerBattleNetInfo;
-    let battle_tag = String::from_stack(state, 1)?;
+    let battle_tag = Option::<String>::from_stack(state, 1)?;
     let account_id = Option::<i32>::from_stack(state, 2)?.unwrap_or_default();
     let broadcast_text = Option::<String>::from_stack(state, 3)?.unwrap_or_default();
     let is_afk = Option::<bool>::from_stack(state, 4)?.unwrap_or(false);
     let is_dnd = Option::<bool>::from_stack(state, 5)?.unwrap_or(false);
     let is_real_id_enabled = Option::<bool>::from_stack(state, 6)?.unwrap_or(false);
     let is_appear_offline = Option::<bool>::from_stack(state, 7)?.unwrap_or(false);
-    borrow_state_mut(state)?.player_bnet_info = PlayerBattleNetInfo {
+    let connected = Option::<bool>::from_stack(state, 8)?.unwrap_or(false);
+    let features_enabled = Option::<bool>::from_stack(state, 9)?.unwrap_or(true);
+    let mut sim = borrow_state_mut(state)?;
+    sim.player_bnet_info = PlayerBattleNetInfo {
         battle_tag,
         account_id,
         broadcast_text,
@@ -62,6 +65,11 @@ pub(crate) fn set_player_battle_net_info(state: &mut LuaState) -> rilua::LuaResu
         is_dnd,
         is_real_id_enabled,
         is_appear_offline,
+    };
+    sim.player_bnet_account_present = true;
+    sim.bnet_connection = crate::lua_api::state_types::BattleNetConnectionState {
+        features_enabled,
+        connected,
     };
     Ok(0)
 }

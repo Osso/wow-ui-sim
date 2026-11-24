@@ -22,10 +22,10 @@ fn assert_two_battle_tags(env: &WowLuaEnv) {
     let tags: (String, String) = env
         .eval(
             r#"
-            A_Admin.SetPlayerBattleNetInfo("Malfurion#1234")
+            A_Admin.SetPlayerBattleNetInfo("Malfurion#1234", nil, nil, nil, nil, nil, nil, true, true)
             FriendsFrame_CheckBattlenetStatus()
             local first = FriendsFrameBattlenetFrame.Tag:GetText()
-            A_Admin.SetPlayerBattleNetInfo("Tyrande#5678")
+            A_Admin.SetPlayerBattleNetInfo("Tyrande#5678", nil, nil, nil, nil, nil, nil, true, true)
             FriendsFrame_CheckBattlenetStatus()
             return first, FriendsFrameBattlenetFrame.Tag:GetText()
             "#,

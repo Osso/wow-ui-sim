@@ -1214,6 +1214,12 @@ pub struct SimState {
     /// INFERRED local identity supplied to legacy `BNGetInfo` consumers.
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     pub player_bnet_info: crate::lua_api::state_types::PlayerBattleNetInfo,
+    /// Whether a local Battle.net account record was supplied for legacy getters.
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub player_bnet_account_present: bool,
+    /// Supplied connection-mode and connectivity gates for legacy globals.
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub bnet_connection: crate::lua_api::state_types::BattleNetConnectionState,
     /// INFERRED account feature state supplied to Retail/Forever social consumers.
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     pub bnet_account_features: crate::lua_api::state_types::BattleNetAccountFeatures,

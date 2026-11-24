@@ -197,10 +197,14 @@ fn register_club_privilege_methods(state: &mut LuaState, table_ref: GcRef<Table>
 
 fn should_allow_club_type(state: &mut LuaState) -> LuaResult<u32> {
     let club_type = i32::from_stack(state, 1)?;
-    let allowed = borrow_state(state)?
-        .clubs
-        .allowed_club_types
-        .contains(&club_type);
+    let allowed = match club_type {
+        2 => true,
+        3 => false,
+        _ => borrow_state(state)?
+            .clubs
+            .allowed_club_types
+            .contains(&club_type),
+    };
     state.push(Val::Bool(allowed));
     Ok(1)
 }
