@@ -2,6 +2,10 @@
 
 `A_Admin` functions are simulator-only, not native WoW APIs.
 
+## SetQuestTimer
+
+Forever only: `A_Admin.SetQuestTimer(questID, seconds)` supplies a timer limit in seconds for the original `C_QuestLog.GetQuestTimers` consumer. Call with `nil` for `seconds` to clear that quest's timer. The timer starts or resets at the current simulator clock time. Each change fires `QUEST_LOG_UPDATE` synchronously, so the loaded Blizzard quest-timer frame refreshes through its event handler. The API shape for `GetQuestTimers` and `QuestTimerInfo` is declared in Forever's pinned `Blizzard_APIDocumentationGenerated/QuestLogDocumentation.lua` (lines 540 and 1620). Timer countdown and setter behavior are INFERRED (R88fr; native evidence pending).
+
 ## SetMinimapQuestBlobInside
 
 Retail, PTR and Forever: `A_Admin.SetMinimapQuestBlobInside(questID, inside)` supplies a boolean containment observation for the quest. It does not emit an event or calculate geometry. An unsupplied quest uses the simulator's false scenario default; the native default is unknown. See the [contract](../specs/minimap-quest-blob-observation.md).
