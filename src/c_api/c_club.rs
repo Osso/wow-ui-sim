@@ -170,23 +170,26 @@ fn register_club_stream_focus_methods(
 fn focus_stream(state: &mut LuaState) -> LuaResult<u32> {
     let club_id = super::club_members::string_arg(state, 1)?;
     let requested_stream_id = f64::from_stack(state, 2)?;
-    let mut sim = borrow_state_mut(state)?;
-    let stream_id = sim
-        .clubs
-        .clubs
-        .get(&club_id)
-        .and_then(|club| {
-            club.streams
-                .iter()
-                .find(|stream| stream.id as f64 == requested_stream_id)
-        })
-        .map(|stream| stream.id);
-    if let Some(stream_id) = stream_id {
-        sim.clubs.focused_streams.insert((club_id, stream_id));
-        state.push(Val::Bool(true));
-    } else {
-        state.push(Val::Bool(false));
-    }
+    let focused = {
+        let mut sim = borrow_state_mut(state)?;
+        let stream_id = sim
+            .clubs
+            .clubs
+            .get(&club_id)
+            .and_then(|club| {
+                club.streams
+                    .iter()
+                    .find(|stream| stream.id as f64 == requested_stream_id)
+            })
+            .map(|stream| stream.id);
+        if let Some(stream_id) = stream_id {
+            sim.clubs.focused_streams.insert((club_id, stream_id));
+            true
+        } else {
+            false
+        }
+    };
+    state.push(Val::Bool(focused));
     Ok(1)
 }
 
