@@ -343,19 +343,22 @@ fn load_texture_hook_probe(env: &WowLuaEnv) {
         addon.join("TextureSetHookProbe.lua"),
         r#"local counter = CreateFrame('Frame', 'TextureHookProbeCounter')
 counter:SetSize(0, 0)
-local texture = CreateFrame('Frame'):CreateTexture()
-local methods = getmetatable(texture).__index
-hooksecurefunc(methods, 'SetTexture', function()
-    local calls = counter:GetWidth()
-    if debug.getstacktaint() ~= 'TextureSetHookProbe' then calls = 100 else calls = calls + 1 end
-    counter:SetSize(calls, calls)
-end)
-_G.TextureHookProbeSeed = function()
-    A_Admin.ClearBuffs()
-    A_Admin.AddBuff(99021, 'Hook Aura One', 'Interface\\Icons\\INV_Misc_QuestionMark', 60, 1)
-    A_Admin.AddBuff(99022, 'Hook Aura Two', '134920', 60, 1)
+local hooked = {}
+local function HookPixelSnap(object)
+    local metatable = getmetatable(object)
+    if not metatable then return end
+    local mk = metatable.__index
+    if not mk or hooked[mk] then return end
+    if mk.SetTexture then
+        hooksecurefunc(mk, 'SetTexture', function(self)
+            _G.TextureHookProbeCount = (_G.TextureHookProbeCount or 0) + 1
+            local calls = counter:GetWidth() + 1
+            counter:SetSize(calls, calls)
+        end)
+    end
+    hooked[mk] = true
 end
-debug.setobjecttaint(_G.TextureHookProbeSeed, 'TextureSetHookProbe')
+HookPixelSnap(UIParent:CreateTexture())
 "#,
     )
     .unwrap();
@@ -383,7 +386,8 @@ fn retail_aura_container_secret_icons_survive_addon_texture_hook() {
     let env = crate::common::aura_container_harness::load_env();
     load_texture_hook_probe(&env);
     env.exec("AuditLive = AuditContainer({{'buffs', 'HELPFUL'}})").unwrap();
-    env.exec("TextureHookProbeSeed()").unwrap();
+    env.exec("A_Admin.ClearBuffs(); A_Admin.AddBuff(99021, 'Hook Aura One', 'Interface\\\\Icons\\\\INV_Misc_QuestionMark', 60, 1); A_Admin.AddBuff(99022, 'Hook Aura Two', '134920', 60, 1)")
+        .unwrap();
     crate::common::aura_container_harness::settle(&env);
     assert_eq!(
         crate::common::aura_container_harness::icons(&env, "AuditLive", "buffs"),
