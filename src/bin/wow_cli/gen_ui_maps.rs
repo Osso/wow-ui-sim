@@ -153,10 +153,9 @@ fn write_help_text_position_table(
         output,
         "pub fn get_ui_map_help_text_position(id: u32) -> Option<u8> {{"
     )?;
-    writeln!(
-        output,
-        "    let index = UI_MAP_HELP_TEXT_POSITIONS.binary_search_by_key(&id, |row| row.0).ok()?;"
-    )?;
+    writeln!(output, "    let index = UI_MAP_HELP_TEXT_POSITIONS")?;
+    writeln!(output, "        .binary_search_by_key(&id, |row| row.0)")?;
+    writeln!(output, "        .ok()?;")?;
     writeln!(output, "    Some(UI_MAP_HELP_TEXT_POSITIONS[index].1)")?;
     writeln!(output, "}}")
 }
