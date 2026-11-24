@@ -11,7 +11,7 @@ Supplies the local identity returned by legacy `BNGetInfo()`.
 - `broadcastText`: account broadcast text; defaults to an empty string.
 - `isAFK`, `isDND`, `isRealIDEnabled`, `isAppearOffline`: booleans; default to `false`.
 
-The simulator returns a nil deprecated presence ID, then these values in the order read by Blizzard UI. The return shape and default values are **INFERRED** (`R88fi (native evidence pending)`).
+The simulator returns a nil deprecated presence ID, then these values in the order read by Blizzard UI. On Retail/Forever, a non-empty supplied BattleTag enables the legacy `BNFeaturesEnabled()` consumer path. The return shape and feature-state mapping are **INFERRED** (`R88fi (native evidence pending)`).
 
 ```lua
 A_Admin.SetPlayerBattleNetInfo("Malfurion#1234", 42)
