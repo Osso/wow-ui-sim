@@ -363,9 +363,9 @@ impl WowLuaEnv {
         };
         #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
         {
-            self.fire_raid_info_replies(raid_info_replies)?;
             #[cfg(feature = "client-retail")]
             let house_replies = self.fire_owned_house_replies(owned_house_replies)?;
+            self.fire_raid_info_replies(raid_info_replies)?;
             #[cfg(not(feature = "client-retail"))]
             let house_replies = 0;
             return Ok(timer_fired
