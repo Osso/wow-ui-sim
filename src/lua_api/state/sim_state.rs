@@ -1211,6 +1211,9 @@ pub struct SimState {
     #[cfg(any(feature = "retail-12-0-7", feature = "retail-12-1-0"))]
     pub quest_hub_dragonriding_races: HashMap<i32, Vec<i32>>,
     pub bnet_friends: Vec<BnetFriend>,
+    /// INFERRED — R88g2 (native evidence pending): selected 1-based Battle.net friend index.
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub bnet_selected_friend_index: Option<i32>,
     /// INFERRED local identity supplied to legacy `BNGetInfo` consumers.
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     pub player_bnet_info: crate::lua_api::state_types::PlayerBattleNetInfo,

@@ -116,6 +116,30 @@ pub(crate) fn set_battle_net_friend_invite(state: &mut LuaState) -> rilua::LuaRe
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) fn set_battle_net_friend_state(state: &mut LuaState) -> rilua::LuaResult<u32> {
+    let index = i32::from_stack(state, 1)?;
+    let is_friend = bool::from_stack(state, 2)?;
+    let is_online = bool::from_stack(state, 3)?;
+    let is_favorite = bool::from_stack(state, 4)?;
+    let mut sim = borrow_state_mut(state)?;
+    let offset = index
+        .checked_sub(1)
+        .and_then(|index| usize::try_from(index).ok());
+    let friend = offset.and_then(|offset| sim.bnet_friends.get_mut(offset));
+    let Some(friend) = friend else {
+        return Err(rilua::runtime_error(
+            "A_Admin.SetBattleNetFriendState: index must identify an existing friend",
+        ));
+    };
+    friend.is_friend = is_friend;
+    friend.is_favorite = is_favorite;
+    for account in &mut friend.game_accounts {
+        account.is_online = is_online;
+    }
+    Ok(0)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub(crate) fn set_social_blocked_entry(state: &mut LuaState) -> rilua::LuaResult<u32> {
     let index = i32::from_stack(state, 1)?;
     let blocked_id = i32::from_stack(state, 2)?;

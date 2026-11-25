@@ -1,7 +1,7 @@
 //! INFERRED legacy Battle.net friend counts from supplied friend and game-account state.
 
-use crate::lua_api::methods::borrow_state;
-use crate::lua_bridge::table_set_rust_fn_static;
+use crate::lua_api::methods::{borrow_state, borrow_state_mut};
+use crate::lua_bridge::{FromStack, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
 use rilua::{LuaApiMut, LuaResult, Val};
 
@@ -13,6 +13,12 @@ pub(crate) fn register(lua: &mut rilua::Lua) -> LuaResult<()> {
         state.global,
         "BNGetNumFriendInvites",
         get_num_friend_invites,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        state.global,
+        "BNSetSelectedFriend",
+        set_selected_friend,
     )
 }
 
@@ -40,4 +46,10 @@ fn get_num_friend_invites(state: &mut LuaState) -> LuaResult<u32> {
     let count = borrow_state(state)?.bnet_friend_invites.len();
     state.push(Val::Num(count as f64));
     Ok(1)
+}
+
+fn set_selected_friend(state: &mut LuaState) -> LuaResult<u32> {
+    let index = i32::from_stack(state, 1)?;
+    borrow_state_mut(state)?.bnet_selected_friend_index = Some(index);
+    Ok(0)
 }

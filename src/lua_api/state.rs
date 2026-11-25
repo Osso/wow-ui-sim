@@ -963,6 +963,8 @@ macro_rules! build_empty_sim_state {
             quest_hub_dragonriding_races: ::std::collections::HashMap::new(),
             bnet_friends: default_bnet_friends(),
             #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            bnet_selected_friend_index: None,
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
             player_bnet_info: Default::default(),
             #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
             player_bnet_account_present: false,

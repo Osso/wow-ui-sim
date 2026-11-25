@@ -31,4 +31,10 @@ The arguments map to `C_BattleNet.AreFriendTagsEnabled`, `AreTitleFriendCustomNa
 
 Supplies one pending Battle.net friend invite. `index` must replace an existing invite or append the next invite; other indices raise an error. The values map to the record fields used by `C_BattleNet.GetFriendInviteInfo(index)`. `BNGetNumFriendInvites()` returns the number of supplied invites.
 
+## `A_Admin.SetBattleNetFriendState(index, isFriend, isOnline, isFavorite)`
+
+Supplies the friend, online, and favorite flags for an existing `BnetFriend` entry. The setter updates the `is_online` flag on each attached game account; it does not create game accounts. The index must identify an existing entry.
+
 **INFERRED — R88g2 (native evidence pending):** `BNGetNumFriends()` returns four values in this order: total friends, online friends, favorite friends, and favorite online friends. Counts include supplied `BnetFriend` entries marked `is_friend`. A friend is online when at least one attached game account is online. The default fixture supplies two friends, one online and one favorite, so the counts are `(2, 1, 1, 0)`.
+
+**INFERRED — R88g2 (native evidence pending):** `BNSetSelectedFriend(index)` stores the selected 1-based Battle.net friend index used by the original FriendsFrame.

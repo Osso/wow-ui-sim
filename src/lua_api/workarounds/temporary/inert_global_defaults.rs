@@ -324,6 +324,10 @@ mod tests {
             .eval(
                 &[world_check, r#"
                 if GetCurrentRegionName() ~= "US" then return "region" end
+                local bnetTotal, bnetOnline, bnetFavorite, bnetFavoriteOnline = BNGetNumFriends()
+                if bnetTotal ~= EXPECTED_BNET_COUNTS[1] or bnetOnline ~= EXPECTED_BNET_COUNTS[2] or bnetFavorite ~= EXPECTED_BNET_COUNTS[3] or bnetFavoriteOnline ~= EXPECTED_BNET_COUNTS[4] then return "bnet_counts" end
+                if BNGetNumFriendInvites() ~= 0 then return "bnet_invites" end
+                if BNGetFriendInfo(1) ~= nil then return "bnet_info" end
                 local languageName, languageID = GetDefaultLanguage()
                 if languageName ~= "Common" or languageID ~= 1 then return "language" end
                 if GetAlternativeDefaultLanguage() ~= nil then return "alt_language" end
@@ -350,10 +354,6 @@ mod tests {
                 if IsOnTournamentRealm() ~= false then return "tournament" end
                 if GetNumDisplayChannels() ~= 0 then return "display_channels" end
                 if GetChannelDisplayInfo(1) ~= nil then return "channel_display_info" end
-                local bnetTotal, bnetOnline, bnetFavorite, bnetFavoriteOnline = BNGetNumFriends()
-                if bnetTotal ~= EXPECTED_BNET_COUNTS[1] or bnetOnline ~= EXPECTED_BNET_COUNTS[2] or bnetFavorite ~= EXPECTED_BNET_COUNTS[3] or bnetFavoriteOnline ~= EXPECTED_BNET_COUNTS[4] then return "bnet_counts" end
-                if BNGetNumFriendInvites() ~= 0 then return "bnet_invites" end
-                if BNGetFriendInfo(1) ~= nil then return "bnet_info" end
                 if Ambiguate("Alyth-Realm", "short") ~= "Alyth" then return "ambiguate_short" end
                 if Ambiguate("Alyth-Realm", "none") ~= "Alyth-Realm" then return "ambiguate_none" end
                 if AreTalentsLocked() ~= false then return "talents_locked" end
