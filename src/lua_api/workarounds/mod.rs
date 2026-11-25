@@ -90,7 +90,7 @@ const POST_LOAD_WORKAROUNDS: &[WorkaroundStep] = &[
         label: "patch_character_create_defaults",
         apply: patch_character_create_defaults,
     },
-    #[cfg(not(feature = "client-retail"))]
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     WorkaroundStep {
         label: "patch_character_frame_title_refresh",
         apply: patch_character_frame_title_refresh,
