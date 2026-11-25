@@ -9,7 +9,7 @@ use rilua::table_security::{TableAccess, check_table_access, unwrap_secret};
 use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
 use rilua::vm::table::Table;
-use rilua::{LuaApiMut, LuaResult, Val, runtime_error};
+use rilua::{LuaResult, Val, runtime_error};
 use std::collections::HashMap;
 
 const USAGE: &str =
