@@ -1,6 +1,7 @@
 //! Quest map and C_TaskQuest handlers.
 
 use crate::c_api::quest_objectives;
+use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::methods::{borrow_state, create_string, create_table, table_set};
 use crate::lua_bridge::FromStack;
 use rilua::vm::state::LuaState;
@@ -44,12 +45,17 @@ pub fn quest_map_update_all_quests(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-/// `GetQuestLogTimeLeft()` — retail returns seconds remaining on a
-/// time-limited quest, or `nil` when the currently selected quest isn't
-/// timed. The seeded quest-log has no time-limited entries, so we only
-/// return a value when the selected quest resolves to one of the seeded
-/// world quests.
+/// Returns the selected quest's supplied timer on Forever, or one nil value
+/// when this profile has no modeled timer state for the legacy query.
 pub fn get_quest_log_time_left(state: &mut LuaState) -> LuaResult<u32> {
+    if ACTIVE == ClientProfile::WowForever {
+        return crate::c_api::c_quest_log::legacy_quest_log_time_left(state);
+    }
+    if ACTIVE == ClientProfile::Retail {
+        state.push(Val::Nil);
+        return Ok(1);
+    }
+
     let selected = borrow_state(state)?.selected_quest_log_id;
     match selected {
         Some(quest_id)

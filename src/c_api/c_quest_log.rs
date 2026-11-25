@@ -129,6 +129,35 @@ fn read_timer_seconds(value: Val) -> LuaResult<f64> {
     Ok(seconds)
 }
 
+#[cfg(feature = "client-wowforever")]
+pub(crate) fn legacy_quest_log_time_left(state: &mut LuaState) -> LuaResult<u32> {
+    let time_left = {
+        let sim = borrow_state(state)?;
+        let selected = sim
+            .selected_quest_log_id
+            .and_then(|id| i32::try_from(id).ok());
+        selected
+            .filter(|quest_id| {
+                sim.quest_log_entries
+                    .entries
+                    .iter()
+                    .any(|entry| entry.quest_id == *quest_id)
+            })
+            .and_then(|quest_id| {
+                sim.quest_log_entries
+                    .timers
+                    .iter()
+                    .find(|timer| timer.quest_id == quest_id)
+            })
+            .map(|timer| {
+                let deadline = timer.supplied_at.as_secs_f64() + timer.initial_seconds;
+                (deadline - sim.clock_elapsed().as_secs_f64() - 1.0).max(0.0)
+            })
+    };
+    state.push(time_left.map_or(Val::Nil, Val::Num));
+    Ok(1)
+}
+
 pub(crate) fn register_info_queries(state: &mut LuaState) -> LuaResult<()> {
     let namespace = ensure_namespace(state, "C_QuestLog")?;
     table_set_rust_fn_static(state, namespace, "GetInfo", get_info)?;
