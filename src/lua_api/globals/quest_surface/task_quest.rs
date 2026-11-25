@@ -48,6 +48,7 @@ pub fn quest_map_update_all_quests(state: &mut LuaState) -> LuaResult<u32> {
 /// Returns the selected quest's supplied timer on Forever, or one nil value
 /// when this profile has no modeled timer state for the legacy query.
 pub fn get_quest_log_time_left(state: &mut LuaState) -> LuaResult<u32> {
+    #[cfg(feature = "client-wowforever")]
     if ACTIVE == ClientProfile::WowForever {
         return crate::c_api::c_quest_log::legacy_quest_log_time_left(state);
     }
