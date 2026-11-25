@@ -12,7 +12,7 @@ Retail `C_Map.GetMapArtHelpTextPosition(uiMapID)` reads `HelpTextPosition` from 
 
 **Native evidence:** **VERIFIED — Retail 12.1.5.70688:** the handler reads `UiMap.HelpTextPosition` for a matching `UiMap` row and sets the result byte to zero when the numeric map ID has no row. **INFERRED — Retail 12.1.5.70688 and Forever 1.60.1.70707:** the complete API returns `0` for an unknown numeric map ID because the documented result is non-nil and the separately recovered publisher returns the byte; the full entry-to-publisher path is unresolved. See `pr46-49-decomp-answers.md`, `R88fu`.
 
-**Supporting FlightMap input:** **VERIFIED (Retail 12.1.5.70688 and Forever 1.60.1.70707):** `GetTaxiMapID()` checks the stored value, returns no Lua values when it is zero, and returns one integer when it is nonzero. **INFERRED (R88fx; native evidence pending):** the simulator supplies the map ID before it dispatches `TAXIMAP_OPENED`; native event ordering is UNKNOWN. **UNKNOWN (R88fx):** native close-time clearing is unknown; the simulator retains its last supplied map ID. See `pr46-49-decomp-answers.md`, `R88fx`.
+**Supporting FlightMap input:** **VERIFIED (Retail 12.1.5.70688 and Forever 1.60.1.70707):** `GetTaxiMapID()` checks the stored value, returns no Lua values when it is zero, and returns one integer when it is nonzero. **INFERRED (R88fx; native evidence pending):** the simulator supplies the map ID before it dispatches `TAXIMAP_OPENED`; native event ordering is UNKNOWN. **UNKNOWN (R88fx):** native close-time clearing is unknown; the simulator retains its last supplied map ID. **INFERRED (R88g0; native evidence pending):** Retail `CloseTaxiMap()` ends the active `TaxiNode` interaction through `C_PlayerInteractionManager`, which emits `TAXIMAP_CLOSED` and the manager hide event; it does nothing when no taxi interaction is active. See `pr46-49-decomp-answers.md`, `R88fx` and `R88g0`.
 
 ## How it works
 
@@ -37,6 +37,7 @@ Retail `C_Map.GetMapArtHelpTextPosition(uiMapID)` reads `HelpTextPosition` from 
 - `tests/c_map_probes.rs::get_map_art_help_text_position_reads_retail_uimap_records`
 - `tests/c_map_probes.rs::ptr_map_art_help_text_position_keeps_existing_temporary_default`
 - `tests/blizzard_flight_map_loads.rs::flight_map_open_path_places_click_to_zoom_labels_from_uimap_positions`
+- `tests/blizzard_flight_map_loads.rs::flight_map_hide_closes_taxi_interaction_without_clearing_map_id`
 
 ## Known gaps (current cycle)
 
