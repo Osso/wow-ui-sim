@@ -65,7 +65,7 @@ fn assert_item_button_and_tooltip_contract(env: &WowLuaEnv) {
 }
 
 fn assert_inventory_candidates_are_supplied(env: &WowLuaEnv) {
-    let count: u32 = env
+    let count: i32 = env
         .eval(
             r#"
             local candidates = {}
