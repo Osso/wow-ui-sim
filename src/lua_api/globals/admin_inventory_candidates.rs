@@ -260,15 +260,17 @@ fn read_table(state: &LuaState, value: Val) -> LuaResult<GcRef<Table>> {
 }
 
 fn read_number(value: Val) -> LuaResult<u32> {
-    match value {
-        Val::Num(number)
-            if number.is_finite()
-                && number.fract() == 0.0
-                && number >= 0.0
-                && number <= f64::from(u32::MAX) =>
-        {
-            Ok(number as u32)
-        }
-        _ => Err(runtime_error(USAGE)),
+    let Val::Num(number) = value else {
+        return Err(runtime_error(USAGE));
+    };
+    if !number.is_finite() {
+        return Err(runtime_error(USAGE));
     }
+    if number.fract() != 0.0 {
+        return Err(runtime_error(USAGE));
+    }
+    if !(0.0..=f64::from(u32::MAX)).contains(&number) {
+        return Err(runtime_error(USAGE));
+    }
+    Ok(number as u32)
 }
