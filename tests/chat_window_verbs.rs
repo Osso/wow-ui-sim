@@ -1,9 +1,26 @@
 //! Integration tests for `src/lua_api/globals/chat_window_verbs.rs`.
 
+use wow_ui_sim::lua_api::state::ChatWindow;
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 fn env() -> WowLuaEnv {
     WowLuaEnv::new().expect("WowLuaEnv init")
+}
+
+#[test]
+fn chat_window_default_remains_white_and_opaque() {
+    let window = ChatWindow::default();
+    assert_eq!((window.alpha, window.r, window.g, window.b), (1.0, 1.0, 1.0, 1.0));
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn chat_window_info_preserves_legacy_presentation_defaults() {
+    let env = env();
+    let values: (f64, f64, f64, f64) = env
+        .eval("local _,_,r,g,b,a=GetChatWindowInfo(3); return a,r,g,b")
+        .unwrap();
+    assert_eq!(values, (0.25, 0.0, 0.0, 0.0));
 }
 
 // ── SetChatWindowAlpha ────────────────────────────────────────────────────────

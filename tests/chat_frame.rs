@@ -71,6 +71,24 @@ const CHAT_LAYOUT_DEBUG_LUA: &str = r#"
     return table.concat(out, "\n")
 "#;
 
+const CHAT_WINDOW_ADMIN_INPUTS_LUA: &str = r#"
+A_Admin.SetChatWindowState(1, "General Probe", true, 1)
+A_Admin.SetChatWindowState(2, "Combat Probe", true, 2)
+"#;
+
+const CHAT_WINDOW_TAB_STATE_LUA: &str = r#"
+return ChatFrame1Tab:GetText(), ChatFrame2Tab:GetText(),
+    ChatFrame1Tab:IsShown(), ChatFrame2Tab:IsShown(),
+    ChatFrame1.isDocked, ChatFrame2.isDocked
+"#;
+
+const CHAT_FRAME2_STARTUP_STATE_LUA: &str = r#"
+local shown = select(7, GetChatWindowInfo(2))
+local frameShown = ChatFrame2 and ChatFrame2:IsShown() or false
+local tabShown = ChatFrame2Tab and ChatFrame2Tab:IsShown() or false
+return shown, frameShown, tabShown
+"#;
+
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::client_profile::blizzard_ui_addons_dir_under(std::path::Path::new(env!(
         "CARGO_MANIFEST_DIR"
@@ -682,7 +700,7 @@ fn test_chat_window_docked_state_round_trips_through_info(env: &WowLuaEnv) {
                 local docked = select(9, GetChatWindowInfo(5))
                 SetChatWindowDocked(5, nil)
                 local undocked = select(9, GetChatWindowInfo(5))
-                return docked, undocked
+                return docked ~= nil and docked ~= false, undocked ~= nil and undocked ~= false
             "#,
             )
             .expect("chat window docked state eval failed");
@@ -692,14 +710,31 @@ fn test_chat_window_docked_state_round_trips_through_info(env: &WowLuaEnv) {
 }
 }
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+#[test]
+fn test_chat_frame2_starts_disabled() {
+    let env = setup_env();
+    let state: (bool, bool, bool) = env
+        .eval(CHAT_FRAME2_STARTUP_STATE_LUA)
+        .expect("ChatFrame2 startup state eval failed");
+    assert_eq!(state, (false, false, false));
+}
+
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 #[test]
 fn test_chat_window_admin_inputs_render_as_docked_tabs() {
     let env = setup_env();
-    env.exec(r#"A_Admin.SetChatWindowState(1, "General Probe", true, 1); A_Admin.SetChatWindowState(2, "Combat Probe", true, 2)"#).unwrap();
-    env.exec("FloatingChatFrame_Update(1, true); FloatingChatFrame_Update(2, true)").unwrap();
-    let tabs: (String, String, bool, bool, bool, bool) = env.eval("return ChatFrame1Tab:GetText(), ChatFrame2Tab:GetText(), ChatFrame1Tab:IsShown(), ChatFrame2Tab:IsShown(), ChatFrame1.isDocked, ChatFrame2.isDocked").unwrap();
-    assert_eq!(tabs, ("General Probe".into(), "Combat Probe".into(), true, true, true, true));
+    env.exec(CHAT_WINDOW_ADMIN_INPUTS_LUA)
+        .expect("set chat window inputs");
+    env.fire_event("UPDATE_CHAT_WINDOWS")
+        .expect("dispatch UPDATE_CHAT_WINDOWS");
+    let tabs: (String, String, bool, bool, bool, bool) = env
+        .eval(CHAT_WINDOW_TAB_STATE_LUA)
+        .expect("chat window tab state");
+    assert_eq!(
+        tabs,
+        ("General Probe".into(), "Combat Probe".into(), true, true, true, true)
+    );
 }
 
 prefork_full_ui_case! {
