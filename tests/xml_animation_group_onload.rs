@@ -424,11 +424,16 @@ local order = {}
 AnimationScene:ExecuteOrDelayUntilSceneSet(function() table.insert(order, "first") end)
 AnimationScene:ExecuteOrDelayUntilSceneSet(function() table.insert(order, "second") end)
 assert(#AnimationScene.delayedActions == 2 and #order == 0)
-AnimationScene:SetFromModelSceneID(596)
-assert(AnimationScene:GetModelSceneID() == 596)
+-- Skip actor creation; this test covers only scene and queue state.
+AnimationScene:SetFromModelSceneID(641, nil, true)
+assert(AnimationScene:GetModelSceneID() == 641)
 AnimationScene:RefreshModelScene()
+assert(AnimationScene:GetModelSceneID() == 641)
 assert(table.concat(order, ",") == "first,second")
 assert(AnimationScene.delayedActions == nil)
+local ranAfterSet = false
+AnimationScene:ExecuteOrDelayUntilSceneSet(function() ranAfterSet = true end)
+assert(ranAfterSet)
 "#;
 
 #[test]
@@ -436,7 +441,7 @@ fn script_animated_model_scene_template_drains_actions_in_order() {
     clear_templates();
     let (_addon, shared) = shared_xml_fixture();
     let env = WowLuaEnv::new().unwrap();
-    std::fs::write(shared.join("SceneConsumer.xml"), r#"<Ui><ModelScene name="AnimationScene" parent="UIParent" setAllPoints="true" inherits="ScriptAnimatedModelSceneTemplate"/></Ui>"#).unwrap();
+    std::fs::write(shared.join("SceneConsumer.xml"), r#"<Ui><ModelScene name="AnimationScene" parent="UIParent" hidden="true" setAllPoints="true" inherits="ScriptAnimatedModelSceneTemplate"/></Ui>"#).unwrap();
     let toc = write_shared_xml_toc(&shared, "SceneConsumer.xml");
     load_addon(&env.loader_env(), &toc).unwrap();
     env.exec(SCRIPT_ANIMATED_MODEL_SCENE_ACTIONS).unwrap();
