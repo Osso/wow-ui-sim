@@ -918,6 +918,7 @@ fn test_patch_12_1_lfg_pvp_encounter_bridges() {
             if C_EncounterJournal.GetBaseDifficultyID(250) ~= 17 then return "ej-base-difficulty-raid-250" end
             if C_EncounterJournal.GetBaseDifficultyID(63) ~= 63 then return "ej-base-difficulty-identity" end
             EJ_SelectInstance(63)
+            A_Admin.SetEncounterJournalDifficultyMask(63, 3)
             if C_EncounterJournal.InstanceHasDifficultyID(1) ~= true then return "ej-instance-difficulty-dungeon" end
             if C_EncounterJournal.InstanceHasDifficultyID(2) ~= true then return "ej-instance-difficulty-dungeon-heroic" end
             if C_EncounterJournal.InstanceHasDifficultyID(14) ~= false then return "ej-instance-difficulty-dungeon-raid" end

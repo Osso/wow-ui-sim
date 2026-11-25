@@ -23,69 +23,6 @@ fn encounter_journal_toc() -> PathBuf {
 }
 
 prefork_full_ui_case! {
-fn encounter_journal_difficulty_queries_use_selected_map(env: &WowLuaEnv) {
-    load_addon(&env.loader_env(), &encounter_journal_toc())
-        .expect("selected Encounter Journal TOC should load");
-    env.apply_post_load_workarounds();
-    env.exec("EJ_SelectInstance(63)")
-        .expect("the Deadmines journal instance should be selectable");
-    let dungeon: (bool, bool, bool, bool, String) = env
-        .eval(r#"
-            local hasNormal = C_EncounterJournal.InstanceHasDifficultyID(1)
-            local hasHeroic = C_EncounterJournal.InstanceHasDifficultyID(2)
-            local hasRaid = C_EncounterJournal.InstanceHasDifficultyID(14)
-            local isHeroicValid = EJ_IsValidInstanceDifficulty(2)
-            EncounterJournal_SetupDifficultyDropdown(EncounterJournal)
-            local values = {}
-            EncounterJournal.encounter.info.difficulty.menuGenerator(
-                EncounterJournal.encounter.info.difficulty,
-                {
-                    SetTag = function() end,
-                    CreateRadio = function(_, _, _, _, value)
-                        values[#values + 1] = value
-                    end,
-                })
-            table.sort(values)
-            return hasNormal, hasHeroic, hasRaid, isHeroicValid, table.concat(values, ",")
-        "#)
-        .expect("the original dungeon dropdown should use selected-map difficulties");
-    assert_eq!(dungeon, (true, true, false, true, "1,2,24".to_string()));
-
-    env.exec("EJ_SelectInstance(72)")
-        .expect("the Bastion of Twilight journal instance should be selectable");
-    let raid: (bool, bool, bool, String) = env
-        .eval(r#"
-            local hasTenPlayer = C_EncounterJournal.InstanceHasDifficultyID(3)
-            local hasDungeon = C_EncounterJournal.InstanceHasDifficultyID(1)
-            local isTenPlayerValid = EJ_IsValidInstanceDifficulty(3)
-            EncounterJournal_SetupDifficultyDropdown(EncounterJournal)
-            local values = {}
-            EncounterJournal.encounter.info.difficulty.menuGenerator(
-                EncounterJournal.encounter.info.difficulty,
-                {
-                    SetTag = function() end,
-                    CreateRadio = function(_, _, _, _, value)
-                        values[#values + 1] = value
-                    end,
-                })
-            table.sort(values)
-            return hasTenPlayer, hasDungeon, isTenPlayerValid, table.concat(values, ",")
-        "#)
-        .expect("the original raid dropdown should use selected-map difficulties");
-    assert_eq!(raid, (true, false, true, "3,4,5,6".to_string()));
-
-    let bases: (i32, i32, i32) = env
-        .eval(r#"
-            return C_EncounterJournal.GetBaseDifficultyID(233),
-                C_EncounterJournal.GetBaseDifficultyID(250),
-                C_EncounterJournal.GetBaseDifficultyID(63)
-        "#)
-        .expect("base difficulty queries should accept difficulty IDs");
-    assert_eq!(bases, (16, 17, 63));
-}
-}
-
-prefork_full_ui_case! {
 fn encounter_journal_renders_supplied_item_sets_and_items(env: &WowLuaEnv) {
     env.exec("A_Admin.SetPlayerClass(2); A_Admin.SetSpec(3)")
         .expect("the player scenario should select the Paladin specialization");

@@ -306,6 +306,8 @@ fn register_admin_social(builder: TableBuilder) -> LuaResult<TableBuilder> {
 }
 
 fn register_admin_encounter_services(mut builder: TableBuilder) -> LuaResult<TableBuilder> {
+    #[cfg(any(feature = "retail-12-1-0", feature = "client-wowforever"))]
+    builder = crate::c_api::c_encounter_journal_difficulty::register_admin(builder)?;
     builder = if crate::c_api::restricted_actions::supported() {
         builder
             .set_function(
