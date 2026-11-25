@@ -326,3 +326,126 @@ fn xml_animation_group_onload_hides_target_textures() {
         "XML animation-group OnLoad should hide child targets before play"
     );
 }
+
+fn copy_shared_xml_sources(source: &std::path::Path, shared: &std::path::Path) {
+    for file in [
+        "AnimationTemplates.lua",
+        "AnimationTemplates.xml",
+        "Vector2D.lua",
+        "ModelSceneMixin.lua",
+        "ModelSceneMixin.xml",
+        "ScriptedAnimations/ScriptAnimatedModelScene.lua",
+        "ScriptedAnimations/ScriptAnimatedModelScene.xml",
+    ] {
+        let target = shared.join(file);
+        std::fs::create_dir_all(target.parent().unwrap()).unwrap();
+        std::fs::copy(source.join(file), target).unwrap();
+    }
+}
+
+fn write_shared_xml_toc(shared: &std::path::Path, consumer_file: &str) -> std::path::PathBuf {
+    let toc = shared.join("Blizzard_SharedXML.toc");
+    let mut file = std::fs::File::create(&toc).unwrap();
+    for entry in [
+        "AnimationTemplates.lua",
+        "ModelSceneMixin.lua",
+        "Vector2D.lua",
+        "ScriptedAnimations/ScriptAnimatedModelScene.lua",
+        "AnimationTemplates.xml",
+        "ModelSceneMixin.xml",
+        "ScriptedAnimations/ScriptAnimatedModelScene.xml",
+        consumer_file,
+    ] {
+        writeln!(file, "{entry}").unwrap();
+    }
+    toc
+}
+
+fn shared_xml_fixture() -> (tempfile::TempDir, std::path::PathBuf) {
+    let cache = wow_ui_sim::blizzard_ui_sync::default_cache_addons_path().unwrap();
+    let source = cache.join("Blizzard_SharedXML");
+    let addon = tempfile::tempdir().unwrap();
+    let shared = addon.path().join("Blizzard_SharedXML");
+    std::fs::create_dir(&shared).unwrap();
+    copy_shared_xml_sources(&source, &shared);
+    (addon, shared)
+}
+
+#[test]
+fn shared_animation_template_setplaying_runs_visibility_handlers() {
+    clear_templates();
+    let (_addon, shared) = shared_xml_fixture();
+    let env = WowLuaEnv::new().unwrap();
+    std::fs::write(
+        shared.join("AnimationConsumer.xml"),
+        r#"<Ui><Frame name="AnimationOwner" parent="UIParent" hidden="true">
+            <Animations><AnimationGroup parentKey="Anim" inherits="VisibleWhilePlayingAnimGroupTemplate">
+                <Alpha duration="2" fromAlpha="0" toAlpha="1"/>
+            </AnimationGroup></Animations>
+        </Frame></Ui>"#,
+    )
+    .unwrap();
+    let toc = write_shared_xml_toc(&shared, "AnimationConsumer.xml");
+    load_addon(&env.loader_env(), &toc).unwrap();
+    env.exec("assert(not AnimationOwner:IsShown()); AnimationOwner.Anim:SetPlaying(true); assert(AnimationOwner:IsShown() and AnimationOwner.Anim:IsPlaying()); AnimationOwner.Anim:SetPlaying(false); assert(not AnimationOwner:IsShown() and not AnimationOwner.Anim:IsPlaying())").unwrap();
+}
+
+const CLASS_TALENTS_SET_BACKGROUND_ANIMATIONS: &str = r#"
+PlayerSpellsUtil.ToggleClassTalentFrame()
+local frame = PlayerSpellsFrame.TalentsFrame
+assert(PlayerSpellsFrame:IsShown(), "class talent toggle did not open PlayerSpellsFrame")
+assert(frame:IsShown(), "class talent toggle did not show TalentsFrame")
+assert(#frame.backgroundAnims > 0, "TalentsFrame has no background animations")
+for _, group in ipairs(frame.backgroundAnims) do
+    assert(group:IsPlaying(), "background animation did not start")
+    for _, animation in ipairs({ group:GetAnimations() }) do
+        local target = animation:GetTarget()
+        if target then assert(target:IsShown(), "animation target did not show") end
+    end
+end
+PlayerSpellsUtil.ToggleClassTalentFrame()
+assert(not PlayerSpellsFrame:IsShown(), "class talent toggle did not close PlayerSpellsFrame")
+assert(not frame:IsVisible(), "closing PlayerSpellsFrame did not hide TalentsFrame")
+for _, group in ipairs(frame.backgroundAnims) do
+    assert(not group:IsPlaying(), "background animation did not stop")
+    for _, animation in ipairs({ group:GetAnimations() }) do
+        local target = animation:GetTarget()
+        if target then assert(not target:IsVisible(), "animation target did not hide") end
+    end
+end
+"#;
+
+prefork_full_ui_case! {
+fn class_talents_background_animation_consumer_runs_set_playing(env: &WowLuaEnv) {
+    env.exec(CLASS_TALENTS_SET_BACKGROUND_ANIMATIONS)
+        .expect("original ClassTalentsFrame consumer should run visibility handlers");
+}
+}
+
+const SCRIPT_ANIMATED_MODEL_SCENE_ACTIONS: &str = r#"
+local order = {}
+AnimationScene:ExecuteOrDelayUntilSceneSet(function() table.insert(order, "first") end)
+AnimationScene:ExecuteOrDelayUntilSceneSet(function() table.insert(order, "second") end)
+assert(#AnimationScene.delayedActions == 2 and #order == 0)
+-- Skip actor creation; this test covers only scene and queue state.
+AnimationScene:SetFromModelSceneID(641, nil, true)
+assert(AnimationScene:GetModelSceneID() == 641)
+AnimationScene:RefreshModelScene()
+assert(AnimationScene:GetModelSceneID() == 641)
+assert(table.concat(order, ",") == "first,second")
+assert(AnimationScene.delayedActions == nil)
+local ranAfterSet = false
+AnimationScene:ExecuteOrDelayUntilSceneSet(function() ranAfterSet = true end)
+assert(ranAfterSet)
+"#;
+
+#[test]
+fn script_animated_model_scene_template_drains_actions_in_order() {
+    clear_templates();
+    let (_addon, shared) = shared_xml_fixture();
+    let env = WowLuaEnv::new().unwrap();
+    std::fs::write(shared.join("SceneConsumer.xml"), r#"<Ui><ModelScene name="AnimationScene" parent="UIParent" hidden="true" setAllPoints="true" inherits="ScriptAnimatedModelSceneTemplate"/></Ui>"#).unwrap();
+    let toc = write_shared_xml_toc(&shared, "SceneConsumer.xml");
+    load_addon(&env.loader_env(), &toc).unwrap();
+    env.exec(SCRIPT_ANIMATED_MODEL_SCENE_ACTIONS).unwrap();
+}
