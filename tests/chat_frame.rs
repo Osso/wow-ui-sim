@@ -623,24 +623,14 @@ fn test_chat_background_batch_uses_chat_frame_bounds_and_alpha_tint(env: &WowLua
 }
 }
 
-prefork_full_ui_case! {
-fn test_chat_frame2_starts_disabled(env: &WowLuaEnv) {
-
-        let (shown, frame_shown, tab_shown): (bool, bool, bool) = env
-            .eval(
-                r#"
-                local shown = select(7, GetChatWindowInfo(2))
-                local frameShown = ChatFrame2 and ChatFrame2:IsShown() or false
-                local tabShown = ChatFrame2Tab and ChatFrame2Tab:IsShown() or false
-                return shown, frameShown, tabShown
-            "#,
-            )
-            .expect("ChatFrame2 startup state eval failed");
-
-        assert!(!shown, "GetChatWindowInfo(2) should report chat window 2 hidden");
-        assert!(!frame_shown, "ChatFrame2 should start hidden");
-        assert!(!tab_shown, "ChatFrame2Tab should start hidden");
-}
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn test_chat_frame2_starts_shown_and_docked() {
+    let env = setup_env();
+    let state: (bool, f64, bool, bool, bool) = env
+        .eval("local _,_,_,_,_,_,shown,_,dock=GetChatWindowInfo(2); return shown,dock,ChatFrame2:IsShown(),ChatFrame2Tab:IsShown(),ChatFrame2.isDocked")
+        .expect("ChatFrame2 startup state eval failed");
+    assert_eq!(state, (true, 2.0, true, true, true));
 }
 
 prefork_full_ui_case! {
@@ -712,6 +702,7 @@ fn test_chat_window_docked_state_round_trips_through_info(env: &WowLuaEnv) {
 }
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 #[test]
 fn test_chat_window_admin_inputs_render_as_docked_tabs() {
     let env = setup_env();

@@ -111,6 +111,7 @@ fn add_and_remove_chat_window_messages_mutates_unique_groups() {
     assert_eq!(w.messages, vec!["SAY".to_string()]);
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 #[test]
 fn first_login_chat_windows_one_and_two_are_shown_and_docked() {
     let env = env();
@@ -120,6 +121,7 @@ fn first_login_chat_windows_one_and_two_are_shown_and_docked() {
     assert_eq!(states, (true, 1.0, true, 2.0, false));
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 #[test]
 fn chat_window_layout_verbs_round_trip_distinct_records() {
     let env = env();
