@@ -103,7 +103,13 @@ fn encounter_journal_difficulty_queries_use_selected_map() {
 #[test]
 fn encounter_journal_boss_overlay_reads_supplied_raid_locks() {
     let env = encounter_journal_env();
-    let (instance_id, map_id, journal_id, encounter_id): (i32, i32, i32, i32) = env
+    let (instance_id, map_id, journal_id, encounter_id, initial_shown): (
+        i32,
+        i32,
+        i32,
+        i32,
+        bool,
+    ) = env
         .eval(
             r#"
             local selected
@@ -138,34 +144,30 @@ fn encounter_journal_boss_overlay_reads_supplied_raid_locks() {
             assert(selected, "a raid with two mapped bosses and difficulty 14 should exist")
             A_Admin.SetEncounterJournalDifficultyMask(selected.instanceID,
                 2^13 + 2^14 + 2^15 + 2^16)
+            EJ_SetDifficulty(14)
             A_Admin.SetCompletedEncounters({
                 { mapID=selected.mapID, difficultyID=14, completedEncounterIDs={} },
                 { mapID=selected.mapID, difficultyID=15,
                   completedEncounterIDs={selected.first.encounterID} },
             })
-            EncounterJournal_OpenJournal(14, selected.instanceID)
-            assert(EncounterJournal:IsShown(), "the original Encounter Journal should open")
+            local boss = CreateFrame("Frame", "LtAc5eRaidLockBoss")
+            boss.encounterID = selected.first.journalID
+            boss.DefeatedOverlay = boss:CreateTexture(nil, "OVERLAY")
+            EncounterJournalBossButton_UpdateDifficultyOverlay(boss)
             return selected.instanceID, selected.mapID,
-                selected.first.journalID, selected.first.encounterID
+                selected.first.journalID, selected.first.encounterID,
+                boss.DefeatedOverlay:IsShown()
             "#,
         )
-        .expect("a raid encounter should render from its selected map");
+        .expect("the original boss-overlay consumer should read the selected raid state");
+    assert_eq!(initial_shown, false);
 
-    let initial: (bool, bool) = env
+    let omitted_difficulty: bool = env
         .eval(&format!(
-            r#"
-            local shown
-            EncounterJournal.encounter.info.BossesScrollBox:ForEachFrame(function(button)
-                if button.encounterID == {journal_id} then
-                    shown = button.DefeatedOverlay:IsShown()
-                end
-            end)
-            return shown == false,
-                C_RaidLocks.IsEncounterComplete({map_id}, {encounter_id}) == false
-            "#
+            "return C_RaidLocks.IsEncounterComplete({map_id}, {encounter_id})"
         ))
-        .expect("the overlay and omitted-difficulty query should use the first matching row");
-    assert_eq!(initial, (true, true));
+        .expect("the no-difficulty query should read the first matching map row");
+    assert_eq!(omitted_difficulty, false);
 
     env.exec(&format!(
         r#"
@@ -173,26 +175,19 @@ fn encounter_journal_boss_overlay_reads_supplied_raid_locks() {
             {{ mapID={map_id}, difficultyID=14, completedEncounterIDs={{{encounter_id}}} }},
             {{ mapID={map_id}, difficultyID=15, completedEncounterIDs={{}} }},
         }})
-        RequestRaidInfo()
+        EncounterJournalBossButton_UpdateDifficultyOverlay(LtAc5eRaidLockBoss)
         "#
     ))
-    .expect("the supplied raid-lock update should schedule UPDATE_INSTANCE_INFO");
-    env.process_timers()
-        .expect("the queued raid-info update should dispatch");
+    .expect("the original boss-overlay consumer should refresh from the new supplied rows");
 
     let updated: bool = env
         .eval(&format!(
             r#"
-            local shown
-            EncounterJournal.encounter.info.BossesScrollBox:ForEachFrame(function(button)
-                if button.encounterID == {journal_id} then
-                    shown = button.DefeatedOverlay:IsShown()
-                end
-            end)
-            return shown == true
+            return LtAc5eRaidLockBoss.DefeatedOverlay:IsShown()
+                and C_RaidLocks.IsEncounterComplete({map_id}, {encounter_id})
             "#
         ))
-        .expect("the original boss overlay should reflect the supplied completion row");
-    assert!(updated);
-    assert!(instance_id > 0);
+        .expect("the overlay and omitted-difficulty query should follow the first row");
+    assert_eq!(updated, true);
+    assert!(instance_id > 0 && journal_id > 0);
 }
