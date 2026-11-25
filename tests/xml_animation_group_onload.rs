@@ -331,6 +331,7 @@ fn copy_shared_xml_sources(source: &std::path::Path, shared: &std::path::Path) {
     for file in [
         "AnimationTemplates.lua",
         "AnimationTemplates.xml",
+        "Vector2D.lua",
         "ModelSceneMixin.lua",
         "ModelSceneMixin.xml",
         "ScriptedAnimations/ScriptAnimatedModelScene.lua",
@@ -348,6 +349,7 @@ fn write_shared_xml_toc(shared: &std::path::Path, consumer_file: &str) -> std::p
     for entry in [
         "AnimationTemplates.lua",
         "ModelSceneMixin.lua",
+        "Vector2D.lua",
         "ScriptedAnimations/ScriptAnimatedModelScene.lua",
         "AnimationTemplates.xml",
         "ModelSceneMixin.xml",
@@ -389,10 +391,9 @@ fn shared_animation_template_setplaying_runs_visibility_handlers() {
 }
 
 const CLASS_TALENTS_SET_BACKGROUND_ANIMATIONS: &str = r#"
-assert(C_AddOns.LoadAddOn("Blizzard_PlayerSpells"))
+PlayerSpellsUtil.ToggleClassTalentFrame()
 local frame = PlayerSpellsFrame.TalentsFrame
-assert(frame.backgroundAnims and #frame.backgroundAnims > 0)
-frame:SetBackgroundAnimationsPlaying(true)
+assert(frame:IsShown() and #frame.backgroundAnims > 0)
 for _, group in ipairs(frame.backgroundAnims) do
     assert(group:IsPlaying())
     for _, animation in ipairs({ group:GetAnimations() }) do
@@ -400,7 +401,8 @@ for _, group in ipairs(frame.backgroundAnims) do
         if target then assert(target:IsShown()) end
     end
 end
-frame:SetBackgroundAnimationsPlaying(false)
+PlayerSpellsUtil.ToggleClassTalentFrame()
+assert(not frame:IsShown())
 for _, group in ipairs(frame.backgroundAnims) do
     assert(not group:IsPlaying())
     for _, animation in ipairs({ group:GetAnimations() }) do
@@ -417,17 +419,25 @@ fn class_talents_background_animation_consumer_runs_set_playing(env: &WowLuaEnv)
 }
 }
 
+const SCRIPT_ANIMATED_MODEL_SCENE_ACTIONS: &str = r#"
+local order = {}
+AnimationScene:ExecuteOrDelayUntilSceneSet(function() table.insert(order, "first") end)
+AnimationScene:ExecuteOrDelayUntilSceneSet(function() table.insert(order, "second") end)
+assert(#AnimationScene.delayedActions == 2 and #order == 0)
+AnimationScene:SetFromModelSceneID(596)
+assert(AnimationScene:GetModelSceneID() == 596)
+AnimationScene:RefreshModelScene()
+assert(table.concat(order, ",") == "first,second")
+assert(AnimationScene.delayedActions == nil)
+"#;
+
 #[test]
-fn script_animated_model_scene_template_delays_actions_after_onload() {
+fn script_animated_model_scene_template_drains_actions_in_order() {
     clear_templates();
     let (_addon, shared) = shared_xml_fixture();
     let env = WowLuaEnv::new().unwrap();
-    std::fs::write(
-        shared.join("SceneConsumer.xml"),
-        r#"<Ui><ModelScene name="AnimationScene" parent="UIParent" inherits="ScriptAnimatedModelSceneTemplate"/></Ui>"#,
-    )
-    .unwrap();
+    std::fs::write(shared.join("SceneConsumer.xml"), r#"<Ui><ModelScene name="AnimationScene" parent="UIParent" setAllPoints="true" inherits="ScriptAnimatedModelSceneTemplate"/></Ui>"#).unwrap();
     let toc = write_shared_xml_toc(&shared, "SceneConsumer.xml");
     load_addon(&env.loader_env(), &toc).unwrap();
-    env.exec("local ran = false; AnimationScene:ExecuteOrDelayUntilSceneSet(function() ran = true end); assert(not ran); assert(AnimationScene.delayedActions and #AnimationScene.delayedActions == 1)").unwrap();
+    env.exec(SCRIPT_ANIMATED_MODEL_SCENE_ACTIONS).unwrap();
 }
