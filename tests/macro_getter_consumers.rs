@@ -73,6 +73,14 @@ fn assert_selected_macro(env: &WowLuaEnv, count: u32, record: (&str, u32, &str))
             record.2.into()
         )
     );
+    env.exec("MacroEditButton_OnClick()")
+        .expect("original macro edit handler opens the icon selector");
+    let selected: (String, f64) = env
+        .eval(r#"return MacroPopupFrame.BorderBox.IconSelectorEditBox:GetText(), tonumber(MacroPopupFrame.BorderBox.SelectedIconArea.SelectedIconButton:GetIconTexture())"#)
+        .expect("original macro icon selector name and numeric icon");
+    assert_eq!(selected, (record.0.into(), f64::from(record.1)));
+    env.exec("MacroPopupFrame:Hide()")
+        .expect("close original macro icon selector");
 }
 
 fn exercise_character_tab(env: &WowLuaEnv) {
@@ -142,6 +150,8 @@ fn macro_getter_ordinary_argument_and_return_contract() {
         name, icon, body = tuple(GetMacroInfo(2))
         assert(name == "" and icon == nil and body == "/say empty name")
         assert(GetMacroInfo(240) == "Last")
+        assert(GetMacroBody(1) == "")
+        assert(C_Macro.GetNumMacros() == 2)
         for _, arg in ipairs({0, -1, 241, true, {}, "unmatched"}) do
             assert(select("#", GetMacroInfo(arg)) == 0, tostring(arg))
         end
@@ -204,7 +214,27 @@ fn macro_getter_inferred_host_policies_and_c_macro_adapter() {
         assert(select("#", GetMacroInfo(3)) == 0) -- default host hole
         assert(C_Macro.GetMacroName(1) == "CaseSensitive") -- INFERRED one-based adapter (R88l.24)
         assert(C_Macro.GetSelectedMacroIcon(1) == 134400)
+        assert(C_Macro.GetMacroName(122) == nil)
+        assert(C_Macro.GetSelectedMacroIcon(122) == 134400)
     "##,
     )
     .expect("INFERRED host selection/listfile policies and one-based C_Macro adapter");
+}
+
+#[test]
+fn macro_getters_return_empty_model_state() {
+    let env = WowLuaEnv::new().expect("Lua environment");
+    assert_empty_macro_state(&env);
+}
+
+fn assert_empty_macro_state(env: &WowLuaEnv) {
+    env.exec(r##"
+        local account, character = GetNumMacros()
+        local cAccount, cCharacter = C_Macro.GetNumMacros()
+        assert(account == 0 and character == 0 and cAccount == 0 and cCharacter == 0)
+        assert(select("#", GetMacroInfo(1)) == 0 and GetMacroBody(1) == nil)
+        assert(#GetMacroIcons() == 0 and #GetMacroItemIcons() == 0)
+        assert(#GetLooseMacroIcons() == 0 and #GetLooseMacroItemIcons() == 0)
+        assert(C_Macro.GetSelectedMacroIcon(1) == 134400)
+        "##).expect("empty macro model exposes no fixture rows or icon entries");
 }
