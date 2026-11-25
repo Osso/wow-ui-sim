@@ -78,3 +78,4 @@ fn tooltip_loot_roll_original_hover_selects_roll_link() {
     )
     .unwrap();
 }
+

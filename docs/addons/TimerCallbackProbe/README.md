@@ -184,6 +184,8 @@ identity). This matches `FcTest` and the retail capture:
   `__eq`) yet a distinct raw table key, sharing the handle's fields.
 - `container:Cancel()` cancels every timer the container backs.
 
+Current simulator implementation: Retail and WoW Forever now register FunctionContainers in Rust; other profiles keep the Lua adapter. **INFERRED (R88y; native evidence pending):** NewTimer accepts a container and returns that same object. **INFERRED (R88y; native evidence pending):** After keeps the former adapter behavior: zero callback arguments, and Cancel suppresses the callback without removing the queued one-shot before it is due.
+
 Notes:
 
 - Iteration state was already per-registration — the plain-function control

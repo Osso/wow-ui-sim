@@ -30,7 +30,9 @@
 //! `string_format.rs` stays on the mlua side only.
 
 use crate::lua_api::env::WowLuaAppData;
-use crate::lua_api::methods::borrow_state;
+use crate::lua_api::methods::{borrow_state, registry_get, table_get};
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+use crate::lua_api::methods::{call_function_state, create_table, table_set};
 use crate::lua_api::next_timer_id;
 use crate::lua_bridge::{TableBuilder, stack_val};
 use rilua::vm::closure::{Closure, RustClosure, RustFn};
@@ -49,6 +51,8 @@ const LEGACY_RETAIL_TIMER_FLAGS: u8 = 3;
 
 /// Registry key for the timer callback storage table.
 const TIMER_CALLBACKS_KEY: &str = "__rilua_timer_callbacks";
+pub(super) const TIMER_CONTAINER_FUNCTION: &str = "__rilua_timer_function";
+pub(super) const TIMER_CONTAINER_OBJECT: &str = "__rilua_timer_container";
 
 // ── Timer callback storage ───────────────────────────────────────────────────
 
@@ -81,13 +85,22 @@ fn timer_callback_table(state: &mut LuaState) -> rilua::vm::gc::arena::GcRef<Tab
 
 /// Store a callback `Val` for a timer ID in the registry table.
 pub(crate) fn store_timer_callback(state: &mut LuaState, timer_id: u64, callback: Val) {
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let (stored_callback, source_callback) = timer_container_callback_record(state, callback);
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+    let (stored_callback, source_callback) = (callback, callback);
+
     let table = timer_callback_table(state);
     if let Some(t) = state.gc.tables.get_mut(table) {
-        let _ = t.raw_set(Val::Num(timer_id as f64), callback, &state.gc.string_arena);
+        let _ = t.raw_set(
+            Val::Num(timer_id as f64),
+            stored_callback,
+            &state.gc.string_arena,
+        );
     }
     state.gc.barrier_back(table);
     if super::handler_timing::is_enabled() {
-        let source = super::handler_timing::TimerCallbackSource::capture(state, callback);
+        let source = super::handler_timing::TimerCallbackSource::capture(state, source_callback);
         if let Some(app) = state.app_data::<WowLuaAppData>() {
             app.sim_state
                 .borrow_mut()
@@ -95,6 +108,40 @@ pub(crate) fn store_timer_callback(state: &mut LuaState, timer_id: u64, callback
                 .insert(timer_id, source);
         }
     }
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn timer_container_callback_record(state: &mut LuaState, container: Val) -> (Val, Val) {
+    let Some((_, _, callback)) = function_container_data(state, container) else {
+        return (container, container);
+    };
+    let record = create_table(state);
+    table_set(state, record, TIMER_CONTAINER_FUNCTION, callback);
+    table_set(state, record, TIMER_CONTAINER_OBJECT, container);
+    (record, callback)
+}
+
+/// Read callback state from a modeled FunctionContainer's weak backing map.
+pub(crate) fn function_container_data(
+    state: &mut LuaState,
+    object: Val,
+) -> Option<(Val, Val, Val)> {
+    if !matches!(object, Val::Userdata(_)) {
+        return None;
+    }
+    let bridge = registry_get(state, "__wow_function_containers");
+    let objects = table_get(state, bridge, "objects");
+    let Val::Table(map) = objects else {
+        return None;
+    };
+    let backing = state
+        .gc
+        .tables
+        .get(map)?
+        .get(object, &state.gc.string_arena);
+    let Val::Table(_) = backing else { return None };
+    let callback = table_get(state, backing, "_callback");
+    matches!(callback, Val::Function(_)).then_some((objects, backing, callback))
 }
 
 /// Queue a Rust callback for the next timer-processing boundary.
@@ -213,6 +260,92 @@ fn extract_callback(state: &LuaState, index: i32) -> LuaResult<Val> {
     }
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn extract_native_timer_callback(state: &mut LuaState, index: i32) -> LuaResult<Val> {
+    let callback = stack_val(state, index);
+    if matches!(callback, Val::Function(_)) {
+        let namespace = crate::c_api::ensure_namespace(state, "C_FunctionContainers")?;
+        let create = table_get(state, Val::Table(namespace), "CreateCallback");
+        return call_function_state(state, create, &[callback]);
+    }
+    if function_container_data(state, callback).is_some() {
+        return Ok(callback);
+    }
+    Err(runtime_error(format!(
+        "bad argument #{index} (function or callback expected)"
+    )))
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn create_timer_container_proxy(state: &mut LuaState, container: Val) -> LuaResult<Val> {
+    let Some((objects, backing, _)) = function_container_data(state, container) else {
+        return Err(runtime_error("timer callback container is unavailable"));
+    };
+    let constructor = table_get(state, Val::Table(state.global), "newproxy");
+    let proxy = call_function_state(state, constructor, &[container])?;
+    let Val::Table(map) = objects else {
+        unreachable!()
+    };
+    state
+        .gc
+        .tables
+        .get_mut(map)
+        .ok_or_else(|| runtime_error("function container map was collected"))?
+        .raw_set(proxy, backing, &state.gc.string_arena)?;
+    state.gc.barrier_back(map);
+    Ok(proxy)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn timer_container_handle_list(state: &mut LuaState, backing: Val) -> Val {
+    let handles = table_get(state, backing, "_timerHandles");
+    if matches!(handles, Val::Table(_)) {
+        return handles;
+    }
+    let handles = create_table(state);
+    table_set(state, backing, "_timerHandles", handles);
+    handles
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn bind_timer_container_handle(state: &mut LuaState, container: Val, handle: Val) -> LuaResult<()> {
+    let Some((_, backing, _)) = function_container_data(state, container) else {
+        return Err(runtime_error("timer callback container is unavailable"));
+    };
+    let Val::Table(list) = timer_container_handle_list(state, backing) else {
+        unreachable!()
+    };
+    let len = state
+        .gc
+        .tables
+        .get(list)
+        .map_or(0, |table| table.len(&state.gc.string_arena));
+    state
+        .gc
+        .tables
+        .get_mut(list)
+        .ok_or_else(|| runtime_error("timer handles were collected"))?
+        .raw_set(Val::Num((len + 1) as f64), handle, &state.gc.string_arena)?;
+    state.gc.barrier_back(list);
+    let id = table_get(state, handle, "__id");
+    table_set(state, backing, "__id", id);
+    Ok(())
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn registration_result(state: &mut LuaState, id: u64, callback: Val) -> LuaResult<(Val, Val)> {
+    let handle = create_timer_handle_table(state, id)?;
+    let proxy = create_timer_container_proxy(state, callback)?;
+    bind_timer_container_handle(state, callback, handle)?;
+    Ok((callback, proxy))
+}
+
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+fn registration_result(state: &mut LuaState, id: u64, _callback: Val) -> LuaResult<(Val, Val)> {
+    let handle = create_timer_handle_table(state, id)?;
+    Ok((handle, handle))
+}
+
 // ── RiluaPendingTimer ────────────────────────────────────────────────────────
 
 /// A pending timer for the rilua VM. Unlike `PendingTimer` (which uses
@@ -232,9 +365,9 @@ pub struct RiluaPendingTimer {
     pub cancelled: bool,
     /// Addon that created this timer.
     pub owner_addon: Option<u16>,
-    /// Whether the callback receives the timer handle as its first argument.
+    /// Whether the callback receives `callback_arg` as its first argument.
     pub callback_receives_timer: bool,
-    /// Original timer handle table passed back to NewTimer/NewTicker callbacks.
+    /// NewTimer/NewTicker callback argument: a legacy handle or container proxy.
     pub callback_arg: Option<Val>,
 }
 
@@ -242,52 +375,57 @@ pub struct RiluaPendingTimer {
 
 /// `C_Timer.After(seconds, callback)` — one-shot timer, no handle returned.
 ///
-/// Accepts non-negative `seconds` and any Lua function. The callback is stored
-/// in `__rilua_timer_callbacks[id]` and a `RiluaPendingTimer` is pushed onto
+/// Accepts non-negative `seconds` and the active profile's supported callback.
+/// The callback is stored in `__rilua_timer_callbacks[id]` and a pending timer is pushed onto
 /// `SimState.rilua_timers`.
 fn timer_after(state: &mut LuaState) -> LuaResult<u32> {
-    let seconds = match stack_val(state, 1) {
-        Val::Num(n) => n.max(0.0),
-        got => {
-            return Err(runtime_error(format!(
-                "bad argument #1 to 'After' (number expected, got {})",
-                got.type_name()
-            )));
-        }
-    };
-    let callback = extract_callback(state, 2)?;
+    let seconds = parse_after_seconds(state)?;
+    let callback = extract_profile_timer_callback(state, 2)?;
+    enqueue_after_timer(state, seconds, callback)?;
+    Ok(0)
+}
 
+fn parse_after_seconds(state: &LuaState) -> LuaResult<f64> {
+    match stack_val(state, 1) {
+        Val::Num(seconds) => Ok(seconds.max(0.0)),
+        value => Err(runtime_error(format!(
+            "bad argument #1 to 'After' (number expected, got {})",
+            value.type_name()
+        ))),
+    }
+}
+
+fn extract_profile_timer_callback(state: &mut LuaState, index: i32) -> LuaResult<Val> {
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    return extract_native_timer_callback(state, index);
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+    extract_callback(state, index)
+}
+
+fn enqueue_after_timer(state: &mut LuaState, seconds: f64, callback: Val) -> LuaResult<()> {
     let id = next_timer_id(state)?;
     store_timer_callback(state, id, callback);
-
     let fire_at = borrow_state(state)?.clock_now() + Duration::from_secs_f64(seconds);
-    let owner_addon = {
-        let app = state
-            .app_data::<WowLuaAppData>()
-            .ok_or_else(|| runtime_error("missing WowLuaAppData"))?;
-        let s = app.sim_state.borrow();
-        s.loading_addon_index.or(s.executing_addon_index)
-    };
-
-    let timer = RiluaPendingTimer {
-        id,
-        fire_at,
-        interval: None,
-        remaining: None,
-        cancelled: false,
-        owner_addon,
-        callback_receives_timer: false,
-        callback_arg: None,
-    };
-
-    {
-        let app = state
-            .app_data::<WowLuaAppData>()
-            .ok_or_else(|| runtime_error("missing WowLuaAppData"))?;
-        app.sim_state.borrow_mut().rilua_timers.push_back(timer);
-    }
-
-    Ok(0)
+    let app = state
+        .app_data::<WowLuaAppData>()
+        .ok_or_else(|| runtime_error("missing WowLuaAppData"))?;
+    let sim = app.sim_state.borrow();
+    let owner_addon = sim.loading_addon_index.or(sim.executing_addon_index);
+    drop(sim);
+    app.sim_state
+        .borrow_mut()
+        .rilua_timers
+        .push_back(RiluaPendingTimer {
+            id,
+            fire_at,
+            interval: None,
+            remaining: None,
+            cancelled: false,
+            owner_addon,
+            callback_receives_timer: false,
+            callback_arg: None,
+        });
+    Ok(())
 }
 
 // ── Timer handle table ───────────────────────────────────────────────────────
@@ -364,19 +502,31 @@ fn enqueue_timer(state: &mut LuaState, mut timer: RiluaPendingTimer) -> LuaResul
 
 // ── C_Timer.NewTicker ────────────────────────────────────────────────────────
 
-/// `C_Timer.NewTicker(seconds, callback, iterations?)` — repeating timer with handle.
+/// `C_Timer.NewTicker(seconds, callback, iterations?)` — repeating timer.
 fn timer_new_ticker(state: &mut LuaState) -> LuaResult<u32> {
     let seconds = parse_validated_seconds(state, "NewTicker")?;
-    let callback = extract_callback(state, 2)?;
-    let iterations: Option<i32> = match stack_val(state, 3) {
-        Val::Num(n) => Some(n as i32),
-        _ => None,
-    };
+    let callback = extract_profile_timer_callback(state, 2)?;
+    let iterations = parse_ticker_iterations(state);
+    schedule_ticker(state, seconds, callback, iterations)?;
+    Ok(1)
+}
 
+fn parse_ticker_iterations(state: &LuaState) -> Option<i32> {
+    match stack_val(state, 3) {
+        Val::Num(iterations) => Some(iterations as i32),
+        _ => None,
+    }
+}
+
+fn schedule_ticker(
+    state: &mut LuaState,
+    seconds: f64,
+    callback: Val,
+    iterations: Option<i32>,
+) -> LuaResult<()> {
     let id = next_timer_id(state)?;
     store_timer_callback(state, id, callback);
-    let handle = create_timer_handle_table(state, id)?;
-
+    let (return_value, callback_arg) = registration_result(state, id, callback)?;
     let interval = Duration::from_secs_f64(seconds);
     let timer = RiluaPendingTimer {
         id,
@@ -386,25 +536,27 @@ fn timer_new_ticker(state: &mut LuaState) -> LuaResult<u32> {
         cancelled: false,
         owner_addon: None,
         callback_receives_timer: true,
-        callback_arg: Some(handle),
+        callback_arg: Some(callback_arg),
     };
     enqueue_timer(state, timer)?;
-
-    state.push(handle);
-    Ok(1)
+    state.push(return_value);
+    Ok(())
 }
 
 // ── C_Timer.NewTimer ─────────────────────────────────────────────────────────
 
-/// `C_Timer.NewTimer(seconds, callback)` — one-shot timer with handle.
+/// `C_Timer.NewTimer(seconds, callback)` — one-shot timer.
 fn timer_new_timer(state: &mut LuaState) -> LuaResult<u32> {
     let seconds = parse_validated_seconds(state, "NewTimer")?;
-    let callback = extract_callback(state, 2)?;
+    let callback = extract_profile_timer_callback(state, 2)?;
+    schedule_one_shot_timer(state, seconds, callback)?;
+    Ok(1)
+}
 
+fn schedule_one_shot_timer(state: &mut LuaState, seconds: f64, callback: Val) -> LuaResult<()> {
     let id = next_timer_id(state)?;
     store_timer_callback(state, id, callback);
-    let handle = create_timer_handle_table(state, id)?;
-
+    let (return_value, callback_arg) = registration_result(state, id, callback)?;
     let timer = RiluaPendingTimer {
         id,
         fire_at: borrow_state(state)?.clock_now() + Duration::from_secs_f64(seconds),
@@ -413,12 +565,11 @@ fn timer_new_timer(state: &mut LuaState) -> LuaResult<u32> {
         cancelled: false,
         owner_addon: None,
         callback_receives_timer: true,
-        callback_arg: Some(handle),
+        callback_arg: Some(callback_arg),
     };
     enqueue_timer(state, timer)?;
-
-    state.push(handle);
-    Ok(1)
+    state.push(return_value);
+    Ok(())
 }
 
 // ── Layout bridge ─────────────────────────────────────────────────────────────
@@ -546,4 +697,35 @@ fn register_layout_globals(lua: &mut rilua::Lua) -> LuaResult<()> {
         )?;
 
     Ok(())
+}
+
+#[cfg(all(test, any(feature = "client-retail", feature = "client-wowforever")))]
+mod function_container_tests {
+    use super::*;
+    use crate::lua_api::WowLuaEnv;
+    use crate::lua_api::methods::call_function_state_multi;
+
+    #[test]
+    fn native_timer_functions_accept_and_return_containers() {
+        let env = WowLuaEnv::new().unwrap();
+        for function in [timer_new_timer, timer_new_ticker] {
+            let callback = env
+                .eval::<Val>("return C_FunctionContainers.CreateCallback(function() end)")
+                .unwrap();
+            let result = {
+                let mut lua = env.rilua_mut();
+                let state = lua.state_mut();
+                let callable = Val::Function(state.gc.alloc_closure(Closure::Rust(
+                    RustClosure::new(function, "native_timer_container_test"),
+                )));
+                call_function_state_multi(
+                    state,
+                    callable,
+                    &[Val::Num(3600.0), callback, Val::Num(1.0)],
+                )
+                .unwrap()
+            };
+            assert_eq!(result, vec![callback]);
+        }
+    }
 }

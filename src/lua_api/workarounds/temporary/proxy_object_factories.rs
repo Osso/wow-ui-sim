@@ -232,10 +232,11 @@ if rawget(C_FunctionContainers, "CreateCallback") == nil then
   -- C_Timer.New* call therefore reuses the same callback object, while each
   -- registration keeps its own independent iteration count.
   --
-  -- The Rust C_Timer engine schedules and fires plain functions, so this layer
-  -- only adds the container contract on top: coerce the callback to a
-  -- container, register its function, and hand back the container.
-  if C_Timer and rawget(C_Timer, "__wow_container_wrapped") == nil then
+  -- Legacy profiles retain this Lua adapter; Retail and WoW Forever register
+  -- FunctionContainers directly in the Rust C_Timer implementation.
+  if C_Timer and debug.getregistry().__wow_native_timer_containers ~= true
+    and rawget(C_Timer, "__wow_container_wrapped") == nil
+  then
     local CreateCallback = C_FunctionContainers.CreateCallback
     local rawAfter = C_Timer.After
     local rawNewTimer = C_Timer.NewTimer
@@ -348,6 +349,8 @@ end
 "#;
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    lua.exec("debug.getregistry().__wow_native_timer_containers = true")?;
     if crate::lua_api::handler_timing::is_enabled() {
         lua.exec(
             r#"debug.getregistry().__wow_timer_original_callbacks = setmetatable({}, {__mode = "kv"})"#,

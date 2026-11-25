@@ -5,6 +5,39 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 const CHILD: &str = "WOW_SIM_TIMER_PROVENANCE_TEST_CHILD";
 const TIMINGS: &str = "WOW_SIM_LOG_HANDLER_TIMINGS";
 const SOURCE: &str = "@Interface/AddOns/TimerProvenance/Callbacks.lua";
+const LEGACY_CYCLE_SETUP: &str = r#"
+local originals = debug.getregistry().__wow_timer_original_callbacks
+assert(type(originals) == "table", "diagnostics must be enabled")
+local handle = {}
+local callback = function() handle.fired = true end
+TimerLifetimeContainer = C_FunctionContainers.CreateCallback(callback)
+C_Timer.After(0, TimerLifetimeContainer)
+handle.invoker = next(originals)
+assert(originals[handle.invoker] == callback)
+"#;
+const LEGACY_CYCLE_RELEASE: &str = r#"
+TimerLifetimeContainer._callback = nil
+TimerLifetimeContainer = nil
+collectgarbage("collect")
+collectgarbage("collect")
+assert(next(debug.getregistry().__wow_timer_original_callbacks) == nil)
+"#;
+const NATIVE_CYCLE_SETUP: &str = r#"
+TimerLifetimeFired = false
+local handle = {}
+local callback = function() handle.fired = true; TimerLifetimeFired = true end
+handle.callback = callback
+TimerLifetimeWeak = setmetatable({callback}, {__mode = "v"})
+TimerLifetimeContainer = C_FunctionContainers.CreateCallback(callback)
+C_Timer.After(0, TimerLifetimeContainer)
+"#;
+const NATIVE_CYCLE_RELEASE: &str = r#"
+TimerLifetimeContainer._callback = nil
+TimerLifetimeContainer = nil
+collectgarbage("collect")
+collectgarbage("collect")
+assert(TimerLifetimeWeak[1] == nil, "completed callback cycle remained reachable")
+"#;
 
 #[test]
 fn after_success_logs_original_source_before_body_and_correlated_return() {
@@ -165,7 +198,7 @@ fn assert_invocation(stderr: &str, line: u32, body: &str, outcome: &str) {
     let returned = returns[0];
     for record in [entry, returned] {
         assert!(record.contains("handler=C_Timer frame=#0"), "{record}");
-        assert!(record.contains(" source=="), "wrapper source lost: {record}");
+        assert!(record.contains(&format!(" source={SOURCE}:{line}")), "{record}");
     }
     assert!(returned.contains("duration_ms="), "{returned}");
     assert_eq!(field(returned, "outcome"), outcome);
@@ -188,35 +221,15 @@ fn completed_callback_handle_cycle_does_not_root_provenance() {
 
 fn exercise_completed_handle_cycle() {
     let env = WowLuaEnv::new().unwrap();
-    env.exec(
-        r#"
-        local originals = debug.getregistry().__wow_timer_original_callbacks
-        assert(type(originals) == "table", "diagnostics must be enabled")
-        local handle = {}
-        local callback = function() handle.fired = true end
-        TimerLifetimeContainer = C_FunctionContainers.CreateCallback(callback)
-        C_Timer.After(0, TimerLifetimeContainer)
-        -- Model a callback-owned handle reaching its invoker. Registry inspection
-        -- exposes the wrapper, but neither it nor the original is kept globally.
-        handle.invoker = next(originals)
-        assert(originals[handle.invoker] == callback)
-        "#,
-    )
-    .unwrap();
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let (setup, release) = (NATIVE_CYCLE_SETUP, NATIVE_CYCLE_RELEASE);
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+    let (setup, release) = (LEGACY_CYCLE_SETUP, LEGACY_CYCLE_RELEASE);
+    env.exec(setup).unwrap();
     env.process_timers().unwrap();
-    env.exec(
-        r#"
-        -- Remove the pre-existing container backing map's independent strong
-        -- callback edge, so this test isolates diagnostic ownership only.
-        TimerLifetimeContainer._callback = nil
-        TimerLifetimeContainer = nil
-        collectgarbage("collect")
-        collectgarbage("collect")
-        assert(next(debug.getregistry().__wow_timer_original_callbacks) == nil,
-            "completed callback/handle cycle retained by provenance association")
-        "#,
-    )
-    .unwrap();
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    env.exec("assert(TimerLifetimeFired)").unwrap();
+    env.exec(release).unwrap();
 }
 
 fn run_fixture(threshold: Option<&str>) -> Option<String> {
