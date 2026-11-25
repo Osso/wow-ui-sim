@@ -90,7 +90,7 @@ const POST_LOAD_WORKAROUNDS: &[WorkaroundStep] = &[
         label: "patch_character_create_defaults",
         apply: patch_character_create_defaults,
     },
-    #[cfg(not(feature = "client-retail"))]
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     WorkaroundStep {
         label: "patch_character_frame_title_refresh",
         apply: patch_character_frame_title_refresh,
@@ -640,7 +640,7 @@ fn patch_post_event_frame_layout(env: &crate::lua_api::WowLuaEnv) {
 }
 
 fn refresh_post_event_surfaces(env: &crate::lua_api::WowLuaEnv) {
-    #[cfg(not(feature = "client-retail"))]
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     refresh_character_frame_surface(env);
     patch_chat_voice_button_surface(env);
     patch_objective_tracker_quest_header(env);
