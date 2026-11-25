@@ -7,7 +7,8 @@
 
 use crate::lua_api::globals::state_backed_queries::dispatch_event_now;
 use crate::lua_api::methods::borrow_state_mut;
-use crate::lua_api::state::{BattlefieldStatus, GuildPerk};
+use crate::lua_api::state::BattlefieldStatus;
+use crate::lua_api::state_types::GuildPerk;
 use crate::lua_bridge::FromStack;
 use rilua::LuaResult;
 use rilua::vm::state::LuaState;

@@ -309,7 +309,7 @@ fn get_guild_perk_info(state: &mut LuaState) -> LuaResult<u32> {
         }
         return Ok(3);
     };
-    let Some(spell) = crate::c_api::spells::get_spell(perk.spell_id) else {
+    let Some(spell) = crate::spells::get_spell(perk.spell_id) else {
         for _ in 0..3 {
             state.push(Val::Nil);
         }
