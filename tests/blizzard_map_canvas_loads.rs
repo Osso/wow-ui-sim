@@ -701,17 +701,21 @@ fn blizzard_map_canvas_world_map_frame_inherits_canvas_template(env: &WowLuaEnv)
          during load"
     );
 
-    let scroll_container_kind: String = env
-        .eval("return type(WorldMapFrame.ScrollContainer)")
-        .expect("WorldMapFrame.ScrollContainer probe succeeds");
-    assert_eq!(
-        scroll_container_kind, "table",
-        "WorldMapFrame.ScrollContainer must resolve to the embedded ScrollFrame child — \
-         MapCanvasFrameTemplate (Blizzard_MapCanvas.xml:52) declares a child Frame block \
-         that inherits MapCanvasFrameScrollContainerTemplate (xml:21) with \
-         parentKey=\"ScrollContainer\". A live ScrollContainer reference proves the nested \
-         virtual-template inheritance chain (MapCanvasFrameTemplate → \
-         MapCanvasFrameScrollContainerTemplate) wired up correctly during XML parse"
+    let (scroll_container, parent_matches, canvas_matches): (String, bool, bool) = env
+        .eval(
+            r#"
+            local scroll = WorldMapFrame.ScrollContainer
+            return type(scroll), scroll:GetParent() == WorldMapFrame,
+                WorldMapFrame:GetCanvasContainer() == scroll
+                    and WorldMapFrame:GetCanvas() == scroll.Child
+            "#,
+        )
+        .expect("WorldMapFrame ScrollContainer contract probe succeeds");
+    assert_eq!(scroll_container, "table");
+    assert!(parent_matches, "XML parentKey child stays parented to WorldMapFrame");
+    assert!(
+        canvas_matches,
+        "MapCanvas methods return the XML-published ScrollContainer and its Child"
     );
 }
 }
