@@ -24,6 +24,8 @@ local layer = assert(C_Map.GetMapArtLayers(mapID)[1])
 local scrollWidth, scrollHeight = scroll:GetWidth(), scroll:GetHeight()
 local expectedScale = math.min(scrollWidth / layer.layerWidth, scrollHeight / layer.layerHeight)
 assert(map:GetMapID() == mapID)
+assert(map.GetCanvas == MapCanvasMixin.GetCanvas)
+assert(map.GetCanvasContainer == MapCanvasMixin.GetCanvasContainer)
 assert(scroll == map.ScrollContainer and child == scroll.Child)
 assert(child:GetWidth() == 3840 and child:GetHeight() == 2560)
 assert(scrollWidth > 0 and scrollHeight > 0)
@@ -128,6 +130,7 @@ fn assert_map_canvas_state(env: &WowLuaEnv, map_id: u32) {
 }
 
 #[test]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn world_map_canvas_uses_model_for_two_maps() {
     let env = load_full_game_ui();
     let errors_before = env.state().borrow().lua_errors.clone();
