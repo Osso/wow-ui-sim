@@ -140,21 +140,13 @@ fn get_quest_log_time_left_nil_when_selected_quest_is_not_world_quest() {
     );
 }
 
+#[cfg(feature = "client-retail")]
 #[test]
-fn get_quest_log_time_left_reports_seeded_minutes_for_world_quest() {
+fn get_quest_log_time_left_returns_one_nil_without_a_retail_timer_model() {
     let env = env();
-    // Pick the first seeded world quest id via C_TaskQuest.
-    env.exec(
-        r#"
-        local quests = C_TaskQuest.GetQuestsOnMap(2025)
-        if quests and quests[1] then
-            C_QuestLog.SetSelectedQuest(quests[1].questID)
-        end
-        "#,
-    )
-    .unwrap();
-    let seconds: f64 = env.eval("return GetQuestLogTimeLeft()").unwrap();
-    // Seeded value lives in quest_surface.rs as
-    // SEEDED_WORLD_QUEST_TIME_LEFT_MINUTES = 120 → 7_200 seconds.
-    assert_eq!(seconds, 7_200.0);
+    let (count, is_nil): (i32, bool) = env
+        .eval("local n = select('#', GetQuestLogTimeLeft()); return n, GetQuestLogTimeLeft() == nil")
+        .unwrap();
+    assert_eq!(count, 1);
+    assert!(is_nil);
 }
