@@ -363,9 +363,9 @@ pub struct RiluaPendingTimer {
     pub cancelled: bool,
     /// Addon that created this timer.
     pub owner_addon: Option<u16>,
-    /// Whether the callback receives the timer handle as its first argument.
+    /// Whether the callback receives `callback_arg` as its first argument.
     pub callback_receives_timer: bool,
-    /// Original timer handle table passed back to NewTimer/NewTicker callbacks.
+    /// NewTimer/NewTicker callback argument: a legacy handle or container proxy.
     pub callback_arg: Option<Val>,
 }
 
@@ -373,8 +373,8 @@ pub struct RiluaPendingTimer {
 
 /// `C_Timer.After(seconds, callback)` — one-shot timer, no handle returned.
 ///
-/// Accepts non-negative `seconds` and any Lua function. The callback is stored
-/// in `__rilua_timer_callbacks[id]` and a `RiluaPendingTimer` is pushed onto
+/// Accepts non-negative `seconds` and the active profile's supported callback.
+/// The callback is stored in `__rilua_timer_callbacks[id]` and a pending timer is pushed onto
 /// `SimState.rilua_timers`.
 fn timer_after(state: &mut LuaState) -> LuaResult<u32> {
     let seconds = parse_after_seconds(state)?;
@@ -500,7 +500,7 @@ fn enqueue_timer(state: &mut LuaState, mut timer: RiluaPendingTimer) -> LuaResul
 
 // ── C_Timer.NewTicker ────────────────────────────────────────────────────────
 
-/// `C_Timer.NewTicker(seconds, callback, iterations?)` — repeating timer with handle.
+/// `C_Timer.NewTicker(seconds, callback, iterations?)` — repeating timer.
 fn timer_new_ticker(state: &mut LuaState) -> LuaResult<u32> {
     let seconds = parse_validated_seconds(state, "NewTicker")?;
     let callback = extract_profile_timer_callback(state, 2)?;
@@ -543,7 +543,7 @@ fn schedule_ticker(
 
 // ── C_Timer.NewTimer ─────────────────────────────────────────────────────────
 
-/// `C_Timer.NewTimer(seconds, callback)` — one-shot timer with handle.
+/// `C_Timer.NewTimer(seconds, callback)` — one-shot timer.
 fn timer_new_timer(state: &mut LuaState) -> LuaResult<u32> {
     let seconds = parse_validated_seconds(state, "NewTimer")?;
     let callback = extract_profile_timer_callback(state, 2)?;
