@@ -12,6 +12,8 @@ pub(crate) mod ambiguate;
 pub(crate) mod bank_reagents;
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub(crate) mod battle_net_account;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) mod battle_net_friends;
 pub(crate) mod bit_library;
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub(crate) mod bnet_blocked_list;

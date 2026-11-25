@@ -2,9 +2,9 @@
 //! Indexed and earlier name queries share the existing simulator projection.
 
 use crate::lua_api::methods::{borrow_state_mut, create_string, create_table, table_set_static};
-#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
-use crate::lua_api::state::BnetBlockedEntry;
 use crate::lua_api::state::SocialFriend;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+use crate::lua_api::state::{BnetBlockedEntry, BnetFriendInvite};
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 use crate::lua_bridge::FromStack;
 use rilua::Val;
@@ -87,6 +87,55 @@ pub(crate) fn set_battle_net_account_features(state: &mut LuaState) -> rilua::Lu
         friends_list_supported: feature(5)?,
     };
     borrow_state_mut(state)?.bnet_account_features = features;
+    Ok(0)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) fn set_battle_net_friend_invite(state: &mut LuaState) -> rilua::LuaResult<u32> {
+    let index = i32::from_stack(state, 1)?;
+    let invite = BnetFriendInvite {
+        invite_id: i32::from_stack(state, 2)?,
+        account_name: String::from_stack(state, 3)?,
+        battle_tag: String::from_stack(state, 4)?,
+        friend_level: i32::from_stack(state, 5)?,
+        creation_timestamp: i64::from_stack(state, 6)?,
+    };
+    let mut sim = borrow_state_mut(state)?;
+    if index < 1 || index as usize > sim.bnet_friend_invites.len() + 1 {
+        return Err(rilua::runtime_error(
+            "A_Admin.SetBattleNetFriendInvite: index must append or replace an entry",
+        ));
+    }
+    let offset = (index - 1) as usize;
+    if offset == sim.bnet_friend_invites.len() {
+        sim.bnet_friend_invites.push(invite);
+    } else {
+        sim.bnet_friend_invites[offset] = invite;
+    }
+    Ok(0)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) fn set_battle_net_friend_state(state: &mut LuaState) -> rilua::LuaResult<u32> {
+    let index = i32::from_stack(state, 1)?;
+    let is_friend = bool::from_stack(state, 2)?;
+    let is_online = bool::from_stack(state, 3)?;
+    let is_favorite = bool::from_stack(state, 4)?;
+    let mut sim = borrow_state_mut(state)?;
+    let offset = index
+        .checked_sub(1)
+        .and_then(|index| usize::try_from(index).ok());
+    let friend = offset.and_then(|offset| sim.bnet_friends.get_mut(offset));
+    let Some(friend) = friend else {
+        return Err(rilua::runtime_error(
+            "A_Admin.SetBattleNetFriendState: index must identify an existing friend",
+        ));
+    };
+    friend.is_friend = is_friend;
+    friend.is_favorite = is_favorite;
+    for account in &mut friend.game_accounts {
+        account.is_online = is_online;
+    }
     Ok(0)
 }
 
