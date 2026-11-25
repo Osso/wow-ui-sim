@@ -4,17 +4,7 @@ fn env() -> WowLuaEnv {
     WowLuaEnv::new().expect("Failed to create Lua environment")
 }
 
-#[cfg(not(any(
-    feature = "retail-12-0-0",
-    feature = "client-retail",
-    feature = "client-wowforever"
-)))]
-#[test]
-fn legacy_macro_and_spellbook_globals_exist_for_addons() {
-    let env = env();
-    let result: String = env
-        .eval(
-            r#"
+const LEGACY_MACRO_CONSTANTS_LUA: &str = r#"
         if ACCOUNT_BINDINGS ~= 1 then
             return "account_bindings=" .. tostring(ACCOUNT_BINDINGS)
         end
@@ -27,6 +17,10 @@ fn legacy_macro_and_spellbook_globals_exist_for_addons() {
         if type(DeleteMacro) ~= "function" then
             return "missing_DeleteMacro"
         end
+        return "ok"
+"#;
+
+const LEGACY_MACRO_GLOBALS_LUA: &str = r#"
         if type(GetMacroBody) ~= "function" then
             return "missing_GetMacroBody"
         end
@@ -42,7 +36,10 @@ fn legacy_macro_and_spellbook_globals_exist_for_addons() {
         if type(GetSpellBookItemName) ~= "function" then
             return "missing_GetSpellBookItemName"
         end
+        return "ok"
+"#;
 
+const LEGACY_MACRO_VALUES_LUA: &str = r#"
         if GetMacroBody(1) ~= "/rw Stack on star" then
             return "macro_body=" .. tostring(GetMacroBody(1))
         end
@@ -62,15 +59,26 @@ fn legacy_macro_and_spellbook_globals_exist_for_addons() {
         end
 
         return "ok"
-    "#,
-        )
-        .unwrap();
+"#;
+
+#[cfg(not(any(
+    feature = "retail-12-0-0",
+    feature = "client-retail",
+    feature = "client-wowforever"
+)))]
+#[test]
+fn legacy_macro_and_spellbook_globals_exist_for_addons() {
+    let env = env();
+    let constants: String = env.eval(LEGACY_MACRO_CONSTANTS_LUA).unwrap();
+    assert_eq!(constants, "ok");
+    let globals: String = env.eval(LEGACY_MACRO_GLOBALS_LUA).unwrap();
+    assert_eq!(globals, "ok");
+    let result: String = env.eval(LEGACY_MACRO_VALUES_LUA).unwrap();
     assert_eq!(
         result, "ok",
         "legacy macro and spellbook globals should exist for addon compatibility: {result}"
     );
 }
-
 #[cfg(not(feature = "retail-12-0-0"))]
 #[test]
 fn legacy_spell_globals_exist_for_addons() {
