@@ -516,20 +516,29 @@ fn contribution_collector_provider_refreshes_pins_from_supplied_records() {
         TAXI_MAP_ADDON_OVERRIDES,
     );
     env.apply_post_load_workarounds();
+    assert_contribution_addons_loaded(&loaded);
+    assert_contribution_pins(&env);
+    assert_contribution_getters(&env);
+}
+
+fn assert_contribution_addons_loaded(loaded: &[String]) {
     for addon in [
         "Blizzard_FrameXML",
         "Blizzard_SharedMapDataProviders",
         "Blizzard_WorldMap",
     ] {
-        assert!(
-            loaded.iter().any(|name| name == addon),
-            "{addon} was not loaded"
-        );
+        assert!(loaded.iter().any(|name| name == addon), "{addon} was not loaded");
     }
+}
+
+fn assert_contribution_pins(env: &WowLuaEnv) {
     let pins: (i32, i32, i32, bool, i32, i32) = env
         .eval(CONTRIBUTION_COLLECTOR_REFRESH_LUA)
         .expect("original contribution collector provider should refresh on WorldMapFrame");
     assert_eq!(pins, (2, 301, 302, false, 901, 902));
+}
+
+fn assert_contribution_getters(env: &WowLuaEnv) {
     let getters: (i32, String, i32, f64, f64, f64, String, String, i32, i32) = env
         .eval(CONTRIBUTION_COLLECTOR_GETTERS_LUA)
         .expect("supplied contribution getters should expose the collector records");

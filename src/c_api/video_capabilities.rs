@@ -76,29 +76,48 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
         return Ok(());
     }
     let namespace = super::ensure_namespace(state, "C_VideoOptions")?;
+    register_spell_visual_density(state, namespace)?;
+    if ACTIVE == ClientProfile::Retail {
+        return Ok(());
+    }
+    register_legacy_antialiasing_globals(state)?;
+    register_video_capability_queries(state, namespace)
+}
+
+fn register_spell_visual_density(
+    state: &mut LuaState,
+    namespace: rilua::vm::gc::arena::GcRef<rilua::vm::table::Table>,
+) -> LuaResult<()> {
     table_set_rust_fn_static(
         state,
         namespace,
         "IsSpellVisualDensitySystemSupported",
         is_spell_visual_density_system_supported,
-    )?;
-    if ACTIVE == ClientProfile::Retail {
+    )
+}
+
+fn register_legacy_antialiasing_globals(state: &mut LuaState) -> LuaResult<()> {
+    if ACTIVE != ClientProfile::WowForever {
         return Ok(());
     }
-    if ACTIVE == ClientProfile::WowForever {
-        table_set_rust_fn_static(
-            state,
-            state.global,
-            "MultiSampleAntiAliasingSupported",
-            is_multisample_anti_aliasing_supported,
-        )?;
-        table_set_rust_fn_static(
-            state,
-            state.global,
-            "AntiAliasingSupported",
-            is_anti_aliasing_supported,
-        )?;
-    }
+    table_set_rust_fn_static(
+        state,
+        state.global,
+        "MultiSampleAntiAliasingSupported",
+        is_multisample_anti_aliasing_supported,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        state.global,
+        "AntiAliasingSupported",
+        is_anti_aliasing_supported,
+    )
+}
+
+fn register_video_capability_queries(
+    state: &mut LuaState,
+    namespace: rilua::vm::gc::arena::GcRef<rilua::vm::table::Table>,
+) -> LuaResult<()> {
     table_set_rust_fn_static(
         state,
         namespace,

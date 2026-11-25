@@ -401,7 +401,12 @@ fn private_aura_info(state: &mut LuaState, unit: &str, instance_id: i32) -> Opti
     if !matches!(record, Val::Table(_)) {
         return None;
     }
-    Some(AuraInfo {
+    Some(aura_info_from_record(state, record, instance_id))
+}
+
+#[cfg(feature = "aura-containers")]
+fn aura_info_from_record(state: &mut LuaState, record: Val, instance_id: i32) -> AuraInfo {
+    AuraInfo {
         name: record_string(state, record, "name").unwrap_or_default(),
         spell_id: record_number(state, record, "spellId") as i32,
         icon: record_aura_icon(state, record),
@@ -417,7 +422,7 @@ fn private_aura_info(state: &mut LuaState, unit: &str, instance_id: i32) -> Opti
         is_from_player_or_player_pet: record_bool(state, record, "isFromPlayerOrPlayerPet"),
         dispel_type: record_string(state, record, "dispelName"),
         aura_instance_id: instance_id,
-    })
+    }
 }
 
 #[cfg(feature = "aura-containers")]

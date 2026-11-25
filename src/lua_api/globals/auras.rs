@@ -270,41 +270,37 @@ pub(crate) fn aura_matches_filter_string(
 
 pub(crate) fn target_fixture_auras() -> Vec<AuraInfo> {
     vec![
-        AuraInfo {
-            name: "Weakened Armor".to_string(),
-            spell_id: 113746,
-            icon: crate::lua_api::game_data::AuraIcon::FileId(136039),
-            duration: 15.0,
-            expiration_time: 15.0,
-            applications: 1,
-            source_unit: "target".to_string(),
-            is_helpful: false,
-            is_raid: false,
-            is_nameplate_only: false,
-            is_stealable: false,
-            can_apply_aura: false,
-            is_from_player_or_player_pet: false,
-            dispel_type: None,
-            aura_instance_id: 1,
-        },
-        AuraInfo {
-            name: "Expose Weakness".to_string(),
-            spell_id: 53338,
-            icon: crate::lua_api::game_data::AuraIcon::FileId(132090),
-            duration: 12.0,
-            expiration_time: 12.0,
-            applications: 2,
-            source_unit: "target".to_string(),
-            is_helpful: false,
-            is_raid: false,
-            is_nameplate_only: false,
-            is_stealable: false,
-            can_apply_aura: false,
-            is_from_player_or_player_pet: false,
-            dispel_type: Some("Magic".to_string()),
-            aura_instance_id: 2,
-        },
+        target_fixture_aura("Weakened Armor", 113746, 136039, 15.0, 1, None, 1),
+        target_fixture_aura("Expose Weakness", 53338, 132090, 12.0, 2, Some("Magic"), 2),
     ]
+}
+
+fn target_fixture_aura(
+    name: &str,
+    spell_id: i32,
+    icon: i32,
+    duration: f64,
+    applications: i32,
+    dispel_type: Option<&str>,
+    aura_instance_id: i32,
+) -> AuraInfo {
+    AuraInfo {
+        name: name.to_string(),
+        spell_id,
+        icon: crate::lua_api::game_data::AuraIcon::FileId(icon),
+        duration,
+        expiration_time: duration,
+        applications,
+        source_unit: "target".to_string(),
+        is_helpful: false,
+        is_raid: false,
+        is_nameplate_only: false,
+        is_stealable: false,
+        can_apply_aura: false,
+        is_from_player_or_player_pet: false,
+        dispel_type: dispel_type.map(str::to_string),
+        aura_instance_id,
+    }
 }
 
 fn collect_unit_auras(state: &mut LuaState, unit: &str, filter: AuraFilter) -> Vec<AuraInfo> {
