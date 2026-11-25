@@ -89,8 +89,8 @@ fn clear_guild_perks_and_reopen(env: &WowLuaEnv) {
     .expect("guild perks panel should refresh after the supplied perks are cleared");
 }
 
-fn guild_perks_panel_is_shown(env: &WowLuaEnv) -> bool {
-    env.eval("return CommunitiesFrame.GuildBenefitsFrame.Perks:IsShown()")
+fn guild_perks_panel_is_visible(env: &WowLuaEnv) -> bool {
+    env.eval("return CommunitiesFrame.GuildBenefitsFrame.Perks:IsVisible()")
         .expect("guild perks panel visibility should be observable")
 }
 
@@ -104,7 +104,7 @@ fn communities_guild_perks_panel_uses_supplied_spell_rows() {
     assert!(!rows.2.is_empty(), "first perk row should have a name");
     assert_ne!(rows.2, rows.3, "perk rows should have distinct names");
     clear_guild_perks_and_reopen(&env);
-    assert!(!guild_perks_panel_is_shown(&env), "zero perks should hide panel");
+    assert!(!guild_perks_panel_is_visible(&env), "zero perks should hide panel");
 }
 
 #[test]
