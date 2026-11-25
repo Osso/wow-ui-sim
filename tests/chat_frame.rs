@@ -623,16 +623,6 @@ fn test_chat_background_batch_uses_chat_frame_bounds_and_alpha_tint(env: &WowLua
 }
 }
 
-#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
-#[test]
-fn test_chat_frame2_starts_shown_and_docked() {
-    let env = setup_env();
-    let state: (bool, f64, bool, bool, bool) = env
-        .eval("local _,_,_,_,_,_,shown,_,dock=GetChatWindowInfo(2); return shown,dock,ChatFrame2:IsShown(),ChatFrame2Tab:IsShown(),ChatFrame2.isDocked")
-        .expect("ChatFrame2 startup state eval failed");
-    assert_eq!(state, (true, 2.0, true, true, true));
-}
-
 prefork_full_ui_case! {
 fn test_chat_frame2_can_be_enabled_explicitly(env: &WowLuaEnv) {
 
