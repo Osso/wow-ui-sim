@@ -184,8 +184,14 @@ fn assert_counter_snapshot(env: &WowLuaEnv, expected: (u32, u32)) {
 #[test]
 fn macro_getter_inferred_host_policies_and_c_macro_adapter() {
     let env = WowLuaEnv::new().expect("Lua environment");
-    env.exec(r#"A_Admin.SetMacroRows([[{"name":"CaseSensitive","icon":"Interface\\Icons\\INV_Misc_QuestionMark","body":""},{"name":"","icon":"0","body":"/say partial"},{}]])"#)
-        .expect("supplied inferred macro rows");
+    seed_rows(
+        &env,
+        vec![
+            macro_record("CaseSensitive", 134400, ""),
+            macro_record("", 0, "/say partial"),
+            MacroInfo::default(),
+        ],
+    );
     env.exec(
         r##"
         assert(GetMacroInfo("0x1") == "CaseSensitive") -- host numeric parser
