@@ -4,6 +4,9 @@
 #[path = "tooltip_full_env_helpers.rs"]
 mod tooltip_full_env_helpers;
 
+use std::path::Path;
+use wow_ui_sim::loader::{find_toc_file, load_addon};
+
 const GROUP_LOOT_EVENT_LIFECYCLE: &str = r#"
 A_Admin.SetManualClock(0)
 A_Admin.StartLootRoll(71, 60, "First", "", 4, 0)
@@ -35,5 +38,18 @@ assert(first:IsShown(), "cancelled timer must not remove the first frame")
 #[test]
 fn group_loot_events_cancel_only_the_matching_container_timer() {
     let env = tooltip_full_env_helpers::load_full_env_without_post_load();
+    load_retail_game_event_router(&env);
     env.exec(GROUP_LOOT_EVENT_LIFECYCLE).unwrap();
 }
+
+#[cfg(feature = "client-retail")]
+fn load_retail_game_event_router(env: &wow_ui_sim::lua_api::WowLuaEnv) {
+    let ui = wow_ui_sim::client_profile::blizzard_ui_addons_dir_under(Path::new(env!("CARGO_MANIFEST_DIR")));
+    let game_addon = ui.join("Blizzard_Game");
+    let toc = find_toc_file(&game_addon).expect("Retail Blizzard_Game TOC must exist");
+    load_addon(&env.loader_env(), &toc)
+        .unwrap_or_else(|error| panic!("load Blizzard_Game from {}: {error}", toc.display()));
+}
+
+#[cfg(feature = "client-wowforever")]
+fn load_retail_game_event_router(_: &wow_ui_sim::lua_api::WowLuaEnv) {}
