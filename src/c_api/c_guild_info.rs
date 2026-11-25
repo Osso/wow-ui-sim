@@ -311,7 +311,8 @@ fn request_rename_status(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-// INFERRED (R88fa (native evidence pending)): supplied replies arrive on a later tick and are not dropped.
+// UNKNOWN (R88fa, Retail 12.1.5.70688 and Forever 1.60.1.70707):
+// rename-status reply delivery and throttling are not proved.
 fn dispatch_guild_rename_status(state: &mut LuaState) -> LuaResult<u32> {
     let status = borrow_state_mut(state)?
         .pending_guild_rename_status

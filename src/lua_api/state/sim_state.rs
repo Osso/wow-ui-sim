@@ -1452,6 +1452,10 @@ pub struct SimState {
     /// Host-supplied resolved item IDs in the current-item list.
     pub current_item_ids: ::std::collections::HashSet<u32>,
     pub can_replace_guild_master: bool,
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub(crate) guild_roster_last_request: Option<f64>,
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub(crate) guild_news_last_request: Option<f64>,
     pub auto_decline_guild_invites: bool,
     pub auto_decline_neighborhood_invites: bool,
     #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]

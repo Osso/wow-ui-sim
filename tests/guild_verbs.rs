@@ -174,8 +174,36 @@ fn request_guild_roster_fires_event() {
 #[test]
 fn c_guild_info_guild_roster_fires_event() {
     let env = env();
-    env.exec("C_GuildInfo.GuildRoster()").unwrap();
+    env.exec("A_Admin.SetManualClock(1); C_GuildInfo.GuildRoster()")
+        .unwrap();
     assert!(fired(&env, "GUILD_ROSTER_UPDATE"));
+}
+
+#[test]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn c_guild_info_guild_roster_drops_repeated_requests_until_ten_seconds() {
+    let env = env();
+    env.exec(
+        r#"
+        A_Admin.SetManualClock(10)
+        C_GuildInfo.GuildRoster()
+        C_GuildInfo.GuildRoster()
+        A_Admin.AdvanceTime(9)
+        C_GuildInfo.GuildRoster()
+        A_Admin.AdvanceTime(1)
+        C_GuildInfo.GuildRoster()
+        "#,
+    )
+    .unwrap();
+    let roster_events = env
+        .state()
+        .borrow()
+        .events
+        .pending()
+        .iter()
+        .filter(|event| event.name == "GUILD_ROSTER_UPDATE")
+        .count();
+    assert_eq!(roster_events, 2);
 }
 
 #[test]
