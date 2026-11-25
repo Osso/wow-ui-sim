@@ -12,7 +12,7 @@ pub(super) fn set_chat_window_state(state: &mut LuaState) -> LuaResult<u32> {
     let index = i32::from_stack(state, 1)?;
     let name = String::from_stack(state, 2)?;
     let shown = bool::from_stack(state, 3)?;
-    let docked = bool::from_stack(state, 4)?;
+    let docked_index = Option::<i32>::from_stack(state, 4)?;
     if index <= 0 {
         return Ok(0);
     }
@@ -23,6 +23,6 @@ pub(super) fn set_chat_window_state(state: &mut LuaState) -> LuaResult<u32> {
         .or_insert_with(|| ChatWindow::for_index(index));
     window.name = name;
     window.shown = shown;
-    window.docked = docked;
+    window.docked_index = docked_index;
     Ok(0)
 }

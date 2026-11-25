@@ -707,7 +707,7 @@ pub struct ChatWindow {
     pub b: f32,
     pub shown: bool,
     pub locked: bool,
-    pub docked: bool,
+    pub docked_index: Option<i32>,
     pub uninteractable: bool,
     pub saved_width: Option<f32>,
     pub saved_height: Option<f32>,
@@ -727,7 +727,7 @@ impl ChatWindow {
     pub fn for_index(index: i32) -> Self {
         Self {
             shown: (1..=2).contains(&index),
-            docked: (1..=2).contains(&index),
+            docked_index: (1..=2).contains(&index).then_some(index),
             ..Self::default()
         }
     }
@@ -744,7 +744,7 @@ impl Default for ChatWindow {
             b: 0.0,
             shown: false,
             locked: false,
-            docked: false,
+            docked_index: None,
             uninteractable: false,
             saved_width: None,
             saved_height: None,

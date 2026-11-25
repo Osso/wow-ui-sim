@@ -13,6 +13,9 @@
 //! - `ChangeChatColor(channel, r, g, b)`      — per-chat-type color override
 //! - `GetChatWindowChannels(index)`           — returns a flat list
 //! - `GetChatWindowMessages(index)`           — returns a flat list
+//! - `GetChatWindowInfo(index)`               — reads the modeled window record
+//! - `SetChatWindowName/Shown/Docked(index, value)` — update layout state
+//! - `Get/SetChatWindowSavedDimensions/Position` — store saved geometry
 //!
 //! Chat windows are keyed by 1-based chat-frame index (`ChatFrame1` → 1).
 //! Windows are lazily created on first touch.
@@ -229,12 +232,12 @@ fn set_chat_window_docked(state: &mut LuaState) -> LuaResult<u32> {
     let Some(index) = stack_i32(state, 1) else {
         return Ok(0);
     };
-    let docked = !matches!(stack_val(state, 2), Val::Nil);
+    let docked_index = stack_i32(state, 2);
     window_entry(state, index)?
         .chat_windows
         .get_mut(&index)
         .unwrap()
-        .docked = docked;
+        .docked_index = docked_index;
     Ok(0)
 }
 
@@ -325,14 +328,14 @@ fn get_chat_window_info(state: &mut LuaState) -> LuaResult<u32> {
     for value in [window.font_size, window.r, window.g, window.b, window.alpha] {
         state.push(Val::Num(value.into()));
     }
-    for value in [
-        window.shown,
-        window.locked,
-        window.docked,
-        window.uninteractable,
-    ] {
-        state.push(Val::Bool(value));
-    }
+    state.push(Val::Bool(window.shown));
+    state.push(Val::Bool(window.locked));
+    state.push(
+        window
+            .docked_index
+            .map_or(Val::Nil, |index| Val::Num(index.into())),
+    );
+    state.push(Val::Bool(window.uninteractable));
     Ok(10)
 }
 

@@ -715,7 +715,7 @@ fn test_chat_window_docked_state_round_trips_through_info(env: &WowLuaEnv) {
 #[test]
 fn test_chat_window_admin_inputs_render_as_docked_tabs() {
     let env = setup_env();
-    env.exec(r#"A_Admin.SetChatWindowState(1, "General Probe", true, true); A_Admin.SetChatWindowState(2, "Combat Probe", true, true)"#).unwrap();
+    env.exec(r#"A_Admin.SetChatWindowState(1, "General Probe", true, 1); A_Admin.SetChatWindowState(2, "Combat Probe", true, 2)"#).unwrap();
     env.exec("FloatingChatFrame_Update(1, true); FloatingChatFrame_Update(2, true)").unwrap();
     let tabs: (String, String, bool, bool, bool, bool) = env.eval("return ChatFrame1Tab:GetText(), ChatFrame2Tab:GetText(), ChatFrame1Tab:IsShown(), ChatFrame2Tab:IsShown(), ChatFrame1.isDocked, ChatFrame2.isDocked").unwrap();
     assert_eq!(tabs, ("General Probe".into(), "Combat Probe".into(), true, true, true, true));
