@@ -726,19 +726,20 @@ pub struct ChatWindow {
 impl ChatWindow {
     /// INFERRED R88g4 (native evidence pending): first-login General and Combat Log windows are shown and docked.
     pub fn for_index(index: i32) -> Self {
-        let mut window = Self {
+        let (alpha, r, g, b) = match crate::client_profile::ACTIVE {
+            crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever => (0.25, 0.0, 0.0, 0.0),
+            _ => (1.0, 1.0, 1.0, 1.0),
+        };
+        Self {
             shown: (1..=2).contains(&index),
             docked_index: (1..=2).contains(&index).then_some(index),
+            alpha,
+            r,
+            g,
+            b,
             ..Self::default()
-        };
-        #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
-        {
-            window.alpha = 0.25;
-            window.r = 0.0;
-            window.g = 0.0;
-            window.b = 0.0;
         }
-        window
     }
 }
 
