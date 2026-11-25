@@ -234,6 +234,10 @@ fn push_nil_event_row(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn query_guild_news(state: &mut LuaState) -> LuaResult<u32> {
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    if !super::guild_info::guild_request_allowed(state, 900.0, true)? {
+        return Ok(0);
+    }
     dispatch_event_now(state, "GUILD_NEWS_UPDATE", &[])?;
     Ok(0)
 }

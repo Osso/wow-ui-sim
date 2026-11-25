@@ -114,6 +114,31 @@ fn guild_news_queries_have_empty_safe_defaults() {
     assert!(info_is_nil);
 }
 
+#[test]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn query_guild_news_drops_requests_until_fifteen_minutes() {
+    let env = env();
+    let events: i32 = env
+        .eval(
+            r#"
+            A_Admin.SetManualClock(1)
+            local count = 0
+            local listener = CreateFrame('Frame')
+            listener:RegisterEvent('GUILD_NEWS_UPDATE')
+            listener:SetScript('OnEvent', function() count = count + 1 end)
+            QueryGuildNews()
+            QueryGuildNews()
+            A_Admin.AdvanceTime(899)
+            QueryGuildNews()
+            A_Admin.AdvanceTime(1)
+            QueryGuildNews()
+            return count
+            "#,
+        )
+        .unwrap();
+    assert_eq!(events, 2);
+}
+
 // ── CanReplaceGuildMaster ─────────────────────────────────────────────────────
 
 #[test]

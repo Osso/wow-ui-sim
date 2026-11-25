@@ -1149,6 +1149,10 @@ macro_rules! build_empty_sim_state {
             consumable_items: ::std::collections::HashSet::new(),
             current_item_ids: ::std::collections::HashSet::new(),
             can_replace_guild_master: false,
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            guild_roster_last_request: None,
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            guild_news_last_request: None,
             auto_decline_guild_invites: false,
             // INFERRED simulator initial preference, not a native default.
             auto_decline_neighborhood_invites: false,

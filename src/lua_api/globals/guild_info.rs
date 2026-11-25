@@ -83,11 +83,35 @@ pub fn can_edit_officer_note(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 pub fn guild_roster(state: &mut LuaState) -> LuaResult<u32> {
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    if !guild_request_allowed(state, 10.0, false)? {
+        return Ok(0);
+    }
     borrow_state_mut(state)?.events.push(Event {
         name: "GUILD_ROSTER_UPDATE".to_string(),
         args: Vec::new(),
     });
     Ok(0)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) fn guild_request_allowed(
+    state: &mut LuaState,
+    interval_seconds: f64,
+    is_news_request: bool,
+) -> LuaResult<bool> {
+    let now = borrow_state(state)?.clock_elapsed().as_secs_f64();
+    let mut sim = borrow_state_mut(state)?;
+    let last_request = if is_news_request {
+        &mut sim.guild_news_last_request
+    } else {
+        &mut sim.guild_roster_last_request
+    };
+    let is_allowed = last_request.is_none_or(|last| now - last >= interval_seconds);
+    if is_allowed {
+        *last_request = Some(now);
+    }
+    Ok(is_allowed)
 }
 
 pub fn get_guild_news_info(state: &mut LuaState) -> LuaResult<u32> {
