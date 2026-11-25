@@ -393,21 +393,24 @@ fn shared_animation_template_setplaying_runs_visibility_handlers() {
 const CLASS_TALENTS_SET_BACKGROUND_ANIMATIONS: &str = r#"
 PlayerSpellsUtil.ToggleClassTalentFrame()
 local frame = PlayerSpellsFrame.TalentsFrame
-assert(frame:IsShown() and #frame.backgroundAnims > 0)
+assert(PlayerSpellsFrame:IsShown(), "class talent toggle did not open PlayerSpellsFrame")
+assert(frame:IsShown(), "class talent toggle did not show TalentsFrame")
+assert(#frame.backgroundAnims > 0, "TalentsFrame has no background animations")
 for _, group in ipairs(frame.backgroundAnims) do
-    assert(group:IsPlaying())
+    assert(group:IsPlaying(), "background animation did not start")
     for _, animation in ipairs({ group:GetAnimations() }) do
         local target = animation:GetTarget()
-        if target then assert(target:IsShown()) end
+        if target then assert(target:IsShown(), "animation target did not show") end
     end
 end
 PlayerSpellsUtil.ToggleClassTalentFrame()
-assert(not frame:IsShown())
+assert(not PlayerSpellsFrame:IsShown(), "class talent toggle did not close PlayerSpellsFrame")
+assert(not frame:IsShown(), "closing PlayerSpellsFrame did not hide TalentsFrame")
 for _, group in ipairs(frame.backgroundAnims) do
-    assert(not group:IsPlaying())
+    assert(not group:IsPlaying(), "background animation did not stop")
     for _, animation in ipairs({ group:GetAnimations() }) do
         local target = animation:GetTarget()
-        if target then assert(not target:IsShown()) end
+        if target then assert(not target:IsShown(), "animation target did not hide") end
     end
 end
 "#;
