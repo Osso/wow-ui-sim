@@ -13,12 +13,12 @@ use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val, runtime_error};
 
 #[derive(Clone, Debug, Default)]
-pub(crate) struct HouseFinderState {
+pub struct HouseFinderState {
     pub neighborhoods: Vec<HouseFinderNeighborhood>,
 }
 
 #[derive(Clone, Debug)]
-pub(crate) struct HouseFinderNeighborhood {
+pub struct HouseFinderNeighborhood {
     pub guid: String,
     pub name: String,
     pub neighborhood_type: i64,
@@ -31,7 +31,7 @@ pub(crate) struct HouseFinderNeighborhood {
 }
 
 #[derive(Clone, Debug)]
-pub(crate) struct HouseFinderPlot {
+pub struct HouseFinderPlot {
     pub x: f64,
     pub y: f64,
     pub owner_type: i64,
@@ -41,7 +41,7 @@ pub(crate) struct HouseFinderPlot {
 }
 
 #[derive(Clone, Debug)]
-pub(crate) enum HouseFinderReply {
+pub enum HouseFinderReply {
     Neighborhoods {
         success: Val,
         rows: Vec<HouseFinderNeighborhood>,

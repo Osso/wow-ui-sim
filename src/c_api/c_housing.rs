@@ -109,6 +109,11 @@ pub(crate) fn register_c_housing_surface(state: &mut LuaState) -> LuaResult<()> 
 
 fn register_profile_surface(state: &mut LuaState) -> LuaResult<()> {
     catalog::register(state)?;
+    register_profile_service_methods(state)?;
+    register_profile_widget_methods(state)
+}
+
+fn register_profile_service_methods(state: &mut LuaState) -> LuaResult<()> {
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
         charter::register(state)?;
     }
@@ -127,6 +132,10 @@ fn register_profile_surface(state: &mut LuaState) -> LuaResult<()> {
     editor::register(state)?;
     #[cfg(feature = "retail-12-0-0")]
     location::register(state)?;
+    Ok(())
+}
+
+fn register_profile_widget_methods(state: &mut LuaState) -> LuaResult<()> {
     exterior::register(state)?;
     basic_mode::register_pending(state)?;
     #[cfg(feature = "retail-12-0-0")]
