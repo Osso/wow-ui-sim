@@ -732,7 +732,12 @@ fn test_xml_fixed_frame_level_shifts_when_parent_level_changes() {
     clear_templates();
     let env = WowLuaEnv::new().unwrap();
     load_xml_fixed_frame_level_probe(&env);
-    let before: i32 = env.eval("return XmlFixedChild:GetFrameLevel()").unwrap();
+    let (parent, before, uses_parent): (i32, i32, bool) = env
+        .eval("return XmlFixedParent:GetFrameLevel(), XmlFixedChild:GetFrameLevel(), XmlFixedChild:IsUsingParentLevel()")
+        .unwrap();
+    assert_eq!(parent, 50);
+    assert_eq!(before, 10);
+    assert!(!uses_parent);
     let after: i32 = env
         .eval("XmlFixedParent:SetFrameLevel(400); return XmlFixedChild:GetFrameLevel()")
         .unwrap();
