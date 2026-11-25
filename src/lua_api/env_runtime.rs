@@ -366,7 +366,9 @@ impl WowLuaEnv {
 
     fn run_due_timer_callbacks(&self) -> Result<usize> {
         if self.state.borrow().manual_clock.is_some() {
-            super::manual_timers::drain(self.lua.borrow_mut().state_mut())
+            Ok(super::manual_timers::drain(
+                self.lua.borrow_mut().state_mut(),
+            )?)
         } else {
             Ok(self.process_regular_timers())
         }
