@@ -369,6 +369,25 @@ fn shared_xml_fixture() -> (tempfile::TempDir, std::path::PathBuf) {
     (addon, shared)
 }
 
+#[test]
+fn shared_animation_template_setplaying_runs_visibility_handlers() {
+    clear_templates();
+    let (_addon, shared) = shared_xml_fixture();
+    let env = WowLuaEnv::new().unwrap();
+    std::fs::write(
+        shared.join("AnimationConsumer.xml"),
+        r#"<Ui><Frame name="AnimationOwner" parent="UIParent" hidden="true">
+            <Animations><AnimationGroup parentKey="Anim" inherits="VisibleWhilePlayingAnimGroupTemplate">
+                <Alpha duration="2" fromAlpha="0" toAlpha="1"/>
+            </AnimationGroup></Animations>
+        </Frame></Ui>"#,
+    )
+    .unwrap();
+    let toc = write_shared_xml_toc(&shared, "AnimationConsumer.xml");
+    load_addon(&env.loader_env(), &toc).unwrap();
+    env.exec("assert(not AnimationOwner:IsShown()); AnimationOwner.Anim:SetPlaying(true); assert(AnimationOwner:IsShown() and AnimationOwner.Anim:IsPlaying()); AnimationOwner.Anim:SetPlaying(false); assert(not AnimationOwner:IsShown() and not AnimationOwner.Anim:IsPlaying())").unwrap();
+}
+
 const CLASS_TALENTS_SET_BACKGROUND_ANIMATIONS: &str = r#"
 local frame = ClassTalentsFrame
 assert(frame.backgroundAnims and #frame.backgroundAnims > 0)
