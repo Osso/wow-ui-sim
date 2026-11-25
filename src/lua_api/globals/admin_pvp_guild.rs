@@ -7,7 +7,7 @@
 
 use crate::lua_api::globals::state_backed_queries::dispatch_event_now;
 use crate::lua_api::methods::borrow_state_mut;
-use crate::lua_api::state::BattlefieldStatus;
+use crate::lua_api::state::{BattlefieldStatus, GuildPerk};
 use crate::lua_bridge::FromStack;
 use rilua::LuaResult;
 use rilua::vm::state::LuaState;
@@ -71,6 +71,28 @@ pub(super) fn set_pvp_timer(state: &mut LuaState) -> LuaResult<u32> {
     let mut sim = borrow_state_mut(state)?;
     sim.pvp_timer_running = running;
     sim.pvp_timer_deadline_ms = deadline_ms;
+    Ok(0)
+}
+
+pub(super) fn set_guild_perks(state: &mut LuaState) -> LuaResult<u32> {
+    let argument_count = state.top.saturating_sub(state.base);
+    if argument_count % 2 != 0 {
+        return Err(rilua::LuaError::Runtime(rilua::RuntimeError {
+            message: "A_Admin.SetGuildPerks expects spellID, level pairs".into(),
+            level: 0,
+            traceback: vec![],
+        }));
+    }
+    let perks = (1..=argument_count)
+        .step_by(2)
+        .map(|index| {
+            Ok(GuildPerk {
+                spell_id: u32::from_stack(state, index as i32)?,
+                level: u32::from_stack(state, (index + 1) as i32)?,
+            })
+        })
+        .collect::<LuaResult<Vec<_>>>()?;
+    borrow_state_mut(state)?.world.guild_perks = perks;
     Ok(0)
 }
 

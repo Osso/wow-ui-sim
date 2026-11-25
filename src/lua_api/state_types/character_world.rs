@@ -543,6 +543,7 @@ pub struct WorldState {
     pub guild_name: Option<String>,
     pub guild_rank: Option<String>,
     pub guild_num_members: i32,
+    pub guild_perks: Vec<GuildPerk>,
     pub great_vault_activities: Vec<GreatVaultActivity>,
     pub great_vault_has_rewards: bool,
     pub great_vault_can_claim: bool,
@@ -678,6 +679,14 @@ pub struct GuildEvent {
     pub month: i32,
     pub day: i32,
     pub hour: i32,
+}
+
+/// One guild perk supplied by the host. Spell identity and level are
+/// explicit inputs; names and icons come from the spell catalog.
+#[derive(Debug, Clone, Copy)]
+pub struct GuildPerk {
+    pub spell_id: u32,
+    pub level: u32,
 }
 
 /// One row of `GetGuildChallengeInfo(orderIndex)`: returns

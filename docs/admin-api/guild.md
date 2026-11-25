@@ -56,6 +56,18 @@ local name, rank = GetGuildInfo("player")
 -- name="Knights of the Ebon Blade", rank="Champion"
 ```
 
+### A_Admin.SetGuildPerks(spellID, level, ...)
+
+Supplies the ordered guild-perk list used by the Retail and WoW Forever Communities Guild Perks panel. Pass one or more `(spellID, level)` pairs; call with no arguments to clear the list. `GetGuildPerkInfo(index)` resolves the supplied spell name and icon from the spell catalog and returns the spell ID. The perk list starts empty until the host supplies it.
+
+This getter shape and empty default are INFERRED R88g3 (native evidence pending), based on the original `Blizzard_Communities/GuildPerks.lua` consumer.
+
+- **Example:**
+```lua
+A_Admin.SetGuildInfo("Knights of the Ebon Blade", "Champion", 42)
+A_Admin.SetGuildPerks(83944, 1, 83940, 2)
+```
+
 ### A_Admin.ClearGuild()
 
 Removes the player from any guild.

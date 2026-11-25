@@ -289,6 +289,39 @@ fn get_num_guild_news(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+fn get_num_guild_perks(state: &mut LuaState) -> LuaResult<u32> {
+    let count = borrow_state(state)?.world.guild_perks.len() as f64;
+    state.push(Val::Num(count));
+    Ok(1)
+}
+
+/// INFERRED R88g3 (native evidence pending): returns perk name, spell ID and icon.
+fn get_guild_perk_info(state: &mut LuaState) -> LuaResult<u32> {
+    let index = i32::from_stack(state, 1)?;
+    let perk = borrow_state(state)?
+        .world
+        .guild_perks
+        .get(index.saturating_sub(1).max(0) as usize)
+        .copied();
+    let Some(perk) = perk.filter(|_| index > 0) else {
+        for _ in 0..3 {
+            state.push(Val::Nil);
+        }
+        return Ok(3);
+    };
+    let Some(spell) = crate::c_api::spells::get_spell(perk.spell_id) else {
+        for _ in 0..3 {
+            state.push(Val::Nil);
+        }
+        return Ok(3);
+    };
+    let name = create_string(state, spell.name);
+    state.push(name);
+    state.push(Val::Num(f64::from(perk.spell_id)));
+    state.push(Val::Num(f64::from(spell.icon_file_data_id)));
+    Ok(3)
+}
+
 /// `GetGuildRosterMOTD()` — guild Message of the Day, empty string when unset.
 fn get_guild_roster_motd(state: &mut LuaState) -> LuaResult<u32> {
     let motd = borrow_state(state)?.world.guild_motd.clone();
@@ -411,6 +444,14 @@ pub fn register_all(lua: &mut rilua::Lua) -> crate::Result<()> {
 
 fn register_guild_membership_queries(lua: &mut rilua::Lua) -> crate::Result<()> {
     LuaApiMut::register_function(lua, "IsInGuild", is_in_guild)?;
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
+        LuaApiMut::register_function(lua, "GetNumGuildPerks", get_num_guild_perks)?;
+        LuaApiMut::register_function(lua, "GetGuildPerkInfo", get_guild_perk_info)?;
+    }
     if matches!(
         crate::client_profile::ACTIVE,
         crate::client_profile::ClientProfile::Retail
