@@ -68,6 +68,27 @@ fn communities_guild_perks_panel_uses_supplied_spell_rows() {
     )
     .expect("guild perks panel should open through the original guild tab");
     wow_ui_sim::startup::fire_one_on_update_tick(&env);
+    let diagnostics: String = env
+        .eval(
+            r#"
+            local perks = CommunitiesFrame.GuildBenefitsFrame.Perks
+            local scrollBox = perks.ScrollBox
+            local dataProvider = scrollBox:GetDataProvider()
+            local view = scrollBox:GetView()
+            local frameCount = view and type(view.GetFrameCount) == "function"
+                and view:GetFrameCount() or -1
+            return table.concat({
+                tostring(dataProvider and dataProvider:GetSize()),
+                tostring(scrollBox:GetWidth()), tostring(scrollBox:GetHeight()),
+                tostring(perks:GetWidth()), tostring(perks:GetHeight()),
+                tostring(CommunitiesFrame.GuildBenefitsFrame:GetWidth()),
+                tostring(CommunitiesFrame.GuildBenefitsFrame:GetHeight()),
+                tostring(frameCount),
+            }, "|")
+            "#,
+        )
+        .expect("guild perks consumer dimensions should be readable");
+    eprintln!("guild perks diagnostics: {diagnostics}");
     let row_names: (bool, i32, String, String) = env
         .eval(
             r#"
