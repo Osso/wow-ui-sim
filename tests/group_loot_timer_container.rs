@@ -13,8 +13,9 @@ A_Admin.FireEvent("MAIN_SPEC_NEED_ROLL", 72, 4, false)
 local first, second = GroupLootFrame1, GroupLootFrame2
 local firstTimer = first.NeedRollAnimFinishedCallback
 local secondTimer = second.NeedRollAnimFinishedCallback
-assert(firstTimer and secondTimer and firstTimer ~= secondTimer)
-assert(first.NeedRollAnim:IsShown() and second.NeedRollAnim:IsShown())
+assert(first and second, "two distinct rolls must use two frames")
+assert(firstTimer and secondTimer and firstTimer ~= secondTimer, "each roll must own a timer")
+assert(first.NeedRollAnim:IsShown() and second.NeedRollAnim:IsShown(), "both roll animations must start")
 first:Hide()
 assert(firstTimer:IsCancelled(), "frame hide must cancel After's container")
 assert(not first.NeedRollAnim:IsShown(), "hidden frame must stop its animation")
