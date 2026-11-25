@@ -116,6 +116,7 @@ const POST_LOAD_WORKAROUNDS: &[WorkaroundStep] = &[
         label: "patch_paging_controls_page_text",
         apply: patch_paging_controls_page_text,
     },
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     WorkaroundStep {
         label: "patch_talent_edge_frame_level_sync",
         apply: patch_talent_edge_frame_level_sync,
@@ -677,6 +678,7 @@ fn patch_runtime_core_addon_surfaces(env: &crate::lua_api::LoaderEnv<'_>, addon_
     if addon_name == "Blizzard_PagedContent" {
         temporary::paging_controls_page_text::patch_loader(env);
     }
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     if matches!(
         addon_name,
         "Blizzard_SharedTalentUI" | "Blizzard_PlayerSpells"

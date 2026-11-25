@@ -31,7 +31,7 @@ pub fn reparent_widget(widgets: &mut WidgetRegistry, child_id: u64, new_parent_i
     update_child_parent_link(widgets, child_id, new_parent_id, same_parent, parent_props);
     if !same_parent {
         widgets.copy_window_movement_context(child_id, new_parent_id);
-        propagate_strata_level(widgets, child_id);
+        recalculate_strata_level(widgets, child_id);
     }
 
     let parent_eff_alpha = parent_props.map(|(_, _, alpha, _)| alpha).unwrap_or(1.0);
@@ -107,11 +107,34 @@ fn attach_to_new_parent(widgets: &mut WidgetRegistry, child_id: u64, new_parent_
     }
 }
 
-pub fn propagate_strata_level_pub(widgets: &mut WidgetRegistry, root_id: u64) {
-    propagate_strata_level(widgets, root_id);
+pub fn propagate_strata_level_pub(widgets: &mut WidgetRegistry, root_id: u64, delta: i32) {
+    propagate_strata_level(widgets, root_id, delta);
 }
 
-fn propagate_strata_level(widgets: &mut WidgetRegistry, root_id: u64) {
+pub fn recalculate_strata_level_pub(widgets: &mut WidgetRegistry, root_id: u64) {
+    recalculate_strata_level(widgets, root_id);
+}
+
+// INFERRED (R14 Q6): same-strata descendants shift by the parent's level delta.
+fn propagate_strata_level(widgets: &mut WidgetRegistry, root_id: u64, delta: i32) {
+    let Some(root) = widgets.get(root_id) else {
+        return;
+    };
+    let root_strata = root.frame_strata;
+    let mut queue = root.children.clone();
+    while let Some(child_id) = queue.pop() {
+        let Some(child) = widgets.get_mut_visual(child_id) else {
+            continue;
+        };
+        if child.frame_strata != root_strata {
+            continue;
+        }
+        child.frame_level += delta;
+        queue.extend(child.children.iter().copied());
+    }
+}
+
+fn recalculate_strata_level(widgets: &mut WidgetRegistry, root_id: u64) {
     let Some(root) = widgets.get(root_id) else {
         return;
     };
