@@ -1254,10 +1254,26 @@ fn assert_texture_hook_probe_counter(env: &WowLuaEnv, name: &str) {
 #[cfg(feature = "client-retail")]
 prefork_full_ui_case! {
 fn retail_aura_container_hook_dispatcher_preserves_secure_consumer(env: &WowLuaEnv) {
+    assert_aura_container_consumer_loaded(env);
+    initialize_live_aura_container(env);
+    assert_initial_aura_icon(env);
+    install_texture_hook_probes(env);
+    assert_hooked_aura_icons(env);
+    assert_texture_hook_probe_counter(env, "TextureSetHookProbeFirstCounter");
+    assert_texture_hook_probe_counter(env, "TextureSetHookProbeSecondCounter");
+}
+}
+
+#[cfg(feature = "client-retail")]
+fn assert_aura_container_consumer_loaded(env: &WowLuaEnv) {
     assert!(
         env.eval::<bool>("return C_AddOns.IsAddOnLoaded('Blizzard_AuraContainer')")
             .unwrap()
     );
+}
+
+#[cfg(feature = "client-retail")]
+fn initialize_live_aura_container(env: &WowLuaEnv) {
     crate::common::aura_container_harness::install_helpers(env);
     env.exec("AuditLive = AuditContainer({{'buffs', 'HELPFUL'}})")
         .unwrap();
@@ -1269,10 +1285,18 @@ fn retail_aura_container_hook_dispatcher_preserves_secure_consumer(env: &WowLuaE
         )],
     );
     crate::common::aura_container_harness::settle(env);
+}
+
+#[cfg(feature = "client-retail")]
+fn assert_initial_aura_icon(env: &WowLuaEnv) {
     assert_eq!(
         crate::common::aura_container_harness::icons(env, "AuditLive", "buffs"),
         r"134400"
     );
+}
+
+#[cfg(feature = "client-retail")]
+fn install_texture_hook_probes(env: &WowLuaEnv) {
     env.exec("TextureHookProbeTarget = AuditLive:GetAuraGroupFrame('buffs', 1):GetIcon()")
         .unwrap();
     load_texture_hook_probe_addons(env);
@@ -1284,13 +1308,14 @@ fn retail_aura_container_hook_dispatcher_preserves_secure_consumer(env: &WowLuaE
         ],
     );
     crate::common::aura_container_harness::settle(env);
+}
+
+#[cfg(feature = "client-retail")]
+fn assert_hooked_aura_icons(env: &WowLuaEnv) {
     assert_eq!(
         crate::common::aura_container_harness::icons(env, "AuditLive", "buffs"),
         r"134400,134400"
     );
-    assert_texture_hook_probe_counter(env, "TextureSetHookProbeFirstCounter");
-    assert_texture_hook_probe_counter(env, "TextureSetHookProbeSecondCounter");
-}
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]

@@ -72,6 +72,12 @@ struct Appearance {
 
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     let namespace = ensure_namespace(state, "C_ContributionCollector")?;
+    register_collector_queries(state, namespace)?;
+    register_contribution_queries(state, namespace)?;
+    register_contribution_details(state, namespace)
+}
+
+fn register_collector_queries(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
     table_set_rust_fn_static(
         state,
         namespace,
@@ -83,7 +89,10 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
         namespace,
         "GetManagedContributionsForCreatureID",
         managed_contributions,
-    )?;
+    )
+}
+
+fn register_contribution_queries(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
     table_set_rust_fn_static(state, namespace, "GetName", contribution_name)?;
     table_set_rust_fn_static(state, namespace, "GetDescription", contribution_description)?;
     table_set_rust_fn_static(state, namespace, "GetState", contribution_state)?;
@@ -93,7 +102,10 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
         "GetContributionResult",
         contribution_result,
     )?;
-    table_set_rust_fn_static(state, namespace, "GetOrderIndex", contribution_order_index)?;
+    table_set_rust_fn_static(state, namespace, "GetOrderIndex", contribution_order_index)
+}
+
+fn register_contribution_details(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
     table_set_rust_fn_static(
         state,
         namespace,
@@ -115,8 +127,7 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
         namespace,
         "GetContributionAppearance",
         contribution_appearance,
-    )?;
-    Ok(())
+    )
 }
 
 pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {

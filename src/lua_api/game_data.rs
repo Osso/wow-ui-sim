@@ -277,13 +277,31 @@ fn apply_player_aura_spell(
     let Some(spell) = crate::spell_lookup::get_spell(spell_id) else {
         return false;
     };
+    replace_player_aura(state, spell_id, spell);
+    true
+}
 
+fn replace_player_aura(
+    state: &std::rc::Rc<std::cell::RefCell<super::state::SimState>>,
+    spell_id: u32,
+    spell: &crate::spells::SpellInfo,
+) {
     let mut sim = state.borrow_mut();
     let aura_instance_id = existing_or_next_player_aura_instance_id(&sim, spell_id);
     sim.player
         .buffs
         .retain(|aura| !is_paladin_aura_spell(aura.spell_id as u32));
-    sim.player.buffs.push(AuraInfo {
+    sim.player
+        .buffs
+        .push(player_aura_info(spell_id, spell, aura_instance_id));
+}
+
+fn player_aura_info(
+    spell_id: u32,
+    spell: &crate::spells::SpellInfo,
+    aura_instance_id: i32,
+) -> AuraInfo {
+    AuraInfo {
         name: spell.name.to_string(),
         spell_id: spell_id as i32,
         icon: AuraIcon::FileId(spell.icon_file_data_id as i32),
@@ -299,8 +317,7 @@ fn apply_player_aura_spell(
         is_from_player_or_player_pet: true,
         dispel_type: None,
         aura_instance_id,
-    });
-    true
+    }
 }
 
 fn existing_or_next_player_aura_instance_id(sim: &super::state::SimState, spell_id: u32) -> i32 {
@@ -678,37 +695,34 @@ pub fn default_player_buffs() -> Vec<AuraInfo> {
 /// Since GetTime() starts near 0 at startup, this equals the duration itself.
 /// Permanent buffs (duration == 0) have expiration_time == 0.
 fn build_auras_from_indices(indices: &[usize]) -> Vec<AuraInfo> {
-    // GetTime() ≈ 0 at init, so expiration = 0 + duration = duration.
-    let get_time = 0.0_f64;
     indices
         .iter()
         .enumerate()
-        .map(|(i, &pool_idx)| {
-            let (name, spell_id, icon, duration, source, can_apply) = BUFF_POOL[pool_idx];
-            let expiration_time = if duration > 0.0 {
-                get_time + duration
-            } else {
-                0.0
-            };
-            AuraInfo {
-                name: name.to_string(),
-                spell_id,
-                icon: AuraIcon::FileId(icon),
-                duration,
-                expiration_time,
-                applications: 0,
-                source_unit: source.to_string(),
-                is_helpful: true,
-                is_raid: true,
-                is_nameplate_only: false,
-                is_stealable: false,
-                can_apply_aura: can_apply,
-                is_from_player_or_player_pet: source == "player",
-                dispel_type: None,
-                aura_instance_id: (i + 1) as i32,
-            }
-        })
+        .map(|(index, &pool_idx)| build_pool_aura(index, BUFF_POOL[pool_idx]))
         .collect()
+}
+
+fn build_pool_aura(index: usize, entry: (&str, i32, i32, f64, &str, bool)) -> AuraInfo {
+    let (name, spell_id, icon, duration, source, can_apply) = entry;
+    // GetTime() ≈ 0 at init, so expiration = 0 + duration = duration.
+    let expiration_time = if duration > 0.0 { duration } else { 0.0 };
+    AuraInfo {
+        name: name.to_string(),
+        spell_id,
+        icon: AuraIcon::FileId(icon),
+        duration,
+        expiration_time,
+        applications: 0,
+        source_unit: source.to_string(),
+        is_helpful: true,
+        is_raid: true,
+        is_nameplate_only: false,
+        is_stealable: false,
+        can_apply_aura: can_apply,
+        is_from_player_or_player_pet: source == "player",
+        dispel_type: None,
+        aura_instance_id: (index + 1) as i32,
+    }
 }
 
 /// Major Factions for the modern Journeys panel. Drives the EncounterJournal
