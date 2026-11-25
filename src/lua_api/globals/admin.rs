@@ -738,6 +738,7 @@ fn register_collections_pvp<'lua>(b: TableBuilder<'lua>) -> LuaResult<TableBuild
             | crate::client_profile::ClientProfile::WowForever
     ) {
         return b
+            .set_function("SetGuildPerks", set_guild_perks)?
             .set_function("SetMaxBattlefieldID", set_battlefield_max_id)?
             .set_function("SetBattlefieldQueue", set_battlefield_queue)?
             .set_function("SetBattlefieldArena", set_battlefield_arena)?
@@ -774,7 +775,6 @@ const COLLECTIONS_PVP_FUNCTIONS: &[(&str, RustFn)] = &[
     ("SetPvPEnabled", set_pvp_enabled),
     ("SetHonorLevel", set_honor_level),
     ("SetGuildInfo", set_guild_info),
-    ("SetGuildPerks", set_guild_perks),
     ("JoinGuild", join_guild),
     ("ClearGuild", clear_guild),
     ("LeaveGuild", leave_guild),
