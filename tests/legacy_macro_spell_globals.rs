@@ -20,7 +20,18 @@ const LEGACY_MACRO_CONSTANTS_LUA: &str = r#"
         return "ok"
 "#;
 
-const LEGACY_MACRO_GLOBALS_LUA: &str = r#"
+const LEGACY_MACRO_GLOBALS_PART_1: &str = r#"        if ACCOUNT_BINDINGS ~= 1 then
+            return "account_bindings=" .. tostring(ACCOUNT_BINDINGS)
+        end
+        if CHARACTER_BINDINGS ~= 2 or CHARACTERBINDINGS ~= 2 then
+            return "character_bindings=" .. tostring(CHARACTER_BINDINGS) .. "," .. tostring(CHARACTERBINDINGS)
+        end
+        if type(CreateMacro) ~= "function" then
+            return "missing_CreateMacro"
+        end
+        if type(DeleteMacro) ~= "function" then
+            return "missing_DeleteMacro"
+        end
         if type(GetMacroBody) ~= "function" then
             return "missing_GetMacroBody"
         end
@@ -33,13 +44,12 @@ const LEGACY_MACRO_GLOBALS_LUA: &str = r#"
         if type(GetSpellBookItemInfo) ~= "function" then
             return "missing_GetSpellBookItemInfo"
         end
-        if type(GetSpellBookItemName) ~= "function" then
-            return "missing_GetSpellBookItemName"
-        end
-        return "ok"
 "#;
 
-const LEGACY_MACRO_VALUES_LUA: &str = r#"
+const LEGACY_MACRO_GLOBALS_PART_2: &str = r#"        if type(GetSpellBookItemName) ~= "function" then
+            return "missing_GetSpellBookItemName"
+        end
+
         if GetMacroBody(1) ~= "/rw Stack on star" then
             return "macro_body=" .. tostring(GetMacroBody(1))
         end
@@ -61,19 +71,11 @@ const LEGACY_MACRO_VALUES_LUA: &str = r#"
         return "ok"
 "#;
 
-#[cfg(not(any(
-    feature = "retail-12-0-0",
-    feature = "client-retail",
-    feature = "client-wowforever"
-)))]
-#[test]
+
 fn legacy_macro_and_spellbook_globals_exist_for_addons() {
     let env = env();
-    let constants: String = env.eval(LEGACY_MACRO_CONSTANTS_LUA).unwrap();
-    assert_eq!(constants, "ok");
-    let globals: String = env.eval(LEGACY_MACRO_GLOBALS_LUA).unwrap();
-    assert_eq!(globals, "ok");
-    let result: String = env.eval(LEGACY_MACRO_VALUES_LUA).unwrap();
+    let script = [LEGACY_MACRO_GLOBALS_PART_1, LEGACY_MACRO_GLOBALS_PART_2].concat();
+    let result: String = env.eval(&script).unwrap();
     assert_eq!(
         result, "ok",
         "legacy macro and spellbook globals should exist for addon compatibility: {result}"

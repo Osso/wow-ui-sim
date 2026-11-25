@@ -99,13 +99,20 @@ fn assert_registration_contract_complete(stderr: &str, diagnostics: bool) {
         return;
     }
     let entries: Vec<_> = stderr.lines().filter(|line| line.starts_with("[handler-entry]")).collect();
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     assert_eq!(entries.len(), 7, "{stderr}");
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+    assert_eq!(entries.len(), 6, "{stderr}");
     assert_registration_entry_records(stderr, &entries);
     assert!(!stderr.contains("callback_source=@TimerContract/Mutation.lua"), "{stderr}");
 }
 
 fn assert_registration_entry_records(stderr: &str, entries: &[&str]) {
-    for (name, count) in [("After", 1), ("Timer", 1), ("Ticker", 2), ("Direct", 1), ("Rescheduled", 1), ("Error", 1)] {
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let expected = [("After", 1), ("Timer", 1), ("Ticker", 2), ("Direct", 1), ("Rescheduled", 1), ("Error", 1)];
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+    let expected = [("After", 1), ("Timer", 1), ("Ticker", 2), ("Rescheduled", 1), ("Error", 1)];
+    for (name, count) in expected {
         let label = format!("callback_source=@TimerContract/{name}.lua:1");
         let matching: Vec<_> = entries.iter().filter(|line| line.contains(&label)).collect();
         assert_eq!(matching.len(), count, "{name}: {stderr}");
