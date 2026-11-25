@@ -738,7 +738,7 @@ pub struct RandomBGInfo {
 /// A macro slot. Matches the `/macro` addon view: name, icon, body text.
 /// `icon` is the texture path passed to `EditMacro` (retail uses a mix
 /// of texture ids and paths; the sim stores whatever the caller provides).
-#[derive(Debug, Default, Clone)]
+#[derive(Debug, Default, Clone, serde::Deserialize, serde::Serialize)]
 pub struct MacroInfo {
     pub name: String,
     pub icon: String,

@@ -225,6 +225,8 @@ fn register_admin_inventory(builder: TableBuilder) -> LuaResult<TableBuilder> {
 
 fn register_admin_inventory_items(builder: TableBuilder) -> LuaResult<TableBuilder> {
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let builder = crate::c_api::c_macro::register_admin(builder)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     let builder = crate::c_api::c_loot_journal::register_admin(builder)?;
     let builder = crate::c_api::c_transmog_sets::register_admin(builder)?;
     #[cfg(feature = "client-wowforever")]
