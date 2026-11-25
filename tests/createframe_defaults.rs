@@ -39,8 +39,8 @@ fn assert_item_button_and_tooltip_contract(env: &WowLuaEnv) {
         .eval(
             r#"
             local probe = CreateFrameDefaultsProbe
-            local expectedA = select(10, GetItemInfo(49812))
-            local expectedB = select(10, GetItemInfo(49803))
+            local expectedA = C_Item.GetItemIconByID(49812)
+            local expectedB = C_Item.GetItemIconByID(49803)
             local count, seenA, seenB, parents = 0, false, false, true
             for _, button in ipairs(EquipmentFlyoutFrame.buttons) do
                 if button:IsShown() then
