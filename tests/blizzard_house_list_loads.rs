@@ -20,14 +20,17 @@ A_Admin.SetHouseFinderNeighborhoods({
 "#;
 
 const SELECT_SECOND_NEIGHBORHOOD: &str = r#"
-local buttons = HouseFinderFrame.neighborhoodButtonPool:EnumerateActive()
-local first = buttons()
-local second = buttons()
-if not first or not second then return "neighborhoods_not_rendered" end
-local rendered = first.NeighborhoodName:GetText() .. "/" .. second.NeighborhoodName:GetText()
+local names = {}
+local selected
+for button in HouseFinderFrame.neighborhoodButtonPool:EnumerateActive() do
+    table.insert(names, button.NeighborhoodName:GetText())
+    if button.neighborhoodInfo.neighborhoodGUID == "Neighborhood-B" then selected = button end
+end
+if #names ~= 2 or not selected then return "neighborhoods_not_rendered" end
+table.sort(names)
 local firstMap = HouseFinderFrame.mapID
-second:Click()
-return rendered .. ";" .. tostring(firstMap) .. "/" .. tostring(HouseFinderFrame.mapID)
+selected:Click()
+return table.concat(names, "/") .. ";" .. tostring(firstMap) .. "/" .. tostring(HouseFinderFrame.mapID)
 "#;
 
 fn blizzard_ui_dir() -> PathBuf {
