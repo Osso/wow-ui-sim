@@ -19,15 +19,13 @@ fn communities_guild_info_open_throttles_roster_request() {
     env.exec(
         r#"
         A_Admin.SetManualClock(10)
-        CommunitiesGuildInfoFrame:Show()
-        CommunitiesGuildInfoFrame:Hide()
-        CommunitiesGuildInfoFrame:Show()
+        CommunitiesFrame:ToggleSubPanel(CommunitiesFrame.GuildDetailsFrame)
+        CommunitiesFrame:ToggleSubPanel(CommunitiesFrame.GuildDetailsFrame)
+        CommunitiesFrame:ToggleSubPanel(CommunitiesFrame.GuildDetailsFrame)
         A_Admin.AdvanceTime(9)
-        CommunitiesGuildInfoFrame:Hide()
-        CommunitiesGuildInfoFrame:Show()
+        CommunitiesFrame:ToggleSubPanel(CommunitiesFrame.GuildDetailsFrame)
         A_Admin.AdvanceTime(1)
-        CommunitiesGuildInfoFrame:Hide()
-        CommunitiesGuildInfoFrame:Show()
+        CommunitiesFrame:ToggleSubPanel(CommunitiesFrame.GuildDetailsFrame)
         "#,
     )
     .expect("open the selected Communities guild info frame repeatedly");
@@ -53,20 +51,18 @@ fn communities_guild_news_open_drops_throttled_request() {
             local listener = CreateFrame('Frame')
             listener:RegisterEvent('GUILD_NEWS_UPDATE')
             listener:SetScript('OnEvent', function() updates = updates + 1 end)
-            CommunitiesGuildNewsFrame:Show()
-            CommunitiesGuildNewsFrame:Hide()
-            CommunitiesGuildNewsFrame:Show()
+            CommunitiesFrame:ToggleSubPanel(CommunitiesFrame.GuildDetailsFrame)
+            CommunitiesFrame:ToggleSubPanel(CommunitiesFrame.GuildDetailsFrame)
+            CommunitiesFrame:ToggleSubPanel(CommunitiesFrame.GuildDetailsFrame)
             A_Admin.AdvanceTime(899)
-            CommunitiesGuildNewsFrame:Hide()
-            CommunitiesGuildNewsFrame:Show()
+            CommunitiesFrame:ToggleSubPanel(CommunitiesFrame.GuildDetailsFrame)
             A_Admin.AdvanceTime(1)
-            CommunitiesGuildNewsFrame:Hide()
-            CommunitiesGuildNewsFrame:Show()
+            CommunitiesFrame:ToggleSubPanel(CommunitiesFrame.GuildDetailsFrame)
             return updates
             "#,
         )
         .unwrap();
     // Each open fires GuildNewsSort's update; QueryGuildNews adds one more only
     // on the first open and after the throttle window.
-    assert_eq!(updates, 6);
+    assert_eq!(updates, 5);
 }
