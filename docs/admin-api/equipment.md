@@ -22,3 +22,24 @@ A_Admin.SetItemOverlayFlag(900001, "corrupted", false)
 ```
 
 Flag names are `corrupted`, `cosmetic`, `conduit`, `curio`, `relic`, and `decor`. The third argument must be a boolean. False removes the flag. Unset flags return false as a simulator scenario default; this is not native item data.
+
+## Inventory flyout candidates
+
+Retail and Forever tests can supply the candidates consumed by `GetInventoryItemsForSlot`:
+
+```lua
+A_Admin.SetInventorySlotCandidates(11, false, {
+    { equipmentSlot = 12, link = otherRingLink },
+    { carriedSlot = 1, link = carriedRingLink },
+}, {
+    slotNames = { Finger0Slot = 11 },
+    carriedEnabled = true,
+    carriedCount = 2,
+    interactionGuidNonzero = false,
+    transmogReady = false,
+})
+```
+
+The call replaces the accepted candidate list for that one-based inventory slot and transmogrify mode. Each row uses one-based `equipmentSlot`, one-based `carriedSlot` for the backpack range, or `bagID` plus one-based `bagSlot` (`bagID` defaults to `0`). `carriedEnabled` and `carriedCount` control the carried-slot range. `link` is optional; omit it only when the supplied model should remove that location from the returned table. Options are also optional. `slotNames` adds or replaces name-to-one-based-slot mappings. The other fields supply the carried-slot range, bank-access predicate input, and readiness for this slot's transmog query. This setter does not derive candidates from equipped items or bags, and an empty list supplies no candidates; native eligibility filtering remains unknown.
+
+The existing Retail model publishes these supplied rows through `GetInventoryItemsForSlot`. **INFERRED:** R88k.1 Retail evidence supports this model; Forever registration is inferred from the selected `PaperDollFrameItemFlyout_GetItems` consumer call, with native evidence pending.

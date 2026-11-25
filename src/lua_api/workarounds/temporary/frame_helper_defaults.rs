@@ -80,11 +80,12 @@ if CreateFrame ~= nil and __wow_original_CreateFrame == nil then
     if not retireGenericFrameHelpers then
       __wow_install_frame_helpers(created)
     end
-    if frameType == "GameTooltip" and created and created.SetFrameStrata ~= nil then
+    if not retireGenericFrameHelpers and frameType == "GameTooltip"
+        and created and created.SetFrameStrata ~= nil then
       created:SetFrameStrata("TOOLTIP")
     end
     local parent = select(3, ...)
-    if type(parent) == "table" and type(inherits) == "string" then
+    if not retireGenericFrameHelpers and type(parent) == "table" and type(inherits) == "string" then
       if string.find(inherits, "MapCanvasFrameScrollContainerTemplate", 1, true) then
         rawset(parent, "ScrollContainer", created)
       end

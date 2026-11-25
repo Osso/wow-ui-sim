@@ -16,6 +16,8 @@ pub mod admin_encounter;
 pub mod admin_equipment;
 pub mod admin_events;
 pub mod admin_interactions;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub mod admin_inventory_candidates;
 pub mod admin_mail;
 pub mod admin_movement;
 pub mod admin_party_target_helpers;
