@@ -1262,6 +1262,7 @@ fn retail_aura_container_hook_dispatcher_preserves_secure_consumer(env: &WowLuaE
     assert_texture_hook_probe_counter(env, "TextureSetHookProbeFirstCounter");
     assert_texture_hook_probe_counter(env, "TextureSetHookProbeSecondCounter");
 }
+}
 
 #[cfg(feature = "client-retail")]
 fn assert_aura_container_consumer_loaded(env: &WowLuaEnv) {
@@ -1315,7 +1316,6 @@ fn assert_hooked_aura_icons(env: &WowLuaEnv) {
         crate::common::aura_container_harness::icons(env, "AuditLive", "buffs"),
         r"134400,134400"
     );
-}
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
