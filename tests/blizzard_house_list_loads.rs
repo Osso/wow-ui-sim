@@ -507,4 +507,3 @@ fn blizzard_house_list_publishes_no_event_listeners_before_show(env: &WowLuaEnv)
     );
 }
 }
-
