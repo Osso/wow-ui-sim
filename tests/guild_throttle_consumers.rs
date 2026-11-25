@@ -35,7 +35,8 @@ fn load_communities() -> WowLuaEnv {
         .expect("full Blizzard UI should load for Communities consumer tests");
     env.exec("assert(C_AddOns.IsAddOnLoaded('Blizzard_Communities'))")
         .expect("the active profile selected Blizzard_Communities from its TOC");
-    env.state().borrow_mut().world.guild_name = Some("Throttle Test Guild".into());
+    env.exec("A_Admin.SetGuildInfo('Throttle Test Guild', 'Member', 2)")
+        .expect("guild context should be supplied through the admin API");
     env
 }
 
