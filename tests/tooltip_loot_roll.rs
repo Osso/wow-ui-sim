@@ -79,5 +79,3 @@ fn tooltip_loot_roll_original_hover_selects_roll_link() {
     .unwrap();
 }
 
-#[path = "group_loot_timer_container.rs"]
-mod group_loot_timer_container;

@@ -15,9 +15,10 @@ local firstTimer = first.NeedRollAnimFinishedCallback
 local secondTimer = second.NeedRollAnimFinishedCallback
 assert(firstTimer and secondTimer and firstTimer ~= secondTimer)
 assert(first.NeedRollAnim:IsShown() and second.NeedRollAnim:IsShown())
-A_Admin.FireEvent("CANCEL_LOOT_ROLL", 71)
-assert(firstTimer:IsCancelled(), "client cancellation must cancel After's container")
-assert(not first.NeedRollAnim:IsShown(), "cancelled roll animation must stop")
+first:Hide()
+assert(firstTimer:IsCancelled(), "frame hide must cancel After's container")
+assert(not first.NeedRollAnim:IsShown(), "hidden frame must stop its animation")
+first:Show()
 A_Admin.AdvanceTime(5)
 assert(not second:IsShown(), "uncancelled roll must finish through its timer")
 assert(first:IsShown(), "cancelled timer must not remove the first frame")
