@@ -49,7 +49,7 @@ fn encounter_journal_difficulty_queries_use_selected_map(env: &WowLuaEnv) {
             return hasNormal, hasHeroic, hasRaid, isHeroicValid, table.concat(values, ",")
         "#)
         .expect("the original dungeon dropdown should use selected-map difficulties");
-    assert_eq!(dungeon, (true, true, false, true, "1,2,24"));
+    assert_eq!(dungeon, (true, true, false, true, "1,2,24".to_string()));
 
     env.exec("EJ_SelectInstance(72)")
         .expect("the Bastion of Twilight journal instance should be selectable");
@@ -72,7 +72,7 @@ fn encounter_journal_difficulty_queries_use_selected_map(env: &WowLuaEnv) {
             return hasTenPlayer, hasDungeon, isTenPlayerValid, table.concat(values, ",")
         "#)
         .expect("the original raid dropdown should use selected-map difficulties");
-    assert_eq!(raid, (true, false, true, "3,4,5,6"));
+    assert_eq!(raid, (true, false, true, "3,4,5,6".to_string()));
 
     let bases: (i32, i32, i32) = env
         .eval(r#"
