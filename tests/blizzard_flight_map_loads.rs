@@ -366,6 +366,22 @@ fn flight_map_open_path_places_click_to_zoom_labels_from_uimap_positions(env: &W
 }
 }
 
+prefork_full_ui_case! {
+fn flight_map_hide_closes_taxi_interaction_without_clearing_map_id(env: &WowLuaEnv) {
+    for map_id in [14, 994] {
+        open_flight_map_for_taxi_map(env, map_id);
+        env.exec("HideUIPanel(FlightMapFrame)")
+            .expect("HideUIPanel should close the original FlightMapFrame consumer");
+
+        let (is_shown, retained_map_id): (bool, i32) = env
+            .eval("return FlightMapFrame:IsShown(), GetTaxiMapID()")
+            .expect("FlightMap close state should be observable");
+        assert!(!is_shown, "FlightMapFrame should be hidden after HideUIPanel");
+        assert_eq!(retained_map_id, map_id, "close must retain the supplied map ID");
+    }
+}
+}
+
 fn assert_flight_map_is_unloaded_and_taxi_map_id_is_zero_values(env: &WowLuaEnv) {
     let loaded: bool = env
         .eval("return C_AddOns.IsAddOnLoaded('Blizzard_FlightMap')")
