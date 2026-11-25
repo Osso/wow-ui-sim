@@ -134,7 +134,11 @@ fn test_sound_system_driver_functions_return_seeded_devices() {
 fn test_bn_features_enabled() {
     let env = env();
     let val: bool = env.eval("return BNFeaturesEnabled()").unwrap();
-    assert!(!val);
+    assert_eq!(
+        val,
+        cfg!(any(feature = "client-retail", feature = "client-wowforever")),
+        "Retail/Forever start in the normal Battle.net feature mode"
+    );
 }
 
 #[test]
@@ -148,7 +152,11 @@ fn test_bn_features_enabled_and_connected() {
 fn test_bn_connected() {
     let env = env();
     let val: bool = env.eval("return BNConnected()").unwrap();
-    assert!(val);
+    assert_eq!(
+        val,
+        !cfg!(any(feature = "client-retail", feature = "client-wowforever")),
+        "Retail/Forever start disconnected; other profiles retain their existing global"
+    );
 }
 
 #[test]

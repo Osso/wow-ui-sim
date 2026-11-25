@@ -965,6 +965,10 @@ macro_rules! build_empty_sim_state {
             #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
             player_bnet_info: Default::default(),
             #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            player_bnet_account_present: false,
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            bnet_connection: Default::default(),
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
             bnet_account_features: Default::default(),
             bnet_friend_invites: Vec::new(),
             bnet_appear_offline: false,

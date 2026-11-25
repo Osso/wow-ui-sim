@@ -217,12 +217,13 @@ fn guild_panel_opens_without_unavailable_error() {
 }
 
 #[test]
-fn bn_connected_returns_true() {
+fn bn_connected_uses_supplied_connection_state() {
     let env = WowLuaEnv::new().unwrap();
     let connected: bool = env.eval("return BNConnected()").unwrap();
-    assert!(
+    assert_eq!(
         connected,
-        "BNConnected should return true for Communities to work"
+        !cfg!(any(feature = "client-retail", feature = "client-wowforever")),
+        "Retail/Forever default disconnected; other profiles retain their prior global"
     );
 }
 

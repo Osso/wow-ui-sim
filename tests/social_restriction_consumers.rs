@@ -20,6 +20,39 @@ fn load_original_addon(addon: &str) -> WowLuaEnv {
     env
 }
 
+#[test]
+fn original_friends_and_quick_join_consumers_follow_battle_net_connection() {
+    let ui = blizzard_ui_dir();
+    let (env, loaded) = build_blizzard_addon_closure_env(
+        &ui,
+        &["Blizzard_FriendsFrame", "Blizzard_QuickJoin", "Blizzard_SocialUI"],
+        &[],
+    );
+    for addon in ["Blizzard_FriendsFrame", "Blizzard_QuickJoin", "Blizzard_SocialUI"] {
+        assert!(loaded.iter().any(|name| name == addon), "TOC selected {addon}");
+    }
+    env.apply_post_load_workarounds();
+    wow_ui_sim::startup::settle_headless_startup(&env);
+    env.exec(
+        r#"
+        A_Admin.SetPlayerBattleNetInfo("Malfurion#1234", 42, nil, false, false, true, false, false, true)
+        assert(BNFeaturesEnabled() and not BNConnected())
+        FriendsFrame_CheckBattlenetStatus()
+        assert(FriendsFrameBattlenetFrame.UnavailableLabel:IsShown())
+        assert(not FriendsFrameBattlenetFrame.Tag:IsShown())
+        local menu = setmetatable({}, { __index = SocialUIBattleNetMenuButtonMixin })
+        assert(not menu:ShouldShowBroadcastMenuOption())
+
+        A_Admin.SetPlayerBattleNetInfo("Malfurion#1234", 42, nil, false, false, true, false, true, true)
+        assert(BNFeaturesEnabled() and BNConnected())
+        FriendsFrame_CheckBattlenetStatus()
+        assert(FriendsFrameBattlenetFrame.Tag:IsShown())
+        assert(menu:ShouldShowBroadcastMenuOption())
+        "#,
+    )
+    .expect("selected FriendsFrame, QuickJoin, and SocialUI paths follow supplied connection state");
+}
+
 fn supply_social_restrictions(env: &WowLuaEnv, muted: bool, age_restricted: bool, disabled: bool) {
     let mut sim = env.state().borrow_mut();
     sim.social_restrictions.is_muted = muted;
@@ -49,6 +82,16 @@ fn original_social_settings_reads_chat_restrictions() {
 }
 
 const COMMUNITIES_CHAT_ACCESSIBILITY_SCRIPT: &str = r#"
+        assert(C_AddOns.IsAddOnLoaded("Blizzard_Communities"), "profile TOC selected Communities")
+        assert(C_AddOns.IsAddOnLoaded("Blizzard_CommunitiesSecure"), "profile TOC selected create-club dialog")
+        A_Admin.SetClubTypeAllowed(Enum.ClubType.BattleNet, false)
+        CommunitiesAddDialog:SetAttribute("setshown", true)
+        assert(not CommunitiesAddDialog.CreateBattleNetGroupButton:IsEnabled())
+        A_Admin.SetClubTypeAllowed(Enum.ClubType.BattleNet, true)
+        CommunitiesAddDialog:SetAttribute("setshown", false)
+        CommunitiesAddDialog:SetAttribute("setshown", true)
+        assert(CommunitiesAddDialog.CreateBattleNetGroupButton:IsEnabled())
+        CommunitiesAddDialog:SetAttribute("setshown", false)
         local addedClubs = {}
         local listener = CreateFrame("Frame")
         listener:RegisterEvent("CLUB_ADDED")
@@ -198,9 +241,48 @@ fn admin_supplies_allowed_community_types() {
         assert(not C_Club.ShouldAllowClubType(Enum.ClubType.Other))
         A_Admin.SetClubTypeAllowed(Enum.ClubType.Character, false)
         assert(not C_Club.ShouldAllowClubType(Enum.ClubType.Character))
+        A_Admin.SetClubTypeAllowed(Enum.ClubType.Guild, false)
+        assert(C_Club.ShouldAllowClubType(Enum.ClubType.Guild))
+        A_Admin.SetClubTypeAllowed(Enum.ClubType.Other, true)
+        assert(not C_Club.ShouldAllowClubType(Enum.ClubType.Other))
+        A_Admin.SetClubTypeAllowed(9999, true)
+        assert(not C_Club.ShouldAllowClubType(9999))
         "#,
     )
-    .expect("admin supplies the allowed community types");
+    .expect("Guild and Other policy overrides supplied club-type state");
+}
+
+#[test]
+fn battle_net_globals_follow_supplied_connection_and_account_state() {
+    let env = WowLuaEnv::new().expect("Lua environment should initialize");
+    env.exec(
+        r#"
+        assert(BNFeaturesEnabled() == true)
+        assert(BNConnected() == false)
+        assert(BNFeaturesEnabledAndConnected() == false)
+        assert(select(string.char(35), BNGetInfo()) == 0)
+
+        A_Admin.SetPlayerBattleNetInfo("Malfurion#1234", 42, nil, false, false, true, false, true, true)
+        assert(BNConnected() == true)
+        assert(BNFeaturesEnabledAndConnected() == true)
+        assert(select(string.char(35), BNGetInfo()) == 8)
+        local _, tag = BNGetInfo()
+        assert(tag == "Malfurion#1234")
+
+        A_Admin.SetPlayerBattleNetInfo(nil, 42, nil, false, false, true, false, true, true)
+        local count, _, tag = select(string.char(35), BNGetInfo()), BNGetInfo()
+        assert(count == 8 and tag == nil)
+        A_Admin.SetPlayerBattleNetInfo("", 42, nil, false, false, true, false, true, true)
+        local _, emptyTag = BNGetInfo()
+        assert(emptyTag == "")
+
+        A_Admin.SetPlayerBattleNetInfo("Malfurion#1234", 42, nil, false, false, true, false, true, false)
+        assert(BNFeaturesEnabled() == false)
+        assert(BNConnected() == false)
+        assert(select(string.char(35), BNGetInfo()) == 0)
+        "#,
+    )
+    .expect("Battle.net globals follow supplied account and connection state");
 }
 
 #[test]

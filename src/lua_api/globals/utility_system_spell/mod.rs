@@ -399,29 +399,26 @@ pub fn is_public_build(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-/// BNFeaturesEnabled() follows the supplied local account identity on Retail/Forever.
+/// INFERRED R88fi: BNFeaturesEnabled follows the supplied connection mode.
 pub fn bn_features_enabled(state: &mut LuaState) -> LuaResult<u32> {
     let enabled = player_bnet_features_enabled(state)?;
     state.push(Val::Bool(enabled));
     Ok(1)
 }
 
-/// BNFeaturesEnabledAndConnected() uses the simulator's connected identity projection.
+/// INFERRED R88fi: connected aliases the features-enabled connection predicate.
 pub fn bn_features_enabled_and_connected(state: &mut LuaState) -> LuaResult<u32> {
-    let enabled = player_bnet_features_enabled(state)?;
-    state.push(Val::Bool(enabled));
+    let connected = player_bnet_connected(state)?;
+    state.push(Val::Bool(connected));
     Ok(1)
 }
 
-/// INFERRED from the supplied identity scenario; native evidence is pending (R88fi (native evidence pending)).
 fn player_bnet_features_enabled(state: &mut LuaState) -> LuaResult<bool> {
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     {
-        let has_identity = !crate::lua_api::methods::borrow_state(state)?
-            .player_bnet_info
-            .battle_tag
-            .is_empty();
-        return Ok(has_identity);
+        return Ok(crate::lua_api::methods::borrow_state(state)?
+            .bnet_connection
+            .features_enabled);
     }
     #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     {
@@ -430,9 +427,29 @@ fn player_bnet_features_enabled(state: &mut LuaState) -> LuaResult<bool> {
     }
 }
 
-/// BNConnected() — always true (sim pretends connected).
+fn player_bnet_connected(state: &mut LuaState) -> LuaResult<bool> {
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    {
+        let connection = crate::lua_api::methods::borrow_state(state)?.bnet_connection;
+        return Ok(connection.features_enabled && connection.connected);
+    }
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+    {
+        let _ = state;
+        Ok(false)
+    }
+}
+
+/// INFERRED R88fi: BNConnected aliases BNFeaturesEnabledAndConnected on Retail/Forever.
 pub fn bn_connected(state: &mut LuaState) -> LuaResult<u32> {
-    state.push(Val::Bool(true));
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let connected = player_bnet_connected(state)?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+    let connected = {
+        let _ = state;
+        true
+    };
+    state.push(Val::Bool(connected));
     Ok(1)
 }
 

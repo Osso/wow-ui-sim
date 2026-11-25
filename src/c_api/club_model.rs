@@ -3,7 +3,6 @@
 //! not prescribe its Lua representation. Numeric selectors are not retained.
 use std::collections::{BTreeMap, BTreeSet};
 
-use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::state::GuildMember;
 
 pub const OWNER: u8 = 1;
@@ -210,11 +209,7 @@ impl Default for ClubState {
 }
 
 fn default_allowed_club_types() -> BTreeSet<i32> {
-    let mut allowed = BTreeSet::from([0, 1]);
-    if ACTIVE == ClientProfile::Retail {
-        allowed.insert(2);
-    }
-    allowed
+    BTreeSet::from([0, 1])
 }
 
 impl ClubState {

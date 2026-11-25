@@ -2,19 +2,21 @@
 
 These setters supply local account data for Retail and WoW Forever scenarios. Values do not connect to Battle.net or change a real account.
 
-## `A_Admin.SetPlayerBattleNetInfo(battleTag[, accountID[, broadcastText[, isAFK[, isDND[, isRealIDEnabled[, isAppearOffline]]]]]])`
+## `A_Admin.SetPlayerBattleNetInfo(battleTag[, accountID[, broadcastText[, isAFK[, isDND[, isRealIDEnabled[, isAppearOffline[, connected[, featuresEnabled]]]]]]]])`
 
-Supplies the local identity returned by legacy `BNGetInfo()`.
+Supplies the local account record and connection state used by legacy Battle.net globals. Calling this setter supplies an account record; omit the call to model no account. Values do not connect to Battle.net or change a real account.
 
-- `battleTag`: required BattleTag string.
+- `battleTag`: string or nil. Nil models a null record string; an empty string remains an empty string.
 - `accountID`: numeric Battle.net account ID; defaults to `0`.
 - `broadcastText`: account broadcast text; defaults to an empty string.
 - `isAFK`, `isDND`, `isRealIDEnabled`, `isAppearOffline`: booleans; default to `false`.
+- `connected`: supplied connectivity gate; defaults to `false`.
+- `featuresEnabled`: supplied connection-mode gate; defaults to `true` (normal mode).
 
-**INFERRED (`R88fi (native evidence pending)`):** `BNGetInfo()` returns, in order, nil deprecated presence ID, BattleTag, account ID, broadcast text, AFK, DND, Real ID enabled, and appear offline. On Retail/Forever, a non-empty supplied BattleTag enables the legacy `BNFeaturesEnabled()` consumer path.
+**INFERRED — R88fi, Retail 12.1.5.70688 and Forever 1.60.1.70707:** `BNFeaturesEnabled()` reads `featuresEnabled`; it does not require an active connection. `BNConnected()` and `BNFeaturesEnabledAndConnected()` return the same `featuresEnabled and connected` predicate. `BNGetInfo()` returns no values when features are disabled or no account record was supplied. Otherwise it returns, in order, nil deprecated presence ID, BattleTag, account ID, broadcast text, AFK, DND, Real ID enabled, and appear offline. The BattleTag is nil only when the supplied record string is nil; an empty string remains a string.
 
 ```lua
-A_Admin.SetPlayerBattleNetInfo("Malfurion#1234", 42)
+A_Admin.SetPlayerBattleNetInfo("Malfurion#1234", 42, nil, nil, nil, nil, nil, true, true)
 local _, battleTag = BNGetInfo()
 -- battleTag == "Malfurion#1234"
 ```
