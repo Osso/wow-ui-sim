@@ -332,15 +332,17 @@ fn bind_timer_container_handle(state: &mut LuaState, container: Val, handle: Val
     Ok(())
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn registration_result(state: &mut LuaState, id: u64, callback: Val) -> LuaResult<(Val, Val)> {
     let handle = create_timer_handle_table(state, id)?;
-    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
-    {
-        let proxy = create_timer_container_proxy(state, callback)?;
-        bind_timer_container_handle(state, callback, handle)?;
-        Ok((callback, proxy))
-    }
-    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+    let proxy = create_timer_container_proxy(state, callback)?;
+    bind_timer_container_handle(state, callback, handle)?;
+    Ok((callback, proxy))
+}
+
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+fn registration_result(state: &mut LuaState, id: u64, _callback: Val) -> LuaResult<(Val, Val)> {
+    let handle = create_timer_handle_table(state, id)?;
     Ok((handle, handle))
 }
 
