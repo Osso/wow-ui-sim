@@ -5,10 +5,10 @@
 ## What it must do
 
 - [x] Show supplied listings in the original Blizzard panel.
-- [x] VERIFIED (R88em): `GetHotItem` returns one of the current listings; the supplied `hotItemMarketID` selects that listing by its market ID.
-- [x] VERIFIED (R88em; Retail consumer `Blizzard_BlackMarketUI.lua:171, 228, 236-244`): the original UI carries `marketID` through its `selectedMarketID`/`auctionID` fields into `GetItemInfoByID` and `ItemPlaceBid`, so the simulator resolves those calls by `marketID` despite the native reconstruction's generic “item ID” wording.
-- [x] VERIFIED (R88em): reject bids for missing listings, nonpositive remaining-time status, or amounts below `max(minBid, currBid + minIncrement)` without changing listing state.
-- [x] VERIFIED (R88em): outside a market interaction, `GetNumItems`, `IsViewOnly`, and item getters return no values; `RequestItems` requires an interaction and returns no values.
+- [x] INFERRED (R88em, Retail 12.1.5.70688 and Forever 1.60.1.70707): `GetHotItem` returns one of the current listings; the supplied `hotItemMarketID` selects that listing by its market ID.
+- [x] INFERRED (R88em, Retail 12.1.5.70688 and Forever 1.60.1.70707; Retail consumer `Blizzard_BlackMarketUI.lua:171, 228, 236-244`): the original UI carries `marketID` through its `selectedMarketID`/`auctionID` fields into `GetItemInfoByID` and `ItemPlaceBid`, so the simulator resolves those calls by `marketID` despite the native reconstruction's generic “item ID” wording.
+- [x] INFERRED (R88em, Retail 12.1.5.70688 and Forever 1.60.1.70707): reject bids for missing listings, nonpositive remaining-time status, or amounts below `max(minBid, currBid + minIncrement)` without changing listing state.
+- [x] INFERRED (R88em, Retail 12.1.5.70688 and Forever 1.60.1.70707): outside a market interaction, `GetNumItems`, `IsViewOnly`, and item getters return no values; `RequestItems` requires an interaction and returns no values.
 - [x] INFERRED (R88em): `A_Admin.SetBlackMarketState` simulates `BLACK_MARKET_OPEN` and starts the interaction, which remains open until `Close`.
 - [x] Dispatch `BLACK_MARKET_BID_RESULT(marketID, resultCode)` for each bid. **INFERRED (R88em; native evidence pending):** `0` means success, `1` means below minimum, and `2` means the market ID is unknown.
 - [x] Respect the supplied view-only flag by hiding the Blizzard bid controls.

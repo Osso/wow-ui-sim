@@ -7,7 +7,7 @@ pub struct NavigationTarget {
     pub state: i32,
     /// INFERRED, R88ff (native evidence pending): scenario distance in yards.
     pub distance: f64,
-    /// R88ff VERIFIED: the query returns this stored Boolean.
+    /// VERIFIED (Retail 12.1.5.70688; R88ff): the query publishes this stored Boolean.
     pub clamped: bool,
     /// INFERRED, R88ff (native evidence pending): supplied screen coordinates.
     pub screen_x: f64,

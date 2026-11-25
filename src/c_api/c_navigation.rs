@@ -118,21 +118,24 @@ fn publish_navigation_lifecycle(state: &mut LuaState, created: bool) -> LuaResul
 }
 
 fn get_distance(state: &mut LuaState) -> LuaResult<u32> {
-    // R88ff VERIFIED: the native getter publishes one float; scenario values are inferred.
+    // VERIFIED (Retail 12.1.5.70688, Forever 1.60.1.70707; R88ff): one number is published.
+    // UNKNOWN (R88ff): unit and no-target value; 0.0 without a target is a simulator choice.
     let distance = navigation_target(state)?.map_or(0.0, |target| target.distance);
     state.push(Val::Num(distance));
     Ok(1)
 }
 
 fn get_target_state(state: &mut LuaState) -> LuaResult<u32> {
-    // R88ff VERIFIED: the native getter publishes one integer; state selection is inferred.
+    // VERIFIED (Retail 12.1.5.70688; R88ff): one integer is published (Forever arity unknown).
+    // UNKNOWN (R88ff): state selection; INVALID without a target is a simulator choice.
     let value = navigation_target(state)?.map_or(INVALID, |target| target.state);
     state.push(Val::Num(f64::from(value)));
     Ok(1)
 }
 
 fn has_valid_screen_position(state: &mut LuaState) -> LuaResult<u32> {
-    // R88ff VERIFIED: either stored coordinate may establish a valid position.
+    // VERIFIED (Retail 12.1.5.70688, Forever body 1.60.1.70707; R88ff): either coordinate
+    // may establish validity. UNKNOWN (R88ff): Forever publication and no-target value.
     let valid = navigation_target(state)?.is_some_and(|target| {
         target.screen_x.abs() >= MIN_VALID_SCREEN_COORDINATE
             || target.screen_y.abs() >= MIN_VALID_SCREEN_COORDINATE
@@ -142,7 +145,8 @@ fn has_valid_screen_position(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn was_clamped(state: &mut LuaState) -> LuaResult<u32> {
-    // R88ff VERIFIED: expose the stored clamped Boolean.
+    // VERIFIED (Retail 12.1.5.70688; R88ff): a stored byte is published as a Boolean.
+    // UNKNOWN (R88ff): Forever publication, clamp producer and no-target value.
     let clamped = navigation_target(state)?.is_some_and(|target| target.clamped);
     state.push(Val::Bool(clamped));
     Ok(1)
@@ -164,7 +168,8 @@ fn get_frame(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn get_next_waypoint_for_map(_state: &mut LuaState) -> LuaResult<u32> {
-    // R88ff VERIFIED: no-waypoint failure returns zero values, not a nil tuple.
+    // VERIFIED (Forever 1.60.1.70707; R88ff): the query-failure branch publishes zero values.
+    // UNKNOWN (Retail 12.1.5.70688; R88ff): no-route result. Waypoint routes are not modeled.
     Ok(0)
 }
 

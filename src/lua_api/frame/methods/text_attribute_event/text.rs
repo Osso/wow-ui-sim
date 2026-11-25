@@ -282,7 +282,8 @@ fn update_text_frame(
         frame.text_stripped = stripped_text.clone();
         frame.text_segments.clear();
         if editbox_text_changed {
-            // INFERRED (R88et): MoneyInputFrame reads its caller-updated counter later.
+            // INFERRED (R88et-b): consumer counter evidence cannot tell deferred delivery from suppression;
+            // the simulator defers OnTextChanged so MoneyInputFrame reads its caller-updated counter.
             frame.mark_editbox_text_changed(Some(false));
         }
         if editbox_text_storage_changed {
