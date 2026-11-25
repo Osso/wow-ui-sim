@@ -33,6 +33,9 @@ pub(super) fn register_small_namespaces(state: &mut LuaState) -> LuaResult<()> {
     }
     register_flat_namespace(state, "C_Bank", C_BANK_METHODS)?;
     register_flat_namespace(state, "C_NewItems", C_NEW_ITEMS_METHODS)?;
+    if !crate::client_profile::ACTIVE.uses_vignette_info_model() {
+        register_flat_namespace(state, "C_VignetteInfo", C_VIGNETTE_INFO_METHODS)?;
+    }
 
     register_flat_namespace(state, "C_Console", C_CONSOLE_METHODS)?;
     register_flat_namespace(state, "C_Covenants", C_COVENANTS_METHODS)?;
@@ -171,6 +174,11 @@ const C_NEW_ITEMS_METHODS: &[(&'static str, rilua::vm::closure::RustFn)] = &[
     ("IsNewItem", c_new_items_is_new_item),
     ("RemoveNewItem", c_new_items_remove_new_item),
     ("ClearAll", c_new_items_clear_all),
+];
+
+const C_VIGNETTE_INFO_METHODS: &[(&'static str, rilua::vm::closure::RustFn)] = &[
+    ("GetVignettes", c_vignette_info_get_vignettes),
+    ("GetVignetteInfo", c_vignette_info_get_vignette_info),
 ];
 
 const C_EVENT_UTILS_METHODS: &[(&'static str, rilua::vm::closure::RustFn)] = &[
@@ -326,6 +334,16 @@ fn c_new_items_remove_new_item(_state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn c_new_items_clear_all(_state: &mut LuaState) -> LuaResult<u32> {
+    Ok(0)
+}
+
+fn c_vignette_info_get_vignettes(state: &mut LuaState) -> LuaResult<u32> {
+    let vignettes = create_table(state);
+    state.push(vignettes);
+    Ok(1)
+}
+
+fn c_vignette_info_get_vignette_info(_state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 

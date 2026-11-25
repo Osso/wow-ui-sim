@@ -106,7 +106,6 @@ pub mod ui_widget_manager;
 pub mod video_capabilities;
 pub(crate) mod video_texture_capability;
 pub(crate) mod video_window;
-#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub(crate) mod vignette_info;
 #[cfg(feature = "client-wrath")]
 pub mod who_routing;

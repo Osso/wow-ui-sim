@@ -94,6 +94,11 @@ impl ClientProfile {
         }
     }
 
+    /// Retail and Forever use the supplied C_VignetteInfo model.
+    pub const fn uses_vignette_info_model(self) -> bool {
+        matches!(self, Self::Retail | Self::WowForever)
+    }
+
     /// Retail and Forever use the generated tracked Mythic+ season-map rows.
     pub const fn uses_tracked_season_maps(self) -> bool {
         matches!(self, Self::Retail | Self::WowForever)

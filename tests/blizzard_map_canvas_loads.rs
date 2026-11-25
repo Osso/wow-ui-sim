@@ -159,14 +159,14 @@ local function row(guid, mapPin, x, y, atlas)
     rewardQuestID=0, mapPin=mapPin }
 end
 A_Admin.SetVignettes({row("V1", nil, 0.2, 0.3, "TaxiNode"),
-  row("V2", {button={}, buttonSelected={}, underlay="", outerGlow=""}, 0.7, 0.8, "TaxiNode")})
+  row("V2", {button={}, buttonSelected={}, underlay="", outerGlow=""}, 0.7, 0.8, "QuestNormal")})
 local a = WorldMapFrame:EnumeratePinsByTemplate("VignettePinTemplate")()
 local b = WorldMapFrame:EnumeratePinsByTemplate("VignettePinPOIButtonTemplate")()
 assert(a and b and a.vignetteGUID == "V1" and b.vignetteGUID == "V2")
-assert(a.vignetteInfo.atlasName == "TaxiNode" and b.vignetteInfo.atlasName == "TaxiNode")
+assert(a.vignetteInfo.atlasName == "TaxiNode" and b.vignetteInfo.atlasName == "QuestNormal")
 local ax, ay = a:GetPosition(); local bx, by = b:GetPosition()
 assert(math.abs(ax - 0.2) < 0.001 and math.abs(ay - 0.3) < 0.001 and math.abs(bx - 0.7) < 0.001 and math.abs(by - 0.8) < 0.001)
-A_Admin.SetVignettes({row("V2", {button={}, buttonSelected={}, underlay="", outerGlow=""}, 0.7, 0.8, "TaxiNode")})
+A_Admin.SetVignettes({row("V2", {button={}, buttonSelected={}, underlay="", outerGlow=""}, 0.7, 0.8, "QuestNormal")})
 assert(WorldMapFrame:GetNumActivePinsByTemplate("VignettePinTemplate") == 0)
 assert(WorldMapFrame:GetNumActivePinsByTemplate("VignettePinPOIButtonTemplate") == 1)
 "#;

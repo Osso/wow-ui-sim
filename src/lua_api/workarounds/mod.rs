@@ -96,6 +96,10 @@ const POST_LOAD_WORKAROUNDS: &[WorkaroundStep] = &[
         apply: patch_character_frame_title_refresh,
     },
     WorkaroundStep {
+        label: "patch_vignette_pin_template",
+        apply: patch_vignette_pin_template,
+    },
+    WorkaroundStep {
         label: "patch_fog_of_war_pin_mixin",
         apply: patch_fog_of_war_pin_mixin,
     },

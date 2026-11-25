@@ -300,8 +300,8 @@ pub(crate) fn register_map_prefix_tables(state: &mut LuaState) -> LuaResult<()> 
     ) {
         super::c_contribution_collector::register(state)?;
         super::c_taxi_map::register(state)?;
-        super::vignette_info::register(state)?;
     }
+    super::vignette_info::register(state)?;
     Ok(())
 }
 

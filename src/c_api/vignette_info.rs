@@ -3,7 +3,7 @@
 use std::collections::BTreeMap;
 
 use crate::c_api::helpers::{ensure_namespace, set_table_array};
-use crate::client_profile::{ACTIVE, ClientProfile};
+use crate::client_profile::ACTIVE;
 use crate::lua_api::methods::{
     borrow_state, borrow_state_mut, call_function_state, create_string, create_table, table_get,
     table_set, val_to_string,
@@ -51,7 +51,7 @@ const FIELDS: &[&str] = &[
 ];
 
 fn enabled() -> bool {
-    matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever)
+    ACTIVE.uses_vignette_info_model()
 }
 
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {

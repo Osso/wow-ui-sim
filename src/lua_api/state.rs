@@ -927,7 +927,6 @@ macro_rules! build_empty_sim_state {
             maps: default_maps(),
             #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
             contribution_collectors: Default::default(),
-            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
             vignettes: crate::c_api::vignette_info::VignetteState::default(),
             #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
             taxi_map: Default::default(),

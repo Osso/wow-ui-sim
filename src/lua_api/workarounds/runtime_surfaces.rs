@@ -17,6 +17,12 @@ pub(super) fn patch_uiparent_onupdate_worklists(env: &crate::lua_api::WowLuaEnv)
     temporary::uiparent_onupdate_worklists::patch(env);
 }
 
+pub(super) fn patch_vignette_pin_template(env: &crate::lua_api::WowLuaEnv) {
+    if !crate::client_profile::ACTIVE.uses_vignette_info_model() {
+        temporary::vignette_pin_template::patch(env);
+    }
+}
+
 #[cfg(not(feature = "client-retail"))]
 pub(super) fn patch_character_select_selected_name(env: &crate::lua_api::WowLuaEnv) {
     temporary::character_select_selected_name::patch(env);
