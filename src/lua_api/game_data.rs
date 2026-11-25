@@ -284,7 +284,7 @@ fn apply_player_aura_spell(
 fn replace_player_aura(
     state: &std::rc::Rc<std::cell::RefCell<super::state::SimState>>,
     spell_id: u32,
-    spell: &crate::spell_lookup::SpellInfo,
+    spell: &crate::spells::SpellInfo,
 ) {
     let mut sim = state.borrow_mut();
     let aura_instance_id = existing_or_next_player_aura_instance_id(&sim, spell_id);
@@ -298,7 +298,7 @@ fn replace_player_aura(
 
 fn player_aura_info(
     spell_id: u32,
-    spell: &crate::spell_lookup::SpellInfo,
+    spell: &crate::spells::SpellInfo,
     aura_instance_id: i32,
 ) -> AuraInfo {
     AuraInfo {
