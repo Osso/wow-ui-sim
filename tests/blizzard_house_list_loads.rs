@@ -435,21 +435,29 @@ fn blizzard_house_list_registers_view_houses_list_recieved_event_on_show(env: &W
 }
 }
 
-prefork_full_ui_case! {
-fn blizzard_house_list_dependency_loads_via_game_screen_pass(env: &WowLuaEnv) {
-    load_house_list(env);
+fn verify_house_finder_scenario(env: &WowLuaEnv) {
+    load_addon(&env.loader_env(), &house_finder_toc()).expect("original House Finder addon loads");
+    env.exec(SUPPLY_NEIGHBORHOODS).expect("supply distinct neighborhoods");
+    env.exec("ShowUIPanel(HouseFinderFrame); C_Housing.HouseFinderRequestNeighborhoods()")
+        .expect("open the original frame and request its list");
+    env.process_timers().expect("neighborhood reply dispatches asynchronously");
+    let selected: String = env.eval(SELECT_SECOND_NEIGHBORHOOD)
+        .expect("original frame selects supplied neighborhood");
+    assert_eq!(selected, "Amber Vale/Cobalt Reach;82");
+    env.process_timers().expect("plot reply dispatches asynchronously");
+    let plots: i64 = env.eval("return #HouseFinderFrame.mapDataProvider.houseMapData")
+        .expect("original map provider stores selected plots");
+    assert_eq!(plots, 1);
+}
 
+prefork_full_ui_case! {
+fn supplied_house_finder_neighborhoods_and_plots_reach_original_consumer(env: &WowLuaEnv) {
+    load_house_list(env);
+    verify_house_finder_scenario(env);
     let templates_loaded: bool = env
         .eval("return C_AddOns.IsAddOnLoaded('Blizzard_HousingTemplates')")
         .expect("IsAddOnLoaded query should succeed");
-    assert!(
-        templates_loaded,
-        "Blizzard_HousingTemplates must be loaded by the Game-screen auto-discovery pass before \
-         the explicit HouseList LoD load runs. HousingTemplates is the only `## Dependencies` \
-         entry on HouseList's TOC, and the test harness's full Game-screen pass hits it via the \
-         normal discovery flow because HousingTemplates is itself non-LoD with `## AllowLoad: \
-         Both` semantics"
-    );
+    assert!(templates_loaded, "HouseList dependency remains loaded via Game-screen discovery");
 }
 }
 
@@ -471,19 +479,3 @@ fn blizzard_house_list_publishes_no_event_listeners_before_show(env: &WowLuaEnv)
 }
 }
 
-prefork_full_ui_case! {
-fn supplied_house_finder_neighborhoods_and_plots_reach_original_consumer(env: &WowLuaEnv) {
-    load_addon(&env.loader_env(), &house_finder_toc()).expect("original House Finder addon loads");
-    env.exec(SUPPLY_NEIGHBORHOODS).expect("supply distinct neighborhoods");
-    env.exec("ShowUIPanel(HouseFinderFrame); C_Housing.HouseFinderRequestNeighborhoods()")
-        .expect("open the original frame and request its list");
-    env.process_timers().expect("neighborhood reply dispatches asynchronously");
-    let selected: String = env.eval(SELECT_SECOND_NEIGHBORHOOD)
-        .expect("original frame selects supplied neighborhood");
-    assert_eq!(selected, "Amber Vale/Cobalt Reach;82");
-    env.process_timers().expect("plot reply dispatches asynchronously");
-    let plots: i64 = env.eval("return #HouseFinderFrame.mapDataProvider.houseMapData")
-        .expect("original map provider stores selected plots");
-    assert_eq!(plots, 1);
-}
-}
