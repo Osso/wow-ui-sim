@@ -1,9 +1,6 @@
 #![cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 
-#[path = "common/mod.rs"]
-mod common;
-
-use common::blizzard_addon_harness::{
+use crate::common::blizzard_addon_harness::{
     blizzard_ui_dir, load_blizzard_addon_closure_into_env, new_blizzard_addon_env,
 };
 use wow_ui_sim::loader::load_addon;
