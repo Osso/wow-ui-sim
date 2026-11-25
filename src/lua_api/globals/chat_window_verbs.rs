@@ -20,6 +20,7 @@
 //! Registered from `register_tail_globals` after `missing_surface`.
 
 use crate::lua_api::methods::{borrow_state_mut, create_string, create_table};
+use crate::lua_api::state::ChatWindow;
 use crate::lua_bridge::{FromStack, stack_val};
 use rilua::vm::state::LuaState;
 use rilua::{LuaApiMut, LuaResult, Val};
@@ -59,7 +60,9 @@ fn window_entry<'a>(
     index: i32,
 ) -> LuaResult<std::cell::RefMut<'a, crate::lua_api::SimState>> {
     let mut st = borrow_state_mut(state)?;
-    st.chat_windows.entry(index).or_default();
+    st.chat_windows
+        .entry(index)
+        .or_insert_with(|| ChatWindow::for_index(index));
     Ok(st)
 }
 
@@ -191,6 +194,148 @@ fn change_chat_color(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn set_chat_window_name(state: &mut LuaState) -> LuaResult<u32> {
+    let Some(index) = stack_i32(state, 1) else {
+        return Ok(0);
+    };
+    let Some(name) = Option::<String>::from_stack(state, 2).ok().flatten() else {
+        return Ok(0);
+    };
+    window_entry(state, index)?
+        .chat_windows
+        .get_mut(&index)
+        .unwrap()
+        .name = name;
+    Ok(0)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn set_chat_window_shown(state: &mut LuaState) -> LuaResult<u32> {
+    let Some(index) = stack_i32(state, 1) else {
+        return Ok(0);
+    };
+    let shown = matches!(stack_val(state, 2), Val::Bool(true));
+    window_entry(state, index)?
+        .chat_windows
+        .get_mut(&index)
+        .unwrap()
+        .shown = shown;
+    Ok(0)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn set_chat_window_docked(state: &mut LuaState) -> LuaResult<u32> {
+    let Some(index) = stack_i32(state, 1) else {
+        return Ok(0);
+    };
+    let docked = !matches!(stack_val(state, 2), Val::Nil);
+    window_entry(state, index)?
+        .chat_windows
+        .get_mut(&index)
+        .unwrap()
+        .docked = docked;
+    Ok(0)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn set_chat_window_saved_dimensions(state: &mut LuaState) -> LuaResult<u32> {
+    let Some(index) = stack_i32(state, 1) else {
+        return Ok(0);
+    };
+    let width = stack_f32(state, 2);
+    let height = stack_f32(state, 3);
+    let mut sim = window_entry(state, index)?;
+    let window = sim.chat_windows.get_mut(&index).unwrap();
+    window.saved_width = width;
+    window.saved_height = height;
+    Ok(0)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn get_chat_window_saved_dimensions(state: &mut LuaState) -> LuaResult<u32> {
+    let Some(index) = stack_i32(state, 1) else {
+        state.push(Val::Nil);
+        state.push(Val::Nil);
+        return Ok(2);
+    };
+    let (width, height) = {
+        let sim = borrow_state_mut(state)?;
+        let window = sim.chat_windows.get(&index);
+        (
+            window.and_then(|value| value.saved_width),
+            window.and_then(|value| value.saved_height),
+        )
+    };
+    state.push(width.map_or(Val::Nil, |n| Val::Num(n.into())));
+    state.push(height.map_or(Val::Nil, |n| Val::Num(n.into())));
+    Ok(2)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn set_chat_window_saved_position(state: &mut LuaState) -> LuaResult<u32> {
+    let Some(index) = stack_i32(state, 1) else {
+        return Ok(0);
+    };
+    let point = Option::<String>::from_stack(state, 2).ok().flatten();
+    let x_offset = stack_f32(state, 3);
+    let y_offset = stack_f32(state, 4);
+    let mut sim = window_entry(state, index)?;
+    let window = sim.chat_windows.get_mut(&index).unwrap();
+    window.saved_point = point;
+    window.saved_x_offset = x_offset;
+    window.saved_y_offset = y_offset;
+    Ok(0)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn get_chat_window_saved_position(state: &mut LuaState) -> LuaResult<u32> {
+    let Some(index) = stack_i32(state, 1) else {
+        state.push(Val::Nil);
+        state.push(Val::Nil);
+        state.push(Val::Nil);
+        return Ok(3);
+    };
+    let (point, x_offset, y_offset) = {
+        let sim = borrow_state_mut(state)?;
+        let window = sim.chat_windows.get(&index);
+        (
+            window.and_then(|value| value.saved_point.clone()),
+            window.and_then(|value| value.saved_x_offset),
+            window.and_then(|value| value.saved_y_offset),
+        )
+    };
+    let point_value = point.map_or(Val::Nil, |value| create_string(state, &value));
+    state.push(point_value);
+    state.push(x_offset.map_or(Val::Nil, |n| Val::Num(n.into())));
+    state.push(y_offset.map_or(Val::Nil, |n| Val::Num(n.into())));
+    Ok(3)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn get_chat_window_info(state: &mut LuaState) -> LuaResult<u32> {
+    let index = stack_i32(state, 1).unwrap_or(1);
+    let window = {
+        let sim = borrow_state_mut(state)?;
+        sim.chat_windows.get(&index).cloned()
+    }
+    .unwrap_or_else(|| ChatWindow::for_index(index));
+    let name = create_string(state, &window.name);
+    state.push(name);
+    for value in [window.font_size, window.r, window.g, window.b, window.alpha] {
+        state.push(Val::Num(value.into()));
+    }
+    for value in [
+        window.shown,
+        window.locked,
+        window.docked,
+        window.uninteractable,
+    ] {
+        state.push(Val::Bool(value));
+    }
+    Ok(10)
+}
+
 fn push_string_list(state: &mut LuaState, items: Vec<String>) -> LuaResult<u32> {
     let table = create_table(state);
     let Val::Table(table_ref) = table else {
@@ -257,5 +402,36 @@ pub fn register_all(lua: &mut rilua::Lua) -> crate::Result<()> {
     LuaApiMut::register_function(lua, "ChangeChatColor", change_chat_color)?;
     LuaApiMut::register_function(lua, "GetChatWindowChannels", get_chat_window_channels)?;
     LuaApiMut::register_function(lua, "GetChatWindowMessages", get_chat_window_messages)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    register_chat_window_layout_verbs(lua)?;
+    Ok(())
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn register_chat_window_layout_verbs(lua: &mut rilua::Lua) -> crate::Result<()> {
+    LuaApiMut::register_function(lua, "GetChatWindowInfo", get_chat_window_info)?;
+    LuaApiMut::register_function(lua, "SetChatWindowName", set_chat_window_name)?;
+    LuaApiMut::register_function(lua, "SetChatWindowShown", set_chat_window_shown)?;
+    LuaApiMut::register_function(lua, "SetChatWindowDocked", set_chat_window_docked)?;
+    LuaApiMut::register_function(
+        lua,
+        "GetChatWindowSavedDimensions",
+        get_chat_window_saved_dimensions,
+    )?;
+    LuaApiMut::register_function(
+        lua,
+        "SetChatWindowSavedDimensions",
+        set_chat_window_saved_dimensions,
+    )?;
+    LuaApiMut::register_function(
+        lua,
+        "GetChatWindowSavedPosition",
+        get_chat_window_saved_position,
+    )?;
+    LuaApiMut::register_function(
+        lua,
+        "SetChatWindowSavedPosition",
+        set_chat_window_saved_position,
+    )?;
     Ok(())
 }

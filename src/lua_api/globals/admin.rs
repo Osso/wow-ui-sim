@@ -147,6 +147,7 @@ fn register_admin_client_metrics(builder: TableBuilder) -> LuaResult<TableBuilde
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn register_admin_modeled_services(builder: TableBuilder) -> LuaResult<TableBuilder> {
+    let builder = super::admin_chat_windows::register_admin(builder)?;
     let builder = crate::c_api::c_behavioral_messaging::register_admin(builder)?;
     let builder = super::real::input_interface::register_admin(builder)?;
     let builder = crate::c_api::c_quest_log::register_zone_story_admin(builder)?;

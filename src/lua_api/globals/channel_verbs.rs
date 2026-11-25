@@ -177,7 +177,10 @@ fn join_permanent_channel(state: &mut LuaState) -> LuaResult<u32> {
             }
         };
         if let Some(frame_id) = frame_id {
-            let window = sim.chat_windows.entry(frame_id).or_default();
+            let window = sim
+                .chat_windows
+                .entry(frame_id)
+                .or_insert_with(|| crate::lua_api::ChatWindow::for_index(frame_id));
             if window.channel_names.insert(name.clone()) {
                 window.channels.push(name.clone());
             }

@@ -111,6 +111,32 @@ fn add_and_remove_chat_window_messages_mutates_unique_groups() {
     assert_eq!(w.messages, vec!["SAY".to_string()]);
 }
 
+#[test]
+fn first_login_chat_windows_one_and_two_are_shown_and_docked() {
+    let env = env();
+    let states: (bool, bool, bool, bool, bool) = env
+        .eval("local _,_,_,_,_,_,s1,_,d1=GetChatWindowInfo(1); local _,_,_,_,_,_,s2,_,d2=GetChatWindowInfo(2); local _,_,_,_,_,_,s3=GetChatWindowInfo(3); return s1,d1,s2,d2,s3")
+        .unwrap();
+    assert_eq!(states, (true, true, true, true, false));
+}
+
+#[test]
+fn chat_window_layout_verbs_round_trip_distinct_records() {
+    let env = env();
+    env.exec(r#"SetChatWindowName(1, "General Probe"); SetChatWindowShown(1, true); SetChatWindowDocked(1, 1); SetChatWindowSavedDimensions(1, 410, 120); SetChatWindowSavedPosition(1, "BOTTOMLEFT", 0.1, 0.2); SetChatWindowName(2, "Combat Probe"); SetChatWindowShown(2, false); SetChatWindowDocked(2, nil); SetChatWindowSavedDimensions(2, 520, 240); SetChatWindowSavedPosition(2, "TOPRIGHT", 0.3, 0.4)"#).unwrap();
+    let values: (String, bool, bool, String, bool, bool) = env
+        .eval("local a=GetChatWindowInfo(1); local _,_,_,_,_,_,s1,_,d1=GetChatWindowInfo(1); local b=GetChatWindowInfo(2); local _,_,_,_,_,_,s2,_,d2=GetChatWindowInfo(2); return a,s1,d1,b,s2,d2")
+        .unwrap();
+    assert_eq!(values, ("General Probe".into(), true, true, "Combat Probe".into(), false, false));
+    let geometry: (f64, f64, String, f64, f64) = env.eval("local w,h=GetChatWindowSavedDimensions(2); local p,x,y=GetChatWindowSavedPosition(2); return w,h,p,x,y").unwrap();
+    assert_eq!((geometry.0, geometry.1, geometry.2.as_str()), (520.0, 240.0, "TOPRIGHT"));
+    assert!((geometry.3 - 0.3).abs() < 1e-6);
+    assert!((geometry.4 - 0.4).abs() < 1e-6);
+    let model = env.state().borrow();
+    assert_eq!(model.chat_windows[&1].name, "General Probe");
+    assert_eq!(model.chat_windows[&2].name, "Combat Probe");
+}
+
 // ── ChangeChatColor ───────────────────────────────────────────────────────────
 
 #[test]

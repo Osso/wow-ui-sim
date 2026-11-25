@@ -699,13 +699,21 @@ pub struct TradeState {
 /// `GetChatWindow*` verb family.
 #[derive(Debug, Clone)]
 pub struct ChatWindow {
+    pub name: String,
     pub font_size: f32,
     pub alpha: f32,
     pub r: f32,
     pub g: f32,
     pub b: f32,
+    pub shown: bool,
     pub locked: bool,
+    pub docked: bool,
     pub uninteractable: bool,
+    pub saved_width: Option<f32>,
+    pub saved_height: Option<f32>,
+    pub saved_point: Option<String>,
+    pub saved_x_offset: Option<f32>,
+    pub saved_y_offset: Option<f32>,
     /// Channels subscribed to this window, in insertion order.
     pub channels: Vec<String>,
     /// Channel membership mirror for idempotent insertion without scanning.
@@ -714,16 +722,35 @@ pub struct ChatWindow {
     pub messages: Vec<String>,
 }
 
+impl ChatWindow {
+    /// INFERRED R88g4 (native evidence pending): first-login General and Combat Log windows are shown and docked.
+    pub fn for_index(index: i32) -> Self {
+        Self {
+            shown: (1..=2).contains(&index),
+            docked: (1..=2).contains(&index),
+            ..Self::default()
+        }
+    }
+}
+
 impl Default for ChatWindow {
     fn default() -> Self {
         Self {
+            name: String::new(),
             font_size: 12.0,
-            alpha: 1.0,
-            r: 1.0,
-            g: 1.0,
-            b: 1.0,
+            alpha: 0.25,
+            r: 0.0,
+            g: 0.0,
+            b: 0.0,
+            shown: false,
             locked: false,
+            docked: false,
             uninteractable: false,
+            saved_width: None,
+            saved_height: None,
+            saved_point: None,
+            saved_x_offset: None,
+            saved_y_offset: None,
             channels: Vec::new(),
             channel_names: HashSet::new(),
             messages: Vec::new(),

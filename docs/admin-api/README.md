@@ -18,6 +18,7 @@ The `A_Admin` namespace provides administrative functions for controlling simula
 - [Kiosk session](kiosk.md) — SetKioskSession
 - [Communities](communities.md) — SetAccountMutedClub, SetClubTypeAllowed
 - [Contribution Collector](contribution-collector.md) — SetContributionCollectors
+- [Chat windows](chat-windows.md) — SetChatWindowState
 - [Voice chat](voice-chat.md) — SetCanPlayerUseVoiceChat
 - [Health & Power](health-power.md) — SetPlayerHealth, SetPlayerPower, SetTargetHealth
 - [Targeting](targeting.md) — SetTarget, ClearTarget, SetFocus, ClearFocus
