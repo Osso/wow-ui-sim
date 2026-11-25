@@ -25,7 +25,7 @@ use crate::lua_api::methods::{
 };
 #[cfg(feature = "retail-12-1-0")]
 use crate::lua_api::methods::{table_set_num, val_to_string};
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(any(feature = "retail-12-1-0", feature = "client-wowforever"))]
 use crate::lua_api::state_types::BnetFriendInvite;
 use crate::lua_api::state_types::{BnetFriend, BnetGameAccount};
 use crate::lua_bridge::{FromStack, table_set_rust_fn_static};
@@ -122,6 +122,13 @@ fn register_texture_methods(state: &mut LuaState, table_ref: BattleNetTable) -> 
 }
 
 fn register_friend_query_methods(state: &mut LuaState, table_ref: BattleNetTable) -> LuaResult<()> {
+    #[cfg(any(feature = "retail-12-1-0", feature = "client-wowforever"))]
+    table_set_rust_fn_static(
+        state,
+        table_ref,
+        "GetFriendInviteInfo",
+        c_bnet_get_friend_invite_info,
+    )?;
     #[cfg(feature = "retail-12-1-0")]
     register_patch_12_1_friend_query_methods(state, table_ref)?;
     table_set_rust_fn_static(state, table_ref, "InviteFriend", c_bnet_invite_friend)?;
@@ -172,12 +179,6 @@ fn register_patch_12_1_friend_query_methods(
         c_bnet_set_custom_title_friend_name,
     )?;
     table_set_rust_fn_static(state, table_ref, "SetFriendTags", c_bnet_set_friend_tags)?;
-    table_set_rust_fn_static(
-        state,
-        table_ref,
-        "GetFriendInviteInfo",
-        c_bnet_get_friend_invite_info,
-    )?;
     table_set_rust_fn_static(
         state,
         table_ref,
@@ -342,7 +343,7 @@ fn c_bnet_set_friend_tags(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(any(feature = "retail-12-1-0", feature = "client-wowforever"))]
 fn c_bnet_get_friend_invite_info(state: &mut LuaState) -> LuaResult<u32> {
     let invite_index = i32::from_stack(state, 1)?;
     let invite = {
@@ -386,7 +387,7 @@ fn c_bnet_send_verified_battle_net_friend_invite(state: &mut LuaState) -> LuaRes
     Ok(0)
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(any(feature = "retail-12-1-0", feature = "client-wowforever"))]
 fn friend_index_to_offset(friend_index: i32) -> usize {
     usize::try_from(friend_index - 1).unwrap_or(usize::MAX)
 }
@@ -464,7 +465,7 @@ fn current_unix_timestamp() -> i64 {
         .unwrap_or(0)
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(any(feature = "retail-12-1-0", feature = "client-wowforever"))]
 fn push_friend_invite_info_table(state: &mut LuaState, invite: &BnetFriendInvite) -> Val {
     let table = create_table(state);
     let account_name = create_string(state, &invite.account_name);

@@ -264,6 +264,10 @@ fn register_admin_social_names(builder: TableBuilder) -> LuaResult<TableBuilder>
         .set_function(
             "SetBattleNetAccountFeatures",
             crate::c_api::c_friend_list::set_battle_net_account_features,
+        )?
+        .set_function(
+            "SetBattleNetFriendInvite",
+            crate::c_api::c_friend_list::set_battle_net_friend_invite,
         )?;
     Ok(builder)
 }

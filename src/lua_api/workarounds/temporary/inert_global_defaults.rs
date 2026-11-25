@@ -14,6 +14,15 @@ if IsPlayerInWorld == nil then
 end
 "#;
 
+const BNET_GLOBAL_DEFAULTS_LUA: &str = r#"
+if BNGetNumFriends == nil then
+    function BNGetNumFriends() return 0, 0, 0, 0 end
+end
+if BNGetNumFriendInvites == nil then
+    function BNGetNumFriendInvites() return 0 end
+end
+"#;
+
 const INERT_GLOBAL_DEFAULTS_LUA: &str = r#"
 if GetCurrentRegionName == nil then
     function GetCurrentRegionName() return "US" end
@@ -113,12 +122,6 @@ if GetChannelDisplayInfo == nil then
     end
 end
 
-if BNGetNumFriends == nil then
-    function BNGetNumFriends() return 0, 0, 0, 0 end
-end
-if BNGetNumFriendInvites == nil then
-    function BNGetNumFriendInvites() return 0 end
-end
 if BNGetFriendInfo == nil then
     function BNGetFriendInfo() return nil end
 end
@@ -254,6 +257,8 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     lua.exec(UNMODELED_WORLD_PRESENCE_LUA)?;
     lua.exec(INERT_GLOBAL_DEFAULTS_LUA)?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+    lua.exec(BNET_GLOBAL_DEFAULTS_LUA)?;
     #[cfg(not(all(feature = "client-retail", feature = "retail-12-1-5")))]
     lua.exec(AVAILABLE_BANDWIDTH_DEFAULT_LUA)?;
     #[cfg(not(all(feature = "profile-retail", feature = "retail-12-1-5")))]
@@ -289,6 +294,22 @@ mod tests {
             "EXPECTED_GUILD_FACTION = {expected_guild_faction}"
         ))
         .expect("expected faction query result should be set");
+        let expected_bnet_counts = if cfg!(any(
+            feature = "client-retail",
+            feature = "client-wowforever"
+        )) {
+            (2, 1, 1, 0)
+        } else {
+            (0, 0, 0, 0)
+        };
+        env.exec(&format!(
+            "EXPECTED_BNET_COUNTS = {{{}, {}, {}, {}}}",
+            expected_bnet_counts.0,
+            expected_bnet_counts.1,
+            expected_bnet_counts.2,
+            expected_bnet_counts.3
+        ))
+        .expect("expected Battle.net counts should be set");
 
         let world_check = if cfg!(any(
             feature = "client-retail",
@@ -328,8 +349,8 @@ mod tests {
                 if IsOnTournamentRealm() ~= false then return "tournament" end
                 if GetNumDisplayChannels() ~= 0 then return "display_channels" end
                 if GetChannelDisplayInfo(1) ~= nil then return "channel_display_info" end
-                local bnetTotal, bnetOnline, bnetFavorite, bnetMobile = BNGetNumFriends()
-                if bnetTotal ~= 0 or bnetOnline ~= 0 or bnetFavorite ~= 0 or bnetMobile ~= 0 then return "bnet_counts" end
+                local bnetTotal, bnetOnline, bnetFavorite, bnetFavoriteOnline = BNGetNumFriends()
+                if bnetTotal ~= EXPECTED_BNET_COUNTS[1] or bnetOnline ~= EXPECTED_BNET_COUNTS[2] or bnetFavorite ~= EXPECTED_BNET_COUNTS[3] or bnetFavoriteOnline ~= EXPECTED_BNET_COUNTS[4] then return "bnet_counts" end
                 if BNGetNumFriendInvites() ~= 0 then return "bnet_invites" end
                 if BNGetFriendInfo(1) ~= nil then return "bnet_info" end
                 if Ambiguate("Alyth-Realm", "short") ~= "Alyth" then return "ambiguate_short" end
