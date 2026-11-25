@@ -954,14 +954,14 @@ fn model_scene_actor_reports_supplied_yaw_values() {
         .eval(
             r#"
             local actor = CreateFrame("ModelScene"):CreateActor()
-            actor:SetYaw(0.4)
+            actor:SetYaw(0.5)
             local first = actor:GetYaw()
-            actor:SetYaw(-1.1)
+            actor:SetYaw(-1.25)
             return first, actor:GetYaw()
             "#,
         )
         .unwrap();
-    assert_eq!(values, (0.4, -1.1));
+    assert_eq!(values, (0.5, -1.25));
 }
 
 #[test]
