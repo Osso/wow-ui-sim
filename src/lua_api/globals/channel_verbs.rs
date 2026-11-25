@@ -32,7 +32,9 @@ use crate::lua_api::methods::{
 };
 #[cfg(feature = "client-wowforever")]
 use crate::lua_api::script_helpers::fire_named_event_state;
-use crate::lua_api::state::{ChatChannel, ChatWindow};
+use crate::lua_api::state::ChatChannel;
+#[cfg(feature = "client-wowforever")]
+use crate::lua_api::state::ChatWindow;
 use crate::lua_bridge::{FromStack, stack_val, table_set_rust_fn_static};
 use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
