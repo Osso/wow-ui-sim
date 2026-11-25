@@ -6,7 +6,7 @@ Addon startup errors in third-party addons can come from simulator compatibility
 
 ### Settings canvases
 
-**INFERRED (R15; native evidence pending):** On loaded Retail and Forever Settings panels, the original registration path leaves canvas visibility unchanged. Opening a category reparents and shows its canvas, and switching categories hides the prior canvas. The Forever original-consumer regression asserts this lifecycle and that an unrelated shown canvas stays shown.
+**INFERRED (R15; native evidence pending):** On loaded Retail and Forever Settings panels, the original registration path leaves canvas visibility unchanged. Opening a category reparents and shows its canvas, and switching categories hides the prior canvas. **VERIFIED (Forever original-consumer test):** both registered canvases stay shown while the Settings panel stays hidden; opening the second category hides the first, shows and parents the second, and leaves an unrelated shown canvas visible.
 
 The simulator keeps the visibility workaround only for profiles other than Retail and Forever. The bootstrap Settings fallback, including `InterfaceOptions_AddCategory`, remains separate for addons that register option panels before the real Settings implementation is available.
 

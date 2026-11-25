@@ -4,9 +4,9 @@
 
 ## What it must do
 
-- [ ] **INFERRED (R14 Q6):** When a frame's level changes by a delta, shift every reachable descendant in the same strata by that delta, including fixed-level descendants.
-- [ ] Do not recompute a descendant's level as its parent's level plus one or its stored offset during this change.
-- [ ] Skip a different-strata child and its subtree.
+- [x] **INFERRED (R14 Q6):** When a frame's level changes by a delta, shift every reachable descendant in the same strata by that delta, including fixed-level descendants.
+- [x] Do not recompute a descendant's level as its parent's level plus one or its stored offset during this change.
+- [x] Skip a different-strata child and its subtree.
 
 ## How it works
 
@@ -27,7 +27,7 @@
 
 ## Known gaps (current cycle)
 
-- [ ] Confirm the integration tests pass on Retail and Forever after removal of the talent-edge post-load wrapper.
+No open verification gaps in this contract.
 
 ## Out of scope
 
