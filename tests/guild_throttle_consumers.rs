@@ -67,6 +67,7 @@ fn communities_guild_perks_panel_uses_supplied_spell_rows() {
         "A_Admin.SetGuildInfo('Perk Test Guild', 'Member', 2); A_Admin.SetGuildPerks(83944, 1, 83940, 2); ToggleCommunitiesFrame(); CommunitiesFrame.GuildInfoTab:Click()",
     )
     .expect("guild perks panel should open through the original guild tab");
+    wow_ui_sim::startup::fire_one_on_update_tick(&env);
     let row_names: (bool, i32, String, String) = env
         .eval(
             r#"
