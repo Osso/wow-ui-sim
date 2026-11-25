@@ -163,7 +163,7 @@ A_Admin.SetVignettes({row("V1", nil, 0.2, 0.3, "TaxiNode"),
 local a = WorldMapFrame:EnumeratePinsByTemplate("VignettePinTemplate")()
 local b = WorldMapFrame:EnumeratePinsByTemplate("VignettePinPOIButtonTemplate")()
 assert(a and b and a.vignetteGUID == "V1" and b.vignetteGUID == "V2")
-assert(a.Texture:GetAtlas() == "TaxiNode" and b.Texture:GetAtlas() == "TaxiNode")
+assert(a.vignetteInfo.atlasName == "TaxiNode" and b.vignetteInfo.atlasName == "TaxiNode")
 local ax, ay = a:GetPosition(); local bx, by = b:GetPosition()
 assert(math.abs(ax - 0.2) < 0.001 and math.abs(ay - 0.3) < 0.001)
 assert(math.abs(bx - 0.7) < 0.001 and math.abs(by - 0.8) < 0.001)
