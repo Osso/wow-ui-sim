@@ -55,6 +55,7 @@ pub(crate) fn macro_counts(rows: &[MacroInfo]) -> (usize, usize) {
     )
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub(crate) fn macro_at_one_based_id(rows: &[MacroInfo], id: u32) -> Option<&MacroInfo> {
     let rows = &rows[..rows.len().min(MACRO_INFO_SLOTS)];
     id.checked_sub(1)
@@ -62,6 +63,7 @@ pub(crate) fn macro_at_one_based_id(rows: &[MacroInfo], id: u32) -> Option<&Macr
         .filter(|row| is_occupied(row))
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub(crate) fn selected_macro_icon(icon: &str) -> Option<u32> {
     resolved_macro_icon(icon)
 }
