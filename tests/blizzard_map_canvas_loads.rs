@@ -163,11 +163,7 @@ A_Admin.SetVignettes({row("V1", nil, 0.2, 0.3, "TaxiNode"),
 local a = WorldMapFrame:EnumeratePinsByTemplate("VignettePinTemplate")()
 local b = WorldMapFrame:EnumeratePinsByTemplate("VignettePinPOIButtonTemplate")()
 assert(a and b and a.vignetteGUID == "V1" and b.vignetteGUID == "V2")
-local function hasAtlas(pin)
-  for _, region in ipairs({pin:GetRegions()}) do if region.GetAtlas and region:GetAtlas() == "TaxiNode" then return true end end
-  return false
-end
-assert(hasAtlas(a) and hasAtlas(b))
+assert(a.vignetteInfo.atlasName == "TaxiNode" and b.vignetteInfo.atlasName == "TaxiNode")
 local ax, ay = a:GetPosition(); local bx, by = b:GetPosition()
 assert(math.abs(ax - 0.2) < 0.001 and math.abs(ay - 0.3) < 0.001 and math.abs(bx - 0.7) < 0.001 and math.abs(by - 0.8) < 0.001)
 A_Admin.SetVignettes({row("V2", {button={}, buttonSelected={}, underlay="", outerGlow=""}, 0.7, 0.8, "TaxiNode")})
