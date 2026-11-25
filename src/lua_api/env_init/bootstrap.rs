@@ -67,7 +67,7 @@ pub(crate) fn init_runtime_surface_bootstrap(lua: &mut rilua::Lua) -> crate::Res
     Ok(())
 }
 
-fn runtime_surface_arguments() -> [Val; 8] {
+fn runtime_surface_arguments() -> [Val; 9] {
     use crate::client_profile::{ACTIVE, ClientProfile};
     let (retire_pve_frame_bridge, retire_glue_owner_defaults) = glue_bootstrap_retirements();
     let classic_combat = matches!(
@@ -77,9 +77,7 @@ fn runtime_surface_arguments() -> [Val; 8] {
             | ClientProfile::Anniversary
             | ClientProfile::WowForever
     );
-    // Positional contract with runtime_surface_bootstrap.lua's destructuring:
-    // classicCombat, forever, vanilla, modeledStoreGlue, modeledStoreCatalog,
-    // modeledStoreVas, retirePveFrameBridge, retireGlueOwnerDefaults.
+    // Keep order in sync with runtime_surface_bootstrap.lua's argument destructuring.
     [
         Val::Bool(classic_combat),
         Val::Bool(ACTIVE == ClientProfile::WowForever),
@@ -92,6 +90,10 @@ fn runtime_surface_arguments() -> [Val; 8] {
         Val::Bool(ACTIVE == ClientProfile::Retail),
         Val::Bool(retire_pve_frame_bridge),
         Val::Bool(retire_glue_owner_defaults),
+        Val::Bool(matches!(
+            ACTIVE,
+            ClientProfile::Retail | ClientProfile::WowForever
+        )),
     ]
 }
 

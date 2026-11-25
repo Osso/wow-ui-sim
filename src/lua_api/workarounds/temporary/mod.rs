@@ -131,7 +131,7 @@ pub(crate) mod main_menu_microbutton_click;
 pub(crate) mod major_faction_display_defaults;
 #[cfg(not(feature = "client-retail"))]
 pub(crate) mod map_art_help_text_defaults;
-pub(crate) mod map_canvas_scroll_container;
+pub(crate) mod map_canvas_scroll_container_legacy;
 pub(crate) mod map_exploration_pin;
 pub(crate) mod map_group_defaults;
 pub(crate) mod map_runtime_state;

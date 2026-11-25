@@ -555,15 +555,8 @@ pub(crate) fn patch_quest_objective_defaults_for_addon_load(env: &crate::lua_api
     temporary::quest_objective_defaults::patch_loader(env);
 }
 
-/// Re-run the runtime-surface bootstrap repair hooks for addons whose load
-/// replaces the patched objects. The bootstrap exposes these as `__wow_patch_*`
-/// globals; the old `hooksecurefunc(C_AddOns, "LoadAddOn")` route is refused
-/// by the shared bootstrap and never fired.
-pub(crate) fn patch_runtime_surface_for_addon_load(
-    env: &crate::lua_api::LoaderEnv<'_>,
-    folder_name: &str,
-) {
-    let patch_fns: &[&str] = match folder_name {
+fn runtime_surface_patch_functions(folder_name: &str) -> Option<&'static [&'static str]> {
+    Some(match folder_name {
         "Blizzard_CharacterSelectNavBar" => &["__wow_patch_character_select_nav_bar"],
         "Blizzard_UIParent"
         | "Blizzard_UIParent_Mainline"
@@ -572,15 +565,31 @@ pub(crate) fn patch_runtime_surface_for_addon_load(
         "Blizzard_MapCanvas"
         | "Blizzard_SharedMapDataProviders"
         | "Blizzard_WorldMap"
-        | "Blizzard_BattlefieldMap" => &[
-            "__wow_patch_map_canvas_scroll_container_methods",
-            "__wow_patch_fog_of_war_pin_methods",
-        ],
-        _ => return,
+        | "Blizzard_BattlefieldMap" => match crate::client_profile::ACTIVE {
+            crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever => {
+                &["__wow_patch_fog_of_war_pin_methods"]
+            }
+            _ => &[
+                "__wow_patch_map_canvas_scroll_container_methods",
+                "__wow_patch_fog_of_war_pin_methods",
+            ],
+        },
+        _ => return None,
+    })
+}
+
+/// Re-run exposed runtime-surface hooks after addon loads replace their targets.
+pub(crate) fn patch_runtime_surface_for_addon_load(
+    env: &crate::lua_api::LoaderEnv<'_>,
+    folder_name: &str,
+) {
+    let Some(patch_functions) = runtime_surface_patch_functions(folder_name) else {
+        return;
     };
-    for patch_fn in patch_fns {
+    for patch_function in patch_functions {
         let _ = env.exec(&format!(
-            r#"if type({patch_fn}) == "function" then {patch_fn}() end"#
+            r#"if type({patch_function}) == "function" then {patch_function}() end"#
         ));
     }
 }
@@ -727,8 +736,14 @@ fn patch_auction_house_runtime_surface(env: &crate::lua_api::LoaderEnv<'_>) {
 }
 
 fn patch_runtime_map_addon_surfaces(env: &crate::lua_api::LoaderEnv<'_>, addon_name: &str) {
-    if addon_name == "Blizzard_MapCanvas" {
-        let _ = temporary::map_canvas_scroll_container::patch(env);
+    if addon_name == "Blizzard_MapCanvas"
+        && !matches!(
+            crate::client_profile::ACTIVE,
+            crate::client_profile::ClientProfile::Retail
+                | crate::client_profile::ClientProfile::WowForever
+        )
+    {
+        let _ = temporary::map_canvas_scroll_container_legacy::patch(env);
     }
     if matches!(
         addon_name,
@@ -767,7 +782,6 @@ mod tests {
         for patch_fn in [
             "__wow_patch_character_select_nav_bar",
             "__wow_patch_uiparent_onupdate_worklists",
-            "__wow_patch_map_canvas_scroll_container_methods",
             "__wow_patch_fog_of_war_pin_methods",
         ] {
             let is_function: bool = env

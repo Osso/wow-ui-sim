@@ -14,6 +14,42 @@ mod support;
 
 use support::*;
 
+const TWO_MAP_CANVAS_PROOF: &str = r#"
+local mapID = {map_id}
+local map = WorldMapFrame
+map:SetMapID(mapID)
+local scroll = assert(map:GetCanvasContainer())
+local child = assert(map:GetCanvas())
+local layer = assert(C_Map.GetMapArtLayers(mapID)[1])
+local scrollWidth, scrollHeight = scroll:GetWidth(), scroll:GetHeight()
+local expectedScale = math.min(scrollWidth / layer.layerWidth, scrollHeight / layer.layerHeight)
+assert(map:GetMapID() == mapID)
+assert(map.SetMapID == MapCanvasMixin.SetMapID)
+assert(map.SetDisplayState == QuestLogOwnerMixin.SetDisplayState)
+assert(map.GetCanvas == MapCanvasMixin.GetCanvas)
+assert(map.GetCanvasContainer == MapCanvasMixin.GetCanvasContainer)
+assert(scroll == map.ScrollContainer and child == scroll.Child)
+assert(scroll.CreateZoomLevels == MapCanvasScrollControllerMixin.CreateZoomLevels)
+assert(scroll.ResetZoom == MapCanvasScrollControllerMixin.ResetZoom)
+assert(scroll.InstantPanAndZoom == MapCanvasScrollControllerMixin.InstantPanAndZoom)
+assert(child:GetWidth() == 3840 and child:GetHeight() == 2560)
+assert(scrollWidth > 0 and scrollHeight > 0)
+assert(scroll.baseScale == expectedScale)
+assert(scroll.baseScale > 0 and scroll.targetScale > 0 and scroll:GetCanvasScale() > 0)
+local levels = assert(scroll.zoomLevels)
+assert(type(levels) == "table" and #levels > 1)
+local previousScale = 0
+for index, level in ipairs(levels) do
+  assert(level.scale > previousScale, "zoom levels must increase")
+  previousScale = level.scale
+end
+assert(scroll:GetZoomLevelIndexForScale(levels[1].scale) == 1)
+assert(scroll:GetZoomLevelIndexForScale(levels[2].scale) == 2)
+assert(scroll:GetZoomLevelIndexForScale(levels[#levels].scale) == #levels)
+local currentIndex = scroll:GetZoomLevelIndexForScale(scroll:GetCanvasScale())
+assert(scroll:GetCurrentLayerIndex() == levels[currentIndex].layerIndex)
+"#;
+
 fn load_full_game_ui() -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("Failed to create Lua environment");
     env.set_screen_size(1024.0, 768.0);
@@ -91,6 +127,34 @@ fn forever_world_map_show_and_sustained_updates_are_error_free() {
         .party_quest_ids
         .remove(&party_guid);
     assert_eq!(env.eval::<i32>(&count_script).unwrap(), 0);
+}
+
+fn settle_world_map(env: &WowLuaEnv) {
+    for _ in 0..10 {
+        fire_gui_startup_on_update_tick(env);
+        process_pending_timers(env);
+    }
+}
+
+fn assert_map_canvas_state(env: &WowLuaEnv, map_id: u32) {
+    let script = TWO_MAP_CANVAS_PROOF.replace("{map_id}", &map_id.to_string());
+    env.exec(&script).expect("original WorldMap SetMapID should build canvas state");
+}
+
+#[test]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn world_map_canvas_uses_model_for_two_maps() {
+    let env = load_full_game_ui();
+    let errors_before = env.state().borrow().lua_errors.clone();
+    env.eval::<()>("ToggleWorldMap()")
+        .expect("ToggleWorldMap should open the WorldMap");
+    settle_world_map(&env);
+    for map_id in [947, 2248] {
+        assert_map_canvas_state(&env, map_id);
+        settle_world_map(&env);
+    }
+    let errors_after = env.state().borrow().lua_errors.clone();
+    assert_eq!(errors_after, errors_before, "MapCanvas added Lua errors");
 }
 
 post_wrath_ui_fixture! {

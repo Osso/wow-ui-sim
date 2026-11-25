@@ -1,6 +1,7 @@
 -- Single publication-scoped exemption inventory; modeled Store catalog registration is separate.
 local classicCombat, forever, vanilla, modeledStoreGlue, modeledStoreCatalog,
-  modeledStoreVas, retirePveFrameBridge, retireGlueOwnerDefaults = ...
+  modeledStoreVas, retirePveFrameBridge, retireGlueOwnerDefaults,
+  retireMapCanvasScrollContainer = ...
 local strictNamespaces = {}
 if classicCombat then
   strictNamespaces.C_CombatText = true
@@ -1229,6 +1230,9 @@ local function __wow_ensure_map_canvas_scroll_container(frame)
 end
 
 local function __wow_patch_map_canvas_scroll_container_methods()
+  if retireMapCanvasScrollContainer then
+    return
+  end
   if rawget(_G, "__wow_map_canvas_scroll_container_patched") then
     return
   end
@@ -1291,7 +1295,9 @@ if not retirePveFrameBridge and rawget(_G, "PVEFrame_ToggleFrame") == nil then
   end
 end
 
-__wow_patch_map_canvas_scroll_container_methods()
+if not retireMapCanvasScrollContainer then
+  __wow_patch_map_canvas_scroll_container_methods()
+end
 
 local function __wow_patch_fog_of_war_pin_methods()
   if rawget(_G, "__wow_fog_of_war_pin_methods_patched") then
@@ -1428,7 +1434,9 @@ __wow_patch_uiparent_onupdate_worklists()
 -- in frame_helper_defaults.rs) can reach them from other chunks.
 rawset(_G, "__wow_patch_character_select_nav_bar", __wow_patch_character_select_nav_bar)
 rawset(_G, "__wow_patch_uiparent_onupdate_worklists", __wow_patch_uiparent_onupdate_worklists)
-rawset(_G, "__wow_patch_map_canvas_scroll_container_methods", __wow_patch_map_canvas_scroll_container_methods)
+if not retireMapCanvasScrollContainer then
+  rawset(_G, "__wow_patch_map_canvas_scroll_container_methods", __wow_patch_map_canvas_scroll_container_methods)
+end
 rawset(_G, "__wow_patch_fog_of_war_pin_methods", __wow_patch_fog_of_war_pin_methods)
 
 AUTOCOMPLETE_LIST = AUTOCOMPLETE_LIST or {}

@@ -4,15 +4,18 @@
 //! the live frame, scroll container, canvas child, and map art sizing. Keep this
 //! isolated until MapCanvas XML/runtime construction matches Blizzard state.
 
-use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::LoaderEnv;
-#[cfg(test)]
-use crate::lua_api::WowLuaEnv;
-use crate::lua_api::loader_env::GeneratedChunkArg;
 
 const MAP_CANVAS_SCROLL_CONTAINER_WORKAROUND_LUA: &str = r#"
 local options = ...
-local preserve_original_world_map_owners = options and options[1] == "preserve_original_world_map_owners"
+local option_set = {}
+for _, option in ipairs(options or {}) do
+  option_set[option] = true
+end
+local retire_container_access = option_set.retire_container_access == true
+local retire_zoom_query = option_set.retire_zoom_query == true
+local retire_viewport_scale_repairs = option_set.retire_viewport_scale_repairs == true
+local retire_world_map_owner_wrappers = option_set.retire_world_map_owner_wrappers == true
 
 if type(ClearCachedActivitiesForPlayer) ~= "function" then
   function ClearCachedActivitiesForPlayer() end
@@ -267,28 +270,34 @@ local function __wow_patch_live_map_canvas(frame)
     return
   end
 
-  if type(MapCanvasMixin.SetMapID) == "function" then
+  if not retire_viewport_scale_repairs and type(MapCanvasMixin.SetMapID) == "function" then
     frame.SetMapID = MapCanvasMixin.SetMapID
   end
-  if type(MapCanvasMixin.GetCanvas) == "function" then
-    frame.GetCanvas = MapCanvasMixin.GetCanvas
+  if not retire_container_access then
+    if type(MapCanvasMixin.GetCanvas) == "function" then
+      frame.GetCanvas = MapCanvasMixin.GetCanvas
+    end
+    if type(MapCanvasMixin.GetCanvasContainer) == "function" then
+      frame.GetCanvasContainer = MapCanvasMixin.GetCanvasContainer
+    end
+    if type(MapCanvasMixin.OnFrameSizeChanged) == "function" then
+      frame.OnFrameSizeChanged = MapCanvasMixin.OnFrameSizeChanged
+    end
   end
-  if type(MapCanvasMixin.GetCanvasContainer) == "function" then
-    frame.GetCanvasContainer = MapCanvasMixin.GetCanvasContainer
-  end
-  if type(MapCanvasMixin.OnFrameSizeChanged) == "function" then
-    frame.OnFrameSizeChanged = MapCanvasMixin.OnFrameSizeChanged
-  end
-  if type(MapCanvasMixin.OnShow) == "function" then
+  if not retire_viewport_scale_repairs and type(MapCanvasMixin.OnShow) == "function" then
     frame.OnShow = MapCanvasMixin.OnShow
   end
 
-  __wow_try_init_map_canvas(frame)
-  __wow_refresh_map_canvas_size(frame)
+  if not retire_container_access then
+    __wow_try_init_map_canvas(frame)
+  end
+  if not retire_viewport_scale_repairs then
+    __wow_refresh_map_canvas_size(frame)
+  end
 end
 
 local function __wow_patch_world_map_display_state(frame)
-  if preserve_original_world_map_owners then
+  if retire_world_map_owner_wrappers then
     return
   end
   if type(frame) ~= "table" or type(frame.SetDisplayState) ~= "function" then
@@ -301,8 +310,12 @@ local function __wow_patch_world_map_display_state(frame)
   local originalSetDisplayState = frame.SetDisplayState
   frame.SetDisplayState = function(self, ...)
     local result = originalSetDisplayState(self, ...)
-    __wow_try_init_map_canvas(self)
-    __wow_refresh_map_canvas_size(self)
+    if not retire_container_access then
+      __wow_try_init_map_canvas(self)
+    end
+    if not retire_viewport_scale_repairs then
+      __wow_refresh_map_canvas_size(self)
+    end
     return result
   end
 
@@ -345,7 +358,9 @@ local function __wow_ensure_map_canvas_zoom_levels(scroll)
   scroll.targetScale = scroll.targetScale or zoomLevels[1].scale or 1.0
 end
 
-rawset(_G, "__wow_ensure_map_canvas_zoom_levels", __wow_ensure_map_canvas_zoom_levels)
+if not retire_zoom_query then
+  rawset(_G, "__wow_ensure_map_canvas_zoom_levels", __wow_ensure_map_canvas_zoom_levels)
+end
 
 local function __wow_refresh_world_map_canvas()
   __wow_patch_live_map_canvas(WorldMapFrame)
@@ -353,27 +368,29 @@ local function __wow_refresh_world_map_canvas()
 end
 
 if type(MapCanvasMixin) == "table" and not rawget(_G, "__wow_map_canvas_scroll_container_advanced_patched") then
-  if rawget(_G, "__wow_map_canvas_original_onload") == nil and type(MapCanvasMixin.OnLoad) == "function" then
+  if not retire_container_access and rawget(_G, "__wow_map_canvas_original_onload") == nil
+    and type(MapCanvasMixin.OnLoad) == "function"
+  then
     _G.__wow_map_canvas_original_onload = MapCanvasMixin.OnLoad
     MapCanvasMixin.OnLoad = function(self, ...)
-      if rawget(self, "__wow_map_canvas_onload_ran") then
-        return
-      end
+      if rawget(self, "__wow_map_canvas_onload_ran") then return end
       __wow_try_init_map_canvas(self)
     end
   end
 
-  if type(MapCanvasMixin.SetMapID) == "function" then
+  if not retire_viewport_scale_repairs and type(MapCanvasMixin.SetMapID) == "function" then
     local originalSetMapID = MapCanvasMixin.SetMapID
     MapCanvasMixin.SetMapID = function(self, ...)
-      __wow_try_init_map_canvas(self)
-      if rawget(self, "ScrollContainer") == nil then
-        local mapID = ...
-        self.mapID = mapID
-        if C_Map and type(C_Map.GetMapArtID) == "function" then
-          self.mapArtID = C_Map.GetMapArtID(mapID)
+      if not retire_container_access then
+        __wow_try_init_map_canvas(self)
+        if rawget(self, "ScrollContainer") == nil then
+          local mapID = ...
+          self.mapID = mapID
+          if C_Map and type(C_Map.GetMapArtID) == "function" then
+            self.mapArtID = C_Map.GetMapArtID(mapID)
+          end
+          return
         end
-        return
       end
       local result = originalSetMapID(self, ...)
       __wow_refresh_map_canvas_size(self)
@@ -381,43 +398,46 @@ if type(MapCanvasMixin) == "table" and not rawget(_G, "__wow_map_canvas_scroll_c
     end
   end
 
-  if type(MapCanvasMixin.OnShow) == "function" then
+  if not retire_viewport_scale_repairs and type(MapCanvasMixin.OnShow) == "function" then
     local originalOnShow = MapCanvasMixin.OnShow
     MapCanvasMixin.OnShow = function(self, ...)
-      __wow_try_init_map_canvas(self)
+      if not retire_container_access then
+        __wow_try_init_map_canvas(self)
+      end
       local result = originalOnShow(self, ...)
       __wow_refresh_map_canvas_size(self)
       return result
     end
   end
 
-  if type(MapCanvasMixin.GetCanvas) == "function" then
-    MapCanvasMixin.GetCanvas = function(self, ...)
-      __wow_try_init_map_canvas(self)
-      local scroll = rawget(self, "ScrollContainer")
-      return scroll and scroll.Child or nil
-    end
-  end
-
-  if type(MapCanvasMixin.GetCanvasContainer) == "function" then
-    MapCanvasMixin.GetCanvasContainer = function(self, ...)
-      __wow_try_init_map_canvas(self)
-      return rawget(self, "ScrollContainer")
-    end
-  end
-
-  if type(MapCanvasMixin.OnFrameSizeChanged) == "function" then
-    local originalOnFrameSizeChanged = MapCanvasMixin.OnFrameSizeChanged
-    MapCanvasMixin.OnFrameSizeChanged = function(self, ...)
-      __wow_try_init_map_canvas(self)
-      if rawget(self, "ScrollContainer") == nil then
-        return
+  if not retire_container_access then
+    if type(MapCanvasMixin.GetCanvas) == "function" then
+      MapCanvasMixin.GetCanvas = function(self, ...)
+        __wow_try_init_map_canvas(self)
+        local scroll = rawget(self, "ScrollContainer")
+        return scroll and scroll.Child or nil
       end
-      return originalOnFrameSizeChanged(self, ...)
+    end
+
+    if type(MapCanvasMixin.GetCanvasContainer) == "function" then
+      MapCanvasMixin.GetCanvasContainer = function(self, ...)
+        __wow_try_init_map_canvas(self)
+        return rawget(self, "ScrollContainer")
+      end
+    end
+
+    if type(MapCanvasMixin.OnFrameSizeChanged) == "function" then
+      local originalOnFrameSizeChanged = MapCanvasMixin.OnFrameSizeChanged
+      MapCanvasMixin.OnFrameSizeChanged = function(self, ...)
+        __wow_try_init_map_canvas(self)
+        if rawget(self, "ScrollContainer") == nil then return end
+        return originalOnFrameSizeChanged(self, ...)
+      end
     end
   end
 
-  if type(MapCanvasScrollControllerMixin) == "table"
+  if not retire_viewport_scale_repairs
+    and type(MapCanvasScrollControllerMixin) == "table"
     and type(MapCanvasScrollControllerMixin.ResetZoom) == "function"
   then
     MapCanvasScrollControllerMixin.ResetZoom = function(self)
@@ -434,7 +454,8 @@ if type(MapCanvasMixin) == "table" and not rawget(_G, "__wow_map_canvas_scroll_c
     end
   end
 
-  if type(MapCanvasScrollControllerMixin) == "table"
+  if not retire_viewport_scale_repairs
+    and type(MapCanvasScrollControllerMixin) == "table"
     and type(MapCanvasScrollControllerMixin.CreateZoomLevels) == "function"
   then
     local originalCreateZoomLevels = MapCanvasScrollControllerMixin.CreateZoomLevels
@@ -453,7 +474,8 @@ if type(MapCanvasMixin) == "table" and not rawget(_G, "__wow_map_canvas_scroll_c
     end
   end
 
-  if type(MapCanvasScrollControllerMixin) == "table"
+  if not retire_viewport_scale_repairs
+    and type(MapCanvasScrollControllerMixin) == "table"
     and type(MapCanvasScrollControllerMixin.InstantPanAndZoom) == "function"
   then
     local originalInstantPanAndZoom = MapCanvasScrollControllerMixin.InstantPanAndZoom
@@ -466,31 +488,29 @@ if type(MapCanvasMixin) == "table" and not rawget(_G, "__wow_map_canvas_scroll_c
     end
   end
 
-  if type(MapCanvasScrollControllerMixin) == "table"
-    and type(MapCanvasScrollControllerMixin.GetZoomLevelIndexForScale) == "function"
-  then
-    local originalGetZoomLevelIndexForScale = MapCanvasScrollControllerMixin.GetZoomLevelIndexForScale
-    MapCanvasScrollControllerMixin.GetZoomLevelIndexForScale = function(self, scale)
-      __wow_ensure_map_canvas_zoom_levels(self)
-      return originalGetZoomLevelIndexForScale(self, scale)
+  if not retire_zoom_query then
+    if type(MapCanvasScrollControllerMixin) == "table"
+      and type(MapCanvasScrollControllerMixin.GetZoomLevelIndexForScale) == "function"
+    then
+      local originalGetZoomLevelIndexForScale = MapCanvasScrollControllerMixin.GetZoomLevelIndexForScale
+      MapCanvasScrollControllerMixin.GetZoomLevelIndexForScale = function(self, scale)
+        __wow_ensure_map_canvas_zoom_levels(self)
+        return originalGetZoomLevelIndexForScale(self, scale)
+      end
     end
-  end
 
-  if type(MapCanvasScrollControllerMixin) == "table"
-    and type(MapCanvasScrollControllerMixin.GetCurrentLayerIndex) == "function"
-  then
-    local originalGetCurrentLayerIndex = MapCanvasScrollControllerMixin.GetCurrentLayerIndex
-    MapCanvasScrollControllerMixin.GetCurrentLayerIndex = function(self, ...)
-      __wow_ensure_map_canvas_zoom_levels(self)
-      local zoomLevels = rawget(self, "zoomLevels")
-      if type(zoomLevels) ~= "table" or type(zoomLevels[1]) ~= "table" then
-        return 1
+    if type(MapCanvasScrollControllerMixin) == "table"
+      and type(MapCanvasScrollControllerMixin.GetCurrentLayerIndex) == "function"
+    then
+      local originalGetCurrentLayerIndex = MapCanvasScrollControllerMixin.GetCurrentLayerIndex
+      MapCanvasScrollControllerMixin.GetCurrentLayerIndex = function(self, ...)
+        __wow_ensure_map_canvas_zoom_levels(self)
+        local zoomLevels = rawget(self, "zoomLevels")
+        if type(zoomLevels) ~= "table" or type(zoomLevels[1]) ~= "table" then return 1 end
+        local ok, layerIndex = pcall(originalGetCurrentLayerIndex, self, ...)
+        if ok and type(layerIndex) == "number" and layerIndex >= 1 then return layerIndex end
+        return zoomLevels[1].layerIndex or 1
       end
-      local ok, layerIndex = pcall(originalGetCurrentLayerIndex, self, ...)
-      if ok and type(layerIndex) == "number" and layerIndex >= 1 then
-        return layerIndex
-      end
-      return zoomLevels[1].layerIndex or 1
     end
   end
 
@@ -503,7 +523,7 @@ for _, mapName in ipairs({ "WorldMapFrame", "BattlefieldMapFrame" }) do
 end
 __wow_patch_world_map_display_state(WorldMapFrame)
 
-if not preserve_original_world_map_owners
+if not retire_world_map_owner_wrappers
   and type(ToggleWorldMap) == "function"
   and not rawget(_G, "__wow_toggle_world_map_refresh_patched")
 then
@@ -528,219 +548,5 @@ end
     "#;
 
 pub(crate) fn patch(env: &LoaderEnv<'_>) -> Result<(), crate::Error> {
-    if ACTIVE == ClientProfile::Retail {
-        // Retail MapCanvas loads before the WorldMap XML frame and its original
-        // QuestLogOwnerMixin. Keep the original display-state and map verbs;
-        // their consumers run after WorldMap owns them. Other repairs stay.
-        env.exec_with_args(
-            MAP_CANVAS_SCROLL_CONTAINER_WORKAROUND_LUA,
-            &[GeneratedChunkArg::String(
-                "preserve_original_world_map_owners".into(),
-            )],
-        )
-    } else {
-        env.exec(MAP_CANVAS_SCROLL_CONTAINER_WORKAROUND_LUA)
-    }
-}
-
-#[cfg(test)]
-pub(crate) fn patch_env(env: &WowLuaEnv) {
-    patch(&env.loader_env()).expect("MapCanvas scroll-container workaround should install");
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn seeds_scroll_container_before_running_map_canvas_onload_once() {
-        let env = WowLuaEnv::new().expect("lua env should initialize");
-        env.exec(
-            r#"
-            original_onload_calls = 0
-            scroll = {
-                Child = {},
-                IsObjectType = function(self, objectType)
-                    return objectType == "ScrollFrame"
-                end,
-            }
-            frame = {
-                GetNumChildren = function()
-                    return 1
-                end,
-                GetChildren = function()
-                    return scroll
-                end,
-            }
-            MapCanvasMixin = {
-                OnLoad = function(self)
-                    original_onload_calls = original_onload_calls + 1
-                    self.originalOnLoadSawScroll = self.ScrollContainer == scroll
-                end,
-            }
-            "#,
-        )
-        .expect("map canvas onload fixture should install");
-
-        patch_env(&env);
-
-        let (onload_calls, has_scroll, onload_saw_scroll, onload_ran): (i64, bool, bool, bool) =
-            env.eval(
-                r#"
-                MapCanvasMixin.OnLoad(frame)
-                MapCanvasMixin.OnLoad(frame)
-                return original_onload_calls,
-                    frame.ScrollContainer == scroll,
-                    frame.originalOnLoadSawScroll == true,
-                    frame.__wow_map_canvas_onload_ran == true
-                "#,
-            )
-            .expect("patched map canvas onload should run");
-
-        assert_eq!(onload_calls, 1);
-        assert!(has_scroll);
-        assert!(onload_saw_scroll);
-        assert!(onload_ran);
-    }
-
-    #[test]
-    fn sizes_zero_canvas_from_map_art_layer_on_set_map_id() {
-        let env = WowLuaEnv::new().expect("lua env should initialize");
-        env.exec(
-            r#"
-            child = {
-                TiledBackground = {
-                    SetSize = function(self, width, height)
-                        self.width = width
-                        self.height = height
-                    end,
-                },
-                GetWidth = function(self)
-                    return self.width or 0
-                end,
-                GetHeight = function(self)
-                    return self.height or 0
-                end,
-                SetSize = function(self, width, height)
-                    self.width = width
-                    self.height = height
-                end,
-            }
-            scroll = {
-                Child = child,
-                CalculateScaleExtents = function(self)
-                    self.calculatedScale = true
-                end,
-                CalculateScrollExtents = function(self)
-                    self.calculatedScroll = true
-                end,
-            }
-            frame = {
-                ScrollContainer = scroll,
-                OnCanvasSizeChanged = function(self)
-                    self.canvasSizeChanged = true
-                end,
-            }
-            C_Map = {
-                GetMapArtLayers = function(mapID)
-                    if mapID == 947 then
-                        return { { layerWidth = 1000, layerHeight = 500 } }
-                    end
-                    return nil
-                end,
-            }
-            MapCanvasMixin = {
-                OnLoad = function() end,
-                SetMapID = function(self, mapID)
-                    self.mapID = mapID
-                    return "map-set"
-                end,
-            }
-            "#,
-        )
-        .expect("map canvas sizing fixture should install");
-
-        patch_env(&env);
-
-        let (
-            result,
-            child_width,
-            child_height,
-            background_width,
-            background_height,
-            calculated_scale,
-            calculated_scroll,
-            canvas_size_changed,
-        ): (String, i64, i64, i64, i64, bool, bool, bool) = env
-            .eval(
-                r#"
-                local result = MapCanvasMixin.SetMapID(frame, 947)
-                return result,
-                    child.width,
-                    child.height,
-                    child.TiledBackground.width,
-                    child.TiledBackground.height,
-                    scroll.calculatedScale == true,
-                    scroll.calculatedScroll == true,
-                    frame.canvasSizeChanged == true
-                "#,
-            )
-            .expect("patched map canvas SetMapID should size the canvas");
-
-        assert_eq!(result, "map-set");
-        assert_eq!(child_width, 1000);
-        assert_eq!(child_height, 500);
-        assert_eq!(background_width, 2000);
-        assert_eq!(background_height, 1000);
-        assert!(calculated_scale);
-        assert!(calculated_scroll);
-        assert!(canvas_size_changed);
-    }
-
-    #[test]
-    fn creates_zoom_levels_before_scroll_controller_queries() {
-        let env = WowLuaEnv::new().expect("lua env should initialize");
-        env.exec(
-            r#"
-            C_Map = {
-                GetMapArtLayers = function(mapID)
-                    if mapID == 947 then
-                        return {
-                            { minScale = 0.75 },
-                            { minScale = 1.5 },
-                        }
-                    end
-                    return nil
-                end,
-            }
-            MapCanvasMixin = { OnLoad = function() end }
-            MapCanvasScrollControllerMixin = {
-                GetCurrentLayerIndex = function()
-                    error("missing zoom levels")
-                end,
-            }
-            scroll = { mapID = 947 }
-            "#,
-        )
-        .expect("map canvas zoom fixture should install");
-
-        patch_env(&env);
-
-        let (layer_index, first_scale, second_layer, target_scale): (i64, f64, i64, f64) = env
-            .eval(
-                r#"
-                local layerIndex = MapCanvasScrollControllerMixin.GetCurrentLayerIndex(scroll)
-                return layerIndex,
-                    scroll.zoomLevels[1].scale,
-                    scroll.zoomLevels[2].layerIndex,
-                    scroll.targetScale
-                "#,
-            )
-            .expect("patched zoom layer query should create fallback zoom levels");
-
-        assert_eq!(layer_index, 1);
-        assert_eq!(first_scale, 0.75);
-        assert_eq!(second_layer, 2);
-        assert_eq!(target_scale, 0.75);
-    }
+    env.exec(MAP_CANVAS_SCROLL_CONTAINER_WORKAROUND_LUA)
 }
