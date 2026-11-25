@@ -978,8 +978,8 @@ fn family_placeholder_resolves_profile_selected_mainline_entries() {
 
 #[cfg(all(feature = "client-wowforever", feature = "optional-tests"))]
 const FOREVER_SETTINGS_CANVAS_SCENARIO: &str = r#"
-assert(C_AddOns.IsAddOnLoaded("Blizzard_Settings_Shared"))
-assert(not SettingsPanel:IsShown())
+assert(C_AddOns.IsAddOnLoaded("Blizzard_Settings_Shared"), "original Settings must load")
+assert(not SettingsPanel:IsShown(), "panel must start hidden")
 local function register(name)
     local frame = CreateFrame("Frame", nil, UIParent)
     frame:Show()
@@ -990,14 +990,18 @@ local function register(name)
 end
 local first, firstCategory = register("Forever first canvas")
 local second, secondCategory = register("Forever second canvas")
-local unrelated, unrelatedCategory = register("Forever unrelated canvas")
-assert(first:IsShown() and second:IsShown() and not SettingsPanel:IsShown())
+local unrelated = register("Forever unrelated canvas")
+assert(first:IsShown() and second:IsShown(), "registration must preserve shown canvases")
+assert(not SettingsPanel:IsShown(), "registration must not open the panel")
 unrelated:Show()
 Settings.OpenToCategory(firstCategory:GetID())
-assert(first:IsShown() and first:GetParent() == SettingsPanel.Container.SettingsCanvas)
+assert(first:IsShown(), "opening the first category must show its canvas")
+assert(first:GetParent() == SettingsPanel.Container.SettingsCanvas, "first canvas must be parented")
 Settings.OpenToCategory(secondCategory:GetID())
-assert(not first:IsShown() and second:IsShown())
-assert(second:GetParent() == SettingsPanel.Container.SettingsCanvas and unrelated:IsShown())
+assert(not first:IsShown(), "category switch must hide the old canvas")
+assert(second:IsShown(), "category switch must show the new canvas")
+assert(second:GetParent() == SettingsPanel.Container.SettingsCanvas, "second canvas must be parented")
+assert(unrelated:IsShown(), "unrelated canvas must stay shown")
 "#;
 
 #[cfg(all(feature = "client-wowforever", feature = "optional-tests"))]
