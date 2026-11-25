@@ -175,6 +175,24 @@ pub(super) fn set_model_by_creature_display_id(state: &mut LuaState) -> LuaResul
     Ok(0)
 }
 
+/// `Actor:SetModelByFileID(fileID)`: stores the model file ID that
+/// `GetModelFileID` reports. Called by Blizzard's
+/// `ScriptAnimatedModelSceneActor:SetEffect` (`ScriptAnimatedModelSceneActor.lua:67`).
+/// The 3D renderer is an intentional gap; only the selected source is modeled.
+pub(super) fn set_model_by_file_id(state: &mut LuaState) -> LuaResult<u32> {
+    let id = frame_id_from_stack(state, 1)?;
+    let file_id = val_to_f64(stack_val(state, 2)) as i64;
+    let mut sim = borrow_state_mut(state)?;
+    if let Some(frame) = sim.widgets.get_mut_visual(id) {
+        let model = frame.model_state_mut();
+        model.model_path = None;
+        model.model_file_id = Some(file_id);
+        model.model_appearance.display_info = None;
+        model.model_appearance.creature_id = None;
+    }
+    Ok(0)
+}
+
 pub(super) fn set_creature(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
     let creature_id = val_to_f64(stack_val(state, 2)) as i32;
@@ -392,6 +410,90 @@ fn stringish_arg(state: &LuaState, index: i32) -> Option<String> {
         Val::Num(n) if n.fract() == 0.0 => Some((n as i64).to_string()),
         Val::Num(n) => Some(n.to_string()),
         _ => None,
+    }
+}
+
+pub(super) fn set_actor_pitch(state: &mut LuaState) -> LuaResult<u32> {
+    let id = frame_id_from_stack(state, 1)?;
+    let pitch = val_to_f64(stack_val(state, 2)) as f32;
+    let mut sim = borrow_state_mut(state)?;
+    if let Some(frame) = sim.widgets.get_mut_visual(id) {
+        frame.model_state_mut().actor_pitch = pitch;
+    }
+    Ok(0)
+}
+
+pub(super) fn get_actor_pitch(state: &mut LuaState) -> LuaResult<u32> {
+    let id = frame_id_from_stack(state, 1)?;
+    let pitch = borrow_state(state)?
+        .widgets
+        .get(id)
+        .map(|frame| frame.model_state().actor_pitch as f64)
+        .unwrap_or(0.0);
+    pitch.into_stack(state)
+}
+
+pub(super) fn set_actor_roll(state: &mut LuaState) -> LuaResult<u32> {
+    let id = frame_id_from_stack(state, 1)?;
+    let roll = val_to_f64(stack_val(state, 2)) as f32;
+    let mut sim = borrow_state_mut(state)?;
+    if let Some(frame) = sim.widgets.get_mut_visual(id) {
+        frame.model_state_mut().actor_roll = roll;
+    }
+    Ok(0)
+}
+
+pub(super) fn get_actor_roll(state: &mut LuaState) -> LuaResult<u32> {
+    let id = frame_id_from_stack(state, 1)?;
+    let roll = borrow_state(state)?
+        .widgets
+        .get(id)
+        .map(|frame| frame.model_state().actor_roll as f64)
+        .unwrap_or(0.0);
+    roll.into_stack(state)
+}
+
+pub(super) fn set_actor_yaw(state: &mut LuaState) -> LuaResult<u32> {
+    let id = frame_id_from_stack(state, 1)?;
+    let yaw = val_to_f64(stack_val(state, 2)) as f32;
+    let mut sim = borrow_state_mut(state)?;
+    if let Some(frame) = sim.widgets.get_mut_visual(id) {
+        frame.model_state_mut().actor_yaw = yaw;
+    }
+    Ok(0)
+}
+
+pub(super) fn get_actor_yaw(state: &mut LuaState) -> LuaResult<u32> {
+    let id = frame_id_from_stack(state, 1)?;
+    let yaw = borrow_state(state)?
+        .widgets
+        .get(id)
+        .map(|frame| frame.model_state().actor_yaw as f64)
+        .unwrap_or(0.0);
+    yaw.into_stack(state)
+}
+
+pub(super) fn set_particle_override_scale(state: &mut LuaState) -> LuaResult<u32> {
+    let id = frame_id_from_stack(state, 1)?;
+    let scale = Option::<f64>::from_stack(state, 2)?.map(|value| value as f32);
+    let mut sim = borrow_state_mut(state)?;
+    if let Some(frame) = sim.widgets.get_mut_visual(id) {
+        frame.model_state_mut().particle_override_scale = scale;
+    }
+    Ok(0)
+}
+
+pub(super) fn get_particle_override_scale(state: &mut LuaState) -> LuaResult<u32> {
+    let id = frame_id_from_stack(state, 1)?;
+    let scale = borrow_state(state)?
+        .widgets
+        .get(id)
+        .and_then(|frame| frame.model_state().particle_override_scale);
+    if let Some(scale) = scale {
+        (scale as f64).into_stack(state)
+    } else {
+        state.push(Val::Nil);
+        Ok(1)
     }
 }
 
@@ -654,6 +756,7 @@ const MODEL_METHODS: &[(&'static str, rilua::vm::closure::RustFn)] = &[
         "SetModelByCreatureDisplayID",
         set_model_by_creature_display_id,
     ),
+    ("SetModelByFileID", set_model_by_file_id),
     ("SetCreature", set_creature),
     ("ClearModel", clear_model),
     ("GetModelFileID", get_model_file_id),
@@ -712,8 +815,14 @@ const MODEL_METHODS: &[(&'static str, rilua::vm::closure::RustFn)] = &[
     ("AdvanceTime", SKIP_3D_RENDERING),
     ("ClearTransform", SKIP_3D_RENDERING),
     ("SetTransform", SKIP_3D_RENDERING),
-    ("SetPitch", SKIP_3D_RENDERING),
-    ("SetRoll", SKIP_3D_RENDERING),
+    ("SetPitch", set_actor_pitch),
+    ("GetPitch", get_actor_pitch),
+    ("SetRoll", set_actor_roll),
+    ("GetRoll", get_actor_roll),
+    ("SetYaw", set_actor_yaw),
+    ("GetYaw", get_actor_yaw),
+    ("SetParticleOverrideScale", set_particle_override_scale),
+    ("GetParticleOverrideScale", get_particle_override_scale),
     ("UseModelCenterToTransform", SKIP_3D_RENDERING),
     ("SetViewTranslation", SKIP_3D_RENDERING),
     ("SetModelDrawLayer", SKIP_3D_RENDERING),
@@ -747,8 +856,6 @@ const MODEL_METHODS: &[(&'static str, rilua::vm::closure::RustFn)] = &[
     ("HasCustomCamera", stub_false),
     ("HasAttachmentPoints", stub_false),
     ("GetLight", stub_nil),
-    ("GetPitch", stub_zero),
-    ("GetRoll", stub_zero),
     ("GetWorldScale", stub_one),
     (
         "TransformCameraSpaceToModelSpace",

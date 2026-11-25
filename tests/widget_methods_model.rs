@@ -912,3 +912,71 @@ fn test_model_scene_actor_accepts_model_loaded_script() {
 
     assert!(registered);
 }
+
+#[test]
+fn model_scene_actor_reports_supplied_pitch_values() {
+    let env = WowLuaEnv::new().expect("env");
+    let values: (f64, f64) = env
+        .eval(
+            r#"
+            local actor = CreateFrame("ModelScene"):CreateActor()
+            actor:SetPitch(0.25)
+            local first = actor:GetPitch()
+            actor:SetPitch(-0.75)
+            return first, actor:GetPitch()
+            "#,
+        )
+        .unwrap();
+    assert_eq!(values, (0.25, -0.75));
+}
+
+#[test]
+fn model_scene_actor_reports_supplied_roll_values() {
+    let env = WowLuaEnv::new().expect("env");
+    let values: (f64, f64) = env
+        .eval(
+            r#"
+            local actor = CreateFrame("ModelScene"):CreateActor()
+            actor:SetRoll(-0.5)
+            local first = actor:GetRoll()
+            actor:SetRoll(1.25)
+            return first, actor:GetRoll()
+            "#,
+        )
+        .unwrap();
+    assert_eq!(values, (-0.5, 1.25));
+}
+
+#[test]
+fn model_scene_actor_reports_supplied_yaw_values() {
+    let env = WowLuaEnv::new().expect("env");
+    let values: (f64, f64) = env
+        .eval(
+            r#"
+            local actor = CreateFrame("ModelScene"):CreateActor()
+            actor:SetYaw(0.5)
+            local first = actor:GetYaw()
+            actor:SetYaw(-1.25)
+            return first, actor:GetYaw()
+            "#,
+        )
+        .unwrap();
+    assert_eq!(values, (0.5, -1.25));
+}
+
+#[test]
+fn model_scene_actor_reports_supplied_particle_override_scales() {
+    let env = WowLuaEnv::new().expect("env");
+    let values: (f64, f64) = env
+        .eval(
+            r#"
+            local actor = CreateFrame("ModelScene"):CreateActor()
+            actor:SetParticleOverrideScale(0.5)
+            local first = actor:GetParticleOverrideScale()
+            actor:SetParticleOverrideScale(2.25)
+            return first, actor:GetParticleOverrideScale()
+            "#,
+        )
+        .unwrap();
+    assert_eq!(values, (0.5, 2.25));
+}
