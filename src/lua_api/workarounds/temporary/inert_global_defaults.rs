@@ -14,6 +14,7 @@ if IsPlayerInWorld == nil then
 end
 "#;
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 const BNET_GLOBAL_DEFAULTS_LUA: &str = r#"
 if BNGetNumFriends == nil then
     function BNGetNumFriends() return 0, 0, 0, 0 end
