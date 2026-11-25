@@ -60,60 +60,51 @@ fn queued_roster_updates(env: &WowLuaEnv) -> usize {
         .count()
 }
 
-#[test]
-fn communities_guild_perks_panel_uses_supplied_spell_rows() {
-    let env = load_communities();
+fn open_guild_perks(env: &WowLuaEnv) {
     env.exec(
         "A_Admin.SetGuildInfo('Perk Test Guild', 'Member', 2); A_Admin.SetGuildPerks(1459, 1, 6673, 2); ToggleCommunitiesFrame(); CommunitiesFrame.GuildInfoTab:Click()",
     )
     .expect("guild perks panel should open through the original guild tab");
-    wow_ui_sim::startup::fire_one_on_update_tick(&env);
-    let diagnostics: String = env
-        .eval(
-            r#"
-            local perks = CommunitiesFrame.GuildBenefitsFrame.Perks
-            local scrollBox = perks.ScrollBox
-            local dataProvider = scrollBox:GetDataProvider()
-            local view = scrollBox:GetView()
-            local frameCount = view and type(view.GetFrameCount) == "function"
-                and view:GetFrameCount() or -1
-            return table.concat({
-                tostring(dataProvider and dataProvider:GetSize()),
-                tostring(scrollBox:GetWidth()), tostring(scrollBox:GetHeight()),
-                tostring(perks:GetWidth()), tostring(perks:GetHeight()),
-                tostring(CommunitiesFrame.GuildBenefitsFrame:GetWidth()),
-                tostring(CommunitiesFrame.GuildBenefitsFrame:GetHeight()),
-                tostring(frameCount),
-            }, "|")
-            "#,
-        )
-        .expect("guild perks consumer dimensions should be readable");
-    eprintln!("guild perks diagnostics: {diagnostics}");
-    let row_names: (bool, i32, String, String) = env
-        .eval(
-            r#"
-            local perks = CommunitiesFrame.GuildBenefitsFrame.Perks
-            local names = {}
-            perks.ScrollBox:ForEachFrame(function(button)
-                names[#names + 1] = button.Name:GetText()
-            end)
-            return perks:IsShown(), #names, names[1] or "", names[2] or ""
-            "#,
-        )
-        .expect("original Communities guild perks rows should be available");
-    assert!(row_names.0, "perks panel should show when two perks are supplied");
-    assert_eq!(row_names.1, 2, "two supplied perks should produce two rows");
-    assert!(!row_names.2.is_empty(), "first perk row should have a name");
-    assert_ne!(row_names.2, row_names.3, "perk rows should have distinct names");
+    wow_ui_sim::startup::fire_one_on_update_tick(env);
+}
 
+fn guild_perk_rows(env: &WowLuaEnv) -> (bool, i32, String, String) {
+    env.eval(
+        r#"
+        local perks = CommunitiesFrame.GuildBenefitsFrame.Perks
+        local names = {}
+        perks.ScrollBox:ForEachFrame(function(button)
+            names[#names + 1] = button.Name:GetText()
+        end)
+        return perks:IsShown(), #names, names[1] or "", names[2] or ""
+        "#,
+    )
+    .expect("original Communities guild perks rows should be available")
+}
+
+fn clear_guild_perks_and_reopen(env: &WowLuaEnv) {
     env.exec(
         "A_Admin.SetGuildPerks(); ToggleCommunitiesFrame(); ToggleCommunitiesFrame(); CommunitiesFrame.GuildInfoTab:Click()",
     )
     .expect("guild perks panel should refresh after the supplied perks are cleared");
-    let shown: bool = env
-        .eval("return CommunitiesFrame.GuildBenefitsFrame.Perks:IsShown()")
-        .expect("guild perks panel visibility should be observable");
-    assert!(!shown, "zero perks should hide the original perks panel");
+}
+
+fn guild_perks_panel_is_shown(env: &WowLuaEnv) -> bool {
+    env.eval("return CommunitiesFrame.GuildBenefitsFrame.Perks:IsShown()")
+        .expect("guild perks panel visibility should be observable")
+}
+
+#[test]
+fn communities_guild_perks_panel_uses_supplied_spell_rows() {
+    let env = load_communities();
+    open_guild_perks(&env);
+    let rows = guild_perk_rows(&env);
+    assert!(rows.0, "perks panel should show when two perks are supplied");
+    assert_eq!(rows.1, 2, "two supplied perks should produce two rows");
+    assert!(!rows.2.is_empty(), "first perk row should have a name");
+    assert_ne!(rows.2, rows.3, "perk rows should have distinct names");
+    clear_guild_perks_and_reopen(&env);
+    assert!(!guild_perks_panel_is_shown(&env), "zero perks should hide panel");
 }
 
 #[test]
