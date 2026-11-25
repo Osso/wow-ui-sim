@@ -20,6 +20,18 @@ fn load_original_addon(addon: &str) -> WowLuaEnv {
     env
 }
 
+fn load_original_friends_frame() -> WowLuaEnv {
+    let ui = blizzard_ui_dir();
+    let addons = ["Blizzard_FriendsFrame", "Blizzard_QuickJoin", "Blizzard_SocialUI"];
+    let (env, loaded) = build_blizzard_addon_closure_env(&ui, &addons, &[]);
+    for addon in addons {
+        assert!(loaded.iter().any(|name| name == addon), "load {addon}");
+    }
+    env.apply_post_load_workarounds();
+    wow_ui_sim::startup::settle_headless_startup(&env);
+    env
+}
+
 #[test]
 fn original_friends_and_quick_join_consumers_follow_battle_net_connection() {
     let ui = blizzard_ui_dir();
@@ -254,7 +266,7 @@ fn admin_supplies_allowed_community_types() {
 
 #[test]
 fn original_friends_frame_renders_supplied_battle_net_counts_and_invites() {
-    let env = load_original_addon("Blizzard_FriendsFrame");
+    let env = load_original_friends_frame();
     env.exec(
         r#"
         A_Admin.SetBattleNetFriendInvite(1, 91, "Jaina", "Jaina#1234", 1, 1760000091)
@@ -269,12 +281,13 @@ fn original_friends_frame_renders_supplied_battle_net_counts_and_invites() {
         ToggleFriendsFrame(1)
         assert(FriendsFrame:IsShown() and FriendsListFrame:IsShown())
         FriendsList_Update(true)
-        local friends, invites = 0, 0
+        local friends, inviteHeaders, invites = 0, 0, 0
         for _, row in FriendsListFrame.ScrollBox:EnumerateDataProviderEntireRange() do
             if row.buttonType == FRIENDS_BUTTON_TYPE_BNET then friends = friends + 1 end
+            if row.buttonType == FRIENDS_BUTTON_TYPE_INVITE_HEADER then inviteHeaders = inviteHeaders + 1 end
             if row.buttonType == FRIENDS_BUTTON_TYPE_INVITE then invites = invites + 1 end
         end
-        assert(friends == 2 and invites == 1)
+        assert(friends == 2 and inviteHeaders == 1 and invites == 1)
         "#,
     )
     .expect("original FriendsFrame renders supplied Battle.net friends and invite");
