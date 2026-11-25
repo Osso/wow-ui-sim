@@ -98,6 +98,7 @@ fn original_consumers_get_constructor_defaults_and_xml_children() {
     let env = game_ui_env();
     env.exec(
         r#"
+        A_Admin.SetPlayerPresent(true)
         A_Admin.EquipItem(11, 49812)
         A_Admin.EquipItem(12, 49803)
         A_Admin.SetInventorySlotCandidates(10, false, {
