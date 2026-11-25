@@ -171,7 +171,12 @@ fn write_candidates(
 }
 
 pub(crate) fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
-    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+    // INFERRED: R88k.1 Retail evidence; Forever registration INFERRED (native evidence pending).
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
         LuaApiMut::register_function(
             lua,
             "GetInventoryItemsForSlot",

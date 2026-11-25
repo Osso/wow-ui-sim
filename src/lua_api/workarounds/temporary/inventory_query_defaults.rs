@@ -45,7 +45,12 @@ end
 "#;
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
-    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Wrath {
+    if !matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Wrath
+            | crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
         lua.exec(INVENTORY_SLOT_DEFAULT_LUA)?;
     }
     #[cfg(not(feature = "retail-12-0-0"))]
@@ -77,6 +82,7 @@ mod tests {
             crate::client_profile::ACTIVE,
             crate::client_profile::ClientProfile::Wrath
                 | crate::client_profile::ClientProfile::Retail
+                | crate::client_profile::ClientProfile::WowForever
         ) {
             let is_nil: bool = env
                 .eval("return GetInventoryItemsForSlot(1) == nil")
