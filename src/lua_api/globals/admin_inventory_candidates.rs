@@ -196,7 +196,8 @@ fn read_optional_number(
     table: GcRef<Table>,
     name: &str,
 ) -> LuaResult<Option<u32>> {
-    match unwrap_secret(state, read_field(state, table, name)?)? {
+    let value = read_field(state, table, name)?;
+    match unwrap_secret(state, value)? {
         Val::Nil => Ok(None),
         value => read_number(value).map(Some),
     }
@@ -207,7 +208,8 @@ fn read_optional_boolean(
     table: GcRef<Table>,
     name: &str,
 ) -> LuaResult<Option<bool>> {
-    match unwrap_secret(state, read_field(state, table, name)?)? {
+    let value = read_field(state, table, name)?;
+    match unwrap_secret(state, value)? {
         Val::Nil => Ok(None),
         Val::Bool(value) => Ok(Some(value)),
         _ => Err(runtime_error(USAGE)),
@@ -219,7 +221,8 @@ fn read_optional_string(
     table: GcRef<Table>,
     name: &str,
 ) -> LuaResult<Option<String>> {
-    match unwrap_secret(state, read_field(state, table, name)?)? {
+    let value = read_field(state, table, name)?;
+    match unwrap_secret(state, value)? {
         Val::Nil => Ok(None),
         Val::Str(value) => state
             .gc
