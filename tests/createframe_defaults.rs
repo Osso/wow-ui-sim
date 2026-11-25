@@ -64,6 +64,21 @@ fn assert_item_button_and_tooltip_contract(env: &WowLuaEnv) {
     );
 }
 
+fn assert_inventory_candidates_are_supplied(env: &WowLuaEnv) {
+    let count: u32 = env
+        .eval(
+            r#"
+            local candidates = {}
+            GetInventoryItemsForSlot(10, candidates)
+            local count = 0
+            for _ in pairs(candidates) do count = count + 1 end
+            return count
+            "#,
+        )
+        .expect("query host-supplied candidates");
+    assert_eq!(count, 2);
+}
+
 fn assert_map_canvas_contract(env: &WowLuaEnv) {
     let contract: (bool, bool) = env
         .eval(
@@ -98,6 +113,7 @@ fn original_consumers_get_constructor_defaults_and_xml_children() {
         "#,
     )
     .expect("supply two candidates to the original equipment flyout");
+    assert_inventory_candidates_are_supplied(&env);
     let addon = addon_createframe_probe();
     load_addon(
         &env.loader_env(),
