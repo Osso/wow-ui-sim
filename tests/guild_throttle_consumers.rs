@@ -70,7 +70,7 @@ fn communities_guild_perks_panel_uses_supplied_spell_rows() {
     let row_names: (bool, i32, String, String) = env
         .eval(
             r#"
-            local perks = CommunitiesFrame.GuildDetailsFrame.Perks
+            local perks = CommunitiesFrame.GuildBenefitsFrame.Perks
             local names = {}
             perks.ScrollBox:ForEachFrame(function(button)
                 names[#names + 1] = button.Name:GetText()
@@ -89,7 +89,7 @@ fn communities_guild_perks_panel_uses_supplied_spell_rows() {
     )
     .expect("guild perks panel should refresh after the supplied perks are cleared");
     let shown: bool = env
-        .eval("return CommunitiesFrame.GuildDetailsFrame.Perks:IsShown()")
+        .eval("return CommunitiesFrame.GuildBenefitsFrame.Perks:IsShown()")
         .expect("guild perks panel visibility should be observable");
     assert!(!shown, "zero perks should hide the original perks panel");
 }
