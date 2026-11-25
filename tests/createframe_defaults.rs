@@ -101,9 +101,11 @@ fn original_consumers_get_constructor_defaults_and_xml_children() {
         A_Admin.SetPlayerPresent(true)
         A_Admin.EquipItem(11, 49812)
         A_Admin.EquipItem(12, 49803)
+        local linkA = select(2, C_Item.GetItemInfo(49812))
+        local linkB = select(2, C_Item.GetItemInfo(49803))
         A_Admin.SetInventorySlotCandidates(10, false, {
-            { equipmentSlot = 11 },
-            { equipmentSlot = 12 },
+            { equipmentSlot = 11, link = linkA },
+            { equipmentSlot = 12, link = linkB },
         }, {
             slotNames = { HandsSlot = 10 },
             carriedEnabled = true,
