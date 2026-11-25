@@ -35,7 +35,7 @@ assert(scroll.InstantPanAndZoom == MapCanvasScrollControllerMixin.InstantPanAndZ
 assert(child:GetWidth() == 3840 and child:GetHeight() == 2560)
 assert(scrollWidth > 0 and scrollHeight > 0)
 assert(scroll.baseScale == expectedScale)
-assert(scroll.baseScale > 0 and scroll.currentScale > 0 and scroll.targetScale > 0)
+assert(scroll.baseScale > 0 and scroll.targetScale > 0 and scroll:GetCanvasScale() > 0)
 local levels = assert(scroll.zoomLevels)
 assert(type(levels) == "table" and #levels > 1)
 local previousScale = 0

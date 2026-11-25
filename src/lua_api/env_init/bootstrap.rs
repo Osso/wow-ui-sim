@@ -77,10 +77,7 @@ fn runtime_surface_arguments() -> [Val; 9] {
             | ClientProfile::Anniversary
             | ClientProfile::WowForever
     );
-    // Positional contract with runtime_surface_bootstrap.lua's destructuring:
-    // classicCombat, forever, vanilla, modeledStoreGlue, modeledStoreCatalog,
-    // modeledStoreVas, retirePveFrameBridge, retireGlueOwnerDefaults,
-    // retireMapCanvasScrollContainer.
+    // Keep order in sync with runtime_surface_bootstrap.lua's argument destructuring.
     [
         Val::Bool(classic_combat),
         Val::Bool(ACTIVE == ClientProfile::WowForever),

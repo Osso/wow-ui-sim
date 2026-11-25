@@ -64,7 +64,7 @@ local function __wow_install_frame_helpers(frame)
   return frame
 end
 
-if CreateFrame ~= nil and __wow_original_CreateFrame == nil then
+if not retireGenericFrameHelpers and CreateFrame ~= nil and __wow_original_CreateFrame == nil then
   __wow_original_CreateFrame = CreateFrame
 
   function CreateFrame(...)

@@ -1434,7 +1434,9 @@ __wow_patch_uiparent_onupdate_worklists()
 -- in frame_helper_defaults.rs) can reach them from other chunks.
 rawset(_G, "__wow_patch_character_select_nav_bar", __wow_patch_character_select_nav_bar)
 rawset(_G, "__wow_patch_uiparent_onupdate_worklists", __wow_patch_uiparent_onupdate_worklists)
-rawset(_G, "__wow_patch_map_canvas_scroll_container_methods", __wow_patch_map_canvas_scroll_container_methods)
+if not retireMapCanvasScrollContainer then
+  rawset(_G, "__wow_patch_map_canvas_scroll_container_methods", __wow_patch_map_canvas_scroll_container_methods)
+end
 rawset(_G, "__wow_patch_fog_of_war_pin_methods", __wow_patch_fog_of_war_pin_methods)
 
 AUTOCOMPLETE_LIST = AUTOCOMPLETE_LIST or {}

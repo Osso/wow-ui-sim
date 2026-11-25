@@ -1,3 +1,7 @@
+## [2026-11-25] implementation | Retail/Forever MapCanvas wrapper retirement
+
+Updated the [post-load workaround audit](investigations/post-load-workaround-audit.md). **VERIFIED (simulator source and exact profile tests):** Retail and WoW Forever use original MapCanvas methods and modeled map state; the scroll-container, zoom-query, and viewport-scale wrappers are no longer registered on those profiles. Other profiles retain the legacy wrapper.
+
 ## [2026-11-24] implementation | Retail hooksecurefunc dispatcher taint
 
 Updated the [taint system](../systems/taint-system.md#retail-hooksecurefunc-dispatcher). **VERIFIED (Retail exact prefork test and full-addon run):** the `securecall` factory keeps the AuraContainer hook dispatcher secure, the target secret-texture error count is zero, and no new errors appear; direct tainted secret-string rejection remains enabled.

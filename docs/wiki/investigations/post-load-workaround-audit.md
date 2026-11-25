@@ -22,6 +22,10 @@ The retirement criterion was exact duplicate call path, not visual symptom
 masking. The remaining runtime hooks still isolate the temporary Lua surfaces in
 `src/lua_api/workarounds/temporary/`.
 
+### Retail and WoW Forever MapCanvas wrapper retirement
+
+**VERIFIED (simulator source and focused profile tests):** Retail and WoW Forever no longer register the MapCanvas scroll-container wrapper, fabricated zoom queries, or viewport-scale repairs. Their original MapCanvas methods use the modeled map state for map changes, sizing, and zoom. Other profiles retain the legacy wrapper in `map_canvas_scroll_container_legacy.rs`. The two-map proof is `world_map_canvas_uses_model_for_two_maps` in `tests/blizzard_map_canvas_loads.rs`.
+
 ### Retail Glue CharacterCreate fallbacks
 
 **VERIFIED (Retail 12.1.5 cache and selector):** the original Glue-selected
