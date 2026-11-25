@@ -32,7 +32,7 @@ use crate::lua_api::methods::{
 };
 #[cfg(feature = "client-wowforever")]
 use crate::lua_api::script_helpers::fire_named_event_state;
-use crate::lua_api::state::ChatChannel;
+use crate::lua_api::state::{ChatChannel, ChatWindow};
 use crate::lua_bridge::{FromStack, stack_val, table_set_rust_fn_static};
 use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
@@ -180,7 +180,7 @@ fn join_permanent_channel(state: &mut LuaState) -> LuaResult<u32> {
             let window = sim
                 .chat_windows
                 .entry(frame_id)
-                .or_insert_with(|| crate::lua_api::ChatWindow::for_index(frame_id));
+                .or_insert_with(|| ChatWindow::for_index(frame_id));
             if window.channel_names.insert(name.clone()) {
                 window.channels.push(name.clone());
             }
