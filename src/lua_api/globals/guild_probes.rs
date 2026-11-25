@@ -451,12 +451,6 @@ fn register_guild_membership_queries(lua: &mut rilua::Lua) -> crate::Result<()> 
     ) {
         LuaApiMut::register_function(lua, "GetNumGuildPerks", get_num_guild_perks)?;
         LuaApiMut::register_function(lua, "GetGuildPerkInfo", get_guild_perk_info)?;
-    }
-    if matches!(
-        crate::client_profile::ACTIVE,
-        crate::client_profile::ClientProfile::Retail
-            | crate::client_profile::ClientProfile::WowForever
-    ) {
         LuaApiMut::register_function(lua, "IsGuildMember", is_guild_member)?;
     }
     LuaApiMut::register_function(lua, "CanReplaceGuildMaster", can_replace_guild_master)?;
