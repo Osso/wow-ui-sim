@@ -165,7 +165,7 @@ fn assert_invocation(stderr: &str, line: u32, body: &str, outcome: &str) {
     let returned = returns[0];
     for record in [entry, returned] {
         assert!(record.contains("handler=C_Timer frame=#0"), "{record}");
-        assert!(record.contains(" source=="), "wrapper source lost: {record}");
+        assert!(record.contains(&format!(" source={SOURCE}:{line}")), "{record}");
     }
     assert!(returned.contains("duration_ms="), "{returned}");
     assert_eq!(field(returned, "outcome"), outcome);
