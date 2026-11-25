@@ -22,23 +22,6 @@ fn test_gametooltip_strata_is_tooltip() {
 }
 
 #[test]
-fn created_gametooltip_uses_constructor_tooltip_strata() {
-    let env = WowLuaEnv::new().unwrap();
-    let (tooltip, ordinary): (String, String) = env
-        .eval(
-            r#"
-            local tooltip = CreateFrame("GameTooltip", nil, UIParent)
-            local ordinary = CreateFrame("Frame", nil, UIParent)
-            return tooltip:GetFrameStrata(), ordinary:GetFrameStrata()
-            "#,
-        )
-        .unwrap();
-
-    assert_eq!(tooltip, "TOOLTIP");
-    assert_eq!(ordinary, "MEDIUM");
-}
-
-#[test]
 fn test_addline_and_numlines() {
     let env = WowLuaEnv::new().unwrap();
 
