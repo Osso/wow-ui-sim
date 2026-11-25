@@ -297,7 +297,7 @@ if GetNumLanguages() ~= 1 then return "num_languages" end
 local indexedLanguageName, indexedLanguageID = GetLanguageByIndex(1)
 if indexedLanguageName ~= "Common" or indexedLanguageID ~= EXPECTED_DEFAULT_LANGUAGE_ID then return "indexed_language" end
 if GetLanguageByIndex(2) ~= nil then return "missing_indexed_language" end
-if GetMaxBattlefieldID() ~= 0 then return "battlefield_id" end
+if GetMaxBattlefieldID() ~= EXPECTED_MAX_BATTLEFIELD_ID then return "battlefield_id" end
 if IsActiveBattlefieldArena() ~= false then return "battlefield_arena" end
 if IsPVPTimerRunning() ~= false then return "pvp_timer" end
 if HasArtifactEquipped() ~= false then return "artifact" end
@@ -345,8 +345,9 @@ return "ok"
             (0, 0, 0, 0)
         };
         let expected_default_language_id = expected_default_language_id();
+        let expected_max_battlefield_id = expected_max_battlefield_id();
         env.exec(&format!(
-            "EXPECTED_GUILD_FACTION = {expected_guild_faction}; EXPECTED_BNET_COUNTS = {{{}, {}, {}, {}}}; EXPECTED_DEFAULT_LANGUAGE_ID = {expected_default_language_id}",
+            "EXPECTED_GUILD_FACTION = {expected_guild_faction}; EXPECTED_BNET_COUNTS = {{{}, {}, {}, {}}}; EXPECTED_DEFAULT_LANGUAGE_ID = {expected_default_language_id}; EXPECTED_MAX_BATTLEFIELD_ID = {expected_max_battlefield_id}",
             expected_bnet_counts.0,
             expected_bnet_counts.1,
             expected_bnet_counts.2,
@@ -363,6 +364,17 @@ return "ok"
             7
         } else {
             1
+        }
+    }
+
+    fn expected_max_battlefield_id() -> i32 {
+        if cfg!(any(
+            feature = "client-retail",
+            feature = "client-wowforever"
+        )) {
+            3
+        } else {
+            0
         }
     }
 
