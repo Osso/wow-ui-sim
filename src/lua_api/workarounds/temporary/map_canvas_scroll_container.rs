@@ -19,6 +19,7 @@ end
 local preserve_original_world_map_owners = option_set.preserve_original_world_map_owners == true
 local retire_container_access = option_set.retire_container_access == true
 local retire_zoom_query = option_set.retire_zoom_query == true
+local retire_viewport_scale_repairs = option_set.retire_viewport_scale_repairs == true
 
 if type(ClearCachedActivitiesForPlayer) ~= "function" then
   function ClearCachedActivitiesForPlayer() end
@@ -273,7 +274,7 @@ local function __wow_patch_live_map_canvas(frame)
     return
   end
 
-  if type(MapCanvasMixin.SetMapID) == "function" then
+  if not retire_viewport_scale_repairs and type(MapCanvasMixin.SetMapID) == "function" then
     frame.SetMapID = MapCanvasMixin.SetMapID
   end
   if not retire_container_access then
@@ -287,14 +288,16 @@ local function __wow_patch_live_map_canvas(frame)
       frame.OnFrameSizeChanged = MapCanvasMixin.OnFrameSizeChanged
     end
   end
-  if type(MapCanvasMixin.OnShow) == "function" then
+  if not retire_viewport_scale_repairs and type(MapCanvasMixin.OnShow) == "function" then
     frame.OnShow = MapCanvasMixin.OnShow
   end
 
   if not retire_container_access then
     __wow_try_init_map_canvas(frame)
   end
-  __wow_refresh_map_canvas_size(frame)
+  if not retire_viewport_scale_repairs then
+    __wow_refresh_map_canvas_size(frame)
+  end
 end
 
 local function __wow_patch_world_map_display_state(frame)
@@ -314,7 +317,9 @@ local function __wow_patch_world_map_display_state(frame)
     if not retire_container_access then
       __wow_try_init_map_canvas(self)
     end
-    __wow_refresh_map_canvas_size(self)
+    if not retire_viewport_scale_repairs then
+      __wow_refresh_map_canvas_size(self)
+    end
     return result
   end
 
@@ -377,7 +382,7 @@ if type(MapCanvasMixin) == "table" and not rawget(_G, "__wow_map_canvas_scroll_c
     end
   end
 
-  if type(MapCanvasMixin.SetMapID) == "function" then
+  if not retire_viewport_scale_repairs and type(MapCanvasMixin.SetMapID) == "function" then
     local originalSetMapID = MapCanvasMixin.SetMapID
     MapCanvasMixin.SetMapID = function(self, ...)
       if not retire_container_access then
@@ -397,7 +402,7 @@ if type(MapCanvasMixin) == "table" and not rawget(_G, "__wow_map_canvas_scroll_c
     end
   end
 
-  if type(MapCanvasMixin.OnShow) == "function" then
+  if not retire_viewport_scale_repairs and type(MapCanvasMixin.OnShow) == "function" then
     local originalOnShow = MapCanvasMixin.OnShow
     MapCanvasMixin.OnShow = function(self, ...)
       if not retire_container_access then
@@ -435,7 +440,8 @@ if type(MapCanvasMixin) == "table" and not rawget(_G, "__wow_map_canvas_scroll_c
     end
   end
 
-  if type(MapCanvasScrollControllerMixin) == "table"
+  if not retire_viewport_scale_repairs
+    and type(MapCanvasScrollControllerMixin) == "table"
     and type(MapCanvasScrollControllerMixin.ResetZoom) == "function"
   then
     MapCanvasScrollControllerMixin.ResetZoom = function(self)
@@ -452,7 +458,8 @@ if type(MapCanvasMixin) == "table" and not rawget(_G, "__wow_map_canvas_scroll_c
     end
   end
 
-  if type(MapCanvasScrollControllerMixin) == "table"
+  if not retire_viewport_scale_repairs
+    and type(MapCanvasScrollControllerMixin) == "table"
     and type(MapCanvasScrollControllerMixin.CreateZoomLevels) == "function"
   then
     local originalCreateZoomLevels = MapCanvasScrollControllerMixin.CreateZoomLevels
@@ -471,7 +478,8 @@ if type(MapCanvasMixin) == "table" and not rawget(_G, "__wow_map_canvas_scroll_c
     end
   end
 
-  if type(MapCanvasScrollControllerMixin) == "table"
+  if not retire_viewport_scale_repairs
+    and type(MapCanvasScrollControllerMixin) == "table"
     and type(MapCanvasScrollControllerMixin.InstantPanAndZoom) == "function"
   then
     local originalInstantPanAndZoom = MapCanvasScrollControllerMixin.InstantPanAndZoom
@@ -549,8 +557,13 @@ pub(crate) fn patch(env: &LoaderEnv<'_>) -> Result<(), crate::Error> {
             "preserve_original_world_map_owners",
             "retire_container_access",
             "retire_zoom_query",
+            "retire_viewport_scale_repairs",
         ],
-        ClientProfile::WowForever => &["retire_container_access", "retire_zoom_query"],
+        ClientProfile::WowForever => &[
+            "retire_container_access",
+            "retire_zoom_query",
+            "retire_viewport_scale_repairs",
+        ],
         _ => &[],
     };
     let args: Vec<_> = option_names
