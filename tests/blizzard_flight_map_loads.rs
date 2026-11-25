@@ -370,6 +370,10 @@ prefork_full_ui_case! {
 fn flight_map_hide_closes_taxi_interaction_without_clearing_map_id(env: &WowLuaEnv) {
     for map_id in [14, 994] {
         open_flight_map_for_taxi_map(env, map_id);
+        let taxi_active: bool = env
+            .eval("return C_PlayerInteractionManager.IsInteractingWithNpcOfType(Enum.PlayerInteractionType.TaxiNode)")
+            .expect("TaxiNode interaction state should be readable after open");
+        assert!(taxi_active, "taxi-map open should activate the TaxiNode interaction");
         let errors_before_close = env.state().borrow().lua_errors.len();
         env.exec("HideUIPanel(FlightMapFrame)")
             .expect("HideUIPanel should close the original FlightMapFrame consumer");
@@ -384,6 +388,10 @@ fn flight_map_hide_closes_taxi_interaction_without_clearing_map_id(env: &WowLuaE
             .expect("FlightMap close state should be observable");
         assert!(!is_shown, "FlightMapFrame should be hidden after HideUIPanel");
         assert_eq!(retained_map_id, map_id, "close must retain the supplied map ID");
+        let taxi_active: bool = env
+            .eval("return C_PlayerInteractionManager.IsInteractingWithNpcOfType(Enum.PlayerInteractionType.TaxiNode)")
+            .expect("TaxiNode interaction state should be readable after close");
+        assert!(!taxi_active, "CloseTaxiMap should clear the TaxiNode interaction");
     }
 }
 }
@@ -410,11 +418,10 @@ fn open_flight_map_for_taxi_map(env: &WowLuaEnv, map_id: i32) {
         .eval("return GetTaxiMapID()")
         .expect("taxi map ID should be readable before the open event");
     assert_eq!(map_id_before_open, map_id);
-    let world_system: f64 = env
-        .eval("return Enum.UIMapSystem.World")
-        .expect("World UIMapSystem enum should be available");
-    env.fire_event_with_args("TAXIMAP_OPENED", &[rilua::Val::Num(world_system)])
-        .expect("World-system TAXIMAP_OPENED should load and open FlightMapFrame");
+    env.exec(
+        "A_Admin.OpenTaxiMap(Enum.UIMapSystem.World)",
+    )
+    .expect("World-system taxi-map producer should open FlightMapFrame");
 }
 
 fn observe_flight_map_label_anchors(env: &WowLuaEnv) -> (bool, bool, i32, i32, String, String) {
