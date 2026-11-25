@@ -30,7 +30,7 @@ Retail and Forever tests can supply the candidates consumed by `GetInventoryItem
 ```lua
 A_Admin.SetInventorySlotCandidates(11, false, {
     { equipmentSlot = 12, link = otherRingLink },
-    { bagID = 0, bagSlot = 1, link = carriedRingLink },
+    { carriedSlot = 1, link = carriedRingLink },
 }, {
     slotNames = { Finger0Slot = 11 },
     carriedEnabled = true,
@@ -40,6 +40,6 @@ A_Admin.SetInventorySlotCandidates(11, false, {
 })
 ```
 
-The call replaces the accepted candidate list for that one-based inventory slot and transmogrify mode. Each row uses one-based `equipmentSlot`, or `bagID` plus one-based `bagSlot` (`bagID` defaults to `0`). `link` is optional; omit it only when the supplied model should remove that location from the returned table. Options are also optional. `slotNames` adds or replaces name-to-one-based-slot mappings. The other fields supply the carried-slot range, bank-access predicate input, and readiness for this slot's transmog query. This setter does not derive candidates from equipped items or bags, and an empty list supplies no candidates; native eligibility filtering remains unknown.
+The call replaces the accepted candidate list for that one-based inventory slot and transmogrify mode. Each row uses one-based `equipmentSlot`, one-based `carriedSlot` for the backpack range, or `bagID` plus one-based `bagSlot` (`bagID` defaults to `0`). `carriedEnabled` and `carriedCount` control the carried-slot range. `link` is optional; omit it only when the supplied model should remove that location from the returned table. Options are also optional. `slotNames` adds or replaces name-to-one-based-slot mappings. The other fields supply the carried-slot range, bank-access predicate input, and readiness for this slot's transmog query. This setter does not derive candidates from equipped items or bags, and an empty list supplies no candidates; native eligibility filtering remains unknown.
 
 The existing Retail model publishes these supplied rows through `GetInventoryItemsForSlot`. **INFERRED:** R88k.1 Retail evidence supports this model; Forever registration is inferred from the selected `PaperDollFrameItemFlyout_GetItems` consumer call, with native evidence pending.

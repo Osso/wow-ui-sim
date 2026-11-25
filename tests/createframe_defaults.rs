@@ -91,7 +91,7 @@ fn original_consumers_get_constructor_defaults_and_xml_children() {
         assert(linkA and linkB, "both supplied rings must have item links")
         A_Admin.SetInventorySlotCandidates(11, false, {
             { equipmentSlot = 12, link = linkB },
-            { bagID = 0, bagSlot = 1, link = linkA },
+            { carriedSlot = 1, link = linkA },
         }, {
             slotNames = { Finger0Slot = 11 },
             carriedEnabled = true,

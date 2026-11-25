@@ -88,13 +88,18 @@ fn read_candidate(
 
 fn read_location(state: &mut LuaState, table: GcRef<Table>) -> LuaResult<CandidateLocation> {
     let equipment_slot = read_optional_number(state, table, "equipmentSlot")?;
+    let carried_slot = read_optional_number(state, table, "carriedSlot")?;
     let bag_id = read_optional_number(state, table, "bagID")?;
     let bag_slot = read_optional_number(state, table, "bagSlot")?;
-    match (equipment_slot, bag_id, bag_slot) {
-        (Some(slot), None, None) if (1..=19).contains(&slot) => {
+    match (equipment_slot, carried_slot, bag_id, bag_slot) {
+        (Some(slot), None, None, None) if (1..=19).contains(&slot) => {
             Ok(CandidateLocation::Equipment(slot - 1))
         }
-        (None, bag, Some(slot)) if slot > 0 => {
+        (None, Some(slot), None, None) if slot > 0 => slot
+            .checked_add(34)
+            .map(CandidateLocation::Carried)
+            .ok_or_else(|| runtime_error(USAGE)),
+        (None, None, bag, Some(slot)) if slot > 0 => {
             let bag_id = bag.unwrap_or(0);
             if bag_id < 4 || (5..=10).contains(&bag_id) {
                 Ok(CandidateLocation::Container { id: bag_id, slot })
@@ -102,7 +107,9 @@ fn read_location(state: &mut LuaState, table: GcRef<Table>) -> LuaResult<Candida
                 Err(runtime_error(USAGE))
             }
         }
-        _ => Err(runtime_error("candidate needs equipmentSlot or bagSlot")),
+        _ => Err(runtime_error(
+            "candidate needs equipmentSlot, carriedSlot, or bagSlot",
+        )),
     }
 }
 
