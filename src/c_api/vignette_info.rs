@@ -146,7 +146,8 @@ fn read_record(
 }
 
 fn string_field(state: &mut LuaState, table: Val, name: &str) -> LuaResult<String> {
-    val_to_string(state, table_get(state, table, name))
+    let value = table_get(state, table, name);
+    val_to_string(state, value)
         .ok_or_else(|| runtime_error(format!("A_Admin.SetVignettes: {name} must be a string")))
 }
 
@@ -189,7 +190,8 @@ fn get_vignettes(state: &mut LuaState) -> LuaResult<u32> {
     let rows = records(state);
     let table = create_table(state);
     for (index, (guid, _)) in rows.into_iter().enumerate() {
-        set_table_array(state, table, index as i64 + 1, create_string(state, guid));
+        let value = create_string(state, &guid);
+        set_table_array(state, table, index as i64 + 1, value);
     }
     state.push(table);
     Ok(1)
@@ -203,7 +205,8 @@ fn get_vignette_info(state: &mut LuaState) -> LuaResult<u32> {
         return Ok(1);
     };
     let table = create_table(state);
-    table_set(state, table, "vignetteGUID", create_string(state, guid));
+    let guid_value = create_string(state, &guid);
+    table_set(state, table, "vignetteGUID", guid_value);
     for (name, value) in record.fields {
         table_set(state, table, &name, value);
     }
