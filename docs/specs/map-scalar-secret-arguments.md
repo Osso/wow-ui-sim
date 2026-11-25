@@ -10,14 +10,14 @@ Saved d97 epoch `20261010T214515Z` reaches six tests: two authentic untainted-se
 
 ### Current Retail/PTR secret arguments
 
-- [x] Bounded fixture coverage: both `*_untainted_secret_returns_one_fixture_*` tests assert authentic host-secret map84, one result and distinctive art620104/name; ordinary fixture tests assert corresponding values/count. Arbitrary integer IDs/native equivalence remain unproved.
-- [x] Both `*_tainted_addon_accepts_ordinary_and_rejects_secret` tests assert ordinary fixture output/count and authentic secret rejection under `pcall`.
+- [x] Bounded map coverage: both `*_untainted_secret_returns_one_fixture_*` tests use authentic host-secret map84 and assert one result; the art test asserts generated art89, while the info test asserts seeded identity/name Stormwind City. Ordinary tests assert corresponding known-map values and result counts. Arbitrary integer IDs/native equivalence remain unproved.
+- [x] Both `*_tainted_addon_accepts_ordinary_and_rejects_secret` tests assert ordinary known-map output/count and authentic secret rejection under `pcall`.
 - [x] Four current secret/taint tests assert rooted-wrapper identity/secrecy and caller taint preservation; addon tests also assert parent restoration.
 
 ### Existing compatibility
 
-- [ ] PARTIAL: art ordinary compatibility test covers one fixture result and zero returns for absent9999/999999; current secret test covers present84 only. Secret absent-map branches are not directly tested.
-- [ ] PARTIAL: info ordinary compatibility test covers fixture84, generic9999 fields and zero returns for999999; current secret test covers fixture identity/name/count only. Full table equality and secret generic/absent branches are not directly tested.
+- [ ] PARTIAL: art ordinary compatibility test covers generated map84 data and zero returns for absent9999/999999; current secret test covers present84 only. Secret absent-map branches are not directly tested.
+- [ ] PARTIAL: info ordinary compatibility test covers seeded map84, generic9999 fields and zero returns for999999; current secret test covers seeded identity/name/count only. Full table equality and secret generic/absent branches are not directly tested.
 - [x] Both ordinary compatibility tests assert fractional/string/missing/boolean/table and both i32-overflow rejection diagnostics in Retail, PTR, historical12.0.7 and saved Wrath/Mists/Era/Anniversary/Forever executions.
 - [ ] PARTIAL: historical Retail12.0.7 ordinary2 PASS plus five other profiles ordinary2 each (10 executions of two distinct tests) independently admitted. Current-secret tests are capability-excluded; other historical epochs and native secret policy remain unproved.
 
@@ -41,7 +41,7 @@ Saved d97 epoch `20261010T214515Z` reaches six tests: two authentic untainted-se
 
 `tests/map_scalar_secret_inputs.rs` supplies new target coverage. Existing `tests/c_map_probes.rs` ordinary target tests and MapDisplay security tests are controls/precedent, not admitted RED/GREEN for this slice. The saved pre-producer RED executes six actual target tests: two untainted-secret FAIL and four compatibility PASS. Final independent reports admit changed-producer Retail93/PTR91 PASS, all six targets included; historical12.0.7 admits two ordinary PASS only.
 
-Required main-thread evidence must use a deliberately seeded map row with distinctive art ID/name and an authentic host-VM secret numeric selector, not a Lua lookalike. For both APIs, assert exact result count and fixture values, untainted secret acceptance, tainted ordinary acceptance, tainted secret rejection, and wrapper/caller preservation. Retain known/absent-map controls, `GetMapInfo` generic-range controls, ordinary invalid-selector controls, and historical-profile compatibility coverage. Fixture values are simulator test data, not native catalog facts.
+Required main-thread evidence must use a known map row with generated art data and an authentic host-VM secret numeric selector, not a Lua lookalike. For both APIs, assert exact result count and known-map values, untainted secret acceptance, tainted ordinary acceptance, tainted secret rejection, and wrapper/caller preservation. Retain known/absent-map controls, `GetMapInfo` generic-range controls, ordinary invalid-selector controls, and historical-profile compatibility coverage. Generated art values are simulator data; they do not prove full native catalog parity.
 
 ## Known gaps (current cycle)
 

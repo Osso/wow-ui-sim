@@ -203,20 +203,23 @@ fn get_map_display_info_tainted_caller_accepts_ordinary_and_rejects_secret() {
 }
 
 #[test]
-fn get_map_art_id_returns_seeded_art_id() {
+fn get_map_art_apis_share_generated_relation() {
     let env = env();
-    let (stormwind, eastern_kingdoms, azeroth): (i32, i32, i32) = env
-        .eval(
-            r#"
-            return C_Map.GetMapArtID(84),
-                   C_Map.GetMapArtID(13),
-                   C_Map.GetMapArtID(947)
-            "#,
-        )
-        .unwrap();
-    assert_eq!(stormwind, 104, "Stormwind City art id");
-    assert_eq!(eastern_kingdoms, 62, "Eastern Kingdoms art id");
-    assert_eq!(azeroth, 0, "Azeroth world map has no tileset");
+    env.exec(
+        r#"
+        for _, entry in ipairs({
+            { mapID = 947, artID = 970, width = 3840, height = 2560, tiles = 150 },
+            { mapID = 2248, artID = 1833, width = 3840, height = 2560, tiles = 150 },
+        }) do
+            assert(C_Map.GetMapArtID(entry.mapID) == entry.artID)
+            local layer = C_Map.GetMapArtLayers(entry.mapID)[1]
+            assert(layer.layerWidth == entry.width and layer.layerHeight == entry.height)
+            assert(#C_Map.GetMapArtLayerTextures(entry.mapID, 1) == entry.tiles)
+        end
+        assert(C_Map.GetMapArtID(2424) == 0)
+        "#,
+    )
+    .expect("map-art APIs should use the generated UiMapXMapArt relation");
 }
 
 #[test]
