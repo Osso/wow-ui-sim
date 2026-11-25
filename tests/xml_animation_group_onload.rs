@@ -405,7 +405,7 @@ for _, group in ipairs(frame.backgroundAnims) do
 end
 PlayerSpellsUtil.ToggleClassTalentFrame()
 assert(not PlayerSpellsFrame:IsShown(), "class talent toggle did not close PlayerSpellsFrame")
-assert(not frame:IsShown(), "closing PlayerSpellsFrame did not hide TalentsFrame")
+assert(not frame:IsVisible(), "closing PlayerSpellsFrame did not hide TalentsFrame")
 for _, group in ipairs(frame.backgroundAnims) do
     assert(not group:IsPlaying(), "background animation did not stop")
     for _, animation in ipairs({ group:GetAnimations() }) do
