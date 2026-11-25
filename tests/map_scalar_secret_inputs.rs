@@ -3,24 +3,15 @@
 
 use wow_ui_sim::lua_api::WowLuaEnv;
 
-const ART_RESULT: &str = "assert(type(value) == 'number' and value == 620104, 'fixture art ID')";
+const ART_RESULT: &str = "assert(type(value) == 'number' and value == 89, 'generated art ID')";
 const INFO_RESULT: &str = r#"
     assert(type(value) == 'table', 'map details table')
     assert(value.mapID == 84, 'fixture UI map ID')
-    assert(value.name == 'Scalar map fixture', 'fixture map name')
+    assert(value.name == 'Stormwind City', 'seeded map name')
 "#;
 
 fn seed_scalar_map_env() -> WowLuaEnv {
-    let env = WowLuaEnv::new().expect("create real Lua environment");
-    {
-        let mut state = env.state().borrow_mut();
-        let map = state.maps.get_mut(&84).expect("seeded map 84");
-        map.art_id = 620104;
-        map.name = "Scalar map fixture".into();
-        state.maps.remove(&9999);
-        state.maps.remove(&999999);
-    }
-    env
+    WowLuaEnv::new().expect("create real Lua environment")
 }
 
 #[cfg(feature = "retail-12-1-0")]

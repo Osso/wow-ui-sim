@@ -216,7 +216,7 @@ fn get_map_art_apis_share_generated_relation() {
             assert(layer.layerWidth == entry.width and layer.layerHeight == entry.height)
             assert(#C_Map.GetMapArtLayerTextures(entry.mapID, 1) == entry.tiles)
         end
-        assert(C_Map.GetMapArtID(946) == 0)
+        assert(C_Map.GetMapArtID(2424) == 0)
         "#,
     )
     .expect("map-art APIs should use the generated UiMapXMapArt relation");
