@@ -24,7 +24,7 @@ fn addon_createframe_probe() -> tempfile::TempDir {
     std::fs::write(
         addon.path().join("Probe.lua"),
         r#"
-        EquipmentFlyout_Show(CharacterFinger0Slot)
+        EquipmentFlyout_Show(CharacterHandsSlot)
         local tooltip = CreateFrame("GameTooltip", nil, UIParent)
         local ordinary = CreateFrame("Frame", nil, UIParent)
         CreateFrameDefaultsProbe = { tooltip = tooltip, ordinary = ordinary }
@@ -85,15 +85,14 @@ fn original_consumers_get_constructor_defaults_and_xml_children() {
         r#"
         A_Admin.EquipItem(11, 49812)
         A_Admin.EquipItem(12, 49803)
-        A_Admin.AddBagItem(0, 1, 49812)
         local linkA = select(2, GetItemInfo(49812))
         local linkB = select(2, GetItemInfo(49803))
         assert(linkA and linkB, "both supplied rings must have item links")
-        A_Admin.SetInventorySlotCandidates(11, false, {
+        A_Admin.SetInventorySlotCandidates(10, false, {
+            { equipmentSlot = 11, link = linkA },
             { equipmentSlot = 12, link = linkB },
-            { carriedSlot = 1, link = linkA },
         }, {
-            slotNames = { Finger0Slot = 11 },
+            slotNames = { HandsSlot = 10 },
             carriedEnabled = true,
             carriedCount = 2,
             interactionGuidNonzero = false,
