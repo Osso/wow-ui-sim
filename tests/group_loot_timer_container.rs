@@ -25,14 +25,16 @@ assert(
         tostring(second.NeedRollAnim:IsShown())
     )
 )
+assert(first.rollID == 71 and second.rollID == 72, "frames must keep distinct roll IDs")
 assert(first.NeedRollAnim:IsShown() and second.NeedRollAnim:IsShown(), "both roll animations must start")
-first:Hide()
-assert(firstTimer:IsCancelled(), "frame hide must cancel After's container")
-assert(not first.NeedRollAnim:IsShown(), "hidden frame must stop its animation")
-first:Show()
+A_Admin.FireEvent("CANCEL_LOOT_ROLL", 71)
+assert(firstTimer:IsCancelled(), "cancel event must cancel its After container")
+assert(not first.NeedRollAnim:IsShown(), "cancelled roll must stop its animation")
+assert(not first:IsShown(), "cancel event must remove the first roll")
+assert(second:IsShown() and not secondTimer:IsCancelled(), "cancelling first roll must leave second active")
 A_Admin.AdvanceTime(5)
 assert(not second:IsShown(), "uncancelled roll must finish through its timer")
-assert(first:IsShown(), "cancelled timer must not remove the first frame")
+assert(not first:IsShown(), "cancelled roll must stay removed")
 "#;
 
 #[test]
