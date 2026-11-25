@@ -90,6 +90,14 @@ pub(crate) fn register_c_pvp_surface(state: &mut LuaState) -> LuaResult<()> {
             | crate::client_profile::ClientProfile::WowForever
     ) {
         crate::lua_bridge::table_set_rust_fn_static(state, ns, "IsMatchActive", is_match_active)?;
+    }
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::Ptr
+            | crate::client_profile::ClientProfile::WowForever
+            | crate::client_profile::ClientProfile::Mists
+    ) {
         outdoor_wait_state::register(state, ns)?;
     }
     #[cfg(feature = "retail-12-0-0")]
