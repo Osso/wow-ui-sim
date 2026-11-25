@@ -273,6 +273,7 @@ const REPUTATION_METHODS: &[(&str, RustFn)] = &[
         crate::c_api::c_reputation::get_faction_paragon_info,
     ),
     ("GetNumFactions", reputation_get_num_factions),
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     ("GetFactionInfo", reputation_get_faction_info),
     ("GetWatchedFactionData", reputation_get_watched_faction_data),
     (
@@ -292,37 +293,8 @@ fn register_reputation_namespace(lua: &mut rilua::Lua) -> crate::Result<()> {
         unreachable!("namespace table must be a table");
     };
     install_static_methods(lua.state_mut(), reputation_ref, REPUTATION_METHODS)?;
-    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
-        table_set_rust_fn_static(
-            lua.state_mut(),
-            reputation_ref,
-            "SetLegacyReputationsShown",
-            crate::c_api::c_reputation::set_legacy_reputations_shown,
-        )?;
-        table_set_rust_fn_static(
-            lua.state_mut(),
-            reputation_ref,
-            "SetReputationSortType",
-            crate::c_api::c_reputation::set_reputation_sort_type,
-        )?;
-        table_set_rust_fn_static(
-            lua.state_mut(),
-            reputation_ref,
-            "IsAccountWideReputation",
-            crate::c_api::c_reputation::is_account_wide_reputation,
-        )?;
-        table_set_rust_fn_static(
-            lua.state_mut(),
-            reputation_ref,
-            "IsFactionActive",
-            crate::c_api::c_reputation::is_faction_active,
-        )?;
-        table_set_rust_fn_static(
-            lua.state_mut(),
-            reputation_ref,
-            "SetFactionActive",
-            crate::c_api::c_reputation::set_faction_active,
-        )?;
+    if crate::c_api::reputation_model::active() {
+        crate::c_api::reputation_model::register(lua.state_mut(), reputation_ref)?;
     }
     LuaApiMut::set_global_val(lua, "C_Reputation", reputation)?;
     Ok(())
@@ -379,6 +351,7 @@ fn reputation_get_num_factions(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 fn reputation_get_faction_info(state: &mut LuaState) -> LuaResult<u32> {
     let index = stack_i32(state, 1).unwrap_or(0);
     let Some(entry) = reputation_data::get_faction_by_index(index) else {

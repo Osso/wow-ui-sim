@@ -248,3 +248,64 @@ fn blizzard_contribution_xml_templates_are_registered(env: &WowLuaEnv) {
     }
 }
 }
+
+prefork_full_ui_case! {
+fn contribution_panel_uses_supplied_result_and_currency_through_interaction(env: &WowLuaEnv) {
+    env.exec(
+        r#"
+        A_Admin.SetContributionCollectors({
+            { mapID=2248, areaPoiID=901, collectorCreatureID=301, name="Collector", atlasName="",
+              x=0.2, y=0.3, contributions={
+                { contributionID=501, name="Ready", state=1, amount=0.5, startTime=100,
+                  description="Ready description", result=Enum.ContributionResult.Success,
+                  orderIndex=1, rewardQuestID=0, active=true,
+                  requiredCurrency={id=2245, amount=5}, atlases={""}, buffs={},
+                  appearance={ stateName="", stateColor={r=1, g=1, b=1}, tooltipLine="",
+                    tooltipUseTimeRemaining=false, statusBarAtlas="", borderAtlas="", bannerAtlas="" } },
+                { contributionID=502, name="Blocked", state=1, amount=0.5, startTime=100,
+                  description="Blocked description", result=Enum.ContributionResult.FailedConditionCheck,
+                  orderIndex=2, rewardQuestID=0, active=true,
+                  requiredCurrency={id=2245, amount=11}, requiredItem={id=6948, count=2},
+                  atlases={""}, buffs={},
+                  appearance={ stateName="", stateColor={r=1, g=1, b=1}, tooltipLine="",
+                    tooltipUseTimeRemaining=false, statusBarAtlas="", borderAtlas="", bannerAtlas="" } },
+              } }
+        })
+        "#,
+    )
+    .expect("contribution scenario should load");
+    load_addon(&env.loader_env(), &contribution_toc())
+        .expect("Contribution bootstrap should register its interaction");
+    env.exec("A_Admin.FireEvent(\"PLAYER_INTERACTION_MANAGER_FRAME_SHOW\", Enum.PlayerInteractionType.ContributionCollector)")
+        .expect("contribution interaction event should dispatch");
+    let result: (bool, i32, bool, bool, String, String) = env
+        .eval("local ids={C_ContributionCollector.GetActive()}; local a=ContributionCollectionFrame:FindContribution(501); local b=ContributionCollectionFrame:FindContribution(502); return ContributionCollectionFrame:IsShown(), #ids, a and a.ContributeButton:IsEnabled() or false, b and b.ContributeButton:IsEnabled() or false, a and a.ContributeButton.Text:GetText() or '', b and b.ContributeButton.Text:GetText() or ''")
+        .expect("contribution button state should be observable");
+    assert!(result.0, "interaction manager should show ContributionCollectionFrame");
+    assert_eq!(result.1, 2, "both supplied active contributions should render");
+    assert!(result.2, "Success result should enable its contribution button");
+    assert!(!result.3, "FailedConditionCheck should disable its contribution button");
+    let currency: (Option<i32>, Option<f64>, bool, String) = env
+        .eval("local id, amount = C_ContributionCollector.GetRequiredContributionCurrency(501); return id, amount, C_CurrencyInfo.GetCurrencyInfo(2245) ~= nil, GetCurrencyString(2245, 5)")
+        .expect("supplied currency cost should be readable");
+    assert_eq!(currency.0, Some(2245));
+    assert_eq!(currency.1, Some(5.0));
+    assert!(currency.2, "fixture currency should have display metadata");
+    assert!(!currency.3.is_empty(), "fixture currency should format as text");
+    let button_cost: (Option<i32>, Option<String>) = env
+        .eval("local b = ContributionCollectionFrame:FindContribution(501).ContributeButton; return b.requiredCurrencyID, b.formatString")
+        .expect("original consumer should retain its currency selection");
+    assert_eq!(button_cost.0, Some(2245));
+    assert_eq!(button_cost.1.as_deref(), Some("Contribute %s"));
+    let button_state: String = env
+        .eval("local b = ContributionCollectionFrame:FindContribution(501).ContributeButton; return tostring(b.contributionID)..'/'..tostring(b.requiredCurrencyID)..'/'..tostring(b.formatString)..'/'..tostring(b:GetText())")
+        .expect("contribution button diagnostic state should be readable");
+    assert_ne!(result.4, result.5, "distinct supplied costs should produce distinct button text; {button_state}");
+    let details_valid: bool = env
+        .eval(
+            "return C_ContributionCollector.GetDescription(501) == 'Ready description' and C_ContributionCollector.GetOrderIndex(502) == 2 and C_ContributionCollector.GetRewardQuestID(502) == 0 and #C_ContributionCollector.GetAtlases(501) == 1 and select('#', C_ContributionCollector.GetBuffs(502)) == 0 and select(1, C_ContributionCollector.GetRequiredContributionItem(502)) == 6948",
+        )
+        .expect("supplied contribution details should be readable");
+    assert!(details_valid, "all supplied contribution fields should reach their getters");
+}
+}

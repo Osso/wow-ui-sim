@@ -25,7 +25,7 @@ use crate::lua_api::methods::{
 };
 #[cfg(feature = "retail-12-1-0")]
 use crate::lua_api::methods::{table_set_num, val_to_string};
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(any(feature = "retail-12-1-0", feature = "client-wowforever"))]
 use crate::lua_api::state_types::BnetFriendInvite;
 use crate::lua_api::state_types::{BnetFriend, BnetGameAccount};
 use crate::lua_bridge::{FromStack, table_set_rust_fn_static};
@@ -49,18 +49,7 @@ pub(crate) fn register_c_battle_net_surface(state: &mut LuaState) -> LuaResult<(
     let table_ref = ensure_namespace(state, "C_BattleNet")?;
     register_texture_methods(state, table_ref)?;
     #[cfg(feature = "retail-12-0-5")]
-    {
-        table_set_rust_fn_static(state, table_ref, "SetAFK", |s| {
-            let flag = Option::<bool>::from_stack(s, 1)?.unwrap_or(true);
-            borrow_state_mut(s)?.bnet_presence.is_afk = flag;
-            Ok(0)
-        })?;
-        table_set_rust_fn_static(state, table_ref, "SetDND", |s| {
-            let flag = Option::<bool>::from_stack(s, 1)?.unwrap_or(true);
-            borrow_state_mut(s)?.bnet_presence.is_dnd = flag;
-            Ok(0)
-        })?;
-    }
+    register_presence_methods(state, table_ref)?;
     // Pinned Forever BattleNetDocumentation.lua:303 declares `SendGameData`.
     #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
     table_set_rust_fn_static(
@@ -72,15 +61,40 @@ pub(crate) fn register_c_battle_net_surface(state: &mut LuaState) -> LuaResult<(
     #[cfg(feature = "retail-12-0-0")]
     super::addon_messages::register_bnet_chat(state, table_ref)?;
     register_friend_query_methods(state, table_ref)?;
-    // Forever BattleNetDocumentation.lua:11-15; F4 Q1 feature-state result.
-    #[cfg(feature = "client-wowforever")]
-    table_set_rust_fn_static(
-        state,
-        table_ref,
-        "AreFriendTagsEnabled",
-        c_bnet_are_friend_tags_enabled,
-    )?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    if crate::client_profile::ACTIVE_INTERFACE_VERSION >= 120100 {
+        register_account_feature_methods(state, table_ref)?;
+    }
+    #[cfg(feature = "client-ptr")]
+    register_ptr_account_feature_methods(state, table_ref)?;
     Ok(())
+}
+
+#[cfg(feature = "retail-12-0-5")]
+fn register_presence_methods(state: &mut LuaState, table_ref: BattleNetTable) -> LuaResult<()> {
+    table_set_rust_fn_static(state, table_ref, "SetAFK", |s| {
+        let flag = Option::<bool>::from_stack(s, 1)?.unwrap_or(true);
+        borrow_state_mut(s)?.bnet_presence.is_afk = flag;
+        Ok(0)
+    })?;
+    table_set_rust_fn_static(state, table_ref, "SetDND", |s| {
+        let flag = Option::<bool>::from_stack(s, 1)?.unwrap_or(true);
+        borrow_state_mut(s)?.bnet_presence.is_dnd = flag;
+        Ok(0)
+    })
+}
+
+/// Records an outgoing in-game friend request once per character name.
+/// The server decides whether it is accepted; the simulator does not fabricate acceptance.
+pub(crate) fn record_title_friend_request(sim: &mut crate::lua_api::state::SimState, name: &str) {
+    let name = name.trim();
+    let already_sent = sim
+        .title_friend_requests
+        .iter()
+        .any(|sent| sent.eq_ignore_ascii_case(name));
+    if !name.is_empty() && !already_sent {
+        sim.title_friend_requests.push(name.to_string());
+    }
 }
 
 fn register_texture_methods(state: &mut LuaState, table_ref: BattleNetTable) -> LuaResult<()> {
@@ -108,6 +122,13 @@ fn register_texture_methods(state: &mut LuaState, table_ref: BattleNetTable) -> 
 }
 
 fn register_friend_query_methods(state: &mut LuaState, table_ref: BattleNetTable) -> LuaResult<()> {
+    #[cfg(any(feature = "retail-12-1-0", feature = "client-wowforever"))]
+    table_set_rust_fn_static(
+        state,
+        table_ref,
+        "GetFriendInviteInfo",
+        c_bnet_get_friend_invite_info,
+    )?;
     #[cfg(feature = "retail-12-1-0")]
     register_patch_12_1_friend_query_methods(state, table_ref)?;
     table_set_rust_fn_static(state, table_ref, "InviteFriend", c_bnet_invite_friend)?;
@@ -124,6 +145,7 @@ fn register_friend_query_methods(state: &mut LuaState, table_ref: BattleNetTable
         "GetAccountInfoByGUID",
         c_bnet_get_account_info_by_guid,
     )?;
+    register_retail_friend_game_account_methods(state, table_ref)?;
     table_set_rust_fn_static(
         state,
         table_ref,
@@ -147,36 +169,6 @@ fn register_patch_12_1_friend_query_methods(
     table_set_rust_fn_static(
         state,
         table_ref,
-        "AreFriendTagsEnabled",
-        c_bnet_feature_enabled,
-    )?;
-    table_set_rust_fn_static(
-        state,
-        table_ref,
-        "AreTitleFriendCustomNamesEnabled",
-        c_bnet_feature_enabled,
-    )?;
-    table_set_rust_fn_static(
-        state,
-        table_ref,
-        "AreTitleFriendsEnabled",
-        c_bnet_feature_enabled,
-    )?;
-    table_set_rust_fn_static(
-        state,
-        table_ref,
-        "IsBattleNetFriendsListEnabled",
-        c_bnet_feature_enabled,
-    )?;
-    table_set_rust_fn_static(
-        state,
-        table_ref,
-        "IsBattleNetFriendsListSupported",
-        c_bnet_feature_enabled,
-    )?;
-    table_set_rust_fn_static(
-        state,
-        table_ref,
         "GetCustomTitleFriendName",
         c_bnet_get_custom_title_friend_name,
     )?;
@@ -187,12 +179,6 @@ fn register_patch_12_1_friend_query_methods(
         c_bnet_set_custom_title_friend_name,
     )?;
     table_set_rust_fn_static(state, table_ref, "SetFriendTags", c_bnet_set_friend_tags)?;
-    table_set_rust_fn_static(
-        state,
-        table_ref,
-        "GetFriendInviteInfo",
-        c_bnet_get_friend_invite_info,
-    )?;
     table_set_rust_fn_static(
         state,
         table_ref,
@@ -213,15 +199,88 @@ fn register_patch_12_1_friend_query_methods(
     )
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn register_account_feature_methods(
+    state: &mut LuaState,
+    table_ref: BattleNetTable,
+) -> LuaResult<()> {
+    let methods: [(&str, fn(&mut LuaState) -> LuaResult<u32>); 5] = [
+        ("AreFriendTagsEnabled", are_friend_tags_enabled),
+        (
+            "AreTitleFriendCustomNamesEnabled",
+            are_title_friend_custom_names_enabled,
+        ),
+        ("AreTitleFriendsEnabled", are_title_friends_enabled),
+        ("IsBattleNetFriendsListEnabled", is_friends_list_enabled),
+        ("IsBattleNetFriendsListSupported", is_friends_list_supported),
+    ];
+    for (name, method) in methods {
+        table_set_rust_fn_static(state, table_ref, name, method)?;
+    }
+    Ok(())
+}
+
+/// PTR keeps its pre-model constant-true registrations (unchanged PTR surface).
+#[cfg(feature = "client-ptr")]
+fn register_ptr_account_feature_methods(
+    state: &mut LuaState,
+    table_ref: BattleNetTable,
+) -> LuaResult<()> {
+    for name in [
+        "AreFriendTagsEnabled",
+        "AreTitleFriendCustomNamesEnabled",
+        "AreTitleFriendsEnabled",
+        "IsBattleNetFriendsListEnabled",
+        "IsBattleNetFriendsListSupported",
+    ] {
+        table_set_rust_fn_static(state, table_ref, name, c_bnet_feature_enabled)?;
+    }
+    Ok(())
+}
+
+#[cfg(feature = "client-ptr")]
 fn c_bnet_feature_enabled(state: &mut LuaState) -> LuaResult<u32> {
     state.push(Val::Bool(true));
     Ok(1)
 }
 
-#[cfg(feature = "client-wowforever")]
-fn c_bnet_are_friend_tags_enabled(state: &mut LuaState) -> LuaResult<u32> {
-    let enabled = borrow_state(state)?.bnet_friend_tags_enabled;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn are_friend_tags_enabled(state: &mut LuaState) -> LuaResult<u32> {
+    let enabled = borrow_state(state)?.bnet_account_features.friend_tags;
+    state.push(Val::Bool(enabled));
+    Ok(1)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn are_title_friend_custom_names_enabled(state: &mut LuaState) -> LuaResult<u32> {
+    let enabled = borrow_state(state)?
+        .bnet_account_features
+        .title_friend_custom_names;
+    state.push(Val::Bool(enabled));
+    Ok(1)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn are_title_friends_enabled(state: &mut LuaState) -> LuaResult<u32> {
+    let enabled = borrow_state(state)?.bnet_account_features.title_friends;
+    state.push(Val::Bool(enabled));
+    Ok(1)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn is_friends_list_enabled(state: &mut LuaState) -> LuaResult<u32> {
+    let enabled = borrow_state(state)?
+        .bnet_account_features
+        .friends_list_enabled;
+    state.push(Val::Bool(enabled));
+    Ok(1)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn is_friends_list_supported(state: &mut LuaState) -> LuaResult<u32> {
+    let enabled = borrow_state(state)?
+        .bnet_account_features
+        .friends_list_supported;
     state.push(Val::Bool(enabled));
     Ok(1)
 }
@@ -284,7 +343,7 @@ fn c_bnet_set_friend_tags(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(any(feature = "retail-12-1-0", feature = "client-wowforever"))]
 fn c_bnet_get_friend_invite_info(state: &mut LuaState) -> LuaResult<u32> {
     let invite_index = i32::from_stack(state, 1)?;
     let invite = {
@@ -328,7 +387,7 @@ fn c_bnet_send_verified_battle_net_friend_invite(state: &mut LuaState) -> LuaRes
     Ok(0)
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(any(feature = "retail-12-1-0", feature = "client-wowforever"))]
 fn friend_index_to_offset(friend_index: i32) -> usize {
     usize::try_from(friend_index - 1).unwrap_or(usize::MAX)
 }
@@ -406,7 +465,7 @@ fn current_unix_timestamp() -> i64 {
         .unwrap_or(0)
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(any(feature = "retail-12-1-0", feature = "client-wowforever"))]
 fn push_friend_invite_info_table(state: &mut LuaState, invite: &BnetFriendInvite) -> Val {
     let table = create_table(state);
     let account_name = create_string(state, &invite.account_name);
@@ -567,6 +626,83 @@ fn c_bnet_get_account_info_by_guid(state: &mut LuaState) -> LuaResult<u32> {
     let t = push_account_info_table(state, &friend, game_account.as_ref());
     state.push(t);
     Ok(1)
+}
+
+fn register_retail_friend_game_account_methods(
+    state: &mut LuaState,
+    table_ref: BattleNetTable,
+) -> LuaResult<()> {
+    if !matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
+        return Ok(());
+    }
+    // Forever shapes VERIFIED at BattleNetDocumentation.lua:100, 148 and 194;
+    // lookup semantics are INFERRED from the existing Retail friend model.
+    table_set_rust_fn_static(
+        state,
+        table_ref,
+        "GetAccountInfoByID",
+        c_bnet_get_account_info_by_id,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        table_ref,
+        "GetFriendGameAccountInfo",
+        c_bnet_get_friend_game_account_info,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        table_ref,
+        "GetFriendNumGameAccounts",
+        c_bnet_get_friend_num_accounts,
+    )
+}
+
+fn c_bnet_get_account_info_by_id(state: &mut LuaState) -> LuaResult<u32> {
+    let account_id = i32::from_stack(state, 1)?;
+    let friend = {
+        let sim = borrow_state(state)?;
+        sim.bnet_friends
+            .iter()
+            .find(|friend| friend.bnet_account_id == account_id)
+            .cloned()
+    };
+    let Some(friend) = friend else {
+        state.push(Val::Nil);
+        return Ok(1);
+    };
+    let game_account = friend.game_accounts.first().cloned();
+    let account_info = push_account_info_table(state, &friend, game_account.as_ref());
+    state.push(account_info);
+    Ok(1)
+}
+
+fn c_bnet_get_friend_game_account_info(state: &mut LuaState) -> LuaResult<u32> {
+    let friend_index = i32::from_stack(state, 1)?;
+    let account_index = i32::from_stack(state, 2)?;
+    let game_account = {
+        let sim = borrow_state(state)?;
+        one_based_index(friend_index)
+            .and_then(|index| sim.bnet_friends.get(index))
+            .and_then(|friend| {
+                one_based_index(account_index).and_then(|index| friend.game_accounts.get(index))
+            })
+            .cloned()
+    };
+    let Some(game_account) = game_account else {
+        state.push(Val::Nil);
+        return Ok(1);
+    };
+    let info = push_game_account_info_table(state, &game_account);
+    state.push(info);
+    Ok(1)
+}
+
+fn one_based_index(index: i32) -> Option<usize> {
+    usize::try_from(index).ok()?.checked_sub(1)
 }
 
 fn c_bnet_get_game_account_info_by_guid(state: &mut LuaState) -> LuaResult<u32> {

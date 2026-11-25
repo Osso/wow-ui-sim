@@ -336,9 +336,9 @@ fn editbox_on_text_changed_fires_on_input() {
     }
 
     env.send_key_press("x", Some("x")).unwrap();
-    assert_eq!(env.eval::<i64>("return _G.change_count").unwrap(), 0);
-    env.send_key_press("y", Some("y")).unwrap();
     assert_eq!(env.eval::<i64>("return _G.change_count").unwrap(), 1);
+    env.send_key_press("y", Some("y")).unwrap();
+    assert_eq!(env.eval::<i64>("return _G.change_count").unwrap(), 2);
 
     env.fire_on_update(0.016).unwrap();
     assert_eq!(env.eval::<i64>("return _G.change_count").unwrap(), 2);
@@ -490,7 +490,7 @@ fn selected_keyboard_edits_dispatch_callbacks_after_committing_text_and_caret() 
     assert_eq!(
         env.eval::<String>("return table.concat(_G.selected_edit_events, ';')")
             .unwrap(),
-        "char:X:XB:1:1"
+        "char:X:XB:1:1;changed:true:XB:1:1"
     );
     env.exec("SelectedCallbackEB:HighlightText(0, 1); SelectedCallbackEB:SetCursorPosition(1)")
         .unwrap();
@@ -498,7 +498,7 @@ fn selected_keyboard_edits_dispatch_callbacks_after_committing_text_and_caret() 
     assert_eq!(
         env.eval::<String>("return table.concat(_G.selected_edit_events, ';')")
             .unwrap(),
-        "char:X:XB:1:1;changed:true:XB:1:1"
+        "char:X:XB:1:1;changed:true:XB:1:1;changed:true:B:0:0"
     );
     env.fire_on_update(0.016).unwrap();
     let events: String = env
@@ -613,7 +613,7 @@ fn editbox_limit_rejection_preserves_selection_and_emits_no_edit_callbacks() {
     assert_eq!(
         env.eval::<String>("return table.concat(_G.limit_events, ';')")
             .unwrap(),
-        "char:B:aBCe;char:C:aBCe"
+        "char:B:aBCe;char:C:aBCe;changed:true:aBCe"
     );
     env.fire_on_update(0.016).unwrap();
     let accepted: (String, i64, i64, String) = env

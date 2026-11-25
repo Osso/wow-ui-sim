@@ -193,7 +193,7 @@ fn vehicle_fixture(env: &WowLuaEnv) {
     env.state().borrow_mut().player.buffs = vec![AuraInfo {
         name: "Vehicle beacon".into(),
         spell_id: 99023,
-        icon: 135841,
+        icon: wow_ui_sim::lua_api::state::AuraIcon::FileId(135841),
         duration: 30.0,
         expiration_time: 30.0,
         applications: 1,

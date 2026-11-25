@@ -1,9 +1,14 @@
 //! Empty-default catalog; no outfit creation, lifecycle, or persistence policy.
 
+#[cfg(not(feature = "client-wowforever"))]
 use crate::c_api::outfit_entry::{build_entry_array, build_entry_table};
+#[cfg(not(feature = "client-wowforever"))]
 use crate::lua_api::methods::borrow_state;
+#[cfg(not(feature = "client-wowforever"))]
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
+#[cfg(not(feature = "client-wowforever"))]
 use rilua::vm::{gc::arena::GcRef, state::LuaState, table::Table};
+#[cfg(not(feature = "client-wowforever"))]
 use rilua::{LuaResult, Val};
 
 #[derive(Debug, Default)]
@@ -13,6 +18,7 @@ pub struct OutfitCatalog {
 
 pub use crate::c_api::outfit_entry::OutfitEntry;
 
+#[cfg(not(feature = "client-wowforever"))]
 pub(super) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
     for (name, handler) in [
         (
@@ -31,6 +37,7 @@ pub(super) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResu
     Ok(())
 }
 
+#[cfg(not(feature = "client-wowforever"))]
 fn read_number(state: &LuaState) -> LuaResult<f64> {
     let value = rilua::table_security::unwrap_secret(state, stack_val(state, 1))?;
     let Val::Num(number) = value else {
@@ -39,11 +46,13 @@ fn read_number(state: &LuaState) -> LuaResult<f64> {
     Ok(number)
 }
 
+#[cfg(not(feature = "client-wowforever"))]
 fn get_outfit_info(state: &mut LuaState) -> LuaResult<u32> {
     let id = read_number(state)?;
     push_matching_entry(state, |entry| entry.outfit_id as f64 == id)
 }
 
+#[cfg(not(feature = "client-wowforever"))]
 fn get_outfit_info_by_player_facing_index(state: &mut LuaState) -> LuaResult<u32> {
     let index = read_number(state)?;
     push_matching_entry(state, |entry| {
@@ -51,6 +60,7 @@ fn get_outfit_info_by_player_facing_index(state: &mut LuaState) -> LuaResult<u32
     })
 }
 
+#[cfg(not(feature = "client-wowforever"))]
 fn get_outfit_info_by_name(state: &mut LuaState) -> LuaResult<u32> {
     let value = rilua::table_security::unwrap_secret(state, stack_val(state, 1))?;
     let Val::Str(name) = value else {
@@ -69,6 +79,7 @@ fn get_outfit_info_by_name(state: &mut LuaState) -> LuaResult<u32> {
     push_matching_entry(state, |entry| entry.name.to_lowercase() == name)
 }
 
+#[cfg(not(feature = "client-wowforever"))]
 fn push_matching_entry(
     state: &mut LuaState,
     matches: impl Fn(&OutfitEntry) -> bool,
@@ -85,6 +96,7 @@ fn push_matching_entry(
     Ok(1)
 }
 
+#[cfg(not(feature = "client-wowforever"))]
 fn get_outfits_info(state: &mut LuaState) -> LuaResult<u32> {
     let entries = borrow_state(state)?.transmog_outfit_catalog.entries.clone();
     let array = build_entry_array(state, &entries);

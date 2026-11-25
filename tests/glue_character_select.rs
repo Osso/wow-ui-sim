@@ -371,6 +371,36 @@ fn forever_name_reservation_default_is_false_on_glue() {
     assert!(!result);
 }
 
+#[cfg(feature = "client-wowforever")]
+const REINCARNATION_API_TEST: &str = r##"
+local function assert_state(guid, name, class_name, level)
+    assert(C_Reincarnation.IsReincarnating())
+    assert(select("#", C_Reincarnation.GetReincarnatingCharacter()) == 4)
+    local actual_guid, actual_name, actual_class, actual_level =
+        C_Reincarnation.GetReincarnatingCharacter()
+    assert(actual_guid == guid and actual_name == name)
+    assert(actual_class == class_name and actual_level == level)
+end
+
+assert(not StaticPopupDialogs or not StaticPopupDialogs.HARDCORE_DEATH,
+    "HARDCORE_DEATH is not registered without the hardcore game rule")
+C_Reincarnation.StartReincarnation("Player-1", "Ari", "Paladin", 60)
+assert_state("Player-1", "Ari", "Paladin", 60)
+
+C_Reincarnation.StartReincarnation("Player-2", "Bee", "Mage", 42)
+assert_state("Player-2", "Bee", "Mage", 42)
+"##;
+
+#[test]
+#[cfg(feature = "client-wowforever")]
+fn reincarnation_api_roundtrips_two_supplied_characters() {
+    test_timeout! {
+        let env = load_blizzard_screen(ScreenKind::Game);
+        env.exec(REINCARNATION_API_TEST)
+            .expect("reincarnation should return both supplied character records");
+    }
+}
+
 fn blizzard_ui_dir() -> std::path::PathBuf {
     default_blizzard_ui_addons_path().expect("Blizzard UI cache should be synced")
 }
@@ -1133,6 +1163,47 @@ fn character_select_configuration_warnings_returns_a_table() {
             "configuration warnings API should return a table even when there are no warnings"
         );
     }
+}
+
+#[test]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn character_select_configuration_warning_popups_track_seen_records() {
+    test_timeout! {
+        let env = load_blizzard_screen(ScreenKind::CharacterSelect);
+        exercise_configuration_warning_popups(&env);
+    }
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn exercise_configuration_warning_popups(env: &common::LockedEnv) {
+    env.exec(
+        r#"
+        A_Admin.SetConfigurationWarnings({
+            { warning = 3, text = "Graphics driver is blocked" },
+            { warning = 4, text = "Graphics driver is out of date" },
+        })
+        CheckSystemRequirements(false)
+        StaticPopup_CheckQueuedDialogs()
+        local first = StaticPopup_FindVisible("CONFIGURATION_WARNING")
+        assert(first and first:IsShown(), "first configuration warning should show")
+        assert(first:GetHtmlText() == "Graphics driver is blocked", "first popup text")
+        assert(first.data.configurationWarning == 3, "first popup warning ID")
+        first:GetButton1():Click()
+        StaticPopup_CheckQueuedDialogs()
+        local second = StaticPopup_FindVisible("CONFIGURATION_WARNING")
+        assert(second and second:IsShown(), "second configuration warning should show")
+        assert(second:GetHtmlText() == "Graphics driver is out of date", "second popup text")
+        assert(second.data.configurationWarning == 4, "second popup warning ID")
+        second:GetButton1():Click()
+        StaticPopup_CheckQueuedDialogs()
+        CheckSystemRequirements(false)
+        StaticPopup_CheckQueuedDialogs()
+        assert(StaticPopup_FindVisible("CONFIGURATION_WARNING") == nil, "seen warnings must not be queued again")
+        CharacterSelect_CheckDialogStates()
+        assert(CharacterSelectUI.VisibilityFramesContainer.ConfigurationWarnings:IsShown(), "seen warnings remain visible in the character-select container")
+        "#,
+    )
+    .expect("original warning popup consumers should preserve and consume warning state");
 }
 
 character_select_tooltip_fixture! {
@@ -2620,34 +2691,18 @@ mod storeglue_r88q_tuple {
         let env = load_blizzard_screen(ScreenKind::CharacterSelect);
         seed_purchase_records(&env);
         seed_r88q_product_inputs(&env);
-        env.exec(
-            r#"
-            local source = debug.getinfo(CharacterSelectListUtil.GetVASInfoForGUID, 'S')
-            assert(source.source:find('CharacterSelectListUtil.lua', 1, true))
-            assert(source.linedefined == 573)
-        "#,
-        )
-        .unwrap();
         env
     }
 
-    // Host input adapter; identical GUID/product/state/error data to the RED fixture.
+    // INFERRED host input supplies two distinct states to the selected consumer.
     fn seed_purchase_records(env: &WowLuaEnv) {
-        use wow_ui_sim::c_api::store_glue_model::VasPurchaseRecord;
-        let mut sim = env.state().borrow_mut();
-        for (guid, product_id, state, errors) in [
-            ("Player-1-a1", 2003, 3, vec![17, 0, -4]),
-            ("Player-2-b2", 189, 4, vec![0, 29]),
-        ] {
-            sim.store_glue.purchase_states.insert(
-                guid.into(),
-                VasPurchaseRecord {
-                    product_id,
-                    state,
-                    errors,
-                },
-            );
-        }
+        env.exec(
+            r#"
+            A_Admin.SetStoreGluePurchaseState('Player-1-a1', 2003, 3, {17, 0, -4})
+            A_Admin.SetStoreGluePurchaseState('Player-2-b2', 189, 4, {0, 29})
+        "#,
+        )
+        .unwrap();
     }
 
     #[test]

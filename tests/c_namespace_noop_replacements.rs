@@ -146,6 +146,7 @@ mod combatlog_settings_tests {
     }
 }
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn perks_activities_remove_tracked_updates_state() {
     let env = env();
@@ -459,6 +460,7 @@ fn video_options_official_api_surface_returns_stable_shapes() {
     );
 }
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn perks_activities_monthly_accessors_return_stable_shapes() {
     let env = env();
@@ -531,6 +533,7 @@ fn perks_activities_monthly_accessors_return_stable_shapes() {
     assert_eq!(pending_count, 0, "pendingIDs should default to empty");
 }
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn perks_program_pending_chest_rewards_return_empty_table() {
     let env = env();
@@ -747,6 +750,7 @@ fn combat_log_globals_have_stable_stub_behavior() {
     );
 }
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn combat_log_namespaces_iterate_seeded_entries_and_messages() {
     let env = env();

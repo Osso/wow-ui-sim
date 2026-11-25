@@ -1,4 +1,4 @@
-//! EditBox presentation and coalesced text notifications at dirty-state flushes.
+//! EditBox presentation at dirty flushes and text notifications at host boundaries.
 
 use std::cell::RefCell;
 use std::rc::Rc;
@@ -36,8 +36,72 @@ pub(crate) fn flush(env: &WowLuaEnv) -> crate::Result<()> {
             .and_then(|data| data.font_system.clone())
     };
     flush_updates(env.state(), fonts.as_ref(), |id, name, args| {
-        env.fire_script_handler(id, name, args)
+        env.dispatch_script_handler(id, name, args).map(|_| ())
     })
+}
+
+/// INFERRED R88et-c: defer host-input changes until keyboard dispatch completes.
+pub(crate) fn flush_at_host_boundary(env: &WowLuaEnv) -> crate::Result<()> {
+    let mut lua = env.rilua_mut();
+    let state = lua.state_mut();
+    let defer_user_input = state
+        .app_data::<WowLuaAppData>()
+        .ok_or_else(|| crate::Error::Other("missing WowLuaAppData".to_string()))?
+        .host_input_depth
+        .get()
+        > 0;
+    flush_state_at_host_boundary_with_mode(state, defer_user_input)
+}
+
+pub(crate) fn flush_state_at_host_boundary(state: &mut LuaState) -> crate::Result<()> {
+    flush_state_at_host_boundary_with_mode(state, false)
+}
+
+fn flush_state_at_host_boundary_with_mode(
+    state: &mut LuaState,
+    defer_user_input: bool,
+) -> crate::Result<()> {
+    if state.call_depth != 0 {
+        return Ok(());
+    }
+    let sim = state
+        .app_data::<WowLuaAppData>()
+        .ok_or_else(|| crate::Error::Other("missing WowLuaAppData".to_string()))?
+        .sim_state
+        .clone();
+    loop {
+        let pending = take_pending_text_changes(&sim, defer_user_input);
+        if pending.is_empty() {
+            return Ok(());
+        }
+        for (id, user_input) in pending {
+            super::env_events::fire_script_handler_state(
+                state,
+                id,
+                "OnTextChanged",
+                vec![Val::Bool(user_input)],
+            )?;
+        }
+    }
+}
+
+fn take_pending_text_changes(
+    sim: &Rc<RefCell<SimState>>,
+    defer_user_input: bool,
+) -> Vec<(u64, bool)> {
+    let mut sim = sim.borrow_mut();
+    let mut ids = sim.widgets.iter_editbox_ids().collect::<Vec<_>>();
+    ids.sort_unstable();
+    ids.into_iter()
+        .filter_map(|id| {
+            let frame = sim.widgets.get_mut(id)?;
+            let user_input = frame
+                .editbox_presentation
+                .as_mut()?
+                .take_text_change(defer_user_input)?;
+            Some((id, user_input))
+        })
+        .collect()
 }
 
 /// The loader may already be executing inside Lua. Never borrow its owning cell.
@@ -123,7 +187,7 @@ fn refresh_editbox(
     fonts: Option<&FontSystem>,
 ) -> Option<EditBoxUpdate> {
     match read_layout_refresh(sim, id) {
-        LayoutRefresh::Unavailable => None,
+        LayoutRefresh::Unavailable => take_text_change(sim, id),
         LayoutRefresh::Unchanged => take_text_change(sim, id),
         LayoutRefresh::Changed(input) => {
             let layout = prepare_layout(fonts, &input);
@@ -191,7 +255,7 @@ fn commit_presentation(
     presentation.input = Some(input);
     presentation.shaped_text = layout.map(|layout| layout.buffer);
     presentation.cursor_geometry = cursor;
-    let text_changed = presentation.take_text_change();
+    let text_changed = presentation.take_text_change(false);
     sim.widgets.mark_visual_dirty(id);
     Some(EditBoxUpdate {
         cursor,
@@ -202,7 +266,7 @@ fn commit_presentation(
 fn take_text_change(sim: &Rc<RefCell<SimState>>, id: u64) -> Option<EditBoxUpdate> {
     let mut sim = sim.borrow_mut();
     let frame = sim.widgets.get_mut(id)?;
-    let text_changed = frame.editbox_presentation.as_mut()?.take_text_change();
+    let text_changed = frame.editbox_presentation.as_mut()?.take_text_change(false);
     Some(EditBoxUpdate {
         cursor: None,
         text_changed,

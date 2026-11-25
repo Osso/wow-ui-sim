@@ -13,7 +13,7 @@
 
 mod cast_inputs;
 
-use crate::lua_api::game_data::{AuraInfo, CastingState, SpellCooldownState};
+use crate::lua_api::game_data::{AuraIcon, AuraInfo, CastingState, SpellCooldownState};
 use crate::lua_api::methods::{borrow_state, borrow_state_mut};
 use crate::lua_api::state::DEFAULT_LFG_QUEUE_POP_DELAY_SECONDS;
 use crate::lua_api::state_types::SecondaryPowerState;
@@ -24,10 +24,12 @@ use rilua::{LuaResult, Val};
 
 // Focused sub-modules — each holds one A_Admin section and keeps the
 // entry-point file small. The parent TableBuilder chain wires these up.
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+use super::admin_actionbars_bags::set_possess_action_slot;
 use super::admin_actionbars_bags::{
     add_bag_item, add_guild_bank_item, add_guild_bank_tab, clear_action_bars, clear_action_slot,
     clear_bags, clear_guild_bank, clear_guild_bank_tabs, remove_bag_item, set_action_slot,
-    set_merchant_items, set_pet_action_slot,
+    set_merchant_items, set_pet_action_slot, set_possess_bar_visible,
 };
 use super::admin_addons::register_test_addon;
 use super::admin_auction_house::{
@@ -41,9 +43,9 @@ use super::admin_buffs::{add_buff, add_debuff, clear_buffs, remove_buff};
 use super::admin_collections::{
     add_transmog, add_transmog_appearance, collect_campsite, collect_heirloom, collect_mount,
     collect_pet, collect_toy, earn_achievement, has_achievement, remove_transmog,
-    set_achievement_earned, set_campsite_collected, set_mount_collected, set_pet_collected,
-    set_toy_collected, set_transmog_for_slot, uncollect_campsite, uncollect_heirloom,
-    uncollect_mount, uncollect_pet, uncollect_toy,
+    set_achievement_earned, set_campsite_collected, set_can_show_achievement_ui,
+    set_mount_collected, set_pet_collected, set_toy_collected, set_transmog_for_slot,
+    uncollect_campsite, uncollect_heirloom, uncollect_mount, uncollect_pet, uncollect_toy,
 };
 use super::admin_crafting::{
     clear_known_recipes, learn_recipe, relearn_profession, seed_reagents_for_recipe,
@@ -55,6 +57,8 @@ use super::admin_encounter::{
 };
 use super::admin_equipment::{equip_item, unequip_item};
 use super::admin_events::{fire_event_admin, toggle_debug_anchors, toggle_debug_borders};
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+use super::admin_interactions::open_guild_rename;
 use super::admin_interactions::{close_mailbox, open_mailbox};
 use super::admin_mail::{add_mail, clear_inbox, set_inbox_count, set_stationery_catalog};
 use super::admin_movement::{set_falling, set_flying, set_mounted, set_moving, set_swimming};
@@ -64,17 +68,22 @@ use super::admin_party_target_helpers::{
     set_party_member_connected, set_party_member_health, set_party_size, set_rot_damage,
     set_target, set_target_power, set_target_type,
 };
+#[cfg(feature = "client-retail")]
+use super::admin_party_target_helpers::{set_party_member_faction, set_party_member_pvp};
 use super::admin_premade::{add_premade_listing, clear_premade_listings, update_premade_listing};
 use super::admin_pvp_guild::{
-    clear_guild, join_guild, leave_guild, set_guild_info, set_honor_level, set_pvp_enabled,
+    clear_guild, join_guild, leave_guild, set_battlefield_arena, set_battlefield_max_id,
+    set_battlefield_queue, set_guild_info, set_guild_perks, set_honor_level, set_player_present,
+    set_pvp_enabled, set_pvp_timer,
 };
 use super::admin_spec::{reset_talents, set_spec, set_talent_rank, set_talent_selection};
 use super::admin_vault::{clear_vault, set_vault_activity, set_vault_rewards};
 use super::admin_zone_economy::{
     set_alt_key_down, set_bind_location, set_control_key_down, set_game_time, set_guild_emblem,
-    set_guild_ranks, set_in_instance, set_instance_info, set_item_level, set_meta_key_down,
-    set_money, set_mouse_over_frame, set_mouse_position, set_net_stats, set_shift_key_down,
-    set_store_frame_shown, set_sub_zone, set_timerunning_season_id, set_zone, set_zone_pvp,
+    set_guild_ranks, set_guild_roster, set_in_instance, set_instance_info, set_item_level,
+    set_meta_key_down, set_money, set_mouse_over_frame, set_mouse_position, set_net_stats,
+    set_shift_key_down, set_store_frame_shown, set_sub_zone, set_timerunning_season_id, set_zone,
+    set_zone_pvp,
 };
 
 // ── Entry point ──────────────────────────────────────────────────────────────
@@ -84,8 +93,98 @@ pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
     use rilua::LuaApiMut;
 
     let builder = TableBuilder::new(lua.state_mut());
+    let builder = register_admin_player_services(builder)?;
+    let builder = register_admin_calendar_services(builder)?;
+    let builder = register_admin_combat(builder)?;
+    let builder = register_admin_world_collections(builder)?;
+    let builder = register_admin_inventory(builder)?;
+    let builder = register_admin_maps_tooltips(builder)?;
+    let builder = register_admin_social(builder)?;
+    let builder = register_admin_encounter_services(builder)?;
+    let admin_val = builder.build();
+
+    LuaApiMut::set_global_val(lua, "A_Admin", admin_val)?;
+    super::group_queries::register_all(lua.state_mut());
+    Ok(())
+}
+
+fn register_admin_player_services(builder: TableBuilder) -> LuaResult<TableBuilder> {
+    #[cfg(feature = "client-retail")]
+    let builder = crate::c_api::c_housing::register_admin(builder)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let builder = register_admin_client_metrics(builder)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let builder = builder
+        .set_function(
+            "SetTutorialFlag",
+            super::missing_surface::set_admin_tutorial_flag,
+        )?
+        .set_function("SetTutorialsEnabled", set_tutorials_enabled)?
+        .set_function("SetPlayerNPERestricted", set_player_npe_restricted)?;
     let builder = register_player(builder)?;
-    let builder = register_combat_casting(builder)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let builder = register_admin_modeled_services(builder)?;
+    #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
+    let builder = crate::c_api::c_navigation::register_admin(builder)?;
+    #[cfg(any(
+        feature = "client-retail",
+        feature = "client-ptr",
+        feature = "client-wowforever"
+    ))]
+    let builder = crate::c_api::c_trade_info::register_admin(builder)?;
+    #[cfg(feature = "client-retail")]
+    let builder = crate::c_api::scripted_animations::register_admin(builder)?;
+    Ok(builder)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn register_admin_client_metrics(builder: TableBuilder) -> LuaResult<TableBuilder> {
+    let builder = super::real::performance_metrics::register_admin(builder)?;
+    let builder = super::real::configuration_warnings::register_admin(builder)?;
+    let builder = super::admin_currency_transfer::register_admin(builder)?;
+    super::real::camera_fov_defaults::register_admin(builder)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn register_admin_modeled_services(builder: TableBuilder) -> LuaResult<TableBuilder> {
+    let builder = super::admin_chat_windows::register_admin(builder)?;
+    let builder = crate::c_api::c_behavioral_messaging::register_admin(builder)?;
+    let builder = super::real::input_interface::register_admin(builder)?;
+    let builder = crate::c_api::c_quest_log::register_zone_story_admin(builder)?;
+    let builder = crate::c_api::c_prof_specs_skill_lines::register_admin(builder)?;
+    let builder = crate::c_api::register_ping_defaults_admin(builder)?;
+    let builder = crate::c_api::c_addons::register_admin(builder)?;
+    let builder = crate::c_api::video_capabilities::register_admin(builder)?;
+    crate::c_api::kiosk::register_admin(builder)
+}
+
+fn register_admin_calendar_services(builder: TableBuilder) -> LuaResult<TableBuilder> {
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let builder = crate::c_api::c_adventure_journal::register_admin(builder)?;
+    let builder = crate::c_api::c_voice_chat_login::register_admin(builder)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let builder = crate::c_api::c_cooldown_viewer::register_admin(builder)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let builder = crate::c_api::ranged_slot::register_admin(builder)?;
+    let builder = crate::c_api::c_content_tracking::register_admin(builder)?;
+    let builder = crate::c_api::c_calendar::club_events::register_admin(builder)?;
+    let builder = crate::c_api::c_calendar::event_types::register_admin(builder)?;
+    let builder = crate::c_api::c_date_and_time::register_admin(builder)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let builder = crate::c_api::c_perks_program::register_admin(builder)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let builder = crate::c_api::target_spell::register_admin(builder)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let builder = crate::c_api::secure_transfer::register_admin(builder)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let builder = crate::c_api::c_pet_battles::register_admin(builder)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let builder = crate::c_api::c_spell_book::register_admin(builder)?;
+    Ok(builder)
+}
+
+fn register_admin_combat(mut builder: TableBuilder) -> LuaResult<TableBuilder> {
+    builder = register_combat_casting(builder)?;
     #[cfg(all(
         feature = "retail-12-0-5",
         any(feature = "profile-retail", feature = "client-ptr")
@@ -94,10 +193,49 @@ pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
     #[cfg(feature = "player-cast-durations")]
     let builder = register_channel_inputs(builder)?;
     let builder = register_targeting_party(builder)?;
-    let builder = register_world(builder)?;
-    let builder = register_collections_pvp(builder)?;
-    let builder = register_inventory_misc(builder)?;
+    Ok(builder)
+}
+
+fn register_admin_world_collections(mut builder: TableBuilder) -> LuaResult<TableBuilder> {
+    builder = register_world(builder)?;
+    builder = register_collections_pvp(builder)?;
+    builder = register_inventory_misc(builder)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let builder = crate::c_api::c_raid_locks::register_admin(builder)?;
+    #[cfg(feature = "client-retail")]
+    let builder = crate::c_api::c_encounter_journal_map::register_admin(builder)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let builder = crate::c_api::c_gossip_info_poi::register_admin(builder)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let builder = crate::c_api::c_contribution_collector::register_admin(builder)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let builder = crate::c_api::c_garrison_mission_lists::register_admin(builder)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let builder = crate::c_api::c_taxi_map::register_admin(builder)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let builder = crate::c_api::c_map::register_admin(builder)?;
+    let builder = crate::c_api::c_auto_complete::register_admin(builder)?;
+    Ok(builder)
+}
+
+fn register_admin_inventory(builder: TableBuilder) -> LuaResult<TableBuilder> {
+    let builder = register_admin_inventory_items(builder)?;
+    register_admin_social_names(builder)
+}
+
+fn register_admin_inventory_items(builder: TableBuilder) -> LuaResult<TableBuilder> {
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let builder = crate::c_api::c_macro::register_admin(builder)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let builder = crate::c_api::c_loot_journal::register_admin(builder)?;
+    let builder = crate::c_api::c_transmog_sets::register_admin(builder)?;
+    #[cfg(feature = "client-wowforever")]
+    let builder = crate::c_api::c_transmog_outfit_info::register_admin(builder)?;
+    #[cfg(feature = "client-retail")]
+    let builder = crate::c_api::c_major_factions::register_admin(builder)?;
     let builder = crate::c_api::item_upgrade_eligibility::register_admin(builder)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let builder = super::admin_inventory_candidates::register(builder)?;
     let builder = builder
         .set_function(
             "AddLossOfControl",
@@ -108,19 +246,84 @@ pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
             crate::c_api::c_loss_of_control::clear_supplied_entries,
         )?;
     let builder = crate::c_api::equipment_set_locks::register_admin(builder)?;
-    let builder = crate::c_api::item_overlay::register_admin(builder)?;
+    crate::c_api::item_overlay::register_admin(builder)
+}
+
+fn register_admin_social_names(builder: TableBuilder) -> LuaResult<TableBuilder> {
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let builder = builder.set_function(
+        "SetSocialIgnoreName",
+        crate::c_api::c_friend_list::set_social_ignore_name,
+    )?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let builder = builder.set_function(
+        "SetSocialBlockedEntry",
+        crate::c_api::c_friend_list::set_social_blocked_entry,
+    )?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let builder = builder
+        .set_function(
+            "SetPlayerBattleNetInfo",
+            crate::c_api::c_friend_list::set_player_battle_net_info,
+        )?
+        .set_function(
+            "SetBattleNetAccountFeatures",
+            crate::c_api::c_friend_list::set_battle_net_account_features,
+        )?
+        .set_function(
+            "SetBattleNetFriendInvite",
+            crate::c_api::c_friend_list::set_battle_net_friend_invite,
+        )?
+        .set_function(
+            "SetBattleNetFriendState",
+            crate::c_api::c_friend_list::set_battle_net_friend_state,
+        )?;
+    Ok(builder)
+}
+
+fn register_admin_maps_tooltips(mut builder: TableBuilder) -> LuaResult<TableBuilder> {
+    builder = crate::c_api::c_minimap_tracking::register_admin(builder)?;
     let builder = crate::c_api::c_minimap_quest_blob::register_admin(builder)?;
     let builder = crate::c_api::c_tooltip_info_weekly::register_admin(builder)?;
+    let builder = crate::c_api::c_store_glue::register_admin(builder)?;
     let builder = crate::c_api::c_tooltip_info_possession::register_admin(builder)?;
+    #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
+    let builder = crate::c_api::c_dye_color::register_admin(builder)?;
     let builder = builder.set_function(
         "SetHousingCatalogVariantStoredCount",
         crate::c_api::c_housing::catalog::set_variant_stored_count,
     )?;
     let builder = crate::c_api::c_stable_info::active_list::register_admin(builder)?;
     let builder = crate::c_api::c_stable_info::pet_info::register_admin(builder)?;
+    Ok(builder)
+}
+
+fn register_admin_social(builder: TableBuilder) -> LuaResult<TableBuilder> {
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let builder = crate::c_api::c_lfg_info::register_admin(builder)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let builder = crate::c_api::c_black_market::register_admin(builder)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let builder = crate::c_api::c_social_queue::register_admin(builder)?;
+    let builder = crate::c_api::c_commentator::register_admin(builder)?;
+    let builder = crate::c_api::c_social_restrictions::register_admin(builder)?;
+    let builder = crate::c_api::c_club::register_admin(builder)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let builder = crate::c_api::c_party_info::pending_invites::register_admin(builder)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let builder = crate::c_api::c_party_info::register_admin(builder)?;
     let builder = crate::c_api::c_stable_info::pet_spec_infos::register_admin(builder)?;
     let builder = crate::c_api::challenge_run::register_admin(builder)?;
-    let builder = if crate::c_api::restricted_actions::supported() {
+    let builder = crate::c_api::c_mythic_plus::register_admin(builder)?;
+    Ok(builder)
+}
+
+fn register_admin_encounter_services(builder: TableBuilder) -> LuaResult<TableBuilder> {
+    #[cfg(any(feature = "retail-12-1-0", feature = "client-wowforever"))]
+    let mut builder = crate::c_api::c_encounter_journal_difficulty::register_admin(builder)?;
+    #[cfg(not(any(feature = "retail-12-1-0", feature = "client-wowforever")))]
+    let mut builder = builder;
+    builder = if crate::c_api::restricted_actions::supported() {
         builder
             .set_function(
                 "SetAddOnRestrictionActive",
@@ -133,16 +336,31 @@ pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
     } else {
         builder
     };
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let builder = super::real::unit_threat::register_admin(builder)?;
+    #[cfg(feature = "client-wowforever")]
+    let builder = crate::c_api::specialization_system::register_admin(builder)?;
+    #[cfg(feature = "client-wowforever")]
+    let builder = crate::c_api::c_quest_log::register_admin(builder)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let builder = crate::c_api::c_class_trial::register_admin(builder)?;
     let builder = crate::lua_api::manual_clock::register_admin(builder)?;
     let builder = super::real::wrath_spell_slots::register_admin(builder)?;
-    let admin_val = builder.build();
-
-    LuaApiMut::set_global_val(lua, "A_Admin", admin_val)?;
-    super::group_queries::register_all(lua.state_mut());
-    Ok(())
+    Ok(builder)
 }
 
 fn register_player(b: TableBuilder) -> LuaResult<TableBuilder> {
+    let b = register_player_profile(b)?;
+    let b = register_player_identity(b)?;
+    register_player_progression(b)
+}
+
+fn register_player_profile(b: TableBuilder) -> LuaResult<TableBuilder> {
+    let b = register_player_classic_fields(b)?;
+    register_player_modern_fields(b)
+}
+
+fn register_player_classic_fields(b: TableBuilder) -> LuaResult<TableBuilder> {
     let b = if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Wrath {
         b.set_function(
             "SetWrathGlyphSocket",
@@ -160,17 +378,39 @@ fn register_player(b: TableBuilder) -> LuaResult<TableBuilder> {
         "SetPlayerFacing",
         super::real::player_facing::set_player_facing,
     )?;
+    Ok(b)
+}
+
+fn register_player_modern_fields(b: TableBuilder) -> LuaResult<TableBuilder> {
     #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
     let b = b.set_function("SetGuildFactionGroupFlags", set_guild_faction_group_flags)?;
-    b.set_function("SetPlayerName", set_player_name)?
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let b = b.set_function(
+        "SetPlayerStagger",
+        crate::lua_api::globals::real::unit_stagger::set_player_stagger,
+    )?;
+    #[cfg(feature = "client-retail")]
+    let b = super::real::unit_power_display_mod::register_admin(b)?;
+    Ok(b)
+}
+
+fn register_player_identity(b: TableBuilder) -> LuaResult<TableBuilder> {
+    let builder = b
+        .set_function("SetPlayerName", set_player_name)?
         .set_function("SetPlayerClass", set_player_class)?
         .set_function("SetPlayerRace", set_player_race)?
         .set_function("SetPlayerLevel", set_player_level)?
         .set_function("SetPlayerEffectiveLevel", set_player_effective_level)?
         .set_function("SetPlayerSex", set_player_sex)?
         .set_function("SetPlayerHealth", set_player_health)?
-        .set_function("SetPlayerPower", set_player_power)?
-        .set_function("SetSpec", set_spec)?
+        .set_function("SetPlayerPower", set_player_power)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let builder = super::admin_account_type::register_admin(builder)?;
+    Ok(builder)
+}
+
+fn register_player_progression(b: TableBuilder) -> LuaResult<TableBuilder> {
+    b.set_function("SetSpec", set_spec)?
         .set_function("SetSpecSelectionEnabled", set_spec_selection_enabled)?
         .set_function("SetTalentRank", set_talent_rank)?
         .set_function("SetTalentSelection", set_talent_selection)?
@@ -214,7 +454,8 @@ fn register_channel_inputs(b: TableBuilder) -> LuaResult<TableBuilder> {
 }
 
 fn register_targeting_party(b: TableBuilder) -> LuaResult<TableBuilder> {
-    b.set_function("SetTarget", set_target)?
+    let b = b
+        .set_function("SetTarget", set_target)?
         .set_function("ClearTarget", clear_target)?
         .set_function("SetFocus", set_focus)?
         .set_function("ClearFocus", clear_focus)?
@@ -228,8 +469,12 @@ fn register_targeting_party(b: TableBuilder) -> LuaResult<TableBuilder> {
         .set_function("SetPartyLeader", set_party_leader)?
         .set_function("SetPartyMember", set_party_member)?
         .set_function("SetPartyMemberConnected", set_party_member_connected)?
-        .set_function("SetPartyMemberHealth", set_party_member_health)?
-        .set_function("KillPartyMember", kill_party_member)?
+        .set_function("SetPartyMemberHealth", set_party_member_health)?;
+    #[cfg(feature = "client-retail")]
+    let b = b
+        .set_function("SetPartyMemberFaction", set_party_member_faction)?
+        .set_function("SetPartyMemberPvP", set_party_member_pvp)?;
+    b.set_function("KillPartyMember", kill_party_member)?
         .set_function("ResPartyMember", res_party_member)?
         .set_function("SetRotDamage", set_rot_damage)?
         .set_function("SetEnemyPool", super::targeting_verbs::admin_set_enemy_pool)
@@ -276,13 +521,43 @@ fn register_modifier_keys(b: TableBuilder) -> LuaResult<TableBuilder> {
 }
 
 fn register_guild_and_game_rules(b: TableBuilder) -> LuaResult<TableBuilder> {
-    b.set_function("SetGuildEmblem", set_guild_emblem)?
+    let b = register_guild_basics(b)?;
+    register_guild_details_and_rules(b)
+}
+
+fn register_guild_basics(b: TableBuilder) -> LuaResult<TableBuilder> {
+    let b = b
+        .set_function("SetGuildEmblem", set_guild_emblem)?
         .set_function(
             "SetGuildTabardMetadata",
             crate::c_api::c_guild_info::admin_set_tabard_metadata,
-        )?
-        .set_function("SetGuildRanks", set_guild_ranks)?
-        .set_function("SetGameRule", super::game_rules::admin_set_game_rule)?
+        )?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let b = b.set_function(
+        "SetGuildRenameStatus",
+        crate::c_api::c_guild_info::admin_set_guild_rename_status,
+    )?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let b = b.set_function(
+        "SetGuildEventsEnabled",
+        crate::c_api::c_guild_info::admin_set_guild_events_enabled,
+    )?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let b = b.set_function(
+        "SetGuildReputationEnabled",
+        crate::c_api::c_guild_info::admin_set_guild_reputation_enabled,
+    )?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let b = b.set_function(
+        "SetGuildPreferredPlaySettingsFeatures",
+        crate::c_api::c_guild_info::admin_set_guild_preferred_play_settings_features,
+    )?;
+    b.set_function("SetGuildRanks", set_guild_ranks)?
+        .set_function("SetGuildRoster", set_guild_roster)
+}
+
+fn register_guild_details_and_rules(b: TableBuilder) -> LuaResult<TableBuilder> {
+    b.set_function("SetGameRule", super::game_rules::admin_set_game_rule)?
         .set_function(
             "SetActiveGameMode",
             super::game_rules::admin_set_active_game_mode,
@@ -393,7 +668,17 @@ fn register_query_catalog_inputs(b: TableBuilder) -> LuaResult<TableBuilder> {
 }
 
 fn register_inventory_and_mail(b: TableBuilder) -> LuaResult<TableBuilder> {
-    let b = b
+    let b = register_action_bars_and_bags(b)?;
+    let b = register_mail_admin(b)?;
+    register_auction_house_admin(b)
+}
+
+fn register_action_bars_and_bags(b: TableBuilder) -> LuaResult<TableBuilder> {
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let b = b.set_function("SetPossessActionSlot", set_possess_action_slot)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let b = b.set_function("OpenGuildRename", open_guild_rename)?;
+    b.set_function("SetPossessBarVisible", set_possess_bar_visible)?
         .set_function("SetActionSlot", set_action_slot)?
         .set_function(
             "SetActionRepeatActive",
@@ -410,15 +695,16 @@ fn register_inventory_and_mail(b: TableBuilder) -> LuaResult<TableBuilder> {
         .set_function("RemoveBagItem", remove_bag_item)?
         .set_function("ClearBags", clear_bags)?
         .set_function("AddGuildBankItem", add_guild_bank_item)?
-        .set_function("ClearGuildBank", clear_guild_bank)?
-        .set_function("AddMail", add_mail)?
+        .set_function("ClearGuildBank", clear_guild_bank)
+}
+
+fn register_mail_admin(b: TableBuilder) -> LuaResult<TableBuilder> {
+    b.set_function("AddMail", add_mail)?
         .set_function("ClearInbox", clear_inbox)?
         .set_function("OpenMailbox", open_mailbox)?
         .set_function("CloseMailbox", close_mailbox)?
         .set_function("SetInboxCount", set_inbox_count)?
-        .set_function("SetStationeryCatalog", set_stationery_catalog)?;
-
-    register_auction_house_admin(b)
+        .set_function("SetStationeryCatalog", set_stationery_catalog)
 }
 
 fn register_auction_house_admin(b: TableBuilder) -> LuaResult<TableBuilder> {
@@ -456,7 +742,23 @@ fn register_vault_and_premade(b: TableBuilder) -> LuaResult<TableBuilder> {
 }
 
 fn register_collections_pvp<'lua>(b: TableBuilder<'lua>) -> LuaResult<TableBuilder<'lua>> {
-    register_functions(b, COLLECTIONS_PVP_FUNCTIONS)
+    let b = register_functions(b, COLLECTIONS_PVP_FUNCTIONS)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let b = crate::c_api::c_spec::register_admin(b)?;
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
+        return b
+            .set_function("SetGuildPerks", set_guild_perks)?
+            .set_function("SetMaxBattlefieldID", set_battlefield_max_id)?
+            .set_function("SetBattlefieldQueue", set_battlefield_queue)?
+            .set_function("SetBattlefieldArena", set_battlefield_arena)?
+            .set_function("SetPlayerPresent", set_player_present)?
+            .set_function("SetPVPTimer", set_pvp_timer);
+    }
+    Ok(b)
 }
 
 const COLLECTIONS_PVP_FUNCTIONS: &[(&str, RustFn)] = &[
@@ -471,6 +773,7 @@ const COLLECTIONS_PVP_FUNCTIONS: &[(&str, RustFn)] = &[
     ("SetToyCollected", set_toy_collected),
     ("SetCampsiteCollected", set_campsite_collected),
     ("SetAchievementEarned", set_achievement_earned),
+    ("SetCanShowAchievementUI", set_can_show_achievement_ui),
     ("HasAchievement", has_achievement),
     ("SetMerchantItems", set_merchant_items),
     ("CollectMount", collect_mount),
@@ -532,6 +835,9 @@ fn register_crafting(b: TableBuilder) -> LuaResult<TableBuilder> {
 fn set_player_name(state: &mut LuaState) -> LuaResult<u32> {
     let name = String::from_stack(state, 1)?;
     borrow_state_mut(state)?.player.name = name;
+    // INFERRED: R88gc (native evidence pending); CharacterFrame consumes this event.
+    let player_unit = Val::Str(state.gc.intern_string(b"player"));
+    super::state_backed_queries::dispatch_event_now(state, "UNIT_NAME_UPDATE", &[player_unit])?;
     Ok(0)
 }
 
@@ -556,6 +862,23 @@ fn set_guild_faction_group_flags(state: &mut LuaState) -> LuaResult<u32> {
         .guild_faction_group_flags
         .insert(race_id, flags);
     Ok(0)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn set_player_npe_restricted(state: &mut LuaState) -> LuaResult<u32> {
+    let restricted = bool::from_stack(state, 1)?;
+    borrow_state_mut(state)?.player.is_npe_restricted = restricted;
+    Ok(0)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn set_tutorials_enabled(state: &mut LuaState) -> LuaResult<u32> {
+    let enabled = bool::from_stack(state, 1)?;
+    crate::lua_api::globals::set_cvar_verb::set_admin_cvar(
+        state,
+        "showTutorials",
+        if enabled { "1" } else { "0" },
+    )
 }
 
 fn set_player_level(state: &mut LuaState) -> LuaResult<u32> {
@@ -799,32 +1122,51 @@ pub(super) fn build_admin_buff(
     duration: f64,
     stacks: i32,
 ) -> AuraInfo {
-    build_admin_aura(st, spell_id, name, icon, duration, stacks, true, None)
+    build_admin_aura(
+        st,
+        spell_id,
+        name,
+        parse_admin_aura_icon(icon),
+        duration,
+        stacks,
+        true,
+        None,
+    )
 }
 
-/// Build an AuraInfo for admin-added auras (buffs or debuffs).
+/// Parse a file data ID or retain a texture path.
+pub(super) fn parse_admin_aura_icon(icon: String) -> AuraIcon {
+    match icon.parse::<i32>() {
+        Ok(file_id) => AuraIcon::FileId(file_id),
+        Err(_) => AuraIcon::Path(icon),
+    }
+}
+
+fn admin_aura_expiration_time(st: &crate::lua_api::state::SimState, duration: f64) -> f64 {
+    if duration > 0.0 {
+        st.clock_elapsed().as_secs_f64() + duration
+    } else {
+        0.0
+    }
+}
+
 #[allow(clippy::too_many_arguments)]
 pub(super) fn build_admin_aura(
     st: &crate::lua_api::state::SimState,
     spell_id: i32,
     name: String,
-    icon: String,
+    icon: AuraIcon,
     duration: f64,
     stacks: i32,
     is_helpful: bool,
     dispel_type: Option<String>,
 ) -> AuraInfo {
-    let expiration_time = if duration > 0.0 {
-        st.clock_elapsed().as_secs_f64() + duration
-    } else {
-        0.0
-    };
     AuraInfo {
         name,
         spell_id,
-        icon: icon.parse::<i32>().unwrap_or(0),
+        icon,
         duration,
-        expiration_time,
+        expiration_time: admin_aura_expiration_time(st, duration),
         applications: stacks,
         source_unit: "player".to_string(),
         is_helpful,

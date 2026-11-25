@@ -5,7 +5,7 @@
 
 use crate::lua_api::globals::real::macro_getters::USE_MODELED_MACRO_GETTERS;
 
-const COMMON_LUA: &str = r#"
+const LEGACY_FIXTURES_LUA: &str = r#"
 if GetMacroBody == nil then
     function GetMacroBody(index)
         local _, _, body = GetMacroInfo(index)
@@ -15,14 +15,10 @@ end
 if CursorHasMacro == nil then
     function CursorHasMacro() return false end
 end
-
 C_Macro = C_Macro or __wow_namespace()
 if rawget(C_Macro, "GetNumMacros") == nil then
     function C_Macro.GetNumMacros() return 2, 1 end
 end
-"#;
-
-const LEGACY_FIXTURES_LUA: &str = r#"
 if GetNumMacros == nil then
     function GetNumMacros() return 2, 1 end
 end
@@ -100,23 +96,11 @@ if rawget(C_Macro, "GetSelectedMacroIcon") == nil then
 end
 "#;
 
-const RETAIL_UNKNOWN_LUA: &str = r#"
--- UNKNOWN in R88l.18–23; do not give these independent getters demo data.
-if rawget(C_Macro, "GetMacroName") == nil then
-    function C_Macro.GetMacroName() return nil end
-end
-if rawget(C_Macro, "GetSelectedMacroIcon") == nil then
-    function C_Macro.GetSelectedMacroIcon() return nil end
-end
-"#;
-
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
-    lua.exec(COMMON_LUA)?;
-    lua.exec(if USE_MODELED_MACRO_GETTERS {
-        RETAIL_UNKNOWN_LUA
-    } else {
-        LEGACY_FIXTURES_LUA
-    })?;
+    if USE_MODELED_MACRO_GETTERS {
+        return Ok(());
+    }
+    lua.exec(LEGACY_FIXTURES_LUA)?;
     Ok(())
 }
 
@@ -124,7 +108,7 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
 mod tests {
     use crate::lua_api::WowLuaEnv;
 
-    #[cfg(not(feature = "client-retail"))]
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     #[test]
     fn installs_macro_ui_fixture_defaults() {
         let env = WowLuaEnv::new().expect("lua env should initialize");

@@ -105,11 +105,46 @@ pub(super) fn set_criteria(state: &mut LuaState) -> LuaResult<u32> {
         is_bonus_step: false,
         bonus_reward_quest_id: None,
     };
+    update_scenario_metadata(state, row)?;
     let changed_ids = store_criteria(state, step, criteria)?;
     for id in changed_ids {
         dispatch_event_now(state, "SCENARIO_CRITERIA_UPDATE", &[Val::Num(id)])?;
     }
     Ok(0)
+}
+
+fn update_scenario_metadata(state: &mut LuaState, row: Val) -> LuaResult<()> {
+    let name = field::<Option<String>>(state, row, "scenarioName")?;
+    let scenario_id = field::<Option<i32>>(state, row, "scenarioID")?;
+    let scenario_type = field::<Option<i32>>(state, row, "scenarioType")?;
+    let flags = field::<Option<i32>>(state, row, "flags")?;
+    let xp = field::<Option<i32>>(state, row, "xp")?;
+    let money = field::<Option<i32>>(state, row, "money")?;
+    let texture_kit = field::<Option<String>>(state, row, "textureKit")?;
+    let mut sim = borrow_state_mut(state)?;
+    let scenario = &mut sim.scenario;
+    if let Some(name) = name {
+        scenario.name = name;
+    }
+    if let Some(id) = scenario_id {
+        scenario.scenario_id = id;
+    }
+    if let Some(kind) = scenario_type {
+        scenario.scenario_type = kind;
+    }
+    if let Some(flags) = flags {
+        scenario.flags = flags;
+    }
+    if let Some(xp) = xp {
+        scenario.xp = xp;
+    }
+    if let Some(money) = money {
+        scenario.money = money;
+    }
+    if let Some(texture_kit) = texture_kit {
+        scenario.texture_kit = texture_kit;
+    }
+    Ok(())
 }
 
 fn store_criteria(

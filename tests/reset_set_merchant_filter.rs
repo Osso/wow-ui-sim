@@ -180,7 +180,7 @@ fn merchant_r88i5_original_consumer_calls_requirement_failure_and_skip() {
     .unwrap();
     // INFERRED adapter: an empty faction table represents the missing owner.
     // VERIFIED publication for a missing native owner is exactly one false.
-    env.exec("__wow_reputation_state.factions = {}").unwrap();
+    env.state().borrow_mut().reputation.factions.clear();
     env.state()
         .borrow_mut()
         .merchant_item_requirements

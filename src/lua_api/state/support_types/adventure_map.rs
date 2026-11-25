@@ -1,4 +1,4 @@
-use super::*;
+use std::collections::HashMap;
 
 /// Zone-choice descriptor for the adventure map. A zone choice is one of
 /// the competing quests on the Broken Isles starting-zone selection
@@ -129,6 +129,10 @@ pub struct EncounterJournalState {
     pub current_tier: u32,
     /// Selected `JournalInstance.id` (raid or dungeon), or 0 when none.
     pub current_instance: u32,
+    /// UNKNOWN (R88gb.1, Retail 12.1.5.70688 / Forever 1.60.1.70707):
+    /// host-supplied per-instance mask; native DB2 source was not identified.
+    #[cfg(any(feature = "retail-12-1-0", feature = "client-wowforever"))]
+    pub instance_difficulty_masks: HashMap<u32, u64>,
     /// Selected `JournalEncounter.id`, or 0 when no boss tab is open.
     pub current_encounter: u32,
     /// Active raid/dungeon `DifficultyID`. Defaults to Normal Raid (14).
@@ -152,6 +156,18 @@ pub struct EncounterJournalState {
     pub current_tab: u32,
     /// Zero-based carousel offset for `C_AdventureJournal` suggestions.
     pub adventure_primary_offset: u32,
+    /// INFERRED: R88dn (native evidence pending). The pinned
+    /// `AdventureGuideUtil.lua:10-11` consumer gates the Encounter Journal
+    /// on this supplied availability observation; normal characters default true.
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub adventure_can_be_shown: bool,
+    /// INFERRED R88dj (native evidence pending): supplied encounter rows by UI map ID.
+    #[cfg(feature = "client-retail")]
+    pub(crate) map_encounters:
+        HashMap<u32, Vec<crate::c_api::c_encounter_journal_map::EncounterJournalMapEncounter>>,
+    /// INFERRED R88cm host-supplied item-set rows for Retail and Forever.
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub item_set_catalog: crate::c_api::c_loot_journal::ItemSetCatalog,
 }
 
 impl Default for EncounterJournalState {
@@ -159,6 +175,8 @@ impl Default for EncounterJournalState {
         Self {
             current_tier: 12,
             current_instance: 0,
+            #[cfg(any(feature = "retail-12-1-0", feature = "client-wowforever"))]
+            instance_difficulty_masks: HashMap::new(),
             current_encounter: 0,
             difficulty: 14,
             class_filter: 0,
@@ -170,6 +188,12 @@ impl Default for EncounterJournalState {
             search_finished: true,
             current_tab: 3,
             adventure_primary_offset: 0,
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            adventure_can_be_shown: true,
+            #[cfg(feature = "client-retail")]
+            map_encounters: HashMap::new(),
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            item_set_catalog: Default::default(),
         }
     }
 }

@@ -91,7 +91,7 @@ fn cfactory_m5_pet_icon_projects_species_catalog() {
         .unwrap();
 }
 
-#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[cfg(feature = "client-ptr")]
 #[test]
 fn cfactory_m5_housing_bootstrap_delivers_empty_owned_house_list() {
     let env = documented_env("HousingUIDocumentation.lua", "GetPlayerOwnedHouses");

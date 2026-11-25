@@ -33,7 +33,7 @@ fn player_aura(id: i32) -> AuraInfo {
     AuraInfo {
         name: format!("Hover Aura {id}"),
         spell_id: id,
-        icon: id,
+        icon: crate::lua_api::game_data::AuraIcon::FileId(id),
         duration: 30.0,
         expiration_time: 30.0,
         applications: 1,

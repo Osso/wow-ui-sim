@@ -31,13 +31,15 @@ Focused default-retail GREEN: 5/5 tests, exit 0, on shared build revision `72220
 ## Forever 70707 singular lookup
 
 Pinned `TransmogOutfitInfoDocumentation.lua:312–325` declares `GetOutfitInfo`.
-Forever queries the same supplied `forever_outfits` entries as `GetOutfitsInfo`,
-not the Retail catalog. Supplied outfit IDs and entry fields are preserved in
-fresh snapshots. **EMULATED:** `emulated_singular_outfit_lookup` treats an
-unsupplied observation or a supplied no-list observation as no match, returning
-zero values; native missing-state arity is UNKNOWN. Enumeration retains its
-existing strict unsupplied-state error. The exact supplied-record and empty-state
-contract is exercised by `src/c_api/forever_lib_baseline_tests.rs`.
+Forever `GetOutfitInfo` and `GetOutfitsInfo` read the same `transmog_outfit_catalog`
+entries as the Retail lookup and outfit-creation path. **INFERRED (R88ex; native
+evidence pending):** an empty catalog returns zero values for both missing
+singular queries and `GetOutfitsInfo()`, matching the declaration's
+`MayReturnNothing` and the selected `GetOutfitsInfo() or {}` consumers. Non-empty
+enumeration returns one table. Supplied records and empty-state behavior are exercised by
+`src/c_api/forever_lib_baseline_tests.rs` and
+`tests/forever_camelot_spellbook.rs`. `A_Admin.SetUnlockedOutfitSlots` supplies
+capacity for tests that create records through the public AddNewOutfit path.
 
 ## Known gaps (current cycle)
 

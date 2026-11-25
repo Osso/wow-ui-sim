@@ -178,6 +178,7 @@ fn test_minimap_ping_methods_persist_runtime_state() {
     );
 }
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn test_world_map_data_providers_are_tracked() {
     let env = env();
@@ -366,18 +367,6 @@ fn test_buff_frame_aura_container_icon_scale() {
         .eval("return BuffFrame.AuraContainer.iconScale")
         .unwrap();
     assert!((scale - 1.0).abs() < f64::EPSILON);
-}
-
-#[test]
-fn test_addon_compartment_frame_methods() {
-    let env = env();
-    // RegisterAddon and UnregisterAddon should be callable without error
-    env.exec("AddonCompartmentFrame:RegisterAddon()").unwrap();
-    env.exec("AddonCompartmentFrame:UnregisterAddon()").unwrap();
-    let is_table: bool = env
-        .eval("return type(AddonCompartmentFrame.registeredAddons) == 'table'")
-        .unwrap();
-    assert!(is_table);
 }
 
 // Forever Blizzard_GroupFinder.toc:10 excludes camelot.

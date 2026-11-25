@@ -225,6 +225,13 @@ impl Args {
         )
     }
 
+    fn run_tests_addon(&self) -> Option<&str> {
+        match &self.command {
+            Some(Commands::RunTests { addon_name }) => Some(addon_name),
+            _ => None,
+        }
+    }
+
     fn read_addon_paths(&self) -> Vec<PathBuf> {
         let mut paths = wow_ui_sim::paths::find_addons_paths(&self.addons_path);
         let exclusive =

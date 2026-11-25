@@ -21,7 +21,9 @@ pub(crate) mod wrath_startup_defaults;
 pub(crate) mod account_store_set_storefront;
 pub(crate) mod achievement_search_preview;
 pub(crate) mod achievement_ui_access_defaults;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod addon_compartment_defaults;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod addons_beta_policy_defaults;
 pub(crate) mod adventure_journal_fallbacks;
 pub(crate) mod adventure_map_frame_surface;
@@ -31,8 +33,11 @@ pub(crate) mod assisted_combat_manager_defaults;
 pub(crate) mod auction_house_search_context_aliases;
 pub(crate) mod auth_challenge_frame_parent;
 pub(crate) mod auto_complete_defaults;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod battle_net_account_defaults;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod behavioral_messaging_defaults;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod black_market_defaults;
 pub(crate) mod c_chat_info_defaults;
 pub(crate) mod calendar_defaults;
@@ -43,12 +48,14 @@ pub(crate) mod catalog_shop_inbound_globals;
 pub(crate) mod catalog_shop_product_card_defaults;
 pub(crate) mod character_create_defaults;
 #[cfg(not(feature = "client-retail"))]
+#[cfg(any(not(feature = "client-wowforever"), test))]
 pub(crate) mod character_frame_surface_refresh;
 #[cfg(not(feature = "client-retail"))]
 pub(crate) mod character_select_selected_name;
 pub(crate) mod character_services_defaults;
 pub(crate) mod chat_voice_button_surface;
 pub(crate) mod chat_window_defaults;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod class_trial_defaults;
 pub(crate) mod click_bindings_defaults;
 pub(crate) mod client_info_defaults;
@@ -61,6 +68,7 @@ pub(crate) mod container_default_shapes;
 pub(crate) mod container_frame_token_tracker;
 pub(crate) mod container_portrait_texture;
 pub(crate) mod content_tracking_defaults;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod contribution_collector_defaults;
 pub(crate) mod cooldown_viewer_defaults;
 pub(crate) mod cpp_mixin_stubs;
@@ -106,6 +114,7 @@ pub(crate) mod item_button_helper_defaults;
 pub(crate) mod item_quality_color_data_methods;
 pub(crate) mod item_targeting_defaults;
 pub(crate) mod item_upgrade_availability_defaults;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod kiosk_namespace_defaults;
 pub(crate) mod legacy_action_bar_globals;
 pub(crate) mod legacy_container_globals;
@@ -114,17 +123,20 @@ pub(crate) mod legacy_talent_skill_defaults;
 pub(crate) mod level_link_spell_lock_state;
 pub(crate) mod lfg_legacy_defaults;
 pub(crate) mod lfg_lock_list;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod loot_journal_defaults;
 pub(crate) mod macro_defaults;
 #[cfg(not(feature = "client-retail"))]
 pub(crate) mod main_menu_microbutton_click;
 pub(crate) mod major_faction_display_defaults;
+#[cfg(not(feature = "client-retail"))]
 pub(crate) mod map_art_help_text_defaults;
 pub(crate) mod map_canvas_scroll_container;
 pub(crate) mod map_exploration_pin;
 pub(crate) mod map_group_defaults;
 pub(crate) mod map_runtime_state;
 pub(crate) mod merchant_filter_state;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod merchant_raid_defaults;
 pub(crate) mod minimap_tracking_defaults;
 pub(crate) mod misc_global_frame_defaults;
@@ -144,6 +156,7 @@ pub(crate) mod party_info_static_defaults;
 pub(crate) mod patch_12_1_inert_defaults;
 pub(crate) mod performance_metric_defaults;
 pub(crate) mod perks_activities_state;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod perks_program_defaults;
 pub(crate) mod pet_battle_action_legality_defaults;
 pub(crate) mod pet_battle_runtime_state;
@@ -155,6 +168,7 @@ pub(crate) mod possess_info_defaults;
 pub(crate) mod post_event_action_button_refresh;
 pub(crate) mod post_event_frame_layout;
 pub(crate) mod private_aura_state;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod profession_specs_defaults;
 pub(crate) mod prototype_dialog_state;
 pub(crate) mod proxy_object_factories;
@@ -164,11 +178,13 @@ pub(crate) mod quest_campaign_header_default;
 pub(crate) mod quest_log_mixin;
 pub(crate) mod quest_objective_defaults;
 pub(crate) mod quest_progress_requirements;
+#[cfg(not(feature = "client-wowforever"))]
 pub(crate) mod reincarnation_defaults;
 pub(crate) mod reputation_state;
 pub(crate) mod restricted_actions_protected;
 pub(crate) mod scenario_defaults;
 pub(crate) mod script_bucket_throttle_limits;
+#[cfg(not(feature = "client-retail"))]
 pub(crate) mod scripted_animation_effect_defaults;
 pub(crate) mod secure_env_global_snapshot;
 pub(crate) mod secure_legacy_unit_globals;
@@ -180,6 +196,7 @@ pub(crate) mod settings_surface_defaults;
 pub(crate) mod shared_character_services_defaults;
 pub(crate) mod shared_xml_anim_mixins;
 pub(crate) mod shared_xml_utility_defaults;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod social_queue_defaults;
 pub(crate) mod social_service_defaults;
 pub(crate) mod sound_driver_defaults;
@@ -187,6 +204,7 @@ pub(crate) mod source_patches;
 pub(crate) mod spell_book_static_defaults;
 pub(crate) mod spell_metadata_defaults;
 pub(crate) mod spell_static_defaults;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod spell_target_defaults;
 #[cfg(not(feature = "client-wrath"))]
 pub(crate) mod startup_condition_capability_defaults;
@@ -199,8 +217,10 @@ pub(crate) mod store_glue_state;
 pub(crate) mod store_public_defaults;
 pub(crate) mod super_track_defaults;
 pub(crate) mod talent_edge_frame_level_sync;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod taxi_map_defaults;
 pub(crate) mod texture_file_data_defaults;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod tooltip_nineslice_surface;
 pub(crate) mod tracking_namespace_defaults;
 pub(crate) mod trade_info_defaults;

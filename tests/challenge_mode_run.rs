@@ -8,6 +8,7 @@
 use crate::common::blizzard_addon_harness::{
     blizzard_ui_dir, load_blizzard_addon_closure_into_env, new_blizzard_addon_env,
 };
+use wow_ui_sim::loader::load_addon;
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 fn load_tracker() -> WowLuaEnv {
@@ -88,6 +89,35 @@ fn original_challenge_timer_reads_supplied_run_and_reset() {
     .unwrap();
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn original_scenario_tracker_reads_supplied_scenario_and_step() {
+    let env = load_tracker();
+    env.exec(
+        r#"
+        ScenarioObjectiveTracker:InitModule()
+        A_Admin.SetScenarioCriteria({
+            stepID=1, title='First supplied stage', description='First stage details',
+            scenarioName='First supplied scenario', scenarioID=6101,
+        }, {})
+        assert(C_Scenario.IsInScenario())
+        ScenarioObjectiveTracker:LayoutContents()
+        assert(ScenarioObjectiveTracker.Header.Text:GetText() == 'First supplied scenario')
+        assert(ScenarioObjectiveTracker.StageBlock.Name:GetText() == 'First supplied stage')
+
+        A_Admin.SetScenarioCriteria({
+            stepID=2, title='Second supplied stage', description='Second stage details',
+            scenarioName='Second supplied scenario', scenarioID=6102,
+        }, {})
+        assert(C_Scenario.IsInScenario())
+        ScenarioObjectiveTracker:LayoutContents()
+        assert(ScenarioObjectiveTracker.Header.Text:GetText() == 'Second supplied scenario')
+        assert(ScenarioObjectiveTracker.StageBlock.Name:GetText() == 'Second supplied stage')
+        "#,
+    )
+    .unwrap();
+}
+
 #[test]
 fn original_scenario_criteria_render_order_quantity_and_completion() {
     let env = load_tracker();
@@ -130,12 +160,80 @@ fn original_scenario_criteria_render_order_quantity_and_completion() {
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
-#[test]
-fn original_challenges_dungeon_icon_reads_supplied_map_metadata() {
+fn load_challenges_ui() -> WowLuaEnv {
     let ui = blizzard_ui_dir();
     let env = new_blizzard_addon_env(&ui);
+    // SharedXML is eager at startup; load its TOC closure before ChallengesUI.
+    let startup = load_blizzard_addon_closure_into_env(&env, &ui, &["Blizzard_SharedXML"], &[]);
+    assert!(startup.iter().any(|name| name == "Blizzard_SharedXML"));
     let loaded = load_blizzard_addon_closure_into_env(&env, &ui, &["Blizzard_ChallengesUI"], &[]);
     assert!(loaded.iter().any(|name| name == "Blizzard_ChallengesUI"));
+    env
+}
+
+#[cfg(feature = "client-retail")]
+fn supply_display_season_maps(env: &WowLuaEnv, season_id: u32) {
+    env.exec(&format!(
+        r#"
+        A_Admin.SetCurrentDisplaySeasonID({season_id})
+        assert(C_MythicPlus.GetCurrentUIDisplaySeason() == {season_id})
+        A_Admin.SetPlayerLevel(GetMaxLevelForPlayerExpansion())
+        local mapIDs = C_ChallengeMode.GetMapTable()
+        assert(#mapIDs == 8)
+        for _, mapID in ipairs(mapIDs) do
+            A_Admin.SetChallengeModeMapInfo(mapID, {{name='Season map '..mapID, id=mapID,
+                timeLimit=1500, texture=mapID + 1000, backgroundTexture=mapID + 2000, mapID=mapID}})
+        end
+    "#
+    ))
+    .unwrap();
+}
+
+#[cfg(feature = "client-retail")]
+fn challenge_icon_map_ids_for_display_season(env: &WowLuaEnv, season_id: u32) -> String {
+    supply_display_season_maps(env, season_id);
+    let ui = blizzard_ui_dir();
+    let challenges_ui_toc = ui.join("Blizzard_ChallengesUI/Blizzard_ChallengesUI_Mainline.toc");
+    load_addon(&env.loader_env(), &challenges_ui_toc).expect("Blizzard_ChallengesUI should load");
+    env.eval(
+        r#"
+        PVEFrame_ShowFrame('ChallengesFrame')
+        assert(PVEFrame:IsShown() and ChallengesFrame:IsShown())
+        local ids = {}
+        for _, icon in ipairs(ChallengesFrame.DungeonIcons) do
+            ids[#ids + 1] = icon.mapID
+        end
+        table.sort(ids)
+        return table.concat(ids, ',')
+    "#,
+    )
+    .unwrap()
+}
+
+#[cfg(feature = "client-retail")]
+prefork_full_ui_case! {
+fn original_challenges_panel_uses_display_season_34_maps(env: &WowLuaEnv) {
+    let ids = challenge_icon_map_ids_for_display_season(env, 34);
+    assert_eq!(ids, "161,239,402,556,557,558,559,560");
+}
+}
+
+#[cfg(feature = "client-retail")]
+prefork_full_ui_case! {
+fn original_challenges_panel_uses_display_season_37_maps(env: &WowLuaEnv) {
+    let default_season: i32 = env
+        .eval("return C_SeasonInfo.GetCurrentDisplaySeasonID()")
+        .unwrap();
+    assert_eq!(default_season, 37);
+    let ids = challenge_icon_map_ids_for_display_season(env, 37);
+    assert_eq!(ids, "249,250,399,584,585,586,587,588");
+}
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[test]
+fn original_challenges_dungeon_icon_reads_supplied_map_metadata() {
+    let env = load_challenges_ui();
     env.exec(
         r#"
         local icon = CreateFrame('Frame', nil, UIParent, 'ChallengesDungeonIconFrameTemplate')
@@ -160,10 +258,7 @@ fn original_challenges_dungeon_icon_reads_supplied_map_metadata() {
 
 #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
 fn load_map_icon() -> WowLuaEnv {
-    let ui = blizzard_ui_dir();
-    let env = new_blizzard_addon_env(&ui);
-    let loaded = load_blizzard_addon_closure_into_env(&env, &ui, &["Blizzard_ChallengesUI"], &[]);
-    assert!(loaded.iter().any(|name| name == "Blizzard_ChallengesUI"));
+    let env = load_challenges_ui();
     env.exec(r#"
         icon = CreateFrame('Frame', nil, UIParent, 'ChallengesDungeonIconFrameTemplate')
         assert(icon.SetUp == ChallengesDungeonIconMixin.SetUp)
@@ -309,7 +404,8 @@ fn challenge_admin_events_observe_updated_state_and_reject_invalid_input() {
 fn keystone_globals_survive_run_end_and_only_the_reset_input_zeroes_them() {
     let env = WowLuaEnv::new().unwrap();
     let errors_before = env.state().borrow().lua_errors.len();
-    env.exec(r#"
+    env.exec(
+        r#"
         local function read()
             assert(select('#', C_ChallengeMode.GetActiveKeystoneInfo()) == 3)
             local level, affixes, charged = C_ChallengeMode.GetActiveKeystoneInfo()
@@ -342,7 +438,9 @@ fn keystone_globals_survive_run_end_and_only_the_reset_input_zeroes_them() {
         A_Admin.ResetActiveKeystoneInfo()
         level, affixes, charged = read()
         assert(level == 0 and affixes == '' and charged == false)
-    "#).unwrap();
+    "#,
+    )
+    .unwrap();
     assert_eq!(env.state().borrow().lua_errors.len(), errors_before);
 }
 
@@ -363,7 +461,9 @@ fn original_scenario_tracker_reads_supplied_criteria_visibility_on_init() {
     )
     .unwrap();
     let independent = WowLuaEnv::new().unwrap();
-    let shown: bool = independent.eval("return C_Scenario.ShouldShowCriteria()").unwrap();
+    let shown: bool = independent
+        .eval("return C_Scenario.ShouldShowCriteria()")
+        .unwrap();
     assert!(shown, "criteria default to shown in a fresh environment");
 }
 

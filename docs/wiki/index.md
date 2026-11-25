@@ -1,3 +1,44 @@
+## [2026-11-24] investigation | Retail hooksecurefunc dispatcher taint
+
+[Taint system](systems/taint-system.md#retail-hooksecurefunc-dispatcher) records the post-load Retail `securecallfunction` override ordering, the dispatcher taint leak, and the full-UI AuraContainer regression. **VERIFIED (Retail full-addon run):** the secret-texture error is gone; the five remaining errors match the pre-fix baseline.
+
+## [2026-11-23] implementation | Retail/Forever Kiosk session input
+
+[Kiosk session](systems/kiosk-session.md) records the pinned namespace ownership, inferred Retail/Forever session defaults, and the original Retail LFD consumer. **VERIFIED (simulator):** the exact kiosk-gated LFD test passes 1/1; startup also emits the existing CurrencyTransfer required-argument error.
+
+## [2026-11-23] investigation | Forever Encounter Journal selection
+
+[Addon loading](systems/addon-loading.md#addon-discovery-and-toc-parsing) records the TOC filter that excludes Forever's Encounter Journal before its Mainline files load; Retail selects the Mainline consumer.
+
+## [2026-11-23] investigation | Clicked first-install saved variables
+
+[Clicked first-install saved variables](investigations/clicked-first-install-savedvariables.md) records the first-profile `OnNewProfile` → blacklist refresh ordering. **VERIFIED (same Retail simulator binary and addon root):** two Clicked errors with SavedVariables disabled; zero with the current ClickedDB loaded. The source-level native behavior remains **INFERRED**.
+
+## [2026-11-23] investigation | Mythic+ map request reentrancy
+
+[Mythic+ map request reentrancy](investigations/mythic-plus-map-request-reentrancy.md) records the inferred R88ev request gate, deferred events, and same-root Retail comparison. **VERIFIED:** master and branch each discovered 78 addons and loaded 49; master recorded 10 unique errors / 159,423 occurrences, while the branch recorded 7 / 7 with no recursion, stack-overflow, instruction-budget, or watchdog error. AllTheThings loaded on both; only master reported its instruction-budget errors.
+
+## [2026-11-23] implementation | EditBox host-boundary notifications and currency transfer queries
+
+Updated the [event system](systems/event-system.md), [Lua API system](systems/lua-api.md#retailforever-account-currency-transfer), and [EditBox contract](../specs/editbox-text-position-selection.md#cursor-geometry-follow-up); the [currency transfer contract](../specs/currency-transfer-eligibility.md) now covers amount/source queries. **INFERRED (R88et-c):** text-change handlers drain after the outermost Lua call returns, separately from cursor layout. **VERIFIED (simulator):** the exact Retail TokenFrame amount-selector path passes after real ScrollBox layout; the Retail/Forever startup captures contain only the approved CurrencyTransfer required-argument error and its ScriptErrors echo. Startup is not clean.
+
+## [2026-11-23] implementation | Script bucket throttle
+
+Updated the [throttle contract](../specs/script-bucket-throttle-limits.md) and linked it from the [watchdog system](systems/script-execution-watchdog.md). **VERIFIED (R88bn):** Retail/Forever registered CVar defaults and Retail whole-second refill rule. **INFERRED (R88bn; native evidence pending):** the restricted bucket is not charged during the existing startup watchdog phase; the first post-phase addon invocation starts at burst capacity. Per-addon ownership and Forever refill remain inferred; normal-bucket execution classes remain unknown and unmodeled.
+
+## [2026-11-22] system | Script execution watchdog
+
+[Script execution watchdog](systems/script-execution-watchdog.md) records the verified 10,001-dispatch VM poll and `script ran too long` error, the inferred 19,000/200 ms timeout mapping, tainted owner scope, and diagnostic fields.
+
+
+## [2026-11-20] implementation | Secure XML mixin environment
+
+[Addon loading](systems/addon-loading.md#secure-dependency-replay-and-library-allowlist) records the Retail `PrivateAuraMixin:OnEnter` failure, secure XML mixin resolution, Forever's `Blizzard_SharedXMLGame` replay, and the secure `RaidWarning.xml` skip. **VERIFIED (stock Retail/Forever):** exact original hover tests pass with two aura records, and `--no-addons --no-saved-vars lua-errors` returns `[]` on both. **INFERRED (R88cd):** native secure addons resolve XML mixins in their active environment.
+
+## [2026-11-20] implementation | Retail/Forever combat-log history
+
+[Combat-log history](systems/combat-log-history.md) links the [history contract](../specs/combat-log-history-state.md). **INFERRED (fixture parity):** Retail/Forever now store host-supplied history, cursor, settings and filter-settings identity in per-environment Rust state; selected original processor tests pass on both profiles. Native filter rules, ingestion and lifecycle remain UNKNOWN. The four-profile compile matrix passes; Mists/Wrath report two pre-existing `tooltip_for_cost_currency` warnings each.
+
 ## [2026-11-19] investigation | Forever spell action-bar status
 
 [Forever spell action-bar status](investigations/forever-spell-action-bar-status.md) records the documented C_Spell/C_ActionBar surface, the empty Forever action-slot producer, and the fixes. **VERIFIED (Forever exact full-UI test):** passive, slotted, unslotted, ID-0, and ranged-input outcomes pass. **INFERRED:** passive masks reuse the Retail host-state model. **VERIFIED (simulator source):** `setToSearch` filtering remains unmodeled.
@@ -257,9 +298,13 @@ The [Round 7 getter contract](../specs/tooltip-r7-getters.md) and [Lua API](syst
 
 [GlobalColor catalog](systems/global-color-catalog.md) links the [Retail `C_UIColor.GetColors` contract](../specs/c-ui-color-get-colors.md) and pinned source provenance. **VERIFIED (local CASC Retail 12.1.5.70783):** FileDataID 4328468 contains 367 decoded rows with no unreadable records. **VERIFIED (native Retail 12.1.5.70688, R88o.3):** `GetColors` uses flag 3, ignores arguments, copies `ColorMixin`, decodes ARGB with f32 reciprocal multiplication, keeps first tag collisions, applies no empty-tag/flag filters, and exports in tag-byte order. **VERIFIED (simulator generated catalog):** the static export has 361 tags. **VERIFIED (CSV exporter):** the CSV omits invalid-index and excluded-row state. **UNKNOWN (70783 cursor mapping):** native 70688 evidence identifies no corresponding 70783 row IDs. **INFERRED (70688 rules applied to 70783):** native output matches only if no additional cursor skips apply. **PRESERVATION:** hand-set Retail colors remain until every consumer's load order is proved. **UNKNOWN:** live cache contents and update schedule.
 
+## [2026-11-20] implementation | Shared Retail/Forever outfit catalog
+
+The [outfit catalog contract](../specs/outfit-catalog-lookups.md), [Forever spellbook contract](../specs/forever-camelot-spellbook.md), [Forever spellbook model](systems/forever-camelot-spellbook.md), and [tooltip contract](../specs/tooltip-outfit.md) record one outfit-record store: `SimState.transmog_outfit_catalog`. Forever's empty catalog returns no values, inferred from its `MayReturnNothing` declaration and guarded UI consumers.
+
 ## [2026-11-14] implementation | Forever tooltip getter publication
 
-The [modified-appearance](../specs/tooltip-appearance-item.md), [merchant-cost](../specs/tooltip-merchant-cost-item.md), [outfit](../specs/tooltip-outfit.md), and [PvP talent](../specs/tooltip-pvp-talent.md) contracts and [Lua API](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) record R88n.8. **VERIFIED (Forever 1.60.1.70707):** the four getters register; tested missing-source results, argument handling, outfit zero/missing-name behavior, and the selected SpellBook consumer pass. The consumer is **PRESERVATION** because populated source records are not modeled. **INFERRED:** saved names map from `SimState.forever_outfits`. **UNKNOWN:** populated appearance/PvP records, native saved-outfit writers, and merchant availability/filter state.
+The [modified-appearance](../specs/tooltip-appearance-item.md), [merchant-cost](../specs/tooltip-merchant-cost-item.md), [outfit](../specs/tooltip-outfit.md), and [PvP talent](../specs/tooltip-pvp-talent.md) contracts and [Lua API](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) record R88n.8. **VERIFIED (Forever 1.60.1.70707):** the four getters register; tested missing-source results, argument handling, outfit zero/missing-name behavior, and the selected SpellBook consumer pass. The selected tooltip consumer has only a tested missing-name result. **INFERRED:** saved names map from the shared `SimState.transmog_outfit_catalog`. **UNKNOWN:** populated appearance/PvP records, native saved-outfit writers, and merchant availability/filter state.
 ## [2026-11-14] implementation | Retail Azerite Essence tooltip rows
 
 The [Round 7 contract](../specs/tooltip-r7-getters.md), [Lua API](systems/lua-api.md#azerite-essence-tooltip-selection-r88n2), and [consumer investigation](investigations/consumer-selection-and-red-proof.md#retail-azerite-essence-tooltip-consumers) record R88p.p4 source and inline rows through the original Retail hover consumers. **VERIFIED (R88p.p4):** source fallback/selector choice, empty-source rows, and inline row order/type/state. **INFERRED:** race-to-selector mapping remains unimplemented because the available 70783 `ChrRaces.csv` lacks `FactionID` values and is not the 70575 runtime pin. **VERIFIED (generated catalog):** no rank above four exists, so gray is unreachable; requirement-row expansion remains UNKNOWN.
@@ -4011,7 +4056,7 @@ Verified four metadata-only credits for the namespace cooldown query and observe
 
 ## [2026-09-11] audit | Credit PTR script-bucket throttle mock output
 
-`ec51f3a7e` and `6a6244864` credit exactly six added rows as bounded mock output: the getter, its return structure, and four fields. Proof is limited to PTR publication, earlier-retail absence, one fresh table, and four numeric-zero placeholders. No native values, disabled-mode semantics, normal/restricted selection, accounting, enforcement, or setter is claimed. See [script bucket throttle mock](../specs/script-bucket-throttle-limits.md) and [[patch-12-1-5-api-audit]].
+`ec51f3a7e` and `6a6244864` credit exactly six added rows as bounded mock output: the getter, its return structure, and four fields. Proof is limited to PTR publication, earlier-retail absence, one fresh table, and four numeric-zero placeholders. Native values and normal/restricted selection remain unknown; the separate CVar and inferred restricted-addon enforcement model is tracked in [script bucket throttle limits](../specs/script-bucket-throttle-limits.md) and [[patch-12-1-5-api-audit]].
 
 ## [2026-09-11] audit | Credit PTR EncounterWarnings Edit Mode preview rows
 
@@ -4630,7 +4675,7 @@ The sixteen retail 12.0.0 `Enum.EditModeDamageMeterSetting.*` and `Enum.EditMode
 | Page | Summary |
 |------|---------|
 | [[layout-system]] | AnchorPoint enum, single/multi-anchor resolution, coordinate systems, SetPoint, cycle detection, and Retail screen clamping with scaled frame insets and shared queued/synchronous resolution |
-| [[rendering-pipeline]] | QuadBatch (60-byte QuadVertex), five-tier RGBA GPU atlas plus glyph/BC1/BC3 bindings, WGSL shaders, mask resolution and inferred sliced-mask UV mapping, presentation-only ScrollFrame geometry/clips with traversal-local offset reuse, strata/level sorting, monotonic top-level show segments, alpha propagation, hit testing, [bounded FontString smooth scaling](../specs/fontstring-smooth-scaling.md), inline `|T`/`|A` icons in text |
+| [[rendering-pipeline]] | QuadBatch (60-byte QuadVertex), mipmapped five-tier RGBA GPU atlas plus glyph/BC1/BC3 bindings, WGSL shaders, mask resolution and inferred sliced-mask UV mapping, presentation-only ScrollFrame geometry/clips with traversal-local offset reuse, strata/level sorting, monotonic top-level show segments, alpha propagation, hit testing, [bounded FontString smooth scaling](../specs/fontstring-smooth-scaling.md), inline `|T`/`|A` icons in text |
 | [[widget-system]] | Frame struct (~140 fields), WidgetType enum (18 types), WidgetRegistry storage accounting, lazy boxed model-family state, verified bounded ColorSelect RGB/XML/unchanged-Retail-consumer proof, requested offsets, designated-child ownership, presentation-only ScrollFrame geometry, default children, button text rendering, three-slice pattern, and 3D no-op boundary |
 | [[simple-html]] | Frame-owned styles, shared block shaping/height/glyph hit regions, actual XML frame-name role application, and bounded original-consumer proof |
 | [[lua-api]] | WowLuaEnv, FrameHandle userdata, 300+ frame methods, model-family compatibility surface, texture fileDataID/path identity, C_* namespaces including the bounded C_ProfSpecs specialization fixture, timers, animation system |
@@ -4656,6 +4701,7 @@ The sixteen retail 12.0.0 `Enum.EditModeDamageMeterSetting.*` and `Enum.EditMode
 
 | Page | Summary |
 |------|---------|
+| [[clicked-first-install-savedvariables]] | Clicked's first-profile `OnNewProfile` refresh reaches the blacklist before its config is initialized; two no-SavedVariables errors disappear when the current ClickedDB loads. The addon-source explanation is inferred, not native-client evidence. |
 | [[att-unit-hyperlink-tooltip]] | ATT NPC first-line failure came from an empty Item tooltip for unit links; modeled GUIDs now return Unit lines and unknown links nil. Grouped regression committed; build and GUI replay pending. |
 | [[animated-status-bar-atlas-visibility]] | Atlas assignment on a non-button XML-hidden animated status-bar texture incorrectly showed it; recognized Button/CheckButton slots alone update visibility. Actual Forever template RED/GREEN proof; full UI visual pending. |
 | [[final-unit-frame-click-aura-proof]] | Bounded local Forever release evidence: PlayerFrame target click, Aura tooltip hover, Combo reset, no CharCustomizeFrame, hidden status-bar animation textures, panel state transitions, zero errors, and an explicitly non-green accidental broad test batch. |
@@ -4714,7 +4760,7 @@ The sixteen retail 12.0.0 `Enum.EditModeDamageMeterSetting.*` and `Enum.EditMode
 | [[adventure-guide-disabled-tabs]] | Disabled Adventure Guide boss/model tabs looked active because model no-op stubs overwrote generic desaturation setters on the shared frame metatable |
 | [[adventure-guide-boss-icons]] | Encounter Journal creature icon fileDataID `0` must be returned as nil so Blizzard boss buttons use their default icon instead of clearing the texture |
 | [[adventure-guide-simplehtml-markup]] | Encounter Journal overview text uses SimpleHTML; HTML stripping now also removes WoW color/link escapes and converts `|n` line breaks |
-| [[appearances-wardrobe-api]] | Collections Journal Appearances opens, but browsing/filtering/search/favorites need stateful `C_TransmogCollection` source, visual, filter, and search backing instead of fixed stubs |
+| [[appearances-wardrobe-api]] | Wardrobe browsing still has broad stubs; Retail and Forever now read supplied base/variant relations through the shared transmog sets provider |
 | [[transmog-inventory-slot-scope]] | Retired stale-source workaround: refreshed retail 12.1 UI uses `C_PaperDollInfo.GetInventorySlotInfo`, so no loader scope remains |
 | [[widget-registry-storage]] | Lazy boxed model-family state removes per-frame storage waste while preserving defaults, round trips, and complete heap accounting; settled 45,002-frame estimate falls below the unchanged 230MB budget |
 | [[backpack-background-texture]] | Static Gethe XML explains the flat panel body but not current source completeness; exact 69977 `bagsitemslot2xc60` was MD5-verified and cached, while release-fixture GUI evidence reports a ready 16-slot Backpack but leaves five `Not found` texture paths under investigation |

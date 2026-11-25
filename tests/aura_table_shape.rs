@@ -131,7 +131,7 @@ fn helpful_non_raid_fixture() -> AuraInfo {
     AuraInfo {
         name: "Helpful non-raid".into(),
         spell_id: 99001,
-        icon: 135841,
+        icon: wow_ui_sim::lua_api::state::AuraIcon::FileId(135841),
         duration: 60.0,
         expiration_time: 60.0,
         applications: 1,
@@ -151,7 +151,7 @@ fn harmful_raid_fixture() -> AuraInfo {
     AuraInfo {
         name: "Harmful raid".into(),
         spell_id: 99002,
-        icon: 136039,
+        icon: wow_ui_sim::lua_api::state::AuraIcon::FileId(136039),
         duration: 30.0,
         expiration_time: 30.0,
         applications: 2,
@@ -195,6 +195,9 @@ fn classification_env() -> WowLuaEnv {
 fn classification_party(helpful: AuraInfo, harmful: AuraInfo) -> PartyMember {
     PartyMember {
         map_position: None,
+        faction_group: None,
+        #[cfg(feature = "client-retail")]
+        pvp: None,
         name: "Aura fixture party member".into(),
         name_cached: true,
         connected: true,

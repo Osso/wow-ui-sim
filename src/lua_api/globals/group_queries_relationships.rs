@@ -138,10 +138,17 @@ pub(super) fn unit_is_owner_or_controller_of_unit(state: &mut LuaState) -> LuaRe
     finish_identity_restricted(state, &[&controlling, &controlled], 1)
 }
 
-/// `UnitIsPVP(unit)` — PvP flagging is not modeled.
+/// `UnitIsPVP(unit)` reads supplied PvP state for Retail party and raid units.
 pub(super) fn unit_is_pvp(state: &mut LuaState) -> LuaResult<u32> {
     let unit = Option::<String>::from_stack(state, 1)?.unwrap_or_default();
-    state.push(Val::Bool(false));
+    #[cfg(feature = "client-retail")]
+    let is_pvp = {
+        let sim = borrow_state(state)?;
+        visible_party_member(&sim, &unit).is_some_and(|member| member.pvp.unwrap_or(false))
+    };
+    #[cfg(not(feature = "client-retail"))]
+    let is_pvp = false;
+    state.push(Val::Bool(is_pvp));
     finish_identity_restricted(state, &[&unit], 1)
 }
 
@@ -248,33 +255,20 @@ fn target_faction<'a>(is_enemy: bool, player_faction: &'a str) -> &'a str {
     }
 }
 
-/// `UnitFactionGroup(unit)` — returns `(english, localized)` faction tokens
-/// for simple UI gating. Player / party / friendly target inherit the player's
-/// faction; hostile targets return the opposing faction.
+/// `UnitFactionGroup(unit)` returns `(english, localized)` faction tokens.
+/// INFERRED (R88dl, native evidence pending): Retail party and raid units use
+/// their supplied faction when present; otherwise they inherit the player's.
 pub(super) fn unit_faction_group(state: &mut LuaState) -> LuaResult<u32> {
     let unit = Option::<String>::from_stack(state, 1)?.unwrap_or_default();
     let faction = {
         let st = borrow_state(state)?;
-        let pf = player_faction_name(&st);
-        match unit.as_str() {
-            "player" | "pet" | "vehicle" => Some(pf),
-            "target" => st
-                .current_target
-                .as_ref()
-                .map(|t| target_faction(t.is_enemy, pf)),
-            "focus" => st
-                .current_focus
-                .as_ref()
-                .map(|t| target_faction(t.is_enemy, pf)),
-            other if visible_party_member(&st, other).is_some() => Some(pf),
-            _ => None,
-        }
+        faction_group_for_unit(&st, &unit, player_faction_name(&st))
     };
     match faction {
         Some(name) => {
-            let s = create_string(state, name);
-            state.push(s);
-            state.push(s);
+            let value = create_string(state, &name);
+            state.push(value);
+            state.push(value);
         }
         None => {
             state.push(Val::Nil);
@@ -282,6 +276,35 @@ pub(super) fn unit_faction_group(state: &mut LuaState) -> LuaResult<u32> {
         }
     }
     Ok(2)
+}
+
+fn faction_group_for_unit(
+    st: &crate::lua_api::state::SimState,
+    unit: &str,
+    player_faction: &str,
+) -> Option<String> {
+    match unit {
+        "player" | "pet" | "vehicle" => Some(player_faction.to_owned()),
+        "target" => st
+            .current_target
+            .as_ref()
+            .map(|target| target_faction(target.is_enemy, player_faction).to_owned()),
+        "focus" => st
+            .current_focus
+            .as_ref()
+            .map(|target| target_faction(target.is_enemy, player_faction).to_owned()),
+        #[cfg(feature = "client-retail")]
+        other => visible_party_member(st, other).map(|member| {
+            member
+                .faction_group
+                .clone()
+                .unwrap_or_else(|| player_faction.to_owned())
+        }),
+        #[cfg(not(feature = "client-retail"))]
+        other if visible_party_member(st, other).is_some() => Some(player_faction.to_owned()),
+        #[cfg(not(feature = "client-retail"))]
+        _ => None,
+    }
 }
 
 /// `UnitCanCooperate(unit1, unit2)` — true when both units are friendly
@@ -418,19 +441,23 @@ pub(super) fn unit_is_ghost(state: &mut LuaState) -> LuaResult<u32> {
 
 /// `UnitIsConnected(unit)` — party tokens read modeled connection state;
 /// other known unit tokens retain their existing presence-based behavior.
+pub(crate) fn unit_is_connected_in_state(st: &SimState, unit: &str) -> bool {
+    match unit {
+        "player" | "pet" | "vehicle" => true,
+        "target" => st.current_target.is_some(),
+        "focus" => st.current_focus.is_some(),
+        other if crate::lua_api::globals::unit_api::parse_party_index(other).is_some() => {
+            visible_party_member(st, other).is_some_and(|member| member.connected)
+        }
+        other => visible_party_member(st, other).is_some(),
+    }
+}
+
 pub(super) fn unit_is_connected(state: &mut LuaState) -> LuaResult<u32> {
     let unit = Option::<String>::from_stack(state, 1)?.unwrap_or_default();
     let connected = {
-        let st = borrow_state(state)?;
-        match unit.as_str() {
-            "player" | "pet" | "vehicle" => true,
-            "target" => st.current_target.is_some(),
-            "focus" => st.current_focus.is_some(),
-            other if crate::lua_api::globals::unit_api::parse_party_index(other).is_some() => {
-                visible_party_member(&st, other).is_some_and(|member| member.connected)
-            }
-            other => visible_party_member(&st, other).is_some(),
-        }
+        let sim = borrow_state(state)?;
+        unit_is_connected_in_state(&sim, &unit)
     };
     state.push(Val::Bool(connected));
     Ok(1)

@@ -3,8 +3,17 @@
 /// Supplied local social restriction input, not a native account-policy query.
 #[derive(Debug, Clone, Default)]
 pub struct SocialRestrictionsState {
+    /// INFERRED host input; false represents an unrestricted account by default.
+    pub is_muted: bool,
+    /// INFERRED host input; false represents an unrestricted adult account by default.
+    pub age_verification_restricted: bool,
+    /// INFERRED host input, distinct from friends-disabled and squelch state.
+    pub chat_disabled: bool,
     /// INFERRED (simulator mapping): host field standing in for the R88ap.4 settings byte; writers/events UNKNOWN.
-    #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+    #[cfg(any(
+        all(feature = "profile-retail", feature = "retail-12-1-5"),
+        feature = "client-wowforever"
+    ))]
     pub friends_disabled_byte: u8,
     /// The simulator seeds an unrestricted local player; callers can supply either value.
     pub is_squelched: bool,
@@ -139,6 +148,86 @@ pub struct BnetGameAccount {
     pub region_id: i32,
     /// Player GUID string (character GUID, distinct from bnet/game account GUIDs).
     pub player_guid: String,
+}
+
+/// One supplied Battle.net blocked-account row for the legacy friends UI.
+/// INFERRED input fields; live blocked-account identity and native defaults are unknown.
+/// Supplied local Battle.net account identity for legacy `BNGetInfo` reads.
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[derive(Debug, Clone)]
+pub struct PlayerBattleNetInfo {
+    pub battle_tag: Option<String>,
+    pub account_id: i32,
+    pub broadcast_text: String,
+    pub is_afk: bool,
+    pub is_dnd: bool,
+    pub is_real_id_enabled: bool,
+    pub is_appear_offline: bool,
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+impl Default for PlayerBattleNetInfo {
+    fn default() -> Self {
+        Self {
+            battle_tag: None,
+            account_id: 0,
+            broadcast_text: String::new(),
+            is_afk: false,
+            is_dnd: false,
+            is_real_id_enabled: false,
+            is_appear_offline: false,
+        }
+    }
+}
+
+/// Supplied Battle.net connection gates for Retail/Forever legacy globals.
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[derive(Debug, Clone, Copy)]
+pub struct BattleNetConnectionState {
+    /// INFERRED: false represents the native excluded connection mode.
+    pub features_enabled: bool,
+    /// INFERRED host-supplied connection/service availability.
+    pub connected: bool,
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+impl Default for BattleNetConnectionState {
+    fn default() -> Self {
+        Self {
+            features_enabled: true,
+            connected: false,
+        }
+    }
+}
+
+/// Supplied account feature values consumed by Retail/Forever social UI.
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[derive(Debug, Clone)]
+pub struct BattleNetAccountFeatures {
+    pub friend_tags: bool,
+    pub title_friend_custom_names: bool,
+    pub title_friends: bool,
+    pub friends_list_enabled: bool,
+    pub friends_list_supported: bool,
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+impl Default for BattleNetAccountFeatures {
+    fn default() -> Self {
+        Self {
+            friend_tags: true,
+            title_friend_custom_names: true,
+            title_friends: true,
+            friends_list_enabled: true,
+            friends_list_supported: true,
+        }
+    }
+}
+
+#[derive(Debug, Clone)]
+pub struct BnetBlockedEntry {
+    pub blocked_id: i32,
+    pub name: String,
 }
 
 /// One WoW friends-list entry. Drives `C_Social.GetFriendInfo`,

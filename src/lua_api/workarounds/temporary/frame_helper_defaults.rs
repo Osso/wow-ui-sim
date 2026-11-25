@@ -5,6 +5,7 @@
 //! until the backed frame systems are implemented directly.
 
 const FRAME_HELPER_DEFAULTS_LUA: &str = r#"
+local retireGenericFrameHelpers = ...
 local function __wow_install_frame_helpers(frame)
   if frame == nil then
     return nil
@@ -75,12 +76,16 @@ if CreateFrame ~= nil and __wow_original_CreateFrame == nil then
         __wow_patch_map_canvas_scroll_container_methods()
       end
     end
-    local created = __wow_install_frame_helpers(__wow_original_CreateFrame(...))
-    if frameType == "GameTooltip" and created and created.SetFrameStrata ~= nil then
+    local created = __wow_original_CreateFrame(...)
+    if not retireGenericFrameHelpers then
+      __wow_install_frame_helpers(created)
+    end
+    if not retireGenericFrameHelpers and frameType == "GameTooltip"
+        and created and created.SetFrameStrata ~= nil then
       created:SetFrameStrata("TOOLTIP")
     end
     local parent = select(3, ...)
-    if type(parent) == "table" and type(inherits) == "string" then
+    if not retireGenericFrameHelpers and type(parent) == "table" and type(inherits) == "string" then
       if string.find(inherits, "MapCanvasFrameScrollContainerTemplate", 1, true) then
         rawset(parent, "ScrollContainer", created)
       end
@@ -89,7 +94,8 @@ if CreateFrame ~= nil and __wow_original_CreateFrame == nil then
   end
 end
 
-do
+-- INFERRED: generic method fallbacks remain compatibility policy on other profiles.
+if not retireGenericFrameHelpers then
   local frameMeta = GetFrameMetatable and GetFrameMetatable()
   local frameIndex = frameMeta and frameMeta.__index
   if type(frameIndex) == "table" then
@@ -273,30 +279,6 @@ local function __wow_register_core_frame_methods()
     end
   end
 
-  function __wow_mark_nearest_layout_parent_dirty(frame)
-    local parent = frame and frame.GetParent and frame:GetParent() or nil
-    while parent do
-      if __wow_mark_layout_frame_dirty(parent) then
-        return
-      end
-      parent = parent.GetParent and parent:GetParent() or nil
-    end
-  end
-
-  function __wow_mark_layout_frame_dirty(frame)
-    if frame and frame.IsLayoutFrame and frame:IsLayoutFrame() then
-      -- Blizzard's BaseLayoutMixin:MarkDirty installs its own OnUpdate; keep an
-      -- already installed custom OnUpdate script in place.
-      local currentOnUpdate = frame.GetScript and frame:GetScript("OnUpdate") or nil
-      frame:MarkDirty()
-      if currentOnUpdate and frame.GetScript and frame:GetScript("OnUpdate") ~= currentOnUpdate then
-        frame:SetScript("OnUpdate", currentOnUpdate)
-      end
-      return true
-    end
-    return false
-  end
-
   if methods.AddModule == nil then
     function methods:AddModule(module)
       local fields = __wow_frame_fields(self)
@@ -370,15 +352,53 @@ local function __wow_register_core_frame_methods()
   end
 end
 
-__wow_register_core_frame_methods()
+-- Paired with the Rust size-change bridge; retain the existing OnUpdate contract.
+function __wow_mark_layout_frame_dirty(frame)
+  if frame and frame.IsLayoutFrame and frame:IsLayoutFrame() then
+    -- Blizzard's BaseLayoutMixin:MarkDirty installs its own OnUpdate; keep an
+    -- already installed custom OnUpdate script in place.
+    local currentOnUpdate = frame.GetScript and frame:GetScript("OnUpdate") or nil
+    frame:MarkDirty()
+    if currentOnUpdate and frame.GetScript and frame:GetScript("OnUpdate") ~= currentOnUpdate then
+      frame:SetScript("OnUpdate", currentOnUpdate)
+    end
+    return true
+  end
+  return false
+end
+
+if not retireGenericFrameHelpers then
+  function __wow_mark_nearest_layout_parent_dirty(frame)
+    local parent = frame and frame.GetParent and frame:GetParent() or nil
+    while parent do
+      if __wow_mark_layout_frame_dirty(parent) then
+        return
+      end
+      parent = parent.GetParent and parent:GetParent() or nil
+    end
+  end
+  __wow_register_core_frame_methods()
+end
 "#;
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
-    lua.exec(FRAME_HELPER_DEFAULTS_LUA)?;
+    use rilua::{LuaApiMut, Val};
+    let bootstrap = lua.load_bytes(
+        FRAME_HELPER_DEFAULTS_LUA.as_bytes(),
+        "@frame-helper-defaults",
+    )?;
+    let retire = cfg!(any(
+        feature = "client-retail",
+        feature = "client-wowforever"
+    ));
+    lua.call_function(&bootstrap, &[Val::Bool(retire)])?;
     Ok(())
 }
 
-#[cfg(test)]
+#[cfg(all(
+    test,
+    not(any(feature = "client-retail", feature = "client-wowforever"))
+))]
 mod tests {
     use crate::lua_api::WowLuaEnv;
 

@@ -25,7 +25,7 @@ fn aura(id: i32, name: &str, helpful: bool, player_source: bool) -> AuraInfo {
     AuraInfo {
         name: name.into(),
         spell_id: 19750,
-        icon: 135987,
+        icon: wow_ui_sim::lua_api::state::AuraIcon::FileId(135987),
         duration: 3600.0,
         expiration_time: 3600.0,
         applications: 2,
@@ -44,6 +44,9 @@ fn aura(id: i32, name: &str, helpful: bool, player_source: bool) -> AuraInfo {
 fn member(name: &str, debuffs: Vec<AuraInfo>) -> PartyMember {
     PartyMember {
         map_position: None,
+        faction_group: None,
+        #[cfg(feature = "client-retail")]
+        pvp: None,
         name: name.into(),
         name_cached: true,
         connected: true,
@@ -321,7 +324,7 @@ fn assert_auras_unchanged(actual: &[Vec<AuraInfo>], expected: &[Vec<AuraInfo>]) 
                 (
                     &a.name,
                     a.spell_id,
-                    a.icon,
+                    &a.icon,
                     a.duration,
                     a.expiration_time,
                     a.applications,
@@ -331,7 +334,7 @@ fn assert_auras_unchanged(actual: &[Vec<AuraInfo>], expected: &[Vec<AuraInfo>]) 
                 (
                     &b.name,
                     b.spell_id,
-                    b.icon,
+                    &b.icon,
                     b.duration,
                     b.expiration_time,
                     b.applications,

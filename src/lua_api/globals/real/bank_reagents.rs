@@ -39,11 +39,11 @@ pub(crate) fn update_screen_registration(env: &WowLuaEnv, is_glue: bool) {
 }
 
 fn query(state: &mut LuaState) -> LuaResult<u32> {
+    let rule_key = crate::c_api::c_game_rules::key_from_name(state, "CraftFromBankRestricted");
     let allowed = {
         let sim = borrow_state(state)?;
-        sim.bank_reagent_object.is_some_and(|permission| {
-            !sim.game_rules.rules.contains_key("CraftFromBankRestricted") || permission
-        })
+        sim.bank_reagent_object
+            .is_some_and(|permission| !sim.game_rules.rules.contains_key(&rule_key) || permission)
     };
     publish_unknown_native_policy(state, allowed)
 }

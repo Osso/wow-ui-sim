@@ -18,6 +18,10 @@ fn retail_env() -> Option<WowLuaEnv> {
     (ACTIVE == ClientProfile::Retail).then(tooltip_full_env_helpers::setup_full_env)
 }
 
+fn forever_env() -> Option<WowLuaEnv> {
+    (ACTIVE == ClientProfile::WowForever).then(tooltip_full_env_helpers::setup_full_env)
+}
+
 fn xp_inputs(local_currency_record: bool) -> CurrencyTooltipInputs {
     CurrencyTooltipInputs {
         flags_0: Some(1 << 3),
@@ -206,6 +210,94 @@ fn set_quest_log_currency_uses_selected_quest_and_normalizes_supplied_amount() {
         GameTooltip:SetQuestLogCurrency('reward', 1)
         local data = GameTooltip:GetPrimaryTooltipData()
         assert(data.lines[3].leftText == XP .. ': 999', 'quest amount must stay unchanged when bit 3 is clear')
+        "#,
+    )
+    .unwrap();
+}
+
+#[test]
+fn forever_set_quest_log_currency_publishes_a_currency_line() {
+    let Some(env) = forever_env() else {
+        return;
+    };
+    let quest_id = 81_234;
+    {
+        let mut state = env.state().borrow_mut();
+        state.selected_quest_log_id = Some(quest_id as u32);
+        state.currency_tooltip_inputs.insert(2245, xp_inputs(true));
+        state
+            .quest_currency_tooltip_results
+            .insert((quest_id, "reward".to_owned(), 0), (2245, 999));
+    }
+    env.exec(
+        r#"
+        GameTooltip:SetQuestLogCurrency('reward', 1)
+        local data = GameTooltip:GetPrimaryTooltipData()
+        local currencyName = C_CurrencyInfo.GetCurrencyInfo(2245).name
+        assert(data and #data.lines > 0, 'Forever quest currency must publish tooltip lines')
+        assert(data.lines[1].leftText == currencyName, 'Forever quest tooltip must expose the currency name')
+        "#,
+    )
+    .unwrap();
+}
+
+fn quest_currency_env() -> Option<WowLuaEnv> {
+    match ACTIVE {
+        ClientProfile::Retail => retail_env(),
+        ClientProfile::WowForever => forever_env(),
+        _ => None,
+    }
+}
+
+fn seed_active_quest_currency_reward(env: &WowLuaEnv) -> i32 {
+    use wow_ui_sim::c_api::quest_readiness::QuestDialogPhase;
+    use wow_ui_sim::lua_api::state::QuestRewardCurrency;
+
+    let mut sim = env.state().borrow_mut();
+    let quest_id = sim.quest_log_entries.entries[0].quest_id;
+    sim.gossip.active = true;
+    let mut active_quest = sim
+        .gossip
+        .active_quests
+        .first()
+        .cloned()
+        .unwrap_or_default();
+    active_quest.quest_id = quest_id as u32;
+    sim.gossip.active_quests = vec![active_quest];
+    sim.selected_quest_log_id = Some(quest_id as u32);
+    sim.quest_log_entries.readiness.dialog = Some((quest_id, QuestDialogPhase::Rewards));
+    sim.quest_log_entries.entries[0]
+        .currency_rewards
+        .push(QuestRewardCurrency {
+            currency_id: 2245,
+            name: "Supplied quest tokens".into(),
+            texture: "Interface\\Icons\\INV_Misc_Coin_01".into(),
+            total_reward_amount: 9,
+            base_reward_amount: None,
+        });
+    sim.quest_currency_tooltip_results
+        .insert((quest_id, "reward".into(), 0), (2245, 9));
+    quest_id
+}
+
+#[test]
+fn quest_info_currency_reward_shows_supplied_tooltip() {
+    let Some(env) = quest_currency_env() else {
+        return;
+    };
+    seed_active_quest_currency_reward(&env);
+    env.exec(
+        r#"
+        QuestInfoFrame.questLog = false
+        QuestInfo_ShowRewards()
+        local reward = QuestInfoRewardsFrame.RewardButtons[1]
+        assert(reward:IsShown() and reward.objectType == 'currency', 'original quest currency reward button')
+        reward:OnEnter()
+        local info = GameTooltip:GetPrimaryTooltipInfo()
+        local data = GameTooltip:GetPrimaryTooltipData()
+        assert(info and info.getterName == 'GetQuestCurrency', 'NPC quest reward must use GetQuestCurrency')
+        assert(data and data.type == Enum.TooltipDataType.Currency and data.id == 2245, 'quest currency tooltip identity')
+        assert(data.lines[1].leftText == C_CurrencyInfo.GetCurrencyInfo(2245).name, 'quest reward tooltip title')
         "#,
     )
     .unwrap();

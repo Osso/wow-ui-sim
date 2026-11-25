@@ -164,10 +164,7 @@ pub(crate) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResu
 }
 
 fn get_item_interaction_item(state: &mut LuaState) -> LuaResult<u32> {
-    // Only Retail's result paths are verified. Keep the other profiles' behavior.
-    if ACTIVE != ClientProfile::Retail {
-        return no_values();
-    }
+    // INFERRED for Forever: its selected consumer uses the shared supplied input model.
     let Some(input) = borrow_state(state)?.item_interaction_tooltip_input.clone() else {
         return no_values();
     };
@@ -348,7 +345,9 @@ fn get_possession(state: &mut LuaState) -> LuaResult<u32> {
     let Some(slot_index) = slot.checked_sub(1) else {
         return no_values();
     };
-    if slot_index != 0 || ACTIVE != ClientProfile::Retail {
+    // INFERRED for Forever: its pinned docs declare GetPossession at line 694.
+    let supported_profile = matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever);
+    if slot_index != 0 || !supported_profile {
         return no_values();
     }
     let Some(spell_id) = borrow_state(state)?.possession_spell_id else {
@@ -365,8 +364,9 @@ fn get_possession(state: &mut LuaState) -> LuaResult<u32> {
 fn publish_quest_log_special_item(state: &mut LuaState) -> LuaResult<u32> {
     // Retail TooltipInfoDocumentation.lua:817; host inputs separate quest-ID
     // context, cache IDs and the selected object because native writers are unknown.
+    // INFERRED for Forever: its declared getter shape can use these supplied records.
     let quest_index = tooltip_getter_args::round7_signed(state, 1, QUEST_SPECIAL_USAGE)?;
-    if ACTIVE != ClientProfile::Retail {
+    if !matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever) {
         return no_values();
     }
     let Some((quest_id, is_not_ready)) = quest_cache_lookup_for_index(state, quest_index) else {
@@ -403,13 +403,12 @@ fn publish_ready_quest_special_item(state: &mut LuaState, quest_id: i32) -> LuaR
 }
 
 fn publish_quest_party_progress(state: &mut LuaState) -> LuaResult<u32> {
-    // Retail TooltipInfoDocumentation.lua:833; only the Retail 70688
-    // populated output is evidenced for this implementation.
+    // Retail docs:833; INFERRED Forever from its declared getter input shape.
     let quest_id = tooltip_getter_args::round7_signed(state, 1, QUEST_PARTY_USAGE)?;
     let omit_title = tooltip_getter_args::round7_optional_bool(state, 2, QUEST_PARTY_USAGE)?;
     let ignore_active_player =
         tooltip_getter_args::round7_optional_bool(state, 3, QUEST_PARTY_USAGE)?;
-    if ACTIVE != ClientProfile::Retail {
+    if !matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever) {
         return no_values();
     }
     let snapshot = borrow_state(state)?
@@ -437,7 +436,8 @@ fn publish_quest_party_progress(state: &mut LuaState) -> LuaResult<u32> {
 fn get_recipe_rank_info(state: &mut LuaState) -> LuaResult<u32> {
     let recipe_id = tooltip_getter_args::round7_signed(state, 1, RECIPE_RANK_USAGE)?;
     let rank = tooltip_getter_args::round7_signed(state, 2, RECIPE_RANK_USAGE)?;
-    if crate::client_profile::ACTIVE != ClientProfile::Retail {
+    // INFERRED for Forever: its declared getter shape can use the supplied cache.
+    if !matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever) {
         return no_values();
     }
     let Some(data) =

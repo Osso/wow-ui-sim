@@ -32,6 +32,10 @@ pub(crate) fn init_shared_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
             Val::Bool(
                 crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail,
             ),
+            Val::Bool(cfg!(any(
+                feature = "client-retail",
+                feature = "client-wowforever"
+            ))),
         ],
     )?;
     LuaApiMut::set_global_val(lua, "__wow_internal_projection_call", Val::Nil)?;

@@ -16,6 +16,10 @@
 //!   when the category id is in `lfg_active_categories`, false otherwise.
 
 use crate::c_api::ensure_namespace;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+use crate::c_api::helpers::set_table_array;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+use crate::lua_api::methods::table_get;
 use crate::lua_api::methods::{
     borrow_state, borrow_state_mut, create_string, create_table, table_set,
 };
@@ -32,6 +36,10 @@ pub(crate) fn register_c_lfg_info_surface(state: &mut LuaState) -> LuaResult<()>
     register_access_methods(state, table_ref)?;
     register_category_methods(state, table_ref)?;
     register_dungeon_methods(state, table_ref)?;
+    #[cfg(feature = "client-retail")]
+    register_queue_state_methods(state, table_ref)?;
+    #[cfg(feature = "client-wowforever")]
+    register_forever_queue_title_methods(state, table_ref)?;
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
         table_set_rust_fn_static(
             state,
@@ -138,6 +146,185 @@ fn register_category_methods(state: &mut LuaState, table_ref: GcRef<Table>) -> L
         is_lfg_mode_active_for_category,
     )?;
     Ok(())
+}
+
+#[cfg(feature = "client-wowforever")]
+fn register_forever_queue_title_methods(
+    state: &mut LuaState,
+    table: GcRef<Table>,
+) -> LuaResult<()> {
+    table_set_rust_fn_static(
+        state,
+        table,
+        "GetAllEntriesForCategory",
+        get_all_entries_for_category,
+    )?;
+    table_set_rust_fn_static(state, table, "HideNameFromUI", hide_name_from_ui)
+}
+
+#[cfg(feature = "client-retail")]
+fn register_queue_state_methods(state: &mut LuaState, table: GcRef<Table>) -> LuaResult<()> {
+    table_set_rust_fn_static(
+        state,
+        table,
+        "GetAllEntriesForCategory",
+        get_all_entries_for_category,
+    )?;
+    table_set_rust_fn_static(state, table, "GetLFDLockStates", get_lfd_lock_states)?;
+    table_set_rust_fn_static(state, table, "HideNameFromUI", hide_name_from_ui)
+}
+
+/// INFERRED from the Retail model (R88da) and Forever docs: return supplied IDs by category.
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn get_all_entries_for_category(state: &mut LuaState) -> LuaResult<u32> {
+    let category = i32::from_stack(state, 1)?;
+    let entries = borrow_state(state)?
+        .lfg_queue_entries
+        .iter()
+        .filter(|entry| entry.category_id == category)
+        .map(|entry| entry.entry_id)
+        .collect::<Vec<_>>();
+    let result = create_table(state);
+    for (index, entry_id) in entries.iter().enumerate() {
+        set_table_array(
+            state,
+            result,
+            index as i64 + 1,
+            Val::Num(f64::from(*entry_id)),
+        );
+    }
+    state.push(result);
+    Ok(1)
+}
+
+/// INFERRED from Retail Blizzard_GroupFinder (R88da): return supplied lock rows.
+#[cfg(feature = "client-retail")]
+fn get_lfd_lock_states(state: &mut LuaState) -> LuaResult<u32> {
+    let locks = borrow_state(state)?.lfg_lock_states.clone();
+    let result = create_table(state);
+    for (index, lock) in locks.iter().enumerate() {
+        let row = create_table(state);
+        table_set(
+            state,
+            row.clone(),
+            "lfgID",
+            Val::Num(f64::from(lock.lfg_id)),
+        );
+        table_set(
+            state,
+            row.clone(),
+            "reason",
+            Val::Num(f64::from(lock.reason)),
+        );
+        table_set(state, row.clone(), "hideEntry", Val::Bool(lock.hide_entry));
+        set_table_array(state, result, index as i64 + 1, row);
+    }
+    state.push(result);
+    Ok(1)
+}
+
+/// INFERRED from the Retail model (R88da) and Forever docs: unsupplied IDs are visible; supplied rows set this flag.
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn hide_name_from_ui(state: &mut LuaState) -> LuaResult<u32> {
+    let entry_id = i32::from_stack(state, 1)?;
+    let hide_name = borrow_state(state)?
+        .lfg_queue_entries
+        .iter()
+        .find(|entry| entry.entry_id == entry_id)
+        .is_some_and(|entry| entry.hide_name);
+    state.push(Val::Bool(hide_name));
+    Ok(1)
+}
+
+/// Supplies queue entries and lock rows for selected Retail and Forever LFG consumers.
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) fn register_admin(
+    builder: crate::lua_bridge::TableBuilder,
+) -> LuaResult<crate::lua_bridge::TableBuilder> {
+    builder.set_function("SetLfgQueueData", set_lfg_queue_data)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn set_lfg_queue_data(state: &mut LuaState) -> LuaResult<u32> {
+    let entry_rows = stack_val(state, 1);
+    let lock_rows = stack_val(state, 2);
+    let entries = read_lfg_queue_entries(state, entry_rows)?;
+    let locks = read_lfg_lock_states(state, lock_rows)?;
+    let mut sim = borrow_state_mut(state)?;
+    sim.lfg_queue_entries = entries;
+    sim.lfg_lock_states = locks;
+    Ok(0)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn read_lfg_queue_entries(
+    state: &mut LuaState,
+    value: Val,
+) -> LuaResult<Vec<crate::lua_api::state_types::collections::LfgQueueEntry>> {
+    read_array(state, value)?
+        .into_iter()
+        .map(|row| {
+            let entry_id = read_lfg_integer(table_get(state, row.clone(), "entryID"), "entryID")?;
+            let hide_name = match table_get(state, row.clone(), "hideName") {
+                Val::Bool(value) => value,
+                _ => return Err(rilua::runtime_error("LFG entry hideName must be boolean")),
+            };
+            Ok(crate::lua_api::state_types::collections::LfgQueueEntry {
+                category_id: read_lfg_integer(table_get(state, row, "categoryID"), "categoryID")?,
+                entry_id,
+                hide_name,
+            })
+        })
+        .collect()
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn read_lfg_lock_states(
+    state: &mut LuaState,
+    value: Val,
+) -> LuaResult<Vec<crate::lua_api::state_types::collections::LfgLockState>> {
+    read_array(state, value)?
+        .into_iter()
+        .map(|row| {
+            let hide_entry = match table_get(state, row.clone(), "hideEntry") {
+                Val::Bool(value) => value,
+                _ => return Err(rilua::runtime_error("LFG lock hideEntry must be boolean")),
+            };
+            Ok(crate::lua_api::state_types::collections::LfgLockState {
+                lfg_id: read_lfg_integer(table_get(state, row.clone(), "lfgID"), "lfgID")?,
+                reason: read_lfg_integer(table_get(state, row, "reason"), "reason")?,
+                hide_entry,
+            })
+        })
+        .collect()
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn read_array(state: &LuaState, value: Val) -> LuaResult<Vec<Val>> {
+    let Val::Table(reference) = value else {
+        return Err(rilua::runtime_error("LFG supplied data must be an array"));
+    };
+    let table = state
+        .gc
+        .tables
+        .get(reference)
+        .ok_or_else(|| rilua::runtime_error("LFG supplied array is unavailable"))?;
+    Ok((1..=table.len(&state.gc.string_arena))
+        .map(|index| table.get_int(index as i64))
+        .collect())
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn read_lfg_integer(value: Val, field: &str) -> LuaResult<i32> {
+    match value {
+        Val::Num(number) if number.is_finite() && number.fract() == 0.0 => {
+            i32::try_from(number as i64)
+                .map_err(|_| rilua::runtime_error(format!("LFG {field} is outside i32 range")))
+        }
+        _ => Err(rilua::runtime_error(format!(
+            "LFG {field} must be an integer"
+        ))),
+    }
 }
 
 fn register_dungeon_methods(state: &mut LuaState, table_ref: GcRef<Table>) -> LuaResult<()> {

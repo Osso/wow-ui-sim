@@ -88,7 +88,7 @@ fn seed_three_auras(env: &WowLuaEnv) {
         .map(|id| AuraInfo {
             name: format!("Audit {id}"),
             spell_id: id,
-            icon: id,
+            icon: wow_ui_sim::lua_api::state::AuraIcon::FileId(id),
             duration: 30.0,
             expiration_time: 30.0,
             applications: 1,

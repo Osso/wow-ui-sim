@@ -11,7 +11,7 @@ fn fixture_aura(id: i32, applications: i32, helpful: bool) -> AuraInfo {
     AuraInfo {
         name: format!("Display count fixture {id}"),
         spell_id: 99000 + id,
-        icon: 134973,
+        icon: wow_ui_sim::lua_api::state::AuraIcon::FileId(134973),
         duration: 30.0,
         expiration_time: 45.0,
         applications,
@@ -362,7 +362,7 @@ fn assert_records_unchanged(actual: &[AuraInfo], expected: &[AuraInfo]) {
                 (
                     &actual.name,
                     actual.spell_id,
-                    actual.icon,
+                    &actual.icon,
                     actual.applications
                 ),
                 (actual.duration, actual.expiration_time, &actual.source_unit),
@@ -378,7 +378,7 @@ fn assert_records_unchanged(actual: &[AuraInfo], expected: &[AuraInfo]) {
                 (
                     &expected.name,
                     expected.spell_id,
-                    expected.icon,
+                    &expected.icon,
                     expected.applications
                 ),
                 (

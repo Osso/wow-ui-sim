@@ -27,6 +27,10 @@ pub struct ProfessionSpecInputs {
     /// Ranks of related SkillLines for the name query's learned gate; base
     /// professions read `profession_data`.
     pub related_skill_ranks: HashMap<u32, SkillRank>,
+    /// INFERRED (R88ez, native evidence pending): supplied specialization data by skill line.
+    pub skill_lines: Vec<ProfessionSpecSkillLine>,
+    /// INFERRED (R88ez, native evidence pending): supplied tab data by trait-tree ID.
+    pub tab_infos: HashMap<u32, ProfessionSpecTabInfo>,
     /// SkillLines whose cached specialization-enabled flag is set.
     pub enabled_skill_lines: HashSet<u32>,
     /// `Enum.ProfessionsSpecTabState` per tab (TraitTree ID).
@@ -63,7 +67,54 @@ pub struct ProfessionSpecInputs {
     pub points_eligible_skill_lines: HashSet<u32>,
 }
 
+/// INFERRED (R88ez, native evidence pending): one supplied profession specialization record.
+#[derive(Debug, Default, Clone)]
+pub struct ProfessionSpecSkillLine {
+    pub skill_line_id: u32,
+    pub config_id: i32,
+    pub spec_tab_ids: Vec<u32>,
+    pub currency_info: ProfessionSpecializationCurrencyInfo,
+    pub spec_tab_info: Option<ProfessionSpecializationTabInfo>,
+}
+
+/// INFERRED (R88ez, native evidence pending): supplied currency query fields.
+#[derive(Debug, Default, Clone)]
+pub struct ProfessionSpecializationCurrencyInfo {
+    pub num_available: i32,
+    pub currency_name: String,
+}
+
+/// INFERRED (R88ez, native evidence pending): supplied specialization-tab status.
+#[derive(Debug, Clone)]
+pub struct ProfessionSpecializationTabInfo {
+    pub enabled: bool,
+    pub error_reason: String,
+}
+
+/// INFERRED (R88ez, native evidence pending): supplied profession tab fields.
+#[derive(Debug, Default, Clone)]
+pub struct ProfessionSpecTabInfo {
+    pub root_node_id: i32,
+    pub name: String,
+    pub description: String,
+    pub root_icon_id: i32,
+    pub highlights: Vec<String>,
+}
+
 impl ProfessionSpecInputs {
+    /// INFERRED (R88ez, native evidence pending): prefer the current profession,
+    /// then the first supplied record.
+    pub(crate) fn default_skill_line(&self, current_skill_line: Option<u32>) -> Option<u32> {
+        current_skill_line
+            .filter(|skill_line| self.skill_line(*skill_line).is_some())
+            .or_else(|| self.skill_lines.first().map(|record| record.skill_line_id))
+    }
+
+    pub(crate) fn skill_line(&self, skill_line_id: u32) -> Option<&ProfessionSpecSkillLine> {
+        self.skill_lines
+            .iter()
+            .find(|record| record.skill_line_id == skill_line_id)
+    }
     /// INFERRED (simulator mapping): return perk nodes in the supplied path group order.
     #[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
     pub(crate) fn perks_for_path(&self, path_id: i32) -> Vec<(i32, bool)> {

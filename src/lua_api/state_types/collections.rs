@@ -171,6 +171,24 @@ pub struct LfgActivityInfo {
     pub is_current_raid_activity: bool,
 }
 
+/// A supplied queue entry for a legacy LFG category.
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[derive(Debug, Clone)]
+pub struct LfgQueueEntry {
+    pub category_id: i32,
+    pub entry_id: i32,
+    pub hide_name: bool,
+}
+
+/// A supplied LFD lock row consumed by the Group Finder frame.
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[derive(Debug, Clone)]
+pub struct LfgLockState {
+    pub lfg_id: i32,
+    pub reason: i32,
+    pub hide_entry: bool,
+}
+
 /// A dungeon entry for the LFD (Looking for Dungeon) panel.
 /// Drives `GetLFGDungeonInfo`, `GetLFDChoiceOrder`, etc.
 #[derive(Debug, Clone)]
@@ -365,6 +383,10 @@ pub struct MapData {
     /// the parent chain to project the map onto a non-direct
     /// ancestor.
     pub rect_on_parent: Option<MapRect>,
+    /// INFERRED (R88cy pending): supplied UI map group for floor navigation.
+    pub map_group_id: Option<i32>,
+    /// INFERRED (R88cy pending): ordering index within its UI map group.
+    pub map_group_relative_height_index: i32,
 }
 
 /// One entry in `MapData.child_rects`. The child whose rect contains a

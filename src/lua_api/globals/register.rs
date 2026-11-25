@@ -79,6 +79,8 @@ fn register_bootstrap_time_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
 fn register_bootstrap_runtime_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
     super::strings::register_all_ui_strings(lua)?;
     super::security::register_all(lua)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    super::real::camera_fov_defaults::register_all(lua)?;
     super::real::source_location::register_all(lua)?;
     super::keybindings::register_all(lua)?;
     super::permanent_shims::register_all(lua.state_mut());
@@ -112,6 +114,8 @@ fn register_bootstrap_shared_apis(lua: &mut rilua::Lua) -> crate::Result<()> {
     // Forever 1.60.1 VoiceChatDocumentation declares these with the retail signature.
     #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
     crate::c_api::c_voice_chat_speak::register(lua.state_mut())?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    crate::c_api::c_voice_chat_speak::register_combat_audio_alert(lua.state_mut())?;
     crate::c_api::c_achievement_telemetry::register(lua.state_mut())?;
     crate::c_api::c_social_contract_glue::register(lua.state_mut())?;
     #[cfg(feature = "maw-power-model")]
@@ -128,6 +132,8 @@ fn register_bootstrap_shared_apis(lua: &mut rilua::Lua) -> crate::Result<()> {
     crate::c_api::c_unit_auras::register(lua.state_mut())?;
     #[cfg(feature = "retail-12-0-5")]
     crate::c_api::private_aura_sounds::register(lua.state_mut())?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    super::real::configuration_warnings::register_all(lua)?;
     Ok(())
 }
 
@@ -183,6 +189,10 @@ fn register_frame_foundation_globals(lua: &mut rilua::Lua) -> crate::Result<()> 
     super::real::game_clock::register_all(lua)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     super::real::world_presence::register_all(lua)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    super::real::quest_objective_info::register_all(lua)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    super::real::bnet_blocked_list::register_all(lua)?;
     #[cfg(feature = "client-retail")]
     super::real::bnet_friend_index::register_all(lua)?;
     super::real::template_queries::register_all(lua)?;
@@ -211,6 +221,10 @@ fn register_frame_context_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
     }
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     super::real::unit_speed::register_all(lua)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    super::real::unit_stagger::register_all(lua)?;
+    #[cfg(feature = "client-retail")]
+    super::real::unit_power_display_mod::register_all(lua)?;
     super::real::preferred_interact::register_all(lua)?;
     super::unit_misc::register_all(lua)?;
     #[cfg(feature = "aura-containers")]
@@ -234,12 +248,13 @@ fn register_frame_context_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
     super::real::neighborhood_invites::register_all(lua)?;
     #[cfg(feature = "client-wowforever")]
     super::real::guild_invites::register_all(lua)?;
-    #[cfg(feature = "client-wowforever")]
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     super::real::merchant_repair::register_all(lua)?;
     #[cfg(feature = "client-retail")]
     super::real::lfd_lock_requests::register_all(lua)?;
     super::real::merchant_buyback::register_all(lua)?;
     super::real::merchant_affordability::register_all(lua)?;
+    super::real::merchant_filter::register_all(lua)?;
     super::real::merchant_item_link::register_all(lua)?;
     super::real::inventory_candidates::register_all(lua)?;
     super::real::guild_logo::register_all(lua)?;
@@ -273,9 +288,14 @@ fn register_core_surfaces(lua: &mut rilua::Lua) -> crate::Result<()> {
     super::missing_surface::register_all(lua)?;
     #[cfg(feature = "client-retail")]
     super::real::specialization_system::register(lua)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    super::real::pvp_talent_info::register(lua)?;
+    #[cfg(feature = "client-wowforever")]
+    crate::c_api::specialization_system::register(lua)?;
     #[cfg(feature = "client-retail")]
     super::real::glue_state::register(lua.state_mut())?;
     super::real::achievement_eligibility::register(lua)?;
+    super::real::achievement_ui_access::register(lua)?;
     crate::c_api::encoding_util::register(lua.state_mut())?;
     super::quest_surface::register_all(lua)?;
     #[cfg(any(
@@ -350,6 +370,7 @@ fn register_actor_state_probes(lua: &mut rilua::Lua) -> crate::Result<()> {
     super::pvp_probes::register_all(lua)?;
     super::real::player_probes::register_all(lua)?;
     super::real::player_identity::register_all(lua)?;
+    super::real::player_languages::register_all(lua)?;
     super::unit_stats::register_all(lua)?;
     super::real::combat_stats::register_all(lua)?;
     super::real::wrath_inventory_candidates::register_all(lua)?;
@@ -435,6 +456,8 @@ fn register_compat_and_admin(lua: &mut rilua::Lua) -> crate::Result<()> {
         super::real::bit_library::register_all(lua)?;
     }
     super::bank_storage_verbs::register_guild_tabard_files(lua)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    super::bank_storage_verbs::register_current_guild_bank_tab(lua)?;
     #[cfg(any(feature = "client-mists", feature = "client-wrath"))]
     super::auction_verbs::register_all(lua)?;
     #[cfg(feature = "client-mists")]

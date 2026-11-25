@@ -77,7 +77,11 @@ pub(crate) fn register_secure_environment_base_globals(lua: &mut rilua::Lua) -> 
 pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
     register_legacy_global_shims(lua)?;
     let state = lua.state_mut();
+    #[cfg(feature = "client-retail")]
+    c_api::scripted_animations::register(state)?;
     register_item_trait_surfaces(state)?;
+    #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
+    c_api::combat_log_history::register(state)?;
     register_world_namespace_surfaces(state)?;
     register_social_namespace_surfaces(state)?;
     register_group_activity_surfaces(state)?;
@@ -85,7 +89,22 @@ pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
     c_api::forever_startup::register(state)
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) fn set_admin_tutorial_flag(state: &mut LuaState) -> LuaResult<u32> {
+    tutorial::set_tutorial_flag(state)
+}
+
 fn register_legacy_global_shims(lua: &mut rilua::Lua) -> LuaResult<()> {
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
+        LuaApiMut::register_function(lua, "IsTutorialFlagged", tutorial::is_tutorial_flagged)?;
+        LuaApiMut::register_function(lua, "GetTutorialsEnabled", tutorial::get_tutorials_enabled)?;
+        LuaApiMut::register_function(lua, "FlagTutorial", tutorial::flag_tutorial)?;
+        LuaApiMut::register_function(lua, "ResetTutorials", tutorial::reset_tutorials)?;
+    }
     register_audio_and_utility_globals(lua)?;
     register_item_spell_globals(lua)?;
     register_scene_and_ui_globals(lua)?;
@@ -285,21 +304,29 @@ fn register_social_namespace_surfaces(state: &mut LuaState) -> LuaResult<()> {
     c_api::c_auto_complete::register_c_auto_complete_surface(state)?;
     c_api::c_battle_net::register_c_battle_net_surface(state)?;
     c_api::c_character_services::register_c_character_services_surface(state)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    c_api::c_class_trial::register(state)?;
     c_api::c_chat_bubbles::register_c_chat_bubbles_surface(state)?;
     club_finder::register_club_finder_surface(state)?;
+    c_api::c_club_finder::register(state)?;
     c_api::c_club::register_club_info_surface(state)?;
     friend_list::register_friend_list_surface(state)?;
     #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
     c_api::c_friend_list::current::register(state)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    c_api::c_friend_list::selected_ignore::register(state)?;
     recruit_a_friend::register_recruit_a_friend_surface(state)?;
     voice_chat::register_voice_chat_surface(state)?;
-    #[cfg(feature = "retail-12-0-5")]
+    // Forever VoiceChatDocumentation.lua:177-191 declares GetChannelForCommunityStream.
+    #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
     c_api::c_voice_chat_channels::register(state)?;
     #[cfg(feature = "retail-12-0-5")]
     c_api::c_lfg_list_policy::register(state)?;
     #[cfg(feature = "retail-12-0-5")]
     c_api::c_pvp_crowd_control::register(state)?;
     c_api::c_social::register_c_social_surface(state)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    c_api::c_social_queue::register(state)?;
     c_api::c_summon_info::register_c_summon_info_surface(state)?;
     character_select::register_character_select_surface(state)?;
     Ok(())
@@ -312,6 +339,10 @@ fn register_group_activity_surfaces(state: &mut LuaState) -> LuaResult<()> {
     c_api::c_guild_info::register(state)?;
     player_info::register_player_info_surface(state)?;
     c_api::c_lfg_info::register_c_lfg_info_surface(state)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    c_api::c_black_market::register(state)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    c_api::c_macro::register(state)?;
     c_api::c_pet_battles::register_c_pet_battles_surface(state)?;
     pet_battles::register_pet_battles_surface(state)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]

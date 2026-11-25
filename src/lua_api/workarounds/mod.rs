@@ -7,10 +7,13 @@ mod temporary;
 pub(crate) use temporary::legacy_talent_skill_defaults::get_legacy_talent_info;
 pub(crate) use temporary::lfg_encounters::get_search_result_encounter_info;
 pub(crate) use temporary::minimap_tracking_defaults::RETAIL_TRACKING_DEFAULT_MASK;
-#[cfg(feature = "client-retail")]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub(crate) use temporary::pvp_talent_defaults::pvp_slot_default;
 pub(crate) use temporary::quest_campaign_header_default::update_campaign_headers;
-pub(crate) use temporary::secure_env_global_snapshot::copy_globals_into_secureenv_without_publication_evidence;
+pub(crate) use temporary::secure_env_global_snapshot::{
+    copy_globals_into_secureenv_without_publication_evidence,
+    refresh_missing_globals_for_secure_addon,
+};
 pub(crate) use temporary::secure_legacy_unit_globals::copy_legacy_unit_globals_to_secureenv;
 
 #[cfg(feature = "client-wrath")]
@@ -87,7 +90,7 @@ const POST_LOAD_WORKAROUNDS: &[WorkaroundStep] = &[
         label: "patch_character_create_defaults",
         apply: patch_character_create_defaults,
     },
-    #[cfg(not(feature = "client-retail"))]
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     WorkaroundStep {
         label: "patch_character_frame_title_refresh",
         apply: patch_character_frame_title_refresh,
@@ -121,13 +124,13 @@ const POST_LOAD_WORKAROUNDS: &[WorkaroundStep] = &[
         label: "patch_catalog_shop_product_card_defaults",
         apply: patch_catalog_shop_product_card_defaults,
     },
-    // Retail Minimap GameTime.xml binds the original invite-count OnLoad.
-    #[cfg(not(feature = "client-retail"))]
+    // Retail and Forever Minimap bind the original invite-count handlers.
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     WorkaroundStep {
         label: "patch_game_time_defaults",
         apply: patch_game_time_defaults,
     },
-    // The repair helper skips profiles whose tooltip templates provide NineSlice.
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     WorkaroundStep {
         label: "patch_tooltip_nineslice_surface",
         apply: patch_tooltip_nineslice_surface,
@@ -206,6 +209,9 @@ pub(crate) fn update_player_location_for_screen(
 }
 
 fn apply_temporary_state_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    use rilua::LuaApiMut;
+
     temporary::garrison_mission_lists::apply_bootstrap(lua)?;
     apply_runtime_state_bootstrap(lua)?;
     apply_account_and_social_state_bootstrap(lua)?;
@@ -214,7 +220,11 @@ fn apply_temporary_state_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     apply_unit_state_bootstrap(lua)?;
     temporary::uiparent_onupdate_worklists::apply_bootstrap(lua)?;
     temporary::forever_glue_display_defaults::apply_bootstrap(lua)?;
-    temporary::video_options_state::apply_bootstrap(lua)
+    temporary::video_options_state::apply_bootstrap(lua)?;
+    // Replace the legacy shim's mission-list functions, not its combat-ally stub.
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    crate::c_api::c_garrison_mission_lists::register(lua.state_mut())?;
+    Ok(())
 }
 
 fn apply_runtime_state_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
@@ -239,7 +249,9 @@ fn apply_runtime_state_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
 }
 
 fn apply_account_and_social_state_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::battle_net_account_defaults::apply_bootstrap(lua)?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::social_queue_defaults::apply_bootstrap(lua)?;
     temporary::merchant_filter_state::apply_bootstrap(lua)
 }
@@ -261,6 +273,7 @@ fn apply_secure_and_store_state_bootstrap(lua: &mut rilua::Lua) -> crate::Result
 
 fn apply_unit_state_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     temporary::unit_auras_state::apply_bootstrap(lua)?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::unit_stagger_defaults::apply_bootstrap(lua)?;
     temporary::unit_power_display_mod::apply_bootstrap(lua)?;
     temporary::unit_threat_defaults::apply_bootstrap(lua)
@@ -308,6 +321,7 @@ fn apply_core_foundation_catalog_defaults(lua: &mut rilua::Lua) -> crate::Result
     temporary::catalog_shop_inbound_globals::apply_bootstrap(lua)?;
     temporary::catalog_shop_product_card_defaults::apply_bootstrap(lua)?;
     temporary::character_create_defaults::apply_bootstrap(lua)?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::class_trial_defaults::apply_bootstrap(lua)?;
     temporary::startup_namespace_defaults::apply_bootstrap(lua)?;
     temporary::social_service_defaults::apply_bootstrap(lua)?;
@@ -329,6 +343,7 @@ fn apply_core_foundation_environment_defaults(lua: &mut rilua::Lua) -> crate::Re
     temporary::gossip_poi_defaults::apply_bootstrap(lua)?;
     temporary::major_faction_display_defaults::apply_bootstrap(lua)?;
     temporary::map_group_defaults::apply_bootstrap(lua)?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::merchant_raid_defaults::apply_bootstrap(lua)?;
     temporary::mythic_plus_cache_defaults::apply_bootstrap(lua)?;
     temporary::shared_character_services_defaults::apply_bootstrap(lua)?;
@@ -346,6 +361,7 @@ fn apply_core_foundation_chat_defaults(
 }
 
 fn apply_core_foundation_tracking_defaults(lua: &mut rilua::Lua) -> crate::Result<()> {
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::contribution_collector_defaults::apply_bootstrap(lua)?;
     temporary::content_tracking_defaults::apply_bootstrap(lua)?;
     temporary::cooldown_viewer_defaults::apply_bootstrap(lua)?;
@@ -353,16 +369,21 @@ fn apply_core_foundation_tracking_defaults(lua: &mut rilua::Lua) -> crate::Resul
     temporary::container_default_shapes::apply_bootstrap(lua)?;
     temporary::container_portrait_texture::apply_bootstrap(lua)?;
     temporary::minimap_tracking_defaults::apply_bootstrap(lua)?;
+    #[cfg(not(feature = "client-retail"))]
     temporary::map_art_help_text_defaults::apply_bootstrap(lua)?;
     temporary::super_track_defaults::apply_bootstrap(lua)
 }
 
 fn apply_core_foundation_addon_defaults(lua: &mut rilua::Lua) -> crate::Result<()> {
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::addon_compartment_defaults::apply_bootstrap(lua)?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::addons_beta_policy_defaults::apply_bootstrap(lua)?;
     temporary::auth_challenge_frame_parent::apply_bootstrap(lua)?;
     temporary::auto_complete_defaults::apply_bootstrap(lua)?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::behavioral_messaging_defaults::apply_bootstrap(lua)?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::black_market_defaults::apply_bootstrap(lua)?;
     temporary::calendar_defaults::apply_bootstrap(lua)
 }
@@ -372,8 +393,11 @@ fn apply_core_foundation_journal_defaults(lua: &mut rilua::Lua) -> crate::Result
     temporary::achievement_search_preview::apply_bootstrap(lua)?;
     temporary::alert_frame_defaults::apply_bootstrap(lua)?;
     temporary::adventure_journal_fallbacks::apply_bootstrap(lua)?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::perks_program_defaults::apply_bootstrap(lua)?;
-    temporary::loot_journal_defaults::apply_bootstrap(lua)
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+    temporary::loot_journal_defaults::apply_bootstrap(lua)?;
+    Ok(())
 }
 
 fn apply_core_foundation_state_defaults(lua: &mut rilua::Lua) -> crate::Result<()> {
@@ -423,11 +447,13 @@ fn apply_inventory_and_spell_defaults(lua: &mut rilua::Lua) -> crate::Result<()>
     temporary::item_upgrade_availability_defaults::apply_bootstrap(lua)?;
     temporary::spell_metadata_defaults::apply_bootstrap(lua)?;
     temporary::spell_static_defaults::apply_bootstrap(lua)?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::spell_target_defaults::apply_bootstrap(lua)?;
     Ok(())
 }
 
 fn apply_core_legacy_defaults(lua: &mut rilua::Lua) -> crate::Result<()> {
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::kiosk_namespace_defaults::apply_bootstrap(lua)?;
     temporary::level_link_spell_lock_state::apply_bootstrap(lua)?;
     temporary::lfg_legacy_defaults::apply_bootstrap(lua)?;
@@ -463,14 +489,17 @@ fn apply_feature_tool_defaults(lua: &mut rilua::Lua) -> crate::Result<()> {
 }
 
 fn apply_feature_progression_defaults(lua: &mut rilua::Lua) -> crate::Result<()> {
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::profession_specs_defaults::apply_bootstrap(lua)?;
     temporary::prototype_dialog_state::apply_bootstrap(lua)?;
     temporary::proxy_object_factories::apply_bootstrap(lua)?;
     temporary::pvp_talent_defaults::apply_bootstrap(lua)?;
     temporary::quest_objective_defaults::apply_bootstrap(lua)?;
     temporary::quest_progress_requirements::apply_bootstrap(lua)?;
+    #[cfg(not(feature = "client-wowforever"))]
     temporary::reincarnation_defaults::apply_bootstrap(lua)?;
     temporary::scenario_defaults::apply_bootstrap(lua)?;
+    #[cfg(not(feature = "client-retail"))]
     temporary::scripted_animation_effect_defaults::apply_bootstrap(lua)?;
     temporary::shared_xml_utility_defaults::apply_bootstrap(lua)?;
     temporary::spell_book_static_defaults::apply_bootstrap(lua)
@@ -479,6 +508,7 @@ fn apply_feature_progression_defaults(lua: &mut rilua::Lua) -> crate::Result<()>
 fn apply_feature_model_defaults(lua: &mut rilua::Lua) -> crate::Result<()> {
     temporary::sound_driver_defaults::apply_bootstrap(lua)?;
     temporary::static_popup_defaults::apply_bootstrap(lua)?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::taxi_map_defaults::apply_bootstrap(lua)?;
     temporary::texture_file_data_defaults::apply_bootstrap(lua)?;
     temporary::tracking_namespace_defaults::apply_bootstrap(lua)?;
@@ -610,7 +640,7 @@ fn patch_post_event_frame_layout(env: &crate::lua_api::WowLuaEnv) {
 }
 
 fn refresh_post_event_surfaces(env: &crate::lua_api::WowLuaEnv) {
-    #[cfg(not(feature = "client-retail"))]
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     refresh_character_frame_surface(env);
     patch_chat_voice_button_surface(env);
     patch_objective_tracker_quest_header(env);

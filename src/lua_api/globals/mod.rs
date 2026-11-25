@@ -2,16 +2,24 @@
 
 pub mod action_bar_api;
 pub mod admin;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub mod admin_account_type;
 pub mod admin_actionbars_bags;
 pub mod admin_addons;
 pub mod admin_auction_house;
 pub mod admin_buffs;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub mod admin_chat_windows;
 pub mod admin_collections;
 pub mod admin_crafting;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub mod admin_currency_transfer;
 pub mod admin_encounter;
 pub mod admin_equipment;
 pub mod admin_events;
 pub mod admin_interactions;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub mod admin_inventory_candidates;
 pub mod admin_mail;
 pub mod admin_movement;
 pub mod admin_party_target_helpers;

@@ -23,9 +23,76 @@
 
 use crate::lua_api::methods::{borrow_state, borrow_state_mut, create_string, val_to_string};
 use crate::lua_api::script_helpers::fire_named_event_state;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+use crate::lua_api::state::PossessActionSlot;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+use crate::lua_bridge::FromStack;
 use crate::lua_bridge::stack_val;
 use rilua::vm::state::LuaState;
 use rilua::{LuaApiMut, LuaResult, Val};
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+const POSSESS_SLOT_TWO_ICON_FILE_ID: u32 = 136_190;
+
+/// Retail behavior is VERIFIED by R88ea; the same projection is INFERRED for Forever.
+/// Selectors 1 and 2 return the native slot shapes; other selectors return no values.
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn get_possess_info(state: &mut LuaState) -> LuaResult<u32> {
+    let selector = i32::from_stack(state, 1)?;
+    let index = match selector {
+        1 => 0,
+        2 => 1,
+        _ => return Ok(0),
+    };
+    let possess_slot = {
+        let Ok(sim) = borrow_state(state) else {
+            return Ok(0);
+        };
+        sim.action_bar_state.possess_slots[index].clone()
+    };
+    push_possess_info(state, selector, possess_slot)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn push_possess_info(
+    state: &mut LuaState,
+    selector: i32,
+    slot: Option<PossessActionSlot>,
+) -> LuaResult<u32> {
+    match selector {
+        1 => push_first_possess_slot(state, slot.as_ref()),
+        2 => push_second_possess_slot(state, slot.as_ref()),
+        _ => Ok(0),
+    }
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn push_first_possess_slot(
+    state: &mut LuaState,
+    slot: Option<&PossessActionSlot>,
+) -> LuaResult<u32> {
+    if let Some(slot) = slot {
+        let texture = create_string(state, &slot.texture);
+        state.push(texture);
+        state.push(Val::Num(slot.spell_id as f64));
+    } else {
+        state.push(Val::Nil);
+        state.push(Val::Nil);
+    }
+    state.push(Val::Bool(true));
+    Ok(3)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn push_second_possess_slot(
+    state: &mut LuaState,
+    slot: Option<&PossessActionSlot>,
+) -> LuaResult<u32> {
+    state.push(Val::Num(POSSESS_SLOT_TWO_ICON_FILE_ID as f64));
+    state.push(slot.map_or(Val::Nil, |slot| Val::Num(slot.spell_id as f64)));
+    state.push(Val::Bool(slot.is_some_and(|slot| slot.enabled)));
+    Ok(3)
+}
 
 fn unit_arg_is_player(state: &mut LuaState, index: i32) -> bool {
     val_to_string(state, stack_val(state, index)).as_deref() == Some("player")
@@ -133,6 +200,8 @@ fn taxi_request_early_landing(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 pub fn register_all(lua: &mut rilua::Lua) -> crate::Result<()> {
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    LuaApiMut::register_function(lua, "GetPossessInfo", get_possess_info)?;
     LuaApiMut::register_function(lua, "UnitInVehicle", unit_in_vehicle)?;
     LuaApiMut::register_function(lua, "UnitHasVehicleUI", unit_has_vehicle_ui)?;
     LuaApiMut::register_function(

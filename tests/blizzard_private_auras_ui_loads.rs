@@ -1,8 +1,10 @@
 use std::path::PathBuf;
 
+use wow_ui_sim::c_api::private_aura_data::PrivateAuraEntry;
 use wow_ui_sim::loader::{discover_all_blizzard_addons, discover_blizzard_addons_for_screen};
 use wow_ui_sim::loader::{find_toc_file, load_addon};
 use wow_ui_sim::lua_api::WowLuaEnv;
+use wow_ui_sim::lua_api::state::{AuraIcon, AuraInfo};
 use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
@@ -221,7 +223,7 @@ fn read_secure_color_catalog(env: &WowLuaEnv) -> SecureColorCatalogSnapshot {
     }
 }
 
-#[cfg(feature = "client-retail")]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn load_full_game_ui() -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("Failed to create Lua environment");
     env.set_screen_size(1024.0, 768.0);
@@ -242,6 +244,7 @@ fn load_full_game_ui() -> WowLuaEnv {
     wow_ui_sim::xml::register_intrinsic_templates();
 
     let ui = blizzard_ui_dir();
+    env.scan_and_register_addons(&ui);
     let addons = discover_blizzard_addons_for_screen(&ui, ScreenKind::Game);
     for (name, toc_path) in &addons {
         load_addon(&env.loader_env(), toc_path)
@@ -252,6 +255,84 @@ fn load_full_game_ui() -> WowLuaEnv {
     fire_startup_events_for_screen(&env, ScreenKind::Game);
 
     env
+}
+
+#[cfg(feature = "client-wowforever")]
+fn create_secure_consumer_addon(root: &tempfile::TempDir) -> PathBuf {
+    let addon = root.path().join("SecureConsumer");
+    std::fs::create_dir(&addon).unwrap();
+    std::fs::write(
+        addon.join("SecureConsumer.toc"),
+        "## UseSecureEnvironment: 1\nCore.lua\n",
+    )
+    .unwrap();
+    std::fs::write(
+        addon.join("Core.lua"),
+        "assert(LatePublicAccessor('unit') == 'unit:published'); \
+         assert(PreservedValue == 'secure'); \
+         ObservedValue = LatePublicAccessor('unit')",
+    )
+    .unwrap();
+    addon.join("SecureConsumer.toc")
+}
+
+#[cfg(feature = "client-wowforever")]
+#[test]
+fn secure_consumer_sees_late_public_globals_without_overwriting_secure_values() {
+    use wow_ui_sim::loader;
+    let root = tempfile::tempdir().unwrap();
+    let toc = create_secure_consumer_addon(&root);
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        "rawset(__secureenv, 'PreservedValue', 'secure'); \
+         rawset(_G, 'PreservedValue', 'insecure'); \
+         LatePublicAccessor = function(value) return value .. ':published' end",
+    )
+    .unwrap();
+    load_addon(&env.loader_env(), &toc).unwrap();
+    assert_eq!(
+        env.eval::<String>("return rawget(__secureenv, 'ObservedValue')")
+            .unwrap(),
+        "unit:published"
+    );
+    assert_eq!(
+        env.eval::<String>("return rawget(__secureenv, 'PreservedValue')")
+            .unwrap(),
+        "secure"
+    );
+}
+
+#[cfg(feature = "client-wowforever")]
+#[test]
+fn wowforever_private_auras_tooltip_consumer_publishes_accessor() {
+    let env = load_full_game_ui();
+    let consumer_errors = env
+        .state()
+        .borrow()
+        .lua_errors
+        .iter()
+        .filter(|message| message.contains("PrivateAurasTooltip"))
+        .cloned()
+        .collect::<Vec<_>>();
+    assert!(
+        consumer_errors.is_empty(),
+        "PrivateAurasTooltip must load without errors: {consumer_errors:?}"
+    );
+    let accessor_type: String = env
+        .eval(
+            "return type(rawget(rawget(__secureenv, 'GameTooltipDataMixin'), \
+             'SetUnitPrivateAura'))",
+        )
+        .expect("secure GameTooltipDataMixin accessor probe should evaluate");
+    assert_eq!(
+        accessor_type, "function",
+        "the original secure consumer must publish SetUnitPrivateAura"
+    );
+    env.state()
+        .borrow()
+        .widgets
+        .get_id_by_name("PrivateAurasTooltip")
+        .expect("the original PrivateAurasTooltip frame must be created");
 }
 
 #[cfg(feature = "client-retail")]
@@ -1136,4 +1217,383 @@ fn blizzard_private_auras_ui_loads_without_addon_specific_lua_errors(env: &WowLu
         load_errors.join("\n  ")
     );
 }
+}
+
+#[cfg(feature = "client-retail")]
+fn load_texture_hook_probe_addons(env: &WowLuaEnv) {
+    let fixtures = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("tests/fixtures");
+    env.state()
+        .borrow_mut()
+        .addon_base_paths
+        .push(fixtures.clone());
+    for addon in ["TextureSetHookProbeFirst", "TextureSetHookProbeSecond"] {
+        let toc = fixtures.join(addon).join(format!("{addon}.toc"));
+        load_addon(&env.loader_env(), &toc).expect("texture hook probe addon should load");
+    }
+}
+
+#[cfg(feature = "client-retail")]
+fn texture_hook_probe_aura(id: i32, icon: &str) -> AuraInfo {
+    AuraInfo {
+        icon: AuraIcon::Path(icon.to_string()),
+        ..crate::common::aura_container_harness::aura(id)
+    }
+}
+
+#[cfg(feature = "client-retail")]
+fn assert_texture_hook_probe_counter(env: &WowLuaEnv, name: &str) {
+    let state = env.state().borrow();
+    let counter = state
+        .widgets
+        .get_by_name(name)
+        .expect("addon hook callback created its counter frame");
+    assert!(counter.width >= 1.0 && counter.width < 100.0);
+    assert_eq!(counter.width, counter.height);
+}
+
+#[cfg(feature = "client-retail")]
+prefork_full_ui_case! {
+fn retail_aura_container_hook_dispatcher_preserves_secure_consumer(env: &WowLuaEnv) {
+    assert_aura_container_consumer_loaded(env);
+    initialize_live_aura_container(env);
+    assert_initial_aura_icon(env);
+    install_texture_hook_probes(env);
+    assert_hooked_aura_icons(env);
+    assert_texture_hook_probe_counter(env, "TextureSetHookProbeFirstCounter");
+    assert_texture_hook_probe_counter(env, "TextureSetHookProbeSecondCounter");
+}
+}
+
+#[cfg(feature = "client-retail")]
+fn assert_aura_container_consumer_loaded(env: &WowLuaEnv) {
+    assert!(
+        env.eval::<bool>("return C_AddOns.IsAddOnLoaded('Blizzard_AuraContainer')")
+            .unwrap()
+    );
+}
+
+#[cfg(feature = "client-retail")]
+fn initialize_live_aura_container(env: &WowLuaEnv) {
+    crate::common::aura_container_harness::install_helpers(env);
+    env.exec("AuditLive = AuditContainer({{'buffs', 'HELPFUL'}})")
+        .unwrap();
+    crate::common::aura_container_harness::set_player_auras(
+        env,
+        vec![texture_hook_probe_aura(
+            99021,
+            "Interface\\Icons\\INV_Misc_QuestionMark",
+        )],
+    );
+    crate::common::aura_container_harness::settle(env);
+}
+
+#[cfg(feature = "client-retail")]
+fn assert_initial_aura_icon(env: &WowLuaEnv) {
+    assert_eq!(
+        crate::common::aura_container_harness::icons(env, "AuditLive", "buffs"),
+        r"134400"
+    );
+}
+
+#[cfg(feature = "client-retail")]
+fn install_texture_hook_probes(env: &WowLuaEnv) {
+    env.exec("TextureHookProbeTarget = AuditLive:GetAuraGroupFrame('buffs', 1):GetIcon()")
+        .unwrap();
+    load_texture_hook_probe_addons(env);
+    crate::common::aura_container_harness::set_player_auras(
+        env,
+        vec![
+            texture_hook_probe_aura(99021, "Interface\\Icons\\INV_Misc_QuestionMark"),
+            texture_hook_probe_aura(99022, "Interface\\Icons\\INV_Misc_QuestionMark"),
+        ],
+    );
+    crate::common::aura_container_harness::settle(env);
+}
+
+#[cfg(feature = "client-retail")]
+fn assert_hooked_aura_icons(env: &WowLuaEnv) {
+    assert_eq!(
+        crate::common::aura_container_harness::icons(env, "AuditLive", "buffs"),
+        r"134400,134400"
+    );
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+const PRIVATE_AURA_CONSUMER_PROBE: &str = r#"
+    local privateUI = rawget(__secureenv, 'PrivateAuraAnchorContainerMixin')
+    local private = rawget(__secureenv, 'C_UnitAurasPrivate')
+    SetCVar('buffDurations', '1')
+    PrivateAuraDataParent = CreateFrame('Frame', 'PrivateAuraDataParent')
+    C_UnitAuras.AddPrivateAuraAnchor({
+        unitToken = 'player', auraIndex = 1, parent = PrivateAuraDataParent,
+    })
+    local anchorSeen = {}
+    local container = {
+        watcher = { GetUnit = function() return 'player' end },
+        ClearPriorityTables = function() end,
+        ProcessAura = function(self, aura) anchorSeen[aura.auraInstanceID] = aura end,
+    }
+    privateUI.ParseAllAuras(container)
+    assert(anchorSeen[301].spellId == 301 and anchorSeen[302].spellId == 302)
+    assert(anchorSeen[301].hideOnPartyFrames and anchorSeen[301].canActivePlayerDispel)
+    local firstRead = private.GetAllPrivateAuras('player')
+    firstRead[1].spellId = 0
+    assert(private.GetAllPrivateAuras('player')[1].spellId == 301)
+    local returned = privateUI.GetUpdatedAuraByInstance(container, true, 301)
+    assert(returned.auraInstanceID == 301 and returned.dispelName == 'Magic')
+    returned.spellId = 0
+    assert(privateUI.GetUpdatedAuraByInstance(container, true, 301).spellId == 301)
+    local privateSource = rawget(__secureenv, 'AuraContainerPrivateAuraSourceMixin')
+    local ids = privateSource:GetAllAuraInstanceIDs('player', 'HARMFUL')
+    assert(#ids == 2 and ids[1] == 301 and ids[2] == 302)
+    assert(privateSource:GetAuraCasterGUID('player', 301) == 'Player-1-301')
+"#;
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn private_aura_entry(
+    id: i32,
+    hide: bool,
+    can_dispel: bool,
+    applications: i32,
+    duration: f64,
+    now: f64,
+) -> PrivateAuraEntry {
+    let aura = AuraInfo {
+        name: format!("Private {id}"),
+        spell_id: id,
+        icon: AuraIcon::FileId(id),
+        duration,
+        expiration_time: now + duration,
+        applications,
+        source_unit: "player".into(),
+        is_helpful: true,
+        is_raid: false,
+        is_nameplate_only: false,
+        is_stealable: false,
+        can_apply_aura: true,
+        is_from_player_or_player_pet: false,
+        dispel_type: Some("Magic".into()),
+        aura_instance_id: id,
+    };
+    PrivateAuraEntry {
+        aura,
+        can_active_player_dispel: can_dispel,
+        hide_on_party_frames: hide,
+        source_guid: Some(format!("Player-1-{id}")),
+    }
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn supply_private_auras(env: &WowLuaEnv) {
+    let now = env.eval::<f64>("return GetTime()").unwrap();
+    let entries = vec![
+        private_aura_entry(301, true, true, 2, 30.0, now),
+        private_aura_entry(302, false, false, 3, 60.0, now),
+    ];
+    let mut state = env.state().borrow_mut();
+    state
+        .private_aura_data
+        .private_auras_by_unit
+        .insert("player".into(), entries.clone());
+    state.private_aura_data.aura_data_by_unit.insert(
+        "player".into(),
+        entries
+            .into_iter()
+            .map(|entry| (entry.aura.aura_instance_id, entry))
+            .collect(),
+    );
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+const PRIVATE_AURA_ANCHOR_PLACEMENT_PROBE: &str = r#"
+    SetCVar('buffDurations', '1')
+    PrivateAuraAnchorParent1 = CreateFrame('Frame', 'PrivateAuraAnchorParent1')
+    PrivateAuraAnchorParent2 = CreateFrame('Frame', 'PrivateAuraAnchorParent2')
+    local function addAnchor(parent, index)
+        return C_UnitAuras.AddPrivateAuraAnchor({
+            unitToken = 'player', auraIndex = index, parent = parent,
+            showCooldownFrame = true, showCooldownEdge = true,
+            showCountdownNumbers = true,
+            iconInfo = {
+                iconAnchor = { point = 'CENTER', relativeTo = parent,
+                    relativePoint = 'CENTER', offsetX = 0, offsetY = 0 },
+                iconWidth = 36, iconHeight = 36,
+            },
+            durationAnchor = { point = 'TOP', relativeTo = parent,
+                relativePoint = 'BOTTOM', offsetX = 0, offsetY = 0 },
+        })
+    end
+    PrivateAuraAnchorID1 = addAnchor(PrivateAuraAnchorParent1, 1)
+    PrivateAuraAnchorID2 = addAnchor(PrivateAuraAnchorParent2, 2)
+"#;
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+const PRIVATE_AURA_ANCHOR_INITIAL_ASSERTIONS: &str = r#"
+    local first = select(1, PrivateAuraAnchorParent1:GetChildren())
+    local second = select(1, PrivateAuraAnchorParent2:GetChildren())
+    assert(first and second, 'reserved private aura frames must be parented to their anchors')
+    local _, firstCooldown = first.Cooldown:GetCooldownTimes()
+    local _, secondCooldown = second.Cooldown:GetCooldownTimes()
+    local _, firstIconRelative = first.Icon:GetPoint()
+    local _, secondIconRelative = second.Icon:GetPoint()
+    local _, firstDurationRelative = first.Duration:GetPoint()
+    local _, secondDurationRelative = second.Duration:GetPoint()
+    assert(firstIconRelative == PrivateAuraAnchorParent1 and first.Icon:GetWidth() == 36)
+    assert(secondIconRelative == PrivateAuraAnchorParent2 and second.Icon:GetWidth() == 36)
+    assert(firstDurationRelative == PrivateAuraAnchorParent1)
+    assert(secondDurationRelative == PrivateAuraAnchorParent2)
+    assert(first:IsShown() and first.Icon:GetTexture() == 301)
+    assert(first.Count:GetText() == '2' and first.Duration:IsShown())
+    assert(first.Duration:GetText() ~= '' and firstCooldown == 30000)
+    assert(second:IsShown() and second.Icon:GetTexture() == 302)
+    assert(second.Count:GetText() == '3' and second.Duration:IsShown())
+    assert(second.Duration:GetText() ~= '' and secondCooldown == 60000)
+"#;
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+const PRIVATE_AURA_ANCHOR_REPLACEMENT_PROBE: &str = r#"
+    C_UnitAurasPrivate._TriggerPrivateAuraUpdate('player', true, { isFullUpdate = true })
+"#;
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn private_aura_anchor_places_and_refreshes_rendered_frames() {
+    let env = load_full_game_ui();
+    supply_private_auras(&env);
+    env.exec(PRIVATE_AURA_ANCHOR_PLACEMENT_PROBE).unwrap();
+    wow_ui_sim::startup::process_pending_timers(&env);
+    wow_ui_sim::startup::fire_one_on_update_tick(&env);
+    env.exec(PRIVATE_AURA_ANCHOR_INITIAL_ASSERTIONS)
+        .expect("both supplied private auras should render through Blizzard UI");
+    replace_first_private_aura(&env);
+    env.exec(PRIVATE_AURA_ANCHOR_REPLACEMENT_PROBE).unwrap();
+    wow_ui_sim::startup::process_pending_timers(&env);
+    wow_ui_sim::startup::fire_one_on_update_tick(&env);
+    env.exec(PRIVATE_AURA_ANCHOR_REFRESH_ASSERTIONS)
+        .expect("private aura replacement should refresh rendered state");
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+const PRIVATE_AURA_ANCHOR_REFRESH_ASSERTIONS: &str = r#"
+    local first = select(1, PrivateAuraAnchorParent1:GetChildren())
+    local second = select(1, PrivateAuraAnchorParent2:GetChildren())
+    local _, firstCooldown = first.Cooldown:GetCooldownTimes()
+    local _, secondCooldown = second.Cooldown:GetCooldownTimes()
+    assert(first:IsShown(), 'first aura frame should remain shown')
+    assert(first.Icon:GetTexture() == 302, 'first icon: ' .. tostring(first.Icon:GetTexture()))
+    assert(first.Count:GetText() == '3', 'first count: ' .. tostring(first.Count:GetText()))
+    assert(first.Duration:IsShown() and first.Duration:GetText() ~= '')
+    assert(firstCooldown == 60000, 'first cooldown: ' .. tostring(firstCooldown))
+    assert(second:IsShown(), 'replacement second aura frame should be shown')
+    assert(second.Icon:GetTexture() == 303, 'replacement second icon: ' .. tostring(second.Icon:GetTexture()))
+    assert(second.Count:GetText() == '4', 'replacement second count: ' .. tostring(second.Count:GetText()))
+    assert(second.Duration:IsShown() and second.Duration:GetText() ~= '')
+    assert(secondCooldown == 45000, 'replacement second cooldown: ' .. tostring(secondCooldown))
+"#;
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn replace_first_private_aura(env: &WowLuaEnv) {
+    let now = env.eval::<f64>("return GetTime()").unwrap();
+    let replacement = private_aura_entry(303, false, false, 4, 45.0, now);
+    let mut state = env.state().borrow_mut();
+    state.private_aura_data.private_auras_by_unit.insert(
+        "player".into(),
+        vec![
+            replacement.clone(),
+            private_aura_entry(302, false, false, 3, 60.0, now),
+        ],
+    );
+    state.private_aura_data.aura_data_by_unit.insert(
+        "player".into(),
+        [
+            (303, replacement),
+            (302, private_aura_entry(302, false, false, 3, 60.0, now)),
+        ]
+        .into_iter()
+        .collect(),
+    );
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+const PRIVATE_AURA_TOOLTIP_SNAPSHOT: &str = r#"
+    local tooltip = __secureenv.PrivateAurasTooltip
+    local info = tooltip:GetPrimaryTooltipInfo()
+    local data = tooltip:GetPrimaryTooltipData()
+    local lines = data and data.lines or {}
+    return info and info.getterName,
+        lines[1] and lines[1].leftText,
+        lines[2] and lines[2].leftText,
+        lines[3] and lines[3].leftText
+"#;
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn private_aura_frame_id(env: &WowLuaEnv, parent: &str) -> u64 {
+    let expression = format!("select(1, __secureenv.{parent}:GetChildren())");
+    let debug_name = env
+        .eval::<String>(&format!("return ({expression}):GetDebugName()"))
+        .unwrap();
+    debug_name
+        .rsplit(':')
+        .next()
+        .and_then(|id| id.parse().ok())
+        .unwrap_or_else(|| panic!("private aura frame has no debug ID: {debug_name}"))
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn assert_private_aura_tooltip(env: &WowLuaEnv, parent: &str, name: &str, duration: &str) {
+    let aura_id = private_aura_frame_id(env, parent);
+    env.fire_script_handler(aura_id, "OnEnter", Vec::new())
+        .expect("selected Blizzard private-aura OnEnter handler should run");
+    let actual: (
+        Option<String>,
+        Option<String>,
+        Option<String>,
+        Option<String>,
+    ) = env
+        .eval(PRIVATE_AURA_TOOLTIP_SNAPSHOT)
+        .expect("private-aura tooltip data should be readable");
+    assert_eq!(actual.0.as_deref(), Some("GetUnitPrivateAura"));
+    assert_eq!(actual.1.as_deref(), Some(name));
+    assert_eq!(actual.2.as_deref(), Some(duration));
+    assert!(
+        actual.3.as_deref().is_some_and(|text| !text.is_empty()),
+        "selected Blizzard consumer should include the aura description"
+    );
+    env.fire_script_handler(aura_id, "OnLeave", Vec::new())
+        .expect("selected Blizzard private-aura OnLeave handler should run");
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn private_aura_state_drives_selected_blizzard_consumers() {
+    let env = load_full_game_ui();
+    supply_private_auras(&env);
+    env.exec(PRIVATE_AURA_CONSUMER_PROBE)
+        .expect("selected private-aura consumers should read supplied host entries");
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn private_aura_tooltip_uses_the_selected_instance_data() {
+    let env = load_full_game_ui();
+    supply_private_auras(&env);
+    {
+        let mut state = env.state().borrow_mut();
+        state
+            .aura_tooltip_inputs
+            .entry(301)
+            .or_default()
+            .remaining_text = Some("29 sec".into());
+        state
+            .aura_tooltip_inputs
+            .entry(302)
+            .or_default()
+            .remaining_text = Some("59 sec".into());
+    }
+    env.exec_rilua_secure(PRIVATE_AURA_ANCHOR_PLACEMENT_PROBE)
+        .expect("private aura anchors should initialize in the secure UI");
+    wow_ui_sim::startup::process_pending_timers(&env);
+    wow_ui_sim::startup::fire_one_on_update_tick(&env);
+    assert_private_aura_tooltip(&env, "PrivateAuraAnchorParent1", "Private 301", "29 sec");
+    assert_private_aura_tooltip(&env, "PrivateAuraAnchorParent2", "Private 302", "59 sec");
 }

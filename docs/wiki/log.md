@@ -1,3 +1,68 @@
+## [2026-11-24] implementation | Retail hooksecurefunc dispatcher taint
+
+Updated the [taint system](../systems/taint-system.md#retail-hooksecurefunc-dispatcher). **VERIFIED (Retail exact prefork test and full-addon run):** the `securecall` factory keeps the AuraContainer hook dispatcher secure, the target secret-texture error count is zero, and no new errors appear; direct tainted secret-string rejection remains enabled.
+
+## [2026-11-24] implementation | Retail/Forever supplied owned-house replies
+
+Updated the [Lua API system](systems/lua-api.md) and [M5 service contract](../specs/c-factory-m5-services.md); documented `A_Admin.SetPlayerOwnedHouses` in [admin API housing inputs](../../admin-api/housing.md). **VERIFIED (pinned Retail/PTR UI caches):** the standard-game Housing Dashboard TOC selects a `GetPlayerOwnedHouses()` consumer and the API documentation defines `HouseInfo` fields and the `PLAYER_HOUSE_LIST_UPDATED` payload. **VERIFIED (Forever TOC and simulator game-type filter):** Forever excludes `standard`, so it does not select this consumer. **INFERRED (R88fj; native evidence pending):** Retail requests queue one event per call for a later timer tick; PTR retains its temporary empty-list response.
+
+## [2026-11-23] implementation | Retail/Forever Kiosk session input
+
+Added [the Kiosk session system page](../systems/kiosk-session.md) and [admin API contract](../../admin-api/kiosk.md). **VERIFIED (pinned caches):** Retail and Forever generated API docs have no Kiosk/C_Kiosk declaration; Blizzard_Kiosk assigns fields to an existing Kiosk namespace. **INFERRED (R88fd (native evidence pending)):** the empty-session defaults and host-supplied fields are simulator scenario behavior. **VERIFIED (simulator):** exact Retail original LFD consumer test passes 1/1; its startup emits the existing CurrencyTransfer required-argument error.
+
+## [2026-11-23] investigation | Forever Encounter Journal selection
+
+Updated [addon loading](systems/addon-loading.md#addon-discovery-and-toc-parsing). **VERIFIED (simulator selection logic and pinned TOCs):** Forever's Encounter Journal root TOC is restricted before its Mainline entries load; Retail selects the Mainline TOC and boss-list consumer.
+
+## [2026-11-23] implementation | Forever Player Spells outfit list
+
+Updated the [Forever outfit contract](../specs/forever-camelot-spellbook.md), [shared catalog contract](../specs/outfit-catalog-lookups.md), and [outfit model](systems/forever-camelot-spellbook.md). **INFERRED (R88ex; native evidence pending):** an empty Forever outfit catalog returns no values, matching `MayReturnNothing` and guarded `GetOutfitsInfo() or {}` consumers. **VERIFIED (simulator):** exact Player Spells toggle proof passes with an empty catalog and with two AddNewOutfit records after A_Admin capacity input; Retail compile passes with zero warnings.
+
+## [2026-11-23] investigation | Clicked first-install saved variables
+
+Added [the investigation](investigations/clicked-first-install-savedvariables.md) and linked it from the Mythic+ startup comparison. **VERIFIED (same Retail simulator binary and addon root):** two Clicked errors with SavedVariables disabled; zero with the current ClickedDB loaded in an isolated session. **INFERRED (bundled AceDB and Clicked source):** first-profile callback order reaches blacklist refresh before its local config is initialized. No simulator change was made.
+
+## [2026-11-23] implementation | Script bucket throttle
+
+Updated the [throttle contract](../specs/script-bucket-throttle-limits.md) and linked it from the [watchdog system](../systems/script-execution-watchdog.md). **VERIFIED (R88bn):** Retail/Forever registered CVar defaults and Retail refill behavior. **INFERRED (R88bn; native evidence pending):** restricted charging pauses during the existing startup watchdog phase and starts at burst capacity after it ends; tainted addon code uses a per-addon bucket, and Forever mirrors Retail refill. Normal-bucket execution classes and native balance ownership remain unknown.
+
+## [2026-11-23] investigation | Mythic+ map request reentrancy
+
+Added [the investigation](investigations/mythic-plus-map-request-reentrancy.md) and linked it from the [request contract](../specs/mythic-plus-map-info-request.md). **VERIFIED (same-root Retail runs after merging master `e6407a379`):** both revisions discovered 78 addons and loaded 49; master recorded 10 unique errors / 159,423 occurrences, while the branch recorded 7 / 7 with no recursion, stack-overflow, instruction-budget, or watchdog error. AllTheThings loaded on both; only master reported its instruction-budget errors. The branch still reports one `Blizzard_ChallengesUI` nil-map-row error and two `Clicked` errors; their scope and evidence labels are in the investigation.
+
+## [2026-11-23] implementation | EditBox host-boundary notifications and currency transfer queries
+
+Updated the [event system](systems/event-system.md), [Lua API system](systems/lua-api.md#retailforever-account-currency-transfer), and [EditBox contract](../specs/editbox-text-position-selection.md#cursor-geometry-follow-up); the [currency transfer contract](../specs/currency-transfer-eligibility.md) now covers amount/source queries. **INFERRED (R88et-c):** text-change handlers drain after the outermost Lua call returns, separately from cursor layout. **VERIFIED (simulator):** the exact Retail TokenFrame amount-selector path passes after real ScrollBox layout; the Retail/Forever startup captures contain only the approved CurrencyTransfer required-argument error and its ScriptErrors echo. Startup is not clean.
+
+## [2026-11-22] system | Script execution watchdog
+
+Added [the watchdog system page](../systems/script-execution-watchdog.md) and updated the simulator contract and diagnostics docs. **VERIFIED (R88bn, Retail/Forever):** no native instruction-count quota; the VM polls elapsed time every 10,001 dispatch steps and raises `script ran too long`. **INFERRED (R88bn):** millisecond thresholds are 19,000 through initial world entry and 200 afterwards. Current runtime proof is tracked in the lt-50f6 handoff.
+
+
+## [2026-11-21] implementation | Retail/Forever transmog set relations
+
+Updated the [Wardrobe API investigation](investigations/appearances-wardrobe-api.md) and [relation contract](../specs/transmog-set-relations.md). **VERIFIED (simulator):** the exact loaded `WardrobeSetsDataProviderMixin` test passes on Retail and Forever with two supplied records and distinct primary appearance IDs; both no-addons/no-saved-vars `lua-errors` runs return `[]`, and Forever→Mists→Wrath→Retail compile receipts report zero warnings. **INFERRED (R88cs pending):** catalog relation semantics beyond the tested consumer projection remain provisional; the temporary Lua body is byte-identical.
+
+## [2026-11-20] implementation | Trilinear mipmapped RGBA GPU atlas
+
+Added per-cell RGBA mip chains down to 1×1 and cell-clamped trilinear sampling to reduce aliasing on downscaled icons. Generated mips retain premultiplied RGB through filtering to avoid dark fringes at transparent edges; mip 0 retains straight alpha for magnification. See [rendering pipeline](systems/rendering-pipeline.md).
+
+## [2026-11-20] correction | Secure dependency replay rule
+
+Updated [addon loading](systems/addon-loading.md#secure-dependency-replay-and-library-allowlist). **VERIFIED (simulator source):** Forever replay membership now follows enabled secure TOC dependency closure; secure dependency passes skip XML for already ordinary-loaded dependencies instead of naming `RaidWarning.xml`. **INFERRED (R88cj pending):** the dependency-closure selector matches native behavior; evidence is pending. Exact private-aura, secure-replay and secure-XML tests pass on Retail and Forever; stock no-addons/no-SavedVariables scans return `[]`.
+
+## [2026-11-20] implementation | Secure XML mixin environment
+
+Updated [addon loading](../systems/addon-loading.md#secure-dependency-replay-and-library-allowlist). Retail's original PrivateAura OnEnter failed because secure XML resolved a stale public `GameTooltipDataMixin` without its late-added accessor. XML resolution now follows the active secure-addon context; Forever also replays `Blizzard_SharedXMLGame` to provide `TooltipDataHandlerMixin.ProcessInfo`; secure loads skip duplicate `RaidWarning.xml`. Exact original hover tests pass on both profiles, and stock no-addons/no-SavedVariables lua-errors scans return `[]`. **INFERRED (R88cd):** native secure XML mixins resolve from the active addon environment.
+
+## [2026-11-20] implementation | Shared Retail/Forever outfit catalog
+
+Updated the [outfit catalog contract](../specs/outfit-catalog-lookups.md), [Forever spellbook contract](../specs/forever-camelot-spellbook.md), [Forever spellbook model](systems/forever-camelot-spellbook.md), and [tooltip contract](../specs/tooltip-outfit.md). `SimState.transmog_outfit_catalog` is now the sole outfit-record store; Forever retains a three-state list marker, not duplicate rows. Proof is recorded in the lane handoff.
+
+## [2026-11-20] implementation | Retail/Forever combat-log history
+
+Updated the [history contract](../specs/combat-log-history-state.md) and [system page](../systems/combat-log-history.md). **INFERRED (fixture parity):** Rust now owns the Retail/Forever history, cursor, settings and filter-settings handle; host input supplies records and no events are synthesized. **VERIFIED (simulator):** the selected original processor's empty and two-record refilter test passes on Retail and Forever. Native return details, filter rules, event ingestion and lifecycle remain UNKNOWN. The required profile compiles pass; Mists and Wrath each report two known `tooltip_for_cost_currency` dead-code warnings.
+
 ## [2026-11-19] investigation | Forever spell action-bar status
 
 Added [the investigation](../investigations/forever-spell-action-bar-status.md). **VERIFIED (Forever generated docs and exact full-UI test):** C_Spell passive/ranged API shapes, C_ActionBar slot-query shape, and passive/slotted/unslotted/ID-0 results. **INFERRED:** Forever uses the Retail host passive-mask model. **VERIFIED (simulator source):** `setToSearch` filtering remains unmodeled.

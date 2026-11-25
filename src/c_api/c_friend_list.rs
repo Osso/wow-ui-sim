@@ -1,8 +1,12 @@
 //! Exact current-profile friend-name queries and note mutation over owned social state.
 //! Indexed and earlier name queries share the existing simulator projection.
 
-use crate::lua_api::methods::{create_string, create_table, table_set_static};
+use crate::lua_api::methods::{borrow_state_mut, create_string, create_table, table_set_static};
 use crate::lua_api::state::SocialFriend;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+use crate::lua_api::state::{BnetBlockedEntry, BnetFriendInvite};
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+use crate::lua_bridge::FromStack;
 use rilua::Val;
 use rilua::vm::state::LuaState;
 
@@ -15,10 +19,184 @@ pub(crate) fn friends_in_display_order(friends: &[SocialFriend]) -> Vec<SocialFr
 
 /// Simulator response policy: enqueue refresh notification over the supplied list.
 pub(crate) fn show_friends(state: &mut LuaState) -> rilua::LuaResult<u32> {
-    crate::lua_api::methods::borrow_state_mut(state)?
+    borrow_state_mut(state)?
         .events
         .push_simple("FRIENDLIST_UPDATE");
     Ok(0)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) fn set_social_ignore_name(state: &mut LuaState) -> rilua::LuaResult<u32> {
+    let index = i32::from_stack(state, 1)?;
+    let name = String::from_stack(state, 2)?;
+    let mut sim = borrow_state_mut(state)?;
+    if index < 1 || index as usize > sim.social_ignores.len() + 1 {
+        return Err(rilua::runtime_error(
+            "A_Admin.SetSocialIgnoreName: index must append or replace an existing entry",
+        ));
+    }
+    let index = index as usize;
+    if index == sim.social_ignores.len() + 1 {
+        sim.social_ignores.push(name);
+    } else {
+        sim.social_ignores[index - 1] = name;
+    }
+    Ok(0)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) fn set_player_battle_net_info(state: &mut LuaState) -> rilua::LuaResult<u32> {
+    use crate::lua_api::state_types::PlayerBattleNetInfo;
+    let battle_tag = Option::<String>::from_stack(state, 1)?;
+    let account_id = Option::<i32>::from_stack(state, 2)?.unwrap_or_default();
+    let broadcast_text = Option::<String>::from_stack(state, 3)?.unwrap_or_default();
+    let is_afk = Option::<bool>::from_stack(state, 4)?.unwrap_or(false);
+    let is_dnd = Option::<bool>::from_stack(state, 5)?.unwrap_or(false);
+    let is_real_id_enabled = Option::<bool>::from_stack(state, 6)?.unwrap_or(false);
+    let is_appear_offline = Option::<bool>::from_stack(state, 7)?.unwrap_or(false);
+    let connected = Option::<bool>::from_stack(state, 8)?.unwrap_or(false);
+    let features_enabled = Option::<bool>::from_stack(state, 9)?.unwrap_or(true);
+    let mut sim = borrow_state_mut(state)?;
+    sim.player_bnet_info = PlayerBattleNetInfo {
+        battle_tag,
+        account_id,
+        broadcast_text,
+        is_afk,
+        is_dnd,
+        is_real_id_enabled,
+        is_appear_offline,
+    };
+    sim.player_bnet_account_present = true;
+    sim.bnet_connection = crate::lua_api::state_types::BattleNetConnectionState {
+        features_enabled,
+        connected,
+    };
+    Ok(0)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) fn set_battle_net_account_features(state: &mut LuaState) -> rilua::LuaResult<u32> {
+    use crate::lua_api::state_types::BattleNetAccountFeatures;
+    let feature =
+        |index| Option::<bool>::from_stack(state, index).map(|value| value.unwrap_or(true));
+    let features = BattleNetAccountFeatures {
+        friend_tags: feature(1)?,
+        title_friend_custom_names: feature(2)?,
+        title_friends: feature(3)?,
+        friends_list_enabled: feature(4)?,
+        friends_list_supported: feature(5)?,
+    };
+    borrow_state_mut(state)?.bnet_account_features = features;
+    Ok(0)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) fn set_battle_net_friend_invite(state: &mut LuaState) -> rilua::LuaResult<u32> {
+    let index = i32::from_stack(state, 1)?;
+    let invite = BnetFriendInvite {
+        invite_id: i32::from_stack(state, 2)?,
+        account_name: String::from_stack(state, 3)?,
+        battle_tag: String::from_stack(state, 4)?,
+        friend_level: i32::from_stack(state, 5)?,
+        creation_timestamp: i64::from_stack(state, 6)?,
+    };
+    let mut sim = borrow_state_mut(state)?;
+    if index < 1 || index as usize > sim.bnet_friend_invites.len() + 1 {
+        return Err(rilua::runtime_error(
+            "A_Admin.SetBattleNetFriendInvite: index must append or replace an entry",
+        ));
+    }
+    let offset = (index - 1) as usize;
+    if offset == sim.bnet_friend_invites.len() {
+        sim.bnet_friend_invites.push(invite);
+    } else {
+        sim.bnet_friend_invites[offset] = invite;
+    }
+    Ok(0)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) fn set_battle_net_friend_state(state: &mut LuaState) -> rilua::LuaResult<u32> {
+    let index = i32::from_stack(state, 1)?;
+    let is_friend = bool::from_stack(state, 2)?;
+    let is_online = bool::from_stack(state, 3)?;
+    let is_favorite = bool::from_stack(state, 4)?;
+    let mut sim = borrow_state_mut(state)?;
+    let offset = index
+        .checked_sub(1)
+        .and_then(|index| usize::try_from(index).ok());
+    let friend = offset.and_then(|offset| sim.bnet_friends.get_mut(offset));
+    let Some(friend) = friend else {
+        return Err(rilua::runtime_error(
+            "A_Admin.SetBattleNetFriendState: index must identify an existing friend",
+        ));
+    };
+    friend.is_friend = is_friend;
+    friend.is_favorite = is_favorite;
+    for account in &mut friend.game_accounts {
+        account.is_online = is_online;
+    }
+    Ok(0)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) fn set_social_blocked_entry(state: &mut LuaState) -> rilua::LuaResult<u32> {
+    let index = i32::from_stack(state, 1)?;
+    let blocked_id = i32::from_stack(state, 2)?;
+    let name = String::from_stack(state, 3)?;
+    let mut sim = borrow_state_mut(state)?;
+    if index < 1 || index as usize > sim.bnet_blocked_entries.len() + 1 {
+        return Err(rilua::runtime_error(
+            "A_Admin.SetSocialBlockedEntry: index must append or replace an existing entry",
+        ));
+    }
+    let entry = BnetBlockedEntry { blocked_id, name };
+    let index = index as usize;
+    if index == sim.bnet_blocked_entries.len() + 1 {
+        sim.bnet_blocked_entries.push(entry);
+    } else {
+        sim.bnet_blocked_entries[index - 1] = entry;
+    }
+    Ok(0)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) mod selected_ignore {
+    use crate::c_api::helpers::ensure_namespace;
+    use crate::lua_api::methods::{borrow_state, borrow_state_mut};
+    use crate::lua_bridge::{FromStack, table_set_rust_fn_static};
+    use rilua::vm::state::LuaState;
+    use rilua::{LuaResult, Val};
+
+    pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
+        let namespace = ensure_namespace(state, "C_FriendList")?;
+        table_set_rust_fn_static(state, namespace, "GetSelectedIgnore", get_selected)?;
+        table_set_rust_fn_static(state, namespace, "SetSelectedIgnore", set_selected)
+    }
+
+    fn get_selected(state: &mut LuaState) -> LuaResult<u32> {
+        let selected = {
+            let sim = borrow_state(state)?;
+            sim.selected_social_ignore.as_ref().and_then(|identity| {
+                sim.social_ignores
+                    .iter()
+                    .position(|name| name == identity)
+                    .map(|index| index + 1)
+            })
+        };
+        state.push(selected.map_or(Val::Nil, |index| Val::Num(index as f64)));
+        Ok(1)
+    }
+
+    fn set_selected(state: &mut LuaState) -> LuaResult<u32> {
+        let index = i32::from_stack(state, 1)?;
+        let mut sim = borrow_state_mut(state)?;
+        sim.selected_social_ignore = index
+            .checked_sub(1)
+            .and_then(|index| usize::try_from(index).ok())
+            .and_then(|index| sim.social_ignores.get(index).cloned());
+        Ok(0)
+    }
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-ptr"))]

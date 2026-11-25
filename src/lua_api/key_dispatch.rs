@@ -150,25 +150,29 @@ impl WowLuaEnv {
     /// `text` is the raw Unicode character(s) for typing into a focused
     /// EditBox. Pass `None` for non-printable keys.
     pub fn send_key_press(&self, key: &str, text: Option<&str>) -> Result<()> {
-        let result = self.send_key_down(key, text);
-        self.send_key_up(key);
-        result
+        self.with_host_input_operation(|| {
+            let result = self.send_key_down(key, text);
+            self.send_key_up(key);
+            result
+        })
     }
 
     /// Dispatch a physical key-down while retaining its held state until key-up.
     pub fn send_key_down(&self, key: &str, text: Option<&str>) -> Result<()> {
-        super::editbox_update::flush(self)?;
-        let normalized = normalized_key_name(key);
-        let key = normalized.as_str();
-        self.state
-            .borrow_mut()
-            .pressed_keys
-            .insert(unmodified_key_name(key).to_string());
-        if key == "ESCAPE" {
-            self.dispatch_escape()
-        } else {
-            self.dispatch_key(key, text)
-        }
+        self.with_host_input_operation(|| {
+            super::editbox_update::flush(self)?;
+            let normalized = normalized_key_name(key);
+            let key = normalized.as_str();
+            self.state
+                .borrow_mut()
+                .pressed_keys
+                .insert(unmodified_key_name(key).to_string());
+            if key == "ESCAPE" {
+                self.dispatch_escape()
+            } else {
+                self.dispatch_key(key, text)
+            }
+        })
     }
 
     /// Release a physical key without dispatching another key-down event.

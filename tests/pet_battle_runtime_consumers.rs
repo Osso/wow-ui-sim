@@ -259,7 +259,7 @@ fn assert_type_hint(env: &WowLuaEnv, defender_type: i32, suffix: Option<&str>) {
     assert_eq!(shown, suffix.is_some());
     if let Some(suffix) = suffix {
         let texture: String = env
-            .eval("return PetBattleFrame.BottomFrame.abilityButtons[1].BetterIcon:GetTexture()")
+            .eval("return PetBattleFrame.BottomFrame.abilityButtons[1].BetterIcon:GetTextureFilePath()")
             .unwrap();
         assert_eq!(
             texture,

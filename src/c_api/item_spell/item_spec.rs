@@ -107,6 +107,8 @@ pub(super) fn get_item_spec_info(state: &mut LuaState) -> LuaResult<u32> {
     let value = rilua::table_security::unwrap_secret(state, stack_val(state, 1))?;
     let item = super::parse_item_id_key(state, value)
         .ok_or_else(|| runtime_error("C_Item.GetItemSpecInfo: expected itemInfo"))?;
+    let characterless_login_key =
+        crate::c_api::c_game_rules::key_from_name(state, "CharacterlessLogin");
     let filtered = {
         let mut sim = borrow_state_mut(state)?;
         let level = sim.player.level;
@@ -127,7 +129,7 @@ pub(super) fn get_item_spec_info(state: &mut LuaState) -> LuaResult<u32> {
         let class = if sim
             .game_rules
             .rules
-            .get("CharacterlessLogin")
+            .get(&characterless_login_key)
             .and_then(|rule| rule.integer_value)
             .is_some_and(|v| v != 0)
         {

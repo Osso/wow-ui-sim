@@ -1,4 +1,4 @@
-//! Retail color-override state exposed through C_ColorOverrides.
+//! Retail and WoW Forever color-override state exposed through C_ColorOverrides.
 
 use super::c_ui_color::{channels_from_packed_color, copy_mixin_members, find_color_mixin};
 use super::helpers::{bad_argument, parse_numeric_string, set_global_val};
@@ -53,7 +53,7 @@ const SET_USAGE: &str = "Usage: C_ColorOverrides.SetColorOverride(overrideType, 
 type PersistedOverride = [u8; 5];
 
 pub(crate) fn register(lua: &mut rilua::Lua) -> LuaResult<()> {
-    if ACTIVE != ClientProfile::Retail {
+    if !matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever) {
         return Ok(());
     }
 

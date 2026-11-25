@@ -1,3 +1,7 @@
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+use crate::common::blizzard_addon_harness::{
+    blizzard_ui_dir, load_blizzard_addon_closure_into_env, new_blizzard_addon_env,
+};
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::screen::ScreenKind;
 
@@ -229,6 +233,101 @@ fn physical_display_input_matches_captured_wow_ui_dimensions() {
         "#,
     )
     .expect("display resize must retain scale and update aspect ratio");
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+const GRAPHICS_ADAPTER_SCRIPT: &str = r#"
+    local options = __video_adapter_options()
+    local function hasAdapter(name)
+        for _, option in ipairs(options) do
+            if option.value == name then return true end
+        end
+        return false
+    end
+    assert(hasAdapter("Integrated Test Adapter"), "integrated adapter missing from graphics options")
+    assert(hasAdapter("External Test Adapter"), "external adapter missing from graphics options")
+    SetCVar("gxAdapter", "External Test Adapter")
+    assert(Settings.GetValue("PROXY_GX_ADAPTER") == "External Test Adapter",
+           "graphics setting should show the selected adapter")
+"#;
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+const FIRST_DISPLAY_SCRIPT: &str = r#"
+    local function hasResolution(options, value)
+        for _, option in ipairs(options) do
+            if option.value == value then return true end
+        end
+        return false
+    end
+    assert(hasResolution(__video_resolution_options(), "1280x720"), "initial options")
+    assert(Settings.GetValue("PROXY_RESOLUTION") == "1280x720", "initial setting value")
+    Settings.SetValue("PROXY_RESOLUTION", "1600x900", true)
+    local size = C_VideoOptions.GetCurrentGameWindowSize()
+    local physicalWidth, physicalHeight = GetPhysicalScreenSize()
+    assert(size.x == 1600 and size.y == 900, "C_VideoOptions did not read updated model")
+    assert(physicalWidth == 1600 and physicalHeight == 900, "physical display did not update")
+    assert(Settings.GetValue("PROXY_RESOLUTION") == "1600x900", "consumer value did not update")
+"#;
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+const SECOND_DISPLAY_SCRIPT: &str = r#"
+    local hasResolution = false
+    for _, option in ipairs(__video_resolution_options()) do
+        if option.value == "2560x1440" then hasResolution = true end
+    end
+    assert(hasResolution, "second display missing from consumer options")
+    assert(Settings.GetValue("PROXY_RESOLUTION") == "2560x1440", "second consumer value")
+"#;
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn original_graphics_adapter_setting_uses_host_model() {
+    let env = load_graphics_consumer(1920.0, 1080.0);
+    env.set_gx_adapter_info(&[
+        ("Integrated Test Adapter", true, false),
+        ("External Test Adapter", false, true),
+    ]);
+    env.exec(GRAPHICS_ADAPTER_SCRIPT)
+        .expect("original Graphics adapter setting should show supplied host adapters");
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn original_graphics_resolution_setting_tracks_display_model() {
+    load_graphics_consumer(1280.0, 720.0)
+        .exec(FIRST_DISPLAY_SCRIPT)
+        .expect("original Graphics resolution setting should update display state");
+    load_graphics_consumer(2560.0, 1440.0)
+        .exec(SECOND_DISPLAY_SCRIPT)
+        .expect("original Graphics setting should read a second configured display size");
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn load_graphics_consumer(width: f32, height: f32) -> WowLuaEnv {
+    let ui = blizzard_ui_dir();
+    let env = new_blizzard_addon_env(&ui);
+    env.set_display_size(width, height)
+        .expect("set physical display size");
+    load_blizzard_addon_closure_into_env(&env, &ui, &["Blizzard_Settings_Shared"], &[]);
+    env.exec(include_str!("screen_mode_video_options_capture.lua"))
+        .expect("instrument dropdown creation for behavior test");
+    let loaded = load_blizzard_addon_closure_into_env(
+        &env,
+        &ui,
+        &["Blizzard_SettingsDefinitions_Shared"],
+        &[],
+    );
+    assert!(
+        loaded
+            .iter()
+            .any(|name| name == "Blizzard_SettingsDefinitions_Shared")
+    );
+    env.fire_event("VARIABLES_LOADED")
+        .expect("allow Settings registrants to run");
+    env.fire_event("PLAYER_ENTERING_WORLD")
+        .expect("run original game Graphics settings registrant");
+    wow_ui_sim::startup::settle_headless_startup(&env);
+    env
 }
 
 #[test]

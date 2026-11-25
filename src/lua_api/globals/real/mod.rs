@@ -5,21 +5,34 @@
 //! `lua_api::workarounds::{temporary,permanent}` instead.
 
 pub(crate) mod achievement_eligibility;
+pub(crate) mod achievement_ui_access;
 pub mod action_bar_state;
 pub mod action_highlights;
 pub(crate) mod ambiguate;
 pub(crate) mod bank_reagents;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) mod battle_net_account;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) mod battle_net_friends;
 pub(crate) mod bit_library;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) mod bnet_blocked_list;
 #[cfg(feature = "client-retail")]
 pub(crate) mod bnet_friend_index;
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) mod break_up_large_numbers;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) mod camera_fov_defaults;
 pub mod combat_probes;
 pub mod combat_stats;
 pub mod combo_points;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) mod configuration_warnings;
 pub mod container_legacy;
 pub mod cursor_model;
 pub(crate) mod cursor_presentation;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) mod dangerous_scripts;
 pub(crate) mod display_scale;
 #[cfg(feature = "retail-12-0-0")]
 pub mod event_callbacks;
@@ -99,8 +112,9 @@ pub(crate) mod macro_getters;
 pub mod math_extensions;
 pub(crate) mod merchant_affordability;
 pub mod merchant_buyback;
+pub(crate) mod merchant_filter;
 pub mod merchant_item_link;
-#[cfg(feature = "client-wowforever")]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub mod merchant_repair;
 mod merchant_requirements;
 #[cfg(feature = "client-mists")]
@@ -119,17 +133,22 @@ pub mod net_stats;
 pub(crate) mod party_ai;
 #[cfg(feature = "retail-12-0-7")]
 pub(crate) mod performance_inputs;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) mod performance_metrics;
 pub mod pet_bar;
 pub mod pet_stats;
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub mod player_facing;
 pub mod player_identity;
+pub(crate) mod player_languages;
 pub mod player_probes;
 pub mod preferred_interact;
 pub(crate) mod protected_globals;
 pub mod publication_12_0_0;
 #[cfg(feature = "retail-12-0-0")]
 pub(crate) mod publication_unit_12_0_0;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub mod pvp_talent_info;
 pub(crate) mod quest_dialog;
 #[cfg(any(
     feature = "client-retail",
@@ -137,6 +156,8 @@ pub(crate) mod quest_dialog;
     feature = "client-wowforever"
 ))]
 pub(crate) mod quest_faction_group;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) mod quest_objective_info;
 #[cfg(feature = "retail-12-0-0")]
 pub(crate) mod raid_targets;
 #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
@@ -165,14 +186,19 @@ pub mod spell_tabs;
 pub mod string_extensions;
 pub mod table_extensions;
 pub mod table_freeze;
+#[cfg(feature = "client-retail")]
+pub(crate) mod taxi_map;
 pub mod template_queries;
 pub mod timerunning;
 pub mod totems;
+pub(crate) mod trainer_services;
 pub(crate) mod tutorial_requests;
 pub mod ui_widget_container;
 #[cfg(any(feature = "client-era", feature = "client-anniversary"))]
 pub(crate) mod unit_health_knowledge;
 pub mod unit_interaction;
+#[cfg(feature = "client-retail")]
+pub(crate) mod unit_power_display_mod;
 #[cfg(feature = "aura-containers")]
 pub mod unit_relationships;
 pub(crate) mod unit_roles;
@@ -186,6 +212,10 @@ pub mod unit_speed;
     any(feature = "profile-retail", feature = "client-ptr")
 ))]
 pub mod unit_spell_target_name;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) mod unit_stagger;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) mod unit_threat;
 pub(crate) mod utf8_case;
 pub mod vehicle_possession;
 pub mod voice_chat_probes;

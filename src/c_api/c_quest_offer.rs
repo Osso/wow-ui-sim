@@ -5,9 +5,9 @@ use std::collections::HashMap;
 use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::SimState;
 use crate::lua_api::methods::{
-    borrow_state, create_table, create_table_with_fields, table_set_num,
+    borrow_state, create_string, create_table, create_table_with_fields, table_set_num,
 };
-use crate::lua_bridge::table_set_rust_fn_static;
+use crate::lua_bridge::{FromStack, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 
@@ -32,7 +32,69 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
         namespace,
         "GetQuestOfferMajorFactionReputationRewards",
         get_major_faction_reputation_rewards,
-    )
+    )?;
+    if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever) {
+        register_progress_requirement_queries(state)?;
+    }
+    Ok(())
+}
+
+fn register_progress_requirement_queries(state: &mut LuaState) -> LuaResult<()> {
+    let namespace = super::ensure_namespace(state, "C_QuestOffer")?;
+    table_set_rust_fn_static(
+        state,
+        namespace,
+        "GetQuestRequiredCurrencyInfo",
+        read_required_currency_info,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        namespace,
+        "GetHideRequiredItems",
+        read_hide_required_items,
+    )?;
+    Ok(())
+}
+
+fn read_hide_required_items(state: &mut LuaState) -> LuaResult<u32> {
+    // INFERRED (R88db pending): absent inputs leave required rows visible.
+    let hidden = {
+        let sim = borrow_state(state)?;
+        crate::c_api::quest_objectives::progress_requirements_for_active_dialog(&sim)
+            .map(|requirements| requirements.hide_required_items)
+            .unwrap_or(false)
+    };
+    state.push(Val::Bool(hidden));
+    Ok(1)
+}
+
+fn read_required_currency_info(state: &mut LuaState) -> LuaResult<u32> {
+    let index = Option::<f64>::from_stack(state, 1)?.unwrap_or(0.0) as usize;
+    let currency = {
+        let sim = borrow_state(state)?;
+        crate::c_api::quest_objectives::progress_requirements_for_active_dialog(&sim)
+            .and_then(|requirements| requirements.currencies.get(index.saturating_sub(1)))
+            .cloned()
+    };
+    let Some(currency) = currency.filter(|_| index > 0) else {
+        return Ok(0);
+    };
+    let name = create_string(state, &currency.name);
+    let info = create_table_with_fields(
+        state,
+        &[
+            ("texture", Val::Num(f64::from(currency.texture))),
+            ("name", name),
+            ("currencyID", Val::Num(f64::from(currency.currency_id))),
+            ("quality", Val::Num(f64::from(currency.quality))),
+            (
+                "requiredAmount",
+                Val::Num(f64::from(currency.required_amount)),
+            ),
+        ],
+    );
+    state.push(info);
+    Ok(1)
 }
 
 fn rewards_for_active_dialog(sim: &SimState) -> Option<&[(i32, i32)]> {

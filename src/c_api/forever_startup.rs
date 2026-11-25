@@ -4,9 +4,9 @@ use std::collections::{HashMap, HashSet};
 
 use crate::c_api::helpers::ensure_namespace;
 use crate::client_profile::{ACTIVE, ClientProfile};
+pub use crate::lua_api::globals::auras::GroupBuffAlert;
 use crate::lua_api::methods::{
     borrow_state, borrow_state_mut, create_string, create_table, create_table_with_fields,
-    table_set_num,
 };
 use crate::lua_bridge::{FromStack, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
@@ -88,7 +88,6 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     if ACTIVE != ClientProfile::WowForever {
         return Ok(());
     }
-    register_group_buffs(state)?;
     register_external_event(state)?;
     register_character_queries(state)?;
     register_services(state)?;
@@ -342,31 +341,6 @@ fn push_external_flag(state: &mut LuaState, query: fn(&ExternalEvent) -> bool) -
     Ok(1)
 }
 
-fn register_group_buffs(state: &mut LuaState) -> LuaResult<()> {
-    let auras = ensure_namespace(state, "C_UnitAuras")?;
-    table_set_rust_fn_static(state, auras, "GetGroupBuffVisualAlerts", group_buff_alerts)
-}
-
-fn group_buff_alerts(state: &mut LuaState) -> LuaResult<u32> {
-    let alerts = borrow_state(state)?
-        .forever_startup
-        .group_buff_alerts
-        .clone();
-    let rows = state.gc.alloc_table(rilua::vm::table::Table::new());
-    for (index, alert) in alerts.iter().enumerate() {
-        let row = create_table_with_fields(
-            state,
-            &[
-                ("spellID", Val::Num(f64::from(alert.spell_id))),
-                ("visualValue", Val::Num(f64::from(alert.visual_value))),
-            ],
-        );
-        table_set_num(state, rows, (index + 1) as f64, row);
-    }
-    state.push(Val::Table(rows));
-    Ok(1)
-}
-
 /// Pinned Forever API/selected-consumer event names; registration is not event generation.
 pub(crate) fn accepts_event(name: &str) -> bool {
     ACTIVE == ClientProfile::WowForever
@@ -416,10 +390,4 @@ pub struct ExternalEvent {
     pub url: String,
     pub can_show: bool,
     pub is_new: bool,
-}
-
-#[derive(Debug, Clone)]
-pub struct GroupBuffAlert {
-    pub spell_id: i32,
-    pub visual_value: i32,
 }

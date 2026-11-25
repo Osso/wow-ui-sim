@@ -4394,7 +4394,6 @@ FontString:UseModelCenterToTransform
 FontString:_AddMessageSilent
 Frame:AddAccessRestrictions
 Frame:AddAtlas
-Frame:AddDataProvider
 Frame:AddDoubleLine
 Frame:AddFontStrings
 Frame:AddForbiddenAspects
@@ -4402,7 +4401,6 @@ Frame:AddHistoryLine
 Frame:AddLine
 Frame:AddMaskTexture
 Frame:AddMessage
-Frame:AddModule
 Frame:AddMsg
 Frame:AddOnDisplayRefreshedCallback
 Frame:AddRoleset
@@ -4423,7 +4421,6 @@ Frame:BackFillMessage
 Frame:CalculateAction
 Frame:CallMethod
 Frame:CanBeAccessedInContext
-Frame:CanInterpolateScroll
 Frame:CanNonSpaceWrap
 Frame:CanSetUnit
 Frame:CanWordWrap
@@ -4703,7 +4700,6 @@ Frame:HasAttachmentPoints
 Frame:HasCustomCamera
 Frame:HasFocus
 Frame:HasMessageByID
-Frame:HasModule
 Frame:HasText
 Frame:HasTrackableSource
 Frame:HighlightText
@@ -4715,7 +4711,6 @@ Frame:IsBlockingLoadRequested
 Frame:IsCountInvisibleLetters
 Frame:IsDelaying
 Frame:IsDesaturated
-Frame:IsDirty
 Frame:IsDone
 Frame:IsDown
 Frame:IsDownOver
@@ -4751,7 +4746,6 @@ Frame:IsTextCopyable
 Frame:IsTruncated
 Frame:IsUsingModelCenterToTransform
 Frame:MakeCurrentCameraCustom
-Frame:MarkDirty
 Frame:MarkDisplayDirty
 Frame:NavigateHome
 Frame:NavigateTo
@@ -4777,12 +4771,9 @@ Frame:RegisterForClicks
 Frame:RegisterForMouse
 Frame:RegisterForWidgetSet
 Frame:RegisterFrames
-Frame:RemoveAllModules
 Frame:RemoveAnimations
-Frame:RemoveDataProvider
 Frame:RemoveMaskTexture
 Frame:RemoveMessagesByPredicate
-Frame:RemoveModule
 Frame:RemoveRoleset
 Frame:ReplaceIconTexture
 Frame:ResetAllFadeTimes
@@ -4876,7 +4867,6 @@ Frame:SetDegrees
 Frame:SetDesaturated
 Frame:SetDesaturation
 Frame:SetDesiredWidth
-Frame:SetDirtyMethod
 Frame:SetDisabledAtlas
 Frame:SetDisabledCheckedTexture
 Frame:SetDisabledFontObject
@@ -4944,7 +4934,6 @@ Frame:SetIconTexture
 Frame:SetInboxItem
 Frame:SetIndentedWordWrap
 Frame:SetInsertMode
-Frame:SetInterpolateScroll
 Frame:SetInventoryItem
 Frame:SetIsDefaultCallback
 Frame:SetItem
@@ -5018,7 +5007,6 @@ Frame:SetPlayerPingScale
 Frame:SetPlayerPingTexture
 Frame:SetPlayerTexture
 Frame:SetPlaying
-Frame:SetPortraitToAsset
 Frame:SetPortraitZoom
 Frame:SetPosition
 Frame:SetPushedAtlas
@@ -5104,7 +5092,6 @@ Frame:SetThickness
 Frame:SetThumbTexture
 Frame:SetTimeVisible
 Frame:SetTimerDuration
-Frame:SetTitle
 Frame:SetToAlpha
 Frame:SetToFinalAlpha
 Frame:SetToTargetValue
@@ -5158,7 +5145,6 @@ Frame:Undress
 Frame:UndressSlot
 Frame:UnregisterCallback
 Frame:UnregisterForWidgetSet
-Frame:Update
 Frame:UpdateBlips
 Frame:UpdateCamera
 Frame:UpdateHeight

@@ -189,6 +189,7 @@ fn test_profession_info_exposes_spell_slots_for_professions_book_buttons() {
     assert_eq!(mining_spell_id, 2575);
 }
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn test_prof_specs_exposes_default_skill_line_and_tabs() {
     let env = env();

@@ -1,7 +1,7 @@
 //! Club membership state. IDs are opaque strings, never roster positions.
 //! INFERRED: string token representation; cached docs name an opaque type but do
 //! not prescribe its Lua representation. Numeric selectors are not retained.
-use std::collections::BTreeMap;
+use std::collections::{BTreeMap, BTreeSet};
 
 use crate::lua_api::state::GuildMember;
 
@@ -177,6 +177,14 @@ pub struct ClubState {
     /// Restrictions deny mutations without events; queries remain available.
     pub initialized: bool,
     pub restriction_reason: u8,
+    /// INFERRED host input: clubs whose account currently cannot use chat.
+    pub account_muted_club_ids: BTreeSet<String>,
+    /// INFERRED R88fq: club types the client allows in community flows.
+    pub allowed_club_types: BTreeSet<i32>,
+    /// Club streams currently focused by Communities.
+    pub focused_streams: BTreeSet<(String, u64)>,
+    /// The stream whose view marker advances while focused.
+    pub auto_advance_stream: Option<(String, u64)>,
     next_id: u64,
     pub(crate) guild_message_authors: BTreeMap<String, Member>,
     pub(crate) guild_seed_author_ids: Vec<String>,
@@ -189,11 +197,19 @@ impl Default for ClubState {
             clubs: BTreeMap::new(),
             initialized: true,
             restriction_reason: 0,
+            account_muted_club_ids: BTreeSet::new(),
+            allowed_club_types: default_allowed_club_types(),
+            focused_streams: BTreeSet::new(),
+            auto_advance_stream: None,
             next_id: 0,
             guild_message_authors: BTreeMap::new(),
             guild_seed_author_ids: Vec::new(),
         }
     }
+}
+
+fn default_allowed_club_types() -> BTreeSet<i32> {
+    BTreeSet::from([0, 1])
 }
 
 impl ClubState {

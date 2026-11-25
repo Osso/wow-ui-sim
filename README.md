@@ -232,6 +232,12 @@ docker run --rm -v "$(pwd)/screenshots:/out" \
   ghcr.io/osso/wow-ui-sim screenshot -o /out/screenshot.webp
 ```
 
+`run-tests MyAddon` loads `MyAddon` from its `.toc` before the test files run, so
+tests call the addon's globals directly. Other addons whose `## Interface` does
+not list the simulator's client version are skipped as out of date, as in the
+game; the addon under test is loaded anyway, with a warning on stderr, and also under
+`--no-addons`. `WOW_SIM_LOAD_OUT_OF_DATE_ADDONS=1` loads every out-of-date addon.
+
 For deterministic timing in addon tests, see the [manual clock example](docs/admin-api/challenge-mode.md#phase-b-explicit-manual-clock).
 
 The image does not include WoW game assets; screenshots may omit textures unless
@@ -309,6 +315,13 @@ the full generator, and records the input hash and build 12.1.5.70391 in the
 output header. Existing spell IDs and all other bytes remain unchanged. This
 mode does not need `Spell.csv`; full `wow-cli generate spells` still requires
 all original CSV inputs and writes the same attribute field.
+
+### Retail UiMap help-position regeneration
+
+`wow-cli generate ui-map-help-text-positions` regenerates the separate
+`UiMapID -> HelpTextPosition` table from
+`data/db2/retail-12.1.5.70961/UiMap.csv`. It does not rewrite the existing
+`UiMapInfo` fields.
 
 ## Writing Tests
 

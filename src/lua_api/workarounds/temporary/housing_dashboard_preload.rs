@@ -34,6 +34,11 @@ if type(C_Housing) == "table" then
         function ClearCachedActivitiesForPlayer() end
     end
 
+end
+"#;
+
+const HOUSE_FINDER_COMPAT_LUA: &str = r#"
+if type(C_Housing) == "table" then
     local HOUSING_SIM_NEIGHBORHOODS = {
         {
             neighborhoodGUID = "wow-ui-sim-neighborhood-dawnmeadow",
@@ -50,17 +55,14 @@ if type(C_Housing) == "table" then
             suggestionReason = Enum.HouseFinderSuggestionReason.None,
         },
     }
-
     local HOUSING_SIM_MAP_IDS = {
         ["wow-ui-sim-neighborhood-dawnmeadow"] = 1,
         ["wow-ui-sim-neighborhood-umber-grove"] = 2248,
     }
-
     local HOUSING_SIM_TEXTURE_SUFFIXES = {
         ["wow-ui-sim-neighborhood-dawnmeadow"] = "elwynn",
         ["wow-ui-sim-neighborhood-umber-grove"] = "durotar",
     }
-
     function C_Housing.HouseFinderRequestNeighborhoods()
         if HouseFinderFrame and type(HouseFinderFrame.OnEvent) == "function" then
             HouseFinderFrame:OnEvent("NEIGHBORHOOD_LIST_UPDATED", Enum.HousingResult.Success, HOUSING_SIM_NEIGHBORHOODS)
@@ -73,33 +75,19 @@ if type(C_Housing) == "table" then
             C_Housing.RequestHouseFinderNeighborhoodData(firstNeighborhood.neighborhoodGUID, firstNeighborhood.neighborhoodName)
         end
     end
-
     function C_Housing.GetUIMapIDForNeighborhood(neighborhoodGUID)
         return HOUSING_SIM_MAP_IDS[neighborhoodGUID]
     end
-
     function C_Housing.GetNeighborhoodTextureSuffix(neighborhoodGUID)
         return HOUSING_SIM_TEXTURE_SUFFIXES[neighborhoodGUID]
     end
-
     function C_Housing.DoesFactionMatchNeighborhood(neighborhoodGUID)
         return true
     end
-
     function C_Housing.RequestHouseFinderNeighborhoodData(neighborhoodGUID, neighborhoodName)
         local mapPlotData = {
-            {
-                mapPosition = { x = 0.35, y = 0.46 },
-                ownerType = Enum.HousingPlotOwnerType.None,
-                plotID = 1,
-                plotCost = 100000,
-            },
-            {
-                mapPosition = { x = 0.62, y = 0.52 },
-                ownerName = "Simfriend",
-                ownerType = Enum.HousingPlotOwnerType.Friend,
-                plotID = 2,
-            },
+            { mapPosition = { x = 0.35, y = 0.46 }, ownerType = Enum.HousingPlotOwnerType.None, plotID = 1, plotCost = 100000 },
+            { mapPosition = { x = 0.62, y = 0.52 }, ownerName = "Simfriend", ownerType = Enum.HousingPlotOwnerType.Friend, plotID = 2 },
         }
         local function dispatchNeighborhoodData()
             if HouseFinderFrame and type(HouseFinderFrame.OnEvent) == "function" then
@@ -115,7 +103,6 @@ if type(C_Housing) == "table" then
             dispatchNeighborhoodData()
         end
     end
-
     function C_Housing.StartTutorial()
         if type(C_AddOns) == "table" and type(C_AddOns.LoadAddOn) == "function" then
             if not AUTOCOMPLETE_LIST or not AUTOCOMPLETE_LIST.HOUSE_FINDER then
@@ -140,15 +127,18 @@ end
 "#;
 
 pub(crate) fn patch(env: &LoaderEnv<'_>) {
-    let result = env
+    let mut result = env
         .exec(super::housing_owned_house_requests::OWNED_HOUSE_REQUESTS_LUA)
         .and_then(|()| env.exec(HOUSING_DASHBOARD_PRELOAD_WORKAROUND_LUA));
+    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail {
+        result = result.and_then(|()| env.exec(HOUSE_FINDER_COMPAT_LUA));
+    }
     if let Err(error) = result {
         eprintln!("[housing-dashboard-preload] {error}");
     }
 }
 
-#[cfg(test)]
+#[cfg(all(test, not(feature = "client-retail")))]
 mod tests {
     use super::*;
     use crate::lua_api::WowLuaEnv;

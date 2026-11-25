@@ -5,17 +5,56 @@ use super::state::{AddonInfo, AppFrameMetrics, LoadDiagnostics, PendingTimer, Si
 use super::timer_processing::{reschedule_timer, timer_should_wait};
 use crate::Result;
 use crate::font::WowFontSystem;
-use crate::lua_api::methods::registry_get;
+use crate::lua_api::methods::{borrow_state_mut, registry_get};
+use crate::lua_bridge::table_set_rust_fn_static;
 use crate::screen::ScreenKind;
-use rilua::{LuaApiMut, Val};
+use rilua::{LuaApiMut, LuaResult, Val};
 use std::cell::RefCell;
 use std::collections::VecDeque;
 use std::rc::Rc;
 use std::time::{Duration, Instant};
 
 const RECENT_FRAME_WINDOW_SIZE: usize = 60;
+
+struct TimerReplySnapshot {
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    raid_info_replies: usize,
+    #[cfg(feature = "client-retail")]
+    owned_house_replies: VecDeque<Vec<crate::c_api::c_housing::current_house::HouseInfo>>,
+    #[cfg(feature = "client-retail")]
+    house_finder_replies: VecDeque<crate::c_api::c_housing::house_finder::HouseFinderReply>,
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pending_completions: usize,
+}
 // Blizzard SharedXML PixelUtil uses this reference height for pixel/UI conversion.
 pub(crate) const UI_REFERENCE_HEIGHT: f32 = 768.0;
+const SCREEN_SIZE_GLOBALS_LUA: &str = r#"
+function GetScreenWidth()
+    local scale = UIParent and UIParent.GetEffectiveScale and UIParent:GetEffectiveScale() or 1
+    local width = __wow_get_screen_metrics()
+    return width / scale
+end
+
+function GetScreenHeight()
+    local scale = UIParent and UIParent.GetEffectiveScale and UIParent:GetEffectiveScale() or 1
+    local _, height = __wow_get_screen_metrics()
+    return height / scale
+end
+
+function GetPhysicalScreenSize()
+    local _, _, width, height = __wow_get_screen_metrics()
+    return width, height
+end
+
+function GetScreenDPIScale()
+    return 1
+end
+
+function ConvertPixelsToUI(pixels, scale)
+    local _, _, _, physicalHeight = __wow_get_screen_metrics()
+    return pixels * {UI_REFERENCE_HEIGHT} / (physicalHeight * scale)
+end
+"#;
 
 #[cfg(feature = "timed-signal-maps")]
 fn next_timer_or_signal_delay(timer_delay: Option<Duration>, state: &SimState) -> Option<Duration> {
@@ -138,6 +177,22 @@ impl WowLuaEnv {
         self.apply_screen_dimensions((width, height), (width, height));
     }
 
+    /// Supply host graphics adapters for the Retail and Forever video model.
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub fn set_gx_adapter_info(&self, adapters: &[(&str, bool, bool)]) {
+        let mut state = self.state.borrow_mut();
+        state.gx_adapter_info = adapters
+            .iter()
+            .map(|(name, is_low_power, is_external)| {
+                crate::c_api::video_window::GxAdapterInfoDetails {
+                    name: (*name).to_owned(),
+                    is_low_power: *is_low_power,
+                    is_external: *is_external,
+                }
+            })
+            .collect();
+    }
+
     /// Set physical display pixels using WoW's 768-unit base UI canvas.
     /// UIParent scale is applied separately by the existing frame/CVar model.
     pub fn set_display_size(&self, width: f32, height: f32) -> Result<()> {
@@ -161,17 +216,7 @@ impl WowLuaEnv {
 
     fn apply_screen_dimensions(&self, canvas: (f32, f32), physical: (f32, f32)) {
         let (width, height) = canvas;
-        {
-            let mut state = self.state.borrow_mut();
-            state.screen_width = width;
-            state.screen_height = height;
-            state.physical_screen_width = physical.0;
-            state.physical_screen_height = physical.1;
-            state.invalidate_strata_buckets();
-            state.widgets.set_layout_physical_height(physical.1);
-            state.widgets.set_layout_canvas_size(width, height);
-            update_screen_widgets_for_dimensions(&mut state, width, height);
-        }
+        update_screen_dimensions(&mut self.state.borrow_mut(), (width, height), physical);
         install_screen_size_globals(self);
         self.notify_screen_size_changed();
     }
@@ -314,20 +359,188 @@ impl WowLuaEnv {
 
     /// Run ready timers and return how many callbacks fired.
     pub fn process_timers(&self) -> Result<usize> {
-        if self.state.borrow().manual_clock.is_some() {
-            return Ok(super::manual_timers::drain(
-                self.lua.borrow_mut().state_mut(),
-            )?);
-        }
-        let signal_fired = self.process_due_timed_signals();
+        let replies = self.take_timer_reply_snapshot();
+        let timer_fired = self.run_due_timer_callbacks()?;
+        self.dispatch_timer_replies(timer_fired, replies)
+    }
 
+    fn run_due_timer_callbacks(&self) -> Result<usize> {
+        if self.state.borrow().manual_clock.is_some() {
+            Ok(super::manual_timers::drain(
+                self.lua.borrow_mut().state_mut(),
+            )?)
+        } else {
+            Ok(self.process_regular_timers())
+        }
+    }
+
+    fn take_timer_reply_snapshot(&self) -> TimerReplySnapshot {
+        #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+        let raid_info_replies =
+            std::mem::take(&mut self.state.borrow_mut().pending_raid_info_replies).len();
+        #[cfg(feature = "client-retail")]
+        let owned_house_replies =
+            std::mem::take(&mut self.state.borrow_mut().pending_owned_house_replies);
+        #[cfg(feature = "client-retail")]
+        let house_finder_replies =
+            std::mem::take(&mut self.state.borrow_mut().pending_house_finder_replies);
+        #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+        let pending_completions = self.state.borrow().pending_combat_audio_utterance_ids.len();
+        TimerReplySnapshot {
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            raid_info_replies,
+            #[cfg(feature = "client-retail")]
+            owned_house_replies,
+            #[cfg(feature = "client-retail")]
+            house_finder_replies,
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            pending_completions,
+        }
+    }
+
+    fn dispatch_timer_replies(
+        &self,
+        timer_fired: usize,
+        replies: TimerReplySnapshot,
+    ) -> Result<usize> {
+        #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+        return self.dispatch_profile_timer_replies(timer_fired, replies);
+        #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+        {
+            let _ = replies;
+            Ok(timer_fired)
+        }
+    }
+
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    fn dispatch_profile_timer_replies(
+        &self,
+        timer_fired: usize,
+        replies: TimerReplySnapshot,
+    ) -> Result<usize> {
+        #[cfg(feature = "client-retail")]
+        let housing_replies = self.fire_owned_house_replies(replies.owned_house_replies)?
+            + self.fire_house_finder_replies(replies.house_finder_replies)?;
+        #[cfg(not(feature = "client-retail"))]
+        let housing_replies = 0;
+        self.fire_raid_info_replies(replies.raid_info_replies)?;
+        let completions = self.dispatch_combat_audio_completions(replies.pending_completions)?;
+        Ok(timer_fired + housing_replies + completions)
+    }
+
+    fn process_regular_timers(&self) -> usize {
+        let signal_fired = self.process_due_timed_signals();
         let now = self.state.borrow().clock_now();
         let timers = take_pending_timers(self);
         let (timer_fired, mut requeue) = process_timer_queue(self, timers, now);
         let mut state = self.state.borrow_mut();
         requeue.append(&mut state.rilua_timers);
         state.rilua_timers = requeue;
-        Ok(signal_fired + timer_fired)
+        signal_fired + timer_fired
+    }
+
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    fn dispatch_combat_audio_completions(&self, count: usize) -> Result<usize> {
+        let mut fired = 0;
+        for _ in 0..count {
+            let Some(utterance_id) = self
+                .state
+                .borrow_mut()
+                .pending_combat_audio_utterance_ids
+                .pop_front()
+            else {
+                break;
+            };
+            let args = [Val::Num(f64::from(utterance_id))];
+            if let Err(error) = self.fire_event_with_args("VOICE_CHAT_TTS_PLAYBACK_FINISHED", &args)
+            {
+                self.state
+                    .borrow_mut()
+                    .pending_combat_audio_utterance_ids
+                    .push_front(utterance_id);
+                return Err(error);
+            }
+            fired += 1;
+        }
+        Ok(fired)
+    }
+
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    fn fire_raid_info_replies(&self, count: usize) -> Result<()> {
+        let mut first_error = None;
+        for _ in 0..count {
+            if let Err(error) = self.fire_event("UPDATE_INSTANCE_INFO")
+                && first_error.is_none()
+            {
+                first_error = Some(error);
+            }
+        }
+        match first_error {
+            Some(error) => Err(error),
+            None => Ok(()),
+        }
+    }
+
+    #[cfg(feature = "client-retail")]
+    fn fire_house_finder_replies(
+        &self,
+        mut replies: std::collections::VecDeque<
+            crate::c_api::c_housing::house_finder::HouseFinderReply,
+        >,
+    ) -> Result<usize> {
+        let count = replies.len();
+        while let Some(reply) = replies.pop_front() {
+            if let Err(error) = self.dispatch_house_finder_reply(reply.clone()) {
+                let mut state = self.state.borrow_mut();
+                state.pending_house_finder_replies.push_front(reply);
+                state.pending_house_finder_replies.append(&mut replies);
+                return Err(error);
+            }
+        }
+        Ok(count)
+    }
+
+    #[cfg(feature = "client-retail")]
+    fn dispatch_house_finder_reply(
+        &self,
+        reply: crate::c_api::c_housing::house_finder::HouseFinderReply,
+    ) -> Result<()> {
+        use crate::c_api::c_housing::house_finder::{
+            HouseFinderReply, encode_neighborhoods, encode_plots,
+        };
+        match reply {
+            HouseFinderReply::Neighborhoods { success, rows } => {
+                let payload = encode_neighborhoods(self.lua.borrow_mut().state_mut(), rows);
+                self.fire_event_with_args("NEIGHBORHOOD_LIST_UPDATED", &[success, payload])
+            }
+            HouseFinderReply::Plots(plots) => {
+                let payload = encode_plots(self.lua.borrow_mut().state_mut(), plots);
+                self.fire_event_with_args("HOUSE_FINDER_NEIGHBORHOOD_DATA_RECIEVED", &[payload])
+            }
+        }
+    }
+
+    #[cfg(feature = "client-retail")]
+    fn fire_owned_house_replies(
+        &self,
+        mut replies: std::collections::VecDeque<
+            Vec<crate::c_api::c_housing::current_house::HouseInfo>,
+        >,
+    ) -> Result<usize> {
+        let count = replies.len();
+        while let Some(houses) = replies.pop_front() {
+            let payload = crate::c_api::c_housing::owned_houses::encode_house_list(
+                self.lua.borrow_mut().state_mut(),
+                houses.clone(),
+            );
+            if let Err(error) = self.fire_event_with_args("PLAYER_HOUSE_LIST_UPDATED", &[payload]) {
+                let mut state = self.state.borrow_mut();
+                state.pending_owned_house_replies.push_front(houses);
+                state.pending_owned_house_replies.append(&mut replies);
+                return Err(error);
+            }
+        }
+        Ok(count)
     }
 
     #[cfg(feature = "timed-signal-maps")]
@@ -367,8 +580,6 @@ impl WowLuaEnv {
         &self,
         elapsed: f64,
     ) -> Result<super::on_update::OnUpdateStageTimings> {
-        #[cfg(feature = "retail-12-0-5")]
-        super::execution_budget::reset_frame_budgets(self.lua.borrow_mut().state_mut())?;
         crate::c_api::c_login::advance(self)?;
         // INFERRED (simulator policy): map the native queued notification to this
         // dispatch boundary, before frame OnUpdate handlers; native delivery timing is unknown.
@@ -490,6 +701,49 @@ pub(crate) fn finalize_frame_metrics_state(
     update_addon_frame_metrics(&mut state.addons);
 }
 
+fn update_screen_dimensions(state: &mut SimState, canvas: (f32, f32), physical: (f32, f32)) {
+    let (width, height) = canvas;
+    state.screen_width = width;
+    state.screen_height = height;
+    state.physical_screen_width = physical.0;
+    state.physical_screen_height = physical.1;
+    state.invalidate_strata_buckets();
+    state.widgets.set_layout_physical_height(physical.1);
+    state.widgets.set_layout_canvas_size(width, height);
+    update_screen_widgets_for_dimensions(state, width, height);
+}
+
+/// INFERRED: a requested resolution updates simulator display state and emits its display event.
+pub(crate) fn set_display_size_from_lua(
+    lua_state: &mut rilua::vm::state::LuaState,
+    width: f32,
+    height: f32,
+) -> LuaResult<()> {
+    if ![width, height]
+        .into_iter()
+        .all(|value| value.is_finite() && value > 0.0)
+    {
+        return Err(rilua::runtime_error(
+            "window dimensions must be finite and positive",
+        ));
+    }
+    let canvas = (width / height * UI_REFERENCE_HEIGHT, UI_REFERENCE_HEIGHT);
+    if !canvas.0.is_finite() {
+        return Err(rilua::runtime_error(
+            "window aspect ratio exceeds UI canvas range",
+        ));
+    }
+    let mut model = borrow_state_mut(lua_state)?;
+    update_screen_dimensions(&mut model, canvas, (width, height));
+    drop(model);
+    crate::lua_api::globals::state_backed_queries::dispatch_event_now(
+        lua_state,
+        "DISPLAY_SIZE_CHANGED",
+        &[],
+    )?;
+    Ok(())
+}
+
 fn update_screen_widgets_for_dimensions(state: &mut SimState, width: f32, height: f32) {
     for name in &["UIParent", "WorldFrame"] {
         if let Some(id) = state.widgets.get_id_by_name(name)
@@ -502,40 +756,38 @@ fn update_screen_widgets_for_dimensions(state: &mut SimState, width: f32, height
 }
 
 fn install_screen_size_globals(env: &WowLuaEnv) {
-    let (width, height, physical_width, physical_height) = {
-        let state = env.state.borrow();
+    let reference_height = UI_REFERENCE_HEIGHT.to_string();
+    let script = SCREEN_SIZE_GLOBALS_LUA.replace("{UI_REFERENCE_HEIGHT}", &reference_height);
+    let _ = env.exec(&script);
+    install_screen_metrics_helper(env);
+}
+
+fn install_screen_metrics_helper(env: &WowLuaEnv) {
+    let mut lua = env.lua.borrow_mut();
+    let state = lua.state_mut();
+    table_set_rust_fn_static(
+        state,
+        state.global,
+        "__wow_get_screen_metrics",
+        screen_metrics,
+    )
+    .expect("register dynamic screen metrics");
+}
+
+fn screen_metrics(state: &mut rilua::vm::state::LuaState) -> LuaResult<u32> {
+    let metrics = {
+        let model = crate::lua_api::methods::borrow_state(state)?;
         (
-            state.screen_width,
-            state.screen_height,
-            state.physical_screen_width,
-            state.physical_screen_height,
+            model.screen_width,
+            model.screen_height,
+            model.physical_screen_width,
+            model.physical_screen_height,
         )
     };
-    let _ = env.exec(&format!(
-        r#"
-        function GetScreenWidth()
-            local scale = UIParent and UIParent.GetEffectiveScale and UIParent:GetEffectiveScale() or 1
-            return {width} / scale
-        end
-
-        function GetScreenHeight()
-            local scale = UIParent and UIParent.GetEffectiveScale and UIParent:GetEffectiveScale() or 1
-            return {height} / scale
-        end
-
-        function GetPhysicalScreenSize()
-            return {physical_width}, {physical_height}
-        end
-
-        function GetScreenDPIScale()
-            return 1
-        end
-
-        function ConvertPixelsToUI(pixels, scale)
-            return pixels * {UI_REFERENCE_HEIGHT} / ({physical_height} * scale)
-        end
-        "#
-    ));
+    for value in [metrics.0, metrics.1, metrics.2, metrics.3] {
+        state.push(Val::Num(f64::from(value)));
+    }
+    Ok(4)
 }
 
 fn install_screen_mode_globals(env: &WowLuaEnv, screen_kind: ScreenKind) {

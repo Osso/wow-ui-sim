@@ -61,7 +61,7 @@ fn aura(id: i32, duration: f64, expiration_time: f64) -> AuraInfo {
     AuraInfo {
         name: format!("Header aura {id}"),
         spell_id: 98000 + id,
-        icon: 134973,
+        icon: wow_ui_sim::lua_api::state::AuraIcon::FileId(134973),
         duration,
         expiration_time,
         applications: 1,

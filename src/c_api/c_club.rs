@@ -3,12 +3,12 @@ pub use super::club_inputs::{receive_member, receive_member_removal};
 use super::helpers::{ensure_namespace, set_table_array};
 use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::methods::{
-    borrow_state, borrow_state_mut, create_string, create_table, table_get, table_set,
-    val_to_string,
+    borrow_state, borrow_state_mut, call_function_state, create_string, create_table, table_get,
+    table_set, val_to_string,
 };
 use crate::lua_api::script_helpers::fire_named_event_state;
 use crate::lua_api::state_types::character_world::GuildChatMessage;
-use crate::lua_bridge::{FromStack, stack_val, table_set_rust_fn_static};
+use crate::lua_bridge::{FromStack, TableBuilder, stack_val, table_set_rust_fn_static};
 use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
 use rilua::vm::table::Table;
@@ -20,11 +20,53 @@ const GUILD_STREAM_ID: f64 = 1.0;
 const FIRST_MESSAGE_EPOCH: i64 = 1_700_000_000_000_000;
 const MESSAGE_EPOCH_STEP: i64 = 120_000_000;
 const INVITATION_CANDIDATES_USAGE: &str = "Usage: local candidates = C_Club.GetInvitationCandidates([filter, maxResults, cursorPosition, allowFullMatch], clubId)";
+const DEFAULT_COMMUNITY_AVATAR_FILE_ID: f64 = 134400.0;
+
+pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
+    if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever) {
+        builder
+            .set_function("SetAccountMutedClub", set_account_muted_club)?
+            .set_function("SetClubTypeAllowed", set_club_type_allowed)
+    } else {
+        Ok(builder)
+    }
+}
+
+// INFERRED R88fq (native evidence pending): supply account-muted club IDs as host scenario state.
+fn set_account_muted_club(state: &mut LuaState) -> LuaResult<u32> {
+    let club_id = super::club_members::string_arg(state, 1)?;
+    let muted = bool::from_stack(state, 2)?;
+    let mut sim = borrow_state_mut(state)?;
+    if muted {
+        sim.clubs.account_muted_club_ids.insert(club_id);
+    } else {
+        sim.clubs.account_muted_club_ids.remove(&club_id);
+    }
+    Ok(0)
+}
+
+// INFERRED R88fq (native evidence pending): supply the client policy for each club type.
+fn set_club_type_allowed(state: &mut LuaState) -> LuaResult<u32> {
+    let club_type = i32::from_stack(state, 1)?;
+    let allowed = bool::from_stack(state, 2)?;
+    let mut sim = borrow_state_mut(state)?;
+    if allowed {
+        sim.clubs.allowed_club_types.insert(club_type);
+    } else {
+        sim.clubs.allowed_club_types.remove(&club_type);
+    }
+    Ok(0)
+}
 
 pub(crate) fn register_club_info_surface(state: &mut LuaState) -> LuaResult<()> {
     let table_ref = ensure_namespace(state, "C_Club")?;
     super::club_members::register(state)?;
     register_club_status_methods(state, table_ref)?;
+    register_club_stream_focus_methods(state, table_ref)?;
+    register_club_profile_methods(state, table_ref)
+}
+
+fn register_club_profile_methods(state: &mut LuaState, table_ref: GcRef<Table>) -> LuaResult<()> {
     if ACTIVE == ClientProfile::WowForever {
         table_set_rust_fn_static(
             state,
@@ -33,20 +75,54 @@ pub(crate) fn register_club_info_surface(state: &mut LuaState) -> LuaResult<()> 
             c_club_get_invitation_candidates,
         )?;
     }
-    #[cfg(feature = "retail-12-1-0")]
-    table_set_rust_fn_static(
+    register_friend_request_methods(state, table_ref)?;
+    if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever) {
+        table_set_rust_fn_static(state, table_ref, "SetAvatarTexture", set_avatar_texture)?;
+    }
+    Ok(())
+}
+
+fn register_friend_request_methods(state: &mut LuaState, table_ref: GcRef<Table>) -> LuaResult<()> {
+    if matches!(
+        ACTIVE,
+        ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever
+    ) {
+        // INFERRED: Forever ClubDocumentation.lua:988,1041 declares both
+        // members; selected UnitPopupShared consumers use the Retail models.
+        table_set_rust_fn_static(
+            state,
+            table_ref,
+            "SendTitleFriendRequest",
+            c_club_send_title_friend_request,
+        )?;
+        table_set_rust_fn_static(
+            state,
+            table_ref,
+            "SendBattleTagFriendRequest",
+            c_club_send_battle_tag_friend_request,
+        )?;
+    }
+    Ok(())
+}
+
+/// INFERRED R88fq (native evidence pending): no avatar file mapping is supplied, so use the default community icon.
+fn set_avatar_texture(state: &mut LuaState) -> LuaResult<u32> {
+    let texture = stack_val(state, 1);
+    let _avatar_id = f64::from_stack(state, 2)?;
+    let _club_type = i32::from_stack(state, 3)?;
+    call_method(
         state,
-        table_ref,
-        "SendTitleFriendRequest",
-        c_club_send_title_friend_request,
+        texture,
+        "SetTexture",
+        Val::Num(DEFAULT_COMMUNITY_AVATAR_FILE_ID),
     )?;
-    #[cfg(feature = "retail-12-0-7")]
-    table_set_rust_fn_static(
-        state,
-        table_ref,
-        "SendBattleTagFriendRequest",
-        c_club_send_battle_tag_friend_request,
-    )?;
+    Ok(0)
+}
+
+fn call_method(state: &mut LuaState, object: Val, method: &str, argument: Val) -> LuaResult<()> {
+    let key = state.gc.intern_string(method.as_bytes());
+    let function = state.gettable(object, Val::Str(key))?;
+    call_function_state(state, function, &[object, argument])?;
     Ok(())
 }
 
@@ -63,7 +139,6 @@ fn c_club_get_invitation_candidates(state: &mut LuaState) -> LuaResult<u32> {
 
 /// Records a Battle.net friend request to a guild club member's account, once per
 /// member; acceptance is a server decision the simulator does not fabricate.
-#[cfg(feature = "retail-12-0-7")]
 fn c_club_send_battle_tag_friend_request(state: &mut LuaState) -> LuaResult<u32> {
     let member = super::club_members::guild_member_arg(state)?;
     let name = member
@@ -79,7 +154,6 @@ fn c_club_send_battle_tag_friend_request(state: &mut LuaState) -> LuaResult<u32>
 }
 
 /// Sends an in-game friend request to a guild club member, by their roster name.
-#[cfg(feature = "retail-12-1-0")]
 fn c_club_send_title_friend_request(state: &mut LuaState) -> LuaResult<u32> {
     let member = super::club_members::guild_member_arg(state)?;
     let name = member
@@ -87,7 +161,7 @@ fn c_club_send_title_friend_request(state: &mut LuaState) -> LuaResult<u32> {
         .map(|member| member.name);
     let mut sim = borrow_state_mut(state)?;
     if let Some(name) = name {
-        crate::c_api::c_battle_net_friend_search::record_title_friend_request(&mut *sim, &name);
+        crate::c_api::c_battle_net::record_title_friend_request(&mut *sim, &name);
     }
     Ok(0)
 }
@@ -109,7 +183,124 @@ fn register_club_privilege_methods(state: &mut LuaState, table_ref: GcRef<Table>
     )?;
     table_set_rust_fn_static(state, table_ref, "GetClubLimits", c_club_get_club_limits)?;
     table_set_rust_fn_static(state, table_ref, "IsEnabled", c_club_is_enabled)?;
+    if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever) {
+        table_set_rust_fn_static(state, table_ref, "IsAccountMuted", c_club_is_account_muted)?;
+        table_set_rust_fn_static(
+            state,
+            table_ref,
+            "ShouldAllowClubType",
+            should_allow_club_type,
+        )?;
+    }
     Ok(())
+}
+
+// INFERRED R88fq (Retail 12.1.5.70688; Forever 1.60.1.70707): Guild is always allowed;
+// Other and unrecognized values are rejected, while BattleNet and Character use supplied state.
+fn should_allow_club_type(state: &mut LuaState) -> LuaResult<u32> {
+    let club_type = i32::from_stack(state, 1)?;
+    let allowed = match club_type {
+        2 => true,
+        0 | 1 => borrow_state(state)?
+            .clubs
+            .allowed_club_types
+            .contains(&club_type),
+        _ => false,
+    };
+    state.push(Val::Bool(allowed));
+    Ok(1)
+}
+
+fn c_club_is_account_muted(state: &mut LuaState) -> LuaResult<u32> {
+    let club_id = super::club_members::string_arg(state, 1)?;
+    let muted = borrow_state(state)?
+        .clubs
+        .account_muted_club_ids
+        .contains(&club_id);
+    state.push(Val::Bool(muted));
+    Ok(1)
+}
+
+fn register_club_stream_focus_methods(
+    state: &mut LuaState,
+    table_ref: GcRef<Table>,
+) -> LuaResult<()> {
+    if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever) {
+        table_set_rust_fn_static(state, table_ref, "FocusStream", focus_stream)?;
+        table_set_rust_fn_static(state, table_ref, "UnfocusStream", unfocus_stream)?;
+        table_set_rust_fn_static(
+            state,
+            table_ref,
+            "SetAutoAdvanceStreamViewMarker",
+            set_auto_advance_stream_view_marker,
+        )?;
+    }
+    Ok(())
+}
+
+// VERIFIED (Retail/Forever ClubDocumentation.lua:339-354): this query returns a bool.
+// INFERRED R88fq (native evidence pending): focus succeeds when the supplied club has the stream.
+fn focus_stream(state: &mut LuaState) -> LuaResult<u32> {
+    let club_id = super::club_members::string_arg(state, 1)?;
+    let requested_stream_id = f64::from_stack(state, 2)?;
+    super::club_members::sync_guild(state)?;
+    let focused = {
+        let mut sim = borrow_state_mut(state)?;
+        let stream_id = sim
+            .clubs
+            .clubs
+            .get(&club_id)
+            .and_then(|club| {
+                club.streams
+                    .iter()
+                    .find(|stream| stream.id as f64 == requested_stream_id)
+            })
+            .map(|stream| stream.id);
+        if let Some(stream_id) = stream_id {
+            sim.clubs.focused_streams.insert((club_id, stream_id));
+            true
+        } else {
+            false
+        }
+    };
+    state.push(Val::Bool(focused));
+    Ok(1)
+}
+
+// VERIFIED (Retail/Forever ClubDocumentation.lua:1054-1064): selects one stream for auto-advance.
+// INFERRED R88fq: the selected stream ID is retained as host model state.
+fn set_auto_advance_stream_view_marker(state: &mut LuaState) -> LuaResult<u32> {
+    let club_id = super::club_members::string_arg(state, 1)?;
+    let requested_stream_id = f64::from_stack(state, 2)?;
+    super::club_members::sync_guild(state)?;
+    let mut sim = borrow_state_mut(state)?;
+    let stream_id = sim
+        .clubs
+        .clubs
+        .get(&club_id)
+        .and_then(|club| {
+            club.streams
+                .iter()
+                .find(|stream| stream.id as f64 == requested_stream_id)
+        })
+        .map(|stream| stream.id);
+    if let Some(stream_id) = stream_id {
+        sim.clubs.auto_advance_stream = Some((club_id, stream_id));
+    }
+    Ok(0)
+}
+
+// VERIFIED (Retail/Forever ClubDocumentation.lua:1193-1203): this function returns no values.
+fn unfocus_stream(state: &mut LuaState) -> LuaResult<u32> {
+    let club_id = super::club_members::string_arg(state, 1)?;
+    let requested_stream_id = f64::from_stack(state, 2)?;
+    let mut sim = borrow_state_mut(state)?;
+    sim.clubs
+        .focused_streams
+        .retain(|(focused_club_id, stream_id)| {
+            focused_club_id != &club_id || *stream_id as f64 != requested_stream_id
+        });
+    Ok(0)
 }
 
 fn register_club_message_methods(state: &mut LuaState, table_ref: GcRef<Table>) -> LuaResult<()> {

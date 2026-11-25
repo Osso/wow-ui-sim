@@ -1,6 +1,7 @@
 //! Mythic+, scenario, and death-recap substate types.
 
 use std::collections::HashMap;
+use std::time::Duration;
 
 /// One affix in the active Mythic+ season. Drives
 /// `C_MythicPlus.GetCurrentAffixes`.
@@ -70,15 +71,25 @@ pub struct OwnedKeystone {
     pub challenge_map_id: i32,
 }
 
+/// Result of the player's most recent Mythic+ weekly chest calculation.
+#[derive(Debug, Clone, Copy)]
+pub struct MythicPlusLastWeeklyChest {
+    /// Challenge-mode map ID for the cached weekly result.
+    pub challenge_map_id: i32,
+    /// Keystone level represented by the cached result.
+    pub level: i32,
+}
+
 /// Backing state for `C_MythicPlus.*` probes.
 #[derive(Debug, Clone)]
 pub struct MythicPlusState {
+    /// INFERRED pending R88cc: cached last-weekly-chest map and level.
+    pub last_weekly_chest: Option<MythicPlusLastWeeklyChest>,
     /// Active affixes for the current weekly rotation.
     pub current_affixes: Vec<MythicPlusAffix>,
     /// Current M+ season id (e.g. 14 = Dragonflight Season 4).
     pub current_season: i32,
-    /// `C_SeasonInfo` display season; 0 means no active display season.
-    /// The live value is server-supplied, so it stays unset until configured.
+    /// Retail/Forever default to the inferred newest season; other profiles keep 0.
     pub display_season_id: i32,
     /// Cached keystone context of the key the player currently owns.
     /// `None` = no context (nothing published); `Some` with a zero field models
@@ -91,6 +102,8 @@ pub struct MythicPlusState {
     #[cfg(feature = "retail-12-0-7")]
     pub season_best_per_map:
         HashMap<i32, (Option<MythicPlusWeeklyBest>, Option<MythicPlusWeeklyBest>)>,
+    /// INFERRED R88ev (native evidence pending): last admitted map-info request time.
+    pub(crate) last_map_info_request_at: Option<Duration>,
     /// Whether a Mythic+ run is currently in progress.
     pub is_active: bool,
     /// Whether the weekly Mythic+ reward is available to claim.
@@ -100,17 +113,23 @@ pub struct MythicPlusState {
 impl Default for MythicPlusState {
     fn default() -> Self {
         Self {
+            last_weekly_chest: None,
             current_affixes: vec![MythicPlusAffix {
                 id: 9,
                 season_id: 14,
             }],
             current_season: 14,
-            display_season_id: 0,
+            display_season_id: if crate::client_profile::ACTIVE.uses_tracked_season_maps() {
+                sim_data::mythic_plus_season_maps::NEWEST_DISPLAY_SEASON_ID as i32
+            } else {
+                0
+            },
             owned_keystone: None,
             run_history: Vec::new(),
             weekly_best_per_map: HashMap::new(),
             #[cfg(feature = "retail-12-0-7")]
             season_best_per_map: HashMap::new(),
+            last_map_info_request_at: None,
             is_active: false,
             is_weekly_reward_available: false,
         }
@@ -154,6 +173,12 @@ pub struct ScenarioState {
     pub num_steps: i32,
     /// Scenario type flag (matches `Enum.ScenarioType` values).
     pub scenario_type: i32,
+    /// Scenario flags used by the objective tracker.
+    pub flags: i32,
+    /// Experience reward supplied for the scenario.
+    pub xp: i32,
+    /// Money reward supplied for the scenario.
+    pub money: i32,
     /// UI texture kit name for the scenario tracker background.
     pub texture_kit: String,
     /// Whether this is a tiered entrance scenario. Drives
@@ -180,6 +205,9 @@ impl Default for ScenarioState {
             current_step: 1,
             num_steps: 0,
             scenario_type: 0,
+            flags: 0,
+            xp: 0,
+            money: 0,
             texture_kit: String::new(),
             is_tiered_entrance: false,
             tiered_entrance_active_spells: Vec::new(),

@@ -127,32 +127,30 @@ fn unit_trial_xp_and_banked_levels_read_state() {
     assert!(other_levels.abs() < 1e-6);
 }
 
+const RESTRICTED_ACCOUNT_STATE: &str = "A_Admin.SetAccountType({ accountType = 0, \
+    restricted = true, expansionTrial = false, expansionTrialExpiry = 0, \
+    restrictedLevel = 60, restrictedMoney = 250000 })";
+
+fn read_restricted_account_data(env: &WowLuaEnv) -> (f64, f64, f64) {
+    env.exec("lvl, money, prof = GetRestrictedAccountData()")
+        .unwrap();
+    (
+        env.eval("return lvl").unwrap(),
+        env.eval("return money").unwrap(),
+        env.eval("return prof").unwrap(),
+    )
+}
+
 #[test]
 fn get_restricted_account_data_returns_three_values() {
     let env = WowLuaEnv::new().expect("env");
-    env.exec("lvl, money, prof = GetRestrictedAccountData()")
-        .unwrap();
-    let lvl: f64 = env.eval("return lvl").unwrap();
-    let money: f64 = env.eval("return money").unwrap();
-    let prof: f64 = env.eval("return prof").unwrap();
-    assert!((lvl - 20.0).abs() < 1e-6);
-    assert!(money.abs() < 1e-6);
-    assert!(prof.abs() < 1e-6);
+    assert_eq!(read_restricted_account_data(&env), (20.0, 0.0, 0.0));
 
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     {
-        let mut state = env.state().borrow_mut();
-        state.player_xp.restricted_level = 60;
-        state.player_xp.restricted_money = 250_000;
-        state.player_xp.restricted_profession = 100;
+        env.exec(RESTRICTED_ACCOUNT_STATE).unwrap();
+        assert_eq!(read_restricted_account_data(&env), (60.0, 250_000.0, 0.0));
     }
-    env.exec("lvl, money, prof = GetRestrictedAccountData()")
-        .unwrap();
-    let lvl: f64 = env.eval("return lvl").unwrap();
-    let money: f64 = env.eval("return money").unwrap();
-    let prof: f64 = env.eval("return prof").unwrap();
-    assert!((lvl - 60.0).abs() < 1e-6);
-    assert!((money - 250_000.0).abs() < 1e-6);
-    assert!((prof - 100.0).abs() < 1e-6);
 }
 
 #[test]

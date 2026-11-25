@@ -34,7 +34,10 @@ fn get_num_loot_items(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn get_merchant_num_items(state: &mut LuaState) -> LuaResult<u32> {
-    let n = borrow_state(state)?.merchant_items.len() as f64;
+    let n = {
+        let sim = borrow_state(state)?;
+        super::real::merchant_filter::filtered_merchant_items(&sim).len() as f64
+    };
     state.push(Val::Num(n));
     Ok(1)
 }

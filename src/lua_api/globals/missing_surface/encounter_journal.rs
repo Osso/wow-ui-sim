@@ -31,11 +31,7 @@ use crate::lua_api::methods::{
 use crate::lua_bridge::{FromStack, stack_val, table_set_rust_fn_static};
 use crate::spells;
 use rilua::vm::closure::RustFn;
-#[cfg(feature = "retail-12-1-0")]
-use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
-#[cfg(feature = "retail-12-1-0")]
-use rilua::vm::table::Table;
 use rilua::{LuaApiMut, LuaResult, Val};
 
 mod adventure;
@@ -122,6 +118,10 @@ const EJ_GLOBAL_FUNCTIONS: &[(&str, RustFn)] = &[
 
 pub(super) fn register_encounter_journal_surface(state: &mut LuaState) -> LuaResult<()> {
     register_encounter_journal_functions(state)?;
+    #[cfg(any(feature = "retail-12-1-0", feature = "client-wowforever"))]
+    crate::c_api::c_encounter_journal_difficulty::register(state)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    crate::c_api::c_raid_locks::register(state)?;
     adventure::register_adventure_journal_surface(state)?;
     Ok(())
 }
@@ -131,28 +131,7 @@ fn register_encounter_journal_functions(state: &mut LuaState) -> LuaResult<()> {
     for &(name, handler) in ENCOUNTER_JOURNAL_FUNCTIONS {
         table_set_rust_fn_static(state, table_ref, name, handler)?;
     }
-    #[cfg(feature = "retail-12-1-0")]
-    register_patch_12_1_encounter_journal_functions(state, table_ref)?;
     Ok(())
-}
-
-#[cfg(feature = "retail-12-1-0")]
-fn register_patch_12_1_encounter_journal_functions(
-    state: &mut LuaState,
-    table_ref: GcRef<Table>,
-) -> LuaResult<()> {
-    table_set_rust_fn_static(
-        state,
-        table_ref,
-        "GetBaseDifficultyID",
-        get_base_difficulty_id,
-    )?;
-    table_set_rust_fn_static(
-        state,
-        table_ref,
-        "InstanceHasDifficultyID",
-        instance_has_difficulty_id,
-    )
 }
 
 pub(crate) fn register_ej_globals(lua: &mut rilua::Lua) -> LuaResult<()> {
@@ -182,43 +161,6 @@ fn get_instance_info(state: &mut LuaState) -> LuaResult<u32> {
     };
     push_instance_tuple(state, row);
     Ok(9)
-}
-
-#[cfg(feature = "retail-12-1-0")]
-fn get_base_difficulty_id(state: &mut LuaState) -> LuaResult<u32> {
-    let instance_id = u32::from_stack(state, 1)?;
-    let Some(row) = data::instance_by_id(instance_id) else {
-        state.push(Val::Nil);
-        return Ok(1);
-    };
-    let difficulty_id = base_difficulty_id(row);
-    state.push(Val::Num(difficulty_id as f64));
-    Ok(1)
-}
-
-#[cfg(feature = "retail-12-1-0")]
-fn instance_has_difficulty_id(state: &mut LuaState) -> LuaResult<u32> {
-    let instance_id = u32::from_stack(state, 1)?;
-    let difficulty_id = u32::from_stack(state, 2).unwrap_or(0);
-    let has_difficulty = data::instance_by_id(instance_id)
-        .map(|row| instance_difficulties(row).contains(&difficulty_id))
-        .unwrap_or(false);
-    state.push(Val::Bool(has_difficulty));
-    Ok(1)
-}
-
-#[cfg(feature = "retail-12-1-0")]
-fn base_difficulty_id(row: &data::Instance) -> u32 {
-    if row.is_raid { 14 } else { 1 }
-}
-
-#[cfg(feature = "retail-12-1-0")]
-fn instance_difficulties(row: &data::Instance) -> &'static [u32] {
-    if row.is_raid {
-        &[14, 15, 16, 17]
-    } else {
-        &[1, 2, 8, 23]
-    }
 }
 
 fn get_section_info(state: &mut LuaState) -> LuaResult<u32> {
@@ -581,9 +523,18 @@ fn ej_instance_is_raid(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn ej_is_valid_instance_difficulty(state: &mut LuaState) -> LuaResult<u32> {
-    let difficulty = u32::from_stack(state, 1).unwrap_or(0);
-    state.push(Val::Bool(difficulty > 0));
-    Ok(1)
+    #[cfg(any(feature = "retail-12-1-0", feature = "client-wowforever"))]
+    {
+        return crate::c_api::c_encounter_journal_difficulty::ej_is_valid_instance_difficulty(
+            state,
+        );
+    }
+    #[cfg(not(any(feature = "retail-12-1-0", feature = "client-wowforever")))]
+    {
+        let difficulty = u32::from_stack(state, 1).unwrap_or(0);
+        state.push(Val::Bool(difficulty > 0));
+        Ok(1)
+    }
 }
 
 fn ej_get_section_path(state: &mut LuaState) -> LuaResult<u32> {

@@ -11,13 +11,13 @@ Retail 12.1.0+ (`retail-12-1-0`, the default Retail epoch) and PTR `C_EncounterT
 - [x] Commit state before dispatching added/state/removed notifications. Callbacks can query or mutate events without holding a SimState borrow. Cancel-all operates on its original ID set, so events created by callbacks survive.
 - [x] Retain terminal data until at least one subsequent game tick has run its OnUpdate/OnPostUpdate callbacks. Remove before notifying `ENCOUNTER_TIMELINE_EVENT_REMOVED`; ID queries then return no result.
 - [x] Return ordinary LuaDurationObject wrappers sharing an event-owned clock. Existing wrappers follow pauses/resumes and freeze after termination/removal; changing one wrapper's duration fields does not mutate events or another wrapper.
-- [x] Retail epochs before 12.1.0 retain the seeded demo and 12.5-second placeholder timer. Retail 12.1.0+ and PTR exclude that demo entirely, including after the post-load compat bootstrap.
+- [x] Retail epochs before 12.1.0 and profiles without a modeled timeline retain the seeded demo and 12.5-second placeholder timer. Retail 12.1.0+ and Forever use the Rust timeline model; on Forever, `IsFeatureAvailable`/`IsFeatureEnabled` are false and the default event list is empty (INFERRED: the cached UI excludes the timeline consumer). Supplied script events reach the original Retail consumer and are queryable through the Forever API. Native encounter-event ingress is not modeled.
 
 ## Modeled choices and boundaries
 
 The timeline's clock starts at zero and accumulates the real runtime OnUpdate delta, matching animation simulation rather than the wall-clock `GetTime` epoch. Duration wrappers track `[0, duration]` using private read-only provider clocks; normal duration clock lookup observes provider metamethods. Finish forces elapsed to duration; cancellation freezes current elapsed. Invalid argument shapes error; unknown IDs return no values. Repeated or terminal transitions are no-ops. Added and state notifications dispatch synchronously in deterministic ID order; exact native uniqueness/coalescing is not claimed.
 
-Automatic completion occurs when active elapsed reaches duration plus the configured queue hold at tick start; public elapsed/remaining duration queries remain clamped to the countdown. Terminal events remain in lists/counts until post-update removal on a later tick. Script events are never blocked or approximate. Feature available/enabled are true in this core model, not modeled user settings. Request IDs/icon masks require nonnegative `u32` integers; durations require finite nonnegative numbers and severity is Low/Medium/High. These input policies are not native coercion evidence.
+Automatic completion occurs when active elapsed reaches duration plus the configured queue hold at tick start; public elapsed/remaining duration queries remain clamped to the countdown. Terminal events remain in lists/counts until post-update removal on a later tick. Script events are never blocked or approximate. Feature available/enabled are true on Retail, not modeled user settings; Forever reports both false by inferred client capability. Request IDs/icon masks require nonnegative `u32` integers; durations require finite nonnegative numbers and severity is Low/Medium/High. These input policies are not native coercion evidence.
 
 The dependent [track/view model](encounter-timeline-tracks.md) implements a bounded simulator queue-hold, track, filter, highlight, Edit Mode, and view model. Script timers remain countdown-clamped during holds. The core proof plus recorded track/view tests cover that model and real Blizzard consumers; neither establishes native hold placement, layout, timing, ordering, or security semantics.
 
@@ -28,15 +28,16 @@ The dependent [track/view model](encounter-timeline-tracks.md) implements a boun
 
 ## Implementation inventory
 
-- `src/c_api/c_encounter_timeline.rs`: registration, public mutations, event dispatch and tick boundaries.
+- `src/c_api/c_encounter_timeline.rs`: registration, public mutations, event dispatch and tick boundaries on Retail 12.1.0+ and Forever.
 - `src/c_api/c_encounter_timeline/`: owned event state, input validation, query snapshots and duration clock adapters.
 - `src/lua_api/on_update.rs`: runtime lifecycle progression/removal hooks.
 - `src/lua_api/globals/lua_duration_object/core.rs`: clock-provider lookup shared with manual clocks.
-- `src/lua_api/workarounds/temporary/encounter_state.rs`: earlier-profile demo only; encounter customization remains separate.
+- `src/lua_api/workarounds/temporary/encounter_state.rs`: demo for profiles without the timeline model; encounter customization remains separate.
 
 ## Tests asserting this spec
 
 - `tests/encounter_timeline_script.rs`: public API lifecycle, callbacks, clock progression, retained timers, validation, isolation and earlier-retail baseline.
+- `tests/encounter_timeline_forever.rs`: Retail original-consumer event display and Forever default-empty, feature-unavailable, script-event, and invalid-ID behavior.
 - `tests/duration_core.rs`: existing duration/manual-clock behavior.
 - `tests/system_api_seeded.rs`: seeded timeline expectations for epochs before 12.1.0; Retail 12.1.0+ and PTR use the lifecycle tests.
 - `startup_globals::test_patch_12_0_7_safe_global_bridges`: existing encounter color/customization consumer.
@@ -58,7 +59,7 @@ The PTR script tests load the existing Blizzard event-frame/settings files to ex
 
 - [x] Recorded core proof at `385c7790f`: nine PTR and five retail integration tests plus existing customization library proof (one PTR, two retail). Recorded dependent proof at `ec9f06834`: 18 PTR integration cases plus one library bridge; earlier-retail proof at `88461edd0`: five integration and two library cases.
 - [ ] Parent owns final combined check/readability/smoke and artifact-validation gates for the core plus [track/view implementation](encounter-timeline-tracks.md).
-- [ ] Native transition/coalescing, secrecy, unknown-spell and validation semantics remain unverified.
+- [ ] Native transition/coalescing, secrecy, unknown-spell, validation, and encounter-source event ingress remain unverified.
 
 ## Out of scope
 

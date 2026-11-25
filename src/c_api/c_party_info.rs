@@ -9,16 +9,20 @@
 
 use crate::c_api::helpers::{ensure_namespace, set_table_array};
 use crate::lua_api::globals::group_queries::active_party_count;
-use crate::lua_api::methods::create_table;
+#[cfg(any(not(feature = "retail-12-0-7"), feature = "client-retail"))]
+use crate::lua_api::methods::borrow_state;
 #[cfg(not(feature = "retail-12-0-7"))]
-use crate::lua_api::methods::{borrow_state, borrow_state_mut};
+use crate::lua_api::methods::borrow_state_mut;
+use crate::lua_api::methods::create_table;
 #[cfg(not(feature = "retail-12-0-7"))]
 use crate::lua_api::state::SEEDED_LOCAL_CHARACTER_GUID;
 use crate::lua_bridge::FromStack;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+use crate::lua_bridge::TableBuilder;
 #[cfg(feature = "retail-12-0-7")]
 use crate::lua_bridge::stack_val;
 use crate::lua_bridge::table_set_rust_fn_static;
-#[cfg(feature = "retail-12-0-7")]
+#[cfg(any(feature = "retail-12-0-7", feature = "client-wowforever"))]
 use rilua::runtime_error;
 use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
@@ -29,6 +33,8 @@ use rilua::{LuaResult, Val};
 pub(crate) mod countdown;
 #[cfg(feature = "retail-12-0-5")]
 mod loot_method;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) mod pending_invites;
 #[cfg(feature = "retail-12-0-5")]
 mod ping_restrictions;
 #[cfg(feature = "retail-12-0-7")]
@@ -37,6 +43,23 @@ pub(crate) mod roles_1207;
 pub(crate) mod solo_1207;
 
 const AVAILABLE_LOOT_METHODS: [i32; 5] = [0, 1, 2, 3, 4];
+
+/// Retail/Forever PartyInfoDocumentation.lua:196-201, 219-227, 230-245,
+/// 338-344, 378-384, 550-562.
+/// INFERRED (R88dt (native evidence pending)): supplied instance-abandon vote inputs.
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[derive(Default)]
+pub(crate) struct InstanceAbandonVoteState {
+    vote_duration: f64,
+    vote_time_left: f64,
+    shutdown_duration: f64,
+    shutdown_time_left: f64,
+    votes_required: f64,
+    keystone_owner_vote_weight: f64,
+    is_keystone_owner: bool,
+    response: Option<bool>,
+    group_responses: Vec<bool>,
+}
 
 /// INFERRED (simulator mapping, R88bk pending): mark the supplied active group as a raid.
 /// PartySync confirmation and event emission are UNKNOWN and remain unmodeled.
@@ -59,7 +82,11 @@ fn invite_unit(state: &mut LuaState) -> LuaResult<u32> {
 
 pub(crate) fn register_c_party_info_surface(state: &mut LuaState) -> LuaResult<()> {
     let table_ref = ensure_namespace(state, "C_PartyInfo")?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pending_invites::register(state)?;
     register_group_membership_probes(state, table_ref)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    register_instance_abandon_vote_surface(state, table_ref)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     table_set_rust_fn_static(state, table_ref, "ConvertToRaid", convert_to_raid)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
@@ -80,6 +107,195 @@ pub(crate) fn register_c_party_info_surface(state: &mut LuaState) -> LuaResult<(
         countdown::register(state, table_ref)?;
     }
     Ok(())
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn register_instance_abandon_vote_surface(
+    state: &mut LuaState,
+    table_ref: GcRef<Table>,
+) -> LuaResult<()> {
+    register_vote_information(state, table_ref)?;
+    register_vote_responses(state, table_ref)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn register_vote_information(state: &mut LuaState, table_ref: GcRef<Table>) -> LuaResult<()> {
+    table_set_rust_fn_static(
+        state,
+        table_ref,
+        "GetInstanceAbandonVoteRequirements",
+        vote_requirements,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        table_ref,
+        "IsChallengeModeKeystoneOwner",
+        is_keystone_owner,
+    )?;
+    table_set_rust_fn_static(state, table_ref, "GetInstanceAbandonVoteTime", vote_time)?;
+    table_set_rust_fn_static(
+        state,
+        table_ref,
+        "GetInstanceAbandonShutdownTime",
+        shutdown_time,
+    )?;
+    Ok(())
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn register_vote_responses(state: &mut LuaState, table_ref: GcRef<Table>) -> LuaResult<()> {
+    table_set_rust_fn_static(
+        state,
+        table_ref,
+        "GetInstanceAbandonVoteResponse",
+        vote_response,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        table_ref,
+        "SetInstanceAbandonVoteResponse",
+        set_vote_response,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        table_ref,
+        "GetNumInstanceAbandonGroupVoteResponses",
+        group_vote_response_count,
+    )
+}
+
+/// A_Admin.SetInstanceAbandonVoteState(voteDuration, voteTimeLeft,
+/// shutdownDuration, shutdownTimeLeft, votesRequired, ownerVoteWeight,
+/// isOwner, response, groupResponses).
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
+    builder.set_function(
+        "SetInstanceAbandonVoteState",
+        set_instance_abandon_vote_state,
+    )
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn vote_requirements(state: &mut LuaState) -> LuaResult<u32> {
+    let (votes_required, owner_vote_weight) = {
+        let sim = borrow_state(state)?;
+        (
+            sim.instance_abandon_vote.votes_required,
+            sim.instance_abandon_vote.keystone_owner_vote_weight,
+        )
+    };
+    state.push(Val::Num(votes_required));
+    state.push(Val::Num(owner_vote_weight));
+    Ok(2)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn is_keystone_owner(state: &mut LuaState) -> LuaResult<u32> {
+    let is_owner = borrow_state(state)?.instance_abandon_vote.is_keystone_owner;
+    state.push(Val::Bool(is_owner));
+    Ok(1)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn vote_time(state: &mut LuaState) -> LuaResult<u32> {
+    let (duration, time_left) = {
+        let sim = borrow_state(state)?;
+        (
+            sim.instance_abandon_vote.vote_duration,
+            sim.instance_abandon_vote.vote_time_left,
+        )
+    };
+    state.push(Val::Num(duration));
+    state.push(Val::Num(time_left));
+    Ok(2)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn shutdown_time(state: &mut LuaState) -> LuaResult<u32> {
+    let (duration, time_left) = {
+        let sim = borrow_state(state)?;
+        (
+            sim.instance_abandon_vote.shutdown_duration,
+            sim.instance_abandon_vote.shutdown_time_left,
+        )
+    };
+    state.push(Val::Num(duration));
+    state.push(Val::Num(time_left));
+    Ok(2)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn vote_response(state: &mut LuaState) -> LuaResult<u32> {
+    let response = borrow_state(state)?.instance_abandon_vote.response;
+    state.push(response.map_or(Val::Nil, Val::Bool));
+    Ok(1)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn set_vote_response(state: &mut LuaState) -> LuaResult<u32> {
+    let response = bool::from_stack(state, 1)?;
+    crate::lua_api::methods::borrow_state_mut(state)?
+        .instance_abandon_vote
+        .response = Some(response);
+    Ok(0)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn group_vote_response_count(state: &mut LuaState) -> LuaResult<u32> {
+    let count = borrow_state(state)?
+        .instance_abandon_vote
+        .group_responses
+        .len();
+    state.push(Val::Num(count as f64));
+    Ok(1)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn set_instance_abandon_vote_state(state: &mut LuaState) -> LuaResult<u32> {
+    let vote_duration = f64::from_stack(state, 1)?;
+    let vote_time_left = f64::from_stack(state, 2)?;
+    let shutdown_duration = f64::from_stack(state, 3)?;
+    let shutdown_time_left = f64::from_stack(state, 4)?;
+    let votes_required = f64::from_stack(state, 5)?;
+    let keystone_owner_vote_weight = f64::from_stack(state, 6)?;
+    let is_keystone_owner = bool::from_stack(state, 7)?;
+    let response = Option::<bool>::from_stack(state, 8)?;
+    let group_responses = read_group_vote_responses(state)?;
+    let mut sim = crate::lua_api::methods::borrow_state_mut(state)?;
+    sim.instance_abandon_vote = InstanceAbandonVoteState {
+        vote_duration,
+        vote_time_left,
+        shutdown_duration,
+        shutdown_time_left,
+        votes_required,
+        keystone_owner_vote_weight,
+        is_keystone_owner,
+        response,
+        group_responses,
+    };
+    Ok(0)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn read_group_vote_responses(state: &mut LuaState) -> LuaResult<Vec<bool>> {
+    let Val::Table(table_ref) = Val::from_stack(state, 9)? else {
+        return Err(runtime_error("group vote responses must be an array"));
+    };
+    let Some(table) = state.gc.tables.get(table_ref) else {
+        return Err(runtime_error("group vote response table is unavailable"));
+    };
+    table
+        .array_slice()
+        .iter()
+        .enumerate()
+        .map(|(index, value)| match value {
+            Val::Bool(response) => Ok(*response),
+            _ => Err(runtime_error(format!(
+                "group vote response {} must be a boolean",
+                index + 1
+            ))),
+        })
+        .collect()
 }
 
 fn mists_supplied_min_level(state: &mut LuaState) -> LuaResult<u32> {
@@ -127,6 +343,13 @@ fn register_group_membership_probes(
     state: &mut LuaState,
     table_ref: GcRef<Table>,
 ) -> LuaResult<()> {
+    #[cfg(feature = "client-retail")]
+    table_set_rust_fn_static(
+        state,
+        table_ref,
+        "IsCrossFactionParty",
+        c_party_info_is_cross_faction_party,
+    )?;
     table_set_rust_fn_static(
         state,
         table_ref,
@@ -210,6 +433,31 @@ fn register_loot_method_probes(state: &mut LuaState, table_ref: GcRef<Table>) ->
     #[cfg(feature = "retail-12-0-5")]
     loot_method::register(state, table_ref)?;
     Ok(())
+}
+
+/// INFERRED (R88dc pending native evidence): unsupplied member factions match the player.
+#[cfg(feature = "client-retail")]
+fn c_party_info_is_cross_faction_party(state: &mut LuaState) -> LuaResult<u32> {
+    let category = Option::<f64>::from_stack(state, 1)?.map(|value| value as i32);
+    let cross_faction = if category == Some(2) {
+        false
+    } else {
+        let sim = borrow_state(state)?;
+        let player_faction = crate::lua_api::game_data::RACE_DATA
+            .get(sim.player.race_index)
+            .map(|(_, _, faction)| *faction)
+            .filter(|faction| !faction.is_empty())
+            .unwrap_or("Alliance");
+        sim.party_group_active
+            && sim.party_members.iter().any(|member| {
+                member
+                    .faction_group
+                    .as_deref()
+                    .is_some_and(|faction| faction != player_faction)
+            })
+    };
+    state.push(Val::Bool(cross_faction));
+    Ok(1)
 }
 
 fn c_party_info_get_active_categories(state: &mut LuaState) -> LuaResult<u32> {

@@ -5,8 +5,18 @@
 
 pub(crate) mod azerite_essence_spell_selector;
 mod c_account_info;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) mod c_behavioral_messaging;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) mod c_black_market;
+#[cfg(any(feature = "retail-12-1-0", feature = "client-wowforever"))]
+pub(crate) mod c_encounter_journal_difficulty;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) mod c_gossip_info_poi;
 pub mod c_guild_info;
 pub mod c_heirloom;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) mod c_raid_locks;
 pub mod c_recruit_a_friend;
 pub(crate) mod c_tooltip_comparison;
 pub(crate) mod c_tooltip_info_artifact_item;
@@ -23,10 +33,14 @@ pub(crate) mod c_tooltip_info_equipment_set;
 pub mod c_tooltip_info_hyperlink;
 pub(crate) mod c_tooltip_info_inventory_by_id;
 pub(crate) mod c_tooltip_info_item_key;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) mod c_tooltip_info_item_sources;
 pub(crate) mod c_tooltip_info_loot;
 #[cfg(any(feature = "retail-12-1-5", feature = "client-wowforever"))]
 pub(crate) mod c_tooltip_info_merchant_cost;
 pub(crate) mod experience_preset;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) mod kiosk;
 #[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
 pub mod performance_bar;
 pub(crate) mod tooltip_azerite_catalog_data;
@@ -52,7 +66,7 @@ pub(crate) mod class_catalog;
 pub(crate) mod classic_startup_data;
 pub(crate) mod collections_availability;
 pub mod credits;
-#[cfg(feature = "client-retail")]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub mod currency_list;
 pub mod forever_talents;
 pub(crate) mod game_mode;
@@ -77,13 +91,21 @@ pub(crate) mod quest_reward_currencies;
 pub(crate) mod quest_reward_spells;
 pub mod quest_special_item;
 pub mod recipe_rank_tooltip;
+#[cfg(feature = "client-wowforever")]
+pub(crate) mod reincarnation;
+#[cfg(feature = "client-retail")]
+pub(crate) mod scripted_animations;
+#[cfg(feature = "client-wowforever")]
+pub(crate) mod specialization_system;
 pub(crate) mod tooltip_data;
 pub(crate) mod tooltip_power_catalog_data;
+pub mod trainer_service;
 pub mod trait_group_currency;
 pub mod trait_group_display;
 pub mod ui_widget_manager;
 pub mod video_capabilities;
 pub(crate) mod video_texture_capability;
+pub(crate) mod video_window;
 #[cfg(feature = "client-wrath")]
 pub mod who_routing;
 
@@ -126,6 +148,8 @@ pub(crate) mod c_action_bar_spell_slots;
 pub mod c_addon_profiler;
 pub mod c_addons;
 pub(crate) mod c_addons_local_table;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) mod c_adventure_journal;
 pub mod c_allied_races;
 pub mod c_ardenweald_gardening;
 pub mod c_area_poi_info;
@@ -168,18 +192,23 @@ pub mod c_chat_bubbles;
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) mod c_chat_info;
 pub mod c_chromie_time;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) mod c_class_trial;
 pub(crate) mod c_click_bindings;
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) mod c_click_bindings_spell;
 pub mod c_club;
+pub(crate) mod c_club_finder;
 #[cfg(feature = "retail-12-0-0")]
 pub(crate) mod c_combat_audio_alert;
 #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
 pub(crate) mod c_combat_log;
 pub mod c_combat_text;
-mod c_commentator;
+pub(crate) mod c_commentator;
 pub(crate) mod c_console;
 pub mod c_content_tracking;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) mod c_contribution_collector;
 pub mod c_cooldown_viewer;
 #[cfg(feature = "retail-12-0-0")]
 mod c_crafting_orders;
@@ -197,11 +226,14 @@ pub(crate) mod c_delves_entrance;
 pub mod c_discord;
 pub mod c_district_utils;
 mod c_dungeon_score_rarity;
-#[cfg(feature = "retail-12-0-0")]
+#[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
 pub mod c_dye_color;
 #[cfg(feature = "client-wowforever")]
 mod c_edit_mode;
-#[cfg(feature = "retail-12-1-0")]
+pub(crate) mod c_edit_mode_cache;
+#[cfg(feature = "client-retail")]
+pub(crate) mod c_encounter_journal_map;
+#[cfg(any(feature = "retail-12-1-0", feature = "client-wowforever"))]
 pub(crate) mod c_encounter_timeline;
 #[cfg(feature = "retail-12-0-0")]
 pub(crate) mod c_encounter_warnings;
@@ -214,6 +246,8 @@ pub(crate) mod c_garrison_damage_classes;
 mod c_garrison_follower_xp;
 #[cfg(feature = "client-retail")]
 pub(crate) mod c_garrison_landing_page;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) mod c_garrison_mission_lists;
 #[cfg(feature = "client-retail")]
 pub mod c_garrison_trees;
 pub mod c_glue;
@@ -237,14 +271,18 @@ mod c_limited_input;
 pub(crate) mod c_log;
 pub mod c_login;
 pub mod c_loot_history;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub mod c_loot_journal;
 pub(crate) mod c_mac_options;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) mod c_macro;
 pub mod c_major_factions;
 pub mod c_map;
 pub(crate) mod c_map_bounties;
 pub mod c_map_exploration_info;
 pub mod c_merchant_frame;
 pub(crate) mod c_minimap_quest_blob;
-mod c_minimap_tracking;
+pub(crate) mod c_minimap_tracking;
 #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
 mod c_mount_item;
 #[cfg(feature = "retail-12-0-5")]
@@ -254,12 +292,14 @@ pub mod c_mythic_plus;
 pub mod c_mythic_plus_calendar;
 #[cfg(feature = "retail-12-0-0")]
 pub(crate) mod c_nameplate_manager;
-#[cfg(feature = "retail-12-0-5")]
+#[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 pub(crate) mod c_navigation;
 pub mod c_neighborhood_initiative;
 pub mod c_paper_doll_info;
 pub mod c_party_info;
 mod c_perks_categories;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) mod c_perks_program;
 pub mod c_pet_battles;
 pub(crate) mod c_pet_item;
 pub mod c_pet_journal_hover;
@@ -278,6 +318,7 @@ pub(crate) mod c_prof_specs_get_children_for_path;
 #[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
 pub(crate) mod c_prof_specs_path_queries;
 pub(crate) mod c_prof_specs_reminders;
+pub(crate) mod c_prof_specs_skill_lines;
 pub(crate) mod c_prof_specs_tab_state;
 pub mod c_pvp;
 #[cfg(feature = "retail-12-0-5")]
@@ -292,20 +333,35 @@ pub mod c_shared_character_services;
 pub mod c_super_track;
 #[cfg(feature = "client-retail")]
 pub mod c_talking_head;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) mod c_taxi_map;
 pub(crate) mod challenge_run;
+#[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
+pub mod combat_log_history;
 pub mod container_purchase;
 mod container_purchase_args;
 pub mod container_quest;
 pub mod engraving_inputs;
 pub mod external_event_url;
+#[cfg(feature = "client-wowforever")]
 mod forever_outfits;
 pub mod forever_startup;
+pub(crate) mod level_link;
 mod lfr_availability;
+pub mod perks_activities;
 pub(crate) mod pet_orders;
 pub mod profession_spec_inputs;
+pub mod ranged_slot;
 pub(crate) use lfr_availability::stock_lfr_availability;
 #[cfg(all(test, feature = "client-wowforever"))]
 mod forever_lib_baseline_tests;
+#[cfg(any(
+    feature = "retail-12-0-0",
+    feature = "client-mists",
+    feature = "client-era",
+    feature = "client-anniversary",
+    feature = "client-wowforever"
+))]
 pub mod outfit_entry;
 mod scenario_finder_availability;
 pub mod store_public_eligibility;
@@ -325,7 +381,9 @@ pub mod c_scenario_info;
 pub mod c_secrets;
 pub mod c_settings_util;
 pub mod c_social;
-mod c_social_restrictions;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) mod c_social_queue;
+pub(crate) mod c_social_restrictions;
 pub(crate) mod c_social_ui;
 pub mod c_sound;
 pub mod c_spec;
@@ -347,9 +405,9 @@ pub mod c_string_util;
 mod c_string_util_decimal;
 pub mod c_summon_info;
 pub mod c_texture;
-#[cfg(feature = "retail-12-0-5")]
+#[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 pub(crate) mod c_tooltip_info_aura_instance;
-#[cfg(feature = "retail-12-0-5")]
+#[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 pub(crate) mod c_tooltip_info_indexed_aura;
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) mod c_tooltip_info_item_context;
@@ -358,6 +416,11 @@ pub mod c_tooltip_info_pvp_talent;
 pub(crate) mod c_tooltip_info_socketed_relic;
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) mod c_tooltip_info_spell_mount;
+#[cfg(any(
+    feature = "client-retail",
+    feature = "client-ptr",
+    feature = "client-wowforever"
+))]
 pub(crate) mod c_trade_info;
 pub(crate) mod c_trade_skill_cooldown;
 pub mod c_trade_skill_crafting_ui;
@@ -372,27 +435,32 @@ pub(crate) mod mists_r88ah;
 pub(crate) mod mists_r88ai;
 #[cfg(feature = "client-mists")]
 pub(crate) mod mists_reputation_list;
+pub mod reputation_model;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) mod secure_transfer;
 #[cfg(any(feature = "retail-12-1-5", feature = "client-wowforever"))]
 pub mod spell_reagent_inventory;
 pub mod store_catalog_model;
 pub mod store_glue_model;
 pub mod store_guid;
 pub mod store_vas_model;
-// The pinned classic TransmogItemsDocumentation.lua / TransmogOutfitInfoDocumentation.lua
-// declare these namespaces on Mists, Era and Anniversary, so the backing model
-// is compiled for those profiles together with the retail API epochs.
+pub(crate) mod target_spell;
+// The pinned TransmogItemsDocumentation.lua declares this model on Mists, Era,
+// Anniversary and Forever, in addition to the Retail API epochs.
 #[cfg(any(
     feature = "retail-12-0-0",
     feature = "client-mists",
     feature = "client-era",
-    feature = "client-anniversary"
+    feature = "client-anniversary",
+    feature = "client-wowforever"
 ))]
 pub(crate) mod c_transmog_collection;
 mod c_transmog_latest;
 pub(crate) mod c_voice_chat_activity;
-#[cfg(feature = "retail-12-0-5")]
+#[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 pub mod c_voice_chat_channels;
 pub mod c_voice_chat_devices;
+pub(crate) mod c_voice_chat_login;
 mod c_voice_chat_settings;
 #[cfg(feature = "retail-12-0-0")]
 mod c_voice_chat_volume;
@@ -432,7 +500,8 @@ pub mod url_texture_inputs;
     feature = "retail-12-0-0",
     feature = "client-mists",
     feature = "client-era",
-    feature = "client-anniversary"
+    feature = "client-anniversary",
+    feature = "client-wowforever"
 ))]
 pub use c_transmog_collection::IllusionInfo;
 pub mod c_achievement_telemetry;
@@ -447,7 +516,8 @@ pub mod c_toy_box_info;
     feature = "retail-12-0-0",
     feature = "client-mists",
     feature = "client-era",
-    feature = "client-anniversary"
+    feature = "client-anniversary",
+    feature = "client-wowforever"
 ))]
 pub mod c_transmog_outfit_info;
 pub mod c_transmog_sets;
@@ -508,10 +578,14 @@ pub use item_set_bonuses::ItemSetBonuses;
 #[cfg(feature = "retail-12-0-0")]
 mod c_ping_cooldown;
 pub use c_ping_secure::PingCooldownInterval;
-#[cfg(feature = "retail-12-0-0")]
+#[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
 mod c_ping_texture_kits;
 #[cfg(feature = "retail-12-0-0")]
 pub use c_ping_texture_kits::PingTextureKits;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) use c_ping_texture_kits::register_admin as register_ping_defaults_admin;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub use c_ping_texture_kits::{PingDefaultOption, PingDefaultOptions};
 #[cfg(any(feature = "retail-12-1-0", feature = "client-wowforever"))]
 mod c_cvar_readiness;
 pub mod c_loss_of_control;
@@ -536,6 +610,7 @@ pub(crate) mod patch_12_1_0_enums;
 pub mod permanent_shims;
 pub mod private_aura_anchors;
 pub(crate) mod private_aura_callbacks;
+pub mod private_aura_data;
 #[cfg(feature = "retail-12-0-5")]
 pub mod private_aura_sounds;
 pub(crate) mod ptr_edit_mode_enums;
@@ -569,10 +644,14 @@ pub(crate) mod c_tts_settings;
 mod helpers;
 mod secure_publication;
 mod secure_publication_data;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) use helpers::bad_argument;
 pub(crate) use helpers::parse_numeric_string;
+#[cfg(feature = "client-ptr")]
+pub(crate) use helpers::read_untainted_signed32_argument;
 #[cfg(feature = "client-retail")]
 pub(crate) use helpers::{
-    bad_argument, read_untainted_signed32_argument, read_untainted_string_argument,
+    read_untainted_signed32_argument, read_untainted_string_argument,
     read_untainted_truthy_argument, read_untainted_value,
 };
 #[cfg(feature = "retail-12-0-0")]
@@ -633,7 +712,7 @@ pub(crate) fn register_utility_bootstrap_tables(state: &mut LuaState) -> LuaResu
     if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Wrath {
         addon_message_prefixes::register(state)?;
     }
-    #[cfg(feature = "retail-12-0-5")]
+    #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
     c_navigation::register(state)?;
     c_weather::register(state)?;
     if supports_super_tracking() {
@@ -646,6 +725,8 @@ pub(crate) fn register_utility_bootstrap_tables(state: &mut LuaState) -> LuaResu
     c_achievement_info_relations::register(state)?;
     c_minimap_tracking::register(state)?;
     c_calendar::register(state)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    c_behavioral_messaging::register(state)?;
     if matches!(
         crate::client_profile::ACTIVE,
         crate::client_profile::ClientProfile::Retail
@@ -671,7 +752,7 @@ pub(crate) fn register_utility_bootstrap_tables(state: &mut LuaState) -> LuaResu
         c_garrison_trees::register(state)?;
     }
     c_damage_meter::register(state)?;
-    #[cfg(feature = "retail-12-1-0")]
+    #[cfg(any(feature = "retail-12-1-0", feature = "client-wowforever"))]
     c_encounter_timeline::register(state)?;
     c_intl::register(state)?;
     #[cfg(feature = "aura-containers")]
@@ -699,6 +780,7 @@ fn register_glue_and_display_tables(state: &mut LuaState) -> LuaResult<()> {
     c_glue::register_c_glue(state)?;
     c_login::register_c_login(state)?;
     video_capabilities::register(state)?;
+    video_window::register(state)?;
     video_texture_capability::register(state)?;
     credits::register(state)?;
     c_district_utils::register_ptr_game_surface(state)?;
@@ -722,6 +804,8 @@ fn register_token_texture_xml_tables(state: &mut LuaState) -> LuaResult<()> {
     c_ping_cooldown::register(state)?;
     #[cfg(feature = "retail-12-0-0")]
     c_ping_texture_kits::register(state)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    c_ping_texture_kits::register_default_options(state)?;
     c_wowtoken_secure::register_c_wowtoken_secure(state)?;
     c_wow_token_public::register_c_wow_token_public(state)?;
     c_wow_token_ui::register(state)?;

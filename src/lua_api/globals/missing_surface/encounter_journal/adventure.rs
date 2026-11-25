@@ -53,7 +53,6 @@ const ADVENTURE_SUGGESTIONS: &[AdventureSuggestion] = &[
 ];
 
 const ADVENTURE_JOURNAL_FUNCTIONS: &[(&str, RustFn)] = &[
-    ("CanBeShown", adventure_can_be_shown),
     ("UpdateSuggestions", adventure_update_suggestions),
     ("GetPrimaryOffset", adventure_get_primary_offset),
     ("SetPrimaryOffset", adventure_set_primary_offset),
@@ -71,11 +70,27 @@ pub(super) fn register_adventure_journal_surface(state: &mut LuaState) -> LuaRes
     for &(name, handler) in ADVENTURE_JOURNAL_FUNCTIONS {
         table_set_rust_fn_static(state, adventure_table_ref, name, handler)?;
     }
+    table_set_rust_fn_static(
+        state,
+        adventure_table_ref,
+        "CanBeShown",
+        adventure_can_be_shown,
+    )?;
     Ok(())
 }
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 fn adventure_can_be_shown(state: &mut LuaState) -> LuaResult<u32> {
     state.push(Val::Bool(true));
+    Ok(1)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn adventure_can_be_shown(state: &mut LuaState) -> LuaResult<u32> {
+    let shown = borrow_state(state)?
+        .encounter_journal
+        .adventure_can_be_shown;
+    state.push(Val::Bool(shown));
     Ok(1)
 }
 

@@ -137,7 +137,8 @@ fn seed_map_display_secret_env() -> WowLuaEnv {
     {
         let loader = env.loader_env();
         let mut lua = loader.rilua_mut();
-        rilua::table_security::register_table_security(&mut lua).expect("actual VM security helpers");
+        rilua::table_security::register_table_security(&mut lua)
+            .expect("actual VM security helpers");
         let secret = wrap_host_secret_number(lua.state_mut(), 84.0);
         lua.state_mut().push(secret);
         let inserted = lua.set_global_val("MapDisplaySecret84", secret);
@@ -225,6 +226,40 @@ fn get_map_art_id_returns_nothing_for_unknown_map() {
         .eval("return select('#', C_Map.GetMapArtID(999999))")
         .unwrap();
     assert_eq!(nret, 0);
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn get_map_art_help_text_position_reads_retail_uimap_records() {
+    let env = env();
+    let positions: (i32, i32, i32, i32, i32, i32) = env
+        .eval(
+            r#"
+            return C_Map.GetMapArtHelpTextPosition(14),
+                   C_Map.GetMapArtHelpTextPosition(62),
+                   C_Map.GetMapArtHelpTextPosition(994),
+                   C_Map.GetMapArtHelpTextPosition(1532),
+                   C_Map.GetMapArtHelpTextPosition(1),
+                   C_Map.GetMapArtHelpTextPosition(999999)
+            "#,
+        )
+        .unwrap();
+    assert_eq!(positions, (1, 1, 3, 4, 0, 0));
+}
+
+#[cfg(feature = "client-ptr")]
+#[test]
+fn ptr_map_art_help_text_position_keeps_existing_temporary_default() {
+    let env = env();
+    let positions: (i32, i32) = env
+        .eval(
+            r#"
+            return C_Map.GetMapArtHelpTextPosition(14),
+                   C_Map.GetMapArtHelpTextPosition(994)
+            "#,
+        )
+        .unwrap();
+    assert_eq!(positions, (2, 2));
 }
 
 #[test]

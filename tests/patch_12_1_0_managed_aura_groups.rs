@@ -10,6 +10,21 @@ use crate::common::aura_container_harness::{
 };
 use wow_ui_sim::lua_api::state::AuraInfo;
 
+fn private_entry(id: i32, helpful: bool, expiration: f64) -> wow_ui_sim::c_api::private_aura_data::PrivateAuraEntry {
+    let mut aura = aura(id);
+    aura.duration = expiration;
+    aura.expiration_time = expiration;
+    aura.is_helpful = helpful;
+    aura.can_apply_aura = helpful;
+    aura.is_from_player_or_player_pet = true;
+    wow_ui_sim::c_api::private_aura_data::PrivateAuraEntry {
+        aura,
+        can_active_player_dispel: false,
+        hide_on_party_frames: false,
+        source_guid: None,
+    }
+}
+
 #[test]
 fn managed_container_creates_anchors_and_follows_live_unit_aura_in_batches_of_ten() {
     let env = load_env();
@@ -441,19 +456,17 @@ fn private_auras_are_shown_filtered_and_sorted_like_public_auras() {
         ..aura(id)
     };
     set_player_auras(&env, vec![timed(102, 10.0), timed(104, 40.0)]);
+    {
+        let mut state = env.state().borrow_mut();
+        let entries = vec![private_entry(103, true, 20.0), private_entry(105, false, 30.0)];
+        state.private_aura_data.private_auras_by_unit.insert("player".into(), entries.clone());
+        state.private_aura_data.aura_data_by_unit.insert(
+            "player".into(),
+            entries.into_iter().map(|entry| (entry.aura.aura_instance_id, entry)).collect(),
+        );
+    }
     env.exec(
         r#"
-        local function private(id, helpful, expiration)
-            return {
-                auraInstanceID = id, spellId = id, icon = id, name = 'Private ' .. id,
-                isHelpful = helpful, isHarmful = not helpful, sourceUnit = 'player',
-                isFromPlayerOrPlayerPet = true, canApplyAura = helpful, applications = 1,
-                duration = expiration, expirationTime = expiration,
-            }
-        end
-        local state = C_UnitAurasPrivate._state
-        state.privateAurasByUnit.player = {{auraInstanceID = 103}, {auraInstanceID = 105}}
-        state.auraDataByUnit.player = {[103] = private(103, true, 20), [105] = private(105, false, 30)}
         AuditPrivate = AuditContainer({
             {'buffs', 'HELPFUL', {sortMethod = AuraContainerSortMethod.ExpirationOnly}},
             {'debuffs', 'HARMFUL', {sortMethod = AuraContainerSortMethod.ExpirationOnly}},

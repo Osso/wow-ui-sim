@@ -22,6 +22,14 @@ Paths below are relative to each profile's pinned `AddOns/Blizzard_APIDocumentat
 
 The already-present elapsed-timer globals keep their publication scope. Wrath is excluded from routing and retains its pre-existing ungrounded `(id, 0, 0)` placeholder; native Wrath elapsed-timer behavior requires a separate lane. `WorldStateInfoDocumentation.lua:64-83` declares start/stop payloads; `WorldElapsedTimerConstantsDocumentation.lua:14` declares ChallengeMode=1 on modern profiles. Admin input supplies timer types; it does not infer them.
 
+## Display-season map table
+
+**VERIFIED (Retail 12.1.5.70688, R88ew):** `C_ChallengeMode.GetMapTable()` builds a dense integer table from local DB2 rows on the callback success path. **INFERRED (R88ew):** the values are `MapChallengeModeID`s from `MythicPlusSeasonTrackedMap`, filtered by the current `DisplaySeasonID`, available before map-info events. **UNKNOWN (R88ew):** a possible player check outside the collector, and the empty-source paths; the simulator applies no player check. The tracked rows come from the pinned Retail 12.1.5.70391 CSV through `tools/gen_mythic_plus_season_maps.py` and `crates/sim-data/data/mythic_plus_season_maps.rs`.
+
+**INFERRED (R88ew):** Retail and Forever default to the highest `DisplaySeasonID` in the Retail data (37). `A_Admin.SetCurrentDisplaySeasonID(id)` supplies another display season for tests on those profiles. The 1.60.1.70707 tracked-map export was unavailable, so Forever uses the Retail rows as an inferred data source; its declaration of `GetMapTable` is present.
+
+**VERIFIED (current simulator code):** Tracked-season map rows, the Retail ChallengesFrame title query, the admin setter, and the season-37 default apply only to Retail and Forever. PTR keeps its existing `C_SeasonInfo.GetCurrentDisplaySeasonID` registration and legacy map-table path with display-season state `0`; Wrath keeps its seeded one-element `{2}` map table. Retail's title reads the optional numeric `C_MythicPlus.GetCurrentUIDisplaySeason()` result (pinned `MythicPlusInfoDocumentation.lua:41-47`), served from the same state as its map table.
+
 ## Map metadata validation
 
 `SetChallengeModeMapInfo` accepts a supplied table. `name`, `id`, `timeLimit`, `backgroundTexture`, and `mapID` are required. Only `texture` can be omitted or nil; the getter returns nil in its fourth result without substituting an asset. The fifth result is the supplied numeric `backgroundTexture`. Retail 70448, PTR 70493 and Forever declare these two numeric results at `ChallengeModeInfoDocumentation.lua:178-179`; Mists, Era and Anniversary declare the same nilability at lines 152-153.

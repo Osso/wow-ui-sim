@@ -55,6 +55,10 @@ mod behavior_pet_bar_update;
 #[path = "blizzard_ui/blizzard_actionbar/behavior_possess_bar_show.rs"]
 mod behavior_possess_bar_show;
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[path = "blizzard_ui/blizzard_actionbar/behavior_possess_info.rs"]
+mod behavior_possess_info;
+
 #[path = "blizzard_ui/blizzard_actionbar/behavior_extra_action_bar.rs"]
 mod behavior_extra_action_bar;
 

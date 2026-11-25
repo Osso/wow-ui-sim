@@ -2,16 +2,28 @@
 
 #[cfg(feature = "client-wowforever")]
 use super::helpers::read_untainted_signed32_argument;
+#[cfg(feature = "client-wowforever")]
+use super::helpers::set_table_array;
 use super::helpers::{ensure_namespace, validate_supplied_relation_id};
 use crate::client_profile::{ACTIVE, ClientProfile};
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+use crate::lua_api::methods::borrow_state_mut;
+#[cfg(feature = "client-wowforever")]
+use crate::lua_api::methods::create_table_with_capacity;
 use crate::lua_api::methods::{
     borrow_state, create_string, create_table, table_set, val_to_string,
 };
 use crate::lua_api::sim_substates::QuestLogEntry;
 use crate::lua_api::workarounds::update_campaign_headers;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+use crate::lua_bridge::TableBuilder;
 use crate::lua_bridge::{FromStack, stack_val, table_set_rust_fn_static};
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+use rilua::runtime_error;
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
+#[cfg(feature = "client-wowforever")]
+use std::time::Duration;
 
 /// Map and categories highlighted by a quest. The default has no highlights.
 #[derive(Debug, Clone, Copy, Default, PartialEq, Eq)]
@@ -31,15 +43,161 @@ pub struct QuestInfoEntryFlags {
 }
 
 const QUEST_LOG_HEADER_TITLE: &str = "Khaz Algar";
+#[cfg(feature = "client-wowforever")]
+const SET_QUEST_TIMER_ERROR: &str =
+    "A_Admin.SetQuestTimer: expected questID and nonnegative seconds or nil";
+
+/// One timer supplied for Forever's original quest-timer consumer.
+#[cfg(feature = "client-wowforever")]
+#[derive(Debug, Clone)]
+pub struct QuestTimer {
+    pub quest_id: i32,
+    pub initial_seconds: f64,
+    pub supplied_at: Duration,
+}
+
+#[cfg(feature = "client-wowforever")]
+pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
+    builder.set_function("SetQuestTimer", set_quest_timer)
+}
+
+#[cfg(feature = "client-wowforever")]
+fn set_quest_timer(state: &mut LuaState) -> LuaResult<u32> {
+    let quest_id = read_untainted_signed32_argument(
+        state,
+        1,
+        "A_Admin.SetQuestTimer",
+        "questID must be a signed 32-bit number",
+    )?;
+    if quest_id <= 0 {
+        return Err(runtime_error(SET_QUEST_TIMER_ERROR));
+    }
+    let timer = read_supplied_timer(state)?;
+    let now = borrow_state(state)?.clock_elapsed();
+    store_quest_timer(state, quest_id, timer, now)?;
+    crate::lua_api::globals::state_backed_queries::dispatch_event_now(
+        state,
+        "QUEST_LOG_UPDATE",
+        &[],
+    )?;
+    Ok(0)
+}
+
+#[cfg(feature = "client-wowforever")]
+fn store_quest_timer(
+    state: &LuaState,
+    quest_id: i32,
+    seconds: Option<f64>,
+    supplied_at: Duration,
+) -> LuaResult<()> {
+    let mut sim = borrow_state_mut(state)?;
+    let timers = &mut sim.quest_log_entries.timers;
+    if let Some(seconds) = seconds {
+        if let Some(existing) = timers.iter_mut().find(|timer| timer.quest_id == quest_id) {
+            existing.initial_seconds = seconds;
+            existing.supplied_at = supplied_at;
+        } else {
+            timers.push(QuestTimer {
+                quest_id,
+                initial_seconds: seconds,
+                supplied_at,
+            });
+        }
+    } else {
+        timers.retain(|timer| timer.quest_id != quest_id);
+    }
+    Ok(())
+}
+
+#[cfg(feature = "client-wowforever")]
+fn read_supplied_timer(state: &mut LuaState) -> LuaResult<Option<f64>> {
+    let value = stack_val(state, 2);
+    if matches!(value, Val::Nil) {
+        return Ok(None);
+    }
+    read_timer_seconds(value).map(Some)
+}
+
+#[cfg(feature = "client-wowforever")]
+fn read_timer_seconds(value: Val) -> LuaResult<f64> {
+    let Val::Num(seconds) = value else {
+        return Err(runtime_error(SET_QUEST_TIMER_ERROR));
+    };
+    if !seconds.is_finite() || seconds < 0.0 || Duration::try_from_secs_f64(seconds).is_err() {
+        return Err(runtime_error(SET_QUEST_TIMER_ERROR));
+    }
+    Ok(seconds)
+}
+
+#[cfg(feature = "client-wowforever")]
+pub(crate) fn legacy_quest_log_time_left(state: &mut LuaState) -> LuaResult<u32> {
+    let time_left = {
+        let sim = borrow_state(state)?;
+        let selected = sim
+            .selected_quest_log_id
+            .and_then(|id| i32::try_from(id).ok());
+        selected
+            .filter(|quest_id| {
+                sim.quest_log_entries
+                    .entries
+                    .iter()
+                    .any(|entry| entry.quest_id == *quest_id)
+            })
+            .and_then(|quest_id| {
+                sim.quest_log_entries
+                    .timers
+                    .iter()
+                    .find(|timer| timer.quest_id == quest_id)
+            })
+            .map(|timer| {
+                let deadline = timer.supplied_at.as_secs_f64() + timer.initial_seconds;
+                (deadline - sim.clock_elapsed().as_secs_f64() - 1.0).max(0.0)
+            })
+    };
+    state.push(time_left.map_or(Val::Nil, Val::Num));
+    Ok(1)
+}
 
 pub(crate) fn register_info_queries(state: &mut LuaState) -> LuaResult<()> {
     let namespace = ensure_namespace(state, "C_QuestLog")?;
     table_set_rust_fn_static(state, namespace, "GetInfo", get_info)?;
+    #[cfg(feature = "client-wowforever")]
+    table_set_rust_fn_static(state, namespace, "GetQuestTimers", get_quest_timers)?;
     if ACTIVE == ClientProfile::Retail {
         table_set_rust_fn_static(state, namespace, "IsQuestTask", is_quest_task)?;
         table_set_rust_fn_static(state, namespace, "IsQuestBounty", is_quest_bounty)?;
     }
     Ok(())
+}
+
+// INFERRED (R88fr; native evidence pending): questTimer is a remaining-seconds
+// countdown and decreases against the simulator clock after the host supplies it.
+#[cfg(feature = "client-wowforever")]
+fn get_quest_timers(state: &mut LuaState) -> LuaResult<u32> {
+    let timers = {
+        let sim = borrow_state(state)?;
+        let elapsed = sim.clock_elapsed();
+        sim.quest_log_entries
+            .timers
+            .iter()
+            .map(|timer| {
+                let since_supplied = elapsed.saturating_sub(timer.supplied_at).as_secs_f64();
+                (
+                    timer.quest_id,
+                    (timer.initial_seconds - since_supplied).max(0.0),
+                )
+            })
+            .collect::<Vec<_>>()
+    };
+    let result = create_table_with_capacity(state, timers.len());
+    for (index, (quest_id, quest_timer)) in timers.into_iter().enumerate() {
+        let info = create_table(state);
+        table_set(state, info, "questID", Val::Num(f64::from(quest_id)));
+        table_set(state, info, "questTimer", Val::Num(quest_timer));
+        set_table_array(state, result, index as i64 + 1, info);
+    }
+    state.push(result);
+    Ok(1)
 }
 
 fn info_entry_flags(entry: &QuestLogEntry) -> QuestInfoEntryFlags {
@@ -190,6 +348,51 @@ fn write_quest_identity_fields(
     table_set(state, t, "isFailed", Val::Bool(entry.is_failed));
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn get_zone_story_info(state: &mut LuaState) -> LuaResult<u32> {
+    let map_id = validate_supplied_relation_id(
+        stack_val(state, 1),
+        "GetZoneStoryInfo requires a uiMapID number",
+    )?;
+    let relation = match map_id {
+        Some(map_id) => borrow_state(state)?.zone_story_info.get(&map_id).copied(),
+        None => None,
+    };
+    if let Some((achievement_id, story_map_id)) = relation {
+        state.push(Val::Num(f64::from(achievement_id)));
+        state.push(Val::Num(f64::from(story_map_id)));
+        Ok(2)
+    } else {
+        Ok(0)
+    }
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) fn register_zone_story_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
+    builder.set_function("SetZoneStoryInfo", set_zone_story_info)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn set_zone_story_info(state: &mut LuaState) -> LuaResult<u32> {
+    let ids = ["uiMapID", "achievementID", "storyMapID"];
+    let mut parsed = [0; 3];
+    for (index, name) in ids.iter().enumerate() {
+        let id = validate_supplied_relation_id(
+            stack_val(state, index as i32 + 1),
+            "SetZoneStoryInfo requires positive integer IDs",
+        )?;
+        parsed[index] = id.filter(|id| *id > 0).ok_or_else(|| {
+            runtime_error(format!(
+                "SetZoneStoryInfo: {name} must be a positive integer"
+            ))
+        })?;
+    }
+    borrow_state_mut(state)?
+        .zone_story_info
+        .insert(parsed[0], (parsed[1], parsed[2]));
+    Ok(0)
+}
+
 fn write_quest_classification_flags(state: &mut LuaState, t: Val, entry: &QuestLogEntry) {
     table_set(state, t, "isMeta", Val::Bool(entry.is_meta));
     table_set(state, t, "isWorldQuest", Val::Bool(entry.is_world_quest));
@@ -228,6 +431,9 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
     // Retail and Forever QuestLogDocumentation.lua:46 declare this query.
     if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever) {
         table_set_rust_fn_static(state, namespace, "CanAbandonQuest", can_abandon_quest)?;
+        // Retail QuestLogDocumentation.lua:675-689; Forever :693-707.
+        #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+        table_set_rust_fn_static(state, namespace, "GetZoneStoryInfo", get_zone_story_info)?;
     }
     // Retail/PTR/Forever QuestLogDocumentation.lua declare these queries
     // (IsUnitOnQuest :1033/:1066; UpdateCampaignHeaders :1269/:1302).

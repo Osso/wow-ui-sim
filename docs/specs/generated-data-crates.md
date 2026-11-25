@@ -21,7 +21,7 @@ Generated Rust catalogs live under `crates/sim-data` and `crates/sim-data-profil
 - `crates/sim-data-profile/`: profile-selected catalogs.
 - `src/lib.rs`, `src/c_api/c_secrets.rs`: compatibility re-exports.
 - `Cargo.toml`, `Dockerfile`: dependency and build context wiring.
-- `tools/gen*.py`: Python generator paths.
+- `tools/gen*.py`: Python generator paths, including `tools/gen_mythic_plus_season_maps.py` for the pinned Retail 12.1.5.70391 `MythicPlusSeasonTrackedMap` export.
 - `crates/sim-data/data/gen_spell_names.rs`, `crates/sim-data-profile/data/gen_area_table.rs`: Rust name-index generators.
 - `src/bin/wow_cli/main.rs`: path-based generator module registration.
 - `src/c_api/c_spell.rs`, `src/c_api/c_map.rs`: Retail public name lookups.
@@ -33,7 +33,7 @@ Generated Rust catalogs live under `crates/sim-data` and `crates/sim-data-profil
 - `tests/generated_data_refresh_coverage.rs`: one Lua refresh-manifest preservation case passes; this does not exercise Rust catalogs.
 - `tests/spell_api.rs::test_retail_spell_name_overrides_match_db2_rows` and `test_spell_get_spell_name_unknown`: Retail SpellName values and missing-ID behavior.
 - `src/lua_api/workarounds/temporary/map_runtime_state.rs::tests::retail_area_names_match_db2_rows`: AreaTable values and unknown/nil behavior.
-- `crates/sim-data/data/*.rs`: 37 existing catalog unit tests pass.
+- `crates/sim-data/data/*.rs`: 37 existing catalog unit tests pass; `mythic_plus_season_maps.rs` is checked through the original ChallengesFrame integration test.
 - `crates/sim-data-profile/data/global_strings_retail.rs`: four existing selected-string unit tests pass.
 - Six generator Python tests pass.
 

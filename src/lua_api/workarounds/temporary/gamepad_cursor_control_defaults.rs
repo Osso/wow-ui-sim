@@ -1,8 +1,6 @@
 //! Temporary gamepad cursor-control defaults.
 //!
-//! The simulator has per-frame gamepad button/stick state, but no global
-//! gamepad cursor-control model yet. Keep these inert globals explicit until
-//! cursor-control input state exists.
+//! Preserve inert gamepad cursor-control globals on profiles without a model.
 
 const GAMEPAD_CURSOR_CONTROL_DEFAULTS_LUA: &str = r#"
 if CanAutoSetGamePadCursorControl == nil then
@@ -18,11 +16,27 @@ end
 "#;
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
+        return Ok(());
+    }
     lua.exec(GAMEPAD_CURSOR_CONTROL_DEFAULTS_LUA)?;
     Ok(())
 }
 
-#[cfg(test)]
+#[cfg(all(
+    test,
+    any(
+        feature = "client-ptr",
+        feature = "client-mists",
+        feature = "client-wrath",
+        feature = "client-era",
+        feature = "client-anniversary"
+    )
+))]
 mod tests {
     use crate::lua_api::WowLuaEnv;
 

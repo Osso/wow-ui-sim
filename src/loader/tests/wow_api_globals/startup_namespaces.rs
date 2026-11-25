@@ -45,6 +45,23 @@ fn test_bootstrap_registers_color_override_members() {
     assert_eq!(color_ty, "function");
     assert_eq!(default_color_ty, "function");
     assert_eq!(override_info_ty, "function");
+    env.exec("ColorMixin = {}").unwrap();
+
+    let (poor_red, poor_green, poor_blue, epic_red, epic_green, epic_blue):
+        (f64, f64, f64, f64, f64, f64) = env
+            .eval(
+                r#"
+                local poor = C_ColorOverrides.GetDefaultColorForQuality(0)
+                local epic = C_ColorOverrides.GetDefaultColorForQuality(4)
+                return poor.r, poor.g, poor.b, epic.r, epic.g, epic.b
+                "#,
+            )
+            .unwrap();
+
+    assert_ne!(
+        (poor_red, poor_green, poor_blue),
+        (epic_red, epic_green, epic_blue)
+    );
 }
 }
 #[test]
@@ -167,7 +184,10 @@ fn test_startup_service_namespaces_exist() {
     assert!(month_day > 0);
     assert_eq!(adjusted_day, month_day + 1);
     assert_eq!(reset_ty, "function");
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     assert_eq!(reset_start, 0);
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    assert_eq!(reset_start, 1_776_150_000);
 
     let (
         shop_ty,

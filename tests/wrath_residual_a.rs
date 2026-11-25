@@ -121,7 +121,7 @@ fn seed_aura(env: &WowLuaEnv, helpful: bool) {
     let aura = wow_ui_sim::lua_api::state::AuraInfo {
         name: "Residual aura".into(),
         spell_id: 465,
-        icon: 135940,
+        icon: wow_ui_sim::lua_api::state::AuraIcon::FileId(135940),
         duration: 30.0,
         expiration_time: state.start_time.elapsed().as_secs_f64() + 12.0,
         applications: 3,
@@ -344,6 +344,9 @@ fn seed_group(env: &WowLuaEnv, count: usize, local_leader: bool) {
     state.party_members = (0..count)
         .map(|index| PartyMember {
             map_position: None,
+            faction_group: None,
+            #[cfg(feature = "client-retail")]
+            pvp: None,
             name: format!("Member{index}"),
             name_cached: true,
             connected: true,

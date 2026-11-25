@@ -104,79 +104,95 @@ fn forever_high_res_graphics_consumer_loads() {
     }
 }
 
+const FIRST_HOST_GRAPHICS_CHECKS: &str = r#"
+    assert(select('#', MultiSampleAntiAliasingSupported()) == 0)
+    local fxaa, cmaa, cmaa2 = AntiAliasingSupported()
+    assert(fxaa == true and cmaa == false and cmaa2 == false)
+    assert(Settings.GetSetting("PROXY_MSAA") ~= nil)
+    assert(Settings.GetSetting("PROXY_MSAA_ALPHA") ~= nil)
+    assert(Settings.GetSetting("Gamma") ~= nil)
+
+    local added = {}
+    local function RecordSetting(settings, category, variable)
+        added[variable] = true
+        settings[#settings + 1] = variable
+    end
+    local normal = GraphicsOverrides.CreateAdvancedSettingsTable({}, RecordSetting)
+    local raid = GraphicsOverrides.CreateAdvancedRaidSettingsTable({}, RecordSetting)
+    assert(#normal > 0 and #raid > 0)
+    for _, prefix in ipairs({ "graphics", "raidGraphics" }) do
+        assert(added[prefix .. "LiquidDetail"] == true)
+        assert(added[prefix .. "TextureResolution"] == true)
+    end
+"#;
+
+const ALTERNATE_HOST_GRAPHICS_CHECKS: &str = r#"
+    assert(Settings.GetSetting("Gamma") ~= nil)
+
+    local added = {}
+    local function RecordSetting(settings, category, variable)
+        added[variable] = true
+        settings[#settings + 1] = variable
+    end
+    local normal = GraphicsOverrides.CreateAdvancedSettingsTable({}, RecordSetting)
+    local raid = GraphicsOverrides.CreateAdvancedRaidSettingsTable({}, RecordSetting)
+    assert(#normal > 0 and #raid > 0)
+    for _, prefix in ipairs({ "graphics", "raidGraphics" }) do
+        assert(added[prefix .. "LiquidDetail"] == true)
+        assert(added[prefix .. "TextureResolution"] == true)
+    end
+"#;
+
+fn first_host_video_capabilities() -> VideoCapabilityBytes {
+    VideoCapabilityBytes {
+        linear_enabled_on_start: 0,
+        outline_disabled: 1,
+        pbr_water_supported: 0,
+        secondary_lighting_supported: 0,
+        spell_visual_density_supported: 0,
+        multisample_anti_aliasing_groups: Vec::new(),
+        cmaa_supported: false,
+        cmaa2_supported: false,
+    }
+}
+
+fn alternate_host_video_capabilities() -> VideoCapabilityBytes {
+    VideoCapabilityBytes {
+        linear_enabled_on_start: 2,
+        outline_disabled: 0,
+        pbr_water_supported: 128,
+        secondary_lighting_supported: 255,
+        spell_visual_density_supported: 3,
+        multisample_anti_aliasing_groups: Vec::new(),
+        cmaa_supported: false,
+        cmaa2_supported: false,
+    }
+}
+
+fn assert_no_graphics_definition_errors(env: &WowLuaEnv, label: &str) {
+    let errors: Vec<_> = env.state().borrow().lua_errors.iter()
+        .filter(|error| error.contains("Blizzard_SettingsDefinitions_Shared/Graphics.lua"))
+        .cloned()
+        .collect();
+    assert!(errors.is_empty(), "{label} graphics definition errors: {errors:#?}");
+}
+
 #[test]
 fn forever_graphics_settings_load_with_first_host_capability_fixture() {
     test_timeout! {
-        // Preserve original consumer loading without asserting inferred byte projections.
-        let env = load_login_screen_with_video_capabilities(Some(VideoCapabilityBytes {
-            linear_enabled_on_start: 0,
-            outline_disabled: 1,
-            pbr_water_supported: 0,
-            secondary_lighting_supported: 0,
-            spell_visual_density_supported: 0,
-        }));
-        env.exec(r#"
-            -- Separate unchanged simulator MSAA policy, not a native false claim.
-            assert(select('#', MultiSampleAntiAliasingSupported()) == 1)
-            assert(MultiSampleAntiAliasingSupported() == false)
-            assert(Settings.GetSetting("PROXY_MSAA") ~= nil)
-            assert(Settings.GetSetting("PROXY_MSAA_ALPHA") ~= nil)
-            assert(Settings.GetSetting("Gamma") ~= nil)
-
-            local added = {}
-            local function RecordSetting(settings, category, variable)
-                added[variable] = true
-                settings[#settings + 1] = variable
-            end
-            local normal = GraphicsOverrides.CreateAdvancedSettingsTable({}, RecordSetting)
-            local raid = GraphicsOverrides.CreateAdvancedRaidSettingsTable({}, RecordSetting)
-            assert(#normal > 0 and #raid > 0)
-            for _, prefix in ipairs({ "graphics", "raidGraphics" }) do
-                assert(added[prefix .. "LiquidDetail"] == true)
-                assert(added[prefix .. "TextureResolution"] == true)
-            end
-        "#).expect("original Forever graphics definitions should load with supplied host bytes");
-
-        let errors: Vec<_> = env.state().borrow().lua_errors.iter()
-            .filter(|error| error.contains("Blizzard_SettingsDefinitions_Shared/Graphics.lua"))
-            .cloned()
-            .collect();
-        assert!(errors.is_empty(), "offline graphics definition errors: {errors:#?}");
+        let env = load_login_screen_with_video_capabilities(Some(first_host_video_capabilities()));
+        env.exec(FIRST_HOST_GRAPHICS_CHECKS)
+            .expect("original Forever graphics definitions should load with supplied host bytes");
+        assert_no_graphics_definition_errors(&env, "offline");
     }
 }
 
 #[test]
 fn forever_graphics_settings_load_with_alternate_host_capability_fixture() {
     test_timeout! {
-        // A second host fixture preserves loading coverage, not projected control selection.
-        let env = load_login_screen_with_video_capabilities(Some(VideoCapabilityBytes {
-            linear_enabled_on_start: 2,
-            outline_disabled: 0,
-            pbr_water_supported: 128,
-            secondary_lighting_supported: 255,
-            spell_visual_density_supported: 3,
-        }));
-        env.exec(r#"
-            assert(Settings.GetSetting("Gamma") ~= nil)
-
-            local added = {}
-            local function RecordSetting(settings, category, variable)
-                added[variable] = true
-                settings[#settings + 1] = variable
-            end
-            local normal = GraphicsOverrides.CreateAdvancedSettingsTable({}, RecordSetting)
-            local raid = GraphicsOverrides.CreateAdvancedRaidSettingsTable({}, RecordSetting)
-            assert(#normal > 0 and #raid > 0)
-            for _, prefix in ipairs({ "graphics", "raidGraphics" }) do
-                assert(added[prefix .. "LiquidDetail"] == true)
-                assert(added[prefix .. "TextureResolution"] == true)
-            end
-        "#).expect("original Forever graphics definitions should load with supplied host bytes");
-
-        let errors: Vec<_> = env.state().borrow().lua_errors.iter()
-            .filter(|error| error.contains("Blizzard_SettingsDefinitions_Shared/Graphics.lua"))
-            .cloned()
-            .collect();
-        assert!(errors.is_empty(), "alternate-host graphics definition errors: {errors:#?}");
+        let env = load_login_screen_with_video_capabilities(Some(alternate_host_video_capabilities()));
+        env.exec(ALTERNATE_HOST_GRAPHICS_CHECKS)
+            .expect("original Forever graphics definitions should load with supplied host bytes");
+        assert_no_graphics_definition_errors(&env, "alternate-host");
     }
 }

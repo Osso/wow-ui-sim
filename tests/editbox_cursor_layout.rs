@@ -160,7 +160,7 @@ fn programmatic_cursor_layout_delivers_before_onupdate_and_suppresses_unchanged_
 }
 
 #[test]
-fn programmatic_text_lifecycle_defers_changed_until_cursor_layout_before_onupdate() {
+fn programmatic_text_lifecycle_dispatches_changed_at_host_return_before_cursor_layout() {
     for assignment in [
         "CursorBox:SetText('x\\né猫')",
         "CursorBox:SetFormattedText('%s\\n%s', 'x', 'é猫')",
@@ -210,19 +210,22 @@ fn programmatic_text_lifecycle_defers_changed_until_cursor_layout_before_onupdat
             CursorBox:HookScript('OnCursorChanged', function(self)
                 LifecycleTrace[#LifecycleTrace + 1] = 'cursor'
                 assert_current_cursor(self)
-                assert(table.concat(LifecycleTrace, ',') == 'set,returned,cursor')
+                assert(table.concat(LifecycleTrace, ',') == 'set,returned,changed,cursor')
             end)
             -- Public lifecycle observer, NOT a genuine cached ScrollingEdit consumer.
             CursorBox:SetScript('OnTextChanged', function(self, userInput)
                 LifecycleTrace[#LifecycleTrace + 1] = 'changed'
-                assert_current_cursor(self)
+                assert(self:GetText() == 'x\né猫', 'callback sees current text')
+                assert(self:GetCursorPosition() == 2, 'callback sees byte cursor')
+                assert(self:GetUTF8CursorPosition() == 2, 'callback sees scalar cursor')
+                assert(#CursorRecords == 0, 'text notification does not force cursor presentation')
                 assert(userInput == false, 'programmatic assignment is not user input')
-                assert(table.concat(LifecycleTrace, ',') == 'set,returned,cursor,changed')
+                assert(table.concat(LifecycleTrace, ',') == 'set,returned,changed')
             end)
             CursorBox:HookScript('OnUpdate', function(self)
                 LifecycleTrace[#LifecycleTrace + 1] = 'update'
                 assert_current_cursor(self)
-                assert(table.concat(LifecycleTrace, ',') == 'set,returned,cursor,changed,update')
+                assert(table.concat(LifecycleTrace, ',') == 'set,returned,changed,cursor,update')
                 assert(#CursorUpdateObservations == 1, 'existing OnUpdate observer preserved')
                 local observation = CursorUpdateObservations[1]
                 assert(observation.record == CursorRecords[1] and observation.count == 1)
@@ -253,6 +256,14 @@ fn programmatic_text_lifecycle_defers_changed_until_cursor_layout_before_onupdat
             env.state().borrow().lua_errors
         );
         assignment_result.unwrap();
+        env.exec(
+            r#"
+            assert(table.concat(LifecycleTrace, ',') == 'set,returned,changed',
+                table.concat(LifecycleTrace, ','))
+            assert(#CursorRecords == 0 and #CursorUpdateObservations == 0)
+            "#,
+        )
+        .unwrap();
 
         let tick_result = env.fire_on_update(TICK_SECONDS);
         env.exec("assert(#LifecycleErrors == 0, table.concat(LifecycleErrors, '\\n'))")
@@ -265,7 +276,7 @@ fn programmatic_text_lifecycle_defers_changed_until_cursor_layout_before_onupdat
         tick_result.unwrap();
         env.exec(
             r#"
-            assert(table.concat(LifecycleTrace, ',') == 'set,returned,cursor,changed,update',
+            assert(table.concat(LifecycleTrace, ',') == 'set,returned,changed,cursor,update',
                 table.concat(LifecycleTrace, ','))
             assert(#CursorRecords == 1 and #CursorUpdateObservations == 1)
             assert(CursorBox:GetText() == 'x\né猫')
@@ -354,11 +365,10 @@ const DIRTY_FLUSH_OBSERVERS: &str = r#"
     CursorBox:SetScript('OnTextChanged', function(self, ...)
         local entry = RecordDirtyEntry('changed', self, ..., select('#', ...))
         assert(entry.arity == 1 and type(entry.value) == 'boolean')
-        local cursor = CursorRecords[entry.cursorCount]
-        assert(cursor ~= nil, 'changed follows an actual cursor presentation')
-        assert(cursor.text == entry.text, 'presentation contains current text')
-        assert(cursor.byte == entry.byte and cursor.scalar == entry.scalar,
-            'presentation contains current public UTF-8 cursor')
+        assert(entry.text == self:GetText(), 'notification sees current text')
+        assert(entry.byte == self:GetCursorPosition(), 'notification sees byte cursor')
+        assert(entry.scalar == self:GetUTF8CursorPosition(),
+            'notification sees scalar cursor')
     end)
 
     function AssertDirtyTrace(expected)
@@ -561,7 +571,7 @@ fn dirty_flush_keydown_presents_pending_text_before_keydown_and_char() {
     exec_dirty_flush_lua(
         &env,
         r#"
-        AssertDirtyTrace('set:ab|changed:false:ab|key:X:ab|char:x:abx')
+        AssertDirtyTrace('set:ab|changed:false:ab|key:X:ab|char:x:abx|changed:true:abx')
         AssertDirtyText('abx', 3, 3)
         "#,
     );
@@ -593,7 +603,7 @@ fn dirty_flush_settext_inside_single_keyboard_onchar_sets_programmatic_origin() 
     exec_dirty_flush_lua(
         &env,
         r#"
-        AssertDirtyTrace('key:X:é\n猫z|char:x:x|set:b')
+        AssertDirtyTrace('key:X:é\n猫z|char:x:x|set:b|changed:false:b')
         AssertDirtyText('b', 1, 1)
         "#,
     );
@@ -621,12 +631,15 @@ fn dirty_flush_settext_inside_keydown_then_keyboard_insert_sets_user_origin() {
     exec_dirty_flush_lua(
         &env,
         r#"
-        AssertDirtyTrace('key:X:é\n猫z|set:ab|char:x:abx')
+        AssertDirtyTrace('key:X:é\n猫z|set:ab|changed:false:ab|char:x:abx|changed:true:abx')
         AssertDirtyText('abx', 3, 3)
         "#,
     );
     tick_dirty_flush(&env);
-    assert_dirty_flush_stable(&env, "key:X:é\\n猫z|set:ab|char:x:abx|changed:true:abx");
+    assert_dirty_flush_stable(
+        &env,
+        "key:X:é\\n猫z|set:ab|changed:false:ab|char:x:abx|changed:true:abx",
+    );
 }
 
 #[cfg(feature = "gui")]

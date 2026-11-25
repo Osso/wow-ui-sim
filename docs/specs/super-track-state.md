@@ -5,6 +5,7 @@ CF-2 supplies tracked targets through `src/c_api/c_super_track.rs` and per-quest
 ## What it must do
 
 - [ ] Register the modeled namespace on Retail, PTR and Forever beside C_QuestLog through one shared runtime profile predicate; preserve unrelated namespace members.
+- [x] **INFERRED (R88dw; native evidence pending):** `GetHighestPrioritySuperTrackingType()` returns the first active modeled type in this order: Quest, Content, MapPin, Vignette, UserWaypoint, Corpse. It returns nil when none is active. The order is a best guess; Scenario and PartyMember have no backing state in this model.
 - [x] **VERIFIED (Retail declaration):** `GetSuperTrackedItemName()` may return no values; when present, it returns non-nil name and description strings. **INFERRED (simulator mapping):** absent `SuperTrackState.item_name` returns no values, while a supplied pair returns both strings. Native target selection and the input writer remain UNKNOWN.
 - [x] **VERIFIED (Retail 12.1.5.70688; optional original-consumer test):** `SetSuperTrackedUserWaypoint` uses Lua truthiness and is a no-op when the stored flag already matches. A changed true value with a valid point clears the quest, content, map-pin, vignette and user-waypoint flags plus one unnamed flag, then sets user-waypoint tracking. It preserves corpse tracking and one unnamed flag. A changed false value or invalid point clears only user-waypoint tracking; the saved point stays unchanged. `IsSuperTrackingUserWaypoint`, `IsSuperTrackingCorpse`, and `IsSuperTrackingAnything` expose the modeled flags. `IsSuperTrackingAnything` includes user-waypoint tracking. `ClearAllSuperTracked` clears modeled flags and selections but preserves the saved waypoint. The implementation uses zero setter values, one getter boolean, and no event as neutral seams; the new setter dispatches no event.
 - [ ] The setter checks secret access before converting the required non-nil argument. Native return arity, the two getterless flags, and named-event effects remain UNKNOWN; see [system evidence bounds](../wiki/systems/super-track-state.md#user-waypoint-supertracking).
@@ -27,7 +28,7 @@ CF-2 supplies tracked targets through `src/c_api/c_super_track.rs` and per-quest
 - `src/c_api/mod.rs` — shared runtime Retail/PTR/Forever publication predicate.
 - `src/lua_api/state{,/sim_state}.rs` — environment-owned `super_track`, with absent selections and false simulator flag defaults.
 - `src/lua_api/sim_substates/quest_log.rs` — quest-log-owned additional_highlights rows, empty by default.
-- `src/lua_api/workarounds/temporary/super_track_defaults.rs` — only unsupported priority query remains; no target fallback installers.
+- `src/lua_api/workarounds/temporary/super_track_defaults.rs` — unsupported priority query fallback remains only outside Retail and Forever; no target fallback installers.
 
 ## Tests asserting this spec
 
@@ -46,7 +47,7 @@ CF-2 supplies tracked targets through `src/c_api/c_super_track.rs` and per-quest
 
 ## Out of scope
 
-Scenario/party targets, priority arbitration, persistence, broader map-provider catalogs, uncached requests, opaque GUID aliases, and nonzero vignette object/record validation. Existing highest-priority query remains a temporary unsupported nil response, retired only when native arbitration is modeled; namespace is not fully modeled. PTR readiness=false is preservation, not readiness RED.
+Scenario/party targets, persistence, broader map-provider catalogs, uncached requests, opaque GUID aliases, and nonzero vignette object/record validation remain out of scope. Native priority ordering remains unverified (R88dw); PTR readiness=false is preservation, not readiness RED.
 
 ## Deferred supertracking coverage restoration
 

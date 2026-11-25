@@ -6,7 +6,7 @@ Adds a buff to the player's aura list.
 
 - **spellId** `number` -- Spell ID for the aura
 - **name** `string` -- Display name
-- **icon** `number` -- File data ID for the aura icon texture
+- **icon** `number|string` -- File data ID or texture path for the aura icon. Numeric strings are treated as file data IDs.
 - **duration** `number` -- Duration in seconds (0 = permanent/no expiry)
 - **stacks** `number` -- Stack count (`applications` in aura data)
 - **caster** `string?` -- Stored source unit token; defaults to `player`. `player` and `pet` set `isFromPlayerOrPlayerPet`. Player-aura queries currently project `sourceUnit` as `player` regardless of the stored token; native behavior is pending investigation.
@@ -16,6 +16,9 @@ Adds a buff to the player's aura list.
 ```lua
 -- Add Power Word: Fortitude (permanent raid buff)
 A_Admin.AddBuff(21562, "Power Word: Fortitude", 135987, 0, 0)
+
+-- Add an aura with a texture path
+A_Admin.AddBuff(12346, "Texture Path Buff", "Interface\\Icons\\INV_Misc_QuestionMark", 30, 1)
 
 -- Add a 30-second 5-stack buff
 A_Admin.AddBuff(12345, "Test Buff", 136001, 30.0, 5)

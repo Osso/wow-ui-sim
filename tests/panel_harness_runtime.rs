@@ -120,6 +120,51 @@ fn forever_without_encounter_journal(env: &WowLuaEnv) -> bool {
     true
 }
 
+#[cfg(feature = "client-retail")]
+#[test]
+fn pet_collection_button_uses_supplied_achievement_ui_access() {
+    let env = WowLuaEnv::new().expect("Failed to create Lua environment");
+    env.set_screen_size(1024.0, 768.0);
+    env.state().borrow_mut().addon_base_paths = vec![blizzard_ui_dir()];
+    load_panel_harness(&env);
+
+    env.exec(
+        r#"
+        assert(C_AddOns.LoadAddOn("Blizzard_Collections"))
+        assert(CanShowAchievementUI())
+        A_Admin.SetCanShowAchievementUI(false)
+        PetJournalAchievementStatus_OnClick()
+        assert(not C_AddOns.IsAddOnLoaded("Blizzard_AchievementUI"))
+        A_Admin.SetCanShowAchievementUI(true)
+        PetJournalAchievementStatus_OnClick()
+        assert(C_AddOns.IsAddOnLoaded("Blizzard_AchievementUI"))
+        "#,
+    )
+    .expect("pet collection consumer should follow supplied UI access");
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn achievement_microbutton_uses_supplied_ui_access() {
+    let env = WowLuaEnv::new().expect("Failed to create Lua environment");
+    env.set_screen_size(1024.0, 768.0);
+    env.state().borrow_mut().addon_base_paths = vec![blizzard_ui_dir()];
+    load_panel_harness(&env);
+
+    env.exec(
+        r#"
+        assert(CanShowAchievementUI())
+        A_Admin.SetCanShowAchievementUI(false)
+        AchievementMicroButton:Click()
+        assert(not C_AddOns.IsAddOnLoaded("Blizzard_AchievementUI"))
+        A_Admin.SetCanShowAchievementUI(true)
+        AchievementMicroButton:Click()
+        assert(C_AddOns.IsAddOnLoaded("Blizzard_AchievementUI"))
+        "#,
+    )
+    .expect("achievement microbutton should follow supplied UI access");
+}
+
 #[test]
 fn achievement_addon_reports_runtime_load_reason() {
     if crate::common::wrath_achievement_fixtures::assert_lazy(
@@ -221,7 +266,8 @@ fn mount_filter_native_initial_and_reset_consumer() {
     env.set_screen_size(1024.0, 768.0);
     env.state().borrow_mut().addon_base_paths = vec![blizzard_ui_dir()];
     load_panel_harness(&env);
-    env.exec(r#"
+    env.exec(
+        r#"
         assert(C_AddOns.LoadAddOn("Blizzard_Collections"))
         assert(not C_MountJournal.IsUsingDefaultFilters(), "load must not set defaults")
         assert(not C_MountJournal.GetCollectedFilterSetting(0), "initial collected bit")
@@ -244,7 +290,9 @@ fn mount_filter_native_initial_and_reset_consumer() {
         C_MountJournal.SetDefaultFilters()
         assert(C_MountJournal.IsUsingDefaultFilters())
         assert(C_MountJournal.GetNumDisplayedMounts() == 0)
-    "#).expect("native filter behavior through Collections");
+    "#,
+    )
+    .expect("native filter behavior through Collections");
 }
 
 #[cfg(feature = "client-retail")]
@@ -843,17 +891,45 @@ fn mount_filter_events_follow_displayed_list_changes() {
     let env = WowLuaEnv::new().expect("Lua environment");
     env.exec("C_MountJournal.SetDefaultFilters()").unwrap();
     env.state().borrow_mut().events.drain();
-    env.exec("C_MountJournal.SetCollectedFilterSetting(1, false)").unwrap();
+    env.exec("C_MountJournal.SetCollectedFilterSetting(1, false)")
+        .unwrap();
     let events = env.state().borrow_mut().events.drain();
-    assert_eq!(events.iter().filter(|event| event.name == "MOUNT_JOURNAL_SEARCH_UPDATED").count(), 1);
-    env.exec("C_MountJournal.SetCollectedFilterSetting(1, false)").unwrap();
-    assert!(env.state().borrow().events.pending().iter().all(|event| event.name != "MOUNT_JOURNAL_SEARCH_UPDATED"));
+    assert_eq!(
+        events
+            .iter()
+            .filter(|event| event.name == "MOUNT_JOURNAL_SEARCH_UPDATED")
+            .count(),
+        1
+    );
+    env.exec("C_MountJournal.SetCollectedFilterSetting(1, false)")
+        .unwrap();
+    assert!(
+        env.state()
+            .borrow()
+            .events
+            .pending()
+            .iter()
+            .all(|event| event.name != "MOUNT_JOURNAL_SEARCH_UPDATED")
+    );
     env.exec("C_MountJournal.SetDefaultFilters()").unwrap();
     let events = env.state().borrow_mut().events.drain();
-    assert_eq!(events.iter().filter(|event| event.name == "MOUNT_JOURNAL_SEARCH_UPDATED").count(), 1);
-    env.exec("C_MountJournal.SetSearch('not-a-real-mount-name')").unwrap();
+    assert_eq!(
+        events
+            .iter()
+            .filter(|event| event.name == "MOUNT_JOURNAL_SEARCH_UPDATED")
+            .count(),
+        1
+    );
+    env.exec("C_MountJournal.SetSearch('not-a-real-mount-name')")
+        .unwrap();
     let events = env.state().borrow_mut().events.drain();
-    assert_eq!(events.iter().filter(|event| event.name == "MOUNT_JOURNAL_SEARCH_UPDATED").count(), 1);
+    assert_eq!(
+        events
+            .iter()
+            .filter(|event| event.name == "MOUNT_JOURNAL_SEARCH_UPDATED")
+            .count(),
+        1
+    );
 }
 
 #[test]

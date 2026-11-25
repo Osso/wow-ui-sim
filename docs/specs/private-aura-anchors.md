@@ -8,6 +8,13 @@ Public `C_UnitAuras.AddPrivateAuraAnchor` / `RemovePrivateAuraAnchor` must produ
 
 ## What it must do
 
+### Retail/Forever placement (INFERRED; R88bw pending aso)
+
+- [x] On Retail and WoW Forever, `C_UnitAurasPrivate.AnchorPrivateAura(auraFrame, icon, duration, anchorID)` applies the registered parent and icon/duration bindings to the supplied regions and reads the selected private aura from typed host data for the anchor's unit and `auraIndex`.
+- [x] The selected icon file ID, stack text, cooldown/duration state, and shown state match the aura through the original consumer.
+- [x] A private-aura data update followed by the original watcher refresh updates the rendered frame; replacing one supplied aura changes that frame without changing the other anchor.
+- [ ] This behavior is a researched best guess from the selected consumer and supplied in-game behavior description. Correct it if R88bw establishes different native semantics.
+
 ### Public contract and payload
 
 - [ ] Accept one `AddPrivateAuraAnchorArgs` record with required `unitToken` string, `auraIndex` number and actual `CreateFrame` parent; return a positive numeric ID for valid fixture inputs, monotonically allocated per environment, without reuse after removal, starting at 1 in each fresh environment. Allocation policy is retained simulator behavior, not native-verified numbering.
@@ -52,7 +59,7 @@ Public `C_UnitAuras.AddPrivateAuraAnchor` / `RemovePrivateAuraAnchor` must produ
 
 | Path | Role |
 | --- | --- |
-| `src/c_api/private_aura_anchors.rs` | Empty per-environment records, monotonic IDs, callbacks and fresh flattened DTOs. |
+| `src/c_api/private_aura_anchors.rs` | Per-environment anchor records, Retail/Forever placement, callbacks and fresh flattened DTOs. |
 | `src/c_api/private_aura_anchors/input.rs` | Complete secret-aware and VM-guarded public/nested input validation. |
 | `src/c_api/mod.rs`, `src/lua_api/globals/register.rs`, `src/lua_api/state.rs`, `src/lua_api/state/sim_state.rs` | Unconditional module/publication and per-environment model wiring, separate from gated aura enumeration. |
 | `tests/private_aura_anchors.rs` | Public lifecycle fixtures; explicit delivery counts repair vacuous reentry PASS; flattened DTO exclusions. |
@@ -62,15 +69,15 @@ Public `C_UnitAuras.AddPrivateAuraAnchor` / `RemovePrivateAuraAnchor` must produ
 
 ### Ownership and publication boundary
 
-Public names already existed through `runtime_surface_bootstrap.lua`'s `__wow_namespace_mt.__index`, which logs missing symbols and caches functions returning nil. Those are not lifecycle implementations. Static namespace stubs and the public aura registrar have no explicit anchor publishers. The old temporary bootstrap independently owned private anchors, counter, callback slots, getter and test-only producers. Concrete C API publication now runs after `auras::register_all` and before runtime namespace metatable installation; existing concrete slots bypass lazy stubs. Both public methods and all three private methods are unconditional; no retail/aura-enumeration cfg is introduced.
+Public names already existed through `runtime_surface_bootstrap.lua`'s `__wow_namespace_mt.__index`, which logs missing symbols and caches functions returning nil. Those are not lifecycle implementations. Static namespace stubs and the public aura registrar have no explicit anchor publishers. The old temporary bootstrap independently owned private anchors, counter, callback slots, getter and test-only producers. Concrete C API publication now runs after `auras::register_all` and before runtime namespace metatable installation; existing concrete slots bypass lazy stubs. Both public lifecycle methods and the three private lifecycle methods remain unconditional. `AnchorPrivateAura` is registered only for Retail and WoW Forever.
 
-Records hold strings/scalars and canonical native frame IDs only. Parent and binding receivers use native backing identity, not overridable dispatch tokens. Existing `frame_ref` caches canonical tables in the rooted registry, pins frame tables without skipping traversal, and shares those tables with per-frame custom fields. No new frame deep copy or Rust-held permanent `Val` root is added. Callback replacement uses named Lua registry roots with GC barriers. Full parsing precedes mutation; model borrows end before synchronous callbacks. Bindings are captured for future `AnchorPrivateAura`, but registration does not apply layout/rendering and DTOs expose no nested input structures.
+Records hold strings/scalars and canonical native frame IDs only. Parent and binding receivers use native backing identity, not overridable dispatch tokens. Existing `frame_ref` caches canonical tables in the rooted registry, pins frame tables without skipping traversal, and shares those tables with per-frame custom fields. No new frame deep copy or Rust-held permanent `Val` root is added. Callback replacement uses named Lua registry roots with GC barriers. Full parsing precedes mutation; model borrows end before synchronous callbacks. Registration retains typed bindings; the Retail/Forever `AnchorPrivateAura` path applies them to the consumer-supplied frame regions. DTOs expose no nested input structures.
 
 `CopyPrivateAuraValue` / `CopyPrivateAuraList` still serve unrelated private aura paths. There is no parallel anchor helper state or fallback producer.
 
 ## Tests asserting this spec
 
-`tests/private_aura_anchors.rs` is automatically included by `build.rs::discover_top_level_test_modules` / `should_include_in_integration_harness` in the existing `integration` binary. No standalone Cargo target is added.
+`tests/private_aura_anchors.rs` covers the public lifecycle in the `integration` binary. `tests/blizzard_private_auras_ui_loads.rs::private_aura_anchor_places_and_refreshes_rendered_frames` covers the original Retail/Forever consumer and observable frame output.
 
 ### Batch29 proof ledger — 2026-10-01
 
@@ -164,11 +171,11 @@ Accepted capability `private-aura-add-restriction-removal` is **exact ordinary-p
 
 - [ ] Bounded independent PASS inspects saved parent behavior/startup, not independent runtime execution. Embedded controls and all-profile execution remain unestablished.
 - [ ] Strengthened reentry counts and nested-output exclusions have saved GREEN but no standalone RED. Callback errors have bounded simulator characterization only; native rollback policy and frame destruction remain unproven.
-- [ ] Rendering/anchor application remains absent despite retained parsed binding data. Full frame/ScriptRegion and all-profile native parity remain unverified.
+- [ ] Native placement semantics remain unverified until R88bw returns. Current Retail/Forever behavior is INFERRED; full ScriptRegion and all-profile parity remain unverified.
 - [ ] Native `AllowedWhenUntainted` secret acceptance, private secure-only behavior and cross-profile parity remain unmodeled/unverified. Conservative rejection and existing private availability must not be reported as native security parity. No combat lockout is introduced: retained source removes restrictions; that is not full native security proof.
 
 ## Out of scope
 
-- Full Blizzard widget/secure-environment acceptance: new cached-consumer regression covers only synchronous container callback lifecycle with explicit inputs and independently inspected saved targeted PASS, not full-page acceptance. Timers, aura content/update rendering, complete `PrivateAuraUnitWatcher` behavior, and full startup/native acceptance remain excluded; bounded saved startup is recorded above.
+- Full Blizzard widget/secure-environment acceptance: the placement test covers two supplied records and one replacement through the selected consumer. Complete `PrivateAuraUnitWatcher` behavior, native placement parity, and full startup acceptance remain out of scope.
 - Aura content, spell data, sounds, warning/update models, container layout/settings, and other aura structure changes: independent owners, not required for public anchor registration.
-- Only structure field rows626/675/676 may gain bounded coverage. Other source-status promotion, PLAN, chat files, code/tests edits, fresh builds/checks/tests/startup, push/deploy and delegation are excluded from this docs followup.
+- Other private-aura subsystems and unrelated structure-field rows remain independently scoped.

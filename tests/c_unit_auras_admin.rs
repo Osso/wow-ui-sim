@@ -20,6 +20,67 @@ fn env() -> WowLuaEnv {
     WowLuaEnv::new().expect("Failed to create Lua environment")
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn group_buff_consumer_env() -> WowLuaEnv {
+    let env = env();
+    let ui = wow_ui_sim::blizzard_ui_sync::default_cache_addons_path().unwrap();
+    env.state().borrow_mut().addon_base_paths = vec![ui.clone()];
+    crate::common::load_profile_framexml(&env);
+    for (name, toc) in wow_ui_sim::loader::discover_blizzard_addons(&ui) {
+        wow_ui_sim::loader::load_addon(&env.loader_env(), &toc)
+            .unwrap_or_else(|error| panic!("{name}: {error}"));
+    }
+    env
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn update_group_buff_settings(env: &WowLuaEnv) -> (bool, bool, bool, bool) {
+    env.eval(
+        r#"
+        local alerts = CreateFrame("Frame")
+        Mixin(alerts, GroupBuffMixin)
+        alerts:RegisterGroupBuffVisualAlertsChangedEvent()
+        alerts:RefreshGroupBuffVisualAlerts()
+        local hidden = CreateFrame("Frame")
+        Mixin(hidden, GroupBuffMixin)
+        hidden:RegisterHiddenGroupBuffsChangedEvent()
+        hidden:RefreshHiddenGroupBuffs()
+        C_UnitAuras.SetGroupBuffVisualAlerts({
+            { spellID = 12345, visualValue = 2 }, { spellID = 67890, visualValue = 4 },
+        })
+        C_UnitAuras.SetHiddenGroupBuffs({ 23456, 78901 })
+        local rows, ids = C_UnitAuras.GetGroupBuffVisualAlerts(), C_UnitAuras.GetHiddenGroupBuffs()
+        return #rows == 2 and rows[1].spellID == 12345 and rows[1].visualValue == 2
+                and rows[2].spellID == 67890 and rows[2].visualValue == 4,
+            #ids == 2 and ids[1] == 23456 and ids[2] == 78901,
+            alerts:GetGroupBuffVisualAlert(67890) == 4,
+            hidden:IsGroupBuffHidden(78901)
+        "#,
+    )
+    .expect("original group buff consumers should receive updated settings")
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn group_buff_settings_round_trip_and_notify_blizzard_listeners() {
+    let env = group_buff_consumer_env();
+    let (alerts_ok, hidden_ok, alert_consumer_ok, hidden_consumer_ok) =
+        update_group_buff_settings(&env);
+    assert!(
+        alerts_ok,
+        "group buff alert rows must retain data and order"
+    );
+    assert!(hidden_ok, "hidden group buff spell IDs must retain order");
+    assert!(
+        alert_consumer_ok,
+        "the Blizzard visual-alert consumer must update"
+    );
+    assert!(
+        hidden_consumer_ok,
+        "the Blizzard hidden-buff consumer must update"
+    );
+}
+
 fn clear_buffs_and_insert(env: &WowLuaEnv, auras: Vec<AuraInfo>) {
     let mut state = env.state().borrow_mut();
     state.player.buffs.clear();
@@ -30,7 +91,7 @@ fn admin_aura(name: &str, spell_id: i32, aura_instance_id: i32, is_helpful: bool
     AuraInfo {
         name: name.into(),
         spell_id,
-        icon: 135841,
+        icon: wow_ui_sim::lua_api::state::AuraIcon::FileId(135841),
         duration: 60.0,
         expiration_time: 60.0,
         applications: 1,

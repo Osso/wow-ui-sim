@@ -1,9 +1,6 @@
-//! Temporary unit stagger defaults.
-//!
-//! The simulator does not model monk stagger damage yet. Keep the legacy
-//! `UnitStagger` global and PaperDoll stagger percentage explicit here until
-//! unit combat state owns stagger amounts.
+//! Unit stagger compatibility for profiles without modeled combat state.
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 const UNIT_STAGGER_DEFAULTS_LUA: &str = r#"
 if UnitStagger == nil then
   function UnitStagger(_unit)
@@ -20,6 +17,7 @@ if rawget(C_PaperDollInfo, "GetStaggerPercentage") == nil then
 end
 "#;
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(UNIT_STAGGER_DEFAULTS_LUA)?;
     Ok(())
@@ -27,8 +25,10 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
 
 #[cfg(test)]
 mod tests {
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     use crate::lua_api::WowLuaEnv;
 
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     #[test]
     fn installs_unit_stagger_default() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
@@ -40,6 +40,7 @@ mod tests {
         assert_eq!(stagger, 0);
     }
 
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     #[test]
     fn installs_paper_doll_stagger_default() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
@@ -57,6 +58,7 @@ mod tests {
         assert!(against_target_is_nil);
     }
 
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     #[test]
     fn preserves_existing_paper_doll_stagger_provider() {
         let env = WowLuaEnv::new().expect("lua env should initialize");

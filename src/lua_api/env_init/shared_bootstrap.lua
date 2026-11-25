@@ -1,6 +1,6 @@
 local projectForbiddenDelegateArguments, retiredPortraitGlobal,
   callPrivateProjectionFactory, retireGlueOwnerDefaults, retireGlueStateDefaults,
-  retireCreateAndInitFromMixinFallback = ...
+  retireCreateAndInitFromMixinFallback, retireGenericFrameHelpers = ...
 
 local function __wow_public_global_path(path)
   local first, rest = string.match(path, "^([^.]+)%.?(.*)$")
@@ -62,6 +62,14 @@ function __wow_resolve_xml_mixin(path)
   local addonLocal = __wow_xml_lookup_local(path)
   if addonLocal ~= nil then
     return addonLocal
+  end
+
+  if __wow_public_global_path("__wow_loading_addon_secure_env") == true then
+    local secureenv = __wow_public_global_path("__secureenv")
+    local secureMixin = __wow_xml_lookup_path(secureenv, path)
+    if secureMixin ~= nil then
+      return secureMixin
+    end
   end
 
   local global = __wow_public_global_path(path)
@@ -847,7 +855,8 @@ tWipe = tWipe or table.wipe
 __wow_hooksecurefunc_registry = __wow_hooksecurefunc_registry or {}
 __wow_hooksecurefunc_wrapper_ids = __wow_hooksecurefunc_wrapper_ids or {}
 
-local callSecureHookFactory = securecallfunction
+-- Retail securecallfunction preserves caller taint for secret-value flows.
+local callSecureHookFactory = securecall
 local function installSecureHookWrapper(object, key, hookId)
   local function wrapper(...)
     local entry = __wow_hooksecurefunc_registry[hookId]
@@ -1142,7 +1151,8 @@ if GetFontStringMetatable == nil then
   end
 end
 
-do
+-- INFERRED: retain this generic provider bridge for other profiles only.
+if not retireGenericFrameHelpers then
   local frameMeta = GetFrameMetatable and GetFrameMetatable()
   local frameIndex = frameMeta and frameMeta.__index
   if type(frameIndex) == "table" then

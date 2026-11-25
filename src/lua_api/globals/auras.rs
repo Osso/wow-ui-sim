@@ -30,7 +30,7 @@ use crate::c_api::aura_filter::{
 use crate::c_api::unit_aura_access::{
     finish_aura_data, finish_spell_keyed_aura_data, require_unit_aura_access,
 };
-use crate::lua_api::game_data::AuraInfo;
+use crate::lua_api::game_data::{AuraIcon, AuraInfo};
 #[cfg(not(feature = "retail-12-0-5"))]
 use crate::lua_api::globals::font_strings_collection::colors::{
     debuff_type_color, make_rilua_color_table,
@@ -47,6 +47,18 @@ use rilua::{LuaResult, RustFn, Val};
 
 const AURA_DATA_HASH_FIELDS: usize = 23;
 const AURA_FILTER_COUNT: usize = 4;
+
+#[derive(Clone, Debug, Default)]
+pub struct GroupBuffSettings {
+    pub visual_alerts: Vec<GroupBuffAlert>,
+    pub hidden_spell_ids: Vec<i32>,
+}
+
+#[derive(Clone, Debug)]
+pub struct GroupBuffAlert {
+    pub spell_id: i32,
+    pub visual_value: i32,
+}
 
 pub fn register_all(state: &mut LuaState) {
     let ns = ensure_c_unit_auras(state);
@@ -258,41 +270,37 @@ pub(crate) fn aura_matches_filter_string(
 
 pub(crate) fn target_fixture_auras() -> Vec<AuraInfo> {
     vec![
-        AuraInfo {
-            name: "Weakened Armor".to_string(),
-            spell_id: 113746,
-            icon: 136039,
-            duration: 15.0,
-            expiration_time: 15.0,
-            applications: 1,
-            source_unit: "target".to_string(),
-            is_helpful: false,
-            is_raid: false,
-            is_nameplate_only: false,
-            is_stealable: false,
-            can_apply_aura: false,
-            is_from_player_or_player_pet: false,
-            dispel_type: None,
-            aura_instance_id: 1,
-        },
-        AuraInfo {
-            name: "Expose Weakness".to_string(),
-            spell_id: 53338,
-            icon: 132090,
-            duration: 12.0,
-            expiration_time: 12.0,
-            applications: 2,
-            source_unit: "target".to_string(),
-            is_helpful: false,
-            is_raid: false,
-            is_nameplate_only: false,
-            is_stealable: false,
-            can_apply_aura: false,
-            is_from_player_or_player_pet: false,
-            dispel_type: Some("Magic".to_string()),
-            aura_instance_id: 2,
-        },
+        target_fixture_aura("Weakened Armor", 113746, 136039, 15.0, 1, None, 1),
+        target_fixture_aura("Expose Weakness", 53338, 132090, 12.0, 2, Some("Magic"), 2),
     ]
+}
+
+fn target_fixture_aura(
+    name: &str,
+    spell_id: i32,
+    icon: i32,
+    duration: f64,
+    applications: i32,
+    dispel_type: Option<&str>,
+    aura_instance_id: i32,
+) -> AuraInfo {
+    AuraInfo {
+        name: name.to_string(),
+        spell_id,
+        icon: crate::lua_api::game_data::AuraIcon::FileId(icon),
+        duration,
+        expiration_time: duration,
+        applications,
+        source_unit: "target".to_string(),
+        is_helpful: false,
+        is_raid: false,
+        is_nameplate_only: false,
+        is_stealable: false,
+        can_apply_aura: false,
+        is_from_player_or_player_pet: false,
+        dispel_type: dispel_type.map(str::to_string),
+        aura_instance_id,
+    }
 }
 
 fn collect_unit_auras(state: &mut LuaState, unit: &str, filter: AuraFilter) -> Vec<AuraInfo> {
@@ -920,12 +928,17 @@ fn push_legacy_aura_result(state: &mut LuaState, aura: Option<&AuraInfo>, unit: 
 
 fn write_wrath_legacy_aura_fields(state: &mut LuaState, table: Val, aura: &AuraInfo, unit: &str) {
     let party_fallback = super::unit_api::parse_party_index(unit).is_some();
-    let icon = crate::manifest_interface_data::get_texture_path(aura.icon as u32)
-        .map(|path| {
-            let filename = format!("Interface\\{}", path.replace('/', "\\"));
-            create_string(state, &filename)
-        })
-        .unwrap_or(Val::Nil);
+    let icon = match &aura.icon {
+        AuraIcon::Path(path) => create_string(state, path),
+        AuraIcon::FileId(file_id) => {
+            crate::manifest_interface_data::get_texture_path(*file_id as u32)
+                .map(|path| {
+                    let filename = format!("Interface\\{}", path.replace('/', "\\"));
+                    create_string(state, &filename)
+                })
+                .unwrap_or(Val::Nil)
+        }
+    };
     // INFERRED: an aura absent from the shared catalog has unspecified rank metadata.
     let rank_text =
         crate::spells::get_spell(aura.spell_id as u32).map_or("", |spell| spell.subtext);
@@ -1111,7 +1124,7 @@ fn all_unit_auras(state: &mut LuaState, unit: &str) -> Vec<AuraInfo> {
 
 // ── Aura table builder ───────────────────────────────────────────────────────
 
-fn build_aura_table(state: &mut LuaState, aura: &AuraInfo, unit: &str) -> Val {
+pub(crate) fn build_aura_table(state: &mut LuaState, aura: &AuraInfo, unit: &str) -> Val {
     let t = create_table_with_capacity(state, AURA_DATA_HASH_FIELDS);
     write_aura_identity(state, t, aura, unit);
     write_aura_flags(state, t, aura);
@@ -1131,25 +1144,48 @@ fn write_aura_identity(state: &mut LuaState, t: Val, aura: &AuraInfo, unit: &str
     let dispel = aura.dispel_type.as_deref().map(|d| create_string(state, d));
 
     table_set(state, t, "name", name);
-    table_set(state, t, "icon", Val::Num(aura.icon as f64));
+    write_aura_icon(state, t, &aura.icon);
     table_set(state, t, "applications", Val::Num(aura.applications as f64));
     table_set(state, t, "charges", Val::Num(aura.applications as f64));
     table_set(state, t, "stackCount", Val::Num(aura.applications as f64));
     if let Some(dispel) = dispel {
         table_set(state, t, "dispelName", dispel);
     }
-    table_set(state, t, "duration", Val::Num(aura.duration));
-    table_set(state, t, "expirationTime", Val::Num(aura.expiration_time));
-    table_set(state, t, "sourceUnit", source);
-    table_set(state, t, "spellId", Val::Num(aura.spell_id as f64));
-    table_set(state, t, "timeMod", Val::Num(1.0));
-    table_set(state, t, "points", empty_points);
+    write_aura_identity_metadata(state, t, aura, source, empty_points);
+}
+
+fn write_aura_identity_metadata(
+    state: &mut LuaState,
+    table: Val,
+    aura: &AuraInfo,
+    source: Val,
+    points: Val,
+) {
+    table_set(state, table, "duration", Val::Num(aura.duration));
     table_set(
         state,
-        t,
+        table,
+        "expirationTime",
+        Val::Num(aura.expiration_time),
+    );
+    table_set(state, table, "sourceUnit", source);
+    table_set(state, table, "spellId", Val::Num(aura.spell_id as f64));
+    table_set(state, table, "timeMod", Val::Num(1.0));
+    table_set(state, table, "points", points);
+    table_set(
+        state,
+        table,
         "auraInstanceID",
         Val::Num(aura.aura_instance_id as f64),
     );
+}
+
+fn write_aura_icon(state: &mut LuaState, table: Val, icon: &AuraIcon) {
+    let value = match icon {
+        AuraIcon::FileId(file_id) => Val::Num(*file_id as f64),
+        AuraIcon::Path(path) => create_string(state, path),
+    };
+    table_set(state, table, "icon", value);
 }
 
 fn write_aura_flags(state: &mut LuaState, t: Val, aura: &AuraInfo) {
@@ -1183,7 +1219,7 @@ mod tests {
         AuraInfo {
             name: "Plain Buff".to_string(),
             spell_id: 99021,
-            icon: 134973,
+            icon: crate::lua_api::game_data::AuraIcon::FileId(134973),
             duration: 30.0,
             expiration_time: 30.0,
             applications: 1,

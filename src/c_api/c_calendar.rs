@@ -1,6 +1,8 @@
 //! Host-supplied Calendar day records and synthetic event-index relations.
 pub(crate) mod civil;
 mod club;
+mod club_event_queries;
+pub(crate) mod club_events;
 mod context_actions;
 mod context_policy;
 mod context_reads;
@@ -18,6 +20,7 @@ mod editable_time;
 mod editable_title;
 mod editable_type;
 mod event_submission;
+pub(crate) mod event_types;
 mod selection;
 mod submission_policy;
 mod view_info;
@@ -147,6 +150,19 @@ pub struct CalendarInviteRecord {
     pub response_time: Option<day_event_record::CalendarTimeRecord>,
 }
 
+const CALENDAR_STATUS_INVITED: i32 = 0;
+
+/// INFERRED pending-count policy from R88ca; the aso native request is pending.
+pub(crate) fn count_pending_calendar_invites(
+    events: &HashMap<(i32, u32), Vec<day_event_record::CalendarDayEventRecord>>,
+) -> usize {
+    events
+        .values()
+        .flatten()
+        .filter(|event| event.invite_status == CALENDAR_STATUS_INVITED)
+        .count()
+}
+
 /// Selected event identity and absolute calendar month.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct CalendarSelection {
@@ -162,32 +178,55 @@ pub(crate) fn seeded_event_indices() -> HashMap<i32, CalendarEventIndexInfo> {
 }
 
 pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
-    let namespace = ensure_namespace(state, "C_Calendar")?;
-    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
-        civil::register(state, namespace)?;
-        club::register(state, namespace)?;
-        selection::register(state, namespace)?;
-        context_policy::register(state, namespace)?;
-        context_reads::register(state, namespace)?;
-        context_actions::register(state, namespace)?;
-        event_submission::register(state, namespace)?;
-        create_event::register(state, namespace)?;
-        editable_reads::register(state, namespace)?;
-        editable_status::register(state, namespace)?;
-        editable_title::register(state, namespace)?;
-        editable_time::register(state, namespace)?;
-        editable_date::register(state, namespace)?;
-        editable_type::register(state, namespace)?;
-        editable_texture::register(state, namespace)?;
-        editable_flags::register(state, namespace)?;
-        view_info::register(state, namespace)?;
-        table_set_rust_fn_static(
-            state,
-            namespace,
-            "GetFirstPendingInvite",
-            day_event_queries::query_first_pending_invite,
-        )?;
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
+        register_modeled_calendar_surface(state)?;
     }
+    register_calendar_day_event_queries(state)
+}
+
+fn register_modeled_calendar_surface(state: &mut LuaState) -> LuaResult<()> {
+    let namespace = ensure_namespace(state, "C_Calendar")?;
+    // Forever CalendarDocumentation.lua:572 verifies the event-index shape;
+    // behavior is INFERRED from this existing Retail calendar model.
+    civil::register(state, namespace)?;
+    club::register(state, namespace)?;
+    club_event_queries::register(state, namespace)?;
+    event_types::register(state, namespace)?;
+    selection::register(state, namespace)?;
+    context_policy::register(state, namespace)?;
+    context_reads::register(state, namespace)?;
+    context_actions::register(state, namespace)?;
+    event_submission::register(state, namespace)?;
+    create_event::register(state, namespace)?;
+    editable_reads::register(state, namespace)?;
+    editable_status::register(state, namespace)?;
+    editable_title::register(state, namespace)?;
+    editable_time::register(state, namespace)?;
+    editable_date::register(state, namespace)?;
+    editable_type::register(state, namespace)?;
+    editable_texture::register(state, namespace)?;
+    editable_flags::register(state, namespace)?;
+    view_info::register(state, namespace)?;
+    table_set_rust_fn_static(
+        state,
+        namespace,
+        "GetFirstPendingInvite",
+        day_event_queries::query_first_pending_invite,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        namespace,
+        "GetNumPendingInvites",
+        day_event_queries::query_num_pending_invites,
+    )
+}
+
+fn register_calendar_day_event_queries(state: &mut LuaState) -> LuaResult<()> {
+    let namespace = ensure_namespace(state, "C_Calendar")?;
     table_set_rust_fn_static(
         state,
         namespace,

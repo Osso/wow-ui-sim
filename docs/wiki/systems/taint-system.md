@@ -89,6 +89,12 @@ For shared Blizzard libraries, secure dependency files run in the shared environ
 
 rilua provides the `debug.*taint*` helpers natively. The simulator registers or overrides `issecurevariable`, `forceinsecure`, `issecure`, `hooksecurefunc` and `secureexecuterange` on top of that VM state; see the Taint System section of the repo `AGENTS.md`.
 
+### Retail `hooksecurefunc` dispatcher
+
+**VERIFIED (simulator source):** Retail post-load restoration reruns `init_shared_bootstrap` after `securecallfunction_source` is installed. That override invokes the callee without clearing caller taint, while the modeled `securecall` clears and restores active-frame taint. The hook adapter must create its simulator-owned dispatcher through `securecall`, not `securecallfunction`.
+
+**VERIFIED (Retail full-addon trace):** the BetterBlizzFrames and Blizzard AuraContainer caller frames were secure; only the simulator dispatcher from EllesmereUI's `SetTexture` hook was tainted between `AuraContainerUtil.lua:284` and the secure `SetTexture` call. This caused the secret-string rejection. **VERIFIED (Retail tests):** the prefork full-UI two-addon hook regression passes with the `securecall` factory, and the direct tainted secret-string test still rejects the same input.
+
 `securecallmethod(obj, name, ...)` calls `obj[name](obj, ...)` via protected pcall dispatch and returns `nil` on missing/non-function/error paths.
 
 Frame method `CallMethod` is registered in `src/lua_api/frame/methods/text_attribute_event/mod.rs`. It preserves return values and marks tainted caller arguments/results as simulator secret values so insecure data cannot be laundered through secure snippets.
@@ -160,6 +166,7 @@ The secure-file and restricted-environment startup-test citations below have [pr
 End-to-end coverage summary:
 
 - `tests/security_api.rs` covers the base Elune-compatible contract: `issecure()`, `forceinsecure()`, `loadstring()` tainting, and `securecall()` restoring secure execution.
+- `tests/blizzard_private_auras_ui_loads.rs` covers the Retail `hooksecurefunc` dispatcher across post-load restoration and a tainted AuraContainer consumer.
 - `tests/protected_frame_enforcement.rs` covers the combat/insecure gates that many `issecure()` branches are protecting.
 - `tests/secure_handler_fallback.rs` covers the SecureHandler fallback path that runs before `Blizzard_RestrictedAddOnEnvironment` loads.
 - `tests/secure_group_headers.rs` covers the secure group-header path after `Blizzard_RestrictedAddOnEnvironment` loads.
@@ -181,6 +188,9 @@ Remaining audit gaps are branch-specific coverage gaps, not known missing implem
 - `src/c_api/helpers.rs` and `crates/sim-lua-bridge/src/table_builder.rs` — paired namespace creation and flag-3 Rust function closure construction
 - R88 series, Retail 12.1.5.70688 decomp line 13165 — separate no-capture native C closure objects for flag-3 publication
 - `src/lua_api/globals/security/` — taint helpers, `securecallmethod`, SecureHandler fallback, state/attribute drivers
+- `src/lua_api/globals/security/secret_values.rs`, `src/lua_api/globals/utility_system_spell/mod.rs` — Retail `securecallfunction` and taint-clearing `securecall` call paths
+- `src/lua_api/env_init/shared_bootstrap.lua` — `hooksecurefunc` dispatcher factory
+- `tests/blizzard_private_auras_ui_loads.rs` — full-UI AuraContainer hook regression
 - `src/c_api/c_click_bindings.rs` — modeled per-environment interaction profile
 - `src/lua_api/workarounds/temporary/click_bindings_defaults.rs` — inert `ExecuteBinding` and remaining temporary helpers
 - `src/lua_api/state.rs` — `secure_attribute_drivers` storage

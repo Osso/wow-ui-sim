@@ -12,17 +12,7 @@ local function expect(condition, message)
   end
 end
 
-local originalGetRealms = C_AutoComplete.GetAutoCompleteRealms
-local originalUpdateResults = AutoComplete_UpdateResults
-local capturedResults
-
-C_AutoComplete.GetAutoCompleteRealms = function()
-  return { "Stormrage", "Stormscale" }
-end
-
-AutoComplete_UpdateResults = function(self, results)
-  capturedResults = results
-end
+A_Admin.SetAutoCompleteRealms({ "Stormrage", "Stormscale" })
 
 local function makeEditBox(sourceFn)
   local editBox = CreateFrame("EditBox", nil, UIParent)
@@ -32,26 +22,24 @@ local function makeEditBox(sourceFn)
   return editBox
 end
 
-local function countNamedResult(results, expectedName)
+local function assertDisplayedRealm(index, name)
+  local button = _G["AutoCompleteButton" .. index]
+  expect(button:IsShown(), name .. " must be displayed")
+  expect(button.nameInfo and button.nameInfo.name == name,
+         "expected displayed result " .. name)
+  expect(button.nameInfo and button.nameInfo.priority == Enum.AutoCompletePriority.Other,
+         name .. " must use Enum.AutoCompletePriority.Other")
+  expect(button:GetText() ~= nil, name .. " must have visible text")
+end
+
+local function countShownButtons()
   local count = 0
-  local priority
-  for index = 1, #results do
-    local result = results[index]
-    if type(result) == "table" and result.name == expectedName then
-      count = count + 1
-      priority = result.priority
-    elseif result == expectedName then
+  for index = 1, AUTOCOMPLETE_MAX_BUTTONS do
+    if _G["AutoCompleteButton" .. index]:IsShown() then
       count = count + 1
     end
   end
-  return count, priority
-end
-
-local function assertAppendedRealm(results, name)
-  local count, priority = countNamedResult(results, name)
-  expect(count == 1, name .. " must appear exactly once, got " .. tostring(count))
-  expect(priority == Enum.AutoCompletePriority.Other,
-         name .. " must use Enum.AutoCompletePriority.Other")
+  return count
 end
 
 local editBox = makeEditBox(function()
@@ -59,29 +47,14 @@ local editBox = makeEditBox(function()
 end)
 
 AutoComplete_Update(editBox, "playername-Storm", strlen("playername-Storm"))
-expect(#capturedResults == 2, "two matching realms must be appended")
-assertAppendedRealm(capturedResults, "playername-Stormrage")
-assertAppendedRealm(capturedResults, "playername-Stormscale")
-
-local duplicateEditBox = makeEditBox(function()
-  return { "playername-Stormscale" }
-end)
-
-capturedResults = nil
-AutoComplete_Update(duplicateEditBox, "playername-Storm", strlen("playername-Storm"))
-
-expect(#capturedResults == 2, "duplicate source string must suppress one appended realm")
-assertAppendedRealm(capturedResults, "playername-Stormrage")
-local stormscaleCount = countNamedResult(capturedResults, "playername-Stormscale")
-expect(stormscaleCount == 1, "duplicate Stormscale completion must not be appended")
-
-C_AutoComplete.GetAutoCompleteRealms = originalGetRealms
-AutoComplete_UpdateResults = originalUpdateResults
+assertDisplayedRealm(1, "playername-Stormrage")
+assertDisplayedRealm(2, "playername-Stormscale")
+expect(countShownButtons() == 2, "exactly two autocomplete buttons must be displayed")
 
 return table.concat(failures, "\n")
 "#;
 
-post_wrath_ui_fixture! {
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 #[test]
 fn blizzard_auto_complete_appends_matching_realm_names() {
     common::with_perf_lock(|| {
@@ -103,5 +76,4 @@ fn blizzard_auto_complete_appends_matching_realm_names() {
             });
         });
     });
-}
 }

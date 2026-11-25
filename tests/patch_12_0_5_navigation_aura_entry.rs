@@ -12,7 +12,7 @@ fn aura(id: i32, helpful: bool) -> AuraInfo {
         }
         .into(),
         spell_id: if helpful { 19750 } else { 172 },
-        icon: if helpful { 135987 } else { 136118 },
+        icon: if helpful { wow_ui_sim::lua_api::state::AuraIcon::FileId(135987) } else { wow_ui_sim::lua_api::state::AuraIcon::FileId(136118) },
         duration: 47.0,
         expiration_time: 150.0,
         applications: 3,
@@ -254,6 +254,8 @@ fn aura_entry_rekeys_party_helpful_and_harmful_stores_without_changing_members()
     let env = aura_env();
     env.state().borrow_mut().party_members = vec![wow_ui_sim::lua_api::state::PartyMember {
         map_position: None,
+        faction_group: None,
+        pvp: None,
         name: "Thrynn".into(),
         name_cached: true,
         connected: true,

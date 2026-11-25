@@ -109,18 +109,77 @@ fn unit_trial_banked_levels(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn get_restricted_account_data(state: &mut LuaState) -> LuaResult<u32> {
-    let (level, money, profession) = {
-        let xp = &borrow_state(state)?.player_xp;
-        (
-            xp.restricted_level,
-            xp.restricted_money,
-            xp.restricted_profession,
-        )
+    let (level, money) = {
+        let account = &borrow_state(state)?.account_type;
+        (account.restricted_level, account.restricted_money)
     };
     state.push(Val::Num(level as f64));
     state.push(Val::Num(money as f64));
-    state.push(Val::Num(profession as f64));
+    state.push(Val::Num(0.0));
     Ok(3)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn is_trial_account(state: &mut LuaState) -> LuaResult<u32> {
+    let value = borrow_state(state)?.account_type.account_type == 5;
+    state.push(Val::Bool(value));
+    Ok(1)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn is_veteran_trial_account(state: &mut LuaState) -> LuaResult<u32> {
+    let value = borrow_state(state)?.account_type.account_type == 4;
+    state.push(Val::Bool(value));
+    Ok(1)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn is_restricted_account(state: &mut LuaState) -> LuaResult<u32> {
+    let value = borrow_state(state)?.account_type.restricted;
+    state.push(Val::Bool(value));
+    Ok(1)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn is_expansion_trial(state: &mut LuaState) -> LuaResult<u32> {
+    let active = {
+        let sim = borrow_state(state)?;
+        let account = &sim.account_type;
+        account.expansion_trial
+            && account.expansion_trial_expiry > sim.clock_elapsed().as_secs_f64()
+    };
+    state.push(Val::Bool(active));
+    Ok(1)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn get_expansion_trial_info(state: &mut LuaState) -> LuaResult<u32> {
+    let (enabled, expiry, now) = {
+        let sim = borrow_state(state)?;
+        (
+            sim.account_type.expansion_trial,
+            sim.account_type.expansion_trial_expiry,
+            sim.clock_elapsed().as_secs_f64(),
+        )
+    };
+    if enabled && expiry > now {
+        state.push(Val::Bool(true));
+        state.push(Val::Num(expiry - now));
+    } else {
+        state.push(Val::Bool(false));
+        state.push(Val::Nil);
+    }
+    Ok(2)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn register_account_type_apis(lua: &mut rilua::Lua) -> crate::Result<()> {
+    LuaApiMut::register_function(lua, "IsTrialAccount", is_trial_account)?;
+    LuaApiMut::register_function(lua, "IsVeteranTrialAccount", is_veteran_trial_account)?;
+    LuaApiMut::register_function(lua, "IsRestrictedAccount", is_restricted_account)?;
+    LuaApiMut::register_function(lua, "IsExpansionTrial", is_expansion_trial)?;
+    LuaApiMut::register_function(lua, "GetExpansionTrialInfo", get_expansion_trial_info)?;
+    Ok(())
 }
 
 pub fn register_all(lua: &mut rilua::Lua) -> crate::Result<()> {
@@ -148,5 +207,7 @@ pub fn register_all(lua: &mut rilua::Lua) -> crate::Result<()> {
     LuaApiMut::register_function(lua, "UnitTrialXP", unit_trial_xp)?;
     LuaApiMut::register_function(lua, "UnitTrialBankedLevels", unit_trial_banked_levels)?;
     LuaApiMut::register_function(lua, "GetRestrictedAccountData", get_restricted_account_data)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    register_account_type_apis(lua)?;
     Ok(())
 }

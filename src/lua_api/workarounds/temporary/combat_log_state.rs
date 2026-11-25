@@ -1,8 +1,7 @@
-//! Temporary combat-log state shared by profile-specific API publishers.
+//! Temporary compatibility helpers for profile-specific combat-log APIs.
 //!
-//! Combat log history is not modeled yet. This keeps the small shared Lua state
-//! fixture explicit rather than presenting it as complete C API behavior.
-//! Retire the empty-only path when the authorized history model owns validity and traversal.
+//! Retail and Forever history is modeled in `c_api::combat_log_history`; other
+//! profiles retain this Lua-backed history fixture.
 
 const COMBAT_LOG_INBOUND_PROFILE_FALLBACK_LUA: &str = r#"
 CombatLogInbound = CombatLogInbound or {
@@ -23,21 +22,23 @@ end
 local state = rawget(_G, "__wow_combat_log_state")
 if type(state) ~= "table" then
     state = {
-        currentEntry = 0,
-        numEntries = 0,
         retentionTime = 300,
         filteredEventsEnabled = false,
         messageLimit = 300,
-        entries = {},
-        currentIndex = nil,
         createdMessages = {},
         filterSettings = nil,
     }
+    if not modelCombatLogHistory then
+        state.currentEntry = 0
+        state.numEntries = 0
+        state.entries = {}
+        state.currentIndex = nil
+    end
     rawset(_G, "__wow_combat_log_state", state)
 end
 
 local function CombatLogState()
-    if type(state.entries) ~= "table" then
+    if not modelCombatLogHistory and type(state.entries) ~= "table" then
         state.entries = {}
     end
     if type(state.createdMessages) ~= "table" then
@@ -116,6 +117,9 @@ end
 if rawget(C_CombatLog, "ClearEventFilters") == nil then
     function C_CombatLog.ClearEventFilters()
         CombatLogState().filteredEventsEnabled = false
+        if modelCombatLogHistory then
+            __wow_combat_log_set_filtered_events_enabled(false)
+        end
         return true
     end
 end
@@ -142,8 +146,7 @@ if rawget(C_CombatLog, "GetCurrentEntryInfo") == nil then
             -- timestamp/event tuple for the original Classic refilter.
             return
         end
-        -- Populated history/cursor policy remains unsupported; do not infer
-        -- event tuple shape or traversal from this temporary scalar fixture.
+        -- Preserve the old-profile scalar fixture; Retail/Forever use the Rust model.
         return currentState.currentEntry
     end
 end
@@ -172,8 +175,8 @@ local function GetCurrentEventInfo()
     return unpack(entry)
 end
 
--- Forever moved this getter out of C_CombatLog. Keep the existing temporary
--- history fixture, but publish it only at its documented namespace locations.
+-- Forever keeps this getter out of C_CombatLog; its Rust model registers the
+-- documented Internal and Secure namespace methods before this bootstrap.
 if publishLegacyCurrentEvent then
     if rawget(C_CombatLog, "GetCurrentEventInfo") == nil then
         C_CombatLog.GetCurrentEventInfo = GetCurrentEventInfo
@@ -204,7 +207,11 @@ end
 
 if rawget(C_CombatLog, "SetEntryRetentionTime") == nil then
     function C_CombatLog.SetEntryRetentionTime(retentionTime)
-        CombatLogState().retentionTime = tonumber(retentionTime) or 0
+        local value = tonumber(retentionTime) or 0
+        CombatLogState().retentionTime = value
+        if modelCombatLogHistory then
+            __wow_combat_log_set_retention_time(value)
+        end
     end
 end
 
@@ -216,7 +223,11 @@ end
 
 if rawget(C_CombatLog, "SetFilteredEventsEnabled") == nil then
     function C_CombatLog.SetFilteredEventsEnabled(enabled)
-        CombatLogState().filteredEventsEnabled = enabled == true
+        local value = enabled == true
+        CombatLogState().filteredEventsEnabled = value
+        if modelCombatLogHistory then
+            __wow_combat_log_set_filtered_events_enabled(value)
+        end
     end
 end
 
@@ -230,13 +241,21 @@ if rawget(C_CombatLog, "SetMessageLimit") == nil then
     function C_CombatLog.SetMessageLimit(limit)
         local currentState = CombatLogState()
         currentState.messageLimit = tonumber(limit) or 0
+        if modelCombatLogHistory then
+            __wow_combat_log_set_message_limit(currentState.messageLimit)
+        end
         FireEvent("COMBAT_LOG_MESSAGE_LIMIT_CHANGED", currentState.messageLimit)
     end
 end
 
 if rawget(C_CombatLog, "ClearEntries") == nil then
     function C_CombatLog.ClearEntries()
-        ClearEntries(CombatLogState())
+        local currentState = CombatLogState()
+        if modelCombatLogHistory then
+            __wow_combat_log_clear_entries()
+        else
+            ClearEntries(currentState)
+        end
         FireEvent("COMBAT_LOG_ENTRIES_CLEARED")
     end
 end
@@ -245,6 +264,9 @@ if rawget(C_CombatLog, "ApplyFilterSettings") == nil then
     function C_CombatLog.ApplyFilterSettings(settings)
         local currentState = CombatLogState()
         currentState.filterSettings = settings
+        if modelCombatLogHistory then
+            __wow_combat_log_set_filter_settings(settings)
+        end
         FireEvent("COMBAT_LOG_APPLY_FILTER_SETTINGS", settings)
     end
 end
@@ -357,19 +379,31 @@ if rawget(_G, "CombatLogAdvanceEntry") == nil then
         end
         local amount = tonumber(step) or 0
         currentState.currentEntry = math.max(0, currentState.currentEntry + amount)
+        if modelCombatLogHistory then
+            return __wow_combat_log_advance_entry(amount)
+        end
         return true
     end
 end
 
 if rawget(_G, "CombatLogSetCurrentEntry") == nil then
     function CombatLogSetCurrentEntry(entry)
-        CombatLogState().currentEntry = math.max(0, tonumber(entry) or 0)
+        local currentEntry = math.max(0, tonumber(entry) or 0)
+        CombatLogState().currentEntry = currentEntry
+        if modelCombatLogHistory then
+            __wow_combat_log_set_current_entry(currentEntry)
+        end
     end
 end
 end -- publishLegacyGlobals
 "#;
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
+    let model_combat_log_history = matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever
+    );
     let publish_legacy = !cfg!(feature = "client-wowforever");
     let publish_globals = !cfg!(feature = "retail-12-0-0");
     let classic_empty_history = matches!(
@@ -392,7 +426,7 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
         lua.exec(COMBAT_LOG_INBOUND_PROFILE_FALLBACK_LUA)?;
     }
     let source = format!(
-        "local publishLegacyCurrentEvent = {publish_legacy}\nlocal publishLegacyGlobals = {publish_globals}\nlocal publishClassicEmptyHistory = {classic_empty_history}\nlocal publishLegacyFilters = {publish_legacy_filters}\n{COMBAT_LOG_STATE_LUA}"
+        "local modelCombatLogHistory = {model_combat_log_history}\nlocal publishLegacyCurrentEvent = {publish_legacy}\nlocal publishLegacyGlobals = {publish_globals}\nlocal publishClassicEmptyHistory = {classic_empty_history}\nlocal publishLegacyFilters = {publish_legacy_filters}\n{COMBAT_LOG_STATE_LUA}"
     );
     lua.exec(&source)?;
     Ok(())
@@ -420,6 +454,7 @@ mod tests {
     }
 
     #[cfg(feature = "retail-12-0-0")]
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     #[test]
     fn patch_12_0_0_combat_log_producers_dispatch_exact_notifications() {
         let env = WowLuaEnv::new().expect("lua env should initialize");

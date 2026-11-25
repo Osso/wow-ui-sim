@@ -66,6 +66,18 @@ fn player_class_info(class_index: i32) -> (&'static str, &'static str) {
     (CLASS_LABELS[idx], CLASS_FILES[idx])
 }
 
+/// INFERRED (R88ce): Quick Join supplies GUIDs, so membership uses exact roster GUIDs.
+fn is_guild_member(state: &mut LuaState) -> LuaResult<u32> {
+    let guid = String::from_stack(state, 1)?;
+    let found = borrow_state(state)?
+        .world
+        .guild_members
+        .iter()
+        .any(|member| member.guid.as_deref() == Some(guid.as_str()));
+    state.push(Val::Bool(found));
+    Ok(1)
+}
+
 fn is_in_guild(state: &mut LuaState) -> LuaResult<u32> {
     let b = borrow_state(state)?.world.guild_name.is_some();
     state.push(Val::Bool(b));
@@ -222,6 +234,10 @@ fn push_nil_event_row(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn query_guild_news(state: &mut LuaState) -> LuaResult<u32> {
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    if !super::guild_info::guild_request_allowed(state, 900.0, true)? {
+        return Ok(0);
+    }
     dispatch_event_now(state, "GUILD_NEWS_UPDATE", &[])?;
     Ok(0)
 }
@@ -273,6 +289,39 @@ fn get_num_guild_news(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+fn get_num_guild_perks(state: &mut LuaState) -> LuaResult<u32> {
+    let count = borrow_state(state)?.world.guild_perks.len() as f64;
+    state.push(Val::Num(count));
+    Ok(1)
+}
+
+/// INFERRED R88g3 (native evidence pending): returns perk name, spell ID and icon.
+fn get_guild_perk_info(state: &mut LuaState) -> LuaResult<u32> {
+    let index = i32::from_stack(state, 1)?;
+    let perk = borrow_state(state)?
+        .world
+        .guild_perks
+        .get(index.saturating_sub(1).max(0) as usize)
+        .copied();
+    let Some(perk) = perk.filter(|_| index > 0) else {
+        for _ in 0..3 {
+            state.push(Val::Nil);
+        }
+        return Ok(3);
+    };
+    let Some(spell) = crate::spell_lookup::get_spell(perk.spell_id) else {
+        for _ in 0..3 {
+            state.push(Val::Nil);
+        }
+        return Ok(3);
+    };
+    let name = create_string(state, spell.name);
+    state.push(name);
+    state.push(Val::Num(f64::from(perk.spell_id)));
+    state.push(Val::Num(f64::from(spell.icon_file_data_id)));
+    Ok(3)
+}
+
 /// `GetGuildRosterMOTD()` — guild Message of the Day, empty string when unset.
 fn get_guild_roster_motd(state: &mut LuaState) -> LuaResult<u32> {
     let motd = borrow_state(state)?.world.guild_motd.clone();
@@ -281,9 +330,8 @@ fn get_guild_roster_motd(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-/// `GetGuildRosterInfo(index)` — retail returns 16 values per roster row.
-/// The sim only models `{name, rank_index}` per member, so we synth the
-/// remaining fields from the player's own level/class and harmless defaults.
+/// `GetGuildRosterInfo(index)` — Retail/Forever include the roster GUID at return 17.
+/// The sim synthesizes the remaining fields from the player's level/class and defaults.
 fn get_guild_roster_info(state: &mut LuaState) -> LuaResult<u32> {
     let index = i32::from_stack(state, 1)?;
     let Ok(zero_based) = usize::try_from(index.saturating_sub(1)) else {
@@ -298,7 +346,15 @@ fn get_guild_roster_info(state: &mut LuaState) -> LuaResult<u32> {
     };
 
     push_roster_row_values(state, &row);
-    Ok(16)
+    Ok(guild_roster_info_field_count())
+}
+
+fn guild_roster_info_field_count() -> u32 {
+    match crate::client_profile::ACTIVE {
+        crate::client_profile::ClientProfile::Retail
+        | crate::client_profile::ClientProfile::WowForever => 17,
+        _ => 16,
+    }
 }
 
 fn push_roster_row_values(state: &mut LuaState, row: &RosterRow) {
@@ -324,6 +380,19 @@ fn push_roster_row_values(state: &mut LuaState, row: &RosterRow) {
     state.push(Val::Bool(false)); // 14: isMobile
     state.push(Val::Bool(false)); // 15: isSoREligible
     state.push(Val::Num(0.0)); // 16: standingID
+    push_roster_guid(state, row);
+}
+
+fn push_roster_guid(state: &mut LuaState, row: &RosterRow) {
+    if guild_roster_info_field_count() != 17 {
+        return;
+    }
+    let guid = row
+        .guid
+        .as_deref()
+        .map(|guid| create_string(state, guid))
+        .unwrap_or(Val::Nil);
+    state.push(guid);
 }
 
 struct RosterRow {
@@ -334,6 +403,7 @@ struct RosterRow {
     class_label: &'static str,
     class_file: &'static str,
     online: bool,
+    guid: Option<String>,
 }
 
 fn build_roster_row(st: &crate::lua_api::state::SimState, zero_based: usize) -> Option<RosterRow> {
@@ -353,14 +423,15 @@ fn build_roster_row(st: &crate::lua_api::state::SimState, zero_based: usize) -> 
         class_label,
         class_file,
         online: member.online,
+        guid: member.guid.clone(),
     })
 }
 
 fn push_nil_roster_row(state: &mut LuaState) -> LuaResult<u32> {
-    for _ in 0..16 {
+    for _ in 0..guild_roster_info_field_count() {
         state.push(Val::Nil);
     }
-    Ok(16)
+    Ok(guild_roster_info_field_count())
 }
 
 pub fn register_all(lua: &mut rilua::Lua) -> crate::Result<()> {
@@ -373,6 +444,15 @@ pub fn register_all(lua: &mut rilua::Lua) -> crate::Result<()> {
 
 fn register_guild_membership_queries(lua: &mut rilua::Lua) -> crate::Result<()> {
     LuaApiMut::register_function(lua, "IsInGuild", is_in_guild)?;
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
+        LuaApiMut::register_function(lua, "GetNumGuildPerks", get_num_guild_perks)?;
+        LuaApiMut::register_function(lua, "GetGuildPerkInfo", get_guild_perk_info)?;
+        LuaApiMut::register_function(lua, "IsGuildMember", is_guild_member)?;
+    }
     LuaApiMut::register_function(lua, "CanReplaceGuildMaster", can_replace_guild_master)?;
     LuaApiMut::register_function(
         lua,

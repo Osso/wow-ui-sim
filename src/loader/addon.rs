@@ -959,6 +959,9 @@ fn should_load_addon_file(
     if !toc.file_allows_screen(index, env.state().borrow().screen_kind) {
         return false;
     }
+    if skips_loaded_dependency_xml(env, ctx, pass, file_rel) {
+        return false;
+    }
     if should_skip_addon_file(toc, file_rel) {
         return false;
     }
@@ -966,6 +969,19 @@ fn should_load_addon_file(
         return false;
     }
     toc.file_allows_environment(index, pass.use_secure_env(ctx))
+}
+
+fn skips_loaded_dependency_xml(
+    env: &LoaderEnv<'_>,
+    ctx: &AddonContext<'_>,
+    pass: EnvironmentPass,
+    file_rel: &Path,
+) -> bool {
+    pass == EnvironmentPass::SecureDependency
+        && file_rel
+            .extension()
+            .is_some_and(|extension| extension == "xml")
+        && addon_loaded_in_environment(env, ctx.name, false)
 }
 
 fn addon_file_context<'a>(
@@ -1108,7 +1124,12 @@ fn maybe_replay_blizzard_lua_in_secure_env(
     ctx: &AddonContext,
     result: &mut LoadResult,
 ) {
-    if !is_secure_replay_library_addon(folder_name) || ctx.use_secure_env {
+    if ctx.use_secure_env {
+        return;
+    }
+    if !is_secure_replay_library_addon(folder_name)
+        && !is_secure_replay_dependency(env, folder_name)
+    {
         return;
     }
 
@@ -1154,6 +1175,51 @@ pub(super) fn is_secure_replay_library_addon(folder_name: &str) -> bool {
     }
 
     SECURE_REPLAY_LIBRARY_ADDONS.contains(&folder_name)
+}
+
+fn secure_replay_dependency_names(metadata: &crate::toc::TocMetadata) -> Vec<String> {
+    crate::toc::collect_metadata_lists(
+        metadata,
+        &[
+            "Dep",
+            "RequiredDep",
+            "Dependencies",
+            "RequiredDeps",
+            "OptionalDep",
+            "OptionalDeps",
+        ],
+    )
+}
+
+/// INFERRED (R88cj): Forever secure replay follows enabled secure TOC dependencies.
+fn is_secure_replay_dependency(env: &LoaderEnv<'_>, folder_name: &str) -> bool {
+    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::WowForever {
+        return false;
+    }
+    let state = env.state().borrow();
+    let mut pending = state
+        .addons
+        .iter()
+        .filter(|addon| addon.enabled && addon.use_secure_env)
+        .flat_map(|addon| secure_replay_dependency_names(&addon.metadata))
+        .collect::<Vec<_>>();
+    let mut visited = HashSet::new();
+    while let Some(dependency) = pending.pop() {
+        if !visited.insert(dependency.clone()) {
+            continue;
+        }
+        if dependency == folder_name {
+            return true;
+        }
+        if let Some(addon) = state
+            .addons
+            .iter()
+            .find(|addon| addon.folder_name == dependency)
+        {
+            pending.extend(secure_replay_dependency_names(&addon.metadata));
+        }
+    }
+    false
 }
 
 pub(super) fn should_skip_addon_file(toc: &TocFile, file_rel: &Path) -> bool {
@@ -1275,6 +1341,15 @@ mod tests {
 
     use super::{build_addon_context, load_addon_internal};
 
+    #[cfg(feature = "client-wowforever")]
+    fn write_addon(root: &Path, name: &str, toc: &str, lua: &str) -> std::path::PathBuf {
+        let addon_dir = root.join(name);
+        std::fs::create_dir_all(&addon_dir).unwrap();
+        std::fs::write(addon_dir.join(format!("{name}.toc")), toc).unwrap();
+        std::fs::write(addon_dir.join("Main.lua"), lua).unwrap();
+        addon_dir
+    }
+
     #[test]
     fn blizzard_talent_ui_context_is_not_tainted() {
         let env = WowLuaEnv::new().unwrap();
@@ -1368,6 +1443,34 @@ mod tests {
         let ctx = build_addon_context(&env.loader_env(), &toc, "TestAddon").unwrap();
 
         assert!(ctx.taint, "third-party addon code must be taint stamped");
+    }
+
+    #[cfg(feature = "client-wowforever")]
+    #[test]
+    fn secure_addon_toc_dependency_replays_into_secure_environment() {
+        let env = WowLuaEnv::new().unwrap();
+        let temp = tempfile::tempdir().unwrap();
+        let provider_dir = write_addon(
+            temp.path(),
+            "ReplayProvider",
+            "## AllowLoad: Game\nMain.lua\n",
+            "ReplayProviderValue = function() return 'from-provider' end",
+        );
+        write_addon(
+            temp.path(),
+            "ReplayConsumer",
+            "## UseSecureEnvironment: 1\n## OptionalDep: ReplayProvider\nMain.lua\n",
+            "",
+        );
+        env.scan_and_register_addons(temp.path());
+        let toc = TocFile::from_file(&provider_dir.join("ReplayProvider.toc")).unwrap();
+
+        load_addon_internal(&env.loader_env(), &toc, None).unwrap();
+
+        let replayed: (String, String) = env
+            .eval("return type(__secureenv.ReplayProviderValue), __secureenv.ReplayProviderValue()")
+            .unwrap();
+        assert_eq!(replayed, ("function".into(), "from-provider".into()));
     }
 
     #[test]

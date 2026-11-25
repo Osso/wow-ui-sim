@@ -832,13 +832,18 @@ fn test_patch_12_1_housing_editor_decor_layout_state() {
     assert_eq!(result, "ok");
 }
 
-#[cfg(feature = "retail-12-1-0")]
-#[test]
-fn test_patch_12_1_safe_global_bridges() {
+#[cfg(all(feature = "retail-12-1-0", not(feature = "client-retail")))]
+fn assert_patch_12_1_safe_global_bridge(script: &str) {
     let env = WowLuaEnv::new().unwrap();
-    let result: String = env
-        .eval(
-            r#"
+    let result: String = env.eval(script).unwrap();
+    assert_eq!(result, "ok");
+}
+
+#[cfg(all(feature = "retail-12-1-0", not(feature = "client-retail")))]
+#[test]
+fn test_patch_12_1_cvar_aura_duration_bridges() {
+    assert_patch_12_1_safe_global_bridge(
+        r#"
             if C_CVar.AreCVarsLoaded() ~= true then return "cvars" end
             if AuraUtil.IsValidFilterString("HELPFUL|PLAYER") ~= true then return "aura-filter-valid" end
             if AuraUtil.IsValidFilterString("UNKNOWN") ~= false then return "aura-filter-invalid" end
@@ -855,7 +860,17 @@ fn test_patch_12_1_safe_global_bridges() {
             if r ~= 1 or g ~= 1 or b ~= 1 or a ~= 1 then return "duration-color-rgba" end
             durationBinding:ClearTextColorCurve()
             if durationBinding:GetTextColorCurve() ~= nil then return "duration-color-cleared" end
-            if C_CombatAudioAlert.SpeakText("test") ~= 0 then return "combat-audio" end
+            return "ok"
+        "#,
+    );
+}
+
+#[cfg(all(feature = "retail-12-1-0", not(feature = "client-retail")))]
+#[test]
+fn test_patch_12_1_misc_global_bridges() {
+    assert_patch_12_1_safe_global_bridge(
+        r#"
+            if type(C_CombatAudioAlert.SpeakText) ~= "function" then return "combat-audio" end
             if #C_CooldownViewer.GetGroupBuffItems() ~= 0 then return "cooldown-group-buffs" end
             if #C_DyeColor.GetDyeColorsForItem(1) ~= 0 then return "dye-item" end
             if #C_DyeColor.GetDyeColorsForItemLocation({}) ~= 0 then return "dye-location" end
@@ -865,6 +880,16 @@ fn test_patch_12_1_safe_global_bridges() {
             if C_Sound.PlaySoundWithOptions({ soundKitID = 1, volumeOverride = 0.5 }) ~= nil then return "sound" end
             if C_Navigation.GetNextWaypointForMap(1) ~= nil then return "navigation" end
             if type(C_Ping.SendMacroPing({ type = Enum.PingSubjectType.ActionReady })) ~= "number" then return "ping-macro" end
+            return "ok"
+        "#,
+    );
+}
+
+#[cfg(all(feature = "retail-12-1-0", not(feature = "client-retail")))]
+#[test]
+fn test_patch_12_1_pet_and_delve_bridges() {
+    assert_patch_12_1_safe_global_bridge(
+        r#"
             local _, _, _, _, _, _, _, _, _, _, _, speciesID = C_PetJournal.GetPetInfoByIndex(1)
             if speciesID then
                 local petInfo = C_PetJournal.GetPetInfoTableBySpeciesID(speciesID)
@@ -876,17 +901,40 @@ fn test_patch_12_1_safe_global_bridges() {
                 if delveTierInfo.overrideTooltipSpellID ~= 0 then return "delve-override-tooltip" end
                 if delveTierInfo.queueAsLFG ~= false then return "delve-queue-as-lfg" end
             end
+            return "ok"
+        "#,
+    );
+}
+
+#[cfg(all(feature = "retail-12-1-0", not(feature = "client-retail")))]
+#[test]
+fn test_patch_12_1_lfg_pvp_encounter_bridges() {
+    assert_patch_12_1_safe_global_bridge(
+        r#"
             local lfgInfo = C_LFGList.GetSearchResultInfo(7)
             if type(lfgInfo) == "table" and lfgInfo.censored ~= false then return "lfg-censored-field" end
             if C_PvP.CanSurrenderArena() ~= false then return "pvp" end
-            if C_EncounterJournal.GetBaseDifficultyID(63) ~= 1 then return "ej-base-difficulty-dungeon" end
-            if C_EncounterJournal.GetBaseDifficultyID(72) ~= 14 then return "ej-base-difficulty-raid" end
-            if C_EncounterJournal.GetBaseDifficultyID(999999) ~= nil then return "ej-base-difficulty-invalid" end
-            if C_EncounterJournal.InstanceHasDifficultyID(63, 1) ~= true then return "ej-instance-difficulty-dungeon" end
-            if C_EncounterJournal.InstanceHasDifficultyID(63, 14) ~= false then return "ej-instance-difficulty-dungeon-raid" end
-            if C_EncounterJournal.InstanceHasDifficultyID(72, 14) ~= true then return "ej-instance-difficulty-raid" end
-            if C_EncounterJournal.InstanceHasDifficultyID(999999, 14) ~= false then return "ej-instance-difficulty-invalid" end
+            if C_EncounterJournal.GetBaseDifficultyID(233) ~= 16 then return "ej-base-difficulty-raid-233" end
+            if C_EncounterJournal.GetBaseDifficultyID(250) ~= 17 then return "ej-base-difficulty-raid-250" end
+            if C_EncounterJournal.GetBaseDifficultyID(63) ~= 63 then return "ej-base-difficulty-identity" end
+            EJ_SelectInstance(63)
+            A_Admin.SetEncounterJournalDifficultyMask(63, 3)
+            if C_EncounterJournal.InstanceHasDifficultyID(1) ~= true then return "ej-instance-difficulty-dungeon" end
+            if C_EncounterJournal.InstanceHasDifficultyID(2) ~= true then return "ej-instance-difficulty-dungeon-heroic" end
+            if C_EncounterJournal.InstanceHasDifficultyID(14) ~= false then return "ej-instance-difficulty-dungeon-raid" end
+            if EJ_IsValidInstanceDifficulty(2) ~= true then return "ej-valid-instance-difficulty-dungeon" end
+            if EJ_IsValidInstanceDifficulty(14) ~= false then return "ej-invalid-instance-difficulty-dungeon" end
             if C_QuestHub.IsAreaPOICurrentlyRelatedToHub(1, 2) ~= false then return "quest-hub" end
+            return "ok"
+        "#,
+    );
+}
+
+#[cfg(all(feature = "retail-12-1-0", not(feature = "client-retail")))]
+#[test]
+fn test_patch_12_1_recruit_friend_and_social_bridges() {
+    assert_patch_12_1_safe_global_bridge(
+        r#"
             if C_RecruitAFriend.IsSystemEnabled() ~= false then return "raf-enabled" end
             if C_RecruitAFriend.IsSystemSupported() ~= false then return "raf-supported" end
             local canSummon, summonReason = C_RecruitAFriend.CanSummonFriend("player")
@@ -897,6 +945,16 @@ fn test_patch_12_1_safe_global_bridges() {
             if C_FriendList.IsLegacyFriendSystemEnabled() ~= false then return "legacy-friends" end
             if C_SocialRestrictions.IsFriendsDisabled() ~= false then return "friends-disabled" end
             if C_SocialUI.IsSystemEnabled() ~= false then return "social-ui" end
+            return "ok"
+        "#,
+    );
+}
+
+#[cfg(all(feature = "retail-12-1-0", not(feature = "client-retail")))]
+#[test]
+fn test_patch_12_1_discord_state_bridges() {
+    assert_patch_12_1_safe_global_bridge(
+        r#"
             if C_Discord.IsEnabled() ~= false then return "discord-enabled" end
             SetCVar("discordClientEnabled", "1")
             if C_Discord.IsEnabled() ~= true then return "discord-enabled-cvar" end
@@ -906,6 +964,16 @@ fn test_patch_12_1_safe_global_bridges() {
             if C_Discord.GetNumDiscordChannels() ~= 0 then return "discord-channels" end
             if C_Discord.GetNumDiscordServers() ~= 0 then return "discord-servers" end
             if type(C_Discord.GetServerLinkableChannels()) ~= "table" then return "discord-linkable" end
+            return "ok"
+        "#,
+    );
+}
+
+#[cfg(all(feature = "retail-12-1-0", not(feature = "client-retail")))]
+#[test]
+fn test_patch_12_1_discord_mutation_and_query_bridges() {
+    assert_patch_12_1_safe_global_bridge(
+        r#"
             C_Discord.Authorize()
             C_Discord.GuildLink()
             C_Discord.GuildUnlink()
@@ -920,11 +988,31 @@ fn test_patch_12_1_safe_global_bridges() {
             if C_Discord.GetServerName(1) ~= nil then return "discord-server-name" end
             if C_Discord.IsGuildChannelLinked(1) ~= false then return "discord-linked" end
             if C_Discord.IsGuildSettingSet("setting") ~= true then return "discord-setting" end
+            return "ok"
+        "#,
+    );
+}
+
+#[cfg(all(feature = "retail-12-1-0", not(feature = "client-retail")))]
+#[test]
+fn test_patch_12_1_lfg_censoring_bridges() {
+    assert_patch_12_1_safe_global_bridge(
+        r#"
             C_LFGList.ConfirmCensoredActiveEntry()
             C_LFGList.RevealCensoredActiveEntry()
             C_LFGList.RevealCensoredSearchResult(1)
             if C_LFGList.DoesCensoredTextMatch("foo", "bar") ~= false then return "lfg-censored-match" end
             if C_LFGList.IsCensoredActiveEntryUnresolved() ~= false then return "lfg-censored-active" end
+            return "ok"
+        "#,
+    );
+}
+
+#[cfg(all(feature = "retail-12-1-0", not(feature = "client-retail")))]
+#[test]
+fn test_patch_12_1_battle_net_invite_bridges() {
+    assert_patch_12_1_safe_global_bridge(
+        r#"
             if C_BattleNet.AreFriendTagsEnabled() ~= true then return "bnet-tags" end
             if C_BattleNet.AreTitleFriendsEnabled() ~= true then return "bnet-title" end
             if C_BattleNet.AreTitleFriendCustomNamesEnabled() ~= true then return "bnet-title-names" end
@@ -943,6 +1031,16 @@ fn test_patch_12_1_safe_global_bridges() {
             if type(inviteInfo.creationTimestamp) ~= "number" then return "bnet-invite-created-at" end
             C_BattleNet.SendVerifiedBattleNetFriendInvite("Anduin#4000")
             if C_BattleNet.GetFriendInviteInfo(2) ~= nil then return "bnet-invite-duplicate" end
+            return "ok"
+        "#,
+    );
+}
+
+#[cfg(all(feature = "retail-12-1-0", not(feature = "client-retail")))]
+#[test]
+fn test_patch_12_1_battle_net_friend_detail_bridges() {
+    assert_patch_12_1_safe_global_bridge(
+        r#"
             C_BattleNet.SetAppearOffline(false)
             C_BattleNet.SetCustomTitleFriendName(1, "Light")
             if C_BattleNet.GetCustomTitleFriendName(1) ~= "Light" then return "bnet-title-name-set" end
@@ -956,14 +1054,36 @@ fn test_patch_12_1_safe_global_bridges() {
                 if type(bnetInfo.friendLevel) ~= "number" then return "bnet-friend-level-field" end
                 if type(bnetInfo.gameAccountInfo) == "table" and type(bnetInfo.gameAccountInfo.classFilename) ~= "string" then return "bnet-class-filename-field" end
             end
-            C_UnitAuras.SetGroupBuffVisualAlerts({ [123] = true })
-            if C_UnitAuras.GetGroupBuffVisualAlerts()[123] ~= true then return "group-alerts" end
-            C_UnitAuras.SetHiddenGroupBuffs({ [456] = true })
-            if C_UnitAuras.GetHiddenGroupBuffs()[456] ~= true then return "hidden-buffs" end
+            return "ok"
+        "#,
+    );
+}
+
+#[cfg(all(feature = "retail-12-1-0", not(feature = "client-retail")))]
+#[test]
+fn test_patch_12_1_group_buff_bridges() {
+    assert_patch_12_1_safe_global_bridge(
+        r#"
+            C_UnitAuras.SetGroupBuffVisualAlerts({ { spellID = 123, visualValue = Enum.VisualAlertType.MarchingAnts }, { spellID = 456, visualValue = Enum.VisualAlertType.MarchingAntsCyan } })
+            local groupAlerts = C_UnitAuras.GetGroupBuffVisualAlerts()
+            if #groupAlerts ~= 2 or groupAlerts[1].spellID ~= 123 or groupAlerts[1].visualValue ~= Enum.VisualAlertType.MarchingAnts or groupAlerts[2].spellID ~= 456 or groupAlerts[2].visualValue ~= Enum.VisualAlertType.MarchingAntsCyan then return "group-alerts" end
+            C_UnitAuras.SetHiddenGroupBuffs({ 456, 789 })
+            local hiddenBuffs = C_UnitAuras.GetHiddenGroupBuffs()
+            if #hiddenBuffs ~= 2 or hiddenBuffs[1] ~= 456 or hiddenBuffs[2] ~= 789 then return "hidden-buffs" end
             CooldownManagerLayout_SetGroupBuffVisualAlerts({ [789] = true })
             if CooldownManagerLayout_GetGroupBuffVisualAlerts()[789] ~= true then return "layout-group-alerts" end
             CooldownManagerLayout_SetHiddenGroupBuffs({ [987] = true })
             if CooldownManagerLayout_GetHiddenGroupBuffs()[987] ~= true then return "layout-hidden-buffs" end
+            return "ok"
+        "#,
+    );
+}
+
+#[cfg(all(feature = "retail-12-1-0", not(feature = "client-retail")))]
+#[test]
+fn test_patch_12_1_housing_presence_bridges() {
+    assert_patch_12_1_safe_global_bridge(
+        r#"
             local slotID, icon, checkRelic = C_PaperDollInfo.GetInventorySlotInfo("MainHandSlot")
             if slotID ~= 16 or type(icon) ~= "number" or checkRelic ~= false then return "paperdoll-slot" end
             if C_HouseEditor.GetHouseEditorPlayerType() ~= nil then return "house-editor-player" end
@@ -972,6 +1092,16 @@ fn test_patch_12_1_safe_global_bridges() {
             if C_Housing.IsInsideOwnedHouse() ~= false then return "housing-owned-house" end
             if C_Housing.IsInsideOwnedPlot() ~= false then return "housing-owned-plot" end
             C_Housing.ResetHouse()
+            return "ok"
+        "#,
+    );
+}
+
+#[cfg(all(feature = "retail-12-1-0", not(feature = "client-retail")))]
+#[test]
+fn test_patch_12_1_housing_blueprint_bridges() {
+    assert_patch_12_1_safe_global_bridge(
+        r#"
             if C_HousingBlueprint.CanImportTypeFromCurrentLocation(1) ~= false then return "blueprint-can-import" end
             C_HousingBlueprint.DeleteBlueprint("id")
             C_HousingBlueprint.ExportBlueprint("id")
@@ -988,6 +1118,16 @@ fn test_patch_12_1_safe_global_bridges() {
             C_HousingBlueprint.RequestBlueprintContents("id")
             C_HousingBlueprint.RequestBlueprintContentsForContext({})
             C_HousingBlueprint.StartImportRoomBlueprint("code")
+            return "ok"
+        "#,
+    );
+}
+
+#[cfg(all(feature = "retail-12-1-0", not(feature = "client-retail")))]
+#[test]
+fn test_patch_12_1_housing_decor_layout_bridges() {
+    assert_patch_12_1_safe_global_bridge(
+        r#"
             C_HousingCustomizeMode.ApplyPetToSelectedDecor("pet")
             local selectedPet = C_HousingCustomizeMode.GetSelectedDecorPetInfo()
             if type(selectedPet) ~= "table" or selectedPet.petGUID ~= "pet" then return "housing-pet-info" end
@@ -1002,6 +1142,16 @@ fn test_patch_12_1_safe_global_bridges() {
             if C_HousingLayout.GetRoomPlayerIsIn() ~= nil then return "housing-player-room" end
             if C_HousingLayout.GetSelectedBlueprintFloorplan() ~= nil then return "housing-blueprint-floorplan" end
             if C_HousingLayout.HasSelectedBlueprintFloorplan() ~= false then return "housing-has-blueprint-floorplan" end
+            return "ok"
+        "#,
+    );
+}
+
+#[cfg(all(feature = "retail-12-1-0", not(feature = "client-retail")))]
+#[test]
+fn test_patch_12_1_item_spell_paperdoll_bridges() {
+    assert_patch_12_1_safe_global_bridge(
+        r#"
             if C_Item.DoesItemMatchSpellItemCondition(6948, 6603) ~= false then return "item-condition" end
             if C_Spell.TargetSpellChecksItemCondition(6603) ~= false then return "spell-condition" end
             local _, spellIcon, conditionalIcon = C_Spell.GetSpellTexture(6603)
@@ -1009,13 +1159,9 @@ fn test_patch_12_1_safe_global_bridges() {
             local slotID2 = C_PaperDollInfo.GetInventorySlotInfoForInvSlot("MainHandSlot")
             if slotID2 ~= 16 then return "paperdoll-invslot" end
             return "ok"
-            "#,
-        )
-        .unwrap();
-
-    assert_eq!(result, "ok");
+        "#,
+    );
 }
-
 #[test]
 fn test_startup_service_globals_exist() {
     let env = WowLuaEnv::new().unwrap();

@@ -95,13 +95,30 @@ fn get_num_online_friends(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn get_num_ignores(state: &mut LuaState) -> LuaResult<u32> {
-    state.push(Val::Num(0.0));
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let count = borrow_state(state)?.social_ignores.len().min(50);
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+    let count = 0;
+    state.push(Val::Num(count as f64));
     Ok(1)
 }
 
 fn get_ignore_name(state: &mut LuaState) -> LuaResult<u32> {
-    let _index = i32::from_stack(state, 1)?;
-    state.push(Val::Nil);
+    let index = i32::from_stack(state, 1)?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+    let _ = index;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let name = {
+        let ignores = &borrow_state(state)?.social_ignores;
+        index
+            .checked_sub(1)
+            .and_then(|index| usize::try_from(index).ok())
+            .and_then(|index| ignores.get(index).cloned())
+    };
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+    let name: Option<String> = None;
+    let value = name.map_or_else(|| Val::Nil, |name| create_string(state, &name));
+    state.push(value);
     Ok(1)
 }
 

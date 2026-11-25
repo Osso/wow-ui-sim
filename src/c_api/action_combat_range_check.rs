@@ -55,23 +55,29 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
 fn update_registration(state: &mut LuaState) -> LuaResult<u32> {
     let key = super::action_button_hover::read_converted_slot(state, FUNCTION, USAGE)?;
     let enable = unknown_policy::read_enable(state, FUNCTION, USAGE)?;
+    let rule_key =
+        super::c_game_rules::key_from_name(state, "ActionCombatSpellHitIndicationEnabled");
     let mut sim = borrow_state_mut(state)?;
-    if !sim
-        .game_rules
-        .rules
-        .contains_key("ActionCombatSpellHitIndicationEnabled")
-    {
+    if !sim.game_rules.rules.contains_key(&rule_key) {
         unknown_policy::report_native_diagnostic(
             "Enabling Action Combat range checking requires the ActionCombatSpellHitIndicationEnabled game rule to be enabled",
         );
         return Ok(0);
     }
-    let registrations = &mut sim.action_combat_range.registrations;
+    apply_registration_delta(&mut sim.action_combat_range.registrations, key, enable);
+    Ok(0)
+}
+
+fn apply_registration_delta(
+    registrations: &mut HashMap<i32, CombatRangeRegistration>,
+    key: i32,
+    enable: bool,
+) {
     let previous = registrations.get(&key).map_or(0, |entry| entry.references);
     let references = previous.wrapping_add(if enable { 1 } else { -1 });
     if references < 0 {
         unknown_policy::report_native_diagnostic("EnableRangeCheck underflow.");
-        return Ok(0);
+        return;
     }
     if references == 0 {
         registrations.remove(&key);
@@ -84,7 +90,6 @@ fn update_registration(state: &mut LuaState) -> LuaResult<u32> {
             })
             .references = references;
     }
-    Ok(0)
 }
 
 fn collect_updates(

@@ -15,7 +15,7 @@
 
 use crate::c_api::helpers::ensure_namespace;
 use crate::client_profile::{ACTIVE, ClientProfile};
-use crate::lua_api::methods::borrow_state_mut;
+use crate::lua_api::methods::{borrow_state, borrow_state_mut};
 use crate::lua_api::script_helpers::fire_named_event_state;
 use crate::lua_bridge::{FromStack, table_set_rust_fn_static};
 use rilua::LuaResult;
@@ -25,6 +25,7 @@ use rilua::vm::state::LuaState;
 /// `globals/enum_data/game_system.rs` `PLAYER_INTERACTION_TYPE` (position 9
 /// after `None=0`, `TradePartner=1`, ..., `Banker=8`).
 const ALLIED_RACE_DETAILS_GIVER: i32 = 9;
+pub(crate) const TAXI_NODE_INTERACTION: i32 = 6;
 
 pub(crate) fn register_c_player_interaction_manager_surface(state: &mut LuaState) -> LuaResult<()> {
     let ns = ensure_namespace(state, "C_PlayerInteractionManager")?;
@@ -34,9 +35,24 @@ pub(crate) fn register_c_player_interaction_manager_surface(state: &mut LuaState
     // `IsReplacingUnit`; Blizzard_UnitFrame/Classic/TargetFrame.lua:168 calls it on
     // every target change. The pinned 3.3.5 Wrath tree has no such documentation file.
     if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Wrath {
+        table_set_rust_fn_static(
+            state,
+            ns,
+            "IsInteractingWithNpcOfType",
+            is_interacting_with_npc_of_type,
+        )?;
         table_set_rust_fn_static(state, ns, "IsReplacingUnit", is_replacing_unit)?;
     }
     Ok(())
+}
+
+fn is_interacting_with_npc_of_type(state: &mut LuaState) -> LuaResult<u32> {
+    let interaction_type = i32::from_stack(state, 1)?;
+    let is_interacting = borrow_state(state)?
+        .active_player_interactions
+        .contains(&interaction_type);
+    state.push(rilua::Val::Bool(is_interacting));
+    Ok(1)
 }
 
 fn is_replacing_unit(state: &mut LuaState) -> LuaResult<u32> {
@@ -74,6 +90,9 @@ pub(crate) fn clear_interaction_type(state: &mut LuaState, interaction_type: i32
 }
 
 fn close_event_for_interaction(interaction_type: i32) -> Option<&'static str> {
+    if ACTIVE == ClientProfile::Retail && interaction_type == TAXI_NODE_INTERACTION {
+        return Some("TAXIMAP_CLOSED");
+    }
     match interaction_type {
         ALLIED_RACE_DETAILS_GIVER => Some("ALLIED_RACE_CLOSE"),
         _ => None,

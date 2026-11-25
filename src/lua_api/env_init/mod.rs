@@ -76,9 +76,7 @@ pub(super) fn init_lua_state(
     register_permanent_bootstrap(lua)?;
     register_temporary_bootstrap(lua, skip_chat_frame_placeholder)?;
     register_runtime_api_functions(lua)?;
-    trace_debug_getter_values(lua, "before_profile_bootstrap");
-    register_profile_bootstrap(lua)?;
-    trace_debug_getter_values(lua, "after_profile_bootstrap");
+    register_profile_bootstrap_with_progress_globals(lua)?;
     copy_legacy_unit_globals_to_secureenv(lua)?;
     let screen_kind = state.borrow().screen_kind;
     install_secure_runtime_surface(lua, screen_kind)?;
@@ -155,7 +153,19 @@ fn register_temporary_bootstrap(
 }
 
 fn register_runtime_api_functions(lua: &mut rilua::Lua) -> crate::Result<()> {
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    crate::c_api::kiosk::register(lua.state_mut())?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    super::globals::real::dangerous_scripts::register(lua)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    super::globals::real::battle_net_account::register(lua)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    super::globals::real::battle_net_friends::register(lua)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    super::globals::real::performance_metrics::register(lua.state_mut())?;
     super::globals::real::heal_prediction::register(lua)?;
+    #[cfg(feature = "client-retail")]
+    super::globals::real::taxi_map::register(lua)?;
     super::globals::real::secure_helpers::register(lua)?;
     super::globals::real::totems::register(lua)?;
     super::globals::real::bank_reagents::register(lua)?;
@@ -169,6 +179,15 @@ fn register_runtime_api_functions(lua: &mut rilua::Lua) -> crate::Result<()> {
     crate::c_api::c_curve_util::register(lua)?;
     crate::c_api::seconds_formatter::register(lua)?;
     crate::c_api::duration_text_binding::register(lua)
+}
+
+fn register_profile_bootstrap_with_progress_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
+    trace_debug_getter_values(lua, "before_profile_bootstrap");
+    register_profile_bootstrap(lua)?;
+    trace_debug_getter_values(lua, "after_profile_bootstrap");
+    // Replace typed quest-progress defaults after temporary bootstrap registration.
+    super::globals::real::quest_dialog::register_progress_requirement_globals(lua)?;
+    Ok(())
 }
 
 fn register_profile_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
@@ -477,7 +496,7 @@ mod tests {
     use crate::lua_api::env::WowLuaAppData;
     use crate::lua_api::state::SimState;
     use rilua::{Lua, LuaApi, LuaApiMut};
-    use std::cell::RefCell;
+    use std::cell::{Cell, RefCell};
     use std::rc::Rc;
 
     #[test]
@@ -495,6 +514,7 @@ mod tests {
             sim_state: Rc::new(RefCell::new(SimState::default())),
             lua: None,
             font_system: None,
+            host_input_depth: Cell::new(0),
             on_update_cache_dirty: true,
             hot_literals: None,
             global_slots: None,

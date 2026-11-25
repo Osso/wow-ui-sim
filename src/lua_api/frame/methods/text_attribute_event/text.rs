@@ -258,8 +258,10 @@ fn update_text_frame(
     let is_tooltip = frame
         .map(|frame| frame.widget_type == WidgetType::GameTooltip)
         .unwrap_or(false);
-    let editbox_text_changed = frame
-        .is_some_and(|frame| frame.widget_type == WidgetType::EditBox && current_text != *text);
+    let is_editbox = frame.is_some_and(|frame| frame.widget_type == WidgetType::EditBox);
+    let editbox_text_changed = is_editbox
+        && current_text.as_deref().unwrap_or_default() != text.as_deref().unwrap_or_default();
+    let editbox_text_storage_changed = is_editbox && current_text != *text;
     let is_button = matches!(
         frame.map(|frame| frame.widget_type),
         Some(WidgetType::Button | WidgetType::CheckButton)
@@ -280,7 +282,11 @@ fn update_text_frame(
         frame.text_stripped = stripped_text.clone();
         frame.text_segments.clear();
         if editbox_text_changed {
+            // INFERRED (R88et-b): consumer counter evidence cannot tell deferred delivery from suppression;
+            // the simulator defers OnTextChanged so MoneyInputFrame reads its caller-updated counter.
             frame.mark_editbox_text_changed(Some(false));
+        }
+        if editbox_text_storage_changed {
             let len = text.as_deref().unwrap_or("").chars().count() as i32;
             frame.editbox_cursor_pos = frame.editbox_cursor_pos.clamp(0, len);
             if let Some((start, end)) = &mut frame.editbox_highlight_range {

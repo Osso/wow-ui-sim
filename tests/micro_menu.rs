@@ -886,7 +886,7 @@ fn main_menu_performance_bar_uses_seeded_network_stats() {
     );
 }
 
-#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn load_performance_bar_tooltip(env: &WowLuaEnv) {
     env.exec(
         r#"
@@ -912,8 +912,40 @@ fn performance_bar_fallbacks_preserve_other_profile_values() {
     assert_eq!(values, (256.0, 1.0, 1.0));
 }
 
+#[cfg(feature = "client-wowforever")]
+#[test]
+fn performance_bar_tooltip_displays_supplied_metrics() {
+    let env = setup_env();
+    let default_fps: f64 = env.eval("return GetFramerate()").expect("GetFramerate");
+    assert_eq!(default_fps, 60.0);
+    load_performance_bar_tooltip(&env);
+    let shown: bool = env
+        .eval(r#"
+            local ok, message = pcall(A_Admin.SetAddOnUsage, "MissingPerformanceAddon", 1, 2)
+            assert(not ok and tostring(message):find("MissingPerformanceAddon", 1, true),
+                "unknown addon usage input must fail with its addon name")
+            A_Admin.SetFramerate(48.5)
+            A_Admin.SetAddOnUsage("Blizzard_MicroMenu", 240, 7)
+            A_Admin.SetAddOnUsage("Blizzard_UIParent", 80, 2)
+            GameTooltip:Hide()
+            MainMenuBarPerformanceBarFrame_OnEnter(MainMenuMicroButton.MainMenuBarPerformanceBar)
+            local fps = string.format(MAINMENUBAR_FPS_LABEL, 48.5)
+            local fpsFound, first, second
+            for index = 1, GameTooltip:NumLines() do
+                local line = _G["GameTooltipTextLeft" .. index]
+                local text = line and line:GetText() or ""
+                if text == fps then fpsFound = true end
+                if text:find("Blizzard_MicroMenu", 1, true) then first = index end
+                if text:find("Blizzard_UIParent", 1, true) then second = index end
+            end
+            return fpsFound and first and second and first < second
+        "#)
+        .expect("original PerformanceBar tooltip should display supplied metrics");
+    assert!(shown, "original PerformanceBar tooltip must use both supplied values");
+}
+
 #[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
-const PERFORMANCE_BAR_TOOLTIP_ASSERTIONS: &str = r#"
+const PERFORMANCE_BAR_TOOLTIP_ASSERTIONS: &str = r##"
     local function capture_results(...)
         return select('#', ...), ...
     end
@@ -932,6 +964,40 @@ const PERFORMANCE_BAR_TOOLTIP_ASSERTIONS: &str = r#"
     local bandwidth = string.format(MAINMENUBAR_BANDWIDTH_LABEL, 0)
     assert(has_tooltip_line(protocol), "original tooltip protocol row: " .. protocol)
     assert(has_tooltip_line(bandwidth), "original tooltip bandwidth row must show zero")
+    local ok, message = pcall(A_Admin.SetAddOnUsage, "MissingPerformanceAddon", 1, 2)
+    assert(not ok and tostring(message):find("MissingPerformanceAddon", 1, true),
+        "unknown addon usage input must fail with its addon name")
+    A_Admin.SetFramerate(48.5)
+    local oldMemory = GetAddOnMemoryUsage("Blizzard_MicroMenu")
+    A_Admin.SetAddOnUsage("Blizzard_MicroMenu", 240, 7)
+    A_Admin.SetAddOnUsage("Blizzard_UIParent", 80, 2)
+    assert(GetAddOnMemoryUsage("Blizzard_MicroMenu") == oldMemory,
+        "memory getter must keep the old snapshot until update")
+    assert(select("#", UpdateAddOnMemoryUsage()) == 0,
+        "UpdateAddOnMemoryUsage must return no values")
+    assert(GetAddOnMemoryUsage("Blizzard_MicroMenu") == 240,
+        "memory update must publish supplied sample")
+    assert(GetAddOnCPUUsage("Blizzard_MicroMenu") == 0,
+        "CPU getter must keep the old snapshot until update")
+    assert(select("#", UpdateAddOnCPUUsage()) == 0,
+        "UpdateAddOnCPUUsage must return no values")
+    assert(GetAddOnCPUUsage("Blizzard_MicroMenu") == 7,
+        "CPU update must publish supplied sample")
+    assert(select("#", ResetCPUUsage()) == 0 and GetAddOnCPUUsage("Blizzard_MicroMenu") == 0,
+        "CPU reset must clear the supplied addon sample")
+    GameTooltip:Hide()
+    MainMenuBarPerformanceBarFrame_OnEnter(MainMenuMicroButton.MainMenuBarPerformanceBar)
+    local first, second
+    for index = 1, GameTooltip:NumLines() do
+        local line = _G["GameTooltipTextLeft" .. index]
+        local text = line and line:GetText() or ""
+        if text:find("Blizzard_MicroMenu", 1, true) then first = index end
+        if text:find("Blizzard_UIParent", 1, true) then second = index end
+    end
+    assert(has_tooltip_line(string.format(MAINMENUBAR_FPS_LABEL, 48.5)),
+        "original PerformanceBar tooltip must display the supplied framerate")
+    assert(first and second and first < second,
+        "original PerformanceBar tooltip must order addons by supplied memory usage")
     local count, home, world = capture_results(GetProtocolTypes())
     assert(count == 2 and type(home) == "number" and type(world) == "number"
         and home == __expected_protocol_home and world == __expected_protocol_world,
@@ -940,7 +1006,7 @@ const PERFORMANCE_BAR_TOOLTIP_ASSERTIONS: &str = r#"
     assert(bandwidth_count == 1 and type(available) == "number" and available == 0,
         "GetAvailableBandwidth must return exactly one numeric zero")
     return "ok"
-    "#;
+    "##;
 
 #[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
 fn assert_performance_bar_tooltip_consumer(env: &WowLuaEnv) {
@@ -965,6 +1031,8 @@ fn check_performance_bar_tooltip(env: &WowLuaEnv, input: Option<PerformanceProto
 #[test]
 fn performance_bar_tooltip_uses_supplied_protocols_and_zero_bandwidth() {
     let env = setup_env();
+    let default_fps: f64 = env.eval("return GetFramerate()").expect("GetFramerate");
+    assert_eq!(default_fps, 60.0);
     load_performance_bar_tooltip(&env);
     check_performance_bar_tooltip(
         &env,

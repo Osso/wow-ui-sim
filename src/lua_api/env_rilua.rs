@@ -22,15 +22,15 @@ impl WowLuaEnv {
     /// Execute Lua code on rilua's VM.
     pub fn exec_rilua(&self, code: &str) -> rilua::LuaResult<()> {
         let func = self.load_rilua(code)?;
-        self.lua.borrow_mut().call_function(&func, &[])?;
-        Ok(())
+        let result = self.lua.borrow_mut().call_function(&func, &[]).map(|_| ());
+        self.finish_host_lua_call(result)
     }
 
     /// Execute Lua code on rilua's VM with a custom chunk name.
     pub fn exec_rilua_named(&self, code: &str, name: &str) -> rilua::LuaResult<()> {
         let func = self.load_rilua_named(code, name)?;
-        self.lua.borrow_mut().call_function(&func, &[])?;
-        Ok(())
+        let result = self.lua.borrow_mut().call_function(&func, &[]).map(|_| ());
+        self.finish_host_lua_call(result)
     }
 
     /// Compile Lua code on rilua and return a function handle.
@@ -52,10 +52,12 @@ impl WowLuaEnv {
     /// entire addon directory.
     pub fn exec_rilua_secure(&self, code: &str) -> rilua::LuaResult<()> {
         let func = self.load_rilua(code)?;
-        let mut lua = self.lua.borrow_mut();
-        super::globals::security::mark_secure(&mut *lua, &func)?;
-        lua.call_function(&func, &[])?;
-        Ok(())
+        let result = {
+            let mut lua = self.lua.borrow_mut();
+            super::globals::security::mark_secure(&mut *lua, &func)?;
+            lua.call_function(&func, &[]).map(|_| ())
+        };
+        self.finish_host_lua_call(result)
     }
 
     /// Dispatch between `exec` (default, runs under `_G`) and
@@ -76,7 +78,57 @@ impl WowLuaEnv {
         func: &rilua::Function,
         args: &[rilua::Val],
     ) -> rilua::LuaResult<Vec<rilua::Val>> {
-        self.lua.borrow_mut().call_function(func, args)
+        let result = self.lua.borrow_mut().call_function(func, args);
+        self.finish_host_lua_call(result)
+    }
+
+    pub(crate) fn with_host_input_operation<T>(
+        &self,
+        operation: impl FnOnce() -> crate::Result<T>,
+    ) -> crate::Result<T> {
+        self.change_host_input_depth(true)?;
+        let result = operation();
+        if self.change_host_input_depth(false)? > 0 {
+            return result;
+        }
+        let flush = super::editbox_update::flush_at_host_boundary(self);
+        match result {
+            Err(error) => Err(error),
+            Ok(value) => {
+                flush?;
+                Ok(value)
+            }
+        }
+    }
+
+    fn change_host_input_depth(&self, increase: bool) -> crate::Result<usize> {
+        let mut lua = self.rilua_mut();
+        let app_data = lua
+            .state_mut()
+            .app_data::<super::env::WowLuaAppData>()
+            .ok_or_else(|| crate::Error::Other("missing WowLuaAppData".to_string()))?;
+        let depth = if increase {
+            app_data.host_input_depth.get() + 1
+        } else {
+            app_data.host_input_depth.get() - 1
+        };
+        app_data.host_input_depth.set(depth);
+        Ok(depth)
+    }
+
+    fn finish_host_lua_call<T>(&self, result: rilua::LuaResult<T>) -> rilua::LuaResult<T> {
+        let flush =
+            super::editbox_update::flush_at_host_boundary(self).map_err(|error| match error {
+                crate::Error::Lua(error) => error,
+                error => rilua::runtime_error(error.to_string()),
+            });
+        match result {
+            Err(error) => Err(error),
+            Ok(value) => {
+                flush?;
+                Ok(value)
+            }
+        }
     }
 
     /// Get access to the primary rilua Lua instance.

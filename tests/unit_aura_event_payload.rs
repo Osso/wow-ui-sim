@@ -22,7 +22,7 @@ fn aura(id: i32) -> AuraInfo {
     AuraInfo {
         name: format!("Payload Aura {id}"),
         spell_id: 98000 + id,
-        icon: 134973,
+        icon: wow_ui_sim::lua_api::state::AuraIcon::FileId(134973),
         duration: 30.0,
         expiration_time: 30.0,
         applications: 1,

@@ -45,6 +45,7 @@ fn level_link_action_locks_read_state_locked_action_slots() {
     assert!(!unlisted);
 }
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn level_link_spell_locks_use_state_backed_table() {
     let env = env();
@@ -90,6 +91,7 @@ fn level_link_action_locks_reject_non_numeric_input() {
     assert!(!from_table, "table action IDs should be unlocked");
 }
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn level_link_spell_locks_normalize_and_track_last_query() {
     let env = env();

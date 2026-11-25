@@ -1,8 +1,7 @@
 //! Temporary `C_VideoOptions` state surface.
 //!
-//! Video option queries are currently a lightweight simulator fixture. Keep the
-//! mutable Lua-visible state explicit as temporary compatibility behavior until
-//! display configuration is backed by a real subsystem.
+//! Non-Retail/Forever profiles keep the legacy Lua fixture for video options.
+//! Retail/Forever window-size methods use the C API display model.
 
 const VIDEO_OPTIONS_STATE_LUA: &str = r#"
 if type(C_VideoOptions) ~= "table" then
@@ -130,34 +129,26 @@ if rawget(C_VideoOptions, "IsSpellVisualDensitySystemSupported") == nil then
 end
 "#;
 
-// Separate temporary runtime/device policy, not an R63 static capability byte.
-// Native MSAA is a runtime/device query on Retail and Forever; PTR publication
-// remains UNKNOWN. This existing Forever workaround does not assert native false.
-const FOREVER_MSAA_CAPABILITY_LUA: &str = r#"
--- The UI renderer uses single-sample targets. Replace this unsupported capability
--- when multisample render targets and MSAA mode enumeration are implemented.
-if rawget(_G, "MultiSampleAntiAliasingSupported") == nil then
-    function MultiSampleAntiAliasingSupported()
-        return false
-    end
-end
-"#;
-
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
-    lua.exec(VIDEO_OPTIONS_STATE_LUA)?;
+    if !matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
+        lua.exec(VIDEO_OPTIONS_STATE_LUA)?;
+    }
     if !crate::c_api::video_capabilities::publishes_capabilities() {
         lua.exec(LEGACY_VIDEO_CAPABILITIES_LUA)?;
-    }
-    if cfg!(feature = "client-wowforever") {
-        lua.exec(FOREVER_MSAA_CAPABILITY_LUA)?;
     }
     Ok(())
 }
 
 #[cfg(test)]
 mod tests {
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     use crate::lua_api::WowLuaEnv;
 
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     #[test]
     fn installs_window_size_state_and_returns_copies() {
         let env = WowLuaEnv::new().expect("lua env should initialize");

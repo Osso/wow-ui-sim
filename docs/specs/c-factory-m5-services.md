@@ -4,7 +4,7 @@ M5 restores individually required startup inputs after [factory removal](c-names
 
 ## What it must do
 
-- [x] Retail/PTR owned-house requests are available before the housing dashboard loads and asynchronously emit `PLAYER_HOUSE_LIST_UPDATED` with an empty list while the authoritative ownership service is absent.
+- [x] Retail `C_Housing.GetPlayerOwnedHouses()` queues one `PLAYER_HOUSE_LIST_UPDATED(houseInfos)` reply per call for a later timer tick; the host supplies the documented HouseInfo rows. Timing is **INFERRED (R88fj; native evidence pending)**. PTR keeps its existing temporary empty-list request bridge. Forever does not load the consumer because its TOC game-type filter excludes `standard`.
 - [x] Retail/PTR/Mists/Forever original pet action buttons remain disabled when swap/skip legality is unavailable. Named temporary predicates return false, not eligibility inferred from health alone.
 - [x] Those profiles' pet-icon query joins the supplied battle species to pet-journal icon metadata; clearing the supplied pet record produces no icon.
 - [x] Forever purchased bank-tab and player-bag capability queries return the documented table/boolean shapes through named temporary workarounds. Their fixed empty/false implementation choices are not native bank policy.
@@ -19,8 +19,8 @@ M5 restores individually required startup inputs after [factory removal](c-names
 - `src/c_api/c_pet_battles.rs` — species/catalog icon projection.
 - `src/c_api/c_transmog_sets{.rs,/catalog.rs}` — Forever valid-set query and existing catalog.
 - `src/c_api/{mod.rs,registration.rs}` and `src/lua_api/{state.rs,state/sim_state.rs}` — share catalog storage without publishing unrelated profile members.
-- `src/lua_api/workarounds/temporary/{housing_owned_house_requests,pet_battle_action_legality_defaults,forever_bank_capability_defaults}.rs` — named missing ownership service, battle legality and bank metadata/capability systems.
-- `src/lua_api/workarounds/temporary/housing_dashboard_preload.rs` — reuses the same owned-house request definition instead of a late-only duplicate.
+- `src/c_api/c_housing/owned_houses.rs` — Retail supplied owned-house records and queued responses.
+- `src/lua_api/workarounds/temporary/{housing_owned_house_requests,pet_battle_action_legality_defaults,forever_bank_capability_defaults}.rs` — PTR's temporary owned-house response plus missing battle-legality and bank metadata/capability systems.
 
 ## Tests asserting this spec
 

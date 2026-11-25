@@ -1,5 +1,4 @@
 //! Frame strata projection of supplied game-rule values.
-use crate::lua_api::globals::game_rules::resolve_rule_name_from_enum_id;
 use crate::lua_api::methods::{borrow_state, create_string};
 use crate::lua_bridge::stack_val;
 use rilua::vm::state::LuaState;
@@ -39,12 +38,12 @@ pub(crate) fn query(state: &mut LuaState) -> LuaResult<u32> {
             "{USAGE} - integer overflow attempting to store {number}"
         )));
     }
-    let name = resolve_rule_name_from_enum_id(state, number.trunc() as i64)
+    let key = super::c_game_rules::key_from_id(state, number.trunc() as i64)
         .ok_or_else(|| rilua::runtime_error(USAGE))?;
     let payload = borrow_state(state)?
         .game_rules
         .rules
-        .get(&name)
+        .get(&key)
         .map(|rule| rule.as_int);
     let result = payload.map(|value| {
         usize::try_from(value)

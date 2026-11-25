@@ -438,6 +438,7 @@ pub(super) fn lookup_player_aura(state: &LuaState, index: i32) -> Option<game_da
     sim.player.buffs.get((index - 1).max(0) as usize).cloned()
 }
 
+#[cfg(not(feature = "retail-12-0-5"))]
 pub(super) fn lookup_player_aura_by_instance_id(
     state: &LuaState,
     aura_instance_id: i32,

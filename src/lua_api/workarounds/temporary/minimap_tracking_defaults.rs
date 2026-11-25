@@ -64,7 +64,7 @@ mod tests {
     use crate::lua_api::WowLuaEnv;
 
     #[test]
-    #[cfg(not(feature = "client-wowforever"))]
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     fn installs_minimap_tracking_defaults() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
 

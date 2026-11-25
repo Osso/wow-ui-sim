@@ -74,18 +74,15 @@
 //!
 //! ## Watched faction wiring
 //!
-//! `C_Reputation.GetWatchedFactionData` (`faction_probes.rs:314-321`)
-//! reads `reputation_data::watched_faction()`
-//! (`reputation_data.rs:213-217`), hard-coded to `Council of Dornogal`
-//! (factionID 2590, reaction HONORED=6, currentStanding=8200,
-//! top_value=12000). Faction 2590 is also seeded into
-//! `state.major_factions` (`game_data.rs:1040-1088`, renown_level=1,
-//! renown_level_threshold=2500) and
-//! `state.major_faction_renown_levels` (1..=20). The test therefore
-//! exercises the **major-faction branch** out of the box; to drive the
-//! standard-rep branch the test mutates
-//! `state.major_factions.remove(&2590)` and to drive the paragon
-//! branch it inserts `state.faction_paragon[2590]`.
+//! `C_Reputation.GetWatchedFactionData` reads the host-fed
+//! `state.reputation` model, which starts with no faction rows. The test
+//! supplies Council of Dornogal (factionID 2590, reaction HONORED=6,
+//! currentStanding=8200, next threshold=12000) through that model. The
+//! game-data fixture also seeds faction 2590 in `state.major_factions`
+//! and `state.major_faction_renown_levels`, so the test starts on the
+//! **major-faction branch**. To drive the standard-rep branch it removes
+//! faction 2590 from `state.major_factions`; to drive the paragon branch
+//! it inserts `state.faction_paragon[2590]`.
 //!
 //! ## Why call `bar:Update()` directly instead of firing
 //! `UPDATE_FACTION` end-to-end
@@ -188,12 +185,29 @@ fn reputation_bar_renders_standard_paragon_and_renown_branches_from_watched_fact
 
     test_timeout! {
     with_blizzard_addon_startup_shape(&[ROOT], &[], |env, _loaded| {
+        seed_watched_faction(env);
         assert_cold_globals_resolve(env);
         drive_standard_branch(env);
         drive_major_faction_branch(env);
         drive_paragon_branch(env);
     });
     }
+}
+
+fn seed_watched_faction(env: &WowLuaEnv) {
+    use wow_ui_sim::c_api::reputation_model::ReputationFaction;
+
+    let mut state = env.state().borrow_mut();
+    state.reputation.factions = vec![ReputationFaction {
+        faction_id: WATCHED_FACTION_ID as i32,
+        name: Some("Council of Dornogal".to_string()),
+        reaction: 6,
+        standing: WATCHED_CURRENT_STANDING as i32,
+        bottom: 0,
+        top: WATCHED_NEXT_THRESHOLD as i32,
+        ..Default::default()
+    }];
+    state.reputation.watched_faction_id = Some(WATCHED_FACTION_ID as i32);
 }
 
 fn assert_cold_globals_resolve(env: &WowLuaEnv) {
@@ -226,10 +240,9 @@ fn assert_cold_globals_resolve(env: &WowLuaEnv) {
         .expect("watched faction probe must run cleanly");
     assert!(
         watched_id_present,
-        "Cold `C_Reputation.GetWatchedFactionData().factionID` must be \
-         {WATCHED_FACTION_ID} (Council of Dornogal, hardcoded by \
-         `reputation_data.rs::watched_faction`); other reading means \
-         the faction-list seed regressed."
+        "`C_Reputation.GetWatchedFactionData()` must return the supplied \
+         Council of Dornogal row (factionID {WATCHED_FACTION_ID}); otherwise \
+         the host-fed reputation state was not published."
     );
 }
 

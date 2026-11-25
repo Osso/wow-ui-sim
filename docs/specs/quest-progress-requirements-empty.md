@@ -1,56 +1,40 @@
-# Temporary empty quest progress-dialogue / requirements inputs
+# Supplied quest progress requirements
 
-Five missing native globals are explicitly temporary compatibility gaps, not
-supplied-state implementations. Source:
-`workarounds/temporary/quest_progress_requirements.rs`.
-[Quest architecture](../wiki/systems/lua-api.md#quest-dialog-material) and the
-[execution receipt](../baselines/quest-lifecycle.md) own context/proof.
+Retail and WoW Forever model quest-giver progress text, required items and currencies, required money, and turn-in portrait input for an active NPC dialog. The model lives in `src/c_api/quest_objectives.rs`; the simulator-only producer is `A_Admin.SetQuestProgressRequirements`. The legacy temporary defaults remain byte-identical; Retail and WoW Forever modeled globals register after them, while Wrath retains the temporary defaults. [Quest architecture](../wiki/systems/lua-api.md#quest-dialog-material) and the [execution receipt](../baselines/quest-lifecycle.md) own implementation details and proof.
 
 ## What it must do
 
-- [x] Retail/Forever GetProgressText returns an empty string, and original progress
-  panel text remains empty when NPC progress dialogue is unmodeled.
-- [x] GetQuestMoneyToGet/GetNumQuestItems/GetNumQuestCurrencies return numeric0;
-  original required-cost/item/currency displays remain hidden with no invented rows.
-- [x] GetQuestPortraitTurnIn returns exactly `0, "", ""`; original reward-panel
-  no-portrait logic hides and detaches the real QuestModelScene.
-- [x] An unsupplied original reward panel remains empty and introduces no swallowed errors.
+- [x] Accept requirements for a quest ID and display its supplied values when that quest is selected in the active NPC dialog.
+- [x] Show supplied progress text, required item and currency rows, and required money in Blizzard's original progress panel.
+- [x] Render required item rows when the supplied item-row and quest-level visibility inputs are both false.
+- [x] Return the supplied portrait display ID, text, and name in the order consumed by Blizzard's original turn-in panel. This order is inferred from the cached consumer; native evidence is pending (R88db).
+- [x] Keep the no-input progress panel empty. Wrath retains the existing temporary defaults for its unmodeled progress-dialog inputs.
+- [ ] Verify inferred defaults and field semantics against native evidence (R88db pending).
 
-Existing reward_items/currency_rewards remain authoritative for rewards; no parallel
-store is introduced. There is no NPC progress-dialogue, required item/currency/cost,
-or turn-in portrait-input model in the inspected state. Retire these empties when
-supplied quest-progress-requirements/dialogue/portrait-input state replaces them.
+These are supplied-state and original-consumer contracts, not claims of native requirement discovery, inventory/currency ownership, or reward acquisition.
 
 ## How it works
 
-- [Quest model](../wiki/systems/lua-api.md#quest-dialog-material)
-- [QL-2](quest-readiness-dialog.md)
+- [Quest model and dialog architecture](../wiki/systems/lua-api.md#quest-dialog-material)
+- [QL-2 readiness and reward-dialog transition](quest-readiness-dialog.md)
 
 ## Implementation inventory
 
-- `src/lua_api/workarounds/temporary/quest_progress_requirements.rs`: typed empties and retirement condition.
-- `src/lua_api/workarounds/{mod.rs,temporary/mod.rs}`: registration under QL-1's profile gate.
+- `src/c_api/quest_objectives.rs`: progress-requirement rows and active-dialog projection.
+- `src/c_api/c_quest_offer.rs`: required-currency and hide-required-item queries.
+- `src/lua_api/globals/admin_quest_objectives.rs`: validated simulator-only input.
+- `src/lua_api/globals/real/quest_dialog.rs`: modeled progress globals, including per-row visibility.
+- `src/lua_api/globals/quest_surface/register.rs` and `src/lua_api/env_init/mod.rs`: Retail/Forever registration after temporary defaults.
+- `src/lua_api/workarounds/temporary/quest_progress_requirements.rs`: unchanged compatibility defaults.
 
 ## Tests asserting this spec
 
-`tests/quest_dialog_requirements.rs` invokes unchanged original handlers, with explicit
-first-dialog mapView state. Cached Retail Mainline/QuestFrame.lua:205,218-225,129
-calls text, requirements and portrait respectively. Its :129-136 tests displayID
-against0; :535-540 hides/detaches. Text/name are strings consumed at :459,499-504.
-
-Historical tests reached three actual original nil calls. Money/currency-count
-calls were behind the earlier item-count failure, not separately credited as REDs.
-The first no-values portrait draft reached the original nil-number comparison at
-:523; revised hidden/detached-frame test reproduced it before the approved0/string
-fix. Saved GREEN and latest integration status live in the execution receipt.
+`tests/quest_progress_requirements.rs` loads the cached Retail or WoW Forever Blizzard UI closure, enters through `A_Admin.OpenMultiQuestNpc(); SelectActiveQuest(2)`, and checks two distinct supplied requirement sets through the original progress panel. It checks text, item names/counts, currency names/counts, required money, visibility, and portrait inputs. `tests/quest_dialog_requirements.rs` covers the no-input panel behavior.
 
 ## Known gaps (current cycle)
 
-- [ ] Close the latest-base integration gate in the execution receipt.
+- [ ] Native behavior for portrait tuple order, item-hidden return values, and absent-input defaults remains unverified (R88db pending).
 
 ## Out of scope
 
-Real progress dialogue/requirements/portrait-input state, reward acquisition or
-native parity. GetNumRewardSpells/GetRewardSpell/GetQuestCurrencyInfo were absent but
-uncalled by these Mainline consumers and are not added. The [eight-global inventory](../baselines/quest-lifecycle.md)
-distinguishes the five included temporary domains from those three exclusions.
+Discovering requirements from native quest data, checking player inventory or currency, claiming native parity, granting rewards, and adding PTR behavior are outside this contract.

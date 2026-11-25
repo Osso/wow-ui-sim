@@ -8,7 +8,7 @@ Bounded Retail 12.0.0/12.0.5 contracts unlocked by rilua `842e4d3`. Source decla
 - [x] `issecrettable` recognizes wrapped tables and `SecretWrapContents` tables, not ordinary tables merely containing wrappers. Metadata queries preserve caller taint, including addon/revoked callers; addon availability is bounded simulator policy despite the cached `AllowedWhenUntainted` annotation.
 - [x] At `retail-12-0-5`, `Ambiguate` accepts genuine secret strings even in tainted/revoked callers; returns transformed secret strings without changing taint. Context remains `NeverSecret`, rejected before fullName processing. Existing public shortening (`none` unchanged, otherwise first hyphen with nonempty suffix) remains simulator policy, not native context enumeration.
 - [x] `C_ChatInfo.ReplaceIconAndGroupExpressions` rejects original secret flags before text processing; accepts public/secret byte strings, independently applies icon/group vocabularies, and retains secret output/taint for secret input. Host-owned lowercase brace-token maps define vocabulary; English raid names/rt1–rt8 default to cached icon paths. Groups/localized aliases require explicit host input. One-pass expansion/unknown-token preservation and secret output propagation are inferred simulator policy.
-- [x] Host-owned frame-event scripts consume configured cumulative instruction budgets through both WowLuaEnv and LoaderEnv dispatch. `PLAYER_LOGOUT`/`ADDONS_UNLOADING` handler scopes (including nested execution) are exempt, with no usage refund. Exhaustion errors recover VM state; host reset permits subsequent execution. Default 10 million instructions per addon per host frame (reset before OnUpdate) is inferred policy, not a native time threshold.
+- [ ] Host-owned tainted file and frame-handler invocations use a per-invocation elapsed-time watchdog through loader and dispatch paths. VERIFIED (R88bn, both builds): the VM polls after every 10,001 dispatch steps and raises `script ran too long` on overrun; the 10,000 instruction-count quota is not a native limit. INFERRED (R88bn): interpret thresholds as milliseconds; use 19,000 during loading and startup callbacks through the initial `PLAYER_ENTERING_WORLD`, then 200. Secure/unowned Blizzard execution stays outside the watchdog. Tests can set a deterministic timeout through `WowLuaEnv`.
 
 ## How it works
 
@@ -20,17 +20,18 @@ Bounded Retail 12.0.0/12.0.5 contracts unlocked by rilua `842e4d3`. Source decla
 - `src/lua_api/globals/security/retail_secret_helpers.rs` — VM-backed global predicates/revocation.
 - `src/lua_api/globals/real/ambiguate.rs` — public and opaque secret name transform; older epochs retain prior Lua body.
 - `src/c_api/chat_expressions.rs`, `c_chat_info.rs` — host vocabulary and real C API transformation; `SimState::chat_expression_inputs` holds per-environment maps.
-- `src/lua_api/execution_budget.rs` — trusted addon owner scopes and shutdown exemptions, reused by loader, host events, named events and frame/OnUpdate dispatch.
+- `src/lua_api/execution_budget.rs` — per-invocation watchdog timeout selection, owner scope, and diagnostic formatting for loader and frame dispatch.
 
 ## Tests asserting this spec
 
-- `tests/rilua_rows.rs` — secure/addon/revoked contexts, exact transformed output, taint preservation, budget exhaustion, both shutdown events and recovery through host and LoaderEnv dispatch.
+- `tests/rilua_rows.rs` — secure/addon/revoked contexts, exact transformed output, taint preservation, and one loader invocation below the test timeout followed by an owner-dispatch overrun.
 - `tests/ambiguate_context.rs` — existing original flag rejection/public name controls.
 - `tests/p1200_global_security.rs` — actual helper publication.
 
 ## Known gaps (current cycle)
 
-- [ ] Dedicated addon-load/OnUpdate runtime proof, native throttle thresholds, elapsed-time accounting, complete timer/slash/key/callback ownership and full event-wide exemption outside frame handlers remain unproven. The two prose rows retain pending status until those boundaries are accounted for.
+- [ ] Native bucket-throttle ownership and normal/restricted execution-class mapping remain unknown. The simulator's restricted-addon bucket policy, burst initialization, and Forever refill mirror are inferred; see [script bucket throttle limits](script-bucket-throttle-limits.md).
+- [ ] Timer, slash-command, key-binding, and other execution ownership outside tainted loader/frame paths remain unproven. The 19,000/200 millisecond watchdog mapping is an inference, not a native fact.
 
 ## Verification — 2026-10-07
 

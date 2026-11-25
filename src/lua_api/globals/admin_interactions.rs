@@ -26,6 +26,20 @@ pub(super) fn open_mailbox(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(super) fn open_guild_rename(state: &mut LuaState) -> LuaResult<u32> {
+    let interaction_type = player_interaction_type("GuildRename");
+    borrow_state_mut(state)?
+        .active_player_interactions
+        .insert(interaction_type);
+    fire_named_event_state(
+        state,
+        "PLAYER_INTERACTION_MANAGER_FRAME_SHOW",
+        &[Val::Num(interaction_type as f64)],
+    );
+    Ok(0)
+}
+
 pub(super) fn close_mailbox(state: &mut LuaState) -> LuaResult<u32> {
     let interaction_type = player_interaction_type("MailInfo");
     let was_active = borrow_state_mut(state)?

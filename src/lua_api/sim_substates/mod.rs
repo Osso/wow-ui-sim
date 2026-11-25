@@ -121,12 +121,16 @@ impl MouseButtons {
     }
 }
 
-/// Backing state for the `C_GameRules` namespace. WoW's retail client
-/// exposes a handful of named game rules (`"DISABLE_DUELS"`,
-/// `"ALLOW_PING_PARTY_MEMBERS"`, etc.) that the UI queries to decide which
-/// features to surface. Each rule has a float / int / string representation;
-/// we store all three on one entry so a single rule can satisfy all three
-/// getter variants without round-tripping strings.
+/// A game-rule key. Enum IDs are canonical on Forever; legacy names remain
+/// available for existing host fixtures and profiles that use name-based rules.
+#[derive(Debug, Clone, Eq, Hash, PartialEq)]
+pub enum GameRuleKey {
+    Id(i32),
+    Name(String),
+}
+
+/// Backing state for the `C_GameRules` namespace. Each rule has a float / int /
+/// string representation in one map entry so every getter reads the same value.
 #[derive(Debug, Clone, PartialEq)]
 pub struct GameRulesState {
     /// Currently active `Enum.GameMode` value.
@@ -137,10 +141,8 @@ pub struct GameRulesState {
     pub display: crate::c_api::game_mode_display::GameModeDisplayState,
     /// Server-supplied rule-set marker; zero means no current rule set.
     pub rule_set_marker: i32,
-    /// Sparse rule store keyed by rule name. Missing key = inactive.
-    pub rules: HashMap<String, GameRuleValue>,
-    /// Native numeric rule values keyed by rule ID; no name/Enum mapping is implied.
-    pub rules_by_id: HashMap<i32, i64>,
+    /// Sparse rules keyed by Enum ID or a required legacy name. Missing = inactive.
+    pub rules: HashMap<GameRuleKey, GameRuleValue>,
     /// INFERRED (simulator mapping): host type tags for numeric-ID rules; tags override integer storage.
     /// Native settings packet ingestion remains UNKNOWN (R88ap.3).
     #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
@@ -167,7 +169,6 @@ impl Default for GameRulesState {
             display: Default::default(),
             rule_set_marker: 0,
             rules: HashMap::new(),
-            rules_by_id: HashMap::new(),
             #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
             non_integer_rule_ids: Default::default(),
             hardcore_active: false,
@@ -225,6 +226,12 @@ pub struct PetBattleState {
     pub round_time_ms: f64,
     /// Last-turn result code (0 = not set / in-progress).
     pub turn_result: i32,
+    /// Supplied legality for switching into each of the three player pet slots.
+    pub can_swap_in: [bool; 3],
+    /// Supplied legality for switching out the active player pet.
+    pub can_active_pet_swap_out: bool,
+    /// Supplied availability of the skip action for the current turn.
+    pub skip_available: bool,
     /// Whether StartPVPMatchmaking has been called without a cancellation.
     pub is_matchmaking: bool,
 }
@@ -254,6 +261,9 @@ impl Default for PetBattleState {
             round_time_left_ms: 0.0,
             round_time_ms: 30_000.0,
             turn_result: 0,
+            can_swap_in: [false; 3],
+            can_active_pet_swap_out: false,
+            skip_available: false,
             is_matchmaking: false,
         }
     }
@@ -405,6 +415,8 @@ pub struct VoiceChannel {
 /// headset-check confirmation dialog has been accepted.
 #[derive(Debug, Clone)]
 pub struct VoiceChatState {
+    /// Supplied voice-service login state; independent of connection and readiness.
+    pub logged_in: bool,
     /// Host-supplied settings-access observation; None is unknown, not denied.
     pub can_access_settings: Option<bool>,
     /// Supplied device catalogs; None answers the documented nil result.
@@ -447,11 +459,20 @@ pub struct VoiceChatState {
     /// Whether parental controls have disabled voice chat.
     /// Drives `IsParentalDisabled`.
     pub is_parental_disabled: bool,
+    /// INFERRED R88fv (native evidence pending): supplied permission for voice-chat UI access.
+    pub can_use_voice_chat: bool,
+    /// INFERRED R88fv (native evidence pending): supplied per-club join error reasons.
+    pub join_club_voice_channel_errors: HashMap<String, i32>,
+    /// INFERRED R88fv (native evidence pending): community voice joins in progress.
+    pub pending_channel_joins: HashSet<(i32, Option<String>, Option<String>)>,
 }
 
 impl Default for VoiceChatState {
     fn default() -> Self {
         Self {
+            // INFERRED (R88eb (native evidence pending)): the simulator has no
+            // voice login session, so its supplied initial state is logged out.
+            logged_in: false,
             // Native evidence (PTR 12.1.7, Retail 12.1.5, Forever 1.60.1): the
             // query is the AND of voice-service readiness state and returns false
             // until the service reaches ready. The simulator has no voice service,
@@ -488,6 +509,9 @@ impl Default for VoiceChatState {
             connection_status: 2,
             master_volume_scale: 1.0,
             is_parental_disabled: false,
+            can_use_voice_chat: true,
+            join_club_voice_channel_errors: HashMap::new(),
+            pending_channel_joins: HashSet::new(),
         }
     }
 }
@@ -573,6 +597,18 @@ pub struct GossipState {
     pub options: Vec<GossipOption>,
     pub active_quests: Vec<GossipQuestRow>,
     pub available_quests: Vec<GossipQuestRow>,
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub pois: HashMap<i32, GossipPoiInfo>,
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[derive(Debug, Clone)]
+pub struct GossipPoiInfo {
+    pub poi_id: i32,
+    pub name: String,
+    pub position: (f64, f64),
+    pub atlas_name: Option<String>,
+    pub texture_index: i32,
 }
 
 /// Torghast (Jailer's Tower) run state.  Drives
@@ -677,13 +713,22 @@ pub struct TradeState {
 /// `GetChatWindow*` verb family.
 #[derive(Debug, Clone)]
 pub struct ChatWindow {
+    pub name: String,
     pub font_size: f32,
     pub alpha: f32,
     pub r: f32,
     pub g: f32,
     pub b: f32,
+    pub shown: bool,
     pub locked: bool,
+    /// INFERRED R88g4 (native evidence pending): FrameXML passes this index to `FCF_DockFrame`.
+    pub docked_index: Option<i32>,
     pub uninteractable: bool,
+    pub saved_width: Option<f32>,
+    pub saved_height: Option<f32>,
+    pub saved_point: Option<String>,
+    pub saved_x_offset: Option<f32>,
+    pub saved_y_offset: Option<f32>,
     /// Channels subscribed to this window, in insertion order.
     pub channels: Vec<String>,
     /// Channel membership mirror for idempotent insertion without scanning.
@@ -692,16 +737,44 @@ pub struct ChatWindow {
     pub messages: Vec<String>,
 }
 
+impl ChatWindow {
+    /// INFERRED R88g4 (native evidence pending): first-login General and Combat Log windows are shown and docked.
+    pub fn for_index(index: i32) -> Self {
+        let (alpha, r, g, b) = match crate::client_profile::ACTIVE {
+            crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever => (0.25, 0.0, 0.0, 0.0),
+            _ => (1.0, 1.0, 1.0, 1.0),
+        };
+        Self {
+            shown: (1..=2).contains(&index),
+            docked_index: (1..=2).contains(&index).then_some(index),
+            alpha,
+            r,
+            g,
+            b,
+            ..Self::default()
+        }
+    }
+}
+
 impl Default for ChatWindow {
     fn default() -> Self {
         Self {
+            name: String::new(),
             font_size: 12.0,
             alpha: 1.0,
             r: 1.0,
             g: 1.0,
             b: 1.0,
+            shown: false,
             locked: false,
+            docked_index: None,
             uninteractable: false,
+            saved_width: None,
+            saved_height: None,
+            saved_point: None,
+            saved_x_offset: None,
+            saved_y_offset: None,
             channels: Vec::new(),
             channel_names: HashSet::new(),
             messages: Vec::new(),

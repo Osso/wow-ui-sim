@@ -11,7 +11,7 @@
 //! - `IsBattlefieldArena()`  — `world.battlefield_arena`
 
 use crate::c_api::c_instance_encounter::is_encounter_in_progress;
-use crate::lua_api::methods::{borrow_state_mut, create_string};
+use crate::lua_api::methods::{borrow_state, borrow_state_mut, create_string};
 use rilua::vm::state::LuaState;
 use rilua::{LuaApiMut, LuaResult, Val};
 
@@ -57,6 +57,46 @@ fn is_battlefield_arena(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+fn is_active_battlefield_arena(state: &mut LuaState) -> LuaResult<u32> {
+    let (arena_active, has_arena_record) = {
+        let sim = borrow_state(state)?;
+        (
+            sim.world.battlefield_arena && sim.player.present,
+            sim.world.current_arena_record_flag,
+        )
+    };
+    state.push(Val::Bool(arena_active));
+    state.push(Val::Bool(has_arena_record));
+    Ok(2)
+}
+
+fn is_pvp_timer_running(state: &mut LuaState) -> LuaResult<u32> {
+    let running = borrow_state_mut(state)?.pvp_timer_running;
+    state.push(Val::Bool(running));
+    Ok(1)
+}
+
+fn get_pvp_timer(state: &mut LuaState) -> LuaResult<u32> {
+    let remaining_ms = {
+        let sim = borrow_state(state)?;
+        if !sim.player.present {
+            0
+        } else if !sim.pvp_timer_running {
+            301_000
+        } else {
+            let now = sim.cached_clock_ms();
+            let difference = sim.pvp_timer_deadline_ms.wrapping_sub(now);
+            if (difference as i32) > 0 {
+                difference.wrapping_add(1_000)
+            } else {
+                999
+            }
+        }
+    };
+    state.push(Val::Num(remaining_ms as f64));
+    Ok(1)
+}
+
 pub fn register_all(lua: &mut rilua::Lua) -> crate::Result<()> {
     LuaApiMut::register_function(lua, "InCombatLockdown", in_combat_lockdown)?;
     LuaApiMut::register_function(lua, "IsEncounterInProgress", is_encounter_in_progress)?;
@@ -64,5 +104,16 @@ pub fn register_all(lua: &mut rilua::Lua) -> crate::Result<()> {
     LuaApiMut::register_function(lua, "IsFlyableArea", is_flyable_area)?;
     LuaApiMut::register_function(lua, "IsInInstance", is_in_instance)?;
     LuaApiMut::register_function(lua, "IsBattlefieldArena", is_battlefield_arena)?;
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
+        LuaApiMut::register_function(lua, "IsActiveBattlefieldArena", is_active_battlefield_arena)?;
+        LuaApiMut::register_function(lua, "IsPVPTimerRunning", is_pvp_timer_running)?;
+        if matches!(LuaApiMut::get_global_val(lua, "GetPVPTimer"), Val::Nil) {
+            LuaApiMut::register_function(lua, "GetPVPTimer", get_pvp_timer)?;
+        }
+    }
     Ok(())
 }

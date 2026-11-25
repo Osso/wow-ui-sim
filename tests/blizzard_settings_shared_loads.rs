@@ -211,6 +211,14 @@ fn load_full_game_ui_with_addon_registration(register: impl FnOnce(&WowLuaEnv)) 
 }
 
 fn load_settings_ui(screen: ScreenKind, register: impl FnOnce(&WowLuaEnv)) -> WowLuaEnv {
+    load_settings_ui_with_preload(screen, |_| {}, register)
+}
+
+fn load_settings_ui_with_preload(
+    screen: ScreenKind,
+    configure: impl FnOnce(&WowLuaEnv),
+    register: impl FnOnce(&WowLuaEnv),
+) -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("Failed to create Lua environment");
     env.set_screen_size(1024.0, 768.0);
     env.set_screen_mode(screen);
@@ -219,6 +227,7 @@ fn load_settings_ui(screen: ScreenKind, register: impl FnOnce(&WowLuaEnv)) -> Wo
         let mut state = env.state().borrow_mut();
         state.addon_base_paths = vec![blizzard_ui_dir()];
     }
+    configure(&env);
 
     wow_ui_sim::xml::register_intrinsic_templates();
 
@@ -1056,6 +1065,77 @@ fn retail_settings_startup_keeps_registered_canvas_visibility() {
             assert(SettingsStartupCanvasProbe:IsShown(),
                    "post-load must not hide a canvas the original registrar left shown")
         "#).expect("normal startup must preserve original canvas registration visibility");
+    }
+}
+
+#[cfg(feature = "client-wowforever")]
+const FOREVER_GRAPHICS_ANTIALIASING_CHECKS: &str = r#"
+    local category
+    for _, group in ipairs(SettingsPanel:GetCategoryList().groups) do for _, candidate in ipairs(group.categories) do if candidate:GetName() == GRAPHICS_LABEL then category = candidate end end end
+    assert(category ~= nil, "original Graphics category must register")
+    local layout = SettingsPanel:GetLayout(category)
+    local getFxaaOptions, getMsaaOptions
+    for _, initializer in layout:EnumerateInitializers() do
+        local setting = initializer.GetSetting and initializer:GetSetting()
+        if setting and setting:GetVariable() == "PROXY_FXAA" then
+            getFxaaOptions = initializer:GetOptions()
+        elseif setting and setting:GetVariable() == "PROXY_MSAA" then
+            getMsaaOptions = initializer:GetOptions()
+        end
+    end
+    assert(getFxaaOptions ~= nil, "original image-based AA dropdown must initialize")
+    assert(getMsaaOptions ~= nil, "original MSAA dropdown must initialize")
+
+    local function optionMap(getOptions)
+        local found = {}
+        for _, option in ipairs(getOptions()) do found[option.value] = option.label end
+        return found
+    end
+    A_Admin.SetAntiAliasingSupported(false, false)
+    local fxaa = optionMap(getFxaaOptions)
+    assert(fxaa[3] == nil and fxaa[4] == nil, "unsupplied CMAA options must be absent")
+    A_Admin.SetAntiAliasingSupported(true, false)
+    fxaa = optionMap(getFxaaOptions)
+    assert(fxaa[3] == ANTIALIASING_CMAA and fxaa[4] == nil, "CMAA support must add only CMAA")
+    A_Admin.SetAntiAliasingSupported(false, true)
+    fxaa = optionMap(getFxaaOptions)
+    assert(fxaa[3] == nil and fxaa[4] == ANTIALIASING_CMAA2, "CMAA2 support must add only CMAA2")
+
+    A_Admin.SetMultiSampleAntiAliasingSupported({})
+    local msaa = optionMap(getMsaaOptions)
+    assert(msaa[0] == VIDEO_OPTIONS_NONE and msaa[1] == nil, "empty MSAA groups must add no MSAA levels")
+    A_Admin.SetMultiSampleAntiAliasingSupported({
+        { msaaQuality = "1,0", sampleCount = 4, coverageCount = 0 },
+        { msaaQuality = "2,2", sampleCount = 8, coverageCount = 2 },
+    })
+    msaa = optionMap(getMsaaOptions)
+    assert(msaa[0] == VIDEO_OPTIONS_NONE, "MSAA options must retain the disabled value")
+    assert(msaa[1] == ADVANCED_ANTIALIASING_MSAA_FORMAT:format(4, 0), "first supplied MSAA group must format its label")
+    assert(msaa[2] == ADVANCED_ANTIALIASING_MSAA_FORMAT:format(8, 2), "second supplied MSAA group must format its label")
+    local count = 0
+    for _ in pairs(msaa) do count = count + 1 end
+    assert(count == 3, "MSAA dropdown must contain exactly the two supplied levels")
+"#;
+
+#[cfg(feature = "client-wowforever")]
+#[test]
+fn forever_graphics_antialiasing_options_follow_host_capability() {
+    test_timeout! {
+        let env = load_settings_ui_with_preload(
+            ScreenKind::Game,
+            |env| {
+                env.exec(r#"
+                    A_Admin.SetAntiAliasingSupported(false, false)
+                    A_Admin.SetMultiSampleAntiAliasingSupported({
+                        { msaaQuality = "1,0", sampleCount = 4, coverageCount = 0 },
+                        { msaaQuality = "2,2", sampleCount = 8, coverageCount = 2 },
+                    })
+                "#).expect("preload host antialiasing capability inputs");
+            },
+            |_| {},
+        );
+        env.exec(FOREVER_GRAPHICS_ANTIALIASING_CHECKS)
+            .expect("original graphics dropdowns should expose supplied CMAA and MSAA groups");
     }
 }
 

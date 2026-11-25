@@ -38,7 +38,9 @@ end
 "#;
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
-    lua.exec(LEVEL_LINK_SPELL_LOCK_STATE_LUA)?;
+    if !crate::c_api::level_link::uses_rust_spell_locks() {
+        lua.exec(LEVEL_LINK_SPELL_LOCK_STATE_LUA)?;
+    }
     Ok(())
 }
 
@@ -46,6 +48,7 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
 mod tests {
     use crate::lua_api::WowLuaEnv;
 
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     #[test]
     fn installs_level_link_spell_lock_state() {
         let env = WowLuaEnv::new().expect("lua env should initialize");

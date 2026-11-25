@@ -6,6 +6,11 @@ use crate::common::blizzard_addon_harness::{
 use wow_ui_sim::loader::{
     BlizzardAddonOverride, discover_blizzard_addons_for_screen, find_toc_file,
 };
+#[cfg(feature = "client-retail")]
+use wow_ui_sim::loader::{
+    discover_all_blizzard_addons, discover_blizzard_startup_addons_for_screen, load_startup_addon,
+    register_load_with_addons,
+};
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::toc::TocFile;
@@ -119,6 +124,13 @@ const SHARED_PIN_MIXINS: &[&str] = &[
     "WorldQuestPinMixin",
 ];
 
+// Forever's Mainline TOC line 29 excludes EncounterJournalDataProvider.xml for camelot.
+#[cfg(feature = "client-wowforever")]
+const PROFILE_EXCLUDED_PIN_MIXINS: &[&str] =
+    &["EncounterJournalPinMixin", "EncounterMapTrackingPinMixin"];
+#[cfg(not(feature = "client-wowforever"))]
+const PROFILE_EXCLUDED_PIN_MIXINS: &[&str] = &[];
+
 fn load_map_data_providers_closure() -> WowLuaEnv {
     let (env, _) =
         build_blizzard_addon_closure_env(&blizzard_ui_dir(), &[ROOT_ADDON], ADDON_OVERRIDES);
@@ -127,6 +139,461 @@ fn load_map_data_providers_closure() -> WowLuaEnv {
 }
 
 // Literal cached inputs absent from Wrath manifest1-382/cache; behavior cases stay enabled.
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+const TAXI_MAP_ADDON_OVERRIDES: &[BlizzardAddonOverride<'static>] = &[
+    BlizzardAddonOverride {
+        addon: "Blizzard_FlightMap",
+        extra_roots: &[
+            "Blizzard_FrameXML",
+            "Blizzard_UIParentPanelManager",
+            "Blizzard_SharedXML",
+        ],
+    },
+    BlizzardAddonOverride {
+        addon: "Blizzard_WorldMap",
+        extra_roots: &[
+            "Blizzard_FrameXML",
+            "Blizzard_UIParentPanelManager",
+            "Blizzard_SharedXML",
+        ],
+    },
+];
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+const CONTRIBUTION_COLLECTOR_INPUT_LUA: &str = r#"
+A_Admin.SetContributionCollectors({
+    { mapID=2248, areaPoiID=901, collectorCreatureID=301, name="Collector Alpha", atlasName="TaxiNode", x=0.2, y=0.3,
+      contributions={{ contributionID=401, name="Contribution Alpha", state=1, amount=0.5,
+        nextStateTime=123.5, startTime=100, description="Alpha description",
+        result=Enum.ContributionResult.Success, orderIndex=1, active=false, rewardQuestID=0,
+        buffs={12345},
+        appearance={ stateName="Progress", stateColor={r=0.2, g=0.4, b=0.6}, tooltipLine="%.0f%%",
+          tooltipUseTimeRemaining=false, statusBarAtlas="Status", borderAtlas="Border", bannerAtlas="Banner" } }} },
+    { mapID=2248, areaPoiID=902, collectorCreatureID=302, name="Collector Beta", atlasName="TaxiNode", x=0.7, y=0.8,
+      contributions={{ contributionID=402, name="Contribution Beta", state=2, amount=0.75,
+        nextStateTime=234.5, startTime=200, description="Beta description",
+        result=Enum.ContributionResult.FailedConditionCheck, orderIndex=2, active=false,
+        rewardQuestID=0 }} },
+    { mapID=9999, areaPoiID=903, collectorCreatureID=303, name="Other Map", atlasName="TaxiNode", x=0.5, y=0.5 },
+})
+"#;
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+const CONTRIBUTION_COLLECTOR_REFRESH_LUA: &str = r#"
+WorldMapFrame:SetMapID(2248)
+local provider = CreateFromMixins(ContributionCollectorDataProviderMixin)
+WorldMapFrame:AddDataProvider(provider)
+provider:RefreshAllData()
+local names, areas = {}, {}
+for pin in WorldMapFrame:EnumeratePinsByTemplate("ContributionCollectorPinTemplate") do
+    names[pin.name] = pin.collectorCreatureID
+    areas[pin.name] = pin.poiInfo.areaPoiID
+end
+return WorldMapFrame:GetNumActivePinsByTemplate("ContributionCollectorPinTemplate"),
+       names["Collector Alpha"], names["Collector Beta"], names["Other Map"] ~= nil,
+       areas["Collector Alpha"], areas["Collector Beta"]
+"#;
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+const CONTRIBUTION_COLLECTOR_GETTERS_LUA: &str = r#"
+local ids = { C_ContributionCollector.GetManagedContributionsForCreatureID(301) }
+local state, amount, nextStateTime, startTime = C_ContributionCollector.GetState(ids[1])
+local appearance = C_ContributionCollector.GetContributionAppearance(ids[1], state)
+local buffs = { C_ContributionCollector.GetBuffs(ids[1]) }
+return ids[1], C_ContributionCollector.GetName(ids[1]), state, amount, nextStateTime, startTime,
+       appearance.stateName, appearance.tooltipLine, #buffs, buffs[1]
+"#;
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+const TAXI_MAP_NODE_INPUT_LUA: &str = r#"
+A_Admin.SetTaxiMapNodes({
+    { mapID=2248, nodeID=101, name="Node Alpha", atlasName="TaxiNode", textureKit="", faction=0,
+      x=0.25, y=0.75, state=2, slotIndex=1, isUndiscovered=false,
+      useSpecialIcon=false, isMapLayerTransition=false },
+    { mapID=2248, nodeID=102, name="Node Beta", atlasName="TaxiNode", textureKit="", faction=0,
+      x=0.75, y=0.25, state=2, slotIndex=2, isUndiscovered=false,
+      useSpecialIcon=false, isMapLayerTransition=false },
+    { mapID=9999, nodeID=103, name="Other Map", atlasName="TaxiNode", textureKit="", faction=0,
+      x=0.5, y=0.5, state=2, slotIndex=3, isUndiscovered=false,
+      useSpecialIcon=false, isMapLayerTransition=false },
+})
+"#;
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+const TAXI_MAP_REFRESH_LUA: &str = r#"
+FlightMapFrame:SetMapID(2248)
+WorldMapFrame:SetMapID(2248)
+
+local flightProvider = CreateFromMixins(FlightMap_FlightPathDataProviderMixin)
+FlightMapFrame:AddDataProvider(flightProvider)
+flightProvider:RefreshAllData()
+
+local sharedProvider = CreateFromMixins(FlightPointDataProviderMixin)
+WorldMapFrame:AddDataProvider(sharedProvider)
+sharedProvider:RefreshAllData()
+
+local flightPins, sharedPins = {}, {}
+for pin in FlightMapFrame:EnumeratePinsByTemplate("FlightMap_FlightPointPinTemplate") do
+    flightPins[pin.taxiNodeData.name] = true
+end
+for pin in WorldMapFrame:EnumeratePinsByTemplate("FlightPointPinTemplate") do
+    sharedPins[pin.poiInfo.name] = true
+end
+
+return FlightMapFrame:GetNumActivePinsByTemplate("FlightMap_FlightPointPinTemplate"),
+       flightPins["Node Alpha"] == true, flightPins["Node Beta"] == true,
+       WorldMapFrame:GetNumActivePinsByTemplate("FlightPointPinTemplate"),
+       sharedPins["Node Alpha"] == true, sharedPins["Node Beta"] == true,
+       C_TaxiMap.ShouldMapShowTaxiNodes(1), C_TaxiMap.ShouldMapShowTaxiNodes(9999),
+       C_TaxiMap.ShouldMapShowTaxiNodes(7777)
+"#;
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn load_taxi_map_addon_closure() -> (WowLuaEnv, Vec<String>) {
+    let ui = blizzard_ui_dir();
+    let env = new_blizzard_addon_env(&ui);
+    env.exec(TAXI_MAP_NODE_INPUT_LUA)
+        .expect("supply taxi nodes before loading the UI consumers");
+    let loaded = load_blizzard_addon_closure_into_env(
+        &env,
+        &ui,
+        &["Blizzard_FlightMap", "Blizzard_WorldMap"],
+        TAXI_MAP_ADDON_OVERRIDES,
+    );
+    env.apply_post_load_workarounds();
+    (env, loaded)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+const GOSSIP_MAP_OVERRIDES: &[BlizzardAddonOverride<'static>] = &[BlizzardAddonOverride {
+    addon: "Blizzard_WorldMap",
+    extra_roots: &["Blizzard_FrameXML", "Blizzard_UIParentPanelManager"],
+}];
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+const GOSSIP_MAP_REFRESH_LUA: &str = r#"
+local provider = CreateFromMixins(GossipDataProviderMixin)
+WorldMapFrame:AddDataProvider(provider)
+local function readGossipPin(mapID)
+    WorldMapFrame:SetMapID(mapID)
+    provider:RefreshAllData()
+    local pin = WorldMapFrame:EnumeratePinsByTemplate("GossipPinTemplate")()
+    if not pin then return 0, "", -1, -1 end
+    local x, y = pin:GetPosition()
+    return WorldMapFrame:GetNumActivePinsByTemplate("GossipPinTemplate"), pin.poiInfo.name, x, y
+end
+local countA, nameA, xA, yA = readGossipPin(2248)
+local infoA = C_GossipInfo.GetPoiInfo(2248, 401)
+local countB, nameB, xB, yB = readGossipPin(84)
+local infoB = C_GossipInfo.GetPoiInfo(84, 402)
+return countA, nameA, xA, yA, infoA.atlasName, infoA.textureIndex,
+       countB, nameB, xB, yB, infoB.atlasName, infoB.textureIndex
+"#;
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn load_gossip_map_addon_closure() -> WowLuaEnv {
+    let ui = blizzard_ui_dir();
+    let env = new_blizzard_addon_env(&ui);
+    env.exec(
+        "A_Admin.SetGossipPoi(2248, 401, 'North Gossip', 0.2, 0.8, 'TaxiNode', 3); A_Admin.SetGossipPoi(84, 402, 'South Gossip', 0.7, 0.3, 'TaxiNode', 7)",
+    )
+    .expect("supply map-specific gossip POIs before loading Blizzard consumers");
+    let loaded = load_blizzard_addon_closure_into_env(
+        &env,
+        &ui,
+        &["Blizzard_SharedMapDataProviders", "Blizzard_WorldMap"],
+        GOSSIP_MAP_OVERRIDES,
+    );
+    assert!(loaded.iter().any(|name| name == "Blizzard_FrameXML"));
+    assert!(loaded.iter().any(|name| name == ROOT_ADDON));
+    assert!(loaded.iter().any(|name| name == "Blizzard_WorldMap"));
+    env.apply_post_load_workarounds();
+    env
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn gossip_map_provider_refreshes_the_supplied_poi_for_each_map() {
+    let env = load_gossip_map_addon_closure();
+    let observed: (
+        i32,
+        String,
+        f64,
+        f64,
+        String,
+        i32,
+        i32,
+        String,
+        f64,
+        f64,
+        String,
+        i32,
+    ) = env
+        .eval(GOSSIP_MAP_REFRESH_LUA)
+        .expect("original gossip provider should refresh pins on the real WorldMapFrame");
+    assert_eq!(
+        observed,
+        (
+            1,
+            "North Gossip".into(),
+            0.2,
+            0.8,
+            "TaxiNode".into(),
+            3,
+            1,
+            "South Gossip".into(),
+            0.7,
+            0.3,
+            "TaxiNode".into(),
+            7
+        )
+    );
+}
+
+#[cfg(feature = "client-retail")]
+const ENCOUNTER_MAP_INPUT_LUA: &str = r#"
+A_Admin.SetEncounterJournalMapEncounters(2248, {
+    { encounterID = 2519, mapX = 0.2, mapY = 0.8, completed = true },
+})
+A_Admin.SetEncounterJournalMapEncounters(84, {
+    { encounterID = 2602, mapX = 0.7, mapY = 0.3, completed = false },
+})
+"#;
+
+#[cfg(feature = "client-retail")]
+const ENCOUNTER_MAP_REFRESH_LUA: &str = r#"
+assert(CanShowEncounterJournal(), "encounter journal gate must be true")
+assert(not Kiosk.IsEnabled() and C_AdventureJournal.CanBeShown())
+assert(AdventureGuideUtil.IsAvailable())
+local provider = CreateFromMixins(EncounterJournalDataProviderMixin)
+WorldMapFrame:SetMapID(2248)
+WorldMapFrame:AddDataProvider(provider)
+local function observe(mapID)
+    WorldMapFrame:SetMapID(mapID)
+    provider:RefreshAllData()
+    local pins = WorldMapFrame:EnumeratePinsByTemplate("EncounterJournalPinTemplate")
+    local pin = pins()
+    if not pin then return 0, -1, -1, false end
+    local x, y = pin:GetPosition()
+    return WorldMapFrame:GetNumActivePinsByTemplate("EncounterJournalPinTemplate"),
+           x, y, pin.DefeatedOpacity:IsShown()
+end
+local countA, xA, yA, completeA = observe(2248)
+local countB, xB, yB, completeB = observe(84)
+return countA, xA, yA, completeA, countB, xB, yB, completeB,
+       C_EncounterJournal.IsEncounterComplete(999999)
+"#;
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn adventure_guide_availability_controls_original_encounter_map_pins() {
+    let env = load_encounter_journal_map_addon_closure();
+    let (shown, unavailable, hidden, restored): (i64, bool, i64, i64) = env
+        .eval(
+            r#"
+            assert(not Kiosk.IsEnabled())
+            assert(AdventureGuideUtil.IsAvailable())
+            local provider = CreateFromMixins(EncounterJournalDataProviderMixin)
+            WorldMapFrame:SetMapID(2248)
+            WorldMapFrame:AddDataProvider(provider)
+            provider:RefreshAllData()
+            local shown = WorldMapFrame:GetNumActivePinsByTemplate("EncounterJournalPinTemplate")
+            A_Admin.SetAdventureJournalCanBeShown(false)
+            local unavailable = AdventureGuideUtil.IsAvailable()
+            assert(not CanShowEncounterJournal())
+            provider:RefreshAllData()
+            local hidden = WorldMapFrame:GetNumActivePinsByTemplate("EncounterJournalPinTemplate")
+            A_Admin.SetAdventureJournalCanBeShown(true)
+            assert(AdventureGuideUtil.IsAvailable())
+            provider:RefreshAllData()
+            local restored = WorldMapFrame:GetNumActivePinsByTemplate("EncounterJournalPinTemplate")
+            return shown, unavailable, hidden, restored
+        "#,
+        )
+        .expect("the original Adventure Guide gate controls encounter map pins");
+    assert!(shown > 0);
+    assert!(!unavailable);
+    assert_eq!(hidden, 0);
+    assert_eq!(restored, shown);
+}
+
+#[cfg(feature = "client-wowforever")]
+#[test]
+fn forever_adventure_guide_availability_controls_original_microbutton() {
+    let ui = blizzard_ui_dir();
+    let (env, loaded) = build_blizzard_addon_closure_env(
+        &ui,
+        &["Blizzard_FrameXMLUtil", "Blizzard_MicroMenu"],
+        &[],
+    );
+    assert!(loaded.iter().any(|name| name == "Blizzard_FrameXMLUtil"));
+    assert!(loaded.iter().any(|name| name == "Blizzard_MicroMenu"));
+    env.exec(
+        r#"
+        assert(AdventureGuideUtil.IsAvailable())
+        EJMicroButton:UpdateDisplay()
+        assert(EJMicroButton:IsEnabled())
+        A_Admin.SetAdventureJournalCanBeShown(false)
+        assert(not AdventureGuideUtil.IsAvailable())
+        EJMicroButton:UpdateDisplay()
+        assert(not EJMicroButton:IsEnabled())
+        A_Admin.SetAdventureJournalCanBeShown(true)
+        assert(AdventureGuideUtil.IsAvailable())
+        EJMicroButton:UpdateDisplay()
+        assert(EJMicroButton:IsEnabled())
+    "#,
+    )
+    .expect("the original Forever microbutton follows Adventure Guide availability");
+}
+
+#[cfg(feature = "client-retail")]
+fn load_encounter_journal_map_addon_closure() -> WowLuaEnv {
+    let ui = blizzard_ui_dir();
+    let env = new_blizzard_addon_env(&ui);
+    env.exec(ENCOUNTER_MAP_INPUT_LUA)
+        .expect("supply encounter map rows before startup and provider loading");
+    load_normal_game_startup_addons(&env, &ui);
+    let loaded = load_blizzard_addon_closure_into_env(
+        &env,
+        &ui,
+        &[
+            "Blizzard_SharedMapDataProviders",
+            "Blizzard_WorldMap",
+            "Blizzard_ContentTracking",
+        ],
+        GOSSIP_MAP_OVERRIDES,
+    );
+    assert!(loaded.iter().any(|name| name == ROOT_ADDON));
+    assert!(loaded.iter().any(|name| name == "Blizzard_WorldMap"));
+    env.apply_post_load_workarounds();
+    env
+}
+
+#[cfg(feature = "client-retail")]
+fn load_normal_game_startup_addons(env: &WowLuaEnv, ui: &std::path::Path) {
+    let addons = discover_all_blizzard_addons(ui);
+    register_load_with_addons(&env.loader_env(), &addons);
+    let startup = discover_blizzard_startup_addons_for_screen(ui, ScreenKind::Game);
+    for addon in startup {
+        let loaded = env
+            .state()
+            .borrow()
+            .addons
+            .iter()
+            .any(|entry| entry.folder_name == addon.name && entry.loaded);
+        if !loaded {
+            load_startup_addon(&env.loader_env(), &addon.toc_path, addon.kind, None)
+                .unwrap_or_else(|error| panic!("startup {}: {error}", addon.name));
+        }
+        if addon.name == "Blizzard_EnvironmentCleanup" {
+            env.restore_post_cleanup_globals();
+        }
+    }
+    env.sync_string_metatable_to_global_string();
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn encounter_journal_provider_positions_supplied_encounter_pins() {
+    let env = load_encounter_journal_map_addon_closure();
+    let pins: (i32, f64, f64, bool, i32, f64, f64, bool, bool) = env
+        .eval(ENCOUNTER_MAP_REFRESH_LUA)
+        .expect("original encounter-journal provider should position map pins");
+    assert_eq!(pins, (1, 0.2, 0.8, true, 1, 0.7, 0.3, false, false));
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn contribution_collector_provider_refreshes_pins_from_supplied_records() {
+    let ui = blizzard_ui_dir();
+    let env = new_blizzard_addon_env(&ui);
+    env.exec(CONTRIBUTION_COLLECTOR_INPUT_LUA)
+        .expect("supply contribution collectors before loading the UI consumer");
+    let loaded = load_blizzard_addon_closure_into_env(
+        &env,
+        &ui,
+        &["Blizzard_SharedMapDataProviders", "Blizzard_WorldMap"],
+        TAXI_MAP_ADDON_OVERRIDES,
+    );
+    env.apply_post_load_workarounds();
+    assert_contribution_addons_loaded(&loaded);
+    assert_contribution_pins(&env);
+    assert_contribution_getters(&env);
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn assert_contribution_addons_loaded(loaded: &[String]) {
+    for addon in [
+        "Blizzard_FrameXML",
+        "Blizzard_SharedMapDataProviders",
+        "Blizzard_WorldMap",
+    ] {
+        assert!(loaded.iter().any(|name| name == addon), "{addon} was not loaded");
+    }
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn assert_contribution_pins(env: &WowLuaEnv) {
+    let pins: (i32, i32, i32, bool, i32, i32) = env
+        .eval(CONTRIBUTION_COLLECTOR_REFRESH_LUA)
+        .expect("original contribution collector provider should refresh on WorldMapFrame");
+    assert_eq!(pins, (2, 301, 302, false, 901, 902));
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn assert_contribution_getters(env: &WowLuaEnv) {
+    let getters: (i32, String, i32, f64, f64, f64, String, String, i32, i32) = env
+        .eval(CONTRIBUTION_COLLECTOR_GETTERS_LUA)
+        .expect("supplied contribution getters should expose the collector records");
+    assert_eq!(
+        getters,
+        (
+            401,
+            "Contribution Alpha".to_string(),
+            1,
+            0.5,
+            123.5,
+            100.0,
+            "Progress".to_string(),
+            "%.0f%%".to_string(),
+            1,
+            12345,
+        )
+    );
+}
+
+// INFERRED R88cr: Forever uses the mainline SoftCursor addon through FrameXML.
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn taxi_map_providers_refresh_pins_from_supplied_nodes() {
+    let (env, loaded) = load_taxi_map_addon_closure();
+    for addon in [
+        "Blizzard_UIParentPanelManager",
+        "Blizzard_FrameXML",
+        "Blizzard_SharedXML",
+        "Blizzard_FlightMap",
+        "Blizzard_SharedMapDataProviders",
+        "Blizzard_WorldMap",
+    ] {
+        assert!(
+            loaded.iter().any(|name| name == addon),
+            "{addon} was not loaded"
+        );
+    }
+    if cfg!(feature = "client-wowforever") {
+        assert!(
+            loaded
+                .iter()
+                .any(|name| name == "Blizzard_GamepadSoftCursor"),
+            "Forever FrameXML must load its mainline SoftCursor dependency"
+        );
+    }
+    let observed: (i32, bool, bool, i32, bool, bool, bool, bool, bool) = env
+        .eval(TAXI_MAP_REFRESH_LUA)
+        .expect("original taxi map data providers should refresh on real map canvases");
+    assert_eq!(observed, (2, true, true, 2, true, true, true, false, false));
+}
+
 post_wrath_ui_fixture! {
 #[test]
 fn find_toc_file_resolves_mainline_variant() {
@@ -552,7 +1019,7 @@ fn publishes_pin_mixin_tables_for_per_widget_pins() {
     let pin_mixins = SHARED_PIN_MIXINS
         .iter()
         .copied()
-        .filter(|mixin| !toc_layout::forever() || *mixin != "EncounterJournalPinMixin");
+        .filter(|mixin| !PROFILE_EXCLUDED_PIN_MIXINS.contains(mixin));
 
     for mixin in pin_mixins {
         let kind: String = env
@@ -649,6 +1116,50 @@ fn shared_map_poi_templates_register_in_template_registry_not_global_frames() {
          parse time against the registry. A non-nil result here would mean the \
          loader is leaking virtual templates into the global namespace"
     );
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn set_supplied_calendar_time(env: &WowLuaEnv, day: u8, hour: u8) {
+    env.state().borrow_mut().calendar_now = wow_ui_sim::c_api::c_calendar::CivilDateTime {
+        year: 2026,
+        month: 4,
+        day,
+        hour,
+        minute: 0,
+    };
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn quest_hub_glow_uses_supplied_weekly_reset_boundary() {
+    let env = load_map_data_providers_closure();
+    set_supplied_calendar_time(&env, 14, 6);
+    env.exec(
+        r#"
+        A_Admin.SetWeeklyResetSchedule(3, 7)
+        pin = CreateFrame("Button")
+        Mixin(pin, QuestHubPinMixin, QuestHubPinGlowMixin)
+        pin.relatedQuests = {{ questID = 80592 }}
+        GLOW_HUB_QUESTS_ACKNOWLEDGED[80592] = 0
+        assert(C_DateAndTime.GetSecondsUntilWeeklyReset() == 3600)
+        assert(C_DateAndTime.GetSecondsUntilDailyReset() == 3600)
+        assert(pin:GetHighlightType() == MapPinHighlightType.ImportantHubQuestHighlight,
+            "quest must glow before the supplied Tuesday reset")
+        "#,
+    )
+    .expect("loaded QuestHubPinGlowMixin should use the supplied weekly reset");
+
+    set_supplied_calendar_time(&env, 15, 8);
+    env.exec(
+        r#"
+        A_Admin.SetWeeklyResetSchedule(4, 9)
+        assert(C_DateAndTime.GetSecondsUntilWeeklyReset() == 3600)
+        assert(C_DateAndTime.GetSecondsUntilDailyReset() == 3600)
+        assert(pin:GetHighlightType() == MapPinHighlightType.ImportantHubQuestHighlight,
+            "quest must glow before the changed Wednesday reset")
+        "#,
+    )
+    .expect("loaded QuestHubPinGlowMixin should use the changed reset input");
 }
 
 #[cfg(all(feature = "optional-tests", feature = "client-retail"))]

@@ -73,6 +73,7 @@ fn get_club_members_returns_guild_roster() {
         let mut state = env.state().borrow_mut();
         state.world.guild_members = vec![GuildMember {
             name: "Uther".into(),
+            guid: None,
             rank_index: 1,
             online: true,
         }];
@@ -90,6 +91,7 @@ fn get_club_members_entry_has_required_fields() {
         let mut state = env.state().borrow_mut();
         state.world.guild_members = vec![GuildMember {
             name: "Uther".into(),
+            guid: None,
             rank_index: 1,
             online: true,
         }];
@@ -176,11 +178,13 @@ fn get_club_members_reflects_state_mutation() {
         state.world.guild_members = vec![
             GuildMember {
                 name: "Arthas".into(),
+                guid: None,
                 rank_index: 1,
                 online: true,
             },
             GuildMember {
                 name: "Jaina".into(),
+                guid: None,
                 rank_index: 2,
                 online: false,
             },

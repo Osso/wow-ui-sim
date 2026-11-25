@@ -4,6 +4,14 @@ Retail 12.1.5 currency tooltips publish R84/R84b `C_TooltipInfo` data through th
 
 ## What it must do
 
+### Forever compatibility
+
+- [x] **INFERRED from Retail:** Forever `GetQuestLogCurrency` accepts the documented `(type, currencyIndex [, questID])` arguments and publishes currency lines through the `GameTooltip:SetQuestLogCurrency` consumer.
+
+### NPC quest dialog
+
+- [x] **INFERRED from Retail:** `GetQuestCurrency(type, currencyIndex)` reads the supplied source row for the active NPC quest dialog and publishes currency data through the original QuestInfo reward button consumer.
+
 ### Inputs and routing
 
 - [x] `GetCurrencyByID` passes the signed amount unchanged and uses zero when the amount is absent.
@@ -31,13 +39,13 @@ Retail 12.1.5 currency tooltips publish R84/R84b `C_TooltipInfo` data through th
 
 - `src/c_api/c_tooltip_info_currency.rs` — host inputs, Retail currency payloads and cap rows.
 - `src/c_api/c_tooltip_info_loot.rs` — Retail `GetLootCurrency` dispatch.
-- `src/lua_api/globals/missing_surface/tooltip_info/probes.rs` — `GetCurrencyByID`, `GetQuestLogCurrency` and `GetHyperlink` dispatch.
+- `src/lua_api/globals/missing_surface/tooltip_info/probes.rs` — `GetCurrencyByID`, `GetQuestCurrency`, `GetQuestLogCurrency` and `GetHyperlink` dispatch.
 - `src/lua_api/globals/missing_surface/tooltip_info/builders.rs` — shared line and identity construction.
 - `src/lua_api/state.rs` and `src/lua_api/state/sim_state.rs` — initialize and store explicit currency and quest selector inputs.
 
 ## Tests asserting this spec
 
-- `tests/tooltip_currency_r84.rs` — original by-ID, hyperlink, quest, range-text, account-label, weekly and total/season consumers.
+- `tests/tooltip_currency_r84.rs` — original by-ID, hyperlink, NPC quest reward and quest-log consumers, range-text, account-label, weekly and total/season consumers.
 - `tests/tooltip_loot_currency.rs` — original loot hover, amount normalization and currency identity.
 - `tests/tooltip_currency.rs` — currency name and top-level quantity assertions.
 
@@ -50,5 +58,5 @@ Retail 12.1.5 currency tooltips publish R84/R84b `C_TooltipInfo` data through th
 
 ## Out of scope
 
-- Non-Retail currency producer changes and other currency getters.
+- Other non-Retail currency producer changes and currency getters.
 - Guessed quest-list sources, missing-result behavior, error-row predicates, balance formulas or formatter modes.

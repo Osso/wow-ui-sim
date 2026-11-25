@@ -4,6 +4,9 @@ use crate::lua_api::methods::{create_string, create_table, table_get, table_set}
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 
+#[path = "c_trade_skill_modifications.rs"]
+pub(crate) mod trade_skill_modifications;
+
 pub(crate) fn rooted_table(state: &mut LuaState) -> Val {
     let table = create_table(state);
     state.push(table);
@@ -48,18 +51,6 @@ pub(crate) fn allocation(state: &mut LuaState, info: &CraftingReagentInfo) -> Va
         },
     );
     number(state, table, "dataSlotIndex", info.data_slot_index);
-    table
-}
-#[cfg(feature = "retail-12-0-0")]
-pub(crate) fn modifications(state: &mut LuaState, mods: &[ItemSlotModification]) -> Val {
-    let table = rooted_table(state);
-    for (index, modification) in mods.iter().enumerate() {
-        let value = rooted_table(state);
-        number(state, value, "dataSlotIndex", modification.data_slot_index);
-        let reagent = identity(state, modification.reagent);
-        table_set(state, value, "reagent", reagent);
-        array_entry(state, table, index, value);
-    }
     table
 }
 pub(crate) fn regular_array(state: &mut LuaState, infos: &[RegularReagentInfo]) -> Val {

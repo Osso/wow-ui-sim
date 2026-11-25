@@ -73,6 +73,13 @@ fn is_default_lfd_enabled(d: &LfdDungeonInfo, player_level: i32) -> bool {
         && player_level <= d.max_level
 }
 
+/// R88ei: returns the supplied maximum queue slot, independent of active queues.
+fn get_max_battlefield_id(state: &mut LuaState) -> LuaResult<u32> {
+    let max_id = borrow_state(state)?.max_battlefield_id;
+    state.push(Val::Num(max_id as f64));
+    Ok(1)
+}
+
 /// `GetBattlefieldStatus(index)` — retail returns 9 values. The sim
 /// only models a single active queue, so any index other than the
 /// one stored in `battlefield_queue` reports `"none"` with default
@@ -647,6 +654,13 @@ fn register_lfg_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
 }
 
 fn register_battlefield_queue_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
+        LuaApiMut::register_function(lua, "GetMaxBattlefieldID", get_max_battlefield_id)?;
+    }
     LuaApiMut::register_function(lua, "GetBattlefieldStatus", get_battlefield_status)?;
     LuaApiMut::register_function(
         lua,

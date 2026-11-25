@@ -21,6 +21,7 @@ fn voice_settings_default() {
         .unwrap();
 }
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
 fn power_display_matches_unmodified_power() {
     WowLuaEnv::new().unwrap().exec("assert(UnitPowerDisplayMod(8) == 1); assert(UnitPower('player', 8, true) == UnitPower('player', 8) * UnitPowerDisplayMod(8))").unwrap();

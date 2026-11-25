@@ -399,21 +399,57 @@ pub fn is_public_build(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-/// BNFeaturesEnabled() — always false (no Battle.net in sim).
+/// INFERRED R88fi: BNFeaturesEnabled follows the supplied connection mode.
 pub fn bn_features_enabled(state: &mut LuaState) -> LuaResult<u32> {
-    state.push(Val::Bool(false));
+    let enabled = player_bnet_features_enabled(state)?;
+    state.push(Val::Bool(enabled));
     Ok(1)
 }
 
-/// BNFeaturesEnabledAndConnected() — always false.
+/// INFERRED R88fi: connected aliases the features-enabled connection predicate.
 pub fn bn_features_enabled_and_connected(state: &mut LuaState) -> LuaResult<u32> {
-    state.push(Val::Bool(false));
+    let connected = player_bnet_connected(state)?;
+    state.push(Val::Bool(connected));
     Ok(1)
 }
 
-/// BNConnected() — always true (sim pretends connected).
+fn player_bnet_features_enabled(state: &mut LuaState) -> LuaResult<bool> {
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    {
+        return Ok(crate::lua_api::methods::borrow_state(state)?
+            .bnet_connection
+            .features_enabled);
+    }
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+    {
+        let _ = state;
+        Ok(false)
+    }
+}
+
+fn player_bnet_connected(state: &mut LuaState) -> LuaResult<bool> {
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    {
+        let connection = crate::lua_api::methods::borrow_state(state)?.bnet_connection;
+        return Ok(connection.features_enabled && connection.connected);
+    }
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+    {
+        let _ = state;
+        Ok(false)
+    }
+}
+
+/// INFERRED R88fi: BNConnected aliases BNFeaturesEnabledAndConnected on Retail/Forever.
 pub fn bn_connected(state: &mut LuaState) -> LuaResult<u32> {
-    state.push(Val::Bool(true));
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let connected = player_bnet_connected(state)?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+    let connected = {
+        let _ = state;
+        true
+    };
+    state.push(Val::Bool(connected));
     Ok(1)
 }
 

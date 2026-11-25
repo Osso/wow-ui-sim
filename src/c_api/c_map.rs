@@ -25,14 +25,15 @@
 //!   links as `UiMapDetails` tables. `mapType` filters by the UIMapType
 //!   enum; `allDescendants` recursively walks the subtree. Unknown maps
 //!   return nothing; known maps with no matching children return an empty array.
+//! - `C_Map.GetMapGroupID` and `GetMapGroupMembersInfo` on Retail and
+//!   Forever read explicitly supplied map-group membership (INFERRED, R88cy pending).
 //! - `C_Map.GetPlayerMapPosition(uiMapID, unitToken)` — returns
 //!   `{x, y}` vector2 from `SimState.player_map_position` for any
 //!   known map, or matching explicit input for an active party member.
 //!   Returns `nil` when no position is available.
-//! - `C_Map.GetBestMapForUnit(unitToken)` — returns the seeded player
-//!   map id (`2248`) for `"player"`.
-//! - `C_Map.GetFallbackWorldMapID()` — returns the seeded player map
-//!   id (`2248`).
+//! - `C_Map.GetBestMapForUnit` and `C_Map.GetFallbackWorldMapID` read
+//!   the simulator quest-log selection on Retail and Forever, defaulting
+//!   to the initial player map. Native equivalence is not established.
 //! - `C_Map.MapHasArt(uiMapID)` — true for positive map ids.
 //! - `C_Map.RequestPreloadMap(uiMapID)` — queues map art + overlay textures.
 
@@ -43,10 +44,16 @@ use crate::lua_api::methods::{
     table_get, table_set, table_set_static, val_to_string,
 };
 use crate::lua_api::state::MapData;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+use crate::lua_bridge::TableBuilder;
 #[cfg(feature = "retail-12-1-0")]
 use crate::lua_bridge::val_to_i32;
 use crate::lua_bridge::{FromStack, stack_val, table_set_rust_fn_static};
-#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+#[cfg(any(
+    all(feature = "profile-retail", feature = "retail-12-1-5"),
+    feature = "client-retail",
+    feature = "client-wowforever"
+))]
 use rilua::runtime_error;
 use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
@@ -54,7 +61,10 @@ use rilua::vm::table::Table;
 use rilua::{LuaResult, Val};
 use std::collections::HashSet;
 
+mod quest_log_selection;
 mod user_waypoint;
+
+pub(crate) use quest_log_selection::uses_rust_quest_log_selection;
 
 type LuaTableRef = GcRef<Table>;
 type RustLuaFn = rilua::vm::closure::RustFn;
@@ -93,6 +103,11 @@ const C_MAP_METHODS: &[(&str, RustLuaFn)] = &[
         c_map_get_map_art_background_atlas,
     ),
     ("GetMapArtID", c_map_get_map_art_id),
+    #[cfg(feature = "client-retail")]
+    (
+        "GetMapArtHelpTextPosition",
+        c_map_get_map_art_help_text_position,
+    ),
     ("GetMapArtLayerTextures", c_map_get_map_art_layer_textures),
     ("GetMapArtLayers", c_map_get_map_art_layers),
     #[cfg(feature = "retail-12-1-0")]
@@ -103,6 +118,10 @@ const C_MAP_METHODS: &[(&str, RustLuaFn)] = &[
     ("GetMapInfoAtPosition", c_map_get_map_info_at_position),
     ("GetMapRectOnMap", c_map_get_map_rect_on_map),
     ("GetMapChildrenInfo", c_map_get_map_children_info),
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    ("GetMapGroupID", c_map_get_map_group_id),
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    ("GetMapGroupMembersInfo", c_map_get_map_group_members_info),
     ("GetWorldPosFromMapPos", c_map_get_world_pos_from_map_pos),
     ("GetPlayerMapPosition", c_map_get_player_map_position),
     ("GetBestMapForUnit", c_map_get_best_map_for_unit),
@@ -115,6 +134,7 @@ const C_MAP_METHODS: &[(&str, RustLuaFn)] = &[
 pub(crate) fn register_c_map_surface(state: &mut LuaState) -> LuaResult<()> {
     let table_ref = ensure_namespace(state, "C_Map")?;
     register_c_map_methods(state, table_ref)?;
+    quest_log_selection::register(state, table_ref)?;
     super::c_map_bounties::register(state)?;
     super::map_world_coordinates::register(state)
 }
@@ -149,6 +169,39 @@ fn register_c_map_methods(state: &mut LuaState, table_ref: LuaTableRef) -> LuaRe
     }
     user_waypoint::register(state, table_ref)?;
     Ok(())
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
+    let builder = builder.set_function("SetMapGroupMember", set_map_group_member)?;
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+        builder.set_function("SetAdventureMapMapID", set_adventure_map_id)
+    } else {
+        Ok(builder)
+    }
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn set_adventure_map_id(state: &mut LuaState) -> LuaResult<u32> {
+    let map_id = i64::from_stack(state, 1)?;
+    borrow_state_mut(state)?.adventure_map.map_id = map_id;
+    Ok(0)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn set_map_group_member(state: &mut LuaState) -> LuaResult<u32> {
+    let map_id = i32::from_stack(state, 1)?;
+    let group_id = i32::from_stack(state, 2)?;
+    let relative_height_index = i32::from_stack(state, 3)?;
+    let mut sim_state = borrow_state_mut(state)?;
+    let Some(map) = sim_state.maps.get_mut(&map_id) else {
+        return Err(runtime_error(format!(
+            "A_Admin.SetMapGroupMember: unknown map {map_id}"
+        )));
+    };
+    map.map_group_id = Some(group_id);
+    map.map_group_relative_height_index = relative_height_index;
+    Ok(0)
 }
 
 fn close_world_map_interaction(state: &mut LuaState) -> LuaResult<u32> {
@@ -226,6 +279,66 @@ fn read_scalar_map_id(state: &LuaState) -> LuaResult<i32> {
     }
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn c_map_get_map_group_id(state: &mut LuaState) -> LuaResult<u32> {
+    let map_id = read_scalar_map_id(state)?;
+    let group_id = borrow_state(state)?
+        .maps
+        .get(&map_id)
+        .and_then(|map| map.map_group_id);
+    if let Some(group_id) = group_id {
+        state.push(Val::Num(f64::from(group_id)));
+        return Ok(1);
+    }
+    Ok(0)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn c_map_get_map_group_members_info(state: &mut LuaState) -> LuaResult<u32> {
+    let group_id = i32::from_stack(state, 1)?;
+    let maps = borrow_state(state)?.maps.clone();
+    let members = map_group_members(&maps, group_id);
+    if members.is_empty() {
+        return Ok(0);
+    }
+    let result = create_table_with_capacity(state, members.len());
+    for (index, map) in members.iter().enumerate() {
+        let info = push_map_group_member_info(state, map);
+        set_table_array(state, result, index as i64 + 1, info);
+    }
+    state.push(result);
+    Ok(1)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn map_group_members(
+    maps: &std::collections::HashMap<i32, MapData>,
+    group_id: i32,
+) -> Vec<&MapData> {
+    let mut members: Vec<_> = maps
+        .values()
+        .filter(|map| map.map_group_id == Some(group_id))
+        .collect();
+    // INFERRED (R88cy pending): display lower relative-height indexes first.
+    members.sort_by_key(|map| (map.map_group_relative_height_index, map.ui_map_id));
+    members
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn push_map_group_member_info(state: &mut LuaState, map: &MapData) -> Val {
+    let info = create_table_with_capacity(state, 3);
+    let name = create_string(state, &map.name);
+    table_set_static(state, info, "mapID", Val::Num(f64::from(map.ui_map_id)));
+    table_set_static(
+        state,
+        info,
+        "relativeHeightIndex",
+        Val::Num(f64::from(map.map_group_relative_height_index)),
+    );
+    table_set_static(state, info, "name", name);
+    info
+}
+
 fn c_map_get_map_art_id(state: &mut LuaState) -> LuaResult<u32> {
     let ui_map_id = read_scalar_map_id(state)?;
     let art_id = borrow_state(state)?.maps.get(&ui_map_id).map(|m| m.art_id);
@@ -233,6 +346,18 @@ fn c_map_get_map_art_id(state: &mut LuaState) -> LuaResult<u32> {
         return Ok(0);
     };
     state.push(Val::Num(art_id as f64));
+    Ok(1)
+}
+
+#[cfg(feature = "client-retail")]
+fn c_map_get_map_art_help_text_position(state: &mut LuaState) -> LuaResult<u32> {
+    let map_id = read_scalar_map_id(state)?;
+    let position = u32::try_from(map_id)
+        .ok()
+        .and_then(sim_data::ui_map_help_text_positions::get_ui_map_help_text_position)
+        .map(u32::from)
+        .unwrap_or(0);
+    state.push(Val::Num(f64::from(position)));
     Ok(1)
 }
 
@@ -504,6 +629,14 @@ fn map_info_source(
     }
     let info = ui_map_table_entry(ui_map_id)?;
     Some(MapInfoSource::UiMap { ui_map_id, info })
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) fn map_type_for_ui_map_id(
+    maps: &std::collections::HashMap<i32, MapData>,
+    ui_map_id: i32,
+) -> Option<i32> {
+    map_info_source(maps, ui_map_id).map(|info| info.map_type())
 }
 
 type MapChildrenByParent = std::collections::HashMap<i32, Vec<i32>>;
@@ -1025,22 +1158,33 @@ fn c_map_get_player_map_position(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn c_map_get_best_map_for_unit(state: &mut LuaState) -> LuaResult<u32> {
-    let unit_token = val_to_string(state, stack_val(state, 1)).unwrap_or_default();
-    if !matches!(unit_token.as_str(), "" | "player") {
+    let unit = stack_val(state, 1);
+    let unit_token = val_to_string(state, unit).unwrap_or_default();
+    if uses_rust_quest_log_selection() {
+        if unit != Val::Nil && unit_token != "player" {
+            state.push(Val::Nil);
+            return Ok(1);
+        }
+    } else if !matches!(unit_token.as_str(), "" | "player") {
         return Ok(0);
     }
-    state.push(Val::Num(DEFAULT_PLAYER_MAP_ID as f64));
-    Ok(1)
+    c_map_get_current_map_id(state)
+}
+
+pub(crate) fn best_map_for_player(state: &LuaState) -> LuaResult<f64> {
+    Ok(borrow_state(state)?
+        .quest_log_selected_map_id
+        .unwrap_or(f64::from(DEFAULT_PLAYER_MAP_ID)))
 }
 
 fn c_map_get_current_map_id(state: &mut LuaState) -> LuaResult<u32> {
-    state.push(Val::Num(DEFAULT_PLAYER_MAP_ID as f64));
+    let current = best_map_for_player(state)?;
+    state.push(Val::Num(current));
     Ok(1)
 }
 
 fn c_map_get_fallback_world_map_id(state: &mut LuaState) -> LuaResult<u32> {
-    state.push(Val::Num(DEFAULT_PLAYER_MAP_ID as f64));
-    Ok(1)
+    c_map_get_current_map_id(state)
 }
 
 fn c_map_map_has_art(state: &mut LuaState) -> LuaResult<u32> {

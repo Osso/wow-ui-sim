@@ -1,8 +1,14 @@
 //! Aura instance enumeration backed by the existing public/private aura stores.
 
-use crate::lua_api::game_data::AuraInfo;
-use crate::lua_api::globals::auras::collect_filtered_unit_auras;
-use crate::lua_api::methods::{borrow_state, create_table, table_get, table_set, table_set_num};
+use crate::lua_api::game_data::{AuraIcon, AuraInfo};
+use crate::lua_api::globals::auras::{
+    GroupBuffAlert as GroupBuffVisualAlert, collect_filtered_unit_auras,
+};
+use crate::lua_api::globals::state_backed_queries::dispatch_event_now;
+use crate::lua_api::methods::{
+    borrow_state, borrow_state_mut, create_string, create_table, create_table_with_fields,
+    table_get, table_set, table_set_num,
+};
 use crate::lua_api::state::SimState;
 use crate::lua_bridge::{FromStack, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
@@ -26,6 +32,13 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
         table_set(state, removed, "GetAuraCasterGUID", Val::Bool(true));
         table_set(state, Val::Table(public), "__wow_removed_keys", removed);
     }
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
+        register_group_buff_settings(state, public)?;
+    }
     table_set_rust_fn_static(
         state,
         public,
@@ -39,9 +52,266 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
         "CancelAuraByInstanceID",
         cancel_aura_by_instance_id,
     )?;
+    if cfg!(feature = "client-retail") || cfg!(feature = "client-wowforever") {
+        register_private_data(state)?;
+    }
     #[cfg(feature = "aura-containers")]
     register_private_enumeration(state)?;
     Ok(())
+}
+
+fn register_private_data(state: &mut LuaState) -> LuaResult<()> {
+    let public = super::ensure_namespace(state, "C_UnitAurasPrivate")?;
+    register_private_data_methods(state, public)?;
+    let secure = super::ensure_secure_namespace(state, "C_UnitAurasPrivate")?;
+    register_private_data_methods(state, secure)
+}
+
+fn register_private_data_methods(
+    state: &mut LuaState,
+    namespace: rilua::vm::gc::arena::GcRef<rilua::vm::table::Table>,
+) -> LuaResult<()> {
+    table_set_rust_fn_static(
+        state,
+        namespace,
+        "GetAllPrivateAuras",
+        get_all_private_auras,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        namespace,
+        "GetAuraDataByAuraInstanceIDPrivate",
+        get_private_aura_data,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        namespace,
+        "GetPrivateAuraCasterGUID",
+        get_private_aura_caster_guid,
+    )
+}
+
+fn private_entry_table(
+    state: &mut LuaState,
+    unit: &str,
+    entry: &crate::c_api::private_aura_data::PrivateAuraEntry,
+) -> Val {
+    let table = crate::lua_api::globals::auras::build_aura_table(state, &entry.aura, unit);
+    table_set(
+        state,
+        table,
+        "canActivePlayerDispel",
+        Val::Bool(entry.can_active_player_dispel),
+    );
+    table_set(
+        state,
+        table,
+        "hideOnPartyFrames",
+        Val::Bool(entry.hide_on_party_frames),
+    );
+    table
+}
+
+fn get_all_private_auras(state: &mut LuaState) -> LuaResult<u32> {
+    let unit = String::from_stack(state, 1)?;
+    let entries = borrow_state(state)?
+        .private_aura_data
+        .private_auras_by_unit
+        .get(&unit)
+        .cloned()
+        .unwrap_or_default();
+    let Val::Table(list) = create_table(state) else {
+        unreachable!("new Lua table must be a table")
+    };
+    for (index, entry) in entries.iter().enumerate() {
+        let table = private_entry_table(state, &unit, entry);
+        table_set_num(state, list, (index + 1) as f64, table);
+    }
+    state.push(Val::Table(list));
+    Ok(1)
+}
+
+fn get_private_aura_data(state: &mut LuaState) -> LuaResult<u32> {
+    let unit = String::from_stack(state, 1)?;
+    let instance_id = i32::from_stack(state, 2)?;
+    let entry = borrow_state(state)?
+        .private_aura_data
+        .aura_data_by_unit
+        .get(&unit)
+        .and_then(|entries| entries.get(&instance_id))
+        .cloned();
+    let value = entry.map_or(Val::Nil, |entry| private_entry_table(state, &unit, &entry));
+    state.push(value);
+    Ok(1)
+}
+
+fn get_private_aura_caster_guid(state: &mut LuaState) -> LuaResult<u32> {
+    let unit = String::from_stack(state, 1)?;
+    let instance_id = i32::from_stack(state, 2)?;
+    let guid = borrow_state(state)?
+        .private_aura_data
+        .aura_data_by_unit
+        .get(&unit)
+        .and_then(|entries| entries.get(&instance_id))
+        .and_then(|entry| entry.source_guid.clone());
+    let value = guid.map_or(Val::Nil, |guid| create_string(state, &guid));
+    state.push(value);
+    Ok(1)
+}
+
+fn register_group_buff_settings(
+    state: &mut LuaState,
+    public: rilua::vm::gc::arena::GcRef<rilua::vm::table::Table>,
+) -> LuaResult<()> {
+    table_set_rust_fn_static(
+        state,
+        public,
+        "GetGroupBuffVisualAlerts",
+        get_group_buff_visual_alerts,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        public,
+        "SetGroupBuffVisualAlerts",
+        set_group_buff_visual_alerts,
+    )?;
+    table_set_rust_fn_static(state, public, "GetHiddenGroupBuffs", get_hidden_group_buffs)?;
+    table_set_rust_fn_static(state, public, "SetHiddenGroupBuffs", set_hidden_group_buffs)
+}
+
+fn get_group_buff_visual_alerts(state: &mut LuaState) -> LuaResult<u32> {
+    let alerts =
+        if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever {
+            borrow_state(state)?
+                .forever_startup
+                .group_buff_alerts
+                .clone()
+        } else {
+            borrow_state(state)?
+                .group_buff_settings
+                .visual_alerts
+                .clone()
+        };
+    let result = push_alert_rows(state, &alerts);
+    state.push(result);
+    Ok(1)
+}
+
+fn set_group_buff_visual_alerts(state: &mut LuaState) -> LuaResult<u32> {
+    let alerts = read_alert_rows(state, 1)?;
+    let mut sim = borrow_state_mut(state)?;
+    sim.group_buff_settings.visual_alerts = alerts.clone();
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever {
+        sim.forever_startup.group_buff_alerts = alerts.clone();
+    }
+    drop(sim);
+    let payload = push_alert_rows(state, &alerts);
+    dispatch_event_now(state, "GROUP_BUFF_VISUAL_ALERTS_CHANGED", &[payload])?;
+    Ok(0)
+}
+
+fn get_hidden_group_buffs(state: &mut LuaState) -> LuaResult<u32> {
+    let ids = borrow_state(state)?
+        .group_buff_settings
+        .hidden_spell_ids
+        .clone();
+    let result = push_spell_ids(state, &ids);
+    state.push(result);
+    Ok(1)
+}
+
+fn set_hidden_group_buffs(state: &mut LuaState) -> LuaResult<u32> {
+    let ids = read_spell_ids(state, 1)?;
+    borrow_state_mut(state)?
+        .group_buff_settings
+        .hidden_spell_ids = ids.clone();
+    let payload = push_spell_ids(state, &ids);
+    dispatch_event_now(state, "HIDDEN_GROUP_BUFFS_CHANGED", &[payload])?;
+    Ok(0)
+}
+
+fn push_alert_rows(state: &mut LuaState, alerts: &[GroupBuffVisualAlert]) -> Val {
+    let rows = state.gc.alloc_table(rilua::vm::table::Table::new());
+    for (index, alert) in alerts.iter().enumerate() {
+        let row = create_table_with_fields(
+            state,
+            &[
+                ("spellID", Val::Num(f64::from(alert.spell_id))),
+                ("visualValue", Val::Num(f64::from(alert.visual_value))),
+            ],
+        );
+        table_set_num(state, rows, index as f64 + 1.0, row);
+    }
+    Val::Table(rows)
+}
+
+fn push_spell_ids(state: &mut LuaState, ids: &[i32]) -> Val {
+    let rows = state.gc.alloc_table(rilua::vm::table::Table::new());
+    for (index, spell_id) in ids.iter().enumerate() {
+        table_set_num(
+            state,
+            rows,
+            index as f64 + 1.0,
+            Val::Num(f64::from(*spell_id)),
+        );
+    }
+    Val::Table(rows)
+}
+
+fn read_alert_rows(state: &mut LuaState, index: i32) -> LuaResult<Vec<GroupBuffVisualAlert>> {
+    let table = table_arg(state, index)?;
+    let mut alerts = Vec::new();
+    for row_index in 1.. {
+        let row = array_value(state, table, row_index);
+        let Val::Table(_) = row else { break };
+        alerts.push(GroupBuffVisualAlert {
+            spell_id: number_field(state, row, "spellID")? as i32,
+            visual_value: number_field(state, row, "visualValue")? as i32,
+        });
+    }
+    Ok(alerts)
+}
+
+fn read_spell_ids(state: &mut LuaState, index: i32) -> LuaResult<Vec<i32>> {
+    let table = table_arg(state, index)?;
+    let mut ids = Vec::new();
+    for row_index in 1.. {
+        let value = array_value(state, table, row_index);
+        let Val::Num(spell_id) = value else { break };
+        ids.push(spell_id as i32);
+    }
+    Ok(ids)
+}
+
+fn table_arg(
+    state: &LuaState,
+    index: i32,
+) -> LuaResult<rilua::vm::gc::arena::GcRef<rilua::vm::table::Table>> {
+    match crate::lua_bridge::stack_val(state, index) {
+        Val::Table(table) => Ok(table),
+        _ => Err(runtime_error("expected table")),
+    }
+}
+
+fn array_value(
+    state: &LuaState,
+    table: rilua::vm::gc::arena::GcRef<rilua::vm::table::Table>,
+    index: i32,
+) -> Val {
+    state
+        .gc
+        .tables
+        .get(table)
+        .map_or(Val::Nil, |items| items.get_int(i64::from(index)))
+}
+
+fn number_field(state: &mut LuaState, row: Val, name: &str) -> LuaResult<f64> {
+    match table_get(state, row, name) {
+        Val::Num(value) => Ok(value),
+        _ => Err(runtime_error(
+            "group buff setting row has a missing numeric field",
+        )),
+    }
 }
 
 /// Clear the selected unit's entries in the live AddBlockedAura/enumeration model.
@@ -108,6 +378,15 @@ fn is_private_aura_filtered_out_by_instance_id(state: &mut LuaState) -> LuaResul
 /// Read one private AuraData record as the public aura model.
 #[cfg(feature = "aura-containers")]
 fn private_aura_info(state: &mut LuaState, unit: &str, instance_id: i32) -> Option<AuraInfo> {
+    if cfg!(feature = "client-retail") || cfg!(feature = "client-wowforever") {
+        return borrow_state(state)
+            .ok()?
+            .private_aura_data
+            .aura_data_by_unit
+            .get(unit)
+            .and_then(|entries| entries.get(&instance_id))
+            .map(|entry| entry.aura.clone());
+    }
     let namespace = super::global_val(state, "C_UnitAurasPrivate");
     let private_state = table_get(state, namespace, "_state");
     let by_unit = table_get(state, private_state, "auraDataByUnit");
@@ -122,10 +401,15 @@ fn private_aura_info(state: &mut LuaState, unit: &str, instance_id: i32) -> Opti
     if !matches!(record, Val::Table(_)) {
         return None;
     }
-    Some(AuraInfo {
+    Some(aura_info_from_record(state, record, instance_id))
+}
+
+#[cfg(feature = "aura-containers")]
+fn aura_info_from_record(state: &mut LuaState, record: Val, instance_id: i32) -> AuraInfo {
+    AuraInfo {
         name: record_string(state, record, "name").unwrap_or_default(),
         spell_id: record_number(state, record, "spellId") as i32,
-        icon: record_number(state, record, "icon") as i32,
+        icon: record_aura_icon(state, record),
         duration: record_number(state, record, "duration"),
         expiration_time: record_number(state, record, "expirationTime"),
         applications: record_number(state, record, "applications") as i32,
@@ -138,7 +422,7 @@ fn private_aura_info(state: &mut LuaState, unit: &str, instance_id: i32) -> Opti
         is_from_player_or_player_pet: record_bool(state, record, "isFromPlayerOrPlayerPet"),
         dispel_type: record_string(state, record, "dispelName"),
         aura_instance_id: instance_id,
-    })
+    }
 }
 
 #[cfg(feature = "aura-containers")]
@@ -146,6 +430,15 @@ fn record_number(state: &mut LuaState, record: Val, key: &str) -> f64 {
     match table_get(state, record, key) {
         Val::Num(number) => number,
         _ => 0.0,
+    }
+}
+
+#[cfg(feature = "aura-containers")]
+fn record_aura_icon(state: &mut LuaState, record: Val) -> AuraIcon {
+    match table_get(state, record, "icon") {
+        Val::Num(file_id) => AuraIcon::FileId(file_id as i32),
+        Val::Str(_) => AuraIcon::Path(record_string(state, record, "icon").unwrap_or_default()),
+        _ => AuraIcon::FileId(0),
     }
 }
 
@@ -356,6 +649,18 @@ fn is_other_player_source(sim: &SimState, aura: &AuraInfo) -> bool {
 #[cfg(feature = "aura-containers")]
 fn get_private_aura_instance_ids(state: &mut LuaState) -> LuaResult<u32> {
     let unit = String::from_stack(state, 1)?;
+    if cfg!(feature = "client-retail") || cfg!(feature = "client-wowforever") {
+        let ids = borrow_state(state)?
+            .private_aura_data
+            .private_auras_by_unit
+            .get(&unit)
+            .into_iter()
+            .flatten()
+            .map(|entry| entry.aura.aura_instance_id)
+            .collect::<Vec<_>>();
+        push_instance_ids(state, ids);
+        return Ok(1);
+    }
     let namespace = super::global_val(state, "C_UnitAurasPrivate");
     let private_state = table_get(state, namespace, "_state");
     let by_unit = table_get(state, private_state, "privateAurasByUnit");

@@ -25,10 +25,21 @@ fn register_profile_spell_tables(state: &mut LuaState) -> LuaResult<()> {
     register_gamepad_tables(state)?;
     #[cfg(feature = "client-wowforever")]
     super::c_edit_mode::register(state)?;
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
+        super::c_edit_mode_cache::register(state)?;
+    }
     #[cfg(any(feature = "client-wowforever", feature = "client-ptr"))]
     super::gamepad_action_bar_constants::register(state);
     #[cfg(feature = "client-wowforever")]
     super::forever_finite_constants::register(state);
+    #[cfg(feature = "client-wowforever")]
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever {
+        super::reincarnation::register(state)?;
+    }
     Ok(())
 }
 
@@ -50,6 +61,7 @@ fn register_gamepad_tables(state: &mut LuaState) -> LuaResult<()> {
 pub(crate) fn register_spell_and_widget_tables(state: &mut LuaState) -> LuaResult<()> {
     register_profile_spell_tables(state)?;
     c_spell::register_c_spell_surface(state)?;
+    super::target_spell::register(state)?;
     // INFERRED: R88ah's 70631 behavior applies to the 70268 declarations and enum.
     #[cfg(feature = "client-mists")]
     super::mists_r88ah::register_spell_visibility(state)?;
@@ -62,16 +74,23 @@ pub(crate) fn register_spell_and_widget_tables(state: &mut LuaState) -> LuaResul
 }
 
 pub(crate) fn register_item_power_tables(state: &mut LuaState) -> LuaResult<()> {
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    super::c_loot_journal::register(state)?;
     super::c_tooltip_comparison::register(state)?;
     super::c_garrison_currency::register(state)?;
     super::c_garrison_follower_xp::register(state)?;
     super::c_garrison_combat_log_spell::register(state)?;
     super::c_scrapping_machine::register(state)?;
     super::c_perks_categories::register(state)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    super::c_perks_program::register(state)?;
+    super::perks_activities::register(state)?;
     super::c_legendary_crafting::register(state)?;
     super::c_transmog_latest::register(state)?;
     super::weapon_enchants::register(state)?;
     c_paper_doll_info::register_c_paper_doll_info_surface(state)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    super::ranged_slot::register(state)?;
     c_artifact_ui::register_c_artifact_ui_surface(state)?;
     c_artifact_relic_forge_ui::register_c_artifact_relic_forge_ui_surface(state)?;
     c_azerite_item::register_c_azerite_item_surface(state)?;
@@ -85,6 +104,7 @@ pub(crate) fn register_character_progression_tables(state: &mut LuaState) -> Lua
     super::quest_difficulty::register(state)?;
     super::c_pet_talent_tree::register(state)?;
     super::c_prof_specs_reminders::register(state)?;
+    super::c_prof_specs_skill_lines::register(state)?;
     super::c_prof_specs_tab_state::register(state)?;
     #[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
     super::c_prof_specs_get_children_for_path::register(state)?;
@@ -117,6 +137,7 @@ fn register_interaction_store_voice(state: &mut LuaState) -> LuaResult<()> {
     super::c_store_glue::register(state)?;
     super::store_public_eligibility::register(state)?;
     super::c_shared_character_services::register(state)?;
+    super::c_voice_chat_login::register(state)?;
     super::c_voice_chat_activity::register(state)?;
     super::c_voice_chat_settings::register(state)?;
     super::c_voice_chat_devices::register(state)?;
@@ -166,6 +187,7 @@ fn register_interaction_crafting(state: &mut LuaState) -> LuaResult<()> {
     super::c_trade_skill_first_craft::register(state)?;
     super::c_trade_skill_quality::register(state)?;
     super::c_trade_skill_source::register(state)?;
+    super::crafting_tables::trade_skill_modifications::register(state)?;
     #[cfg(feature = "retail-12-0-0")]
     super::c_crafting_orders::register(state)?;
     #[cfg(feature = "retail-12-0-0")]
@@ -174,13 +196,20 @@ fn register_interaction_crafting(state: &mut LuaState) -> LuaResult<()> {
     super::c_weekly_rewards::register(state)?;
     #[cfg(feature = "retail-12-0-0")]
     super::c_key_bindings::register(state)?;
-    #[cfg(feature = "retail-12-0-0")]
+    #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
     super::c_dye_color::register(state)?;
     super::c_item_interaction::register(state)?;
     super::c_cooldown_viewer::register(state)?;
     super::c_content_tracking::register(state)?;
     super::c_neighborhood_initiative::register(state)?;
+    #[cfg(any(
+        feature = "client-retail",
+        feature = "client-ptr",
+        feature = "client-wowforever"
+    ))]
     super::c_trade_info::register(state)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    super::secure_transfer::register(state)?;
     super::c_roleset::register(state)?;
     Ok(())
 }
@@ -219,9 +248,14 @@ fn register_interaction_appearance(state: &mut LuaState) -> LuaResult<()> {
         feature = "client-anniversary"
     ))]
     super::c_transmog_outfit_info::register(state)?;
+    #[cfg(feature = "client-wowforever")]
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever {
+        super::c_transmog_outfit_info::register_forever(state)?;
+    }
     super::transmog_availability::register(state)?;
     super::c_spectating_ui::register(state)?;
     super::c_commentator::register(state)?;
+    #[cfg(feature = "client-wowforever")]
     super::forever_outfits::register(state)?;
     c_ardenweald_gardening::register_c_ardenweald_gardening_surface(state)?;
     c_arrow_callout_manager::register_c_arrow_callout_manager_surface(state)?;
@@ -257,10 +291,22 @@ fn register_retirement_successors(state: &mut LuaState) -> LuaResult<()> {
 }
 
 pub(crate) fn register_map_prefix_tables(state: &mut LuaState) -> LuaResult<()> {
-    c_map::register_c_map_surface(state)
+    c_map::register_c_map_surface(state)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
+        super::c_contribution_collector::register(state)?;
+        super::c_taxi_map::register(state)?;
+    }
+    Ok(())
 }
 
 pub(crate) fn register_map_environment_tables(state: &mut LuaState) -> LuaResult<()> {
+    #[cfg(feature = "client-retail")]
+    super::c_encounter_journal_map::register(state)?;
     c_fog_of_war::register_fog_of_war_surface(state)?;
     c_map_exploration_info::register_c_map_exploration_info_surface(state)
 }

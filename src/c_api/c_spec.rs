@@ -3,7 +3,7 @@
 use crate::lua_api::game_data::CastingState;
 use crate::lua_api::globals::real::specialization_helpers::push_specialization_identity;
 use crate::lua_api::globals::spellbook_data;
-#[cfg(feature = "client-retail")]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 use crate::lua_api::methods::table_set;
 use crate::lua_api::methods::{borrow_state, borrow_state_mut, create_table};
 use crate::lua_api::workarounds::get_legacy_talent_info;
@@ -15,19 +15,25 @@ use rilua::vm::table::Table;
 use rilua::{LuaResult, Val};
 
 use super::helpers::ensure_namespace;
-#[cfg(feature = "client-retail")]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 use super::helpers::{read_untainted_signed32_argument, read_untainted_truthy_argument};
 
-#[cfg(feature = "client-retail")]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 #[derive(Debug, Clone, Default)]
 pub struct PvpTalentInfoRecord {
     pub talent_id: i32,
     pub name: String,
-    pub icon: u32,
+    /// VERIFIED (R88eu): the legacy global returns an icon value or nil.
+    pub icon: Option<u32>,
     pub selected: bool,
     pub available: bool,
     pub spell_id: u32,
-    pub unlocked: bool,
+    /// VERIFIED (R88eu): the legacy global returns an unlocked flag or nil.
+    pub unlocked: Option<bool>,
+    /// INFERRED R88eu: the legacy global returns tier; absent host input defaults to zero.
+    pub tier: i32,
+    /// INFERRED R88eu: the legacy global returns column; absent host input defaults to zero.
+    pub column: i32,
     pub known: bool,
     pub granted_by_aura: bool,
     pub dependencies_unmet: bool,
@@ -40,11 +46,27 @@ pub struct PvpTalentState {
     pub failure_reason: String,
     pub has_unspent_slot: bool,
     pub has_new_talent: bool,
-    /// Simulator-session lock set; native lifetime, persistence and event effects are unknown.
-    #[cfg(feature = "client-retail")]
+    /// Simulator-session lock set; native lifetime and persistence are unknown.
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     pub locked_talent_ids: std::collections::HashSet<i32>,
+    /// Host-supplied selected talent IDs in slot order.
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub selected_talent_ids: Vec<i32>,
+    /// Host-supplied slot unlock levels, keyed by talent slot.
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub slot_unlock_levels: std::collections::HashMap<i32, i32>,
+    /// Forever host-supplied PvP talent unlock levels, keyed by talent ID.
+    #[cfg(feature = "client-wowforever")]
+    pub talent_unlock_levels: std::collections::HashMap<i32, i32>,
+    /// Forever host-supplied slot records, keyed by slot index.
+    #[cfg(feature = "client-wowforever")]
+    pub slot_infos:
+        std::collections::HashMap<i32, super::c_tooltip_info_pvp_talent::PvpTalentSlotInput>,
+    /// Host-supplied inspected talent IDs, keyed by unit token and slot.
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub inspect_selected_talent_ids: std::collections::HashMap<(String, i32), i32>,
     /// Host-supplied `GetPvpTalentInfo` records; no records are seeded.
-    #[cfg(feature = "client-retail")]
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     pub info_by_id: std::collections::HashMap<i32, PvpTalentInfoRecord>,
 }
 
@@ -66,7 +88,7 @@ const C_SPECIALIZATION_INFO_METHODS: &[(&str, RustLuaFn)] = &[
     ),
     ("CanPlayerUseTalentUI", c_spec_can_player_use_talent_ui),
     ("GetActiveSpecGroup", c_spec_get_active_spec_group),
-    #[cfg(feature = "client-retail")]
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     ("GetPvpTalentInfo", get_pvp_talent_info),
     #[cfg(feature = "client-mists")]
     ("GetTalentInfo", c_spec_get_talent_info),
@@ -98,6 +120,8 @@ fn register_c_specialization_info_profile_methods(
 ) -> LuaResult<()> {
     register_c_specialization_info_forever_methods(state, t_ref)?;
     register_c_specialization_info_talent_info(state, t_ref)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    register_c_specialization_info_pvp_selection_methods(state, t_ref)?;
     register_c_specialization_info_retail_methods(state, t_ref)?;
     register_c_specialization_info_class_ids(state, t_ref)?;
     register_c_specialization_info_forever_pvp_methods(state, t_ref)?;
@@ -142,6 +166,47 @@ fn register_c_specialization_info_talent_info(
     Ok(())
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn register_c_specialization_info_pvp_selection_methods(
+    state: &mut LuaState,
+    t_ref: GcRef<Table>,
+) -> LuaResult<()> {
+    table_set_rust_fn_static(
+        state,
+        t_ref,
+        "GetAllSelectedPvpTalentIDs",
+        get_all_selected_pvp_talent_ids,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        t_ref,
+        "GetInspectSelectedPvpTalent",
+        get_inspect_selected_pvp_talent,
+    )?;
+    #[cfg(feature = "client-wowforever")]
+    register_forever_pvp_methods(state, t_ref)?;
+    Ok(())
+}
+
+#[cfg(feature = "client-wowforever")]
+fn register_forever_pvp_methods(state: &mut LuaState, t_ref: GcRef<Table>) -> LuaResult<()> {
+    super::c_tooltip_info_pvp_talent::register_forever_slot_info(state, t_ref)?;
+    table_set_rust_fn_static(
+        state,
+        t_ref,
+        "GetPvpTalentSlotUnlockLevel",
+        get_forever_pvp_talent_slot_unlock_level,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        t_ref,
+        "GetPvpTalentUnlockLevel",
+        get_forever_pvp_talent_unlock_level,
+    )?;
+    table_set_rust_fn_static(state, t_ref, "IsPvpTalentLocked", is_pvp_talent_locked)?;
+    table_set_rust_fn_static(state, t_ref, "SetPvpTalentLocked", set_pvp_talent_locked)
+}
+
 fn register_c_specialization_info_retail_methods(
     state: &mut LuaState,
     t_ref: GcRef<Table>,
@@ -165,6 +230,12 @@ fn register_c_specialization_info_retail_pvp_methods(
         t_ref,
         "GetPvpTalentSlotUnlockLevel",
         get_pvp_talent_slot_unlock_level,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        t_ref,
+        "GetPvpTalentAlertStatus",
+        pvp_talent_alert_status,
     )?;
     table_set_rust_fn_static(
         state,
@@ -261,23 +332,25 @@ fn register_c_specialization_info_ptr_talent_point(
     Ok(())
 }
 
-#[cfg(feature = "client-retail")]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 const GET_PVP_TALENT_INFO_USAGE: &str =
     "Usage: local talentInfo = C_SpecializationInfo.GetPvpTalentInfo(talentID)";
-#[cfg(feature = "client-retail")]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 const GET_PVP_TALENT_SLOT_UNLOCK_LEVEL_USAGE: &str =
     "Usage: local requiredLevel = C_SpecializationInfo.GetPvpTalentSlotUnlockLevel(talentIndex)";
-#[cfg(feature = "client-retail")]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 const GET_PVP_TALENT_UNLOCK_LEVEL_USAGE: &str =
     "Usage: local requiredLevel = C_SpecializationInfo.GetPvpTalentUnlockLevel(talentID)";
-#[cfg(feature = "client-retail")]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 const IS_PVP_TALENT_LOCKED_USAGE: &str =
     "Usage: local locked = C_SpecializationInfo.IsPvpTalentLocked(talentID)";
-#[cfg(feature = "client-retail")]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 const SET_PVP_TALENT_LOCKED_USAGE: &str =
     "Usage: C_SpecializationInfo.SetPvpTalentLocked(talentID, locked)";
 
-#[cfg(feature = "client-retail")]
+// VERIFIED populated-row fields; UNKNOWN missing-row public arity. R88eq eq1.
+// INFERRED: Forever mirrors the Retail supplied-record path. R88eq eq1.
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn get_pvp_talent_info(state: &mut LuaState) -> LuaResult<u32> {
     let talent_id = read_untainted_signed32_argument(
         state,
@@ -297,10 +370,20 @@ fn get_pvp_talent_info(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-#[cfg(feature = "client-retail")]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn push_pvp_talent_info(state: &mut LuaState, record: &PvpTalentInfoRecord) {
     let result = create_table(state);
     state.push(result);
+    for (key, value) in pvp_talent_info_fields(state, record) {
+        table_set(state, result, key, value);
+    }
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn pvp_talent_info_fields(
+    state: &mut LuaState,
+    record: &PvpTalentInfoRecord,
+) -> [(&'static str, Val); 11] {
     let name = Val::Str(state.gc.intern_string(record.name.as_bytes()));
     let reason = record
         .dependencies_unmet_reason
@@ -308,37 +391,61 @@ fn push_pvp_talent_info(state: &mut LuaState, record: &PvpTalentInfoRecord) {
         .map_or(Val::Nil, |text| {
             Val::Str(state.gc.intern_string(text.as_bytes()))
         });
-    for (key, value) in [
+    let icon = record
+        .icon
+        .map_or(Val::Nil, |icon| Val::Num(f64::from(icon)));
+    [
         ("talentID", Val::Num(f64::from(record.talent_id))),
         ("name", name),
-        ("icon", Val::Num(f64::from(record.icon))),
+        ("icon", icon),
         ("selected", Val::Bool(record.selected)),
         ("available", Val::Bool(record.available)),
         ("spellID", Val::Num(f64::from(record.spell_id))),
-        ("unlocked", Val::Bool(record.unlocked)),
+        ("unlocked", record.unlocked.map_or(Val::Nil, Val::Bool)),
         ("known", Val::Bool(record.known)),
         ("grantedByAura", Val::Bool(record.granted_by_aura)),
         ("dependenciesUnmet", Val::Bool(record.dependencies_unmet)),
         ("dependenciesUnmetReason", reason),
-    ] {
-        table_set(state, result, key, value);
-    }
+    ]
 }
 
+// VERIFIED: a matching row returns its integer; a miss returns nil. R88eq eq1.
 #[cfg(feature = "client-retail")]
 fn get_pvp_talent_slot_unlock_level(state: &mut LuaState) -> LuaResult<u32> {
-    let _talent_index = read_untainted_signed32_argument(
+    let talent_index = read_untainted_signed32_argument(
         state,
         1,
         "C_SpecializationInfo.GetPvpTalentSlotUnlockLevel",
         GET_PVP_TALENT_SLOT_UNLOCK_LEVEL_USAGE,
     )?;
-    // No PvpTalentSlotUnlock rows are modeled; the verified absent-row path returns nil.
-    state.push(Val::Nil);
+    let level = borrow_state(state)?
+        .pvp_talents
+        .slot_unlock_levels
+        .get(&talent_index)
+        .copied();
+    state.push(level.map_or(Val::Nil, |level| Val::Num(f64::from(level))));
     Ok(1)
 }
 
-// INFERRED: the generated 12.1.5.70783 PvpTalent catalog supplies unlock levels.
+// INFERRED: Forever mirrors Retail row/miss results. R88eq eq1.
+#[cfg(feature = "client-wowforever")]
+fn get_forever_pvp_talent_slot_unlock_level(state: &mut LuaState) -> LuaResult<u32> {
+    let slot = read_untainted_signed32_argument(
+        state,
+        1,
+        "C_SpecializationInfo.GetPvpTalentSlotUnlockLevel",
+        GET_PVP_TALENT_SLOT_UNLOCK_LEVEL_USAGE,
+    )?;
+    let level = borrow_state(state)?
+        .pvp_talents
+        .slot_unlock_levels
+        .get(&slot)
+        .copied();
+    state.push(level.map_or(Val::Nil, |level| Val::Num(f64::from(level))));
+    Ok(1)
+}
+
+// VERIFIED row/miss results; INFERRED: catalog rows supply Retail levels. R88eq eq1.
 #[cfg(feature = "client-retail")]
 fn get_pvp_talent_unlock_level(state: &mut LuaState) -> LuaResult<u32> {
     let talent_id = read_untainted_signed32_argument(
@@ -357,7 +464,26 @@ fn get_pvp_talent_unlock_level(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-#[cfg(feature = "client-retail")]
+// INFERRED: Forever mirrors Retail row/miss results. R88eq eq1.
+#[cfg(feature = "client-wowforever")]
+fn get_forever_pvp_talent_unlock_level(state: &mut LuaState) -> LuaResult<u32> {
+    let talent_id = read_untainted_signed32_argument(
+        state,
+        1,
+        "C_SpecializationInfo.GetPvpTalentUnlockLevel",
+        GET_PVP_TALENT_UNLOCK_LEVEL_USAGE,
+    )?;
+    let level = borrow_state(state)?
+        .pvp_talents
+        .talent_unlock_levels
+        .get(&talent_id)
+        .copied();
+    state.push(level.map_or(Val::Nil, |level| Val::Num(f64::from(level))));
+    Ok(1)
+}
+
+// VERIFIED: this getter publishes a Boolean. R88eq eq1.
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn is_pvp_talent_locked(state: &mut LuaState) -> LuaResult<u32> {
     let talent_id = read_untainted_signed32_argument(
         state,
@@ -373,7 +499,9 @@ fn is_pvp_talent_locked(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-#[cfg(feature = "client-retail")]
+// VERIFIED: the setter normally returns no values. R88eq eq1.
+// INFERRED: truthy inserts the ID; false erases it. R88eq eq1.
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn set_pvp_talent_locked(state: &mut LuaState) -> LuaResult<u32> {
     let talent_id = read_untainted_signed32_argument(
         state,
@@ -387,13 +515,254 @@ fn set_pvp_talent_locked(state: &mut LuaState) -> LuaResult<u32> {
         "C_SpecializationInfo.SetPvpTalentLocked",
         SET_PVP_TALENT_LOCKED_USAGE,
     )?;
-    let mut sim = borrow_state_mut(state)?;
-    if locked {
-        sim.pvp_talents.locked_talent_ids.insert(talent_id);
-    } else {
-        sim.pvp_talents.locked_talent_ids.remove(&talent_id);
+    {
+        let mut sim = borrow_state_mut(state)?;
+        if locked {
+            sim.pvp_talents.locked_talent_ids.insert(talent_id);
+        } else {
+            sim.pvp_talents.locked_talent_ids.remove(&talent_id);
+        }
     }
+    // INFERRED event; R88eq eq2 leaves event semantics UNKNOWN.
+    dispatch_pvp_talent_update(state)
+}
+
+// VERIFIED list result; Forever uses the same host-supplied list as INFERRED. R88eq eq1.
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn get_all_selected_pvp_talent_ids(state: &mut LuaState) -> LuaResult<u32> {
+    let selected = borrow_state(state)?.pvp_talents.selected_talent_ids.clone();
+    let result = create_table(state);
+    for (index, talent_id) in selected.iter().enumerate() {
+        super::helpers::set_table_array(
+            state,
+            result,
+            index as i64 + 1,
+            Val::Num(f64::from(*talent_id)),
+        );
+    }
+    state.push(result);
+    Ok(1)
+}
+
+// VERIFIED nil-or-cached-ID result; Forever mirrors the supplied cache as INFERRED. R88eq eq1.
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn get_inspect_selected_pvp_talent(state: &mut LuaState) -> LuaResult<u32> {
+    use crate::lua_bridge::FromStack;
+    let unit = String::from_stack(state, 1)?;
+    let slot = i32::from_stack(state, 2)?;
+    let selected = borrow_state(state)?
+        .pvp_talents
+        .inspect_selected_talent_ids
+        .get(&(unit, slot))
+        .copied();
+    state.push(selected.map_or(Val::Nil, |id| Val::Num(f64::from(id))));
+    Ok(1)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) fn register_admin(
+    builder: crate::lua_bridge::TableBuilder,
+) -> LuaResult<crate::lua_bridge::TableBuilder> {
+    let builder = builder
+        .set_function("SetPvpTalentInfo", admin_set_pvp_talent_info)?
+        .set_function("SetPvpTalentAlertStatus", admin_set_pvp_talent_alert_status)?
+        .set_function("SetSelectedPvpTalentIDs", admin_set_selected_pvp_talent_ids)?
+        .set_function(
+            "SetInspectSelectedPvpTalent",
+            admin_set_inspect_selected_pvp_talent,
+        )?
+        .set_function("SetPvpTalentSlotInfo", admin_set_pvp_talent_slot_info)?
+        .set_function(
+            "SetPvpTalentSlotUnlockLevel",
+            admin_set_pvp_talent_slot_unlock_level,
+        )?;
+    register_forever_pvp_admin(builder)
+}
+
+#[cfg(feature = "client-wowforever")]
+fn register_forever_pvp_admin(
+    builder: crate::lua_bridge::TableBuilder,
+) -> LuaResult<crate::lua_bridge::TableBuilder> {
+    Ok(builder.set_function(
+        "SetPvpTalentUnlockLevel",
+        admin_set_forever_pvp_talent_unlock_level,
+    )?)
+}
+
+#[cfg(feature = "client-retail")]
+fn register_forever_pvp_admin(
+    builder: crate::lua_bridge::TableBuilder,
+) -> LuaResult<crate::lua_bridge::TableBuilder> {
+    Ok(builder)
+}
+
+// VERIFIED fields; row inputs are simulator host data. R88eq eq1.
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn admin_set_pvp_talent_alert_status(state: &mut LuaState) -> LuaResult<u32> {
+    use crate::lua_bridge::FromStack;
+    let has_unspent_slot = bool::from_stack(state, 1)?;
+    let has_new_talent = bool::from_stack(state, 2)?;
+    {
+        let mut sim = borrow_state_mut(state)?;
+        sim.pvp_talents.has_unspent_slot = has_unspent_slot;
+        sim.pvp_talents.has_new_talent = has_new_talent;
+    }
+    // INFERRED event; R88eq eq2 leaves event semantics UNKNOWN.
+    dispatch_pvp_talent_update(state)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn admin_set_pvp_talent_info(state: &mut LuaState) -> LuaResult<u32> {
+    use crate::lua_bridge::FromStack;
+    let record = PvpTalentInfoRecord {
+        talent_id: i32::from_stack(state, 1)?,
+        name: String::from_stack(state, 2)?,
+        icon: Option::<u32>::from_stack(state, 3)?,
+        selected: bool::from_stack(state, 4)?,
+        available: bool::from_stack(state, 5)?,
+        spell_id: u32::from_stack(state, 6)?,
+        unlocked: Option::<bool>::from_stack(state, 7)?,
+        tier: Option::<i32>::from_stack(state, 12)?.unwrap_or_default(),
+        column: Option::<i32>::from_stack(state, 13)?.unwrap_or_default(),
+        known: bool::from_stack(state, 8)?,
+        granted_by_aura: bool::from_stack(state, 9)?,
+        dependencies_unmet: bool::from_stack(state, 10)?,
+        dependencies_unmet_reason: Option::<String>::from_stack(state, 11)?,
+    };
+    let talent_id = record.talent_id;
+    borrow_state_mut(state)?
+        .pvp_talents
+        .info_by_id
+        .insert(talent_id, record);
+    // INFERRED refresh event; R88eq eq2 leaves event semantics UNKNOWN.
+    dispatch_pvp_talent_update(state)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn admin_set_selected_pvp_talent_ids(state: &mut LuaState) -> LuaResult<u32> {
+    let selected = read_pvp_talent_id_array(state, 1, "A_Admin.SetSelectedPvpTalentIDs")?;
+    // INFERRED host input: Retail slot buttons read their selections from the active group.
+    #[cfg(feature = "client-retail")]
+    {
+        let mut sim = borrow_state_mut(state)?;
+        sim.pvp_talents.selected_talent_ids = selected.clone();
+        let group = std::array::from_fn(|position| selected.get(position).copied());
+        let active_group = sim.pvp_talent_tooltip.active_group_index;
+        sim.pvp_talent_tooltip.groups.insert(active_group, group);
+    }
+    #[cfg(feature = "client-wowforever")]
+    {
+        borrow_state_mut(state)?.pvp_talents.selected_talent_ids = selected;
+    }
+    dispatch_pvp_talent_update(state)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn read_pvp_talent_id_array(
+    state: &LuaState,
+    index: i32,
+    admin_function: &str,
+) -> LuaResult<Vec<i32>> {
+    let Val::Table(input) = rilua::table_security::unwrap_secret(state, stack_val(state, index))?
+    else {
+        return Err(rilua::runtime_error(format!(
+            "{admin_function}: expected a talent ID array"
+        )));
+    };
+    let table = state.gc.tables.get(input).expect("live Lua table");
+    (1..=table.array_len())
+        .map(
+            |position| match table.get(Val::Num(position as f64), &state.gc.string_arena) {
+                Val::Num(id) => Ok(id as i32),
+                _ => Err(rilua::runtime_error(format!(
+                    "{admin_function}: talent IDs must be numbers"
+                ))),
+            },
+        )
+        .collect()
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn dispatch_pvp_talent_update(state: &mut LuaState) -> LuaResult<u32> {
+    // INFERRED event; R88eq eq2 leaves event semantics UNKNOWN.
+    crate::lua_api::globals::state_backed_queries::dispatch_event_now(
+        state,
+        "PLAYER_PVP_TALENT_UPDATE",
+        &[],
+    )?;
     Ok(0)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn admin_set_inspect_selected_pvp_talent(state: &mut LuaState) -> LuaResult<u32> {
+    use crate::lua_bridge::FromStack;
+    let unit = String::from_stack(state, 1)?;
+    let slot = i32::from_stack(state, 2)?;
+    let talent_id = i32::from_stack(state, 3)?;
+    borrow_state_mut(state)?
+        .pvp_talents
+        .inspect_selected_talent_ids
+        .insert((unit, slot), talent_id);
+    // INFERRED inspect refresh event; R88eq eq2 leaves event semantics UNKNOWN.
+    crate::lua_api::globals::state_backed_queries::dispatch_event_now(
+        state,
+        "INSPECT_HONOR_UPDATE",
+        &[],
+    )?;
+    Ok(0)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn admin_set_pvp_talent_slot_unlock_level(state: &mut LuaState) -> LuaResult<u32> {
+    use crate::lua_bridge::FromStack;
+    let slot = i32::from_stack(state, 1)?;
+    let level = i32::from_stack(state, 2)?;
+    borrow_state_mut(state)?
+        .pvp_talents
+        .slot_unlock_levels
+        .insert(slot, level);
+    dispatch_pvp_talent_update(state)
+}
+
+#[cfg(feature = "client-wowforever")]
+fn admin_set_forever_pvp_talent_unlock_level(state: &mut LuaState) -> LuaResult<u32> {
+    use crate::lua_bridge::FromStack;
+    let talent_id = i32::from_stack(state, 1)?;
+    let level = i32::from_stack(state, 2)?;
+    borrow_state_mut(state)?
+        .pvp_talents
+        .talent_unlock_levels
+        .insert(talent_id, level);
+    dispatch_pvp_talent_update(state)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn admin_set_pvp_talent_slot_info(state: &mut LuaState) -> LuaResult<u32> {
+    use crate::lua_bridge::FromStack;
+    let slot_index = i32::from_stack(state, 1)?;
+    let slot = super::c_tooltip_info_pvp_talent::PvpTalentSlotInput {
+        enabled: bool::from_stack(state, 2)?,
+        level: i32::from_stack(state, 3)?,
+        available_talent_ids: read_pvp_talent_id_array(state, 4, "A_Admin.SetPvpTalentSlotInfo")?,
+    };
+    #[cfg(feature = "client-retail")]
+    {
+        let slot_index = usize::try_from(slot_index).map_err(|_| {
+            rilua::runtime_error("A_Admin.SetPvpTalentSlotInfo: slot index must be nonnegative")
+        })?;
+        borrow_state_mut(state)?
+            .pvp_talent_tooltip
+            .slots
+            .insert(slot_index, slot);
+    }
+    #[cfg(feature = "client-wowforever")]
+    {
+        borrow_state_mut(state)?
+            .pvp_talents
+            .slot_infos
+            .insert(slot_index, slot);
+    }
+    dispatch_pvp_talent_update(state)
 }
 
 fn get_inspect_specialization(state: &mut LuaState) -> LuaResult<u32> {
@@ -429,6 +798,7 @@ fn can_use_pvp_talent_ui(state: &mut LuaState) -> LuaResult<u32> {
     Ok(2)
 }
 
+// VERIFIED two Boolean results; meanings UNKNOWN. R88eq eq1.
 fn pvp_talent_alert_status(state: &mut LuaState) -> LuaResult<u32> {
     let (unspent, new_talent) = {
         let sim = borrow_state(state)?;

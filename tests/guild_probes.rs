@@ -114,6 +114,31 @@ fn guild_news_queries_have_empty_safe_defaults() {
     assert!(info_is_nil);
 }
 
+#[test]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn query_guild_news_drops_requests_until_fifteen_minutes() {
+    let env = env();
+    let events: i32 = env
+        .eval(
+            r#"
+            A_Admin.SetManualClock(1)
+            local count = 0
+            local listener = CreateFrame('Frame')
+            listener:RegisterEvent('GUILD_NEWS_UPDATE')
+            listener:SetScript('OnEvent', function() count = count + 1 end)
+            QueryGuildNews()
+            QueryGuildNews()
+            A_Admin.AdvanceTime(899)
+            QueryGuildNews()
+            A_Admin.AdvanceTime(1)
+            QueryGuildNews()
+            return count
+            "#,
+        )
+        .unwrap();
+    assert_eq!(events, 2);
+}
+
 // ── CanReplaceGuildMaster ─────────────────────────────────────────────────────
 
 #[test]
@@ -187,11 +212,13 @@ fn get_num_guild_members_counts_roster() {
         st.world.guild_members = vec![
             GuildMember {
                 name: "Alpha".into(),
+                guid: None,
                 rank_index: 1,
                 online: true,
             },
             GuildMember {
                 name: "Beta".into(),
+                guid: None,
                 rank_index: 2,
                 online: false,
             },
@@ -212,11 +239,13 @@ fn seeded_guild_roster_has_one_online_and_one_offline_member() {
     env.state().borrow_mut().world.guild_members = vec![
         GuildMember {
             name: "Uther".into(),
+            guid: None,
             rank_index: 1,
             online: true,
         },
         GuildMember {
             name: "Jaina".into(),
+            guid: None,
             rank_index: 2,
             online: false,
         },
@@ -244,6 +273,7 @@ fn get_guild_roster_size_returns_total_count() {
     let env = env();
     env.state().borrow_mut().world.guild_members = vec![GuildMember {
         name: "Solo".into(),
+        guid: None,
         rank_index: 1,
         online: true,
     }];
@@ -301,6 +331,7 @@ fn get_guild_roster_info_synthesises_row_from_member_and_rank() {
         ];
         st.world.guild_members = vec![GuildMember {
             name: "Alpha".into(),
+            guid: None,
             rank_index: 2,
             online: true,
         }];
@@ -342,6 +373,7 @@ fn get_guild_roster_info_reports_offline_member() {
     let env = env();
     env.state().borrow_mut().world.guild_members = vec![GuildMember {
         name: "Offline".into(),
+        guid: None,
         rank_index: 1,
         online: false,
     }];

@@ -64,20 +64,31 @@ fn transmog_sets_query_supplied_records() {
 
 #[test]
 fn outfit_info_uses_existing_forever_catalog_and_emulated_empty() {
-    use super::outfit_entry::OutfitEntry;
     let env = WowLuaEnv::new().unwrap();
+    assert_no_outfit_match(&env);
+    seed_no_outfit_result(&env);
+    assert_no_outfit_match(&env);
+    seed_outfit_catalog_entries(&env);
+    assert_published_outfit_entries(&env);
+}
+
+fn assert_no_outfit_match(env: &WowLuaEnv) {
     assert_eq!(
         env.eval::<i32>("return select('#', C_TransmogOutfitInfo.GetOutfitInfo(91))")
             .unwrap(),
         0
     );
-    env.state().borrow_mut().forever_outfits = Some(None);
-    assert_eq!(
-        env.eval::<i32>("return select('#', C_TransmogOutfitInfo.GetOutfitInfo(91))")
-            .unwrap(),
-        0
-    );
-    env.state().borrow_mut().forever_outfits = Some(Some(vec![
+}
+
+fn seed_no_outfit_result(env: &WowLuaEnv) {
+    let mut state = env.state().borrow_mut();
+    state.transmog_outfit_catalog.entries.clear();
+}
+
+fn seed_outfit_catalog_entries(env: &WowLuaEnv) {
+    use super::outfit_entry::OutfitEntry;
+    let mut state = env.state().borrow_mut();
+    state.transmog_outfit_catalog.entries = vec![
         OutfitEntry {
             outfit_id: 91,
             name: "Copper".into(),
@@ -96,7 +107,10 @@ fn outfit_info_uses_existing_forever_catalog_and_emulated_empty() {
             is_disabled: false,
             player_facing_outfit_index: 42,
         },
-    ]));
+    ];
+}
+
+fn assert_published_outfit_entries(env: &WowLuaEnv) {
     let actual: (String, String, i32, i32, bool) = env.eval(r#"
         local first = C_TransmogOutfitInfo.GetOutfitInfo(91)
         local second = C_TransmogOutfitInfo.GetOutfitInfo(305)
@@ -116,31 +130,21 @@ fn outfit_info_uses_existing_forever_catalog_and_emulated_empty() {
 
 #[test]
 fn group_buffs_publish_six_supplied_fields_and_fresh_snapshots() {
-    use super::c_cooldown_viewer::GroupBuffItem;
     let env = WowLuaEnv::new().unwrap();
     assert_eq!(
         env.eval::<i32>("return #C_CooldownViewer.GetGroupBuffItems()")
             .unwrap(),
         0
     );
-    env.state().borrow_mut().cooldown_viewer_group_buffs = vec![
-        GroupBuffItem {
-            spell_id: 91,
-            display_spell_id: 92,
-            name: "Copper".into(),
-            icon_id: 123,
-            flags: 1,
-            is_known: false,
-        },
-        GroupBuffItem {
-            spell_id: 305,
-            display_spell_id: 306,
-            name: "Silver".into(),
-            icon_id: 456,
-            flags: 2,
-            is_known: true,
-        },
-    ];
+    env.exec(
+        r#"
+        A_Admin.SetGroupBuffItems({
+            { spellID = 91, displaySpellID = 92, name = 'Copper', iconID = 123, flags = 1, isKnown = false },
+            { spellID = 305, displaySpellID = 306, name = 'Silver', iconID = 456, flags = 2, isKnown = true },
+        })
+        "#,
+    )
+    .unwrap();
     let actual: (String, String, i32) = env.eval(r#"
         local items = C_CooldownViewer.GetGroupBuffItems()
         assert(#items == 2)
@@ -152,7 +156,7 @@ fn group_buffs_publish_six_supplied_fields_and_fresh_snapshots() {
         return C_CooldownViewer.GetGroupBuffItems()[1].name, items[2].name, count
     "#).unwrap();
     assert_eq!(actual, ("Copper".into(), "Silver".into(), 6));
-    env.state().borrow_mut().cooldown_viewer_group_buffs.clear();
+    env.exec("A_Admin.SetGroupBuffItems({})").unwrap();
     assert_eq!(
         env.eval::<i32>("return #C_CooldownViewer.GetGroupBuffItems()")
             .unwrap(),

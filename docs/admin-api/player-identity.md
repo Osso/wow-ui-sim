@@ -98,3 +98,33 @@ Sets the player's displayed sex for localization purposes.
 A_Admin.SetPlayerSex(3)     -- female
 print(UnitSex("player"))    -- 3
 ```
+
+## A_Admin.SetAccountType(account)
+
+Supplies account state for the Retail and WoW Forever profiles. The native claims below are **INFERRED (R88fw; Retail 12.1.5.70688 / Forever 1.60.1.70707)** unless marked UNKNOWN.
+
+- **account** `table` -- All fields are required:
+  - `accountType` `number` -- Shared account-type word. `5` makes `IsTrialAccount()` true; `4` makes `IsVeteranTrialAccount()` true. These results are mutually exclusive.
+  - `restricted` `boolean` -- Separate restricted-account flag.
+  - `expansionTrial` `boolean` -- Expansion-trial flag.
+  - `expansionTrialExpiry` `number` -- Absolute expiry on the simulator's `GetTime()` clock; must be finite and nonnegative.
+  - `restrictedLevel` `number` -- Level limit; must be nonnegative.
+  - `restrictedMoney` `number` -- Copper limit; must be nonnegative.
+- **UNKNOWN (R88fw; Retail 12.1.5.70688 / Forever 1.60.1.70707):** the native trial predicates also use a `converted` setting fallback when the account type does not match. The simulator CVar registry does not define `converted`, so this fallback is not modeled.
+- **INFERRED (R88fw; Retail 12.1.5.70688 / Forever 1.60.1.70707):** `IsExpansionTrial()` requires the flag and a future expiry. `GetExpansionTrialInfo()` returns `(true, remainingSeconds)` while active, else `(false, nil)`.
+- **INFERRED (R88fw; Retail 12.1.5.70688 / Forever 1.60.1.70707):** `GetRestrictedAccountData()` returns the supplied level and money limits, followed by profession cap `0`.
+- **Affects:** `IsTrialAccount()`, `IsVeteranTrialAccount()`, `IsRestrictedAccount()`, `IsExpansionTrial()`, `GetExpansionTrialInfo()`, `GetRestrictedAccountData()`
+- **Example:**
+```lua
+A_Admin.SetManualClock(0)
+A_Admin.SetAccountType({
+    accountType = 5,
+    restricted = true,
+    expansionTrial = true,
+    expansionTrialExpiry = 3600,
+    restrictedLevel = 20,
+    restrictedMoney = 100000,
+})
+local isTrial, remaining = GetExpansionTrialInfo()
+local level, money, profession = GetRestrictedAccountData()
+```

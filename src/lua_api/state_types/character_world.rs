@@ -246,6 +246,8 @@ pub struct PlayerState {
     pub can_port_graveyard: bool,
     pub health: i32,
     pub health_max: i32,
+    /// INFERRED R88ch: supplied current stagger damage amount for this unit.
+    pub stagger_amount: f64,
     pub class_index: i32,
     pub race_index: usize,
     /// INFERRED (simulator mapping): host-supplied FactionTemplate flags keyed by one-based race ID; empty by default.
@@ -260,6 +262,9 @@ pub struct PlayerState {
     pub power_type: i32,
     /// Secondary power pools keyed by Enum.PowerType value (e.g. Holy Power).
     pub secondary_powers: HashMap<i32, SecondaryPowerState>,
+    /// INFERRED (R88dy, native evidence pending): supplied display modifiers by PowerType.
+    #[cfg(feature = "client-retail")]
+    pub power_display_modifiers: HashMap<i32, f64>,
     /// Explicit regen pairs indexed by power type; no mana/player-stat alias.
     #[cfg(feature = "client-retail")]
     pub power_regen: HashMap<i32, PowerRegen>,
@@ -368,10 +373,39 @@ impl PlayerState {
     }
 }
 
+/// Account type and the limits reported to restricted-account consumers.
+/// Defaults are an unrestricted account; the historical cap values remain
+/// available until a host supplies a different account snapshot.
+#[derive(Debug, Clone)]
+pub struct AccountTypeState {
+    /// INFERRED (R88fw; Retail 12.1.5.70688 / Forever 1.60.1.70707): shared connection account-type word.
+    pub account_type: i32,
+    /// INFERRED (R88fw; Retail 12.1.5.70688 / Forever 1.60.1.70707): dedicated restricted-account byte.
+    pub restricted: bool,
+    /// INFERRED (R88fw; Retail 12.1.5.70688 / Forever 1.60.1.70707): expansion-trial flag and absolute GetTime expiry.
+    pub expansion_trial: bool,
+    pub expansion_trial_expiry: f64,
+    pub restricted_level: i32,
+    pub restricted_money: i64,
+}
+
+impl Default for AccountTypeState {
+    fn default() -> Self {
+        Self {
+            account_type: 0,
+            restricted: false,
+            expansion_trial: false,
+            expansion_trial_expiry: 0.0,
+            restricted_level: 20,
+            restricted_money: 0,
+        }
+    }
+}
+
 /// XP / honor / rest globals consumed by `Blizzard_ActionBar/Shared/ExpBar.lua`
 /// and `Mainline/HonorBar.lua`. Default values mirror "level 70 paladin in a
 /// rested inn, no Trial restrictions": no exhaustion XP, rest state 1
-/// ("Rested", 1.5x multiplier), no honor banked, no trial cap. The basic
+/// ("Rested", 1.5x multiplier), no honor banked, no trial cap.
 /// XP totals (`xp` / `xp_max`) live on [`PlayerState`] alongside health
 /// because many existing readers (UnitXP / UnitXPMax / IsXPUserDisabled /
 /// IsResting / UnitHonorLevel) already key off it.
@@ -399,19 +433,11 @@ pub struct PlayerXpState {
     /// `UnitTrialBankedLevels("player")` — banked levels held for trial
     /// accounts that have not subscribed yet.
     pub trial_banked_levels: i32,
-    /// `GetRestrictedAccountData()` first return — the level cap a
-    /// limited account is locked at. 20 matches the historical Trial cap
-    /// and the previous custom-stub return.
-    pub restricted_level: i32,
-    /// `GetRestrictedAccountData()` second return — copper cap.
-    pub restricted_money: i64,
-    /// `GetRestrictedAccountData()` third return — profession-skill cap.
-    pub restricted_profession: i32,
     /// `GameLimitedMode_IsBankedXPActive()` — true while the trial cap is
     /// armed (the player has stopped earning XP toward the next level).
     pub banked_xp_active: bool,
     /// `GameLimitedMode_GetLevelLimit()` — the level the trial cap
-    /// enforces. Defaults to the same value as `restricted_level`.
+    /// enforces. Defaults to the historical level cap of 20.
     pub level_limit: i32,
 }
 
@@ -427,9 +453,6 @@ impl Default for PlayerXpState {
             honor_max: 0,
             trial_xp: 0,
             trial_banked_levels: 0,
-            restricted_level: 20,
-            restricted_money: 0,
-            restricted_profession: 0,
             banked_xp_active: false,
             level_limit: 20,
         }
@@ -511,6 +534,8 @@ pub struct WorldState {
     /// Whether the current instance is an arena battleground. Drives
     /// `IsBattlefieldArena`.
     pub battlefield_arena: bool,
+    /// R88ei: whether the current arena record exists.
+    pub current_arena_record_flag: bool,
     /// Numeric active-player guild identity; zero means no guild.
     pub guild_id: u64,
     /// Zero-based active-player rank into the existing guild_ranks rights cache.
@@ -518,6 +543,7 @@ pub struct WorldState {
     pub guild_name: Option<String>,
     pub guild_rank: Option<String>,
     pub guild_num_members: i32,
+    pub guild_perks: Vec<GuildPerk>,
     pub great_vault_activities: Vec<GreatVaultActivity>,
     pub great_vault_has_rewards: bool,
     pub great_vault_can_claim: bool,
@@ -625,11 +651,14 @@ pub struct WorldState {
     pub guild_events: Vec<GuildEvent>,
 }
 
-/// A guild member: display name, 1-based rank index, and online state.
+/// A guild member: display name, optional host-supplied GUID, rank, and online state.
+/// INFERRED (R88ce): membership matches GUIDs exactly; unseeded members have no GUID.
 /// Rank 1 is highest (Guild Master). Higher values = lower rank.
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub struct GuildMember {
     pub name: String,
+    pub guid: Option<String>,
     pub rank_index: i32,
     pub online: bool,
 }
@@ -650,6 +679,14 @@ pub struct GuildEvent {
     pub month: i32,
     pub day: i32,
     pub hour: i32,
+}
+
+/// One guild perk supplied by the host. Spell identity and level are
+/// explicit inputs; names and icons come from the spell catalog.
+#[derive(Debug, Clone, Copy)]
+pub struct GuildPerk {
+    pub spell_id: u32,
+    pub level: u32,
 }
 
 /// One row of `GetGuildChallengeInfo(orderIndex)`: returns
@@ -701,7 +738,7 @@ pub struct RandomBGInfo {
 /// A macro slot. Matches the `/macro` addon view: name, icon, body text.
 /// `icon` is the texture path passed to `EditMacro` (retail uses a mix
 /// of texture ids and paths; the sim stores whatever the caller provides).
-#[derive(Debug, Default, Clone)]
+#[derive(Debug, Default, Clone, serde::Deserialize, serde::Serialize)]
 pub struct MacroInfo {
     pub name: String,
     pub icon: String,

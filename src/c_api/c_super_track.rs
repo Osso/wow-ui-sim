@@ -1,4 +1,18 @@
-//! Supplied SuperTrack targets. No priority arbitration is inferred.
+//! Supplied SuperTrack targets. Priority order is inferred pending R88dw evidence.
+
+/// INFERRED, R88ff (native evidence pending): supplied engine navigation data.
+#[derive(Debug, Clone, Copy)]
+pub struct NavigationTarget {
+    /// INFERRED, R88ff (native evidence pending): value reported by the target.
+    pub state: i32,
+    /// INFERRED, R88ff (native evidence pending): scenario distance in yards.
+    pub distance: f64,
+    /// VERIFIED (Retail 12.1.5.70688; R88ff): the query publishes this stored Boolean.
+    pub clamped: bool,
+    /// INFERRED, R88ff (native evidence pending): supplied screen coordinates.
+    pub screen_x: f64,
+    pub screen_y: f64,
+}
 
 #[derive(Debug, Clone, Default)]
 pub struct SuperTrackState {
@@ -24,6 +38,8 @@ pub struct SuperTrackState {
     pub user_waypoint: bool,
     /// INFERRED simulator default false; VERIFIED preserved when waypoint tracking starts.
     pub corpse: bool,
+    /// Supplied navigation data is usable only while some target is super-tracked.
+    pub navigation_target: Option<NavigationTarget>,
 }
 
 use super::helpers::{
@@ -75,12 +91,54 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
         table_set_rust_fn_static(state, namespace, "SetSuperTrackedMapPin", set_map_pin)?;
         table_set_rust_fn_static(state, namespace, "SetSuperTrackedVignette", set_vignette)?;
     }
+    if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever) {
+        table_set_rust_fn_static(
+            state,
+            namespace,
+            "GetHighestPrioritySuperTrackingType",
+            highest_priority_type,
+        )?;
+    }
     Ok(())
 }
 
 fn supplied_id(state: &LuaState, index: i32) -> LuaResult<i32> {
     validate_supplied_relation_id(stack_val(state, index), "SuperTrack ID must be a number")?
         .ok_or_else(|| rilua::runtime_error("SuperTrack ID must be a finite i32 integer"))
+}
+
+// Enum.SuperTrackingType values follow the zero-based order in addon_system.rs.
+const SUPER_TRACKING_TYPE_QUEST: i32 = 0;
+const SUPER_TRACKING_TYPE_USER_WAYPOINT: i32 = 1;
+const SUPER_TRACKING_TYPE_CORPSE: i32 = 2;
+const SUPER_TRACKING_TYPE_CONTENT: i32 = 4;
+const SUPER_TRACKING_TYPE_MAP_PIN: i32 = 6;
+const SUPER_TRACKING_TYPE_VIGNETTE: i32 = 7;
+
+/// Return the first active modeled target in the inferred R88dw priority order.
+fn highest_priority_type(state: &mut LuaState) -> LuaResult<u32> {
+    let tracked = borrow_state(state)?.super_track.clone();
+    let priorities = [
+        (tracked.quest_tracking, SUPER_TRACKING_TYPE_QUEST),
+        (tracked.content_tracking, SUPER_TRACKING_TYPE_CONTENT),
+        (tracked.map_pin_tracking, SUPER_TRACKING_TYPE_MAP_PIN),
+        (
+            if ACTIVE == ClientProfile::Retail {
+                tracked.vignette_tracking
+            } else {
+                tracked.vignette.is_some()
+            },
+            SUPER_TRACKING_TYPE_VIGNETTE,
+        ),
+        (tracked.user_waypoint, SUPER_TRACKING_TYPE_USER_WAYPOINT),
+        (tracked.corpse, SUPER_TRACKING_TYPE_CORPSE),
+    ];
+    let result = priorities
+        .into_iter()
+        .find_map(|(active, kind)| active.then_some(kind))
+        .map_or(Val::Nil, |kind| Val::Num(f64::from(kind)));
+    state.push(result);
+    Ok(1)
 }
 
 fn item_name(state: &mut LuaState) -> LuaResult<u32> {
@@ -199,6 +257,8 @@ fn anything(state: &mut LuaState) -> LuaResult<u32> {
 /// effect is UNKNOWN (R88j.5).
 fn publish_change(state: &mut LuaState) -> LuaResult<u32> {
     dispatch_event_now(state, "SUPER_TRACKING_CHANGED", &[])?;
+    #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
+    super::c_navigation::update_navigation_frame(state)?;
     Ok(0)
 }
 

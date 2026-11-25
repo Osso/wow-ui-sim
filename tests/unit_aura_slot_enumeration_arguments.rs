@@ -11,7 +11,7 @@ fn aura(id: i32, helpful: bool, from_player: bool) -> AuraInfo {
     AuraInfo {
         name: "Duplicate enumeration name".into(),
         spell_id: 88000 + id,
-        icon: 134973,
+        icon: wow_ui_sim::lua_api::state::AuraIcon::FileId(134973),
         duration: 30.0,
         expiration_time: 45.0,
         applications: 3,
@@ -411,7 +411,7 @@ fn assert_records_unchanged(actual: &[AuraInfo], expected: &[AuraInfo]) {
             (
                 &a.name,
                 a.spell_id,
-                a.icon,
+                &a.icon,
                 a.duration,
                 a.expiration_time,
                 a.applications,
@@ -421,7 +421,7 @@ fn assert_records_unchanged(actual: &[AuraInfo], expected: &[AuraInfo]) {
             (
                 &b.name,
                 b.spell_id,
-                b.icon,
+                &b.icon,
                 b.duration,
                 b.expiration_time,
                 b.applications,

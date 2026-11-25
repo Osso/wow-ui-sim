@@ -757,6 +757,42 @@ fn ptr_store_disabled_without_override_leaves_game_menu_and_stores_unchanged() {
     }
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+const ACTIVE_GAMEPAD_GAME_MENU_CASE: &str = r#"
+    A_Admin.SetUsingGamepad(true)
+    local active = IsUsingGamepad()
+    GameMenuFrame_Show()
+    local opened = A_Admin.GetGamePadCursorControlEnabled()
+    A_Admin.SetUsingGamepad(true)
+    local usingAtClose = IsUsingGamepad()
+    local canDisable = CanAutoSetGamePadCursorControl(false)
+    GameMenuFrame:CloseMenu()
+    return active, usingAtClose, canDisable, not GameMenuFrame:IsShown(), opened,
+        A_Admin.GetGamePadCursorControlEnabled()
+"#;
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+const INACTIVE_GAMEPAD_GAME_MENU_CASE: &str = r#"
+    A_Admin.SetUsingGamepad(false)
+    GameMenuFrame_Show()
+    return A_Admin.GetGamePadCursorControlEnabled(), GameMenuFrame:IsShown()
+"#;
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn gamepad_cursor_control_tracks_game_menu_lifecycle() {
+    test_timeout! {
+        let active_env = setup_game_menu_env();
+        active_env.exec("SetCVar('GamePadOverlapMouseMs', '60000')").unwrap();
+        let active: (bool, bool, bool, bool, bool, bool) =
+            active_env.eval(ACTIVE_GAMEPAD_GAME_MENU_CASE).unwrap();
+        assert_eq!(active, (true, true, true, true, true, false));
+        let inactive_env = setup_game_menu_env();
+        let inactive: (bool, bool) = inactive_env.eval(INACTIVE_GAMEPAD_GAME_MENU_CASE).unwrap();
+        assert_eq!(inactive, (false, true));
+    }
+}
+
 #[cfg(feature = "client-ptr")]
 #[test]
 fn ptr_store_override_toggle_requires_a_matching_native_catalog_session() {

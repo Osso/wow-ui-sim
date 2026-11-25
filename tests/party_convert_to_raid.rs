@@ -15,6 +15,9 @@ fn consumer_source() -> &'static str {
 fn party_member() -> PartyMember {
     PartyMember {
         map_position: None,
+        faction_group: None,
+        #[cfg(feature = "client-retail")]
+        pvp: None,
         name: "PartyMember".into(),
         name_cached: true,
         connected: true,
@@ -40,7 +43,10 @@ fn original_unit_popup_convert_to_raid_updates_group_readers() {
         let source: String = env
             .eval("return debug.getinfo(UnitPopupConvertToRaidButtonMixin.OnClick, 'S').source")
             .unwrap();
-        assert!(source.contains(consumer_source()), "unexpected UnitPopup source: {source}");
+        assert!(
+            source.contains(consumer_source()),
+            "unexpected UnitPopup source: {source}"
+        );
         {
             let mut sim = env.state().borrow_mut();
             sim.party_group_active = true;

@@ -65,7 +65,22 @@ macro_rules! build_empty_sim_state {
         let restricted_actions = crate::c_api::restricted_actions::initial_states(&cvars);
         let quest_log_entries = QuestLogState::seeded();
         Self {
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            dangerous_scripts_allowed: false,
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            scripts_disallowed_for_beta: false,
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            kiosk_session: Default::default(),
+            #[cfg(feature = "client-retail")]
+            scripted_animation_effects: None,
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            ranged_slot: crate::c_api::ranged_slot::RangedSlotState::default(),
             store_glue: Default::default(),
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            behavioral_messaging_receipts: Vec::new(),
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            configuration_warnings: Vec::new(),
+            pending_target_spell: Default::default(),
             loot_specialization: 0,
             loot_spec_window: None,
             pending_loot_specs: Vec::new(),
@@ -77,6 +92,7 @@ macro_rules! build_empty_sim_state {
             source_location_exclusions: Vec::new(),
             events: EventQueue::default(),
             private_aura_anchors: crate::c_api::private_aura_anchors::PrivateAuraAnchors::default(),
+            private_aura_data: Default::default(),
             #[cfg(all(
                 feature = "retail-12-0-5",
                 any(feature = "profile-retail", feature = "client-ptr")
@@ -87,8 +103,17 @@ macro_rules! build_empty_sim_state {
                 crate::c_api::c_nameplate_manager::NamePlateHitTestInsets::default(),
             input_interface_style:
                 crate::c_api::c_input_interface_style::InputInterfaceStyle::default(),
+            #[cfg(any(
+                feature = "client-retail",
+                feature = "client-ptr",
+                feature = "client-wowforever"
+            ))]
+            gamepad_cursor_control_enabled: false,
+            edit_mode_cache: crate::c_api::c_edit_mode_cache::EditModeCacheState::default(),
             #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
             last_gamepad_input_timestamp: None,
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            gx_adapter_info: crate::c_api::video_window::default_gx_adapter_info(),
             video_capability_bytes: Default::default(),
             #[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
             performance_bar_protocol_types: None,
@@ -98,7 +123,7 @@ macro_rules! build_empty_sim_state {
             gamepad_allow_hover_events_with_free_look: false,
             #[cfg(feature = "retail-12-1-5")]
             weather: crate::c_api::c_weather::WeatherState::default(),
-            #[cfg(feature = "retail-12-1-0")]
+            #[cfg(any(feature = "retail-12-1-0", feature = "client-wowforever"))]
             encounter_timeline: crate::c_api::c_encounter_timeline::Timeline::default(),
             scripts: ScriptRegistry::default(),
             ui_reload_requested: false,
@@ -118,7 +143,13 @@ macro_rules! build_empty_sim_state {
             #[cfg(feature = "client-wrath")]
             legacy_gamma: 0.0,
             guild_roster_selection: 0,
+            guild_events_enabled: false,
+            guild_reputation_enabled: false,
+            guild_can_change_locale: false,
+            guild_can_change_datacenter_locality: false,
             guild_request_inputs: Default::default(),
+            guild_rename_status: None,
+            pending_guild_rename_status: Default::default(),
             runeforge_interaction: Default::default(),
             restriction_report_active: false,
             ping_radial_frame: None,
@@ -156,13 +187,29 @@ macro_rules! build_empty_sim_state {
             addon_saved_version_check_enabled: None,
             system_chat_log: Vec::new(),
             addon_message_prefixes: Default::default(),
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            social_queue: Default::default(),
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            party_invite_confirmations: Default::default(),
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            black_market: Default::default(),
             #[cfg(feature = "client-retail")]
             talking_head: Default::default(),
             adventure_map: AdventureMapState::default(),
             encounter_journal: EncounterJournalState::default(),
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            completed_encounters: Vec::new(),
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            pending_raid_info_replies: VecDeque::new(),
+            #[cfg(feature = "client-retail")]
+            pending_owned_house_replies: VecDeque::new(),
+            #[cfg(feature = "client-retail")]
+            pending_house_finder_replies: VecDeque::new(),
             pet_journal_hover: crate::c_api::c_pet_journal_hover::PetJournalHoverState::default(),
             anima_diversion: AnimaDiversionState::default(),
             garrison_talents: GarrisonTalentState::default(),
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            garrison_mission_lists: Default::default(),
             hyperlink_tooltip: Default::default(),
             trade_skill_crafting_ui_inputs: Default::default(),
             #[cfg(feature = "client-retail")]
@@ -200,6 +247,8 @@ macro_rules! build_empty_sim_state {
             item_set_bonuses: crate::c_api::ItemSetBonuses::default(),
             #[cfg(feature = "retail-12-0-0")]
             ping_texture_kits: crate::c_api::PingTextureKits::default(),
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            ping_default_options: crate::c_api::PingDefaultOptions::default(),
             #[cfg(feature = "retail-12-0-0")]
             party_ai_guids: HashSet::new(),
             #[cfg(feature = "retail-12-0-5")]
@@ -216,6 +265,8 @@ macro_rules! build_empty_sim_state {
             weapon_attack_power: ::std::collections::HashMap::new(),
             quest_blobs: $collections.quest_blobs,
             minimap_quest_blob_inside: HashMap::new(),
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            zone_story_info: HashMap::new(),
             fog_of_war_frames: $collections.fog_of_war_frames,
             unit_position_frames: $collections.unit_position_frames,
             report_player_eligible: false,
@@ -247,6 +298,8 @@ macro_rules! build_empty_sim_state {
             #[cfg(any(feature = "client-ptr", feature = "client-wowforever"))]
             glue_feature_status: Default::default(),
             is_logged_in: $runtime.is_logged_in,
+            startup_script_watchdog_phase: true,
+            script_watchdog_timeout_override: None,
             post_event_workarounds_applied: false,
             screen_first_display_state: $runtime.screen_first_display_state,
             account_save_enabled: $runtime.account_save_enabled,
@@ -303,6 +356,7 @@ macro_rules! build_empty_sim_state {
             model_scenes: HashMap::new(),
             active_player_interactions: HashSet::new(),
             outdoor_pvp_world_state: Default::default(),
+            should_use_hybrid_minimap: None,
             minimap_tracking_mask: None,
             battleground_enlistment: Default::default(),
             pvp_reward_caches: Default::default(),
@@ -314,16 +368,24 @@ macro_rules! build_empty_sim_state {
             azerite_empowered: AzeriteEmpoweredItemState::default(),
             barber_shop: BarberShopState::default(),
             damage_meter: crate::c_api::c_damage_meter::DamageMeterInput::default(),
+            #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
+            combat_log_history: crate::c_api::combat_log_history::CombatLogHistory::default(),
             item_interaction: None,
             item_interaction_tooltip_input: None,
             possession_spell_id: None,
             possession_object: None,
             major_factions: HashMap::new(),
+            #[cfg(feature = "client-wowforever")]
+            reincarnation: Default::default(),
             major_faction_renown_levels: HashMap::new(),
             major_faction_renown_rewards: HashMap::new(),
             recent_allies: crate::c_api::c_recent_allies::RecentAlliesInput::default(),
             latest_transmog_appearance: None,
             account_wide_reputation_factions: HashSet::new(),
+            reputation: Default::default(),
+            perks_activities: Default::default(),
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            perks_program: Default::default(),
             faction_paragon: HashMap::new(),
             #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
             active_brawl: None,
@@ -334,7 +396,8 @@ macro_rules! build_empty_sim_state {
                 feature = "retail-12-0-0",
                 feature = "client-mists",
                 feature = "client-era",
-                feature = "client-anniversary"
+                feature = "client-anniversary",
+                feature = "client-wowforever"
             ))]
             transmog_appearance_sources: HashMap::new(),
             #[cfg(feature = "client-wowforever")]
@@ -366,14 +429,16 @@ macro_rules! build_empty_sim_state {
                 feature = "retail-12-0-0",
                 feature = "client-mists",
                 feature = "client-era",
-                feature = "client-anniversary"
+                feature = "client-anniversary",
+                feature = "client-wowforever"
             ))]
             transmog_outfit_catalog: crate::c_api::c_transmog_outfit_info::OutfitCatalog::default(),
             #[cfg(any(
                 feature = "retail-12-0-0",
                 feature = "client-mists",
                 feature = "client-era",
-                feature = "client-anniversary"
+                feature = "client-anniversary",
+                feature = "client-wowforever"
             ))]
             transmog_outfits: crate::c_api::c_transmog_outfit_info::OutfitState::default(),
             #[cfg(any(
@@ -401,11 +466,13 @@ macro_rules! build_empty_sim_state {
                 feature = "retail-12-0-0",
                 feature = "client-mists",
                 feature = "client-era",
-                feature = "client-anniversary"
+                feature = "client-anniversary",
+                feature = "client-wowforever"
             ))]
             transmog_custom_sets: crate::c_api::c_transmog_collection::CustomSets::default(),
             equipped_outfit_locked: false,
             locked_action_slots: HashSet::new(),
+            level_link_locked_spells: HashSet::new(),
             is_active_battlefield: false,
             spell_trade_skill_links: HashMap::new(),
             spell_id_aliases: HashMap::new(),
@@ -424,10 +491,11 @@ macro_rules! build_empty_sim_state {
             has_active_lair: false,
             active_lair_is_lfg: false,
             title_friend_requests: Vec::new(),
-            #[cfg(feature = "retail-12-0-7")]
             club_battle_tag_friend_requests: Vec::new(),
             clubs: crate::c_api::club_model::ClubState::default(),
+            club_finder: crate::c_api::c_club_finder::ClubFinderState::default(),
             spell_cooldown_categories: HashMap::new(),
+            spellbook_auto_cast: HashMap::new(),
             spellbook_low_rank: HashSet::new(),
             spellbook_loose_flyout_members: HashSet::new(),
             spell_cooldown_item_sources: HashMap::new(),
@@ -491,6 +559,8 @@ macro_rules! build_empty_sim_state {
             party_members: $collections.party_members,
             party_group_active: $runtime.party_group_active,
             #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            instance_abandon_vote: Default::default(),
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
             party_is_raid: None,
             home_subgroup_roster: None,
             instance_subgroup_roster: None,
@@ -510,6 +580,12 @@ macro_rules! build_empty_sim_state {
             wrath_unit_tap_states: HashMap::new(),
             current_target: $runtime.current_target,
             unit_target_guids: HashMap::new(),
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            unit_threats: HashMap::new(),
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            unit_effectively_tank_auras: HashMap::new(),
+            #[cfg(feature = "client-wowforever")]
+            specialization_system: 0,
             unit_guid_overrides: HashMap::new(),
             player_owned_or_controlled_unit_guids: HashSet::new(),
             previous_target: None,
@@ -557,6 +633,8 @@ macro_rules! build_empty_sim_state {
             action_spell_ranges: Default::default(),
             #[cfg(feature = "retail-12-0-0")]
             weekly_reward_progress: Default::default(),
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            auto_complete_realms: Vec::new(),
             weekly_rewards: Default::default(),
             #[cfg(feature = "retail-12-0-0")]
             encounter_warning_settings: Default::default(),
@@ -606,8 +684,12 @@ macro_rules! build_empty_sim_state {
             #[cfg(feature = "retail-12-0-5")]
             spell_max_cumulative_aura_applications: ::std::collections::HashMap::new(),
             pvp_match_active: false,
+            pvp_timer_running: false,
+            pvp_timer_deadline_ms: 0,
             pvp_request_transport: Default::default(),
             aura_filter_facts: Default::default(),
+            #[cfg(feature = "aura-instance-enumeration")]
+            group_buff_settings: Default::default(),
             target_auras: crate::lua_api::globals::auras::target_fixture_auras(),
             inventory_item_cooldowns: ::std::collections::HashMap::new(),
             item_cooldowns: ::std::collections::HashMap::new(),
@@ -659,6 +741,7 @@ macro_rules! build_empty_sim_state {
             #[cfg(feature = "client-wowforever")]
             forever_pvp_talent_spell_ids: HashMap::new(),
             player_xp: PlayerXpState::default(),
+            account_type: crate::lua_api::state_types::AccountTypeState::default(),
             bind_location: "Stormwind City".into(),
             pvp_honor: PvpHonorState::default(),
             world: super::state_types::seeded_world_state(),
@@ -674,6 +757,7 @@ macro_rules! build_empty_sim_state {
             bag_info: crate::c_api::bag_info::BagInfo::default_bags(),
             tracked_recipes: $collections.tracked_recipes,
             crafting: CraftingState::default(),
+            trainer: crate::c_api::trainer_service::TrainerState::default(),
             net_stats: NetStats::default(),
             game_clock: GameClock::default(),
             store_frame_shown: false,
@@ -703,10 +787,13 @@ macro_rules! build_empty_sim_state {
             lfr_availability: crate::c_api::stock_lfr_availability(),
             transmog_availability: Default::default(),
             spectating: false,
-            forever_outfits: None,
             scenario_finder_availability: None,
             mists_party_min_level: None,
             lfg_category_info: default_lfg_category_info(),
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            lfg_queue_entries: Vec::new(),
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            lfg_lock_states: Vec::new(),
             lfg_active_categories: ::std::collections::HashSet::new(),
             lfg_queued_dungeons: ::std::collections::HashMap::new(),
             lfg_expand_prompt: None,
@@ -749,6 +836,7 @@ macro_rules! build_empty_sim_state {
             quest_watch_types: crate::c_api::seed_quest_watch_types(&quest_log_entries.entries),
             quest_log_entries,
             super_track: Default::default(),
+            navigation_frame_active: false,
             quest_war_mode_eligibility: HashSet::new(),
             pending_quest_offer: None,
             quest_choice_id: None,
@@ -776,7 +864,6 @@ macro_rules! build_empty_sim_state {
             merchant_frame_open: false,
             // Inferred default scenario: no configured repair service.
             merchant_repair_capable: false,
-            #[cfg(feature = "client-wowforever")]
             merchant_sell_all_junk_feature_enabled: false,
             tabard_frame_open: false,
             trainer_frame_open: false,
@@ -792,6 +879,8 @@ macro_rules! build_empty_sim_state {
             #[cfg(feature = "client-wowforever")]
             stable_reads: crate::c_api::c_stable_info::forever::StableReadState::default(),
             merchant_items: Vec::new(),
+            merchant_filter: 0,
+            merchant_item_refundable: HashMap::new(),
             purchase_inputs: Default::default(),
             inventory_candidates: Default::default(),
             merchant_links: Default::default(),
@@ -824,7 +913,7 @@ macro_rules! build_empty_sim_state {
             currency_info: super::globals::currency_data::seeded_currency_info_map(),
             currency_tooltip_inputs: HashMap::new(),
             wrath_currency: super::globals::real::wrath_currency::CurrencyListState::default(),
-            #[cfg(feature = "client-retail")]
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
             currency_list: crate::c_api::currency_list::CurrencyListState::default(),
             #[cfg(feature = "client-mists")]
             mists_currency_watch_overrides: HashMap::new(),
@@ -836,16 +925,25 @@ macro_rules! build_empty_sim_state {
             mount_item_relations: HashMap::new(),
             equipment_manager: EquipmentManagerState::new(),
             maps: default_maps(),
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            contribution_collectors: Default::default(),
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            taxi_map: Default::default(),
+            quest_log_selected_map_id: None,
             user_waypoint: None,
             map_display_hide_icons: HashMap::new(),
             map_world_rects: HashMap::new(),
             bounty_set_maps: HashMap::new(),
             achievements: default_achievements(),
+            can_show_achievement_ui: true,
             achievement_eligibility: AchievementEligibilityInputs::default(),
             achievement_superceding: HashMap::new(),
             calendar_now: Default::default(),
+            weekly_reset_schedule: Default::default(),
             calendar_displayed_month: Default::default(),
             calendar_next_club_id: None,
+            calendar_club_events: Vec::new(),
+            calendar_event_types: Vec::new(),
             calendar_context_policy: Default::default(),
             calendar_opened_selection: None,
             calendar_context_selection: None,
@@ -866,13 +964,29 @@ macro_rules! build_empty_sim_state {
             #[cfg(any(feature = "retail-12-0-7", feature = "retail-12-1-0"))]
             quest_hub_dragonriding_races: ::std::collections::HashMap::new(),
             bnet_friends: default_bnet_friends(),
-            #[cfg(feature = "client-wowforever")]
-            bnet_friend_tags_enabled: false,
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            bnet_selected_friend_index: None,
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            player_bnet_info: Default::default(),
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            player_bnet_account_present: false,
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            bnet_connection: Default::default(),
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            bnet_account_features: Default::default(),
             bnet_friend_invites: Vec::new(),
             bnet_appear_offline: false,
             #[cfg(feature = "retail-12-0-0")]
             bnet_custom_message: String::new(),
             social_friends: default_social_friends(),
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            social_ignores: Vec::new(),
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            bnet_blocked_entries: Vec::new(),
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            selected_social_ignore: None,
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            selected_bnet_block: None,
             social_restrictions: SocialRestrictionsState::default(),
             #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
             cinematic_summaries: HashMap::new(),
@@ -925,6 +1039,8 @@ macro_rules! build_empty_sim_state {
             super_district_info_by_id: ::std::collections::HashMap::new(),
             selected_super_district_id: 0,
             character_services: CharacterServicesState::default(),
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            class_trial: crate::c_api::c_class_trial::ClassTrialState::default(),
             shared_character_services:
                 crate::c_api::c_shared_character_services::SharedCharacterServicesState::default(),
             trial_boost_level:
@@ -942,6 +1058,7 @@ macro_rules! build_empty_sim_state {
             #[cfg(feature = "client-mists")]
             last_watched_reputation_slot_request: None,
             battlefield_vehicles: ::std::collections::HashMap::new(),
+            max_battlefield_id: 3,
             battlefield_queue: BattlefieldQueue::default(),
             battlefield_minimap_visible: false,
             chat_channels: Vec::new(),
@@ -955,6 +1072,16 @@ macro_rules! build_empty_sim_state {
             corpse_available: false,
             corpse_map_positions: HashMap::new(),
             active_trade: None,
+            #[cfg(any(
+                feature = "client-retail",
+                feature = "client-ptr",
+                feature = "client-wowforever"
+            ))]
+            pickup_trade_money_restricted: false,
+            #[cfg(feature = "client-ptr")]
+            trade_offer_warning: false,
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            secure_transfer: None,
             open_panels: ::std::collections::HashSet::new(),
             is_party_lfg: false,
             everyone_assistant: false,
@@ -981,7 +1108,7 @@ macro_rules! build_empty_sim_state {
             voice_chat: VoiceChatState::default(),
             #[cfg(feature = "client-wrath")]
             legacy_unit_voice: HashMap::new(),
-            #[cfg(feature = "retail-12-0-5")]
+            #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
             voice_channels: Vec::new(),
             #[cfg(feature = "retail-12-0-5")]
             lfg_endgame_policy: Default::default(),
@@ -993,6 +1120,12 @@ macro_rules! build_empty_sim_state {
             bnet_presence: Default::default(),
             #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
             voice_chat_speak_requests: Vec::new(),
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            combat_audio_speak_requests: Vec::new(),
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            next_combat_audio_utterance_id: 1,
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            pending_combat_audio_utterance_ids: Default::default(),
             voice_chat_speak_stop_count: 0,
             achievement_telemetry: Vec::new(),
             item_search_text: String::new(),
@@ -1020,10 +1153,14 @@ macro_rules! build_empty_sim_state {
             consumable_items: ::std::collections::HashSet::new(),
             current_item_ids: ::std::collections::HashSet::new(),
             can_replace_guild_master: false,
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            guild_roster_last_request: None,
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            guild_news_last_request: None,
             auto_decline_guild_invites: false,
             // INFERRED simulator initial preference, not a native default.
             auto_decline_neighborhood_invites: false,
-            #[cfg(feature = "retail-12-0-0")]
+            #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
             dye_colors: Default::default(),
             guild_roster_show_offline: true,
             menu_open: false,
@@ -1045,20 +1182,22 @@ pub use crate::c_api::c_pvp::{PvpBrawlInfo, SpecialEventBrawlInfo};
     feature = "retail-12-0-0",
     feature = "client-mists",
     feature = "client-era",
-    feature = "client-anniversary"
+    feature = "client-anniversary",
+    feature = "client-wowforever"
 ))]
 pub use crate::c_api::c_transmog_collection::AppearanceSourceInfo;
 #[cfg(any(
     feature = "retail-12-0-0",
     feature = "client-mists",
     feature = "client-era",
-    feature = "client-anniversary"
+    feature = "client-anniversary",
+    feature = "client-wowforever"
 ))]
 pub use crate::c_api::c_transmog_outfit_info::ViewedOutfitSlotInfo;
 
 // Re-export game data types so existing `crate::lua_api::state::X` imports keep working.
-pub use super::game_data::AuraInfo;
 pub use super::game_data::SpellCooldownState;
+pub use super::game_data::{AuraIcon, AuraInfo};
 pub use super::game_data::{
     CLASS_LABELS, CastTargetSnapshot, CastingState, EmpowerTiming, PartyMember, RACE_DATA,
     ROT_DAMAGE_LEVELS, SubgroupMemberRecord, SubgroupOwnerRoster, TargetInfo, XP_LEVELS,
@@ -1077,25 +1216,25 @@ pub use super::state_types::{
     AuctionSellQuote, AuctionSellQuoteKind, AuctionSortSpec, AzeriteEssenceInfo,
     AzeriteEssenceMilestoneInfo, AzeriteEssenceState, BagItem, BarberShopAlternateFormRace,
     BarberShopCategory, BarberShopCharacterData, BarberShopOption, BarberShopState, BidAuction,
-    BnetFriend, BnetFriendInvite, BnetGameAccount, BrowseQuery, CharacterNameSeparator, ChatBubble,
-    CommodityPurchaseQuote, CommoditySearchResultInfo, CommoditySearchResults, CraftingState,
-    CurrencyInfo, CursorInfo, CursorItemOrigin, DeathRecapEntry, DeathRecapEventInfo,
-    EquipmentManagerState, EquipmentSet, EquippedItem, GreatVaultActivity, GroupMemberCountsMember,
-    GroupMemberCountsState, GuildBankRankPermissions, GuildBankTab, GuildMember, GuildRank,
-    ItemSearchKey, ItemSearchResultInfo, ItemSearchResults, KillingBlowInfo, LfdDungeonInfo,
-    LfgActivityGroupInfo, LfgActivityInfo, LfgAdvancedFilter, LfgApplication, LfgCategoryInfo,
-    LfgRoleSelection, LfgTooltipReward, LfgTooltipRewardGroup, LoadDiagnosticAttribution,
-    LoadDiagnostics, LootHistoryState, LootRollInfo, LootSlot, LuaErrorRecord, MacroInfo,
-    MapChildRect, MapData, MapRect, MirrorTimer, MissingRequirement, MissingRequirementKind,
-    MovementState, MythicPlusAffix, MythicPlusRatingMapSummary, MythicPlusRatingSummary,
-    MythicPlusRun, MythicPlusState, MythicPlusWeeklyBest, NilSymbolAccess, NilSymbolEnvironment,
-    NilSymbolObservation, NilSymbolObservationKind, OwnedAuction, OwnedKeystone, PendingTimer,
-    PlayerChoiceInfo, PlayerChoiceOptionButtonInfo, PlayerChoiceOptionInfo,
-    PlayerChoiceOptionRewardInfo, PlayerChoiceRewardCurrencyInfo, PlayerChoiceRewardItemInfo,
-    PlayerChoiceRewardReputationInfo, PlayerChoiceState, PlayerState, PlayerXpState, PvpHonorState,
-    SEEDED_LOCAL_CHARACTER_GUID, SEEDED_LOCAL_CHARACTER_NAME, ScenarioState, ScenarioStep,
-    SecondaryPowerState, SocialFriend, SocialRestrictionsState, SummonRequestState,
-    TokenAuctionInfo, WorldState, WowTokenState,
+    BnetBlockedEntry, BnetFriend, BnetFriendInvite, BnetGameAccount, BrowseQuery,
+    CharacterNameSeparator, ChatBubble, CommodityPurchaseQuote, CommoditySearchResultInfo,
+    CommoditySearchResults, CraftingState, CurrencyInfo, CursorInfo, CursorItemOrigin,
+    DeathRecapEntry, DeathRecapEventInfo, EquipmentManagerState, EquipmentSet, EquippedItem,
+    GreatVaultActivity, GroupMemberCountsMember, GroupMemberCountsState, GuildBankRankPermissions,
+    GuildBankTab, GuildMember, GuildRank, ItemSearchKey, ItemSearchResultInfo, ItemSearchResults,
+    KillingBlowInfo, LfdDungeonInfo, LfgActivityGroupInfo, LfgActivityInfo, LfgAdvancedFilter,
+    LfgApplication, LfgCategoryInfo, LfgRoleSelection, LfgTooltipReward, LfgTooltipRewardGroup,
+    LoadDiagnosticAttribution, LoadDiagnostics, LootHistoryState, LootRollInfo, LootSlot,
+    LuaErrorRecord, MacroInfo, MapChildRect, MapData, MapRect, MirrorTimer, MissingRequirement,
+    MissingRequirementKind, MovementState, MythicPlusAffix, MythicPlusLastWeeklyChest,
+    MythicPlusRatingMapSummary, MythicPlusRatingSummary, MythicPlusRun, MythicPlusState,
+    MythicPlusWeeklyBest, NilSymbolAccess, NilSymbolEnvironment, NilSymbolObservation,
+    NilSymbolObservationKind, OwnedAuction, OwnedKeystone, PendingTimer, PlayerChoiceInfo,
+    PlayerChoiceOptionButtonInfo, PlayerChoiceOptionInfo, PlayerChoiceOptionRewardInfo,
+    PlayerChoiceRewardCurrencyInfo, PlayerChoiceRewardItemInfo, PlayerChoiceRewardReputationInfo,
+    PlayerChoiceState, PlayerState, PlayerXpState, PvpHonorState, SEEDED_LOCAL_CHARACTER_GUID,
+    SEEDED_LOCAL_CHARACTER_NAME, ScenarioState, ScenarioStep, SecondaryPowerState, SocialFriend,
+    SocialRestrictionsState, SummonRequestState, TokenAuctionInfo, WorldState, WowTokenState,
 };
 #[cfg(feature = "client-retail")]
 pub use super::state_types::{EffectiveAttackPower, PowerRegen, WeaponAttackPower};
@@ -1127,13 +1266,14 @@ pub use super::sim_substates::{
     ArchaeologyArtifact, ArchaeologyRace, ArchaeologyState, ArrowCalloutInfo, ArrowCalloutState,
     ArtifactAppearanceInfo, ArtifactAppearanceSetInfo, ArtifactArtInfo, ArtifactPowerInfo,
     BattlefieldQueue, BattlefieldStatus, ChatChannel, ChatWindow, ColorRgb, FactionEntry,
-    GameClock, GameRuleValue, GameRulesState, GardenwealdState, GossipOption, GossipQuestRow,
-    GossipState, Keybindings, LfgListCounts, LootMethodState, MessageLogEntry, MetaPowerEntry,
-    ModifierKeys, MouseButtons, NetStats, PetBattlePet, PetBattleState, PetState, QuestBounty,
-    QuestLogEntry, QuestLogState, QuestRewardCurrency, QuestRewardItem, QuestRewardSpell,
-    RelicSlotInfo, SelectedArtifact, TorghastState, TradeState, ViewedArtifactState, VoiceChannel,
-    VoiceChatState, VoiceMember, WowLabsAreaInfo, WowLabsCircleInfo, WowLabsDataManagerState,
-    WowLabsMatchmakingState, WowLabsPartyInvite, WowLabsPartyMember, WowLabsPoint, WowLabsState,
+    GameClock, GameRuleKey, GameRuleValue, GameRulesState, GardenwealdState, GossipOption,
+    GossipQuestRow, GossipState, Keybindings, LfgListCounts, LootMethodState, MessageLogEntry,
+    MetaPowerEntry, ModifierKeys, MouseButtons, NetStats, PetBattlePet, PetBattleState, PetState,
+    QuestBounty, QuestLogEntry, QuestLogState, QuestRewardCurrency, QuestRewardItem,
+    QuestRewardSpell, RelicSlotInfo, SelectedArtifact, TorghastState, TradeState,
+    ViewedArtifactState, VoiceChannel, VoiceChatState, VoiceMember, WowLabsAreaInfo,
+    WowLabsCircleInfo, WowLabsDataManagerState, WowLabsMatchmakingState, WowLabsPartyInvite,
+    WowLabsPartyMember, WowLabsPoint, WowLabsState,
 };
 
 #[derive(Default)]

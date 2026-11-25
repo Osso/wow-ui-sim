@@ -4,6 +4,7 @@
 //! `globals::auras`. Private warning placement is owned by
 //! `c_api::private_aura_anchors`.
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 const UNIT_AURAS_STATE_LUA: &str = r#"
 if type(C_UnitAuras) ~= "table" then
     C_UnitAuras = {}
@@ -42,15 +43,18 @@ if hiddenGroupBuffRead then
 end
 "#;
 
-pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
-    let modern = cfg!(feature = "retail-12-1-0");
-    let hidden_read = cfg!(any(
-        feature = "retail-12-1-0",
-        feature = "client-wowforever"
-    ));
-    lua.exec(&format!(
-        "local modernGroupBuffSettings = {modern}\nlocal hiddenGroupBuffRead = {hidden_read}\n{UNIT_AURAS_STATE_LUA}"
-    ))?;
+pub(crate) fn apply_bootstrap(_lua: &mut rilua::Lua) -> crate::Result<()> {
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+    {
+        let modern = cfg!(feature = "retail-12-1-0");
+        let hidden_read = cfg!(any(
+            feature = "retail-12-1-0",
+            feature = "client-wowforever"
+        ));
+        _lua.exec(&format!(
+            "local modernGroupBuffSettings = {modern}\nlocal hiddenGroupBuffRead = {hidden_read}\n{UNIT_AURAS_STATE_LUA}"
+        ))?;
+    }
     Ok(())
 }
 

@@ -319,19 +319,25 @@ fn test_c_reputation_get_faction_paragon_info_nil() {
 #[test]
 fn test_c_reputation_get_num_factions() {
     let env = env();
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    supply_reputation_row(&env);
     let count: i32 = env.eval("return C_Reputation.GetNumFactions()").unwrap();
     assert!(count > 0, "expected faction list to have entries");
 }
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn test_c_reputation_get_faction_info() {
     let env = env();
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    supply_reputation_row(&env);
     let name: String = env
         .eval("return C_Reputation.GetFactionInfo(1).name")
         .unwrap();
     assert!(!name.is_empty(), "expected first faction to have a name");
 }
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn test_c_reputation_get_faction_info_out_of_range_nil() {
     let env = env();
@@ -344,6 +350,8 @@ fn test_c_reputation_get_faction_info_out_of_range_nil() {
 #[test]
 fn test_c_reputation_get_watched_faction_data() {
     let env = env();
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    supply_reputation_row(&env);
     let name: String = env
         .eval("return C_Reputation.GetWatchedFactionData().name")
         .unwrap();
@@ -826,4 +834,16 @@ fn test_all_namespaces_are_tables() {
             .unwrap();
         assert!(is_table, "{} should be a table", ns);
     }
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn supply_reputation_row(env: &wow_ui_sim::lua_api::WowLuaEnv) {
+    use wow_ui_sim::c_api::reputation_model::ReputationFaction;
+    let mut state = env.state().borrow_mut();
+    state.reputation.factions.push(ReputationFaction {
+        faction_id: 899_101,
+        name: Some("Fixture reputation".to_owned()),
+        ..Default::default()
+    });
+    state.reputation.watched_faction_id = Some(899_101);
 }

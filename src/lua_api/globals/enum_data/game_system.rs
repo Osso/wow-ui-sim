@@ -680,8 +680,11 @@ pub const BATTLE_PET_ACTION: SeqEnumDef = (
     &["None", "Ability", "SwitchPet", "Trap", "Skip"],
 );
 
-/// BattlePetOwner - pet battle owner sides.
-pub const BATTLE_PET_OWNER: SeqEnumDef = ("BattlePetOwner", &["Ally", "Enemy", "Weather"]);
+/// BattlePetOwner - pet battle owner sides. Blizzard API docs define Weather=0, Ally=1, Enemy=2.
+pub const BATTLE_PET_OWNER: EnumDef = (
+    "BattlePetOwner",
+    &[("Weather", 0), ("Ally", 1), ("Enemy", 2)],
+);
 
 // ============================================================================
 // Delves Companion Enums

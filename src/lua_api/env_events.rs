@@ -12,6 +12,7 @@ use crate::lua_api::script_helpers::{
 };
 use rilua::{LuaApi, LuaApiMut, Val};
 use std::cell::RefCell;
+use std::collections::HashMap;
 use std::env;
 use std::rc::Rc;
 use std::time::{Duration, Instant};
@@ -274,6 +275,34 @@ impl WowLuaEnv {
         Ok(())
     }
 
+    /// Replace supplied Calendar day rows and notify Retail/Forever on count changes.
+    pub fn replace_calendar_day_events(
+        &self,
+        events: HashMap<
+            (i32, u32),
+            Vec<crate::c_api::c_calendar::day_event_record::CalendarDayEventRecord>,
+        >,
+    ) -> Result<()> {
+        let pending_count_changed = {
+            let mut state = self.state.borrow_mut();
+            let previous_count = crate::c_api::c_calendar::count_pending_calendar_invites(
+                &state.calendar_day_events,
+            );
+            let next_count = crate::c_api::c_calendar::count_pending_calendar_invites(&events);
+            state.calendar_day_events = events;
+            previous_count != next_count
+        };
+        let supports_invite_updates = matches!(
+            crate::client_profile::ACTIVE,
+            crate::client_profile::ClientProfile::Retail
+                | crate::client_profile::ClientProfile::WowForever
+        );
+        if pending_count_changed && supports_invite_updates {
+            self.fire_event("CALENDAR_UPDATE_PENDING_INVITES")?;
+        }
+        Ok(())
+    }
+
     /// Fire an event to all registered frames.
     pub fn fire_event(&self, event: &str) -> Result<()> {
         self.fire_event_with_args(event, &[])
@@ -305,10 +334,21 @@ impl WowLuaEnv {
         // Individual calls unroot their arguments before invoking error handlers.
         let result = self.fire_rooted_event(event, args);
         self.lua.borrow_mut().state_mut().top = saved_top;
-        result
+        let flush = super::editbox_update::flush_at_host_boundary(self);
+        result?;
+        flush
     }
 
     fn fire_rooted_event(&self, event: &str, args: &[Val]) -> Result<()> {
+        self.apply_rooted_event_producers(event, args)?;
+        self.dispatch_rooted_event_listeners(event, args)?;
+        self.finish_rooted_event(event);
+        Ok(())
+    }
+
+    fn apply_rooted_event_producers(&self, event: &str, args: &[Val]) -> Result<()> {
+        #[cfg(not(feature = "retail-12-0-0"))]
+        let _ = args;
         #[cfg(feature = "client-wrath")]
         if event == "QUEST_LOG_UPDATE" {
             self.state
@@ -328,6 +368,10 @@ impl WowLuaEnv {
             event,
             args,
         )?;
+        Ok(())
+    }
+
+    fn dispatch_rooted_event_listeners(&self, event: &str, args: &[Val]) -> Result<()> {
         let collect_started = Instant::now();
         let listeners = {
             let mut lua = self.lua.borrow_mut();
@@ -344,10 +388,14 @@ impl WowLuaEnv {
             }
         }
         trace_event_phase(event, "dispatch-listeners", dispatch_started);
+        Ok(())
+    }
+
+    fn finish_rooted_event(&self, event: &str) {
         if event == "PLAYER_ENTERING_WORLD" {
+            self.state.borrow_mut().startup_script_watchdog_phase = false;
             self.apply_post_event_workarounds();
         }
-        Ok(())
     }
 
     fn handler_owner_addon(&self, widget_id: u64) -> Option<u16> {
@@ -497,8 +545,12 @@ impl WowLuaEnv {
         handler_name: &str,
         extra_args: Vec<Val>,
     ) -> Result<()> {
-        self.dispatch_script_handler(widget_id, handler_name, extra_args)
-            .map(|_| ())
+        let result = self
+            .dispatch_script_handler(widget_id, handler_name, extra_args)
+            .map(|_| ());
+        let flush = super::editbox_update::flush_at_host_boundary(self);
+        result?;
+        flush
     }
 
     pub(crate) fn dispatch_script_handler(

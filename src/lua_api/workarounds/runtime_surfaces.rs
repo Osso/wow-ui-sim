@@ -30,7 +30,7 @@ pub(super) fn patch_chat_voice_button_surface(env: &crate::lua_api::WowLuaEnv) {
     temporary::chat_voice_button_surface::patch(env);
 }
 
-#[cfg(not(feature = "client-retail"))]
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(super) fn patch_game_time_defaults(env: &crate::lua_api::WowLuaEnv) {
     temporary::game_time_calendar_invites::patch(env);
 }
@@ -39,13 +39,9 @@ pub(super) fn patch_lfg_lock_list(env: &crate::lua_api::WowLuaEnv) {
     temporary::lfg_lock_list::patch(env);
 }
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(super) fn patch_tooltip_nineslice_surface(env: &crate::lua_api::WowLuaEnv) {
-    if matches!(
-        crate::client_profile::ACTIVE,
-        crate::client_profile::ClientProfile::Retail
-            | crate::client_profile::ClientProfile::Mists
-            | crate::client_profile::ClientProfile::WowForever
-    ) {
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Mists {
         return;
     }
 
@@ -92,12 +88,12 @@ pub(super) fn patch_character_create_defaults(env: &crate::lua_api::WowLuaEnv) {
     temporary::character_create_defaults::patch(env);
 }
 
-#[cfg(not(feature = "client-retail"))]
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(super) fn patch_character_frame_title_refresh(env: &crate::lua_api::WowLuaEnv) {
     refresh_character_frame_surface(env);
 }
 
-#[cfg(not(feature = "client-retail"))]
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(super) fn refresh_character_frame_surface(env: &crate::lua_api::WowLuaEnv) {
     temporary::character_frame_surface_refresh::patch(env);
 }

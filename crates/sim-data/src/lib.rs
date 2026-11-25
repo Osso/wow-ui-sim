@@ -63,6 +63,8 @@ pub mod map_art;
 pub mod map_challenge_modes;
 #[path = "../data/model_scenes.rs"]
 pub mod model_scenes;
+#[path = "../data/mythic_plus_season_maps.rs"]
+pub mod mythic_plus_season_maps;
 #[path = "../data/perks_categories.rs"]
 pub mod perks_categories;
 #[path = "../data/pet_talent_trees.rs"]
@@ -95,5 +97,8 @@ pub mod spells;
 pub mod traits;
 #[path = "../data/ui_maps.rs"]
 pub mod ui_maps;
+#[rustfmt::skip]
+#[path = "../data/ui_map_help_text_positions.rs"]
+pub mod ui_map_help_text_positions;
 #[path = "../data/zones.rs"]
 pub mod zones;

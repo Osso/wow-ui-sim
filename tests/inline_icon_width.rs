@@ -91,14 +91,23 @@ fn texture_icon_without_size_takes_no_room() {
     );
 }
 
-// VERIFIED R88d: width zero uses the caller metric; mapping it to line height is INFERRED.
+// VERIFIED (R88f.L.2; 47237b8fb): FontString measurement advances from
+// the snapped absolute icon edge. INFERRED: zero atlas width uses the caller
+// metric, mapped here to line height.
 #[test]
 fn atlas_zero_width_uses_inferred_line_metric() {
     let (plain, with_icon) = widths("ab", "a|A:hud-backpack:24:0|ab");
     let (_, line) = widths("ab", "|A:hud-backpack:0:0|a");
+    let (prefix, _) = widths("a", "a");
+    let expected_advance = f64::from((prefix as f32 + line as f32 + 0.5).floor()) - prefix;
     assert!(
-        line > 0.0 && (with_icon - plain - line).abs() < 0.01,
-        "plain {plain}, with icon {with_icon}, line {line}"
+        prefix.fract() != 0.0,
+        "prefix must be fractional to exercise icon-edge snapping: {prefix}"
+    );
+    assert!(
+        line > 0.0 && (with_icon - plain - expected_advance).abs() < 0.01,
+        "plain {plain}, with icon {with_icon}, line {line}, prefix {prefix}, \
+         expected advance {expected_advance}"
     );
 }
 

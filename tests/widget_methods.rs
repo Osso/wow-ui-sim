@@ -51,7 +51,9 @@ fn test_editbox_focus_switches_between_frames() {
 #[test]
 fn editbox_lua_focus_transitions_dispatch_once_with_current_state() {
     let env = WowLuaEnv::new().unwrap();
-    let calls: String = env.eval(r#"
+    let calls: String = env
+        .eval(
+            r#"
         local first = CreateFrame('EditBox')
         local second = CreateFrame('EditBox')
         local calls = {}
@@ -70,14 +72,21 @@ fn editbox_lua_focus_transitions_dispatch_once_with_current_state() {
         second:ClearFocus()
         second:ClearFocus()
         return table.concat(calls, ',')
-    "#).unwrap();
-    assert_eq!(calls, "first:gained:true,first:lost:false,second:gained:true,second:lost:false");
+    "#,
+        )
+        .unwrap();
+    assert_eq!(
+        calls,
+        "first:gained:true,first:lost:false,second:gained:true,second:lost:false"
+    );
 }
 
 #[test]
 fn editbox_focus_lost_redirect_does_not_gain_stale_target() {
     let env = WowLuaEnv::new().unwrap();
-    let calls: String = env.eval(r#"
+    let calls: String = env
+        .eval(
+            r#"
         local first = CreateFrame('EditBox')
         local requested = CreateFrame('EditBox')
         local redirected = CreateFrame('EditBox')
@@ -94,7 +103,9 @@ fn editbox_focus_lost_redirect_does_not_gain_stale_target() {
         requested:SetFocus()
         assert(redirected:HasFocus() and not requested:HasFocus())
         return table.concat(calls, ',')
-    "#).unwrap();
+    "#,
+        )
+        .unwrap();
     assert_eq!(calls, "lost:false,redirected:true");
 }
 
@@ -117,7 +128,9 @@ fn editbox_focus_dispatches_intrinsic_bindings_in_order() {
     "#).unwrap();
     let loaded = wow_ui_sim::loader::load_addon(&env.loader_env(), &toc).unwrap();
     assert!(loaded.warnings.is_empty(), "{:?}", loaded.warnings);
-    let bindings: String = env.eval(r#"
+    let bindings: String = env
+        .eval(
+            r#"
         local calls = {}
         FocusBindingProbe = function(binding, self)
             table.insert(calls, binding .. ':' .. tostring(self:HasFocus()))
@@ -131,14 +144,18 @@ fn editbox_focus_dispatches_intrinsic_bindings_in_order() {
         edit:SetFocus()
         edit:ClearFocus()
         return table.concat(calls, ',')
-    "#).unwrap();
+    "#,
+        )
+        .unwrap();
     assert_eq!(bindings, "pre:false,normal:false,post:false");
 }
 
 #[test]
 fn editbox_focus_error_reports_and_other_focus_callbacks_continue() {
     let env = WowLuaEnv::new().unwrap();
-    let hidden: bool = env.eval(r#"
+    let hidden: bool = env
+        .eval(
+            r#"
         local popup = CreateFrame('Frame')
         local first = CreateFrame('EditBox')
         local second = CreateFrame('EditBox')
@@ -147,9 +164,20 @@ fn editbox_focus_error_reports_and_other_focus_callbacks_continue() {
         first:SetFocus()
         second:SetFocus()
         return not popup:IsShown() and second:HasFocus()
-    "#).unwrap();
-    assert!(hidden, "gained callback must run despite former owner's failing lost callback");
-    assert!(env.state().borrow().lua_errors.iter().any(|error| error.contains("focus cleanup failure")));
+    "#,
+        )
+        .unwrap();
+    assert!(
+        hidden,
+        "gained callback must run despite former owner's failing lost callback"
+    );
+    assert!(
+        env.state()
+            .borrow()
+            .lua_errors
+            .iter()
+            .any(|error| error.contains("focus cleanup failure"))
+    );
 }
 
 #[test]
@@ -189,6 +217,72 @@ fn test_editbox_set_get_number() {
 
     let num: f64 = env.eval("return TestEBNum:GetNumber()").unwrap();
     assert!((num - 42.5).abs() < 0.01);
+}
+
+#[test]
+fn editbox_set_text_and_number_dispatch_after_host_return() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+            EditBoxChangeProbe = CreateFrame("EditBox", nil, UIParent)
+            EditBoxChangeProbe:SetSize(200, 20)
+            EditBoxChangeProbe:Show()
+            EditBoxChangeProbe.changes = {}
+            EditBoxChangeProbe.callReturned = false
+            EditBoxChangeProbe:HookScript("OnTextChanged", function(_, userInput)
+                table.insert(EditBoxChangeProbe.changes,
+                    tostring(userInput) .. ":" .. tostring(EditBoxChangeProbe.callReturned))
+            end)
+            EditBoxChangeProbe:SetText("alpha")
+            EditBoxChangeProbe:SetText("alpha")
+            assert(#EditBoxChangeProbe.changes == 0)
+            EditBoxChangeProbe.callReturned = true
+        "#,
+    )
+    .unwrap();
+    let after_set_text: (f64, String) = env
+        .eval("return #EditBoxChangeProbe.changes, EditBoxChangeProbe.changes[1]")
+        .unwrap();
+    assert_eq!(after_set_text, (1.0, "false:true".into()));
+
+    env.exec(
+        r#"
+            EditBoxChangeProbe.callReturned = false
+            EditBoxChangeProbe:SetNumber(4)
+            assert(#EditBoxChangeProbe.changes == 1)
+            EditBoxChangeProbe.callReturned = true
+        "#,
+    )
+    .unwrap();
+    let after_set_number: (f64, String) = env
+        .eval("return #EditBoxChangeProbe.changes, EditBoxChangeProbe.changes[2]")
+        .unwrap();
+    assert_eq!(after_set_number, (2.0, "false:true".into()));
+
+    env.exec(
+        r#"
+            EditBoxChangeProbe.callReturned = false
+            EditBoxChangeProbe:SetNumber(4)
+            EditBoxChangeProbe.callReturned = true
+        "#,
+    )
+    .unwrap();
+    let after_unchanged_number: f64 = env.eval("return #EditBoxChangeProbe.changes").unwrap();
+    assert_eq!(after_unchanged_number, 2.0);
+
+    env.exec(
+        r#"
+            EditBoxChangeProbe.callReturned = false
+            EditBoxChangeProbe:SetFormattedText("%s", "omega")
+            assert(#EditBoxChangeProbe.changes == 2)
+            EditBoxChangeProbe.callReturned = true
+        "#,
+    )
+    .unwrap();
+    let after_formatted_text: (f64, String) = env
+        .eval("return #EditBoxChangeProbe.changes, EditBoxChangeProbe.changes[3]")
+        .unwrap();
+    assert_eq!(after_formatted_text, (3.0, "false:true".into()));
 }
 
 #[test]

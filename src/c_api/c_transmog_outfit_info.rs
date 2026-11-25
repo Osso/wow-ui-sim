@@ -1,42 +1,71 @@
 //! Outfit settings, catalog queries, and applied selection.
 //!
-//! The module is compiled for the retail API epochs and for the modern-engine
-//! classic profiles whose pinned `TransmogOutfitInfoDocumentation.lua` declares
-//! `C_TransmogOutfitInfo` (Mists 66 functions, Era and Anniversary 65; see
-//! `src/c_api/mod.rs`).
+//! The full module is compiled for retail API epochs and modern-engine classic
+//! profiles whose pinned API docs declare `C_TransmogOutfitInfo`. Forever uses
+//! only the two existing lifecycle handlers required by its selected consumer.
 
 mod catalog;
 pub use catalog::{OutfitCatalog, OutfitEntry};
 
+#[cfg(not(feature = "client-wowforever"))]
 mod actions;
+#[cfg(not(feature = "client-wowforever"))]
 mod viewed;
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) use actions::run_outfit_command;
 
+#[cfg(not(feature = "client-wowforever"))]
 mod pending_cost;
+#[cfg(not(feature = "client-wowforever"))]
 mod pending_cost_info;
+#[cfg(not(feature = "client-wowforever"))]
 pub use pending_cost_info::PendingTransmogCost;
 
 mod viewed_slot_info;
+#[cfg(not(feature = "client-wowforever"))]
 mod viewed_slots;
 pub use viewed_slot_info::ViewedOutfitSlotInfo;
 
 mod model;
 pub use model::{OutfitContents, OutfitState, SituationCategory, SituationGroup};
+#[cfg(not(feature = "client-wowforever"))]
 mod imports;
 mod lifecycle;
+#[cfg(not(feature = "client-wowforever"))]
 mod pending;
+#[cfg(not(feature = "client-wowforever"))]
 mod situation_catalog;
+#[cfg(not(feature = "client-wowforever"))]
 mod situations;
+#[cfg(not(feature = "client-wowforever"))]
 mod slots;
+#[cfg(not(feature = "client-wowforever"))]
 mod visuals;
 
 use super::helpers::ensure_namespace;
+#[cfg(not(feature = "client-wowforever"))]
 use crate::lua_api::methods::{borrow_state, borrow_state_mut};
+#[cfg(feature = "client-wowforever")]
+use crate::lua_bridge::TableBuilder;
+#[cfg(not(feature = "client-wowforever"))]
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
+use rilua::LuaResult;
+#[cfg(not(feature = "client-wowforever"))]
+use rilua::Val;
 use rilua::vm::state::LuaState;
-use rilua::{LuaResult, Val};
 
+#[cfg(feature = "client-wowforever")]
+pub(super) fn register_forever(state: &mut LuaState) -> LuaResult<()> {
+    let namespace = ensure_namespace(state, "C_TransmogOutfitInfo")?;
+    lifecycle::register_forever(state, namespace)
+}
+
+#[cfg(feature = "client-wowforever")]
+pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
+    lifecycle::register_admin(builder)
+}
+
+#[cfg(not(feature = "client-wowforever"))]
 pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
     let namespace = ensure_namespace(state, "C_TransmogOutfitInfo")?;
     table_set_rust_fn_static(state, namespace, "InTransmogEvent", |s| {
@@ -111,12 +140,14 @@ fn can_player_transmog_slot(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+#[cfg(not(feature = "client-wowforever"))]
 fn get_outfit_situations_enabled(state: &mut LuaState) -> LuaResult<u32> {
     let enabled = borrow_state(state)?.outfit_situations_enabled;
     state.push(Val::Bool(enabled));
     Ok(1)
 }
 
+#[cfg(not(feature = "client-wowforever"))]
 fn set_outfit_situations_enabled(state: &mut LuaState) -> LuaResult<u32> {
     let Val::Bool(enabled) = stack_val(state, 1) else {
         return Err(rilua::runtime_error(

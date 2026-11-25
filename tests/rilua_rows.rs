@@ -2,7 +2,7 @@
 #![cfg(feature = "retail-12-0-0")]
 
 use rilua::LuaApiMut;
-use wow_ui_sim::lua_api::{AddonInfo, WowLuaEnv};
+use wow_ui_sim::lua_api::WowLuaEnv;
 
 fn secret_env() -> WowLuaEnv {
     let env = WowLuaEnv::new().unwrap();
@@ -157,84 +157,73 @@ fn rilua_rows_chat_expressions_replace_icons_and_reject_secret_flags() {
     "#).unwrap();
 }
 
-#[cfg(feature = "retail-12-0-5")]
-fn budget_env() -> WowLuaEnv {
-    let env = WowLuaEnv::new().unwrap();
-    {
-        let mut sim = env.state().borrow_mut();
-        let index = sim.addons.len() as u16;
-        sim.addons.push(AddonInfo {
-            folder_name: "BudgetAddon".into(),
-            ..Default::default()
-        });
-        sim.loading_addon_index = Some(index);
-    }
-    env.exec(
-        r#"
-        BudgetFrame = CreateFrame('Frame', 'BudgetFrame')
-        BudgetFrame:RegisterEvent('PLAYER_LOGOUT')
-        BudgetFrame:RegisterEvent('ADDONS_UNLOADING')
-        BudgetFrame:RegisterEvent('PLAYER_LOGIN')
-        Completed = 0
-        Iterations = 1000
-        seterrorhandler(function(err) BudgetError = err end)
-        local function handler(self, event)
-            assert(debug.getstacktaint() == 'BudgetAddon')
-            local n = 0
-            for i=1,Iterations do n = n + i end
-            Completed = Completed + 1
-        end
-        debug.setobjecttaint(handler, 'BudgetAddon')
-        BudgetFrame:SetScript('OnEvent', handler)
-    "#,
+fn create_script_probe(
+    root: &std::path::Path,
+    addon_name: &str,
+    source: &str,
+) -> std::path::PathBuf {
+    let addon_dir = root.join(addon_name);
+    std::fs::create_dir_all(&addon_dir).unwrap();
+    let toc_path = addon_dir.join(format!("{addon_name}.toc"));
+    std::fs::write(
+        &toc_path,
+        format!("## Interface: 120000\n{addon_name}.lua\n"),
     )
     .unwrap();
-    env.state().borrow_mut().loading_addon_index = None;
-    env.loader_env()
-        .with_state(|state| {
-            state.set_instruction_budget("BudgetAddon", Some(1000));
-            Ok::<_, rilua::LuaError>(())
-        })
-        .unwrap();
-    env
+    std::fs::write(addon_dir.join(format!("{addon_name}.lua")), source).unwrap();
+    toc_path
 }
 
-#[cfg(feature = "retail-12-0-5")]
-fn assert_event_budget(named: bool) {
-    let env = budget_env();
-    let dispatch = |event| {
-        if named {
-            env.loader_env().fire_event_with_args(event, &[])
-        } else {
-            env.fire_event(event)
-        }
-        .unwrap();
-    };
-    dispatch("PLAYER_LOGIN");
-    env.exec("assert(Completed == 0, 'completed='..tostring(Completed)..' error='..tostring(BudgetError)); assert(string.find(BudgetError, 'instruction budget exhausted', 1, true), tostring(BudgetError))").unwrap();
-    dispatch("PLAYER_LOGOUT");
-    dispatch("ADDONS_UNLOADING");
-    env.exec("assert(Completed == 2)").unwrap();
-    dispatch("PLAYER_LOGIN");
-    env.exec("assert(Completed == 2); Iterations = 1").unwrap();
-    env.loader_env()
-        .with_state(|state| state.reset_instruction_usage("BudgetAddon"))
-        .unwrap();
-    dispatch("PLAYER_LOGIN");
-    env.exec("assert(debug.getstacktaint() == nil); assert(Completed == 3, 'completed='..tostring(Completed)..' error='..tostring(BudgetError))")
-        .unwrap();
-}
-
-#[cfg(feature = "retail-12-0-5")]
 #[test]
-fn rilua_rows_host_event_budget_exhaustion_shutdown_exemption_and_recovery() {
-    assert_event_budget(false);
+fn rilua_rows_owner_watchdog_loads_file_then_rejects_dispatch_overrun() {
+    let directory = tempfile::tempdir().unwrap();
+    let toc = create_script_probe(
+        directory.path(),
+        "WatchdogProbe",
+        "local frame = CreateFrame('Frame'); frame:RegisterEvent('PLAYER_LOGIN'); \
+         frame:SetScript('OnEvent', function() while true do end end)",
+    );
+    let env = WowLuaEnv::new().unwrap();
+    env.set_script_watchdog_timeout_for_tests(std::time::Duration::from_secs(60));
+    env.exec("SetCVar('luaScriptBucketThrottleEnabled', '0'); seterrorhandler(function(err) WatchdogError = err end)")
+        .unwrap();
+    let loader = env.loader_env();
+    let loaded = wow_ui_sim::loader::load_addon(&loader, &toc).unwrap();
+    assert_eq!(loaded.lua_files, 1);
+    env.set_script_watchdog_timeout_for_tests(std::time::Duration::ZERO);
+    env.fire_event("PLAYER_LOGIN").unwrap();
+    env.exec("assert(string.find(WatchdogError, 'script ran too long', 1, true))")
+        .unwrap();
 }
 
-#[cfg(feature = "retail-12-0-5")]
 #[test]
-fn rilua_rows_named_event_budget_exhaustion_shutdown_exemption_and_recovery() {
-    assert_event_budget(true);
+fn rilua_rows_bucket_skips_loading_and_throttles_after_world_entry() {
+    let directory = tempfile::tempdir().unwrap();
+    let toc = create_script_probe(
+        directory.path(),
+        "ThrottleProbe",
+        "local frame = CreateFrame('Frame'); frame:RegisterEvent('PLAYER_ENTERING_WORLD'); \
+         frame:SetScript('OnEvent', function() \
+             ThrottleCalls = (ThrottleCalls or 0) + 1; \
+             local total = 0; \
+             for i = 1, 200000 do total = total + i end; \
+             ThrottleTotal = total \
+         end)",
+    );
+    let env = WowLuaEnv::new().unwrap();
+    env.exec("SetCVar('luaScriptBucketThrottleEnabled', '0'); seterrorhandler(function(err) ThrottleError = err end)")
+        .unwrap();
+    let loader = env.loader_env();
+    wow_ui_sim::loader::load_addon(&loader, &toc).unwrap();
+    env.exec("SetCVar('luaScriptBucketThrottleEnabled', '1'); SetCVar('luaScriptBucketThrottleMaxMsPerSecondRestricted', '0'); SetCVar('luaScriptBucketThrottleMaxMsBurstRestricted', '1'); ThrottleCalls = 0")
+        .unwrap();
+
+    env.fire_event("PLAYER_ENTERING_WORLD").unwrap();
+    env.exec("assert(ThrottleCalls == 1 and ThrottleError == nil)")
+        .unwrap();
+    env.fire_event("PLAYER_ENTERING_WORLD").unwrap();
+    env.exec("assert(ThrottleCalls == 2 and string.find(ThrottleError, 'insecure scripts exceeded execution limit for addon ThrottleProbe', 1, true))")
+        .unwrap();
 }
 
 #[cfg(feature = "retail-12-0-5")]

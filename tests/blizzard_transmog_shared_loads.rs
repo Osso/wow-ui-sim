@@ -1,5 +1,9 @@
 use std::path::PathBuf;
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+use crate::common::blizzard_addon_harness::{
+    load_blizzard_addon_closure_into_env, new_blizzard_addon_env,
+};
 use wow_ui_sim::loader::load_addon;
 use wow_ui_sim::loader::{discover_blizzard_addons_for_screen, find_toc_file};
 use wow_ui_sim::lua_api::WowLuaEnv;
@@ -466,6 +470,76 @@ fn explicit_load_publishes_transmog_location_mixin() {
 }
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn load_original_transmog_frame(visible: Option<bool>) -> WowLuaEnv {
+    let ui = blizzard_ui_dir();
+    let env = new_blizzard_addon_env(&ui);
+    if let Some(visible) = visible {
+        env.exec(&format!("A_Admin.SetRangedSlotShown({visible})"))
+            .expect("set ranged-slot visibility input");
+    }
+    let shared = load_blizzard_addon_closure_into_env(&env, &ui, &["Blizzard_SharedXML"], &[]);
+    assert!(shared.iter().any(|name| name == "Blizzard_SharedXML"));
+    let startup = load_blizzard_addon_closure_into_env(
+        &env,
+        &ui,
+        &["Blizzard_UIParentPanelManager", "Blizzard_UIPanels_Game"],
+        &[],
+    );
+    assert!(
+        startup
+            .iter()
+            .any(|name| name == "Blizzard_UIParentPanelManager")
+    );
+    assert!(startup.iter().any(|name| name == "Blizzard_UIPanels_Game"));
+    load_transmog_addon(&env, &ui);
+    env
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn load_transmog_addon(env: &WowLuaEnv, ui: &std::path::Path) {
+    let toc_path = ui.join("Blizzard_Transmog/Blizzard_Transmog.toc");
+    let toc = TocFile::from_file(&toc_path).expect("Blizzard_Transmog TOC parses");
+    assert!(toc.is_load_on_demand());
+    assert!(toc.allows_screen(ScreenKind::Game));
+    assert!(!toc.is_game_type_restricted());
+    assert!(
+        toc.files
+            .iter()
+            .any(|file| file.to_string_lossy() == "Blizzard_Transmog.lua")
+    );
+
+    let loaded = load_blizzard_addon_closure_into_env(env, ui, &["Blizzard_Transmog"], &[]);
+    assert!(loaded.iter().any(|name| name == "Blizzard_Transmog"));
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn supplied_ranged_slot_visibility_controls_transmog_refresh() {
+    for (visible, expected) in [
+        (None, cfg!(feature = "client-wowforever")),
+        (Some(true), true),
+        (Some(false), false),
+    ] {
+        let env = load_original_transmog_frame(visible);
+        let actual: bool = env
+            .eval(
+                r#"
+                local ranged = TransmogUtil.CreateTransmogLocation(
+                    "RANGEDSLOT", Enum.TransmogType.Appearance, false)
+                local mainHand = TransmogUtil.CreateTransmogLocation(
+                    "MAINHANDSLOT", Enum.TransmogType.Appearance, false)
+                TransmogFrame.CharacterPreview.selectedSlotData = { transmogLocation = ranged }
+                return TransmogFrame.CharacterPreview:ShouldForceRefreshOnSlotUpdate({
+                    transmogLocation = mainHand,
+                })
+                "#,
+            )
+            .expect("query original TransmogFrame refresh behavior");
+        assert_eq!(actual, expected, "ranged slot visibility: {visible:?}");
+    }
+}
+
 post_wrath_ui_fixture! {
 #[test]
 fn explicit_load_publishes_item_model_base_mixin() {
@@ -697,5 +771,68 @@ fn explicit_load_emits_no_addon_specific_errors() {
          tolerate an empty/nil return without raising. Found: \
          {addon_specific:?}"
     );
+}
+}
+
+post_wrath_ui_fixture! {
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn wardrobe_sets_provider_reads_supplied_base_and_variant_relations() {
+    let env = fresh_game_env();
+    load_addon(&env.loader_env(), &transmog_shared_toc())
+        .expect("Blizzard_TransmogShared must load via Rust loader");
+    env.exec(
+        r#"
+        A_Admin.SetTransmogSetCatalog({
+            {
+                setID = 9101,
+                name = "Copper regalia",
+                collected = true,
+                validForCharacter = true,
+                primaryAppearances = {
+                    { appearanceID = 8101, collected = true },
+                    { appearanceID = 8102, collected = true },
+                },
+            },
+            {
+                setID = 9102,
+                name = "Copper regalia (variant)",
+                baseSetID = 9101,
+                collected = true,
+                validForCharacter = true,
+                primaryAppearances = {
+                    { appearanceID = 8201, collected = true },
+                    { appearanceID = 8202, collected = true },
+                },
+            },
+        })
+        "#,
+    )
+    .expect("A_Admin must accept the supplied transmog-set catalog");
+
+    let result: String = env
+        .eval(
+            r#"
+            local provider = setmetatable({}, { __index = WardrobeSetsDataProviderMixin })
+            local baseSets = provider:GetBaseSets()
+            if #baseSets ~= 1 or baseSets[1].setID ~= 9101 then return "base_sets" end
+            local usableSets = provider:GetUsableSets()
+            if #usableSets ~= 2 then return "usable_sets" end
+            local baseCollected, baseTotal = provider:GetSetSourceCounts(9101)
+            local variantCollected, variantTotal = provider:GetSetSourceCounts(9102)
+            if baseCollected ~= 2 or baseTotal ~= 2 then return "base_sources" end
+            if variantCollected ~= 2 or variantTotal ~= 2 then return "variant_sources" end
+            local baseAppearances = provider:GetSetSourceData(9101).primaryAppearances
+            local variantAppearances = provider:GetSetSourceData(9102).primaryAppearances
+            if baseAppearances[1].appearanceID ~= 8101 then return "base_appearance" end
+            if variantAppearances[1].appearanceID ~= 8201 then return "variant_appearance" end
+            local baseData = provider:GetBaseSetData(9101)
+            if baseData.topCollected ~= 2 or baseData.topTotal ~= 2 then return "base_data" end
+            if provider:GetBaseSetData(9102) ~= nil then return "variant_base_data" end
+            return "ok"
+            "#,
+        )
+        .expect("WardrobeSetsDataProviderMixin must read the supplied set relations");
+    assert_eq!(result, "ok");
 }
 }

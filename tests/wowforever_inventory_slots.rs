@@ -93,3 +93,27 @@ fn forever_inventory_namespace_reuses_existing_slot_contract() {
     )
     .unwrap();
 }
+
+#[test]
+fn forever_character_panel_uses_supplied_title_and_equipment_textures() {
+    let env = WowLuaEnv::new().unwrap();
+    crate::common::load_game_startup_inventory(&env);
+    env.apply_post_load_workarounds();
+    env.exec(
+        r#"
+        A_Admin.EquipItem(1, 211993)
+        A_Admin.EquipItem(16, 231268)
+        ToggleCharacter("PaperDollFrame", true)
+        assert(CharacterFrame:IsShown() and PaperDollFrame:IsShown())
+        A_Admin.SetPlayerName("R88gc Lane Character")
+        assert(CharacterFrame.TitleContainer.TitleText:GetText() == UnitPVPName("player"))
+        assert(UnitPVPName("player") == "R88gc Lane Character")
+        local head = GetInventoryItemTexture("player", CharacterHeadSlot:GetID())
+        local mainHand = GetInventoryItemTexture("player", CharacterMainHandSlot:GetID())
+        assert(head ~= nil and mainHand ~= nil and head ~= mainHand)
+        assert(CharacterHeadSlot.icon:GetTexture() == head)
+        assert(CharacterMainHandSlot.icon:GetTexture() == mainHand)
+        "#,
+    )
+    .unwrap();
+}

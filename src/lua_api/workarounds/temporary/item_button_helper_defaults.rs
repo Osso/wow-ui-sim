@@ -4,6 +4,7 @@
 //! Forever. Other profiles keep their existing defaults until audited.
 //! The independent CreateFrame wrapper is intentionally unchanged.
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 const ITEM_BUTTON_FRAME_SURFACE_LUA: &str = r#"
 local function ensure_item_button_surface(button)
     if type(button) ~= "table" then
@@ -128,11 +129,12 @@ if SetItemButtonNormalTextureVertexColor == nil then
 end
 "#;
 
-pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
-    lua.exec(ITEM_BUTTON_FRAME_SURFACE_LUA)?;
+pub(crate) fn apply_bootstrap(_lua: &mut rilua::Lua) -> crate::Result<()> {
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+    _lua.exec(ITEM_BUTTON_FRAME_SURFACE_LUA)?;
     // Retail and Forever load these globals from the original Mainline ItemButton Lua.
     #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
-    lua.exec(ITEM_BUTTON_HELPER_DEFAULTS_LUA)?;
+    _lua.exec(ITEM_BUTTON_HELPER_DEFAULTS_LUA)?;
     Ok(())
 }
 
@@ -220,6 +222,7 @@ mod tests {
     }
 
     #[test]
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     fn installs_item_button_create_frame_surface() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
         env.exec(

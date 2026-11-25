@@ -2,6 +2,10 @@
 
 `A_Admin` functions are simulator-only, not native WoW APIs.
 
+## SetQuestTimer
+
+Forever only: `A_Admin.SetQuestTimer(questID, seconds)` supplies a timer limit in seconds for the original `C_QuestLog.GetQuestTimers` consumer. Call with `nil` for `seconds` to clear that quest's timer. The timer starts or resets at the current simulator clock time. Each change fires `QUEST_LOG_UPDATE` synchronously, so the loaded Blizzard quest-timer frame refreshes through its event handler. The API shape for `GetQuestTimers` and `QuestTimerInfo` is declared in Forever's pinned `Blizzard_APIDocumentationGenerated/QuestLogDocumentation.lua` (lines 540 and 1620). Timer countdown and setter behavior are INFERRED (R88fr; native evidence pending).
+
 ## SetMinimapQuestBlobInside
 
 Retail, PTR and Forever: `A_Admin.SetMinimapQuestBlobInside(questID, inside)` supplies a boolean containment observation for the quest. It does not emit an event or calculate geometry. An unsupplied quest uses the simulator's false scenario default; the native default is unknown. See the [contract](../specs/minimap-quest-blob-observation.md).
@@ -17,6 +21,10 @@ not infer progress, grant rewards or create membership. Identical input is inert
 [Contract](../specs/quest-objective-progress.md) owns projections, declared bootstrap
 cardinality and committed-before-notify behavior. Both-profile behavioral RED is
 recorded; producer GREEN remains pending.
+
+## SetQuestProgressRequirements
+
+Retail/Forever only: `A_Admin.SetQuestProgressRequirements(questID, requirements)` supplies progress text, required money, ordered item and currency rows, required-item visibility, and turn-in portrait inputs for an existing active quest. All top-level fields are required: `money`, `hideRequiredItems`, `text`, `portraitDisplayID`, `portraitName`, `portraitText`, `items`, and `currencies`. Money and portrait display ID are nonnegative integers; the visibility fields are booleans; text and portrait names are strings. Each item row has string `name` and `texture`, positive integer `requiredAmount`, and boolean `hidden`. Each currency row has positive integer `currencyID` and `texture`, string `name`, nonnegative integer `quality`, and positive integer `requiredAmount`. Returns `true` only when valid input changes the stored snapshot; invalid data errors before mutation, and identical data returns `false`. It does not discover requirements or grant items, currency, money, or rewards. [Contract](../specs/quest-progress-requirements-empty.md) covers the original Blizzard progress-panel consumer and proof boundary.
 
 ## SetQuestReadiness
 

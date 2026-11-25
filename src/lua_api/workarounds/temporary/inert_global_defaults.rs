@@ -14,6 +14,16 @@ if IsPlayerInWorld == nil then
 end
 "#;
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+const BNET_GLOBAL_DEFAULTS_LUA: &str = r#"
+if BNGetNumFriends == nil then
+    function BNGetNumFriends() return 0, 0, 0, 0 end
+end
+if BNGetNumFriendInvites == nil then
+    function BNGetNumFriendInvites() return 0 end
+end
+"#;
+
 const INERT_GLOBAL_DEFAULTS_LUA: &str = r#"
 if GetCurrentRegionName == nil then
     function GetCurrentRegionName() return "US" end
@@ -57,8 +67,10 @@ CLOCK_TICKER_Y_OVERRIDE = CLOCK_TICKER_Y_OVERRIDE or false
 
 C_SocialRestrictions = C_SocialRestrictions or __wow_namespace()
 if rawget(C_SocialRestrictions, "IsChatDisabled") == nil then
+    -- INFERRED: other profiles have no modeled chat-disabled input.
     function C_SocialRestrictions.IsChatDisabled() return false end
 end
+
 C_Commentator = C_Commentator or __wow_namespace()
 if rawget(C_Commentator, "IsSpectating") == nil then
     function C_Commentator.IsSpectating() return false end
@@ -111,12 +123,6 @@ if GetChannelDisplayInfo == nil then
     end
 end
 
-if BNGetNumFriends == nil then
-    function BNGetNumFriends() return 0, 0, 0, 0 end
-end
-if BNGetNumFriendInvites == nil then
-    function BNGetNumFriendInvites() return 0 end
-end
 if BNGetFriendInfo == nil then
     function BNGetFriendInfo() return nil end
 end
@@ -167,11 +173,6 @@ if SetCursorHoveredItemTradeItem == nil then
         return nil
     end
 end
-if GetNumGuildPerks == nil then
-    function GetNumGuildPerks()
-        return 0
-    end
-end
 if RequestGuildRewards == nil then
     function RequestGuildRewards()
         return nil
@@ -181,6 +182,13 @@ if GetGuildRenameRequired == nil then
     function GetGuildRenameRequired()
         return false
     end
+end
+"#;
+
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+const INERT_GUILD_PERKS_DEFAULT_LUA: &str = r#"
+if GetNumGuildPerks == nil then
+    function GetNumGuildPerks() return 0 end
 end
 "#;
 
@@ -252,6 +260,10 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     lua.exec(UNMODELED_WORLD_PRESENCE_LUA)?;
     lua.exec(INERT_GLOBAL_DEFAULTS_LUA)?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+    lua.exec(INERT_GUILD_PERKS_DEFAULT_LUA)?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+    lua.exec(BNET_GLOBAL_DEFAULTS_LUA)?;
     #[cfg(not(all(feature = "client-retail", feature = "retail-12-1-5")))]
     lua.exec(AVAILABLE_BANDWIDTH_DEFAULT_LUA)?;
     #[cfg(not(all(feature = "profile-retail", feature = "retail-12-1-5")))]
@@ -272,76 +284,121 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
 mod tests {
     use crate::lua_api::WowLuaEnv;
 
-    #[test]
-    // Loot-spec assertions moved to tests/loot_specialization.rs: the selected
-    // UnitPopupSharedButtonMixins.lua:1824,1854,1902 consumes the modeled globals.
-    fn installs_region_social_and_group_defaults() {
-        let env = WowLuaEnv::new().expect("lua env should initialize");
+    const INERT_DEFAULTS_CHECK_LUA: &str = r#"
+if GetCurrentRegionName() ~= "US" then return "region" end
+local bnetTotal, bnetOnline, bnetFavorite, bnetFavoriteOnline = BNGetNumFriends()
+if bnetTotal ~= EXPECTED_BNET_COUNTS[1] or bnetOnline ~= EXPECTED_BNET_COUNTS[2] or bnetFavorite ~= EXPECTED_BNET_COUNTS[3] or bnetFavoriteOnline ~= EXPECTED_BNET_COUNTS[4] then return "bnet_counts" end
+if BNGetNumFriendInvites() ~= 0 then return "bnet_invites" end
+if BNGetFriendInfo(1) ~= nil then return "bnet_info" end
+local languageName, languageID = GetDefaultLanguage()
+if languageName ~= "Common" or languageID ~= EXPECTED_DEFAULT_LANGUAGE_ID then return "language" end
+if GetAlternativeDefaultLanguage() ~= nil then return "alt_language" end
+if GetNumLanguages() ~= 1 then return "num_languages" end
+local indexedLanguageName, indexedLanguageID = GetLanguageByIndex(1)
+if indexedLanguageName ~= "Common" or indexedLanguageID ~= EXPECTED_DEFAULT_LANGUAGE_ID then return "indexed_language" end
+if GetLanguageByIndex(2) ~= nil then return "missing_indexed_language" end
+if GetMaxBattlefieldID() ~= EXPECTED_MAX_BATTLEFIELD_ID then return "battlefield_id" end
+if IsActiveBattlefieldArena() ~= false then return "battlefield_arena" end
+if IsPVPTimerRunning() ~= false then return "pvp_timer" end
+if HasArtifactEquipped() ~= false then return "artifact" end
+if UnitExists("player") ~= true or UnitExists("target") ~= false then return "unit" end
+if EVENT_TOAST_MANAGER_OFFSET_Y_OVERRIDE ~= false then return "toast_offset" end
+if CLOCK_TICKER_Y_OVERRIDE ~= false then return "clock_ticker" end
+if C_SocialRestrictions.IsChatDisabled() ~= false then return "social" end
+if C_Commentator.IsSpectating() ~= false then return "spectating" end
+if C_Commentator.SendAddonMessage("A", "B", "WHISPER") ~= Enum.SendAddonMessageResult.Success then return "send" end
+if type(C_GuildBank) ~= "table" then return "guild_bank" end
+if type(C_FriendList.GetNumFriends()) ~= "number" then return "friends" end
+if type(C_FriendList.GetNumOnlineFriends()) ~= "number" then return "online_friends" end
+if C_FriendList.GetNumIgnores() ~= 0 then return "ignores" end
+if C_FriendList.GetIgnoreName(1) ~= nil then return "ignore_name" end
+if ACCOUNT_BINDINGS ~= 1 or CHARACTER_BINDINGS ~= 2 or CHARACTERBINDINGS ~= CHARACTER_BINDINGS then return "bindings" end
+if IsOnTournamentRealm() ~= false then return "tournament" end
+if GetNumDisplayChannels() ~= 0 then return "display_channels" end
+if GetChannelDisplayInfo(1) ~= nil then return "channel_display_info" end
+if Ambiguate("Alyth-Realm", "short") ~= "Alyth" then return "ambiguate_short" end
+if Ambiguate("Alyth-Realm", "none") ~= "Alyth-Realm" then return "ambiguate_none" end
+if AreTalentsLocked() ~= false then return "talents_locked" end
+if GetGuildFactionGroup() ~= EXPECTED_GUILD_FACTION then return "guild_faction" end
+if WorldLootObjectExists("player") ~= false then return "world_loot_object" end
+if CanShowSetRoleButton() ~= false then return "role_button" end
+if #GetSpellConfirmationPromptsInfo() ~= 0 then return "spell_prompts" end
+if #GetActiveLootRollIDs() ~= 0 then return "loot_rolls" end
+if GetNumArenaOpponents() ~= 0 then return "arena" end
+if GetNumArenaOpponentSpecs() ~= 0 then return "arena_specs" end
+return "ok"
+"#;
+
+    fn configure_expected_defaults(env: &WowLuaEnv) {
         let expected_guild_faction =
             if cfg!(all(feature = "profile-retail", feature = "retail-12-1-5")) {
                 -1
             } else {
                 1
             };
+        let expected_bnet_counts = if cfg!(any(
+            feature = "client-retail",
+            feature = "client-wowforever"
+        )) {
+            (2, 1, 1, 0)
+        } else {
+            (0, 0, 0, 0)
+        };
+        let expected_default_language_id = expected_default_language_id();
+        let expected_max_battlefield_id = expected_max_battlefield_id();
         env.exec(&format!(
-            "EXPECTED_GUILD_FACTION = {expected_guild_faction}"
+            "EXPECTED_GUILD_FACTION = {expected_guild_faction}; EXPECTED_BNET_COUNTS = {{{}, {}, {}, {}}}; EXPECTED_DEFAULT_LANGUAGE_ID = {expected_default_language_id}; EXPECTED_MAX_BATTLEFIELD_ID = {expected_max_battlefield_id}",
+            expected_bnet_counts.0,
+            expected_bnet_counts.1,
+            expected_bnet_counts.2,
+            expected_bnet_counts.3
         ))
-        .expect("expected faction query result should be set");
+        .expect("expected default values should be set");
+    }
 
-        let world_check = if cfg!(any(feature = "client-retail", feature = "client-wowforever")) {
+    fn expected_default_language_id() -> i32 {
+        if cfg!(any(
+            feature = "client-retail",
+            feature = "client-wowforever"
+        )) {
+            7
+        } else {
+            1
+        }
+    }
+
+    fn expected_max_battlefield_id() -> i32 {
+        if cfg!(any(
+            feature = "client-retail",
+            feature = "client-wowforever"
+        )) {
+            3
+        } else {
+            0
+        }
+    }
+
+    fn default_language_check() -> String {
+        let world_check = if cfg!(any(
+            feature = "client-retail",
+            feature = "client-wowforever"
+        )) {
             r#"if IsPlayerInWorld() ~= false then return "player_world" end"#
         } else {
             r#"if IsPlayerInWorld() ~= true then return "player_world" end"#
         };
-        let result: String = env
-            .eval(
-                &[world_check, r#"
-                if GetCurrentRegionName() ~= "US" then return "region" end
-                local languageName, languageID = GetDefaultLanguage()
-                if languageName ~= "Common" or languageID ~= 1 then return "language" end
-                if GetAlternativeDefaultLanguage() ~= nil then return "alt_language" end
-                if GetNumLanguages() ~= 1 then return "num_languages" end
-                local indexedLanguageName, indexedLanguageID = GetLanguageByIndex(1)
-                if indexedLanguageName ~= "Common" or indexedLanguageID ~= 1 then return "indexed_language" end
-                if GetLanguageByIndex(2) ~= nil then return "missing_indexed_language" end
-                if GetMaxBattlefieldID() ~= 0 then return "battlefield_id" end
-                if IsActiveBattlefieldArena() ~= false then return "battlefield_arena" end
-                if IsPVPTimerRunning() ~= false then return "pvp_timer" end
-                if HasArtifactEquipped() ~= false then return "artifact" end
-                if UnitExists("player") ~= true or UnitExists("target") ~= false then return "unit" end
-                if EVENT_TOAST_MANAGER_OFFSET_Y_OVERRIDE ~= false then return "toast_offset" end
-                if CLOCK_TICKER_Y_OVERRIDE ~= false then return "clock_ticker" end
-                if C_SocialRestrictions.IsChatDisabled() ~= false then return "social" end
-                if C_Commentator.IsSpectating() ~= false then return "spectating" end
-                if C_Commentator.SendAddonMessage("A", "B", "WHISPER") ~= Enum.SendAddonMessageResult.Success then return "send" end
-                if type(C_GuildBank) ~= "table" then return "guild_bank" end
-                if type(C_FriendList.GetNumFriends()) ~= "number" then return "friends" end
-                if type(C_FriendList.GetNumOnlineFriends()) ~= "number" then return "online_friends" end
-                if C_FriendList.GetNumIgnores() ~= 0 then return "ignores" end
-                if C_FriendList.GetIgnoreName(1) ~= nil then return "ignore_name" end
-                if ACCOUNT_BINDINGS ~= 1 or CHARACTER_BINDINGS ~= 2 or CHARACTERBINDINGS ~= CHARACTER_BINDINGS then return "bindings" end
-                if IsOnTournamentRealm() ~= false then return "tournament" end
-                if GetNumDisplayChannels() ~= 0 then return "display_channels" end
-                if GetChannelDisplayInfo(1) ~= nil then return "channel_display_info" end
-                local bnetTotal, bnetOnline, bnetFavorite, bnetMobile = BNGetNumFriends()
-                if bnetTotal ~= 0 or bnetOnline ~= 0 or bnetFavorite ~= 0 or bnetMobile ~= 0 then return "bnet_counts" end
-                if BNGetNumFriendInvites() ~= 0 then return "bnet_invites" end
-                if BNGetFriendInfo(1) ~= nil then return "bnet_info" end
-                if Ambiguate("Alyth-Realm", "short") ~= "Alyth" then return "ambiguate_short" end
-                if Ambiguate("Alyth-Realm", "none") ~= "Alyth-Realm" then return "ambiguate_none" end
-                if AreTalentsLocked() ~= false then return "talents_locked" end
-                if GetGuildFactionGroup() ~= EXPECTED_GUILD_FACTION then return "guild_faction" end
-                if WorldLootObjectExists("player") ~= false then return "world_loot_object" end
-                if CanShowSetRoleButton() ~= false then return "role_button" end
-                if #GetSpellConfirmationPromptsInfo() ~= 0 then return "spell_prompts" end
-                if #GetActiveLootRollIDs() ~= 0 then return "loot_rolls" end
-                if GetNumArenaOpponents() ~= 0 then return "arena" end
-                if GetNumArenaOpponentSpecs() ~= 0 then return "arena_specs" end
-                return "ok"
-                "#].join("\n"),
-            )
-            .expect("inert defaults should be callable");
+        [world_check, INERT_DEFAULTS_CHECK_LUA].join("\n")
+    }
 
+    #[test]
+    // Loot-spec assertions moved to tests/loot_specialization.rs: the selected
+    // UnitPopupSharedButtonMixins.lua:1824,1854,1902 consumes the modeled globals.
+    fn installs_region_social_and_group_defaults() {
+        let env = WowLuaEnv::new().expect("lua env should initialize");
+        configure_expected_defaults(&env);
+        let result: String = env
+            .eval(&default_language_check())
+            .expect("inert defaults should be callable");
         assert_eq!(result, "ok");
     }
 

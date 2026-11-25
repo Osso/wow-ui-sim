@@ -104,6 +104,13 @@ fn prepare_cvar_value(state: &mut LuaState, name: &str) -> LuaResult<String> {
     Ok(value)
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) fn set_admin_cvar(state: &mut LuaState, name: &str, value: &str) -> LuaResult<u32> {
+    borrow_state_mut(state)?.cvars.set_temporary(name, value);
+    dispatch_cvar_update(state, name, value)?;
+    Ok(0)
+}
+
 fn dispatch_cvar_update(state: &mut LuaState, name: &str, value: &str) -> LuaResult<()> {
     crate::c_api::game_mode_display::cvar_set_callback(state, name)?;
     crate::c_api::restricted_actions::update_forced_cvar(state, name)?;

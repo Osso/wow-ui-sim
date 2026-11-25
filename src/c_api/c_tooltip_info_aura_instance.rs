@@ -1,8 +1,10 @@
-//! Retail 12.0.5 aura-instance tooltip input boundary.
-//! Polarity/miss policies are inferred; restricted aura output remains unmodeled.
+//! Retail and Forever aura-instance tooltip input boundaries.
+//! Forever lookup semantics are inferred; restricted aura output remains unmodeled.
 
-use crate::lua_api::globals::missing_surface::tooltip_info::tooltip_for_aura_instance;
-use crate::lua_api::methods::val_to_string;
+use crate::lua_api::globals::missing_surface::tooltip_info::{
+    tooltip_for_aura_instance, tooltip_for_selected_indexed_aura,
+};
+use crate::lua_api::methods::{borrow_state, val_to_string};
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
 use rilua::table_security::unwrap_secret;
 use rilua::vm::gc::arena::GcRef;
@@ -10,8 +12,24 @@ use rilua::vm::state::LuaState;
 use rilua::vm::table::Table;
 use rilua::{LuaResult, Val};
 
-/// Publish only into the existing, globally rooted namespace.
+/// Publish getters into the profile's native `C_TooltipInfo` namespace.
 pub(crate) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
+    match crate::client_profile::ACTIVE {
+        crate::client_profile::ClientProfile::Retail => {
+            // Retail's verified C_TooltipInfo registration marks this getter secure-only.
+            super::register_namespace_function_with_flags(
+                state,
+                "C_TooltipInfo",
+                "GetUnitPrivateAura",
+                get_private_aura,
+                2,
+            )?;
+        }
+        crate::client_profile::ClientProfile::WowForever => {
+            table_set_rust_fn_static(state, namespace, "GetUnitPrivateAura", get_private_aura)?;
+        }
+        _ => {}
+    }
     table_set_rust_fn_static(state, namespace, "GetUnitAuraByAuraInstanceID", get_aura)?;
     table_set_rust_fn_static(state, namespace, "GetUnitBuffByAuraInstanceID", get_buff)?;
     table_set_rust_fn_static(
@@ -21,6 +39,28 @@ pub(crate) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResu
         get_debuff,
     )?;
     Ok(())
+}
+
+// INFERRED (R88cd pending): the selected private-aura consumer supplies a unit
+// token and aura instance ID; reuse the Retail unit-aura tooltip line producer.
+fn get_private_aura(state: &mut LuaState) -> LuaResult<u32> {
+    let api_name = "C_TooltipInfo.GetUnitPrivateAura";
+    super::unit_aura_access::require_unit_aura_access(state, api_name)?;
+    let unit_value = unwrap_secret(state, stack_val(state, 1))?;
+    let instance_value = unwrap_secret(state, stack_val(state, 2))?;
+    let unit = val_to_string(state, unit_value).ok_or_else(|| {
+        rilua::runtime_error(format!("{api_name}: argument 1 requires a UTF-8 string"))
+    })?;
+    let instance_id = parse_instance_id(instance_value, api_name)?;
+    let aura = borrow_state(state)?
+        .private_aura_data
+        .aura_data_by_unit
+        .get(&unit)
+        .and_then(|auras| auras.get(&instance_id))
+        .map(|entry| entry.aura.clone());
+    let tooltip = tooltip_for_selected_indexed_aura(state, aura);
+    state.push(tooltip);
+    Ok(1)
 }
 
 fn get_aura(state: &mut LuaState) -> LuaResult<u32> {
