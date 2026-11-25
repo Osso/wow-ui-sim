@@ -437,23 +437,43 @@ fn blizzard_house_list_registers_view_houses_list_recieved_event_on_show(env: &W
 }
 
 fn verify_house_finder_scenario(env: &WowLuaEnv) {
-    load_addon(&env.loader_env(), &house_finder_toc()).expect("original House Finder addon loads");
     env.exec(SUPPLY_NEIGHBORHOODS).expect("supply distinct neighborhoods");
+    load_addon(&env.loader_env(), &house_finder_toc()).expect("original House Finder addon loads");
     env.exec("C_Housing.StartTutorial()")
         .expect("start the inferred tutorial flow through C_Housing");
+    assert_no_house_finder_list_yet(env);
     env.process_timers().expect("neighborhood reply dispatches asynchronously");
     let selected: String = env.eval(SELECT_SECOND_NEIGHBORHOOD)
         .expect("original frame selects supplied neighborhood");
     assert_eq!(selected, "Amber Vale/Cobalt Reach;41/82");
+    assert_eq!(neighborhood_suffix(env), "cobalt");
     let faction_match: bool = env
         .eval("return C_Housing.DoesFactionMatchNeighborhood('Neighborhood-B')")
         .expect("faction result comes from supplied neighborhood state");
     assert!(!faction_match);
+    assert_no_house_finder_plots_yet(env);
     env.process_timers().expect("plot reply dispatches asynchronously");
     let supplied_plot: String = env
         .eval("local p = HouseFinderFrame.mapDataProvider.houseMapData[1]; return p.plotID .. '/' .. p.ownerName")
         .expect("original map provider stores supplied plot fields");
     assert_eq!(supplied_plot, "29/Mira");
+}
+
+fn assert_no_house_finder_list_yet(env: &WowLuaEnv) {
+    let pending: bool = env.eval("local nextButton = HouseFinderFrame.neighborhoodButtonPool:EnumerateActive(); return nextButton() == nil")
+        .expect("House Finder list is not dispatched before the next timer tick");
+    assert!(pending);
+}
+
+fn assert_no_house_finder_plots_yet(env: &WowLuaEnv) {
+    let pending: bool = env.eval("return HouseFinderFrame.mapDataProvider.houseMapData == nil")
+        .expect("plot data is not dispatched before the next timer tick");
+    assert!(pending);
+}
+
+fn neighborhood_suffix(env: &WowLuaEnv) -> String {
+    env.eval("return C_Housing.GetNeighborhoodTextureSuffix('Neighborhood-B')")
+        .expect("texture suffix comes from supplied neighborhood state")
 }
 
 prefork_full_ui_case! {

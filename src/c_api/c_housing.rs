@@ -85,7 +85,29 @@ pub(crate) fn register_admin(
 }
 
 pub(crate) fn register_c_housing_surface(state: &mut LuaState) -> LuaResult<()> {
-    // Replaces an unconditional temporary surface, including non-retail profiles.
+    register_profile_surface(state)?;
+    let housing = ensure_namespace(state, "C_Housing")?;
+    if cfg!(feature = "retail-12-0-0") {
+        market::register(state, housing)?;
+    }
+    let blueprints = ensure_namespace(state, "C_HousingBlueprint")?;
+    let house_editor = ensure_namespace(state, "C_HouseEditor")?;
+    let customize_mode = ensure_namespace(state, "C_HousingCustomizeMode")?;
+    let decor = ensure_namespace(state, "C_HousingDecor")?;
+    let layout = ensure_namespace(state, "C_HousingLayout")?;
+    register_patch_12_0_7_housing_surface(state, customize_mode, layout)?;
+    register_patch_12_1_c_housing_surface(
+        state,
+        housing,
+        blueprints,
+        house_editor,
+        customize_mode,
+        decor,
+        layout,
+    )
+}
+
+fn register_profile_surface(state: &mut LuaState) -> LuaResult<()> {
     catalog::register(state)?;
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
         charter::register(state)?;
@@ -117,25 +139,7 @@ pub(crate) fn register_c_housing_surface(state: &mut LuaState) -> LuaResult<()> 
         feature = "client-wowforever"
     ))]
     presence::register(state)?;
-    let housing = ensure_namespace(state, "C_Housing")?;
-    if cfg!(feature = "retail-12-0-0") {
-        market::register(state, housing)?;
-    }
-    let blueprints = ensure_namespace(state, "C_HousingBlueprint")?;
-    let house_editor = ensure_namespace(state, "C_HouseEditor")?;
-    let customize_mode = ensure_namespace(state, "C_HousingCustomizeMode")?;
-    let decor = ensure_namespace(state, "C_HousingDecor")?;
-    let layout = ensure_namespace(state, "C_HousingLayout")?;
-    register_patch_12_0_7_housing_surface(state, customize_mode, layout)?;
-    register_patch_12_1_c_housing_surface(
-        state,
-        housing,
-        blueprints,
-        house_editor,
-        customize_mode,
-        decor,
-        layout,
-    )
+    Ok(())
 }
 
 #[cfg(any(feature = "retail-12-0-7", feature = "retail-12-1-0"))]
