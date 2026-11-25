@@ -22,6 +22,7 @@
 ## Tests asserting this spec
 
 - `tests/frame_level.rs::set_frame_level_shifts_same_strata_descendants_by_delta`
+- `tests/xml_frame_strata.rs::test_xml_fixed_frame_level_shifts_when_parent_level_changes`
 - `tests/hero_talents/rendering.rs::test_button_frame_level_change_relevels_connected_edges_on_update`
 
 ## Known gaps (current cycle)
