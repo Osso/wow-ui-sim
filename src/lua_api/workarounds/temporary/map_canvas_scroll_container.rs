@@ -16,10 +16,10 @@ local option_set = {}
 for _, option in ipairs(options or {}) do
   option_set[option] = true
 end
-local preserve_original_world_map_owners = option_set.preserve_original_world_map_owners == true
 local retire_container_access = option_set.retire_container_access == true
 local retire_zoom_query = option_set.retire_zoom_query == true
 local retire_viewport_scale_repairs = option_set.retire_viewport_scale_repairs == true
+local retire_world_map_owner_wrappers = option_set.retire_world_map_owner_wrappers == true
 
 if type(ClearCachedActivitiesForPlayer) ~= "function" then
   function ClearCachedActivitiesForPlayer() end
@@ -301,7 +301,7 @@ local function __wow_patch_live_map_canvas(frame)
 end
 
 local function __wow_patch_world_map_display_state(frame)
-  if preserve_original_world_map_owners then
+  if retire_world_map_owner_wrappers then
     return
   end
   if type(frame) ~= "table" or type(frame.SetDisplayState) ~= "function" then
@@ -527,7 +527,7 @@ for _, mapName in ipairs({ "WorldMapFrame", "BattlefieldMapFrame" }) do
 end
 __wow_patch_world_map_display_state(WorldMapFrame)
 
-if not preserve_original_world_map_owners
+if not retire_world_map_owner_wrappers
   and type(ToggleWorldMap) == "function"
   and not rawget(_G, "__wow_toggle_world_map_refresh_patched")
 then
@@ -552,20 +552,17 @@ end
     "#;
 
 pub(crate) fn patch(env: &LoaderEnv<'_>) -> Result<(), crate::Error> {
-    let option_names: &[&str] = match ACTIVE {
-        ClientProfile::Retail => &[
-            "preserve_original_world_map_owners",
-            "retire_container_access",
-            "retire_zoom_query",
-            "retire_viewport_scale_repairs",
-        ],
-        ClientProfile::WowForever => &[
-            "retire_container_access",
-            "retire_zoom_query",
-            "retire_viewport_scale_repairs",
-        ],
-        _ => &[],
-    };
+    let option_names: &[&str] =
+        if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever) {
+            &[
+                "retire_container_access",
+                "retire_zoom_query",
+                "retire_viewport_scale_repairs",
+                "retire_world_map_owner_wrappers",
+            ]
+        } else {
+            &[]
+        };
     let args: Vec<_> = option_names
         .iter()
         .map(|option| GeneratedChunkArg::String((*option).into()))
