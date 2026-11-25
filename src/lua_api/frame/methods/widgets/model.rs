@@ -413,6 +413,90 @@ fn stringish_arg(state: &LuaState, index: i32) -> Option<String> {
     }
 }
 
+pub(super) fn set_actor_pitch(state: &mut LuaState) -> LuaResult<u32> {
+    let id = frame_id_from_stack(state, 1)?;
+    let pitch = val_to_f64(stack_val(state, 2)) as f32;
+    let mut sim = borrow_state_mut(state)?;
+    if let Some(frame) = sim.widgets.get_mut_visual(id) {
+        frame.model_state_mut().actor_pitch = pitch;
+    }
+    Ok(0)
+}
+
+pub(super) fn get_actor_pitch(state: &mut LuaState) -> LuaResult<u32> {
+    let id = frame_id_from_stack(state, 1)?;
+    let pitch = borrow_state(state)?
+        .widgets
+        .get(id)
+        .map(|frame| frame.model_state().actor_pitch as f64)
+        .unwrap_or(0.0);
+    pitch.into_stack(state)
+}
+
+pub(super) fn set_actor_roll(state: &mut LuaState) -> LuaResult<u32> {
+    let id = frame_id_from_stack(state, 1)?;
+    let roll = val_to_f64(stack_val(state, 2)) as f32;
+    let mut sim = borrow_state_mut(state)?;
+    if let Some(frame) = sim.widgets.get_mut_visual(id) {
+        frame.model_state_mut().actor_roll = roll;
+    }
+    Ok(0)
+}
+
+pub(super) fn get_actor_roll(state: &mut LuaState) -> LuaResult<u32> {
+    let id = frame_id_from_stack(state, 1)?;
+    let roll = borrow_state(state)?
+        .widgets
+        .get(id)
+        .map(|frame| frame.model_state().actor_roll as f64)
+        .unwrap_or(0.0);
+    roll.into_stack(state)
+}
+
+pub(super) fn set_actor_yaw(state: &mut LuaState) -> LuaResult<u32> {
+    let id = frame_id_from_stack(state, 1)?;
+    let yaw = val_to_f64(stack_val(state, 2)) as f32;
+    let mut sim = borrow_state_mut(state)?;
+    if let Some(frame) = sim.widgets.get_mut_visual(id) {
+        frame.model_state_mut().actor_yaw = yaw;
+    }
+    Ok(0)
+}
+
+pub(super) fn get_actor_yaw(state: &mut LuaState) -> LuaResult<u32> {
+    let id = frame_id_from_stack(state, 1)?;
+    let yaw = borrow_state(state)?
+        .widgets
+        .get(id)
+        .map(|frame| frame.model_state().actor_yaw as f64)
+        .unwrap_or(0.0);
+    yaw.into_stack(state)
+}
+
+pub(super) fn set_particle_override_scale(state: &mut LuaState) -> LuaResult<u32> {
+    let id = frame_id_from_stack(state, 1)?;
+    let scale = Option::<f64>::from_stack(state, 2)?.map(|value| value as f32);
+    let mut sim = borrow_state_mut(state)?;
+    if let Some(frame) = sim.widgets.get_mut_visual(id) {
+        frame.model_state_mut().particle_override_scale = scale;
+    }
+    Ok(0)
+}
+
+pub(super) fn get_particle_override_scale(state: &mut LuaState) -> LuaResult<u32> {
+    let id = frame_id_from_stack(state, 1)?;
+    let scale = borrow_state(state)?
+        .widgets
+        .get(id)
+        .and_then(|frame| frame.model_state().particle_override_scale);
+    if let Some(scale) = scale {
+        (scale as f64).into_stack(state)
+    } else {
+        state.push(Val::Nil);
+        Ok(1)
+    }
+}
+
 pub(super) fn get_model_alpha(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
     let sim = borrow_state(state)?;
@@ -731,8 +815,14 @@ const MODEL_METHODS: &[(&'static str, rilua::vm::closure::RustFn)] = &[
     ("AdvanceTime", SKIP_3D_RENDERING),
     ("ClearTransform", SKIP_3D_RENDERING),
     ("SetTransform", SKIP_3D_RENDERING),
-    ("SetPitch", SKIP_3D_RENDERING),
-    ("SetRoll", SKIP_3D_RENDERING),
+    ("SetPitch", set_actor_pitch),
+    ("GetPitch", get_actor_pitch),
+    ("SetRoll", set_actor_roll),
+    ("GetRoll", get_actor_roll),
+    ("SetYaw", set_actor_yaw),
+    ("GetYaw", get_actor_yaw),
+    ("SetParticleOverrideScale", set_particle_override_scale),
+    ("GetParticleOverrideScale", get_particle_override_scale),
     ("UseModelCenterToTransform", SKIP_3D_RENDERING),
     ("SetViewTranslation", SKIP_3D_RENDERING),
     ("SetModelDrawLayer", SKIP_3D_RENDERING),
@@ -766,8 +856,6 @@ const MODEL_METHODS: &[(&'static str, rilua::vm::closure::RustFn)] = &[
     ("HasCustomCamera", stub_false),
     ("HasAttachmentPoints", stub_false),
     ("GetLight", stub_nil),
-    ("GetPitch", stub_zero),
-    ("GetRoll", stub_zero),
     ("GetWorldScale", stub_one),
     (
         "TransformCameraSpaceToModelSpace",
