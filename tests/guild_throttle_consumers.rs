@@ -64,7 +64,7 @@ fn queued_roster_updates(env: &WowLuaEnv) -> usize {
 fn communities_guild_perks_panel_uses_supplied_spell_rows() {
     let env = load_communities();
     env.exec(
-        "A_Admin.SetGuildInfo('Perk Test Guild', 'Member', 2); A_Admin.SetGuildPerks(83944, 1, 83940, 2); ToggleCommunitiesFrame(); CommunitiesFrame.GuildInfoTab:Click()",
+        "A_Admin.SetGuildInfo('Perk Test Guild', 'Member', 2); A_Admin.SetGuildPerks(1459, 1, 6673, 2); ToggleCommunitiesFrame(); CommunitiesFrame.GuildInfoTab:Click()",
     )
     .expect("guild perks panel should open through the original guild tab");
     wow_ui_sim::startup::fire_one_on_update_tick(&env);
