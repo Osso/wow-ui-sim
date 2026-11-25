@@ -30,12 +30,18 @@ assert(scroll == map.ScrollContainer and child == scroll.Child)
 assert(child:GetWidth() == 3840 and child:GetHeight() == 2560)
 assert(scrollWidth > 0 and scrollHeight > 0)
 assert(scroll.baseScale == expectedScale)
-assert(type(scroll.zoomLevels) == "table" and #scroll.zoomLevels > 1)
+local levels = assert(scroll.zoomLevels)
+assert(type(levels) == "table" and #levels > 1)
 local previousScale = 0
-for index, level in ipairs(scroll.zoomLevels) do
+for index, level in ipairs(levels) do
   assert(level.scale > previousScale, "zoom levels must increase")
   previousScale = level.scale
 end
+assert(scroll:GetZoomLevelIndexForScale(levels[1].scale) == 1)
+assert(scroll:GetZoomLevelIndexForScale(levels[2].scale) == 2)
+assert(scroll:GetZoomLevelIndexForScale(levels[#levels].scale) == #levels)
+local currentIndex = scroll:GetZoomLevelIndexForScale(scroll:GetCanvasScale())
+assert(scroll:GetCurrentLayerIndex() == levels[currentIndex].layerIndex)
 "#;
 
 fn load_full_game_ui() -> WowLuaEnv {

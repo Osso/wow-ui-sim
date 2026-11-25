@@ -18,6 +18,7 @@ for _, option in ipairs(options or {}) do
 end
 local preserve_original_world_map_owners = option_set.preserve_original_world_map_owners == true
 local retire_container_access = option_set.retire_container_access == true
+local retire_zoom_query = option_set.retire_zoom_query == true
 
 if type(ClearCachedActivitiesForPlayer) ~= "function" then
   function ClearCachedActivitiesForPlayer() end
@@ -356,7 +357,9 @@ local function __wow_ensure_map_canvas_zoom_levels(scroll)
   scroll.targetScale = scroll.targetScale or zoomLevels[1].scale or 1.0
 end
 
-rawset(_G, "__wow_ensure_map_canvas_zoom_levels", __wow_ensure_map_canvas_zoom_levels)
+if not retire_zoom_query then
+  rawset(_G, "__wow_ensure_map_canvas_zoom_levels", __wow_ensure_map_canvas_zoom_levels)
+end
 
 local function __wow_refresh_world_map_canvas()
   __wow_patch_live_map_canvas(WorldMapFrame)
@@ -481,31 +484,29 @@ if type(MapCanvasMixin) == "table" and not rawget(_G, "__wow_map_canvas_scroll_c
     end
   end
 
-  if type(MapCanvasScrollControllerMixin) == "table"
-    and type(MapCanvasScrollControllerMixin.GetZoomLevelIndexForScale) == "function"
-  then
-    local originalGetZoomLevelIndexForScale = MapCanvasScrollControllerMixin.GetZoomLevelIndexForScale
-    MapCanvasScrollControllerMixin.GetZoomLevelIndexForScale = function(self, scale)
-      __wow_ensure_map_canvas_zoom_levels(self)
-      return originalGetZoomLevelIndexForScale(self, scale)
+  if not retire_zoom_query then
+    if type(MapCanvasScrollControllerMixin) == "table"
+      and type(MapCanvasScrollControllerMixin.GetZoomLevelIndexForScale) == "function"
+    then
+      local originalGetZoomLevelIndexForScale = MapCanvasScrollControllerMixin.GetZoomLevelIndexForScale
+      MapCanvasScrollControllerMixin.GetZoomLevelIndexForScale = function(self, scale)
+        __wow_ensure_map_canvas_zoom_levels(self)
+        return originalGetZoomLevelIndexForScale(self, scale)
+      end
     end
-  end
 
-  if type(MapCanvasScrollControllerMixin) == "table"
-    and type(MapCanvasScrollControllerMixin.GetCurrentLayerIndex) == "function"
-  then
-    local originalGetCurrentLayerIndex = MapCanvasScrollControllerMixin.GetCurrentLayerIndex
-    MapCanvasScrollControllerMixin.GetCurrentLayerIndex = function(self, ...)
-      __wow_ensure_map_canvas_zoom_levels(self)
-      local zoomLevels = rawget(self, "zoomLevels")
-      if type(zoomLevels) ~= "table" or type(zoomLevels[1]) ~= "table" then
-        return 1
+    if type(MapCanvasScrollControllerMixin) == "table"
+      and type(MapCanvasScrollControllerMixin.GetCurrentLayerIndex) == "function"
+    then
+      local originalGetCurrentLayerIndex = MapCanvasScrollControllerMixin.GetCurrentLayerIndex
+      MapCanvasScrollControllerMixin.GetCurrentLayerIndex = function(self, ...)
+        __wow_ensure_map_canvas_zoom_levels(self)
+        local zoomLevels = rawget(self, "zoomLevels")
+        if type(zoomLevels) ~= "table" or type(zoomLevels[1]) ~= "table" then return 1 end
+        local ok, layerIndex = pcall(originalGetCurrentLayerIndex, self, ...)
+        if ok and type(layerIndex) == "number" and layerIndex >= 1 then return layerIndex end
+        return zoomLevels[1].layerIndex or 1
       end
-      local ok, layerIndex = pcall(originalGetCurrentLayerIndex, self, ...)
-      if ok and type(layerIndex) == "number" and layerIndex >= 1 then
-        return layerIndex
-      end
-      return zoomLevels[1].layerIndex or 1
     end
   end
 
@@ -547,8 +548,9 @@ pub(crate) fn patch(env: &LoaderEnv<'_>) -> Result<(), crate::Error> {
         ClientProfile::Retail => &[
             "preserve_original_world_map_owners",
             "retire_container_access",
+            "retire_zoom_query",
         ],
-        ClientProfile::WowForever => &["retire_container_access"],
+        ClientProfile::WowForever => &["retire_container_access", "retire_zoom_query"],
         _ => &[],
     };
     let args: Vec<_> = option_names
@@ -663,52 +665,5 @@ mod tests {
         assert!(calculated_scale);
         assert!(calculated_scroll);
         assert!(canvas_size_changed);
-    }
-
-    #[test]
-    fn creates_zoom_levels_before_scroll_controller_queries() {
-        let env = WowLuaEnv::new().expect("lua env should initialize");
-        env.exec(
-            r#"
-            C_Map = {
-                GetMapArtLayers = function(mapID)
-                    if mapID == 947 then
-                        return {
-                            { minScale = 0.75 },
-                            { minScale = 1.5 },
-                        }
-                    end
-                    return nil
-                end,
-            }
-            MapCanvasMixin = { OnLoad = function() end }
-            MapCanvasScrollControllerMixin = {
-                GetCurrentLayerIndex = function()
-                    error("missing zoom levels")
-                end,
-            }
-            scroll = { mapID = 947 }
-            "#,
-        )
-        .expect("map canvas zoom fixture should install");
-
-        patch_env(&env);
-
-        let (layer_index, first_scale, second_layer, target_scale): (i64, f64, i64, f64) = env
-            .eval(
-                r#"
-                local layerIndex = MapCanvasScrollControllerMixin.GetCurrentLayerIndex(scroll)
-                return layerIndex,
-                    scroll.zoomLevels[1].scale,
-                    scroll.zoomLevels[2].layerIndex,
-                    scroll.targetScale
-                "#,
-            )
-            .expect("patched zoom layer query should create fallback zoom levels");
-
-        assert_eq!(layer_index, 1);
-        assert_eq!(first_scale, 0.75);
-        assert_eq!(second_layer, 2);
-        assert_eq!(target_scale, 0.75);
     }
 }
