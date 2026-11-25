@@ -18,6 +18,7 @@ The `A_Admin` namespace provides administrative functions for controlling simula
 - [Kiosk session](kiosk.md) — SetKioskSession
 - [Communities](communities.md) — SetAccountMutedClub, SetClubTypeAllowed
 - [Contribution Collector](contribution-collector.md) — SetContributionCollectors
+- Vignettes: `A_Admin.SetVignettes(records)` supplies the session's `C_VignetteInfo` records and fires `VIGNETTES_UPDATED`. Each record requires `vignetteGUID`, `uiMapID`, `x`, and `y`; documented `VignetteInfo` fields can also be supplied, including `mapPin`. Optional host values are `facing`, `healthPercent`, `minGroupSize`, and `maxGroupSize`. Empty records are the default. Unknown-GUID return behavior is INFERRED (R88g6).
 - [Chat windows](chat-windows.md) — SetChatWindowState
 - [Voice chat](voice-chat.md) — SetCanPlayerUseVoiceChat
 - [Health & Power](health-power.md) — SetPlayerHealth, SetPlayerPower, SetTargetHealth

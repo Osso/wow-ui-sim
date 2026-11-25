@@ -1162,6 +1162,8 @@ pub struct SimState {
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     pub contribution_collectors: crate::c_api::c_contribution_collector::ContributionCollectorState,
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub vignettes: crate::c_api::vignette_info::VignetteState,
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     pub taxi_map: crate::c_api::c_taxi_map::TaxiMapState,
     /// Existing simulator selection, scoped to the current Lua UI lifetime.
     pub(crate) quest_log_selected_map_id: Option<f64>,
