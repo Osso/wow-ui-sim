@@ -4,7 +4,11 @@ fn env() -> WowLuaEnv {
     WowLuaEnv::new().expect("Failed to create Lua environment")
 }
 
-#[cfg(not(feature = "retail-12-0-0"))]
+#[cfg(not(any(
+    feature = "retail-12-0-0",
+    feature = "client-retail",
+    feature = "client-wowforever"
+)))]
 #[test]
 fn legacy_macro_and_spellbook_globals_exist_for_addons() {
     let env = env();

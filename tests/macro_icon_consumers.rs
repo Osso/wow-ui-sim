@@ -1,5 +1,8 @@
 //! R88l.20–23: original icon consumer and separately observable Lua API contracts.
-#![cfg(all(feature = "client-retail", feature = "optional-tests"))]
+#![cfg(all(
+    any(feature = "client-retail", feature = "client-wowforever"),
+    feature = "optional-tests"
+))]
 
 use crate::common::blizzard_addon_harness::with_blizzard_addon_closure;
 use wow_ui_sim::lua_api::WowLuaEnv;
@@ -19,6 +22,11 @@ fn assert_original_empty_icon_source(env: &WowLuaEnv) {
     .expect("the original provider retains its own question mark for an empty host feed");
 }
 
+fn set_icon_catalog(env: &WowLuaEnv, catalog: &serde_json::Value) {
+    env.exec(&format!("A_Admin.SetMacroIconCatalog([=[{catalog}]=])"))
+        .expect("supplied macro icon catalog");
+}
+
 #[test]
 fn macro_icon_api_returns_reused_table_and_rejects_wrong_type() {
     let env = WowLuaEnv::new().expect("Lua environment");
@@ -28,13 +36,13 @@ fn macro_icon_api_returns_reused_table_and_rejects_wrong_type() {
         let item = format!("host_item_{n}");
         let spell_id = 123 + n;
         let item_id = -45 - n;
-        {
-            let mut sim = env.state().borrow_mut();
-            sim.macro_icons.loose_spells = vec![Some(spell.clone()), None, Some(item.clone())];
-            sim.macro_icons.loose_items = vec![Some(item.clone())];
-            sim.macro_icons.spells = vec![spell_id];
-            sim.macro_icons.items = vec![item_id];
-        }
+        let catalog = serde_json::json!({
+            "looseSpells": [spell.clone(), null, item.clone()],
+            "looseItems": [item.clone()],
+            "spells": [spell_id],
+            "items": [item_id],
+        });
+        set_icon_catalog(&env, &catalog);
         assert_direct_icon_contents(&env, &spell, &item, spell_id, item_id);
     }
 }
@@ -98,13 +106,13 @@ fn original_icon_provider_observes_all_four_supplied_sources() {
             let item_name = format!("host_item_{n}");
             let spell_id = 900_100 + n;
             let item_id = -900_200 - n;
-            {
-                let mut sim = env.state().borrow_mut();
-                sim.macro_icons.loose_spells = vec![Some(spell_name.clone())];
-                sim.macro_icons.loose_items = vec![Some(item_name.clone())];
-                sim.macro_icons.spells = vec![spell_id];
-                sim.macro_icons.items = vec![item_id];
-            }
+            let catalog = serde_json::json!({
+                "looseSpells": [spell_name.clone()],
+                "looseItems": [item_name.clone()],
+                "spells": [spell_id],
+                "items": [item_id],
+            });
+            set_icon_catalog(env, &catalog);
             env.exec(&format!(
                 r#"
                 local source = debug.getinfo(IconDataProviderMixin.Init, "S").source
@@ -121,7 +129,8 @@ fn original_icon_provider_observes_all_four_supplied_sources() {
             ))
             .expect("original provider should distinguish both snapshots of all four host feeds");
         }
-        env.state().borrow_mut().macro_icons = Default::default();
+        env.exec("A_Admin.SetMacroIconCatalog([[{}]])")
+            .expect("clear supplied icon catalog");
         assert_original_empty_icon_source(env);
     });
 }

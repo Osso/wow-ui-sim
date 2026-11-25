@@ -26,27 +26,15 @@ fn show_macro_frame_loads_and_populates_selector() {
                 .expect("native macro lazy loader, selection and populated rows");
             return;
         }
-        #[cfg(feature = "client-retail")]
-        {
-            let mut sim = env.state().borrow_mut();
-            sim.macros.resize_with(121, Default::default);
-            for (index, name, icon, body) in [
-                (0, "Raid Beacon", "134400", "/rw Stack on star"),
-                (1, "Ready", "132212", "/readycheck"),
-                (120, "Crusader", "135890", "/cast Crusader Aura"),
-            ] {
-                sim.macros[index] = wow_ui_sim::lua_api::state::MacroInfo {
-                    name: name.into(),
-                    icon: icon.into(),
-                    body: body.into(),
-                };
-            }
-        }
-        env.exec(
-            "Constants.MacroConsts = { MAX_ACCOUNT_MACROS = 120, MAX_CHARACTER_MACROS = 30 }",
-        )
-        .expect("failed to seed retail MacroConsts");
-        let result: String = env.eval(r#"
+        #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+        seed_macro_consumer_rows(&env);
+        let (expected_name, expected_body) =
+            if cfg!(any(feature = "client-retail", feature = "client-wowforever")) {
+                ("MacroAlpha", "/say alpha")
+            } else {
+                ("Raid Beacon", "/rw Stack on star")
+            };
+        let result: String = env.eval(&format!(r#"
             if not ShowMacroFrame then
                 return "missing_show_macro_frame"
             end
@@ -62,10 +50,10 @@ fn show_macro_frame_loads_and_populates_selector() {
             if MacroFrame.MacroSelector.numMacros ~= 2 then
                 return "selector_count=" .. tostring(MacroFrame.MacroSelector.numMacros)
             end
-            if MacroFrameSelectedMacroName:GetText() ~= "Raid Beacon" then
+            if MacroFrameSelectedMacroName:GetText() ~= "{expected_name}" then
                 return "selected_name=" .. tostring(MacroFrameSelectedMacroName:GetText())
             end
-            if MacroFrameText:GetText() ~= "/rw Stack on star" then
+            if MacroFrameText:GetText() ~= "{expected_body}" then
                 return "selected_body=" .. tostring(MacroFrameText:GetText())
             end
             if MacroFrame.SelectedMacroButton.Icon:GetTexture() ~= 134400 then
@@ -77,9 +65,18 @@ fn show_macro_frame_loads_and_populates_selector() {
                 return "counts=" .. tostring(accountCount) .. "," .. tostring(characterCount)
             end
             return "ok"
-        "#).unwrap();
+        "#)).unwrap();
         assert_eq!(result, "ok", "ShowMacroFrame should load and populate the macro selector: {result}");
     }
+}
+
+fn seed_macro_consumer_rows(env: &wow_ui_sim::lua_api::WowLuaEnv) {
+    env.exec(r#"
+        assert(CreateMacro("MacroAlpha", "134400", "/say alpha") == 1)
+        assert(CreateMacro("MacroBeta", "132212", "/readycheck") == 2)
+        assert(CreateMacro("CharacterGamma", "135890", "/cast Crusader Aura", true) == 121)
+    "#)
+    .expect("supplied account and character macros");
 }
 
 #[test]

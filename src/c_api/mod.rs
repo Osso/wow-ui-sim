@@ -274,6 +274,8 @@ pub mod c_loot_history;
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub mod c_loot_journal;
 pub(crate) mod c_mac_options;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) mod c_macro;
 pub mod c_major_factions;
 pub mod c_map;
 pub(crate) mod c_map_bounties;

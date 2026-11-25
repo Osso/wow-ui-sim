@@ -16,7 +16,7 @@ use inferred_selection::{by_name, is_occupied};
 // Both registration and the compatibility bootstrap use this publication decision.
 pub(crate) const USE_MODELED_MACRO_GETTERS: bool = matches!(
     crate::client_profile::ACTIVE,
-    crate::client_profile::ClientProfile::Retail
+    crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::WowForever
 );
 
 const MACRO_INFO_SLOTS: usize = 240;
@@ -33,6 +33,7 @@ pub(crate) fn register(lua: &mut rilua::Lua) -> crate::Result<()> {
     }
     LuaApiMut::register_function(lua, "GetNumMacros", get_num_macros)?;
     LuaApiMut::register_function(lua, "GetMacroInfo", get_macro_info)?;
+    LuaApiMut::register_function(lua, "GetMacroBody", get_macro_body)?;
     for (name, handler) in [
         ("GetLooseMacroIcons", get_loose_spell_icons as rilua::RustFn),
         ("GetLooseMacroItemIcons", get_loose_item_icons),
@@ -44,17 +45,29 @@ pub(crate) fn register(lua: &mut rilua::Lua) -> crate::Result<()> {
     Ok(())
 }
 
+pub(crate) fn macro_counts(rows: &[MacroInfo]) -> (usize, usize) {
+    let account_end = rows.len().min(ACCOUNT_SLOTS);
+    let character_end = rows.len().min(ACCOUNT_SLOTS + CHARACTER_SLOTS);
+    let count = |range: &[MacroInfo]| range.iter().filter(|row| is_occupied(row)).count();
+    (
+        count(&rows[..account_end]),
+        count(&rows[account_end..character_end]),
+    )
+}
+
+pub(crate) fn macro_at_one_based_id(rows: &[MacroInfo], id: u32) -> Option<&MacroInfo> {
+    let rows = &rows[..rows.len().min(MACRO_INFO_SLOTS)];
+    id.checked_sub(1)
+        .and_then(|slot| rows.get(slot as usize))
+        .filter(|row| is_occupied(row))
+}
+
+pub(crate) fn selected_macro_icon(icon: &str) -> Option<u32> {
+    resolved_macro_icon(icon)
+}
+
 fn get_num_macros(state: &mut LuaState) -> LuaResult<u32> {
-    let (account, character) = {
-        let sim = borrow_state(state)?;
-        let occupied = |rows: &[MacroInfo]| rows.iter().filter(|row| is_occupied(row)).count();
-        let split = sim.macros.len().min(ACCOUNT_SLOTS);
-        let end = sim.macros.len().min(ACCOUNT_SLOTS + CHARACTER_SLOTS);
-        (
-            occupied(&sim.macros[..split]),
-            occupied(&sim.macros[split..end]),
-        )
-    };
+    let (account, character) = macro_counts(&borrow_state(state)?.macros);
     state.push(Val::Num(account as f64));
     state.push(Val::Num(character as f64));
     Ok(2)
@@ -79,6 +92,21 @@ fn get_macro_info(state: &mut LuaState) -> LuaResult<u32> {
     let body = create_string(state, &row.body);
     state.push(body);
     Ok(3)
+}
+
+pub(crate) fn get_macro_body(state: &mut LuaState) -> LuaResult<u32> {
+    let Ok(input) = unwrap_secret(state, stack_val(state, 1)) else {
+        state.push(Val::Nil);
+        return Ok(1);
+    };
+    let body = {
+        let sim = borrow_state(state)?;
+        let rows = &sim.macros[..sim.macros.len().min(MACRO_INFO_SLOTS)];
+        select_macro_record(state, rows, input).map(|row| row.body.clone())
+    };
+    let value = body.map_or(Val::Nil, |body| create_string(state, &body));
+    state.push(value);
+    Ok(1)
 }
 
 fn select_macro_record<'a>(

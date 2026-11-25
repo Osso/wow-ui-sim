@@ -1,5 +1,8 @@
 //! Native Retail macro getters, exercised through two independently loaded Blizzard consumers.
-#![cfg(all(feature = "client-retail", feature = "optional-tests"))]
+#![cfg(all(
+    any(feature = "client-retail", feature = "client-wowforever"),
+    feature = "optional-tests"
+))]
 
 use crate::common::panel_fixtures::setup_env;
 use wow_ui_sim::lua_api::{WowLuaEnv, state::MacroInfo};
@@ -13,10 +16,13 @@ fn macro_record(name: &str, icon: u32, body: &str) -> MacroInfo {
 }
 
 fn seed(env: &WowLuaEnv, names: &[(&str, u32, &str)]) {
-    env.state().borrow_mut().macros = names
+    let rows = names
         .iter()
         .map(|&(name, icon, body)| macro_record(name, icon, body))
-        .collect();
+        .collect::<Vec<_>>();
+    let json = serde_json::to_string(&rows).expect("macro rows serialize");
+    env.exec(&format!("A_Admin.SetMacroRows([=[{json}]=])"))
+        .expect("supplied macro rows");
 }
 
 #[test]
@@ -39,10 +45,6 @@ fn load_macro_ui(env: &WowLuaEnv) {
     env.exec(
         r#"
         assert(not C_AddOns.IsAddOnLoaded("Blizzard_MacroUI"), "MacroUI starts load-on-demand")
-        -- Pre-existing fixture prerequisite from pinned MacroConstantsDocumentation.lua:10–11.
-        Constants.MacroConsts = {
-            MAX_ACCOUNT_MACROS = 120, MAX_CHARACTER_MACROS = 30,
-        }
         ShowMacroFrame()
         assert(C_AddOns.IsAddOnLoaded("Blizzard_MacroUI"), "original macro bootstrap must load UI")
         local source = debug.getinfo(MacroFrame.Update, "S").source
@@ -75,11 +77,9 @@ fn assert_selected_macro(env: &WowLuaEnv, count: u32, record: (&str, u32, &str))
 
 fn exercise_character_tab(env: &WowLuaEnv) {
     let character = ("NativeCharacter", 132212, "/say character");
-    {
-        let mut sim = env.state().borrow_mut();
-        sim.macros.resize_with(121, Default::default);
-        sim.macros[120] = macro_record(character.0, character.1, character.2);
-    }
+    let mut rows = vec![MacroInfo::default(); 121];
+    rows[120] = macro_record(character.0, character.1, character.2);
+    seed_rows(env, rows);
     env.exec("MacroFrame:ChangeTab(2)").unwrap();
     assert_selected_macro(env, 1, character);
 }
@@ -127,7 +127,7 @@ fn macro_getter_ordinary_argument_and_return_contract() {
     records[120] = macro_record("Character", 132212, "/say character");
     records[239] = macro_record("Last", 0, "");
     records[240] = macro_record("Outside", 134400, "");
-    env.state().borrow_mut().macros = records;
+    seed_rows(&env, records);
 
     env.exec(
         r##"
@@ -162,6 +162,12 @@ fn macro_getter_ordinary_argument_and_return_contract() {
     assert_counter_snapshot(&env, (3, 0));
 }
 
+fn seed_rows(env: &WowLuaEnv, rows: Vec<MacroInfo>) {
+    let json = serde_json::to_string(&rows).expect("macro rows serialize");
+    env.exec(&format!("A_Admin.SetMacroRows([=[{json}]=])"))
+        .expect("supplied macro rows");
+}
+
 fn assert_counter_snapshot(env: &WowLuaEnv, expected: (u32, u32)) {
     let observed: (f64, f64) = env.eval(r##"
         local account, character = GetNumMacros(false, {})
@@ -176,17 +182,10 @@ fn assert_counter_snapshot(env: &WowLuaEnv, expected: (u32, u32)) {
 }
 
 #[test]
-fn macro_getter_inferred_host_policies_and_unknown_seams() {
+fn macro_getter_inferred_host_policies_and_c_macro_adapter() {
     let env = WowLuaEnv::new().expect("Lua environment");
-    seed(
-        &env,
-        &[("CaseSensitive", 134400, ""), ("", 0, "/say partial")],
-    );
-    {
-        let mut sim = env.state().borrow_mut();
-        sim.macros[0].icon = r"Interface\Icons\INV_Misc_QuestionMark".into();
-        sim.macros.push(MacroInfo::default());
-    }
+    env.exec(r#"A_Admin.SetMacroRows([[{"name":"CaseSensitive","icon":"Interface\\Icons\\INV_Misc_QuestionMark","body":""},{"name":"","icon":"0","body":"/say partial"},{}]])"#)
+        .expect("supplied inferred macro rows");
     env.exec(
         r##"
         assert(GetMacroInfo("0x1") == "CaseSensitive") -- host numeric parser
@@ -197,8 +196,9 @@ fn macro_getter_inferred_host_policies_and_unknown_seams() {
         assert(select("#", GetMacroInfo("casesensitive")) == 0)
         assert(GetMacroInfo(2) == "") -- partial record is occupied
         assert(select("#", GetMacroInfo(3)) == 0) -- default host hole
-        assert(C_Macro.GetMacroName(1) == nil and C_Macro.GetSelectedMacroIcon(121) == nil)
+        assert(C_Macro.GetMacroName(1) == "CaseSensitive") -- INFERRED one-based adapter (R88l.24)
+        assert(C_Macro.GetSelectedMacroIcon(1) == 134400)
     "##,
     )
-    .expect("INFERRED host selection/listfile policies and UNKNOWN nil seams");
+    .expect("INFERRED host selection/listfile policies and one-based C_Macro adapter");
 }

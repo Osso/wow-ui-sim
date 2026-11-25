@@ -854,6 +854,8 @@ pub fn register_all(lua: &mut rilua::Lua) -> crate::Result<()> {
     if cursor_model::modeled() {
         LuaApiMut::register_function(lua, "CursorHasMoney", cursor_has_money)?;
         LuaApiMut::register_function(lua, "CursorHasSpell", cursor_has_spell)?;
+    }
+    if crate::lua_api::globals::real::macro_getters::USE_MODELED_MACRO_GETTERS {
         LuaApiMut::register_function(lua, "CursorHasMacro", cursor_has_macro)?;
     }
     LuaApiMut::register_function(lua, "PlaceAction", place_action)?;
