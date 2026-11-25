@@ -15,6 +15,17 @@ use std::rc::Rc;
 use std::time::{Duration, Instant};
 
 const RECENT_FRAME_WINDOW_SIZE: usize = 60;
+
+struct TimerReplySnapshot {
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    raid_info_replies: usize,
+    #[cfg(feature = "client-retail")]
+    owned_house_replies: VecDeque<Vec<crate::c_api::c_housing::current_house::HouseInfo>>,
+    #[cfg(feature = "client-retail")]
+    house_finder_replies: VecDeque<crate::c_api::c_housing::house_finder::HouseFinderReply>,
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pending_completions: usize,
+}
 // Blizzard SharedXML PixelUtil uses this reference height for pixel/UI conversion.
 pub(crate) const UI_REFERENCE_HEIGHT: f32 = 768.0;
 const SCREEN_SIZE_GLOBALS_LUA: &str = r#"
@@ -348,32 +359,73 @@ impl WowLuaEnv {
 
     /// Run ready timers and return how many callbacks fired.
     pub fn process_timers(&self) -> Result<usize> {
+        let replies = self.take_timer_reply_snapshot();
+        let timer_fired = self.run_due_timer_callbacks()?;
+        self.dispatch_timer_replies(timer_fired, replies)
+    }
+
+    fn run_due_timer_callbacks(&self) -> Result<usize> {
+        if self.state.borrow().manual_clock.is_some() {
+            Ok(super::manual_timers::drain(
+                self.lua.borrow_mut().state_mut(),
+            )?)
+        } else {
+            Ok(self.process_regular_timers())
+        }
+    }
+
+    fn take_timer_reply_snapshot(&self) -> TimerReplySnapshot {
         #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
         let raid_info_replies =
             std::mem::take(&mut self.state.borrow_mut().pending_raid_info_replies).len();
         #[cfg(feature = "client-retail")]
         let owned_house_replies =
             std::mem::take(&mut self.state.borrow_mut().pending_owned_house_replies);
+        #[cfg(feature = "client-retail")]
+        let house_finder_replies =
+            std::mem::take(&mut self.state.borrow_mut().pending_house_finder_replies);
         #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
         let pending_completions = self.state.borrow().pending_combat_audio_utterance_ids.len();
-        let timer_fired = if self.state.borrow().manual_clock.is_some() {
-            super::manual_timers::drain(self.lua.borrow_mut().state_mut())?
-        } else {
-            self.process_regular_timers()
-        };
-        #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
-        {
+        TimerReplySnapshot {
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            raid_info_replies,
             #[cfg(feature = "client-retail")]
-            let house_replies = self.fire_owned_house_replies(owned_house_replies)?;
-            self.fire_raid_info_replies(raid_info_replies)?;
-            #[cfg(not(feature = "client-retail"))]
-            let house_replies = 0;
-            return Ok(timer_fired
-                + house_replies
-                + self.dispatch_combat_audio_completions(pending_completions)?);
+            owned_house_replies,
+            #[cfg(feature = "client-retail")]
+            house_finder_replies,
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            pending_completions,
         }
+    }
+
+    fn dispatch_timer_replies(
+        &self,
+        timer_fired: usize,
+        replies: TimerReplySnapshot,
+    ) -> Result<usize> {
+        #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+        return self.dispatch_profile_timer_replies(timer_fired, replies);
         #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
-        Ok(timer_fired)
+        {
+            let _ = replies;
+            Ok(timer_fired)
+        }
+    }
+
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    fn dispatch_profile_timer_replies(
+        &self,
+        timer_fired: usize,
+        replies: TimerReplySnapshot,
+    ) -> Result<usize> {
+        #[cfg(feature = "client-retail")]
+        let housing_replies = self.fire_owned_house_replies(replies.owned_house_replies)?
+            + self.fire_house_finder_replies(replies.house_finder_replies)?;
+        #[cfg(not(feature = "client-retail"))]
+        let housing_replies = 0;
+        self.fire_raid_info_replies(replies.raid_info_replies)?;
+        let completions = self.dispatch_combat_audio_completions(replies.pending_completions)?;
+        Ok(timer_fired + housing_replies + completions)
     }
 
     fn process_regular_timers(&self) -> usize {
@@ -426,6 +478,45 @@ impl WowLuaEnv {
         match first_error {
             Some(error) => Err(error),
             None => Ok(()),
+        }
+    }
+
+    #[cfg(feature = "client-retail")]
+    fn fire_house_finder_replies(
+        &self,
+        mut replies: std::collections::VecDeque<
+            crate::c_api::c_housing::house_finder::HouseFinderReply,
+        >,
+    ) -> Result<usize> {
+        let count = replies.len();
+        while let Some(reply) = replies.pop_front() {
+            if let Err(error) = self.dispatch_house_finder_reply(reply.clone()) {
+                let mut state = self.state.borrow_mut();
+                state.pending_house_finder_replies.push_front(reply);
+                state.pending_house_finder_replies.append(&mut replies);
+                return Err(error);
+            }
+        }
+        Ok(count)
+    }
+
+    #[cfg(feature = "client-retail")]
+    fn dispatch_house_finder_reply(
+        &self,
+        reply: crate::c_api::c_housing::house_finder::HouseFinderReply,
+    ) -> Result<()> {
+        use crate::c_api::c_housing::house_finder::{
+            HouseFinderReply, encode_neighborhoods, encode_plots,
+        };
+        match reply {
+            HouseFinderReply::Neighborhoods { success, rows } => {
+                let payload = encode_neighborhoods(self.lua.borrow_mut().state_mut(), rows);
+                self.fire_event_with_args("NEIGHBORHOOD_LIST_UPDATED", &[success, payload])
+            }
+            HouseFinderReply::Plots(plots) => {
+                let payload = encode_plots(self.lua.borrow_mut().state_mut(), plots);
+                self.fire_event_with_args("HOUSE_FINDER_NEIGHBORHOOD_DATA_RECIEVED", &[payload])
+            }
         }
     }
 

@@ -392,6 +392,9 @@ pub struct HousingState {
     /// Host-supplied owned-house records for asynchronous list requests.
     #[cfg(feature = "client-retail")]
     pub owned_houses: Vec<crate::c_api::c_housing::current_house::HouseInfo>,
+    /// Host-supplied House Finder neighborhoods and their map records.
+    #[cfg(feature = "client-retail")]
+    pub house_finder: crate::c_api::c_housing::house_finder::HouseFinderState,
     /// No housing area is supplied in an empty world; ownership is separate.
     pub current_housing_area: Option<crate::c_api::c_housing::HousingArea>,
     pub inside_owned_house: bool,

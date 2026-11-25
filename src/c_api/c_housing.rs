@@ -36,6 +36,8 @@ mod presence;
 
 pub mod current_house;
 #[cfg(feature = "client-retail")]
+pub(crate) mod house_finder;
+#[cfg(feature = "client-retail")]
 pub(crate) mod owned_houses;
 
 use crate::c_api::helpers::ensure_namespace;
@@ -78,41 +80,12 @@ const BUDGET_TYPE_PET_DECOR: i32 = 2;
 pub(crate) fn register_admin(
     builder: crate::lua_bridge::TableBuilder,
 ) -> LuaResult<crate::lua_bridge::TableBuilder> {
-    owned_houses::register_admin(builder)
+    let builder = owned_houses::register_admin(builder)?;
+    house_finder::register_admin(builder)
 }
 
 pub(crate) fn register_c_housing_surface(state: &mut LuaState) -> LuaResult<()> {
-    // Replaces an unconditional temporary surface, including non-retail profiles.
-    catalog::register(state)?;
-    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
-        charter::register(state)?;
-    }
-    if matches!(
-        crate::client_profile::ACTIVE,
-        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
-    ) {
-        current_house::register(state)?;
-    }
-    #[cfg(feature = "client-retail")]
-    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
-        owned_houses::register(state)?;
-    }
-    #[cfg(feature = "retail-12-0-0")]
-    editor::register(state)?;
-    #[cfg(feature = "retail-12-0-0")]
-    location::register(state)?;
-    exterior::register(state)?;
-    basic_mode::register_pending(state)?;
-    #[cfg(feature = "retail-12-0-0")]
-    basic_mode::register(state)?;
-    #[cfg(feature = "retail-12-0-5")]
-    inspect_mode::register(state)?;
-    #[cfg(any(
-        feature = "client-retail",
-        feature = "client-ptr",
-        feature = "client-wowforever"
-    ))]
-    presence::register(state)?;
+    register_profile_surface(state)?;
     let housing = ensure_namespace(state, "C_Housing")?;
     if cfg!(feature = "retail-12-0-0") {
         market::register(state, housing)?;
@@ -132,6 +105,50 @@ pub(crate) fn register_c_housing_surface(state: &mut LuaState) -> LuaResult<()> 
         decor,
         layout,
     )
+}
+
+fn register_profile_surface(state: &mut LuaState) -> LuaResult<()> {
+    catalog::register(state)?;
+    register_profile_service_methods(state)?;
+    register_profile_widget_methods(state)
+}
+
+fn register_profile_service_methods(state: &mut LuaState) -> LuaResult<()> {
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+        charter::register(state)?;
+    }
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
+    ) {
+        current_house::register(state)?;
+    }
+    #[cfg(feature = "client-retail")]
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+        owned_houses::register(state)?;
+        house_finder::register(state)?;
+    }
+    #[cfg(feature = "retail-12-0-0")]
+    editor::register(state)?;
+    #[cfg(feature = "retail-12-0-0")]
+    location::register(state)?;
+    Ok(())
+}
+
+fn register_profile_widget_methods(state: &mut LuaState) -> LuaResult<()> {
+    exterior::register(state)?;
+    basic_mode::register_pending(state)?;
+    #[cfg(feature = "retail-12-0-0")]
+    basic_mode::register(state)?;
+    #[cfg(feature = "retail-12-0-5")]
+    inspect_mode::register(state)?;
+    #[cfg(any(
+        feature = "client-retail",
+        feature = "client-ptr",
+        feature = "client-wowforever"
+    ))]
+    presence::register(state)?;
+    Ok(())
 }
 
 #[cfg(any(feature = "retail-12-0-7", feature = "retail-12-1-0"))]

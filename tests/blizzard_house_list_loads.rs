@@ -6,6 +6,33 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::toc::TocFile;
 
+const SUPPLY_NEIGHBORHOODS: &str = r#"
+A_Admin.SetHouseFinderNeighborhoods({
+    { neighborhoodGUID="Neighborhood-A", neighborhoodName="Amber Vale", neighborhoodType=Enum.NeighborhoodType.Public,
+      neighborhoodOwnerType=Enum.NeighborhoodOwnerType.None, suggestionReason=Enum.HouseFinderSuggestionReason.None,
+      uiMapID=41, textureSuffix="amber", factionMatches=true,
+      plots={{ mapPosition={x=0.2,y=0.3}, ownerType=Enum.HousingPlotOwnerType.None, plotID=17, plotCost=1250 }} },
+    { neighborhoodGUID="Neighborhood-B", neighborhoodName="Cobalt Reach", neighborhoodType=Enum.NeighborhoodType.Public,
+      neighborhoodOwnerType=Enum.NeighborhoodOwnerType.None, suggestionReason=Enum.HouseFinderSuggestionReason.None,
+      uiMapID=82, textureSuffix="cobalt", factionMatches=false,
+      plots={{ mapPosition={x=0.7,y=0.8}, ownerType=Enum.HousingPlotOwnerType.Friend, plotID=29, ownerName="Mira" }} },
+})
+"#;
+
+const SELECT_SECOND_NEIGHBORHOOD: &str = r#"
+local names = {}
+local selected
+for button in HouseFinderFrame.neighborhoodButtonPool:EnumerateActive() do
+    table.insert(names, button.NeighborhoodName:GetText())
+    if button.neighborhoodInfo.neighborhoodGUID == "Neighborhood-B" then selected = button end
+end
+if #names ~= 2 or not selected then return "neighborhoods_not_rendered" end
+table.sort(names)
+local firstMap = HouseFinderFrame.mapID
+selected:Click()
+return table.concat(names, "/") .. ";" .. tostring(firstMap) .. "/" .. tostring(HouseFinderFrame.mapID)
+"#;
+
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::client_profile::blizzard_ui_addons_dir_under(std::path::Path::new(env!(
         "CARGO_MANIFEST_DIR"
@@ -18,6 +45,10 @@ fn house_list_dir() -> PathBuf {
 
 fn house_list_toc() -> PathBuf {
     house_list_dir().join("Blizzard_HouseList.toc")
+}
+
+fn house_finder_toc() -> PathBuf {
+    blizzard_ui_dir().join("Blizzard_HousingHouseFinder/Blizzard_HousingHouseFinder.toc")
 }
 
 fn load_house_list(env: &WowLuaEnv) {
@@ -408,21 +439,54 @@ fn blizzard_house_list_registers_view_houses_list_recieved_event_on_show(env: &W
 }
 }
 
-prefork_full_ui_case! {
-fn blizzard_house_list_dependency_loads_via_game_screen_pass(env: &WowLuaEnv) {
-    load_house_list(env);
+fn verify_house_finder_scenario(env: &WowLuaEnv) {
+    env.exec(SUPPLY_NEIGHBORHOODS).expect("supply distinct neighborhoods");
+    load_addon(&env.loader_env(), &house_finder_toc()).expect("original House Finder addon loads");
+    env.exec("C_Housing.StartTutorial()")
+        .expect("start the inferred tutorial flow through C_Housing");
+    assert_no_house_finder_list_yet(env);
+    env.process_timers().expect("neighborhood reply dispatches asynchronously");
+    let selected: String = env.eval(SELECT_SECOND_NEIGHBORHOOD)
+        .expect("original frame selects supplied neighborhood");
+    assert_eq!(selected, "Amber Vale/Cobalt Reach;41/82");
+    assert_eq!(neighborhood_suffix(env), "cobalt");
+    let faction_match: bool = env
+        .eval("return C_Housing.DoesFactionMatchNeighborhood('Neighborhood-B')")
+        .expect("faction result comes from supplied neighborhood state");
+    assert!(!faction_match);
+    assert_no_house_finder_plots_yet(env);
+    env.process_timers().expect("plot reply dispatches asynchronously");
+    let supplied_plot: String = env
+        .eval("local p = HouseFinderFrame.mapDataProvider.houseMapData[1]; return p.plotID .. '/' .. p.ownerName")
+        .expect("original map provider stores supplied plot fields");
+    assert_eq!(supplied_plot, "29/Mira");
+}
 
+fn assert_no_house_finder_list_yet(env: &WowLuaEnv) {
+    let pending: bool = env.eval("local nextButton = HouseFinderFrame.neighborhoodButtonPool:EnumerateActive(); return nextButton() == nil")
+        .expect("House Finder list is not dispatched before the next timer tick");
+    assert!(pending);
+}
+
+fn assert_no_house_finder_plots_yet(env: &WowLuaEnv) {
+    let pending: bool = env.eval("return HouseFinderFrame.mapDataProvider.houseMapData == nil")
+        .expect("plot data is not dispatched before the next timer tick");
+    assert!(pending);
+}
+
+fn neighborhood_suffix(env: &WowLuaEnv) -> String {
+    env.eval("return C_Housing.GetNeighborhoodTextureSuffix('Neighborhood-B')")
+        .expect("texture suffix comes from supplied neighborhood state")
+}
+
+prefork_full_ui_case! {
+fn supplied_house_finder_neighborhoods_and_plots_reach_original_consumer(env: &WowLuaEnv) {
+    load_house_list(env);
+    verify_house_finder_scenario(env);
     let templates_loaded: bool = env
         .eval("return C_AddOns.IsAddOnLoaded('Blizzard_HousingTemplates')")
         .expect("IsAddOnLoaded query should succeed");
-    assert!(
-        templates_loaded,
-        "Blizzard_HousingTemplates must be loaded by the Game-screen auto-discovery pass before \
-         the explicit HouseList LoD load runs. HousingTemplates is the only `## Dependencies` \
-         entry on HouseList's TOC, and the test harness's full Game-screen pass hits it via the \
-         normal discovery flow because HousingTemplates is itself non-LoD with `## AllowLoad: \
-         Both` semantics"
-    );
+    assert!(templates_loaded, "HouseList dependency remains loaded via Game-screen discovery");
 }
 }
 
