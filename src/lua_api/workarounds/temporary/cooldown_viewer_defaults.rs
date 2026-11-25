@@ -1,9 +1,8 @@
 //! Temporary `C_CooldownViewer` defaults.
 //!
-//! Category sets and cooldown info are modeled in `c_api::c_cooldown_viewer`.
-//! Group buff items and cooldown-ID lookup are not modeled yet; these empty
-//! defaults keep the Blizzard cooldown-viewer UI loadable until a real backend
-//! owns them.
+//! Category sets, group buff items and cooldown info are modeled in
+//! `c_api::c_cooldown_viewer`. The empty cooldown-ID default keeps the Blizzard
+//! cooldown-viewer UI loadable until that lookup has a real backend.
 
 const COOLDOWN_VIEWER_DEFAULTS_LUA: &str = r#"
 C_CooldownViewer = C_CooldownViewer or __wow_namespace()
@@ -14,19 +13,26 @@ local function installCooldownViewerDefault(name, fn)
     end
 end
 
-if type(GetBuildInfo) == "function" and select(4, GetBuildInfo()) >= 120100 then
-    installCooldownViewerDefault("GetGroupBuffItems", function()
-        return {}
-    end)
-end
-
 installCooldownViewerDefault("GetCooldownID", function()
     return nil
 end)
 "#;
 
+const PTR_GROUP_BUFF_DEFAULT_LUA: &str = r#"
+if type(GetBuildInfo) == "function" and select(4, GetBuildInfo()) >= 120100 then
+    if rawget(C_CooldownViewer, "GetGroupBuffItems") == nil then
+        C_CooldownViewer.GetGroupBuffItems = function()
+            return {}
+        end
+    end
+end
+"#;
+
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(COOLDOWN_VIEWER_DEFAULTS_LUA)?;
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Ptr {
+        lua.exec(PTR_GROUP_BUFF_DEFAULT_LUA)?;
+    }
     Ok(())
 }
 
