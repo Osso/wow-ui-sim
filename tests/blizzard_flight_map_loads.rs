@@ -366,6 +366,36 @@ fn flight_map_open_path_places_click_to_zoom_labels_from_uimap_positions(env: &W
 }
 }
 
+prefork_full_ui_case! {
+fn flight_map_hide_closes_taxi_interaction_without_clearing_map_id(env: &WowLuaEnv) {
+    for map_id in [14, 994] {
+        open_flight_map_for_taxi_map(env, map_id);
+        let taxi_active: bool = env
+            .eval("return C_PlayerInteractionManager.IsInteractingWithNpcOfType(Enum.PlayerInteractionType.TaxiNode)")
+            .expect("TaxiNode interaction state should be readable after open");
+        assert!(taxi_active, "taxi-map open should activate the TaxiNode interaction");
+        let errors_before_close = env.state().borrow().lua_errors.len();
+        env.exec("HideUIPanel(FlightMapFrame)")
+            .expect("HideUIPanel should close the original FlightMapFrame consumer");
+        let errors_after_close = env.state().borrow().lua_errors.len();
+        assert_eq!(
+            errors_after_close, errors_before_close,
+            "FlightMap OnHide should call a modeled CloseTaxiMap without Lua errors"
+        );
+
+        let (is_shown, retained_map_id): (bool, i32) = env
+            .eval("return FlightMapFrame:IsShown(), GetTaxiMapID()")
+            .expect("FlightMap close state should be observable");
+        assert!(!is_shown, "FlightMapFrame should be hidden after HideUIPanel");
+        assert_eq!(retained_map_id, map_id, "close must retain the supplied map ID");
+        let taxi_active: bool = env
+            .eval("return C_PlayerInteractionManager.IsInteractingWithNpcOfType(Enum.PlayerInteractionType.TaxiNode)")
+            .expect("TaxiNode interaction state should be readable after close");
+        assert!(!taxi_active, "CloseTaxiMap should clear the TaxiNode interaction");
+    }
+}
+}
+
 fn assert_flight_map_is_unloaded_and_taxi_map_id_is_zero_values(env: &WowLuaEnv) {
     let loaded: bool = env
         .eval("return C_AddOns.IsAddOnLoaded('Blizzard_FlightMap')")
@@ -388,11 +418,10 @@ fn open_flight_map_for_taxi_map(env: &WowLuaEnv, map_id: i32) {
         .eval("return GetTaxiMapID()")
         .expect("taxi map ID should be readable before the open event");
     assert_eq!(map_id_before_open, map_id);
-    let world_system: f64 = env
-        .eval("return Enum.UIMapSystem.World")
-        .expect("World UIMapSystem enum should be available");
-    env.fire_event_with_args("TAXIMAP_OPENED", &[rilua::Val::Num(world_system)])
-        .expect("World-system TAXIMAP_OPENED should load and open FlightMapFrame");
+    env.exec(
+        "A_Admin.OpenTaxiMap(Enum.UIMapSystem.World)",
+    )
+    .expect("World-system taxi-map producer should open FlightMapFrame");
 }
 
 fn observe_flight_map_label_anchors(env: &WowLuaEnv) -> (bool, bool, i32, i32, String, String) {

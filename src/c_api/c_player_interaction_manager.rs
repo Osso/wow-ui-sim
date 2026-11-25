@@ -25,6 +25,7 @@ use rilua::vm::state::LuaState;
 /// `globals/enum_data/game_system.rs` `PLAYER_INTERACTION_TYPE` (position 9
 /// after `None=0`, `TradePartner=1`, ..., `Banker=8`).
 const ALLIED_RACE_DETAILS_GIVER: i32 = 9;
+pub(crate) const TAXI_NODE_INTERACTION: i32 = 6;
 
 pub(crate) fn register_c_player_interaction_manager_surface(state: &mut LuaState) -> LuaResult<()> {
     let ns = ensure_namespace(state, "C_PlayerInteractionManager")?;
@@ -89,6 +90,9 @@ pub(crate) fn clear_interaction_type(state: &mut LuaState, interaction_type: i32
 }
 
 fn close_event_for_interaction(interaction_type: i32) -> Option<&'static str> {
+    if ACTIVE == ClientProfile::Retail && interaction_type == TAXI_NODE_INTERACTION {
+        return Some("TAXIMAP_CLOSED");
+    }
     match interaction_type {
         ALLIED_RACE_DETAILS_GIVER => Some("ALLIED_RACE_CLOSE"),
         _ => None,

@@ -1,11 +1,14 @@
 //! INFERRED (R88cp): taxi-node queries filter supplied nodes by UI map ID.
 //! `ShouldMapShowTaxiNodes` is true for Continent and Zone map types in the existing map-info catalog.
 
+use crate::c_api::c_player_interaction_manager::TAXI_NODE_INTERACTION;
 use crate::c_api::helpers::{ensure_namespace, set_table_array};
+use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::methods::{
     borrow_state, borrow_state_mut, create_string, create_table_with_capacity, table_get,
     table_set_static, val_to_string,
 };
+use crate::lua_api::script_helpers::fire_named_event_state;
 use crate::lua_bridge::{FromStack, TableBuilder, stack_val, table_set_rust_fn_static};
 use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
@@ -55,13 +58,18 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
         "ShouldMapShowTaxiNodes",
         should_map_show_nodes,
     )?;
+    if ACTIVE == ClientProfile::Retail {
+        table_set_rust_fn_static(state, state.global, "CloseTaxiMap", close_taxi_map)?;
+    }
     Ok(())
 }
 
 pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
     let builder = builder.set_function("SetTaxiMapNodes", set_taxi_map_nodes)?;
-    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
-        builder.set_function("SetTaxiMapID", set_taxi_map_id)
+    if ACTIVE == ClientProfile::Retail {
+        builder
+            .set_function("SetTaxiMapID", set_taxi_map_id)?
+            .set_function("OpenTaxiMap", open_taxi_map)
     } else {
         Ok(builder)
     }
@@ -112,6 +120,37 @@ fn set_taxi_map_nodes(state: &mut LuaState) -> LuaResult<u32> {
 fn set_taxi_map_id(state: &mut LuaState) -> LuaResult<u32> {
     let map_id = i32::from_stack(state, 1)?;
     borrow_state_mut(state)?.taxi_map.ui_map_id = map_id;
+    Ok(0)
+}
+
+fn open_taxi_map(state: &mut LuaState) -> LuaResult<u32> {
+    let ui_map_system = i32::from_stack(state, 1)?;
+    open_taxi_interaction(state, ui_map_system)?;
+    Ok(0)
+}
+
+fn open_taxi_interaction(state: &mut LuaState, ui_map_system: i32) -> LuaResult<()> {
+    borrow_state_mut(state)?
+        .active_player_interactions
+        .insert(TAXI_NODE_INTERACTION);
+    fire_named_event_state(
+        state,
+        "PLAYER_INTERACTION_MANAGER_FRAME_SHOW",
+        &[Val::Num(f64::from(TAXI_NODE_INTERACTION))],
+    );
+    fire_named_event_state(
+        state,
+        "TAXIMAP_OPENED",
+        &[Val::Num(f64::from(ui_map_system))],
+    );
+    Ok(())
+}
+
+fn close_taxi_map(state: &mut LuaState) -> LuaResult<u32> {
+    crate::c_api::c_player_interaction_manager::clear_interaction_type(
+        state,
+        TAXI_NODE_INTERACTION,
+    )?;
     Ok(0)
 }
 
