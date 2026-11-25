@@ -61,6 +61,40 @@ fn queued_roster_updates(env: &WowLuaEnv) -> usize {
 }
 
 #[test]
+fn communities_guild_perks_panel_uses_supplied_spell_rows() {
+    let env = load_communities();
+    env.exec(
+        "A_Admin.SetGuildInfo('Perk Test Guild', 'Member', 2); A_Admin.SetGuildPerks(83944, 1, 83940, 2); ToggleCommunitiesFrame(); CommunitiesFrame.GuildInfoTab:Click()",
+    )
+    .expect("guild perks panel should open through the original guild tab");
+    let row_names: (bool, usize, String, String) = env
+        .eval(
+            r#"
+            local perks = CommunitiesFrame.GuildDetailsFrame.Perks
+            local names = {}
+            perks.ScrollBox:ForEachFrame(function(button)
+                names[#names + 1] = button.Name:GetText()
+            end)
+            return perks:IsShown(), #names, names[1] or "", names[2] or ""
+            "#,
+        )
+        .expect("original Communities guild perks rows should be available");
+    assert!(row_names.0, "perks panel should show when two perks are supplied");
+    assert_eq!(row_names.1, 2, "two supplied perks should produce two rows");
+    assert!(!row_names.2.is_empty(), "first perk row should have a name");
+    assert_ne!(row_names.2, row_names.3, "perk rows should have distinct names");
+
+    env.exec(
+        "A_Admin.SetGuildPerks(); ToggleCommunitiesFrame(); ToggleCommunitiesFrame(); CommunitiesFrame.GuildInfoTab:Click()",
+    )
+    .expect("guild perks panel should refresh after the supplied perks are cleared");
+    let shown: bool = env
+        .eval("return CommunitiesFrame.GuildDetailsFrame.Perks:IsShown()")
+        .expect("guild perks panel visibility should be observable");
+    assert!(!shown, "zero perks should hide the original perks panel");
+}
+
+#[test]
 fn communities_guild_info_open_throttles_roster_request() {
     let env = load_communities();
     env.exec("A_Admin.SetManualClock(10)").unwrap();
