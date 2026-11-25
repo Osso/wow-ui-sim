@@ -113,36 +113,44 @@ fn read_record(
         .get(array)
         .map(|table| table.get_int(index as i64))
         .unwrap_or(Val::Nil);
-    let Val::Table(table) = value else {
-        return Err(runtime_error("A_Admin.SetVignettes: expected record table"));
-    };
-    let table = Val::Table(table);
+    let table = record_table(value)?;
     let guid = string_field(state, table, "vignetteGUID")?;
+    Ok((guid, read_record_data(state, table)?))
+}
+
+fn record_table(value: Val) -> LuaResult<Val> {
+    match value {
+        Val::Table(table) => Ok(Val::Table(table)),
+        _ => Err(runtime_error("A_Admin.SetVignettes: expected record table")),
+    }
+}
+
+fn read_record_data(state: &mut LuaState, table: Val) -> LuaResult<VignetteRecord> {
     let map_id = number_field(state, table, "uiMapID")? as i32;
     let x = number_field(state, table, "x")?;
     let y = number_field(state, table, "y")?;
     let facing = optional_number(state, table, "facing");
     let health = optional_number(state, table, "healthPercent");
     let group_size = optional_pair(state, table, "minGroupSize", "maxGroupSize");
-    let fields = FIELDS
+    Ok(VignetteRecord {
+        fields: read_fields(state, table),
+        map_id,
+        x,
+        y,
+        facing,
+        health,
+        group_size,
+    })
+}
+
+fn read_fields(state: &mut LuaState, table: Val) -> BTreeMap<String, Val> {
+    FIELDS
         .iter()
         .filter_map(|name| {
             let value = table_get(state, table, name);
             (!matches!(value, Val::Nil)).then(|| ((*name).to_owned(), value))
         })
-        .collect();
-    Ok((
-        guid,
-        VignetteRecord {
-            fields,
-            map_id,
-            x,
-            y,
-            facing,
-            health,
-            group_size,
-        },
-    ))
+        .collect()
 }
 
 fn string_field(state: &mut LuaState, table: Val, name: &str) -> LuaResult<String> {

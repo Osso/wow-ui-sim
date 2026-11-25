@@ -151,22 +151,25 @@ fn original_world_map_vignette_provider_uses_supplied_records() {
 }
 
 const VIGNETTE_PROVIDER_PROOF: &str = r#"
-local mapID = WorldMapFrame:GetMapID()
 local function row(guid, mapPin, x, y, atlas)
-  return { vignetteGUID=guid, uiMapID=mapID, x=x, y=y, name=guid, objectGUID=guid,
-    isDead=false, onWorldMap=true, zoneInfiniteAOI=false, onMinimap=false, isUnique=false,
-    inFogOfWar=false, atlasName=atlas, hasTooltip=false, vignetteID=1,
-    type=Enum.VignetteType.Normal, rewardQuestID=0, mapPin=mapPin }
+  return { vignetteGUID=guid, uiMapID=WorldMapFrame:GetMapID(), x=x, y=y, name=guid,
+    objectGUID=guid, isDead=false, onWorldMap=true, zoneInfiniteAOI=false,
+    onMinimap=false, isUnique=false, inFogOfWar=false, atlasName=atlas,
+    hasTooltip=false, vignetteID=1, type=Enum.VignetteType.Normal,
+    rewardQuestID=0, mapPin=mapPin }
 end
 A_Admin.SetVignettes({row("V1", nil, 0.2, 0.3, "TaxiNode"),
   row("V2", {button={}, buttonSelected={}, underlay="", outerGlow=""}, 0.7, 0.8, "TaxiNode")})
 local a = WorldMapFrame:EnumeratePinsByTemplate("VignettePinTemplate")()
 local b = WorldMapFrame:EnumeratePinsByTemplate("VignettePinPOIButtonTemplate")()
 assert(a and b and a.vignetteGUID == "V1" and b.vignetteGUID == "V2")
-assert(a.vignetteInfo.atlasName == "TaxiNode" and b.vignetteInfo.atlasName == "TaxiNode")
+local function hasAtlas(pin)
+  for _, region in ipairs({pin:GetRegions()}) do if region.GetAtlas and region:GetAtlas() == "TaxiNode" then return true end end
+  return false
+end
+assert(hasAtlas(a) and hasAtlas(b))
 local ax, ay = a:GetPosition(); local bx, by = b:GetPosition()
-assert(math.abs(ax - 0.2) < 0.001 and math.abs(ay - 0.3) < 0.001)
-assert(math.abs(bx - 0.7) < 0.001 and math.abs(by - 0.8) < 0.001)
+assert(math.abs(ax - 0.2) < 0.001 and math.abs(ay - 0.3) < 0.001 and math.abs(bx - 0.7) < 0.001 and math.abs(by - 0.8) < 0.001)
 A_Admin.SetVignettes({row("V2", {button={}, buttonSelected={}, underlay="", outerGlow=""}, 0.7, 0.8, "TaxiNode")})
 assert(WorldMapFrame:GetNumActivePinsByTemplate("VignettePinTemplate") == 0)
 assert(WorldMapFrame:GetNumActivePinsByTemplate("VignettePinPOIButtonTemplate") == 1)
