@@ -169,11 +169,6 @@ if SetCursorHoveredItemTradeItem == nil then
         return nil
     end
 end
-if GetNumGuildPerks == nil then
-    function GetNumGuildPerks()
-        return 0
-    end
-end
 if RequestGuildRewards == nil then
     function RequestGuildRewards()
         return nil
@@ -183,6 +178,13 @@ if GetGuildRenameRequired == nil then
     function GetGuildRenameRequired()
         return false
     end
+end
+"#;
+
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+const INERT_GUILD_PERKS_DEFAULT_LUA: &str = r#"
+if GetNumGuildPerks == nil then
+    function GetNumGuildPerks() return 0 end
 end
 "#;
 
@@ -254,6 +256,8 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     lua.exec(UNMODELED_WORLD_PRESENCE_LUA)?;
     lua.exec(INERT_GLOBAL_DEFAULTS_LUA)?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+    lua.exec(INERT_GUILD_PERKS_DEFAULT_LUA)?;
     #[cfg(not(all(feature = "client-retail", feature = "retail-12-1-5")))]
     lua.exec(AVAILABLE_BANDWIDTH_DEFAULT_LUA)?;
     #[cfg(not(all(feature = "profile-retail", feature = "retail-12-1-5")))]
