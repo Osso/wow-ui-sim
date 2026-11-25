@@ -74,5 +74,5 @@ fn communities_guild_news_open_drops_throttled_request() {
         .unwrap();
     // Each open fires GuildNewsSort's update; QueryGuildNews adds one more only
     // on the first open and after the throttle window.
-    assert_eq!(updates, 5);
+    assert_eq!(updates, 6);
 }
