@@ -99,6 +99,10 @@ fn assert_direct_icon_contents(
 
 #[test]
 fn original_icon_provider_observes_all_four_supplied_sources() {
+    assert_original_icon_provider_observes_all_four_supplied_sources();
+}
+
+fn assert_original_icon_provider_observes_all_four_supplied_sources() {
     with_blizzard_addon_closure(&["Blizzard_FrameXMLBase"], &[], |env, loaded| {
         assert!(loaded.iter().any(|addon| addon == "Blizzard_FrameXMLBase"));
         for n in 1..=2 {

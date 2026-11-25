@@ -94,6 +94,10 @@ fn exercise_character_tab(env: &WowLuaEnv) {
 
 #[test]
 fn click_binding_ui_uses_supplied_macro_name_and_numeric_icon() {
+    assert_click_binding_uses_supplied_macro_name_and_numeric_icon();
+}
+
+fn assert_click_binding_uses_supplied_macro_name_and_numeric_icon() {
     let env = setup_env();
     seed(
         &env,
@@ -129,13 +133,17 @@ fn click_binding_ui_uses_supplied_macro_name_and_numeric_icon() {
 #[test]
 fn macro_getter_ordinary_argument_and_return_contract() {
     let env = WowLuaEnv::new().expect("Lua environment");
+    assert_ordinary_macro_getter_contract(&env);
+}
+
+fn assert_ordinary_macro_getter_contract(env: &WowLuaEnv) {
     let mut records = vec![MacroInfo::default(); 241];
     records[0] = macro_record("Found", 134400, "");
     records[1] = macro_record("", 0, "/say empty name");
     records[120] = macro_record("Character", 132212, "/say character");
     records[239] = macro_record("Last", 0, "");
     records[240] = macro_record("Outside", 134400, "");
-    seed_rows(&env, records);
+    seed_rows(env, records);
 
     env.exec(
         r##"
@@ -160,16 +168,16 @@ fn macro_getter_ordinary_argument_and_return_contract() {
         "##,
     )
     .expect("R88l.19 ordinary selector/result shape");
-    assert_counter_snapshot(&env, (2, 1));
+    assert_counter_snapshot(env, (2, 1));
     seed(
-        &env,
+        env,
         &[
             ("First", 134400, ""),
             ("Second", 132212, ""),
             ("Third", 134331, ""),
         ],
     );
-    assert_counter_snapshot(&env, (3, 0));
+    assert_counter_snapshot(env, (3, 0));
 }
 
 fn seed_rows(env: &WowLuaEnv, rows: Vec<MacroInfo>) {

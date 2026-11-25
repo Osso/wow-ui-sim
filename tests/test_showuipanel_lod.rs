@@ -19,7 +19,10 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 
 #[test]
 fn show_macro_frame_loads_and_populates_selector() {
-    test_timeout! {
+    test_timeout! { assert_show_macro_frame_loads_and_populates_selector(); }
+}
+
+fn assert_show_macro_frame_loads_and_populates_selector() {
         let env = setup_env();
         if cfg!(feature = "client-wrath") {
             env.exec(include_str!("fixtures/wrath_f03/macros.lua"))
@@ -67,7 +70,6 @@ fn show_macro_frame_loads_and_populates_selector() {
             return "ok"
         "#)).unwrap();
         assert_eq!(result, "ok", "ShowMacroFrame should load and populate the macro selector: {result}");
-    }
 }
 
 fn seed_macro_consumer_rows(env: &wow_ui_sim::lua_api::WowLuaEnv) {
