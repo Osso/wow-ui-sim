@@ -278,6 +278,7 @@ fn original_friends_frame_renders_supplied_battle_net_counts_and_invites() {
         assert(invite.battleTag == "Jaina#1234" and invite.friendLevel == 1)
         assert(invite.creationTimestamp == 1760000091)
 
+        FriendsFrame.selectedFriendType = FRIENDS_BUTTON_TYPE_WOW
         ToggleFriendsFrame(1)
         assert(FriendsFrame:IsShown() and FriendsListFrame:IsShown())
         FriendsList_Update(true)
