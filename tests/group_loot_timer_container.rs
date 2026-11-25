@@ -14,7 +14,14 @@ local first, second = GroupLootFrame1, GroupLootFrame2
 local firstTimer = first.NeedRollAnimFinishedCallback
 local secondTimer = second.NeedRollAnimFinishedCallback
 assert(first and second, "two distinct rolls must use two frames")
-assert(firstTimer and secondTimer and firstTimer ~= secondTimer, "each roll must own a timer")
+assert(
+    firstTimer and secondTimer and firstTimer ~= secondTimer,
+    ("timer mismatch: first=%s second=%s rollIDs=%s/%s animations=%s/%s"):format(
+        tostring(firstTimer), tostring(secondTimer), tostring(first.rollID),
+        tostring(second.rollID), tostring(first.NeedRollAnim:IsShown()),
+        tostring(second.NeedRollAnim:IsShown())
+    )
+)
 assert(first.NeedRollAnim:IsShown() and second.NeedRollAnim:IsShown(), "both roll animations must start")
 first:Hide()
 assert(firstTimer:IsCancelled(), "frame hide must cancel After's container")
