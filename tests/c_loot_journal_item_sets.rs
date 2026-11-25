@@ -29,26 +29,50 @@ fn encounter_journal_difficulty_queries_use_selected_map(env: &WowLuaEnv) {
     env.apply_post_load_workarounds();
     env.exec("EJ_SelectInstance(63)")
         .expect("the Deadmines journal instance should be selectable");
-    let dungeon: (bool, bool, bool, bool) = env
+    let dungeon: (bool, bool, bool, bool, String) = env
         .eval(r#"
-            return C_EncounterJournal.InstanceHasDifficultyID(1),
-                C_EncounterJournal.InstanceHasDifficultyID(2),
-                C_EncounterJournal.InstanceHasDifficultyID(14),
-                EJ_IsValidInstanceDifficulty(2)
+            local hasNormal = C_EncounterJournal.InstanceHasDifficultyID(1)
+            local hasHeroic = C_EncounterJournal.InstanceHasDifficultyID(2)
+            local hasRaid = C_EncounterJournal.InstanceHasDifficultyID(14)
+            local isHeroicValid = EJ_IsValidInstanceDifficulty(2)
+            EncounterJournal_SetupDifficultyDropdown(EncounterJournal)
+            local values = {}
+            EncounterJournal.encounter.info.difficulty.menuGenerator(
+                EncounterJournal.encounter.info.difficulty,
+                {
+                    SetTag = function() end,
+                    CreateRadio = function(_, _, _, _, value)
+                        values[#values + 1] = value
+                    end,
+                })
+            table.sort(values)
+            return hasNormal, hasHeroic, hasRaid, isHeroicValid, table.concat(values, ",")
         "#)
-        .expect("dungeon difficulty queries should use the selected map");
-    assert_eq!(dungeon, (true, true, false, true));
+        .expect("the original dungeon dropdown should use selected-map difficulties");
+    assert_eq!(dungeon, (true, true, false, true, "1,2,24"));
 
     env.exec("EJ_SelectInstance(72)")
         .expect("the Bastion of Twilight journal instance should be selectable");
-    let raid: (bool, bool, bool) = env
+    let raid: (bool, bool, bool, String) = env
         .eval(r#"
-            return C_EncounterJournal.InstanceHasDifficultyID(3),
-                C_EncounterJournal.InstanceHasDifficultyID(1),
-                EJ_IsValidInstanceDifficulty(3)
+            local hasTenPlayer = C_EncounterJournal.InstanceHasDifficultyID(3)
+            local hasDungeon = C_EncounterJournal.InstanceHasDifficultyID(1)
+            local isTenPlayerValid = EJ_IsValidInstanceDifficulty(3)
+            EncounterJournal_SetupDifficultyDropdown(EncounterJournal)
+            local values = {}
+            EncounterJournal.encounter.info.difficulty.menuGenerator(
+                EncounterJournal.encounter.info.difficulty,
+                {
+                    SetTag = function() end,
+                    CreateRadio = function(_, _, _, _, value)
+                        values[#values + 1] = value
+                    end,
+                })
+            table.sort(values)
+            return hasTenPlayer, hasDungeon, isTenPlayerValid, table.concat(values, ",")
         "#)
-        .expect("raid difficulty queries should use the selected map");
-    assert_eq!(raid, (true, false, true));
+        .expect("the original raid dropdown should use selected-map difficulties");
+    assert_eq!(raid, (true, false, true, "3,4,5,6"));
 
     let bases: (i32, i32, i32) = env
         .eval(r#"
