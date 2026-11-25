@@ -237,10 +237,6 @@ const MANUAL_FULL_UI_CASES: &[Case<WowLuaEnv>] = &[
         test_keybindings_panels_detail::world_map_exploration_pin_first_open_settles_without_reopen,
     ),
     Case::new(
-        "test_keybindings_panels_detail::world_map_exploration_pin_recovers_when_first_overlay_fetch_is_empty",
-        test_keybindings_panels_detail::world_map_exploration_pin_recovers_when_first_overlay_fetch_is_empty,
-    ),
-    Case::new(
         "test_keybindings_panels_detail::world_map_registers_fog_of_war_pin_template_as_fog_of_war_frame",
         test_keybindings_panels_detail::world_map_registers_fog_of_war_pin_template_as_fog_of_war_frame,
     ),

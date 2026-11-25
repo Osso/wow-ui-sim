@@ -80,6 +80,7 @@ pub(super) fn patch_fog_of_war_pin_mixin(env: &crate::lua_api::WowLuaEnv) {
     temporary::fog_of_war_pin::patch(env);
 }
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(super) fn patch_map_exploration_pin_mixin(env: &crate::lua_api::WowLuaEnv) {
     temporary::map_exploration_pin::patch(env);
 }
@@ -104,6 +105,7 @@ pub(super) fn patch_fog_of_war_pin_mixin_for_runtime_addon_load(
     temporary::fog_of_war_pin::patch_for_runtime_addon_load(env);
 }
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(super) fn patch_map_exploration_pin_mixin_for_runtime_addon_load(
     env: &crate::lua_api::LoaderEnv<'_>,
 ) {
