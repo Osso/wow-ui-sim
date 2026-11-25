@@ -1,14 +1,15 @@
 #![cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 
-use crate::common::blizzard_addon_harness::{blizzard_ui_dir, build_blizzard_addon_closure_env};
+#[path = "common/prefork_full_ui_preload.rs"]
+mod prefork_full_ui_preload;
+
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 fn load_communities() -> WowLuaEnv {
-    let ui = blizzard_ui_dir();
-    let (env, loaded) = build_blizzard_addon_closure_env(&ui, &["Blizzard_Communities"], &[]);
-    assert!(loaded.iter().any(|name| name == "Blizzard_Communities"));
-    env.apply_post_load_workarounds();
-    wow_ui_sim::startup::settle_headless_startup(&env);
+    let env = prefork_full_ui_preload::preload_full_game_ui()
+        .expect("full Blizzard UI should load for Communities consumer tests");
+    env.exec("assert(C_AddOns.IsAddOnLoaded('Blizzard_Communities'))")
+        .expect("the active profile selected Blizzard_Communities from its TOC");
     env
 }
 
