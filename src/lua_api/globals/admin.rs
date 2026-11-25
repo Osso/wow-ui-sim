@@ -821,6 +821,8 @@ fn register_crafting(b: TableBuilder) -> LuaResult<TableBuilder> {
 fn set_player_name(state: &mut LuaState) -> LuaResult<u32> {
     let name = String::from_stack(state, 1)?;
     borrow_state_mut(state)?.player.name = name;
+    // INFERRED: R88gc (native evidence pending); CharacterFrame consumes this event.
+    super::state_backed_queries::dispatch_event_now(state, "UNIT_NAME_UPDATE", &["player"])?;
     Ok(0)
 }
 

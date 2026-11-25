@@ -97,7 +97,6 @@ fn forever_inventory_namespace_reuses_existing_slot_contract() {
 #[test]
 fn forever_character_panel_uses_supplied_title_and_equipment_textures() {
     let env = WowLuaEnv::new().unwrap();
-    env.exec("A_Admin.SetPlayerName('R88gc Lane Character')").unwrap();
     crate::common::load_game_startup_inventory(&env);
     env.apply_post_load_workarounds();
     env.exec(
@@ -106,6 +105,7 @@ fn forever_character_panel_uses_supplied_title_and_equipment_textures() {
         A_Admin.EquipItem(16, 231268)
         ToggleCharacter("PaperDollFrame", true)
         assert(CharacterFrame:IsShown() and PaperDollFrame:IsShown())
+        A_Admin.SetPlayerName("R88gc Lane Character")
         assert(CharacterFrame.TitleContainer.TitleText:GetText() == UnitPVPName("player"))
         assert(UnitPVPName("player") == "R88gc Lane Character")
         local head = GetInventoryItemTexture("player", CharacterHeadSlot:GetID())
