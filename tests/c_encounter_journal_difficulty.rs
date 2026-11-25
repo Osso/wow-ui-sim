@@ -26,17 +26,7 @@ fn encounter_journal_env() -> WowLuaEnv {
     env
 }
 
-#[test]
-fn encounter_journal_difficulty_queries_use_selected_map() {
-    let env = encounter_journal_env();
-    env.exec(
-        "EJ_SelectInstance(63); A_Admin.SetEncounterJournalDifficultyMask(63, 2^0 + 2^1 + 2^13 + 2^23)",
-    )
-    .expect("the dungeon instance and its supplied difficulty mask should be selected");
-
-    let dungeon: (bool, bool, bool, bool, bool, String) = env
-        .eval(
-            r#"
+const DUNGEON_DIFFICULTY_QUERY: &str = r#"
             local hasNormal = C_EncounterJournal.InstanceHasDifficultyID(1)
             local hasHeroic = C_EncounterJournal.InstanceHasDifficultyID(2)
             local hasRaid = C_EncounterJournal.InstanceHasDifficultyID(14)
@@ -55,19 +45,9 @@ fn encounter_journal_difficulty_queries_use_selected_map() {
             table.sort(values)
             return hasNormal, hasHeroic, hasRaid, isHeroicValid,
                 raidMaskWithoutMapRow, table.concat(values, ",")
-            "#,
-        )
-        .expect("the original dungeon dropdown should use selected-map difficulties");
-    assert_eq!(
-        dungeon,
-        (true, true, false, true, false, "1,2,24".to_string())
-    );
+            "#;
 
-    env.exec("EJ_SelectInstance(72); A_Admin.SetEncounterJournalDifficultyMask(72, 60)")
-        .expect("the raid instance and its supplied difficulty mask should be selected");
-    let raid: (bool, bool, bool, String) = env
-        .eval(
-            r#"
+const RAID_DIFFICULTY_QUERY: &str = r#"
             local hasTenPlayer = C_EncounterJournal.InstanceHasDifficultyID(3)
             local hasDungeon = C_EncounterJournal.InstanceHasDifficultyID(1)
             local isTenPlayerValid = EJ_IsValidInstanceDifficulty(3)
@@ -83,35 +63,53 @@ fn encounter_journal_difficulty_queries_use_selected_map() {
                 })
             table.sort(values)
             return hasTenPlayer, hasDungeon, isTenPlayerValid, table.concat(values, ",")
-            "#,
-        )
-        .expect("the original raid dropdown should use selected-map difficulties");
-    assert_eq!(raid, (true, false, true, "3,4,5,6".to_string()));
+            "#;
 
-    let bases: (i32, i32, i32) = env
-        .eval(
-            r#"
+const BASE_DIFFICULTY_QUERY: &str = r#"
             return C_EncounterJournal.GetBaseDifficultyID(233),
                 C_EncounterJournal.GetBaseDifficultyID(250),
                 C_EncounterJournal.GetBaseDifficultyID(63)
-            "#,
-        )
+            "#;
+
+fn assert_dungeon_difficulty_queries(env: &WowLuaEnv) {
+    env.exec(
+        "EJ_SelectInstance(63); A_Admin.SetEncounterJournalDifficultyMask(63, 2^0 + 2^1 + 2^13 + 2^23)",
+    )
+    .expect("the dungeon instance and its supplied difficulty mask should be selected");
+    let dungeon: (bool, bool, bool, bool, bool, String) = env
+        .eval(DUNGEON_DIFFICULTY_QUERY)
+        .expect("the original dungeon dropdown should use selected-map difficulties");
+    assert_eq!(
+        dungeon,
+        (true, true, false, true, false, "1,2,24".to_string())
+    );
+}
+
+fn assert_raid_difficulty_queries(env: &WowLuaEnv) {
+    env.exec("EJ_SelectInstance(72); A_Admin.SetEncounterJournalDifficultyMask(72, 60)")
+        .expect("the raid instance and its supplied difficulty mask should be selected");
+    let raid: (bool, bool, bool, String) = env
+        .eval(RAID_DIFFICULTY_QUERY)
+        .expect("the original raid dropdown should use selected-map difficulties");
+    assert_eq!(raid, (true, false, true, "3,4,5,6".to_string()));
+}
+
+fn assert_base_difficulty_queries(env: &WowLuaEnv) {
+    let bases: (i32, i32, i32) = env
+        .eval(BASE_DIFFICULTY_QUERY)
         .expect("base difficulty queries should accept difficulty IDs");
     assert_eq!(bases, (16, 17, 63));
 }
 
 #[test]
-fn encounter_journal_boss_overlay_reads_supplied_raid_locks() {
+fn encounter_journal_difficulty_queries_use_selected_map() {
     let env = encounter_journal_env();
-    let (instance_id, map_id, journal_id, encounter_id, initial_shown): (
-        i32,
-        i32,
-        i32,
-        i32,
-        bool,
-    ) = env
-        .eval(
-            r#"
+    assert_dungeon_difficulty_queries(&env);
+    assert_raid_difficulty_queries(&env);
+    assert_base_difficulty_queries(&env);
+}
+
+const RAID_LOCK_BOSS_SETUP: &str = r#"
             local selected
             for instanceIndex = 1, 500 do
                 local instanceID = EJ_GetInstanceByIndex(instanceIndex, true)
@@ -157,18 +155,25 @@ fn encounter_journal_boss_overlay_reads_supplied_raid_locks() {
             return selected.instanceID, selected.mapID,
                 selected.first.journalID, selected.first.encounterID,
                 boss.DefeatedOverlay:IsShown()
-            "#,
-        )
-        .expect("the original boss-overlay consumer should read the selected raid state");
-    assert_eq!(initial_shown, false);
+            "#;
 
+fn read_raid_lock_boss_setup(
+    env: &WowLuaEnv,
+) -> (i32, i32, i32, i32, bool) {
+    env.eval(RAID_LOCK_BOSS_SETUP)
+        .expect("the original boss-overlay consumer should read the selected raid state")
+}
+
+fn assert_omitted_raid_lock_difficulty(env: &WowLuaEnv, map_id: i32, encounter_id: i32) {
     let omitted_difficulty: bool = env
         .eval(&format!(
             "return C_RaidLocks.IsEncounterComplete({map_id}, {encounter_id})"
         ))
         .expect("the no-difficulty query should read the first matching map row");
     assert_eq!(omitted_difficulty, false);
+}
 
+fn update_raid_lock_boss_overlay(env: &WowLuaEnv, map_id: i32, encounter_id: i32) {
     env.exec(&format!(
         r#"
         A_Admin.SetCompletedEncounters({{
@@ -179,7 +184,9 @@ fn encounter_journal_boss_overlay_reads_supplied_raid_locks() {
         "#
     ))
     .expect("the original boss-overlay consumer should refresh from the new supplied rows");
+}
 
+fn assert_updated_raid_lock_boss_overlay(env: &WowLuaEnv, map_id: i32, encounter_id: i32) {
     let updated: bool = env
         .eval(&format!(
             r#"
@@ -189,5 +196,16 @@ fn encounter_journal_boss_overlay_reads_supplied_raid_locks() {
         ))
         .expect("the overlay and omitted-difficulty query should follow the first row");
     assert_eq!(updated, true);
+}
+
+#[test]
+fn encounter_journal_boss_overlay_reads_supplied_raid_locks() {
+    let env = encounter_journal_env();
+    let (instance_id, map_id, journal_id, encounter_id, initial_shown) =
+        read_raid_lock_boss_setup(&env);
+    assert_eq!(initial_shown, false);
+    assert_omitted_raid_lock_difficulty(&env, map_id, encounter_id);
+    update_raid_lock_boss_overlay(&env, map_id, encounter_id);
+    assert_updated_raid_lock_boss_overlay(&env, map_id, encounter_id);
     assert!(instance_id > 0 && journal_id > 0);
 }
