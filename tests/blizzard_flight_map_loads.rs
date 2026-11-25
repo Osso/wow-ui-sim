@@ -370,8 +370,14 @@ prefork_full_ui_case! {
 fn flight_map_hide_closes_taxi_interaction_without_clearing_map_id(env: &WowLuaEnv) {
     for map_id in [14, 994] {
         open_flight_map_for_taxi_map(env, map_id);
+        let errors_before_close = env.state().borrow().lua_errors.len();
         env.exec("HideUIPanel(FlightMapFrame)")
             .expect("HideUIPanel should close the original FlightMapFrame consumer");
+        let errors_after_close = env.state().borrow().lua_errors.len();
+        assert_eq!(
+            errors_after_close, errors_before_close,
+            "FlightMap OnHide should call a modeled CloseTaxiMap without Lua errors"
+        );
 
         let (is_shown, retained_map_id): (bool, i32) = env
             .eval("return FlightMapFrame:IsShown(), GetTaxiMapID()")
