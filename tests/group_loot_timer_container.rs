@@ -1,0 +1,30 @@
+//! GroupLootFrame uses FunctionContainer callbacks with C_Timer.After.
+#![cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+
+#[path = "tooltip_full_env_helpers.rs"]
+mod tooltip_full_env_helpers;
+
+const GROUP_LOOT_EVENT_LIFECYCLE: &str = r#"
+A_Admin.SetManualClock(0)
+A_Admin.StartLootRoll(71, 60, "First", "", 4, 0)
+A_Admin.StartLootRoll(72, 60, "Second", "", 4, 0)
+A_Admin.FireEvent("MAIN_SPEC_NEED_ROLL", 71, 3, true)
+A_Admin.FireEvent("MAIN_SPEC_NEED_ROLL", 72, 4, false)
+local first, second = GroupLootFrame1, GroupLootFrame2
+local firstTimer = first.NeedRollAnimFinishedCallback
+local secondTimer = second.NeedRollAnimFinishedCallback
+assert(firstTimer and secondTimer and firstTimer ~= secondTimer)
+assert(first.NeedRollAnim:IsShown() and second.NeedRollAnim:IsShown())
+A_Admin.FireEvent("CANCEL_LOOT_ROLL", 71)
+assert(firstTimer:IsCancelled(), "client cancellation must cancel After's container")
+assert(not first.NeedRollAnim:IsShown(), "cancelled roll animation must stop")
+A_Admin.AdvanceTime(5)
+assert(not second:IsShown(), "uncancelled roll must finish through its timer")
+assert(first:IsShown(), "cancelled timer must not remove the first frame")
+"#;
+
+#[test]
+fn group_loot_events_cancel_only_the_matching_container_timer() {
+    let env = tooltip_full_env_helpers::load_full_env_without_post_load();
+    env.exec(GROUP_LOOT_EVENT_LIFECYCLE).unwrap();
+}
