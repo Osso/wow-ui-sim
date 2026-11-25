@@ -52,19 +52,6 @@ const TWO_GROUP_BUFF_TAB_TEST: &str = r#"
     local tab = CooldownViewerSettings.GroupBuffsTab
     assert(not tab.isTabDisabled and tab:IsMouseClickEnabled())
     assert(not tab.Icon:IsDesaturated() and math.abs(tab.Icon:GetAlpha() - 1) < 0.001)
-    tab:Click()
-    assert(CooldownViewerSettings.GroupBuffFilter:IsShown())
-    local function sectionIDs(section)
-        local ids = {}
-        for item in section.itemPool:EnumerateActive() do
-            table.insert(ids, item:GetGroupBuffItem().spellID)
-        end
-        return ids
-    end
-    local shown = sectionIDs(CooldownViewerSettings.GroupBuffFilter.shownSection)
-    local hidden = sectionIDs(CooldownViewerSettings.GroupBuffFilter.hiddenSection)
-    assert(#shown == 1 and shown[1] == 1459, 'shown record mismatch')
-    assert(#hidden == 1 and hidden[1] == 21562, 'hidden record mismatch')
 "#;
 
 const ONE_GROUP_BUFF_TAB_TEST: &str = r#"
@@ -78,6 +65,19 @@ const ONE_GROUP_BUFF_TAB_TEST: &str = r#"
     assert(tab.Icon:IsDesaturated() and math.abs(tab.Icon:GetAlpha() - 0.5) < 0.001)
     assert(CooldownViewerSettings.displayMode == 'spells')
 "#;
+
+fn group_buff_tab_frame_id(env: &WowLuaEnv) -> u64 {
+    let state = env.state().borrow();
+    let settings_id = state
+        .widgets
+        .get_id_by_name("CooldownViewerSettings")
+        .expect("settings panel should exist");
+    *state
+        .widgets
+        .get(settings_id)
+        .and_then(|frame| frame.children_keys.get("GroupBuffsTab"))
+        .expect("settings tab should be a keyed child")
+}
 
 fn group_buff_settings_env() -> WowLuaEnv {
     let env = crate::common::panel_fixtures::setup_env();
@@ -96,8 +96,30 @@ fn group_buff_settings_env() -> WowLuaEnv {
 fn cooldown_viewer_settings_group_buff_tab_tracks_supplied_items() {
     let env = group_buff_settings_env();
     env.exec(EMPTY_GROUP_BUFF_TAB_TEST).expect("empty state should disable the tab");
-    env.exec(TWO_GROUP_BUFF_TAB_TEST).expect("tab click should show supplied group buffs");
-    env.exec(ONE_GROUP_BUFF_TAB_TEST).expect("reopening after one item should disable the tab");
+    env.exec(TWO_GROUP_BUFF_TAB_TEST)
+        .expect("two supplied records should enable the tab");
+    env.send_click(group_buff_tab_frame_id(&env))
+        .expect("simulated click should run original tab scripts");
+    let (filter_shown, shown, hidden): (bool, Vec<i32>, Vec<i32>) = env
+        .eval(
+            r#"
+            local function sectionIDs(section)
+                local ids = {}
+                for item in section.itemPool:EnumerateActive() do
+                    table.insert(ids, item:GetGroupBuffItem().spellID)
+                end
+                return ids
+            end
+            local filter = CooldownViewerSettings.GroupBuffFilter
+            return filter:IsShown(), sectionIDs(filter.shownSection), sectionIDs(filter.hiddenSection)
+            "#,
+        )
+        .expect("tab click should show the group buff filter");
+    assert!(filter_shown);
+    assert_eq!(shown, [1459]);
+    assert_eq!(hidden, [21562]);
+    env.exec(ONE_GROUP_BUFF_TAB_TEST)
+        .expect("reopening after one item should disable the tab");
 }
 
 #[test]
