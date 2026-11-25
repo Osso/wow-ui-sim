@@ -25,8 +25,9 @@ local first = buttons()
 local second = buttons()
 if not first or not second then return "neighborhoods_not_rendered" end
 local rendered = first.NeighborhoodName:GetText() .. "/" .. second.NeighborhoodName:GetText()
+local firstMap = HouseFinderFrame.mapID
 second:Click()
-return rendered .. ";" .. tostring(HouseFinderFrame.mapID)
+return rendered .. ";" .. tostring(firstMap) .. "/" .. tostring(HouseFinderFrame.mapID)
 "#;
 
 fn blizzard_ui_dir() -> PathBuf {
@@ -438,16 +439,21 @@ fn blizzard_house_list_registers_view_houses_list_recieved_event_on_show(env: &W
 fn verify_house_finder_scenario(env: &WowLuaEnv) {
     load_addon(&env.loader_env(), &house_finder_toc()).expect("original House Finder addon loads");
     env.exec(SUPPLY_NEIGHBORHOODS).expect("supply distinct neighborhoods");
-    env.exec("ShowUIPanel(HouseFinderFrame); C_Housing.HouseFinderRequestNeighborhoods()")
-        .expect("open the original frame and request its list");
+    env.exec("C_Housing.StartTutorial()")
+        .expect("start the inferred tutorial flow through C_Housing");
     env.process_timers().expect("neighborhood reply dispatches asynchronously");
     let selected: String = env.eval(SELECT_SECOND_NEIGHBORHOOD)
         .expect("original frame selects supplied neighborhood");
-    assert_eq!(selected, "Amber Vale/Cobalt Reach;82");
+    assert_eq!(selected, "Amber Vale/Cobalt Reach;41/82");
+    let faction_match: bool = env
+        .eval("return C_Housing.DoesFactionMatchNeighborhood('Neighborhood-B')")
+        .expect("faction result comes from supplied neighborhood state");
+    assert!(!faction_match);
     env.process_timers().expect("plot reply dispatches asynchronously");
-    let plots: i64 = env.eval("return #HouseFinderFrame.mapDataProvider.houseMapData")
-        .expect("original map provider stores selected plots");
-    assert_eq!(plots, 1);
+    let supplied_plot: String = env
+        .eval("local p = HouseFinderFrame.mapDataProvider.houseMapData[1]; return p.plotID .. '/' .. p.ownerName")
+        .expect("original map provider stores supplied plot fields");
+    assert_eq!(supplied_plot, "29/Mira");
 }
 
 prefork_full_ui_case! {

@@ -36,6 +36,8 @@ mod presence;
 
 pub mod current_house;
 #[cfg(feature = "client-retail")]
+pub(crate) mod house_finder;
+#[cfg(feature = "client-retail")]
 pub(crate) mod owned_houses;
 
 use crate::c_api::helpers::ensure_namespace;
@@ -78,7 +80,8 @@ const BUDGET_TYPE_PET_DECOR: i32 = 2;
 pub(crate) fn register_admin(
     builder: crate::lua_bridge::TableBuilder,
 ) -> LuaResult<crate::lua_bridge::TableBuilder> {
-    owned_houses::register_admin(builder)
+    let builder = owned_houses::register_admin(builder)?;
+    house_finder::register_admin(builder)
 }
 
 pub(crate) fn register_c_housing_surface(state: &mut LuaState) -> LuaResult<()> {
@@ -96,6 +99,7 @@ pub(crate) fn register_c_housing_surface(state: &mut LuaState) -> LuaResult<()> 
     #[cfg(feature = "client-retail")]
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
         owned_houses::register(state)?;
+        house_finder::register(state)?;
     }
     #[cfg(feature = "retail-12-0-0")]
     editor::register(state)?;

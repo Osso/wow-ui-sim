@@ -162,6 +162,10 @@ pub struct SimState {
     #[cfg(feature = "client-retail")]
     pub(crate) pending_owned_house_replies:
         VecDeque<Vec<crate::c_api::c_housing::current_house::HouseInfo>>,
+    /// Preserve House Finder list and plot responses until a later timer tick.
+    #[cfg(feature = "client-retail")]
+    pub(crate) pending_house_finder_replies:
+        VecDeque<crate::c_api::c_housing::house_finder::HouseFinderReply>,
     pub pet_journal_hover: crate::c_api::c_pet_journal_hover::PetJournalHoverState,
     pub anima_diversion: AnimaDiversionState,
     pub garrison_talents: GarrisonTalentState,
