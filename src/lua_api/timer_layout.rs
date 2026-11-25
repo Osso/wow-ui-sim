@@ -727,34 +727,3 @@ mod function_container_tests {
         }
     }
 }
-
-#[cfg(all(test, any(feature = "client-retail", feature = "client-wowforever")))]
-mod function_container_tests {
-    use super::*;
-    use crate::lua_api::WowLuaEnv;
-    use crate::lua_api::methods::call_function_state_multi;
-
-    #[test]
-    fn native_timer_functions_accept_and_return_containers() {
-        let env = WowLuaEnv::new().unwrap();
-        for function in [timer_new_timer, timer_new_ticker] {
-            let callback = env
-                .eval::<Val>("return C_FunctionContainers.CreateCallback(function() end)")
-                .unwrap();
-            let result = {
-                let mut lua = env.rilua_mut();
-                let state = lua.state_mut();
-                let callable = Val::Function(state.gc.alloc_closure(Closure::Rust(
-                    RustClosure::new(function, "native_timer_container_test"),
-                )));
-                call_function_state_multi(
-                    state,
-                    callable,
-                    &[Val::Num(3600.0), callback, Val::Num(1.0)],
-                )
-                .unwrap()
-            };
-            assert_eq!(result, vec![callback]);
-        }
-    }
-}
