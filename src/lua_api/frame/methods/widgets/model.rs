@@ -175,6 +175,24 @@ pub(super) fn set_model_by_creature_display_id(state: &mut LuaState) -> LuaResul
     Ok(0)
 }
 
+/// `Actor:SetModelByFileID(fileID)`: stores the model file ID that
+/// `GetModelFileID` reports. Called by Blizzard's
+/// `ScriptAnimatedModelSceneActor:SetEffect` (`ScriptAnimatedModelSceneActor.lua:67`).
+/// The 3D renderer is an intentional gap; only the selected source is modeled.
+pub(super) fn set_model_by_file_id(state: &mut LuaState) -> LuaResult<u32> {
+    let id = frame_id_from_stack(state, 1)?;
+    let file_id = val_to_f64(stack_val(state, 2)) as i64;
+    let mut sim = borrow_state_mut(state)?;
+    if let Some(frame) = sim.widgets.get_mut_visual(id) {
+        let model = frame.model_state_mut();
+        model.model_path = None;
+        model.model_file_id = Some(file_id);
+        model.model_appearance.display_info = None;
+        model.model_appearance.creature_id = None;
+    }
+    Ok(0)
+}
+
 pub(super) fn set_creature(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
     let creature_id = val_to_f64(stack_val(state, 2)) as i32;
@@ -654,6 +672,7 @@ const MODEL_METHODS: &[(&'static str, rilua::vm::closure::RustFn)] = &[
         "SetModelByCreatureDisplayID",
         set_model_by_creature_display_id,
     ),
+    ("SetModelByFileID", set_model_by_file_id),
     ("SetCreature", set_creature),
     ("ClearModel", clear_model),
     ("GetModelFileID", get_model_file_id),
