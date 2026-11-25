@@ -410,7 +410,7 @@ for _, group in ipairs(frame.backgroundAnims) do
     assert(not group:IsPlaying(), "background animation did not stop")
     for _, animation in ipairs({ group:GetAnimations() }) do
         local target = animation:GetTarget()
-        if target then assert(not target:IsShown(), "animation target did not hide") end
+        if target then assert(not target:IsVisible(), "animation target did not hide") end
     end
 end
 "#;
