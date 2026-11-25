@@ -19,13 +19,18 @@ fn communities_guild_info_open_throttles_roster_request() {
     env.exec(
         r#"
         A_Admin.SetManualClock(10)
-        CommunitiesFrame:ToggleSubPanel(CommunitiesFrame.GuildDetailsFrame)
-        CommunitiesFrame:ToggleSubPanel(CommunitiesFrame.GuildDetailsFrame)
-        CommunitiesFrame:ToggleSubPanel(CommunitiesFrame.GuildDetailsFrame)
+        CommunitiesFrame:Show()
+        CommunitiesFrame.GuildDetailsFrame:Show()
+        local info = CommunitiesFrame.GuildDetailsFrame.Info
+        info:Show()
+        info:Hide()
+        info:Show()
         A_Admin.AdvanceTime(9)
-        CommunitiesFrame:ToggleSubPanel(CommunitiesFrame.GuildDetailsFrame)
+        info:Hide()
+        info:Show()
         A_Admin.AdvanceTime(1)
-        CommunitiesFrame:ToggleSubPanel(CommunitiesFrame.GuildDetailsFrame)
+        info:Hide()
+        info:Show()
         "#,
     )
     .expect("open the selected Communities guild info frame repeatedly");
@@ -51,13 +56,18 @@ fn communities_guild_news_open_drops_throttled_request() {
             local listener = CreateFrame('Frame')
             listener:RegisterEvent('GUILD_NEWS_UPDATE')
             listener:SetScript('OnEvent', function() updates = updates + 1 end)
-            CommunitiesFrame:ToggleSubPanel(CommunitiesFrame.GuildDetailsFrame)
-            CommunitiesFrame:ToggleSubPanel(CommunitiesFrame.GuildDetailsFrame)
-            CommunitiesFrame:ToggleSubPanel(CommunitiesFrame.GuildDetailsFrame)
+            CommunitiesFrame:Show()
+            CommunitiesFrame.GuildDetailsFrame:Show()
+            local news = CommunitiesFrame.GuildDetailsFrame.News
+            news:Show()
+            news:Hide()
+            news:Show()
             A_Admin.AdvanceTime(899)
-            CommunitiesFrame:ToggleSubPanel(CommunitiesFrame.GuildDetailsFrame)
+            news:Hide()
+            news:Show()
             A_Admin.AdvanceTime(1)
-            CommunitiesFrame:ToggleSubPanel(CommunitiesFrame.GuildDetailsFrame)
+            news:Hide()
+            news:Show()
             return updates
             "#,
         )
