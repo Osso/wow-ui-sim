@@ -390,7 +390,7 @@ fn shared_animation_template_setplaying_runs_visibility_handlers() {
 
 const CLASS_TALENTS_SET_BACKGROUND_ANIMATIONS: &str = r#"
 assert(C_AddOns.LoadAddOn("Blizzard_PlayerSpells"))
-local frame = ClassTalentsFrame
+local frame = PlayerSpellsFrame.TalentsFrame
 assert(frame.backgroundAnims and #frame.backgroundAnims > 0)
 frame:SetBackgroundAnimationsPlaying(true)
 for _, group in ipairs(frame.backgroundAnims) do
