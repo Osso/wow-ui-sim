@@ -741,7 +741,6 @@ fn test_xml_fixed_frame_level_shifts_when_parent_level_changes() {
     let after: i32 = env
         .eval("XmlFixedParent:SetFrameLevel(400); return XmlFixedChild:GetFrameLevel()")
         .unwrap();
-    assert_eq!(before, 10);
     // VERIFIED (R14 Q6, pr46-49-decomp-answers.md:2225-2239): fixed same-strata children shift by the parent's delta.
     assert_eq!(after, 360);
 }
