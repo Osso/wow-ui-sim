@@ -12,10 +12,20 @@ fn game_ui_env() -> WowLuaEnv {
     let loaded = load_blizzard_addon_closure_into_env(
         &env,
         &ui,
-        &["Blizzard_FrameXML", "Blizzard_ItemButton", "Blizzard_WorldMap"],
+        &[
+            "Blizzard_FrameXML",
+            "Blizzard_ItemButton",
+            "Blizzard_UIPanels_Game",
+            "Blizzard_WorldMap",
+        ],
         &[],
     );
-    for name in ["Blizzard_FrameXML", "Blizzard_ItemButton", "Blizzard_WorldMap"] {
+    for name in [
+        "Blizzard_FrameXML",
+        "Blizzard_ItemButton",
+        "Blizzard_UIPanels_Game",
+        "Blizzard_WorldMap",
+    ] {
         assert!(loaded.iter().any(|loaded| loaded == name), "{name} must load");
     }
     env
@@ -31,16 +41,10 @@ fn addon_createframe_probe() -> tempfile::TempDir {
     std::fs::write(
         addon.path().join("Probe.lua"),
         r#"
-        local first = EquipmentFlyout_CreateButton()
-        local second = EquipmentFlyout_CreateButton()
-        SetItemButtonTexture(first, GetInventoryItemTexture("player", 1))
-        SetItemButtonTexture(second, GetInventoryItemTexture("player", 16))
+        EquipmentFlyout_Show(CharacterFinger0Slot)
         local tooltip = CreateFrame("GameTooltip", nil, UIParent)
         local ordinary = CreateFrame("Frame", nil, UIParent)
-        CreateFrameDefaultsProbe = {
-            first = first, second = second, tooltip = tooltip,
-            ordinary = ordinary,
-        }
+        CreateFrameDefaultsProbe = { tooltip = tooltip, ordinary = ordinary }
         "#,
     )
     .expect("write tainted addon probe");
@@ -48,21 +52,31 @@ fn addon_createframe_probe() -> tempfile::TempDir {
 }
 
 fn assert_item_button_and_tooltip_contract(env: &WowLuaEnv) {
-    let result: (bool, bool, bool, bool, bool, bool, String, String) = env
+    let result: (bool, bool, bool, bool, String, String) = env
         .eval(
             r#"
             local probe = CreateFrameDefaultsProbe
-            return probe.first.icon:GetParent() == probe.first,
-                probe.first.IconBorder:GetParent() == probe.first,
-                probe.second.icon:GetParent() == probe.second,
-                probe.second.IconBorder:GetParent() == probe.second,
-                probe.first.icon:GetTexture() == GetInventoryItemTexture("player", 1),
-                probe.second.icon:GetTexture() == GetInventoryItemTexture("player", 16),
+            local seen, count = {}, 0
+            local expectedA = select(10, GetItemInfo(49812))
+            local expectedB = select(10, GetItemInfo(49803))
+            for _, button in ipairs(EquipmentFlyoutFrame.buttons) do
+                if button:IsShown() then
+                    count = count + 1
+                    seen[button.icon:GetTexture()] = button
+                    if button.icon:GetParent() ~= button
+                        or button.IconBorder:GetParent() ~= button then
+                        return false, false, false, false,
+                            probe.tooltip:GetFrameStrata(), probe.ordinary:GetFrameStrata()
+                    end
+                end
+            end
+            return count >= 2, expectedA ~= expectedB,
+                seen[expectedA] ~= nil, seen[expectedB] ~= nil,
                 probe.tooltip:GetFrameStrata(), probe.ordinary:GetFrameStrata()
             "#,
         )
-        .expect("query original ItemButton and constructor behavior");
-    assert_eq!(result, (true, true, true, true, true, true, "TOOLTIP".into(), "MEDIUM".into()));
+        .expect("query original equipment flyout and constructor behavior");
+    assert_eq!(result, (true, true, true, true, "TOOLTIP".into(), "MEDIUM".into()));
 }
 
 fn assert_map_canvas_contract(env: &WowLuaEnv) {
@@ -82,8 +96,11 @@ fn assert_map_canvas_contract(env: &WowLuaEnv) {
 #[test]
 fn original_consumers_get_constructor_defaults_and_xml_children() {
     let env = game_ui_env();
-    env.exec("A_Admin.EquipItem(1, 211993); A_Admin.EquipItem(16, 231268)")
-        .expect("supply two distinct equipped items");
+    env.exec(
+        "A_Admin.EquipItem(11, 49812); A_Admin.EquipItem(12, 49803); \
+         A_Admin.AddBagItem(0, 1, 49812); A_Admin.AddBagItem(0, 2, 49803)",
+    )
+    .expect("supply two distinct ring items to the equipment flyout");
     let addon = addon_createframe_probe();
     load_addon(
         &env.loader_env(),
