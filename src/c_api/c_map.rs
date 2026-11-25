@@ -3,8 +3,8 @@
 //!
 //! Migrates 7 entries off `NAMESPACE_NIL_STUBS`:
 //!
-//! - `C_Map.GetMapArtID(uiMapID)` — returns the `art_id` for the
-//!   seeded map, or nothing (retail `mayreturnnothing`).
+//! - `C_Map.GetMapArtID(uiMapID)` — returns the art ID from generated
+//!   map-art data for known maps, or nothing for an unknown map.
 //! - `C_Map.GetMapInfo(uiMapID)` — returns a `UiMapDetails`-shaped
 //!   table for seeded maps and unseeded Retail UiMap records. Unknown
 //!   Retail IDs return nothing; other profiles retain generic details for
@@ -341,11 +341,15 @@ fn push_map_group_member_info(state: &mut LuaState, map: &MapData) -> Val {
 
 fn c_map_get_map_art_id(state: &mut LuaState) -> LuaResult<u32> {
     let ui_map_id = read_scalar_map_id(state)?;
-    let art_id = borrow_state(state)?.maps.get(&ui_map_id).map(|m| m.art_id);
-    let Some(art_id) = art_id else {
+    if !borrow_state(state)?.maps.contains_key(&ui_map_id) {
         return Ok(0);
-    };
-    state.push(Val::Num(art_id as f64));
+    }
+
+    let art_id = u32::try_from(ui_map_id)
+        .ok()
+        .and_then(crate::map_art::get_map_art)
+        .map_or(0, |map_art| map_art.art_id);
+    state.push(Val::Num(f64::from(art_id)));
     Ok(1)
 }
 

@@ -349,10 +349,8 @@ pub struct AchievementGuildRep {
 }
 
 /// Per-map metadata keyed by ui-map id in `SimState.maps`. Drives
-/// `C_Map.GetMapArtID`, `GetMapChildrenInfo`, and
-/// `GetPlayerMapPosition`. Only the handful of ids commonly referenced
-/// by Blizzard UI / addons are seeded (Azeroth world map, Eastern
-/// Kingdoms continent, Stormwind City zone).
+/// `GetMapChildrenInfo` and `GetPlayerMapPosition`. Only a handful of ids
+/// commonly referenced by Blizzard UI and addons are seeded.
 #[derive(Debug, Clone)]
 pub struct MapData {
     pub ui_map_id: i32,
@@ -361,9 +359,6 @@ pub struct MapData {
     pub map_type: i32,
     /// Parent map id in the hierarchy. `0` for the Cosmic root.
     pub parent_map_id: i32,
-    /// Art tileset id returned by `GetMapArtID`. Non-zero for real
-    /// zones; `0` for purely-logical maps (Cosmic).
-    pub art_id: i32,
     /// `UIMapFlag` bitmask (0 = no flags).
     pub flags: i32,
     /// Direct children of this map in display order. Drives

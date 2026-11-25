@@ -1,12 +1,12 @@
 //! Scalar map selectors: current secret acceptance and ordinary compatibility.
-//! Fixtures describe simulator behavior, not native unknown-map policy.
+//! Known-map values come from simulator defaults, not native catalog claims.
 
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 const ART_RESULT: &str = "assert(type(value) == 'number' and value == 89, 'generated art ID')";
 const INFO_RESULT: &str = r#"
     assert(type(value) == 'table', 'map details table')
-    assert(value.mapID == 84, 'fixture UI map ID')
+    assert(value.mapID == 84, 'known UI map ID')
     assert(value.name == 'Stormwind City', 'seeded map name')
 "#;
 

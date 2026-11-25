@@ -5,7 +5,6 @@ struct DefaultMapSeed {
     name: &'static str,
     map_type: i32,
     parent_map_id: i32,
-    art_id: i32,
     child_map_ids: &'static [i32],
 }
 
@@ -17,7 +16,6 @@ const DEFAULT_MAP_SEEDS: &[DefaultMapSeed] = &[
         name: "Cosmic",
         map_type: 0,
         parent_map_id: 0,
-        art_id: 0,
         child_map_ids: &[947],
     },
     DefaultMapSeed {
@@ -25,7 +23,6 @@ const DEFAULT_MAP_SEEDS: &[DefaultMapSeed] = &[
         name: "Azeroth",
         map_type: 1,
         parent_map_id: 946,
-        art_id: 0,
         child_map_ids: &[13],
     },
     DefaultMapSeed {
@@ -33,7 +30,6 @@ const DEFAULT_MAP_SEEDS: &[DefaultMapSeed] = &[
         name: "Eastern Kingdoms",
         map_type: 2,
         parent_map_id: 947,
-        art_id: 62,
         child_map_ids: &[84],
     },
     DefaultMapSeed {
@@ -41,7 +37,6 @@ const DEFAULT_MAP_SEEDS: &[DefaultMapSeed] = &[
         name: "Dun Morogh",
         map_type: 3,
         parent_map_id: 0,
-        art_id: 12,
         child_map_ids: &[],
     },
     DefaultMapSeed {
@@ -49,7 +44,6 @@ const DEFAULT_MAP_SEEDS: &[DefaultMapSeed] = &[
         name: "Stormwind City",
         map_type: 3,
         parent_map_id: 13,
-        art_id: 104,
         child_map_ids: &[],
     },
     DefaultMapSeed {
@@ -57,7 +51,6 @@ const DEFAULT_MAP_SEEDS: &[DefaultMapSeed] = &[
         name: "Eastern Plaguelands",
         map_type: 3,
         parent_map_id: 13,
-        art_id: 0,
         child_map_ids: &[],
     },
     DefaultMapSeed {
@@ -65,7 +58,6 @@ const DEFAULT_MAP_SEEDS: &[DefaultMapSeed] = &[
         name: "Deadwind Pass",
         map_type: 3,
         parent_map_id: 13,
-        art_id: 0,
         child_map_ids: &[],
     },
     DefaultMapSeed {
@@ -73,7 +65,6 @@ const DEFAULT_MAP_SEEDS: &[DefaultMapSeed] = &[
         name: "Northern Stranglethorn",
         map_type: 3,
         parent_map_id: 13,
-        art_id: 0,
         child_map_ids: &[],
     },
     DefaultMapSeed {
@@ -81,7 +72,6 @@ const DEFAULT_MAP_SEEDS: &[DefaultMapSeed] = &[
         name: "Dustwallow Marsh",
         map_type: 3,
         parent_map_id: 12,
-        art_id: 0,
         child_map_ids: &[],
     },
     DefaultMapSeed {
@@ -89,7 +79,6 @@ const DEFAULT_MAP_SEEDS: &[DefaultMapSeed] = &[
         name: "Caverns of Time",
         map_type: 5,
         parent_map_id: 71,
-        art_id: 0,
         child_map_ids: &[],
     },
     DefaultMapSeed {
@@ -97,7 +86,6 @@ const DEFAULT_MAP_SEEDS: &[DefaultMapSeed] = &[
         name: "Alterac Valley",
         map_type: 3,
         parent_map_id: 0,
-        art_id: 0,
         child_map_ids: &[],
     },
     DefaultMapSeed {
@@ -105,7 +93,6 @@ const DEFAULT_MAP_SEEDS: &[DefaultMapSeed] = &[
         name: "Arathi Basin",
         map_type: 3,
         parent_map_id: 0,
-        art_id: 0,
         child_map_ids: &[],
     },
     DefaultMapSeed {
@@ -113,7 +100,6 @@ const DEFAULT_MAP_SEEDS: &[DefaultMapSeed] = &[
         name: "Eye of the Storm",
         map_type: 3,
         parent_map_id: 0,
-        art_id: 0,
         child_map_ids: &[],
     },
     DefaultMapSeed {
@@ -121,7 +107,6 @@ const DEFAULT_MAP_SEEDS: &[DefaultMapSeed] = &[
         name: "Strand of the Ancients",
         map_type: 3,
         parent_map_id: 0,
-        art_id: 0,
         child_map_ids: &[],
     },
     DefaultMapSeed {
@@ -129,7 +114,6 @@ const DEFAULT_MAP_SEEDS: &[DefaultMapSeed] = &[
         name: "Isle of Conquest",
         map_type: 3,
         parent_map_id: 0,
-        art_id: 0,
         child_map_ids: &[],
     },
     DefaultMapSeed {
@@ -137,7 +121,6 @@ const DEFAULT_MAP_SEEDS: &[DefaultMapSeed] = &[
         name: "Terokkar Forest",
         map_type: 3,
         parent_map_id: 101,
-        art_id: 0,
         child_map_ids: &[],
     },
     DefaultMapSeed {
@@ -145,7 +128,6 @@ const DEFAULT_MAP_SEEDS: &[DefaultMapSeed] = &[
         name: "Netherstorm",
         map_type: 3,
         parent_map_id: 101,
-        art_id: 0,
         child_map_ids: &[],
     },
     DefaultMapSeed {
@@ -153,7 +135,6 @@ const DEFAULT_MAP_SEEDS: &[DefaultMapSeed] = &[
         name: "Borean Tundra",
         map_type: 3,
         parent_map_id: 113,
-        art_id: 0,
         child_map_ids: &[],
     },
     DefaultMapSeed {
@@ -161,7 +142,6 @@ const DEFAULT_MAP_SEEDS: &[DefaultMapSeed] = &[
         name: "Howling Fjord",
         map_type: 3,
         parent_map_id: 113,
-        art_id: 0,
         child_map_ids: &[],
     },
     DefaultMapSeed {
@@ -169,7 +149,6 @@ const DEFAULT_MAP_SEEDS: &[DefaultMapSeed] = &[
         name: "Icecrown",
         map_type: 3,
         parent_map_id: 113,
-        art_id: 0,
         child_map_ids: &[],
     },
     DefaultMapSeed {
@@ -177,7 +156,6 @@ const DEFAULT_MAP_SEEDS: &[DefaultMapSeed] = &[
         name: "The Storm Peaks",
         map_type: 3,
         parent_map_id: 113,
-        art_id: 0,
         child_map_ids: &[],
     },
     DefaultMapSeed {
@@ -185,7 +163,6 @@ const DEFAULT_MAP_SEEDS: &[DefaultMapSeed] = &[
         name: "Isle of Quel'Danas",
         map_type: 3,
         parent_map_id: 13,
-        art_id: 0,
         child_map_ids: &[],
     },
     DefaultMapSeed {
@@ -193,7 +170,6 @@ const DEFAULT_MAP_SEEDS: &[DefaultMapSeed] = &[
         name: "Wintergrasp",
         map_type: 3,
         parent_map_id: 113,
-        art_id: 0,
         child_map_ids: &[],
     },
     DefaultMapSeed {
@@ -201,7 +177,6 @@ const DEFAULT_MAP_SEEDS: &[DefaultMapSeed] = &[
         name: "Mount Hyjal",
         map_type: 3,
         parent_map_id: 12,
-        art_id: 0,
         child_map_ids: &[],
     },
     DefaultMapSeed {
@@ -209,7 +184,6 @@ const DEFAULT_MAP_SEEDS: &[DefaultMapSeed] = &[
         name: "Deepholm",
         map_type: 3,
         parent_map_id: 276,
-        art_id: 0,
         child_map_ids: &[],
     },
     DefaultMapSeed {
@@ -217,7 +191,6 @@ const DEFAULT_MAP_SEEDS: &[DefaultMapSeed] = &[
         name: "Uldum",
         map_type: 3,
         parent_map_id: 12,
-        art_id: 0,
         child_map_ids: &[],
     },
     DefaultMapSeed {
@@ -225,7 +198,6 @@ const DEFAULT_MAP_SEEDS: &[DefaultMapSeed] = &[
         name: "Kun-Lai Summit",
         map_type: 3,
         parent_map_id: 424,
-        art_id: 0,
         child_map_ids: &[],
     },
     DefaultMapSeed {
@@ -233,7 +205,6 @@ const DEFAULT_MAP_SEEDS: &[DefaultMapSeed] = &[
         name: "Vale of Eternal Blossoms",
         map_type: 3,
         parent_map_id: 424,
-        art_id: 0,
         child_map_ids: &[],
     },
     DefaultMapSeed {
@@ -241,7 +212,6 @@ const DEFAULT_MAP_SEEDS: &[DefaultMapSeed] = &[
         name: "Isle of Thunder",
         map_type: 3,
         parent_map_id: 424,
-        art_id: 0,
         child_map_ids: &[],
     },
     DefaultMapSeed {
@@ -249,7 +219,6 @@ const DEFAULT_MAP_SEEDS: &[DefaultMapSeed] = &[
         name: "Tanaan Jungle",
         map_type: 3,
         parent_map_id: 572,
-        art_id: 0,
         child_map_ids: &[],
     },
     DefaultMapSeed {
@@ -257,7 +226,6 @@ const DEFAULT_MAP_SEEDS: &[DefaultMapSeed] = &[
         name: "Gorgrond",
         map_type: 3,
         parent_map_id: 572,
-        art_id: 0,
         child_map_ids: &[],
     },
     DefaultMapSeed {
@@ -265,7 +233,6 @@ const DEFAULT_MAP_SEEDS: &[DefaultMapSeed] = &[
         name: "Broken Shore",
         map_type: 3,
         parent_map_id: 619,
-        art_id: 0,
         child_map_ids: &[],
     },
     DefaultMapSeed {
@@ -273,7 +240,6 @@ const DEFAULT_MAP_SEEDS: &[DefaultMapSeed] = &[
         name: "Suramar",
         map_type: 3,
         parent_map_id: 619,
-        art_id: 0,
         child_map_ids: &[],
     },
     DefaultMapSeed {
@@ -281,7 +247,6 @@ const DEFAULT_MAP_SEEDS: &[DefaultMapSeed] = &[
         name: "Zuldazar",
         map_type: 3,
         parent_map_id: 875,
-        art_id: 0,
         child_map_ids: &[],
     },
     DefaultMapSeed {
@@ -289,7 +254,6 @@ const DEFAULT_MAP_SEEDS: &[DefaultMapSeed] = &[
         name: "Nazmir",
         map_type: 3,
         parent_map_id: 875,
-        art_id: 0,
         child_map_ids: &[],
     },
     DefaultMapSeed {
@@ -297,7 +261,6 @@ const DEFAULT_MAP_SEEDS: &[DefaultMapSeed] = &[
         name: "Antoran Wastes",
         map_type: 3,
         parent_map_id: 882,
-        art_id: 0,
         child_map_ids: &[],
     },
     DefaultMapSeed {
@@ -305,7 +268,6 @@ const DEFAULT_MAP_SEEDS: &[DefaultMapSeed] = &[
         name: "Tiragarde Sound",
         map_type: 3,
         parent_map_id: 876,
-        art_id: 0,
         child_map_ids: &[],
     },
     DefaultMapSeed {
@@ -313,7 +275,6 @@ const DEFAULT_MAP_SEEDS: &[DefaultMapSeed] = &[
         name: "Isle of Dorn",
         map_type: 3,
         parent_map_id: 947, // Azeroth: the nearest seeded ancestor (UiMap.db2 says 2274 Khaz Algar, not seeded)
-        art_id: 5920,
         child_map_ids: &[],
     },
     DefaultMapSeed {
@@ -321,7 +282,6 @@ const DEFAULT_MAP_SEEDS: &[DefaultMapSeed] = &[
         name: "Exile's Reach",
         map_type: 3,
         parent_map_id: 0,
-        art_id: 0,
         child_map_ids: &[],
     },
     DefaultMapSeed {
@@ -329,7 +289,6 @@ const DEFAULT_MAP_SEEDS: &[DefaultMapSeed] = &[
         name: "Mechagon Island",
         map_type: 3,
         parent_map_id: 876,
-        art_id: 0,
         child_map_ids: &[],
     },
     DefaultMapSeed {
@@ -337,7 +296,6 @@ const DEFAULT_MAP_SEEDS: &[DefaultMapSeed] = &[
         name: "Uldum",
         map_type: 3,
         parent_map_id: 12,
-        art_id: 0,
         child_map_ids: &[],
     },
     DefaultMapSeed {
@@ -345,7 +303,6 @@ const DEFAULT_MAP_SEEDS: &[DefaultMapSeed] = &[
         name: "Vale of Eternal Blossoms",
         map_type: 3,
         parent_map_id: 424,
-        art_id: 0,
         child_map_ids: &[],
     },
     DefaultMapSeed {
@@ -353,7 +310,6 @@ const DEFAULT_MAP_SEEDS: &[DefaultMapSeed] = &[
         name: "Bastion",
         map_type: 3,
         parent_map_id: 1550,
-        art_id: 0,
         child_map_ids: &[],
     },
     DefaultMapSeed {
@@ -361,7 +317,6 @@ const DEFAULT_MAP_SEEDS: &[DefaultMapSeed] = &[
         name: "The Maw",
         map_type: 3,
         parent_map_id: 1550,
-        art_id: 0,
         child_map_ids: &[],
     },
     DefaultMapSeed {
@@ -369,7 +324,6 @@ const DEFAULT_MAP_SEEDS: &[DefaultMapSeed] = &[
         name: "The Shadowlands",
         map_type: 2,
         parent_map_id: 946, // Cosmic, as in UiMap.db2
-        art_id: 0,
         child_map_ids: &[],
     },
     DefaultMapSeed {
@@ -377,7 +331,6 @@ const DEFAULT_MAP_SEEDS: &[DefaultMapSeed] = &[
         name: "Oribos",
         map_type: 3,
         parent_map_id: 0,
-        art_id: 0,
         child_map_ids: &[],
     },
     DefaultMapSeed {
@@ -385,7 +338,6 @@ const DEFAULT_MAP_SEEDS: &[DefaultMapSeed] = &[
         name: "Zereth Mortis",
         map_type: 3,
         parent_map_id: 1550,
-        art_id: 0,
         child_map_ids: &[],
     },
     DefaultMapSeed {
@@ -393,7 +345,6 @@ const DEFAULT_MAP_SEEDS: &[DefaultMapSeed] = &[
         name: "Emerald Dream",
         map_type: 3,
         parent_map_id: 1978,
-        art_id: 0,
         child_map_ids: &[],
     },
     DefaultMapSeed {
@@ -401,7 +352,6 @@ const DEFAULT_MAP_SEEDS: &[DefaultMapSeed] = &[
         name: "The Ringing Deeps",
         map_type: 3,
         parent_map_id: 2274,
-        art_id: 0,
         child_map_ids: &[],
     },
     DefaultMapSeed {
@@ -409,7 +359,6 @@ const DEFAULT_MAP_SEEDS: &[DefaultMapSeed] = &[
         name: "Azj-Kahet",
         map_type: 3,
         parent_map_id: 2275,
-        art_id: 0,
         child_map_ids: &[],
     },
     DefaultMapSeed {
@@ -417,7 +366,6 @@ const DEFAULT_MAP_SEEDS: &[DefaultMapSeed] = &[
         name: "Undermine",
         map_type: 3,
         parent_map_id: 2274,
-        art_id: 0,
         child_map_ids: &[],
     },
     DefaultMapSeed {
@@ -425,7 +373,6 @@ const DEFAULT_MAP_SEEDS: &[DefaultMapSeed] = &[
         name: "K'aresh",
         map_type: 3,
         parent_map_id: 2274,
-        art_id: 0,
         child_map_ids: &[],
     },
     DefaultMapSeed {
@@ -433,7 +380,6 @@ const DEFAULT_MAP_SEEDS: &[DefaultMapSeed] = &[
         name: "Eversong Woods",
         map_type: 3,
         parent_map_id: 13,
-        art_id: 0,
         child_map_ids: &[],
     },
     DefaultMapSeed {
@@ -441,7 +387,6 @@ const DEFAULT_MAP_SEEDS: &[DefaultMapSeed] = &[
         name: "Isle of Quel'Danas",
         map_type: 3,
         parent_map_id: 13,
-        art_id: 0,
         child_map_ids: &[],
     },
 ];
@@ -459,7 +404,6 @@ fn default_map_entry(seed: &DefaultMapSeed) -> (i32, MapData) {
         name: seed.name.into(),
         map_type: seed.map_type,
         parent_map_id: seed.parent_map_id,
-        art_id: seed.art_id,
         flags: 0,
         child_map_ids: seed.child_map_ids.to_vec(),
         child_rects: Vec::new(),
