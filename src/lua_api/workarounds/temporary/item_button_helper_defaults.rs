@@ -134,7 +134,7 @@ pub(crate) fn apply_bootstrap(_lua: &mut rilua::Lua) -> crate::Result<()> {
     _lua.exec(ITEM_BUTTON_FRAME_SURFACE_LUA)?;
     // Retail and Forever load these globals from the original Mainline ItemButton Lua.
     #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
-    lua.exec(ITEM_BUTTON_HELPER_DEFAULTS_LUA)?;
+    _lua.exec(ITEM_BUTTON_HELPER_DEFAULTS_LUA)?;
     Ok(())
 }
 
