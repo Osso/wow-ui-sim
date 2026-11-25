@@ -9,6 +9,8 @@ mod c_account_info;
 pub(crate) mod c_behavioral_messaging;
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub(crate) mod c_black_market;
+#[cfg(any(feature = "retail-12-1-0", feature = "client-wowforever"))]
+pub(crate) mod c_encounter_journal_difficulty;
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub(crate) mod c_gossip_info_poi;
 pub mod c_guild_info;

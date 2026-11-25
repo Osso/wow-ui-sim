@@ -129,6 +129,10 @@ pub struct EncounterJournalState {
     pub current_tier: u32,
     /// Selected `JournalInstance.id` (raid or dungeon), or 0 when none.
     pub current_instance: u32,
+    /// UNKNOWN (R88gb.1, Retail 12.1.5.70688 / Forever 1.60.1.70707):
+    /// host-supplied per-instance mask; native DB2 source was not identified.
+    #[cfg(any(feature = "retail-12-1-0", feature = "client-wowforever"))]
+    pub instance_difficulty_masks: HashMap<u32, u64>,
     /// Selected `JournalEncounter.id`, or 0 when no boss tab is open.
     pub current_encounter: u32,
     /// Active raid/dungeon `DifficultyID`. Defaults to Normal Raid (14).
@@ -171,6 +175,8 @@ impl Default for EncounterJournalState {
         Self {
             current_tier: 12,
             current_instance: 0,
+            #[cfg(any(feature = "retail-12-1-0", feature = "client-wowforever"))]
+            instance_difficulty_masks: HashMap::new(),
             current_encounter: 0,
             difficulty: 14,
             class_filter: 0,
