@@ -707,6 +707,7 @@ pub struct ChatWindow {
     pub b: f32,
     pub shown: bool,
     pub locked: bool,
+    /// INFERRED R88g4 (native evidence pending): FrameXML passes this index to `FCF_DockFrame`.
     pub docked_index: Option<i32>,
     pub uninteractable: bool,
     pub saved_width: Option<f32>,
