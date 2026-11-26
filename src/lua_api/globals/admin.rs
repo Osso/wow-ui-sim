@@ -167,6 +167,7 @@ fn register_admin_calendar_services(builder: TableBuilder) -> LuaResult<TableBui
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     let builder = crate::c_api::ranged_slot::register_admin(builder)?;
     let builder = crate::c_api::c_content_tracking::register_admin(builder)?;
+    let builder = crate::c_api::vignette_info::register_admin(builder)?;
     let builder = crate::c_api::c_calendar::club_events::register_admin(builder)?;
     let builder = crate::c_api::c_calendar::event_types::register_admin(builder)?;
     let builder = crate::c_api::c_date_and_time::register_admin(builder)?;

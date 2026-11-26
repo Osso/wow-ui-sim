@@ -143,6 +143,36 @@ fn assert_map_canvas_state(env: &WowLuaEnv, map_id: u32) {
 
 #[test]
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn original_world_map_vignette_provider_uses_supplied_records() {
+    let env = load_full_game_ui();
+    env.eval::<()>("ToggleWorldMap()").expect("open WorldMap");
+    settle_world_map(&env);
+    env.exec(VIGNETTE_PROVIDER_PROOF).expect("vignette consumer proof");
+}
+
+const VIGNETTE_PROVIDER_PROOF: &str = r#"
+local function row(guid, mapPin, x, y, atlas)
+  return { vignetteGUID=guid, uiMapID=WorldMapFrame:GetMapID(), x=x, y=y, name=guid,
+    objectGUID=guid, isDead=false, onWorldMap=true, zoneInfiniteAOI=false,
+    onMinimap=false, isUnique=false, inFogOfWar=false, atlasName=atlas,
+    hasTooltip=false, vignetteID=1, type=Enum.VignetteType.Normal,
+    rewardQuestID=0, mapPin=mapPin }
+end
+A_Admin.SetVignettes({row("V1", nil, 0.2, 0.3, "TaxiNode"),
+  row("V2", {button={}, buttonSelected={}, underlay="", outerGlow=""}, 0.7, 0.8, "QuestNormal")})
+local a = WorldMapFrame:EnumeratePinsByTemplate("VignettePinTemplate")()
+local b = WorldMapFrame:EnumeratePinsByTemplate("VignettePinPOIButtonTemplate")()
+assert(a and b and a.vignetteGUID == "V1" and b.vignetteGUID == "V2")
+assert(a.vignetteInfo.atlasName == "TaxiNode" and b.vignetteInfo.atlasName == "QuestNormal")
+local ax, ay = a:GetPosition(); local bx, by = b:GetPosition()
+assert(math.abs(ax - 0.2) < 0.001 and math.abs(ay - 0.3) < 0.001 and math.abs(bx - 0.7) < 0.001 and math.abs(by - 0.8) < 0.001)
+A_Admin.SetVignettes({row("V2", {button={}, buttonSelected={}, underlay="", outerGlow=""}, 0.7, 0.8, "QuestNormal")})
+assert(WorldMapFrame:GetNumActivePinsByTemplate("VignettePinTemplate") == 0)
+assert(WorldMapFrame:GetNumActivePinsByTemplate("VignettePinPOIButtonTemplate") == 1)
+"#;
+
+#[test]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn world_map_canvas_uses_model_for_two_maps() {
     let env = load_full_game_ui();
     let errors_before = env.state().borrow().lua_errors.clone();
