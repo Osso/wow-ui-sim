@@ -55,19 +55,6 @@ if RunScript == nil then
   end
 end
 
-if CallErrorHandler == nil then
-  function CallErrorHandler(message)
-    if message == nil or message == "unknown" then
-      return message
-    end
-    local handler = geterrorhandler and geterrorhandler()
-    if type(handler) == "function" then
-      return handler(message)
-    end
-    error(message)
-  end
-end
-
 if GetErrorCallstackHeight == nil then
   function GetErrorCallstackHeight()
     return 0
@@ -185,6 +172,22 @@ if debug ~= nil and debug.getfenv ~= nil then
 end
 "#;
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+const CALL_ERROR_HANDLER_FALLBACK_LUA: &str = r#"
+if CallErrorHandler == nil then
+  function CallErrorHandler(message)
+    if message == nil or message == "unknown" then
+      return message
+    end
+    local handler = geterrorhandler and geterrorhandler()
+    if type(handler) == "function" then
+      return handler(message)
+    end
+    error(message)
+  end
+end
+"#;
+
 /// temporary: master's no-op fallback. Only Retail 12.1.5 registers the real
 /// R88y `AddSourceLocationExclude`; other profiles' native behavior is UNKNOWN. Evidence: pr46-49-decomp-answers.md, sections R88y.
 const SOURCE_LOCATION_EXCLUDE_FALLBACK_LUA: &str = r#"
@@ -199,6 +202,8 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
         lua.exec(SOURCE_LOCATION_EXCLUDE_FALLBACK_LUA)?;
     }
     lua.exec(DEBUG_ENVIRONMENT_DEFAULTS_LUA)?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+    lua.exec(CALL_ERROR_HANDLER_FALLBACK_LUA)?;
     Ok(())
 }
 
