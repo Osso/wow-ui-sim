@@ -222,12 +222,16 @@ fn achievement_microbutton_uses_earned_achievement_state() {
     let env = load_achievement_ui_consumer();
     env.exec(
         r#"
+        A_Admin.ClearGuild()
         A_Admin.SetCanShowAchievementUI(true)
         A_Admin.SetAchievementEarned(6, false)
+        assert(not IsInGuild())
+        assert(not HasCompletedAnyAchievement())
         AchievementMicroButton:Click()
         assert(not C_AddOns.IsAddOnLoaded("Blizzard_AchievementUI"),
             "no earned achievement must keep the panel closed")
         A_Admin.SetAchievementEarned(6, true)
+        assert(HasCompletedAnyAchievement())
         AchievementMicroButton:Click()
         assert(C_AddOns.IsAddOnLoaded("Blizzard_AchievementUI"),
             "an earned achievement must open the panel")
