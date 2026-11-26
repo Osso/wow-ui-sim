@@ -45,14 +45,23 @@ fn advance_tracker(env: &WowLuaEnv) {
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn assert_seeded_quest_blocks(env: &WowLuaEnv) {
-    let (first_exists, first_title, second_exists, second_title): (bool, String, bool, String) = env
+    let (
+        first_exists,
+        first_visible,
+        first_title,
+        second_exists,
+        second_visible,
+        second_title,
+    ): (bool, bool, String, bool, bool, String) = env
         .eval(
             r#"
             local blocks = QuestObjectiveTracker.usedBlocks[QuestObjectiveTracker.blockTemplate]
             local first = blocks and blocks[80000]
             local second = blocks and blocks[80001]
-            return first ~= nil, first and first.HeaderText:GetText() or "",
-                   second ~= nil, second and second.HeaderText:GetText() or ""
+            return first ~= nil, first and first:IsVisible() or false,
+                   first and first.HeaderText:GetText() or "",
+                   second ~= nil, second and second:IsVisible() or false,
+                   second and second.HeaderText:GetText() or ""
             "#,
         )
         .expect("the original tracker block state should be readable");
@@ -61,8 +70,10 @@ fn assert_seeded_quest_blocks(env: &WowLuaEnv) {
     } else {
         ("The Lost Expedition", "Defending the Gates")
     };
-    assert!(first_exists, "quest 80000 should have a rendered tracker block");
+    assert!(first_exists, "quest 80000 should have a tracker block");
+    assert!(first_visible, "quest 80000 tracker block should be visible");
     assert_eq!(first_title, expected_titles.0);
-    assert!(second_exists, "quest 80001 should have a rendered tracker block");
+    assert!(second_exists, "quest 80001 should have a tracker block");
+    assert!(second_visible, "quest 80001 tracker block should be visible");
     assert_eq!(second_title, expected_titles.1);
 }
