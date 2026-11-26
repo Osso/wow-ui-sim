@@ -36,11 +36,11 @@ if DevTools_AddMessageHandler == nil then
 end
 "#;
 
-pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
+pub(crate) fn apply_bootstrap(_lua: &mut rilua::Lua) -> crate::Result<()> {
     #[cfg(not(feature = "retail-12-0-0"))]
-    lua.exec(LEGACY_EVENT_CALLBACK_DEFAULTS_LUA)?;
+    _lua.exec(LEGACY_EVENT_CALLBACK_DEFAULTS_LUA)?;
     #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
-    lua.exec(DISPATCHER_CALLBACK_DEFAULTS_LUA)?;
+    _lua.exec(DISPATCHER_CALLBACK_DEFAULTS_LUA)?;
     Ok(())
 }
 
