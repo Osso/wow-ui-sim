@@ -597,18 +597,29 @@ fn forever_spellbook_catalog_stays_one_page_after_known_spells() {
     env.exec("A_Admin.SetSpec(70)")
         .expect("the original spellbook should select the player's Retribution specialization");
     env.exec(
-        r#"A_Admin.SetSpec(70); for _, id in ipairs({6603, 8690, 7328, 35395, 19750, 85673, 853, 275779, 465, 1022, 1044, 642, 633, 190784, 96231, 10326, 213644, 6940, 31884, 375576, 115750, 32223, 317920, 183435, 5502, 121183, 137026, 385125, 31935, 53595, 26573, 53600, 31850, 86659, 62124, 498, 327193, 378974, 387174, 204019, 85043, 152261, 76671, 280373}) do A_Admin.LearnSpell(id) end"#,
+        r#"for _, id in ipairs({6603, 8690, 7328, 35395, 19750, 85673, 853, 275779, 465, 1022, 1044, 642, 633, 190784, 96231, 10326, 213644, 6940, 31884, 375576, 115750, 32223, 317920, 183435, 5502, 121183, 137026, 385125, 31935, 53595, 26573, 53600, 31850, 86659, 62124, 498, 327193, 378974, 387174, 204019, 85043, 152261, 76671, 280373}) do A_Admin.LearnSpell(id) end"#,
     )
     .expect("Paladin catalog spells should be supplied to the player state");
     open_spellbook(&env);
 
-    let (page_text, max_pages): (String, i64) = env
+    let paging_state: String = env
         .eval(
-            "local paging = PlayerSpellsFrame.SpellBookFrame.PagedSpellsFrame.PagingControls; return paging.PageText:GetText(), paging.maxPages",
+            "local paging = PlayerSpellsFrame.SpellBookFrame.PagedSpellsFrame.PagingControls; return tostring(paging.PageText:GetText()) .. ':' .. tostring(paging.maxPages)",
         )
         .expect("spellbook paging state should be readable from the original UI");
-    assert_eq!(max_pages, 1, "known-spell inputs do not add entries to the spellbook catalog");
-    assert!(page_text.starts_with("Page 1/1"), "expected one page, got {page_text}");
+    env.exec("PlayerSpellsFrame.SpellBookFrame.PagedSpellsFrame.PagingControls.NextPageButton:Click()")
+        .expect("the real next-page button should accept the click");
+    let first_category_page: String = env
+        .eval("return PlayerSpellsFrame.SpellBookFrame.PagedSpellsFrame.PagingControls.PageText:GetText()")
+        .expect("page text after the first real click should be readable");
+    assert_eq!(first_category_page, "Page 1/1", "the first category has one page");
+
+    env.exec("PlayerSpellsFrame.SpellBookFrame.SpellBookCategoryButton3:Click()")
+        .expect("the real Protection category tab should accept the click");
+    let second_category_page: String = env
+        .eval("return PlayerSpellsFrame.SpellBookFrame.PagedSpellsFrame.PagingControls.PageText:GetText()")
+        .expect("page text after selecting Protection should be readable");
+    assert_eq!(second_category_page, "Page 1/1", "the Protection category has one page");
 }
 
 #[test]
