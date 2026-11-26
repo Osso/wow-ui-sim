@@ -1,50 +1,50 @@
 {
   "schema": 1,
   "profile": "retail",
-  "capture_time_utc": "2026-11-23T14:08:24.984509Z",
-  "runtime_source_revision": "9b531a0ab10370ee87626419e90f7b597ecf9764",
-  "branch_head_at_capture": "9b531a0ab10370ee87626419e90f7b597ecf9764",
+  "capture_time_utc": "2026-11-26T03:54:16.174650Z",
+  "runtime_source_revision": "dd64100287da7a5ebb0a5c97528f05e468d453e3",
+  "branch_head_at_capture": "dd64100287da7a5ebb0a5c97528f05e468d453e3",
   "features": "sound,gui,casc,client-retail",
   "target": "x86_64-unknown-linux-gnu",
   "command": [
     "timeout",
     "90",
-    "<home>/.cache/wow-ui-sim-targets/slot-1/debug/wow-sim",
+    "<home>/.cache/wow-ui-sim-targets/slot-4/debug/wow-sim",
     "--no-addons",
     "--no-saved-vars",
     "lua-errors"
   ],
-  "binary_sha256": "41230c6e3381b4a76634ddec11dae078d5511f259e69b3b37cf0b14931c15786",
-  "cargo_stdout_sha256": "87a7d5348e57177af76d255dd8ffec51697749b5be7424acb6f015330077fc25",
-  "baseline_sha256": "c8d6d0c83445ff1f709577a57674778c1a6a3d8b9cc78071e34a953d4dba1274",
-  "raw_stdout_sha256": "c8d6d0c83445ff1f709577a57674778c1a6a3d8b9cc78071e34a953d4dba1274",
+  "binary_sha256": "039fe342fa67087289c806453af42e43aed1e0421372cb11a11166307f39a969",
+  "cargo_stdout_sha256": "073c0e315500931e06f2dbfe203c25528e7cb392b9c11cb7c26b7101513ac139",
+  "baseline_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+  "raw_stdout_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
   "baseline_transform": "none; byte-identical captured stdout including trailing LF",
-  "messages": 2,
-  "occurrences": 2,
+  "messages": 0,
+  "occurrences": 0,
   "result": {
-    "exit_code": 1
+    "exit_code": 0
   },
-  "startup_clean": false,
-  "disposition": "VERIFIED (stock simulator capture): the only records are the approved CurrencyTransfer required-argument failure and its ScriptErrors echo; no unrelated startup error was observed. This is not a clean-startup, native, rendered, or full-suite acceptance.",
-  "cvar_isolation": "Fresh child-only XDG_DATA_HOME; byte-exact current cvars.json copy; original file unchanged under O_NOATIME guard.",
+  "startup_clean": true,
+  "disposition": "VERIFIED (stock Retail simulator capture): zero Lua error records and zero occurrences; this is startup proof, not native or full-suite acceptance.",
+  "cvar_isolation": "Fresh child-only XDG_DATA_HOME; byte-exact current cvars.json copy; O_NOATIME-guarded original hash/stat unchanged.",
   "cvar_source": {
     "path": "~/.local/share/wow-sim/cvars.json",
     "before": {
-      "sha256": "0b65106721c91490447c50d70121ea6599dcec334643de02d982bb17804305b5",
+      "sha256": "90cceeb09dcdc98462dec0e70900217169812746f356f67245af45cb573d64b2",
       "size": 811,
-      "mtime_ns": 1795171919943023520,
-      "ctime_ns": 1795171919943023520,
-      "atime_ns": 1795431327823635394,
-      "inode": 130973869,
+      "mtime_ns": 1795571677991575716,
+      "ctime_ns": 1795571677992575743,
+      "atime_ns": 1795658537584791123,
+      "inode": 130944441,
       "mode": 33188
     },
     "after": {
-      "sha256": "0b65106721c91490447c50d70121ea6599dcec334643de02d982bb17804305b5",
+      "sha256": "90cceeb09dcdc98462dec0e70900217169812746f356f67245af45cb573d64b2",
       "size": 811,
-      "mtime_ns": 1795171919943023520,
-      "ctime_ns": 1795171919943023520,
-      "atime_ns": 1795431327823635394,
-      "inode": 130973869,
+      "mtime_ns": 1795571677991575716,
+      "ctime_ns": 1795571677992575743,
+      "atime_ns": 1795658537584791123,
+      "inode": 130944441,
       "mode": 33188
     },
     "unchanged": true
@@ -70,43 +70,27 @@
     }
   },
   "compile_receipt": {
-    "path": "<home>/.cache/wow-ui-sim-targets/slot-1/receipts/lt-5522-retail-cli-final-r2.json",
-    "sha256": "f2d0a7152c8c4c18eb76671ad02d0f31ccc0735210fc57986364732fa19ac905",
-    "cargo_stdout_sha256": "87a7d5348e57177af76d255dd8ffec51697749b5be7424acb6f015330077fc25",
-    "cargo_stderr_sha256": "fbaf12d5f6c5ed1bd8573214660e20eb3fc5683a6be27ba4d842d8cccae2285d",
+    "path": "<home>/.cache/wow-ui-sim-targets/slot-4/receipts/lt-0e56-retail-norun.json",
+    "sha256": "95bd99854785d4c4700544653a54ba1342a5202201cc19944b544821a89deb5e",
+    "cargo_stdout_sha256": "073c0e315500931e06f2dbfe203c25528e7cb392b9c11cb7c26b7101513ac139",
+    "cargo_stderr_sha256": "51e3904546ea169eecc38fbbb46f7c74df15f4e8e8e1d63d075c91092747b1f6",
     "warnings": 0,
     "result": "success"
   },
   "capture_artifact": {
-    "path": "<home>/.local/state/wow-ui-sim/handoff/dots/lt-5522/lua-errors/retail-capture.json",
-    "sha256": "8001575426daa5bc01b8916bf0739df7cc09b0700fda499452111b46d4c94baa",
+    "path": "<home>/.local/state/wow-ui-sim/handoff/dots/lt-0e56/retail-lua-errors.stdout.json",
+    "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
     "isolated_xdg": "<ephemeral; removed after capture>",
-    "binary_path": "<home>/.cache/wow-ui-sim-targets/slot-1/debug/wow-sim",
-    "raw_stdout_path": "<home>/.local/state/wow-ui-sim/handoff/dots/lt-5522/lua-errors/retail-raw.stdout.json",
-    "raw_stderr_path": "<home>/.local/state/wow-ui-sim/handoff/dots/lt-5522/lua-errors/retail-raw.stderr.txt"
+    "binary_path": "<home>/.cache/wow-ui-sim-targets/slot-4/debug/wow-sim",
+    "raw_stdout_path": "<home>/.local/state/wow-ui-sim/handoff/dots/lt-0e56/retail-lua-errors.stdout.json",
+    "raw_stderr_path": "<home>/.local/state/wow-ui-sim/handoff/dots/lt-0e56/retail-lua-errors.stderr.txt"
   },
   "current_baseline_delta": {
-    "prior_tracked_baseline_commit": "bc7d5350d10c8e0f9ecad68258520189fe019312",
-    "prior_file_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
-    "prior_messages": 0,
-    "prior_occurrences": 0,
-    "current_messages": 2,
-    "current_occurrences": 2,
-    "scope": "The two exact raw records are the direct TokenUI OnTextChanged Usage error and its Blizzard_ScriptErrors echo."
-  },
-  "approved_exception": {
-    "evidence": "INFERRED (captured stack plus pinned Blizzard_CurrencyTransfer.lua:488 and CurrencyTransferMenuMixin:GetCurrencyID): the initial CurrencyTransfer OnTextChanged path reaches GetClampedInputAmount before a currency ID is set, so the required-ID API reports its Usage error.",
-    "records": [
-      {
-        "count": 1,
-        "role": "direct OnTextChanged error"
-      },
-      {
-        "count": 1,
-        "role": "Blizzard_ScriptErrors echo"
-      }
-    ],
-    "approved_scope": "Only this CurrencyTransfer nil-currencyID error and its echo are allowed; unrelated records are not."
+    "prior_messages": 2,
+    "prior_occurrences": 2,
+    "current_messages": 0,
+    "current_occurrences": 0,
+    "scope": "Both prior CurrencyTransfer records are absent: the direct OnTextChanged Usage error and its Blizzard_ScriptErrors echo."
   },
   "blizzard_addons_loaded": 282,
   "previous_capture": {
@@ -115,7 +99,7 @@
     "records": 0,
     "occurrences": 0,
     "exit_code": 0,
-    "note": "Historical clean capture; superseded by this approved exception baseline."
+    "note": "Historical clean capture from 2026-10-19; this 2026-11-25 capture is current."
   },
-  "refresh_reason": "VERIFIED (captured stdout): the final merged-tree capture contains the same two records and counts as the committed baseline. INFERRED: the only earlier mismatch after merging current master was the generated template-handler source hash; the raw baseline now matches this capture byte for byte."
+  "refresh_reason": "VERIFIED (2026-11-25 Retail stock capture): exact stdout is [] plus LF with exit 0. This capture removes both CurrencyTransfer startup records."
 }
