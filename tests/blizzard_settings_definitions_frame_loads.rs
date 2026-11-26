@@ -40,12 +40,12 @@ fn ping_tutorial_uses_original_settings_category_callback() {
     let (shown, hidden): (bool, bool) = env
         .eval(
             r#"
+            local category = SettingsPanel:GetCategory(Settings.PINGSYSTEM_CATEGORY_ID)
             SetCVar("pingCategoryTutorialShown", "1")
-            Settings.OpenToCategory(Settings.PINGSYSTEM_CATEGORY_ID)
+            EventRegistry:TriggerEvent("Settings.CategoryChanged", category)
             local hidden = PingSystemTutorial:IsShown()
             SetCVar("pingCategoryTutorialShown", "0")
-            Settings.OpenToCategory(Settings.INTERFACE_CATEGORY_ID)
-            Settings.OpenToCategory(Settings.PINGSYSTEM_CATEGORY_ID)
+            EventRegistry:TriggerEvent("Settings.CategoryChanged", category)
             return PingSystemTutorial:IsShown(), hidden
             "#,
         )
