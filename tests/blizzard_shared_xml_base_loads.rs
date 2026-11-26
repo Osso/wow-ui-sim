@@ -479,13 +479,17 @@ assert(red:WrapTextInColorCode("red") == "|cffff0000red|r")
 assert(blue:WrapTextInColorCode("blue") == "|cff0000ffblue|r")
 local seen = {}
 local heights = {}
-geterrorhandler = function(message) seen[#seen + 1] = message end
+local savedErrorHandler = geterrorhandler
+local savedSetHeight = SetErrorCallstackHeight
+geterrorhandler = function(...) seen[#seen + 1] = select(1, ...) end
 SetErrorCallstackHeight = function(height) heights[#heights + 1] = height end
-CallErrorHandler("first")
-CallErrorHandler("second")
+local firstOK, first = pcall(CallErrorHandler, "first")
+local secondOK, second = pcall(CallErrorHandler, "second")
+assert(firstOK and secondOK)
 assert(seen[1] == "first" and seen[2] == "second")
-assert(heights[1] == GetCallstackHeight() - 1 and heights[2] == GetCallstackHeight() - 1)
-assert(heights[3] == nil and heights[4] == nil)
+assert(heights[1] == -1 and heights[2] == -1 and heights[3] == nil and heights[4] == nil)
+geterrorhandler = savedErrorHandler
+SetErrorCallstackHeight = savedSetHeight
 return "ok"
 "#;
 

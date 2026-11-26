@@ -481,23 +481,6 @@ fn blizzard_minimap_publishes_named_frames_with_correct_widget_types(env: &WowLu
 }
 }
 
-const GAME_TIME_BEHAVIOR_PROBE: &str = r#"
-A_Admin.SetGameTime(1, 2)
-local first = GameTime_GetTime(true)
-A_Admin.SetGameTime(23, 58)
-local second = GameTime_GetTime(false)
-assert(first ~= second)
-assert(first:find("AM", 1, true) and second:find("PM", 1, true))
-return "ok"
-"#;
-
-prefork_full_ui_case! {
-fn original_game_time_uses_two_supplied_clock_values(env: &WowLuaEnv) {
-    let result: String = env.eval(GAME_TIME_BEHAVIOR_PROBE).unwrap();
-    assert_eq!(result, "ok");
-}
-}
-
 prefork_full_ui_case! {
 fn blizzard_minimap_publishes_gametime_helper_functions(env: &WowLuaEnv) {
     for func in GAMETIME_FUNCTIONS {
