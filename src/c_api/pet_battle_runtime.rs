@@ -1,6 +1,6 @@
 //! INFERRED local command boundary; requests are not authoritative server replies.
 use super::pet_battle_runtime_model::PetBattleRequest;
-use crate::lua_api::methods::{borrow_state, borrow_state_mut, create_string};
+use crate::lua_api::methods::{borrow_state, borrow_state_mut, create_string, table_set_num};
 use crate::lua_bridge::{FromStack, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val, runtime_error};
@@ -28,7 +28,69 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     ] {
         table_set_rust_fn_static(state, ns, name, function)?;
     }
+    table_set_rust_fn_static(state, ns, "GetAllEffectNames", get_all_effect_names)?;
+    table_set_rust_fn_static(state, ns, "IsTrapAvailable", is_trap_available)?;
+    table_set_rust_fn_static(state, ns, "IsPlayerNPC", is_player_npc)?;
+    table_set_rust_fn_static(state, ns, "ShouldShowPetSelect", should_show_pet_select)?;
     Ok(())
+}
+
+/// INFERRED R88g9 (native evidence pending): supplied labels use a one-based array; native shape is UNKNOWN.
+fn get_all_effect_names(state: &mut LuaState) -> LuaResult<u32> {
+    let names = borrow_state(state)?
+        .pet_battles
+        .runtime
+        .effect_names
+        .clone();
+    let array = crate::lua_bridge::TableBuilder::new(state).build();
+    let Val::Table(array_ref) = array else {
+        unreachable!("table builder returns a table");
+    };
+    state.push(array);
+    for (index, name) in names.iter().enumerate() {
+        let value = create_string(state, name);
+        table_set_num(state, array_ref, (index + 1) as f64, value);
+    }
+    Ok(1)
+}
+
+/// INFERRED R88f.D.44, R88g9 (native evidence pending): evaluate supplied trap inputs.
+fn is_trap_available(state: &mut LuaState) -> LuaResult<u32> {
+    let sim = borrow_state(state)?;
+    let battle = &sim.pet_battles;
+    let runtime = &battle.runtime;
+    let phase_allows_trap = battle.battle_state == 2;
+    let team_allows_trap = !runtime.local_team_present || !runtime.local_team_skip_blocking;
+    let available = phase_allows_trap
+        && runtime.player_trap_state == 1
+        && runtime.opponent_is_npc
+        && runtime.action_available
+        && team_allows_trap;
+    let error = if available { 0 } else { runtime.trap_error };
+    drop(sim);
+    state.push(Val::Bool(available));
+    state.push(Val::Num(f64::from(error)));
+    Ok(2)
+}
+
+/// INFERRED R88f.D.45, R88g9 (native evidence pending): read the opposite-team NPC marker.
+fn is_player_npc(state: &mut LuaState) -> LuaResult<u32> {
+    let is_npc = borrow_state(state)?.pet_battles.runtime.opponent_is_npc;
+    state.push(Val::Bool(is_npc));
+    Ok(1)
+}
+
+/// INFERRED R88f.D.46, R88g9 (native evidence pending): phases 1 and 3 expose local selection.
+fn should_show_pet_select(state: &mut LuaState) -> LuaResult<u32> {
+    let sim = borrow_state(state)?;
+    let battle = &sim.pet_battles;
+    let runtime = &battle.runtime;
+    let selection_phase = matches!(battle.battle_state, 1 | 3);
+    let should_show =
+        selection_phase && runtime.local_team_present && runtime.local_team_should_select;
+    drop(sim);
+    state.push(Val::Bool(should_show));
+    Ok(1)
 }
 
 fn matchmaking_info(state: &mut LuaState) -> LuaResult<u32> {
