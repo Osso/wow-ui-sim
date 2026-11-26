@@ -114,6 +114,7 @@ pub(crate) mod inventory_query_defaults;
 pub(crate) mod item_button_helper_defaults;
 #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod item_quality_color_data_methods;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod item_targeting_defaults;
 pub(crate) mod item_upgrade_availability_defaults;
 #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]

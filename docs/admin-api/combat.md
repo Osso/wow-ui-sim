@@ -4,6 +4,10 @@
 
 Adds or removes a supplied player-known spell ID. The known-spell queries include this supplied membership as well as the simulator's fixed spellbook data. These inputs do not add spellbook slots or fire events.
 
+### A_Admin.SetSpellTargeting(spellID, classification) (Retail and WoWForever)
+
+Supplies whether a spell is classified as helpful or harmful. Pass `"helpful"`, `"harmful"`, or `nil`; each call replaces that spell's prior classification, and `nil` clears both sets. `IsHelpfulSpell`, `IsHarmfulSpell`, `C_Item.IsHelpfulItem`, and `C_Item.IsHarmfulItem` read this scenario input. It does not create spell or item data.
+
 ### A_Admin.SetSpellBookItemLowRank(spellID, lowRank)
 
 Sets or clears a scenario low-rank flag for a spell ID. The scenario starts with no flagged spells; this is not native rank data. On PTR and WoWForever, `C_SpellBook.IsSpellBookItemLowRank` reads this input.

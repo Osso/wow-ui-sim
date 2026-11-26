@@ -126,6 +126,16 @@ pub(super) fn register_c_item(state: &mut LuaState) -> LuaResult<()> {
     let table_ref = ensure_namespace(state, "C_Item")?;
     register_c_item_data_request(state, table_ref)?;
     table_set_rust_fn_static(state, table_ref, "GetItemSpell", super::get_item_spell)?;
+    if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever) {
+        register_c_item_methods(
+            state,
+            table_ref,
+            &[
+                ("IsHelpfulItem", c_item_is_helpful_item),
+                ("IsHarmfulItem", c_item_is_harmful_item),
+            ],
+        )?;
+    }
     register_c_item_existence_queries(state, table_ref)?;
     register_c_item_metadata_queries(state, table_ref)?;
     register_c_item_inventory_queries(state, table_ref)?;
@@ -167,6 +177,40 @@ fn register_c_item_data_request(state: &mut LuaState, table_ref: GcRef<Table>) -
 fn request_load_item_data(_state: &mut LuaState) -> LuaResult<u32> {
     // No request model exists; native completion-event behavior is UNKNOWN.
     Ok(0)
+}
+
+// INFERRED: R88g9 (native evidence pending). Classify an item's selected use
+// spell with the same supplied classification sets as IsHelpfulSpell/
+// IsHarmfulSpell. The pinned ItemDocumentation.lua declares AllowedWhenUntainted.
+fn item_spell_classification(
+    state: &mut LuaState,
+    helpful: bool,
+    api_name: &str,
+) -> LuaResult<u32> {
+    let value = rilua::table_security::unwrap_secret(state, stack_val(state, 1))?;
+    let item = super::parse_item_id_key(state, value)
+        .ok_or_else(|| runtime_error(format!("C_Item.{api_name}: expected itemInfo")))?;
+    let spell = super::item_effects::selected_use_spell(item).map(|(spell, _)| spell);
+    let classified = if let Some(spell) = spell {
+        let sim = borrow_state(state)?;
+        if helpful {
+            sim.helpful_spells.contains(&spell)
+        } else {
+            sim.harmful_spells.contains(&spell)
+        }
+    } else {
+        false
+    };
+    state.push(Val::Bool(classified));
+    Ok(1)
+}
+
+fn c_item_is_helpful_item(state: &mut LuaState) -> LuaResult<u32> {
+    item_spell_classification(state, true, "IsHelpfulItem")
+}
+
+fn c_item_is_harmful_item(state: &mut LuaState) -> LuaResult<u32> {
+    item_spell_classification(state, false, "IsHarmfulItem")
 }
 
 fn register_c_item_dressability_query(

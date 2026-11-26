@@ -446,6 +446,7 @@ fn apply_inventory_and_spell_defaults(lua: &mut rilua::Lua) -> crate::Result<()>
     #[cfg(feature = "client-wowforever")]
     temporary::forever_startup_capabilities::apply_bootstrap(lua)?;
     temporary::item_button_helper_defaults::apply_bootstrap(lua)?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::item_targeting_defaults::apply_bootstrap(lua)?;
     temporary::item_upgrade_availability_defaults::apply_bootstrap(lua)?;
     temporary::spell_metadata_defaults::apply_bootstrap(lua)?;

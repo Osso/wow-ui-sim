@@ -425,6 +425,8 @@ fn register_player_progression(b: TableBuilder) -> LuaResult<TableBuilder> {
 }
 
 fn register_combat_casting(b: TableBuilder) -> LuaResult<TableBuilder> {
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let b = b.set_function("SetSpellTargeting", set_spell_targeting)?;
     b.set_function("LearnSpell", learn_spell)?
         .set_function("UnlearnSpell", unlearn_spell)?
         .set_function("SetInCombat", set_in_combat)?
@@ -901,6 +903,36 @@ fn set_player_sex(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 // ── Combat ───────────────────────────────────────────────────────────────────
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn set_spell_targeting(state: &mut LuaState) -> LuaResult<u32> {
+    let spell_id = u32::from_stack(state, 1)?;
+    let classification =
+        crate::lua_api::methods::val_to_string(state, crate::lua_bridge::stack_val(state, 2));
+    let classification = match classification.as_deref() {
+        Some("helpful") => Some(true),
+        Some("harmful") => Some(false),
+        None if matches!(crate::lua_bridge::stack_val(state, 2), Val::Nil) => None,
+        _ => {
+            return Err(rilua::runtime_error(
+                "A_Admin.SetSpellTargeting: expected helpful, harmful, or nil",
+            ));
+        }
+    };
+    let mut sim = borrow_state_mut(state)?;
+    sim.helpful_spells.remove(&spell_id);
+    sim.harmful_spells.remove(&spell_id);
+    match classification {
+        Some(true) => {
+            sim.helpful_spells.insert(spell_id);
+        }
+        Some(false) => {
+            sim.harmful_spells.insert(spell_id);
+        }
+        None => {}
+    }
+    Ok(0)
+}
 
 fn learn_spell(state: &mut LuaState) -> LuaResult<u32> {
     let id = u32::from_stack(state, 1)?;
