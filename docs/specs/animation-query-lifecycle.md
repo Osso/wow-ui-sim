@@ -7,6 +7,7 @@ Ordinary simulator query behavior for `SimpleAnim` and `SimpleAnimGroup`, exerci
 - [x] Animation `IsPlaying`, `IsPaused`, and `IsDone` follow their owning group through playback, pause/resume, restart, stop, and completion; an independent idle group stays unchanged.
 - [x] Pausing freezes elapsed time. Restart and Stop reset elapsed/progress. Explicit Stop of a playing group dispatches its `OnStop` scripts after modeled state, flipbook, and action-bar state settle; callback cleanup and reentrant Play remain effective. Stop does not dispatch `OnFinished`. The modeled animation `IsStopped` is true whenever its owner is not playing, including pause.
 - [x] `Finish` remains pending until a tick; completion callbacks observe settled state and fire once. Natural completion after restart also settles owner/child queries.
+- [x] `Play(reverse, offset)` starts the group timeline at `offset`; looping groups wrap it by duration, while non-looping groups clamp it. Reverse playback mirrors the offset within the timeline. The signature is documented in pinned Retail and Forever `SimpleAnimGroupAPIDocumentation.lua`; wrapping is used by `SyncedAnimGroupMixin:PlaySynced`, and reverse mirroring is INFERRED (R88g7), not confirmed by native execution.
 - [x] Reverse playback and repeating loops update elapsed/progress while `IsReverse` and `GetLoopState` identify direction and configured loop mode. Paused `Play(true/false)` changes direction without resetting elapsed; omitted direction preserves paused direction. Bounce callbacks observe direction changes at actual reached boundaries. The [current six-case checkpoint](#current-bounded-saved-execution--2026-10-13) covers these asserted simulator behaviors, not native geometry.
 - [x] Delayed animations expose local active elapsed/progress independently of the group's total timeline; animation progress clamps during end delay. `GetSmoothProgress` currently equals unsmoothed progress even with `IN` smoothing.
 - [x] `IsDelaying` identifies the animation's start-delay interval on its ordered timeline: inclusive at the order's start, exclusive at active playback's start. Earlier orders contribute their longest total duration, including end delay; parallel animations are not summed. Waiting for an earlier order and the queried animation's own end delay return false. Reverse playback queries the same timeline interval; no extra phase state is introduced. Frozen `ccd526c6c` fails paused explicit-reverse traversal; the corrected exact ordered-delay test passes at `c81f10375`.
@@ -26,7 +27,7 @@ These are simulator-model requirements, not native lifecycle or smoothing claims
 
 ## Tests asserting this spec
 
-`tests/animation_query_lifecycle.rs`, auto-discovered into the existing `integration` Cargo target:
+`tests/animation_query_lifecycle.rs` and `tests/synced_animation_offset.rs`, auto-discovered into the existing `integration` Cargo target:
 
 | Test | Queries/boundary |
 |---|---|
@@ -36,6 +37,7 @@ These are simulator-model requirements, not native lifecycle or smoothing claims
 | `bounce_loop_callback_observes_direction_change` | Loop/direction/state queries inside real `OnLoop` callbacks |
 | `delayed_animation_queries_use_local_active_elapsed` | Animation `IsDelaying`, elapsed/progress/smooth progress; exact start-delay boundary and completion across start/end delays |
 | `delaying_uses_order_start_and_longest_parallel_duration` | Earlier-order wait, parallel maximum including end delay, exact delay boundaries, own end delay, and reverse traversal |
+| `synced_animation_offset::synced_animation_consumer_starts_at_distinct_offsets` | Original `SyncedAnimGroupMixin:PlaySynced` caller passes two times to `Play`; asserts distinct observed elapsed positions |
 
 Existing complementary coverage: `tests/animation_group_state.rs`, `tests/animation_group.rs` (explicit playing-group Stop callback state, visible cleanup, reentrant Play, error routing, and no OnFinished), and `tests/animation_anim.rs`.
 
