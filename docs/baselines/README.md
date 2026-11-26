@@ -54,7 +54,9 @@ device; this is not audio-device acceptance.
 **VERIFIED (pre-change Retail and WoW Forever captures):** each profile reported
 the TokenUI `OnTextChanged` required-currency Usage error and its
 `Blizzard_ScriptErrors` echo while the transfer menu was hidden and had no
-selected currency. The API still rejects nil currency IDs.
+selected currency. **VERIFIED (R88es; Retail and WoW Forever simulator tests):**
+`GetMaxTransferableAmountFromQuantity(nil, quantity)` still raises its Usage
+error; no C API behavior changed.
 
 **VERIFIED (Retail and WoW Forever stock simulator captures at source
 `872533f76`):** both stdout files are byte-identical `[]` plus LF, with **0
