@@ -3,8 +3,8 @@
 //! `ChatTypeInfoColors.lua` consumes this while assigning `ChatTypeInfo[name].id`.
 //! INFERRED "R88g9 (native evidence pending)": the fixed-name order projects the
 //! pinned Retail `Blizzard_ChatFrameBase/Shared/ChatTypeInfoConstants.lua`
-//! declaration order, omitting the SMART_WHISPER and GUILD_DISCORD aliases.
-//! Channel slots follow the twenty declared `CHANNEL1`..`CHANNEL20` records.
+//! declaration order. `SMART_WHISPER` aliases `WHISPER`; `GUILD_ITEM_LOOTED`
+//! aliases `GUILD_ACHIEVEMENT`. Channel slots follow `CHANNEL1`..`CHANNEL20`.
 
 use crate::lua_bridge::stack_val;
 use rilua::vm::state::LuaState;
@@ -17,6 +17,7 @@ const CHAT_TYPE_NAMES: &[&str] = &[
     "RAID",
     "GUILD",
     "OFFICER",
+    "GUILD_DISCORD",
     "YELL",
     "WHISPER",
     "WHISPER_INFORM",
@@ -78,6 +79,7 @@ const CHAT_TYPE_NAMES: &[&str] = &[
     "PET_BATTLE_INFO",
     "COMMUNITIES_CHANNEL",
     "VOICE_TEXT",
+    "PING",
 ];
 
 pub(crate) fn register_all(lua: &mut Lua) -> LuaResult<()> {

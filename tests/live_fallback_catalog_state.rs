@@ -66,8 +66,9 @@ fn chat_type_env() -> WowLuaEnv {
     let ui = blizzard_ui_dir();
     let env = new_blizzard_addon_env(&ui);
     let constants = ui.join("Blizzard_ChatFrameBase/Shared/ChatTypeInfoConstants.lua");
+    let overrides = ui.join("Blizzard_ChatFrameBase/Mainline/ChatTypeInfoConstantsOverride.lua");
     let colors = ui.join("Blizzard_ChatFrameBase/Shared/ChatTypeInfoColors.lua");
-    for path in [constants, colors] {
+    for path in [constants, overrides, colors] {
         let source = std::fs::read_to_string(path).unwrap();
         env.exec(&source).unwrap();
     }
@@ -91,11 +92,13 @@ fn specialization_consumer_resolves_two_catalog_rows() {
 #[test]
 fn chat_color_consumer_binds_two_distinct_type_indices() {
     let env = chat_type_env();
-    let indices: (i32, i32) = env
-        .eval("return ChatTypeInfo.SAY.id, ChatTypeInfo.PARTY.id")
+    let indices: (i32, i32, i32, i32, i32) = env
+        .eval("return ChatTypeInfo.SAY.id, ChatTypeInfo.PARTY.id, ChatTypeInfo.GUILD.id, ChatTypeInfo.GUILD_DISCORD.id, ChatTypeInfo.PING.id")
         .unwrap();
-    assert_eq!(indices, (2, 3));
+    assert_eq!((indices.0, indices.1), (2, 3));
     assert_ne!(indices.0, indices.1);
+    assert_ne!(indices.2, indices.3);
+    assert!(indices.4 > 0);
 }
 
 #[test]
