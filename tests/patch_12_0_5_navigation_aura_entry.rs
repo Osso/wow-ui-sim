@@ -255,7 +255,6 @@ fn aura_entry_rekeys_party_helpful_and_harmful_stores_without_changing_members()
     env.state().borrow_mut().party_members = vec![wow_ui_sim::lua_api::state::PartyMember {
         map_position: None,
         faction_group: None,
-        pvp: None,
         name: "Thrynn".into(),
         name_cached: true,
         connected: true,
