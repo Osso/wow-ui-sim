@@ -55,8 +55,13 @@ fn assert_seeded_quest_blocks(env: &WowLuaEnv) {
             "#,
         )
         .expect("the original tracker block state should be readable");
+    let expected_titles = if cfg!(feature = "client-wowforever") {
+        ("[80] The Lost Expedition", "[80] Defending the Gates")
+    } else {
+        ("The Lost Expedition", "Defending the Gates")
+    };
     assert!(first_exists, "quest 80000 should have a rendered tracker block");
-    assert_eq!(first_title, "The Lost Expedition");
+    assert_eq!(first_title, expected_titles.0);
     assert!(second_exists, "quest 80001 should have a rendered tracker block");
-    assert_eq!(second_title, "Defending the Gates");
+    assert_eq!(second_title, expected_titles.1);
 }
