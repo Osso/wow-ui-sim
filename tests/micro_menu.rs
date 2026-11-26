@@ -73,19 +73,19 @@ const BLIZZARD_ADDONS: &[&str] = &[
 
 /// Create a fully loaded environment with Blizzard addons and startup events.
 fn setup_env() -> WowLuaEnv {
+    let env = setup_env_without_startup();
+    fire_startup_events(&env);
+    env
+}
+
+fn setup_env_without_startup() -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("Failed to create Lua environment");
     env.set_screen_size(1024.0, 768.0);
-
-    // Set addon_base_paths for runtime on-demand loading
-    {
-        let mut state = env.state().borrow_mut();
-        state.addon_base_paths = vec![blizzard_ui_dir()];
-    }
+    env.state().borrow_mut().addon_base_paths = vec![blizzard_ui_dir()];
 
     if cfg!(feature = "client-wrath") {
         common::load_profile_framexml(&env);
         env.apply_post_load_workarounds();
-        fire_startup_events(&env);
         return env;
     }
 
@@ -94,7 +94,6 @@ fn setup_env() -> WowLuaEnv {
     }
     env.apply_post_load_workarounds();
     install_fixture_globals(&env);
-    fire_startup_events(&env);
     env
 }
 
@@ -306,6 +305,41 @@ fn micro_menu_game_menu_button_opens_game_menu(env: &WowLuaEnv) {
         "GameMenuFrame should be shown after clicking MainMenuMicroButton"
     );
 }
+}
+
+#[cfg(feature = "client-wowforever")]
+#[test]
+fn main_menu_microbutton_click_toggles_game_menu() {
+    let env = setup_env();
+    env.exec("A_Admin.SetMouseOverFrame(MainMenuMicroButton)")
+        .expect("mouse-over fixture should select MainMenuMicroButton");
+    env.exec("MainMenuMicroButton:Click()")
+        .expect("MainMenuMicroButton first click failed");
+    assert!(frame_is_shown(&env, "GameMenuFrame"));
+    env.exec("MainMenuMicroButton:Click()")
+        .expect("MainMenuMicroButton second click failed");
+    assert!(!frame_is_shown(&env, "GameMenuFrame"));
+}
+
+#[cfg(any(feature = "client-wowforever", feature = "client-retail"))]
+#[test]
+fn friends_frame_starts_hidden_and_close_all_windows_hides_it() {
+    let env = setup_env_without_startup();
+    assert!(
+        !frame_is_shown(&env, "FriendsFrame"),
+        "FriendsFrame placeholder should start hidden before startup"
+    );
+    fire_startup_events(&env);
+    assert!(
+        !frame_is_shown(&env, "FriendsFrame"),
+        "FriendsFrame should remain hidden after startup"
+    );
+    env.exec("ToggleFriendsFrame(); CloseAllWindows()")
+        .expect("FriendsFrame should open and close through the panel manager");
+    assert!(
+        !frame_is_shown(&env, "FriendsFrame"),
+        "CloseAllWindows should hide FriendsFrame"
+    );
 }
 
 #[cfg(all(feature = "client-retail", feature = "optional-tests"))]
