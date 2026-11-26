@@ -28,6 +28,7 @@ end
 
 "#;
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 const DISPATCHER_CALLBACK_DEFAULTS_LUA: &str = r#"
 if DevTools_AddMessageHandler == nil then
     function DevTools_AddMessageHandler(_handler)
@@ -35,10 +36,11 @@ if DevTools_AddMessageHandler == nil then
 end
 "#;
 
-pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
+pub(crate) fn apply_bootstrap(_lua: &mut rilua::Lua) -> crate::Result<()> {
     #[cfg(not(feature = "retail-12-0-0"))]
-    lua.exec(LEGACY_EVENT_CALLBACK_DEFAULTS_LUA)?;
-    lua.exec(DISPATCHER_CALLBACK_DEFAULTS_LUA)?;
+    _lua.exec(LEGACY_EVENT_CALLBACK_DEFAULTS_LUA)?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+    _lua.exec(DISPATCHER_CALLBACK_DEFAULTS_LUA)?;
     Ok(())
 }
 
@@ -46,6 +48,7 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
 mod tests {
     use crate::lua_api::WowLuaEnv;
 
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     #[test]
     fn installs_inert_dispatcher_callback_defaults() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
