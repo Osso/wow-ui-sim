@@ -3,28 +3,15 @@
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 #[test]
-fn transfer_calculation_apis_require_currency_id() {
+fn transfer_calculation_apis_handle_unselected_currency() {
     let env = WowLuaEnv::new().expect("simulator should initialize");
     env.exec(
         r#"
-            local maxOk, maxError = pcall(
-                C_CurrencyInfo.GetMaxTransferableAmountFromQuantity,
-                nil,
-                10
-            )
-            assert(not maxOk)
-            assert(string.find(
-                maxError,
-                "Usage: local maxTransferableAmount = C_CurrencyInfo.GetMaxTransferableAmountFromQuantity(currencyID, requestedQuantity)",
-                1,
-                true
-            ))
+            assert(C_CurrencyInfo.GetMaxTransferableAmountFromQuantity(nil, 10) == nil)
+            assert(C_CurrencyInfo.GetMaxTransferableAmountFromQuantity(1560, 100) == 76)
+            assert(C_CurrencyInfo.GetMaxTransferableAmountFromQuantity(1792, 100) == 80)
 
-            local costOk, costError = pcall(
-                C_CurrencyInfo.GetCostToTransferCurrency,
-                nil,
-                10
-            )
+            local costOk, costError = pcall(C_CurrencyInfo.GetCostToTransferCurrency, nil, 10)
             assert(not costOk)
             assert(string.find(
                 costError,
@@ -34,5 +21,5 @@ fn transfer_calculation_apis_require_currency_id() {
             ))
         "#,
     )
-    .expect("both transfer calculation APIs should reject a missing currency ID");
+    .expect("max transfer should handle the unselected currency and supplied rates");
 }
