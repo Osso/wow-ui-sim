@@ -55,8 +55,8 @@ Retail 12.1.5 currency tooltips publish R84/R84b `C_TooltipInfo` data through th
   Reason: R84 leaves source resolution and missing-result behavior UNKNOWN; no source list can be implemented from this evidence.
 - [ ] The balance-helper formula, runtime number-format mode, locale grouping and total-row prefix selection are not modeled; tests supply explicit values or formatted text.
   Reason: R84 does not establish these formulas or locale inputs; the simulator must not invent them.
-- [ ] CurrencyContainer row content and amount-dependent description formatting are host-supplied. No 70688 text catalog is claimed.
-  Reason: R84 proves selection rules but not the actual 70688 text records.
+- [x] CurrencyContainer row content and amount-dependent description formatting are host-supplied. No 70688 text catalog is claimed.
+  Behavioral proof: `tests/tooltip_currency_r84.rs::set_hyperlink_resolves_currency_links` drives the original `SetHyperlink` consumer with a supplied matching range and with no amount; it checks distinct selected title, description and amount output. No 70688 text catalog is claimed.
 - [ ] The conditional error row, recharge calculation and locale-table aliases remain unmodeled.
   Reason: R84 leaves the error predicate and aliases unknown, and the recharge result is not consumed by the tooltip path.
 
