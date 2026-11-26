@@ -42,6 +42,27 @@ fn use_action_starts_cast_for_flash_of_light() {
     }
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn cast_bar_visibility_uses_game_rule_during_spell_cast_lifecycle() {
+    test_timeout! {
+        for (disabled, expected_shown) in [(true, false), (false, true)] {
+            let env = env_with_full_blizzard_ui();
+            env.exec(&format!(
+                "A_Admin.SetGameRule('PlayerCastBarDisabled', {disabled})"
+            ))
+            .expect("game-rule input should be supplied");
+            env.exec("UseAction(1)").expect("spell cast should start");
+
+            let (casting, shown): (bool, bool) = env
+                .eval("return UnitCastingInfo('player') ~= nil, PlayerCastingBarFrame:IsShown()")
+                .expect("original cast-bar consumer should observe the rule");
+            assert!(casting, "the supplied action should start a cast");
+            assert_eq!(shown, expected_shown, "cast-bar visibility for disabled={disabled}");
+        }
+    }
+}
+
 #[test]
 fn cast_completes_and_heals_target() {
     test_timeout! {

@@ -9,11 +9,6 @@ if type(C_GameRules) ~= "table" then
 end
 
 GameRulesUtil = GameRulesUtil or {}
-if rawget(GameRulesUtil, "ShouldShowPlayerCastBar") == nil then
-    function GameRulesUtil.ShouldShowPlayerCastBar()
-        return true
-    end
-end
 
 local function GameRulesNamespaceFallback(t, key)
     if type(__wow_record_nil_symbol_access) == "function" then
@@ -30,8 +25,19 @@ elseif mt.__index == nil then
 end
 "#;
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+const CAST_BAR_VISIBILITY_DEFAULT_LUA: &str = r#"
+if rawget(GameRulesUtil, "ShouldShowPlayerCastBar") == nil then
+    function GameRulesUtil.ShouldShowPlayerCastBar()
+        return true
+    end
+end
+"#;
+
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(GAME_RULES_NAMESPACE_FALLBACK_LUA)?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+    lua.exec(CAST_BAR_VISIBILITY_DEFAULT_LUA)?;
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Ptr {
         lua.exec(
             r#"
@@ -68,14 +74,18 @@ mod tests {
                 if type(GameRulesUtil) ~= "table" then
                     return "missing_util"
                 end
-                if GameRulesUtil.ShouldShowPlayerCastBar() ~= true then
-                    return "bad_cast_bar_rule"
-                end
                 return "ok"
                 "#,
             )
             .expect("game rules fallback probe should run");
 
         assert_eq!(result, "ok");
+
+        #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+        assert_eq!(
+            env.eval::<bool>("return GameRulesUtil.ShouldShowPlayerCastBar()")
+                .expect("retained cast-bar default should run"),
+            true
+        );
     }
 }
