@@ -34,8 +34,10 @@ fn item_targeting_uses_item_use_spells_and_returns_false_without_one() {
         assert(C_Item.IsHarmfulItem(6948) == true)
         assert(C_Item.IsHarmfulItem(5512) == false)
         assert(C_Item.IsHelpfulItem(6948) == false)
-        assert(C_Item.IsHelpfulItem(999999) == false)
-        assert(C_Item.IsHarmfulItem(999999) == false)
+        assert(C_Item.DoesItemExistByID(25), "no-spell fixture must be a mapped item")
+        assert(select("#", C_Item.GetItemSpell(25)) == 0, "fixture must have no use spell")
+        assert(C_Item.IsHelpfulItem(25) == false)
+        assert(C_Item.IsHarmfulItem(25) == false)
         "#,
     )
     .expect("item targeting should classify supplied use spells");
