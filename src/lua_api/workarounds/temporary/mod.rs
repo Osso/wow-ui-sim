@@ -129,7 +129,7 @@ pub(crate) mod lfg_lock_list;
 #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod loot_journal_defaults;
 pub(crate) mod macro_defaults;
-#[cfg(not(feature = "client-retail"))]
+#[cfg(all(not(feature = "client-retail"), not(feature = "client-wowforever")))]
 pub(crate) mod main_menu_microbutton_click;
 pub(crate) mod major_faction_display_defaults;
 #[cfg(not(feature = "client-retail"))]

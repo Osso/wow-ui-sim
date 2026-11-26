@@ -64,7 +64,7 @@ const POST_LOAD_WORKAROUNDS: &[WorkaroundStep] = &[
         label: "init_edit_mode_layout",
         apply: init_edit_mode_layout,
     },
-    #[cfg(not(feature = "client-retail"))]
+    #[cfg(all(not(feature = "client-retail"), not(feature = "client-wowforever")))]
     WorkaroundStep {
         label: "patch_ui_parent_panel_toggles",
         apply: patch_ui_parent_panel_toggles,

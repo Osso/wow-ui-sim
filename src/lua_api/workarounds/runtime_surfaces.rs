@@ -1,6 +1,6 @@
 use super::*;
 
-#[cfg(not(feature = "client-retail"))]
+#[cfg(all(not(feature = "client-retail"), not(feature = "client-wowforever")))]
 pub(super) fn patch_ui_parent_panel_toggles(env: &crate::lua_api::WowLuaEnv) {
     temporary::main_menu_microbutton_click::patch(env);
 }
