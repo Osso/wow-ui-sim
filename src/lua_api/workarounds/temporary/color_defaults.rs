@@ -235,6 +235,8 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(COLOR_DEFAULTS_LUA)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     lua.exec(RETAIL_COLOR_BOOTSTRAP_LUA)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    lua.exec(RETAIL_COLOR_BOOTSTRAP_LUA)?;
     lua.exec(COLOR_DEFAULTS_CONTINUED_LUA)?;
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Wrath {
         lua.exec(WRATH_QUEST_DIFFICULTY_DEFAULTS_LUA)?;
