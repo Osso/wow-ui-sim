@@ -86,6 +86,7 @@ pub(crate) mod encounter_state;
 pub(crate) mod environment_cleanup_restore;
 pub(crate) mod equipment_set_lock_defaults;
 pub(crate) mod event_scheduler_state;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod fog_of_war_pin;
 #[cfg(feature = "client-wowforever")]
 pub(crate) mod forever_bank_capability_defaults;

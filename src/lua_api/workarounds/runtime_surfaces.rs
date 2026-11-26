@@ -79,6 +79,7 @@ pub(super) fn patch_objective_tracker_quest_header(env: &crate::lua_api::WowLuaE
     temporary::objective_tracker_quest_header::patch(env);
 }
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(super) fn patch_fog_of_war_pin_mixin(env: &crate::lua_api::WowLuaEnv) {
     temporary::fog_of_war_pin::patch(env);
 }
@@ -101,6 +102,7 @@ pub(super) fn refresh_character_frame_surface(env: &crate::lua_api::WowLuaEnv) {
     temporary::character_frame_surface_refresh::patch(env);
 }
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(super) fn patch_fog_of_war_pin_mixin_for_runtime_addon_load(
     env: &crate::lua_api::LoaderEnv<'_>,
 ) {

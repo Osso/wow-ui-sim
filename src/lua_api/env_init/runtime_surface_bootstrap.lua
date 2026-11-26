@@ -1,7 +1,7 @@
 -- Single publication-scoped exemption inventory; modeled Store catalog registration is separate.
 local classicCombat, forever, vanilla, modeledStoreGlue, modeledStoreCatalog,
   modeledStoreVas, retirePveFrameBridge, retireGlueOwnerDefaults,
-  retireMapCanvasScrollContainer = ...
+  retireMapCanvasScrollContainer, retireFogOfWarPinRepair = ...
 local strictNamespaces = {}
 if classicCombat then
   strictNamespaces.C_CombatText = true
@@ -1336,7 +1336,9 @@ local function __wow_patch_fog_of_war_pin_methods()
   rawset(_G, "__wow_fog_of_war_pin_methods_patched", true)
 end
 
-__wow_patch_fog_of_war_pin_methods()
+if not retireFogOfWarPinRepair then
+  __wow_patch_fog_of_war_pin_methods()
+end
 
 local function __wow_patch_character_select_nav_bar()
   if rawget(_G, "__wow_character_select_nav_bar_patched") then

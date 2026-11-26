@@ -99,6 +99,7 @@ const POST_LOAD_WORKAROUNDS: &[WorkaroundStep] = &[
         label: "patch_vignette_pin_template",
         apply: patch_vignette_pin_template,
     },
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     WorkaroundStep {
         label: "patch_fog_of_war_pin_mixin",
         apply: patch_fog_of_war_pin_mixin,
@@ -568,9 +569,7 @@ fn runtime_surface_patch_functions(folder_name: &str) -> Option<&'static [&'stat
         | "Blizzard_WorldMap"
         | "Blizzard_BattlefieldMap" => match crate::client_profile::ACTIVE {
             crate::client_profile::ClientProfile::Retail
-            | crate::client_profile::ClientProfile::WowForever => {
-                &["__wow_patch_fog_of_war_pin_methods"]
-            }
+            | crate::client_profile::ClientProfile::WowForever => &[],
             _ => &[
                 "__wow_patch_map_canvas_scroll_container_methods",
                 "__wow_patch_fog_of_war_pin_methods",
@@ -754,6 +753,7 @@ fn patch_runtime_map_addon_surfaces(env: &crate::lua_api::LoaderEnv<'_>, addon_n
             | "Blizzard_WorldMap"
             | "Blizzard_BattlefieldMap"
     ) {
+        #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
         patch_fog_of_war_pin_mixin_for_runtime_addon_load(env);
         patch_map_exploration_pin_mixin_for_runtime_addon_load(env);
     }

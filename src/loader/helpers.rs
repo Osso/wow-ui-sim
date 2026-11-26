@@ -699,6 +699,18 @@ fn lifecycle_handlers_with_options(
             ("OnMouseDown", scripts.on_mouse_down.last()),
             ("OnMouseUp", scripts.on_mouse_up.last()),
             ("OnMouseWheel", scripts.on_mouse_wheel.last()),
+            (
+                "OnUiMapChanged",
+                if matches!(
+                    crate::client_profile::ACTIVE,
+                    crate::client_profile::ClientProfile::Retail
+                        | crate::client_profile::ClientProfile::WowForever
+                ) {
+                    scripts.on_ui_map_changed.last()
+                } else {
+                    None
+                },
+            ),
             ("OnDragStart", scripts.on_drag_start.last()),
             ("OnDragStop", scripts.on_drag_stop.last()),
             ("OnReceiveDrag", scripts.on_receive_drag.last()),

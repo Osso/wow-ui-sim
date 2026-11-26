@@ -67,7 +67,7 @@ pub(crate) fn init_runtime_surface_bootstrap(lua: &mut rilua::Lua) -> crate::Res
     Ok(())
 }
 
-fn runtime_surface_arguments() -> [Val; 9] {
+fn runtime_surface_arguments() -> [Val; 10] {
     use crate::client_profile::{ACTIVE, ClientProfile};
     let (retire_pve_frame_bridge, retire_glue_owner_defaults) = glue_bootstrap_retirements();
     let classic_combat = matches!(
@@ -90,6 +90,10 @@ fn runtime_surface_arguments() -> [Val; 9] {
         Val::Bool(ACTIVE == ClientProfile::Retail),
         Val::Bool(retire_pve_frame_bridge),
         Val::Bool(retire_glue_owner_defaults),
+        Val::Bool(matches!(
+            ACTIVE,
+            ClientProfile::Retail | ClientProfile::WowForever
+        )),
         Val::Bool(matches!(
             ACTIVE,
             ClientProfile::Retail | ClientProfile::WowForever
