@@ -15,7 +15,7 @@ fn get_num_talent_tabs_returns_zero() {
     assert_eq!(n, 0);
 }
 
-#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+#[cfg(not(feature = "client-retail"))]
 #[test]
 fn get_talent_info_returns_nil() {
     let env = env();
@@ -23,9 +23,8 @@ fn get_talent_info_returns_nil() {
     assert_eq!(v, None);
 }
 
-#[test]
-fn original_specialization_talent_wrapper_uses_distinct_queries() {
-    let env = env();
+#[cfg(feature = "client-retail")]
+fn load_original_specialization_addon(env: &WowLuaEnv) {
     let ui = wow_ui_sim::client_profile::blizzard_ui_addons_dir_under(std::path::Path::new(
         env!("CARGO_MANIFEST_DIR"),
     ));
@@ -39,10 +38,17 @@ fn original_specialization_talent_wrapper_uses_distinct_queries() {
     .expect("selected Game screen specialization addon");
     wow_ui_sim::loader::load_addon(&env.loader_env(), &toc)
         .expect("selected specialization addon should load");
+}
+
+#[test]
+fn specialization_talent_info_uses_distinct_queries() {
+    let env = env();
+    #[cfg(feature = "client-retail")]
+    load_original_specialization_addon(&env);
 
     let results: (Option<String>, Option<String>) = env
         .eval("return GetTalentInfo(1, 1, 1, false, nil), GetTalentInfo(2, 3, 1, false, nil)")
-        .expect("original talent wrapper should accept both query shapes");
+        .expect("talent owner should accept both distinct query shapes");
     assert_eq!(results, (None, None));
 }
 

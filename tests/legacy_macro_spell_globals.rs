@@ -125,14 +125,14 @@ fn legacy_spell_globals_exist_for_addons() {
         if GetSpellBookItemTexture(1) == nil then
             return "missing_spellbook_texture"
         end
-        if cfg!(any(feature = "client-retail", feature = "client-wowforever")) then
-            return "ok"
-        end
         if type(SpellBook_GetSpellBookSlot) ~= "function" then
             return "missing_SpellBook_GetSpellBookSlot"
         end
         if SpellBook_GetSpellBookSlot(4, 7) ~= 4 then
             return "spellbook_slot=" .. tostring(SpellBook_GetSpellBookSlot(4, 7))
+        end
+        if SpellBook_GetSpellBookSlot(8, 3) ~= 8 then
+            return "second_spellbook_slot=" .. tostring(SpellBook_GetSpellBookSlot(8, 3))
         end
 
         return "ok"
