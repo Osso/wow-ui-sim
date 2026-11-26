@@ -336,7 +336,7 @@ fn retail_pet_battle_runtime_queries_follow_admin_inputs() {
     )
     .unwrap();
     let (effects, effect, trap, error, select, npc): (i32, String, bool, i32, bool, bool) = env
-        .eval("local e = C_PetBattles.GetAllEffectNames(); local t, x = C_PetBattles.IsTrapAvailable(); return #e, e[1], t, x, C_PetBattles.ShouldShowPetSelect(), C_PetBattles.IsPlayerNPC(2)")
+        .eval("local e = {C_PetBattles.GetAllEffectNames()}; local t, x = C_PetBattles.IsTrapAvailable(); return #e, e[1], t, x, C_PetBattles.ShouldShowPetSelect(), C_PetBattles.IsPlayerNPC(2)")
         .unwrap();
     assert_eq!((effects, effect), (1, "Supplied effect".into()));
     assert!(!trap);

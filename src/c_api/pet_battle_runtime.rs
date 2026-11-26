@@ -1,6 +1,6 @@
 //! INFERRED local command boundary; requests are not authoritative server replies.
 use super::pet_battle_runtime_model::PetBattleRequest;
-use crate::lua_api::methods::{borrow_state, borrow_state_mut, create_string, table_set_num};
+use crate::lua_api::methods::{borrow_state, borrow_state_mut, create_string};
 use crate::lua_bridge::{FromStack, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val, runtime_error};
@@ -35,23 +35,18 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     Ok(())
 }
 
-/// INFERRED R88g9 (native evidence pending): supplied labels use a one-based array; native shape is UNKNOWN.
+/// INFERRED R88g9 (native evidence pending): consumer at SharedPetBattleTemplates.lua:381 expects string returns.
 fn get_all_effect_names(state: &mut LuaState) -> LuaResult<u32> {
     let names = borrow_state(state)?
         .pet_battles
         .runtime
         .effect_names
         .clone();
-    let array = crate::lua_bridge::TableBuilder::new(state).build();
-    let Val::Table(array_ref) = array else {
-        unreachable!("table builder returns a table");
-    };
-    state.push(array);
-    for (index, name) in names.iter().enumerate() {
+    for name in &names {
         let value = create_string(state, name);
-        table_set_num(state, array_ref, (index + 1) as f64, value);
+        state.push(value);
     }
-    Ok(1)
+    Ok(names.len() as u32)
 }
 
 /// INFERRED R88f.D.44, R88g9 (native evidence pending): evaluate supplied trap inputs.

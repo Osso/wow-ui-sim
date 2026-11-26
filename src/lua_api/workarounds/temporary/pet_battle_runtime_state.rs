@@ -377,7 +377,7 @@ mod tests {
         let result: String = env
             .eval(
                 r##"
-                local effects = C_PetBattles.GetAllEffectNames()
+                local effects = {C_PetBattles.GetAllEffectNames()}
                 if effects[1] ~= "Supplied effect" then return "effects" end
                 if C_PetBattles.IsPlayerNPC(2) ~= true then return "player-npc" end
                 if C_PetBattles.ShouldShowPetSelect() ~= true then return "pet-select" end
