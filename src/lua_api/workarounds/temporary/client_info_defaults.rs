@@ -19,7 +19,6 @@ pub(crate) const CLASSIC_EXPANSION_LEVEL: f64 = match crate::client_profile::ACT
     _ => 10.0,
 };
 
-#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 const CLIENT_INFO_DEFAULTS_LUA: &str = r#"
 if GetRealmID == nil then
   function GetRealmID()
@@ -215,9 +214,9 @@ pub(crate) fn apply_bootstrap(_lua: &mut rilua::Lua) -> crate::Result<()> {
                 &crate::client_profile::ACTIVE.expansion_level().to_string(),
             );
         _lua.exec(&code)?;
-        _lua.exec(CLIENT_INFO_DEFAULTS_LUA)?;
         _lua.exec(CLIENT_IDENTITY_ACCOUNT_DEFAULTS_LUA)?;
     }
+    _lua.exec(CLIENT_INFO_DEFAULTS_LUA)?;
     Ok(())
 }
 
