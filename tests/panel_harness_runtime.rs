@@ -1,8 +1,10 @@
 use crate::common;
 
 use std::path::PathBuf;
-use wow_ui_sim::loader::{find_toc_file, load_addon};
+use wow_ui_sim::loader::{discover_blizzard_addons_for_screen, find_toc_file, load_addon};
 use wow_ui_sim::lua_api::WowLuaEnv;
+use wow_ui_sim::screen::ScreenKind;
+use wow_ui_sim::startup::fire_startup_events_for_screen;
 
 // Keep startup order explicit; let the loader select each profile's TOC.
 const PANEL_HARNESS_ADDONS: &[&str] = &[
@@ -123,12 +125,19 @@ fn forever_without_encounter_journal(env: &WowLuaEnv) -> bool {
 fn load_achievement_ui_consumer() -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("Failed to create Lua environment");
     env.set_screen_size(1024.0, 768.0);
+    env.set_screen_mode(ScreenKind::Game);
     common::panel_fixtures::seed_addon_search_paths(&env);
+    wow_ui_sim::xml::register_intrinsic_templates();
+    env.exec("A_Admin.SetAchievementEarned(6, true)")
+        .expect("earned achievement input should be accepted");
     let ui = blizzard_ui_dir();
-    load_panel_harness_addons(&env, &ui);
-    common::panel_fixtures::load_panel_startup_publishers(&env, &ui);
+    let addons = discover_blizzard_addons_for_screen(&ui, ScreenKind::Game);
+    for (name, toc_path) in addons {
+        load_addon(&env.loader_env(), &toc_path)
+            .unwrap_or_else(|error| panic!("[load {name}] FAILED: {error}"));
+    }
     env.apply_post_load_workarounds();
-    fire_panel_harness_startup_events(&env);
+    fire_startup_events_for_screen(&env, ScreenKind::Game);
     env
 }
 
@@ -180,10 +189,12 @@ fn achievement_microbutton_uses_earned_achievement_state() {
         A_Admin.SetCanShowAchievementUI(true)
         A_Admin.SetAchievementEarned(6, false)
         AchievementMicroButton:Click()
-        assert(not C_AddOns.IsAddOnLoaded("Blizzard_AchievementUI"))
+        assert(not C_AddOns.IsAddOnLoaded("Blizzard_AchievementUI"),
+            "no earned achievement must keep the panel closed")
         A_Admin.SetAchievementEarned(6, true)
         AchievementMicroButton:Click()
-        assert(C_AddOns.IsAddOnLoaded("Blizzard_AchievementUI"))
+        assert(C_AddOns.IsAddOnLoaded("Blizzard_AchievementUI"),
+            "an earned achievement must open the panel")
         "#,
     )
     .expect("achievement microbutton should follow earned achievement state");
