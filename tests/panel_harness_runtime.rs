@@ -1,10 +1,9 @@
 use crate::common;
 
 use std::path::PathBuf;
-use wow_ui_sim::loader::{discover_blizzard_addons_for_screen, find_toc_file, load_addon};
+use wow_ui_sim::loader::{find_toc_file, load_addon};
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::screen::ScreenKind;
-use wow_ui_sim::startup::fire_startup_events_for_screen;
 
 // Keep startup order explicit; let the loader select each profile's TOC.
 const PANEL_HARNESS_ADDONS: &[&str] = &[
@@ -131,13 +130,10 @@ fn load_achievement_ui_consumer() -> WowLuaEnv {
     env.exec("A_Admin.SetAchievementEarned(6, true)")
         .expect("earned achievement input should be accepted");
     let ui = blizzard_ui_dir();
-    let addons = discover_blizzard_addons_for_screen(&ui, ScreenKind::Game);
-    for (name, toc_path) in addons {
-        load_addon(&env.loader_env(), &toc_path)
-            .unwrap_or_else(|error| panic!("[load {name}] FAILED: {error}"));
-    }
+    load_panel_harness_addons(&env, &ui);
+    common::panel_fixtures::load_panel_startup_publishers(&env, &ui);
     env.apply_post_load_workarounds();
-    fire_startup_events_for_screen(&env, ScreenKind::Game);
+    fire_panel_harness_startup_events(&env);
     env
 }
 
@@ -165,6 +161,8 @@ fn account_store_consumer_retains_distinct_storefront_ids() {
 #[test]
 fn achievement_search_consumer_handles_two_empty_result_selections() {
     let env = load_achievement_ui_consumer();
+    env.exec(r#"assert(C_AddOns.LoadAddOn("Blizzard_AchievementUI"))"#)
+        .expect("the original AchievementUI consumer should load");
     env.exec(
         r#"local searchBox = AchievementFrame.HeaderDetails.Filters.SearchBox
            local previews = searchBox.SearchPreviewContainer.searchPreviews
