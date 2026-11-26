@@ -194,23 +194,25 @@ fn key_blizzard_panels_registered() {
     }
 }
 
-prefork_full_ui_case! {
-fn show_ui_panel_named_securecall_keeps_panels_secure(env: &WowLuaEnv) {
-    let result: (bool, bool, bool, bool) = env.eval(r#"
-        local secureInside
-        hooksecurefunc("CloseWindows", function()
-            secureInside = issecure()
-        end)
-        ShowUIPanel(GameMenuFrame)
-        local firstShown = GameMenuFrame:IsShown()
-        local firstSecure = secureInside
-        HideUIPanel(GameMenuFrame)
-        secureInside = nil
-        ShowUIPanel(HelpFrame)
-        return firstShown, HelpFrame:IsShown(), firstSecure, secureInside
-    "#).unwrap();
-    assert_eq!(result, (true, true, true, true));
-}
+#[test]
+fn show_ui_panel_named_securecall_keeps_panels_secure() {
+    test_timeout! {
+        let env = setup_env();
+        let result: (bool, bool, bool, bool) = env.eval(r#"
+            local secureInside
+            hooksecurefunc("CloseWindows", function()
+                secureInside = issecure()
+            end)
+            ShowUIPanel(GameMenuFrame)
+            local firstShown = GameMenuFrame:IsShown()
+            local firstSecure = secureInside
+            HideUIPanel(GameMenuFrame)
+            secureInside = nil
+            ShowUIPanel(HelpFrame)
+            return firstShown, HelpFrame:IsShown(), firstSecure, secureInside
+        "#).unwrap();
+        assert_eq!(result, (true, true, true, true));
+    }
 }
 
 prefork_full_ui_case! {
