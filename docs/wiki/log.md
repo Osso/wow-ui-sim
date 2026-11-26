@@ -1,4 +1,4 @@
-## [2026-11-26] investigation | ObjectiveTracker dirty startup-shaped fixture
+## [2026-11-25] investigation | ObjectiveTracker dirty startup-shaped fixture
 
 Added [the investigation](investigations/objective-tracker-dirty-fixture.md). **VERIFIED (Retail and Forever exact tests):** the startup-shaped tracker fixture now loads the original SplashFrame provider and renders seeded quests 80000 and 80001 after watch events, timer drains, and OnUpdate ticks. The prior failure was the omitted provider causing the first original update to error before quest enumeration; no timer drain or vendor source changed.
 

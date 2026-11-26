@@ -1,4 +1,4 @@
-## [2026-11-26] investigation | ObjectiveTracker dirty startup-shaped fixture
+## [2026-11-25] investigation | ObjectiveTracker dirty startup-shaped fixture
 
 [ObjectiveTracker dirty fixture](investigations/objective-tracker-dirty-fixture.md) records the missing SplashFrame provider, the aborted original first update, and the two-profile seeded quest consumer test. No timer or Blizzard Lua behavior changed.
 
