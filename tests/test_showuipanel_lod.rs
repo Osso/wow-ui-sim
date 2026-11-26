@@ -72,6 +72,7 @@ fn assert_macro_panel_selection(
         if MacroFrameText:GetText() ~= "{expected_body}" then
             return "selected_body=" .. tostring(MacroFrameText:GetText())
         end
+        return "ok"
         "#)).unwrap();
     assert_eq!(result, "ok", "ShowMacroFrame should load and populate the macro selector: {result}");
 }
