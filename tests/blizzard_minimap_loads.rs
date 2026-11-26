@@ -483,12 +483,11 @@ fn blizzard_minimap_publishes_named_frames_with_correct_widget_types(env: &WowLu
 
 const GAME_TIME_BEHAVIOR_PROBE: &str = r#"
 A_Admin.SetGameTime(1, 2)
-local first = GameTime_GetTime(false)
+local first = GameTime_GetTime(true)
 A_Admin.SetGameTime(23, 58)
 local second = GameTime_GetTime(false)
 assert(first ~= second)
-assert(GameTime_GetGameTime(false):find("2", 1, true))
-assert(GameTime_GetGameTime(false):find("58", 1, true))
+assert(first:find("AM", 1, true) and second:find("PM", 1, true))
 return "ok"
 "#;
 

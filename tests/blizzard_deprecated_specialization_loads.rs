@@ -318,11 +318,9 @@ fn deprecated_talent_query_validates_arguments_and_empty_grid(env: &WowLuaEnv) {
         local inactive = GetTalentInfo(1, 1, 1, false, nil)
         C_SpecializationInfo.SetSpecialization(1)
         assert(GetSpecialization() == 1)
-        local active = GetTalentInfo(1, 1, 1, false, nil)
+        local active = GetTalentInfo(1, 2, 1, false, nil)
         assert(type(active) == "number")
-        if inactive ~= nil then
-            assert(type(inactive) == "number" and inactive ~= active)
-        end
+        assert(type(inactive) == "number" and inactive ~= active)
     "#).expect("original deprecated wrapper and query validation should execute");
 }
 }

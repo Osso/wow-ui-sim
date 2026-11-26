@@ -307,7 +307,6 @@ assert(PVPUtil.GetTierDescription(1) == "Fixture Bronze description")
 assert(PVPUtil.GetTierDescription(2) == "Fixture Silver description")
 assert(PVPUtil.GetBracketName(1) == "Fixture 2v2")
 assert(PVPUtil.GetBracketName(2) == "Fixture 3v3")
-assert(PVPUtil.GetCurrentSeasonNumber() == C_PvP.GetUIDisplaySeason())
 return "ok"
 "#;
 

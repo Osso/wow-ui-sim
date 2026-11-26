@@ -478,10 +478,14 @@ assert(not red:IsRGBEqualTo(blue))
 assert(red:WrapTextInColorCode("red") == "|cffff0000red|r")
 assert(blue:WrapTextInColorCode("blue") == "|cff0000ffblue|r")
 local seen = {}
+local heights = {}
 geterrorhandler = function(message) seen[#seen + 1] = message end
+SetErrorCallstackHeight = function(height) heights[#heights + 1] = height end
 CallErrorHandler("first")
 CallErrorHandler("second")
 assert(seen[1] == "first" and seen[2] == "second")
+assert(heights[1] == GetCallstackHeight() - 1 and heights[2] == GetCallstackHeight() - 1)
+assert(heights[3] == nil and heights[4] == nil)
 return "ok"
 "#;
 
