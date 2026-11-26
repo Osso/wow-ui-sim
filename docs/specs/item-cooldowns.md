@@ -4,7 +4,7 @@ Item cooldown queries must project independently supplied start/duration pairs u
 
 ## What it must do
 
-- [ ] Simulator-only `A_Admin.SetItemCooldown(itemID, duration)` sets the item's start to current `GetTime()` and supplied duration; duration `0` clears the input. [Admin API](../admin-api/combat.md#a_adminsetitemcooldownitemid-duration).
+- [x] Simulator-only `A_Admin.SetItemCooldown(itemID, duration)` sets the item's start to current `GetTime()` and supplied duration; duration `0` clears the input. [Admin API](../admin-api/combat.md#a_adminsetitemcooldownitemid-duration).
 - [x] `C_Item.GetItemCooldown` resolves numeric ItemInfo and item hyperlinks to the same item ID and returns exactly `(number, number, boolean)`, with the supplied pair unchanged and enabled `true`.
 - [x] `C_Container.GetItemCooldown(itemID)` selects a numeric item ID and returns exactly `(number, number, number)`, with the supplied pair unchanged and enabled `1`; it does not select an equipment slot.
 - [x] `C_Container.GetContainerItemCooldown(bag, slot)` resolves the occupied item ID and returns its unchanged pair with numeric enabled `1`; this route is distinct from the single-item-ID query.
