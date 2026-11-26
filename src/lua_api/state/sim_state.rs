@@ -66,9 +66,13 @@ pub struct SimState {
     pub(crate) private_aura_anchors: crate::c_api::private_aura_anchors::PrivateAuraAnchors,
     pub private_aura_data: crate::c_api::private_aura_data::PrivateAuraData,
     /// Explicit pending records only; empty default and lifecycle are simulator policy.
-    #[cfg(all(
-        feature = "retail-12-0-5",
-        any(feature = "profile-retail", feature = "client-ptr")
+    #[cfg(any(
+        all(
+            feature = "retail-12-0-5",
+            any(feature = "profile-retail", feature = "client-ptr")
+        ),
+        feature = "client-retail",
+        feature = "client-wowforever"
     ))]
     pub(crate) pending_spell_confirmation_prompts: HashMap<
         u64,

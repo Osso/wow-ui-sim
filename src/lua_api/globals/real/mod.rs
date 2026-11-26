@@ -275,7 +275,10 @@ pub mod inventory_candidates;
 #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
 pub(crate) mod cinematic_summary;
 
-#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+#[cfg(any(
+    all(feature = "profile-retail", feature = "retail-12-1-5"),
+    feature = "client-wowforever"
+))]
 pub(crate) mod set_role_button;
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]

@@ -93,9 +93,13 @@ macro_rules! build_empty_sim_state {
             events: EventQueue::default(),
             private_aura_anchors: crate::c_api::private_aura_anchors::PrivateAuraAnchors::default(),
             private_aura_data: Default::default(),
-            #[cfg(all(
-                feature = "retail-12-0-5",
-                any(feature = "profile-retail", feature = "client-ptr")
+            #[cfg(any(
+                all(
+                    feature = "retail-12-0-5",
+                    any(feature = "profile-retail", feature = "client-ptr")
+                ),
+                feature = "client-retail",
+                feature = "client-wowforever"
             ))]
             pending_spell_confirmation_prompts: HashMap::new(),
             #[cfg(feature = "retail-12-0-5")]
