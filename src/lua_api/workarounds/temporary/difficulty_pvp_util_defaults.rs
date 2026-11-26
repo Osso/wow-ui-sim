@@ -72,22 +72,6 @@ const DIFFICULTY_PVP_METHOD_DEFAULTS_LUA: &str = r#"
 if rawget(DifficultyUtil, "GetDifficultyName") == nil then
     local difficultyNames = {
         [DifficultyUtil.ID.DungeonNormal] = PLAYER_DIFFICULTY1 or "Normal",
-        [DifficultyUtil.ID.DungeonHeroic] = PLAYER_DIFFICULTY2 or "Heroic",
-        [DifficultyUtil.ID.Raid10Normal] = PLAYER_DIFFICULTY1 or "Normal",
-        [DifficultyUtil.ID.Raid25Normal] = PLAYER_DIFFICULTY1 or "Normal",
-        [DifficultyUtil.ID.Raid10Heroic] = PLAYER_DIFFICULTY2 or "Heroic",
-        [DifficultyUtil.ID.Raid25Heroic] = PLAYER_DIFFICULTY2 or "Heroic",
-        [DifficultyUtil.ID.RaidLFR] = PLAYER_DIFFICULTY3 or "Raid Finder",
-        [DifficultyUtil.ID.DungeonChallenge] = PLAYER_DIFFICULTY_MYTHIC_PLUS or "Mythic+",
-        [DifficultyUtil.ID.Raid40] = LEGACY_RAID_DIFFICULTY or "Legacy Raid",
-        [DifficultyUtil.ID.PrimaryRaidNormal] = PLAYER_DIFFICULTY1 or "Normal",
-        [DifficultyUtil.ID.PrimaryRaidHeroic] = PLAYER_DIFFICULTY2 or "Heroic",
-        [DifficultyUtil.ID.PrimaryRaidMythic] = PLAYER_DIFFICULTY6 or "Mythic",
-        [DifficultyUtil.ID.PrimaryRaidLFR] = PLAYER_DIFFICULTY3 or "Raid Finder",
-        [DifficultyUtil.ID.DungeonMythic] = PLAYER_DIFFICULTY6 or "Mythic",
-        [DifficultyUtil.ID.DungeonTimewalker] = PLAYER_DIFFICULTY_TIMEWALKER or "Timewalking",
-        [DifficultyUtil.ID.RaidTimewalker] = PLAYER_DIFFICULTY_TIMEWALKER or "Timewalking",
-        [DifficultyUtil.ID.RaidStory] = PLAYER_DIFFICULTY_STORY_RAID or "Story",
     }
 
     function DifficultyUtil.GetDifficultyName(difficultyID)
@@ -109,19 +93,22 @@ end
 if rawget(DifficultyUtil, "GetMaxPlayers") == nil then
     local maxPlayers = {
         [DifficultyUtil.ID.DungeonNormal] = 5,
-        [DifficultyUtil.ID.DungeonHeroic] = 5,
-        [DifficultyUtil.ID.DungeonMythic] = 5,
-        [DifficultyUtil.ID.DungeonChallenge] = 5,
-        [DifficultyUtil.ID.DungeonTimewalker] = 5,
-        [DifficultyUtil.ID.Raid10Normal] = 10,
-        [DifficultyUtil.ID.Raid10Heroic] = 10,
-        [DifficultyUtil.ID.Raid25Normal] = 25,
-        [DifficultyUtil.ID.Raid25Heroic] = 25,
-        [DifficultyUtil.ID.Raid40] = 40,
     }
 
     function DifficultyUtil.GetMaxPlayers(difficultyID)
         return maxPlayers[difficultyID]
+    end
+end
+if rawget(DifficultyUtil, "IsPrimaryRaid") == nil then
+    local primaryRaids = {
+        [DifficultyUtil.ID.PrimaryRaidLFR] = true,
+        [DifficultyUtil.ID.PrimaryRaidNormal] = true,
+        [DifficultyUtil.ID.PrimaryRaidHeroic] = true,
+        [DifficultyUtil.ID.PrimaryRaidMythic] = true,
+    }
+
+    function DifficultyUtil.IsPrimaryRaid(difficultyID)
+        return primaryRaids[difficultyID] or false
     end
 end
 if rawget(PVPUtil, "GetTierName") == nil then
