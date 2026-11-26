@@ -52,11 +52,6 @@ if rawget(C_Calendar, "EventGetTypesDisplayOrdered") == nil then
         return {}
     end
 end
-if rawget(C_Calendar, "GetClubCalendarEvents") == nil then
-    function C_Calendar.GetClubCalendarEvents()
-        return {}
-    end
-end
 if rawget(C_Calendar, "GetNumGuildEvents") == nil then
     function C_Calendar.GetNumGuildEvents()
         return 0
@@ -102,8 +97,19 @@ if rawget(C_Calendar, "CloseEvent") == nil then
 end
 "#;
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+const CLUB_CALENDAR_EVENTS_DEFAULT_LUA: &str = r#"
+if rawget(C_Calendar, "GetClubCalendarEvents") == nil then
+    function C_Calendar.GetClubCalendarEvents()
+        return {}
+    end
+end
+"#;
+
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(CALENDAR_DEFAULTS_LUA)?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+    lua.exec(CLUB_CALENDAR_EVENTS_DEFAULT_LUA)?;
     Ok(())
 }
 
