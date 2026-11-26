@@ -18,10 +18,15 @@ fn objective_tracker_renders_two_watched_seed_quests() {
 fn supply_watched_quests(env: &WowLuaEnv) {
     env.exec(
         r#"
-        assert(C_QuestLog.AddQuestWatch(80000))
-        assert(C_QuestLog.AddQuestWatch(80001))
+        C_QuestLog.AddQuestWatch(80000)
+        C_QuestLog.AddQuestWatch(80001)
         A_Admin.FireEvent("QUEST_WATCH_LIST_CHANGED", 80000, true)
         A_Admin.FireEvent("QUEST_WATCH_LIST_CHANGED", 80001, true)
+        local watched = {}
+        for index = 1, C_QuestLog.GetNumQuestWatches() do
+            watched[C_QuestLog.GetQuestIDForQuestWatchIndex(index)] = true
+        end
+        assert(watched[80000] and watched[80001], "both supplied quests must be watched")
         "#,
     )
     .expect("client APIs and admin events should supply both watched quests");
