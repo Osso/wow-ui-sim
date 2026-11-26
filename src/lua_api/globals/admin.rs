@@ -247,7 +247,8 @@ fn register_admin_inventory_items(builder: TableBuilder) -> LuaResult<TableBuild
             crate::c_api::c_loss_of_control::clear_supplied_entries,
         )?;
     let builder = crate::c_api::equipment_set_locks::register_admin(builder)?;
-    crate::c_api::item_overlay::register_admin(builder)
+    let builder = crate::c_api::item_overlay::register_admin(builder)?;
+    crate::c_api::c_item_interaction::register_admin(builder)
 }
 
 fn register_admin_social_names(builder: TableBuilder) -> LuaResult<TableBuilder> {
@@ -288,6 +289,9 @@ fn register_admin_maps_tooltips(mut builder: TableBuilder) -> LuaResult<TableBui
     let builder = crate::c_api::c_tooltip_info_weekly::register_admin(builder)?;
     let builder = crate::c_api::c_store_glue::register_admin(builder)?;
     let builder = crate::c_api::c_tooltip_info_possession::register_admin(builder)?;
+    let builder = crate::c_api::item_tooltip::register_admin(builder)?;
+    let builder = crate::c_api::c_tooltip_info_inventory_by_id::register_admin(builder)?;
+    let builder = crate::c_api::item_location::register_admin(builder)?;
     #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
     let builder = crate::c_api::c_dye_color::register_admin(builder)?;
     let builder = builder.set_function(
@@ -766,6 +770,8 @@ fn register_collections_pvp<'lua>(b: TableBuilder<'lua>) -> LuaResult<TableBuild
     let b = register_functions(b, COLLECTIONS_PVP_FUNCTIONS)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     let b = crate::c_api::c_spec::register_admin(b)?;
+    #[cfg(feature = "client-retail")]
+    let b = crate::c_api::c_tooltip_info_pvp_talent::register_admin(b)?;
     if matches!(
         crate::client_profile::ACTIVE,
         crate::client_profile::ClientProfile::Retail

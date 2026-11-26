@@ -15,6 +15,7 @@ use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 
 const LINE_TYPE_SELL_PRICE: f64 = 11.0;
+const LINE_TYPE_GEM_SOCKET: f64 = 3.0;
 const SELL_PRICE_REQUEST_MODE: u8 = 0;
 const SELL_PRICE_NO_INVENTORY_TYPE: u8 = 0;
 const SELL_PRICE_CALCULATED_ITEM_CLASS: u8 = 3;
@@ -167,6 +168,17 @@ fn color_segment_table(state: &mut LuaState, segments: Vec<TooltipColorSegment>)
     }
     state.top = saved_top;
     table
+}
+
+#[cfg(feature = "client-retail")]
+/// Fresh builder used when native ordinary spell content stops before identity.
+/// Its final miss-result shape remains EMULATED and is not a native parity claim.
+pub(crate) fn empty_untyped_tooltip(state: &mut LuaState) -> Val {
+    let tooltip = create_table(state);
+    let lines = create_table(state);
+    table_set(state, tooltip, "lines", lines);
+    stamp_data_instance(state, tooltip);
+    tooltip
 }
 
 pub(super) fn empty_tooltip(state: &mut LuaState, tooltip_type: f64) -> Val {
@@ -858,7 +870,16 @@ pub(super) fn tooltip_for_item_info(
     item_id: u32,
     item: &items::ItemInfo,
 ) -> Val {
-    build_item_tooltip(state, item_id, item, None)
+    build_item_tooltip(state, item_id, item, None, None)
+}
+
+pub(super) fn tooltip_for_item_info_with_socket_projection(
+    state: &mut LuaState,
+    item_id: u32,
+    item: &items::ItemInfo,
+    projection: &[crate::c_api::item_tooltip::ItemSocketProjectionRow],
+) -> Val {
+    build_item_tooltip(state, item_id, item, None, Some(projection))
 }
 
 pub(super) fn tooltip_for_item_info_with_request(
@@ -867,7 +888,7 @@ pub(super) fn tooltip_for_item_info_with_request(
     item: &items::ItemInfo,
     request: RetailSellPriceRequest,
 ) -> Val {
-    build_item_tooltip(state, item_id, item, Some(request))
+    build_item_tooltip(state, item_id, item, Some(request), None)
 }
 
 fn build_item_tooltip(
@@ -875,11 +896,49 @@ fn build_item_tooltip(
     item_id: u32,
     item: &items::ItemInfo,
     request: Option<RetailSellPriceRequest>,
+    socket_projection: Option<&[crate::c_api::item_tooltip::ItemSocketProjectionRow]>,
 ) -> Val {
     let tooltip = create_identified_tooltip(state, TOOLTIP_TYPE_ITEM, item_id);
     stamp_data_instance(state, tooltip);
     populate_item_tooltip_lines(state, tooltip, item_id, item, request);
+    if let Some(projection) = socket_projection {
+        append_item_socket_projection(state, tooltip, projection);
+    }
     tooltip
+}
+
+/// Pinned `TooltipInfoSharedDocumentation.lua:37` declares GemSocket as 3 and
+/// `TooltipDataRules.lua:18-33` consumes its metadata. Native row selection is
+/// not inferred: only explicit instance rows supplied by the host are appended.
+fn append_item_socket_projection(
+    state: &mut LuaState,
+    tooltip: Val,
+    projection: &[crate::c_api::item_tooltip::ItemSocketProjectionRow],
+) {
+    let saved_top = state.top;
+    state.push(tooltip);
+    let lines = table_get(state, tooltip, "lines");
+    state.push(lines);
+    let mut index = super::spell::tooltip_line_count(state, lines) + 1;
+    for row in projection {
+        let line = create_table(state);
+        set_table_array(state, lines, index, line);
+        table_set(state, line, "type", Val::Num(LINE_TYPE_GEM_SOCKET));
+        publish_socket_field(state, line, "socketType", row.socket_type.as_deref());
+        publish_socket_field(state, line, "gemIcon", row.gem_icon.as_deref());
+        if let Some(item_id) = row.gem_item_id {
+            table_set(state, line, "gemItemID", Val::Num(f64::from(item_id)));
+        }
+        index += 1;
+    }
+    state.top = saved_top;
+}
+
+fn publish_socket_field(state: &mut LuaState, line: Val, key: &str, value: Option<&str>) {
+    if let Some(value) = value {
+        let value = create_string(state, value);
+        table_set(state, line, key, value);
+    }
 }
 
 /// WM97 DQ4: relic lines run inside the item producer, after the shared item
