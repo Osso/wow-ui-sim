@@ -105,6 +105,25 @@ fn find_toc_file_resolves_bare_toc() {
     );
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn hidden_currency_transfer_input_waits_for_menu_visibility() {
+    let env = load_full_game_ui();
+    let menu_state: (bool, Option<i32>) = env
+        .eval("return CurrencyTransferMenu:IsShown(), CurrencyTransferMenu:GetCurrencyID()")
+        .expect("the original transfer menu should load hidden without a selected currency");
+    assert_eq!(menu_state, (false, None));
+    let maxima: (f64, f64) = env
+        .eval("return C_CurrencyInfo.GetMaxTransferableAmountFromQuantity(1560, 100), C_CurrencyInfo.GetMaxTransferableAmountFromQuantity(1792, 100)")
+        .expect("supplied transferable currencies retain their calculated maxima");
+    assert_eq!(maxima, (76.0, 79.0));
+    let errors = env.state().borrow().lua_errors.clone();
+    assert!(
+        !errors.iter().any(|error| error.contains("GetMaxTransferableAmountFromQuantity")),
+        "the hidden original input must retain its notification: {errors:?}"
+    );
+}
+
 #[cfg(feature = "client-retail")]
 #[test]
 fn currency_transfer_menu_clamps_to_account_source_quantity_and_cost() {
