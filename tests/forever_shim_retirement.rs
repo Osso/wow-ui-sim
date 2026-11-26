@@ -77,7 +77,7 @@ const MAP_POSITION_PROBE: &str = r#"
         FlightMapFrame:SetMapID(mapID)
         return C_Map.GetMapArtHelpTextPosition(mapID), select('#', provider.MapLabel:GetPoint())
     end
-    local presentValue, presentPoints = observe(1411)
+    local presentValue, presentPoints = observe(947)
     local missingValue, missingPoints = observe(14)
     return presentValue, missingValue, presentPoints, missingPoints
 "#;
