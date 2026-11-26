@@ -74,6 +74,7 @@ end
 -- INFERRED: Wrath has no cached SharedXMLBase/Color.lua provider.
 "#;
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 const RETAIL_COLOR_BOOTSTRAP_LUA: &str = r#"
 if CreateColor == nil then
   function CreateColor(r, g, b, a)
