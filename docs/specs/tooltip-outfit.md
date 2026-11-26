@@ -10,7 +10,7 @@
 - [x] **VERIFIED (R88n.8):** accept finite numbers and convertible numeric strings in 0..=4294967295, validate before truncating toward zero, and use `Usage: local data = C_TooltipInfo.GetOutfit(outfitID)` for argument errors.
 - [x] **VERIFIED (R88n.8):** outfit ID zero returns zero Lua values.
 - [x] **VERIFIED (R88n.8):** a nonzero ID without a saved-name record returns one TooltipData table built with an empty name.
-- [ ] **INFERRED:** a matching row in the shared `transmog_outfit_catalog` supplies the saved name used by this getter.
+- [x] **INFERRED:** a matching row in the shared `transmog_outfit_catalog` supplies the saved name used by this getter. The original Retail `GameTooltip:SetOutfit` consumer renders two distinct catalog-created names.
 - [x] The optional Forever contract test checks registration, the zero-ID path, a nonzero missing-name result, and the original SpellBook outfit consumer. The default test also checks two distinct nonzero missing-name inputs and ID conversion.
 
 ### Retail compatibility
@@ -34,11 +34,12 @@
 
 - `tests/tooltip_outfit_forever.rs` — default Forever API test for zero, range validation, numeric-string truncation, and two distinct missing-name IDs.
 - `tests/tooltip_forever_four_getters.rs` — optional missing-name API case and original `SpellBookOutfitItemMixin:OnIconEnter` dispatch on the selected Forever PlayerSpells addon.
+- `tests/tooltip_residual_prefork.rs::tooltip_residual_outfit_catalog_name_reaches_original_consumer` — two populated Retail catalog names through the original `GameTooltip:SetOutfit` accessor.
 - `tests/p1200_rest_outfit_tooltip.rs` — existing Retail catalog and miss behavior.
 
 ## Known gaps (current cycle)
 
-- [ ] **INFERRED:** the native accessor's saved-name record is the current player's outfit state, and the shared `transmog_outfit_catalog` is the matching simulator input. The populated-tooltip path has no test; writer, persistence and update-event parity remain unknown.
+- [ ] **INFERRED:** the native accessor's saved-name record is the current player's outfit state. Writer, persistence and update-event parity remain unknown; the simulator test proves only its catalog-to-consumer mapping.
 - [ ] **UNKNOWN:** native TooltipData line layout and other fields beyond the verified empty-name table path.
 
 ## Out of scope

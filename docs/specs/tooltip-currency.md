@@ -57,10 +57,14 @@ Retail 12.1.5 currency tooltips publish R84/R84b `C_TooltipInfo` data through th
   Classification: (c) native-only inputs or formulas. R84 does not establish the balance formula or locale selection; no values may be invented.
 - [x] CurrencyContainer row content and amount-dependent description formatting are host-supplied. No 70688 text catalog is claimed.
   Behavioral proof: `tests/tooltip_currency_r84.rs::set_hyperlink_resolves_currency_links` drives the original `SetHyperlink` consumer with a supplied matching range and with no amount; it checks distinct selected title, description and amount output. No 70688 text catalog is claimed.
-- [ ] The conditional error row, recharge calculation and locale-table aliases remain unmodeled.
-  Classification: (c) error-row predicate and locale aliases are UNKNOWN. The verified recharge helper return is discarded by the effective-quantity caller, so it does not change the tooltip result; its recharge fields are not present in the current currency state model.
+- [ ] The recharge calculation remains unmodeled. R84 verifies the standalone clock/offset, cycle, wrapping and cap formula, but the effective-quantity caller discards its result. Current `CurrencyInfo` and `CurrencyTooltipInputs` have no recharge start, end, duration, amount, cap or time-offset fields, so there is no tooltip effect to assert.
+  Classification: (c) missing backing fields and no established tooltip result. Do not invent recharge state or a row.
+- [ ] The conditional error row remains unmodeled. R84 verifies a type-41 row after color remapping, but its predicate requires successful results from two unresolved helpers.
+  Classification: (c) native-only predicate and text inputs.
+- [ ] Locale-table aliases remain unmodeled.
+  Classification: (c) R84 does not establish the locale table or aliases.
 
 ## Out of scope
 
 - Other non-Retail currency producer changes and currency getters.
-- Guessed quest-list sources, missing-result behavior, error-row predicates, balance formulas or formatter modes.
+- Guessed quest-list sources, missing-result behavior, error-row predicates, recharge state, balance formulas or formatter modes.

@@ -72,8 +72,10 @@ for _, region in ipairs({ GameTooltip:GetRegions() }) do
             matches = matches + 1
             assert(math.abs(region:GetHeight() - 10) < 0.01,
                 'the original options must set divider height 10')
-            assert(math.abs(region:GetWidth() - blank:GetWidth()) < 0.01,
-                'the All anchor must span the wrapped blank row')
+            assert(math.abs(region:GetLeft() - blank:GetLeft()) < 0.01,
+                'the All anchor must start at the wrapped blank row left edge')
+            assert(math.abs(region:GetRight() - blank:GetRight()) < 0.01,
+                'the All anchor must end at the wrapped blank row right edge')
         end
     end
 end
@@ -133,7 +135,6 @@ assert(GameTooltip:GetLeftLine(1):GetText() == 'Blastfurious Machete',
 "#;
 
 const OUTFIT_CONSUMER_PROBE: &str = r#"
-A_Admin.SetUnlockedOutfitSlots(0, 2)
 C_TransmogOutfitInfo.AddNewOutfit('Residual Raid', 134400)
 C_TransmogOutfitInfo.AddNewOutfit('Residual Dungeon', 134401)
 local outfits = {

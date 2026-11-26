@@ -15,6 +15,8 @@ The hyperlink dispatcher follows R82/R82b, Retail 12.1.5.70688. Source lives in 
 - [x] Essence mode 2 uses explicit rank/main/passive selection and supplied localized headings, emits identity type 8, and orders main before passive without next-rank/source/requirement annotations. VERIFIED — `tooltip_hyperlink_r82_essence_uses_supplied_rank_spell_selection`.
 - [x] Conduit mode 1 clamps signed rank below one, emits descriptor rows before description, preserves item-level metadata and suppresses soulbound. VERIFIED — `tooltip_hyperlink_r82_conduit_clamps_rank_and_suppresses_soulbound`.
 - [x] Quest uses a supplied quest-log record as its record-provider seam and emits only identity type 23 plus one type-0 title. Retail PvP talent uses primary SpellID and suppresses annotations. VERIFIED — `tooltip_hyperlink_r82_quest_only_publishes_supplied_title` and `tooltip_hyperlink_r82_pvptal_uses_primary_spell_without_annotation`.
+- [x] Retail keystone links parse eight scalars, route the inferred first scalar to the shared item producer with mode 0 and clear preview, and preserve two distinct item/SellPrice outputs through `GameTooltip:SetHyperlink` even when `hideVendorPrice` is true. VERIFIED route behavior per R88aw; first-scalar mapping INFERRED per R82.
+- [ ] The remaining seven keystone scalar-to-request mappings are UNKNOWN and discarded.
 
 ## How it works
 
@@ -36,6 +38,7 @@ The hyperlink dispatcher follows R82/R82b, Retail 12.1.5.70688. Source lives in 
 - `tests/tooltip_hyperlink_r82.rs`: `tooltip_hyperlink_r82_raw_and_coloured_currency_omit_top_level_quantity`, `tooltip_hyperlink_r82_marker_priority_precedes_text_position`, `tooltip_hyperlink_r82_no_producer_markers_do_not_fall_through`, `tooltip_hyperlink_r82_trade_returns_false`, `tooltip_hyperlink_r82_apower_rank_colour_uses_adjusted_bonus`, `tooltip_hyperlink_r82_conduit_clamps_rank_and_suppresses_soulbound`, `tooltip_hyperlink_r82_essence_uses_supplied_rank_spell_selection`, `tooltip_hyperlink_r82_quest_only_publishes_supplied_title`, `tooltip_hyperlink_r82_pvptal_uses_primary_spell_without_annotation`, `tooltip_hyperlink_r82_parses_item_request_fields_without_owned_identity`, `tooltip_hyperlink_r82_spell_difficulty_is_not_rank`, `tooltip_hyperlink_r82_spell_wrapper_values_do_not_replace_spell_identity`, `tooltip_hyperlink_r82_rank_inputs_and_marker_inventory`, and `tooltip_hyperlink_r82b_artifact_display_math_uses_explicit_context`.
 - `tests/tooltip_item_descriptor.rs`: `tooltip_item_descriptor_original_hyperlink_preserves_bonus_lists`.
 - `tests/tooltip_currency_r84.rs`: `set_hyperlink_resolves_currency_links`.
+- `tests/tooltip_residual_prefork.rs`: `tooltip_residual_keystone_links_keep_sell_price_preview_clear` drives two eight-scalar keystone-marker links through the original `SetHyperlink` consumer.
 
 VERIFIED on code tree `195448e8b` after the m41 merge: Retail library 2264/2264 and tooltip-related integration 653/653 pass, with zero compiler warnings. VERIFIED on preceding production tree `0763fde84`: PTR and Forever each pass all 15 exact changed cases, with zero warnings. These are simulator proofs, not full native output equivalence; request-only and catalog evidence limits remain as stated above.
 
@@ -47,7 +50,9 @@ VERIFIED on code tree `195448e8b` after the m41 merge: Retail library 2264/2264 
   Reason: R82 leaves the complete serialized spell rows UNKNOWN, so adding them would invent native output.
 - [ ] Catalog bindings are INFERRED 70391 values, isolated in a droppable commit. The existing standalone artifact getter's flag8/maximum policy is not reused as hyperlink evidence.
   Reason: The bindings have only 70391 inferred evidence, not direct R82 native confirmation.
+- [ ] The remaining seven keystone scalar-to-request mappings are UNKNOWN and discarded.
+  Reason: R82 proves eight scalars and an item request, but not the field mapping.
 
 ## Out of scope
 
-Unit object lookup, quest objectives/state rows, achievement/instance-lock rows, exceptional malformed input and native miss arity are UNKNOWN. They must not produce guessed rows. Talent output is unmodelled because no selected Retail link producer was established; non-Retail PvP talent lacks a row source. Enchant validation, curio/mount discriminators, Maw-power record selection and keystone field mapping stay unmodelled where the backing lookup or request mapping is unknown. No unrelated producer substitutes for them.
+Unit object lookup, quest objectives/state rows, achievement/instance-lock rows, exceptional malformed input and native miss arity are UNKNOWN. They must not produce guessed rows. Talent output is unmodelled because no selected Retail link producer was established; non-Retail PvP talent lacks a row source. Enchant validation, curio/mount discriminators, Maw-power record selection and the remaining seven keystone scalar mappings stay unmodelled where the backing lookup or request mapping is unknown. No unrelated producer substitutes for them.

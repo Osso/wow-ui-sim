@@ -4,9 +4,10 @@ mod catalog;
 pub mod inputs;
 pub mod parse;
 
+use crate::items;
 use crate::lua_api::globals::missing_surface::tooltip_info::{
-    append_line, compose_tooltip, tooltip_for_currency, tooltip_for_item_hyperlink,
-    tooltip_for_link_spell,
+    append_line, compose_tooltip, tooltip_for_currency, tooltip_for_item_context_with_sell_price,
+    tooltip_for_item_hyperlink, tooltip_for_link_spell,
 };
 use crate::lua_api::methods::borrow_state;
 use crate::lua_bridge::FromStack;
@@ -56,6 +57,8 @@ fn route_hyperlink(state: &mut LuaState, request: HyperlinkRequest) -> LuaResult
             state,
             request.spell_id,
         ))),
+        HyperlinkRequest::Keystone { item_id } => Ok(keystone_hyperlink_tooltip(state, item_id)?
+            .map_or(HyperlinkOutput::Unknown, HyperlinkOutput::Tooltip)),
         HyperlinkRequest::Currency { id, quantity } => {
             Ok(currency_hyperlink_tooltip(state, id, quantity)?
                 .map_or(HyperlinkOutput::Unknown, HyperlinkOutput::Tooltip))
@@ -89,6 +92,17 @@ fn route_special_hyperlink(
         other => HyperlinkOutput::AlreadyPublished(power_route(state, other)?),
     };
     Ok(output)
+}
+
+fn keystone_hyperlink_tooltip(state: &mut LuaState, item_id: u32) -> LuaResult<Option<Val>> {
+    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail {
+        return Ok(None);
+    }
+    // R88aw: the keystone route passes mode zero and leaves preview clear.
+    let item = items::get_item(item_id);
+    Ok(Some(tooltip_for_item_context_with_sell_price(
+        state, item_id, item,
+    )))
 }
 
 fn currency_hyperlink_tooltip(

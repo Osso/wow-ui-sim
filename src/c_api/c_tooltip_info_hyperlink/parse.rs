@@ -1,6 +1,9 @@
 //! R82 Q1/Q2: request parsing only. No guessed downstream field meanings.
 use crate::c_api::item_descriptor::{ParsedItemLink, parse_item_link};
 
+/// R82 Q1: keystone links carry eight numeric scalars.
+const KEYSTONE_SCALAR_COUNT: usize = 8;
+
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum Marker {
     Item,
@@ -15,8 +18,11 @@ pub enum Marker {
     ArtifactPower,
     Trade,
     Achievement,
-    InstanceLock,
-    Keystone,
+    Keystone {
+        /// INFERRED (R82/R88aw): the first of eight keystone scalars selects the item.
+        /// The remaining scalar-to-request mapping is UNKNOWN.
+        item_id: u32,
+    },
     UrlIndex,
     StoreCategory,
     AzeriteEssence,
@@ -59,6 +65,13 @@ pub struct ItemRequest {
     pub optional_arg1: i32,
     pub optional_arg2: i32,
     pub hide_vendor_price: bool,
+}
+
+struct RequestOptions {
+    optional_arg1: Option<i32>,
+    optional_arg2: Option<i32>,
+    hide_vendor_price: bool,
+    previous_arg2: i32,
 }
 
 #[derive(Clone, Debug, PartialEq, Eq)]
@@ -120,70 +133,120 @@ pub fn parse(
     hide_vendor_price: bool,
     previous_arg2: i32,
 ) -> Option<HyperlinkRequest> {
+    let (marker, payload) = find_marker_payload(text)?;
+    let payload = payload.split('|').next()?;
+    let options = RequestOptions {
+        optional_arg1,
+        optional_arg2,
+        hide_vendor_price,
+        previous_arg2,
+    };
+    parse_payload(marker, payload, &options)
+}
+
+fn find_marker_payload(text: &str) -> Option<(Marker, &str)> {
     let text = text.split('\0').next()?;
-    let (marker, payload) = MARKERS.iter().find_map(|&(marker, tag)| {
+    MARKERS.iter().find_map(|&(marker, tag)| {
         text.find(tag)
             .map(|offset| (marker, &text[offset + tag.len()..]))
-    })?;
-    let payload = payload.split('|').next()?;
+    })
+}
+
+fn parse_payload(
+    marker: Marker,
+    payload: &str,
+    options: &RequestOptions,
+) -> Option<HyperlinkRequest> {
     let mut fields = payload.split(':');
-    let mut next = || fields.next().and_then(number);
     Some(match marker {
         Marker::UrlIndex
         | Marker::StoreCategory
         | Marker::PerksActivity
         | Marker::InitiativeTask => HyperlinkRequest::NoProducer(marker),
-        Marker::Item => HyperlinkRequest::Item(ItemRequest {
-            link: parse_item_link(&format!("item:{payload}"))?,
-            optional_arg1: optional_arg1.unwrap_or(0),
-            optional_arg2: optional_arg2.unwrap_or(previous_arg2),
-            hide_vendor_price,
-        }),
-        Marker::Spell => HyperlinkRequest::Spell(SpellRequest {
-            spell_id: next()?,
-            difficulty: next().map_or(-1, |n| n as i32),
-            mode: 0,
-            is_link: true,
-            resolve_overrides: false,
-            optional_arg1: optional_arg1.unwrap_or(0),
-            optional_arg2: optional_arg2.unwrap_or(0),
-        }),
+        Marker::Item => parse_item_request(payload, options)?,
+        Marker::Spell => parse_spell_request(&mut fields, options)?,
+        Marker::Trade => parse_trade_request(payload)?,
+        Marker::Keystone => parse_keystone_request(&mut fields)?,
+        Marker::Unit | Marker::Achievement | Marker::InstanceLock => HyperlinkRequest::Unmodelled {
+            marker,
+            payload: payload.to_string(),
+        },
+        _ => parse_single_numeric_request(marker, &mut fields)?,
+    })
+}
+
+fn parse_item_request(payload: &str, options: &RequestOptions) -> Option<HyperlinkRequest> {
+    Some(HyperlinkRequest::Item(ItemRequest {
+        link: parse_item_link(&format!("item:{payload}"))?,
+        optional_arg1: options.optional_arg1.unwrap_or(0),
+        optional_arg2: options.optional_arg2.unwrap_or(options.previous_arg2),
+        hide_vendor_price: options.hide_vendor_price,
+    }))
+}
+
+fn parse_spell_request(
+    fields: &mut std::str::Split<'_, char>,
+    options: &RequestOptions,
+) -> Option<HyperlinkRequest> {
+    Some(HyperlinkRequest::Spell(SpellRequest {
+        spell_id: next_number(fields)?,
+        difficulty: next_number(fields).map_or(-1, |n| n as i32),
+        mode: 0,
+        is_link: true,
+        resolve_overrides: false,
+        optional_arg1: options.optional_arg1.unwrap_or(0),
+        optional_arg2: options.optional_arg2.unwrap_or(0),
+    }))
+}
+
+fn parse_trade_request(payload: &str) -> Option<HyperlinkRequest> {
+    let mut fields = payload.split(':');
+    Some(HyperlinkRequest::Trade {
+        guid: fields.next()?.to_string(),
+        first: number(fields.next()?)?,
+        second: number(fields.next()?)?,
+    })
+}
+
+fn parse_keystone_request(fields: &mut std::str::Split<'_, char>) -> Option<HyperlinkRequest> {
+    let item_id = next_number(fields)?;
+    for _ in 1..KEYSTONE_SCALAR_COUNT {
+        next_number(fields)?;
+    }
+    Some(HyperlinkRequest::Keystone { item_id })
+}
+
+fn parse_single_numeric_request(
+    marker: Marker,
+    fields: &mut std::str::Split<'_, char>,
+) -> Option<HyperlinkRequest> {
+    Some(match marker {
         Marker::Currency => HyperlinkRequest::Currency {
-            id: next()?,
-            quantity: next().unwrap_or(0) as i32,
+            id: next_number(fields)?,
+            quantity: next_number(fields).unwrap_or(0) as i32,
         },
         Marker::ArtifactPower => HyperlinkRequest::ArtifactPower {
-            id: next()?,
-            base: next()? as u8,
-            total: next()? as u8,
+            id: next_number(fields)?,
+            base: next_number(fields)? as u8,
+            total: next_number(fields)? as u8,
         },
         Marker::AzeriteEssence => HyperlinkRequest::AzeriteEssence {
-            id: next()?,
-            rank: next()?.max(1),
+            id: next_number(fields)?,
+            rank: next_number(fields)?.max(1),
         },
         Marker::Conduit => HyperlinkRequest::Conduit {
-            id: next()?,
-            rank: (next()? as i32).max(1),
+            id: next_number(fields)?,
+            rank: (next_number(fields)? as i32).max(1),
         },
-        Marker::Trade => {
-            let mut fields = payload.split(':');
-            HyperlinkRequest::Trade {
-                guid: fields.next()?.to_string(),
-                first: number(fields.next()?)?,
-                second: number(fields.next()?)?,
-            }
-        }
-        Marker::Unit | Marker::Achievement | Marker::InstanceLock | Marker::Keystone => {
-            HyperlinkRequest::Unmodelled {
-                marker,
-                payload: payload.to_string(),
-            }
-        }
         _ => HyperlinkRequest::Single {
             marker,
-            id: next()?,
+            id: next_number(fields)?,
         },
     })
+}
+
+fn next_number(fields: &mut std::str::Split<'_, char>) -> Option<u32> {
+    fields.next().and_then(number)
 }
 
 fn number(text: &str) -> Option<u32> {
