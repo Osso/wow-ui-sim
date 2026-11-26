@@ -57,7 +57,10 @@ pub(crate) fn patch(env: &LoaderEnv<'_>) {
     let _ = env.exec(ITEM_QUALITY_COLOR_DATA_METHODS_WORKAROUND_LUA);
 }
 
-#[cfg(test)]
+#[cfg(all(
+    test,
+    not(any(feature = "client-retail", feature = "client-wowforever"))
+))]
 mod tests {
     use super::*;
     use crate::lua_api::WowLuaEnv;

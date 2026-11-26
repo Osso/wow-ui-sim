@@ -134,6 +134,7 @@ pub(super) fn ensure_adventure_map_frame_surface_for_runtime_addon_load(
     temporary::adventure_map_frame_surface::patch_loader(env);
 }
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(super) fn patch_item_quality_color_data_methods(env: &crate::lua_api::LoaderEnv<'_>) {
     temporary::item_quality_color_data_methods::patch(env);
 }

@@ -708,6 +708,7 @@ fn patch_runtime_journal_addon_surfaces(env: &crate::lua_api::LoaderEnv<'_>, add
 }
 
 fn patch_runtime_feature_addon_surfaces(env: &crate::lua_api::LoaderEnv<'_>, addon_name: &str) {
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     if matches!(addon_name, "Blizzard_ArtifactUI" | "Blizzard_Colors") {
         patch_item_quality_color_data_methods(env);
     }
