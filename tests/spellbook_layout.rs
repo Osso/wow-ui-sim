@@ -594,8 +594,10 @@ fn spellbook_layout_stays_locked() {
 #[test]
 fn forever_spellbook_catalog_stays_one_page_after_known_spells() {
     let env = setup_full_ui();
+    env.exec("A_Admin.SetSpec(70)")
+        .expect("the original spellbook should select the player's Retribution specialization");
     env.exec(
-        r#"for _, id in ipairs({6603, 8690, 7328, 35395, 19750, 85673, 853, 275779, 465, 1022, 1044, 642, 633, 190784, 96231, 10326, 213644, 6940, 31884, 375576, 115750, 32223, 317920, 183435, 5502, 121183, 137026, 385125, 31935, 53595, 26573, 53600, 31850, 86659, 62124, 498, 327193, 378974, 387174, 204019, 85043, 152261, 76671, 280373}) do A_Admin.LearnSpell(id) end"#,
+        r#"A_Admin.SetSpec(70); for _, id in ipairs({6603, 8690, 7328, 35395, 19750, 85673, 853, 275779, 465, 1022, 1044, 642, 633, 190784, 96231, 10326, 213644, 6940, 31884, 375576, 115750, 32223, 317920, 183435, 5502, 121183, 137026, 385125, 31935, 53595, 26573, 53600, 31850, 86659, 62124, 498, 327193, 378974, 387174, 204019, 85043, 152261, 76671, 280373}) do A_Admin.LearnSpell(id) end"#,
     )
     .expect("Paladin catalog spells should be supplied to the player state");
     open_spellbook(&env);
