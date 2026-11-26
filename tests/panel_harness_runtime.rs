@@ -179,6 +179,19 @@ fn achievement_search_consumer_handles_two_empty_result_selections() {
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 #[test]
+fn global_placeholder_tables_are_published_by_original_consumers() {
+    let env = load_achievement_ui_consumer();
+    env.exec(
+        r#"assert(C_AddOns.LoadAddOn("Blizzard_AuctionHouseUI"))
+           assert(type(StaticPopupDialogs["BUYOUT_AUCTION"]) == "table")
+           assert(type(StaticPopupDialogs["BID_AUCTION"]) == "table")
+           assert(type(SOUNDKIT) == "table")"#,
+    )
+    .expect("original consumers should publish their registries");
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
 fn pet_collection_consumer_uses_profile_selected_surface() {
     let env = load_achievement_ui_consumer();
     if cfg!(feature = "client-wowforever") {

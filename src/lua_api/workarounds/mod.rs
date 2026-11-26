@@ -232,6 +232,7 @@ fn apply_temporary_state_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
 }
 
 fn apply_runtime_state_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::global_placeholder_tables::apply_bootstrap(lua)?;
     temporary::frame_helper_defaults::apply_bootstrap(lua)?;
     crate::c_api::c_event_scheduler::apply_bootstrap(lua)?;
