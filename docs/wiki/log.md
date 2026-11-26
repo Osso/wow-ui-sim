@@ -4321,3 +4321,7 @@ Updated the [VAS system page](systems/store-secure-vas.md) with R88al. **VERIFIE
 ## [2026-11-14] implementation | Retail q3 screen clamp producers
 
 [Screen clamp suppression](investigations/screen-clamp-suppression.md) records q3 anchor dependency propagation, the guarded coordinate root, native-unit conversion and rounding, and separate inset notifications and restriction policy. The remaining q4 inputs are host seams, not native defaults.
+
+## [2026-11-26] implementation | Round 7 keystone consumer
+
+Updated the [Lua API system page](systems/lua-api.md#selected-keystone-info), [Round 7 contract](../specs/tooltip-r7-getters.md), and [ChallengeMode admin API](../admin-api/challenge-mode.md). The Retail original-event test now covers two selected keystones, their visible map/level/affix rows, supplied scaling percentages, and removal. **INFERRED (R88g9 (native evidence pending)):** selected modifier mapping and native power-level scaling remain separate from the simulator's explicit host inputs.

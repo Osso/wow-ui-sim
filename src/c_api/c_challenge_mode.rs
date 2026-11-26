@@ -90,6 +90,14 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
         "GetChallengeCompletionInfo",
         get_challenge_completion_info,
     )?;
+    if supports_keystone_profile() {
+        table_set_rust_fn_static(
+            state,
+            namespace,
+            "GetPowerLevelDamageHealthMod",
+            get_power_level_damage_health_mod,
+        )?;
+    }
     if ACTIVE == ClientProfile::Retail {
         table_set_rust_fn_static(state, namespace, "HasSlottedKeystone", has_slotted_keystone)?;
         table_set_rust_fn_static(state, namespace, "SlotKeystone", slot_keystone)?;
@@ -113,11 +121,60 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
 }
 
 pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
+    let builder = if supports_keystone_profile() {
+        builder.set_function("SetChallengePowerLevelMods", set_challenge_power_level_mods)?
+    } else {
+        builder
+    };
     if ACTIVE == ClientProfile::Retail {
         builder.set_function("SetKeystoneItemInfo", set_keystone_item_info)
     } else {
         Ok(builder)
     }
+}
+
+fn supports_keystone_profile() -> bool {
+    matches!(
+        ACTIVE,
+        ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever
+    )
+}
+
+fn set_challenge_power_level_mods(state: &mut LuaState) -> LuaResult<u32> {
+    let level = i32::from_stack(state, 1)?;
+    if matches!(stack_val(state, 2), Val::Nil) {
+        borrow_state_mut(state)?
+            .challenge_run
+            .power_level_mods
+            .remove(&level);
+        return Ok(0);
+    }
+    let damage = f64::from_stack(state, 2)?;
+    let health = f64::from_stack(state, 3)?;
+    borrow_state_mut(state)?
+        .challenge_run
+        .power_level_mods
+        .insert(level, (damage, health));
+    Ok(0)
+}
+
+fn get_power_level_damage_health_mod(state: &mut LuaState) -> LuaResult<u32> {
+    const USAGE: &str = "Usage: local damageMod, healthMod = C_ChallengeMode.GetPowerLevelDamageHealthMod(powerLevel)";
+    if matches!(stack_val(state, 1), Val::Nil) {
+        return Err(rilua::runtime_error(USAGE));
+    }
+    let level = i32::from_stack(state, 1)?;
+    let Some((damage, health)) = borrow_state(state)?
+        .challenge_run
+        .power_level_mods
+        .get(&level)
+    else {
+        return Ok(0);
+    };
+    // INFERRED (R88g9 (native evidence pending)): values come only from host input.
+    state.push(Val::Num(*damage));
+    state.push(Val::Num(*health));
+    Ok(2)
 }
 
 fn set_keystone_item_info(state: &mut LuaState) -> LuaResult<u32> {
