@@ -596,21 +596,18 @@ fn forever_spellbook_paging_click_updates_page_text() {
     let env = setup_full_ui();
     env.exec("PlayerSpellsUtil.ToggleSpellBookFrame()")
         .expect("the original spellbook should open");
-    let before: String = env
-        .eval("local s = PlayerSpellsFrame.SpellBookFrame; return tostring(s:GetTab()) .. ':' .. tostring(s.categoryMixins[1].displayName) .. ':' .. tostring(#s.categoryMixins)")
-        .expect("spellbook category state should be readable");
-    env.exec("PlayerSpellsFrame.SpellBookFrame.CategoryTabSystem:GetTabButton(1):Click()")
-        .expect("the real class category tab should accept the click");
-    let class_first_page: String = env
+    env.exec("PlayerSpellsFrame.SpellBookFrame.CategoryTabSystem:GetTabButton(3):Click()")
+        .expect("the real Protection category tab should accept the click");
+    let first_page: String = env
         .eval("return PlayerSpellsFrame.SpellBookFrame.PagedSpellsFrame.PagingControls.PageText:GetText()")
-        .expect("the class category page text should be readable");
-    assert!(class_first_page == "Page 1/2", "class catalog should have two pages, got {class_first_page}; initial {before}");
+        .expect("the Protection category page text should be readable");
+    assert_eq!(first_page, "Page 1/2", "the Protection catalog supplies two pages");
     env.exec("PlayerSpellsFrame.SpellBookFrame.PagedSpellsFrame.PagingControls.NextPageButton:Click()")
         .expect("the real next-page button should accept the click");
-    let class_second_page: String = env
+    let second_page: String = env
         .eval("return PlayerSpellsFrame.SpellBookFrame.PagedSpellsFrame.PagingControls.PageText:GetText()")
-        .expect("class page two text should be readable");
-    assert_eq!(class_second_page, "Page 2/2", "the real next-page click should show page two");
+        .expect("Protection page two text should be readable");
+    assert_eq!(second_page, "Page 2/2", "the real next-page click should show page two");
 }
 
 #[test]
