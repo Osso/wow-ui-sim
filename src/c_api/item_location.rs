@@ -2,10 +2,11 @@
 
 use std::collections::HashSet;
 
-use crate::lua_api::methods::{borrow_state, table_get};
+use crate::lua_api::methods::{borrow_state, borrow_state_mut, table_get};
 use crate::lua_api::state::{CursorItemOrigin, SimState};
-use rilua::Val;
+use crate::lua_bridge::{TableBuilder, stack_val};
 use rilua::vm::state::LuaState;
+use rilua::{LuaResult, Val, runtime_error};
 
 const LAST_NATIVE_CONTAINER_INDEX: i32 = 15;
 const REINDEXED_CONTAINER_INDEX_START: i32 = 5;
@@ -63,6 +64,76 @@ pub struct R88sInventoryInputs {
     /// Host observations for special equipment slots when mode is active.
     /// Missing slots are UNKNOWN and reject.
     pub available_special_equipment_slots: HashSet<i32>,
+}
+
+pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
+    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail {
+        return Ok(builder);
+    }
+    builder.set_function("SetItemLocationInputs", set_item_location_inputs)
+}
+
+fn set_item_location_inputs(state: &mut LuaState) -> LuaResult<u32> {
+    let inventory_count = read_optional_i32(stack_val(state, 1), "inventoryCount")?;
+    let inventory_mode_active = read_optional_bool(stack_val(state, 2), "inventoryModeActive")?;
+    let slots = read_special_slots(state)?;
+    borrow_state_mut(state)?.r88s_inventory_inputs = R88sInventoryInputs {
+        inventory_count,
+        inventory_mode_active,
+        available_special_equipment_slots: slots,
+    };
+    Ok(0)
+}
+
+fn read_special_slots(state: &LuaState) -> LuaResult<HashSet<i32>> {
+    let Val::Table(reference) = stack_val(state, 3) else {
+        return Err(runtime_error(
+            "A_Admin.SetItemLocationInputs: availableEquipmentSlots must be a table",
+        ));
+    };
+    let table = state
+        .gc
+        .tables
+        .get(reference)
+        .ok_or_else(|| runtime_error("availableEquipmentSlots table is unavailable"))?;
+    table
+        .array_slice()
+        .iter()
+        .map(|value| read_required_i32(*value, "availableEquipmentSlots"))
+        .collect()
+}
+
+fn read_optional_i32(value: Val, field: &str) -> LuaResult<Option<i32>> {
+    if value.is_nil() {
+        Ok(None)
+    } else {
+        read_required_i32(value, field).map(Some)
+    }
+}
+
+fn read_required_i32(value: Val, field: &str) -> LuaResult<i32> {
+    match value {
+        Val::Num(value)
+            if value.is_finite()
+                && value.fract() == 0.0
+                && (f64::from(i32::MIN)..=f64::from(i32::MAX)).contains(&value) =>
+        {
+            Ok(value as i32)
+        }
+        _ => Err(runtime_error(format!(
+            "A_Admin.SetItemLocationInputs: {field} must be a signed integer"
+        ))),
+    }
+}
+
+fn read_optional_bool(value: Val, field: &str) -> LuaResult<Option<bool>> {
+    match value {
+        Val::Nil => Ok(None),
+        Val::Bool(value) => Ok(Some(value)),
+        _ => Err(runtime_error(format!(
+            "A_Admin.SetItemLocationInputs: {field} must be a boolean or nil"
+        ))),
+    }
 }
 
 /// Read the Retail R88s.s1 ItemLocation forms with their inventory bounds.

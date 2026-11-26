@@ -47,6 +47,14 @@ Supplies currency-specific transfer eligibility inputs. Fields that are not supp
 - **rules** `table` -- Optional boolean fields: `faction_key_0`, `faction_key_1`, `award_condition_met`, `quantity_cap_reached`, and `weekly_cap_reached`.
 - **Affects:** `C_CurrencyInfo.CanTransferCurrency(currencyID)`
 
+### A_Admin.SetItemTooltipSellPriceQuantities(itemID, currentQuantity, preparedMaxQuantity)
+
+Supplies the Retail no-instance SellPrice quantity pair for one item. Both quantities must be unsigned integers. Passing nil for either quantity clears the pair. The producer uses the prepared maximum only when it exceeds the current quantity; it does not derive either value from `Stackable`.
+
+### A_Admin.SetItemTooltipSocketProjection(bagID, slotIndex, rows)
+
+Supplies socket metadata for an existing carried bag item on Retail and WoW Forever. `bagID` is 0–4 and `slotIndex` is positive. Each row requires at least one of `socketType` (nonempty string), `gemIcon` (nonempty string), or `gemItemID` (unsigned integer). Nil or an empty table clears the projection. `GetInventoryItemByID` copies the selected instance's rows; no row is inferred from the item catalog.
+
 ### A_Admin.SetItemLevel(ilvl)
 
 Sets the player's displayed average item level.

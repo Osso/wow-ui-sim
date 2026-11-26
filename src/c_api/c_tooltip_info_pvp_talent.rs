@@ -15,10 +15,10 @@ use crate::lua_api::globals::missing_surface::tooltip_info::tooltip_for_spell;
 use crate::lua_api::globals::missing_surface::tooltip_info::{
     append_line, format_global_numeric, format_global_text, global_text, named_color,
 };
-use crate::lua_api::methods::borrow_state;
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 use crate::lua_api::methods::table_set;
-use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
+use crate::lua_api::methods::{borrow_state, borrow_state_mut};
+use crate::lua_bridge::{TableBuilder, stack_val, table_set_rust_fn_static};
 use rilua::LuaResult;
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 use rilua::Val;
@@ -134,6 +134,102 @@ impl Default for PvpTalentTooltipInputs {
 
 pub(crate) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
     table_set_rust_fn_static(state, namespace, "GetPvpTalent", get_pvp_talent)
+}
+
+#[cfg(feature = "client-retail")]
+pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
+    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail {
+        return Ok(builder);
+    }
+    builder
+        .set_function("SetPvpTalentTooltipRecord", set_pvp_talent_tooltip_record)?
+        .set_function(
+            "SetPvpTalentTooltipResolution",
+            set_pvp_talent_tooltip_resolution,
+        )
+}
+
+#[cfg(feature = "client-retail")]
+fn set_pvp_talent_tooltip_record(state: &mut LuaState) -> LuaResult<u32> {
+    let talent_id = read_i32(state, 1, "talentID")?;
+    let spell_id = read_u32(state, 2, "spellID")?;
+    let overrides_spell_id = read_u32(state, 3, "overridesSpellID")?;
+    let level_required = read_i32(state, 4, "levelRequired")?;
+    let category_position_mask = read_u8(state, 5, "categoryPositionMask")?;
+    borrow_state_mut(state)?.pvp_talent_tooltip.catalog.insert(
+        talent_id,
+        PvpTalentTooltipRecord {
+            spell_id,
+            overrides_spell_id,
+            level_required,
+            category_position_mask,
+            ..PvpTalentTooltipRecord::default()
+        },
+    );
+    Ok(0)
+}
+
+#[cfg(feature = "client-retail")]
+fn set_pvp_talent_tooltip_resolution(state: &mut LuaState) -> LuaResult<u32> {
+    let spell_id = read_u32(state, 1, "spellID")?;
+    let resolved = if stack_val(state, 2).is_nil() {
+        None
+    } else {
+        Some(read_u32(state, 2, "resolvedSpellID")?)
+    };
+    let mut sim = borrow_state_mut(state)?;
+    if let Some(resolved) = resolved {
+        sim.pvp_talent_tooltip
+            .resolved_spell_ids
+            .insert(spell_id, resolved);
+    } else {
+        sim.pvp_talent_tooltip.resolved_spell_ids.remove(&spell_id);
+    }
+    Ok(0)
+}
+
+#[cfg(feature = "client-retail")]
+fn read_u32(state: &LuaState, position: i32, field: &str) -> LuaResult<u32> {
+    read_integer(state, position, field, 0.0, f64::from(u32::MAX)).map(|value| value as u32)
+}
+
+#[cfg(feature = "client-retail")]
+fn read_i32(state: &LuaState, position: i32, field: &str) -> LuaResult<i32> {
+    read_integer(
+        state,
+        position,
+        field,
+        f64::from(i32::MIN),
+        f64::from(i32::MAX),
+    )
+    .map(|value| value as i32)
+}
+
+#[cfg(feature = "client-retail")]
+fn read_u8(state: &LuaState, position: i32, field: &str) -> LuaResult<u8> {
+    read_integer(state, position, field, 0.0, f64::from(u8::MAX)).map(|value| value as u8)
+}
+
+#[cfg(feature = "client-retail")]
+fn read_integer(
+    state: &LuaState,
+    position: i32,
+    field: &str,
+    minimum: f64,
+    maximum: f64,
+) -> LuaResult<f64> {
+    match stack_val(state, position) {
+        Val::Num(value)
+            if value.is_finite()
+                && value.fract() == 0.0
+                && (minimum..=maximum).contains(&value) =>
+        {
+            Ok(value)
+        }
+        _ => Err(rilua::runtime_error(format!(
+            "A_Admin.SetPvpTalentTooltipRecord: {field} must be an integer in [{minimum}, {maximum}]"
+        ))),
+    }
 }
 
 #[cfg(feature = "client-retail")]

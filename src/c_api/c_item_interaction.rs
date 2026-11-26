@@ -6,7 +6,7 @@ use crate::lua_api::methods::{
     borrow_state, borrow_state_mut, create_string, create_table, table_set,
 };
 use crate::lua_api::state::{CursorInfo, CursorItemOrigin, ItemLocationData};
-use crate::lua_bridge::table_set_rust_fn_static;
+use crate::lua_bridge::{TableBuilder, stack_val, table_set_rust_fn_static};
 use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
 use rilua::vm::table::Table;
@@ -44,6 +44,83 @@ struct PendingItem {
     identity: u64,
     guid: Option<String>,
     location: ItemLocationData,
+}
+
+pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
+    if ACTIVE != ClientProfile::Retail {
+        return Ok(builder);
+    }
+    builder.set_function("SetItemInteractionScenario", set_item_interaction_scenario)
+}
+
+fn set_item_interaction_scenario(state: &mut LuaState) -> LuaResult<u32> {
+    let interaction_type = read_i32(stack_val(state, 1), "interactionType")?;
+    let accepted_item_ids = read_u32_array(state, 2)?;
+    let selection_id = read_i32(stack_val(state, 3), "selectionID")?;
+    let record_id = read_u32(stack_val(state, 4), "recordID")?;
+    let mut sim = borrow_state_mut(state)?;
+    sim.item_interaction = Some(ItemInteractionInfo {
+        interaction_type,
+        ..ItemInteractionInfo::default()
+    });
+    sim.item_interaction_tooltip_input = Some(crate::c_api::ItemInteractionTooltipInput {
+        pending_item_acceptance: accepted_item_ids
+            .into_iter()
+            .map(|item_id| ((interaction_type, item_id), true))
+            .collect(),
+        selection_id,
+        record_id,
+        ..crate::c_api::ItemInteractionTooltipInput::default()
+    });
+    Ok(0)
+}
+
+fn read_u32_array(state: &LuaState, position: i32) -> LuaResult<Vec<u32>> {
+    let Val::Table(reference) = stack_val(state, position) else {
+        return Err(rilua::runtime_error(
+            "A_Admin.SetItemInteractionScenario: acceptedItemIDs must be a table",
+        ));
+    };
+    let table = state
+        .gc
+        .tables
+        .get(reference)
+        .ok_or_else(|| rilua::runtime_error("acceptedItemIDs table is unavailable"))?;
+    table
+        .array_slice()
+        .iter()
+        .map(|value| read_u32(*value, "acceptedItemIDs"))
+        .collect()
+}
+
+fn read_u32(value: Val, field: &str) -> LuaResult<u32> {
+    match value {
+        Val::Num(value)
+            if value.is_finite()
+                && value.fract() == 0.0
+                && (0.0..=f64::from(u32::MAX)).contains(&value) =>
+        {
+            Ok(value as u32)
+        }
+        _ => Err(rilua::runtime_error(format!(
+            "A_Admin.SetItemInteractionScenario: {field} must contain unsigned integers"
+        ))),
+    }
+}
+
+fn read_i32(value: Val, field: &str) -> LuaResult<i32> {
+    match value {
+        Val::Num(value)
+            if value.is_finite()
+                && value.fract() == 0.0
+                && (f64::from(i32::MIN)..=f64::from(i32::MAX)).contains(&value) =>
+        {
+            Ok(value as i32)
+        }
+        _ => Err(rilua::runtime_error(format!(
+            "A_Admin.SetItemInteractionScenario: {field} must be a signed integer"
+        ))),
+    }
 }
 
 pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {

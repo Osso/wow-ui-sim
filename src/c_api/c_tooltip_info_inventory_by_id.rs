@@ -31,15 +31,18 @@
 //! `guid`.
 
 use crate::c_api::item_spell::item_guid_for_bag_slot;
+use crate::c_api::item_tooltip::ItemSocketProjectionRow;
 use crate::c_api::tooltip_data::unknown_getter_failure;
 use crate::c_api::tooltip_getter_args::signed;
 use crate::items;
 use crate::lua_api::globals::missing_surface::tooltip_info::tooltip_for_item_context;
-use crate::lua_api::methods::{borrow_state, create_string, table_set};
+use crate::lua_api::methods::{
+    borrow_state, borrow_state_mut, create_string, table_get, table_set, val_to_string,
+};
 use crate::lua_api::state::SimState;
-use crate::lua_bridge::table_set_rust_fn_static;
-use rilua::LuaResult;
+use crate::lua_bridge::{TableBuilder, stack_val, table_set_rust_fn_static};
 use rilua::vm::{gc::arena::GcRef, state::LuaState, table::Table};
+use rilua::{LuaResult, Val};
 
 /// WM57: the backpack is bag id 0 and the ordinary carried bags are 1-4.
 const BACKPACK: i32 = 0;
@@ -76,6 +79,133 @@ pub(crate) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResu
         "GetInventoryItemByID",
         get_inventory_item_by_id,
     )
+}
+
+pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
+    if !matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
+        return Ok(builder);
+    }
+    builder.set_function(
+        "SetItemTooltipSocketProjection",
+        set_item_tooltip_socket_projection,
+    )
+}
+
+fn set_item_tooltip_socket_projection(state: &mut LuaState) -> LuaResult<u32> {
+    let bag = read_i32(stack_val(state, 1), "bagID")?;
+    let slot = read_i32(stack_val(state, 2), "slotIndex")?;
+    if !(0..=4).contains(&bag) || slot < 1 {
+        return Err(rilua::runtime_error(
+            "A_Admin.SetItemTooltipSocketProjection: invalid bag location",
+        ));
+    }
+    let rows = read_socket_rows(state, stack_val(state, 3))?;
+    let mut sim = borrow_state_mut(state)?;
+    if !sim.bag_items.contains_key(&(bag, slot)) {
+        return Err(rilua::runtime_error(
+            "A_Admin.SetItemTooltipSocketProjection: bag item does not exist",
+        ));
+    }
+    if rows.is_empty() {
+        sim.item_tooltip_socket_projections.remove(&(bag, slot));
+    } else {
+        sim.item_tooltip_socket_projections
+            .insert((bag, slot), rows);
+    }
+    Ok(0)
+}
+
+fn read_socket_rows(state: &mut LuaState, value: Val) -> LuaResult<Vec<ItemSocketProjectionRow>> {
+    if value.is_nil() {
+        return Ok(Vec::new());
+    }
+    let Val::Table(reference) = value else {
+        return Err(rilua::runtime_error(
+            "A_Admin.SetItemTooltipSocketProjection: rows must be a table or nil",
+        ));
+    };
+    let table = state
+        .gc
+        .tables
+        .get(reference)
+        .ok_or_else(|| rilua::runtime_error("socket projection table is unavailable"))?;
+    let rows = table.array_slice().to_vec();
+    rows.iter()
+        .map(|row| read_socket_row(state, *row))
+        .collect()
+}
+
+fn read_socket_row(state: &mut LuaState, value: Val) -> LuaResult<ItemSocketProjectionRow> {
+    if !matches!(value, Val::Table(_)) {
+        return Err(rilua::runtime_error(
+            "socket projection row must be a table",
+        ));
+    }
+    let socket_type = table_get(state, value, "socketType");
+    let gem_icon = table_get(state, value, "gemIcon");
+    let gem_item_id = table_get(state, value, "gemItemID");
+    let row = ItemSocketProjectionRow {
+        socket_type: read_optional_text(state, socket_type, "socketType")?,
+        gem_icon: read_optional_text(state, gem_icon, "gemIcon")?,
+        gem_item_id: read_optional_u32(gem_item_id, "gemItemID")?,
+    };
+    if row.socket_type.is_none() && row.gem_icon.is_none() && row.gem_item_id.is_none() {
+        return Err(rilua::runtime_error(
+            "socket projection row requires socketType, gemIcon, or gemItemID",
+        ));
+    }
+    Ok(row)
+}
+
+fn read_optional_text(state: &mut LuaState, value: Val, field: &str) -> LuaResult<Option<String>> {
+    if value.is_nil() {
+        return Ok(None);
+    }
+    val_to_string(state, value)
+        .filter(|text| !text.is_empty())
+        .map(Some)
+        .ok_or_else(|| {
+            rilua::runtime_error(format!(
+                "A_Admin.SetItemTooltipSocketProjection: {field} must be a nonempty string"
+            ))
+        })
+}
+
+fn read_optional_u32(value: Val, field: &str) -> LuaResult<Option<u32>> {
+    if value.is_nil() {
+        return Ok(None);
+    }
+    match value {
+        Val::Num(value)
+            if value.is_finite()
+                && value.fract() == 0.0
+                && (0.0..=f64::from(u32::MAX)).contains(&value) =>
+        {
+            Ok(Some(value as u32))
+        }
+        _ => Err(rilua::runtime_error(format!(
+            "A_Admin.SetItemTooltipSocketProjection: {field} must be an unsigned integer"
+        ))),
+    }
+}
+
+fn read_i32(value: Val, field: &str) -> LuaResult<i32> {
+    match value {
+        Val::Num(value)
+            if value.is_finite()
+                && value.fract() == 0.0
+                && (f64::from(i32::MIN)..=f64::from(i32::MAX)).contains(&value) =>
+        {
+            Ok(value as i32)
+        }
+        _ => Err(rilua::runtime_error(format!(
+            "A_Admin.SetItemTooltipSocketProjection: {field} must be a signed integer"
+        ))),
+    }
 }
 
 fn get_inventory_item_by_id(state: &mut LuaState) -> LuaResult<u32> {
