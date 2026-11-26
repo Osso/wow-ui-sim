@@ -164,16 +164,16 @@ fn get_power_level_damage_health_mod(state: &mut LuaState) -> LuaResult<u32> {
         return Err(rilua::runtime_error(USAGE));
     }
     let level = i32::from_stack(state, 1)?;
-    let Some((damage, health)) = borrow_state(state)?
-        .challenge_run
-        .power_level_mods
-        .get(&level)
-    else {
+    let modifiers = {
+        let sim = borrow_state(state)?;
+        sim.challenge_run.power_level_mods.get(&level).copied()
+    };
+    let Some((damage, health)) = modifiers else {
         return Ok(0);
     };
     // INFERRED (R88g9 (native evidence pending)): values come only from host input.
-    state.push(Val::Num(*damage));
-    state.push(Val::Num(*health));
+    state.push(Val::Num(damage));
+    state.push(Val::Num(health));
     Ok(2)
 }
 
