@@ -157,7 +157,7 @@ const INV_TYPE_EQUIP_LOCS: &[(u8, &str)] = &[
 ];
 
 /// Model policy: absent item cooldown input projects a ready pair, not native parity.
-pub(super) fn item_cooldown_pair(sim: &SimState, item_id: Option<u32>) -> (f64, f64) {
+pub(crate) fn item_cooldown_pair(sim: &SimState, item_id: Option<u32>) -> (f64, f64) {
     item_id
         .and_then(|id| sim.item_cooldowns.get(&id))
         .map_or((0.0, 0.0), |cooldown| (cooldown.start, cooldown.duration))

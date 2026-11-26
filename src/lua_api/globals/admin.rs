@@ -436,6 +436,7 @@ fn register_combat_casting(b: TableBuilder) -> LuaResult<TableBuilder> {
         .set_function("FailCasting", cast_inputs::fail_casting)?
         .set_function("SetGCD", set_gcd)?
         .set_function("SetSpellCooldown", set_spell_cooldown)?
+        .set_function("SetItemCooldown", set_item_cooldown)?
         .set_function("SetSpellBookItemLowRank", set_spellbook_item_low_rank)?
         .set_function("SetMoving", set_moving)?
         .set_function("SetMounted", set_mounted)?
@@ -1033,6 +1034,20 @@ fn set_spell_cooldown(state: &mut LuaState) -> LuaResult<u32> {
             duration,
         },
     );
+    Ok(0)
+}
+
+fn set_item_cooldown(state: &mut LuaState) -> LuaResult<u32> {
+    let item_id = u32::from_stack(state, 1)?;
+    let duration = f64::from_stack(state, 2)?;
+    let mut sim = borrow_state_mut(state)?;
+    if duration == 0.0 {
+        sim.item_cooldowns.remove(&item_id);
+    } else {
+        let start = sim.clock_elapsed().as_secs_f64();
+        sim.item_cooldowns
+            .insert(item_id, SpellCooldownState { start, duration });
+    }
     Ok(0)
 }
 

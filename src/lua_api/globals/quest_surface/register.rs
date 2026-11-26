@@ -197,6 +197,11 @@ pub const GLOBAL_QUEST_FUNCTIONS: &[(&str, SurfaceFn)] = &[
         "GetQuestLogSpecialItemInfo",
         get_quest_log_special_item_info,
     ),
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    (
+        "GetQuestLogSpecialItemCooldown",
+        get_quest_log_special_item_cooldown,
+    ),
     ("SortQuestWatches", noop),
     ("SortQuestSortTypes", noop),
     ("SortQuests", noop),
