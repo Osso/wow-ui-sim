@@ -114,6 +114,7 @@ pub(crate) mod inventory_query_defaults;
 pub(crate) mod item_button_helper_defaults;
 #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod item_quality_color_data_methods;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod item_targeting_defaults;
 pub(crate) mod item_upgrade_availability_defaults;
 #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
@@ -136,6 +137,7 @@ pub(crate) mod map_art_help_text_defaults;
 pub(crate) mod map_canvas_scroll_container_legacy;
 #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod map_exploration_pin;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod map_group_defaults;
 pub(crate) mod map_runtime_state;
 pub(crate) mod merchant_filter_state;
