@@ -105,13 +105,10 @@ end
 "#;
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
-    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail
-        && !screen.is_glue()
-    {
-        return Ok(());
-    }
     lua.exec(ADVENTURE_JOURNAL_FALLBACKS_LUA)?;
-    lua.exec(ADVENTURE_GUIDE_HELPER_DEFAULTS_LUA)?;
+    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail {
+        lua.exec(ADVENTURE_GUIDE_HELPER_DEFAULTS_LUA)?;
+    }
     if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail {
         lua.exec(AVAILABILITY_FALLBACK_LUA)?;
     }
@@ -122,11 +119,13 @@ pub(crate) fn update_for_screen_mode(
     lua: &mut rilua::Lua,
     screen: crate::screen::ScreenKind,
 ) -> crate::Result<()> {
-    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail {
-        return Ok(());
-    }
     if screen.is_glue() {
         lua.exec(AVAILABILITY_FALLBACK_LUA)?;
+        lua.exec(ADVENTURE_GUIDE_HELPER_DEFAULTS_LUA)?;
+        return Ok(());
+    }
+    // Retail Game startup loads the original AdventureGuideUtil before consumers.
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
         return Ok(());
     }
     // Remove only our Glue fallback, never the original Game owner.
