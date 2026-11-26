@@ -66,7 +66,14 @@ local function RegisterFilterRecords(namespace)
 end
 
 RegisterFilterRecords(C_CombatLog)
-RegisterFilterRecords(C_CombatLogSecure)
+
+-- Retail's secure namespace is a separate table from the public namespace.
+-- Older profiles publish C_CombatLogSecure on the ordinary global table.
+local secureNamespace = C_CombatLogSecure
+if __secureenv and __secureenv.C_CombatLogSecure then
+    secureNamespace = __secureenv.C_CombatLogSecure
+end
+RegisterFilterRecords(secureNamespace)
 
 -- Simulator diagnostic only, not a native filter query API. Keep records rooted
 -- in closures, not untraced Rust Val fields. Public/secure stores stay separate.

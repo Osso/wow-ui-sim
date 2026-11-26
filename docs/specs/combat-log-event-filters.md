@@ -4,7 +4,7 @@ Stage Retail/PTR/Forever AddEventFilter and sibling ClearEventFilters in `src/c_
 
 ## What it must do
 
-- [ ] Original TOC-selected secure Blizzard_CombatLogProcessor SetFilterSettings/ApplyFilterSettings adds supplied filter records and replaces them after clear; empty settings clear them all on Retail, PTR and Forever.
+- [x] Original TOC-selected secure Blizzard_CombatLogProcessor SetFilterSettings/ApplyFilterSettings adds supplied filter records and replaces them after clear; empty settings clear them all on Retail, PTR and Forever.
 - [ ] Public C_CombatLog and C_CombatLogSecure each retain independent filter records; public clear does not erase secure records. Independence is simulator staging policy, not established native behavior.
 - [ ] Preserve argument order, count, nil positions and values without coercion or inferred defaults. A simulator-only diagnostic returns a fresh packed-record snapshot for the supplied namespace; it is not a WoW API.
 - [ ] Do not reset filtered-event enablement when clearing filter records: these are distinct state domains.
@@ -36,7 +36,7 @@ case032/033 settings-identity checks are **preservation only**, not independent 
 ## Known gaps (current cycle)
 
 - [x] Exercise the original processor on Forever and assert separate public/secure records, replacement, empty-setting clear, nil preservation and snapshot isolation.
-- [ ] Fix the Retail secure-namespace identity mismatch: the exact selector fails when the filter diagnostic receives the consumer's secure environment table.
+- [x] Fix the Retail secure-namespace identity mismatch: register filter records on the secure environment's C_CombatLogSecure table, so the original consumer and diagnostic use the same namespace identity.
 - [ ] Run the exact selector on PTR; current PTR proof is compile-only.
 - [x] Run stock Retail and Forever startup and compare the full JSON message/count maps with their `[]` baselines.
 
