@@ -49,6 +49,7 @@ fn update_equipped_item(
             owned_identity: None,
         },
     );
+    st.equipped_item_tooltip_guids.remove(&slot);
     st.player.stats = CharacterStats::compute(&st.player.equipped_items, st.player.class_index);
     Ok(previous)
 }
@@ -62,6 +63,7 @@ pub(super) fn unequip_item(state: &mut LuaState) -> LuaResult<u32> {
         crate::c_api::item_location::ItemSlot::Equipment(slot),
     );
     let previous = st.player.equipped_items.remove(&slot);
+    st.equipped_item_tooltip_guids.remove(&slot);
     st.player.stats = CharacterStats::compute(&st.player.equipped_items, st.player.class_index);
     drop(st);
     if previous.is_some() && crate::c_api::world_loot_object::is_equippable_spell_slot(slot) {
@@ -70,6 +72,33 @@ pub(super) fn unequip_item(state: &mut LuaState) -> LuaResult<u32> {
             "PLAYER_EQUIPED_SPELLS_CHANGED",
             &[],
         )?;
+    }
+    Ok(0)
+}
+
+/// Supply or clear the opaque GUID used by one equipped-copy tooltip request.
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(super) fn set_equipped_item_guid(state: &mut LuaState) -> LuaResult<u32> {
+    let slot = i32::from_stack(state, 1)?;
+    let guid = Option::<String>::from_stack(state, 2)?;
+    if guid.as_ref().is_some_and(|guid| guid.is_empty()) {
+        return Err(rilua::runtime_error(
+            "A_Admin.SetEquippedItemGUID: guid must be a nonempty string or nil",
+        ));
+    }
+    let mut sim = borrow_state_mut(state)?;
+    if !sim.player.equipped_items.contains_key(&slot) {
+        return Err(rilua::runtime_error(
+            "A_Admin.SetEquippedItemGUID: equipment slot has no item",
+        ));
+    }
+    match guid {
+        Some(guid) => {
+            sim.equipped_item_tooltip_guids.insert(slot, guid);
+        }
+        None => {
+            sim.equipped_item_tooltip_guids.remove(&slot);
+        }
     }
     Ok(0)
 }

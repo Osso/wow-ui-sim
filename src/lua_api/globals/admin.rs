@@ -55,6 +55,8 @@ use super::admin_encounter::{
     add_loot_item, clear_loot, end_loot_roll, get_last_loot_roll_choice, simulate_boss_kill,
     start_loot_roll,
 };
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+use super::admin_equipment::set_equipped_item_guid;
 use super::admin_equipment::{equip_item, unequip_item};
 use super::admin_events::{fire_event_admin, toggle_debug_anchors, toggle_debug_borders};
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
@@ -416,7 +418,8 @@ fn register_player_identity(b: TableBuilder) -> LuaResult<TableBuilder> {
 }
 
 fn register_player_progression(b: TableBuilder) -> LuaResult<TableBuilder> {
-    b.set_function("SetSpec", set_spec)?
+    let b = b
+        .set_function("SetSpec", set_spec)?
         .set_function("SetSpecSelectionEnabled", set_spec_selection_enabled)?
         .set_function("SetTalentRank", set_talent_rank)?
         .set_function("SetTalentSelection", set_talent_selection)?
@@ -426,7 +429,10 @@ fn register_player_progression(b: TableBuilder) -> LuaResult<TableBuilder> {
         .set_function("RemoveBuff", remove_buff)?
         .set_function("ClearBuffs", clear_buffs)?
         .set_function("EquipItem", equip_item)?
-        .set_function("UnequipItem", unequip_item)
+        .set_function("UnequipItem", unequip_item)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let b = b.set_function("SetEquippedItemGUID", set_equipped_item_guid)?;
+    Ok(b)
 }
 
 fn register_combat_casting(b: TableBuilder) -> LuaResult<TableBuilder> {

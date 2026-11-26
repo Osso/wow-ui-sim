@@ -55,6 +55,10 @@ Supplies the Retail no-instance SellPrice quantity pair for one item. Both quant
 
 Supplies socket metadata for an existing carried bag item on Retail and WoW Forever. `bagID` is 0–4 and `slotIndex` is positive. Each row requires at least one of `socketType` (nonempty string), `gemIcon` (nonempty string), or `gemItemID` (unsigned integer). Nil or an empty table clears the projection. `GetInventoryItemByID` copies the selected instance's rows; no row is inferred from the item catalog.
 
+### A_Admin.SetEquippedItemGUID(slot, guid)
+
+Supplies or clears the opaque GUID used by `C_TooltipInfo.GetInventoryItemByID` for an equipped copy on Retail and WoW Forever. `slot` is an existing signed equipment-slot index. `guid` is a nonempty string, or nil to clear it. Equipping or unequipping an item clears the supplied GUID. This does not claim a native GUID format or writer.
+
 ### A_Admin.SetItemLevel(ilvl)
 
 Sets the player's displayed average item level.

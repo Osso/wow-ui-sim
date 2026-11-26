@@ -26,9 +26,9 @@
 //! Explicit host-supplied bag-instance socket rows are copied into the shared
 //! producer. Pinned TooltipInfoSharedDocumentation declares GemSocket as line
 //! type 3 and the original TooltipDataRules consumer renders `gemIcon` or
-//! `socketType`. Native row selection remains UNKNOWN. An equipped copy also has
-//! no simulator GUID string, because `C_Item.GetItemGUID` only models bag
-//! locations, so only a bag copy publishes `guid`.
+//! `socketType`. Native row selection remains UNKNOWN. An equipped copy can
+//! also publish an explicit opaque GUID supplied through `A_Admin`; the native
+//! equipped-GUID writer and format remain UNKNOWN.
 
 use crate::c_api::item_spell::item_guid_for_bag_slot;
 use crate::c_api::item_tooltip::ItemSocketProjectionRow;
@@ -59,12 +59,12 @@ struct OwnedInstance {
 #[derive(Clone, Copy)]
 enum Location {
     Bag { bag: i32, slot: i32 },
-    Equipment,
+    Equipment { slot: i32 },
 }
 
 impl Location {
-    /// The simulator identity, in the shape `C_Item.GetItemGUID` publishes. The
-    /// equipment range has no modelled GUID string.
+    /// Bag copies use the simulator's `C_Item.GetItemGUID` shape. Equipment
+    /// copies use the explicit opaque host GUID when one was supplied.
     fn instance(self, item_id: u32, sim: &SimState) -> OwnedInstance {
         let (guid, socket_projection) = match self {
             Location::Bag { bag, slot } => (
@@ -74,7 +74,10 @@ impl Location {
                     .cloned()
                     .unwrap_or_default(),
             ),
-            Location::Equipment => (None, Vec::new()),
+            Location::Equipment { slot } => (
+                sim.equipped_item_tooltip_guids.get(&slot).cloned(),
+                Vec::new(),
+            ),
         };
         OwnedInstance {
             guid,
@@ -253,7 +256,7 @@ fn find_instance(state: &LuaState, item_id: u32) -> Option<OwnedInstance> {
             bag: BACKPACK,
             slot,
         })
-        .or_else(|| equipment_slot(&sim, item_id).map(|_| Location::Equipment))
+        .or_else(|| equipment_slot(&sim, item_id).map(|slot| Location::Equipment { slot }))
         .or_else(|| carried_bag_slot(&sim, item_id))?;
     Some(location.instance(item_id, &sim))
 }

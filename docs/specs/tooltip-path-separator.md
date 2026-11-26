@@ -8,7 +8,7 @@ Bounded simulator contract for the original cached Retail `SocialUIUtil.AddSepar
 
 ## What it must do
 
-- [ ] Execute the unchanged cached `retail/AddOns/Blizzard_SocialUIShared/SocialUIUtil.lua:138-152` and attach its path/options divider to the wrapped blank row it just added, without increasing NumLines again.
+- [x] Execute the unchanged cached `retail/AddOns/Blizzard_SocialUIShared/SocialUIUtil.lua:138-152` and attach its path/options divider to the wrapped blank row it just added, without increasing NumLines again.
 - [x] Emit one texture request for that path whose bounds equal the blank row's text rect under the render scale, with tooltip alpha.
 - [x] ClearLines removes the attachment; rebuilding text-only content emits no stale divider.
 - [x] Numeric and numeric-string AddTexture inputs attach to the last row without appending rows.
@@ -27,6 +27,7 @@ Bounded simulator contract for the original cached Retail `SocialUIUtil.AddSepar
 
 ## Tests asserting this spec
 
+- `tests/tooltip_residual_prefork.rs::tooltip_residual_original_social_separator_attaches_to_blank_row` invokes the cached consumer in the full Retail UI and checks its one blank row, path, height 10, All-anchor edges and lack of a second AddTexture row.
 - `tests/tooltip_separator_u1.rs`: original complete cached Lua file, helper invocation, row/text order, emitted quad bounds at scales 1 and 0.5, alpha, clear/rebuild and numeric preservation. No image decode or CASC access required for deferred quad evidence.
 - `tests/tooltip_text.rs`: existing numeric and numeric-string behavior controls.
 

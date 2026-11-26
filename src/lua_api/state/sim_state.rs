@@ -284,6 +284,8 @@ pub struct SimState {
     /// UNKNOWN Retail SellPrice inputs: item ID to (current, prepared maximum) quantity.
     /// Empty by default; these values are not derived from Stackable.
     pub item_tooltip_sell_price_quantities: HashMap<u32, (u32, u32)>,
+    /// Explicit opaque GUIDs for equipped-copy tooltip requests; empty by default.
+    pub equipped_item_tooltip_guids: HashMap<i32, String>,
     /// Host-supplied socket metadata copied from a selected bag instance.
     pub item_tooltip_socket_projections:
         HashMap<(i32, i32), Vec<crate::c_api::item_tooltip::ItemSocketProjectionRow>>,
