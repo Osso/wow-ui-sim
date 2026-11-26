@@ -7,7 +7,7 @@ fn synced_animation_consumer_starts_at_distinct_offsets() {
     let source = std::fs::read_to_string(root.join("Blizzard_SharedXML/AnimationTemplates.lua")).unwrap();
     env.exec(&source).unwrap();
     env.exec(r#"
-        local group = UIParent:CreateAnimationGroup()
+        group = UIParent:CreateAnimationGroup()
         group:CreateAnimation("Alpha"):SetDuration(2)
         group:SetLooping("REPEAT")
         Mixin(group, SyncedAnimGroupMixin)
