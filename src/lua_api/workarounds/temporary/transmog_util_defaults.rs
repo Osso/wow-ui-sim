@@ -81,11 +81,11 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
 
 #[cfg(test)]
 mod tests {
-    use crate::lua_api::WowLuaEnv;
-
     #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     #[test]
     fn installs_transmog_util_location_defaults() {
+        use crate::lua_api::WowLuaEnv;
+
         let env = WowLuaEnv::new().expect("lua env should initialize");
         {
             let mut lua = env.lua.borrow_mut();
@@ -115,6 +115,8 @@ mod tests {
     #[cfg(feature = "client-retail")]
     #[test]
     fn retail_defers_locations_to_original_lua_and_keeps_best_item_separate() {
+        use crate::lua_api::WowLuaEnv;
+
         let env = WowLuaEnv::new().expect("environment");
         env.exec(
             r#"
