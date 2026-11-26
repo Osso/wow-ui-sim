@@ -10,11 +10,21 @@ mod prefork;
 mod prefork_full_ui_preload;
 #[path = "common/workload_gate_core.rs"]
 mod prefork_workload_gate;
-#[cfg(feature = "client-retail")]
+#[cfg(any(feature = "client-retail", feature = "client-mists"))]
 #[path = "test_keybindings_panels_detail.rs"]
 mod test_keybindings_panels_detail;
 
 wow_ui_sim_test_harness::integration_tests!();
+
+#[cfg(feature = "client-mists")]
+fn install_test_error_handler(env: &WowLuaEnv) {
+    crate::common::install_error_collector(env, "__test_errors");
+}
+
+#[cfg(feature = "client-mists")]
+fn drain_test_errors(env: &WowLuaEnv) -> Vec<String> {
+    crate::common::drain_string_table(env, "__test_errors")
+}
 
 use prefork::{Case, Config};
 use std::env;
@@ -237,12 +247,17 @@ const MANUAL_FULL_UI_CASES: &[Case<WowLuaEnv>] = &[
         test_keybindings_panels_detail::world_map_exploration_pin_first_open_settles_without_reopen,
     ),
     Case::new(
-        "test_keybindings_panels_detail::world_map_exploration_pin_recovers_when_first_overlay_fetch_is_empty",
-        test_keybindings_panels_detail::world_map_exploration_pin_recovers_when_first_overlay_fetch_is_empty,
-    ),
-    Case::new(
         "test_keybindings_panels_detail::world_map_registers_fog_of_war_pin_template_as_fog_of_war_frame",
         test_keybindings_panels_detail::world_map_registers_fog_of_war_pin_template_as_fog_of_war_frame,
+    ),
+];
+
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+const LEGACY_FULL_UI_CASES: &[Case<WowLuaEnv>] = &[
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+    Case::new(
+        "test_keybindings_panels_detail::world_map_exploration_pin_recovers_when_first_overlay_fetch_is_empty",
+        test_keybindings_panels_detail::world_map_exploration_pin_recovers_when_first_overlay_fetch_is_empty,
     ),
 ];
 
@@ -288,6 +303,8 @@ fn listed_full_ui_cases() -> Vec<Case<WowLuaEnv>> {
     let groups = [
         #[cfg(feature = "client-retail")]
         default_cases.as_slice(),
+        #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+        LEGACY_FULL_UI_CASES,
         #[cfg(feature = "gui")]
         CHAT_FIXTURE_CASES,
         CAST_BAR_FIXTURE_CASES,
@@ -360,6 +377,10 @@ fn run_full_ui_and_exact_fixtures(config: Config) -> ExitCode {
         prefork::run_with_setup(&full_ui_cases, config, || {
             run_conformance_subprocess()?;
             prefork_full_ui_preload::preload_full_game_ui()
+        }),
+        #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+        prefork::run_with_setup(LEGACY_FULL_UI_CASES, config, || {
+            Ok::<_, String>(spell_casting::env_with_full_blizzard_ui())
         }),
         #[cfg(feature = "gui")]
         run_exact_fixture_subprocess("chat"),

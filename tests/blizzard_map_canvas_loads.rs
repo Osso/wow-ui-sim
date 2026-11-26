@@ -14,6 +14,25 @@ mod support;
 
 use support::*;
 
+const EXPLORED_PIN_STATE_PROOF: &str = r#"
+local mapID = {map_id}
+assert(WorldMapFrame:IsShown())
+assert(WorldMapFrame:GetMapID() == mapID)
+local modelOverlays = C_MapExplorationInfo.GetExploredMapTextures(mapID)
+assert(modelOverlays and #modelOverlays > 0, "map model should supply explored overlays")
+local pin = WorldMapFrame:EnumeratePinsByTemplate("MapExplorationPinTemplate")()
+assert(pin, "original provider should acquire an exploration pin")
+local active = 0
+local visible = 0
+for texture in pin.overlayTexturePool:EnumerateActive() do
+    active = active + 1
+    if texture:IsShown() then visible = visible + 1 end
+end
+assert(active > 0 and visible > 0, "original consumer should acquire visible overlays")
+assert(pin.isWaitingForLoad == nil, "exploration pin should finish loading")
+assert(math.abs(pin:GetAlpha() - WorldMapFrame:GetGlobalAlpha()) < 0.001, "pin alpha should refresh")
+"#;
+
 const TWO_MAP_CANVAS_PROOF: &str = r#"
 local mapID = {map_id}
 local map = WorldMapFrame
@@ -141,6 +160,11 @@ fn assert_map_canvas_state(env: &WowLuaEnv, map_id: u32) {
     env.exec(&script).expect("original WorldMap SetMapID should build canvas state");
 }
 
+fn assert_exploration_pin_state(env: &WowLuaEnv, map_id: u32) {
+    let script = EXPLORED_PIN_STATE_PROOF.replace("{map_id}", &map_id.to_string());
+    env.exec(&script).expect("original exploration consumer should render model data");
+}
+
 #[test]
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn original_world_map_vignette_provider_uses_supplied_records() {
@@ -182,6 +206,7 @@ fn world_map_canvas_uses_model_for_two_maps() {
     for map_id in [947, 2248] {
         assert_map_canvas_state(&env, map_id);
         settle_world_map(&env);
+        assert_exploration_pin_state(&env, map_id);
     }
     let errors_after = env.state().borrow().lua_errors.clone();
     assert_eq!(errors_after, errors_before, "MapCanvas added Lua errors");
