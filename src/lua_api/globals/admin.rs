@@ -564,6 +564,10 @@ fn register_guild_basics(b: TableBuilder) -> LuaResult<TableBuilder> {
 fn register_guild_details_and_rules(b: TableBuilder) -> LuaResult<TableBuilder> {
     b.set_function("SetGameRule", super::game_rules::admin_set_game_rule)?
         .set_function(
+            "SetGameRuleByID",
+            super::game_rules::admin_set_game_rule_by_id,
+        )?
+        .set_function(
             "SetActiveGameMode",
             super::game_rules::admin_set_active_game_mode,
         )?

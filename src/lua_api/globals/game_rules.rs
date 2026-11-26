@@ -373,6 +373,16 @@ pub fn admin_set_game_rule(state: &mut LuaState) -> LuaResult<u32> {
     let Some(key) = admin_rule_key(state) else {
         return Ok(0);
     };
+    store_admin_game_rule(state, key)
+}
+
+/// Set an ID-keyed game-rule row for fixtures on profiles with name-keyed rules.
+pub fn admin_set_game_rule_by_id(state: &mut LuaState) -> LuaResult<u32> {
+    let rule_id = i32::from_stack(state, 1)?;
+    store_admin_game_rule(state, GameRuleKey::Id(rule_id))
+}
+
+fn store_admin_game_rule(state: &mut LuaState, key: GameRuleKey) -> LuaResult<u32> {
     let op = read_rule_op(state);
     let mut sim = borrow_state_mut(state)?;
     match op {

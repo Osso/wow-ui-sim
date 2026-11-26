@@ -15,9 +15,9 @@ local dungeonFirst = GetDungeonDifficultyID()
 A_Admin.SetInstanceInfo("Second", "party", 250, 5)
 local dungeonSecond = GetDungeonDifficultyID()
 if dungeonFirst ~= 233 or dungeonSecond ~= 250 then return "dungeon-difficulty" end
-A_Admin.SetGameRule(93, 1)
+A_Admin.SetGameRuleByID(93, 1)
 local roleButtonFirst = CanShowSetRoleButton()
-A_Admin.SetGameRule(93, 0)
+A_Admin.SetGameRuleByID(93, 0)
 local roleButtonSecond = CanShowSetRoleButton()
 if roleButtonFirst ~= true or roleButtonSecond ~= false then return "role-button" end
 A_Admin.SetPlayerRace(0)
