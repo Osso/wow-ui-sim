@@ -45,6 +45,7 @@ const PANEL_ADDONS: &[&str] = &[
     "Blizzard_GarrisonBase",
     "Blizzard_GameTooltip",
     "Blizzard_StaticPopup_Game",
+    "Blizzard_GameMenu",
     "Blizzard_TransmogShared",
     "Blizzard_UIParentPanelManager",
     "Blizzard_Settings_Shared",
@@ -56,6 +57,7 @@ const PANEL_ADDONS: &[&str] = &[
     "Blizzard_FrameXML",
     "Blizzard_UIPanels_Game",
     "Blizzard_ActionBar",
+    "Blizzard_HelpFrame",
     "Blizzard_UnitFrame",
     "Blizzard_TokenUI",
 ];
