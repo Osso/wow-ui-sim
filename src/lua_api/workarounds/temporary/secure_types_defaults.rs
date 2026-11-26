@@ -7,7 +7,22 @@ const SECURE_TYPES_COMMON_LUA: &str = r#"
 if SecureTypes == nil then
   SecureTypes = {}
 end
+"#;
 
+const SECURECALL_NAME_COMPAT_LUA: &str = r#"
+do
+  local __wow_original_securecall = securecall
+  if type(__wow_original_securecall) == "function" and not rawget(_G, "__wow_securecall_accepts_names") then
+    function securecall(fn, ...)
+      if type(fn) == "string" then
+        fn = _G[fn]
+      end
+      return __wow_original_securecall(fn, ...)
+    end
+
+    rawset(_G, "__wow_securecall_accepts_names", true)
+  end
+end
 "#;
 
 const SECURE_TYPES_DEFAULTS_LUA: &str = r#"
@@ -160,12 +175,14 @@ end
 "#;
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
+    lua.exec(SECURE_TYPES_COMMON_LUA)?;
+
     if !matches!(
         crate::client_profile::ACTIVE,
         crate::client_profile::ClientProfile::Retail
             | crate::client_profile::ClientProfile::WowForever
     ) {
-        lua.exec(SECURE_TYPES_COMMON_LUA)?;
+        lua.exec(SECURECALL_NAME_COMPAT_LUA)?;
     }
 
     if !matches!(
