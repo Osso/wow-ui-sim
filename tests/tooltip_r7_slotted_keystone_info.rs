@@ -46,7 +46,7 @@ fn slot_keystone(
 fn assert_slotted_info(env: &WowLuaEnv, map_id: u32, name: &str, level: u32, a: u32, b: u32) {
     env.exec(&format!(
         r#"
-        local function capture(...) return {n = select("#", ...), ...} end
+        local function capture(...) return {n = select('#', ...), ...} end
         local info = capture(C_ChallengeMode.GetSlottedKeystoneInfo())
         assert(info.n == 3, "GetSlottedKeystoneInfo returns three documented values")
         local selectedMap, affixes, selectedLevel = info[1], info[2], info[3]
