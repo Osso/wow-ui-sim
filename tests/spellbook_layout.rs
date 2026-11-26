@@ -592,24 +592,21 @@ fn spellbook_layout_stays_locked() {
 
 #[cfg(feature = "client-wowforever")]
 #[test]
-fn forever_spellbook_paging_click_updates_page_text() {
+fn forever_spellbook_catalog_stays_one_page_after_known_spells() {
     let env = setup_full_ui();
     env.exec(
         r#"for _, id in ipairs({6603, 8690, 7328, 35395, 19750, 85673, 853, 275779, 465, 1022, 1044, 642, 633, 190784, 96231, 10326, 213644, 6940, 31884, 375576, 115750, 32223, 317920, 183435, 5502, 121183, 137026, 385125, 31935, 53595, 26573, 53600, 31850, 86659, 62124, 498, 327193, 378974, 387174, 204019, 85043, 152261, 76671, 280373}) do A_Admin.LearnSpell(id) end"#,
     )
-    .expect("catalog spells should be supplied to the player's spell state");
+    .expect("Paladin catalog spells should be supplied to the player state");
     open_spellbook(&env);
 
-    let first_page: String = env
-        .eval("return PlayerSpellsFrame.SpellBookFrame.PagedSpellsFrame.PagingControls.PageText:GetText()")
-        .expect("first spellbook page text should be readable");
-    assert!(first_page.starts_with("Page 1 of "), "expected page one, got {first_page}");
-    env.exec("PlayerSpellsFrame.SpellBookFrame.PagedSpellsFrame.PagingControls.NextPageButton:Click()")
-        .expect("real next-page button click should run");
-    let second_page: String = env
-        .eval("return PlayerSpellsFrame.SpellBookFrame.PagedSpellsFrame.PagingControls.PageText:GetText()")
-        .expect("second spellbook page text should be readable");
-    assert!(second_page.starts_with("Page 2 of "), "expected page two, got {second_page}");
+    let (page_text, max_pages): (String, i64) = env
+        .eval(
+            "local paging = PlayerSpellsFrame.SpellBookFrame.PagedSpellsFrame.PagingControls; return paging.PageText:GetText(), paging.maxPages",
+        )
+        .expect("spellbook paging state should be readable from the original UI");
+    assert_eq!(max_pages, 1, "known-spell inputs do not add entries to the spellbook catalog");
+    assert!(page_text.starts_with("Page 1/1"), "expected one page, got {page_text}");
 }
 
 #[test]
