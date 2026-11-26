@@ -470,29 +470,6 @@ fn eager_discovery_includes_addon_on_all_four_screens() {
 
 }
 
-const SHARED_XML_BASE_BEHAVIOR_PROBE: &str = r#"
-local red = CreateColor(1, 0, 0)
-local blue = CreateColor(0, 0, 1)
-assert(red:IsRGBEqualTo(CreateColor(1, 0, 0)))
-assert(not red:IsRGBEqualTo(blue))
-assert(red:WrapTextInColorCode("red") == "|cffff0000red|r")
-assert(blue:WrapTextInColorCode("blue") == "|cff0000ffblue|r")
-local seen = {}
-local heights = {}
-local savedErrorHandler = geterrorhandler
-local savedSetHeight = SetErrorCallstackHeight
-geterrorhandler = function(...) seen[#seen + 1] = select(1, ...) end
-SetErrorCallstackHeight = function(height) heights[#heights + 1] = height end
-local firstOK, first = pcall(CallErrorHandler, "first")
-local secondOK, second = pcall(CallErrorHandler, "second")
-assert(firstOK and secondOK)
-assert(seen[1] == "first" and seen[2] == "second")
-assert(heights[1] == -1 and heights[2] == -1 and heights[3] == nil and heights[4] == nil)
-geterrorhandler = savedErrorHandler
-SetErrorCallstackHeight = savedSetHeight
-return "ok"
-"#;
-
 prefork_full_ui_case! {
     fn original_color_and_error_helpers_preserve_two_inputs(env: &WowLuaEnv) {
         let result: String = env.eval(SHARED_XML_BASE_BEHAVIOR_PROBE).unwrap();
