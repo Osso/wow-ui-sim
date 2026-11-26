@@ -182,7 +182,9 @@ fn achievement_search_consumer_handles_two_empty_result_selections() {
 fn global_placeholder_tables_are_published_by_original_consumers() {
     let env = load_achievement_ui_consumer();
     env.exec(
-        r#"assert(C_AddOns.LoadAddOn("Blizzard_AuctionHouseUI"))
+        r#"assert(C_AddOns.LoadAddOn("Blizzard_UIParentPanelManager"))
+           assert(UISpecialFrames[1] == "ItemRefTooltip")
+           assert(C_AddOns.LoadAddOn("Blizzard_AuctionHouseUI"))
            assert(type(StaticPopupDialogs["BUYOUT_AUCTION"]) == "table")
            assert(type(StaticPopupDialogs["BID_AUCTION"]) == "table")
            assert(type(SOUNDKIT) == "table")"#,
