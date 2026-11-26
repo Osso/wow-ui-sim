@@ -340,7 +340,8 @@ fn friends_frame_starts_hidden_and_close_all_windows_hides_it() {
     assert!(frame_is_shown(&env, "FriendsFrame"), "ToggleFriendsFrame should show FriendsFrame");
     let panel_state: String = env
         .eval(
-            "local panel = UIPanelWindows and UIPanelWindows.FriendsFrame; return tostring(panel and panel.area) .. ':' .. tostring(GetUIPanel('left') == FriendsFrame)",
+            "local name = FriendsFrame:GetName(); local panel = UIPanelWindows and UIPanelWindows[name]; return tostring(name) .. ':' .. tostring(panel and panel.area) .. ':' .. tostring(FriendsFrame:GetAttribute('UIPanelLayout-area')) .. ':' .. tostring(GetUIPanel('left') == FriendsFrame)",
+
         )
         .expect("FriendsFrame panel registration should be readable");
     env.exec("CloseAllWindows()")
