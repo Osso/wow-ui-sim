@@ -133,6 +133,12 @@ pub(super) fn register_c_item(state: &mut LuaState) -> LuaResult<()> {
             &[
                 ("IsHelpfulItem", c_item_is_helpful_item),
                 ("IsHarmfulItem", c_item_is_harmful_item),
+                // ItemDocumentation.lua:689-718 (Retail) and 711-740 (Forever).
+                ("GetItemInventoryType", c_item_get_item_inventory_type),
+                (
+                    "GetItemInventoryTypeByID",
+                    c_item_get_item_inventory_type_by_id,
+                ),
             ],
         )?;
     }
@@ -211,6 +217,59 @@ fn c_item_is_helpful_item(state: &mut LuaState) -> LuaResult<u32> {
 
 fn c_item_is_harmful_item(state: &mut LuaState) -> LuaResult<u32> {
     item_spell_classification(state, false, "IsHarmfulItem")
+}
+
+/// GetItemInventoryType(itemLocation) -> inventoryType (Nilable,
+/// AllowedWhenUntainted). Bag and equipment locations resolve through the
+/// shared ItemLocation reader; the type is the catalog's InventoryType field
+/// that GetItemInfoInstant publishes as itemEquipLoc.
+fn c_item_get_item_inventory_type(state: &mut LuaState) -> LuaResult<u32> {
+    let location = crate::c_api::tooltip_getter_args::allowed_when_untainted(
+        state,
+        1,
+        "C_Item.GetItemInventoryType",
+    )?;
+    if !matches!(location, Val::Table(_)) {
+        return Err(runtime_error(
+            "Usage: C_Item.GetItemInventoryType(itemLocation)",
+        ));
+    }
+    // INFERRED: R88g9 (native evidence pending). A location table that names
+    // no resolvable bag or equipment item publishes nil instead of raising.
+    let slot = crate::c_api::item_location::read_numeric_item_slot(state, location);
+    let item_id = {
+        let sim = borrow_state(state)?;
+        slot.and_then(|slot| slot.item_id(&sim))
+    };
+    push_item_inventory_type(state, item_id);
+    Ok(1)
+}
+
+/// GetItemInventoryTypeByID(itemInfo) -> inventoryType (Nilable,
+/// AllowedWhenUntainted). itemInfo accepts an item ID, link or name.
+fn c_item_get_item_inventory_type_by_id(state: &mut LuaState) -> LuaResult<u32> {
+    let value = crate::c_api::tooltip_getter_args::allowed_when_untainted(
+        state,
+        1,
+        "C_Item.GetItemInventoryTypeByID",
+    )?;
+    if !matches!(value, Val::Num(_) | Val::Str(_)) {
+        return Err(runtime_error(
+            "Usage: C_Item.GetItemInventoryTypeByID(itemInfo)",
+        ));
+    }
+    let item_id = parse_item_id_key(state, value);
+    push_item_inventory_type(state, item_id);
+    Ok(1)
+}
+
+/// INFERRED: R88g9 (native evidence pending). An item missing from the
+/// catalog publishes nil, the documented nilable result.
+fn push_item_inventory_type(state: &mut LuaState, item_id: Option<u32>) {
+    let inventory_type = item_id
+        .and_then(items::get_item)
+        .map(|item| Val::Num(f64::from(item.inventory_type)));
+    state.push(inventory_type.unwrap_or(Val::Nil));
 }
 
 fn register_c_item_dressability_query(
