@@ -6,8 +6,7 @@
 
 - [x] **VERIFIED (simulator tests):** `IsAccountTransferableCurrency` returns true for a supplied transferable currency and false for a nontransferable or unknown currency. **VERIFIED (generated data):** percentages and flags come from CurrencyTypes and CurrencyCategory data for 12.1.5.70391. **INFERRED (WM64):** the percentage field is `WarbondTransferPercentage`.
 - [x] **VERIFIED (simulator tests):** Retail `CanTransferCurrency` returns a boolean and an optional result code for tested server-disabled, missing-source and eligible-source cases. It reads supplied effective policy inputs. **VERIFIED (simulator source):** the query does not request data or dispatch an event.
-- [x] **INFERRED (R88g8, native evidence pending):** `GetMaxTransferableAmountFromQuantity(nil, quantity)` returns nil. The original CurrencyTransfer input handler calls it before the menu has a selected currency and uses `or 0` for the missing maximum. **VERIFIED (simulator tests):** supplied currency IDs return their calculated maximums.
-- [x] **VERIFIED (Retail and WoW Forever tests):** `GetCostToTransferCurrency` requires a currency ID. Missing or nil IDs raise its published Usage error.
+- [x] **VERIFIED (Retail and WoW Forever tests):** `GetMaxTransferableAmountFromQuantity` and `GetCostToTransferCurrency` require a currency ID. Missing or nil IDs raise each function's published Usage error; they do not return a currency result.
 - [x] **INFERRED (R88es, Retail 12.1.5.70688 and Forever 1.60.1.70707):** on the percentage path, the maximum amount is `floor(p * 0.01 * Q)` using single-precision operations; the total cost is `ceil((100 / p) * q)` using single-precision division and multiplication. **VERIFIED (Retail simulator tests):** examples assert 76 from 100 at currency 1560's rate, costs 99 for 76 and 101 for 77. The original Retail TokenUI consumer asserts source-specific amounts 159/79 and costs 199/99 for supplied source quantities 200/100 at an 80% rate.
 - [x] **VERIFIED (Retail simulator test):** when account data is ready, the original TokenUI source selector can read supplied character rows, select each source, set the maximum through its button, and observe the resulting text clamp and gross cost.
 - [ ] Assert the public `FetchCurrencyDataFromAccountCharacters` result while account data is not ready, including its nil result and subsequent ready-state row shape.
@@ -27,7 +26,7 @@
 
 ## Tests asserting this spec
 
-- `tests/currency_transfer_arguments.rs` asserts the inferred nil result for an unselected max query, supplied-rate maxima for two currencies, and the exact missing-ID Usage error for transfer cost.
+- `tests/currency_transfer_arguments.rs` asserts required currency IDs and exact Usage errors.
 - `tests/currency_unused_mutations.rs` asserts supplied eligibility policy, account sources and original TokenUI projections.
 - `tests/blizzard_token_ui_loads.rs` asserts the original TokenFrame and CurrencyTransferMenu path with two source quantities.
 
