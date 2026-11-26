@@ -55,7 +55,6 @@ if type(AdventureGuideUtil) ~= "table" then
 end
 "#;
 
-#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 const ADVENTURE_GUIDE_HELPER_DEFAULTS_LUA: &str = r#"
 if rawget(AdventureGuideUtil, "OpenJournalLink") == nil then
     function AdventureGuideUtil.OpenJournalLink(_journalType, _id, _difficultyID)
@@ -106,8 +105,12 @@ end
 "#;
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail
+        && !screen.is_glue()
+    {
+        return Ok(());
+    }
     lua.exec(ADVENTURE_JOURNAL_FALLBACKS_LUA)?;
-    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     lua.exec(ADVENTURE_GUIDE_HELPER_DEFAULTS_LUA)?;
     if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail {
         lua.exec(AVAILABILITY_FALLBACK_LUA)?;
@@ -145,10 +148,7 @@ mod tests {
 
     #[test]
     fn installs_adventure_journal_fallback_shapes_when_missing() {
-        if cfg!(any(
-            feature = "client-retail",
-            feature = "client-wowforever"
-        )) {
+        if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
             return;
         }
         let env = WowLuaEnv::new().expect("lua env should initialize");
