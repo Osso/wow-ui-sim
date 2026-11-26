@@ -1,5 +1,5 @@
 //! INFERRED local command boundary; requests are not authoritative server replies.
-use super::pet_battle_runtime_model::PetBattleRequest;
+use super::pet_battle_runtime_model::{PetBattleRequest, PetBattleRuntime};
 use crate::lua_api::methods::{borrow_state, borrow_state_mut, create_string};
 use crate::lua_bridge::{FromStack, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
@@ -51,21 +51,33 @@ fn get_all_effect_names(state: &mut LuaState) -> LuaResult<u32> {
 
 /// INFERRED R88f.D.44, R88g9 (native evidence pending): evaluate supplied trap inputs.
 fn is_trap_available(state: &mut LuaState) -> LuaResult<u32> {
-    let sim = borrow_state(state)?;
-    let battle = &sim.pet_battles;
-    let runtime = &battle.runtime;
-    let phase_allows_trap = battle.battle_state == 2;
-    let team_allows_trap = !runtime.local_team_present || !runtime.local_team_skip_blocking;
-    let available = phase_allows_trap
-        && runtime.player_trap_state == 1
-        && runtime.opponent_is_npc
-        && runtime.action_available
-        && team_allows_trap;
-    let error = if available { 0 } else { runtime.trap_error };
-    drop(sim);
+    let (available, error) = {
+        let sim = borrow_state(state)?;
+        let battle = &sim.pet_battles;
+        let runtime = &battle.runtime;
+        let available = trap_is_available(battle.battle_state, runtime);
+        let error = if available { 0 } else { runtime.trap_error };
+        (available, error)
+    };
     state.push(Val::Bool(available));
     state.push(Val::Num(f64::from(error)));
     Ok(2)
+}
+
+fn trap_is_available(battle_state: i32, runtime: &PetBattleRuntime) -> bool {
+    if battle_state != 2 {
+        return false;
+    }
+    if runtime.player_trap_state != 1 {
+        return false;
+    }
+    if !runtime.opponent_is_npc {
+        return false;
+    }
+    if !runtime.action_available {
+        return false;
+    }
+    !runtime.local_team_present || !runtime.local_team_skip_blocking
 }
 
 /// INFERRED R88f.D.45, R88g9 (native evidence pending): read the opposite-team NPC marker.
