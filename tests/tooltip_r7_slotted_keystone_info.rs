@@ -1,23 +1,20 @@
-#![cfg(all(feature = "optional-tests", feature = "client-retail"))]
-
-#[path = "tooltip_full_env_helpers.rs"]
-mod tooltip_full_env_helpers;
+#![cfg(feature = "client-retail")]
 
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 const ADDONS_LUA: &str = r#"
 for _, addon in ipairs({"Blizzard_GroupFinder", "Blizzard_ChallengesUI"}) do
-    local loaded, reason = C_AddOns.LoadAddOn(addon)
-    assert(loaded, addon .. " load failed: " .. tostring(reason))
+    if not C_AddOns.IsAddOnLoaded(addon) then
+        local loaded, reason = C_AddOns.LoadAddOn(addon)
+        assert(loaded, addon .. " load failed: " .. tostring(reason))
+    end
 end
 assert(ChallengesKeystoneFrame.KeystoneSlot)
-CHALLENGE_MODE_POWER_LEVEL = "Level %d"
+assert(type(CHALLENGE_MODE_POWER_LEVEL) == "string")
 "#;
 
-fn load_challenges_frame() -> WowLuaEnv {
-    let env = tooltip_full_env_helpers::load_full_env_without_post_load();
+fn load_challenges_frame(env: &WowLuaEnv) {
     env.exec(ADDONS_LUA).expect("original ChallengesUI frame should load");
-    env
 }
 
 fn set_map_info(env: &WowLuaEnv, map_id: u32, map_selector: u32, name: &str) {
@@ -85,7 +82,7 @@ fn assert_challenge_frame_values(
     env.exec(&format!(
         r#"
         assert(ChallengesKeystoneFrame.DungeonName:GetText() == {name:?})
-        assert(ChallengesKeystoneFrame.PowerLevel:GetText() == "Level {level}")
+        assert(ChallengesKeystoneFrame.PowerLevel:GetText() == CHALLENGE_MODE_POWER_LEVEL:format({level}))
         local affixOffset = 0
         if {level} >= 3 then
             assert(ChallengesKeystoneFrame.Affixes[1].Percent:GetText() == "+{damage}%")
@@ -99,9 +96,9 @@ fn assert_challenge_frame_values(
     .unwrap();
 }
 
-#[test]
-fn challenges_ui_slotted_event_reads_and_clears_selected_keystone_info() {
-    let env = load_challenges_frame();
+prefork_full_ui_case! {
+fn challenges_ui_slotted_event_reads_and_clears_selected_keystone_info(env: &WowLuaEnv) {
+    load_challenges_frame(env);
     set_map_info(&env, 2, 960, "Keystone Map Alpha");
     set_map_info(&env, 56, 961, "Keystone Map Beta");
     for (slot, item, selector, map, name, level, damage, health, a, b) in [
@@ -117,4 +114,5 @@ fn challenges_ui_slotted_event_reads_and_clears_selected_keystone_info() {
         env.exec("assert(C_ChallengeMode.RemoveKeystone()); assert(not C_ChallengeMode.HasSlottedKeystone()); assert(select('#', C_ChallengeMode.GetSlottedKeystoneInfo()) == 0)")
             .unwrap();
     }
+}
 }
