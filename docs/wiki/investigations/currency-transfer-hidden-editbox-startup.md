@@ -7,6 +7,7 @@ The Retail CurrencyTransfer startup Usage error came from simulator `OnTextChang
 ### Observed sequence
 
 - **VERIFIED (Retail and WoW Forever startup captures before the EditBox change):** `Blizzard_TokenUI/Blizzard_CurrencyTransfer.lua:488` reported the required-currency Usage error, and `Blizzard_ScriptErrors` recorded its echo.
+- **VERIFIED (Retail and WoW Forever stock simulator captures at source `872533f76`):** both byte-exact stdout files are `[]` plus LF, with zero records / occurrences and exit 0. Their binary hashes differ; the original CVar file is unchanged. See the [profile baselines](../../baselines/README.md#currencytransfer-startup-resolution--2026-11-25).
 - **VERIFIED (Retail and WoW Forever cached UI files):** the TokenUI TOCs do not declare `LoadOnDemand`; `Blizzard_CurrencyTransfer.xml` creates `CurrencyTransferMenu` hidden, and its amount input has no XML text value. The amount selector's `OnLoad` calls `Reset`, which calls `SetNumber(0)`.
 - **VERIFIED (Retail cached Lua):** the menu's `OnLoad` initializes visuals. `OnCurrencyTransferRequested` sets the currency before `ShowUIPanel`; `OnShow` calls `FullRefresh`, which selects the highest-quantity source.
 - **VERIFIED (simulator source):** XML frame finalization creates children and fires lifecycle scripts before returning. The loader flushes pending EditBox text changes after the complete top-level frame, so it dispatched the hidden input's change after `OnLoad` but before a later request could select a currency.
