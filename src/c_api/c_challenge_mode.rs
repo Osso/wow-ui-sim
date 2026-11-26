@@ -9,7 +9,7 @@ use crate::lua_api::methods::{
     table_set_static,
 };
 use crate::lua_api::state::{CursorInfo, CursorItemOrigin};
-use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
+use crate::lua_bridge::{FromStack, TableBuilder, stack_val, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 use std::collections::{BTreeMap, BTreeSet};
@@ -17,6 +17,10 @@ use std::collections::{BTreeMap, BTreeSet};
 mod inferred;
 
 const CHALLENGE_MAP_ITEM_MODIFIER_ID: u32 = 17;
+const KEYSTONE_LEVEL_ITEM_MODIFIER_ID: u32 = 18;
+const FIRST_KEYSTONE_AFFIX_ITEM_MODIFIER_ID: u32 = 19;
+const SECOND_KEYSTONE_AFFIX_ITEM_MODIFIER_ID: u32 = 20;
+const LAST_KEYSTONE_AFFIX_ITEM_MODIFIER_ID: u32 = 22;
 const UNSPECIFIED_CHALLENGE_MODE_ID: u32 = 0;
 const ABSENT_CURRENT_MAP_ID: u32 = 0;
 
@@ -86,20 +90,173 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
         "GetChallengeCompletionInfo",
         get_challenge_completion_info,
     )?;
+    if supports_keystone_profile() {
+        register_power_level_handler(state, namespace)?;
+    }
     if ACTIVE == ClientProfile::Retail {
-        table_set_rust_fn_static(state, namespace, "HasSlottedKeystone", has_slotted_keystone)?;
-        table_set_rust_fn_static(state, namespace, "SlotKeystone", slot_keystone)?;
-        table_set_rust_fn_static(state, namespace, "RemoveKeystone", remove_keystone)?;
-        table_set_rust_fn_static(state, namespace, "CloseKeystoneFrame", close_keystone_frame)?;
-        table_set_rust_fn_static(state, namespace, "ClearKeystone", clear_keystone)?;
-        table_set_rust_fn_static(
-            state,
-            namespace,
-            "CanUseKeystoneInCurrentMap",
-            can_use_keystone_in_current_map,
-        )?;
+        register_retail_keystone_handlers(state, namespace)?;
     }
     Ok(())
+}
+
+fn register_power_level_handler(
+    state: &mut LuaState,
+    namespace: rilua::vm::gc::arena::GcRef<rilua::vm::table::Table>,
+) -> LuaResult<()> {
+    table_set_rust_fn_static(
+        state,
+        namespace,
+        "GetPowerLevelDamageHealthMod",
+        get_power_level_damage_health_mod,
+    )
+}
+
+fn register_retail_keystone_handlers(
+    state: &mut LuaState,
+    namespace: rilua::vm::gc::arena::GcRef<rilua::vm::table::Table>,
+) -> LuaResult<()> {
+    table_set_rust_fn_static(state, namespace, "HasSlottedKeystone", has_slotted_keystone)?;
+    table_set_rust_fn_static(state, namespace, "SlotKeystone", slot_keystone)?;
+    table_set_rust_fn_static(state, namespace, "RemoveKeystone", remove_keystone)?;
+    table_set_rust_fn_static(
+        state,
+        namespace,
+        "GetSlottedKeystoneInfo",
+        get_slotted_keystone_info,
+    )?;
+    table_set_rust_fn_static(state, namespace, "CloseKeystoneFrame", close_keystone_frame)?;
+    table_set_rust_fn_static(state, namespace, "ClearKeystone", clear_keystone)?;
+    table_set_rust_fn_static(
+        state,
+        namespace,
+        "CanUseKeystoneInCurrentMap",
+        can_use_keystone_in_current_map,
+    )?;
+    Ok(())
+}
+
+pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
+    let builder = if supports_keystone_profile() {
+        builder.set_function("SetChallengePowerLevelMods", set_challenge_power_level_mods)?
+    } else {
+        builder
+    };
+    if ACTIVE == ClientProfile::Retail {
+        builder.set_function("SetKeystoneItemInfo", set_keystone_item_info)
+    } else {
+        Ok(builder)
+    }
+}
+
+fn supports_keystone_profile() -> bool {
+    matches!(
+        ACTIVE,
+        ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever
+    )
+}
+
+fn set_challenge_power_level_mods(state: &mut LuaState) -> LuaResult<u32> {
+    let level = i32::from_stack(state, 1)?;
+    if matches!(stack_val(state, 2), Val::Nil) {
+        borrow_state_mut(state)?
+            .challenge_run
+            .power_level_mods
+            .remove(&level);
+        return Ok(0);
+    }
+    let damage = f64::from_stack(state, 2)?;
+    let health = f64::from_stack(state, 3)?;
+    borrow_state_mut(state)?
+        .challenge_run
+        .power_level_mods
+        .insert(level, (damage, health));
+    Ok(0)
+}
+
+fn get_power_level_damage_health_mod(state: &mut LuaState) -> LuaResult<u32> {
+    const USAGE: &str = "Usage: local damageMod, healthMod = C_ChallengeMode.GetPowerLevelDamageHealthMod(powerLevel)";
+    if matches!(stack_val(state, 1), Val::Nil) {
+        return Err(rilua::runtime_error(USAGE));
+    }
+    let level = i32::from_stack(state, 1)?;
+    let modifiers = {
+        let sim = borrow_state(state)?;
+        sim.challenge_run.power_level_mods.get(&level).copied()
+    };
+    let Some((damage, health)) = modifiers else {
+        return Ok(0);
+    };
+    // INFERRED (R88g9 (native evidence pending)): values come only from host input.
+    state.push(Val::Num(damage));
+    state.push(Val::Num(health));
+    Ok(2)
+}
+
+fn set_keystone_item_info(state: &mut LuaState) -> LuaResult<u32> {
+    let bag = i32::from_stack(state, 1)?;
+    let slot = i32::from_stack(state, 2)?;
+    let item_id = u32::from_stack(state, 3)?;
+    let map_selector = u32::from_stack(state, 4)?;
+    let map_id = u32::from_stack(state, 5)?;
+    let level = u32::from_stack(state, 6)?;
+    let first_affix = u32::from_stack(state, 7)?;
+    let second_affix = u32::from_stack(state, 8)?;
+    let modifiers = vec![
+        (CHALLENGE_MAP_ITEM_MODIFIER_ID, map_id),
+        (KEYSTONE_LEVEL_ITEM_MODIFIER_ID, level),
+        (FIRST_KEYSTONE_AFFIX_ITEM_MODIFIER_ID, first_affix),
+        (SECOND_KEYSTONE_AFFIX_ITEM_MODIFIER_ID, second_affix),
+    ];
+    let mut sim = borrow_state_mut(state)?;
+    sim.keystone.current_map_selector = Some(map_selector);
+    sim.keystone
+        .item_modifiers
+        .insert(KeystoneLocation::Bag(bag, slot), (item_id, modifiers));
+    Ok(0)
+}
+
+fn get_slotted_keystone_info(state: &mut LuaState) -> LuaResult<u32> {
+    // INFERRED (R88g9 (native evidence pending)): read modifier IDs from the selected item.
+    let Some(modifiers) = read_selected_keystone_modifiers(state)? else {
+        return Ok(0);
+    };
+    let map_id = keystone_modifier_value(&modifiers, CHALLENGE_MAP_ITEM_MODIFIER_ID).unwrap_or(0);
+    let level = keystone_modifier_value(&modifiers, KEYSTONE_LEVEL_ITEM_MODIFIER_ID).unwrap_or(0);
+    let affixes = create_table(state);
+    state.push(Val::Num(f64::from(map_id)));
+    state.push(affixes);
+    let mut index = 1_i64;
+    for kind in FIRST_KEYSTONE_AFFIX_ITEM_MODIFIER_ID..=LAST_KEYSTONE_AFFIX_ITEM_MODIFIER_ID {
+        if let Some(id) = keystone_modifier_value(&modifiers, kind).filter(|id| *id != 0) {
+            crate::c_api::helpers::set_table_array(state, affixes, index, Val::Num(f64::from(id)));
+            index += 1;
+        }
+    }
+    state.push(Val::Num(f64::from(level)));
+    Ok(3)
+}
+
+fn read_selected_keystone_modifiers(state: &LuaState) -> LuaResult<Option<Vec<(u32, u32)>>> {
+    let sim = borrow_state(state)?;
+    let Some(item_id) = sim.keystone.selected_item_id else {
+        return Ok(None);
+    };
+    let Some(location) = sim.keystone.selected_location else {
+        return Ok(None);
+    };
+    if sim.keystone.selected_guid.is_none() {
+        return Ok(None);
+    }
+    let Some((stored_id, modifiers)) = sim.keystone.item_modifiers.get(&location) else {
+        return Ok(None);
+    };
+    Ok((*stored_id == item_id).then(|| modifiers.clone()))
+}
+
+fn keystone_modifier_value(modifiers: &[(u32, u32)], kind: u32) -> Option<u32> {
+    modifiers
+        .iter()
+        .find_map(|(modifier_kind, value)| (*modifier_kind == kind).then_some(*value))
 }
 
 fn has_slotted_keystone(state: &mut LuaState) -> LuaResult<u32> {

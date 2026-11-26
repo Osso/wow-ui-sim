@@ -194,6 +194,14 @@ assert(select('#', C_TooltipInfo.GetAzeriteEssence(3, 4)) == 0,
     'a missing exact next-rank record must return zero values')
 "#;
 
+const NO_PLAYER_SOURCE_LUA: &str = r#"
+local data = AzeriteTestShowEssence(3, 0)
+assert(AzeriteTestFindLine(data, 'Marshal Gabriel'),
+    'without a player, the original essence hover must select the first source')
+assert(not AzeriteTestFindLine(data, 'Xander Silberman'),
+    'without a player, the original essence hover must not select the second source')
+"#;
+
 const SOURCE_SELECTION_LUA: &str = r#"
 local fallback = AzeriteTestFindLine(AzeriteTestSourceFallback, 'Eternal Palace Raid')
 assert(fallback and fallback.wrapText == true,
@@ -623,6 +631,14 @@ fn retail_azerite_essence_original_hover_selects_verified_source_rows_and_absent
         SOURCE_SELECTION_LUA,
         "the original Azerite hover must select verified source rows",
     );
+}
+
+#[test]
+fn retail_azerite_essence_original_hover_uses_first_source_without_player() {
+    let env = original_azerite_tooltip_env();
+    seed_essence(&env, ESSENCE_THREE, 1);
+    env.exec("A_Admin.SetPlayerPresent(false)").unwrap();
+    run_azerite_script(&env, NO_PLAYER_SOURCE_LUA, "no-player source selection failed");
 }
 
 #[test]

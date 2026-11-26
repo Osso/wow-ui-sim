@@ -67,6 +67,8 @@ pub(crate) struct MapInfo {
 pub(crate) struct ChallengeState {
     pub active: Option<ActiveRun>,
     pub active_keystone: ActiveKeystone,
+    /// Host-supplied scaling rows used by `GetPowerLevelDamageHealthMod`.
+    pub power_level_mods: BTreeMap<i32, (f64, f64)>,
     pub maps: BTreeMap<i32, MapInfo>,
     pub timers: BTreeMap<i32, timers::ElapsedTimer>,
     pub criteria: BTreeMap<i32, Vec<scenario::Criterion>>,

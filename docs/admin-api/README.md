@@ -23,6 +23,7 @@ The `A_Admin` namespace provides administrative functions for controlling simula
 - [Voice chat](voice-chat.md) — SetCanPlayerUseVoiceChat
 - [Health & Power](health-power.md) — SetPlayerHealth, SetPlayerPower, SetTargetHealth
 - [Targeting](targeting.md) — SetTarget, ClearTarget, SetFocus, ClearFocus
+- [Challenge mode](challenge-mode.md) — SetChallengePowerLevelMods
 - [Party](party.md) — SetPartySize, SetPartyMember, SetPartyMemberHealth, KillPartyMember, ResPartyMember, SetRotDamage
 - [Movement](movement.md) — SetMoving, SetMounted, SetFlying, SetFalling, SetSwimming
 - [Navigation target](navigation.md) — SetNavigationTarget
