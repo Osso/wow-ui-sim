@@ -548,6 +548,87 @@ pub(crate) fn world_map_exploration_pin_first_open_settles_without_reopen(env: &
     );
 }
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+pub(crate) fn world_map_exploration_pin_recovers_when_first_overlay_fetch_is_empty(
+    env: &WowLuaEnv,
+) {
+    install_test_error_handler(&env);
+
+    env.eval::<bool>(
+        r#"
+            local original = C_MapExplorationInfo.GetExploredMapTextures
+            local suppressedByMapID = {}
+            C_MapExplorationInfo.GetExploredMapTextures = function(mapID)
+                if type(mapID) == "number" and not suppressedByMapID[mapID] then
+                    suppressedByMapID[mapID] = true
+                    return {}
+                end
+                return original(mapID)
+            end
+            return true
+        "#,
+    )
+    .unwrap();
+
+    env.send_key_press("M", None).expect("M keybind failed");
+    for _ in 0..12 {
+        process_pending_timers(&env);
+        env.state().borrow_mut().ensure_layout_rects();
+        fire_one_on_update_tick(&env);
+    }
+
+    let result: String = env
+        .eval(
+            r#"
+                if not (WorldMapFrame and WorldMapFrame:IsShown()) then
+                    return "world_map_not_open"
+                end
+
+                local pin = WorldMapFrame:EnumeratePinsByTemplate("MapExplorationPinTemplate")()
+                if not pin then
+                    return "missing_exploration_pin"
+                end
+
+                local activeTextures = 0
+                local visibleTextures = 0
+                if pin.overlayTexturePool and pin.overlayTexturePool.EnumerateActive then
+                    for texture in pin.overlayTexturePool:EnumerateActive() do
+                        activeTextures = activeTextures + 1
+                        if texture:IsVisible() then
+                            visibleTextures = visibleTextures + 1
+                        end
+                    end
+                end
+
+                local waiting = rawget(pin, "isWaitingForLoad")
+                local alpha = pin:GetAlpha()
+                if activeTextures == 0 or visibleTextures == 0 or waiting ~= nil or alpha <= 0 then
+                    return string.format(
+                        "pin_unsettled:active=%d:visible=%d:waiting=%s:alpha=%.2f",
+                        activeTextures,
+                        visibleTextures,
+                        tostring(waiting),
+                        alpha
+                    )
+                end
+                return "ok"
+            "#,
+        )
+        .unwrap();
+
+    let errors = drain_test_errors(&env);
+    assert_eq!(
+        result, "ok",
+        "World map should recover from an empty first explored-texture fetch without requiring reopen: {result}"
+    );
+    assert!(
+        errors.is_empty(),
+        "World map empty-first-fetch recovery test produced {} Lua error(s):\n{}",
+        errors.len(),
+        errors.join("\n"),
+    );
+}
+
 pub(crate) fn world_map_registers_fog_of_war_pin_template_as_fog_of_war_frame(env: &WowLuaEnv) {
     install_test_error_handler(&env);
 

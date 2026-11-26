@@ -242,6 +242,15 @@ const MANUAL_FULL_UI_CASES: &[Case<WowLuaEnv>] = &[
     ),
 ];
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+const LEGACY_FULL_UI_CASES: &[Case<WowLuaEnv>] = &[
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+    Case::new(
+        "test_keybindings_panels_detail::world_map_exploration_pin_recovers_when_first_overlay_fetch_is_empty",
+        test_keybindings_panels_detail::world_map_exploration_pin_recovers_when_first_overlay_fetch_is_empty,
+    ),
+];
+
 #[cfg(feature = "client-retail")]
 const GENERATED_FULL_UI_CASES: &[Case<WowLuaEnv>] =
     wow_ui_sim_test_harness::prefork_full_ui_cases!();
@@ -284,6 +293,8 @@ fn listed_full_ui_cases() -> Vec<Case<WowLuaEnv>> {
     let groups = [
         #[cfg(feature = "client-retail")]
         default_cases.as_slice(),
+        #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+        LEGACY_FULL_UI_CASES,
         #[cfg(feature = "gui")]
         CHAT_FIXTURE_CASES,
         CAST_BAR_FIXTURE_CASES,
@@ -355,6 +366,10 @@ fn run_full_ui_and_exact_fixtures(config: Config) -> ExitCode {
         #[cfg(feature = "client-retail")]
         prefork::run_with_setup(&full_ui_cases, config, || {
             run_conformance_subprocess()?;
+            prefork_full_ui_preload::preload_full_game_ui()
+        }),
+        #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+        prefork::run_with_setup(LEGACY_FULL_UI_CASES, config, || {
             prefork_full_ui_preload::preload_full_game_ui()
         }),
         #[cfg(feature = "gui")]
