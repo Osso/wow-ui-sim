@@ -195,3 +195,13 @@ Evidence: lt-4265 R88e.2, Retail 12.1.5.70688. Full native public-handler
 publication and the final Lua value for an absent index remain UNKNOWN.
 The simulator preserves its existing absent-index policy. This change does
 not model event timing, event dispatch or the native notification queue.
+
+## Current cycle: duplicate helper defaults (lt-8d57)
+
+- [x] **VERIFIED (R88g8):** Retail and Forever select `ObjectAPI/Mainline/Quest.lua` and `FrameXMLUtil/Mainline/QuestUtils.lua` before `Blizzard_ObjectiveTracker`. Exact producer tests for quest rows, group capability and special items pass on both profiles. The fallback definitions remain on profiles without these providers.
+- [ ] **UNRESOLVED (R88g8):** original tracker output preservation is not proven on either Retail or Forever. In both profiles the tracker/container is already dirty before the supplied quest events. The events call the module's `MarkDirty`, but the dirty container schedules no new callback; its stored `dirtyCallback` is not invoked. Container/module `Update` and `BuildQuestWatchInfos` do not run, so the supplied quests do not reach rendered blocks. The consumer test was removed; its full source is in the lt-8d57 handoff `REPORT.md` as a follow-up patch. This is not evidence that the retired helper defaults were reached or incorrect.
+- [x] **INFERRED (R88g8; native evidence pending):** an unset `C_LFGList.CanCreateQuestGroup` simulator input returns false.
+
+**Coverage gap:** the three producer tests cover only simulator-supplied inputs. Existing tests exercise some `QuestCache` behavior, including autocomplete, but do not directly verify the retired fallback's complete `QuestCache:Get` projection or `QuestUtil.CanCreateQuestGroup` / `QuestUtil.QuestShowsItemByIndex` behavior. The removed consumer fixture was the only direct coverage added here for those original helpers.
+
+The `ObjectiveTrackerContainerMixin`, `ObjectiveTrackerModuleHeaderMixin` and `ObjectiveTrackerModuleMixin` names in the header workaround are references used to wrap selected methods, not definitions of the mixin tables. The wrapper remains unchanged. Producer tests: `tests/quest_helper_load_ownership.rs`.

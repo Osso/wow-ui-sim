@@ -14,6 +14,8 @@ use crate::lua_api::state::SimState;
 pub struct QuestSpecialItemInputs {
     /// One-based quest-log indexes resolved by the quest-ID request context.
     pub quest_ids_by_log_index: HashMap<i32, i32>,
+    /// Host-supplied legacy quest-log item IDs, keyed by one-based log index.
+    pub special_item_ids_by_log_index: HashMap<i32, u32>,
     /// Special-item fields copied from the resolved quest-cache records.
     pub cached_quest_records: HashMap<i32, QuestSpecialItemCacheRecord>,
     /// Existing inventory item objects selected by the native item predicates.

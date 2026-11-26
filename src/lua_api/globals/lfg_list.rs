@@ -378,8 +378,16 @@ fn state_push_num_zero(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-fn can_create_quest_group(_state: &mut LuaState) -> LuaResult<u32> {
-    _state.push(rilua::Val::Bool(false));
+/// INFERRED (R88g8; native evidence pending): unset quest capability is false.
+fn can_create_quest_group(state: &mut LuaState) -> LuaResult<u32> {
+    let quest_id = Option::<i32>::from_stack(state, 1)?.unwrap_or_default();
+    let can_create = borrow_state(state)?
+        .quest_log_entries
+        .group_creation_by_quest
+        .get(&quest_id)
+        .copied()
+        .unwrap_or(false);
+    state.push(rilua::Val::Bool(can_create));
     Ok(1)
 }
 

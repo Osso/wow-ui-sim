@@ -10,6 +10,18 @@ Forever only: `A_Admin.SetQuestTimer(questID, seconds)` supplies a timer limit i
 
 Retail, PTR and Forever: `A_Admin.SetMinimapQuestBlobInside(questID, inside)` supplies a boolean containment observation for the quest. It does not emit an event or calculate geometry. An unsupplied quest uses the simulator's false scenario default; the native default is unknown. See the [contract](../specs/minimap-quest-blob-observation.md).
 
+## SetQuestLogEntry
+
+`A_Admin.SetQuestLogEntry(questID, title, isComplete)` adds a clean ordinary quest row or updates the title and completion flag of an existing row. It does not add a watch or fire an event. Use `C_QuestLog.AddQuestWatch` and the relevant client event to drive the original tracker.
+
+## SetQuestGroupCreatable
+
+`A_Admin.SetQuestGroupCreatable(questID, canCreate)` supplies the result returned by `C_LFGList.CanCreateQuestGroup` for that quest ID. An unset ID returns `false` (**INFERRED**, R88g8; native evidence is pending). The setter stores only host-supplied quest capability state; it does not create a listing or alter party state.
+
+## SetQuestLogSpecialItem
+
+`A_Admin.SetQuestLogSpecialItem(questLogIndex, itemID)` supplies the quest-log special item used by `GetQuestLogSpecialItemInfo`; pass `nil` to clear the item at that index. A supplied item returns `(nil, itemID, nil, false)`; an unset index returns no values. The setter stores only host input and does not load or create an inventory item.
+
 ## SetQuestObjectives
 
 Retail/Forever only: `A_Admin.SetQuestObjectives(questID, rows, percentage?)` replaces

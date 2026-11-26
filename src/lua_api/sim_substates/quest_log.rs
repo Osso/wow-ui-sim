@@ -116,6 +116,8 @@ pub struct QuestLogState {
     /// Supplied chapter IDs in campaign order.
     pub campaign_chapter_ids: HashMap<i32, Vec<i32>>,
     pub entries: Vec<QuestLogEntry>,
+    /// Host-supplied quest-group capability; unset remains false (INFERRED, R88g8).
+    pub group_creation_by_quest: HashMap<i32, bool>,
     /// Explicitly supplied countdowns displayed by the Forever quest timer.
     #[cfg(feature = "client-wowforever")]
     pub timers: Vec<crate::c_api::c_quest_log::QuestTimer>,
@@ -333,6 +335,17 @@ fn seed_quest_defaults() -> QuestLogEntry {
         reward_talents: 0,
         reward_factions: Vec::new(),
         currency_rewards: Vec::new(),
+    }
+}
+
+impl QuestLogEntry {
+    pub(crate) fn new_supplied(quest_id: i32, title: String, is_complete: bool) -> Self {
+        Self {
+            quest_id,
+            title,
+            is_complete,
+            ..seed_quest_defaults()
+        }
     }
 }
 
