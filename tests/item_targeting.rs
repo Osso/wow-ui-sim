@@ -22,7 +22,7 @@ fn spell_targeting_admin_input_updates_existing_classification_sets() {
 fn item_targeting_uses_item_use_spells_and_returns_false_without_one() {
     let env = WowLuaEnv::new().expect("Lua environment should initialize");
     env.exec(
-        r#"
+        r##"
         local _, helpfulSpell = C_Item.GetItemSpell(5512)
         local _, harmfulSpell = C_Item.GetItemSpell(6948)
         assert(helpfulSpell and helpfulSpell > 0, "Healthstone use spell must resolve")
@@ -38,7 +38,7 @@ fn item_targeting_uses_item_use_spells_and_returns_false_without_one() {
         assert(select("#", C_Item.GetItemSpell(25)) == 0, "fixture must have no use spell")
         assert(C_Item.IsHelpfulItem(25) == false)
         assert(C_Item.IsHarmfulItem(25) == false)
-        "#,
+        "##,
     )
     .expect("item targeting should classify supplied use spells");
 }
