@@ -115,7 +115,7 @@ fn load_game_ui() -> WowLuaEnv {
 #[test]
 fn forever_selected_name_consumer_survives_guard_retirement() {
     let env = load_character_select();
-    let names: (String, String) = env.exec(SELECTED_NAME_PROBE).unwrap();
+    let names: (String, String) = env.eval(SELECTED_NAME_PROBE).unwrap();
     assert_ne!(names.0, names.1);
 }
 
