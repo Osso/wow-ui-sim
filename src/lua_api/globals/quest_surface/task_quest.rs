@@ -73,9 +73,23 @@ pub fn get_quest_log_time_left(state: &mut LuaState) -> LuaResult<u32> {
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub fn get_quest_log_special_item_cooldown(state: &mut LuaState) -> LuaResult<u32> {
-    // INFERRED: R88g8 (native evidence pending); no cooldown input means no active cooldown.
-    state.push(Val::Num(0.0));
-    state.push(Val::Num(0.0));
+    let index = Option::<i32>::from_stack(state, 1)?.unwrap_or_default();
+    let item_id = borrow_state(state)?
+        .quest_log_entries
+        .quest_special_item_inputs
+        .special_item_ids_by_log_index
+        .get(&index)
+        .copied();
+    let Some(item_id) = item_id else {
+        // INFERRED: R88g8 (native evidence pending); no item gives a nil start.
+        return Ok(0);
+    };
+    let (start, duration) = {
+        let sim = borrow_state(state)?;
+        crate::c_api::item_spell::helpers::item_cooldown_pair(&sim, Some(item_id))
+    };
+    state.push(Val::Num(start));
+    state.push(Val::Num(duration));
     state.push(Val::Num(1.0));
     Ok(3)
 }

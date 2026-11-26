@@ -1,9 +1,10 @@
 # Supplied item cooldowns
 
-Item cooldown queries must project independently supplied start/duration pairs unchanged. Passive input lives in `src/lua_api/state/`; C API queries live in `src/c_api/item_spell/`. See the [API inventory](../wiki/systems/lua-api.md) for architecture. Independent archived source `ffb6d7d7d8ab5a13be9bdd5c603b963380002656` proves the five literal requirements below in bounded Retail and Mists tests; corrected-fixture Mists GREEN is recorded at `bf1b61f10` below; current post-retirement HEAD, PTR, native and full-parent acceptance remain pending.
+Item cooldown queries must project independently supplied start/duration pairs unchanged. Input lives in `src/lua_api/state/`; C API queries live in `src/c_api/item_spell/`. See the [API inventory](../wiki/systems/lua-api.md) for architecture. Independent archived source `ffb6d7d7d8ab5a13be9bdd5c603b963380002656` proves the five literal requirements below in bounded Retail and Mists tests; corrected-fixture Mists GREEN is recorded at `bf1b61f10` below; current post-retirement HEAD, PTR, native and full-parent acceptance remain pending.
 
 ## What it must do
 
+- [ ] Simulator-only `A_Admin.SetItemCooldown(itemID, duration)` sets the item's start to current `GetTime()` and supplied duration; duration `0` clears the input. [Admin API](../admin-api/combat.md#a_adminsetitemcooldownitemid-duration).
 - [x] `C_Item.GetItemCooldown` resolves numeric ItemInfo and item hyperlinks to the same item ID and returns exactly `(number, number, boolean)`, with the supplied pair unchanged and enabled `true`.
 - [x] `C_Container.GetItemCooldown(itemID)` selects a numeric item ID and returns exactly `(number, number, number)`, with the supplied pair unchanged and enabled `1`; it does not select an equipment slot.
 - [x] `C_Container.GetContainerItemCooldown(bag, slot)` resolves the occupied item ID and returns its unchanged pair with numeric enabled `1`; this route is distinct from the single-item-ID query.
@@ -16,7 +17,9 @@ Item cooldown queries must project independently supplied start/duration pairs u
 
 ## Implementation inventory
 
-- `src/lua_api/state/sim_state.rs`, `src/lua_api/state.rs`: passive item-ID cooldown map and empty initializer, separate from equipment-slot input.
+- `src/lua_api/state/sim_state.rs`, `src/lua_api/state.rs`: item-ID cooldown map and empty initializer, separate from equipment-slot input.
+- `src/lua_api/globals/admin.rs`: simulator-only item cooldown input setter.
+- `src/lua_api/globals/quest_surface/task_quest.rs`: legacy quest-special-item cooldown query over the item-ID map.
 - `src/lua_api/game_data.rs`: existing `SpellCooldownState` start/duration pair.
 - `src/c_api/item_spell/helpers.rs`: pure item-map pair projection; absent input yields `(0, 0)` by explicit model policy, not fallback compatibility or native parity.
 - `src/c_api/item_spell/c_item.rs`: existing ItemInfo parser selects the passive item-map pair; boolean enabled `true`.
@@ -25,7 +28,7 @@ Item cooldown queries must project independently supplied start/duration pairs u
 
 ## Tests asserting this spec
 
-`tests/item_cooldowns.rs`: four route tests, exact return counts/types/values, colliding item/slot IDs, and absent records. Inserts overwrite fixture defaults; removals establish missing records and an empty slot. Genuine preproducer Retail execution at `e4caa4899`: four tests, legacy 1 PASS and query 3 FAIL, exit 101. All three queries fail their first `cooldown start value` assertion. C_Item numeric/hyperlink selector controls and Container bag controls were reached; subsequent hyperlink/collision/missing tuples were not reached. This historical RED is not superseded or relabeled by subsequent GREEN.
+`tests/item_cooldowns.rs`: item input, four query-route tests, exact return counts/types/values, colliding item/slot IDs, and absent records. `tests/objective_tracker_dirty.rs` checks the original quest item button's cooldown frame and texture vertex color. Inserts overwrite fixture defaults; removals establish missing records and an empty slot. Genuine preproducer Retail execution at `e4caa4899`: four tests, legacy 1 PASS and query 3 FAIL, exit 101. All three queries fail their first `cooldown start value` assertion. C_Item numeric/hyperlink selector controls and Container bag controls were reached; subsequent hyperlink/collision/missing tuples were not reached. This historical RED is not superseded or relabeled by subsequent GREEN.
 
 ## Bounded archived GREEN — 2026-10-14
 
