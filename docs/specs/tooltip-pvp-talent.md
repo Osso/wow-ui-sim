@@ -21,7 +21,7 @@ VERIFIED: Retail `C_TooltipInfo.GetPvpTalent` uses the PvP talent row to build s
 - [x] VERIFIED: Use `SpellID` as the primary spell input. The host-supplied resolver map gives its resolved outcome; an absent entry means identity. R53 confirms `OverridesSpellID` is only used by the conditional replacement annotation and is not a fallback.
 - [x] VERIFIED: A successful tooltip uses type `1` and the resolved nonzero spell ID; the tests do not cover zero-ID publication or miss paths.
 - [x] VERIFIED: Zero `OverridesSpellID` adds no replacement line. A nonzero override can add a type-`0` `REPLACES_SPELL` line after ordinary spell content, and the original row's attribute mask `32768` suppresses it.
-- [x] VERIFIED: Missing resolved override-name or original override rows suppress `REPLACES_SPELL`; the original `GameTooltip:SetPvpTalent` consumer test covers both row-miss branches.
+- [ ] VERIFIED: Missing resolved override-name or original override rows suppress `REPLACES_SPELL`; getter-level tests cover both row-miss branches, but no selected original PvP talent consumer test proves them.
 - [x] VERIFIED: Populated tooltip data uses the shared data-instance counter, which increments between consecutive calls.
 
 ### Local and inspect annotations
@@ -59,7 +59,7 @@ VERIFIED: Retail `C_TooltipInfo.GetPvpTalent` uses the PvP talent row to build s
 
 ## Tests asserting this spec
 
-- `tests/tooltip_pvp_talent.rs` — optional R73 tests drive original slot hover and the original list template hover (the panel harness does not realize virtualized list rows), with a pre-load pass-through spy, visible lines, mutually exclusive outcomes and primary getter metadata; supplied slot fields share group selection and preserve no-host defaults. Retail registration; original `GameTooltip:SetPvpTalent` accessor with a pass-through getter spy and visible line checks; generated default catalog values and neutral grant/eligibility inputs; spell identity, replacement line and suppression; missing resolved replacement-name and original replacement-row cases; local level, group, position, eligibility, combat and rest branches; item, essence and inspect grant branches.
+- `tests/tooltip_pvp_talent.rs` — optional R73 tests drive original slot hover and the original list template hover (the panel harness does not realize virtualized list rows), with a pre-load pass-through spy, visible lines, mutually exclusive outcomes and primary getter metadata; supplied slot fields share group selection and preserve no-host defaults. Retail registration; a `TestGetPvpTalent` getter-level wrapper around `GameTooltip:SetPvpTalent` with a pass-through getter spy; generated default catalog values and neutral grant/eligibility inputs; spell identity, replacement line and suppression; getter-level missing resolved replacement-name and original replacement-row cases (not yet proved through the selected PvP talent consumer); local level, group, position, eligibility, combat and rest branches; item, essence and inspect grant branches.
 - `tests/tooltip_full_env_helpers.rs` — optional pre-addon setup hook installs the getter spy before `TooltipDataHandler` copies the namespace.
 - `tests/tooltip_forever_four_getters.rs` — optional Forever registration, argument acceptance, Usage text, two supplied-hit cases and a missing-record case.
 - `tools/test_gen_pvp_talent_catalog.py` — projected-column, row validation, and generated Rust output.
