@@ -179,22 +179,32 @@ fn achievement_search_consumer_handles_two_empty_result_selections() {
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 #[test]
-fn pet_collection_button_uses_supplied_achievement_ui_access() {
+fn pet_collection_consumer_uses_profile_selected_surface() {
     let env = load_achievement_ui_consumer();
+    if cfg!(feature = "client-wowforever") {
+        env.exec(
+            r#"A_Admin.SetSummonedBattlePetGUID("BattlePet-1")
+               assert(C_AddOns.LoadAddOn("Blizzard_Collections"))
+               assert(C_AddOns.IsAddOnLoaded("Blizzard_Collections"))
+               assert(PetJournal)
+               assert(C_PetJournal.IsCurrentlySummoned("BattlePet-1"))
+               assert(not C_PetJournal.IsCurrentlySummoned("BattlePet-2"))"#,
+        )
+        .expect("Forever Collections should load its selected pet-journal consumer");
+        return;
+    }
     env.exec(
-        r#"
-        assert(C_AddOns.LoadAddOn("Blizzard_Collections"))
-        A_Admin.SetAchievementEarned(6, true)
-        assert(CanShowAchievementUI())
-        A_Admin.SetCanShowAchievementUI(false)
-        PetJournalAchievementStatus_OnClick()
-        assert(not C_AddOns.IsAddOnLoaded("Blizzard_AchievementUI"))
-        A_Admin.SetCanShowAchievementUI(true)
-        PetJournalAchievementStatus_OnClick()
-        assert(C_AddOns.IsAddOnLoaded("Blizzard_AchievementUI"))
-        "#,
+        r#"assert(C_AddOns.LoadAddOn("Blizzard_Collections"))
+           A_Admin.SetAchievementEarned(6, true)
+           assert(CanShowAchievementUI())
+           A_Admin.SetCanShowAchievementUI(false)
+           PetJournalAchievementStatus_OnClick()
+           assert(not C_AddOns.IsAddOnLoaded("Blizzard_AchievementUI"))
+           A_Admin.SetCanShowAchievementUI(true)
+           PetJournalAchievementStatus_OnClick()
+           assert(C_AddOns.IsAddOnLoaded("Blizzard_AchievementUI"))"#,
     )
-    .expect("pet collection consumer should follow supplied UI access");
+    .expect("Retail pet collection consumer should follow supplied UI access");
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
