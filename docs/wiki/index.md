@@ -1,3 +1,7 @@
+## [2026-11-26] investigation | Restricted environment item helper bindings
+
+[Restricted environment item helper bindings](investigations/restricted-env-item-helpers.md) records **VERIFIED** Retail full-UI and Forever selected-addon tests: the original secure snippet reads item targeting and `HasAction` results. **UNVERIFIED:** why the earlier item-targeting report saw a nil call; no producer change was made.
+
 ## [2026-11-25] investigation | Hidden CurrencyTransfer EditBox startup notification
 
 [CurrencyTransfer hidden EditBox startup](investigations/currency-transfer-hidden-editbox-startup.md) records the required API contract, hidden XML initialization order, and the inferred visibility-delayed notification rule. **INFERRED — R88g8 (native evidence pending):** hidden EditBoxes retain changed text notifications until visible. Exact Retail and WoW Forever consumer/API tests pass. Both final stock captures return byte-exact `[]` with exit 0; this is simulator evidence only.
