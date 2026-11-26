@@ -8,6 +8,23 @@ mod render_order_support;
 use render_order_support::env_with_isolated_world_map;
 use wow_ui_sim::lua_api::WowLuaEnv;
 
+const FOG_PIN_MAP_REFRESH_LUA: &str = r#"
+local pin = WorldMapFrame:EnumeratePinsByTemplate("FogOfWarPinTemplate")()
+if not pin then return "missing_fog_pin" end
+
+WorldMapFrame:SetMapID(981)
+local firstMap, firstFog = pin:GetUiMapID(), pin.fogOfWarID
+if firstMap ~= 981 or firstFog ~= 4 or not pin:IsShown() then return "first_map" end
+
+WorldMapFrame:SetMapID(1032)
+local secondMap, secondFog = pin:GetUiMapID(), pin.fogOfWarID
+if secondMap ~= 1032 or secondFog ~= 5 or not pin:IsShown() then return "second_map" end
+
+WorldMapFrame:SetMapID(2248)
+if pin:IsShown() then return "stale_fog_pin_visible" end
+return "ok"
+"#;
+
 fn env() -> WowLuaEnv {
     WowLuaEnv::new().expect("Failed to create Lua environment")
 }
@@ -48,6 +65,18 @@ fn test_default_map_has_world_quests() {
     );
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn world_map_fog_pin_refreshes_for_two_maps_and_hides_stale_assets() {
+    let env = env_with_isolated_world_map();
+    let previous_errors = env.state().borrow().lua_errors.len();
+    let result: String = env.eval(FOG_PIN_MAP_REFRESH_LUA).unwrap();
+    let current_errors = env.state().borrow().lua_errors.len();
+    assert_eq!(result, "ok", "fog pin refresh failed: {result}");
+    assert_eq!(current_errors, previous_errors, "map changes produced Lua errors");
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 #[test]
 fn world_map_zone_map_shows_seeded_quest_pins() {
     let env = env_with_isolated_world_map();

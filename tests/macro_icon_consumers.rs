@@ -102,36 +102,40 @@ fn original_icon_provider_observes_all_four_supplied_sources() {
     assert_original_icon_provider_observes_all_four_supplied_sources();
 }
 
+fn assert_supplied_icon_provider_sources(env: &WowLuaEnv, n: i32) {
+    let spell_name = format!("host_spell_{n}");
+    let item_name = format!("host_item_{n}");
+    let spell_id = 900_100 + n;
+    let item_id = -900_200 - n;
+    let catalog = serde_json::json!({
+        "looseSpells": [spell_name.clone()],
+        "looseItems": [item_name.clone()],
+        "spells": [spell_id],
+        "items": [item_id],
+    });
+    set_icon_catalog(env, &catalog);
+    env.exec(&format!(
+        r#"
+        local source = debug.getinfo(IconDataProviderMixin.Init, "S").source
+        assert(source:gsub("\\", "/"):find("Blizzard_FrameXMLBase/IconDataProvider.lua", 1, true), source)
+        local provider = CreateFromMixins(IconDataProviderMixin)
+        provider:Init(IconDataProviderExtraType.None, false, {{IconDataProviderIconType.Spell, IconDataProviderIconType.Item}})
+        assert(provider:GetNumIcons() == 5, "one built-in question mark and four supplied icons")
+        assert(provider:GetIconByIndex(2) == [[INTERFACE\ICONS\{spell_name}]], "supplied loose spell")
+        assert(provider:GetIconByIndex(3) == {spell_id}, "supplied catalog spell")
+        assert(provider:GetIconByIndex(4) == [[INTERFACE\ICONS\{item_name}]], "supplied loose item")
+        assert(provider:GetIconByIndex(5) == {item_id}, "supplied signed catalog item")
+        provider:Release()
+        "#,
+    ))
+    .expect("original provider should distinguish both snapshots of all four host feeds");
+}
+
 fn assert_original_icon_provider_observes_all_four_supplied_sources() {
     with_blizzard_addon_closure(&["Blizzard_FrameXMLBase"], &[], |env, loaded| {
         assert!(loaded.iter().any(|addon| addon == "Blizzard_FrameXMLBase"));
         for n in 1..=2 {
-            let spell_name = format!("host_spell_{n}");
-            let item_name = format!("host_item_{n}");
-            let spell_id = 900_100 + n;
-            let item_id = -900_200 - n;
-            let catalog = serde_json::json!({
-                "looseSpells": [spell_name.clone()],
-                "looseItems": [item_name.clone()],
-                "spells": [spell_id],
-                "items": [item_id],
-            });
-            set_icon_catalog(env, &catalog);
-            env.exec(&format!(
-                r#"
-                local source = debug.getinfo(IconDataProviderMixin.Init, "S").source
-                assert(source:gsub("\\", "/"):find("Blizzard_FrameXMLBase/IconDataProvider.lua", 1, true), source)
-                local provider = CreateFromMixins(IconDataProviderMixin)
-                provider:Init(IconDataProviderExtraType.None, false, {{IconDataProviderIconType.Spell, IconDataProviderIconType.Item}})
-                assert(provider:GetNumIcons() == 5, "one built-in question mark and four supplied icons")
-                assert(provider:GetIconByIndex(2) == [[INTERFACE\ICONS\{spell_name}]], "supplied loose spell")
-                assert(provider:GetIconByIndex(3) == {spell_id}, "supplied catalog spell")
-                assert(provider:GetIconByIndex(4) == [[INTERFACE\ICONS\{item_name}]], "supplied loose item")
-                assert(provider:GetIconByIndex(5) == {item_id}, "supplied signed catalog item")
-                provider:Release()
-                "#,
-            ))
-            .expect("original provider should distinguish both snapshots of all four host feeds");
+            assert_supplied_icon_provider_sources(env, n);
         }
         env.exec("A_Admin.SetMacroIconCatalog([[{}]])")
             .expect("clear supplied icon catalog");

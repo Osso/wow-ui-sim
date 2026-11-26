@@ -1,34 +1,17 @@
 //! Integration tests for keybinding dispatch — core world map panel details.
 
+#[cfg(feature = "client-mists")]
+use super::{drain_test_errors, install_test_error_handler};
+#[cfg(feature = "client-retail")]
 use crate::prefork_full_ui_preload::{
     drain_test_errors, frame_is_shown, install_test_error_handler,
 };
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::startup::{fire_one_on_update_tick, process_pending_timers};
 
-const FOG_PIN_MAP_REFRESH_LUA: &str = r#"
-local pin = WorldMapFrame:EnumeratePinsByTemplate("FogOfWarPinTemplate")()
-if not pin then return "missing_fog_pin" end
-
-WorldMapFrame:SetMapID(981)
-local firstMap, firstFog = pin:GetUiMapID(), pin.fogOfWarID
-if firstMap ~= 981 or firstFog ~= 4 or not pin:IsShown() then
-    return string.format("first_map:%s:%s:%s:handler=%s", tostring(firstMap), tostring(firstFog), tostring(pin:IsShown()), type(pin:GetScript("OnUiMapChanged")))
-end
-
-WorldMapFrame:SetMapID(1032)
-local secondMap, secondFog = pin:GetUiMapID(), pin.fogOfWarID
-if secondMap ~= 1032 or secondFog ~= 5 or not pin:IsShown() then
-    return string.format("second_map:%s:%s:%s", tostring(secondMap), tostring(secondFog), tostring(pin:IsShown()))
-end
-
-WorldMapFrame:SetMapID(2248)
-if pin:IsShown() then return "stale_fog_pin_visible" end
-return "ok"
-"#;
-
 // ── M → ToggleWorldMap() ────────────────────────────────────────────────
 
+#[cfg(feature = "client-retail")]
 pub(crate) fn keybind_m_opens_world_map(env: &WowLuaEnv) {
     env.send_key_press("M", None).expect("M keybind failed");
     assert!(
@@ -37,21 +20,7 @@ pub(crate) fn keybind_m_opens_world_map(env: &WowLuaEnv) {
     );
 }
 
-pub(crate) fn world_map_fog_pin_refreshes_across_maps_and_hides_stale_assets(env: &WowLuaEnv) {
-    install_test_error_handler(env);
-    env.send_key_press("M", None).expect("M keybind failed");
-    let result: String = env
-        .eval(FOG_PIN_MAP_REFRESH_LUA)
-        .expect("fog pin map refresh should run");
-    let errors = drain_test_errors(env);
-    assert_eq!(result, "ok", "fog pin map refresh failed: {result}");
-    assert!(
-        errors.is_empty(),
-        "fog pin map refresh produced Lua errors: {}",
-        errors.join("\n")
-    );
-}
-
+#[cfg(feature = "client-retail")]
 pub(crate) fn world_map_floor_dropdown_hidden_without_subzone_or_map_group(env: &WowLuaEnv) {
     install_test_error_handler(&env);
     env.state().borrow_mut().world.sub_zone_name.clear();
@@ -116,6 +85,7 @@ pub(crate) fn world_map_floor_dropdown_hidden_without_subzone_or_map_group(env: 
     );
 }
 
+#[cfg(feature = "client-retail")]
 pub(crate) fn world_map_tracking_defaults_follow_filter_masks(env: &WowLuaEnv) {
     env.exec(
         r#"
@@ -132,6 +102,7 @@ pub(crate) fn world_map_tracking_defaults_follow_filter_masks(env: &WowLuaEnv) {
     .expect("original world-map filters must observe both defaults");
 }
 
+#[cfg(feature = "client-retail")]
 pub(crate) fn world_map_bounty_board_reads_supplied_bounties(env: &WowLuaEnv) {
     use wow_ui_sim::lua_api::state::QuestBounty;
     {
@@ -175,6 +146,7 @@ pub(crate) fn world_map_bounty_board_reads_supplied_bounties(env: &WowLuaEnv) {
     .expect("resolved empty and missing map must differ");
 }
 
+#[cfg(feature = "client-retail")]
 pub(crate) fn world_map_threat_frame_reads_quest_log_flags(env: &WowLuaEnv) {
     let quest_id = env
         .state()
@@ -210,6 +182,7 @@ pub(crate) fn world_map_threat_frame_reads_quest_log_flags(env: &WowLuaEnv) {
     .expect("excluded quest flags must not count as active threats");
 }
 
+#[cfg(feature = "client-retail")]
 pub(crate) fn world_map_campaign_headers_refresh_on_show(env: &WowLuaEnv) {
     env.exec(
         r#"
@@ -222,6 +195,7 @@ pub(crate) fn world_map_campaign_headers_refresh_on_show(env: &WowLuaEnv) {
     .expect("original quest map show must refresh campaign headers");
 }
 
+#[cfg(feature = "client-retail")]
 pub(crate) fn world_map_party_quest_counts_follow_membership(env: &WowLuaEnv) {
     let quest_id = env.state().borrow().quest_log_entries.entries[0].quest_id;
     {
@@ -257,6 +231,7 @@ pub(crate) fn world_map_party_quest_counts_follow_membership(env: &WowLuaEnv) {
     .expect("removing supplied membership must update the original utility");
 }
 
+#[cfg(feature = "client-retail")]
 pub(crate) fn keybind_m_toggles_world_map_without_errors(env: &WowLuaEnv) {
     install_test_error_handler(&env);
 
@@ -291,6 +266,7 @@ pub(crate) fn keybind_m_toggles_world_map_without_errors(env: &WowLuaEnv) {
     );
 }
 
+#[cfg(feature = "client-retail")]
 pub(crate) fn world_map_title_text_is_non_empty_after_opening(env: &WowLuaEnv) {
     install_test_error_handler(&env);
 
@@ -337,6 +313,7 @@ pub(crate) fn world_map_title_text_is_non_empty_after_opening(env: &WowLuaEnv) {
     );
 }
 
+#[cfg(feature = "client-retail")]
 pub(crate) fn world_map_exploration_pin_has_visible_overlay_textures_after_opening(
     env: &WowLuaEnv,
 ) {
@@ -425,6 +402,7 @@ pub(crate) fn world_map_exploration_pin_has_visible_overlay_textures_after_openi
     );
 }
 
+#[cfg(feature = "client-retail")]
 pub(crate) fn world_map_exploration_pin_converges_visible_after_onupdate_ticks(env: &WowLuaEnv) {
     install_test_error_handler(&env);
 
@@ -524,6 +502,7 @@ pub(crate) fn world_map_exploration_pin_converges_visible_after_onupdate_ticks(e
     );
 }
 
+#[cfg(feature = "client-retail")]
 pub(crate) fn world_map_exploration_pin_first_open_settles_without_reopen(env: &WowLuaEnv) {
     install_test_error_handler(&env);
 
@@ -584,6 +563,7 @@ pub(crate) fn world_map_exploration_pin_first_open_settles_without_reopen(env: &
     );
 }
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) fn world_map_exploration_pin_recovers_when_first_overlay_fetch_is_empty(
     env: &WowLuaEnv,
 ) {
@@ -664,6 +644,7 @@ pub(crate) fn world_map_exploration_pin_recovers_when_first_overlay_fetch_is_emp
     );
 }
 
+#[cfg(feature = "client-retail")]
 pub(crate) fn world_map_registers_fog_of_war_pin_template_as_fog_of_war_frame(env: &WowLuaEnv) {
     install_test_error_handler(&env);
 

@@ -23,53 +23,72 @@ fn show_macro_frame_loads_and_populates_selector() {
 }
 
 fn assert_show_macro_frame_loads_and_populates_selector() {
-        let env = setup_env();
-        if cfg!(feature = "client-wrath") {
-            env.exec(include_str!("fixtures/wrath_f03/macros.lua"))
-                .expect("native macro lazy loader, selection and populated rows");
-            return;
-        }
-        #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
-        seed_macro_consumer_rows(&env);
-        let (expected_name, expected_body) =
-            if cfg!(any(feature = "client-retail", feature = "client-wowforever")) {
-                ("MacroAlpha", "/say alpha")
-            } else {
-                ("Raid Beacon", "/rw Stack on star")
-            };
-        let result: String = env.eval(&format!(r#"
-            if not ShowMacroFrame then
-                return "missing_show_macro_frame"
-            end
+    let env = setup_env();
+    if load_wrath_macro_fixture(&env) {
+        return;
+    }
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    seed_macro_consumer_rows(&env);
+    let (expected_name, expected_body) = expected_macro_selection();
+    assert_macro_panel_selection(&env, expected_name, expected_body);
+    assert_macro_panel_counts(&env);
+}
 
-            ShowMacroFrame()
+fn load_wrath_macro_fixture(env: &wow_ui_sim::lua_api::WowLuaEnv) -> bool {
+    if !cfg!(feature = "client-wrath") {
+        return false;
+    }
+    env.exec(include_str!("fixtures/wrath_f03/macros.lua"))
+        .expect("native macro lazy loader, selection and populated rows");
+    true
+}
 
-            if not MacroFrame or not MacroFrame:IsShown() then
-                return "macro_frame_not_shown"
-            end
-            if PanelTemplates_GetSelectedTab(MacroFrame) ~= 1 then
-                return "selected_tab=" .. tostring(PanelTemplates_GetSelectedTab(MacroFrame))
-            end
-            if MacroFrame.MacroSelector.numMacros ~= 2 then
-                return "selector_count=" .. tostring(MacroFrame.MacroSelector.numMacros)
-            end
-            if MacroFrameSelectedMacroName:GetText() ~= "{expected_name}" then
-                return "selected_name=" .. tostring(MacroFrameSelectedMacroName:GetText())
-            end
-            if MacroFrameText:GetText() ~= "{expected_body}" then
-                return "selected_body=" .. tostring(MacroFrameText:GetText())
-            end
-            if MacroFrame.SelectedMacroButton.Icon:GetTexture() ~= 134400 then
-                return "selected_icon=" .. tostring(MacroFrame.SelectedMacroButton.Icon:GetTexture())
-            end
+fn expected_macro_selection() -> (&'static str, &'static str) {
+    if cfg!(any(feature = "client-retail", feature = "client-wowforever")) {
+        ("MacroAlpha", "/say alpha")
+    } else {
+        ("Raid Beacon", "/rw Stack on star")
+    }
+}
 
-            local accountCount, characterCount = GetNumMacros()
-            if accountCount ~= 2 or characterCount ~= 1 then
-                return "counts=" .. tostring(accountCount) .. "," .. tostring(characterCount)
-            end
-            return "ok"
+fn assert_macro_panel_selection(
+    env: &wow_ui_sim::lua_api::WowLuaEnv,
+    expected_name: &str,
+    expected_body: &str,
+) {
+    let result: String = env.eval(&format!(r#"
+        if not ShowMacroFrame then return "missing_show_macro_frame" end
+        ShowMacroFrame()
+        if not MacroFrame or not MacroFrame:IsShown() then return "macro_frame_not_shown" end
+        if PanelTemplates_GetSelectedTab(MacroFrame) ~= 1 then
+            return "selected_tab=" .. tostring(PanelTemplates_GetSelectedTab(MacroFrame))
+        end
+        if MacroFrame.MacroSelector.numMacros ~= 2 then
+            return "selector_count=" .. tostring(MacroFrame.MacroSelector.numMacros)
+        end
+        if MacroFrameSelectedMacroName:GetText() ~= "{expected_name}" then
+            return "selected_name=" .. tostring(MacroFrameSelectedMacroName:GetText())
+        end
+        if MacroFrameText:GetText() ~= "{expected_body}" then
+            return "selected_body=" .. tostring(MacroFrameText:GetText())
+        end
+        return "ok"
         "#)).unwrap();
-        assert_eq!(result, "ok", "ShowMacroFrame should load and populate the macro selector: {result}");
+    assert_eq!(result, "ok", "ShowMacroFrame should load and populate the macro selector: {result}");
+}
+
+fn assert_macro_panel_counts(env: &wow_ui_sim::lua_api::WowLuaEnv) {
+    let result: String = env.eval(r#"
+        if MacroFrame.SelectedMacroButton.Icon:GetTexture() ~= 134400 then
+            return "selected_icon=" .. tostring(MacroFrame.SelectedMacroButton.Icon:GetTexture())
+        end
+        local accountCount, characterCount = GetNumMacros()
+        if accountCount ~= 2 or characterCount ~= 1 then
+            return "counts=" .. tostring(accountCount) .. "," .. tostring(characterCount)
+        end
+        return "ok"
+    "#).unwrap();
+    assert_eq!(result, "ok", "ShowMacroFrame should load and populate the macro selector: {result}");
 }
 
 fn seed_macro_consumer_rows(env: &wow_ui_sim::lua_api::WowLuaEnv) {

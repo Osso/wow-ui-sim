@@ -97,15 +97,19 @@ fn click_binding_ui_uses_supplied_macro_name_and_numeric_icon() {
     assert_click_binding_uses_supplied_macro_name_and_numeric_icon();
 }
 
-fn assert_click_binding_uses_supplied_macro_name_and_numeric_icon() {
-    let env = setup_env();
+fn seed_click_binding_macro_rows(env: &WowLuaEnv) {
     seed(
-        &env,
+        env,
         &[
             ("ClickMacroAlpha", 134400, "/say alpha"),
             ("ClickMacroBeta", 132212, "/say beta"),
         ],
     );
+}
+
+fn assert_click_binding_uses_supplied_macro_name_and_numeric_icon() {
+    let env = setup_env();
+    seed_click_binding_macro_rows(&env);
     env.exec(
         r#"
         assert(not C_AddOns.IsAddOnLoaded("Blizzard_ClickBindingUI"), "click binding starts LoD")
@@ -137,6 +141,21 @@ fn macro_getter_ordinary_argument_and_return_contract() {
 }
 
 fn assert_ordinary_macro_getter_contract(env: &WowLuaEnv) {
+    seed_ordinary_macro_records(env);
+    assert_ordinary_macro_selector_results(env);
+    assert_counter_snapshot(env, (2, 1));
+    seed(
+        env,
+        &[
+            ("First", 134400, ""),
+            ("Second", 132212, ""),
+            ("Third", 134331, ""),
+        ],
+    );
+    assert_counter_snapshot(env, (3, 0));
+}
+
+fn seed_ordinary_macro_records(env: &WowLuaEnv) {
     let mut records = vec![MacroInfo::default(); 241];
     records[0] = macro_record("Found", 134400, "");
     records[1] = macro_record("", 0, "/say empty name");
@@ -144,7 +163,9 @@ fn assert_ordinary_macro_getter_contract(env: &WowLuaEnv) {
     records[239] = macro_record("Last", 0, "");
     records[240] = macro_record("Outside", 134400, "");
     seed_rows(env, records);
+}
 
+fn assert_ordinary_macro_selector_results(env: &WowLuaEnv) {
     env.exec(
         r##"
         local function tuple(...)
@@ -168,16 +189,6 @@ fn assert_ordinary_macro_getter_contract(env: &WowLuaEnv) {
         "##,
     )
     .expect("R88l.19 ordinary selector/result shape");
-    assert_counter_snapshot(env, (2, 1));
-    seed(
-        env,
-        &[
-            ("First", 134400, ""),
-            ("Second", 132212, ""),
-            ("Third", 134331, ""),
-        ],
-    );
-    assert_counter_snapshot(env, (3, 0));
 }
 
 fn seed_rows(env: &WowLuaEnv, rows: Vec<MacroInfo>) {
