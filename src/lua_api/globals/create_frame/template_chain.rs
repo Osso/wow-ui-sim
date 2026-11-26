@@ -672,7 +672,7 @@ fn describe_fast_script_miss(handler_name: &str, script: &crate::xml::ScriptBody
     }
 }
 
-fn base_method_only_handlers(scripts: &crate::xml::ScriptsXml) -> [MethodOnlyScript<'_>; 9] {
+fn base_method_only_handlers(scripts: &crate::xml::ScriptsXml) -> [MethodOnlyScript<'_>; 10] {
     [
         ("OnLoad", scripts.on_load.last()),
         ("OnEvent", scripts.on_event.last()),
@@ -683,6 +683,18 @@ fn base_method_only_handlers(scripts: &crate::xml::ScriptsXml) -> [MethodOnlyScr
         ("PostClick", scripts.post_click.last()),
         ("OnShow", scripts.on_show.last()),
         ("OnHide", scripts.on_hide.last()),
+        (
+            "OnUiMapChanged",
+            if matches!(
+                crate::client_profile::ACTIVE,
+                crate::client_profile::ClientProfile::Retail
+                    | crate::client_profile::ClientProfile::WowForever
+            ) {
+                scripts.on_ui_map_changed.last()
+            } else {
+                None
+            },
+        ),
     ]
 }
 
