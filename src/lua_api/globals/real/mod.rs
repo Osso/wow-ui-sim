@@ -38,7 +38,11 @@ pub(crate) mod cursor_presentation;
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub(crate) mod dangerous_scripts;
 pub(crate) mod display_scale;
-#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[cfg(any(
+    feature = "client-retail",
+    feature = "client-wowforever",
+    feature = "retail-12-0-0"
+))]
 pub mod event_callbacks;
 #[cfg(feature = "client-wowforever")]
 pub mod forever_stat_contributions;
