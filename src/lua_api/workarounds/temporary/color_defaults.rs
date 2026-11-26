@@ -15,6 +15,27 @@ local function __wow_make_color(r, g, b, a)
     return self.r, self.g, self.b
   end
 
+  function color:IsRGBEqualTo(otherColor)
+    return self.r == otherColor.r
+      and self.g == otherColor.g
+      and self.b == otherColor.b
+  end
+
+  function color:IsEqualTo(otherColor)
+    return self:IsRGBEqualTo(otherColor) and self.a == otherColor.a
+  end
+
+  function color:SetRGBA(r, g, b, a)
+    self.r = r
+    self.g = g
+    self.b = b
+    self.a = a or 1
+  end
+
+  function color:SetRGB(r, g, b)
+    self:SetRGBA(r, g, b, nil)
+  end
+
   function color:GetRGBA()
     return self.r, self.g, self.b, self.a
   end
@@ -53,7 +74,6 @@ end
 -- INFERRED: Wrath has no cached SharedXMLBase/Color.lua provider.
 "#;
 
-#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 const RETAIL_COLOR_BOOTSTRAP_LUA: &str = r#"
 if CreateColor == nil then
   function CreateColor(r, g, b, a)
@@ -233,9 +253,6 @@ C_ColorOverrides = colorOverrides
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(COLOR_DEFAULTS_LUA)?;
-    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
-    lua.exec(RETAIL_COLOR_BOOTSTRAP_LUA)?;
-    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     lua.exec(RETAIL_COLOR_BOOTSTRAP_LUA)?;
     lua.exec(COLOR_DEFAULTS_CONTINUED_LUA)?;
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Wrath {
