@@ -122,7 +122,7 @@ fn forever_selected_name_consumer_survives_guard_retirement() {
 #[test]
 fn forever_token_tracker_startup_owns_original_xml_frame() {
     let env = load_game_ui();
-    let slots: i32 = env.exec(TOKEN_TRACKER_PROBE).unwrap();
+    let slots: i32 = env.eval(TOKEN_TRACKER_PROBE).unwrap();
     assert_eq!(slots, 2);
 }
 
@@ -131,7 +131,7 @@ fn forever_mount_journal_popup_click_uses_original_animation_children() {
     let env = load_game_ui();
     env.exec("assert(C_AddOns.LoadAddOn('Blizzard_Collections'))").unwrap();
     let errors_before = env.state().borrow().lua_errors.len();
-    let clicked: bool = env.exec(MOUNT_POPUP_PROBE).unwrap();
+    let clicked: bool = env.eval(MOUNT_POPUP_PROBE).unwrap();
     assert!(clicked);
     assert_eq!(env.state().borrow().lua_errors.len(), errors_before);
 }
@@ -140,6 +140,6 @@ fn forever_mount_journal_popup_click_uses_original_animation_children() {
 fn forever_map_help_position_consumer_reads_present_and_missing_rows() {
     let env = load_game_ui();
     env.exec("assert(C_AddOns.LoadAddOn('Blizzard_FlightMap'))").unwrap();
-    let values: (i32, i32, i32, i32) = env.exec(MAP_POSITION_PROBE).unwrap();
+    let values: (i32, i32, i32, i32) = env.eval(MAP_POSITION_PROBE).unwrap();
     assert_eq!(values, (0, 0, 0, 0));
 }
