@@ -48,7 +48,7 @@ ensure_named_frame("Frame", "SideDressUpFrame")
 ensure_named_frame("Frame", "LootFrame")
 ensure_named_frame("Frame", "RaidWarningFrame")
 ensure_named_frame("Frame", "GossipFrame")
-ensure_named_frame("Frame", "FriendsFrame")
+ensure_named_frame("Frame", "FriendsFrame", true)
 ensure_named_frame("Frame", "HelpFrame", true)
 
 local buffFrame = ensure_named_frame("Frame", "BuffFrame")
@@ -96,6 +96,9 @@ mod tests {
                     local frame = rawget(_G, name)
                     if type(frame) ~= "table" then
                         return name
+                    end
+                    if name == "FriendsFrame" and frame:IsShown() then
+                        return "FriendsFrame must start hidden"
                     end
                 end
                 if type(BuffFrame.AuraContainer) ~= "table" then

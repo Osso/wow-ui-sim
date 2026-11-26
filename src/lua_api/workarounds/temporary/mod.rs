@@ -129,7 +129,7 @@ pub(crate) mod lfg_lock_list;
 #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod loot_journal_defaults;
 pub(crate) mod macro_defaults;
-#[cfg(not(feature = "client-retail"))]
+#[cfg(all(not(feature = "client-retail"), not(feature = "client-wowforever")))]
 pub(crate) mod main_menu_microbutton_click;
 pub(crate) mod major_faction_display_defaults;
 #[cfg(not(feature = "client-retail"))]
@@ -152,7 +152,7 @@ pub(crate) mod mythic_plus_cache_defaults;
 pub(crate) mod navigation_defaults;
 pub(crate) mod object_api_request_load_callbacks;
 pub(crate) mod objective_tracker_quest_header;
-#[cfg(not(feature = "client-retail"))]
+#[cfg(all(not(feature = "client-retail"), not(feature = "client-wowforever")))]
 pub(crate) mod paging_controls_page_text;
 #[cfg(not(feature = "retail-12-0-0"))]
 pub(crate) mod party_ai_legacy;
