@@ -31,12 +31,14 @@ Stage Retail/PTR/Forever AddEventFilter and sibling ClearEventFilters in `src/c_
 | --- | --- | --- | --- |
 | `combat_log_event_filters::original_processor_replaces_and_clears_filter_records` | secure 2 distinct rows -> 1 different row -> 1 empty-event row -> 0; public 1 -> 0 with secure unchanged | one fixed snapshot cannot satisfy counts 2, 1, 0 and different event/GUID values; constant add/clear return values do not alter required state | add no-op fails first 2-row observation; clear no-op accumulates 3 rows instead of replacement 1, or leaves 1 after empty settings; public add/clear no-op fails 1 -> 0 |
 
-case032/033 settings-identity checks are **preservation only**, not independent producer RED. No new runtime RED/GREEN was executed: edit-only authorization. Missing-member failure and a static contradiction are not executed semantic RED.
+case032/033 settings-identity checks are **preservation only**, not independent producer RED. **VERIFIED (WoW Forever 1.60.1 simulator):** the exact original-consumer selector passes after the filter-record provider is registered. This proves simulator behavior, not native event matching or restrictions.
 
 ## Known gaps (current cycle)
 
-- [ ] Execute exact selector RED on test-only commit, GREEN on producer commit, Retail and PTR separately; prove registration before execution.
-- [ ] Run stock startup and compare exact message/count maps, not unique counts alone.
+- [x] Exercise the original processor on Forever and assert separate public/secure records, replacement, empty-setting clear, nil preservation and snapshot isolation.
+- [ ] Fix the Retail secure-namespace identity mismatch: the exact selector fails when the filter diagnostic receives the consumer's secure environment table.
+- [ ] Run the exact selector on PTR; current PTR proof is compile-only.
+- [x] Run stock Retail and Forever startup and compare the full JSON message/count maps with their `[]` baselines.
 
 ## Out of scope
 
