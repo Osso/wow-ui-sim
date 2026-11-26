@@ -590,18 +590,34 @@ fn register_services(b: TableBuilder) -> LuaResult<TableBuilder> {
 }
 
 fn register_housing_and_pet_battles(b: TableBuilder) -> LuaResult<TableBuilder> {
-    b.set_function(
-        "SetHousingServiceEnabled",
-        super::housing::admin_set_housing_service_enabled,
-    )?
-    .set_function(
-        "SetPetBattleCounts",
-        super::pet_battles::admin_set_pet_battle_counts,
-    )?
-    .set_function(
-        "SetPetBattleState",
-        super::pet_battles::admin_set_pet_battle_state,
-    )
+    let b = b
+        .set_function(
+            "SetHousingServiceEnabled",
+            super::housing::admin_set_housing_service_enabled,
+        )?
+        .set_function(
+            "SetPetBattleCounts",
+            super::pet_battles::admin_set_pet_battle_counts,
+        )?
+        .set_function(
+            "SetPetBattleState",
+            super::pet_battles::admin_set_pet_battle_state,
+        )?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let b = b
+        .set_function(
+            "SetPetBattleAvailability",
+            super::pet_battles::admin_set_pet_battle_availability,
+        )?
+        .set_function(
+            "SetPetBattleTeamState",
+            super::pet_battles::admin_set_pet_battle_team_state,
+        )?
+        .set_function(
+            "SetPetBattleEffectName",
+            super::pet_battles::admin_set_pet_battle_effect_name,
+        )?;
+    Ok(b)
 }
 
 fn register_lfg_services(b: TableBuilder) -> LuaResult<TableBuilder> {

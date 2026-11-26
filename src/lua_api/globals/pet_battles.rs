@@ -8,10 +8,16 @@
 //! Admin: `A_Admin.SetPetBattleCounts(player?, enemy?)` plus
 //! `A_Admin.SetPetBattleState(state?)` — missing args default to 0.
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+use crate::lua_api::methods::val_to_string;
 use crate::lua_api::methods::{borrow_state, borrow_state_mut, create_table};
 #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 use crate::lua_api::methods::{table_get, table_set};
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+use crate::lua_bridge::stack_val;
 use crate::lua_bridge::{FromStack, table_set_rust_fn_static};
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+use rilua::runtime_error;
 use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
 use rilua::vm::table::Table;
@@ -131,6 +137,55 @@ pub fn admin_set_pet_battle_state(state: &mut LuaState) -> LuaResult<u32> {
         table_set(state, runtime_state, BATTLE_STATE_KEY, Val::Num(s as f64));
     }
     Ok(0)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub fn admin_set_pet_battle_availability(state: &mut LuaState) -> LuaResult<u32> {
+    let trap_state = u8::try_from(i32::from_stack(state, 1)?)
+        .map_err(|_| runtime_error("pet battle trap state must fit in u8"))?;
+    let action_available = read_boolean(state, 2)?;
+    let trap_error = i32::from_stack(state, 3)?;
+    let mut sim = borrow_state_mut(state)?;
+    let runtime = &mut sim.pet_battles.runtime;
+    runtime.player_trap_state = trap_state;
+    runtime.action_available = action_available;
+    runtime.trap_error = trap_error;
+    Ok(0)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub fn admin_set_pet_battle_team_state(state: &mut LuaState) -> LuaResult<u32> {
+    let local_team_present = read_boolean(state, 1)?;
+    let skip_blocking = read_boolean(state, 2)?;
+    let should_select = read_boolean(state, 3)?;
+    let opponent_is_npc = read_boolean(state, 4)?;
+    let mut sim = borrow_state_mut(state)?;
+    let runtime = &mut sim.pet_battles.runtime;
+    runtime.local_team_present = local_team_present;
+    runtime.local_team_skip_blocking = skip_blocking;
+    runtime.local_team_should_select = should_select;
+    runtime.opponent_is_npc = opponent_is_npc;
+    Ok(0)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub fn admin_set_pet_battle_effect_name(state: &mut LuaState) -> LuaResult<u32> {
+    let name = val_to_string(state, stack_val(state, 1))
+        .ok_or_else(|| runtime_error("pet battle effect name must be a string"))?;
+    borrow_state_mut(state)?
+        .pet_battles
+        .runtime
+        .effect_names
+        .push(name);
+    Ok(0)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn read_boolean(state: &LuaState, index: i32) -> LuaResult<bool> {
+    match stack_val(state, index) {
+        Val::Bool(value) => Ok(value),
+        _ => Err(runtime_error("pet battle input must be a boolean")),
+    }
 }
 
 #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
