@@ -665,6 +665,14 @@ fn fire_unit_aura(env: &WowLuaEnv) {
 /// This safety net shows each member frame individually with pcall wrappers.
 pub(crate) fn refresh_party_frames(env: &WowLuaEnv) {
     fire_simple_event(env, "GROUP_ROSTER_UPDATE");
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
+        // INFERRED R88g8 (native evidence pending): GROUP_ROSTER_UPDATE can load RaidUI.
+        fire_simple_event(env, "RAID_ROSTER_UPDATE");
+    }
     force_show_party_member_frames(env);
 }
 
