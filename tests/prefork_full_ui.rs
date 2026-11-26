@@ -1167,7 +1167,7 @@ fn generated_registry_lists_path_declared_marker_case(state: &ConformanceState) 
 #[cfg(feature = "client-retail")]
 fn generated_registry_lists_foundation_batch(state: &ConformanceState) {
     const MODULE_COUNTS: &[(&str, usize)] = &[
-        ("blizzard_shared_xml_base_loads::", 16),
+        ("blizzard_shared_xml_base_loads::", 17),
         ("blizzard_shared_xml_loads::", 13),
         ("blizzard_shared_talent_ui_loads::", 11),
         ("blizzard_shared_xml_game_loads::", 10),
@@ -1202,7 +1202,7 @@ fn generated_registry_lists_foundation_batch(state: &ConformanceState) {
         );
         total += actual_count;
     }
-    assert_eq!(total, 68);
+    assert_eq!(total, 69);
 }
 
 #[cfg(feature = "client-retail")]
