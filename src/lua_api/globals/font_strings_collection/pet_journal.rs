@@ -394,6 +394,8 @@ pub fn register_rilua_pet_journal(lua: &mut rilua::Lua) -> LuaResult<()> {
 
     set_global_val(lua.state_mut(), "C_PetJournal", t);
     crate::c_api::c_pet_journal_hover::register(lua.state_mut())?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    crate::c_api::c_pet_journal::register(lua.state_mut())?;
     crate::c_api::c_pet_item::register(lua.state_mut())
 }
 
