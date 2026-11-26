@@ -2,10 +2,14 @@
 
 use crate::lua_api::globals::quest_surface::data::{QUEST_LOG, QuestLogEntry};
 use crate::lua_api::globals::state_backed_queries::dispatch_event_now;
-use crate::lua_api::methods::{borrow_state_mut, table_get};
+use crate::lua_api::methods::borrow_state_mut;
+#[cfg(any(feature = "profile-retail", feature = "client-wowforever"))]
+use crate::lua_api::methods::table_get;
 use crate::lua_api::sim_substates::{GossipQuestRow, GossipState, QuestRewardItem};
 use crate::lua_api::state::QuestLogEntry as RichQuestLogEntry;
-use crate::lua_bridge::{FromStack, TableBuilder, stack_val};
+#[cfg(any(feature = "profile-retail", feature = "client-wowforever"))]
+use crate::lua_bridge::stack_val;
+use crate::lua_bridge::{FromStack, TableBuilder};
 #[cfg(not(feature = "client-wrath"))]
 use rilua::Val;
 use rilua::vm::state::LuaState;
