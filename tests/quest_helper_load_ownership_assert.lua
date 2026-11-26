@@ -22,6 +22,12 @@ local diagnostic = table.concat({
     "moduleState=" .. tostring(module.state),
     "watches=" .. tostring(C_QuestLog.GetNumQuestWatches()),
     "watch1=" .. tostring(C_QuestLog.GetQuestIDForQuestWatchIndex(1)),
+    "moduleExists=" .. tostring(module ~= nil),
+    "hasContainer=" .. tostring(module ~= nil and module.parentContainer ~= nil),
+    "initialized=" .. tostring(module ~= nil and module.init == true),
+    "frameExists=" .. tostring(ObjectiveTrackerFrame ~= nil),
+    "watched=" .. tostring(C_QuestLog.GetQuestWatchType(990001) ~= nil),
+    "parentMatches=" .. tostring(module ~= nil and module.parentContainer == ObjectiveTrackerFrame),
 }, ",")
 return first ~= nil and first.rightEdgeFrame ~= nil and first.rightEdgeFrame:IsShown(),
        first ~= nil and first.ItemButton ~= nil and first.ItemButton:IsShown(),
@@ -29,10 +35,4 @@ return first ~= nil and first.rightEdgeFrame ~= nil and first.rightEdgeFrame:IsS
        second ~= nil and second.ItemButton == nil,
        QuestCache.objects[990001] ~= nil and QuestCache.objects[990001].questID == 990001,
        firstTitle,
-       module ~= nil,
-       module ~= nil and module.parentContainer ~= nil,
-       module ~= nil and module.init == true,
-       ObjectiveTrackerFrame ~= nil,
-       C_QuestLog.GetQuestWatchType(990001) ~= nil,
-       module ~= nil and module.parentContainer == ObjectiveTrackerFrame,
        diagnostic
