@@ -1,6 +1,6 @@
 ## [2026-11-25] investigation | Hidden CurrencyTransfer EditBox startup notification
 
-[CurrencyTransfer hidden EditBox startup](investigations/currency-transfer-hidden-editbox-startup.md) records the required API contract, hidden XML initialization order, and the inferred visibility-delayed notification rule. **INFERRED — R88g8 (native evidence pending):** hidden EditBoxes retain changed text notifications until visible; final profile startup captures are pending.
+[CurrencyTransfer hidden EditBox startup](investigations/currency-transfer-hidden-editbox-startup.md) records the required API contract, hidden XML initialization order, and the inferred visibility-delayed notification rule. **INFERRED — R88g8 (native evidence pending):** hidden EditBoxes retain changed text notifications until visible. Exact Retail and WoW Forever consumer/API tests pass; final profile startup captures are pending.
 
 ## [2026-11-24] investigation | Retail hooksecurefunc dispatcher taint
 

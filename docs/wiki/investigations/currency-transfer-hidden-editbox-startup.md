@@ -16,7 +16,7 @@ The Retail CurrencyTransfer startup Usage error came from simulator `OnTextChang
 
 - **UNKNOWN (native):** the initial native text value of this XML EditBox and whether a hidden EditBox receives or delays `OnTextChanged`. The absent XML text value does not establish the native constructor default.
 - **INFERRED — R88g8 (native evidence pending):** a changed hidden EditBox should retain its pending notification until a host boundary after it and its ancestors become visible. The original consumer sets the currency before showing the menu; its visible `FullRefresh` selects a source when roster data is ready. This avoids dispatch during uninitialized hidden construction without weakening the required API contract.
-- **VERIFIED (test source):** `hidden_currency_transfer_input_waits_for_menu_visibility` loads the original UI, checks the hidden/unselected state, checks positive maxima for currency IDs 1560 and 1792, and rejects the startup Usage record. Passing test evidence is pending. The original menu-consumer test separately checks the selected-source amount and cost behavior.
+- **VERIFIED (Retail and WoW Forever simulator tests):** exact `hidden_currency_transfer_input_waits_for_menu_visibility` passes on both profiles. It loads the original UI, checks the hidden/unselected state, checks positive maxima for currency IDs 1560 and 1792, and rejects the startup Usage record. The original Retail menu-consumer test separately checks selected-source amount and cost behavior; the strict nil-ID Usage test passes on both profiles.
 
 The rule applies to EditBoxes generally. It changes notification timing only; text state and pending origin remain intact. Revisit the inference if native evidence becomes available.
 
