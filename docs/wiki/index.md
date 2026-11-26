@@ -1,7 +1,3 @@
-## [2026-11-25] investigation | CurrencyTransfer nil currency during EditBox initialization
-
-[CurrencyTransfer startup investigation](investigations/currency-transfer-nil-currency-startup.md) records the original consumer path, the inferred nil maximum-query result, and why no hidden-EditBox gate was added. **VERIFIED (Retail capture):** both startup records are gone; Forever capture and profile compile gates remain pending.
-
 ## [2026-11-24] investigation | Retail hooksecurefunc dispatcher taint
 
 [Taint system](systems/taint-system.md#retail-hooksecurefunc-dispatcher) records the post-load Retail `securecallfunction` override ordering, the dispatcher taint leak, and the full-UI AuraContainer regression. **VERIFIED (Retail full-addon run):** the secret-texture error is gone; the five remaining errors match the pre-fix baseline.
