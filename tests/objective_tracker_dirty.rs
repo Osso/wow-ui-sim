@@ -104,18 +104,18 @@ return groupA and groupA:IsVisible() or false,
        item and item:IsVisible() or false,
        second and second.ItemButton and second.ItemButton:IsVisible() or false,
        index, item and item:GetAttribute("questLogIndex") or 0,
-       itemID or 0, item and item.icon:GetTexture() ~= nil or false
+       itemID or 0, item and tostring(item.icon:GetTexture()) or ""
 "#;
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn assert_right_edge_buttons(env: &WowLuaEnv) {
-    let actual: (bool, bool, bool, bool, i64, i64, i64, bool) = env
+    let actual: (bool, bool, bool, bool, i64, i64, i64, String) = env
         .eval(READ_TRACKER_BUTTONS)
         .expect("original tracker button state should be readable");
     assert_eq!((actual.0, actual.1, actual.2, actual.3), (true, false, true, false));
     assert_eq!(actual.4, actual.5);
     assert_eq!(actual.6, 19001);
-    assert!(actual.7);
+    assert_eq!(actual.7, "19001");
 }
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn assert_seeded_quest_blocks(env: &WowLuaEnv) {
