@@ -71,6 +71,14 @@ pub fn get_quest_log_time_left(state: &mut LuaState) -> LuaResult<u32> {
     }
 }
 
+pub fn get_quest_log_special_item_cooldown(state: &mut LuaState) -> LuaResult<u32> {
+    // INFERRED: R88g8 (native evidence pending); no cooldown input means no active cooldown.
+    state.push(Val::Num(0.0));
+    state.push(Val::Num(0.0));
+    state.push(Val::Num(1.0));
+    Ok(3)
+}
+
 pub fn get_quest_log_special_item_info(state: &mut LuaState) -> LuaResult<u32> {
     let index = Option::<i32>::from_stack(state, 1)?.unwrap_or_default();
     let item_id = borrow_state(state)?
