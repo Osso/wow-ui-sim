@@ -5,7 +5,7 @@ compile_error!("prefork_full_ui requires client-retail or client-mists");
 
 #[path = "common/prefork.rs"]
 mod prefork;
-#[cfg(feature = "client-retail")]
+#[cfg(any(feature = "client-retail", feature = "client-mists"))]
 #[path = "common/prefork_full_ui_preload.rs"]
 mod prefork_full_ui_preload;
 #[path = "common/workload_gate_core.rs"]
@@ -370,7 +370,7 @@ fn run_full_ui_and_exact_fixtures(config: Config) -> ExitCode {
         }),
         #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
         prefork::run_with_setup(LEGACY_FULL_UI_CASES, config, || {
-            Ok(spell_casting::env_with_full_blizzard_ui())
+            prefork_full_ui_preload::preload_full_game_ui()
         }),
         #[cfg(feature = "gui")]
         run_exact_fixture_subprocess("chat"),
