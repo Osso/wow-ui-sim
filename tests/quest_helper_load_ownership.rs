@@ -101,7 +101,14 @@ fn assert_tracker_output(env: &wow_ui_sim::lua_api::WowLuaEnv) {
     let output: (bool, bool, bool, bool, bool, String, String) = env
         .eval(include_str!("quest_helper_load_ownership_assert.lua"))
         .expect("original tracker must render the supplied quest states");
-    assert_eq!(output.0, true, "group finder button must be shown: {output:?}");
+    let state = env.state().borrow();
+    let lua_errors = state.lua_errors.clone();
+    let timer_count = state.timers.len() + state.rilua_timers.len();
+    drop(state);
+    assert_eq!(
+        output.0, true,
+        "group button not shown: output={output:?}, lua_errors={lua_errors:?}, timers={timer_count}"
+    );
     assert_eq!(output.1, true, "quest item button must be shown");
     assert_eq!(output.2, true, "false group capability must hide its button");
     assert_eq!(output.3, true, "missing item must hide its button");
