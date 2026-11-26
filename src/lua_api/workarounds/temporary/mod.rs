@@ -50,7 +50,7 @@ pub(crate) mod character_create_defaults;
 #[cfg(not(feature = "client-retail"))]
 #[cfg(any(not(feature = "client-wowforever"), test))]
 pub(crate) mod character_frame_surface_refresh;
-#[cfg(not(feature = "client-retail"))]
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod character_select_selected_name;
 pub(crate) mod character_services_defaults;
 pub(crate) mod chat_voice_button_surface;
@@ -64,7 +64,7 @@ pub(crate) mod color_defaults;
 pub(crate) mod combat_log_state;
 pub(crate) mod configuration_warnings_defaults;
 pub(crate) mod container_default_shapes;
-#[cfg(not(feature = "client-retail"))]
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod container_frame_token_tracker;
 pub(crate) mod container_portrait_texture;
 pub(crate) mod content_tracking_defaults;
@@ -133,7 +133,7 @@ pub(crate) mod macro_defaults;
 #[cfg(all(not(feature = "client-retail"), not(feature = "client-wowforever")))]
 pub(crate) mod main_menu_microbutton_click;
 pub(crate) mod major_faction_display_defaults;
-#[cfg(not(feature = "client-retail"))]
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod map_art_help_text_defaults;
 pub(crate) mod map_canvas_scroll_container_legacy;
 #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
@@ -147,7 +147,7 @@ pub(crate) mod merchant_raid_defaults;
 pub(crate) mod minimap_tracking_defaults;
 pub(crate) mod misc_global_frame_defaults;
 pub(crate) mod modified_click_defaults;
-#[cfg(not(feature = "client-retail"))]
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod mount_journal_dynamic_flight_popup;
 pub(crate) mod mythic_plus_cache_defaults;
 pub(crate) mod navigation_defaults;

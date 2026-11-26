@@ -100,5 +100,8 @@ pub mod ui_maps;
 #[rustfmt::skip]
 #[path = "../data/ui_map_help_text_positions.rs"]
 pub mod ui_map_help_text_positions;
+#[rustfmt::skip]
+#[path = "../data/ui_map_help_text_positions_forever.rs"]
+pub mod ui_map_help_text_positions_forever;
 #[path = "../data/zones.rs"]
 pub mod zones;

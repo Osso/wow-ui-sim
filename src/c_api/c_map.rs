@@ -103,7 +103,7 @@ const C_MAP_METHODS: &[(&str, RustLuaFn)] = &[
         c_map_get_map_art_background_atlas,
     ),
     ("GetMapArtID", c_map_get_map_art_id),
-    #[cfg(feature = "client-retail")]
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     (
         "GetMapArtHelpTextPosition",
         c_map_get_map_art_help_text_position,
@@ -353,12 +353,18 @@ fn c_map_get_map_art_id(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-#[cfg(feature = "client-retail")]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn c_map_get_map_art_help_text_position(state: &mut LuaState) -> LuaResult<u32> {
     let map_id = read_scalar_map_id(state)?;
+    let lookup_help_text_position = match crate::client_profile::ACTIVE {
+        crate::client_profile::ClientProfile::WowForever => {
+            sim_data::ui_map_help_text_positions_forever::get_ui_map_help_text_position
+        }
+        _ => sim_data::ui_map_help_text_positions::get_ui_map_help_text_position,
+    };
     let position = u32::try_from(map_id)
         .ok()
-        .and_then(sim_data::ui_map_help_text_positions::get_ui_map_help_text_position)
+        .and_then(lookup_help_text_position)
         .map(u32::from)
         .unwrap_or(0);
     state.push(Val::Num(f64::from(position)));
