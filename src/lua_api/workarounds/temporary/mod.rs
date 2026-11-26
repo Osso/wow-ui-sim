@@ -166,6 +166,7 @@ pub(crate) mod pet_battle_runtime_state;
 pub(crate) mod ping_defaults;
 pub(crate) mod player_location_defaults;
 pub(crate) mod player_spells_onload_backfill;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod pool_constructor_defaults;
 pub(crate) mod possess_info_defaults;
 pub(crate) mod post_event_action_button_refresh;
@@ -198,6 +199,7 @@ pub(crate) mod settings_canvas_visibility;
 pub(crate) mod settings_surface_defaults;
 pub(crate) mod shared_character_services_defaults;
 pub(crate) mod shared_xml_anim_mixins;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod shared_xml_utility_defaults;
 #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod social_queue_defaults;

@@ -4,7 +4,7 @@
 //! Retain the historical location stand-ins only on other profiles pending their
 //! own ownership proof. The unrelated best-item helper remains unresolved.
 
-#[cfg(not(feature = "client-retail"))]
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 const TRANSMOG_UTIL_LOCATION_DEFAULTS_LUA: &str = r#"
 local function __wow_make_transmog_util_location(slotName, slotID, transmogType, modification)
   local location = {
@@ -73,7 +73,7 @@ end
 "#;
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
-    #[cfg(not(feature = "client-retail"))]
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     lua.exec(TRANSMOG_UTIL_LOCATION_DEFAULTS_LUA)?;
     lua.exec(TRANSMOG_UTIL_BEST_ITEM_DEFAULT_LUA)?;
     Ok(())
@@ -81,11 +81,11 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
 
 #[cfg(test)]
 mod tests {
-    use crate::lua_api::WowLuaEnv;
-
-    #[cfg(not(feature = "client-retail"))]
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     #[test]
     fn installs_transmog_util_location_defaults() {
+        use crate::lua_api::WowLuaEnv;
+
         let env = WowLuaEnv::new().expect("lua env should initialize");
         {
             let mut lua = env.lua.borrow_mut();
@@ -115,6 +115,8 @@ mod tests {
     #[cfg(feature = "client-retail")]
     #[test]
     fn retail_defers_locations_to_original_lua_and_keeps_best_item_separate() {
+        use crate::lua_api::WowLuaEnv;
+
         let env = WowLuaEnv::new().expect("environment");
         env.exec(
             r#"
