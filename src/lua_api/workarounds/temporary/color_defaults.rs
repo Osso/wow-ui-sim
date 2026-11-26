@@ -15,27 +15,6 @@ local function __wow_make_color(r, g, b, a)
     return self.r, self.g, self.b
   end
 
-  function color:IsRGBEqualTo(otherColor)
-    return self.r == otherColor.r
-      and self.g == otherColor.g
-      and self.b == otherColor.b
-  end
-
-  function color:IsEqualTo(otherColor)
-    return self:IsRGBEqualTo(otherColor) and self.a == otherColor.a
-  end
-
-  function color:SetRGBA(r, g, b, a)
-    self.r = r
-    self.g = g
-    self.b = b
-    self.a = a or 1
-  end
-
-  function color:SetRGB(r, g, b)
-    self:SetRGBA(r, g, b, nil)
-  end
-
   function color:GetRGBA()
     return self.r, self.g, self.b, self.a
   end
@@ -71,37 +50,14 @@ local function __wow_make_color(r, g, b, a)
   return color
 end
 
--- INFERRED: Wrath has no cached SharedXMLBase/Color.lua provider.
-"#;
-
-#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
-const RETAIL_COLOR_BOOTSTRAP_LUA: &str = r#"
+-- INFERRED: early bootstrap callers use CreateColor before SharedXMLBase/Color.lua loads.
+-- Wrath has no cached SharedXMLBase/Color.lua provider.
 if CreateColor == nil then
   function CreateColor(r, g, b, a)
     return __wow_make_color(r, g, b, a)
   end
 end
-"#;
 
-#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
-const RETAIL_COLOR_BOOTSTRAP_LUA: &str = r#"
-if CreateColor == nil then
-  function CreateColor(r, g, b, a)
-    return __wow_make_color(r, g, b, a)
-  end
-end
-"#;
-
-#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
-const COLOR_CONSTRUCTOR_FALLBACK_LUA: &str = r#"
-if CreateColor == nil then
-  function CreateColor(r, g, b, a)
-    return __wow_make_color(r, g, b, a)
-  end
-end
-"#;
-
-const COLOR_DEFAULTS_CONTINUED_LUA: &str = r#"
 local function __wow_color_merge_namespace(existing, defaults)
   local namespace = type(existing) == "table" and existing or {}
   for key, value in pairs(defaults or {}) do
@@ -263,16 +219,12 @@ C_ColorOverrides = colorOverrides
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(COLOR_DEFAULTS_LUA)?;
-    lua.exec(RETAIL_COLOR_BOOTSTRAP_LUA)?;
-    lua.exec(COLOR_DEFAULTS_CONTINUED_LUA)?;
-    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail {
-        lua.exec(NON_RETAIL_COLOR_DEFAULTS_LUA)?;
-    }
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Wrath {
         lua.exec(WRATH_QUEST_DIFFICULTY_DEFAULTS_LUA)?;
     }
-    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
-    lua.exec(COLOR_CONSTRUCTOR_FALLBACK_LUA)?;
+    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail {
+        lua.exec(NON_RETAIL_COLOR_DEFAULTS_LUA)?;
+    }
     Ok(())
 }
 
