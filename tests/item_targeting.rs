@@ -53,6 +53,7 @@ fn restricted_environment_publishes_working_item_targeting_queries(env: &WowLuaE
         local _, helpfulSpell = C_Item.GetItemSpell(5512)
         A_Admin.SetSpellTargeting(helpfulSpell, "helpful")
         assert(ActionButton1 and select(2, ActionButton1:IsProtected()))
+        assert(__secureenv.C_Item and type(__secureenv.C_Item.IsHelpfulItem) == "function")
         SecureHandlerExecute(ActionButton1, "assert(IsHelpfulItem(5512))")
         "#,
     )
