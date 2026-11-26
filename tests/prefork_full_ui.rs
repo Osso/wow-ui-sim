@@ -10,7 +10,7 @@ mod prefork;
 mod prefork_full_ui_preload;
 #[path = "common/workload_gate_core.rs"]
 mod prefork_workload_gate;
-#[cfg(feature = "client-retail")]
+#[cfg(any(feature = "client-retail", feature = "client-mists"))]
 #[path = "test_keybindings_panels_detail.rs"]
 mod test_keybindings_panels_detail;
 
@@ -370,7 +370,7 @@ fn run_full_ui_and_exact_fixtures(config: Config) -> ExitCode {
         }),
         #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
         prefork::run_with_setup(LEGACY_FULL_UI_CASES, config, || {
-            prefork_full_ui_preload::preload_full_game_ui()
+            Ok(spell_casting::env_with_full_blizzard_ui())
         }),
         #[cfg(feature = "gui")]
         run_exact_fixture_subprocess("chat"),
