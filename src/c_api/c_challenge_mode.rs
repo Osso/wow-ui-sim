@@ -91,32 +91,47 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
         get_challenge_completion_info,
     )?;
     if supports_keystone_profile() {
-        table_set_rust_fn_static(
-            state,
-            namespace,
-            "GetPowerLevelDamageHealthMod",
-            get_power_level_damage_health_mod,
-        )?;
+        register_power_level_handler(state, namespace)?;
     }
     if ACTIVE == ClientProfile::Retail {
-        table_set_rust_fn_static(state, namespace, "HasSlottedKeystone", has_slotted_keystone)?;
-        table_set_rust_fn_static(state, namespace, "SlotKeystone", slot_keystone)?;
-        table_set_rust_fn_static(state, namespace, "RemoveKeystone", remove_keystone)?;
-        table_set_rust_fn_static(
-            state,
-            namespace,
-            "GetSlottedKeystoneInfo",
-            get_slotted_keystone_info,
-        )?;
-        table_set_rust_fn_static(state, namespace, "CloseKeystoneFrame", close_keystone_frame)?;
-        table_set_rust_fn_static(state, namespace, "ClearKeystone", clear_keystone)?;
-        table_set_rust_fn_static(
-            state,
-            namespace,
-            "CanUseKeystoneInCurrentMap",
-            can_use_keystone_in_current_map,
-        )?;
+        register_retail_keystone_handlers(state, namespace)?;
     }
+    Ok(())
+}
+
+fn register_power_level_handler(
+    state: &mut LuaState,
+    namespace: rilua::vm::gc::arena::GcRef<rilua::vm::table::Table>,
+) -> LuaResult<()> {
+    table_set_rust_fn_static(
+        state,
+        namespace,
+        "GetPowerLevelDamageHealthMod",
+        get_power_level_damage_health_mod,
+    )
+}
+
+fn register_retail_keystone_handlers(
+    state: &mut LuaState,
+    namespace: rilua::vm::gc::arena::GcRef<rilua::vm::table::Table>,
+) -> LuaResult<()> {
+    table_set_rust_fn_static(state, namespace, "HasSlottedKeystone", has_slotted_keystone)?;
+    table_set_rust_fn_static(state, namespace, "SlotKeystone", slot_keystone)?;
+    table_set_rust_fn_static(state, namespace, "RemoveKeystone", remove_keystone)?;
+    table_set_rust_fn_static(
+        state,
+        namespace,
+        "GetSlottedKeystoneInfo",
+        get_slotted_keystone_info,
+    )?;
+    table_set_rust_fn_static(state, namespace, "CloseKeystoneFrame", close_keystone_frame)?;
+    table_set_rust_fn_static(state, namespace, "ClearKeystone", clear_keystone)?;
+    table_set_rust_fn_static(
+        state,
+        namespace,
+        "CanUseKeystoneInCurrentMap",
+        can_use_keystone_in_current_map,
+    )?;
     Ok(())
 }
 
