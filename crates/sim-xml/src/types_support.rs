@@ -209,6 +209,8 @@ pub struct ScriptsXml {
     pub on_mouse_up: Vec<ScriptBodyXml>,
     #[serde(rename = "OnMouseWheel", default)]
     pub on_mouse_wheel: Vec<ScriptBodyXml>,
+    #[serde(rename = "OnUiMapChanged", default)]
+    pub on_ui_map_changed: Vec<ScriptBodyXml>,
     #[serde(rename = "OnDragStart", default)]
     pub on_drag_start: Vec<ScriptBodyXml>,
     #[serde(rename = "OnDragStop", default)]

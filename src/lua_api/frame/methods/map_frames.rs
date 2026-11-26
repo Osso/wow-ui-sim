@@ -170,7 +170,19 @@ fn set_ui_map_id(state: &mut LuaState) -> LuaResult<u32> {
     let map_id = stack_i32(state, 2).unwrap_or(0);
     let mut sim = borrow_state_mut(state)?;
     if is_fog_of_war_frame(&sim, id) {
+        #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+        let previous_map_id = sim.fog_of_war_frames.get(&id).and_then(|fog| fog.ui_map_id);
         store_fog_of_war_ui_map_id(&mut sim, id, map_id);
+        drop(sim);
+        #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+        if previous_map_id != Some(map_id) {
+            crate::lua_api::script_helpers::dispatch_script_state(
+                state,
+                id,
+                "OnUiMapChanged",
+                &[Val::Num(map_id as f64)],
+            )?;
+        }
         return Ok(0);
     }
     if is_unit_position_frame(&sim, id) {
