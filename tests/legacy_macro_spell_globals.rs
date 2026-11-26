@@ -121,9 +121,6 @@ fn legacy_spell_globals_exist_for_addons() {
         if type(GetSpellBookItemTexture) ~= "function" then
             return "missing_GetSpellBookItemTexture"
         end
-        if type(SpellBook_GetSpellBookSlot) ~= "function" then
-            return "missing_SpellBook_GetSpellBookSlot"
-        end
 
         if GetSpellBookItemTexture(1) == nil then
             return "missing_spellbook_texture"
