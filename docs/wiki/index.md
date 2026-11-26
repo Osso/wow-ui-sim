@@ -1,6 +1,6 @@
 ## [2026-11-25] investigation | CurrencyTransfer nil currency during EditBox initialization
 
-[CurrencyTransfer startup investigation](investigations/currency-transfer-nil-currency-startup.md) records the original consumer path, the inferred nil maximum-query result, and why no hidden-EditBox gate was added. **VERIFIED (Retail and WoW Forever captures):** both startup records are gone; Retail, WoW Forever, Mists and Wrath no-run builds and PTR cargo check pass with zero warnings.
+[CurrencyTransfer startup investigation](investigations/currency-transfer-nil-currency-startup.md) records the original consumer path, the inferred nil maximum-query result, and why no hidden-EditBox gate was added. **VERIFIED (Retail capture):** both startup records are gone; Forever capture and profile compile gates remain pending.
 
 ## [2026-11-24] investigation | Retail hooksecurefunc dispatcher taint
 

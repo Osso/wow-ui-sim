@@ -1,6 +1,6 @@
 ## [2026-11-25] investigation | CurrencyTransfer nil currency during EditBox initialization
 
-Added the [startup investigation](investigations/currency-transfer-nil-currency-startup.md) and updated the [Lua API system](systems/lua-api.md#retailforever-account-currency-transfer). **INFERRED — R88g8 (native evidence pending):** the max-transfer query returns nil for an unselected currency, based on the original consumer's pre-selection call and `or 0`; the generated arg declaration remains non-nilable. Hidden EditBox delivery remains UNKNOWN. **VERIFIED (Retail and WoW Forever captures):** both `lua-errors` runs return `[]`; Retail, WoW Forever, Mists and Wrath no-run builds and PTR cargo check pass with zero warnings.
+Added the [startup investigation](investigations/currency-transfer-nil-currency-startup.md) and updated the [Lua API system](systems/lua-api.md#retailforever-account-currency-transfer). **INFERRED — R88g8 (native evidence pending):** the max-transfer query returns nil for an unselected currency, based on the original consumer's pre-selection call and `or 0`; the generated arg declaration remains non-nilable. Hidden EditBox delivery remains UNKNOWN. **VERIFIED (Retail capture):** `lua-errors` returns `[]`; Forever capture and compile gates remain pending.
 
 ## [2026-11-25] implementation | Frame-level delta and Forever Settings canvas
 

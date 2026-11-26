@@ -40,33 +40,28 @@ WOW_SIM_NO_SAVED_VARS=1 WOW_SIM_NO_ADDONS=1 timeout 90 "${CARGO_TARGET_DIR}/debu
 ```
 
 Set `CARGO_TARGET_DIR` to the approved shared cache before building. Keep CASC
-and sound at their stock settings. Refresh after a verified capture. Retail
-and WoW Forever now have clean `[]` captures; reject any new records unless a
-separate baseline review classifies them. These baselines are not full-suite,
-GUI or native parity acceptance.
+and sound at their stock settings. Refresh after a verified capture. The only
+approved non-clean exception is the exact CurrencyTransfer nil-currencyID Usage
+error and its ScriptErrors echo described below; reject unrelated records. The
+baseline is not full-suite, GUI or native parity acceptance.
 
 Verified on 2026-10-19 at runtime source `a150e228591da3c97179b606b23082d9cff9b07a`:
 **0 records / 0 occurrences, exit0 (`[]` plus LF)**; 282 Blizzard addons loaded.
 Original persisted CVar hash/stat remained unchanged. The host had no audio
-device; this is not audio-device acceptance. The capture is historical and is
-superseded by the current Retail capture below.
+device; this is not audio-device acceptance.
 
-### CurrencyTransfer startup records retired — 2026-11-25
+### Approved CurrencyTransfer exception — 2026-11-23
 
-**VERIFIED (Retail and WoW Forever simulator captures):** both stock stdout
-files contain `[]` plus LF, with zero records / occurrences and exit 0. The
-previous two records were the TokenUI `OnTextChanged` nil-currency Usage error
-and its `Blizzard_ScriptErrors` echo. See the Retail and WoW Forever metadata
-files for the byte hashes, runtime inputs and isolated-CVar receipts. The
-profile compile matrix has zero warnings for Retail, Forever, Mists and Wrath;
-PTR `cargo check --lib --tests` also has zero warnings.
+**VERIFIED (Retail simulator capture at `8b518705a`):** the byte-exact stock
+stdout contains **2 records / 2 occurrences, exit 1**: the TokenUI
+`OnTextChanged` `GetMaxTransferableAmountFromQuantity` required-argument Usage
+error and its `Blizzard_ScriptErrors` echo. The original CVar file was unchanged;
+no unrelated record appeared. See [`retail-lua-errors.meta.json`](retail-lua-errors.meta.json).
 
-**INFERRED — R88g8 (native evidence pending):** the original input handler may
-call `GetMaxTransferableAmountFromQuantity` before currency selection; the
-simulator returns nil for that argument so its existing `or 0` handles the
-missing maximum. The generated declaration still marks `currencyID` non-nilable.
-See the [startup investigation](../wiki/investigations/currency-transfer-nil-currency-startup.md).
-This capture proves simulator startup only, not native parity.
+**INFERRED (R88et-c and pinned TokenUI source):** initialization delivers the
+queued `OnTextChanged` before `CurrencyTransferMenu:GetCurrencyID()` is set, so
+the call in `GetClampedInputAmount` supplies nil. This is the only approved
+Retail baseline exception.
 
 ### Mists
 

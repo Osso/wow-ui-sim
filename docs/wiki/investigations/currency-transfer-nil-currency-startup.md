@@ -18,7 +18,7 @@ The original consumer initializes `CurrencyTransferAmountSelectorMixin`, resets 
 
 `src/c_api/item_spell/c_currency.rs` returns nil for argument 1 equal to nil in `GetMaxTransferableAmountFromQuantity`. `GetCostToTransferCurrency` keeps its required-ID Usage error. The targeted API test checks the nil case and positive supplied results for currencies 1560 and 1792. The original TokenUI amount-selector test checks its normal amount/cost consumer path. The [currency-transfer contract](../../specs/currency-transfer-eligibility.md) records the API expectation.
 
-**VERIFIED (Retail and WoW Forever captures):** both stock `lua-errors` outputs are `[]` with exit 0, so both CurrencyTransfer records are gone from both baselines. **VERIFIED (build receipts):** Retail, WoW Forever, Mists and Wrath `--lib --test integration --no-run` builds pass with zero warnings, and PTR `cargo check --lib --tests` passes with zero warnings.
+The Retail `lua-errors` capture is clean (`[]`, exit 0), so both CurrencyTransfer records are gone from that baseline. Forever capture and the profile compile matrix remain pending in the lane report until completed.
 
 ## Sources
 
