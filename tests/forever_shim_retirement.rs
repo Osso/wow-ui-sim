@@ -3,7 +3,11 @@
 use crate::common::blizzard_addon_harness::{
     blizzard_ui_dir, new_blizzard_addon_env, new_blizzard_addon_glue_env,
 };
-use wow_ui_sim::loader::{discover_blizzard_addons_for_screen, find_toc_file, load_addon};
+use wow_ui_sim::loader::{
+    discover_all_blizzard_addons, discover_blizzard_addons_for_screen,
+    discover_blizzard_startup_addons_for_screen, find_toc_file, load_addon, load_startup_addon,
+    register_load_with_addons,
+};
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::startup::{fire_startup_events_for_screen, settle_headless_startup};
@@ -99,6 +103,35 @@ fn load_character_select() -> WowLuaEnv {
     env
 }
 
+fn load_application_startup() -> WowLuaEnv {
+    let ui = blizzard_ui_dir();
+    let env = new_blizzard_addon_env(&ui);
+    register_load_with_addons(&env.loader_env(), &discover_all_blizzard_addons(&ui));
+    let startup = discover_blizzard_startup_addons_for_screen(&ui, ScreenKind::Game);
+    for (name, toc_name) in [
+        ("Blizzard_UIPanels_Game", "Blizzard_UIPanels_Game_Mainline.toc"),
+        ("Blizzard_TokenUI", "Blizzard_TokenUI.toc"),
+    ] {
+        let addon = startup.iter().find(|addon| addon.name == name).unwrap();
+        assert_eq!(addon.toc_path.file_name().unwrap().to_str(), Some(toc_name));
+    }
+    for addon in startup {
+        let loaded = env.state().borrow().addons.iter().any(|loaded| {
+            loaded.folder_name == addon.name && loaded.is_loaded_in_environment(loaded.use_secure_env)
+        });
+        if !loaded {
+            load_startup_addon(&env.loader_env(), &addon.toc_path, addon.kind, None)
+                .unwrap_or_else(|error| panic!("startup {}: {error}", addon.name));
+        }
+        if addon.name == "Blizzard_EnvironmentCleanup" {
+            env.restore_post_cleanup_globals();
+        }
+    }
+    env.sync_string_metatable_to_global_string();
+    env.apply_post_load_workarounds();
+    env
+}
+
 fn load_game_ui() -> WowLuaEnv {
     let ui = blizzard_ui_dir();
     let env = new_blizzard_addon_env(&ui);
@@ -121,7 +154,7 @@ fn forever_selected_name_consumer_survives_guard_retirement() {
 
 #[test]
 fn forever_token_tracker_startup_owns_original_xml_frame() {
-    let env = load_game_ui();
+    let env = load_application_startup();
     let slots: i32 = env.eval(TOKEN_TRACKER_PROBE).unwrap();
     assert_eq!(slots, 2);
 }
