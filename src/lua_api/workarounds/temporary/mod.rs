@@ -18,6 +18,7 @@ pub(crate) mod session_exit_defaults;
 #[cfg(feature = "client-wrath")]
 pub(crate) mod wrath_startup_defaults;
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod account_store_set_storefront;
 pub(crate) mod achievement_search_preview;
 #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]

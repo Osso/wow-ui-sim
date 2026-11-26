@@ -143,6 +143,26 @@ fn load_achievement_ui_consumer() -> WowLuaEnv {
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 #[test]
+fn account_store_consumer_retains_distinct_storefront_ids() {
+    let env = load_achievement_ui_consumer();
+    let loaded: bool = env
+        .eval(r#"return C_AddOns.LoadAddOn("Blizzard_AccountStore") == true"#)
+        .expect("AccountStore load result should be readable");
+    assert_eq!(loaded, cfg!(feature = "client-retail"));
+    if !loaded {
+        return;
+    }
+    env.exec(
+        r#"AccountStoreFrame:SetStoreFrontID(37)
+           assert(AccountStoreFrame.storeFrontID == 37)
+           AccountStoreFrame:SetStoreFrontID(81)
+           assert(AccountStoreFrame.storeFrontID == 81)"#,
+    )
+    .expect("the original AccountStore consumer should retain both storefront inputs");
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
 fn pet_collection_button_uses_supplied_achievement_ui_access() {
     let env = load_achievement_ui_consumer();
     env.exec(

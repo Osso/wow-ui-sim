@@ -159,6 +159,7 @@ pub(super) fn patch_auth_challenge_frame_parent_from_env(env: &crate::lua_api::W
     temporary::auth_challenge_frame_parent::patch_env(env);
 }
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) fn patch_account_store_set_storefront(
     env: &crate::lua_api::LoaderEnv<'_>,
 ) -> Result<(), crate::Error> {
