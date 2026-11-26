@@ -13,7 +13,7 @@ if not pin then return "missing_fog_pin" end
 WorldMapFrame:SetMapID(981)
 local firstMap, firstFog = pin:GetUiMapID(), pin.fogOfWarID
 if firstMap ~= 981 or firstFog ~= 4 or not pin:IsShown() then
-    return string.format("first_map:%s:%s:%s", tostring(firstMap), tostring(firstFog), tostring(pin:IsShown()))
+    return string.format("first_map:%s:%s:%s:handler=%s", tostring(firstMap), tostring(firstFog), tostring(pin:IsShown()), type(pin:GetScript("OnUiMapChanged")))
 end
 
 WorldMapFrame:SetMapID(1032)
