@@ -63,13 +63,6 @@ ensure_inbound_interface("SimpleCheckoutInboundInterface")
 "#;
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
-    if matches!(
-        crate::client_profile::ACTIVE,
-        crate::client_profile::ClientProfile::Retail
-            | crate::client_profile::ClientProfile::WowForever
-    ) {
-        return Ok(());
-    }
     // Only Retail has a verified eager owner for the main interface.
     let install_main_interface =
         crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail;

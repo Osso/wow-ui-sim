@@ -24,13 +24,6 @@ end
 "#;
 
 pub(crate) fn patch_after_lua_file(env: &LoaderEnv<'_>) -> Result<(), crate::Error> {
-    if matches!(
-        crate::client_profile::ACTIVE,
-        crate::client_profile::ClientProfile::Retail
-            | crate::client_profile::ClientProfile::WowForever
-    ) {
-        return Ok(());
-    }
     env.exec(CPP_MIXIN_STUBS_LUA)
 }
 

@@ -55,13 +55,6 @@ end
 "#;
 
 pub(crate) fn patch(env: &LoaderEnv<'_>) {
-    if matches!(
-        crate::client_profile::ACTIVE,
-        crate::client_profile::ClientProfile::Retail
-            | crate::client_profile::ClientProfile::WowForever
-    ) {
-        return;
-    }
     let _ = env.exec(DAMAGE_METER_INITIAL_SCROLLBOX_EXTENT_LUA);
 }
 

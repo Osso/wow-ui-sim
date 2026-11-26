@@ -145,7 +145,10 @@ pub(crate) fn patch(env: &LoaderEnv<'_>) {
     }
 }
 
-#[cfg(all(test, not(feature = "client-retail")))]
+#[cfg(all(
+    test,
+    not(any(feature = "client-retail", feature = "client-wowforever"))
+))]
 mod tests {
     use super::*;
     use crate::lua_api::WowLuaEnv;

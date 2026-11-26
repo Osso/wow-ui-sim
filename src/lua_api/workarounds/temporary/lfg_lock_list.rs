@@ -15,13 +15,6 @@ end
 "#;
 
 pub(crate) fn patch(env: &WowLuaEnv) {
-    if matches!(
-        crate::client_profile::ACTIVE,
-        crate::client_profile::ClientProfile::Retail
-            | crate::client_profile::ClientProfile::WowForever
-    ) {
-        return;
-    }
     let _ = env.exec(LFG_LOCK_LIST_LUA);
 }
 

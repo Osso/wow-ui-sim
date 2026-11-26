@@ -21,13 +21,6 @@ end
 "#;
 
 pub(crate) fn patch(env: &LoaderEnv<'_>) -> Result<(), crate::Error> {
-    if matches!(
-        crate::client_profile::ACTIVE,
-        crate::client_profile::ClientProfile::Retail
-            | crate::client_profile::ClientProfile::WowForever
-    ) {
-        return Ok(());
-    }
     env.exec(GLUEPARENT_UIPARENT_ATTRIBUTES_LUA)
 }
 
