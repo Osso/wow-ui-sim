@@ -17,10 +17,12 @@
 //! - `StartPVPMatchmaking()` — sets `is_matchmaking = true` on state.
 
 use super::{ensure_namespace, set_table_array};
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 use crate::lua_api::globals::pet_battles::get_or_create_runtime_state;
+use crate::lua_api::methods::{borrow_state, create_string, create_table};
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 use crate::lua_api::methods::{
-    borrow_state, borrow_state_mut, create_string, create_table, table_get, table_get_static,
-    table_set, val_to_string,
+    borrow_state_mut, table_get, table_get_static, table_set, val_to_string,
 };
 use crate::lua_api::state::PetBattlePet;
 use crate::lua_bridge::{FromStack, table_set_rust_fn_static};
@@ -29,6 +31,7 @@ use rilua::{LuaResult, Val};
 
 pub(super) fn register_pet_battles_surface(state: &mut LuaState) -> LuaResult<()> {
     let ns = ensure_namespace(state, "C_PetBattles")?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     table_set_rust_fn_static(state, ns, "GetAbilityInfoByID", get_ability_info_by_id)?;
     table_set_rust_fn_static(state, ns, "GetActivePet", get_active_pet)?;
     table_set_rust_fn_static(
@@ -46,6 +49,7 @@ pub(super) fn register_pet_battles_surface(state: &mut LuaState) -> LuaResult<()
     table_set_rust_fn_static(state, ns, "GetRoundTimingInfo", get_round_timing_info)?;
     table_set_rust_fn_static(state, ns, "GetTurnResult", get_turn_result)?;
     table_set_rust_fn_static(state, ns, "GetXP", get_xp)?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     table_set_rust_fn_static(state, ns, "StartPVPMatchmaking", start_pvp_matchmaking)?;
     Ok(())
 }
@@ -65,6 +69,7 @@ fn resolve_pet(state: &mut LuaState, owner_slot: usize, idx_slot: usize) -> Opti
     pets.get(idx).cloned()
 }
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 fn get_ability_info_by_id(state: &mut LuaState) -> LuaResult<u32> {
     let ability_id = i32::from_stack(state, 1)?;
     if let Some((name, icon, max_cooldown, description, num_turns, pet_type)) =
@@ -228,6 +233,7 @@ fn get_xp(state: &mut LuaState) -> LuaResult<u32> {
     Ok(2)
 }
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 fn runtime_ability_info(
     state: &mut LuaState,
     ability_id: i32,
@@ -244,6 +250,7 @@ fn runtime_ability_info(
     Some((name, icon, max_cooldown, description, num_turns, pet_type))
 }
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 fn runtime_ability_table(state: &mut LuaState, ability_id: i32) -> Option<Val> {
     let runtime_state = table_get_static(state, Val::Table(state.global), "__wow_pet_battle_state");
     let abilities = table_get(state, runtime_state, "abilitiesByID");
@@ -257,6 +264,7 @@ fn runtime_ability_table(state: &mut LuaState, ability_id: i32) -> Option<Val> {
         .map(|t| t.get(Val::Num(ability_id as f64), &state.gc.string_arena))
 }
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 fn runtime_ability_number(state: &mut LuaState, ability_table: Val, key: &str) -> f64 {
     match table_get(state, ability_table, key) {
         Val::Num(value) => value,
@@ -264,6 +272,7 @@ fn runtime_ability_number(state: &mut LuaState, ability_table: Val, key: &str) -
     }
 }
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 fn start_pvp_matchmaking(state: &mut LuaState) -> LuaResult<u32> {
     {
         let mut sim = borrow_state_mut(state)?;

@@ -207,6 +207,8 @@ pub struct GameRuleValue {
 /// PvP matchmaking flag.
 #[derive(Debug, Clone, PartialEq)]
 pub struct PetBattleState {
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub runtime: crate::c_api::pet_battle_runtime_model::PetBattleRuntime,
     pub num_pets_player: i32,
     pub num_pets_enemy: i32,
     pub battle_state: i32,
@@ -234,16 +236,28 @@ pub struct PetBattleState {
     pub is_matchmaking: bool,
 }
 
+// INFERRED legacy sample inputs are retained outside the approved migration profiles.
+const LEGACY_PET_SAMPLES: bool = !cfg!(any(
+    feature = "client-retail",
+    feature = "client-wowforever"
+));
+
+fn initial_pet_roster(make: fn() -> PetBattlePet) -> Vec<PetBattlePet> {
+    LEGACY_PET_SAMPLES.then(make).into_iter().collect()
+}
+
 impl Default for PetBattleState {
     fn default() -> Self {
         Self {
-            num_pets_player: 1,
-            num_pets_enemy: 1,
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            runtime: Default::default(),
+            num_pets_player: i32::from(LEGACY_PET_SAMPLES),
+            num_pets_enemy: i32::from(LEGACY_PET_SAMPLES),
             battle_state: 0,
             active_pet_player: 1,
             active_pet_enemy: 1,
-            player_pets: vec![PetBattlePet::default_player()],
-            enemy_pets: vec![PetBattlePet::default_enemy()],
+            player_pets: initial_pet_roster(PetBattlePet::default_player),
+            enemy_pets: initial_pet_roster(PetBattlePet::default_enemy),
             round_time_left_ms: 0.0,
             round_time_ms: 30_000.0,
             turn_result: 0,

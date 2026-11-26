@@ -4,6 +4,7 @@
 //! layer still seeds sample pets and models selection, queue, and duel state
 //! that are not yet represented in the Rust subsystem.
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 const PET_BATTLE_RUNTIME_STATE_LUA: &str = r#"
 if C_PetBattles == nil then
   C_PetBattles = __wow_namespace()
@@ -348,8 +349,24 @@ C_PetBattles.ForfeitGame = function()
 end
 "#;
 
+// Stateless compatibility members remain pending their native model; no Lua-owned state.
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+const STATIC_PET_BATTLE_DEFAULTS_LUA: &str = r#"
+local function install(name, fn)
+    if rawget(C_PetBattles, name) == nil then C_PetBattles[name] = fn end
+end
+install("GetAllEffectNames", function() end)
+install("GetPetInfoByPetID", function(_petID) end)
+install("IsTrapAvailable", function() return false, 0 end)
+install("IsPlayerNPC", function(_owner) return false end)
+install("ShouldShowPetSelect", function() return false end)
+"#;
+
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     lua.exec(PET_BATTLE_RUNTIME_STATE_LUA)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    lua.exec(STATIC_PET_BATTLE_DEFAULTS_LUA)?;
     Ok(())
 }
 
@@ -379,6 +396,7 @@ mod tests {
     }
 
     #[test]
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     fn pvp_matchmaking_info_is_nil_until_queued() {
         // QueueStatusFrame lists a pet-battle entry for ANY non-nil status,
         // so a numeric "None" showed the LFG eye with a phantom queue.
@@ -397,6 +415,27 @@ mod tests {
             queued, "queued",
             "queued: the status string the UI compares against"
         );
+    }
+
+    #[test]
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    fn pvp_matchmaking_info_is_nil_until_queued() {
+        let env = WowLuaEnv::new().expect("lua environment");
+        env.exec("C_PetBattles.StartPVPMatchmaking()").unwrap();
+        let idle: Option<String> = env
+            .eval("return C_PetBattles.GetPVPMatchmakingInfo()")
+            .unwrap();
+        assert_eq!(idle, None, "a request is not an authoritative queue");
+        env.state()
+            .borrow_mut()
+            .pet_battles
+            .runtime
+            .matchmaking
+            .status = 1;
+        let queued: String = env
+            .eval("return C_PetBattles.GetPVPMatchmakingInfo()")
+            .unwrap();
+        assert_eq!(queued, "queued");
     }
 
     #[test]
