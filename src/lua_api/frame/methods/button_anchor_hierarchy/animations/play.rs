@@ -39,32 +39,40 @@ fn start_group(
     let Some(group_id) = resolve_animation_group_id(&sim, caller_id) else {
         return Ok(None);
     };
-    let notification = if let Some(group) = sim.animation_groups.get_mut(&group_id) {
-        let started = !group.playing;
-        let resuming = group.paused;
-        let reverse = reverse.unwrap_or(resuming && group.reverse);
-        if started && !resuming {
-            // INFERRED (R88g7): offset is elapsed timeline time; reverse mirrors it.
-            group.elapsed = animation_group_start_elapsed(group, offset, reverse);
-            for animation in &mut group.animations {
-                animation.elapsed = 0.0;
-            }
-        }
-        group.playing = true;
-        group.paused = false;
-        group.done = false;
-        group.pending_finish = false;
-        group.reverse = reverse;
-        if started { group.frame_id } else { None }
-    } else {
-        None
-    };
+    let notification = sim
+        .animation_groups
+        .get_mut(&group_id)
+        .map(|group| update_group_playback(group, reverse, offset))
+        .unwrap_or(None);
     refresh_active_animation_group(&mut sim, group_id);
     apply_group_flipbook_state(&mut sim, group_id);
     apply_group_vertex_color_state(&mut sim, group_id);
     super::apply_group_motion_state(&mut sim, group_id);
     sync_action_bar_busy_for_group(&mut sim, group_id);
     Ok(notification)
+}
+
+fn update_group_playback(
+    group: &mut crate::lua_api::animation::AnimGroupState,
+    requested_reverse: Option<bool>,
+    offset: f64,
+) -> Option<u64> {
+    let started = !group.playing;
+    let resuming = group.paused;
+    let reverse = requested_reverse.unwrap_or(resuming && group.reverse);
+    if started && !resuming {
+        // INFERRED (R88g7): offset is elapsed timeline time; reverse mirrors it.
+        group.elapsed = animation_group_start_elapsed(group, offset, reverse);
+        for animation in &mut group.animations {
+            animation.elapsed = 0.0;
+        }
+    }
+    group.playing = true;
+    group.paused = false;
+    group.done = false;
+    group.pending_finish = false;
+    group.reverse = reverse;
+    if started { group.frame_id } else { None }
 }
 
 fn animation_group_start_elapsed(
