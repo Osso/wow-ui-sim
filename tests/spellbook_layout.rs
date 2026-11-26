@@ -614,7 +614,7 @@ fn forever_spellbook_catalog_stays_one_page_after_known_spells() {
         .expect("page text after the first real click should be readable");
     assert_eq!(first_category_page, "Page 1/1", "the first category has one page");
 
-    env.exec("PlayerSpellsFrame.SpellBookFrame.SpellBookCategoryButton3:Click()")
+    env.exec("PlayerSpellsFrame.SpellBookFrame.CategoryTabSystem:GetTabButton(3):Click()")
         .expect("the real Protection category tab should accept the click");
     let second_category_page: String = env
         .eval("return PlayerSpellsFrame.SpellBookFrame.PagedSpellsFrame.PagingControls.PageText:GetText()")
