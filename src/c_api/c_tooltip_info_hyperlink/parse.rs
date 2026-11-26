@@ -18,11 +18,8 @@ pub enum Marker {
     ArtifactPower,
     Trade,
     Achievement,
-    Keystone {
-        /// INFERRED (R82/R88aw): the first of eight keystone scalars selects the item.
-        /// The remaining scalar-to-request mapping is UNKNOWN.
-        item_id: u32,
-    },
+    InstanceLock,
+    Keystone,
     UrlIndex,
     StoreCategory,
     AzeriteEssence,
@@ -114,6 +111,11 @@ pub enum HyperlinkRequest {
         guid: String,
         first: u32,
         second: u32,
+    },
+    Keystone {
+        /// INFERRED (R82/R88aw): the first of eight keystone scalars selects the item.
+        /// The remaining scalar-to-request mapping is UNKNOWN.
+        item_id: u32,
     },
     /// These routes have no proven payload-to-producer mapping. Preserve their
     /// text without guessing GUID validation or serialized tooltip rows.

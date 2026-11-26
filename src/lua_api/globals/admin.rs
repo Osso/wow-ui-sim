@@ -418,7 +418,8 @@ fn register_player_identity(b: TableBuilder) -> LuaResult<TableBuilder> {
 }
 
 fn register_player_progression(b: TableBuilder) -> LuaResult<TableBuilder> {
-    b.set_function("SetSpec", set_spec)?
+    let b = b
+        .set_function("SetSpec", set_spec)?
         .set_function("SetSpecSelectionEnabled", set_spec_selection_enabled)?
         .set_function("SetTalentRank", set_talent_rank)?
         .set_function("SetTalentSelection", set_talent_selection)?
@@ -428,7 +429,7 @@ fn register_player_progression(b: TableBuilder) -> LuaResult<TableBuilder> {
         .set_function("RemoveBuff", remove_buff)?
         .set_function("ClearBuffs", clear_buffs)?
         .set_function("EquipItem", equip_item)?
-        .set_function("UnequipItem", unequip_item);
+        .set_function("UnequipItem", unequip_item)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     let b = b.set_function("SetEquippedItemGUID", set_equipped_item_guid)?;
     Ok(b)
