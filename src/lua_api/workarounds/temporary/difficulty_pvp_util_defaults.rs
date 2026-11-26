@@ -130,6 +130,16 @@ if GetDungeonDifficultyID == nil then
         return DifficultyUtil.ID.DungeonNormal
     end
 end
+if GetDifficultyInfo == nil then
+    function GetDifficultyInfo(difficultyID)
+        return DifficultyUtil.GetDifficultyName(difficultyID) or PLAYER_DIFFICULTY1 or "Normal",
+            0, false, false, false, false
+    end
+end
+"#;
+
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+const RAID_DIFFICULTY_GLOBAL_DEFAULTS_LUA: &str = r#"
 if GetRaidDifficultyID == nil then
     function GetRaidDifficultyID()
         return DifficultyUtil.ID.PrimaryRaidNormal
@@ -138,12 +148,6 @@ end
 if GetLegacyRaidDifficultyID == nil then
     function GetLegacyRaidDifficultyID()
         return 1
-    end
-end
-if GetDifficultyInfo == nil then
-    function GetDifficultyInfo(difficultyID)
-        return DifficultyUtil.GetDifficultyName(difficultyID) or PLAYER_DIFFICULTY1 or "Normal",
-            0, false, false, false, false
     end
 end
 "#;
@@ -164,6 +168,8 @@ end
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(DIFFICULTY_PVP_UTIL_DEFAULTS_LUA)?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+    lua.exec(RAID_DIFFICULTY_GLOBAL_DEFAULTS_LUA)?;
     #[cfg(feature = "retail-12-0-7")]
     lua.exec(BASE_DIFFICULTY_DEFAULTS_LUA)?;
     Ok(())
