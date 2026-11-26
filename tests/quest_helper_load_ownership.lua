@@ -1,4 +1,9 @@
-QuestHelperProbe = { events = 0, dirty = 0, containerUpdates = 0, moduleUpdates = 0, watchBuilds = 0 }
+QuestHelperProbe = { events = 0, dirty = 0, containerUpdates = 0, moduleUpdates = 0, watchBuilds = 0, scheduled = 0, callbacks = 0 }
+local originalRunNextFrame = RunNextFrame
+RunNextFrame = function(callback)
+    QuestHelperProbe.scheduled = QuestHelperProbe.scheduled + 1
+    return originalRunNextFrame(function(...) QuestHelperProbe.callbacks = QuestHelperProbe.callbacks + 1; return callback(...) end)
+end
 hooksecurefunc(QuestObjectiveTracker, "OnEvent", function(_, event)
     if event == "QUEST_WATCH_LIST_CHANGED" or event == "QUEST_LOG_UPDATE" then QuestHelperProbe.events = QuestHelperProbe.events + 1 end
 end)
