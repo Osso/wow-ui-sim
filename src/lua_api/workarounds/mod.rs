@@ -345,6 +345,7 @@ fn apply_core_foundation_environment_defaults(lua: &mut rilua::Lua) -> crate::Re
     temporary::global_frame_defaults::apply_bootstrap(lua)?;
     temporary::gossip_poi_defaults::apply_bootstrap(lua)?;
     temporary::major_faction_display_defaults::apply_bootstrap(lua)?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::map_group_defaults::apply_bootstrap(lua)?;
     #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::merchant_raid_defaults::apply_bootstrap(lua)?;
