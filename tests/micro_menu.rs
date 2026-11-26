@@ -76,12 +76,6 @@ const BLIZZARD_ADDONS: &[&str] = &[
 
 /// Create a fully loaded environment with Blizzard addons and startup events.
 fn setup_env() -> WowLuaEnv {
-    let env = setup_env_without_startup();
-    fire_startup_events(&env);
-    env
-}
-
-fn setup_env_without_startup() -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("Failed to create Lua environment");
     env.set_screen_size(1024.0, 768.0);
     env.state().borrow_mut().addon_base_paths = vec![blizzard_ui_dir()];
@@ -89,6 +83,7 @@ fn setup_env_without_startup() -> WowLuaEnv {
     if cfg!(feature = "client-wrath") {
         common::load_profile_framexml(&env);
         env.apply_post_load_workarounds();
+        fire_startup_events(&env);
         return env;
     }
 
@@ -97,6 +92,7 @@ fn setup_env_without_startup() -> WowLuaEnv {
     }
     env.apply_post_load_workarounds();
     install_fixture_globals(&env);
+    fire_startup_events(&env);
     env
 }
 
