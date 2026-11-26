@@ -370,7 +370,7 @@ fn run_full_ui_and_exact_fixtures(config: Config) -> ExitCode {
         }),
         #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
         prefork::run_with_setup(LEGACY_FULL_UI_CASES, config, || {
-            prefork_full_ui_preload::preload_full_game_ui()
+            Ok::<_, String>(spell_casting::env_with_full_blizzard_ui())
         }),
         #[cfg(feature = "gui")]
         run_exact_fixture_subprocess("chat"),
