@@ -1,10 +1,10 @@
 # Combat-log event filter records
 
-Stage Retail/PTR AddEventFilter and sibling ClearEventFilters in `src/c_api/c_combat_log.rs`. This is an opaque filter-record model, not a native event matcher. [Consumer selection and RED discipline](../wiki/investigations/consumer-selection-and-red-proof.md) govern acceptance.
+Stage Retail/PTR/Forever AddEventFilter and sibling ClearEventFilters in `src/c_api/c_combat_log.rs`. This is an opaque filter-record model, not a native event matcher. [Consumer selection and RED discipline](../wiki/investigations/consumer-selection-and-red-proof.md) govern acceptance.
 
 ## What it must do
 
-- [ ] Original TOC-selected secure Blizzard_CombatLogProcessor SetFilterSettings/ApplyFilterSettings adds supplied filter records and replaces them after clear; empty settings clear them all.
+- [ ] Original TOC-selected secure Blizzard_CombatLogProcessor SetFilterSettings/ApplyFilterSettings adds supplied filter records and replaces them after clear; empty settings clear them all on Retail, PTR and Forever.
 - [ ] Public C_CombatLog and C_CombatLogSecure each retain independent filter records; public clear does not erase secure records. Independence is simulator staging policy, not established native behavior.
 - [ ] Preserve argument order, count, nil positions and values without coercion or inferred defaults. A simulator-only diagnostic returns a fresh packed-record snapshot for the supplied namespace; it is not a WoW API.
 - [ ] Do not reset filtered-event enablement when clearing filter records: these are distinct state domains.
@@ -23,7 +23,7 @@ Stage Retail/PTR AddEventFilter and sibling ClearEventFilters in `src/c_api/c_co
 
 ## Tests asserting this spec
 
-`tests/combat_log_event_filters.rs`, selector `combat_log_event_filters::original_processor_replaces_and_clears_filter_records`, compiles only for Retail/PTR. It loads the real dependency closure, checks secure function provenance and executes the original method without overrides.
+`tests/combat_log_event_filters.rs`, selector `combat_log_event_filters::original_processor_replaces_and_clears_filter_records`, compiles for Retail, PTR and Forever. It loads the real dependency closure, checks secure function provenance and executes the original method without overrides.
 
 ### Static contradiction table (each listed selector stands alone)
 
@@ -42,4 +42,4 @@ case032/033 settings-identity checks are **preservation only**, not independent 
 
 Cached `CombatLogSecureDocumentation.lua` declares AddEventFilter and ClearEventFilters with `HasRestrictions = true`, `Environment = SecureOnly`, but **no Arguments, Returns or SecretArguments declarations**. Public `CombatLogDocumentation.lua` does not declare these members. Therefore argument validation/coercion/arity, return values, secret handling and restriction enforcement are **UNKNOWN**, not inferred from the lack of declarations. Accepting opaque arguments and returning no values is staging policy, not native parity. Consumer evidence supplies only nil/string event lists and nil/number/GUID source/destination selectors; no undocumented rejection rules are introduced.
 
-Event matching (including event-list syntax, object-mask conjunctions, zero/empty semantics and filter combination), native history ingestion/traversal and public/secure native sharing are **UNKNOWN**. **INFERRED (simulator mapping):** Retail/Forever now use an explicit host-supplied Rust history model that preserves the previous fixture's traversal; it does not synthesize events or wire filter records into matching. See the [history contract](combat-log-history-state.md). Retail/PTR select this mainline processor for filter-record staging. Forever also selects `mainline`, but this filter-record stage still has no dedicated Forever consumer test. Mists/Era/Anniversary reject the mainline-only TOC despite cached files; Wrath rejects mainline and has no cached processor. No vendor changes or decompiled sources are used.
+Event matching (including event-list syntax, object-mask conjunctions, zero/empty semantics and filter combination), native history ingestion/traversal and public/secure native sharing are **UNKNOWN**. **INFERRED (simulator mapping):** Retail/Forever now use an explicit host-supplied Rust history model that preserves the previous fixture's traversal; it does not synthesize events or wire filter records into matching. See the [history contract](combat-log-history-state.md). Retail/PTR/Forever select this mainline processor for filter-record staging. The Forever consumer test proves simulator behavior only, not native filtering parity. Mists/Era/Anniversary reject the mainline-only TOC despite cached files; Wrath rejects mainline and has no cached processor. No vendor changes or decompiled sources are used.
