@@ -127,6 +127,13 @@ end
 "#;
 
 pub(crate) fn patch(env: &LoaderEnv<'_>) {
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
+        return;
+    }
     let mut result = env
         .exec(super::housing_owned_house_requests::OWNED_HOUSE_REQUESTS_LUA)
         .and_then(|()| env.exec(HOUSING_DASHBOARD_PRELOAD_WORKAROUND_LUA));

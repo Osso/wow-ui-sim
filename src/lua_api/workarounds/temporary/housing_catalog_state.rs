@@ -6,6 +6,13 @@
 const HOUSING_CATALOG_STATE_LUA: &str = include_str!("housing_catalog_state.lua");
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
+        return Ok(());
+    }
     // Only inverse profiles publish the original seeded exterior members.
     // Modern profiles install real state-backed APIs; no missing-method fallback.
     let install_legacy = if crate::c_api::c_housing::exterior::MODELED {

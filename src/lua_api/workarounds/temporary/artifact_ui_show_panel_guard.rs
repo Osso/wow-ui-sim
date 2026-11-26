@@ -47,6 +47,13 @@ rawset(_G, "__wow_artifact_ui_show_panel_guard_wrapped", true)
 "#;
 
 pub(crate) fn patch(env: &LoaderEnv<'_>) {
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
+        return;
+    }
     let _ = env.exec(ARTIFACT_UI_SHOW_PANEL_GUARD_WORKAROUND_LUA);
 }
 
