@@ -121,11 +121,11 @@ pub(crate) fn update_for_screen_mode(
 ) -> crate::Result<()> {
     if screen.is_glue() {
         lua.exec(AVAILABILITY_FALLBACK_LUA)?;
-        lua.exec(ADVENTURE_GUIDE_HELPER_DEFAULTS_LUA)?;
         return Ok(());
     }
     // Retail Game startup loads the original AdventureGuideUtil before consumers.
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+        lua.exec(ADVENTURE_GUIDE_HELPER_DEFAULTS_LUA)?;
         return Ok(());
     }
     // Remove only our Glue fallback, never the original Game owner.
