@@ -16,11 +16,12 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
 fn can_show(state: &mut LuaState) -> LuaResult<u32> {
     let sim = borrow_state(state)?;
     let rules = &sim.game_rules;
-    let enabled = !rules.non_integer_rule_ids.contains(&93)
-        && rules
-            .rules
-            .get(&GameRuleKey::Id(93))
-            .is_some_and(|value| value.as_int & 0xff != 0);
+    let value = rules.rules.get(&GameRuleKey::Id(93));
+    #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+    let is_integer = !rules.non_integer_rule_ids.contains(&93);
+    #[cfg(feature = "client-wowforever")]
+    let is_integer = value.is_some_and(|value| value.integer_value.is_some());
+    let enabled = is_integer && value.is_some_and(|value| value.as_int & 0xff != 0);
     drop(sim);
     state.push(Val::Bool(enabled));
     Ok(1)
