@@ -21,7 +21,7 @@ local secondMap, secondFog = pin:GetUiMapID(), pin.fogOfWarID
 if secondMap ~= 1032 or secondFog ~= 5 or not pin:IsShown() then return "second_map" end
 
 WorldMapFrame:SetMapID(2248)
-if pin:IsShown() then return "stale_fog_pin_visible" end
+if pin:IsShown() or pin.fogOfWarID ~= nil then return "stale_fog_pin_state" end
 return "ok"
 "#;
 
