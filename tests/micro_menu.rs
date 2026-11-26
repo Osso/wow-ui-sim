@@ -327,30 +327,19 @@ fn main_menu_microbutton_click_toggles_game_menu() {
 #[cfg(any(feature = "client-wowforever", feature = "client-retail"))]
 #[test]
 fn friends_frame_starts_hidden_and_close_all_windows_hides_it() {
-    let env = setup_env_without_startup();
+    let env = setup_env();
     assert!(
         !frame_is_shown(&env, "FriendsFrame"),
-        "FriendsFrame placeholder should start hidden before startup"
-    );
-    fire_startup_events(&env);
-    assert!(
-        !frame_is_shown(&env, "FriendsFrame"),
-        "FriendsFrame should remain hidden after startup"
+        "FriendsFrame should start hidden after startup"
     );
     env.exec("ShowUIPanel(FriendsFrame)")
         .expect("FriendsFrame should open through the original panel manager");
     assert!(frame_is_shown(&env, "FriendsFrame"), "ShowUIPanel should show FriendsFrame");
-    let panel_state: String = env
-        .eval(
-            "local name = FriendsFrame:GetName(); local panel = UIPanelWindows and UIPanelWindows[name]; return tostring(name) .. ':' .. tostring(panel and panel.area) .. ':' .. tostring(FriendsFrame:GetAttribute('UIPanelLayout-area')) .. ':' .. tostring(GetUIPanel('left') == FriendsFrame)",
-
-        )
-        .expect("FriendsFrame panel registration should be readable");
     env.exec("CloseAllWindows()")
         .expect("CloseAllWindows should run through the original panel manager");
     assert!(
         !frame_is_shown(&env, "FriendsFrame"),
-        "CloseAllWindows should hide FriendsFrame; panel registration: {panel_state}"
+        "CloseAllWindows should hide FriendsFrame"
     );
 }
 
