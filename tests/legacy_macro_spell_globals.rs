@@ -67,6 +67,9 @@ const LEGACY_MACRO_GLOBALS_PART_2: &str = r#"        if type(GetSpellBookItemNam
         if type(itemInfo) ~= "table" then
             return "container_info_type=" .. type(itemInfo)
         end
+        if SpellBook_GetSpellBookSlot(4, 7) ~= 4 or SpellBook_GetSpellBookSlot(8, 3) ~= 8 then
+            return "spellbook_slot"
+        end
 
         return "ok"
 "#;
