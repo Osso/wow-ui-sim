@@ -45,7 +45,16 @@ fn slot_keystone(
     result.expect("the original slotted-keystone event should complete");
 }
 
-fn assert_slotted_info(env: &WowLuaEnv, map_id: u32, name: &str, level: u32, a: u32, b: u32) {
+fn assert_slotted_info(
+    env: &WowLuaEnv,
+    map_id: u32,
+    name: &str,
+    level: u32,
+    damage: u32,
+    health: u32,
+    a: u32,
+    b: u32,
+) {
     env.exec(&format!(
         r#"
         local function capture(...) return {{n = select('#', ...), ...}} end
@@ -56,8 +65,14 @@ fn assert_slotted_info(env: &WowLuaEnv, map_id: u32, name: &str, level: u32, a: 
         assert(affixes[1] == {a} and affixes[2] == {b} and affixes[3] == nil)
         assert(ChallengesKeystoneFrame.DungeonName:GetText() == {name:?})
         assert(ChallengesKeystoneFrame.PowerLevel:GetText() == "Level {level}")
-        assert(ChallengesKeystoneFrame.Affixes[1].affixID == {a})
-        assert(ChallengesKeystoneFrame.Affixes[2].affixID == {b})
+        local affixOffset = 0
+        if {level} >= 3 then
+            assert(ChallengesKeystoneFrame.Affixes[1].Percent:GetText() == "+{damage}%")
+            assert(ChallengesKeystoneFrame.Affixes[2].Percent:GetText() == "+{health}%")
+            affixOffset = 2
+        end
+        assert(ChallengesKeystoneFrame.Affixes[affixOffset + 1].affixID == {a})
+        assert(ChallengesKeystoneFrame.Affixes[affixOffset + 2].affixID == {b})
         "#
     ))
     .unwrap();
@@ -68,12 +83,16 @@ fn challenges_ui_slotted_event_reads_and_clears_selected_keystone_info() {
     let env = load_challenges_frame();
     set_map_info(&env, 2, 960, "Keystone Map Alpha");
     set_map_info(&env, 56, 961, "Keystone Map Beta");
-    for (slot, item, selector, map, name, level, a, b) in [
-        (3, 180_653, 960, 2, "Keystone Map Alpha", 2, 6, 9),
-        (4, 158_923, 961, 56, "Keystone Map Beta", 1, 7, 10),
+    for (slot, item, selector, map, name, level, damage, health, a, b) in [
+        (3, 180_653, 960, 2, "Keystone Map Alpha", 2, 11, 17, 6, 9),
+        (4, 158_923, 961, 56, "Keystone Map Beta", 4, 23, 29, 7, 10),
     ] {
+        env.exec(&format!(
+            "A_Admin.SetChallengePowerLevelMods({level}, {damage}, {health})"
+        ))
+        .unwrap();
         slot_keystone(&env, slot, item, selector, map, level, a, b);
-        assert_slotted_info(&env, map, name, level, a, b);
+        assert_slotted_info(&env, map, name, level, damage, health, a, b);
         env.exec("assert(C_ChallengeMode.RemoveKeystone()); assert(not C_ChallengeMode.HasSlottedKeystone()); assert(select('#', C_ChallengeMode.GetSlottedKeystoneInfo()) == 0)")
             .unwrap();
     }
