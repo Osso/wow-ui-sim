@@ -499,7 +499,7 @@ fn transfer_percentage(currency_id: i32) -> Option<f32> {
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn get_max_transferable_amount_from_quantity(state: &mut LuaState) -> LuaResult<u32> {
-    // INFERRED (R88g8, native evidence pending): TokenUI queries before selecting a currency.
+    // INFERRED — R88g8 (native evidence pending): TokenUI queries before selecting a currency.
     if matches!(stack_val(state, 1), Val::Nil) {
         state.push(Val::Nil);
         return Ok(1);
