@@ -184,6 +184,7 @@ fn global_placeholder_tables_are_published_by_original_consumers() {
     env.exec(
         r#"assert(C_AddOns.LoadAddOn("Blizzard_UIParentPanelManager"))
            assert(UISpecialFrames[1] == "ItemRefTooltip")
+           assert(UI_SPECIAL_FRAMES == UISpecialFrames)
            assert(C_AddOns.LoadAddOn("Blizzard_AuctionHouseUI"))
            assert(type(StaticPopupDialogs["BUYOUT_AUCTION"]) == "table")
            assert(type(StaticPopupDialogs["BID_AUCTION"]) == "table")
