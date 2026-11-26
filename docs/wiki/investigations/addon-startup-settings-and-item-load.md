@@ -6,12 +6,9 @@ Addon startup errors in third-party addons can come from simulator compatibility
 
 ### Settings canvases
 
-`Settings.RegisterCanvasLayoutCategory(frame, ...)` and `Settings.RegisterCanvasLayoutSubcategory(...)` register option panels without displaying their canvas. Real WoW only shows a canvas when its category is opened. The simulator must hide registered canvas frames immediately, hide inactive registered canvases on `Settings.OpenToCategory(...)`, and show only the currently opened category canvas.
+**INFERRED (R15; native evidence pending):** On loaded Retail and Forever Settings panels, the original registration path leaves canvas visibility unchanged. Opening a category reparents and shows its canvas, and switching categories hides the prior canvas. **VERIFIED (Forever original-consumer test):** both registered canvases stay shown while the Settings panel stays hidden; opening the second category hides the first, shows and parents the second, and leaves an unrelated shown canvas visible.
 
-This behavior belongs in both layers:
-
-- the post-load Settings workaround for Blizzard's loaded Settings panel;
-- the bootstrap Settings fallback, including `InterfaceOptions_AddCategory`, for addons that register option panels before the real Settings implementation is available.
+The simulator keeps the visibility workaround only for profiles other than Retail and Forever. The bootstrap Settings fallback, including `InterfaceOptions_AddCategory`, remains separate for addons that register option panels before the real Settings implementation is available.
 
 ### Secure attribute delegates
 

@@ -113,7 +113,7 @@ pub fn set_using_parent_level(state: &mut LuaState) -> LuaResult<u32> {
             frame.frame_level = level;
         }
     }
-    super::super::methods_hierarchy::propagate_strata_level_pub(&mut sim.widgets, id);
+    super::super::methods_hierarchy::recalculate_strata_level_pub(&mut sim.widgets, id);
     Ok(0)
 }
 

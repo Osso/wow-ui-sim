@@ -114,7 +114,11 @@ pub fn set_frame_level(state: &mut LuaState) -> LuaResult<u32> {
     if let Some(frame) = sim.widgets.get_mut_visual(id) {
         frame.frame_level = level;
     }
-    super::super::methods_hierarchy::propagate_strata_level_pub(&mut sim.widgets, id);
+    super::super::methods_hierarchy::propagate_strata_level_pub(
+        &mut sim.widgets,
+        id,
+        level - current_level,
+    );
     sim.invalidate_strata_buckets();
     // Frame level is part of the hit-grid render-order key; re-insert the
     // subtree at its new position.

@@ -166,7 +166,7 @@ fn set_xml_frame_level(state: &Rc<RefCell<SimState>>, frame_id: u64, level: i32,
     } else {
         set_parent_relative_xml_frame_level(&mut sim, frame_id, level);
     }
-    crate::lua_api::frame::propagate_strata_level_pub(&mut sim.widgets, frame_id);
+    crate::lua_api::frame::recalculate_strata_level_pub(&mut sim.widgets, frame_id);
 }
 
 fn set_fixed_xml_frame_level(sim: &mut SimState, frame_id: u64, level: i32) {
@@ -205,7 +205,7 @@ fn set_xml_frame_level_to_parent(state: &Rc<RefCell<SimState>>, frame_id: u64) {
             frame.frame_level = parent_level;
         }
     }
-    crate::lua_api::frame::propagate_strata_level_pub(&mut sim.widgets, frame_id);
+    crate::lua_api::frame::recalculate_strata_level_pub(&mut sim.widgets, frame_id);
 }
 
 fn parent_frame_level(sim: &SimState, frame_id: u64) -> Option<i32> {

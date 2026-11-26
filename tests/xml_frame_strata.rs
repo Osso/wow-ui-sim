@@ -4,6 +4,17 @@ use wow_ui_sim::loader::{LoadTiming, create_frame_from_xml};
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::xml::{XmlElement, clear_templates, parse_xml};
 
+const XML_FIXED_FRAME_LEVEL_PROBE: &str = r#"
+<Ui>
+    <Frame name="XmlFixedParent" parent="UIParent" frameLevel="50">
+        <Size x="10" y="10"/>
+    </Frame>
+    <Frame name="XmlFixedChild" parent="XmlFixedParent" frameLevel="10" fixedFrameLevel="true">
+        <Size x="10" y="10"/>
+    </Frame>
+</Ui>
+"#;
+
 #[test]
 fn test_create_frame_from_xml_frame_strata() {
     clear_templates();
@@ -697,23 +708,8 @@ fn test_xml_frame_level_uses_parent_relative_offset() {
     assert_eq!(updated_child_level, 260);
 }
 
-#[test]
-fn test_xml_fixed_frame_level_stops_parent_propagation_after_initial_offset() {
-    clear_templates();
-    let env = WowLuaEnv::new().unwrap();
-
-    let xml = r#"
-        <Ui>
-            <Frame name="XmlFixedParent" parent="UIParent" frameLevel="50">
-                <Size x="10" y="10"/>
-            </Frame>
-            <Frame name="XmlFixedChild" parent="XmlFixedParent" frameLevel="10" fixedFrameLevel="true">
-                <Size x="10" y="10"/>
-            </Frame>
-        </Ui>
-    "#;
-
-    let ui = parse_xml(xml).unwrap();
+fn load_xml_fixed_frame_level_probe(env: &WowLuaEnv) {
+    let ui = parse_xml(XML_FIXED_FRAME_LEVEL_PROBE).unwrap();
     for element in &ui.elements {
         if let XmlElement::Frame(frame) = element {
             create_frame_from_xml(
@@ -729,30 +725,24 @@ fn test_xml_fixed_frame_level_stops_parent_propagation_after_initial_offset() {
         }
     }
 
-    // Ground truth (XmlFrameLevelProbe childFixed): absolute level 10, fixed,
-    // not using parent level. Parent is 50, so the gap is -40 — the prior
-    // `== 10` offset assertion was the disproven April model.
-    let (parent_level, child_level, child_uses_parent): (i32, i32, bool) = env
-        .eval(
-            r#"
-            return XmlFixedParent:GetFrameLevel(), XmlFixedChild:GetFrameLevel(), XmlFixedChild:IsUsingParentLevel()
-            "#,
-        )
-        .unwrap();
-    assert_eq!(parent_level, 50);
-    assert_eq!(child_level, 10, "fixed XML frameLevel is absolute");
-    assert!(!child_uses_parent);
+}
 
-    let (child_before, child_after): (i32, i32) = env
-        .eval(
-            r#"
-            local before = XmlFixedChild:GetFrameLevel()
-            XmlFixedParent:SetFrameLevel(400)
-            return before, XmlFixedChild:GetFrameLevel()
-            "#,
-        )
+#[test]
+fn test_xml_fixed_frame_level_shifts_when_parent_level_changes() {
+    clear_templates();
+    let env = WowLuaEnv::new().unwrap();
+    load_xml_fixed_frame_level_probe(&env);
+    let (parent, before, uses_parent): (i32, i32, bool) = env
+        .eval("return XmlFixedParent:GetFrameLevel(), XmlFixedChild:GetFrameLevel(), XmlFixedChild:IsUsingParentLevel()")
         .unwrap();
-    assert_eq!(child_after, child_before);
+    assert_eq!(parent, 50);
+    assert_eq!(before, 10);
+    assert!(!uses_parent);
+    let after: i32 = env
+        .eval("XmlFixedParent:SetFrameLevel(400); return XmlFixedChild:GetFrameLevel()")
+        .unwrap();
+    // VERIFIED (R14 Q6, pr46-49-decomp-answers.md:2225-2239): fixed same-strata children shift by the parent's delta.
+    assert_eq!(after, 360);
 }
 
 #[test]

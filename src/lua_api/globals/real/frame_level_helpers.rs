@@ -40,7 +40,7 @@ fn adjust_frame_level(state: &mut LuaState, delta: i32, action: &str) -> LuaResu
     if let Some(frame) = sim.widgets.get_mut_visual(id) {
         frame.frame_level = next_level;
     }
-    propagate_strata_level_pub(&mut sim.widgets, id);
+    propagate_strata_level_pub(&mut sim.widgets, id, next_level - current_level);
     sim.invalidate_strata_buckets();
     Ok(0)
 }
