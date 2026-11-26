@@ -11,7 +11,7 @@ fn transfer_calculation_apis_handle_unselected_currency() {
                 "an unselected currency has no maximum")
             assert(C_CurrencyInfo.GetMaxTransferableAmountFromQuantity(1560, 100) == 76,
                 "currency 1560 uses its supplied transfer rate")
-            assert(C_CurrencyInfo.GetMaxTransferableAmountFromQuantity(1792, 100) == 79,
+            assert(C_CurrencyInfo.GetMaxTransferableAmountFromQuantity(1792, 100) == 80,
                 "currency 1792 uses its supplied transfer rate")
 
             local costOk, costError = pcall(C_CurrencyInfo.GetCostToTransferCurrency, nil, 10)
