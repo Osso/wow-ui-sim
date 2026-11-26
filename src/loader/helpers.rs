@@ -674,6 +674,30 @@ fn lifecycle_handlers_with_options(
     scripts: &crate::xml::ScriptsXml,
     default_binding: Option<u8>,
 ) -> String {
+    let mut code = build_base_lifecycle_handlers(target, scripts, default_binding);
+    code.push_str(&build_pointer_lifecycle_handlers(
+        target,
+        scripts,
+        default_binding,
+    ));
+    code.push_str(&build_ui_map_changed_handler(
+        target,
+        scripts,
+        default_binding,
+    ));
+    code.push_str(&build_drag_lifecycle_handlers(
+        target,
+        scripts,
+        default_binding,
+    ));
+    code
+}
+
+fn build_base_lifecycle_handlers(
+    target: &str,
+    scripts: &crate::xml::ScriptsXml,
+    default_binding: Option<u8>,
+) -> String {
     apply_script_handlers_with_options(
         target,
         &[
@@ -694,11 +718,50 @@ fn lifecycle_handlers_with_options(
             ("PostClick", scripts.post_click.last()),
             ("OnShow", scripts.on_show.last()),
             ("OnHide", scripts.on_hide.last()),
+        ],
+        default_binding,
+    )
+}
+
+fn build_pointer_lifecycle_handlers(
+    target: &str,
+    scripts: &crate::xml::ScriptsXml,
+    default_binding: Option<u8>,
+) -> String {
+    apply_script_handlers_with_options(
+        target,
+        &[
             ("OnEnter", scripts.on_enter.last()),
             ("OnLeave", scripts.on_leave.last()),
             ("OnMouseDown", scripts.on_mouse_down.last()),
             ("OnMouseUp", scripts.on_mouse_up.last()),
             ("OnMouseWheel", scripts.on_mouse_wheel.last()),
+        ],
+        default_binding,
+    )
+}
+
+fn build_ui_map_changed_handler(
+    target: &str,
+    scripts: &crate::xml::ScriptsXml,
+    default_binding: Option<u8>,
+) -> String {
+    let handler = if crate::client_profile::ACTIVE.uses_native_map_canvas_pin_refresh() {
+        scripts.on_ui_map_changed.last()
+    } else {
+        None
+    };
+    apply_script_handlers_with_options(target, &[("OnUiMapChanged", handler)], default_binding)
+}
+
+fn build_drag_lifecycle_handlers(
+    target: &str,
+    scripts: &crate::xml::ScriptsXml,
+    default_binding: Option<u8>,
+) -> String {
+    apply_script_handlers_with_options(
+        target,
+        &[
             ("OnDragStart", scripts.on_drag_start.last()),
             ("OnDragStop", scripts.on_drag_stop.last()),
             ("OnReceiveDrag", scripts.on_receive_drag.last()),

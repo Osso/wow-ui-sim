@@ -18,7 +18,11 @@ mod source_metadata;
 #[cfg(test)]
 mod tests;
 
-#[cfg(feature = "client-mists")]
+#[cfg(any(
+    feature = "client-mists",
+    feature = "client-retail",
+    feature = "client-wowforever"
+))]
 pub(crate) use event_dispatch::dispatch_script_state;
 pub(crate) use event_dispatch::{dispatch_named_event_handlers, event_matches_unit_filter};
 pub use event_dispatch::{dispatch_on_update, fire_named_event_state, get_event_listeners};

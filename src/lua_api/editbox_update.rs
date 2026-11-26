@@ -94,12 +94,8 @@ fn take_pending_text_changes(
     ids.sort_unstable();
     ids.into_iter()
         .filter_map(|id| {
-            let frame = sim.widgets.get_mut(id)?;
-            let user_input = frame
-                .editbox_presentation
-                .as_mut()?
-                .take_text_change(defer_user_input)?;
-            Some((id, user_input))
+            take_visible_text_change(&mut sim, id, defer_user_input)
+                .map(|user_input| (id, user_input))
         })
         .collect()
 }
@@ -250,12 +246,17 @@ fn commit_presentation(
         .and_then(|layout| layout.cursor)
         .map(|cursor| frame_cursor_geometry(&input, cursor));
     let mut sim = sim.borrow_mut();
+    let visible = sim.widgets.is_ancestor_visible(id);
     let frame = sim.widgets.get_mut(id)?;
     let presentation = frame.editbox_presentation_mut();
     presentation.input = Some(input);
     presentation.shaped_text = layout.map(|layout| layout.buffer);
     presentation.cursor_geometry = cursor;
-    let text_changed = presentation.take_text_change(false);
+    let text_changed = if visible {
+        presentation.take_text_change(false)
+    } else {
+        None
+    };
     sim.widgets.mark_visual_dirty(id);
     Some(EditBoxUpdate {
         cursor,
@@ -264,11 +265,24 @@ fn commit_presentation(
 }
 
 fn take_text_change(sim: &Rc<RefCell<SimState>>, id: u64) -> Option<EditBoxUpdate> {
-    let mut sim = sim.borrow_mut();
-    let frame = sim.widgets.get_mut(id)?;
-    let text_changed = frame.editbox_presentation.as_mut()?.take_text_change(false);
+    let text_changed = {
+        let mut sim = sim.borrow_mut();
+        take_visible_text_change(&mut sim, id, false)
+    };
     Some(EditBoxUpdate {
         cursor: None,
         text_changed,
     })
+}
+
+/// INFERRED — R88g8 (native evidence pending): hidden EditBoxes retain notifications until visible.
+fn take_visible_text_change(sim: &mut SimState, id: u64, defer_user_input: bool) -> Option<bool> {
+    if !sim.widgets.is_ancestor_visible(id) {
+        return None;
+    }
+    let frame = sim.widgets.get_mut(id)?;
+    frame
+        .editbox_presentation
+        .as_mut()?
+        .take_text_change(defer_user_input)
 }
