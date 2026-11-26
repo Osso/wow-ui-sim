@@ -48,6 +48,8 @@ const BLIZZARD_ADDONS: &[&str] = &[
     "Blizzard_ClassMenu",
     "Blizzard_MicroMenu",
     "Blizzard_ManagedFrameSystem",
+    "Blizzard_Game",
+    "Blizzard_UIParentUtil",
     "Blizzard_EditMode",
     "Blizzard_GarrisonBase",
     "Blizzard_HousingEventHandler",
