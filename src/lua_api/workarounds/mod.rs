@@ -81,7 +81,7 @@ const POST_LOAD_WORKAROUNDS: &[WorkaroundStep] = &[
         label: "patch_chat_voice_button_surface",
         apply: patch_chat_voice_button_surface,
     },
-    #[cfg(not(feature = "client-retail"))]
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     WorkaroundStep {
         label: "patch_character_select_selected_name",
         apply: patch_character_select_selected_name,
@@ -138,8 +138,8 @@ const POST_LOAD_WORKAROUNDS: &[WorkaroundStep] = &[
         label: "patch_tooltip_nineslice_surface",
         apply: patch_tooltip_nineslice_surface,
     },
-    // Retail startup dispatches per-addon ADDON_LOADED and owns this XML frame.
-    #[cfg(not(feature = "client-retail"))]
+    // Retail and Forever startup dispatch per-addon ADDON_LOADED and own this XML frame.
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     WorkaroundStep {
         label: "patch_container_frame_token_tracker",
         apply: patch_container_frame_token_tracker,
@@ -702,7 +702,7 @@ fn patch_runtime_core_addon_surfaces(env: &crate::lua_api::LoaderEnv<'_>, addon_
 
 fn patch_runtime_journal_addon_surfaces(env: &crate::lua_api::LoaderEnv<'_>, addon_name: &str) {
     if addon_name == "Blizzard_Collections" {
-        #[cfg(not(feature = "client-retail"))]
+        #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
         patch_toggle_collections_journal_for_runtime_addon_load(env);
         temporary::collections_journal_namespace::patch(env);
     }
