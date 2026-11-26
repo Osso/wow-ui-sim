@@ -195,3 +195,11 @@ Evidence: lt-4265 R88e.2, Retail 12.1.5.70688. Full native public-handler
 publication and the final Lua value for an absent index remain UNKNOWN.
 The simulator preserves its existing absent-index policy. This change does
 not model event timing, event dispatch or the native notification queue.
+
+## Current cycle: duplicate helper defaults (lt-8d57)
+
+- [ ] **VERIFIED when exact tests pass:** Retail and Forever use their selected `ObjectAPI/Mainline/Quest.lua` and `FrameXMLUtil/Mainline/QuestUtils.lua` providers for `QuestCache` and the two `QuestUtil` methods before the original tracker consumes watched quests; the fallback definitions remain on profiles without those method providers.
+- [ ] **VERIFIED when exact tests pass:** the original `QuestObjectiveTracker` event/update path reads supplied group capability and special-item state, renders the right-edge group/item buttons for two distinct quests, and retains the provider's quest object across updates.
+- [ ] **INFERRED (R88g8; native evidence pending):** an unset `C_LFGList.CanCreateQuestGroup` simulator input returns false.
+
+The `ObjectiveTrackerContainerMixin`, `ObjectiveTrackerModuleHeaderMixin` and `ObjectiveTrackerModuleMixin` names in the header workaround are references used to wrap selected methods, not definitions of the mixin tables. The wrapper remains unchanged. Exact preservation tests: `tests/quest_helper_load_ownership.rs`.

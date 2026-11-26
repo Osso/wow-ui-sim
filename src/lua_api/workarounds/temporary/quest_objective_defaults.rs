@@ -20,49 +20,28 @@ if type(GetBuildInfo) == "function" and select(4, GetBuildInfo()) >= 120100 then
     end
   end
 end
+"#;
 
--- Retail-backed ObjectiveTracker code asks ObjectAPI's QuestCache for quest
--- objects. Classic/Mists profile source does not always load ObjectAPI's
--- retail Quest.lua, so provide a thin cache backed by the modeled C_QuestLog
--- quest surface.
+// The selected Retail/Forever cache publishes these helpers before tracker use.
+const QUEST_HELPER_DEFAULTS_LUA: &str = r#"
+-- Keep these adapters only where the selected profile has no cached provider.
 if QuestCache == nil then
-
   local Quest = {}
   Quest.__index = Quest
 
-  function Quest:GetID()
-    return self.questID
-  end
-
-  function Quest:GetQuestLogIndex()
-    return C_QuestLog.GetLogIndexForQuestID(self.questID)
-  end
-
-  function Quest:IsComplete()
-    return C_QuestLog.IsComplete(self.questID)
-  end
-
-  function Quest:IsDisabledForSession()
-    return C_QuestLog.IsQuestDisabledForSession(self.questID)
-  end
-
-  function Quest:IsCalling()
-    return self:GetQuestClassification() == Enum.QuestClassification.Calling
-  end
-
-  function Quest:GetQuestClassification()
-    return C_QuestInfoSystem.GetQuestClassification(self.questID)
-  end
+  function Quest:GetID() return self.questID end
+  function Quest:GetQuestLogIndex() return C_QuestLog.GetLogIndexForQuestID(self.questID) end
+  function Quest:IsComplete() return C_QuestLog.IsComplete(self.questID) end
+  function Quest:IsDisabledForSession() return C_QuestLog.IsQuestDisabledForSession(self.questID) end
+  function Quest:IsCalling() return self:GetQuestClassification() == Enum.QuestClassification.Calling end
+  function Quest:GetQuestClassification() return C_QuestInfoSystem.GetQuestClassification(self.questID) end
 
   QuestCache = {}
-
   function QuestCache:Get(questID)
     local quest = setmetatable({ questID = questID }, Quest)
     quest.title = C_QuestLog.GetTitleForQuestID(questID) or ""
     quest.requiredMoney = C_QuestLog.GetRequiredMoney(questID) or 0
-    quest.isAutoComplete = false
-    quest.isBounty = false
-    quest.isTask = false
+    quest.isAutoComplete, quest.isBounty, quest.isTask = false, false, false
     return quest
   end
 end
@@ -78,16 +57,13 @@ if QuestUtil.CanCreateQuestGroup == nil then
 end
 if QuestUtil.QuestShowsItemByIndex == nil then
   function QuestUtil.QuestShowsItemByIndex(questLogIndex, isQuestComplete)
-    if type(GetQuestLogSpecialItemInfo) ~= "function" then
-      return false
-    end
+    if type(GetQuestLogSpecialItemInfo) ~= "function" then return false end
     local _, item, _, showItemWhenComplete = GetQuestLogSpecialItemInfo(questLogIndex)
     return item ~= nil and (not isQuestComplete or showItemWhenComplete)
   end
 end
 "#;
 
-// Keep the unsupported-profile shim byte-identical; Retail/Forever use modeled tasks.
 const LEGACY_TASKS_TABLE_LUA: &str = r#"-- Bonus / world-quest objective trackers iterate the task list at startup.
 -- Return an empty table so the `for ... in ipairs(tasksTable)` loops no-op.
 if GetTasksTable == nil then
@@ -111,6 +87,9 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
         lua.exec(UNMODELED_POPUPS_LUA)?;
     }
     lua.exec(QUEST_OBJECTIVE_DEFAULTS_LUA)?;
+    if !uses_cached_quest_helpers() {
+        lua.exec(QUEST_HELPER_DEFAULTS_LUA)?;
+    }
     if !crate::c_api::quest_objectives::ENABLED {
         lua.exec(LEGACY_TASKS_TABLE_LUA)?;
     }
@@ -122,9 +101,20 @@ pub(crate) fn patch_loader(env: &LoaderEnv<'_>) {
         let _ = env.exec(UNMODELED_POPUPS_LUA);
     }
     let _ = env.exec(QUEST_OBJECTIVE_DEFAULTS_LUA);
+    if !uses_cached_quest_helpers() {
+        let _ = env.exec(QUEST_HELPER_DEFAULTS_LUA);
+    }
     if !crate::c_api::quest_objectives::ENABLED {
         let _ = env.exec(LEGACY_TASKS_TABLE_LUA);
     }
+}
+
+fn uses_cached_quest_helpers() -> bool {
+    matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever
+    )
 }
 
 #[cfg(test)]
@@ -195,6 +185,7 @@ mod tests {
         assert_eq!(result, "ok");
     }
 
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     #[test]
     fn reapply_restores_quest_util_defaults_after_addon_reset() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
@@ -219,28 +210,28 @@ mod tests {
         assert_eq!(result, "ok");
     }
 
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     #[test]
     fn quest_util_group_creation_uses_lfg_list_backing_when_available() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
         env.exec(
             r#"
             QuestUtil = {}
-            C_LFGList.CanCreateQuestGroup = function(questID)
-              return questID == 401
-            end
+            A_Admin.SetQuestGroupCreatable(401, true)
+            A_Admin.SetQuestGroupCreatable(402, false)
             "#,
         )
-        .expect("fixture should install LFG backing");
+        .expect("fixture should supply distinct LFG quest states");
 
         {
             let mut lua = env.lua.borrow_mut();
             super::apply_bootstrap(&mut lua).expect("quest objective defaults should reapply");
         }
 
-        let can_create: bool = env
-            .eval("return QuestUtil.CanCreateQuestGroup(401)")
-            .expect("quest group probe should run");
+        let capabilities: (bool, bool) = env
+            .eval("return QuestUtil.CanCreateQuestGroup(401), QuestUtil.CanCreateQuestGroup(402)")
+            .expect("quest group probes should run");
 
-        assert!(can_create);
+        assert_eq!(capabilities, (true, false));
     }
 }

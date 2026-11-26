@@ -71,8 +71,22 @@ pub fn get_quest_log_time_left(state: &mut LuaState) -> LuaResult<u32> {
     }
 }
 
-pub fn get_quest_log_special_item_info(_state: &mut LuaState) -> LuaResult<u32> {
-    Ok(0)
+pub fn get_quest_log_special_item_info(state: &mut LuaState) -> LuaResult<u32> {
+    let index = Option::<i32>::from_stack(state, 1)?.unwrap_or_default();
+    let item_id = borrow_state(state)?
+        .quest_log_entries
+        .quest_special_item_inputs
+        .special_item_ids_by_log_index
+        .get(&index)
+        .copied();
+    let Some(item_id) = item_id else {
+        return Ok(0);
+    };
+    state.push(Val::Nil);
+    state.push(Val::Num(f64::from(item_id)));
+    state.push(Val::Nil);
+    state.push(Val::Bool(false));
+    Ok(4)
 }
 
 pub fn get_reward_skill_points_nil_triplet(state: &mut LuaState) -> LuaResult<u32> {

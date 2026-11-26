@@ -26,6 +26,9 @@ pub(super) fn register_quests(b: TableBuilder) -> LuaResult<TableBuilder> {
         "RequestQuestAcceptConfirmation",
         request_quest_accept_confirmation,
     )?;
+    let b = b
+        .set_function("SetQuestGroupCreatable", set_quest_group_creatable)?
+        .set_function("SetQuestLogSpecialItem", set_quest_log_special_item)?;
     let b = if crate::c_api::quest_objectives::ENABLED {
         b.set_function(
             "SetQuestObjectives",
@@ -90,6 +93,31 @@ fn request_quest_accept_confirmation(state: &mut LuaState) -> LuaResult<u32> {
     );
     state.top = saved_top;
     result?;
+    Ok(0)
+}
+
+fn set_quest_group_creatable(state: &mut LuaState) -> LuaResult<u32> {
+    let quest_id = i32::from_stack(state, 1)?;
+    let can_create = bool::from_stack(state, 2)?;
+    borrow_state_mut(state)?
+        .quest_log_entries
+        .group_creation_by_quest
+        .insert(quest_id, can_create);
+    Ok(0)
+}
+
+fn set_quest_log_special_item(state: &mut LuaState) -> LuaResult<u32> {
+    let index = i32::from_stack(state, 1)?;
+    let item_id = Option::<u32>::from_stack(state, 2)?;
+    let items = &mut borrow_state_mut(state)?
+        .quest_log_entries
+        .quest_special_item_inputs
+        .special_item_ids_by_log_index;
+    if let Some(item_id) = item_id {
+        items.insert(index, item_id);
+    } else {
+        items.remove(&index);
+    }
     Ok(0)
 }
 
