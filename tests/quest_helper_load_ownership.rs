@@ -88,7 +88,7 @@ fn assert_cache_identity_survives_update(env: &wow_ui_sim::lua_api::WowLuaEnv) {
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn assert_tracker_output(env: &wow_ui_sim::lua_api::WowLuaEnv) {
-    let output: (bool, bool, bool, bool, bool, String) = env
+    let output: (bool, bool, bool, bool, bool, String, bool, bool, bool, bool, bool, bool) = env
         .eval(include_str!("quest_helper_load_ownership_assert.lua"))
         .expect("original tracker must render the supplied quest states");
     assert_eq!(output.0, true, "group finder button must be shown: {output:?}");
