@@ -8,7 +8,6 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::startup::fire_startup_events_for_screen;
 
-#[cfg(feature = "client-retail")]
 pub(crate) fn frame_is_shown(env: &WowLuaEnv, frame_name: &str) -> bool {
     let code = format!("return {frame_name} ~= nil and {frame_name}:IsShown() == true");
     env.eval::<bool>(&code).unwrap_or(false)

@@ -1,8 +1,11 @@
 //! Integration tests for keybinding dispatch — core world map panel details.
 
+#[cfg(feature = "client-mists")]
+use super::{drain_test_errors, install_test_error_handler};
 #[cfg(feature = "client-retail")]
-use crate::prefork_full_ui_preload::frame_is_shown;
-use crate::prefork_full_ui_preload::{drain_test_errors, install_test_error_handler};
+use crate::prefork_full_ui_preload::{
+    drain_test_errors, frame_is_shown, install_test_error_handler,
+};
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::startup::{fire_one_on_update_tick, process_pending_timers};
 

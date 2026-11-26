@@ -5,7 +5,7 @@ compile_error!("prefork_full_ui requires client-retail or client-mists");
 
 #[path = "common/prefork.rs"]
 mod prefork;
-#[cfg(any(feature = "client-retail", feature = "client-mists"))]
+#[cfg(feature = "client-retail")]
 #[path = "common/prefork_full_ui_preload.rs"]
 mod prefork_full_ui_preload;
 #[path = "common/workload_gate_core.rs"]
@@ -15,6 +15,16 @@ mod prefork_workload_gate;
 mod test_keybindings_panels_detail;
 
 wow_ui_sim_test_harness::integration_tests!();
+
+#[cfg(feature = "client-mists")]
+fn install_test_error_handler(env: &WowLuaEnv) {
+    crate::common::install_error_collector(env, "__test_errors");
+}
+
+#[cfg(feature = "client-mists")]
+fn drain_test_errors(env: &WowLuaEnv) -> Vec<String> {
+    crate::common::drain_string_table(env, "__test_errors")
+}
 
 use prefork::{Case, Config};
 use std::env;
