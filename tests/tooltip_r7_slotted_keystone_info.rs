@@ -55,6 +55,11 @@ fn assert_slotted_info(
     a: u32,
     b: u32,
 ) {
+    assert_selected_keystone_values(env, map_id, level, a, b);
+    assert_challenge_frame_values(env, name, level, damage, health, a, b);
+}
+
+fn assert_selected_keystone_values(env: &WowLuaEnv, map_id: u32, level: u32, a: u32, b: u32) {
     env.exec(&format!(
         r#"
         local function capture(...) return {{n = select('#', ...), ...}} end
@@ -63,6 +68,22 @@ fn assert_slotted_info(
         local selectedMap, affixes, selectedLevel = info[1], info[2], info[3]
         assert(selectedMap == {map_id} and selectedLevel == {level})
         assert(affixes[1] == {a} and affixes[2] == {b} and affixes[3] == nil)
+        "#
+    ))
+    .unwrap();
+}
+
+fn assert_challenge_frame_values(
+    env: &WowLuaEnv,
+    name: &str,
+    level: u32,
+    damage: u32,
+    health: u32,
+    a: u32,
+    b: u32,
+) {
+    env.exec(&format!(
+        r#"
         assert(ChallengesKeystoneFrame.DungeonName:GetText() == {name:?})
         assert(ChallengesKeystoneFrame.PowerLevel:GetText() == "Level {level}")
         local affixOffset = 0
