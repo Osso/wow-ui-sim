@@ -40,7 +40,7 @@ fn original_specialization_talent_wrapper_uses_distinct_queries() {
     wow_ui_sim::loader::load_addon(&env.loader_env(), &toc)
         .expect("selected specialization addon should load");
 
-    let results: (usize, usize) = env
+    let results: (i32, i32) = env
         .eval(
             r##"return select("#", GetTalentInfo(1, 1, 1, false, nil)),
                       select("#", GetTalentInfo(2, 3, 1, false, nil))"##,
