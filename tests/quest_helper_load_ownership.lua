@@ -1,22 +1,3 @@
-QuestHelperProbe = { events = 0, dirty = 0, containerUpdates = 0, moduleUpdates = 0, watchBuilds = 0, scheduled = 0, callbacks = 0, dirtyScheduled = 0, dirtyCallbacks = 0 }
-local trackerContainer = ObjectiveTrackerFrame
-local originalRunNextFrame = RunNextFrame
-RunNextFrame = function(callback)
-    QuestHelperProbe.scheduled = QuestHelperProbe.scheduled + 1
-    if callback == trackerContainer.dirtyCallback then QuestHelperProbe.dirtyScheduled = QuestHelperProbe.dirtyScheduled + 1 end
-    return originalRunNextFrame(function(...)
-        QuestHelperProbe.callbacks = QuestHelperProbe.callbacks + 1
-        if callback == trackerContainer.dirtyCallback then QuestHelperProbe.dirtyCallbacks = QuestHelperProbe.dirtyCallbacks + 1 end
-        return callback(...)
-    end)
-end
-hooksecurefunc(QuestObjectiveTracker, "OnEvent", function(_, event)
-    if event == "QUEST_WATCH_LIST_CHANGED" or event == "QUEST_LOG_UPDATE" then QuestHelperProbe.events = QuestHelperProbe.events + 1 end
-end)
-hooksecurefunc(QuestObjectiveTracker, "MarkDirty", function() QuestHelperProbe.dirty = QuestHelperProbe.dirty + 1 end)
-hooksecurefunc(ObjectiveTrackerFrame, "Update", function() QuestHelperProbe.containerUpdates = QuestHelperProbe.containerUpdates + 1 end)
-hooksecurefunc(QuestObjectiveTracker, "Update", function() QuestHelperProbe.moduleUpdates = QuestHelperProbe.moduleUpdates + 1 end)
-hooksecurefunc(QuestObjectiveTracker, "BuildQuestWatchInfos", function() QuestHelperProbe.watchBuilds = QuestHelperProbe.watchBuilds + 1 end)
 function QuestHelperSupplyInputs()
     local firstID = 990001
     local secondID = 990002

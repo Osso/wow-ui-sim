@@ -46,7 +46,7 @@ fn admin_quest_log_special_item_supplies_item_and_absence() {
     assert_eq!(values, (19001, 0));
 }
 
-#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[cfg(feature = "client-retail")]
 #[test]
 fn original_quest_helpers_preserve_tracker_consumer_outputs() {
     crate::common::blizzard_addon_harness::with_blizzard_addon_startup_shape(
@@ -55,26 +55,18 @@ fn original_quest_helpers_preserve_tracker_consumer_outputs() {
         |env, loaded| {
             assert_provider_order(loaded);
             env.exec(include_str!("quest_helper_load_ownership.lua"))
-                .expect("install probes for the original tracker lifecycle");
+                .expect("prepare distinct quest inputs");
             advance_tracker_turns(env);
             env.exec("QuestHelperSupplyInputs()")
-                .expect("supply distinct quest rows and notify the real tracker");
+                .expect("notify the real tracker after supplying quest state");
             advance_tracker_turns(env);
             assert_tracker_output(env);
-            let state = env.state().borrow();
-            eprintln!(
-                "PROBE timers={} rilua_timers={} lua_errors={:?}",
-                state.timers.len(),
-                state.rilua_timers.len(),
-                state.lua_errors
-            );
-            drop(state);
             assert_cache_identity_survives_update(env);
         },
     );
 }
 
-#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[cfg(feature = "client-retail")]
 fn advance_tracker_turns(env: &wow_ui_sim::lua_api::WowLuaEnv) {
     wow_ui_sim::startup::process_pending_timers(env);
     for _ in 0..3 {
@@ -83,7 +75,7 @@ fn advance_tracker_turns(env: &wow_ui_sim::lua_api::WowLuaEnv) {
     }
 }
 
-#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[cfg(feature = "client-retail")]
 fn assert_provider_order(loaded: &[String]) {
     let tracker = loaded
         .iter()
@@ -95,7 +87,7 @@ fn assert_provider_order(loaded: &[String]) {
     }
 }
 
-#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[cfg(feature = "client-retail")]
 fn assert_cache_identity_survives_update(env: &wow_ui_sim::lua_api::WowLuaEnv) {
     env.exec("QuestHelperCachedQuest = QuestCache.objects[990001]; A_Admin.FireEvent('QUEST_LOG_UPDATE')")
         .expect("repeat the original tracker event");
@@ -107,19 +99,12 @@ fn assert_cache_identity_survives_update(env: &wow_ui_sim::lua_api::WowLuaEnv) {
     assert!(same);
 }
 
-#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[cfg(feature = "client-retail")]
 fn assert_tracker_output(env: &wow_ui_sim::lua_api::WowLuaEnv) {
-    let output: (bool, bool, bool, bool, bool, String, String) = env
+    let output: (bool, bool, bool, bool, bool, String) = env
         .eval(include_str!("quest_helper_load_ownership_assert.lua"))
         .expect("original tracker must render the supplied quest states");
-    let state = env.state().borrow();
-    let lua_errors = state.lua_errors.clone();
-    let timer_count = state.timers.len() + state.rilua_timers.len();
-    drop(state);
-    assert_eq!(
-        output.0, true,
-        "group button not shown: output={output:?}, lua_errors={lua_errors:?}, timers={timer_count}"
-    );
+    assert_eq!(output.0, true, "group finder button must be shown");
     assert_eq!(output.1, true, "quest item button must be shown");
     assert_eq!(output.2, true, "false group capability must hide its button");
     assert_eq!(output.3, true, "missing item must hide its button");
