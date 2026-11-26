@@ -183,6 +183,13 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
 
 #[cfg(test)]
 mod tests {
+    #[cfg(any(
+        feature = "client-ptr",
+        feature = "client-mists",
+        feature = "client-wrath",
+        feature = "client-era",
+        feature = "client-anniversary"
+    ))]
     use crate::lua_api::WowLuaEnv;
 
     #[cfg(any(
