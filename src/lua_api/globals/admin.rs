@@ -29,7 +29,7 @@ use super::admin_actionbars_bags::set_possess_action_slot;
 use super::admin_actionbars_bags::{
     add_bag_item, add_guild_bank_item, add_guild_bank_tab, clear_action_bars, clear_action_slot,
     clear_bags, clear_guild_bank, clear_guild_bank_tabs, remove_bag_item, set_action_slot,
-    set_merchant_items, set_pet_action_slot, set_possess_bar_visible,
+    set_guild_bank_money, set_merchant_items, set_pet_action_slot, set_possess_bar_visible,
 };
 use super::admin_addons::register_test_addon;
 use super::admin_auction_house::{
@@ -59,9 +59,9 @@ use super::admin_encounter::{
 use super::admin_equipment::set_equipped_item_guid;
 use super::admin_equipment::{equip_item, unequip_item};
 use super::admin_events::{fire_event_admin, toggle_debug_anchors, toggle_debug_borders};
-#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
-use super::admin_interactions::open_guild_rename;
 use super::admin_interactions::{close_mailbox, open_mailbox};
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+use super::admin_interactions::{open_guild_bank, open_guild_rename};
 use super::admin_mail::{add_mail, clear_inbox, set_inbox_count, set_stationery_catalog};
 use super::admin_movement::{set_falling, set_flying, set_mounted, set_moving, set_swimming};
 use super::admin_party_target_helpers::{
@@ -708,7 +708,9 @@ fn register_action_bars_and_bags(b: TableBuilder) -> LuaResult<TableBuilder> {
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     let b = b.set_function("SetPossessActionSlot", set_possess_action_slot)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
-    let b = b.set_function("OpenGuildRename", open_guild_rename)?;
+    let b = b
+        .set_function("OpenGuildRename", open_guild_rename)?
+        .set_function("OpenGuildBank", open_guild_bank)?;
     b.set_function("SetPossessBarVisible", set_possess_bar_visible)?
         .set_function("SetActionSlot", set_action_slot)?
         .set_function(
@@ -726,6 +728,7 @@ fn register_action_bars_and_bags(b: TableBuilder) -> LuaResult<TableBuilder> {
         .set_function("RemoveBagItem", remove_bag_item)?
         .set_function("ClearBags", clear_bags)?
         .set_function("AddGuildBankItem", add_guild_bank_item)?
+        .set_function("SetGuildBankMoney", set_guild_bank_money)?
         .set_function("ClearGuildBank", clear_guild_bank)
 }
 

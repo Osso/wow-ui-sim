@@ -222,6 +222,17 @@ pub(super) fn clear_guild_bank_tabs(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
+/// Supplies the copper amount returned by `GetGuildBankMoney()`.
+/// INFERRED R88g9 (native evidence pending): a guild-money change reaches the
+/// UI as `GUILDBANK_UPDATE_MONEY`, the event the original `MoneyFrame.lua:158-165`
+/// GUILDBANK money type and `Blizzard_GuildBankUI.lua:21` register for.
+pub(super) fn set_guild_bank_money(state: &mut LuaState) -> LuaResult<u32> {
+    let copper = i64::from_stack(state, 1)?;
+    borrow_state_mut(state)?.guild_bank_money = copper;
+    fire_named_event_state(state, "GUILDBANK_UPDATE_MONEY", &[]);
+    Ok(0)
+}
+
 pub(super) fn clear_guild_bank(state: &mut LuaState) -> LuaResult<u32> {
     borrow_state_mut(state)?.guild_bank_items.clear();
     Ok(0)

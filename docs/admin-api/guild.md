@@ -68,6 +68,23 @@ A_Admin.SetGuildInfo("Knights of the Ebon Blade", "Champion", 42)
 A_Admin.SetGuildPerks(83944, 1, 83940, 2)
 ```
 
+### A_Admin.SetGuildBankMoney(copper)
+
+Sets the copper amount returned by `GetGuildBankMoney()`, then fires `GUILDBANK_UPDATE_MONEY`. The original `GuildBankMoneyFrame` (`Blizzard_GuildBankUI/Mainline/Blizzard_GuildBankUI.xml:534-541`, `MoneyFrame.lua:158-165`) shows the new amount.
+
+The event is INFERRED R88g9 (native evidence pending).
+
+### A_Admin.OpenGuildBank()
+
+Retail and WoW Forever only. Starts the `Enum.PlayerInteractionType.GuildBanker` interaction and fires `PLAYER_INTERACTION_MANAGER_FRAME_SHOW`. The original `Blizzard_GuildBankUI_Bootstrap.lua` registration loads `Blizzard_GuildBankUI` and shows `GuildBankFrame`.
+
+- **Example:**
+```lua
+A_Admin.SetGuildBankMoney(1234567)
+A_Admin.OpenGuildBank()
+print(GuildBankMoneyFrameGoldButton:GetText()) -- "123"
+```
+
 ### A_Admin.ClearGuild()
 
 Removes the player from any guild.
