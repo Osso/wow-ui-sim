@@ -1,7 +1,7 @@
 //! Temporary Settings canvas visibility workaround.
 //!
-//! Preserve the existing visibility compatibility policy on non-Retail profiles.
-//! Retail leaves the original Settings registration, selection and startup intact.
+//! Preserve the visibility compatibility policy outside Retail and Forever.
+//! Those profiles leave original Settings registration and selection intact.
 
 use crate::lua_api::WowLuaEnv;
 
@@ -132,7 +132,7 @@ __wow_hide_registered_settings_canvas_frames()
 pub(crate) fn patch(env: &WowLuaEnv) {
     use crate::client_profile::{ACTIVE, ClientProfile};
 
-    if ACTIVE != ClientProfile::Retail {
+    if ACTIVE != ClientProfile::Retail && ACTIVE != ClientProfile::WowForever {
         let _ = env.exec(SETTINGS_CANVAS_LAYOUT_HIDE_LUA);
     }
 }

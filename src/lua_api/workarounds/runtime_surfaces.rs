@@ -64,6 +64,7 @@ pub(super) fn patch_achievement_display_set_achievements(env: &crate::lua_api::W
     permanent::reapply_achievement_display_after_blizzard_load(env);
 }
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(super) fn patch_talent_edge_frame_level_sync(env: &crate::lua_api::WowLuaEnv) {
     temporary::talent_edge_frame_level_sync::patch(env);
 }

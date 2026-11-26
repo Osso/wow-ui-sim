@@ -673,7 +673,7 @@ fn normalize_edit_mode_selection_layers(
         frame.has_fixed_frame_level = false;
         frame.frame_level = parent_level + frame.frame_level_offset.unwrap_or(1);
     }
-    crate::lua_api::frame::methods::methods_hierarchy::propagate_strata_level_pub(
+    crate::lua_api::frame::methods::methods_hierarchy::recalculate_strata_level_pub(
         &mut sim.widgets,
         frame_id,
     );

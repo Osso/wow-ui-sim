@@ -1,3 +1,7 @@
+## [2026-11-25] implementation | Frame-level delta and Forever Settings canvas
+
+Updated the [frame-level propagation contract](../specs/frame-level-propagation.md) and the [Settings startup investigation](../investigations/addon-startup-settings-and-item-load.md). **VERIFIED (R14 Q6, `pr46-49-decomp-answers.md:2225-2239`):** `SetFrameLevel` shifts same-strata descendants by the parent's delta, including fixed-level children, and skips different-strata subtrees. **INFERRED (R15; native evidence pending):** Forever's original Settings canvas registration and category selection need no post-load visibility wrapper. **VERIFIED (Retail):** all 45 selected frame-level/strata tests pass, including the connected talent-edge update. **VERIFIED (Forever):** the focused frame-level, fixed XML child, talent-edge, and original Settings canvas tests pass. **VERIFIED (builds):** the requested Forever, Mists, Wrath, Retail and PTR profile checks report zero warnings. **VERIFIED (Retail/Forever lua-errors):** both runs exit 1 with the same two baseline errors after normalization of only the template-method-handler digest.
+
 ## [2026-11-25] implementation | Retail/Forever MapCanvas wrapper retirement
 
 Updated the [post-load workaround audit](investigations/post-load-workaround-audit.md). **VERIFIED (simulator source and exact profile tests):** Retail and WoW Forever use original MapCanvas methods and modeled map state; the scroll-container, zoom-query, and viewport-scale wrappers are no longer registered on those profiles. Other profiles retain the legacy wrapper.

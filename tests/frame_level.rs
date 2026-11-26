@@ -3,8 +3,30 @@
 use wow_ui_sim::iced_app::frame_collect::collect_hittable_frames;
 use wow_ui_sim::lua_api::WowLuaEnv;
 
+const FRAME_LEVEL_DELTA_SCENARIO: &str = r#"
+local parent = CreateFrame("Frame", "FrameLevelDeltaParent", UIParent)
+parent:SetFrameLevel(100)
+local fixed = CreateFrame("Frame", "FrameLevelDeltaFixed", parent)
+fixed:SetFrameLevel(150)
+fixed:SetFixedFrameLevel(true)
+local child = CreateFrame("Frame", "FrameLevelDeltaChild", parent)
+local grandchild = CreateFrame("Frame", "FrameLevelDeltaGrandchild", child)
+local other = CreateFrame("Frame", "FrameLevelDeltaOtherStrata", parent)
+other:SetFrameStrata("HIGH")
+local otherChild = CreateFrame("Frame", "FrameLevelDeltaOtherChild", other)
+parent:SetFrameLevel(125)
+assert(fixed:GetFrameLevel() == 175)
+assert(child:GetFrameLevel() == 126 and grandchild:GetFrameLevel() == 127)
+assert(other:GetFrameLevel() == 101 and otherChild:GetFrameLevel() == 102)
+"#;
+
 fn env() -> WowLuaEnv {
     WowLuaEnv::new().unwrap()
+}
+
+#[test]
+fn set_frame_level_shifts_same_strata_descendants_by_delta() {
+    env().exec(FRAME_LEVEL_DELTA_SCENARIO).unwrap();
 }
 
 #[test]
