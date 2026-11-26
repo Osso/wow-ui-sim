@@ -76,7 +76,6 @@ fn world_map_fog_pin_refreshes_for_two_maps_and_hides_stale_assets() {
     assert_eq!(current_errors, previous_errors, "map changes produced Lua errors");
 }
 
-#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 #[test]
 fn world_map_zone_map_shows_seeded_quest_pins() {
     let env = env_with_isolated_world_map();
