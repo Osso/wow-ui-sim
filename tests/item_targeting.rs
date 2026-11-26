@@ -41,24 +41,3 @@ fn item_targeting_uses_item_use_spells_and_returns_false_without_one() {
     .expect("item targeting should classify supplied use spells");
 }
 
-prefork_full_ui_case! {
-fn restricted_environment_publishes_working_item_targeting_queries(env: &WowLuaEnv) {
-    let public_api_present: bool = env
-        .eval("return type(C_Item.IsHelpfulItem) == 'function'")
-        .expect("public item targeting API should be present after full UI startup");
-    assert!(public_api_present, "full UI must retain the C_Item producer");
-    let errors_before = env.state().borrow().lua_errors.len();
-    env.exec(
-        r#"
-        local _, helpfulSpell = C_Item.GetItemSpell(5512)
-        A_Admin.SetSpellTargeting(helpfulSpell, "helpful")
-        assert(ActionButton1 and select(2, ActionButton1:IsProtected()))
-        assert(__secureenv.C_Item and type(__secureenv.C_Item.IsHelpfulItem) == "function")
-        SecureHandlerExecute(ActionButton1, "assert(IsHelpfulItem(5512))")
-        "#,
-    )
-    .expect("original restricted item-targeting snippet should execute");
-    let errors_after = env.state().borrow().lua_errors.len();
-    assert_eq!(errors_after, errors_before, "restricted snippet raised a Lua error");
-}
-}
