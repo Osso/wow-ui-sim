@@ -27,7 +27,7 @@ These are simulator-model requirements, not native lifecycle or smoothing claims
 
 ## Tests asserting this spec
 
-`tests/animation_query_lifecycle.rs` and `tests/synced_animation_offset.rs`, auto-discovered into the existing `integration` Cargo target:
+`tests/animation_query_lifecycle.rs` and `tests/animation_on_play.rs`, reached through the existing `integration` Cargo target:
 
 | Test | Queries/boundary |
 |---|---|
@@ -37,7 +37,7 @@ These are simulator-model requirements, not native lifecycle or smoothing claims
 | `bounce_loop_callback_observes_direction_change` | Loop/direction/state queries inside real `OnLoop` callbacks |
 | `delayed_animation_queries_use_local_active_elapsed` | Animation `IsDelaying`, elapsed/progress/smooth progress; exact start-delay boundary and completion across start/end delays |
 | `delaying_uses_order_start_and_longest_parallel_duration` | Earlier-order wait, parallel maximum including end delay, exact delay boundaries, own end delay, and reverse traversal |
-| `synced_animation_offset::synced_animation_consumer_starts_at_distinct_offsets` | Original `SyncedAnimGroupMixin:PlaySynced` caller passes two times to `Play`; asserts distinct observed elapsed positions |
+| `animation_on_play::class_talent_sheen_uses_manual_synced_offsets` | Opens the real Class Talents panel; its XML-created sheen group starts through the original `OnShow` lifecycle at two manual-clock times and reports distinct elapsed positions |
 
 Existing complementary coverage: `tests/animation_group_state.rs`, `tests/animation_group.rs` (explicit playing-group Stop callback state, visible cleanup, reentrant Play, error routing, and no OnFinished), and `tests/animation_anim.rs`.
 

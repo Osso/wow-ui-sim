@@ -53,3 +53,30 @@ fn animation_on_play_routes_set_playing_and_play_synced() {
         assert(calls == 3)
     "#).unwrap();
 }
+
+#[test]
+fn class_talent_sheen_uses_manual_synced_offsets_on_show() {
+    let env = crate::common::panel_fixtures::setup_env();
+    env.exec(r#"
+        A_Admin.SetManualClock(0)
+        PlayerSpellsUtil.ToggleClassTalentFrame()
+        local findSheen
+        findSheen = function(frame)
+            if frame.BorderSheen and frame.BorderSheen.Anim then return frame.BorderSheen.Anim end
+            for _, child in ipairs({frame:GetChildren()}) do
+                local group = findSheen(child)
+                if group then return group end
+            end
+        end
+        local group = findSheen(PlayerSpellsFrame.TalentsFrame)
+        assert(group and group:IsPlaying(), "ClassTalentButtonArtMixin.OnShow must start the XML sheen")
+        local first = group:GetElapsed()
+        A_Admin.AdvanceTime(0.25)
+        PlayerSpellsUtil.ToggleClassTalentFrame()
+        assert(not group:IsPlaying(), "closing talents must stop the original sheen")
+        PlayerSpellsUtil.ToggleClassTalentFrame()
+        local second = group:GetElapsed()
+        assert(first < 0.01 and second > first + 0.20, "second OnShow must use the synced offset")
+        assert(second < group:GetDuration())
+    "#).unwrap();
+}
