@@ -48,7 +48,8 @@ fn restricted_environment_publishes_working_item_targeting_queries(env: &WowLuaE
         r#"
         local _, helpfulSpell = C_Item.GetItemSpell(5512)
         A_Admin.SetSpellTargeting(helpfulSpell, "helpful")
-        SecureHandlerExecute(UIParent, "assert(IsHelpfulItem(5512))")
+        assert(ActionButton1 and select(2, ActionButton1:IsProtected()))
+        SecureHandlerExecute(ActionButton1, "assert(IsHelpfulItem(5512))")
         "#,
     )
     .expect("original restricted item-targeting snippet should execute");
