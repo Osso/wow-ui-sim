@@ -1,4 +1,7 @@
 //! Environment-local ordinary global event callbacks.
+//!
+//! INFERRED "R88g9 (native evidence pending)": Retail/Forever globals use the
+//! existing environment-local callback registry and event dispatcher.
 
 use crate::lua_api::methods::{
     create_table, registry_get, registry_table_or_create, table_get, table_set, val_to_string,

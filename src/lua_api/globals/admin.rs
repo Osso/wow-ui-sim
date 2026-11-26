@@ -384,7 +384,7 @@ fn register_player_classic_fields(b: TableBuilder) -> LuaResult<TableBuilder> {
 }
 
 fn register_player_modern_fields(b: TableBuilder) -> LuaResult<TableBuilder> {
-    #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     let b = b.set_function("SetGuildFactionGroupFlags", set_guild_faction_group_flags)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     let b = b.set_function(
@@ -874,7 +874,7 @@ fn set_player_race(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
-#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn set_guild_faction_group_flags(state: &mut LuaState) -> LuaResult<u32> {
     let race_id = i32::from_stack(state, 1)?;
     let flags = u32::from_stack(state, 2)?;

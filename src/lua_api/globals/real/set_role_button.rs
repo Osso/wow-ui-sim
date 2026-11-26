@@ -1,6 +1,7 @@
 //! VERIFIED: pr46-49-decomp-answers.md R88ap part A §3 (Retail 12.1.5).
 //! UNKNOWN settings packet ingestion and refresh events remain unmodeled.
-//! INFERRED (simulator mapping): rule 93 is read from the ID-keyed game-rule entry plus the
+//! Forever parity is INFERRED "R88g9 (native evidence pending)". The simulator mapping reads
+//! rule 93 from the ID-keyed game-rule entry plus the
 //! `non_integer_rule_ids` type tags, standing in for the native settings-packet rule store.
 use crate::lua_api::methods::borrow_state;
 use crate::lua_api::state::GameRuleKey;

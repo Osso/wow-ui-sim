@@ -82,6 +82,12 @@ fn register_bootstrap_runtime_globals(lua: &mut rilua::Lua) -> crate::Result<()>
     super::real::client_info::register_all(lua)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     super::real::global_text::register_all(lua)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    super::real::instance_legacy::register_all(lua)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    super::real::spell_confirmation_prompts::register_query(lua)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    super::real::chat_type_index::register_all(lua)?;
     super::security::register_all(lua)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     super::real::camera_fov_defaults::register_all(lua)?;
@@ -155,7 +161,7 @@ fn register_frame_foundation_globals(lua: &mut rilua::Lua) -> crate::Result<()> 
     super::font_strings_collection::register_all(lua)?;
     super::utility_system_spell::register_all(lua)?;
     super::real::frame_level_helpers::register_all(lua)?;
-    #[cfg(feature = "retail-12-0-0")]
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     {
         LuaApiMut::register_function(
             lua,

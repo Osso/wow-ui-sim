@@ -53,7 +53,7 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     )
 }
 
-fn get_base_difficulty_id(state: &mut LuaState) -> LuaResult<u32> {
+pub(crate) fn get_base_difficulty_id(state: &mut LuaState) -> LuaResult<u32> {
     // INFERRED (Retail 12.1.5.70688, R88gb): identity mapping outside 233 and 250.
     let difficulty_id = i32::from_stack(state, 1)? as i16;
     let base_difficulty_id = base_difficulty_id(i32::from(difficulty_id));

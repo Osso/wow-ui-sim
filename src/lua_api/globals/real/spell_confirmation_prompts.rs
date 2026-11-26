@@ -178,8 +178,12 @@ pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
     builder.set_function("QueueSpellConfirmationPrompt", queue_prompt)
 }
 
+pub(crate) fn register_query(lua: &mut rilua::Lua) -> LuaResult<()> {
+    LuaApiMut::register_function(lua, "GetSpellConfirmationPromptsInfo", get_prompts)
+}
+
 pub(crate) fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
-    LuaApiMut::register_function(lua, "GetSpellConfirmationPromptsInfo", get_prompts)?;
+    register_query(lua)?;
     LuaApiMut::register_function(lua, "AcceptSpellConfirmationPrompt", remove_prompt)?;
     LuaApiMut::register_function(lua, "DeclineSpellConfirmationPrompt", remove_prompt)
 }

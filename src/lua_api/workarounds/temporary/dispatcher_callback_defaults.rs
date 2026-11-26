@@ -4,7 +4,7 @@
 //! retain legacy global/unit defaults. DevTools handlers remain inert until
 //! their independent registration and dispatch system is modeled.
 
-#[cfg(not(feature = "retail-12-0-0"))]
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 const LEGACY_EVENT_CALLBACK_DEFAULTS_LUA: &str = r#"
 if RegisterEventCallback == nil then
     function RegisterEventCallback(_event, _callback)
@@ -37,7 +37,7 @@ end
 "#;
 
 pub(crate) fn apply_bootstrap(_lua: &mut rilua::Lua) -> crate::Result<()> {
-    #[cfg(not(feature = "retail-12-0-0"))]
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     _lua.exec(LEGACY_EVENT_CALLBACK_DEFAULTS_LUA)?;
     #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     _lua.exec(DISPATCHER_CALLBACK_DEFAULTS_LUA)?;
@@ -65,7 +65,7 @@ mod tests {
         assert_eq!(result, "ok");
     }
 
-    #[cfg(not(feature = "retail-12-0-0"))]
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     #[test]
     fn installs_legacy_event_callback_defaults() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
