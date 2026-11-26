@@ -65,19 +65,24 @@ if GetDifficultyInfo == nil then
             0, false, false, false, false
     end
 end
+if rawget(DifficultyUtil, "GetDifficultyName") == nil then
+    function DifficultyUtil.GetDifficultyName(difficultyID)
+        if difficultyID == DifficultyUtil.ID.DungeonNormal then
+            return PLAYER_DIFFICULTY1 or "Normal"
+        end
+    end
+end
+if rawget(DifficultyUtil, "GetMaxPlayers") == nil then
+    function DifficultyUtil.GetMaxPlayers(difficultyID)
+        if difficultyID == DifficultyUtil.ID.DungeonNormal then
+            return 5
+        end
+    end
+end
 "#;
 
 #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 const DIFFICULTY_PVP_METHOD_DEFAULTS_LUA: &str = r#"
-if rawget(DifficultyUtil, "GetDifficultyName") == nil then
-    local difficultyNames = {
-        [DifficultyUtil.ID.DungeonNormal] = PLAYER_DIFFICULTY1 or "Normal",
-    }
-
-    function DifficultyUtil.GetDifficultyName(difficultyID)
-        return difficultyNames[difficultyID]
-    end
-end
 if rawget(DifficultyUtil, "IsPrimaryRaid") == nil then
     local primaryRaids = {
         [DifficultyUtil.ID.PrimaryRaidLFR] = true,
@@ -97,18 +102,6 @@ if rawget(DifficultyUtil, "GetMaxPlayers") == nil then
 
     function DifficultyUtil.GetMaxPlayers(difficultyID)
         return maxPlayers[difficultyID]
-    end
-end
-if rawget(DifficultyUtil, "IsPrimaryRaid") == nil then
-    local primaryRaids = {
-        [DifficultyUtil.ID.PrimaryRaidLFR] = true,
-        [DifficultyUtil.ID.PrimaryRaidNormal] = true,
-        [DifficultyUtil.ID.PrimaryRaidHeroic] = true,
-        [DifficultyUtil.ID.PrimaryRaidMythic] = true,
-    }
-
-    function DifficultyUtil.IsPrimaryRaid(difficultyID)
-        return primaryRaids[difficultyID] or false
     end
 end
 if rawget(PVPUtil, "GetTierName") == nil then
