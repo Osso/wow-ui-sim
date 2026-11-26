@@ -6,6 +6,27 @@ use crate::prefork_full_ui_preload::{
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::startup::{fire_one_on_update_tick, process_pending_timers};
 
+const FOG_PIN_MAP_REFRESH_LUA: &str = r#"
+local pin = WorldMapFrame:EnumeratePinsByTemplate("FogOfWarPinTemplate")()
+if not pin then return "missing_fog_pin" end
+
+WorldMapFrame:SetMapID(981)
+local firstMap, firstFog = pin:GetUiMapID(), pin.fogOfWarID
+if firstMap ~= 981 or firstFog ~= 4 or not pin:IsShown() then
+    return string.format("first_map:%s:%s:%s", tostring(firstMap), tostring(firstFog), tostring(pin:IsShown()))
+end
+
+WorldMapFrame:SetMapID(1032)
+local secondMap, secondFog = pin:GetUiMapID(), pin.fogOfWarID
+if secondMap ~= 1032 or secondFog ~= 5 or not pin:IsShown() then
+    return string.format("second_map:%s:%s:%s", tostring(secondMap), tostring(secondFog), tostring(pin:IsShown()))
+end
+
+WorldMapFrame:SetMapID(2248)
+if pin:IsShown() then return "stale_fog_pin_visible" end
+return "ok"
+"#;
+
 // ── M → ToggleWorldMap() ────────────────────────────────────────────────
 
 pub(crate) fn keybind_m_opens_world_map(env: &WowLuaEnv) {
@@ -13,6 +34,21 @@ pub(crate) fn keybind_m_opens_world_map(env: &WowLuaEnv) {
     assert!(
         frame_is_shown(&env, "WorldMapFrame"),
         "WorldMapFrame should be shown after pressing M"
+    );
+}
+
+pub(crate) fn world_map_fog_pin_refreshes_across_maps_and_hides_stale_assets(env: &WowLuaEnv) {
+    install_test_error_handler(env);
+    env.send_key_press("M", None).expect("M keybind failed");
+    let result: String = env
+        .eval(FOG_PIN_MAP_REFRESH_LUA)
+        .expect("fog pin map refresh should run");
+    let errors = drain_test_errors(env);
+    assert_eq!(result, "ok", "fog pin map refresh failed: {result}");
+    assert!(
+        errors.is_empty(),
+        "fog pin map refresh produced Lua errors: {}",
+        errors.join("\n")
     );
 }
 

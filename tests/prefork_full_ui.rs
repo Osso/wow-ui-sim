@@ -225,6 +225,10 @@ const MANUAL_FULL_UI_CASES: &[Case<WowLuaEnv>] = &[
         test_keybindings_panels_detail::world_map_title_text_is_non_empty_after_opening,
     ),
     Case::new(
+        "test_keybindings_panels_detail::world_map_fog_pin_refreshes_across_maps_and_hides_stale_assets",
+        test_keybindings_panels_detail::world_map_fog_pin_refreshes_across_maps_and_hides_stale_assets,
+    ),
+    Case::new(
         "test_keybindings_panels_detail::world_map_exploration_pin_has_visible_overlay_textures_after_opening",
         test_keybindings_panels_detail::world_map_exploration_pin_has_visible_overlay_textures_after_opening,
     ),
