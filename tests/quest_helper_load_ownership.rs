@@ -59,6 +59,14 @@ fn original_quest_helpers_preserve_tracker_consumer_outputs() {
             wow_ui_sim::startup::process_pending_timers(env);
             wow_ui_sim::startup::fire_one_on_update_tick(env);
             assert_tracker_output(env);
+            let state = env.state().borrow();
+            eprintln!(
+                "PROBE timers={} rilua_timers={} lua_errors={:?}",
+                state.timers.len(),
+                state.rilua_timers.len(),
+                state.lua_errors
+            );
+            drop(state);
             assert_cache_identity_survives_update(env);
         },
     );
