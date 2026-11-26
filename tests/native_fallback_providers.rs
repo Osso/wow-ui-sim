@@ -47,6 +47,24 @@ fn account_type_queries_follow_two_supplied_records() {
 }
 
 #[test]
+fn raid_difficulty_queries_follow_two_supplied_instances() {
+    let env = env();
+    let values: (i32, i32, i32, i32) = env
+        .eval(
+            r#"
+            A_Admin.SetInstanceInfo("Vault One", "raid", 14, 20)
+            local first = GetRaidDifficultyID()
+            local legacy = GetLegacyRaidDifficultyID()
+            A_Admin.SetInstanceInfo("Vault Two", "raid", 16, 20)
+            return first, legacy, GetRaidDifficultyID(), GetLegacyRaidDifficultyID()
+            "#,
+        )
+        .expect("difficulty queries should follow supplied instances");
+
+    assert_eq!(values, (14, 3, 16, 3));
+}
+
+#[test]
 fn player_language_queries_follow_two_supplied_races() {
     let env = env();
     let values: (String, i32, i32, bool, String, i32, i32, String, i32, i32) = env
