@@ -16,10 +16,14 @@ use crate::lua_api::globals::missing_surface::tooltip_info::{
     append_line, empty_untyped_tooltip, format_global_numeric, format_global_text, global_text,
     named_color,
 };
+use crate::lua_api::methods::borrow_state;
+#[cfg(feature = "client-retail")]
+use crate::lua_api::methods::borrow_state_mut;
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 use crate::lua_api::methods::table_set;
-use crate::lua_api::methods::{borrow_state, borrow_state_mut};
-use crate::lua_bridge::{TableBuilder, stack_val, table_set_rust_fn_static};
+#[cfg(feature = "client-retail")]
+use crate::lua_bridge::TableBuilder;
+use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
 use rilua::LuaResult;
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 use rilua::Val;

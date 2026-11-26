@@ -770,6 +770,7 @@ fn register_collections_pvp<'lua>(b: TableBuilder<'lua>) -> LuaResult<TableBuild
     let b = register_functions(b, COLLECTIONS_PVP_FUNCTIONS)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     let b = crate::c_api::c_spec::register_admin(b)?;
+    #[cfg(feature = "client-retail")]
     let b = crate::c_api::c_tooltip_info_pvp_talent::register_admin(b)?;
     if matches!(
         crate::client_profile::ACTIVE,

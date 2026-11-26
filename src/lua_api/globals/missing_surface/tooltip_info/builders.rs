@@ -170,6 +170,7 @@ fn color_segment_table(state: &mut LuaState, segments: Vec<TooltipColorSegment>)
     table
 }
 
+#[cfg(feature = "client-retail")]
 /// Fresh builder used when native ordinary spell content stops before identity.
 /// Its final miss-result shape remains EMULATED and is not a native parity claim.
 pub(crate) fn empty_untyped_tooltip(state: &mut LuaState) -> Val {
