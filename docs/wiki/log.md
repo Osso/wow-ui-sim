@@ -1,3 +1,7 @@
+## [2026-11-25] investigation | Hidden CurrencyTransfer EditBox startup notification
+
+Added [the CurrencyTransfer/EditBox investigation](investigations/currency-transfer-hidden-editbox-startup.md) and linked it from the [EditBox contract](../specs/editbox-text-position-selection.md). **VERIFIED (cached UI source and simulator loader):** the menu is constructed hidden, its `OnLoad` resets the amount input before currency selection, and the loader drains after the complete top-level frame. Exact Retail and WoW Forever startup regressions pass; both final stock captures return byte-exact `[]`, exit 0. Strict nil-ID Usage behavior remains unchanged. **INFERRED — R88g8 (native evidence pending):** retain hidden EditBox text notifications until a visible host boundary.
+
 ## [2026-11-25] investigation | ObjectiveTracker dirty startup-shaped fixture
 
 Added [the investigation](investigations/objective-tracker-dirty-fixture.md). **VERIFIED (Retail and Forever exact tests):** the startup-shaped tracker fixture now loads the original SplashFrame provider and renders seeded quests 80000 and 80001 after watch events, timer drains, and OnUpdate ticks. The prior failure was the omitted provider causing the first original update to error before quest enumeration; no timer drain or vendor source changed.
