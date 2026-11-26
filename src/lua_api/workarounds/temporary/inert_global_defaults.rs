@@ -28,32 +28,6 @@ const INERT_GLOBAL_DEFAULTS_LUA: &str = r#"
 if GetCurrentRegionName == nil then
     function GetCurrentRegionName() return "US" end
 end
-if GetDefaultLanguage == nil then
-    function GetDefaultLanguage() return "Common", 1 end
-end
-if GetAlternativeDefaultLanguage == nil then
-    function GetAlternativeDefaultLanguage() return nil end
-end
-if GetNumLanguages == nil then
-    function GetNumLanguages() return 1 end
-end
-if GetLanguageByIndex == nil then
-    function GetLanguageByIndex(index)
-        if index == 1 then
-            return GetDefaultLanguage()
-        end
-        return nil
-    end
-end
-if GetMaxBattlefieldID == nil then
-    function GetMaxBattlefieldID() return 0 end
-end
-if IsActiveBattlefieldArena == nil then
-    function IsActiveBattlefieldArena() return false end
-end
-if IsPVPTimerRunning == nil then
-    function IsPVPTimerRunning() return false end
-end
 if HasArtifactEquipped == nil then
     function HasArtifactEquipped() return false end
 end
@@ -141,12 +115,6 @@ if WorldLootObjectExists == nil then
     end
 end
 
-if GetActiveLootRollIDs == nil then
-    function GetActiveLootRollIDs()
-        return {}
-    end
-end
-
 if GetNumArenaOpponents == nil then
     function GetNumArenaOpponents()
         return 0
@@ -182,6 +150,37 @@ if GetGuildRenameRequired == nil then
     function GetGuildRenameRequired()
         return false
     end
+end
+"#;
+
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+const NATIVE_REGISTERED_GLOBAL_DEFAULTS_LUA: &str = r#"
+if GetDefaultLanguage == nil then
+    function GetDefaultLanguage() return "Common", 1 end
+end
+if GetAlternativeDefaultLanguage == nil then
+    function GetAlternativeDefaultLanguage() return nil end
+end
+if GetNumLanguages == nil then
+    function GetNumLanguages() return 1 end
+end
+if GetLanguageByIndex == nil then
+    function GetLanguageByIndex(index)
+        if index == 1 then return GetDefaultLanguage() end
+        return nil
+    end
+end
+if GetMaxBattlefieldID == nil then
+    function GetMaxBattlefieldID() return 0 end
+end
+if IsActiveBattlefieldArena == nil then
+    function IsActiveBattlefieldArena() return false end
+end
+if IsPVPTimerRunning == nil then
+    function IsPVPTimerRunning() return false end
+end
+if GetActiveLootRollIDs == nil then
+    function GetActiveLootRollIDs() return {} end
 end
 "#;
 
@@ -260,6 +259,8 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     lua.exec(UNMODELED_WORLD_PRESENCE_LUA)?;
     lua.exec(INERT_GLOBAL_DEFAULTS_LUA)?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+    lua.exec(NATIVE_REGISTERED_GLOBAL_DEFAULTS_LUA)?;
     #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     lua.exec(INERT_GUILD_PERKS_DEFAULT_LUA)?;
     #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]

@@ -73,18 +73,6 @@ if GetBuildInfo == nil then
   end
 end
 
-if GetRealmName == nil then
-  function GetRealmName()
-    return "SimulatedRealm"
-  end
-end
-
-if GetNormalizedRealmName == nil then
-  function GetNormalizedRealmName()
-    return "SimulatedRealm"
-  end
-end
-
 if GetRealmID == nil then
   function GetRealmID()
     return 1
@@ -100,36 +88,6 @@ end
 if GetUpgradeExpansionLevel == nil then
   function GetUpgradeExpansionLevel()
     return 80
-  end
-end
-
-if IsExpansionTrial == nil then
-  function IsExpansionTrial()
-    return false
-  end
-end
-
-if GetExpansionTrialInfo == nil then
-  function GetExpansionTrialInfo()
-    return false, 0
-  end
-end
-
-if IsTrialAccount == nil then
-  function IsTrialAccount()
-    return false
-  end
-end
-
-if IsRestrictedAccount == nil then
-  function IsRestrictedAccount()
-    return false
-  end
-end
-
-if IsVeteranTrialAccount == nil then
-  function IsVeteranTrialAccount()
-    return false
   end
 end
 
@@ -251,6 +209,31 @@ if GetWebTicket == nil then
 end
 "#;
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+const CLIENT_IDENTITY_ACCOUNT_DEFAULTS_LUA: &str = r#"
+if GetRealmName == nil then
+  function GetRealmName() return "SimulatedRealm" end
+end
+if GetNormalizedRealmName == nil then
+  function GetNormalizedRealmName() return "SimulatedRealm" end
+end
+if IsExpansionTrial == nil then
+  function IsExpansionTrial() return false end
+end
+if GetExpansionTrialInfo == nil then
+  function GetExpansionTrialInfo() return false, 0 end
+end
+if IsTrialAccount == nil then
+  function IsTrialAccount() return false end
+end
+if IsRestrictedAccount == nil then
+  function IsRestrictedAccount() return false end
+end
+if IsVeteranTrialAccount == nil then
+  function IsVeteranTrialAccount() return false end
+end
+"#;
+
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     let (version, build) = client_identity()?;
     let code = CLIENT_INFO_DEFAULTS_LUA
@@ -266,6 +249,8 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
             &crate::client_profile::ACTIVE.expansion_level().to_string(),
         );
     lua.exec(&code)?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+    lua.exec(CLIENT_IDENTITY_ACCOUNT_DEFAULTS_LUA)?;
     Ok(())
 }
 

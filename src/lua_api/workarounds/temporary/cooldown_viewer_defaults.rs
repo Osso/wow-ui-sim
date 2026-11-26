@@ -18,6 +18,7 @@ installCooldownViewerDefault("GetCooldownID", function()
 end)
 "#;
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 const PTR_GROUP_BUFF_DEFAULT_LUA: &str = r#"
 if type(GetBuildInfo) == "function" and select(4, GetBuildInfo()) >= 120100 then
     if rawget(C_CooldownViewer, "GetGroupBuffItems") == nil then
@@ -30,6 +31,7 @@ end
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(COOLDOWN_VIEWER_DEFAULTS_LUA)?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Ptr {
         lua.exec(PTR_GROUP_BUFF_DEFAULT_LUA)?;
     }
