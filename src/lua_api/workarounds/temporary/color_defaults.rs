@@ -289,6 +289,79 @@ mod tests {
         assert!(preserves_fallback);
     }
 
+    #[cfg(all(
+        feature = "retail-12-0-0",
+        not(any(feature = "client-retail", feature = "client-wowforever"))
+    ))]
+    #[test]
+    fn patch_12_0_0_color_util_conversions_and_wrapping() {
+        let env = WowLuaEnv::new().expect("lua env should initialize");
+
+        let result: String = env
+            .eval(
+                r#"
+                local function assert_close(actual, expected, label)
+                  if math.abs(actual - expected) > 0.000001 then return label end
+                end
+
+                local h, s, v = C_ColorUtil.ConvertRGBToHSV(1, 0, 0)
+                if assert_close(h, 0, "rgb_h") or assert_close(s, 1, "rgb_s") or assert_close(v, 1, "rgb_v") then
+                  return assert_close(h, 0, "rgb_h") or assert_close(s, 1, "rgb_s") or assert_close(v, 1, "rgb_v")
+                end
+                h, s, v = C_ColorUtil.ConvertRGBToHSV(0.25, 0.5, 0.75)
+                if assert_close(h, 0.5833333333333334, "fractional_h")
+                    or assert_close(s, 0.6666666666666666, "fractional_s")
+                    or assert_close(v, 0.75, "fractional_v") then
+                  return assert_close(h, 0.5833333333333334, "fractional_h")
+                    or assert_close(s, 0.6666666666666666, "fractional_s")
+                    or assert_close(v, 0.75, "fractional_v")
+                end
+                h, s, v = C_ColorUtil.ConvertRGBToHSV(0, 0, 0)
+                if h ~= -1 or s ~= 0 or v ~= 0 then return "black" end
+                h, s, v = C_ColorUtil.ConvertRGBToHSV(1, 1, 1)
+                if h ~= -1 or s ~= 0 or v ~= 1 then return "white" end
+
+                local r, g, b = C_ColorUtil.ConvertHSVToRGB(0, 1, 1)
+                if r ~= 1 or g ~= 0 or b ~= 0 then return "hsv_red" end
+                r, g, b = C_ColorUtil.ConvertHSVToRGB(1 / 3, 1, 1)
+                if assert_close(r, 0, "hsv_green_r") or assert_close(g, 1, "hsv_green_g") or assert_close(b, 0, "hsv_green_b") then
+                  return "hsv_green"
+                end
+                r, g, b = C_ColorUtil.ConvertHSVToRGB(1, 0, 0.5)
+                if r ~= 0.5 or g ~= 0.5 or b ~= 0.5 then return "hsv_hue_boundary" end
+
+                h, s, v = C_ColorUtil.ConvertHSVToHSL(0, 1, 1)
+                if h ~= 0 or s ~= 1 or v ~= 0.5 then return "hsv_hsl_red" end
+                h, s, v = C_ColorUtil.ConvertHSVToHSL(0, 0, 0.5)
+                if h ~= 0 or s ~= 0 or v ~= 0.5 then return "hsv_hsl_gray" end
+                h, s, v = C_ColorUtil.ConvertHSLToHSV(0, 1, 0.5)
+                if h ~= 0 or s ~= 1 or v ~= 1 then return "hsl_hsv_red" end
+                h, s, v = C_ColorUtil.ConvertHSLToHSV(0, 0, 0.5)
+                if h ~= 0 or s ~= 0 or v ~= 0.5 then return "hsl_hsv_gray" end
+
+                h, s, v = C_ColorUtil.ConvertRGBToHSV(nil, nil, nil)
+                if h ~= -1 or s ~= 0 or v ~= 0 then return "nil_rgb" end
+                r, g, b = C_ColorUtil.ConvertHSVToRGB(nil, nil, nil)
+                if r ~= 0 or g ~= 0 or b ~= 0 then return "nil_hsv" end
+                h, s, v = C_ColorUtil.ConvertHSVToHSL(nil, nil, nil)
+                if h ~= 0 or s ~= 0 or v ~= 0 then return "nil_hsl" end
+                h, s, v = C_ColorUtil.ConvertHSLToHSV(nil, nil, nil)
+                if h ~= 0 or s ~= 0 or v ~= 0 then return "nil_hsv_from_hsl" end
+
+                if C_ColorUtil.WrapTextInColor("Ready", { r = 1, g = 0.5, b = 0 }) ~= "|cffff7f00Ready|r" then
+                  return "wrap_text"
+                end
+                if C_ColorUtil.WrapTextInColor("", { r = 1, g = 0.5, b = 0 }) ~= "|cffff7f00|r" then
+                  return "wrap_empty"
+                end
+                return "ok"
+                "#,
+            )
+            .expect("ColorUtil probe should run");
+
+        assert_eq!(result, "ok");
+    }
+
     #[test]
     fn installs_pvp_defaults_without_replacing_state_backed_methods() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
