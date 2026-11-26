@@ -119,3 +119,18 @@ A_Admin.SetSpellCooldown(31935, 15.0)   -- Avenger's Shield on 15s CD
 local start, dur, enabled = GetSpellCooldown(31935)
 -- dur=15.0
 ```
+
+### A_Admin.SetItemCooldown(itemID, duration)
+
+Sets the supplied cooldown for an item ID. The start time is the current simulator `GetTime()` value. A duration of `0` clears that item's cooldown input.
+
+- **itemID** `number` -- Item ID to put on cooldown
+- **duration** `number` -- Cooldown duration in seconds; `0` clears the input
+- **Affects:** `C_Item.GetItemCooldown(itemID)` and the original quest item button when that item is the quest special item
+
+```lua
+A_Admin.SetItemCooldown(19001, 31)
+local start, duration, enabled = C_Item.GetItemCooldown(19001)
+-- duration=31, enabled=true
+A_Admin.SetItemCooldown(19001, 0) -- clear
+```

@@ -1,3 +1,11 @@
+## [2026-11-25] investigation | Hidden CurrencyTransfer EditBox startup notification
+
+[CurrencyTransfer hidden EditBox startup](investigations/currency-transfer-hidden-editbox-startup.md) records the required API contract, hidden XML initialization order, and the inferred visibility-delayed notification rule. **INFERRED — R88g8 (native evidence pending):** hidden EditBoxes retain changed text notifications until visible. Exact Retail and WoW Forever consumer/API tests pass. Both final stock captures return byte-exact `[]` with exit 0; this is simulator evidence only.
+
+## [2026-11-25] investigation | ObjectiveTracker dirty startup-shaped fixture
+
+[ObjectiveTracker dirty fixture](investigations/objective-tracker-dirty-fixture.md) records the missing SplashFrame provider, the aborted original first update, and the two-profile seeded quest consumer test. No timer or Blizzard Lua behavior changed.
+
 ## [2026-11-24] investigation | Retail hooksecurefunc dispatcher taint
 
 [Taint system](systems/taint-system.md#retail-hooksecurefunc-dispatcher) records the post-load Retail `securecallfunction` override ordering, the dispatcher taint leak, and the full-UI AuraContainer regression. **VERIFIED (Retail full-addon run):** the secret-texture error is gone; the five remaining errors match the pre-fix baseline.

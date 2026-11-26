@@ -45,6 +45,7 @@ const PANEL_ADDONS: &[&str] = &[
     "Blizzard_GarrisonBase",
     "Blizzard_GameTooltip",
     "Blizzard_StaticPopup_Game",
+    "Blizzard_GameMenu",
     "Blizzard_TransmogShared",
     "Blizzard_UIParentPanelManager",
     "Blizzard_Settings_Shared",
@@ -56,6 +57,7 @@ const PANEL_ADDONS: &[&str] = &[
     "Blizzard_FrameXML",
     "Blizzard_UIPanels_Game",
     "Blizzard_ActionBar",
+    "Blizzard_HelpFrame",
     "Blizzard_UnitFrame",
     "Blizzard_TokenUI",
 ];
@@ -191,6 +193,28 @@ fn key_blizzard_panels_registered() {
             return table.concat(missing, ", ")
         "#).unwrap();
         assert!(missing.is_empty(), "Missing or wrong UIPanelWindows entries: {missing}");
+    }
+}
+
+#[test]
+fn show_ui_panel_named_securecall_keeps_panels_secure() {
+    test_timeout! {
+        let env = setup_env();
+        let result: (bool, bool, bool, bool, bool) = env.eval(r#"
+            local secureInside
+            hooksecurefunc("CloseAllWindows", function()
+                secureInside = issecure()
+            end)
+            ShowUIPanel(CinematicFrame)
+            local firstShown = CinematicFrame:IsShown()
+            local firstSecure = secureInside
+            HideUIPanel(CinematicFrame)
+            local loaded = C_AddOns.LoadAddOn("Blizzard_BarbershopUI")
+            secureInside = nil
+            ShowUIPanel(BarberShopFrame)
+            return firstShown, loaded, BarberShopFrame:IsShown(), firstSecure, secureInside
+        "#).unwrap();
+        assert_eq!(result, (true, true, true, true, true));
     }
 }
 
