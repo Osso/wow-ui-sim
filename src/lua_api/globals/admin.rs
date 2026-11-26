@@ -186,9 +186,13 @@ fn register_admin_calendar_services(builder: TableBuilder) -> LuaResult<TableBui
 
 fn register_admin_combat(mut builder: TableBuilder) -> LuaResult<TableBuilder> {
     builder = register_combat_casting(builder)?;
-    #[cfg(all(
-        feature = "retail-12-0-5",
-        any(feature = "profile-retail", feature = "client-ptr")
+    #[cfg(any(
+        all(
+            feature = "retail-12-0-5",
+            any(feature = "profile-retail", feature = "client-ptr")
+        ),
+        feature = "client-retail",
+        feature = "client-wowforever"
     ))]
     let builder = super::real::spell_confirmation_prompts::register_admin(builder)?;
     #[cfg(feature = "player-cast-durations")]
