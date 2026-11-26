@@ -594,16 +594,17 @@ fn spellbook_layout_stays_locked() {
 #[test]
 fn forever_spellbook_paging_click_updates_page_text() {
     let env = setup_full_ui();
-    env.exec(
-        r#"A_Admin.SetPlayerClass(2); for _, id in ipairs({35395, 19750, 85673, 853, 275779, 465, 1022, 1044, 642, 633, 190784, 96231, 10326, 213644, 6940, 31884, 375576, 115750, 32223, 317920, 183435, 5502, 121183, 137026, 385125, 31935, 53595, 26573, 53600, 31850, 86659, 62124, 498, 327193, 378974, 387174, 204019, 85043, 152261, 76671, 280373}) do A_Admin.LearnSpell(id) end"#,
-    )
-    .expect("Paladin catalog spells should be supplied to the player state");
-    open_spellbook(&env);
-
+    env.exec("PlayerSpellsUtil.ToggleSpellBookFrame()")
+        .expect("the original spellbook should open");
+    let before: String = env
+        .eval("local s = PlayerSpellsFrame.SpellBookFrame; return tostring(s:GetTab()) .. ':' .. tostring(s.categoryMixins[1].displayName) .. ':' .. tostring(#s.categoryMixins)")
+        .expect("spellbook category state should be readable");
+    env.exec("PlayerSpellsFrame.SpellBookFrame.CategoryTabSystem:GetTabButton(1):Click()")
+        .expect("the real class category tab should accept the click");
     let class_first_page: String = env
         .eval("return PlayerSpellsFrame.SpellBookFrame.PagedSpellsFrame.PagingControls.PageText:GetText()")
-        .expect("the default class category page text should be readable");
-    assert_eq!(class_first_page, "Page 1/2", "the class catalog supplies two pages");
+        .expect("the class category page text should be readable");
+    assert!(class_first_page == "Page 1/2", "class catalog should have two pages, got {class_first_page}; initial {before}");
     env.exec("PlayerSpellsFrame.SpellBookFrame.PagedSpellsFrame.PagingControls.NextPageButton:Click()")
         .expect("the real next-page button should accept the click");
     let class_second_page: String = env
