@@ -58,6 +58,7 @@ fn original_quest_helpers_preserve_tracker_consumer_outputs() {
                 .expect("supply distinct quest rows and notify the real tracker");
             wow_ui_sim::startup::process_pending_timers(env);
             wow_ui_sim::startup::fire_one_on_update_tick(env);
+            wow_ui_sim::startup::process_pending_timers(env);
             assert_tracker_output(env);
             let state = env.state().borrow();
             eprintln!(
