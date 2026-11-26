@@ -23,6 +23,8 @@ pub(crate) mod bnet_friend_index;
 pub(crate) mod break_up_large_numbers;
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub(crate) mod camera_fov_defaults;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) mod client_info;
 pub mod combat_probes;
 pub mod combat_stats;
 pub mod combo_points;
@@ -40,6 +42,8 @@ pub mod event_callbacks;
 pub mod forever_stat_contributions;
 pub mod frame_level_helpers;
 pub(crate) mod game_clock;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) mod global_text;
 #[cfg(any(
     feature = "client-retail",
     feature = "client-ptr",

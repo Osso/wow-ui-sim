@@ -78,6 +78,10 @@ fn register_bootstrap_time_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
 
 fn register_bootstrap_runtime_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
     super::strings::register_all_ui_strings(lua)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    super::real::client_info::register_all(lua)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    super::real::global_text::register_all(lua)?;
     super::security::register_all(lua)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     super::real::camera_fov_defaults::register_all(lua)?;
