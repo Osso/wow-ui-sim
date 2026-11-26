@@ -7,20 +7,26 @@ use crate::common::blizzard_addon_harness::{
 };
 
 const MODELED_STATE_GLOBALS_LUA: &str = r#"
+local baseFirst = GetBaseDifficultyID(233)
+local baseSecond = GetBaseDifficultyID(250)
+if baseFirst ~= 16 or baseSecond ~= 17 then return "base-difficulty" end
 A_Admin.SetInstanceInfo("First", "party", 233, 5)
 local dungeonFirst = GetDungeonDifficultyID()
 A_Admin.SetInstanceInfo("Second", "party", 250, 5)
 local dungeonSecond = GetDungeonDifficultyID()
+if dungeonFirst ~= 233 or dungeonSecond ~= 250 then return "dungeon-difficulty" end
 A_Admin.SetGameRule(93, 1)
 local roleButtonFirst = CanShowSetRoleButton()
 A_Admin.SetGameRule(93, 0)
 local roleButtonSecond = CanShowSetRoleButton()
+if roleButtonFirst ~= true or roleButtonSecond ~= false then return "role-button" end
 A_Admin.SetPlayerRace(0)
 A_Admin.SetGuildFactionGroupFlags(1, 4)
 local factionFirst = GetGuildFactionGroup()
 A_Admin.SetPlayerRace(1)
 A_Admin.SetGuildFactionGroupFlags(2, 2)
 local factionSecond = GetGuildFactionGroup()
+if factionFirst ~= 0 or factionSecond ~= 1 then return "guild-faction" end
 A_Admin.QueueSpellConfirmationPrompt({spellID=401, confirmType=1, text="First", duration=3,
     currencyID=0, currencyCost=0, difficultyID=0, displayItemID=0, itemContext=0,
     treasureContextLevel=0})
@@ -30,11 +36,10 @@ A_Admin.QueueSpellConfirmationPrompt({spellID=402, confirmType=2, text="Second",
 local prompts = GetSpellConfirmationPromptsInfo()
 local promptText = {}
 for _, prompt in ipairs(prompts) do promptText[prompt.spellID] = prompt.text end
-return GetBaseDifficultyID(233) == 16 and GetBaseDifficultyID(250) == 17
-    and dungeonFirst == 233 and dungeonSecond == 250
-    and roleButtonFirst == true and roleButtonSecond == false
-    and factionFirst == 0 and factionSecond == 1
-    and #prompts == 2 and promptText[401] == "First" and promptText[402] == "Second"
+if #prompts ~= 2 or promptText[401] ~= "First" or promptText[402] ~= "Second" then
+    return "spell-prompts"
+end
+return "ok"
 "#;
 
 const EVENT_CALLBACKS_LUA: &str = r#"
@@ -115,8 +120,8 @@ fn global_text_lookup_uses_two_loaded_strings() {
 #[test]
 fn state_backed_legacy_globals_follow_distinct_inputs() {
     let env = WowLuaEnv::new().unwrap();
-    let result: bool = env.eval(MODELED_STATE_GLOBALS_LUA).unwrap();
-    assert!(result);
+    let result: String = env.eval(MODELED_STATE_GLOBALS_LUA).unwrap();
+    assert_eq!(result, "ok");
 }
 
 #[test]
