@@ -1,13 +1,14 @@
 //! Integration tests for keybinding dispatch — core world map panel details.
 
-use crate::prefork_full_ui_preload::{
-    drain_test_errors, frame_is_shown, install_test_error_handler,
-};
+#[cfg(feature = "client-retail")]
+use crate::prefork_full_ui_preload::frame_is_shown;
+use crate::prefork_full_ui_preload::{drain_test_errors, install_test_error_handler};
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::startup::{fire_one_on_update_tick, process_pending_timers};
 
 // ── M → ToggleWorldMap() ────────────────────────────────────────────────
 
+#[cfg(feature = "client-retail")]
 pub(crate) fn keybind_m_opens_world_map(env: &WowLuaEnv) {
     env.send_key_press("M", None).expect("M keybind failed");
     assert!(
@@ -16,6 +17,7 @@ pub(crate) fn keybind_m_opens_world_map(env: &WowLuaEnv) {
     );
 }
 
+#[cfg(feature = "client-retail")]
 pub(crate) fn world_map_floor_dropdown_hidden_without_subzone_or_map_group(env: &WowLuaEnv) {
     install_test_error_handler(&env);
     env.state().borrow_mut().world.sub_zone_name.clear();
@@ -80,6 +82,7 @@ pub(crate) fn world_map_floor_dropdown_hidden_without_subzone_or_map_group(env: 
     );
 }
 
+#[cfg(feature = "client-retail")]
 pub(crate) fn world_map_tracking_defaults_follow_filter_masks(env: &WowLuaEnv) {
     env.exec(
         r#"
@@ -96,6 +99,7 @@ pub(crate) fn world_map_tracking_defaults_follow_filter_masks(env: &WowLuaEnv) {
     .expect("original world-map filters must observe both defaults");
 }
 
+#[cfg(feature = "client-retail")]
 pub(crate) fn world_map_bounty_board_reads_supplied_bounties(env: &WowLuaEnv) {
     use wow_ui_sim::lua_api::state::QuestBounty;
     {
@@ -139,6 +143,7 @@ pub(crate) fn world_map_bounty_board_reads_supplied_bounties(env: &WowLuaEnv) {
     .expect("resolved empty and missing map must differ");
 }
 
+#[cfg(feature = "client-retail")]
 pub(crate) fn world_map_threat_frame_reads_quest_log_flags(env: &WowLuaEnv) {
     let quest_id = env
         .state()
@@ -174,6 +179,7 @@ pub(crate) fn world_map_threat_frame_reads_quest_log_flags(env: &WowLuaEnv) {
     .expect("excluded quest flags must not count as active threats");
 }
 
+#[cfg(feature = "client-retail")]
 pub(crate) fn world_map_campaign_headers_refresh_on_show(env: &WowLuaEnv) {
     env.exec(
         r#"
@@ -186,6 +192,7 @@ pub(crate) fn world_map_campaign_headers_refresh_on_show(env: &WowLuaEnv) {
     .expect("original quest map show must refresh campaign headers");
 }
 
+#[cfg(feature = "client-retail")]
 pub(crate) fn world_map_party_quest_counts_follow_membership(env: &WowLuaEnv) {
     let quest_id = env.state().borrow().quest_log_entries.entries[0].quest_id;
     {
@@ -221,6 +228,7 @@ pub(crate) fn world_map_party_quest_counts_follow_membership(env: &WowLuaEnv) {
     .expect("removing supplied membership must update the original utility");
 }
 
+#[cfg(feature = "client-retail")]
 pub(crate) fn keybind_m_toggles_world_map_without_errors(env: &WowLuaEnv) {
     install_test_error_handler(&env);
 
@@ -255,6 +263,7 @@ pub(crate) fn keybind_m_toggles_world_map_without_errors(env: &WowLuaEnv) {
     );
 }
 
+#[cfg(feature = "client-retail")]
 pub(crate) fn world_map_title_text_is_non_empty_after_opening(env: &WowLuaEnv) {
     install_test_error_handler(&env);
 
@@ -301,6 +310,7 @@ pub(crate) fn world_map_title_text_is_non_empty_after_opening(env: &WowLuaEnv) {
     );
 }
 
+#[cfg(feature = "client-retail")]
 pub(crate) fn world_map_exploration_pin_has_visible_overlay_textures_after_opening(
     env: &WowLuaEnv,
 ) {
@@ -389,6 +399,7 @@ pub(crate) fn world_map_exploration_pin_has_visible_overlay_textures_after_openi
     );
 }
 
+#[cfg(feature = "client-retail")]
 pub(crate) fn world_map_exploration_pin_converges_visible_after_onupdate_ticks(env: &WowLuaEnv) {
     install_test_error_handler(&env);
 
@@ -488,6 +499,7 @@ pub(crate) fn world_map_exploration_pin_converges_visible_after_onupdate_ticks(e
     );
 }
 
+#[cfg(feature = "client-retail")]
 pub(crate) fn world_map_exploration_pin_first_open_settles_without_reopen(env: &WowLuaEnv) {
     install_test_error_handler(&env);
 
@@ -629,6 +641,7 @@ pub(crate) fn world_map_exploration_pin_recovers_when_first_overlay_fetch_is_emp
     );
 }
 
+#[cfg(feature = "client-retail")]
 pub(crate) fn world_map_registers_fog_of_war_pin_template_as_fog_of_war_frame(env: &WowLuaEnv) {
     install_test_error_handler(&env);
 
