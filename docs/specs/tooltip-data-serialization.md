@@ -20,9 +20,11 @@ publication is not expanded by this change.
 - [x] Both sides take that same RGB publication: a supplied right side publishes the packed color, not the raw factory color.
 - [x] Populated identity omits zero `id`; later common identity assignments append ordered type-19 rows with `tooltipType`, nonzero-only `tooltipID`, empty left text and supplied left color.
 - [x] Original `ProcessInfo`, GameTooltip line handlers and TooltipUtil retain their payloads; presentation parses inline markup independently.
-- [ ] **VERIFIED (Retail 12.1.5.70688; R88aw):** supported `GetItemByID`, item/keystone-link `GetHyperlink`, ordinary item `GetBagItem`, `GetLootRollItem`, and merchant item-offer `GetMerchantItem` requests pass mode 0. `GetBagItem` alone supplies an item-instance identity for status processing; merchant offers set preview, and item-link preview follows `hideVendorPrice`. **INFERRED (simulator mapping):** the matching producers pass those request, preview, and instance inputs to the shared builder.
+- [x] **VERIFIED (Retail 12.1.5.70688; R88aw; simulator test):** `GetItemByID`, item-link `GetHyperlink`, ordinary item `GetBagItem`, `GetLootRollItem`, and merchant item-offer `GetMerchantItem` pass mode 0. `GetBagItem` alone supplies an item-instance identity for status processing; merchant offers set preview, and item-link preview follows `hideVendorPrice`. The necessary test drives the original item, hyperlink, bag, loot-roll, and merchant accessors with distinct item IDs.
+- [ ] **VERIFIED (Retail 12.1.5.70688; R88aw):** the keystone-link `GetHyperlink` route passes mode 0 and leaves preview clear. The simulator's keystone-link route remains unmodelled and untested.
+- [ ] **INFERRED (simulator mapping):** native request, preview, and instance fields map to `RetailSellPriceRequest`; the tests prove the modeled outputs, not the native field layout.
 - [x] Retail `SetBagItem` publishes the seven type-6 fields only from explicit, empty-default host acceptance and snapshot inputs; the native predicate and writer remain UNKNOWN.
-- [ ] **VERIFIED (Retail 12.1.5.70688; `pr46-49-decomp-answers.md`, R88p.p1):** on the no-instance path, `maxPrice` uses the prepared maximum quantity only when it exceeds current quantity; the unit-price product wraps at 32 bits. Absent or non-increasing quantity inputs keep `maxPrice = -1`.
+- [x] **VERIFIED (Retail 12.1.5.70688; `pr46-49-decomp-answers.md`, R88p.p1; simulator test):** on the no-instance path, `maxPrice` uses the prepared maximum quantity only when it exceeds current quantity; the unit-price product wraps at 32 bits. Absent or non-increasing quantity inputs keep `maxPrice = -1`. The original `SellPrice` consumer renders distinct minimum and maximum rows for two supplied quantity pairs.
 
 ### Retail SellPrice behavior (R88p.p1, R88aw)
 
@@ -118,6 +120,7 @@ do not claim those native details.
   proves the double-line header publishes the same packed, alpha-free RGB on its right side.
 - `tests/tooltip_d56_serialization.rs`: direct getters and original consumers.
 - `src/c_api/tooltip_data_tests.rs`: nested identity order and present/absent sides.
+- `tests/tooltip_verified_lane.rs`: necessary original-accessor coverage for request mode, preview, bag-instance status input, prepared maximum quantity, 32-bit wrapping, and visible SellPrice output.
 - `tests/tooltip_serializer_fields.rs`: selected Retail consumers read line-level `price`/`maxPrice`; fixture checks cover generated item flags/classification, preview routes, calculated-price host inputs, timed bag status, and instance versus no-instance `maxPrice`.
 - `tests/tooltip_serializer_consumer_output.rs::bag_item_accessor_publishes_accepted_battle_pet_fields_to_original_consumer`
   calls the original Retail `GameTooltip:SetBagItem` on two distinct explicit

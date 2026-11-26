@@ -13,7 +13,8 @@ use crate::c_api::tooltip_getter_args::{allowed_when_untainted, round7_signed};
 use crate::lua_api::globals::missing_surface::tooltip_info::tooltip_for_spell;
 #[cfg(feature = "client-retail")]
 use crate::lua_api::globals::missing_surface::tooltip_info::{
-    append_line, format_global_numeric, format_global_text, global_text, named_color,
+    append_line, empty_untyped_tooltip, format_global_numeric, format_global_text, global_text,
+    named_color,
 };
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 use crate::lua_api::methods::table_set;
@@ -372,11 +373,15 @@ fn publish_retail_pvp_talent(
         return crate::c_api::tooltip_data::unknown_getter_failure();
     }
     let resolved_spell_id = resolve_spell_id(state, context.record.spell_id, None)?;
-    if !context.player_present || crate::spells::get_spell(resolved_spell_id).is_none() {
-        // R53 confirms annotation continuation, but the public result is UNKNOWN.
-        return crate::c_api::tooltip_data::unknown_getter_failure();
-    }
-    compose_retail_pvp_talent(state, arguments, context, resolved_spell_id)
+    let ordinary_content =
+        context.player_present && crate::spells::get_spell(resolved_spell_id).is_some();
+    compose_retail_pvp_talent(
+        state,
+        arguments,
+        context,
+        resolved_spell_id,
+        ordinary_content,
+    )
 }
 
 #[cfg(feature = "client-retail")]
@@ -385,9 +390,16 @@ fn compose_retail_pvp_talent(
     arguments: PvpTalentArguments,
     context: RetailPvpTalentContext,
     spell_id: u32,
+    ordinary_content: bool,
 ) -> LuaResult<u32> {
-    let tooltip = tooltip_for_spell(state, spell_id);
-    append_replacement_line(state, tooltip, &context.record)?;
+    let tooltip = if ordinary_content {
+        tooltip_for_spell(state, spell_id)
+    } else {
+        empty_untyped_tooltip(state)
+    };
+    if ordinary_content {
+        append_replacement_line(state, tooltip, &context.record)?;
+    }
     let local_group = if arguments.retail.is_inspect {
         None
     } else if arguments.retail.group_was_supplied {

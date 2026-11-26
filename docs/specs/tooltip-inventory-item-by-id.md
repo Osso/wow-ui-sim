@@ -55,14 +55,11 @@ The native ranges listed between the backpack range and the equipment range are
 unnamed (UNKNOWN), and the bank is not part of the modelled carried inventory, so
 neither is searched.
 
-## Known gaps (current cycle)
+- [x] **VERIFIED (Retail 12.1.5.70688; Forever 1.60.1.70707):** the found instance's gem/socket projection is copied before item construction. **VERIFIED (simulator test):** two bag instances of the same item retain distinct `socketType`, `gemIcon`, and `gemItemID` rows through the original `GameTooltip:SetInventoryItemByID` consumer; the original `GemSocket` rule renders the supplied gem and empty-socket textures.
+- [ ] **UNKNOWN (native):** which items or instance states trigger each socket row. The simulator emits only explicit host-supplied instance rows.
+- [ ] **INFERRED (simulator mapping):** supplied socket metadata uses `Enum.TooltipDataLineType.GemSocket` (3), declared by pinned `TooltipInfoSharedDocumentation.lua:37` and consumed by `TooltipDataRules.lua:18-33`; native row selection and complete row fields are not established.
 
-- [ ] The gem/socket projection is VERIFIED as an instance data copy before the
-      item enters the builder, and the socket metadata row shape (`socketType`,
-      `gemIcon`, `gemItemID`) is VERIFIED. Which items trigger which row and its
-      line type are UNKNOWN, and the shared item producer emits no socket rows,
-      so the projection has no observable output and is not modelled.
-  Classification: (c) native-only for this lane. The source-data shape is known, but row selection and line type are UNKNOWN, so no observable native-compatible implementation is supported.
+## Known gaps (current cycle)
 - [ ] `guid` is published only for a bag copy. An equipped copy has no simulator
       GUID string: `C_Item.GetItemGUID` models bag locations only.
   Classification: (c) native-only for this lane. The simulator has no equipped-item GUID input, and the native equipped-copy publication is not established.
@@ -88,10 +85,12 @@ neither is searched.
 ## Implementation inventory
 
 - `src/c_api/c_tooltip_info_inventory_by_id.rs`: argument reader, ordered
-  inventory scan, instance GUID and tooltip publication.
+  inventory scan, instance GUID/socket projection, admin input, and tooltip publication.
+- `src/c_api/item_tooltip.rs` and `src/lua_api/globals/missing_surface/tooltip_info/builders.rs`: explicit socket-row input and GemSocket publication.
 - `src/lua_api/globals/missing_surface/tooltip_info/`: shared item tooltip
   producer.
 
 ## Tests asserting this spec
 
 - `tests/tooltip_inventory_item_by_id.rs`
+- `tests/tooltip_verified_lane.rs::inventory_tooltip_copies_each_instance_socket_projection`

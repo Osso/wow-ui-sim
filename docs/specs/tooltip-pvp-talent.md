@@ -21,7 +21,7 @@ VERIFIED: Retail `C_TooltipInfo.GetPvpTalent` uses the PvP talent row to build s
 - [x] VERIFIED: Use `SpellID` as the primary spell input. The host-supplied resolver map gives its resolved outcome; an absent entry means identity. R53 confirms `OverridesSpellID` is only used by the conditional replacement annotation and is not a fallback.
 - [x] VERIFIED: A successful tooltip uses type `1` and the resolved nonzero spell ID; the tests do not cover zero-ID publication or miss paths.
 - [x] VERIFIED: Zero `OverridesSpellID` adds no replacement line. A nonzero override can add a type-`0` `REPLACES_SPELL` line after ordinary spell content, and the original row's attribute mask `32768` suppresses it.
-- [ ] VERIFIED: Missing resolved override-name or original override rows suppress `REPLACES_SPELL`; getter-level tests cover both row-miss branches, but no selected original PvP talent consumer test proves them.
+- [x] VERIFIED: Missing resolved override-name or original override rows suppress `REPLACES_SPELL`. The necessary test drives the original `GameTooltip:SetPvpTalent` consumer for both row-miss branches and retains the primary identity and talent annotation as positive controls.
 - [x] VERIFIED: Populated tooltip data uses the shared data-instance counter, which increments between consecutive calls.
 
 ### Local and inspect annotations
@@ -59,6 +59,7 @@ VERIFIED: Retail `C_TooltipInfo.GetPvpTalent` uses the PvP talent row to build s
 
 ## Tests asserting this spec
 
+- `tests/tooltip_verified_lane.rs` — necessary original `SetPvpTalent` coverage for both replacement-row misses and annotation continuation after a resolved primary spell-name miss.
 - `tests/tooltip_pvp_talent.rs` — optional R73 tests drive original slot hover and the original list template hover (the panel harness does not realize virtualized list rows), with a pre-load pass-through spy, visible lines, mutually exclusive outcomes and primary getter metadata; supplied slot fields share group selection and preserve no-host defaults. Retail registration; a `TestGetPvpTalent` getter-level wrapper around `GameTooltip:SetPvpTalent` with a pass-through getter spy; generated default catalog values and neutral grant/eligibility inputs; spell identity, replacement line and suppression; getter-level missing resolved replacement-name and original replacement-row cases (not yet proved through the selected PvP talent consumer); local level, group, position, eligibility, combat and rest branches; item, essence and inspect grant branches.
 - `tests/tooltip_full_env_helpers.rs` — optional pre-addon setup hook installs the getter spy before `TooltipDataHandler` copies the namespace.
 - `tests/tooltip_forever_four_getters.rs` — optional Forever registration, argument acceptance, Usage text, two supplied-hit cases and a missing-record case.
@@ -66,14 +67,16 @@ VERIFIED: Retail `C_TooltipInfo.GetPvpTalent` uses the PvP talent row to build s
 
 ## Known gaps (current cycle)
 
-- [ ] UNKNOWN (Retail): The native final Lua result for zero talent ID, failed base-spell presence, missing player or missing resolved spell-name row. The simulator uses the shared EMULATED zero-value seam for these Retail paths.
+- [ ] UNKNOWN (Retail): The native final Lua result for zero talent ID, failed base-spell presence, or missing player. Those paths retain the shared EMULATED zero-value seam. A missing resolved spell-name row instead exposes modeled annotations through the separately labeled EMULATED untyped builder; its native final result remains unknown.
 - [ ] INFERRED (Forever): The simulator's supplied `talentID`-to-`SpellID` map does not establish current-player selection, native writers, inspect behavior or native populated-record parity. It remains empty by default; no talent rows are seeded.
 - [ ] UNKNOWN: Whether the native base-spell presence provider can report `SpellID` zero as present. This path is not modeled or tested.
 - [ ] UNKNOWN: The native spell override ranking walk's exact ranked IDs, map writers and precedence among talent, aura and SpellReplace sources. The host supplies the resolved ID; this implementation does not infer the walk.
 - [ ] UNKNOWN: Native alignment of the installed 12.1.5.70783 rows with selected build 12.1.5.70575, the effect-parameter decoder, essence lookup, inspect lifecycle, additional progression restrictions and remaining eligibility failure reasons. Grant and eligibility outcomes remain host-only; absent inputs do not fabricate lines.
 - [x] VERIFIED (R73): Active-group membership uses four shared selected positions. The original slot hover supplies selected talents; the original list hover supplies unselected candidates.
 - [x] VERIFIED (cached declaration): `GetPvpTalentSlotInfo` uses the shape at `SpecializationInfoDocumentation.lua:153-165,491-499`. Supplied slot records contain enabled/level/available IDs; selectedTalentID comes only from shared groups. UNKNOWN: native default values. The old empty default remains isolated as a temporary workaround, unchanged for calls without supplied records.
-- [ ] VERIFIED: When the primary spell producer misses because the local player or spell-name row is unavailable, the native PvP caller still runs talent annotations. UNKNOWN: Its final result and table shape; this failure path stays unmodelled and untested here.
+- [x] VERIFIED: When the resolved primary spell-name row is unavailable, the native PvP caller still runs talent annotations. The necessary original-consumer test supplies two missing resolved IDs and observes two distinct `UNLOCKED_AT_LEVEL` lines.
+- [ ] VERIFIED: A missing local player also reaches the annotation stage. That branch and the native final result/table shape remain unasserted; the simulator uses an EMULATED untyped builder only to expose modeled annotation lines.
+- [ ] UNKNOWN: The native final Lua result and complete table shape after an ordinary spell-producer miss.
 - [ ] VERIFIED: Native `isInspect` also changes the ordinary spell request. UNKNOWN: The existing simulator producer has no matching observable request field, so this effect stays unmodelled.
 - [ ] UNKNOWN: Numeric RGB defaults, the complete ordinary spell line and field set, and a getter-specific event contract.
 - [ ] INFERRED: The simulator maps native attribute mask `32768` to the current spell row's `attributes_9` value.

@@ -23,19 +23,19 @@
 //! the backpack range and the equipment range are UNKNOWN, and the bank is not
 //! part of the modelled carried inventory, so neither is searched.
 //!
-//! Not modelled, because the evidence leaves it UNKNOWN and the shared item
-//! producer emits no such rows today: which items produce the item producer's
-//! gem/socket metadata rows (`socketType`, `gemIcon`, `gemItemID`) and their
-//! line type. An equipped copy also has no simulator GUID string, because
-//! `C_Item.GetItemGUID` only models bag locations, so only a bag copy publishes
-//! `guid`.
+//! Explicit host-supplied bag-instance socket rows are copied into the shared
+//! producer. Pinned TooltipInfoSharedDocumentation declares GemSocket as line
+//! type 3 and the original TooltipDataRules consumer renders `gemIcon` or
+//! `socketType`. Native row selection remains UNKNOWN. An equipped copy also has
+//! no simulator GUID string, because `C_Item.GetItemGUID` only models bag
+//! locations, so only a bag copy publishes `guid`.
 
 use crate::c_api::item_spell::item_guid_for_bag_slot;
 use crate::c_api::item_tooltip::ItemSocketProjectionRow;
 use crate::c_api::tooltip_data::unknown_getter_failure;
 use crate::c_api::tooltip_getter_args::signed;
 use crate::items;
-use crate::lua_api::globals::missing_surface::tooltip_info::tooltip_for_item_context;
+use crate::lua_api::globals::missing_surface::tooltip_info::tooltip_for_item_context_with_socket_projection;
 use crate::lua_api::methods::{
     borrow_state, borrow_state_mut, create_string, table_get, table_set, val_to_string,
 };
@@ -52,9 +52,11 @@ const LAST_CARRIED_BAG: i32 = 4;
 /// The selected copy and the simulator instance identity the request carries.
 struct OwnedInstance {
     guid: Option<String>,
+    socket_projection: Vec<ItemSocketProjectionRow>,
 }
 
 /// Where the selected copy sits in the modelled player inventory.
+#[derive(Clone, Copy)]
 enum Location {
     Bag { bag: i32, slot: i32 },
     Equipment,
@@ -63,12 +65,21 @@ enum Location {
 impl Location {
     /// The simulator identity, in the shape `C_Item.GetItemGUID` publishes. The
     /// equipment range has no modelled GUID string.
-    fn instance(self, item_id: u32) -> OwnedInstance {
-        let guid = match self {
-            Location::Bag { bag, slot } => Some(item_guid_for_bag_slot(bag, slot, item_id)),
-            Location::Equipment => None,
+    fn instance(self, item_id: u32, sim: &SimState) -> OwnedInstance {
+        let (guid, socket_projection) = match self {
+            Location::Bag { bag, slot } => (
+                Some(item_guid_for_bag_slot(bag, slot, item_id)),
+                sim.item_tooltip_socket_projections
+                    .get(&(bag, slot))
+                    .cloned()
+                    .unwrap_or_default(),
+            ),
+            Location::Equipment => (None, Vec::new()),
         };
-        OwnedInstance { guid }
+        OwnedInstance {
+            guid,
+            socket_projection,
+        }
     }
 }
 
@@ -219,7 +230,12 @@ fn get_inventory_item_by_id(state: &mut LuaState) -> LuaResult<u32> {
     let Some(item) = items::get_item(item_id) else {
         return unknown_getter_failure();
     };
-    let tooltip = tooltip_for_item_context(state, item_id, Some(item));
+    let tooltip = tooltip_for_item_context_with_socket_projection(
+        state,
+        item_id,
+        Some(item),
+        &instance.socket_projection,
+    );
     if let Some(guid) = instance.guid {
         let guid = create_string(state, &guid);
         table_set(state, tooltip, "guid", guid);
@@ -239,7 +255,7 @@ fn find_instance(state: &LuaState, item_id: u32) -> Option<OwnedInstance> {
         })
         .or_else(|| equipment_slot(&sim, item_id).map(|_| Location::Equipment))
         .or_else(|| carried_bag_slot(&sim, item_id))?;
-    Some(location.instance(item_id))
+    Some(location.instance(item_id, &sim))
 }
 
 fn carried_bag_slot(sim: &SimState, item_id: u32) -> Option<Location> {

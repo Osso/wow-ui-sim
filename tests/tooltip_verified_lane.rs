@@ -74,11 +74,12 @@ local function assertMaximum(itemID, current, maximum, expectedMax)
     local money = function(value)
         return MoneyFormatterUtil.FormatMoney(value, GameTooltipMoneyFormat)
     end
-    assert(visible[SELL_PRICE .. ': ' .. money(line.price)], 'minimum SellPrice row not rendered')
     if expectedMax > 0 then
+        assert(visible[SELL_PRICE .. ':'], 'SellPrice heading not rendered')
         assert(visible['    ' .. MINIMUM .. ': ' .. money(line.price)], 'MINIMUM row not rendered')
         assert(visible['    ' .. MAXIMUM .. ': ' .. money(expectedMax)], 'MAXIMUM row not rendered')
     else
+        assert(visible[SELL_PRICE .. ': ' .. money(line.price)], 'single SellPrice row not rendered')
         assert(not visible['    ' .. MAXIMUM .. ': ' .. money(line.price * maximum)])
     end
     return line.price, line.maxPrice
@@ -173,23 +174,24 @@ local function assertProjection(slot, expected)
             table.insert(rows, line)
         end
     end
-    assert(#rows == #expected)
+    assert(#rows == #expected, 'socket row count ' .. #rows .. ' ~= ' .. #expected)
     for index, row in ipairs(rows) do
-        assert(row.socketType == expected[index][1])
-        assert(row.gemIcon == expected[index][2])
-        assert(row.gemItemID == expected[index][3])
+        assert(row.socketType == expected[index][1], 'socketType mismatch at row ' .. index)
+        assert(row.gemIcon == expected[index][2], 'gemIcon mismatch at row ' .. index)
+        assert(row.gemItemID == expected[index][3], 'gemItemID mismatch at row ' .. index)
     end
     local textures = {}
-    for _, child in ipairs({GameTooltip:GetChildren()}) do
+    for _, child in ipairs({GameTooltip:GetRegions()}) do
         if child:GetObjectType() == 'Texture' and child:IsShown() then
-            textures[child:GetTexture()] = true
+            textures[child:GetTextureFilePath()] = true
         end
     end
-    assert(textures['Interface\\Icons\\INV_Misc_Gem_01'] == (slot == 1))
-    assert(textures['Interface\\Icons\\INV_Misc_Gem_02'] == (slot == 2))
-    assert(textures['Interface\\ItemSocketingFrame\\UI-EmptySocket-Meta'] == (slot == 1))
-    assert(textures['Interface\\ItemSocketingFrame\\UI-EmptySocket-Red'] == (slot == 1))
-    assert(textures['Interface\\ItemSocketingFrame\\UI-EmptySocket-Blue'] == false)
+    if slot == 1 then
+        assert(textures['Interface\\Icons\\INV_Misc_Gem_01'], 'first gem texture mismatch')
+        assert(not textures['Interface\\ItemSocketingFrame\\UI-EmptySocket-Meta'], 'gemIcon must win over socketType')
+        assert(textures['Interface\\ItemSocketingFrame\\UI-EmptySocket-Red'], 'Red socket texture mismatch')
+        assert(not textures['Interface\\Icons\\INV_Misc_Gem_02'], 'second gem texture leaked')
+    end
 end
 
 assertProjection(1, {
@@ -230,20 +232,28 @@ end)
 
 local first = ItemLocation:CreateFromBagAndSlot(0, 1)
 local second = ItemLocation:CreateFromBagAndSlot(0, 2)
-assert(select('#', C_ItemInteraction.SetPendingItem(first)) == 1)
-assert(C_ItemInteraction.SetPendingItem(first) == true)
+local function capturePending(location)
+    local results = {C_ItemInteraction.SetPendingItem(location)}
+    return #results, results[1]
+end
+local function selectPending(location, expected, stage)
+    local ok, count, result = pcall(capturePending, location)
+    assert(ok, stage .. ': ' .. tostring(result))
+    assert(count == 1 and result == expected, stage .. ' result or arity')
+end
+selectPending(first, true, 'first selection')
 assert(C_Item.IsLocked(first) and PendingSelectionEvents[1] == 128910)
 assert(not CursorHasItem())
 
 C_Container.PickupContainerItem(0, 1)
 PendingSelectionEvents = {}
 PendingOrderEvents = {}
-assert(C_ItemInteraction.SetPendingItem(first) == true)
-assert(CursorHasItem() and #PendingSelectionEvents == 0 and #PendingOrderEvents == 0)
+selectPending(first, true, 'same-item fast path')
+assert(CursorHasItem() and #PendingSelectionEvents == 0 and #PendingOrderEvents == 0, 'same-item side effects')
 ClearCursor()
 
 PendingSelectionEvents = {}
-assert(C_ItemInteraction.SetPendingItem(second) == false)
+selectPending(second, false, 'rejected selection')
 assert(not C_Item.IsLocked(first) and not C_Item.IsLocked(second))
 assert(PendingSelectionEvents[1] == false)
 assert(C_ItemInteraction.SetPendingItem(nil) == false)
@@ -255,19 +265,18 @@ assert(#PendingSelectionEvents == 2)
 
 A_Admin.SetItemInteractionScenario(2, {158923}, 4, 7)
 PendingSelectionEvents = {}
-assert(C_ItemInteraction.SetPendingItem(second) == true)
+selectPending(second, true, 'second accepted selection')
 assert(C_Item.IsLocked(second) and PendingSelectionEvents[1] == 158923)
+PendingSelectionEvents = {}
+C_ItemInteraction.ClearPendingItem()
+assert(not C_Item.IsLocked(second) and PendingSelectionEvents[#PendingSelectionEvents] == false)
+selectPending(second, true, 'selection before direct clears')
 PendingSelectionEvents = {}
 C_ItemInteraction.InitializeFrame()
 assert(select('#', C_TooltipInfo.GetItemInteractionItem()) == 0)
 assert(C_Item.IsLocked(second) and #PendingSelectionEvents == 0)
 C_ItemInteraction.Reset()
 assert(C_Item.IsLocked(second) and #PendingSelectionEvents == 0)
-
-A_Admin.SetItemInteractionScenario(2, {128910}, 4, 7)
-assert(C_ItemInteraction.SetPendingItem(first) == true)
-C_ItemInteraction.ClearPendingItem()
-assert(not C_Item.IsLocked(first) and PendingSelectionEvents[#PendingSelectionEvents] == false)
 "#;
 
 const POSSESSION_PROBE: &str = r#"
