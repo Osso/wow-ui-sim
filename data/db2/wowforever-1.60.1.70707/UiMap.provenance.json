@@ -1,0 +1,16 @@
+{
+  "profile": "wowforever",
+  "product": "wowf",
+  "build": "1.60.1.70707",
+  "interface": 16001,
+  "source": "https://wago.tools/db2/UiMap/csv?build=1.60.1.70707",
+  "sha256": "1f4aac70eaac015b1d2d0ea0faf6e3d7fb2cf7afdf45e5bb6772d9b80a72346b",
+  "rows": 60,
+  "duplicate_ids": 0,
+  "help_text_position_counts": {
+    "0": 60
+  },
+  "retrieved": "2026-11-26",
+  "regenerate": "wow-cli generate ui-map-help-text-positions",
+  "provenance_scope": "Build-specific Wago export; independent local-CASC equality is not established. All exported HelpTextPosition values are zero."
+}

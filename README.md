@@ -316,12 +316,13 @@ output header. Existing spell IDs and all other bytes remain unchanged. This
 mode does not need `Spell.csv`; full `wow-cli generate spells` still requires
 all original CSV inputs and writes the same attribute field.
 
-### Retail UiMap help-position regeneration
+### Retail and Forever UiMap help-position regeneration
 
 `wow-cli generate ui-map-help-text-positions` regenerates the separate
-`UiMapID -> HelpTextPosition` table from
-`data/db2/retail-12.1.5.70961/UiMap.csv`. It does not rewrite the existing
-`UiMapInfo` fields.
+`UiMapID -> HelpTextPosition` tables from
+`data/db2/retail-12.1.5.70961/UiMap.csv` and
+`data/db2/wowforever-1.60.1.70707/UiMap.csv`. It records each CSV hash in the
+generated table and does not rewrite the existing `UiMapInfo` fields.
 
 ## Writing Tests
 

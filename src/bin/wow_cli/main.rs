@@ -296,7 +296,7 @@ enum GenerateTarget {
     Zones,
     /// Generate crates/sim-data/data/ui_maps.rs and Retail UiMapAssignment data
     UiMaps,
-    /// Generate Retail UiMap.HelpTextPosition data from the pinned UiMap CSV
+    /// Generate Retail and Forever UiMap.HelpTextPosition data from the pinned UiMap CSVs
     UiMapHelpTextPositions,
     /// Regenerate Retail UiMapAssignment rows from data/db2/retail-12.1.5.70783
     UiMapAssignments,
