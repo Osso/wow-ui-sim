@@ -12,6 +12,17 @@ pub struct PetBattleRuntime {
     pub parser_states: BTreeMap<String, i32>,
     pub matchmaking: PetBattleMatchmaking,
     pub selected_action: Option<(i32, Option<i32>)>,
+    /// INFERRED R88g9 (native evidence pending): supplied labels; collection shape is UNKNOWN.
+    pub effect_names: Vec<String>,
+    /// INFERRED R88g9 (native evidence pending): supplied action checks for UI predicates.
+    pub player_trap_state: u8,
+    pub trap_error: i32,
+    pub action_available: bool,
+    pub local_team_present: bool,
+    pub local_team_skip_blocking: bool,
+    pub local_team_should_select: bool,
+    /// INFERRED R88f.D.45, R88g9 (native evidence pending): opposite team's NPC marker.
+    pub opponent_is_npc: bool,
     pub requests: Vec<PetBattleRequest>,
 }
 

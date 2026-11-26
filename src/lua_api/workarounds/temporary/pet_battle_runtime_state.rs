@@ -349,24 +349,14 @@ C_PetBattles.ForfeitGame = function()
 end
 "#;
 
-// Stateless compatibility members remain pending their native model; no Lua-owned state.
-#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
-const STATIC_PET_BATTLE_DEFAULTS_LUA: &str = r#"
-local function install(name, fn)
-    if rawget(C_PetBattles, name) == nil then C_PetBattles[name] = fn end
-end
-install("GetAllEffectNames", function() end)
-install("GetPetInfoByPetID", function(_petID) end)
-install("IsTrapAvailable", function() return false, 0 end)
-install("IsPlayerNPC", function(_owner) return false end)
-install("ShouldShowPetSelect", function() return false end)
-"#;
-
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
-    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     lua.exec(PET_BATTLE_RUNTIME_STATE_LUA)?;
-    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
-    lua.exec(STATIC_PET_BATTLE_DEFAULTS_LUA)?;
+    Ok(())
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) fn apply_bootstrap(_: &mut rilua::Lua) -> crate::Result<()> {
     Ok(())
 }
 
@@ -375,23 +365,33 @@ mod tests {
     use crate::lua_api::WowLuaEnv;
 
     #[test]
-    fn installs_static_pet_battle_fallbacks() {
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    fn retail_pet_battle_runtime_members_read_supplied_state() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
-
+        env.exec(
+            "A_Admin.SetPetBattleEffectName('Supplied effect'); \
+             A_Admin.SetPetBattleTeamState(true, false, true, true); \
+             A_Admin.SetPetBattleState(1)",
+        )
+        .expect("pet-battle state inputs");
         let result: String = env
             .eval(
                 r##"
-                local trapReady, trapError = C_PetBattles.IsTrapAvailable()
-                if select("#", C_PetBattles.GetAllEffectNames()) ~= 0 then return "effects" end
-                if select("#", C_PetBattles.GetPetInfoByPetID("BattlePet-0-000000000000")) ~= 0 then return "pet-info" end
-                if trapReady ~= false or trapError ~= 0 then return "trap" end
-                if C_PetBattles.IsPlayerNPC() ~= false then return "player-npc" end
-                if C_PetBattles.ShouldShowPetSelect() ~= false then return "pet-select" end
+                local effects = {C_PetBattles.GetAllEffectNames()}
+                if effects[1] ~= "Supplied effect" then return "effects" end
+                if C_PetBattles.IsPlayerNPC(2) ~= true then return "player-npc" end
+                if C_PetBattles.ShouldShowPetSelect() ~= true then return "pet-select" end
+                A_Admin.SetPetBattleState(2)
+                A_Admin.SetPetBattleAvailability(1, true, 4)
+                local available, reason = C_PetBattles.IsTrapAvailable()
+                if not available or reason ~= 0 then return "trap-available" end
+                A_Admin.SetPetBattleAvailability(0, true, 4)
+                available, reason = C_PetBattles.IsTrapAvailable()
+                if available or reason ~= 4 then return "trap-unavailable" end
                 return "ok"
                 "##,
             )
-            .expect("static pet-battle fallbacks should be callable");
-
+            .expect("Rust-backed pet-battle inputs should be callable");
         assert_eq!(result, "ok");
     }
 
