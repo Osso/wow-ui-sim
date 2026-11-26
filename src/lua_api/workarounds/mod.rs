@@ -397,6 +397,7 @@ fn apply_core_foundation_addon_defaults(lua: &mut rilua::Lua) -> crate::Result<(
 fn apply_core_foundation_journal_defaults(lua: &mut rilua::Lua) -> crate::Result<()> {
     #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::achievement_ui_access_defaults::apply_bootstrap(lua)?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::achievement_search_preview::apply_bootstrap(lua)?;
     temporary::alert_frame_defaults::apply_bootstrap(lua)?;
     temporary::adventure_journal_fallbacks::apply_bootstrap(lua)?;
@@ -557,6 +558,7 @@ pub(crate) fn patch_dispatcher_surface_for_addon_load(env: &crate::lua_api::Load
     let _ = temporary::dispatcher_surface::patch_for_addon_load(env);
 }
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) fn patch_achievement_search_preview_for_addon_load(env: &crate::lua_api::LoaderEnv<'_>) {
     let _ = temporary::achievement_search_preview::patch_for_addon_load(env);
 }

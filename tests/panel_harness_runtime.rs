@@ -163,6 +163,24 @@ fn account_store_consumer_retains_distinct_storefront_ids() {
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 #[test]
+fn achievement_search_consumer_handles_two_empty_result_selections() {
+    let env = load_achievement_ui_consumer();
+    env.exec(
+        r#"local searchBox = AchievementFrame.HeaderDetails.Filters.SearchBox
+           local previews = searchBox.SearchPreviewContainer.searchPreviews
+           SetAchievementSearchString("frame-repairs-no-such-achievement-981743")
+           AchievementFrame_ShowSearchPreviewResults()
+           AchievementFrame_SetSearchPreviewSelection(1)
+           assert(searchBox.selectedIndex == 1)
+           AchievementFrame_SetSearchPreviewSelection(2)
+           assert(searchBox.selectedIndex == 1)
+           assert(not previews[1]:IsShown() and previews[1].achievementID == nil)"#,
+    )
+    .expect("the original achievement search consumer should handle both selections");
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
 fn pet_collection_button_uses_supplied_achievement_ui_access() {
     let env = load_achievement_ui_consumer();
     env.exec(
