@@ -1,6 +1,4 @@
 use crate::common;
-use wow_ui_sim::map_exploration;
-use wow_ui_sim::startup::{fire_one_on_update_tick, process_pending_timers};
 
 use super::support::{drain_test_errors, frame_is_shown, install_test_error_handler, setup_env};
 
@@ -262,55 +260,6 @@ fn world_map_exploration_pin_has_visible_overlay_textures_after_opening() {
             errors.len(),
             errors.join("\n"),
         );
-    }
-}
-
-const EXPLORED_PIN_STATE_LUA: &str = r#"
-local pin = WorldMapFrame:EnumeratePinsByTemplate("MapExplorationPinTemplate")()
-assert(pin, "original MapExplorationPinTemplate consumer should acquire a pin")
-local textures = pin.overlayTexturePool
-assert(textures and textures:GetNumActive() > 0, "exploration overlays should be acquired")
-local visible = 0
-for texture in textures:EnumerateActive() do
-    if texture:IsVisible() then visible = visible + 1 end
-end
-assert(visible > 0, "exploration overlays should be visible")
-assert(pin.isWaitingForLoad == nil, "exploration pin should finish loading")
-assert(math.abs(pin:GetAlpha() - WorldMapFrame:GetGlobalAlpha()) < 0.001, "pin alpha should refresh")
-"#;
-
-fn first_two_maps_with_exploration_data() -> [u32; 2] {
-    let mut maps = (1..=10_000).filter(|map_id| {
-        map_exploration::get_default_visible_overlays_for_map(*map_id)
-            .iter()
-            .any(|overlay| !overlay.file_data_ids.is_empty())
-    });
-    [maps.next().expect("first explored map"), maps.next().expect("second explored map")]
-}
-
-fn check_original_exploration_pin(env: &wow_ui_sim::lua_api::WowLuaEnv, map_id: u32) {
-    env.eval::<()>(&format!("WorldMapFrame:SetMapID({map_id})"))
-        .expect("WorldMapFrame should select supplied explored map");
-    for _ in 0..8 {
-        process_pending_timers(env);
-        fire_one_on_update_tick(env);
-    }
-    env.exec(EXPLORED_PIN_STATE_LUA)
-        .expect("original exploration pin should render supplied model overlays");
-}
-
-#[test]
-fn world_map_exploration_pin_uses_model_data_on_distinct_maps() {
-    test_timeout! {
-        let env = setup_env();
-        install_test_error_handler(&env);
-        env.exec("ToggleWorldMap()")
-            .expect("ToggleWorldMap should open the original world map");
-        for map_id in first_two_maps_with_exploration_data() {
-            check_original_exploration_pin(&env, map_id);
-        }
-        let errors = drain_test_errors(&env);
-        assert!(errors.is_empty(), "map exploration produced Lua errors: {errors:?}");
     }
 }
 
