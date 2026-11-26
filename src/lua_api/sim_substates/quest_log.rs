@@ -338,6 +338,17 @@ fn seed_quest_defaults() -> QuestLogEntry {
     }
 }
 
+impl QuestLogEntry {
+    pub(crate) fn new_supplied(quest_id: i32, title: String, is_complete: bool) -> Self {
+        Self {
+            quest_id,
+            title,
+            is_complete,
+            ..seed_quest_defaults()
+        }
+    }
+}
+
 fn lost_expedition_entry() -> QuestLogEntry {
     QuestLogEntry {
         quest_id: 80000,

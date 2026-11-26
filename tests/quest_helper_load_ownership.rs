@@ -12,6 +12,18 @@ fn normal_bootstrap_owns_quest_classification_enums() {
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 #[test]
+fn admin_quest_log_entry_setter_adds_two_distinct_rows() {
+    let env = wow_ui_sim::lua_api::WowLuaEnv::new().expect("normal environment");
+    env.exec("A_Admin.SetQuestLogEntry(990001, 'First', false); A_Admin.SetQuestLogEntry(990002, 'Second', true)")
+        .expect("host should add both quest rows");
+    let values: (String, String, bool, bool) = env
+        .eval("return C_QuestLog.GetTitleForQuestID(990001), C_QuestLog.GetTitleForQuestID(990002), C_QuestLog.IsComplete(990001), C_QuestLog.IsComplete(990002)")
+        .expect("quest queries should read both supplied rows");
+    assert_eq!(values, ("First".into(), "Second".into(), false, true));
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
 fn admin_quest_group_capability_supplies_distinct_values() {
     let env = wow_ui_sim::lua_api::WowLuaEnv::new().expect("normal environment");
     env.exec("A_Admin.SetQuestGroupCreatable(80000, true); A_Admin.SetQuestGroupCreatable(80001, false)")
@@ -37,19 +49,18 @@ fn admin_quest_log_special_item_supplies_item_and_absence() {
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 #[test]
 fn original_quest_helpers_preserve_tracker_consumer_outputs() {
-    let cache = wow_ui_sim::blizzard_ui_sync::default_cache_addons_path().unwrap();
-    let (env, loaded) = crate::common::blizzard_addon_harness::build_blizzard_addon_closure_env(
-        &cache,
+    crate::common::blizzard_addon_harness::with_blizzard_addon_startup_shape(
         &["Blizzard_ObjectiveTracker"],
         &[],
+        |env, loaded| {
+            assert_provider_order(loaded);
+            env.exec(include_str!("quest_helper_load_ownership.lua"))
+                .expect("supply distinct quest rows and notify the real tracker");
+            wow_ui_sim::startup::fire_one_on_update_tick(env);
+            assert_tracker_output(env);
+            assert_cache_identity_survives_update(env);
+        },
     );
-    assert_provider_order(&loaded);
-    env.exec(include_str!("quest_helper_load_ownership.lua"))
-        .expect("supply quest state and notify the real tracker");
-    env.apply_post_load_workarounds();
-    wow_ui_sim::startup::fire_one_on_update_tick(&env);
-    assert_tracker_output(&env);
-    assert_cache_identity_survives_update(&env);
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
@@ -66,11 +77,11 @@ fn assert_provider_order(loaded: &[String]) {
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn assert_cache_identity_survives_update(env: &wow_ui_sim::lua_api::WowLuaEnv) {
-    env.exec("QuestHelperCachedQuest = QuestCache.objects[80000]; A_Admin.FireEvent('QUEST_LOG_UPDATE')")
+    env.exec("QuestHelperCachedQuest = QuestCache.objects[990001]; A_Admin.FireEvent('QUEST_LOG_UPDATE')")
         .expect("repeat the original tracker event");
     wow_ui_sim::startup::fire_one_on_update_tick(env);
     let same: bool = env
-        .eval("return QuestCache.objects[80000] == QuestHelperCachedQuest")
+        .eval("return QuestCache.objects[990001] == QuestHelperCachedQuest")
         .expect("original cache object identity should remain stable");
     assert!(same);
 }
@@ -85,5 +96,5 @@ fn assert_tracker_output(env: &wow_ui_sim::lua_api::WowLuaEnv) {
     assert_eq!(output.2, true, "false group capability must hide its button");
     assert_eq!(output.3, true, "missing item must hide its button");
     assert_eq!(output.4, true, "cache entry must retain its quest identity");
-    assert!(output.5.contains("The Lost Expedition"));
+    assert!(output.5.contains("Group and item"));
 }

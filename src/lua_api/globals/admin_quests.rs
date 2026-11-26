@@ -6,10 +6,10 @@ use crate::lua_api::methods::borrow_state_mut;
 use crate::lua_api::sim_substates::{GossipQuestRow, GossipState, QuestRewardItem};
 use crate::lua_api::state::QuestLogEntry as RichQuestLogEntry;
 use crate::lua_bridge::{FromStack, TableBuilder};
-use rilua::LuaResult;
 #[cfg(not(feature = "client-wrath"))]
 use rilua::Val;
 use rilua::vm::state::LuaState;
+use rilua::{LuaResult, runtime_error};
 
 const DEFAULT_QUEST_ID: u32 = 80000;
 const DEFAULT_QUEST_TITLE: &str = "The Lost Expedition";
@@ -19,6 +19,8 @@ const AVAILABLE_MULTI_QUEST_ID: u32 = 80002;
 const COMPLETED_REWARD_NAME: &str = "Earthen Lockbox";
 const COMPLETED_REWARD_TEXTURE: &str = "Interface\\Icons\\INV_Box_01";
 const QUEST_GREETING_TEXT: &str = "How can I help you, adventurer?";
+const SET_QUEST_LOG_ENTRY_USAGE: &str =
+    "Usage: A_Admin.SetQuestLogEntry(questID, title, isComplete)";
 
 pub(super) fn register_quests(b: TableBuilder) -> LuaResult<TableBuilder> {
     #[cfg(all(feature = "profile-retail", feature = "retail-12-0-5"))]
@@ -26,9 +28,7 @@ pub(super) fn register_quests(b: TableBuilder) -> LuaResult<TableBuilder> {
         "RequestQuestAcceptConfirmation",
         request_quest_accept_confirmation,
     )?;
-    let b = b
-        .set_function("SetQuestGroupCreatable", set_quest_group_creatable)?
-        .set_function("SetQuestLogSpecialItem", set_quest_log_special_item)?;
+    let b = register_quest_state_inputs(b)?;
     let b = if crate::c_api::quest_objectives::ENABLED {
         b.set_function(
             "SetQuestObjectives",
@@ -49,6 +49,12 @@ pub(super) fn register_quests(b: TableBuilder) -> LuaResult<TableBuilder> {
     b.set_function("OpenQuestNpc", open_quest_npc)?
         .set_function("OpenMultiQuestNpc", open_multi_quest_npc)?
         .set_function("CloseQuestNpc", close_quest_npc)
+}
+
+fn register_quest_state_inputs(b: TableBuilder) -> LuaResult<TableBuilder> {
+    b.set_function("SetQuestLogEntry", set_quest_log_entry)?
+        .set_function("SetQuestGroupCreatable", set_quest_group_creatable)?
+        .set_function("SetQuestLogSpecialItem", set_quest_log_special_item)
 }
 
 #[cfg(feature = "client-wrath")]
@@ -94,6 +100,44 @@ fn request_quest_accept_confirmation(state: &mut LuaState) -> LuaResult<u32> {
     state.top = saved_top;
     result?;
     Ok(0)
+}
+
+fn set_quest_log_entry(state: &mut LuaState) -> LuaResult<u32> {
+    let quest_id = i32::from_stack(state, 1)?;
+    if quest_id <= 0 {
+        return Err(runtime_error(SET_QUEST_LOG_ENTRY_USAGE));
+    }
+    let title = String::from_stack(state, 2)?;
+    let is_complete = bool::from_stack(state, 3)?;
+    let mut sim = borrow_state_mut(state)?;
+    set_supplied_quest_log_entry(&mut sim, quest_id, title, is_complete);
+    Ok(0)
+}
+
+fn set_supplied_quest_log_entry(
+    sim: &mut crate::lua_api::SimState,
+    quest_id: i32,
+    title: String,
+    is_complete: bool,
+) {
+    if let Some(entry) = sim
+        .quest_log_entries
+        .entries
+        .iter_mut()
+        .find(|entry| entry.quest_id == quest_id)
+    {
+        entry.title = title;
+        entry.is_complete = is_complete;
+        return;
+    }
+    sim.quest_log_entries
+        .entries
+        .push(RichQuestLogEntry::new_supplied(
+            quest_id,
+            title,
+            is_complete,
+        ));
+    sim.quest_log.push(quest_id as u32);
 }
 
 fn set_quest_group_creatable(state: &mut LuaState) -> LuaResult<u32> {
