@@ -7,7 +7,7 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 fn quest_log_item_uses_supplied_rows_and_returns_no_data_for_misses() {
     let env = WowLuaEnv::new().expect("create Lua environment");
     env.exec(
-        r#"
+        r##"
         local questID = 81234
         A_Admin.SetQuestLogEntry(questID, "Tooltip source test", false)
         A_Admin.SetQuestLogRewardItems(questID, {
@@ -32,7 +32,7 @@ fn quest_log_item_uses_supplied_rows_and_returns_no_data_for_misses() {
         }), "invalid reward rows must be rejected")
         assert(C_TooltipInfo.GetQuestLogItem("reward", 1, questID).id == 6948,
             "invalid input must not replace the existing reward rows")
-        "#,
+        "##,
     )
     .expect("quest-log tooltip source behavior matches the supplied reward state");
 }
