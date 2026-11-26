@@ -23,6 +23,20 @@ tooltip_selection_getters_fixture! {
     }
 
     #[test]
+    fn tooltip_hyperlink_r82_spell_wrapper_values_do_not_replace_spell_identity() {
+        let env = tooltip_full_env_helpers::load_full_env_without_post_load();
+        env.exec(r#"
+            for _, case in ipairs({
+                {'spell:19750', 101, 202, 19750},
+                {'|cff00ff00|Hspell:53563:7|h[spell]|h|r', -303, 404, 53563},
+            }) do
+                local data = C_TooltipInfo.GetHyperlink(case[1], case[2], case[3])
+                assert(data and data.id == case[4], 'wrapper values must not replace the parsed spell ID')
+            end
+        "#).unwrap();
+    }
+
+    #[test]
     fn tooltip_hyperlink_r82_marker_priority_precedes_text_position() {
         let env = tooltip_full_env_helpers::load_full_env_without_post_load();
         env.exec(r#"
