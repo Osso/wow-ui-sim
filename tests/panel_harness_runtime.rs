@@ -120,9 +120,22 @@ fn forever_without_encounter_journal(env: &WowLuaEnv) -> bool {
     true
 }
 
+fn load_achievement_ui_consumer() -> WowLuaEnv {
+    let env = WowLuaEnv::new().expect("Failed to create Lua environment");
+    env.set_screen_size(1024.0, 768.0);
+    common::panel_fixtures::seed_addon_search_paths(&env);
+    let ui = blizzard_ui_dir();
+    load_panel_harness_addons(&env, &ui);
+    common::panel_fixtures::load_panel_startup_publishers(&env, &ui);
+    env.apply_post_load_workarounds();
+    fire_panel_harness_startup_events(&env);
+    env
+}
+
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
-prefork_full_ui_case! {
-fn pet_collection_button_uses_supplied_achievement_ui_access(env: &WowLuaEnv) {
+#[test]
+fn pet_collection_button_uses_supplied_achievement_ui_access() {
+    let env = load_achievement_ui_consumer();
     env.exec(
         r#"
         assert(C_AddOns.LoadAddOn("Blizzard_Collections"))
@@ -138,11 +151,11 @@ fn pet_collection_button_uses_supplied_achievement_ui_access(env: &WowLuaEnv) {
     )
     .expect("pet collection consumer should follow supplied UI access");
 }
-}
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
-prefork_full_ui_case! {
-fn achievement_microbutton_uses_supplied_ui_access(env: &WowLuaEnv) {
+#[test]
+fn achievement_microbutton_uses_supplied_ui_access() {
+    let env = load_achievement_ui_consumer();
     env.exec(
         r#"
         A_Admin.SetAchievementEarned(6, true)
@@ -157,11 +170,11 @@ fn achievement_microbutton_uses_supplied_ui_access(env: &WowLuaEnv) {
     )
     .expect("achievement microbutton should follow supplied UI access");
 }
-}
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
-prefork_full_ui_case! {
-fn achievement_microbutton_uses_earned_achievement_state(env: &WowLuaEnv) {
+#[test]
+fn achievement_microbutton_uses_earned_achievement_state() {
+    let env = load_achievement_ui_consumer();
     env.exec(
         r#"
         A_Admin.SetCanShowAchievementUI(true)
@@ -174,7 +187,6 @@ fn achievement_microbutton_uses_earned_achievement_state(env: &WowLuaEnv) {
         "#,
     )
     .expect("achievement microbutton should follow earned achievement state");
-}
 }
 
 #[test]
