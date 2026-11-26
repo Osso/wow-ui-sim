@@ -8,19 +8,6 @@ if SecureTypes == nil then
   SecureTypes = {}
 end
 
-do
-  local __wow_original_securecall = securecall
-  if type(__wow_original_securecall) == "function" and not rawget(_G, "__wow_securecall_accepts_names") then
-    function securecall(fn, ...)
-      if type(fn) == "string" then
-        fn = _G[fn]
-      end
-      return __wow_original_securecall(fn, ...)
-    end
-
-    rawset(_G, "__wow_securecall_accepts_names", true)
-  end
-end
 "#;
 
 const SECURE_TYPES_DEFAULTS_LUA: &str = r#"
@@ -173,7 +160,13 @@ end
 "#;
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
-    lua.exec(SECURE_TYPES_COMMON_LUA)?;
+    if !matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
+        lua.exec(SECURE_TYPES_COMMON_LUA)?;
+    }
 
     if !matches!(
         crate::client_profile::ACTIVE,
@@ -192,6 +185,13 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
 mod tests {
     use crate::lua_api::WowLuaEnv;
 
+    #[cfg(any(
+        feature = "client-ptr",
+        feature = "client-mists",
+        feature = "client-wrath",
+        feature = "client-era",
+        feature = "client-anniversary"
+    ))]
     #[test]
     fn installs_securecall_name_compatibility() {
         let env = WowLuaEnv::new().expect("lua env should initialize");

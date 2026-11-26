@@ -509,6 +509,11 @@ pub fn securecall(state: &mut LuaState) -> LuaResult<u32> {
     let func = resolve_securecall_function(state);
 
     if !matches!(func, Val::Function(_)) {
+        if matches!(stack_val(state, 1), Val::Str(_)) {
+            // INFERRED — R88g9 (native evidence pending): a missing or non-function
+            // named target reports the securecall function-type error.
+            call_error_handler_state(state, "securecall: function expected");
+        }
         state.push(Val::Nil);
         return Ok(1);
     }

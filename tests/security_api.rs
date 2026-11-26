@@ -214,6 +214,24 @@ fn test_securecall_accepts_global_function_name() {
 }
 
 #[test]
+fn test_securecall_missing_global_reports_function_expected() {
+    let env = env();
+    let message: String = env
+        .eval(
+            r#"
+            local previous = geterrorhandler()
+            local message
+            seterrorhandler(function(error) message = tostring(error) end)
+            securecall("SecureCallMissingGlobalProbe")
+            seterrorhandler(previous)
+            return message
+            "#,
+        )
+        .unwrap();
+    assert!(message.contains("securecall: function expected"));
+}
+
+#[test]
 fn test_securecallfunction() {
     let env = env();
     let result: i32 = env
