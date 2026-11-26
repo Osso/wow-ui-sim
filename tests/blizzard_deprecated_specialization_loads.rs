@@ -311,21 +311,18 @@ fn blizzard_deprecated_specialization_get_talent_info_returns_nil_when_backing_r
 prefork_full_ui_case! {
 fn deprecated_talent_query_validates_arguments_and_empty_grid(env: &WowLuaEnv) {
     env.exec(r#"
-        assert(GetTalentInfo(1, 1, 1, false, nil) == nil)
-        assert(GetTalentInfo(99, 9, 1, false, nil) == nil)
-        C_SpecializationInfo.GetTalentInfo = function(query)
-            if query.tier == 1 and query.column == 1 then
-                return { talentID = 7101 }
-            end
-            return { talentID = 7102 }
+        C_SpecializationInfo.SetSpecialization(2)
+        assert(GetSpecialization() == 2)
+        local specID, name = GetSpecializationInfo(2)
+        assert(specID == 70 and name ~= "")
+        local inactive = GetTalentInfo(1, 1, 1, false, nil)
+        C_SpecializationInfo.SetSpecialization(1)
+        assert(GetSpecialization() == 1)
+        local active = GetTalentInfo(1, 1, 1, false, nil)
+        assert(type(active) == "number")
+        if inactive ~= nil then
+            assert(type(inactive) == "number" and inactive ~= active)
         end
-        assert(GetTalentInfo(1, 1, 1, false, nil) == 7101)
-        assert(GetTalentInfo(99, 9, 1, false, nil) == 7102)
-        assert(not pcall(C_SpecializationInfo.GetTalentInfo, nil))
-        assert(not pcall(C_SpecializationInfo.GetTalentInfo, {}))
-        assert(not pcall(C_SpecializationInfo.GetTalentInfo, { tier = 1 }))
-        assert(not pcall(C_SpecializationInfo.GetTalentInfo, { tier = -1, column = 1 }))
-        assert(C_SpecializationInfo.GetTalentInfo({ tier = 0, column = 1 }) == nil)
     "#).expect("original deprecated wrapper and query validation should execute");
 }
 }

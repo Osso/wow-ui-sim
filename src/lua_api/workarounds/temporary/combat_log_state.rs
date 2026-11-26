@@ -405,7 +405,10 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
             | crate::client_profile::ClientProfile::WowForever
     );
     let publish_legacy = !cfg!(feature = "client-wowforever");
-    let publish_globals = !cfg!(feature = "retail-12-0-0");
+    let publish_globals = !cfg!(any(
+        feature = "client-retail",
+        feature = "client-wowforever"
+    ));
     let classic_empty_history = matches!(
         crate::client_profile::ACTIVE,
         crate::client_profile::ClientProfile::Era

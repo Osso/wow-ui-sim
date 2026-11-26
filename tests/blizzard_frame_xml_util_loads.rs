@@ -282,6 +282,49 @@ fn blizzard_frame_xml_util_does_not_publish_patch_12_1_difficulty_color_delegate
 }
 }
 
+const DIFFICULTY_UTIL_BEHAVIOR_PROBE: &str = r#"
+local normal, heroic = 1, 2
+local names = { [normal] = "Fixture Normal", [heroic] = "Fixture Heroic" }
+local primary = { 14 }
+DifficultyUtil.DifficultyNames = names
+DifficultyUtil.PrimaryRaids = primary
+assert(DifficultyUtil.GetDifficultyName(normal) == names[normal])
+assert(DifficultyUtil.GetDifficultyName(heroic) == names[heroic])
+assert(DifficultyUtil.IsPrimaryRaid(14) == true)
+assert(DifficultyUtil.IsPrimaryRaid(heroic) == false)
+return "ok"
+"#;
+
+const PVP_UTIL_BEHAVIOR_PROBE: &str = r#"
+PVP_RANK_1_NAME = "Fixture Bronze"
+PVP_RANK_2_NAME = "Fixture Silver"
+PVP_RANK_1_NEXT_RANK_DESC = "Fixture Bronze description"
+PVP_RANK_2_NEXT_RANK_DESC = "Fixture Silver description"
+CONQUEST_BRACKET_NAMES = { [1] = "Fixture 2v2", [2] = "Fixture 3v3" }
+assert(PVPUtil.GetTierName(1) == "Fixture Bronze")
+assert(PVPUtil.GetTierName(2) == "Fixture Silver")
+assert(PVPUtil.GetTierDescription(1) == "Fixture Bronze description")
+assert(PVPUtil.GetTierDescription(2) == "Fixture Silver description")
+assert(PVPUtil.GetBracketName(1) == "Fixture 2v2")
+assert(PVPUtil.GetBracketName(2) == "Fixture 3v3")
+assert(PVPUtil.GetCurrentSeasonNumber() == C_PvP.GetUIDisplaySeason())
+return "ok"
+"#;
+
+prefork_full_ui_case! {
+fn original_difficulty_util_reads_supplied_tables(env: &WowLuaEnv) {
+    let result: String = env.eval(DIFFICULTY_UTIL_BEHAVIOR_PROBE).unwrap();
+    assert_eq!(result, "ok");
+}
+}
+
+prefork_full_ui_case! {
+fn original_pvp_util_reads_supplied_rank_and_bracket_tables(env: &WowLuaEnv) {
+    let result: String = env.eval(PVP_UTIL_BEHAVIOR_PROBE).unwrap();
+    assert_eq!(result, "ok");
+}
+}
+
 prefork_full_ui_case! {
 fn blizzard_frame_xml_util_publishes_communities_and_pvp_namespaces(env: &WowLuaEnv) {
 
