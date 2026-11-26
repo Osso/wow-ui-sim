@@ -54,6 +54,13 @@ fn objective_tracker_renders_supplied_right_edge_buttons() {
             supply_button_quests(env);
             advance_tracker(env);
             assert_right_edge_buttons(env);
+            let first = read_item_cooldown(env);
+            assert_item_cooldown(first, 31_000.0);
+            update_item_cooldown(env);
+            advance_tracker(env);
+            let second = read_item_cooldown(env);
+            assert!(second.0 > first.0, "second item cooldown should start later");
+            assert_item_cooldown(second, 47_000.0);
         },
     );
 }
@@ -66,6 +73,8 @@ A_Admin.SetQuestGroupCreatable(81000, true)
 A_Admin.SetQuestGroupCreatable(81001, false)
 local itemIndex = C_QuestLog.GetLogIndexForQuestID(81000)
 A_Admin.SetQuestLogSpecialItem(itemIndex, 19001)
+A_Admin.SetItemCooldown(19001, 31)
+assert(GetQuestLogSpecialItemCooldown(C_QuestLog.GetLogIndexForQuestID(81001)) == nil)
 C_QuestLog.AddQuestWatch(81000)
 C_QuestLog.AddQuestWatch(81001)
 local watched = {}
@@ -81,6 +90,40 @@ A_Admin.FireEvent("QUEST_WATCH_LIST_CHANGED", 81001, true)
 fn supply_button_quests(env: &WowLuaEnv) {
     env.exec(SUPPLY_BUTTON_QUESTS)
         .expect("admin inputs should supply the two watched quests");
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+const UPDATE_ITEM_COOLDOWN: &str = r#"
+A_Admin.SetItemCooldown(19001, 47)
+A_Admin.FireEvent("QUEST_LOG_UPDATE")
+"#;
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+const READ_ITEM_COOLDOWN: &str = r#"
+local block = QuestObjectiveTracker.usedBlocks[QuestObjectiveTracker.blockTemplate][81000]
+local item = block.ItemButton
+local start, duration = item.Cooldown:GetCooldownTimes()
+local red, green, blue = item.icon:GetVertexColor()
+return start, duration, red, green, blue
+"#;
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn update_item_cooldown(env: &WowLuaEnv) {
+    env.exec(UPDATE_ITEM_COOLDOWN)
+        .expect("the tracker should receive its quest log refresh event");
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn read_item_cooldown(env: &WowLuaEnv) -> (f64, f64, f64, f64, f64) {
+    env.eval(READ_ITEM_COOLDOWN)
+        .expect("the item button cooldown and texture color should be readable")
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn assert_item_cooldown(actual: (f64, f64, f64, f64, f64), duration: f64) {
+    assert!(actual.0 > 0.0, "cooldown start should be positive");
+    assert_eq!(actual.1, duration);
+    assert_eq!((actual.2, actual.3, actual.4), (1.0, 1.0, 1.0));
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
