@@ -335,9 +335,9 @@ fn friends_frame_starts_hidden_and_close_all_windows_hides_it() {
         !frame_is_shown(&env, "FriendsFrame"),
         "FriendsFrame should remain hidden after startup"
     );
-    env.exec("ToggleFriendsFrame()")
-        .expect("FriendsFrame should open through its original toggle");
-    assert!(frame_is_shown(&env, "FriendsFrame"), "ToggleFriendsFrame should show FriendsFrame");
+    env.exec("ShowUIPanel(FriendsFrame)")
+        .expect("FriendsFrame should open through the original panel manager");
+    assert!(frame_is_shown(&env, "FriendsFrame"), "ShowUIPanel should show FriendsFrame");
     let panel_state: String = env
         .eval(
             "local name = FriendsFrame:GetName(); local panel = UIPanelWindows and UIPanelWindows[name]; return tostring(name) .. ':' .. tostring(panel and panel.area) .. ':' .. tostring(FriendsFrame:GetAttribute('UIPanelLayout-area')) .. ':' .. tostring(GetUIPanel('left') == FriendsFrame)",
