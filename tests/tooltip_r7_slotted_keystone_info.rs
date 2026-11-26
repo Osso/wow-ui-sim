@@ -37,10 +37,12 @@ fn slot_keystone(
     a: u32,
     b: u32,
 ) {
-    env.exec(&format!(
+    let result = env.exec(&format!(
         "A_Admin.AddBagItem(0, {bag_slot}, {item_id}, 1); A_Admin.SetKeystoneItemInfo(0, {bag_slot}, {item_id}, {map_selector}, {map_id}, {level}, {a}, {b}); C_Container.PickupContainerItem(0, {bag_slot}); C_ChallengeMode.SlotKeystone()"
-    ))
-    .unwrap();
+    ));
+    let selected_level: u32 = env.eval("return select(3, C_ChallengeMode.GetSlottedKeystoneInfo())").unwrap();
+    assert_eq!(selected_level, level, "the API publishes supplied keystone level");
+    result.expect("the original slotted-keystone event should complete");
 }
 
 fn assert_slotted_info(env: &WowLuaEnv, map_id: u32, name: &str, level: u32, a: u32, b: u32) {
