@@ -120,6 +120,10 @@ const NAMED_MANAGER_FRAMES: &[&str] = &[
     "SecureHandlersUpdateFrame",
 ];
 
+#[cfg(feature = "client-retail")]
+const RESTRICTED_ENV_IMPORT_PROBE: &str =
+    include_str!("common/restricted_environment_import_probe.lua");
+
 fn load_full_game_ui() -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("Failed to create Lua environment");
     env.set_screen_size(1024.0, 768.0);
@@ -553,6 +557,16 @@ fn tainted_addon_secure_handler_execute_runs_restricted_snippet_without_clearing
     assert!(caller_insecure_before, "addon caller must enter tainted");
     assert!(snippet_ran, "vendor restricted snippet must set the header attribute");
     assert!(caller_insecure_after, "secure dispatch must not clear addon caller taint");
+}
+}
+
+#[cfg(feature = "client-retail")]
+prefork_full_ui_case! {
+fn restricted_environment_secure_snippet_imports_item_and_action_apis(env: &WowLuaEnv) {
+    let result: (bool, bool, bool, bool, bool, bool) = env
+        .eval(RESTRICTED_ENV_IMPORT_PROBE)
+        .expect("original restricted snippet should return API results");
+    assert_eq!(result, (true, true, false, false, true, false));
 }
 }
 
