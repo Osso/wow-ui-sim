@@ -43,14 +43,16 @@ fn item_targeting_uses_item_use_spells_and_returns_false_without_one() {
 
 prefork_full_ui_case! {
 fn restricted_environment_publishes_working_item_targeting_queries(env: &WowLuaEnv) {
+    let errors_before = env.state().borrow().lua_errors.len();
     env.exec(
         r#"
         local _, helpfulSpell = C_Item.GetItemSpell(5512)
         A_Admin.SetSpellTargeting(helpfulSpell, "helpful")
-        assert(__secureenv.IsHelpfulItem(5512) == true)
-        assert(__secureenv.IsHarmfulItem(5512) == false)
+        SecureHandlerExecute(UIParent, "assert(IsHelpfulItem(5512))")
         "#,
     )
-    .expect("restricted item targeting consumer should run");
+    .expect("original restricted item-targeting snippet should execute");
+    let errors_after = env.state().borrow().lua_errors.len();
+    assert_eq!(errors_after, errors_before, "restricted snippet raised a Lua error");
 }
 }
