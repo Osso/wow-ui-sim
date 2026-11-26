@@ -40,13 +40,10 @@ fn original_specialization_talent_wrapper_uses_distinct_queries() {
     wow_ui_sim::loader::load_addon(&env.loader_env(), &toc)
         .expect("selected specialization addon should load");
 
-    let results: (i32, i32) = env
-        .eval(
-            r##"return select("#", GetTalentInfo(1, 1, 1, false, nil)),
-                      select("#", GetTalentInfo(2, 3, 1, false, nil))"##,
-        )
+    let results: (Option<String>, Option<String>) = env
+        .eval("return GetTalentInfo(1, 1, 1, false, nil), GetTalentInfo(2, 3, 1, false, nil)")
         .expect("original talent wrapper should accept both query shapes");
-    assert_eq!(results, (0, 0));
+    assert_eq!(results, (None, None));
 }
 
 #[test]
