@@ -467,6 +467,7 @@ fn apply_core_legacy_defaults(lua: &mut rilua::Lua) -> crate::Result<()> {
     temporary::modified_click_defaults::apply_bootstrap(lua)?;
     temporary::performance_metric_defaults::apply_bootstrap(lua)?;
     temporary::script_bucket_throttle_limits::apply_bootstrap(lua)?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::pool_constructor_defaults::apply_bootstrap(lua)?;
     temporary::misc_global_frame_defaults::apply_bootstrap(lua)?;
     Ok(())

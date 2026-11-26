@@ -165,6 +165,7 @@ pub(crate) mod pet_battle_runtime_state;
 pub(crate) mod ping_defaults;
 pub(crate) mod player_location_defaults;
 pub(crate) mod player_spells_onload_backfill;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod pool_constructor_defaults;
 pub(crate) mod possess_info_defaults;
 pub(crate) mod post_event_action_button_refresh;

@@ -180,10 +180,10 @@ A_Admin.SetContributionCollectors({
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 const CONTRIBUTION_COLLECTOR_REFRESH_LUA: &str = r#"
-WorldMapFrame:SetMapID(2248)
+WorldMapFrame:SetMapID(2249)
 local provider = CreateFromMixins(ContributionCollectorDataProviderMixin)
 WorldMapFrame:AddDataProvider(provider)
-provider:RefreshAllData()
+WorldMapFrame:SetMapID(2248)
 local names, areas = {}, {}
 for pin in WorldMapFrame:EnumeratePinsByTemplate("ContributionCollectorPinTemplate") do
     names[pin.name] = pin.collectorCreatureID
