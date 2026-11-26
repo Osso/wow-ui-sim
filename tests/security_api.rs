@@ -200,17 +200,22 @@ fn test_securecall() {
 #[test]
 fn test_securecall_accepts_global_function_name() {
     let env = env();
-    let result: i32 = env
+    let (named_result, numeric_result): (i32, i32) = env
         .eval(
             r#"
             function SecureCallNameProbe(a, b)
                 return a + b
             end
-            return securecall("SecureCallNameProbe", 3, 4)
+            function SecureCallNumericNameProbe(a, b)
+                return a * b
+            end
+            _G["12345"] = SecureCallNumericNameProbe
+            return securecall("SecureCallNameProbe", 3, 4), securecall(12345, 3, 4)
         "#,
         )
         .unwrap();
-    assert_eq!(result, 7);
+    assert_eq!(named_result, 7);
+    assert_eq!(numeric_result, 12);
 }
 
 #[test]
@@ -223,6 +228,7 @@ fn test_securecall_missing_global_reports_function_expected() {
             local message
             seterrorhandler(function(error) message = tostring(error) end)
             securecall("SecureCallMissingGlobalProbe")
+            securecall(987654321)
             seterrorhandler(previous)
             return message
             "#,

@@ -509,7 +509,7 @@ pub fn securecall(state: &mut LuaState) -> LuaResult<u32> {
     let func = resolve_securecall_function(state);
 
     if !matches!(func, Val::Function(_)) {
-        if matches!(stack_val(state, 1), Val::Str(_)) {
+        if matches!(stack_val(state, 1), Val::Str(_) | Val::Number(_)) {
             // INFERRED — R88g9 (native evidence pending): a missing or non-function
             // named target reports the securecall function-type error.
             call_error_handler_state(state, "securecall: function expected");
@@ -524,15 +524,17 @@ pub fn securecall(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn resolve_securecall_function(state: &mut LuaState) -> Val {
-    match stack_val(state, 1) {
-        Val::Str(name_ref) => state
-            .gc
-            .tables
-            .get(state.global)
-            .map(|table| table.get_str(name_ref, &state.gc.string_arena))
-            .unwrap_or(Val::Nil),
-        value => value,
-    }
+    let name = match stack_val(state, 1) {
+        Val::Str(name) => name,
+        Val::Num(number) => state.intern_string(number.to_string().as_bytes()),
+        value => return value,
+    };
+    state
+        .gc
+        .tables
+        .get(state.global)
+        .map(|table| table.get_str(name, &state.gc.string_arena))
+        .unwrap_or(Val::Nil)
 }
 
 fn collect_securecall_args(state: &LuaState) -> Vec<Val> {
