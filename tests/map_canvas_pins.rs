@@ -73,7 +73,10 @@ fn world_map_fog_pin_refreshes_for_two_maps_and_hides_stale_assets() {
     let result: String = env.eval(FOG_PIN_MAP_REFRESH_LUA).unwrap();
     let current_errors = env.state().borrow().lua_errors.len();
     assert_eq!(result, "ok", "fog pin refresh failed: {result}");
-    assert_eq!(current_errors, previous_errors, "map changes produced Lua errors");
+    assert_eq!(
+        current_errors, previous_errors,
+        "map changes produced Lua errors"
+    );
 }
 
 #[test]
