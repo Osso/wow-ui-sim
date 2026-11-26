@@ -47,12 +47,6 @@ end
 "#;
 
 const GAME_TIME_BOOTSTRAP_LUA: &str = r#"
-if GetTimePreciseSec == nil then
-    function GetTimePreciseSec()
-        return GetTime()
-    end
-end
-
 if GameTime_GetTime == nil then
     function GameTime_GetTime(_useLocalTime)
         return "12:00"
@@ -76,6 +70,15 @@ if type(GameTimeFrame) == "table" and GameTimeFrame.pendingCalendarInvites == ni
 end
 "#;
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+const PRECISE_TIME_DEFAULT_LUA: &str = r#"
+if GetTimePreciseSec == nil then
+    function GetTimePreciseSec()
+        return GetTime()
+    end
+end
+"#;
+
 pub(crate) fn register_secure_environment_base(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(GAME_TIME_SECURE_ENVIRONMENT_BASE_LUA)?;
     Ok(())
@@ -83,6 +86,8 @@ pub(crate) fn register_secure_environment_base(lua: &mut rilua::Lua) -> crate::R
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(GAME_TIME_SECURE_ENVIRONMENT_BASE_LUA)?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+    lua.exec(PRECISE_TIME_DEFAULT_LUA)?;
     lua.exec(GAME_TIME_BOOTSTRAP_LUA)?;
     Ok(())
 }
