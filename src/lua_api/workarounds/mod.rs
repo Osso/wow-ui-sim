@@ -394,6 +394,7 @@ fn apply_core_foundation_addon_defaults(lua: &mut rilua::Lua) -> crate::Result<(
 }
 
 fn apply_core_foundation_journal_defaults(lua: &mut rilua::Lua) -> crate::Result<()> {
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::achievement_ui_access_defaults::apply_bootstrap(lua)?;
     temporary::achievement_search_preview::apply_bootstrap(lua)?;
     temporary::alert_frame_defaults::apply_bootstrap(lua)?;

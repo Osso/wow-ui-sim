@@ -20,6 +20,7 @@ pub(crate) mod wrath_startup_defaults;
 
 pub(crate) mod account_store_set_storefront;
 pub(crate) mod achievement_search_preview;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod achievement_ui_access_defaults;
 #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod addon_compartment_defaults;
