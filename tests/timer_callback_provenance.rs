@@ -86,34 +86,61 @@ fn registration_and_invocation_contracts_hold_in_both_diagnostic_modes() {
     }
     for threshold in [None, Some("0")] {
         let stderr = run_isolated(threshold, exercise_registration_contracts).unwrap();
-        assert!(stderr.contains("registration-contract-complete"), "{stderr}");
-        if threshold.is_none() {
-            assert!(!stderr.contains("[handler-entry]"), "{stderr}");
-            assert!(!stderr.contains("callback_source="), "{stderr}");
-            assert!(!stderr.contains("timer_id="), "{stderr}");
-            continue;
-        }
-        let entries: Vec<_> = stderr.lines().filter(|line| line.starts_with("[handler-entry]")).collect();
-        assert_eq!(entries.len(), 7, "{stderr}");
-        for (name, count) in [("After", 1), ("Timer", 1), ("Ticker", 2), ("Direct", 1), ("Rescheduled", 1), ("Error", 1)] {
-            let label = format!("callback_source=@TimerContract/{name}.lua:1");
-            let matching: Vec<_> = entries.iter().filter(|line| line.contains(&label)).collect();
-            assert_eq!(matching.len(), count, "{name}: {stderr}");
-            let id = field(matching[0], "timer_id");
-            assert!(matching.iter().all(|line| field(line, "timer_id") == id));
-            let returned: Vec<_> = stderr.lines().filter(|line| line.starts_with("[handler]") && line.contains(&label)).collect();
-            assert_eq!(returned.len(), count, "{stderr}");
-            for record in returned {
-                assert_eq!(field(record, "timer_id"), id);
-                assert_eq!(field(record, "outcome"), if name == "Error" { "error" } else { "ok" });
-            }
-        }
-        assert!(!stderr.contains("callback_source=@TimerContract/Mutation.lua"), "{stderr}");
+        assert_registration_contract_complete(&stderr, threshold.is_some());
+    }
+}
+
+fn assert_registration_contract_complete(stderr: &str, diagnostics: bool) {
+    assert!(stderr.contains("registration-contract-complete"), "{stderr}");
+    if !diagnostics {
+        assert!(!stderr.contains("[handler-entry]"), "{stderr}");
+        assert!(!stderr.contains("callback_source="), "{stderr}");
+        assert!(!stderr.contains("timer_id="), "{stderr}");
+        return;
+    }
+    let entries: Vec<_> = stderr.lines().filter(|line| line.starts_with("[handler-entry]")).collect();
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    assert_eq!(entries.len(), 7, "{stderr}");
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+    assert_eq!(entries.len(), 6, "{stderr}");
+    assert_registration_entry_records(stderr, &entries);
+    assert!(!stderr.contains("callback_source=@TimerContract/Mutation.lua"), "{stderr}");
+}
+
+fn assert_registration_entry_records(stderr: &str, entries: &[&str]) {
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let expected = [("After", 1), ("Timer", 1), ("Ticker", 2), ("Direct", 1), ("Rescheduled", 1), ("Error", 1)];
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+    let expected = [("After", 1), ("Timer", 1), ("Ticker", 2), ("Rescheduled", 1), ("Error", 1)];
+    for (name, count) in expected {
+        let label = format!("callback_source=@TimerContract/{name}.lua:1");
+        let matching: Vec<_> = entries.iter().filter(|line| line.contains(&label)).collect();
+        assert_eq!(matching.len(), count, "{name}: {stderr}");
+        let id = field(matching[0], "timer_id");
+        assert!(matching.iter().all(|line| field(line, "timer_id") == id));
+        assert_registration_return_records(stderr, &label, &id, count, name);
+    }
+}
+
+fn assert_registration_return_records(stderr: &str, label: &str, id: &str, count: usize, name: &str) {
+    let returned: Vec<_> = stderr.lines()
+        .filter(|line| line.starts_with("[handler]") && line.contains(label)).collect();
+    assert_eq!(returned.len(), count, "{stderr}");
+    for record in returned {
+        assert_eq!(field(record, "timer_id"), id);
+        assert_eq!(field(record, "outcome"), if name == "Error" { "error" } else { "ok" });
     }
 }
 
 fn exercise_registration_contracts() {
     let env = WowLuaEnv::new().unwrap();
+    setup_contract_recorder(&env);
+    register_contract_callbacks(&env);
+    schedule_contract_callbacks(&env);
+    assert_contract_callback_results(&env);
+}
+
+fn setup_contract_recorder(env: &WowLuaEnv) {
     env.exec(r#"
         Contract = { trace = {}, errors = 0 }
         function Contract.record(name, ...)
@@ -126,6 +153,9 @@ fn exercise_registration_contracts() {
             Contract.errors = Contract.errors + 1
         end)
     "#).unwrap();
+}
+
+fn register_contract_callbacks(env: &WowLuaEnv) {
     for (name, body) in [
         ("After", "assert(select('#', ...) == 0); Contract.record('After')"),
         ("Timer", "local proxy = ...; assert(select('#', ...) == 1 and proxy == Contract.timer); assert(proxy.label == 'shared'); assert(({[Contract.timer]=true})[proxy] == nil); Contract.record('Timer'); C_Timer.After(0, Contract.Rescheduled)"),
@@ -138,6 +168,9 @@ fn exercise_registration_contracts() {
     ] {
         env.exec_named(&format!("Contract.{name} = function(...) {body} end; debug.setobjecttaint(Contract.{name}, 'TimerContract')"), &format!("@TimerContract/{name}.lua")).unwrap();
     }
+}
+
+fn schedule_contract_callbacks(env: &WowLuaEnv) {
     env.exec(r#"
         C_Timer.After(0, Contract.After)
         local container = C_FunctionContainers.CreateCallback(Contract.Timer)
@@ -145,11 +178,6 @@ fn exercise_registration_contracts() {
         assert(Contract.timer == container)
         Contract.timer.label = 'shared'
         Contract.ticker = C_Timer.NewTicker(0, Contract.Ticker, 5)
-        Contract.direct = C_Timer.NewTimedSignalMap(Contract.Direct)
-        Contract.direct:SignalAt(19, 100)
-        Contract.direct:SignalAt(19, 0)
-        Contract.direct:SignalAt(20, 0)
-        Contract.direct:CancelSignal(20)
         C_Timer.After(0, Contract.Error)
         local cancelled = C_Timer.NewTimer(0, Contract.Cancelled)
         cancelled:Cancel()
@@ -159,10 +187,33 @@ fn exercise_registration_contracts() {
             for wrapper in pairs(originals) do originals[wrapper] = Contract.Mutation end
         end
     "#).unwrap();
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    schedule_timed_signal_map(env);
     env.process_timers().unwrap();
     env.process_timers().unwrap();
     env.exec("Contract.ticker:Cancel(); assert(Contract.ticker:IsCancelled())").unwrap();
     env.process_timers().unwrap();
+}
+
+fn schedule_timed_signal_map(env: &WowLuaEnv) {
+    env.exec(r#"
+        Contract.direct = C_Timer.NewTimedSignalMap(Contract.Direct)
+        Contract.direct:SignalAt(19, 100)
+        Contract.direct:SignalAt(19, 0)
+        Contract.direct:SignalAt(20, 0)
+        Contract.direct:CancelSignal(20)
+    "#).unwrap();
+}
+
+fn assert_contract_callback_results(env: &WowLuaEnv) {
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    assert_timed_signal_contract_results(env);
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+    assert_legacy_timer_contract_results(env);
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn assert_timed_signal_contract_results(env: &WowLuaEnv) {
     env.exec(r#"
         local counts = {}
         for _, name in ipairs(Contract.trace) do counts[name] = (counts[name] or 0) + 1 end
@@ -174,6 +225,28 @@ fn exercise_registration_contracts() {
         assert(Contract.direct:GetSignalCount() == 0)
         print('registration-contract-complete')
     "#).unwrap();
+}
+
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+fn assert_legacy_timer_contract_results(env: &WowLuaEnv) {
+    env.exec(r#"
+        local counts = {}
+        for _, name in ipairs(Contract.trace) do counts[name] = (counts[name] or 0) + 1 end
+        assert(#Contract.trace == 6)
+        for _, name in ipairs({'After', 'Timer', 'Rescheduled', 'Error'}) do
+            assert(counts[name] == 1, name)
+        end
+        assert(counts.Ticker == 2 and Contract.errors == 1)
+        print('registration-contract-complete')
+    "#).unwrap();
+}
+
+fn expected_invoker_source(line: u32) -> String {
+    if cfg!(any(feature = "client-retail", feature = "client-wowforever")) {
+        format!(" source={SOURCE}:{line}")
+    } else {
+        " source==".to_string()
+    }
 }
 
 fn assert_invocation(stderr: &str, line: u32, body: &str, outcome: &str) {
@@ -198,7 +271,7 @@ fn assert_invocation(stderr: &str, line: u32, body: &str, outcome: &str) {
     let returned = returns[0];
     for record in [entry, returned] {
         assert!(record.contains("handler=C_Timer frame=#0"), "{record}");
-        assert!(record.contains(&format!(" source={SOURCE}:{line}")), "{record}");
+        assert!(record.contains(&expected_invoker_source(line)), "{record}");
     }
     assert!(returned.contains("duration_ms="), "{returned}");
     assert_eq!(field(returned, "outcome"), outcome);

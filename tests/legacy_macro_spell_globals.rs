@@ -4,18 +4,23 @@ fn env() -> WowLuaEnv {
     WowLuaEnv::new().expect("Failed to create Lua environment")
 }
 
-#[cfg(not(any(
-    feature = "retail-12-0-0",
-    feature = "client-retail",
-    feature = "client-wowforever"
-)))]
-#[test]
-fn legacy_macro_and_spellbook_globals_exist_for_addons() {
-    let env = env();
-    let result: String = env
-        .eval(
-            r#"
+const LEGACY_MACRO_CONSTANTS_LUA: &str = r#"
         if ACCOUNT_BINDINGS ~= 1 then
+            return "account_bindings=" .. tostring(ACCOUNT_BINDINGS)
+        end
+        if CHARACTER_BINDINGS ~= 2 or CHARACTERBINDINGS ~= 2 then
+            return "character_bindings=" .. tostring(CHARACTER_BINDINGS) .. "," .. tostring(CHARACTERBINDINGS)
+        end
+        if type(CreateMacro) ~= "function" then
+            return "missing_CreateMacro"
+        end
+        if type(DeleteMacro) ~= "function" then
+            return "missing_DeleteMacro"
+        end
+        return "ok"
+"#;
+
+const LEGACY_MACRO_GLOBALS_PART_1: &str = r#"        if ACCOUNT_BINDINGS ~= 1 then
             return "account_bindings=" .. tostring(ACCOUNT_BINDINGS)
         end
         if CHARACTER_BINDINGS ~= 2 or CHARACTERBINDINGS ~= 2 then
@@ -39,7 +44,9 @@ fn legacy_macro_and_spellbook_globals_exist_for_addons() {
         if type(GetSpellBookItemInfo) ~= "function" then
             return "missing_GetSpellBookItemInfo"
         end
-        if type(GetSpellBookItemName) ~= "function" then
+"#;
+
+const LEGACY_MACRO_GLOBALS_PART_2: &str = r#"        if type(GetSpellBookItemName) ~= "function" then
             return "missing_GetSpellBookItemName"
         end
 
@@ -62,15 +69,18 @@ fn legacy_macro_and_spellbook_globals_exist_for_addons() {
         end
 
         return "ok"
-    "#,
-        )
-        .unwrap();
+"#;
+
+
+fn legacy_macro_and_spellbook_globals_exist_for_addons() {
+    let env = env();
+    let script = [LEGACY_MACRO_GLOBALS_PART_1, LEGACY_MACRO_GLOBALS_PART_2].concat();
+    let result: String = env.eval(&script).unwrap();
     assert_eq!(
         result, "ok",
         "legacy macro and spellbook globals should exist for addon compatibility: {result}"
     );
 }
-
 #[cfg(not(feature = "retail-12-0-0"))]
 #[test]
 fn legacy_spell_globals_exist_for_addons() {

@@ -33,7 +33,7 @@ assert(pin.isWaitingForLoad == nil, "exploration pin should finish loading")
 assert(math.abs(pin:GetAlpha() - WorldMapFrame:GetGlobalAlpha()) < 0.001, "pin alpha should refresh")
 "#;
 
-const TWO_MAP_CANVAS_PROOF: &str = r#"
+const TWO_MAP_CANVAS_PROOF_PART_1: &str = r#"
 local mapID = {map_id}
 local map = WorldMapFrame
 map:SetMapID(mapID)
@@ -58,7 +58,9 @@ assert(scroll.baseScale > 0 and scroll.targetScale > 0 and scroll:GetCanvasScale
 local levels = assert(scroll.zoomLevels)
 assert(type(levels) == "table" and #levels > 1)
 local previousScale = 0
-for index, level in ipairs(levels) do
+"#;
+
+const TWO_MAP_CANVAS_PROOF_PART_2: &str = r#"for index, level in ipairs(levels) do
   assert(level.scale > previousScale, "zoom levels must increase")
   previousScale = level.scale
 end
@@ -68,6 +70,10 @@ assert(scroll:GetZoomLevelIndexForScale(levels[#levels].scale) == #levels)
 local currentIndex = scroll:GetZoomLevelIndexForScale(scroll:GetCanvasScale())
 assert(scroll:GetCurrentLayerIndex() == levels[currentIndex].layerIndex)
 "#;
+
+fn two_map_canvas_proof() -> String {
+    [TWO_MAP_CANVAS_PROOF_PART_1, TWO_MAP_CANVAS_PROOF_PART_2].concat()
+}
 
 fn load_full_game_ui() -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("Failed to create Lua environment");
@@ -120,13 +126,20 @@ fn forever_world_map_show_and_sustained_updates_are_error_free() {
     assert!(target_scale > 0.0);
     assert_eq!(quest_limit, 40);
 
+    assert_forever_map_errors_are_empty(&env);
+    assert_party_quest_count_tracks_supplied_members(&env);
+}
+
+fn assert_forever_map_errors_are_empty(env: &WowLuaEnv) {
     let errors = env.state().borrow().lua_errors.clone();
     assert!(
         errors.is_empty(),
         "showing and ticking the Forever world map emitted Lua errors:\n{}",
         errors.join("\n")
     );
+}
 
+fn assert_party_quest_count_tracks_supplied_members(env: &WowLuaEnv) {
     let quest_id = {
         let mut state = env.state().borrow_mut();
         state.party_group_active = true;
@@ -156,7 +169,7 @@ fn settle_world_map(env: &WowLuaEnv) {
 }
 
 fn assert_map_canvas_state(env: &WowLuaEnv, map_id: u32) {
-    let script = TWO_MAP_CANVAS_PROOF.replace("{map_id}", &map_id.to_string());
+    let script = two_map_canvas_proof().replace("{map_id}", &map_id.to_string());
     env.exec(&script).expect("original WorldMap SetMapID should build canvas state");
 }
 

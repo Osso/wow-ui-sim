@@ -91,8 +91,13 @@ fn shared_container_two_tickers_keep_independent_counts() {
 #[test]
 fn fired_callback_receives_proxy_equal_to_handle() {
     let env = env();
-    // Retail: the callback gets a proxy of the handle that == the handle but is a
-    // distinct table key, and shares the handle's fields.
+    schedule_proxy_callback(&env);
+    wait_for_proxy_callback(&env);
+    assert_proxy_callback_result(&env);
+}
+
+fn schedule_proxy_callback(env: &WowLuaEnv) {
+    // Retail: the callback gets a proxy equal to the handle, but a distinct raw key.
     let _: () = env
         .eval(
             r#"
@@ -110,16 +115,20 @@ fn fired_callback_receives_proxy_equal_to_handle() {
             "#,
         )
         .unwrap();
+}
 
-    let deadline = std::time::Instant::now() + std::time::Duration::from_secs(3);
-    while std::time::Instant::now() < deadline {
-        process_pending_timers(&env);
+fn wait_for_proxy_callback(env: &WowLuaEnv) {
+    let deadline = Instant::now() + Duration::from_secs(3);
+    while Instant::now() < deadline {
+        process_pending_timers(env);
         if env.eval::<bool>("return _G.__tcp.fired").unwrap() {
             break;
         }
         std::thread::sleep(Duration::from_millis(15));
     }
+}
 
+fn assert_proxy_callback_result(env: &WowLuaEnv) {
     let (fired, nargs, eq, distinct, shares): (bool, f64, bool, bool, bool) = env
         .eval(
             r#"

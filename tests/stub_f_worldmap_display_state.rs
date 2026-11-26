@@ -12,7 +12,7 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::startup::collect_lua_error_startup;
 
-const DISPLAY_STATE_CONTROLS_LUA: &str = r#"
+const DISPLAY_STATE_CONTROLS_LUA_PART_1: &str = r#"
 local map = assert(WorldMapFrame)
 local owner = QuestLogOwnerMixin.SetDisplayState
 assert(map.HandleUserActionMaximizeSelf == QuestLogOwnerMixin.HandleUserActionMaximizeSelf)
@@ -33,11 +33,14 @@ local function geometry()
   local sw, sh = scroll:GetWidth(), scroll:GetHeight()
   local cw, ch = child:GetWidth(), child:GetHeight()
   assert(w > 0 and h > 0 and sw > 0 and sh > 0 and cw > 0 and ch > 0)
+  assert(scroll.currentScale > 0)
   assert(scroll.targetScale > 0)
   return w, h, sw, sh, cw, ch
 end
 SetCVar("miniWorldMap", 1)
-SetCVar("questLogOpen", 0)
+"#;
+
+const DISPLAY_STATE_CONTROLS_LUA_PART_2: &str = r#"SetCVar("questLogOpen", 0)
 for _ = 1, 2 do
   ToggleWorldMap()
   assert(map:IsShown() and map:IsMinimized() and not map.QuestLog:IsShown())
@@ -62,11 +65,17 @@ for _ = 1, 2 do
   panel.CloseButton:Click("LeftButton")
   assert(not map.QuestLog:IsShown() and GetCVar("questLogOpen") == "0")
   local restoredW, restoredH = geometry()
-  assert(restoredW == w and restoredH == h and map:GetMapID() == mapID)
+"#;
+
+const DISPLAY_STATE_CONTROLS_LUA_PART_3: &str = r#"  assert(restoredW == w and restoredH == h and map:GetMapID() == mapID)
   ToggleWorldMap()
   assert(not map:IsShown())
 end
 "#;
+
+fn display_state_controls_lua() -> String {
+    [DISPLAY_STATE_CONTROLS_LUA_PART_1, DISPLAY_STATE_CONTROLS_LUA_PART_2, DISPLAY_STATE_CONTROLS_LUA_PART_3].concat()
+}
 
 const MINIMAP_ZONE_BUTTON_LUA: &str = r#"
 local map = assert(WorldMapFrame)
@@ -96,7 +105,7 @@ end
 SetCVar("miniWorldMap", 0)
 "#;
 
-const MAPPIN_WORLDQUEST_LUA: &str = r#"
+const MAPPIN_WORLDQUEST_LUA_PART_1: &str = r#"
 local map = assert(WorldMapFrame)
 local slash = assert(SlashCmdList[SLASH_COMMAND.MAPPIN])
 assert(LinkUtil.IsLinkHandlerRegistered(LinkTypes.WorldQuest))
@@ -121,7 +130,9 @@ for _, case in ipairs({{2248, 25, 75}, {2214, 60, 40}}) do
   assert(child == scroll.Child and scroll.targetScale > 0)
   assert(child:GetWidth() > 0 and child:GetHeight() > 0)
   ToggleWorldMap()
-  assert(not map:IsShown())
+"#;
+
+const MAPPIN_WORLDQUEST_LUA_PART_2: &str = r#"  assert(not map:IsShown())
 end
 SetItemRef("worldquest:1", "|Hworldquest:1|h[World Quest]|h", "LeftButton", DEFAULT_CHAT_FRAME)
 assert(map:IsShown())
@@ -130,6 +141,10 @@ assert(not map:IsShown())
 C_Map.ClearUserWaypoint()
 assert(not C_Map.HasUserWaypoint())
 "#;
+
+fn mappin_worldquest_lua() -> String {
+    [MAPPIN_WORLDQUEST_LUA_PART_1, MAPPIN_WORLDQUEST_LUA_PART_2].concat()
+}
 
 fn assert_world_map_startup_order(startup: &[StartupAddon]) -> (usize, usize) {
     let canvas = startup.iter().position(|a| a.name == "Blizzard_MapCanvas").unwrap();
@@ -176,35 +191,35 @@ fn load_normal_game_worldmap() -> WowLuaEnv {
     env
 }
 
-fn assert_lua_errors_unchanged(env: &WowLuaEnv, before: &[String]) {
-    let after = env.state().borrow().lua_errors.clone();
-    assert_eq!(after, before, "WorldMap actions added Lua errors");
+fn assert_lua_errors_empty(env: &WowLuaEnv) {
+    assert!(
+        env.state().borrow().lua_errors.is_empty(),
+        "unfiltered errors: {:?}",
+        env.state().borrow().lua_errors
+    );
 }
 
 #[test]
 fn original_worldmap_display_state_controls_preserve_canvas_geometry() {
     let env = load_normal_game_worldmap();
-    let errors_before = env.state().borrow().lua_errors.clone();
-    env.exec(DISPLAY_STATE_CONTROLS_LUA).expect("WorldMap controls should preserve canvas geometry");
-    assert_lua_errors_unchanged(&env, &errors_before);
+    env.exec(&display_state_controls_lua()).expect("WorldMap controls should preserve canvas geometry");
+    assert_lua_errors_empty(&env);
 }
 
 #[test]
 fn original_minimap_zone_button_preserves_world_map_toggle() {
     let env = load_normal_game_worldmap();
-    let errors_before = env.state().borrow().lua_errors.clone();
     env.exec(MINIMAP_ZONE_BUTTON_LUA).expect("Minimap zone button should toggle the WorldMap");
     env.send_key_press("M", None).expect("dispatch M to open map");
     env.exec("assert(WorldMapFrame:IsShown() and WorldMapFrame:IsMaximized())").expect("M opens maximized map");
     env.send_key_press("M", None).expect("dispatch M to close map");
     env.exec("assert(not WorldMapFrame:IsShown())").expect("M closes map");
-    assert_lua_errors_unchanged(&env, &errors_before);
+    assert_lua_errors_empty(&env);
 }
 
 #[test]
 fn original_mappin_and_worldquest_link_preserve_world_map_open() {
     let env = load_normal_game_worldmap();
-    let errors_before = env.state().borrow().lua_errors.clone();
-    env.exec(MAPPIN_WORLDQUEST_LUA).expect("Mappin and WorldQuest link should open the WorldMap");
-    assert_lua_errors_unchanged(&env, &errors_before);
+    env.exec(&mappin_worldquest_lua()).expect("Mappin and WorldQuest link should open the WorldMap");
+    assert_lua_errors_empty(&env);
 }

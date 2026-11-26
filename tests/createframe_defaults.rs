@@ -93,9 +93,7 @@ fn assert_map_canvas_contract(env: &WowLuaEnv) {
     assert_eq!(contract, (true, true));
 }
 
-#[test]
-fn original_consumers_get_constructor_defaults_and_xml_children() {
-    let env = game_ui_env();
+fn supply_createframe_inventory_candidates(env: &WowLuaEnv) {
     env.exec(
         r#"
         A_Admin.SetPlayerPresent(true)
@@ -116,6 +114,12 @@ fn original_consumers_get_constructor_defaults_and_xml_children() {
         "#,
     )
     .expect("supply two candidates to the original equipment flyout");
+}
+
+#[test]
+fn original_consumers_get_constructor_defaults_and_xml_children() {
+    let env = game_ui_env();
+    supply_createframe_inventory_candidates(&env);
     assert_inventory_candidates_are_supplied(&env);
     let addon = addon_createframe_probe();
     load_addon(
