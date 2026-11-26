@@ -200,20 +200,21 @@ fn key_blizzard_panels_registered() {
 fn show_ui_panel_named_securecall_keeps_panels_secure() {
     test_timeout! {
         let env = setup_env();
-        let result: (bool, bool, bool, bool) = env.eval(r#"
+        let result: (bool, bool, bool, bool, bool) = env.eval(r#"
             local secureInside
-            hooksecurefunc("CloseWindows", function()
+            hooksecurefunc("CloseAllWindows", function()
                 secureInside = issecure()
             end)
-            ShowUIPanel(GameMenuFrame)
-            local firstShown = GameMenuFrame:IsShown()
+            ShowUIPanel(CinematicFrame)
+            local firstShown = CinematicFrame:IsShown()
             local firstSecure = secureInside
-            HideUIPanel(GameMenuFrame)
+            HideUIPanel(CinematicFrame)
+            local loaded = C_AddOns.LoadAddOn("Blizzard_BarbershopUI")
             secureInside = nil
-            ShowUIPanel(HelpFrame)
-            return firstShown, HelpFrame:IsShown(), firstSecure, secureInside
+            ShowUIPanel(BarberShopFrame)
+            return firstShown, loaded, BarberShopFrame:IsShown(), firstSecure, secureInside
         "#).unwrap();
-        assert_eq!(result, (true, true, true, true));
+        assert_eq!(result, (true, true, true, true, true));
     }
 }
 
