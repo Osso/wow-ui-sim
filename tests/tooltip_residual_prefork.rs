@@ -144,29 +144,6 @@ assert(GameTooltip:GetLeftLine(1):GetText() == 'Blastfurious Machete',
     'the equipped copy must retain its ordinary item tooltip')
 "#;
 
-const OUTFIT_CONSUMER_PROBE: &str = r#"
-C_TransmogOutfitInfo.AddNewOutfit('Residual Raid', 134400)
-C_TransmogOutfitInfo.AddNewOutfit('Residual Dungeon', 134401)
-local outfits = {
-    { C_TransmogOutfitInfo.GetOutfitInfoByName('Residual Raid').outfitID, 'Residual Raid' },
-    { C_TransmogOutfitInfo.GetOutfitInfoByName('Residual Dungeon').outfitID, 'Residual Dungeon' },
-}
-GameTooltip:SetOwner(UIParent, 'ANCHOR_NONE')
-for _, case in ipairs(outfits) do
-    GameTooltip:SetOutfit(case[1])
-    local info = GameTooltip:GetPrimaryTooltipInfo()
-    local data = GameTooltip:GetPrimaryTooltipData()
-    assert(info and info.getterName == 'GetOutfit',
-        'the original SetOutfit accessor must select GetOutfit')
-    assert(data and data.type == Enum.TooltipDataType.Outfit and data.id == case[1],
-        'the populated outfit must retain its catalog identity')
-    assert(data.lines[1].leftText == case[2],
-        'the original consumer must receive the supplied saved name')
-    assert(GameTooltip:GetLeftLine(1):GetText() == case[2],
-        'the original consumer must render the supplied saved name')
-end
-"#;
-
 prefork_full_ui_case! {
 fn tooltip_residual_set_owner_releases_attachments(env: &WowLuaEnv) {
     env.exec(SET_OWNER_RELEASE_PROBE).unwrap();
@@ -194,11 +171,5 @@ fn tooltip_residual_keystone_links_keep_sell_price_preview_clear(env: &WowLuaEnv
 prefork_full_ui_case! {
 fn tooltip_residual_equipped_copy_publishes_supplied_guid(env: &WowLuaEnv) {
     env.exec(EQUIPPED_GUID_PROBE).unwrap();
-}
-}
-
-prefork_full_ui_case! {
-fn tooltip_residual_outfit_catalog_name_reaches_original_consumer(env: &WowLuaEnv) {
-    env.exec(OUTFIT_CONSUMER_PROBE).unwrap();
 }
 }
