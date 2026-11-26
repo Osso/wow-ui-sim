@@ -120,17 +120,13 @@ fn forever_without_encounter_journal(env: &WowLuaEnv) -> bool {
     true
 }
 
-#[cfg(feature = "client-retail")]
-#[test]
-fn pet_collection_button_uses_supplied_achievement_ui_access() {
-    let env = WowLuaEnv::new().expect("Failed to create Lua environment");
-    env.set_screen_size(1024.0, 768.0);
-    env.state().borrow_mut().addon_base_paths = vec![blizzard_ui_dir()];
-    load_panel_harness(&env);
-
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+prefork_full_ui_case! {
+fn pet_collection_button_uses_supplied_achievement_ui_access(env: &WowLuaEnv) {
     env.exec(
         r#"
         assert(C_AddOns.LoadAddOn("Blizzard_Collections"))
+        A_Admin.SetAchievementEarned(6, true)
         assert(CanShowAchievementUI())
         A_Admin.SetCanShowAchievementUI(false)
         PetJournalAchievementStatus_OnClick()
@@ -142,17 +138,14 @@ fn pet_collection_button_uses_supplied_achievement_ui_access() {
     )
     .expect("pet collection consumer should follow supplied UI access");
 }
+}
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
-#[test]
-fn achievement_microbutton_uses_supplied_ui_access() {
-    let env = WowLuaEnv::new().expect("Failed to create Lua environment");
-    env.set_screen_size(1024.0, 768.0);
-    env.state().borrow_mut().addon_base_paths = vec![blizzard_ui_dir()];
-    load_panel_harness(&env);
-
+prefork_full_ui_case! {
+fn achievement_microbutton_uses_supplied_ui_access(env: &WowLuaEnv) {
     env.exec(
         r#"
+        A_Admin.SetAchievementEarned(6, true)
         assert(CanShowAchievementUI())
         A_Admin.SetCanShowAchievementUI(false)
         AchievementMicroButton:Click()
@@ -163,6 +156,25 @@ fn achievement_microbutton_uses_supplied_ui_access() {
         "#,
     )
     .expect("achievement microbutton should follow supplied UI access");
+}
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+prefork_full_ui_case! {
+fn achievement_microbutton_uses_earned_achievement_state(env: &WowLuaEnv) {
+    env.exec(
+        r#"
+        A_Admin.SetCanShowAchievementUI(true)
+        A_Admin.SetAchievementEarned(6, false)
+        AchievementMicroButton:Click()
+        assert(not C_AddOns.IsAddOnLoaded("Blizzard_AchievementUI"))
+        A_Admin.SetAchievementEarned(6, true)
+        AchievementMicroButton:Click()
+        assert(C_AddOns.IsAddOnLoaded("Blizzard_AchievementUI"))
+        "#,
+    )
+    .expect("achievement microbutton should follow earned achievement state");
+}
 }
 
 #[test]
