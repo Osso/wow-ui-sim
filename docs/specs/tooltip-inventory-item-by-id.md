@@ -62,17 +62,17 @@ neither is searched.
       `gemIcon`, `gemItemID`) is VERIFIED. Which items trigger which row and its
       line type are UNKNOWN, and the shared item producer emits no socket rows,
       so the projection has no observable output and is not modelled.
-  Reason: The source-data shape is known, but row selection and line type are UNKNOWN, so no observable native-compatible implementation is supported.
+  Classification: (c) native-only for this lane. The source-data shape is known, but row selection and line type are UNKNOWN, so no observable native-compatible implementation is supported.
 - [ ] `guid` is published only for a bag copy. An equipped copy has no simulator
       GUID string: `C_Item.GetItemGUID` models bag locations only.
-  Reason: The current simulator has no equipped-item GUID input, and the native equipped-copy publication is not established here.
+  Classification: (c) native-only for this lane. The simulator has no equipped-item GUID input, and the native equipped-copy publication is not established.
 - [ ] The two per-item state and usability tests of the native search are
       recorded but their gameplay meaning is UNKNOWN, so only a missing item or a
       missing catalog record rejects a candidate.
-  Reason: Native behavior records the tests but does not identify their gameplay meaning or rejection rules.
+  Classification: (c) native-only for this lane. Native behavior records the tests but does not identify their gameplay meaning or rejection rules.
 - [ ] Exact native argument-error text is not modelled; the shared signed reader
       reports its own message.
-  Reason: The evidence does not provide the exact native error text.
+  Classification: (c) native-only for this lane. The evidence does not provide the exact native error text.
 
 ## Out of scope
 

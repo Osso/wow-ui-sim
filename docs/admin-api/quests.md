@@ -14,6 +14,10 @@ Retail, PTR and Forever: `A_Admin.SetMinimapQuestBlobInside(questID, inside)` su
 
 `A_Admin.SetQuestLogEntry(questID, title, isComplete)` adds a clean ordinary quest row or updates the title and completion flag of an existing row. It does not add a watch or fire an event. Use `C_QuestLog.AddQuestWatch` and the relevant client event to drive the original tracker.
 
+## SetQuestLogRewardItems
+
+Retail and Forever only: `A_Admin.SetQuestLogRewardItems(questID, items)` replaces the reward-item rows on an existing rich quest-log entry. Each row requires `name`, `texture`, positive `count`, `quality` from 0 through 7, and boolean `isUsable`; optional `itemID` must be positive when present. Invalid rows or an unknown quest ID raise an error before any row changes. The setter only changes the supplied quest-log model. It does not grant inventory items or fire events. This simulator-only input supports tooltip behavior tests.
+
 ## SetQuestGroupCreatable
 
 `A_Admin.SetQuestGroupCreatable(questID, canCreate)` supplies the result returned by `C_LFGList.CanCreateQuestGroup` for that quest ID. An unset ID returns `false` (**INFERRED**, R88g8; native evidence is pending). The setter stores only host-supplied quest capability state; it does not create a listing or alter party state.
