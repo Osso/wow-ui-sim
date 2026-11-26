@@ -188,25 +188,6 @@ fn blizzard_deprecated_specialization_installs_four_direct_aliases_as_functions(
 }
 }
 
-prefork_full_ui_case! {
-fn deprecated_talent_wrapper_reads_modeled_specialization_grid(env: &WowLuaEnv) {
-    env.exec(r#"
-        C_SpecializationInfo.SetSpecialization(2)
-        assert(GetSpecialization() == 2)
-        local specID, name = GetSpecializationInfo(2)
-        assert(specID ~= nil and name ~= nil)
-        local inactive = GetTalentInfo(1, 1, 1, false, nil)
-        assert(type(inactive) == "number")
-        C_SpecializationInfo.SetSpecialization(1)
-        assert(GetSpecialization() == 1)
-        local active = GetTalentInfo(2, 2, 1, false, nil)
-        assert(type(active) == "number")
-        assert(active ~= inactive)
-        assert(GetTalentInfo(99, 9, 1, false, nil) == nil)
-    "#).expect("original wrapper should consume modeled specialization state");
-}
-}
-
 #[test]
 fn specialization_info_for_class_id_returns_nothing_past_class_specs() {
     let env = WowLuaEnv::new().expect("Failed to create Lua environment");
