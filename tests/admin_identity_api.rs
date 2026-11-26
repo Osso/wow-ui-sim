@@ -40,6 +40,27 @@ fn test_set_player_name_updates_unit_name() {
 }
 
 #[test]
+fn test_set_player_name_after_startup_has_no_raid_ui_errors() {
+    let env = env();
+    crate::common::load_game_startup_inventory(&env);
+    env.apply_post_load_workarounds();
+    crate::common::install_error_collector(&env, "__raid_name_errors");
+    wow_ui_sim::startup::fire_startup_events(&env);
+    crate::common::drain_string_table(&env, "__raid_name_errors");
+
+    for name in ["R88g8 First Name", "R88g8 Second Name"] {
+        let actual: String = env
+            .eval(&format!("A_Admin.SetPlayerName({name:?}); return UnitName('player')"))
+            .expect("player name update");
+        assert_eq!(actual, name);
+    }
+    assert!(
+        crate::common::drain_string_table(&env, "__raid_name_errors").is_empty(),
+        "name updates must not add Lua errors after roster startup"
+    );
+}
+
+#[test]
 fn test_set_player_name_realm_still_nil() {
     let env = env();
     let is_nil: bool = env

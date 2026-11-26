@@ -94,11 +94,18 @@ fn forever_inventory_namespace_reuses_existing_slot_contract() {
     .unwrap();
 }
 
+fn start_forever_raid_name_error_capture(env: &WowLuaEnv) {
+    crate::common::load_game_startup_inventory(env);
+    env.apply_post_load_workarounds();
+    crate::common::install_error_collector(env, "__raid_name_errors");
+    wow_ui_sim::startup::fire_startup_events(env);
+    crate::common::drain_string_table(env, "__raid_name_errors");
+}
+
 #[test]
 fn forever_character_panel_uses_supplied_title_and_equipment_textures() {
     let env = WowLuaEnv::new().unwrap();
-    crate::common::load_game_startup_inventory(&env);
-    env.apply_post_load_workarounds();
+    start_forever_raid_name_error_capture(&env);
     env.exec(
         r#"
         A_Admin.EquipItem(1, 211993)
@@ -108,6 +115,9 @@ fn forever_character_panel_uses_supplied_title_and_equipment_textures() {
         A_Admin.SetPlayerName("R88gc Lane Character")
         assert(CharacterFrame.TitleContainer.TitleText:GetText() == UnitPVPName("player"))
         assert(UnitPVPName("player") == "R88gc Lane Character")
+        A_Admin.SetPlayerName("Second Lane Character")
+        assert(CharacterFrame.TitleContainer.TitleText:GetText() == UnitPVPName("player"))
+        assert(UnitPVPName("player") == "Second Lane Character")
         local head = GetInventoryItemTexture("player", CharacterHeadSlot:GetID())
         local mainHand = GetInventoryItemTexture("player", CharacterMainHandSlot:GetID())
         assert(head ~= nil and mainHand ~= nil and head ~= mainHand)
@@ -116,4 +126,8 @@ fn forever_character_panel_uses_supplied_title_and_equipment_textures() {
         "#,
     )
     .unwrap();
+    assert!(
+        crate::common::drain_string_table(&env, "__raid_name_errors").is_empty(),
+        "name updates must not add Lua errors after roster startup"
+    );
 }
