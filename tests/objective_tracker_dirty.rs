@@ -4,9 +4,10 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 #[test]
 fn objective_tracker_renders_two_watched_seed_quests() {
     crate::common::blizzard_addon_harness::with_blizzard_addon_startup_shape(
-        &["Blizzard_ObjectiveTracker"],
+        &["Blizzard_ObjectiveTracker", "Blizzard_SplashFrame"],
         &[],
-        |env, _| {
+        |env, loaded| {
+            assert!(loaded.iter().any(|name| name == "Blizzard_SplashFrame"));
             supply_watched_quests(env);
             advance_tracker(env);
             assert_seeded_quest_blocks(env);
