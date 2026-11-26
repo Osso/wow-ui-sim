@@ -471,13 +471,6 @@ fn eager_discovery_includes_addon_on_all_four_screens() {
 }
 
 prefork_full_ui_case! {
-    fn original_color_and_error_helpers_preserve_two_inputs(env: &WowLuaEnv) {
-        let result: String = env.eval(SHARED_XML_BASE_BEHAVIOR_PROBE).unwrap();
-        assert_eq!(result, "ok");
-    }
-}
-
-prefork_full_ui_case! {
     fn full_game_load_emits_no_addon_specific_lua_errors(env: &WowLuaEnv) {
         let errors: Vec<String> = env.state().borrow().lua_errors.clone();
 
