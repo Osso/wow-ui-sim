@@ -1,3 +1,7 @@
+## [2026-11-25] investigation | Hidden CurrencyTransfer EditBox startup notification
+
+[CurrencyTransfer hidden EditBox startup](investigations/currency-transfer-hidden-editbox-startup.md) records the required API contract, hidden XML initialization order, and the inferred visibility-delayed notification rule. **INFERRED — R88g8 (native evidence pending):** hidden EditBoxes retain changed text notifications until visible; final profile startup captures are pending.
+
 ## [2026-11-24] investigation | Retail hooksecurefunc dispatcher taint
 
 [Taint system](systems/taint-system.md#retail-hooksecurefunc-dispatcher) records the post-load Retail `securecallfunction` override ordering, the dispatcher taint leak, and the full-UI AuraContainer regression. **VERIFIED (Retail full-addon run):** the secret-texture error is gone; the five remaining errors match the pre-fix baseline.

@@ -120,7 +120,7 @@ fn hidden_currency_transfer_input_waits_for_menu_visibility() {
     let errors = env.state().borrow().lua_errors.clone();
     assert!(
         !errors.iter().any(|error| error.contains("GetMaxTransferableAmountFromQuantity")),
-        "the hidden original input must retain its notification: {errors:?}"
+        "the hidden original input must not dispatch before currency initialization: {errors:?}"
     );
 }
 
