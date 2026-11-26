@@ -43,6 +43,10 @@ fn item_targeting_uses_item_use_spells_and_returns_false_without_one() {
 
 prefork_full_ui_case! {
 fn restricted_environment_publishes_working_item_targeting_queries(env: &WowLuaEnv) {
+    let public_api_present: bool = env
+        .eval("return type(C_Item.IsHelpfulItem) == 'function'")
+        .expect("public item targeting API should be present after full UI startup");
+    assert!(public_api_present, "full UI must retain the C_Item producer");
     let errors_before = env.state().borrow().lua_errors.len();
     env.exec(
         r#"
