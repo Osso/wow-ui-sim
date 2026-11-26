@@ -13,13 +13,13 @@ if rawget(C_EquipmentSet, "EquipmentSetContainsLockedItems") == nil then
 end
 "#;
 
-pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
+pub(crate) fn apply_bootstrap(_lua: &mut rilua::Lua) -> crate::Result<()> {
     #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     {
         if crate::c_api::equipment_set_locks::supports_item_lock_observations() {
             return Ok(());
         }
-        lua.exec(EQUIPMENT_SET_LOCK_DEFAULTS_LUA)?;
+        _lua.exec(EQUIPMENT_SET_LOCK_DEFAULTS_LUA)?;
     }
     Ok(())
 }

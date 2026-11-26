@@ -16,9 +16,9 @@ if SetGamePadCursorControl == nil then
 end
 "#;
 
-pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
+pub(crate) fn apply_bootstrap(_lua: &mut rilua::Lua) -> crate::Result<()> {
     #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
-    lua.exec(GAMEPAD_CURSOR_CONTROL_DEFAULTS_LUA)?;
+    _lua.exec(GAMEPAD_CURSOR_CONTROL_DEFAULTS_LUA)?;
     Ok(())
 }
 
