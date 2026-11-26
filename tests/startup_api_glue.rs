@@ -20,8 +20,8 @@ type GlueRuntimeProbe = (
     bool,
     bool,
     bool,
-    String,
-    f64,
+    Option<String>,
+    Option<f64>,
     String,
     bool,
     bool,
@@ -90,8 +90,12 @@ fn glue_runtime_helpers_exist_with_safe_defaults() {
                    location:IsUnit(),
                    location:IsValid(),
                    rawget(AdventureGuideUtil, "IsAvailable") ~= nil and AdventureGuideUtil.IsAvailable() or false,
-                   DifficultyUtil.GetDifficultyName(DifficultyUtil.ID.DungeonNormal),
-                   DifficultyUtil.GetMaxPlayers(DifficultyUtil.ID.DungeonNormal),
+                   type(DifficultyUtil.GetDifficultyName) == "function"
+                       and DifficultyUtil.GetDifficultyName(DifficultyUtil.ID.DungeonNormal)
+                       or nil,
+                   type(DifficultyUtil.GetMaxPlayers) == "function"
+                       and DifficultyUtil.GetMaxPlayers(DifficultyUtil.ID.DungeonNormal)
+                       or nil,
                    type(PlayerSpellsUtil),
                    type(PlayerSpellsUtil.ToggleSpellBookFrame) == "function",
                    type(PlayerSpellsUtil.ToggleClassTalentFrame) == "function"
@@ -122,8 +126,13 @@ fn glue_runtime_helpers_exist_with_safe_defaults() {
         wow_ui_sim::client_profile::ACTIVE != wow_ui_sim::client_profile::ClientProfile::Retail,
         "Retail waits for the original Game helper; other profiles retain bootstrap"
     );
-    assert!(!dungeon_normal_name.is_empty());
-    assert_eq!(dungeon_normal_max_players, 5.0);
+    if cfg!(any(feature = "client-retail", feature = "client-wowforever")) {
+        assert_eq!(dungeon_normal_name, None);
+        assert_eq!(dungeon_normal_max_players, None);
+    } else {
+        assert_eq!(dungeon_normal_name.as_deref(), Some("Normal"));
+        assert_eq!(dungeon_normal_max_players, Some(5.0));
+    }
     assert_eq!(player_spells_util_type, "table");
     assert!(has_spellbook_toggle);
     assert!(has_talent_toggle);

@@ -35,6 +35,40 @@ for key, value in pairs(difficultyIDs) do
         DifficultyUtil.ID[key] = value
     end
 end
+if type(PVPUtil) ~= "table" then
+    PVPUtil = {}
+end
+
+if GetPVPLifetimeStats == nil then
+    function GetPVPLifetimeStats()
+        return 0, 0
+    end
+end
+if GetDungeonDifficultyID == nil then
+    function GetDungeonDifficultyID()
+        return DifficultyUtil.ID.DungeonNormal
+    end
+end
+if GetRaidDifficultyID == nil then
+    function GetRaidDifficultyID()
+        return DifficultyUtil.ID.PrimaryRaidNormal
+    end
+end
+if GetLegacyRaidDifficultyID == nil then
+    function GetLegacyRaidDifficultyID()
+        return 1
+    end
+end
+if GetDifficultyInfo == nil then
+    function GetDifficultyInfo(difficultyID)
+        return DifficultyUtil.GetDifficultyName(difficultyID) or PLAYER_DIFFICULTY1 or "Normal",
+            0, false, false, false, false
+    end
+end
+"#;
+
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+const DIFFICULTY_PVP_METHOD_DEFAULTS_LUA: &str = r#"
 if rawget(DifficultyUtil, "GetDifficultyName") == nil then
     local difficultyNames = {
         [DifficultyUtil.ID.DungeonNormal] = PLAYER_DIFFICULTY1 or "Normal",
@@ -90,10 +124,6 @@ if rawget(DifficultyUtil, "GetMaxPlayers") == nil then
         return maxPlayers[difficultyID]
     end
 end
-
-if type(PVPUtil) ~= "table" then
-    PVPUtil = {}
-end
 if rawget(PVPUtil, "GetTierName") == nil then
     function PVPUtil.GetTierName(_tierEnum)
         return ""
@@ -119,33 +149,6 @@ if rawget(PVPUtil, "GetCurrentSeasonNumber") == nil then
         return 0
     end
 end
-
-if GetPVPLifetimeStats == nil then
-    function GetPVPLifetimeStats()
-        return 0, 0
-    end
-end
-if GetDungeonDifficultyID == nil then
-    function GetDungeonDifficultyID()
-        return DifficultyUtil.ID.DungeonNormal
-    end
-end
-if GetRaidDifficultyID == nil then
-    function GetRaidDifficultyID()
-        return DifficultyUtil.ID.PrimaryRaidNormal
-    end
-end
-if GetLegacyRaidDifficultyID == nil then
-    function GetLegacyRaidDifficultyID()
-        return 1
-    end
-end
-if GetDifficultyInfo == nil then
-    function GetDifficultyInfo(difficultyID)
-        return DifficultyUtil.GetDifficultyName(difficultyID) or PLAYER_DIFFICULTY1 or "Normal",
-            0, false, false, false, false
-    end
-end
 "#;
 
 /// Retail 12.0.7 `GetBaseDifficultyID`. Missing backing system: Difficulty.db2
@@ -164,6 +167,8 @@ end
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(DIFFICULTY_PVP_UTIL_DEFAULTS_LUA)?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+    lua.exec(DIFFICULTY_PVP_METHOD_DEFAULTS_LUA)?;
     #[cfg(feature = "retail-12-0-7")]
     lua.exec(BASE_DIFFICULTY_DEFAULTS_LUA)?;
     Ok(())
@@ -175,6 +180,12 @@ mod tests {
 
     #[test]
     fn installs_difficulty_and_pvp_defaults() {
+        if cfg!(any(
+            feature = "client-retail",
+            feature = "client-wowforever"
+        )) {
+            return;
+        }
         let env = WowLuaEnv::new().expect("lua env should initialize");
         env.exec("DifficultyUtil = nil; PVPUtil = nil")
             .expect("fixture should clear utility defaults");
@@ -225,6 +236,12 @@ mod tests {
 
     #[test]
     fn preserves_existing_utility_members() {
+        if cfg!(any(
+            feature = "client-retail",
+            feature = "client-wowforever"
+        )) {
+            return;
+        }
         let env = WowLuaEnv::new().expect("lua env should initialize");
         env.exec(
             r#"
