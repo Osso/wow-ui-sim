@@ -1,5 +1,7 @@
 #![cfg(feature = "client-retail")]
 
+use wow_ui_sim::lua_api::WowLuaEnv;
+
 const SET_OWNER_RELEASE_PROBE: &str = r#"
 local function attachedCount()
     local count = 0
