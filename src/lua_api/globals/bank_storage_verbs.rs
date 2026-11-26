@@ -15,12 +15,6 @@ pub fn register_guild_tabard_files(lua: &mut rilua::Lua) -> crate::Result<()> {
     Ok(())
 }
 
-/// INFERRED from `Blizzard_GuildBankUI/Mainline/Blizzard_GuildBankUI.lua:719-721`.
-pub fn register_current_guild_bank_tab(lua: &mut rilua::Lua) -> crate::Result<()> {
-    LuaApiMut::register_function(lua, "GetCurrentGuildBankTab", get_current_guild_bank_tab)?;
-    Ok(())
-}
-
 pub fn register_all(lua: &mut rilua::Lua) -> crate::Result<()> {
     register_bank_globals(lua)?;
     register_guild_bank_globals(lua)?;
@@ -40,7 +34,12 @@ fn register_bank_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
     Ok(())
 }
 
-fn register_guild_bank_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
+/// Legacy guild-bank globals. Every name in `GUILD_BANK_GLOBALS` is a `_G`
+/// row in `data/secure-publication/retail-12-1-5-70688.csv` and is called by
+/// the original Retail and Forever `Blizzard_GuildBankUI/Mainline` consumer
+/// (money: `Blizzard_GuildBankUI.lua:204`, `MoneyFrame.lua:164`). The pinned
+/// `Blizzard_APIDocumentationGenerated` trees document none of them.
+pub fn register_guild_bank_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
     for (name, function) in GUILD_BANK_GLOBALS {
         LuaApiMut::register_function(lua, name, *function)?;
     }

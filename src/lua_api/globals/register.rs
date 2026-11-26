@@ -457,7 +457,7 @@ fn register_compat_and_admin(lua: &mut rilua::Lua) -> crate::Result<()> {
     }
     super::bank_storage_verbs::register_guild_tabard_files(lua)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
-    super::bank_storage_verbs::register_current_guild_bank_tab(lua)?;
+    super::bank_storage_verbs::register_guild_bank_globals(lua)?;
     #[cfg(any(feature = "client-mists", feature = "client-wrath"))]
     super::auction_verbs::register_all(lua)?;
     #[cfg(feature = "client-mists")]
