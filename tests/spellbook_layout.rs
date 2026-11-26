@@ -611,7 +611,6 @@ fn forever_spellbook_paging_click_updates_page_text() {
         .expect("class page two text should be readable");
     assert_eq!(class_second_page, "Page 2/2", "the real next-page click should show page two");
 }
-}
 
 #[test]
 fn spellbook_spell_items_have_nonzero_rect() {
