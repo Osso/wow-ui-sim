@@ -33,6 +33,32 @@ use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn ping_tutorial_uses_original_settings_category_callback() {
+    let env = load_full_game_ui();
+    let (shown, hidden): (bool, bool) = env
+        .eval(
+            r#"
+            SetCVar("pingCategoryTutorialShown", "1")
+            Settings.OpenToCategory(Settings.PINGSYSTEM_CATEGORY_ID)
+            local hidden = PingSystemTutorial:IsShown()
+            SetCVar("pingCategoryTutorialShown", "0")
+            Settings.OpenToCategory(Settings.INTERFACE_CATEGORY_ID)
+            Settings.OpenToCategory(Settings.PINGSYSTEM_CATEGORY_ID)
+            return PingSystemTutorial:IsShown(), hidden
+            "#,
+        )
+        .expect("original settings category callback should update the tutorial");
+
+    assert!(!hidden, "CVar value 1 should not show the tutorial");
+    if ACTIVE == ClientProfile::WowForever {
+        assert!(shown, "CVar value 0 should show the tutorial on Forever");
+    } else {
+        assert!(!shown, "the Retail build is newer than the tutorial cutoff");
+    }
+}
+
 #[path = "common/toc_layout.rs"]
 mod toc_layout;
 
