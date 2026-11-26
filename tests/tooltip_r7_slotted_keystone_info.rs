@@ -40,8 +40,8 @@ fn slot_keystone(
     let result = env.exec(&format!(
         "A_Admin.AddBagItem(0, {bag_slot}, {item_id}, 1); A_Admin.SetKeystoneItemInfo(0, {bag_slot}, {item_id}, {map_selector}, {map_id}, {level}, {a}, {b}); C_Container.PickupContainerItem(0, {bag_slot}); C_ChallengeMode.SlotKeystone()"
     ));
-    let selected_level: u32 = env.eval("return select(3, C_ChallengeMode.GetSlottedKeystoneInfo())").unwrap();
-    assert_eq!(selected_level, level, "the API publishes supplied keystone level");
+    let selected_level: i32 = env.eval("return select(3, C_ChallengeMode.GetSlottedKeystoneInfo())").unwrap();
+    assert_eq!(selected_level, level as i32, "the API publishes supplied keystone level");
     result.expect("the original slotted-keystone event should complete");
 }
 
