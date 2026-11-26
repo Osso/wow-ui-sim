@@ -71,6 +71,7 @@ pub fn get_quest_log_time_left(state: &mut LuaState) -> LuaResult<u32> {
     }
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub fn get_quest_log_special_item_cooldown(state: &mut LuaState) -> LuaResult<u32> {
     // INFERRED: R88g8 (native evidence pending); no cooldown input means no active cooldown.
     state.push(Val::Num(0.0));
