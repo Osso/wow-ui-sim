@@ -1,5 +1,17 @@
 # Combat State
 
+### Pet-battle runtime inputs (Retail and WoW Forever)
+
+These inputs supply simulator state; they do not model a server reply. The predicate rules below are **INFERRED R88g9 (native evidence pending)** where the cited R88f checks stop short of the complete handler.
+
+- `A_Admin.SetPetBattleAvailability(playerTrapState, actionAvailable, trapError)` supplies the local trap-state byte, action-availability check, and failure code used by `C_PetBattles.IsTrapAvailable()`.
+- `A_Admin.SetPetBattleTeamState(localTeamPresent, skipBlocking, shouldSelect, opponentIsNPC)` supplies the local team flags and opposite-team NPC marker used by `IsTrapAvailable()`, `ShouldShowPetSelect()` and `IsPlayerNPC()`.
+- `A_Admin.SetPetBattleEffectName(name)` appends one supplied label returned by `C_PetBattles.GetAllEffectNames()`.
+
+The Retail `SharedPetBattleTemplates.lua:381` consumer collects each `GetAllEffectNames()` return into an array, so **INFERRED R88g9 (native evidence pending)** the simulator returns supplied labels as separate string results; native ordering and contents remain unknown. `Blizzard_PetBattleUI.lua:667` consumes `IsTrapAvailable()`, `:155` and `:195` consume `ShouldShowPetSelect()`, and `:300` consumes `IsPlayerNPC()`; these call sites establish consumer use, not the exact native state mapping.
+
+The current predicate projection uses battle phases 1 or 3 for pet selection, and phase 2 for trap availability. Trap availability also requires trap state 1, an NPC opponent, available action state, and no skip-blocking flag for a present local team. `GetPetInfoByPetID` is modeled by the existing `C_PetJournal.GetPetInfoByPetID` handler against supplied journal data; **VERIFIED R88f.D.43**, the checked Retail registration census has no `C_PetBattles.GetPetInfoByPetID` entry and publishes that member under `C_PetJournal`.
+
 ### A_Admin.LearnSpell(spellID) / A_Admin.UnlearnSpell(spellID)
 
 Adds or removes a supplied player-known spell ID. The known-spell queries include this supplied membership as well as the simulator's fixed spellbook data. These inputs do not add spellbook slots or fire events.

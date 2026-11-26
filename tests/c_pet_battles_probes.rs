@@ -107,6 +107,7 @@ fn get_pet_info_out_of_range_returns_nil() {
 }
 
 #[test]
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 fn get_pet_info_by_pet_id_returns_nil() {
     let env = env();
     let result_count: i32 = env
@@ -294,6 +295,7 @@ fn get_xp_returns_zero_by_default() {
 // ── IsPlayerNPC ───────────────────────────────────────────────────────────────
 
 #[test]
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 fn is_player_npc_returns_false() {
     let env = env();
     let is_npc: bool = env.eval("return C_PetBattles.IsPlayerNPC()").unwrap();
@@ -301,6 +303,7 @@ fn is_player_npc_returns_false() {
 }
 
 #[test]
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 fn static_fallbacks_return_safe_default_shapes() {
     let env = env();
     let (effect_count, trap_ready, trap_error, should_select): (i32, bool, i32, bool) = env
@@ -319,6 +322,27 @@ fn static_fallbacks_return_safe_default_shapes() {
     assert!(!trap_ready);
     assert_eq!(trap_error, 0);
     assert!(!should_select);
+}
+
+#[test]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn retail_pet_battle_runtime_queries_follow_admin_inputs() {
+    let env = env();
+    env.exec(
+        "A_Admin.SetPetBattleEffectName('Supplied effect'); \
+         A_Admin.SetPetBattleState(1); \
+         A_Admin.SetPetBattleTeamState(true, false, true, true); \
+         A_Admin.SetPetBattleAvailability(0, true, 4)",
+    )
+    .unwrap();
+    let (effects, effect, trap, error, select, npc): (i32, String, bool, i32, bool, bool) = env
+        .eval("local e = {C_PetBattles.GetAllEffectNames()}; local t, x = C_PetBattles.IsTrapAvailable(); return #e, e[1], t, x, C_PetBattles.ShouldShowPetSelect(), C_PetBattles.IsPlayerNPC(2)")
+        .unwrap();
+    assert_eq!((effects, effect), (1, "Supplied effect".into()));
+    assert!(!trap);
+    assert_eq!(error, 4);
+    assert!(select);
+    assert!(npc);
 }
 
 // ── StartPVPMatchmaking ───────────────────────────────────────────────────────

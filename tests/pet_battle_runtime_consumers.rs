@@ -282,6 +282,55 @@ fn original_ability_hint_tracks_type_chart() {
     }
 }
 
+fn set_battle_runtime_inputs(env: &WowLuaEnv, phase: i32, npc: bool, selecting: bool, trap: bool) {
+    env.exec(&format!(
+        "A_Admin.SetPetBattleCounts(3, 2); A_Admin.SetPetBattleState({phase}); \
+         A_Admin.SetPetBattleAvailability({}, true, 0); \
+         A_Admin.SetPetBattleTeamState(true, false, {selecting}, {npc})",
+        i32::from(trap),
+    ))
+    .expect("supplied battle state");
+}
+
+fn assert_action_button_state(env: &WowLuaEnv, selecting: bool, npc: bool, trap: bool) {
+    let actual: String = env
+        .eval(r#"
+            local switch = PetBattleFrame.BottomFrame.SwitchPetButton
+            local catch = PetBattleFrame.BottomFrame.CatchButton
+            local available = C_PetBattles.IsTrapAvailable()
+            return tostring(switch:GetAlpha()) .. "," .. tostring(switch:IsEnabled()) .. "," ..
+                tostring(catch:IsEnabled()) .. "," .. tostring(C_PetBattles.ShouldShowPetSelect()) ..
+                "," .. tostring(C_PetBattles.IsPlayerNPC(2)) .. "," .. tostring(available)
+        "#)
+        .expect("original PetBattleUI action button state");
+    assert_eq!(
+        actual,
+        format!("{},{},{},{},{},{}", if selecting { 0 } else { 1 }, false, trap, selecting, npc, trap),
+        "original action buttons follow supplied battle state"
+    );
+}
+
+#[test]
+fn original_pet_battle_ui_consumes_supplied_runtime_predicates() {
+    test_timeout! {
+        let env = loaded_game();
+        set_battle_runtime_inputs(&env, 1, true, true, false);
+        env.exec("A_Admin.FireEvent('PET_BATTLE_ACTION_SELECTED')")
+            .expect("original action button event for forced pet selection");
+        assert_action_button_state(&env, true, true, false);
+
+        set_battle_runtime_inputs(&env, 2, true, false, true);
+        env.exec("A_Admin.FireEvent('PET_BATTLE_ACTION_SELECTED')")
+            .expect("original button event for NPC trap availability");
+        assert_action_button_state(&env, false, true, true);
+
+        set_battle_runtime_inputs(&env, 2, false, false, true);
+        env.exec("A_Admin.FireEvent('PET_BATTLE_ACTION_SELECTED')")
+            .expect("original button event for player-opponent trap availability");
+        assert_action_button_state(&env, false, false, false);
+    }
+}
+
 #[test]
 fn empty_pet_queries_do_not_create_sample_rosters() {
     let env = WowLuaEnv::new().unwrap();
