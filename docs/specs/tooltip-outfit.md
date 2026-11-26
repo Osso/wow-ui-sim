@@ -6,12 +6,12 @@
 
 ### Forever publication and inputs
 
-- [ ] **VERIFIED (Forever 1.60.1.70707):** `TooltipInfoDocumentation.lua:646-659` declares `GetOutfit` with one required number argument, `MayReturnNothing`, and a non-nilable TooltipData return.
-- [ ] **VERIFIED (R88n.8):** accept finite numbers and convertible numeric strings in 0..=4294967295, validate before truncating toward zero, and use `Usage: local data = C_TooltipInfo.GetOutfit(outfitID)` for argument errors.
-- [ ] **VERIFIED (R88n.8):** outfit ID zero returns zero Lua values.
-- [ ] **VERIFIED (R88n.8):** a nonzero ID without a saved-name record returns one TooltipData table built with an empty name.
+- [x] **VERIFIED (Forever 1.60.1.70707):** `TooltipInfoDocumentation.lua:646-659` declares `GetOutfit` with one required number argument, `MayReturnNothing`, and a non-nilable TooltipData return.
+- [x] **VERIFIED (R88n.8):** accept finite numbers and convertible numeric strings in 0..=4294967295, validate before truncating toward zero, and use `Usage: local data = C_TooltipInfo.GetOutfit(outfitID)` for argument errors.
+- [x] **VERIFIED (R88n.8):** outfit ID zero returns zero Lua values.
+- [x] **VERIFIED (R88n.8):** a nonzero ID without a saved-name record returns one TooltipData table built with an empty name.
 - [ ] **INFERRED:** a matching row in the shared `transmog_outfit_catalog` supplies the saved name used by this getter.
-- [ ] The optional Forever contract test checks registration, the zero-ID path, a nonzero missing-name result, and the original SpellBook outfit consumer.
+- [x] The optional Forever contract test checks registration, the zero-ID path, a nonzero missing-name result, and the original SpellBook outfit consumer. The default test also checks two distinct nonzero missing-name inputs and ID conversion.
 
 ### Retail compatibility
 
@@ -32,6 +32,7 @@
 
 ## Tests asserting this spec
 
+- `tests/tooltip_outfit_forever.rs` — default Forever API test for zero, range validation, numeric-string truncation, and two distinct missing-name IDs.
 - `tests/tooltip_forever_four_getters.rs` — optional missing-name API case and original `SpellBookOutfitItemMixin:OnIconEnter` dispatch on the selected Forever PlayerSpells addon.
 - `tests/p1200_rest_outfit_tooltip.rs` — existing Retail catalog and miss behavior.
 
