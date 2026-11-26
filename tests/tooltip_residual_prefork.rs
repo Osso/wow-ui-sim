@@ -78,10 +78,14 @@ for _, region in ipairs({ GameTooltip:GetRegions() }) do
             local secondPoint, secondTarget, secondRelative = region:GetPoint(2)
             assert(firstTarget == blank and secondTarget == blank,
                 'both All constraints must target the wrapped blank row')
-            assert(firstPoint == 'BOTTOMRIGHT' and firstRelative == 'BOTTOMRIGHT',
-                'the first All constraint must span the bottom edge')
-            assert(secondPoint == 'TOPLEFT' and secondRelative == 'TOPLEFT',
-                'the second All constraint must span the top edge')
+            assert(
+                (firstPoint == 'BOTTOMRIGHT' and secondPoint == 'TOPLEFT')
+                or (firstPoint == 'TOPLEFT' and secondPoint == 'BOTTOMRIGHT'),
+                'the All constraints must span the top and bottom edges')
+            assert(
+                (firstRelative == 'BOTTOMRIGHT' and secondRelative == 'TOPLEFT')
+                or (firstRelative == 'TOPLEFT' and secondRelative == 'BOTTOMRIGHT'),
+                'both All constraints must use matching blank-row edges')
         end
     end
 end
