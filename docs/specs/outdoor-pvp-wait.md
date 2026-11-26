@@ -1,6 +1,6 @@
 # Outdoor PvP wait time
 
-The original WorldMap zone timer reads supplied outdoor PvP timing state. Retail and PTR declare `C_PvP.GetOutdoorPvPWaitTime` in `Blizzard_APIDocumentationGenerated/PvpInfoDocumentation.lua:455`.
+The original WorldMap zone timer reads supplied outdoor PvP timing state. Retail and PTR declare `C_PvP.GetOutdoorPvPWaitTime` in `Blizzard_APIDocumentationGenerated/PvpInfoDocumentation.lua:455`; Mists also declares it in that profile's pinned `PvpInfoDocumentation.lua:165`, so the shared producer is registered there.
 
 ## What it must do
 
@@ -16,6 +16,7 @@ The original WorldMap zone timer reads supplied outdoor PvP timing state. Retail
 ## Tests asserting this spec
 
 - `tests/blizzard_world_map_loads.rs::world_map_zone_timer_consumes_supplied_pvp_world_states`
+- `tests/mists_world_map_panel.rs::mists_world_map_opens_with_zone_art_and_quest_pins`
 
 ## Out of scope
 

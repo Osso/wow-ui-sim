@@ -33,7 +33,10 @@ pub(super) fn register_small_namespaces(state: &mut LuaState) -> LuaResult<()> {
     }
     register_flat_namespace(state, "C_Bank", C_BANK_METHODS)?;
     register_flat_namespace(state, "C_NewItems", C_NEW_ITEMS_METHODS)?;
-    register_flat_namespace(state, "C_VignetteInfo", C_VIGNETTE_INFO_METHODS)?;
+    if !crate::client_profile::ACTIVE.uses_vignette_info_model() {
+        register_flat_namespace(state, "C_VignetteInfo", C_VIGNETTE_INFO_METHODS)?;
+    }
+
     register_flat_namespace(state, "C_Console", C_CONSOLE_METHODS)?;
     register_flat_namespace(state, "C_Covenants", C_COVENANTS_METHODS)?;
     register_flat_namespace(state, "C_Soulbinds", C_SOULBINDS_METHODS)?;
