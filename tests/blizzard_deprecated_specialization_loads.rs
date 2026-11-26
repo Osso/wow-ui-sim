@@ -1,4 +1,4 @@
-#![cfg(feature = "client-retail")]
+#![cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 use std::path::PathBuf;
 
 use wow_ui_sim::loader::{discover_blizzard_addons_for_screen, load_addon};
@@ -313,6 +313,14 @@ fn deprecated_talent_query_validates_arguments_and_empty_grid(env: &WowLuaEnv) {
     env.exec(r#"
         assert(GetTalentInfo(1, 1, 1, false, nil) == nil)
         assert(GetTalentInfo(99, 9, 1, false, nil) == nil)
+        C_SpecializationInfo.GetTalentInfo = function(query)
+            if query.specializationIndex == 1 and query.talentIndex == 1 then
+                return { talentID = 7101 }
+            end
+            return { talentID = 7102 }
+        end
+        assert(GetTalentInfo(1, 1, 1, false, nil).talentID == 7101)
+        assert(GetTalentInfo(99, 9, 1, false, nil).talentID == 7102)
         assert(not pcall(C_SpecializationInfo.GetTalentInfo, nil))
         assert(not pcall(C_SpecializationInfo.GetTalentInfo, {}))
         assert(not pcall(C_SpecializationInfo.GetTalentInfo, { tier = 1 }))
