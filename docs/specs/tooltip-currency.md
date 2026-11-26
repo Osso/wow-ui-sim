@@ -52,13 +52,13 @@ Retail 12.1.5 currency tooltips publish R84/R84b `C_TooltipInfo` data through th
 ## Known gaps (current cycle)
 
 - [ ] The host supplies selected quest source results; reward, required-objective and choice source lists are not inferred. Resolver-miss Lua results remain UNKNOWN.
-  Reason: R84 leaves source resolution and missing-result behavior UNKNOWN; no source list can be implemented from this evidence.
+  Classification: (c) source-list mapping and miss publication are UNKNOWN in R84. Existing quest objective and reward state does not supply the currency source rows; do not infer them from unrelated fields.
 - [ ] The balance-helper formula, runtime number-format mode, locale grouping and total-row prefix selection are not modeled; tests supply explicit values or formatted text.
-  Reason: R84 does not establish these formulas or locale inputs; the simulator must not invent them.
+  Classification: (c) native-only inputs or formulas. R84 does not establish the balance formula or locale selection; no values may be invented.
 - [x] CurrencyContainer row content and amount-dependent description formatting are host-supplied. No 70688 text catalog is claimed.
   Behavioral proof: `tests/tooltip_currency_r84.rs::set_hyperlink_resolves_currency_links` drives the original `SetHyperlink` consumer with a supplied matching range and with no amount; it checks distinct selected title, description and amount output. No 70688 text catalog is claimed.
 - [ ] The conditional error row, recharge calculation and locale-table aliases remain unmodeled.
-  Reason: R84 leaves the error predicate and aliases unknown, and the recharge result is not consumed by the tooltip path.
+  Classification: (c) error-row predicate and locale aliases are UNKNOWN. The verified recharge helper return is discarded by the effective-quantity caller, so it does not change the tooltip result; its recharge fields are not present in the current currency state model.
 
 ## Out of scope
 

@@ -72,10 +72,13 @@ creation and declared row fonts). Native evidence: WM63-L23 section 3, Retail
 - [ ] Native font files, glyph advances, baselines and exact rendered line
       heights are UNKNOWN. The arithmetic is exact only relative to the
       simulator's own measured text.
+  Classification: (c) native-only. The simulator cannot infer native glyph metrics from its own font measurements.
 - [ ] Builds without glyph measurement use the estimated glyph height in
       `sizing.rs`, not FontString measurement.
+  Classification: (a) the estimator path is implemented in `sizing.rs`, but no behavioral test proves the no-glyph build path with two distinct tooltip inputs yet.
 - [ ] WM63 L23 is Retail-only evidence; Wrath, Mists, Era, Anniversary and
       WowForever keep their legacy sizing path.
+  Classification: (c) preservation only; this lane does not change other-profile sizing.
 
 ## Out of scope
 
