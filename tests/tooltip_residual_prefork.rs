@@ -72,10 +72,16 @@ for _, region in ipairs({ GameTooltip:GetRegions() }) do
             matches = matches + 1
             assert(math.abs(region:GetHeight() - 10) < 0.01,
                 'the original options must set divider height 10')
-            assert(math.abs(region:GetLeft() - blank:GetLeft()) < 0.01,
-                'the All anchor must start at the wrapped blank row left edge')
-            assert(math.abs(region:GetRight() - blank:GetRight()) < 0.01,
-                'the All anchor must end at the wrapped blank row right edge')
+            assert(region:GetNumPoints() == 2,
+                'the original All option must install two constraints')
+            local firstPoint, firstTarget, firstRelative = region:GetPoint(1)
+            local secondPoint, secondTarget, secondRelative = region:GetPoint(2)
+            assert(firstTarget == blank and secondTarget == blank,
+                'both All constraints must target the wrapped blank row')
+            assert(firstPoint == 'BOTTOMRIGHT' and firstRelative == 'BOTTOMRIGHT',
+                'the first All constraint must span the bottom edge')
+            assert(secondPoint == 'TOPLEFT' and secondRelative == 'TOPLEFT',
+                'the second All constraint must span the top edge')
         end
     end
 end
@@ -118,7 +124,7 @@ end
 const EQUIPPED_GUID_PROBE: &str = r#"
 A_Admin.EquipItem(16, 231268)
 A_Admin.SetEquippedItemGUID(16, 'supplied-equipped-guid')
-assert(not pcall(A_Admin.SetEquippedItemGUID, 15, 'missing-slot-guid'),
+assert(not pcall(A_Admin.SetEquippedItemGUID, -1, 'missing-slot-guid'),
     'the GUID input must reject an empty equipment slot')
 assert(not pcall(A_Admin.SetEquippedItemGUID, 16, ''),
     'the GUID input must reject an empty string')
