@@ -78,8 +78,7 @@ fn runtime_surface_arguments() -> [Val; 10] {
             | ClientProfile::WowForever
     );
     let vanilla = matches!(ACTIVE, ClientProfile::Era | ClientProfile::Anniversary);
-    let retire_map_canvas_repairs =
-        matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever);
+    let retire_map_canvas_repairs = ACTIVE.uses_native_map_canvas_pin_refresh();
     // Keep order in sync with runtime_surface_bootstrap.lua's argument destructuring.
     [
         Val::Bool(classic_combat),

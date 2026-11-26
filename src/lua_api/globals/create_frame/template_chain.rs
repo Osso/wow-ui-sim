@@ -685,11 +685,7 @@ fn base_method_only_handlers(scripts: &crate::xml::ScriptsXml) -> [MethodOnlyScr
         ("OnHide", scripts.on_hide.last()),
         (
             "OnUiMapChanged",
-            if matches!(
-                crate::client_profile::ACTIVE,
-                crate::client_profile::ClientProfile::Retail
-                    | crate::client_profile::ClientProfile::WowForever
-            ) {
+            if crate::client_profile::ACTIVE.uses_native_map_canvas_pin_refresh() {
                 scripts.on_ui_map_changed.last()
             } else {
                 None

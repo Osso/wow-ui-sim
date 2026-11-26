@@ -746,11 +746,7 @@ fn build_ui_map_changed_handler(
     scripts: &crate::xml::ScriptsXml,
     default_binding: Option<u8>,
 ) -> String {
-    let handler = if matches!(
-        crate::client_profile::ACTIVE,
-        crate::client_profile::ClientProfile::Retail
-            | crate::client_profile::ClientProfile::WowForever
-    ) {
+    let handler = if crate::client_profile::ACTIVE.uses_native_map_canvas_pin_refresh() {
         scripts.on_ui_map_changed.last()
     } else {
         None

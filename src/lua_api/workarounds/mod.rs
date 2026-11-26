@@ -568,14 +568,16 @@ fn runtime_surface_patch_functions(folder_name: &str) -> Option<&'static [&'stat
         "Blizzard_MapCanvas"
         | "Blizzard_SharedMapDataProviders"
         | "Blizzard_WorldMap"
-        | "Blizzard_BattlefieldMap" => match crate::client_profile::ACTIVE {
-            crate::client_profile::ClientProfile::Retail
-            | crate::client_profile::ClientProfile::WowForever => &[],
-            _ => &[
-                "__wow_patch_map_canvas_scroll_container_methods",
-                "__wow_patch_fog_of_war_pin_methods",
-            ],
-        },
+        | "Blizzard_BattlefieldMap" => {
+            if crate::client_profile::ACTIVE.uses_native_map_canvas_pin_refresh() {
+                &[]
+            } else {
+                &[
+                    "__wow_patch_map_canvas_scroll_container_methods",
+                    "__wow_patch_fog_of_war_pin_methods",
+                ]
+            }
+        }
         _ => return None,
     })
 }

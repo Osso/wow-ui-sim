@@ -99,6 +99,11 @@ impl ClientProfile {
         matches!(self, Self::Retail | Self::WowForever)
     }
 
+    /// Retail and Forever dispatch native MapCanvas pin map-change handlers.
+    pub(crate) const fn uses_native_map_canvas_pin_refresh(self) -> bool {
+        matches!(self, Self::Retail | Self::WowForever)
+    }
+
     /// Retail and Forever use the generated tracked Mythic+ season-map rows.
     pub const fn uses_tracked_season_maps(self) -> bool {
         matches!(self, Self::Retail | Self::WowForever)
