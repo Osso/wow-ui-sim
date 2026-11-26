@@ -15,11 +15,38 @@ fn get_num_talent_tabs_returns_zero() {
     assert_eq!(n, 0);
 }
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn get_talent_info_returns_nil() {
     let env = env();
     let v: Option<String> = env.eval("return GetTalentInfo(1, 1)").unwrap();
     assert_eq!(v, None);
+}
+
+#[test]
+fn original_specialization_talent_wrapper_uses_distinct_queries() {
+    let env = env();
+    let ui = wow_ui_sim::client_profile::blizzard_ui_addons_dir_under(std::path::Path::new(
+        env!("CARGO_MANIFEST_DIR"),
+    ));
+    let toc = wow_ui_sim::loader::discover_blizzard_addons_for_screen(
+        &ui,
+        wow_ui_sim::screen::ScreenKind::Game,
+    )
+    .into_iter()
+    .find(|(name, _)| name == "Blizzard_DeprecatedSpecialization")
+    .map(|(_, path)| path)
+    .expect("selected Game screen specialization addon");
+    wow_ui_sim::loader::load_addon(&env.loader_env(), &toc)
+        .expect("selected specialization addon should load");
+
+    let results: (usize, usize) = env
+        .eval(
+            r#"return select("#", GetTalentInfo(1, 1, 1, false, nil)),
+                     select("#", GetTalentInfo(2, 3, 1, false, nil))"#,
+        )
+        .expect("original talent wrapper should accept both query shapes");
+    assert_eq!(results, (0, 0));
 }
 
 #[test]
