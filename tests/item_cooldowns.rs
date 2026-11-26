@@ -1,6 +1,29 @@
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::lua_api::state::{BagItem, SpellCooldownState};
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+const ADMIN_ITEM_COOLDOWN_INPUTS: &str = r#"
+local expectedA = GetTime()
+A_Admin.SetItemCooldown(6948, 31)
+local startA, durationA, enabledA = C_Item.GetItemCooldown(6948)
+assert(math.abs(startA - expectedA) < 0.01 and durationA == 31 and enabledA == true)
+local expectedB = GetTime()
+A_Admin.SetItemCooldown(13, 47)
+local startB, durationB, enabledB = C_Item.GetItemCooldown(13)
+assert(math.abs(startB - expectedB) < 0.01 and durationB == 47 and enabledB == true)
+A_Admin.SetItemCooldown(6948, 0)
+local startCleared, durationCleared, enabledCleared = C_Item.GetItemCooldown(6948)
+assert(startCleared == 0 and durationCleared == 0 and enabledCleared == true)
+"#;
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn admin_item_cooldown_supplies_distinct_items_and_clears() {
+    let env = crate::support::env();
+    env.exec(ADMIN_ITEM_COOLDOWN_INPUTS)
+        .expect("admin item cooldown inputs should project through C_Item");
+}
+
 fn seed_item_cooldown_env() -> WowLuaEnv {
     let env = crate::support::env();
     {
