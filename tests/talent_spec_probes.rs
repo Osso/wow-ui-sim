@@ -42,8 +42,8 @@ fn original_specialization_talent_wrapper_uses_distinct_queries() {
 
     let results: (usize, usize) = env
         .eval(
-            r#"return select("#", GetTalentInfo(1, 1, 1, false, nil)),
-                     select("#", GetTalentInfo(2, 3, 1, false, nil))"#,
+            r##"return select("#", GetTalentInfo(1, 1, 1, false, nil)),
+                      select("#", GetTalentInfo(2, 3, 1, false, nil))"##,
         )
         .expect("original talent wrapper should accept both query shapes");
     assert_eq!(results, (0, 0));
