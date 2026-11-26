@@ -132,7 +132,7 @@ mod tests {
             feature = "client-retail",
             feature = "client-wowforever"
         )) {
-            r#"if GetChatTypeIndex("SYSTEM") ~= 1 then return "index" end"#
+            r#"if GetChatTypeIndex("SAY") ~= 2 or GetChatTypeIndex("GUILD") ~= 5 then return "index" end"#
         } else {
             r#"if GetChatTypeIndex("SAY") ~= 1 then return "index" end"#
         };
