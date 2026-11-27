@@ -16,7 +16,18 @@ assert(register, 'original Audio registrant was not selected')
 register()
 
 local function FindOriginalCallback(func, seen)
-    if type(func) ~= 'function' or seen[func] then return end
+    if seen[func] then return end
+    -- Retail/Forever store FunctionContainer records (6dcd435ec9): a table
+    -- holding the captured function and its container.
+    if type(func) == 'table' then
+        seen[func] = true
+        for _, value in pairs(func) do
+            local found = FindOriginalCallback(value, seen)
+            if found then return found end
+        end
+        return
+    end
+    if type(func) ~= 'function' then return end
     seen[func] = true
     if IsOriginalAudio(func) then return func end
     local i = 1
