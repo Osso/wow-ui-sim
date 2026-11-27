@@ -10,7 +10,7 @@ const FRIENDS_FRAME_CONSUMER: &str = r#"
     ShowUIPanel(FriendsFrame)
     for _, expected in ipairs({ "Varian", "Jaina" }) do
         local button = FriendsListFrame.ScrollBox:FindFrameByPredicate(function(frame)
-            return frame.name:GetText() == expected
+            return frame.name and frame.name:GetText() == expected
         end)
         assert(button and button.name:GetText() == expected, expected)
     end
