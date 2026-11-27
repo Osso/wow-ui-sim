@@ -66,12 +66,10 @@ C_AzeriteEssence.CanDeactivateEssence # not-yet
 C_AzeriteEssence.GetNumUsableEssences # not-yet
 C_AzeriteItem.HasActiveAzeriteItem # not-yet
 C_AzeriteItem.IsAzeriteItemByID # not-yet
-C_Bank.AreAnyBankTypesViewable # not-yet
 C_Bank.AutoDepositItemsIntoBank # not-yet
 C_Bank.BankBagTypeAndIDToInvSlot # not-yet
 C_Bank.CanDepositMoney # not-yet
 C_Bank.CanUseBank # not-yet
-C_Bank.CanViewBank # not-yet
 C_Bank.CanWithdrawMoney # not-yet
 C_Bank.CloseBankFrame # not-yet
 C_Bank.DepositMoney # not-yet
