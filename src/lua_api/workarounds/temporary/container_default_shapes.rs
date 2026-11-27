@@ -13,12 +13,6 @@ if rawget(C_Container, "GetContainerItemPurchaseInfo") == nil then
     end
 end
 
-if rawget(C_Container, "IsContainerFiltered") == nil then
-    function C_Container.IsContainerFiltered(_bag)
-        return false
-    end
-end
-
 if rawget(C_Container, "IsBattlePayItem") == nil then
     function C_Container.IsBattlePayItem(_bag, _slot)
         return false
@@ -27,8 +21,20 @@ end
 
 "#;
 
+/// Retail and Forever register the modeled `C_Container.IsContainerFiltered`.
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+const CONTAINER_FILTER_DEFAULT_LUA: &str = r#"
+if rawget(C_Container, "IsContainerFiltered") == nil then
+    function C_Container.IsContainerFiltered(_bag)
+        return false
+    end
+end
+"#;
+
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(CONTAINER_DEFAULT_SHAPES_LUA)?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+    lua.exec(CONTAINER_FILTER_DEFAULT_LUA)?;
     Ok(())
 }
 

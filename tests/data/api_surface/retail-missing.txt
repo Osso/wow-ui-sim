@@ -460,23 +460,14 @@ C_ConsoleScriptCollection.GetCollectionDataByTag # not-yet
 C_ConsoleScriptCollection.GetElements # not-yet
 C_ConsoleScriptCollection.GetScriptData # not-yet
 C_Container.ContainerRefundItemPurchase # not-yet
-C_Container.GetBankAutosortDisabled # not-yet
 C_Container.GetContainerItemDurability # not-yet
 C_Container.GetContainerItemEquipmentSetInfo # not-yet
 C_Container.GetContainerItemPurchaseCurrency # not-yet
 C_Container.GetContainerItemPurchaseItem # not-yet
-C_Container.GetInsertItemsLeftToRight # not-yet
 C_Container.GetMaxArenaCurrency # not-yet
-C_Container.GetSortBagsRightToLeft # not-yet
 C_Container.IsBattlePayItem # not-yet: temporary Lua workaround
-C_Container.IsContainerFiltered # not-yet: temporary Lua workaround
 C_Container.PlayerHasHearthstone # not-yet
-C_Container.SetBackpackAutosortDisabled # not-yet
-C_Container.SetBackpackSellJunkDisabled # not-yet
 C_Container.SetBagPortraitTexture # not-yet: temporary Lua workaround
-C_Container.SetBankAutosortDisabled # not-yet
-C_Container.SetInsertItemsLeftToRight # not-yet
-C_Container.SetSortBagsRightToLeft # not-yet
 C_Container.ShowContainerSellCursor # not-yet
 C_Container.SocketContainerItem # not-yet
 C_Container.SortAccountBankBags # not-yet

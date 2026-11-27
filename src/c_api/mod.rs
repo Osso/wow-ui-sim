@@ -339,6 +339,7 @@ pub(crate) mod c_taxi_map;
 pub(crate) mod challenge_run;
 #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
 pub mod combat_log_history;
+pub mod container_preferences;
 pub mod container_purchase;
 mod container_purchase_args;
 pub mod container_quest;
