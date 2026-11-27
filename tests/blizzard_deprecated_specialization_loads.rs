@@ -42,6 +42,10 @@ fn load_full_game_ui() -> WowLuaEnv {
     env
 }
 
+// Mainline facts: `[Game]` resolves to Standard and `standard` admits the TOC.
+// Forever's camelot game type is outside `classic, standard` (abbc1272f6);
+// 17cbe8e786 widened this file to Forever for the GetTalentInfo wrapper only.
+#[cfg(feature = "client-retail")]
 #[test]
 fn blizzard_deprecated_specialization_toc_declares_classic_and_standard_game_types() {
     let toc = TocFile::from_file(&deprecated_specialization_toc())
@@ -88,6 +92,10 @@ fn blizzard_deprecated_specialization_toc_declares_classic_and_standard_game_typ
     );
 }
 
+// Mainline facts: `[Game]` resolves to Standard and `standard` admits the TOC.
+// Forever's camelot game type is outside `classic, standard` (abbc1272f6);
+// 17cbe8e786 widened this file to Forever for the GetTalentInfo wrapper only.
+#[cfg(feature = "client-retail")]
 #[test]
 fn blizzard_deprecated_specialization_toc_lists_game_template_and_talent_consts() {
     let toc = TocFile::from_file(&deprecated_specialization_toc())
@@ -119,6 +127,10 @@ fn blizzard_deprecated_specialization_toc_lists_game_template_and_talent_consts(
     );
 }
 
+// Mainline facts: `[Game]` resolves to Standard and `standard` admits the TOC.
+// Forever's camelot game type is outside `classic, standard` (abbc1272f6);
+// 17cbe8e786 widened this file to Forever for the GetTalentInfo wrapper only.
+#[cfg(feature = "client-retail")]
 #[test]
 fn blizzard_deprecated_specialization_appears_in_game_discovery_only() {
     let game_addons = discover_blizzard_addons_for_screen(&blizzard_ui_dir(), ScreenKind::Game);
