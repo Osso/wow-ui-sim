@@ -254,6 +254,7 @@ fn get_guild_bank_money(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+#[cfg(not(feature = "client-mists"))]
 fn guild_bank_money_limit(state: &LuaState) -> LuaResult<Option<i64>> {
     let sim = borrow_state(state)?;
     let selected = sim.world.guild_selected_rank.checked_sub(1);
@@ -265,6 +266,8 @@ fn guild_bank_money_limit(state: &LuaState) -> LuaResult<Option<i64>> {
 
 fn get_guild_bank_withdraw_money(state: &mut LuaState) -> LuaResult<u32> {
     #[cfg(feature = "client-mists")]
+    let _ = state;
+    #[cfg(feature = "client-mists")]
     let limit = -1;
     #[cfg(not(feature = "client-mists"))]
     let limit = guild_bank_money_limit(state)?.unwrap_or(0);
@@ -273,6 +276,8 @@ fn get_guild_bank_withdraw_money(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn get_guild_bank_withdraw_gold_limit(state: &mut LuaState) -> LuaResult<u32> {
+    #[cfg(feature = "client-mists")]
+    let _ = state;
     #[cfg(feature = "client-mists")]
     let gold = 0;
     #[cfg(not(feature = "client-mists"))]
@@ -330,6 +335,8 @@ fn pickup_guild_bank_money(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn can_withdraw_guild_bank_money(state: &mut LuaState) -> LuaResult<u32> {
+    #[cfg(feature = "client-mists")]
+    let _ = state;
     #[cfg(feature = "client-mists")]
     let allowed = true;
     #[cfg(not(feature = "client-mists"))]

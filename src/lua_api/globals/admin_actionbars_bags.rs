@@ -228,6 +228,7 @@ pub(super) fn set_guild_bank_tab_cost(state: &mut LuaState) -> LuaResult<u32> {
         return Err(runtime_error("Guild bank tab cost must be nonnegative"));
     }
     borrow_state_mut(state)?.guild_bank_tab_cost = cost;
+    fire_named_event_state(state, "GUILDBANK_UPDATE_TABS", &[]);
     Ok(0)
 }
 

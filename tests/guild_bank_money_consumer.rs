@@ -49,6 +49,16 @@ fn guild_bank_frame_shows_supplied_money(env: &WowLuaEnv) {
 
 prefork_full_ui_case! {
 fn guild_bank_withdraw_state_uses_supplied_permissions(env: &WowLuaEnv) {
+    let empty_money: i64 = env.eval("return GetGuildBankMoney()").unwrap();
+    let empty_allowance: i64 = env.eval("return GetGuildBankWithdrawMoney()").unwrap();
+    let empty_gold_limit: i64 = env.eval("return GetGuildBankWithdrawGoldLimit()").unwrap();
+    let empty_can_withdraw: bool = env.eval("return CanWithdrawGuildBankMoney()").unwrap();
+    let empty_can_edit: bool = env.eval("return CanEditGuildBankTabInfo()").unwrap();
+    let empty_tab_cost: i64 = env.eval("return GetGuildBankTabCost()").unwrap();
+    assert_eq!((empty_money, empty_allowance, empty_gold_limit), (0, 0, 0));
+    assert_eq!(empty_tab_cost, 0);
+    assert!(!empty_can_withdraw);
+    assert!(!empty_can_edit);
     env.exec(OPEN_EMPTY_GUILD_BANK).expect("original guild bank opens empty");
     assert_eq!(shown_guild_bank_coins(env), "0/0/0");
     let empty_withdraw_enabled: bool = env
