@@ -109,3 +109,17 @@ Sets the automatic rot damage intensity applied to party members each tick.
 A_Admin.SetRotDamage(2)     -- moderate damage for healing practice
 A_Admin.SetRotDamage(0)     -- disable rot
 ```
+
+### A_Admin.SetLFGRoleCheck(category, lfgID, slots, members, isBattleground)
+
+Starts an LFG role check. Retail and PTR only.
+
+- **category** `number` -- `LE_LFG_CATEGORY_*` value, at least 1
+- **lfgID**, **slots**, **members** `number` -- non-negative integers
+- **isBattleground** `boolean`
+- **Affects:** `GetLFGRoleUpdate()` returns `true, slots, members, category, lfgID, isBattleground`; Blizzard `GetLFGMode(category, lfgID)` returns `"rolecheck"`
+- **Fires:** nothing
+
+### A_Admin.ClearLFGRoleCheck()
+
+Ends the role check. `GetLFGRoleUpdate()` then returns `false, 0, 0, 0, 0, false` (INFERRED R88g9, native evidence pending: the tuple the simulator reported before this model).

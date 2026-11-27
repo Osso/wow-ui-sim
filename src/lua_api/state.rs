@@ -413,21 +413,24 @@ macro_rules! build_empty_sim_state {
                 feature = "retail-12-0-0",
                 feature = "client-mists",
                 feature = "client-era",
-                feature = "client-anniversary"
+                feature = "client-anniversary",
+                feature = "client-wowforever"
             ))]
             transmog_illusions: Vec::new(),
             #[cfg(any(
                 feature = "retail-12-0-0",
                 feature = "client-mists",
                 feature = "client-era",
-                feature = "client-anniversary"
+                feature = "client-anniversary",
+                feature = "client-wowforever"
             ))]
             viewed_outfit_slots: HashMap::new(),
             #[cfg(any(
                 feature = "retail-12-0-0",
                 feature = "client-mists",
                 feature = "client-era",
-                feature = "client-anniversary"
+                feature = "client-anniversary",
+                feature = "client-wowforever"
             ))]
             pending_transmog_cost: None,
             transmog_outfit_locks: HashSet::new(),
@@ -451,14 +454,16 @@ macro_rules! build_empty_sim_state {
                 feature = "retail-12-0-0",
                 feature = "client-mists",
                 feature = "client-era",
-                feature = "client-anniversary"
+                feature = "client-anniversary",
+                feature = "client-wowforever"
             ))]
             active_transmog_outfit_id: None,
             #[cfg(any(
                 feature = "retail-12-0-0",
                 feature = "client-mists",
                 feature = "client-era",
-                feature = "client-anniversary"
+                feature = "client-anniversary",
+                feature = "client-wowforever"
             ))]
             viewed_transmog_outfit_id: None,
             // Simulator initial policy; native default is unverified.
@@ -824,6 +829,8 @@ macro_rules! build_empty_sim_state {
             #[cfg(feature = "client-retail")]
             lfd_lock_requests: Default::default(),
             lfg_roles: LfgRoleSelection::default(),
+            current_region: Default::default(),
+            lfg_role_check: None,
             lfd_dungeons: default_lfd_dungeons(),
             lfg_tooltip_rewards_ready: false,
             lfg_tooltip_reward_groups: Vec::new(),

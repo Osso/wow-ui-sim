@@ -1,5 +1,6 @@
 //! Outfit-slot topology and per-outfit secondary shoulder selection.
 
+use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::globals::state_backed_queries::dispatch_event_now;
 use crate::lua_api::methods::{
     borrow_state, borrow_state_mut, create_string, create_table, table_set, table_set_num,
@@ -94,41 +95,65 @@ const SLOTS: [SlotDefinition; 15] = [
     },
 ];
 
+type Handler = fn(&mut LuaState) -> LuaResult<u32>;
+
+const MEMBERS: [(&str, Handler); 15] = [
+    ("IsSlotWeaponSlot", is_weapon),
+    ("SlotHasSecondary", has_secondary),
+    ("GetSecondarySlotState", get_secondary),
+    ("SetSecondarySlotState", set_secondary),
+    ("GetEquippedSlotOptionFromTransmogSlot", get_equipped_option),
+    ("GetCollectionInfoForSlotAndOption", get_collection),
+    ("GetSlotGroupInfo", get_groups),
+    ("GetAllSlotLocationInfo", get_all_locations),
+    ("GetLinkedSlotInfo", get_linked_slots),
+    (
+        "GetTransmogOutfitSlotFromInventorySlot",
+        slot_from_inventory_slot,
+    ),
+    (
+        "GetTransmogOutfitSlotForInventoryType",
+        slot_for_inventory_type,
+    ),
+    (
+        "GetItemModifiedAppearanceEffectiveCategory",
+        effective_category,
+    ),
+    ("GetIllusionDefaultIMAIDForCollectionType", default_illusion),
+    ("GetUnassignedAtlasForSlot", unassigned_atlas),
+    ("GetUnassignedDisplayAtlasForSlot", unassigned_display_atlas),
+];
+
+/// Members whose pinned temporary Lua fallback stays authoritative on Forever.
+const FOREVER_FALLBACK_MEMBERS: [&str; 3] = [
+    "GetAllSlotLocationInfo",
+    "GetLinkedSlotInfo",
+    "GetTransmogOutfitSlotFromInventorySlot",
+];
+
+fn is_forever() -> bool {
+    ACTIVE == ClientProfile::WowForever
+}
+
+/// Forever `Enum.TransmogOutfitSlotOption` adds ArmorCloth..ArmorPlate (12-15).
+pub(super) fn max_slot_option() -> i32 {
+    if is_forever() { 15 } else { 11 }
+}
+
 pub(super) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
-    for (name, handler) in [
-        (
-            "IsSlotWeaponSlot",
-            is_weapon as fn(&mut LuaState) -> LuaResult<u32>,
-        ),
-        ("SlotHasSecondary", has_secondary),
-        ("GetSecondarySlotState", get_secondary),
-        ("SetSecondarySlotState", set_secondary),
-        ("SetViewedWeaponOptionForSlot", set_weapon_option),
-        ("GetWeaponOptionsForSlot", get_weapon_options),
-        ("GetEquippedSlotOptionFromTransmogSlot", get_equipped_option),
-        ("GetCollectionInfoForSlotAndOption", get_collection),
-        ("GetSlotGroupInfo", get_groups),
-        ("GetAllSlotLocationInfo", get_all_locations),
-        ("GetLinkedSlotInfo", get_linked_slots),
-        (
-            "GetTransmogOutfitSlotFromInventorySlot",
-            slot_from_inventory_slot,
-        ),
-        (
-            "GetTransmogOutfitSlotForInventoryType",
-            slot_for_inventory_type,
-        ),
-        (
-            "GetItemModifiedAppearanceEffectiveCategory",
-            effective_category,
-        ),
-        ("GetIllusionDefaultIMAIDForCollectionType", default_illusion),
-        ("GetUnassignedAtlasForSlot", unassigned_atlas),
-        ("GetUnassignedDisplayAtlasForSlot", unassigned_display_atlas),
-    ] {
-        table_set_rust_fn_static(state, namespace, name, handler)?;
+    for (name, handler) in MEMBERS {
+        if !(is_forever() && FOREVER_FALLBACK_MEMBERS.contains(&name)) {
+            table_set_rust_fn_static(state, namespace, name, handler)?;
+        }
     }
-    Ok(())
+    // Forever TransmogOutfitInfoDocumentation.lua renames the weapon-option pair.
+    let (set_name, get_name) = if is_forever() {
+        ("SetViewedOptionForSlot", "GetOptionsForSlot")
+    } else {
+        ("SetViewedWeaponOptionForSlot", "GetWeaponOptionsForSlot")
+    };
+    table_set_rust_fn_static(state, namespace, set_name, set_weapon_option)?;
+    table_set_rust_fn_static(state, namespace, get_name, get_weapon_options)
 }
 
 fn read_slot(state: &LuaState) -> LuaResult<i32> {
@@ -194,7 +219,7 @@ fn set_secondary(state: &mut LuaState) -> LuaResult<u32> {
 fn set_weapon_option(state: &mut LuaState) -> LuaResult<u32> {
     let slot = read_slot(state)?;
     let option = i32::from_stack(state, 2)?;
-    if !(0..=11).contains(&option) {
+    if !(0..=max_slot_option()).contains(&option) {
         return Err(rilua::runtime_error("invalid weapon option"));
     }
     let changed = borrow_state_mut(state)?
@@ -207,9 +232,14 @@ fn set_weapon_option(state: &mut LuaState) -> LuaResult<u32> {
     if !changed {
         return Ok(0);
     }
+    let event = if is_forever() {
+        "VIEWED_TRANSMOG_OUTFIT_SLOT_OPTION_CHANGED"
+    } else {
+        "VIEWED_TRANSMOG_OUTFIT_SLOT_WEAPON_OPTION_CHANGED"
+    };
     dispatch_event_now(
         state,
-        "VIEWED_TRANSMOG_OUTFIT_SLOT_WEAPON_OPTION_CHANGED",
+        event,
         &[Val::Num(slot as f64), Val::Num(option as f64)],
     )?;
     Ok(0)
@@ -262,7 +292,8 @@ fn get_weapon_options(state: &mut LuaState) -> LuaResult<u32> {
     for (index, (option, name)) in weapon_options(slot).iter().enumerate() {
         let row = create_table(state);
         let name = create_string(state, name);
-        table_set(state, row, "weaponOption", Val::Num(*option as f64));
+        let option_field = if is_forever() { "type" } else { "weaponOption" };
+        table_set(state, row, option_field, Val::Num(*option as f64));
         table_set(state, row, "name", name);
         table_set(state, row, "enabled", Val::Bool(true));
         table_set_num(state, table, (index + 1) as f64, row);
