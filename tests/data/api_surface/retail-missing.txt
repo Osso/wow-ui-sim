@@ -2109,7 +2109,6 @@ GetBattlegroundPoints # not-yet
 GetBestFlexRaidChoice # not-yet
 GetBillingTimeRested # not-yet: temporary Lua workaround
 GetButtonMetatable # not-yet: temporary Lua workaround
-GetCallstackHeight # not-yet: temporary Lua workaround
 GetCemeteryPreference # not-yet
 GetClickFrame # not-yet
 GetCompanionInfo # not-yet

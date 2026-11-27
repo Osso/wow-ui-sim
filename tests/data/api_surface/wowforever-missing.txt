@@ -2165,7 +2165,6 @@ GetAvailableBandwidth # not-yet: temporary Lua workaround
 GetAvailableLocales # not-yet
 GetBackgroundLoadingStatus # not-yet: temporary Lua workaround
 GetBillingTimeRested # not-yet: temporary Lua workaround
-GetCallstackHeight # not-yet: temporary Lua workaround
 GetCemeteryPreference # not-yet
 GetCollapsingStarCost # not-yet
 GetCorpseRecoveryDelay # not-yet
