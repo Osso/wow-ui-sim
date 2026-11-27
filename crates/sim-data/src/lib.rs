@@ -59,6 +59,8 @@ pub mod items;
 pub mod manifest_interface_data;
 #[path = "../data/map_art.rs"]
 pub mod map_art;
+#[path = "../data/map_art_forever.rs"]
+pub mod map_art_forever;
 #[path = "../data/map_challenge_modes.rs"]
 pub mod map_challenge_modes;
 #[path = "../data/model_scenes.rs"]

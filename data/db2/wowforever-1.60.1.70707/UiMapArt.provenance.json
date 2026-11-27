@@ -1,0 +1,31 @@
+{
+  "profile": "wowforever",
+  "product": "wowf",
+  "build": "1.60.1.70707",
+  "interface": 16001,
+  "retrieved": "2026-11-27",
+  "regenerate": "wow-cli generate map-art",
+  "provenance_scope": "Build-specific Wago exports; independent local-CASC equality is not established.",
+  "tables": {
+    "UiMapXMapArt": {
+      "source": "https://wago.tools/db2/UiMapXMapArt/csv?build=1.60.1.70707",
+      "sha256": "81092d619701f0b31a3537129ec5667b38630b5291e211034971a1dde05678dc",
+      "rows": 60
+    },
+    "UiMapArt": {
+      "source": "https://wago.tools/db2/UiMapArt/csv?build=1.60.1.70707",
+      "sha256": "4e41d771db74b6d6135ad695243ca054760cd8c163f6d7496582152908175fb8",
+      "rows": 144
+    },
+    "UiMapArtStyleLayer": {
+      "source": "https://wago.tools/db2/UiMapArtStyleLayer/csv?build=1.60.1.70707",
+      "sha256": "a8322f8c5c119f6c018ba47f750b42a8ad7f00f0881f4cec8ad36a35285af499",
+      "rows": 6
+    },
+    "UiMapArtTile": {
+      "source": "https://wago.tools/db2/UiMapArtTile/csv?build=1.60.1.70707",
+      "sha256": "5e72ffb01f2a54e44d80c40c5cb7ef6724e7c5d0e4cadc84a341227f4e683c74",
+      "rows": 1672
+    }
+  }
+}

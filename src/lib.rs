@@ -72,7 +72,7 @@ pub mod lua_server;
 #[path = "lua_server_windows.rs"]
 pub mod lua_server;
 pub use sim_data::manifest_interface_data;
-pub use sim_data::map_art;
+pub mod map_art;
 pub mod map_exploration;
 #[cfg(feature = "client-mists")]
 pub mod mists;
