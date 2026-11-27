@@ -144,6 +144,7 @@ pub(crate) fn update_for_screen_mode(
 #[cfg(test)]
 mod tests {
     use crate::lua_api::WowLuaEnv;
+    use crate::screen::ScreenKind;
 
     #[test]
     fn installs_adventure_journal_fallback_shapes_when_missing() {
@@ -210,31 +211,51 @@ mod tests {
         }
     }
 
+    // Blizzard_FrameXMLUtil (AllowLoad: Game) owns OpenHyperLink. Since
+    // 7796e28aa, Retail installs helper defaults only at the Game boundary, so
+    // Glue has none until a Game visit has left them behind.
+    const GLUE_AVAILABILITY_PROBE: &str = r#"
+        assert(AdventureGuideUtil.IsAvailable() == true)
+        local open = rawget(AdventureGuideUtil, "OpenHyperLink")
+        if open == nil then return "absent" end
+        return tostring(open("journal", "1", "2", "3"))
+    "#;
+
+    fn expected_glue_open_result(game_visited: bool) -> &'static str {
+        let is_retail =
+            crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail;
+        if is_retail && !game_visited {
+            "absent"
+        } else {
+            "false"
+        }
+    }
+
+    fn assert_glue_then_game_boundary(env: &WowLuaEnv, screen: ScreenKind, game_visited: bool) {
+        env.set_screen_mode(screen);
+        let open_result: String = env
+            .eval(GLUE_AVAILABILITY_PROBE)
+            .expect("Glue availability");
+        assert_eq!(open_result, expected_glue_open_result(game_visited));
+        env.set_screen_mode(ScreenKind::Game);
+        let missing: bool = env
+            .eval("return rawget(AdventureGuideUtil, 'IsAvailable') == nil")
+            .expect("Game boundary");
+        let is_retail =
+            crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail;
+        assert_eq!(missing, is_retail);
+    }
+
     #[test]
     fn availability_fallback_follows_screen_without_removing_other_owners() {
-        use crate::screen::ScreenKind;
         let env = WowLuaEnv::new().expect("lua env");
-        for screen in [
+        let glue_screens = [
             ScreenKind::Login,
             ScreenKind::CharacterSelect,
             ScreenKind::CharacterCreate,
-        ] {
-            env.set_screen_mode(screen);
-            env.exec(
-                r#"
-                assert(AdventureGuideUtil.IsAvailable() == true)
-                assert(AdventureGuideUtil.OpenHyperLink("journal", "1", "2", "3") == false)
-            "#,
-            )
-            .expect("Glue retains its existing bootstrap behavior");
-            env.set_screen_mode(ScreenKind::Game);
-            let missing: bool = env
-                .eval("return rawget(AdventureGuideUtil, 'IsAvailable') == nil")
-                .expect("Game boundary");
-            assert_eq!(
-                missing,
-                crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail
-            );
+        ];
+        for (index, screen) in glue_screens.into_iter().enumerate() {
+            assert_glue_then_game_boundary(&env, screen, index > 0);
         }
         env.set_screen_mode(ScreenKind::Login);
         env.exec("AdventureGuideUtil.IsAvailable = function() return 'independent owner' end")
