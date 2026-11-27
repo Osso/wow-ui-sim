@@ -708,7 +708,7 @@ fn unit_class(state: &mut LuaState) -> LuaResult<u32> {
     super::real::unit_secret_predicates::finish_identity_restricted(state, &[&unit], 3)
 }
 
-fn arena_or_group_class(st: &crate::lua_api::state::SimState, unit: &str) -> u32 {
+fn arena_or_group_class(st: &crate::lua_api::state::SimState, unit: &str) -> i32 {
     #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
     if let Some(opponent) = st.arena_opponents.get(unit) {
         return opponent.class_index;

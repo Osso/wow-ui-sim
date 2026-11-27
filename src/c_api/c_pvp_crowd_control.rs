@@ -17,7 +17,7 @@ pub struct CrowdControlWindow {
 #[derive(Debug, Clone)]
 pub struct ArenaOpponent {
     pub guid: String,
-    pub class_index: u32,
+    pub class_index: i32,
     pub spec_id: u32,
 }
 
@@ -128,7 +128,7 @@ fn required_opponent_guid(guid: Option<String>) -> LuaResult<String> {
         .ok_or_else(|| runtime_error("A_Admin.SetArenaOpponent: guid must be a nonempty string"))
 }
 
-fn required_opponent_class(class_index: Option<i32>) -> LuaResult<u32> {
+fn required_opponent_class(class_index: Option<i32>) -> LuaResult<i32> {
     let index = class_index
         .ok_or_else(|| runtime_error("A_Admin.SetArenaOpponent: classIndex is required"))?;
     let (name, _, _) = crate::lua_api::game_data::class_info_by_index(index);
@@ -137,7 +137,7 @@ fn required_opponent_class(class_index: Option<i32>) -> LuaResult<u32> {
             "A_Admin.SetArenaOpponent: classIndex is out of range",
         ));
     }
-    Ok(index as u32)
+    Ok(index)
 }
 
 /// INFERRED R88g9 (native evidence pending): supplied host roster changes signal these events.
