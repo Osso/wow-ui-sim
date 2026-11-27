@@ -6,10 +6,10 @@ use crate::c_api::helpers::{ensure_namespace, set_table_array};
 use crate::client_profile::{ACTIVE, ClientProfile};
 pub use crate::lua_api::globals::auras::GroupBuffAlert;
 use crate::lua_api::methods::{
-    borrow_state, borrow_state_mut, create_string, create_table, create_table_with_fields,
+    borrow_state, create_string, create_table, create_table_with_fields,
 };
 #[cfg(feature = "client-wowforever")]
-use crate::lua_api::methods::{table_get, val_to_string};
+use crate::lua_api::methods::{borrow_state_mut, table_get, val_to_string};
 #[cfg(feature = "client-wowforever")]
 use crate::lua_bridge::TableBuilder;
 use crate::lua_bridge::{FromStack, stack_val, table_set_rust_fn_static};
