@@ -313,14 +313,14 @@ return "ok"
 "#;
 
 prefork_full_ui_case! {
-fn original_difficulty_util_reads_supplied_tables(env: &WowLuaEnv) {
+fn original_difficulty_util_reads_selected_owner_tables(env: &WowLuaEnv) {
     let result: String = env.eval(DIFFICULTY_UTIL_BEHAVIOR_PROBE).unwrap();
     assert_eq!(result, "ok");
 }
 }
 
 prefork_full_ui_case! {
-fn original_pvp_util_reads_supplied_rank_and_bracket_tables(env: &WowLuaEnv) {
+fn original_pvp_util_reads_selected_owner_rank_and_bracket_tables(env: &WowLuaEnv) {
     let result: String = env.eval(PVP_UTIL_BEHAVIOR_PROBE).unwrap();
     assert_eq!(result, "ok");
 }
