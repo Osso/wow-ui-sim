@@ -14,8 +14,9 @@ fn test_spell_override_maw_epoch_and_explicit_charge_state() {
             charge_mod_rate: 2.0,
         },
     );
-    // data/patch-api/sources/12.0.7-wikitext-register.json records this removal.
-    let maw_expression = if cfg!(feature = "retail-12-0-7") {
+    // data/patch-api/sources/12.0.7-wikitext-register.json records this removal;
+    // Forever shares it through maw-power-rarity-info (a9ffb9d1b0).
+    let maw_expression = if cfg!(feature = "maw-power-rarity-info") {
         "C_Spell.GetMawPowerBorderAtlasBySpellID == nil"
     } else {
         // Preserve the earlier-profile fixture baseline, not a native contract claim.
