@@ -363,6 +363,8 @@ fn can_edit_guild_tab_info(state: &mut LuaState) -> LuaResult<u32> {
 
 fn can_edit_guild_tab(state: &mut LuaState, tab: i32) -> LuaResult<u32> {
     #[cfg(feature = "client-mists")]
+    let _ = tab;
+    #[cfg(feature = "client-mists")]
     let allowed = true;
     #[cfg(not(feature = "client-mists"))]
     let allowed = {
