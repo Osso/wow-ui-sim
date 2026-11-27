@@ -40,7 +40,12 @@ pub(crate) fn register_c_lfg_info_surface(state: &mut LuaState) -> LuaResult<()>
     register_queue_state_methods(state, table_ref)?;
     #[cfg(feature = "client-wowforever")]
     register_forever_queue_title_methods(state, table_ref)?;
-    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
+        // LFGInfoDocumentation.lua:85-91 is byte-identical on Retail and Forever.
         table_set_rust_fn_static(
             state,
             table_ref,
@@ -241,7 +246,31 @@ fn hide_name_from_ui(state: &mut LuaState) -> LuaResult<u32> {
 pub(crate) fn register_admin(
     builder: crate::lua_bridge::TableBuilder,
 ) -> LuaResult<crate::lua_bridge::TableBuilder> {
-    builder.set_function("SetLfgQueueData", set_lfg_queue_data)
+    builder
+        .set_function("SetLfgQueueData", set_lfg_queue_data)?
+        .set_function("ShowLfgExpandSearchPrompt", show_expand_search_prompt)
+}
+
+/// `A_Admin.ShowLfgExpandSearchPrompt(key, data)`: stores the server prompt
+/// (a non-negative integer key and an opaque string) and fires
+/// `SHOW_LFG_EXPAND_SEARCH_PROMPT` (LFGInfoDocumentation.lua:488), which the
+/// original `LFGEventFrame_OnEvent` turns into the `LFG_QUEUE_EXPAND` popup.
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn show_expand_search_prompt(state: &mut LuaState) -> LuaResult<u32> {
+    let key = f64::from_stack(state, 1)?;
+    let data = String::from_stack(state, 2)?;
+    if !(key.is_finite() && key >= 0.0 && key.fract() == 0.0 && key <= u64::MAX as f64) {
+        return Err(rilua::runtime_error(
+            "ShowLfgExpandSearchPrompt: key must be a non-negative integer",
+        ));
+    }
+    borrow_state_mut(state)?.lfg_expand_prompt = Some((key as u64, data.into_bytes()));
+    crate::lua_api::script_helpers::fire_named_event_state(
+        state,
+        "SHOW_LFG_EXPAND_SEARCH_PROMPT",
+        &[],
+    );
+    Ok(0)
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]

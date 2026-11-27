@@ -540,7 +540,6 @@ C_DateAndTime.AdjustTimeByMinutes # not-yet: temporary Lua workaround
 C_DateAndTime.AdjustTimeByMonths # not-yet
 C_DateAndTime.GetCalendarTimeFromEpoch # not-yet: temporary Lua workaround
 C_DateAndTime.GetServerTimeLocal # not-yet: temporary Lua workaround
-C_DeathInfo.GetCorpseMapPosition # not-yet
 C_DeathInfo.GetDeathReleasePosition # not-yet
 C_DeathInfo.UseSelfResurrectOption # not-yet
 C_Debug.DashboardIsEnabled # not-yet

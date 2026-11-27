@@ -390,6 +390,18 @@ pub fn load_game_startup_inventory(env: &WowLuaEnv) {
     env.sync_string_metatable_to_global_string();
 }
 
+/// Production game-screen startup (inventory, post-load workarounds, startup events).
+#[cfg(feature = "client-wowforever")]
+pub fn forever_game_env() -> WowLuaEnv {
+    let env = WowLuaEnv::new().expect("create Forever Lua environment");
+    load_game_startup_inventory(&env);
+    env.sync_addon_names_to_lua();
+    env.apply_post_load_workarounds();
+    let game = wow_ui_sim::screen::ScreenKind::Game;
+    wow_ui_sim::startup::fire_startup_events_for_screen(&env, game);
+    env
+}
+
 pub fn is_classic_ui_profile() -> bool {
     matches!(
         wow_ui_sim::client_profile::ACTIVE,

@@ -38,6 +38,13 @@ pub(super) fn open_guild_bank(state: &mut LuaState) -> LuaResult<u32> {
     show_player_interaction(state, "GuildBanker")
 }
 
+/// The map-table interaction registered by the original
+/// `Blizzard_UIPanels_Game/Mainline/WorldMapFrame.lua:1-7` (`WorldMap`).
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(super) fn open_world_map_interaction(state: &mut LuaState) -> LuaResult<u32> {
+    show_player_interaction(state, "WorldMap")
+}
+
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn show_player_interaction(state: &mut LuaState, name: &str) -> LuaResult<u32> {
     let interaction_type = player_interaction_type(name);

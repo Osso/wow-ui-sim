@@ -145,8 +145,11 @@ fn register_c_map_methods(state: &mut LuaState, table_ref: LuaTableRef) -> LuaRe
     }
     if matches!(
         crate::client_profile::ACTIVE,
-        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::Ptr
+            | crate::client_profile::ClientProfile::WowForever
     ) {
+        // MapDocumentation.lua:29-36 is byte-identical on Retail and Forever.
         table_set_rust_fn_static(
             state,
             table_ref,

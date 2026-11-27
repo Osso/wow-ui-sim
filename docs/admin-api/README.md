@@ -21,10 +21,10 @@ The `A_Admin` namespace provides administrative functions for controlling simula
 - Vignettes (Retail and WoW Forever): `A_Admin.SetVignettes(records)` supplies the session's modeled `C_VignetteInfo` records and fires `VIGNETTES_UPDATED`. Other profiles retain their existing legacy vignette surface. Each record requires `vignetteGUID`, `uiMapID`, `x`, and `y`; documented `VignetteInfo` fields can also be supplied, including `mapPin`. Optional host values are `facing`, `healthPercent`, `minGroupSize`, and `maxGroupSize`. Empty records are the default. Unknown-GUID return behavior is INFERRED (R88g6).
 - [Chat windows](chat-windows.md) — SetChatWindowState
 - [Voice chat](voice-chat.md) — SetCanPlayerUseVoiceChat, SetVoiceChatConnected, SetRemoteTtsVoices
-- [Health & Power](health-power.md) — SetPlayerHealth, SetPlayerPower, SetTargetHealth, SetReleaseTimeRemaining, SetNoReleaseAura, AddSelfResurrectOption, ClearSelfResurrectOptions, AddDeathRecap, ClearDeathRecaps
+- [Health & Power](health-power.md) — SetPlayerHealth, SetPlayerPower, SetTargetHealth, SetReleaseTimeRemaining, SetNoReleaseAura, AddSelfResurrectOption, ClearSelfResurrectOptions, AddDeathRecap, ClearDeathRecaps, SetCorpseMapPosition, ClearCorpse
 - [Targeting](targeting.md) — SetTarget, ClearTarget, SetFocus, ClearFocus
 - [Challenge mode](challenge-mode.md) — SetChallengePowerLevelMods
-- [Party](party.md) — SetPartySize, SetPartyMember, SetPartyMemberHealth, KillPartyMember, ResPartyMember, SetRotDamage, SetLFGRoleCheck, ClearLFGRoleCheck
+- [Party](party.md) — SetPartySize, SetPartyMember, SetPartyMemberHealth, KillPartyMember, ResPartyMember, SetRotDamage, SetLFGRoleCheck, ClearLFGRoleCheck, ShowLfgExpandSearchPrompt
 - [Movement](movement.md) — SetMoving, SetMounted, SetFlying, SetFalling, SetSwimming
 - [Navigation target](navigation.md) — SetNavigationTarget
 - [Taxi map](taxi-map.md) — SetTaxiMapNodes, SetTaxiMapID, OpenTaxiMap
@@ -42,7 +42,7 @@ The `A_Admin` namespace provides administrative functions for controlling simula
 - [PvP](pvp.md) — SetPvPEnabled, SetHonorLevel, SetArenaCrowdControl
 - [Guild](guild.md) — SetGuildInfo, ClearGuild, JoinGuild, LeaveGuild
 - [Mail](mail.md) — AddMail, ClearInbox, SetInboxCount
-- [Interactions](interactions.md) — OpenGuildRename, OpenMailbox, CloseMailbox
+- [Interactions](interactions.md) — OpenGuildRename, OpenMailbox, CloseMailbox, OpenWorldMapInteraction
 - [Premade Groups](premade-groups.md) — AddPremadeListing, ClearPremadeListings, UpdatePremadeListing
 - [Quests](quests.md) — simulator-only selected completed quest turn-in
 - [Events](events.md) — FireEvent
