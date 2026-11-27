@@ -62,16 +62,17 @@ fn maw_power_rarity_info_requires_both_rarity_and_atlas() {
 }
 
 #[test]
-fn base_difficulty_is_identity_until_difficulty_variants_are_modeled() {
+fn base_difficulty_queries_map_known_variants() {
     let env = WowLuaEnv::new().unwrap();
     env.exec(
         r#"
         assert(type(rawget(_G, 'GetBaseDifficultyID')) == 'function')
-        for _, id in ipairs({1, 14, 15, 16, 23, 233}) do
-            assert(GetBaseDifficultyID(id) == id)
+        local expected = { [1] = 1, [14] = 14, [15] = 15, [16] = 16, [23] = 23, [233] = 16, [250] = 17 }
+        for id, base in pairs(expected) do
+            assert(GetBaseDifficultyID(id) == base)
         end
-        local ok, err = pcall(GetBaseDifficultyID, '16')
-        assert(not ok and tostring(err):find('difficultyID'), tostring(err))
+        local ok = pcall(GetBaseDifficultyID, '16')
+        assert(not ok, 'string difficultyID must be rejected')
         "#,
     )
     .unwrap();
