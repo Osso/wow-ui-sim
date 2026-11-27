@@ -243,6 +243,7 @@ fn apply_runtime_state_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     temporary::housing_owned_house_requests::apply_bootstrap(lua)?;
     #[cfg(feature = "client-wowforever")]
     temporary::forever_bank_capability_defaults::apply_bootstrap(lua)?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::house_exterior_debug::apply_bootstrap(lua)?;
     temporary::map_runtime_state::apply_bootstrap(lua)?;
     temporary::perks_activities_state::apply_bootstrap(lua)?;
@@ -344,6 +345,7 @@ fn apply_core_foundation_environment_defaults(lua: &mut rilua::Lua) -> crate::Re
     temporary::difficulty_pvp_util_defaults::apply_bootstrap(lua)?;
     #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::edit_mode_cache_defaults::apply_bootstrap(lua)?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::equipment_set_lock_defaults::apply_bootstrap(lua)?;
     temporary::global_frame_defaults::apply_bootstrap(lua)?;
     temporary::gossip_poi_defaults::apply_bootstrap(lua)?;
@@ -387,6 +389,7 @@ fn apply_core_foundation_addon_defaults(lua: &mut rilua::Lua) -> crate::Result<(
     #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::addons_beta_policy_defaults::apply_bootstrap(lua)?;
     temporary::auth_challenge_frame_parent::apply_bootstrap(lua)?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::auto_complete_defaults::apply_bootstrap(lua)?;
     #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::behavioral_messaging_defaults::apply_bootstrap(lua)?;
@@ -425,6 +428,7 @@ fn apply_core_dispatcher_and_format_defaults(lua: &mut rilua::Lua) -> crate::Res
 }
 
 fn apply_dispatcher_and_date_defaults(lua: &mut rilua::Lua) -> crate::Result<()> {
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::dispatcher_callback_defaults::apply_bootstrap(lua)?;
     temporary::dispatcher_surface::apply_bootstrap(lua)?;
     temporary::date_and_time_defaults::apply_bootstrap(lua)?;
@@ -432,7 +436,9 @@ fn apply_dispatcher_and_date_defaults(lua: &mut rilua::Lua) -> crate::Result<()>
 }
 
 fn apply_format_and_game_defaults(lua: &mut rilua::Lua) -> crate::Result<()> {
-    temporary::dropdown_list_defaults::apply_bootstrap(lua)?;
+    if should_use_temporary_shared_xml_defaults() {
+        temporary::dropdown_list_defaults::apply_bootstrap(lua)?;
+    }
     temporary::formatting_utility_defaults::apply_bootstrap(lua)?;
     temporary::game_time_calendar_invites::apply_bootstrap(lua)?;
     temporary::gamepad_cursor_control_defaults::apply_bootstrap(lua)?;
@@ -488,7 +494,9 @@ fn apply_feature_temporary_namespace_bootstrap(lua: &mut rilua::Lua) -> crate::R
 
 fn apply_feature_tool_defaults(lua: &mut rilua::Lua) -> crate::Result<()> {
     temporary::assisted_combat_manager_defaults::apply_bootstrap(lua)?;
-    temporary::callback_registry_defaults::apply_bootstrap(lua)?;
+    if should_use_temporary_shared_xml_defaults() {
+        temporary::callback_registry_defaults::apply_bootstrap(lua)?;
+    }
     temporary::macro_defaults::apply_bootstrap(lua)?;
     temporary::navigation_defaults::apply_bootstrap(lua)?;
     temporary::object_api_request_load_callbacks::apply_bootstrap(lua)?;
@@ -552,7 +560,17 @@ pub(crate) fn apply_cpp_mixin_stubs_after_lua_file(env: &crate::lua_api::LoaderE
 }
 
 pub(crate) fn patch_callback_registry_defaults(env: &crate::lua_api::LoaderEnv<'_>) {
-    let _ = temporary::callback_registry_defaults::patch_for_addon_load(env);
+    if should_use_temporary_shared_xml_defaults() {
+        let _ = temporary::callback_registry_defaults::patch_for_addon_load(env);
+    }
+}
+
+fn should_use_temporary_shared_xml_defaults() -> bool {
+    !matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever
+    )
 }
 
 pub(crate) fn patch_dispatcher_surface_for_addon_load(env: &crate::lua_api::LoaderEnv<'_>) {

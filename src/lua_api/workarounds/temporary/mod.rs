@@ -35,6 +35,10 @@ pub(crate) mod artifact_ui_show_panel_guard;
 pub(crate) mod assisted_combat_manager_defaults;
 pub(crate) mod auction_house_search_context_aliases;
 pub(crate) mod auth_challenge_frame_parent;
+#[cfg(any(
+    test,
+    not(any(feature = "client-retail", feature = "client-wowforever"))
+))]
 pub(crate) mod auto_complete_defaults;
 #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod battle_net_account_defaults;
@@ -80,6 +84,10 @@ pub(crate) mod date_and_time_defaults;
 pub(crate) mod debug_environment_defaults;
 pub(crate) mod details_saved_variables;
 pub(crate) mod difficulty_pvp_util_defaults;
+#[cfg(any(
+    test,
+    not(any(feature = "client-retail", feature = "client-wowforever"))
+))]
 pub(crate) mod dispatcher_callback_defaults;
 pub(crate) mod dispatcher_surface;
 pub(crate) mod dropdown_list_defaults;
@@ -88,6 +96,7 @@ pub(crate) mod dye_color_defaults;
 pub(crate) mod edit_mode_cache_defaults;
 pub(crate) mod encounter_state;
 pub(crate) mod environment_cleanup_restore;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod equipment_set_lock_defaults;
 pub(crate) mod event_scheduler_state;
 #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
@@ -110,6 +119,7 @@ pub(crate) mod glue_character_select_defaults;
 pub(crate) mod glueparent_uiparent_attributes;
 pub(crate) mod gossip_poi_defaults;
 pub(crate) mod guild_info_namespace_fallback;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod house_exterior_debug;
 pub(crate) mod housing_catalog_state;
 pub(crate) mod housing_dashboard_preload;

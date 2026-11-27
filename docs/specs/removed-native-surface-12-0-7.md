@@ -18,7 +18,7 @@ Simulator registrations must stop publishing the page-listed retired natives at 
 - `src/c_api/c_spell_maw_powers.rs`: atlas lifetime gate; live link query retained.
 - `src/lua_api/globals/group_verbs.rs`: UninviteUnit publication gate; KickUnit retained.
 - `src/lua_api/frame/methods/map_frames.rs`: six setter publication/body gates.
-- `src/lua_api/workarounds/temporary/auto_complete_defaults.rs`: old alias publication lifetime.
+- `src/lua_api/workarounds/temporary/auto_complete_defaults.rs`: legacy forwarders for profiles without cached equivalents; modern profiles do not run this bootstrap.
 - `src/lua_api/workarounds/temporary/click_bindings_defaults.rs`: old namespace alias publication lifetime.
 - `src/lua_api/workarounds/temporary/spell_static_defaults.rs`: prevent retired atlas republishing.
 
@@ -26,7 +26,7 @@ Simulator registrations must stop publishing the page-listed retired natives at 
 
 - `tests/patch_12_0_7_removed_native_surface.rs`: native absence and unchanged cached forwarding.
 - `tests/spell_maw_powers.rs`, `tests/group_verbs.rs`, `tests/global_frames.rs`, `tests/click_targeting.rs`: epoch splits and live behavior.
-- `tests/c_auto_complete_probes.rs`, `tests/startup_api_stubs.rs`: live namespace and retired globals.
+- `tests/c_autocomplete.rs`, `tests/startup_api_stubs.rs`: live namespace, CVar-controlled forwarding, and retired globals.
 - `src/loader/tests/wow_api_globals/startup_globals.rs`, `src/loader/tests/minimap_specialized.rs`: startup and widget epoch controls.
 - Bootstrap module tests: namespace and live-global controls.
 
