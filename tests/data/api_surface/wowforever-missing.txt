@@ -6,7 +6,6 @@ AbbreviateNumbers # not-yet: temporary Lua workaround
 AcceptAreaSpiritHeal # not-yet
 AcceptGuild # not-yet
 AddSourceLocationExclude # not-yet: temporary Lua workaround
-Ambiguate # not-yet: temporary Lua workaround
 AreClassRolesSoftSuggestions # not-yet
 AutoEquipCursorItem # not-yet
 BeginTrade # not-yet
