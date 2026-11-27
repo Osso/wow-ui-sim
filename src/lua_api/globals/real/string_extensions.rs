@@ -7,6 +7,13 @@ use rilua::{LuaApiMut, LuaResult, Val, runtime_error};
 const DEFAULT_TRIM_BYTES: &[u8] = b" \r\n\t";
 
 pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
+        LuaApiMut::register_function(lua, "CalculateStringEditDistance", edit_distance)?;
+    }
     let state = lua.state_mut();
     let key = state.gc.intern_string_static(b"string");
     let globals = state
@@ -23,6 +30,43 @@ pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
     table_set_rust_fn_static(state, table, "ltrim", trim_left)?;
     table_set_rust_fn_static(state, table, "rtrim", trim_right)?;
     Ok(())
+}
+
+fn edit_distance(state: &mut LuaState) -> LuaResult<u32> {
+    let first = optional_string_bytes(state, 1);
+    let second = optional_string_bytes(state, 2);
+    let distance = match (first, second) {
+        (Some(first), Some(second)) => byte_edit_distance(first, second),
+        _ => 0,
+    };
+    state.push(Val::Num(distance as f64));
+    Ok(1)
+}
+
+fn optional_string_bytes(state: &LuaState, index: i32) -> Option<&[u8]> {
+    let Val::Str(reference) = stack_val(state, index) else {
+        return None;
+    };
+    state
+        .gc
+        .string_arena
+        .get(reference)
+        .map(|string| string.data())
+}
+
+fn byte_edit_distance(first: &[u8], second: &[u8]) -> usize {
+    let mut previous = (0..=second.len()).collect::<Vec<_>>();
+    for (row, first_byte) in first.iter().enumerate() {
+        let mut current = vec![row + 1; second.len() + 1];
+        for (column, second_byte) in second.iter().enumerate() {
+            let cost = usize::from(first_byte != second_byte);
+            current[column + 1] = (previous[column + 1] + 1)
+                .min(current[column] + 1)
+                .min(previous[column] + cost);
+        }
+        previous = current;
+    }
+    previous[second.len()]
 }
 
 fn argument_bytes(state: &LuaState, index: i32) -> LuaResult<&[u8]> {

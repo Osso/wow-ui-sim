@@ -2117,7 +2117,6 @@ C_WowSurvey.OpenSurvey # not-yet
 C_WowSurvey.TriggerSurveyServe # not-yet
 C_WowTokenUI.StartTokenSell # not-yet
 C_XMLUtil.GetTemplates # not-yet
-CalculateStringEditDistance # not-yet: temporary Lua workaround
 CanChangePlayerDifficulty # not-yet
 CanDualWield # not-yet
 CanEjectPassengerFromSeat # not-yet

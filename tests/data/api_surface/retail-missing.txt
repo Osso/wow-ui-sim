@@ -1973,7 +1973,6 @@ C_WowTokenSecure.SetBalanceAmountString # not-yet
 C_WowTokenSecure.WillKickFromWorld # not-yet
 C_WowTokenUI.StartTokenSell # not-yet
 C_XMLUtil.GetTemplates # not-yet
-CalculateStringEditDistance # not-yet: temporary Lua workaround
 CallCompanion # not-yet
 CameraOrSelectOrMoveStart # intentionally-unsupported: 3D camera/model
 CameraOrSelectOrMoveStop # intentionally-unsupported: 3D camera/model
