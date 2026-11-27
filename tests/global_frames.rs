@@ -387,6 +387,7 @@ fn test_lfg_list_frame_search_panel() {
 
 }
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn test_alert_frame_sub_systems() {
     let env = env();
@@ -399,6 +400,7 @@ fn test_alert_frame_sub_systems() {
     );
 }
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn test_alert_frame_queued_subsystem_tracks_queue_and_priority() {
     let env = env();
@@ -442,6 +444,36 @@ fn test_alert_frame_queued_subsystem_tracks_queue_and_priority() {
     assert!(!add3);
     assert_eq!(after_remove, 1);
     assert_eq!(after_clear, 0);
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn alert_frame_systems_use_selected_framexml_provider() {
+    crate::common::blizzard_addon_harness::with_blizzard_addon_closure(
+        &["Blizzard_FrameXML"],
+        &[],
+        |env, loaded| {
+            assert!(loaded.iter().any(|name| name == "Blizzard_FrameXML"));
+            let actual: (bool, bool, bool) = env
+                .eval(
+                    r#"
+                    local system = NewPetAlertSystem
+                    local isRegistered = false
+                    for _, registered in ipairs(AlertFrame.alertFrameSubSystems) do
+                        if registered == system then
+                            isRegistered = true
+                            break
+                        end
+                    end
+                    return type(AlertFrame.AddQueuedAlertFrameSubSystem) == "function",
+                        system.setUpFunction == NewPetAlertFrame_SetUp,
+                        system.alertFramePool ~= nil and isRegistered
+                    "#,
+                )
+                .expect("selected FrameXML alert consumer should initialize");
+            assert_eq!(actual, (true, true, true));
+        },
+    );
 }
 
 #[test]
