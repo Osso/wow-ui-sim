@@ -7,6 +7,10 @@
 use wow_ui_sim::iced_app::{RegistryQuadBatchParams, build_quad_batch_for_registry};
 use wow_ui_sim::lua_api::WowLuaEnv;
 
+use crate::common::blizzard_addon_harness::{
+    blizzard_ui_dir, load_blizzard_addon_closure_into_env, new_blizzard_addon_env,
+};
+
 fn exec_original(env: &WowLuaEnv, relative: &str) {
     let path = wow_ui_sim::client_profile::blizzard_ui_addons_dir().join(relative);
     let source = std::fs::read_to_string(&path).expect("SETUP: read original cache");
@@ -15,13 +19,22 @@ fn exec_original(env: &WowLuaEnv, relative: &str) {
 }
 
 fn load_consumer() -> WowLuaEnv {
-    let env = WowLuaEnv::new().expect("SETUP: env");
     if cfg!(feature = "client-wrath") {
+        let env = WowLuaEnv::new().expect("SETUP: env");
         exec_original(&env, "../FrameXML/LFGFrame.lua");
         exec_original(&env, "../FrameXML/LFDFrame.lua");
-    } else {
-        exec_original(&env, "Blizzard_GroupFinder/Shared/LFGFrame.lua");
+        return with_concrete_fixture(env);
     }
+    // Retail LFGFrame.lua registers StaticPopupDialogs at load; the original
+    // owner replaces the retired placeholder table (c1b07efb79).
+    let ui = blizzard_ui_dir();
+    let env = new_blizzard_addon_env(&ui);
+    load_blizzard_addon_closure_into_env(&env, &ui, &["Blizzard_StaticPopup_Game"], &[]);
+    exec_original(&env, "Blizzard_GroupFinder/Shared/LFGFrame.lua");
+    with_concrete_fixture(env)
+}
+
+fn with_concrete_fixture(env: WowLuaEnv) -> WowLuaEnv {
     env.exec(
         r#"
         C12Parent = CreateFrame("Frame", "C12Parent", UIParent)
