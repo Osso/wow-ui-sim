@@ -90,6 +90,10 @@ pub(crate) mod difficulty_pvp_util_defaults;
     not(any(feature = "client-retail", feature = "client-wowforever"))
 ))]
 pub(crate) mod dispatcher_callback_defaults;
+#[cfg(any(
+    test,
+    not(any(feature = "client-retail", feature = "client-wowforever"))
+))]
 pub(crate) mod dispatcher_surface;
 pub(crate) mod dropdown_list_defaults;
 pub(crate) mod dye_color_defaults;
