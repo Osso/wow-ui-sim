@@ -328,13 +328,24 @@ fn t_invert_inverts_array_and_hash_entries() {
     assert_eq!(inv_foo, "foo", "hash entries invert value->key");
 }
 
+fn shared_xml_base_env() -> wow_ui_sim::lua_api::WowLuaEnv {
+    use crate::common::blizzard_addon_harness::{
+        blizzard_ui_dir, load_blizzard_addon_closure_into_env, new_blizzard_addon_env,
+    };
+    let ui = blizzard_ui_dir();
+    let env = new_blizzard_addon_env(&ui);
+    load_blizzard_addon_closure_into_env(&env, &ui, &["Blizzard_SharedXMLBase"], &[]);
+    env
+}
+
 #[test]
 fn enum_util_make_enum_returns_valid_enum() {
     // Direct consequence of tInvert working: MakeEnum now yields a real
     // enum. Blizzard_ObjectiveTrackerModule.lua:1 relies on this to set
     // ObjectiveTrackerModuleState before downstream tables reference
-    // `ObjectiveTrackerModuleState.Skipped`.
-    let env = env();
+    // `ObjectiveTrackerModuleState.Skipped`. 096d8a1f8c retired the bootstrap
+    // copy, so the original EnumUtil.lua owner must load first.
+    let env = shared_xml_base_env();
     let (skipped, shown_fully): (f64, f64) = env
         .eval(
             r#"
@@ -434,6 +445,16 @@ fn player_is_timerunning_returns_false() {
     assert!(!t);
 }
 
+/// Retail and Forever read Classic's cap from the Rust client model
+/// (d1bdbb7f54, EXPANSION_LEVEL_CAPS (0, 60)).
+fn expansion_zero_max_level() -> f64 {
+    if cfg!(any(feature = "client-retail", feature = "client-wowforever")) {
+        60.0
+    } else {
+        80.0
+    }
+}
+
 #[test]
 fn startup_expansion_and_threat_stubs_return_safe_values() {
     let env = env();
@@ -459,7 +480,7 @@ fn startup_expansion_and_threat_stubs_return_safe_values() {
     assert_eq!(result.1, 10.0);
     assert_eq!(result.2, 10.0);
     assert_eq!(result.3, 10.0);
-    assert_eq!(result.4, 80.0);
+    assert_eq!(result.4, expansion_zero_max_level());
     assert_eq!(result.5, 80.0);
     assert!(
         result.6,
