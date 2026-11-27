@@ -333,7 +333,6 @@ fn apply_core_foundation_catalog_defaults(lua: &mut rilua::Lua) -> crate::Result
     temporary::social_service_defaults::apply_bootstrap(lua)?;
     temporary::world_service_defaults::apply_bootstrap(lua)?;
     temporary::click_bindings_defaults::apply_bootstrap(lua)?;
-    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::client_info_defaults::apply_bootstrap(lua)?;
     temporary::collections_journal_namespace::apply_bootstrap(lua)?;
     temporary::color_defaults::apply_bootstrap(lua)?;
