@@ -524,6 +524,10 @@ fn test_transmog_player_has_transmog_by_item_info_and_is_at_npc() {
 // TransmogUtil
 // ============================================================================
 
+// Retail (7d49a70109) and Forever (1d562c9d38) use the original
+// Blizzard_TransmogShared TransmogUtil instead of the bare-environment
+// stand-in; blizzard_transmog_shared_loads.rs covers that consumer.
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn test_transmog_util_get_transmog_location() {
     let env = env();
@@ -540,6 +544,10 @@ fn test_transmog_util_get_transmog_location() {
     assert_eq!(modification, 0);
 }
 
+// Retail (7d49a70109) and Forever (1d562c9d38) use the original
+// Blizzard_TransmogShared TransmogUtil instead of the bare-environment
+// stand-in; blizzard_transmog_shared_loads.rs covers that consumer.
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn test_transmog_util_get_transmog_location_boolean_modification() {
     let env = env();
@@ -555,6 +563,10 @@ fn test_transmog_util_get_transmog_location_boolean_modification() {
     assert_eq!(modification, 0);
 }
 
+// Retail (7d49a70109) and Forever (1d562c9d38) use the original
+// Blizzard_TransmogShared TransmogUtil instead of the bare-environment
+// stand-in; blizzard_transmog_shared_loads.rs covers that consumer.
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn test_transmog_location_methods() {
     let env = env();
@@ -579,6 +591,10 @@ fn test_transmog_location_methods() {
     assert_eq!(result, "ok", "TransmogLocation methods: {result}");
 }
 
+// Retail (7d49a70109) and Forever (1d562c9d38) use the original
+// Blizzard_TransmogShared TransmogUtil instead of the bare-environment
+// stand-in; blizzard_transmog_shared_loads.rs covers that consumer.
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn test_transmog_util_create_transmog_location() {
     let env = env();
