@@ -1,8 +1,7 @@
 //! `C_Item.RequestLoadItemDataByID` through the original Blizzard_ObjectAPI
 //! consumer: `Item:ContinueOnItemLoad` registers with `ItemEventListener`
 //! (AsyncCallbackSystem.lua), which calls the request and fires or clears the
-//! callbacks from `ITEM_DATA_LOAD_RESULT(itemID, success)`; the callback
-//! receives that `success` flag.
+//! callbacks from `ITEM_DATA_LOAD_RESULT(itemID, success)`.
 #![cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 
 use crate::common;
@@ -12,7 +11,7 @@ const CONTINUE_ON_LOAD: &str = r#"
     local fired = {}
     for _, itemID in ipairs({6948, 2147480}) do
         Item:CreateFromItemID(itemID):ContinueOnItemLoad(function(id, success)
-            fired[#fired + 1] = id .. ":" .. tostring(success)
+            fired[#fired + 1] = itemID .. ":" .. tostring(success)
         end)
     end
     return table.concat(fired, ",")
@@ -31,12 +30,12 @@ fn item_load_callbacks_report_catalog_membership() {
     let env = env_with_object_api();
     let fired: String = env.eval(CONTINUE_ON_LOAD).unwrap();
     // 6948 (Hearthstone) is in the item catalog; 2147480 is not. Forever's
-    // AsyncCallbackSystem.lua fires item callbacks on failure too; Retail's
-    // clears them.
+    // AsyncCallbackSystem.lua passes `success` and fires on failure too;
+    // Retail's fires without arguments and clears failed requests.
     let expected = if cfg!(feature = "client-wowforever") {
         "6948:true,2147480:false"
     } else {
-        "6948:true"
+        "6948:nil"
     };
     assert_eq!(fired, expected);
 }
