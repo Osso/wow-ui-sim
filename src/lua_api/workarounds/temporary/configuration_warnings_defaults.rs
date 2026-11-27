@@ -126,20 +126,29 @@ mod tests {
         assert_eq!(result, ("table".to_string(), None, false));
     }
 
+    // The Rust provider (14a0d85002) shadows this fallback on every profile;
+    // seen state belongs to supplied warnings with numeric IDs.
     #[test]
-    fn stores_seen_warnings_in_local_cache() {
+    fn marks_only_the_selected_supplied_warning_seen() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
 
-        let seen: bool = env
+        let seen: (bool, bool, bool) = env
             .eval(
                 r#"
-                C_ConfigurationWarnings.SetConfigurationWarningSeen("warning")
-                return C_ConfigurationWarnings.GetConfigurationWarningSeen("warning")
+                A_Admin.SetConfigurationWarnings({
+                    { warning = 3, text = "Driver" },
+                    { warning = 5, text = "Memory" },
+                })
+                local before = C_ConfigurationWarnings.GetConfigurationWarningSeen(3)
+                C_ConfigurationWarnings.SetConfigurationWarningSeen(3)
+                return before,
+                    C_ConfigurationWarnings.GetConfigurationWarningSeen(3),
+                    C_ConfigurationWarnings.GetConfigurationWarningSeen(5)
                 "#,
             )
-            .expect("configuration warning seen cache should be callable");
+            .expect("configuration warning seen state should be callable");
 
-        assert!(seen);
+        assert_eq!(seen, (false, true, false));
     }
 
     #[test]
