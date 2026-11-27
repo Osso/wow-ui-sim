@@ -303,11 +303,9 @@ fn assert_owner_invocation(stderr: &str, owner: &str) {
         assert_eq!(field(record, "addon"), owner, "{record}");
         assert_eq!(field(record, "frame"), "#0", "{record}");
         assert_eq!(field(record, "callback_source"), CALLBACK, "{record}");
-        assert_ne!(
-            field(record, "source"),
-            CALLBACK,
-            "invoker and original must remain distinct"
-        );
+        // Retail registers the FunctionContainer in Rust and invokes the
+        // captured callback directly (6dcd435ec9), so the invoker is the original.
+        assert_eq!(field(record, "source"), CALLBACK, "{record}");
     }
     assert_eq!(field(live[1], "outcome"), "ok");
     let body = format!("asyncreq-timeout owner={owner}");
