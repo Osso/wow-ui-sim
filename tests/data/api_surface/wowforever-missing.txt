@@ -1799,15 +1799,6 @@ C_StableInfo.PickupStablePet # not-yet
 C_StableInfo.SetPetFavorite # not-yet
 C_StableInfo.SetPetSlot # not-yet
 C_StorePublic.EventStoreUISetShown # not-yet: temporary Lua workaround
-C_StringUtil.CreateAbbreviatedNumberFormatter # not-yet
-C_StringUtil.EscapeLuaFormatString # not-yet
-C_StringUtil.EscapeLuaPatterns # not-yet
-C_StringUtil.FloorToNearestString # not-yet
-C_StringUtil.RemoveContiguousSpaces # not-yet
-C_StringUtil.RoundToNearestString # not-yet
-C_StringUtil.StripTextureMarkupForLooseFiles # not-yet
-C_StringUtil.TruncateWhenZero # not-yet
-C_StringUtil.WrapString # not-yet
 C_SummonInfo.CancelSummon # not-yet
 C_SummonInfo.ConfirmSummon # not-yet
 C_SummonInfo.GetSummonConfirmAreaName # not-yet

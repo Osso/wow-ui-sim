@@ -110,7 +110,7 @@ pub(crate) mod vignette_info;
 #[cfg(feature = "client-wrath")]
 pub mod who_routing;
 
-#[cfg(feature = "retail-12-0-5")]
+#[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 pub(crate) mod abbreviated_number_formatter;
 #[cfg(feature = "retail-12-0-5")]
 pub mod action_count_info;

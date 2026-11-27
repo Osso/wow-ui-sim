@@ -2,7 +2,7 @@
 
 use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::methods::{create_string, create_string_bytes, val_to_string};
-#[cfg(feature = "retail-12-0-5")]
+#[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 use crate::lua_bridge::FromStack;
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
 #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
@@ -24,7 +24,10 @@ pub fn register_c_string_util(state: &mut LuaState) -> LuaResult<()> {
         "EscapeQuotedCodes",
         c_string_util_escape_quoted_codes,
     )?;
-    if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::Ptr) {
+    if matches!(
+        ACTIVE,
+        ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever
+    ) {
         table_set_rust_fn_static(
             state,
             c_string_util_ref,
@@ -44,20 +47,22 @@ pub fn register_c_string_util(state: &mut LuaState) -> LuaResult<()> {
             c_string_util_wrap_string,
         )?;
     }
-    #[cfg(feature = "retail-12-0-0")]
+    #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
     table_set_rust_fn_static(
         state,
         c_string_util_ref,
         "RemoveContiguousSpaces",
         c_string_util_remove_contiguous_spaces,
     )?;
-    #[cfg(feature = "retail-12-0-0")]
+    #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
     table_set_rust_fn_static(
         state,
         c_string_util_ref,
         "TruncateWhenZero",
         c_string_util_truncate_when_zero,
     )?;
+    // Forever 70707 declares the Retail signatures of the helpers above and
+    // below (StringUtilDocumentation.lua:10-203).
     // Forever shape VERIFIED at StringUtilDocumentation.lua:153; semantics
     // INFERRED from the existing Retail markup-stripping model.
     #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
@@ -67,7 +72,7 @@ pub fn register_c_string_util(state: &mut LuaState) -> LuaResult<()> {
         "StripHyperlinks",
         c_string_util_strip_hyperlinks,
     )?;
-    #[cfg(feature = "retail-12-0-0")]
+    #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
     {
         table_set_rust_fn_static(
             state,
@@ -82,7 +87,7 @@ pub fn register_c_string_util(state: &mut LuaState) -> LuaResult<()> {
             round_to_nearest_string,
         )?;
     }
-    #[cfg(feature = "retail-12-0-5")]
+    #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
     table_set_rust_fn_static(
         state,
         c_string_util_ref,
@@ -91,12 +96,12 @@ pub fn register_c_string_util(state: &mut LuaState) -> LuaResult<()> {
     )?;
     #[cfg(feature = "numeric-rule-formatters")]
     super::numeric_rule_formatter::register(state, c_string_util_ref)?;
-    #[cfg(feature = "retail-12-0-5")]
+    #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
     super::abbreviated_number_formatter::register(state, c_string_util_ref)?;
     Ok(())
 }
 
-#[cfg(feature = "retail-12-0-5")]
+#[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 fn strip_loose_file_textures(state: &mut LuaState) -> LuaResult<u32> {
     let text = String::from_stack(state, 1)?;
     let stripped = hyperlinks::strip_loose_file_textures(&text);
@@ -146,7 +151,7 @@ pub fn c_string_util_wrap_string(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-#[cfg(feature = "retail-12-0-0")]
+#[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
 fn c_string_util_remove_contiguous_spaces(state: &mut LuaState) -> LuaResult<u32> {
     let input = string_bytes(state, 1)
         .ok_or_else(|| runtime_error("RemoveContiguousSpaces expects string text"))?;
@@ -169,7 +174,7 @@ fn c_string_util_remove_contiguous_spaces(state: &mut LuaState) -> LuaResult<u32
     Ok(1)
 }
 
-#[cfg(feature = "retail-12-0-0")]
+#[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
 fn c_string_util_truncate_when_zero(state: &mut LuaState) -> LuaResult<u32> {
     // Strict numeric validation is simulator policy, not native conformance.
     let Val::Num(number) = stack_val(state, 1) else {
@@ -211,7 +216,7 @@ fn c_string_util_strip_hyperlinks(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-#[cfg(feature = "retail-12-0-0")]
+#[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
 fn truncate_ascii_space_runs(input: &[u8], max_spaces: usize) -> Vec<u8> {
     let mut spaces = 0;
     input
@@ -231,18 +236,18 @@ fn truncate_ascii_space_runs(input: &[u8], max_spaces: usize) -> Vec<u8> {
         .collect()
 }
 
-#[cfg(feature = "retail-12-0-0")]
+#[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
 fn floor_to_nearest_string(state: &mut LuaState) -> LuaResult<u32> {
     format_integer(state, f64::floor)
 }
 
-#[cfg(feature = "retail-12-0-0")]
+#[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
 fn round_to_nearest_string(state: &mut LuaState) -> LuaResult<u32> {
     // INFERRED: nearest integer with ties toward positive infinity, like floor(n + .5).
     format_integer(state, |number| (number + 0.5).floor())
 }
 
-#[cfg(feature = "retail-12-0-0")]
+#[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
 fn format_integer(state: &mut LuaState, round: fn(f64) -> f64) -> LuaResult<u32> {
     let number = rilua::table_security::unwrap_secret(state, stack_val(state, 1))?;
     let Val::Num(number) = number else {
