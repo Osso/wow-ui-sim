@@ -104,111 +104,71 @@ fn preload_click_panels(env: &WowLuaEnv) {
 /// Loading the full game-screen addon list makes this regression test hit the
 /// 120s timeout before it even reaches the click loop. Keep the harness scoped
 /// to the UI families this test actually clicks.
-const BLIZZARD_ADDONS: &[(&str, &str)] = &[
-    ("Blizzard_SharedXMLBase", "Blizzard_SharedXMLBase.toc"),
-    ("Blizzard_Colors", "Blizzard_Colors_Mainline.toc"),
-    ("Blizzard_SharedXML", "Blizzard_SharedXML_Mainline.toc"),
-    (
-        "Blizzard_SharedXMLGame",
-        "Blizzard_SharedXMLGame_Mainline.toc",
-    ),
-    (
-        "Blizzard_UIPanelTemplates",
-        "Blizzard_UIPanelTemplates_Mainline.toc",
-    ),
-    (
-        "Blizzard_FrameXMLBase",
-        "Blizzard_FrameXMLBase_Mainline.toc",
-    ),
-    ("Blizzard_FrameEffects", "Blizzard_FrameEffects.toc"),
-    ("Blizzard_LoadLocale", "Blizzard_LoadLocale.toc"),
-    ("Blizzard_Fonts_Shared", "Blizzard_Fonts_Shared.toc"),
-    ("Blizzard_HelpPlate", "Blizzard_HelpPlate.toc"),
-    (
-        "Blizzard_AccessibilityTemplates",
-        "Blizzard_AccessibilityTemplates.toc",
-    ),
-    ("Blizzard_ObjectAPI", "Blizzard_ObjectAPI_Mainline.toc"),
-    ("Blizzard_UIParent", "Blizzard_UIParent_Mainline.toc"),
-    ("Blizzard_TextStatusBar", "Blizzard_TextStatusBar.toc"),
-    ("Blizzard_MoneyFrame", "Blizzard_MoneyFrame_Mainline.toc"),
-    ("Blizzard_POIButton", "Blizzard_POIButton.toc"),
-    ("Blizzard_Flyout", "Blizzard_Flyout.toc"),
-    ("Blizzard_StoreUI", "Blizzard_StoreUI_Mainline.toc"),
-    ("Blizzard_MicroMenu", "Blizzard_MicroMenu_Mainline.toc"),
-    ("Blizzard_ClassMenu", "Blizzard_ClassMenu.toc"),
-    ("Blizzard_EditMode", "Blizzard_EditMode.toc"),
-    ("Blizzard_GarrisonBase", "Blizzard_GarrisonBase.toc"),
-    ("Blizzard_GameTooltip", "Blizzard_GameTooltip_Mainline.toc"),
-    (
-        "Blizzard_UIParentPanelManager",
-        "Blizzard_UIParentPanelManager_Mainline.toc",
-    ),
-    (
-        "Blizzard_Settings_Shared",
-        "Blizzard_Settings_Shared_Mainline.toc",
-    ),
-    (
-        "Blizzard_SettingsDefinitions_Shared",
-        "Blizzard_SettingsDefinitions_Shared.toc",
-    ),
-    (
-        "Blizzard_SettingsDefinitions_Frame",
-        "Blizzard_SettingsDefinitions_Frame_Mainline.toc",
-    ),
-    ("Blizzard_FrameXMLUtil", "Blizzard_FrameXMLUtil.toc"),
-    ("Blizzard_ItemButton", "Blizzard_ItemButton_Mainline.toc"),
-    ("Blizzard_QuickKeybind", "Blizzard_QuickKeybind.toc"),
-    ("Blizzard_FrameXML", "Blizzard_FrameXML_Mainline.toc"),
-    (
-        "Blizzard_UIPanels_Game",
-        "Blizzard_UIPanels_Game_Mainline.toc",
-    ),
-    (
-        "Blizzard_MapCanvasSecureUtil",
-        "Blizzard_MapCanvasSecureUtil.toc",
-    ),
-    ("Blizzard_MapCanvas", "Blizzard_MapCanvas.toc"),
-    (
-        "Blizzard_SharedMapDataProviders",
-        "Blizzard_SharedMapDataProviders_Mainline.toc",
-    ),
-    ("Blizzard_WorldMap", "Blizzard_WorldMap_Mainline.toc"),
-    ("Blizzard_ActionBar", "Blizzard_ActionBar_Mainline.toc"),
-    ("Blizzard_GameMenu", "Blizzard_GameMenu_Mainline.toc"),
-    ("Blizzard_UIWidgets", "Blizzard_UIWidgets_Mainline.toc"),
-    ("Blizzard_Minimap", "Blizzard_Minimap_Mainline.toc"),
-    ("Blizzard_AddOnList", "Blizzard_AddOnList.toc"),
-    ("Blizzard_TimerunningUtil", "Blizzard_TimerunningUtil.toc"),
-    ("Blizzard_MawBuffs", "Blizzard_MawBuffs.toc"),
-    ("Blizzard_AutoComplete", "Blizzard_AutoComplete.toc"),
-    (
-        "Blizzard_ChatFrameBase",
-        "Blizzard_ChatFrameBase_Mainline.toc",
-    ),
-    (
-        "Blizzard_VoiceToggleButton",
-        "Blizzard_VoiceToggleButton.toc",
-    ),
-    ("Blizzard_ChatFrame", "Blizzard_ChatFrame_Mainline.toc"),
-    ("Blizzard_GuildControlUI", "Blizzard_GuildControlUI.toc"),
-    (
-        "Blizzard_CommunitiesSecure",
-        "Blizzard_CommunitiesSecure.toc",
-    ),
-    ("Blizzard_Communities", "Blizzard_Communities_Mainline.toc"),
-    ("Blizzard_UnitFrame", "Blizzard_UnitFrame_Mainline.toc"),
-    ("Blizzard_ObjectiveTracker", "Blizzard_ObjectiveTracker.toc"),
+const BLIZZARD_ADDONS: &[&str] = &[
+    "Blizzard_SharedXMLBase",
+    "Blizzard_Colors",
+    "Blizzard_SharedXML",
+    "Blizzard_SharedXMLGame",
+    "Blizzard_UIPanelTemplates",
+    "Blizzard_FrameXMLBase",
+    "Blizzard_FrameEffects",
+    "Blizzard_LoadLocale",
+    "Blizzard_Fonts_Shared",
+    "Blizzard_HelpPlate",
+    "Blizzard_AccessibilityTemplates",
+    "Blizzard_ObjectAPI",
+    "Blizzard_UIParent",
+    "Blizzard_TextStatusBar",
+    "Blizzard_MoneyFrame",
+    "Blizzard_POIButton",
+    "Blizzard_Flyout",
+    "Blizzard_StoreUI",
+    "Blizzard_MicroMenu",
+    "Blizzard_ClassMenu",
+    "Blizzard_EditMode",
+    "Blizzard_GarrisonBase",
+    "Blizzard_GameTooltip",
+    "Blizzard_UIParentPanelManager",
+    "Blizzard_Settings_Shared",
+    "Blizzard_SettingsDefinitions_Shared",
+    "Blizzard_SettingsDefinitions_Frame",
+    "Blizzard_FrameXMLUtil",
+    "Blizzard_ItemButton",
+    "Blizzard_QuickKeybind",
+    "Blizzard_FrameXML",
+    "Blizzard_UIPanels_Game",
+    "Blizzard_MapCanvasSecureUtil",
+    "Blizzard_MapCanvas",
+    "Blizzard_SharedMapDataProviders",
+    "Blizzard_WorldMap",
+    "Blizzard_ActionBar",
+    "Blizzard_GameMenu",
+    "Blizzard_UIWidgets",
+    "Blizzard_Minimap",
+    "Blizzard_AddOnList",
+    "Blizzard_TimerunningUtil",
+    "Blizzard_MawBuffs",
+    "Blizzard_AutoComplete",
+    "Blizzard_ChatFrameBase",
+    "Blizzard_VoiceToggleButton",
+    "Blizzard_ChatFrame",
+    "Blizzard_GuildControlUI",
+    "Blizzard_CommunitiesSecure",
+    "Blizzard_Communities",
+    "Blizzard_UnitFrame",
+    "Blizzard_ObjectiveTracker",
 ];
 
 fn load_all_blizzard_addons(env: &WowLuaEnv) {
     let ui = blizzard_ui_dir();
     env.state().borrow_mut().addon_base_paths = vec![ui.clone()];
-    for (name, toc) in BLIZZARD_ADDONS {
-        let toc_path = ui.join(name).join(toc);
-        if !toc_path.exists() {
+    for name in BLIZZARD_ADDONS {
+        // Resolve the profile's TOC; the 12.1.5 cache dropped the `_Mainline`
+        // file names this list used to hard-code, which silently skipped them.
+        let Some(toc_path) = wow_ui_sim::loader::find_toc_file(&ui.join(name)) else {
+            eprintln!("[load {name}] skipped: no TOC for the active profile");
             continue;
-        }
+        };
         if let Err(e) = load_addon(&env.loader_env(), &toc_path) {
             eprintln!("[load {name}] FAILED: {e}");
         } else {

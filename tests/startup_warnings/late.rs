@@ -757,7 +757,7 @@ fn test_new_player_experience_loads_without_minimap_cluster_warning() {
 #[test]
 fn test_battlefield_map_startup_uses_maputil_displayable_map_helper() {
     test_timeout! {
-        let (env, warnings) = load_blizzard_addon_by_folder("Blizzard_BattlefieldMap");
+        let (env, warnings) = load_blizzard_game_addon_by_folder("Blizzard_BattlefieldMap");
 
         let load_maputil_warnings: Vec<String> = warnings
             .iter()

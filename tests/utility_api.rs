@@ -617,8 +617,10 @@ fn test_strlen_alias() {
 fn load_cached_compat(env: &WowLuaEnv) {
     let ui = wow_ui_sim::blizzard_ui_sync::default_cache_addons_path().unwrap();
     let path = ui.join("Blizzard_SharedXMLBase/Compat.lua");
-    let source = std::fs::read_to_string(&path)
-        .expect(&format!("cached Compat.lua is missing or unreadable: {}", path.display()));
+    let source = std::fs::read_to_string(&path).expect(&format!(
+        "cached Compat.lua is missing or unreadable: {}",
+        path.display()
+    ));
     env.exec(&source).unwrap();
 }
 
@@ -671,6 +673,15 @@ fn test_strsplittable() {
 #[test]
 fn test_string_split_method() {
     let env = env();
+    if wow_ui_sim::client_profile::is_active_retail_12_1_5() {
+        // R88y.y2 VERIFIED: Retail string.split is the strsplit handler, so the
+        // receiver "a-b-c" is the delimiter set and "-" is the input.
+        let (native, a, b): (bool, String, String) = env
+            .eval(r#"return rawequal(string.split, strsplit), ("a-b-c"):split("-")"#)
+            .unwrap();
+        assert_eq!((native, a.as_str(), b.as_str()), (true, "", ""));
+        return;
+    }
     let (a, b, c): (String, String, String) = env.eval(r#"return ("a-b-c"):split("-")"#).unwrap();
     assert_eq!((a.as_str(), b.as_str(), c.as_str()), ("a", "b", "c"));
 }
@@ -732,10 +743,12 @@ fn compat_alias_env() -> WowLuaEnv {
     let env = env();
     #[cfg(not(feature = "client-wrath"))]
     {
-        let ui = wow_ui_sim::blizzard_ui_sync::default_cache_addons_path().expect("Blizzard UI cache");
+        let ui =
+            wow_ui_sim::blizzard_ui_sync::default_cache_addons_path().expect("Blizzard UI cache");
         let source = std::fs::read_to_string(ui.join("Blizzard_SharedXMLBase/Compat.lua"))
             .expect("cached Blizzard Compat.lua");
-        env.exec(&source).expect("cached Blizzard Compat.lua executes");
+        env.exec(&source)
+            .expect("cached Blizzard Compat.lua executes");
     }
     env
 }

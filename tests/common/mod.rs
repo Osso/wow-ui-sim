@@ -18,10 +18,10 @@ pub mod game_menu_fixture;
 pub mod grouped_fixture;
 pub mod lua_error_assertions;
 pub mod panel_fixtures;
-#[cfg(feature = "client-retail")]
-pub mod store_catalog_fixture;
 #[cfg(target_os = "linux")]
 pub(crate) mod prefork_process;
+#[cfg(feature = "client-retail")]
+pub mod store_catalog_fixture;
 #[cfg(target_os = "linux")]
 mod timeout_reexec;
 pub(crate) mod workload_gate;
@@ -390,6 +390,18 @@ pub fn load_game_startup_inventory(env: &WowLuaEnv) {
     env.sync_string_metatable_to_global_string();
 }
 
+/// Classic profiles and Forever load production's selected startup TOCs, not
+/// a Retail-shaped addon list: Forever's Camelot `[Game]` variants select
+/// different owners (Blizzard_ActionBar.toc MainMenuBarEndCaps, Blizzard_Minimap).
+/// Returns true when the fixture needs no hand-written addon list.
+pub fn load_non_retail_game_startup_inventory(env: &WowLuaEnv) -> bool {
+    if wow_ui_sim::client_profile::ACTIVE != wow_ui_sim::client_profile::ClientProfile::WowForever {
+        return load_classic_game_startup_inventory(env);
+    }
+    load_game_startup_inventory(env);
+    true
+}
+
 /// Production game-screen startup (inventory, post-load workarounds, startup events).
 #[cfg(feature = "client-wowforever")]
 pub fn forever_game_env() -> WowLuaEnv {
@@ -400,6 +412,25 @@ pub fn forever_game_env() -> WowLuaEnv {
     let game = wow_ui_sim::screen::ScreenKind::Game;
     wow_ui_sim::startup::fire_startup_events_for_screen(&env, game);
     env
+}
+
+/// Local third-party addon TOC under the gitignored `Interface/AddOns/*`
+/// (`.gitignore:8`). A checkout without it cannot run the consumer, so the
+/// caller skips with an explicit log line naming the missing path.
+#[cfg(feature = "client-wowforever")]
+pub fn local_addon_toc_or_skip(test: &str, addon: &str) -> Option<PathBuf> {
+    let toc = Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("Interface/AddOns")
+        .join(addon)
+        .join(format!("{addon}.toc"));
+    if toc.is_file() {
+        return Some(toc);
+    }
+    eprintln!(
+        "SKIPPED {test}: local addon TOC {} is absent (gitignored, not part of the repository)",
+        toc.display()
+    );
+    None
 }
 
 pub fn is_classic_ui_profile() -> bool {

@@ -121,7 +121,7 @@ fn load_settled_game_ui() -> common::LockedEnv {
         env.set_screen_size(1024.0, 768.0);
         env.state().borrow_mut().addon_base_paths = vec![blizzard_ui_dir()];
 
-        if !common::load_classic_game_startup_inventory(&env) {
+        if !common::load_non_retail_game_startup_inventory(&env) {
             let ui = blizzard_ui_dir();
             for addon_name in action_bar_addons() {
                 common::load_required_blizzard_addon(&env, &ui, addon_name);
@@ -260,7 +260,8 @@ fn main_action_bar_layout_is_locked() {
     test_timeout! {
         let env = load_settled_game_ui();
 
-        let endcap_texture_access = if cfg!(feature = "client-ptr") {
+        // PTR and Forever (Camelot/MainMenuBarEndCaps.xml:8-12) nest the atlas in a Texture child.
+        let endcap_texture_access = if cfg!(any(feature = "client-ptr", feature = "client-wowforever")) {
             ".Texture"
         } else {
             ""

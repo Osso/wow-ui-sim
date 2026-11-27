@@ -59,19 +59,23 @@ fn by_type(state: &mut LuaState) -> LuaResult<u32> {
 
 fn by_stream(state: &mut LuaState) -> LuaResult<u32> {
     let club = String::from_stack(state, 1)?;
-    let stream = f64::from_stack(state, 2)?;
+    let stream = stream_id_arg(state)?;
     let channel = borrow_state(state)?
         .voice_channels
         .iter()
-        .find(|channel| {
-            channel.club_id == club
-                && channel
-                    .stream_id
-                    .parse::<f64>()
-                    .is_ok_and(|id| id == stream)
-        })
+        .find(|channel| channel.club_id == club && channel.stream_id == stream)
         .cloned();
     push_channel(state, channel)
+}
+
+/// `ClubStreamId` (VoiceChatDocumentation.lua:177) is an opaque string id.
+/// String ids and integral numbers (1e7f03286e) both select it; a number is
+/// compared as its decimal text, as Lua string coercion would produce.
+fn stream_id_arg(state: &LuaState) -> LuaResult<String> {
+    match Val::from_stack(state, 2)? {
+        Val::Num(n) if n.fract() == 0.0 => Ok(format!("{n:.0}")),
+        _ => String::from_stack(state, 2),
+    }
 }
 
 fn push_channel(state: &mut LuaState, channel: Option<VoiceChannel>) -> LuaResult<u32> {
