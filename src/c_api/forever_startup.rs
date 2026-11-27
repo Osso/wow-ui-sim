@@ -9,7 +9,9 @@ use crate::lua_api::methods::{
     borrow_state, borrow_state_mut, create_string, create_table, create_table_with_fields,
     table_get, val_to_string,
 };
-use crate::lua_bridge::{FromStack, TableBuilder, stack_val, table_set_rust_fn_static};
+#[cfg(feature = "client-wowforever")]
+use crate::lua_bridge::TableBuilder;
+use crate::lua_bridge::{FromStack, stack_val, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
 use rilua::{LuaApiMut, LuaResult, Val};
 
@@ -266,18 +268,15 @@ fn can_purchase_bank_tab(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+#[cfg(feature = "client-wowforever")]
 pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
-    if ACTIVE == ClientProfile::WowForever {
-        builder
-            .set_function(
-                "SetShouldUsePlayerBagsInBank",
-                set_should_use_player_bags_in_bank,
-            )?
-            .set_function("SetBankViewableTypes", set_bank_viewable_types)?
-            .set_function("SetPurchasedBankTabData", set_purchased_bank_tab_data)
-    } else {
-        Ok(builder)
-    }
+    builder
+        .set_function(
+            "SetShouldUsePlayerBagsInBank",
+            set_should_use_player_bags_in_bank,
+        )?
+        .set_function("SetBankViewableTypes", set_bank_viewable_types)?
+        .set_function("SetPurchasedBankTabData", set_purchased_bank_tab_data)
 }
 
 fn should_use_player_bags_in_bank(state: &mut LuaState) -> LuaResult<u32> {
