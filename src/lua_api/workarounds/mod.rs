@@ -489,7 +489,9 @@ fn apply_feature_temporary_namespace_bootstrap(lua: &mut rilua::Lua) -> crate::R
 
 fn apply_feature_tool_defaults(lua: &mut rilua::Lua) -> crate::Result<()> {
     temporary::assisted_combat_manager_defaults::apply_bootstrap(lua)?;
-    temporary::callback_registry_defaults::apply_bootstrap(lua)?;
+    if callback_registry_defaults_enabled() {
+        temporary::callback_registry_defaults::apply_bootstrap(lua)?;
+    }
     temporary::macro_defaults::apply_bootstrap(lua)?;
     temporary::navigation_defaults::apply_bootstrap(lua)?;
     temporary::object_api_request_load_callbacks::apply_bootstrap(lua)?;
@@ -553,7 +555,17 @@ pub(crate) fn apply_cpp_mixin_stubs_after_lua_file(env: &crate::lua_api::LoaderE
 }
 
 pub(crate) fn patch_callback_registry_defaults(env: &crate::lua_api::LoaderEnv<'_>) {
-    let _ = temporary::callback_registry_defaults::patch_for_addon_load(env);
+    if callback_registry_defaults_enabled() {
+        let _ = temporary::callback_registry_defaults::patch_for_addon_load(env);
+    }
+}
+
+fn callback_registry_defaults_enabled() -> bool {
+    !matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever
+    )
 }
 
 pub(crate) fn patch_dispatcher_surface_for_addon_load(env: &crate::lua_api::LoaderEnv<'_>) {
