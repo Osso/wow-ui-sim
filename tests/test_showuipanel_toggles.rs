@@ -1001,6 +1001,7 @@ fn toggle_guild_frame_opens_and_closes_communities_panel() {
             .eval(r#"return C_AddOns.LoadAddOn("Blizzard_Communities")"#)
             .expect("Blizzard_Communities load should return");
         assert!(loaded, "Blizzard_Communities should load: {reason:?}");
+        common::supply_connected_battle_net(&env);
 
         let result: String = env.eval(r#"
             if not ToggleGuildFrame then
