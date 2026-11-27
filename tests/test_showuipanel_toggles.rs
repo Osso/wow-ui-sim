@@ -159,22 +159,40 @@ fn load_lod_bootstrap(env: &WowLuaEnv, ui: &std::path::Path, addon_name: &str) {
 }
 
 fn load_achievement_bootstrap(env: &WowLuaEnv, ui: &std::path::Path) {
-    if wow_ui_sim::client_profile::ACTIVE != wow_ui_sim::client_profile::ClientProfile::Retail {
-        return;
-    }
+    use wow_ui_sim::client_profile::{ACTIVE, ClientProfile};
+    // Forever's Camelot toggle calls ToggleLegacyChallenges, published by the
+    // Blizzard_LegacySystem bootstrap (the 9003cf923b-retired toggle copy used
+    // to stand in for both bootstraps).
+    let owners: &[&str] = match ACTIVE {
+        ClientProfile::Retail => &["Blizzard_AchievementUI"],
+        ClientProfile::WowForever => &["Blizzard_AchievementUI", "Blizzard_LegacySystem"],
+        _ => return,
+    };
     let startup =
         wow_ui_sim::loader::discover_blizzard_startup_addons_for_screen(ui, ScreenKind::Game);
-    assert_housing_startup_owner(&startup);
+    if ACTIVE == ClientProfile::Retail {
+        assert_housing_startup_owner(&startup);
+    }
+    for owner in owners {
+        load_startup_bootstrap(env, &startup, owner);
+    }
+}
+
+fn load_startup_bootstrap(
+    env: &WowLuaEnv,
+    startup: &[wow_ui_sim::loader::StartupAddon],
+    owner: &str,
+) {
     let addon = startup
         .iter()
-        .find(|addon| addon.name == "Blizzard_AchievementUI")
-        .expect("normal Retail startup includes the original achievement bootstrap");
+        .find(|addon| addon.name == owner)
+        .unwrap_or_else(|| panic!("normal startup includes the original {owner} bootstrap"));
     // Full startup promotes this owner via implicit prerequisites; the partial
     // fixture needs only its original TOC bootstrap before the lazy toggle.
     let toc = wow_ui_sim::toc::TocFile::from_file(&addon.toc_path).unwrap();
     assert!(toc.is_load_on_demand() && toc.has_bootstrap_files());
     wow_ui_sim::loader::load_addon_bootstrap_from_toc(&env.loader_env(), &toc)
-        .expect("original achievement bootstrap loads after eager TOC dependencies");
+        .unwrap_or_else(|error| panic!("original {owner} bootstrap loads: {error}"));
 }
 
 fn assert_housing_startup_owner(startup: &[wow_ui_sim::loader::StartupAddon]) {
