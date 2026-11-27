@@ -50,7 +50,15 @@ pub fn store_persistent_sub_region_cache(root: &Path, key: &str, data: &TextureD
     else {
         return;
     };
-    let _ = image.save(path);
+    // Written under a name of this process's own and renamed into place: the
+    // cache is shared by simulator processes running at the same time.
+    let Some(name) = path.file_name().and_then(|name| name.to_str()) else {
+        return;
+    };
+    let temp_path = path.with_file_name(format!("{}.part.{name}", std::process::id()));
+    if image.save(&temp_path).is_ok() && std::fs::rename(&temp_path, &path).is_err() {
+        let _ = std::fs::remove_file(&temp_path);
+    }
 }
 
 pub fn persistent_sub_region_cache_path(root: &Path, key: &str) -> PathBuf {
