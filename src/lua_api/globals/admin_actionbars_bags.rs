@@ -231,11 +231,40 @@ pub(super) fn set_guild_bank_tab_cost(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
+fn guild_bank_permission_values(state: &LuaState, argument: u32) -> LuaResult<Vec<i32>> {
+    let Val::Table(reference) = stack_val(state, argument) else {
+        return Err(runtime_error("Guild bank permissions must be tables"));
+    };
+    let values = state
+        .gc
+        .tables
+        .get(reference)
+        .map(|table| {
+            table
+                .array_slice()
+                .iter()
+                .filter_map(|value| match value {
+                    Val::Num(number)
+                        if number.is_finite()
+                            && number.fract() == 0.0
+                            && *number >= i32::MIN as f64
+                            && *number <= i32::MAX as f64 =>
+                    {
+                        Some(*number as i32)
+                    }
+                    _ => None,
+                })
+                .collect()
+        })
+        .unwrap_or_default();
+    Ok(values)
+}
+
 pub(super) fn set_guild_bank_rank_permissions(state: &mut LuaState) -> LuaResult<u32> {
     let rank = usize::from_stack(state, 1)?;
     let money_per_day = i64::from_stack(state, 2)?;
-    let rights = Vec::<i32>::from_stack(state, 3)?;
-    let stacks = Vec::<i32>::from_stack(state, 4)?;
+    let rights = guild_bank_permission_values(state, 3)?;
+    let stacks = guild_bank_permission_values(state, 4)?;
     if rank == 0 || rank > 10 || rights.len() != 6 || stacks.len() != 6 {
         return Err(runtime_error("Invalid guild bank rank permission input"));
     }
