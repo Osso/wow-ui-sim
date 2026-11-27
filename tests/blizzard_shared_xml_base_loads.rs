@@ -185,12 +185,9 @@ fn retail_shared_xml_base_defines_mixin_factory_before_addon_performance_uses_it
     assert!(!present, "Retail must not install a bootstrap fallback");
     // The client loads the StaticPopupDialogs owner before AddOnPerformance.lua
     // registers its dialogs (c1b07efb79 retired the placeholder table).
-    let loaded = load_blizzard_addon_closure_into_env(
-        &env,
-        &ui,
-        &["Blizzard_StaticPopup_Game", "Blizzard_AddOnPerformance"],
-        &[],
-    );
+    load_blizzard_addon_closure_into_env(&env, &ui, &["Blizzard_StaticPopup_Game"], &[]);
+    let loaded =
+        load_blizzard_addon_closure_into_env(&env, &ui, &["Blizzard_AddOnPerformance"], &[]);
     let shared = loaded
         .iter()
         .position(|name| name == "Blizzard_SharedXMLBase");
