@@ -460,7 +460,6 @@ C_ConsoleScriptCollection.GetCollectionDataByTag # not-yet
 C_ConsoleScriptCollection.GetElements # not-yet
 C_ConsoleScriptCollection.GetScriptData # not-yet
 C_Container.ContainerRefundItemPurchase # not-yet
-C_Container.GetContainerItemDurability # not-yet
 C_Container.GetContainerItemEquipmentSetInfo # not-yet
 C_Container.GetContainerItemPurchaseCurrency # not-yet
 C_Container.GetContainerItemPurchaseItem # not-yet
@@ -1066,7 +1065,6 @@ C_Item.IsItemSpecificToPlayerClass # not-yet
 C_Item.ReplaceEnchant # not-yet
 C_Item.ReplaceTradeEnchant # not-yet
 C_Item.ReplaceTradeskillEnchant # not-yet
-C_Item.RequestLoadItemDataByID # not-yet: temporary Lua workaround
 C_ItemInteraction.GetChargeInfo # not-yet
 C_ItemInteraction.GetItemConversionCurrencyCost # not-yet
 C_ItemInteraction.GetItemInteractionSpellId # not-yet
@@ -2778,7 +2776,6 @@ issecurevalue # not-yet
 loadstring_untainted # not-yet
 pcallwithenv # not-yet
 secretunwrap # not-yet
-securecall # not-yet: temporary Lua workaround
 setsecurehookforbidden # not-yet
 strsplittable # not-yet: temporary Lua workaround
 table.removemulti # not-yet

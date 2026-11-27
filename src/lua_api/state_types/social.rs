@@ -215,7 +215,8 @@ pub struct BattleNetAccountFeatures {
 impl Default for BattleNetAccountFeatures {
     fn default() -> Self {
         Self {
-            friend_tags: true,
+            // Forever F4 Q1 (pr46-49-decomp-answers.md): friend tags load disabled.
+            friend_tags: !cfg!(feature = "client-wowforever"),
             title_friend_custom_names: true,
             title_friends: true,
             friends_list_enabled: true,

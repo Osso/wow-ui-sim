@@ -51,7 +51,7 @@ fn seconds_formatter_native_handle_survives_securecopy_and_aura_validation() {
     )
     .unwrap();
     #[cfg(feature = "client-wowforever")]
-    env.exec("assert(C_Intl == nil)").unwrap();
+    env.exec("assert(type(C_Intl) == 'table')").unwrap();
 }
 
 #[test]

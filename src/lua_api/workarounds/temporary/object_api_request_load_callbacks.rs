@@ -11,13 +11,6 @@ local function __wow_fire_listener_callbacks(listener, id)
   end
 end
 
-if C_Item ~= nil and type(rawget(C_Item, "RequestLoadItemDataByID")) ~= "function" then
-  function C_Item.RequestLoadItemDataByID(itemID)
-    __wow_fire_listener_callbacks(ItemEventListener, itemID)
-    return true
-  end
-end
-
 if C_Spell ~= nil and type(rawget(C_Spell, "RequestLoadSpellData")) ~= "function" then
   function C_Spell.RequestLoadSpellData(spellID)
     __wow_fire_listener_callbacks(SpellEventListener, spellID)
@@ -26,8 +19,28 @@ if C_Spell ~= nil and type(rawget(C_Spell, "RequestLoadSpellData")) ~= "function
 end
 "#;
 
+/// Retail and Forever register the modeled Rust `C_Item.RequestLoadItemDataByID`.
+const ITEM_REQUEST_LOAD_CALLBACK_LUA: &str = r#"
+if C_Item ~= nil and type(rawget(C_Item, "RequestLoadItemDataByID")) ~= "function" then
+  function C_Item.RequestLoadItemDataByID(itemID)
+    if ItemEventListener ~= nil and type(ItemEventListener.FireCallbacks) == "function" then
+      ItemEventListener:FireCallbacks(itemID)
+    end
+    return true
+  end
+end
+"#;
+
+fn item_request_workaround_applies() -> bool {
+    use crate::client_profile::{ACTIVE, ClientProfile};
+    !matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever)
+}
+
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(OBJECT_API_REQUEST_LOAD_CALLBACKS_LUA)?;
+    if item_request_workaround_applies() {
+        lua.exec(ITEM_REQUEST_LOAD_CALLBACK_LUA)?;
+    }
     Ok(())
 }
 
@@ -35,6 +48,8 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
 mod tests {
     use crate::lua_api::WowLuaEnv;
 
+    /// Retail and Forever register the Rust item request instead.
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     #[test]
     fn installs_item_and_spell_request_load_callbacks_when_missing() {
         let env = WowLuaEnv::new().expect("lua env should initialize");

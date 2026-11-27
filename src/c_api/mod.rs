@@ -200,7 +200,7 @@ pub(crate) mod c_click_bindings;
 pub(crate) mod c_click_bindings_spell;
 pub mod c_club;
 pub(crate) mod c_club_finder;
-#[cfg(feature = "retail-12-0-0")]
+#[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
 pub(crate) mod c_combat_audio_alert;
 #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
 pub(crate) mod c_combat_log;

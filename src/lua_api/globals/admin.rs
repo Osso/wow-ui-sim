@@ -29,8 +29,8 @@ use super::admin_actionbars_bags::set_possess_action_slot;
 use super::admin_actionbars_bags::{
     add_bag_item, add_guild_bank_item, add_guild_bank_tab, clear_action_bars, clear_action_slot,
     clear_bags, clear_guild_bank, clear_guild_bank_tabs, remove_bag_item, set_action_slot,
-    set_guild_bank_money, set_guild_bank_rank_permissions, set_guild_bank_tab_cost,
-    set_merchant_items, set_pet_action_slot, set_possess_bar_visible,
+    set_bag_item_durability, set_guild_bank_money, set_guild_bank_rank_permissions,
+    set_guild_bank_tab_cost, set_merchant_items, set_pet_action_slot, set_possess_bar_visible,
 };
 use super::admin_addons::register_test_addon;
 use super::admin_auction_house::{
@@ -740,6 +740,7 @@ fn register_action_bars_and_bags(b: TableBuilder) -> LuaResult<TableBuilder> {
         .set_function("ClearActionBars", clear_action_bars)?
         .set_function("AddBagItem", add_bag_item)?
         .set_function("RemoveBagItem", remove_bag_item)?
+        .set_function("SetBagItemDurability", set_bag_item_durability)?
         .set_function("ClearBags", clear_bags)?
         .set_function("AddGuildBankItem", add_guild_bank_item)?
         .set_function("SetGuildBankMoney", set_guild_bank_money)?

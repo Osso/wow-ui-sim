@@ -169,6 +169,14 @@ pub(super) fn register_c_item(state: &mut LuaState) -> LuaResult<()> {
 }
 
 fn register_c_item_data_request(state: &mut LuaState, table_ref: GcRef<Table>) -> LuaResult<()> {
+    if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever) {
+        table_set_rust_fn_static(
+            state,
+            table_ref,
+            "RequestLoadItemDataByID",
+            super::item_data_request::request_load_item_data_by_id,
+        )?;
+    }
     if ACTIVE != ClientProfile::Retail {
         return Ok(());
     }

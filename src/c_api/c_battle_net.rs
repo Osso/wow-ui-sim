@@ -61,8 +61,11 @@ pub(crate) fn register_c_battle_net_surface(state: &mut LuaState) -> LuaResult<(
     #[cfg(feature = "retail-12-0-0")]
     super::addon_messages::register_bnet_chat(state, table_ref)?;
     register_friend_query_methods(state, table_ref)?;
+    // Retail 12.1.0+ and Forever 1.60.1 BattleNetDocumentation.lua declare these.
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
-    if crate::client_profile::ACTIVE_INTERFACE_VERSION >= 120100 {
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever
+        || crate::client_profile::ACTIVE_INTERFACE_VERSION >= 120100
+    {
         register_account_feature_methods(state, table_ref)?;
     }
     #[cfg(feature = "client-ptr")]

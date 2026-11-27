@@ -96,20 +96,6 @@ fn bag_location(state: &mut LuaState) -> LuaResult<(i32, i32)> {
     Ok((i32::from_stack(state, 1)?, i32::from_stack(state, 2)?))
 }
 
-fn get_container_item_durability(state: &mut LuaState) -> LuaResult<u32> {
-    let location = bag_location(state)?;
-    let durability = borrow_state(state)?
-        .bag_items
-        .get(&location)
-        .and_then(|item| item.durability);
-    if let Some((current, maximum)) = durability {
-        state.push(Val::Num(f64::from(current)));
-        state.push(Val::Num(f64::from(maximum)));
-        return Ok(2);
-    }
-    Ok(0)
-}
-
 fn parse_item_link_gems(link: &str) -> [u32; 3] {
     let mut gems = [0; 3];
     if let Some((_, item)) = link.split_once("item:") {
@@ -147,7 +133,7 @@ pub(crate) fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
         LuaApiMut::register_function(
             lua,
             "GetContainerItemDurability",
-            get_container_item_durability,
+            crate::c_api::item_spell::c_container_get_item_durability,
         )?;
         LuaApiMut::register_function(lua, "GetContainerItemGems", get_container_item_gems)?;
     }

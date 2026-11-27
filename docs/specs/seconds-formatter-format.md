@@ -12,7 +12,7 @@
 - [ ] Accept only authenticated wrapped numeric format inputs from untainted callers. Return wrapped text for wrapped input; tainted calls cannot decode it through the formatter. Keep wrapped time at configurable curve callbacks and never pass decoded time to addon conversion overrides.
 - [ ] Native AuraContainer option copying and `SetDurationText` retain the formatter. A real binding/FontString follows remaining time through one minute, five seconds, and sub-second values; secret-derived text retains its existing read guard.
 - [ ] Reject invalid format numbers and receivers without changing configuration or visible text; reject invalid whitespace-mode writes atomically. Preserve existing deferred validation for older interval/count setters. Curve and ICU failures propagate; there is no placeholder/error-to-zero rendering path when the native-duration capability is enabled.
-- [ ] Share only the private native backend capability. Retail 12.0.5/default retail and Forever must not publish `C_Intl` or enable the complete `retail-12-1-5` API epoch.
+- [ ] Share only the private native backend capability. Retail 12.0.5 must not publish `C_Intl` or enable the complete `retail-12-1-5` API epoch. Forever publishes the `C_Intl` members that its pinned `Blizzard_APIDocumentationGenerated/IntlDocumentation.lua` declares (byte-identical to the Retail 12.1.5 file), but it must not enable the complete `retail-12-1-5` API epoch.
 
 ## Evidence and explicit simulator guesses
 
