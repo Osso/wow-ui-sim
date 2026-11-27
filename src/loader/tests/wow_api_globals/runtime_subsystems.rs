@@ -382,7 +382,7 @@ fn test_unit_state_bootstrap_functions_exist() {
 }
 
 // Retail and Forever take UISpecialFrames from the original UIParent; the
-// placeholder tables are compiled out there (9b2500fef2).
+// placeholder tables are compiled out there (c1b07efb79).
 #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn test_ui_special_frames_table() {
