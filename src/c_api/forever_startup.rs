@@ -133,8 +133,6 @@ pub(crate) fn read_current_cvar(state: &LuaState, name: &str) -> LuaResult<Optio
 }
 
 fn register_services(state: &mut LuaState) -> LuaResult<()> {
-    let discord = ensure_namespace(state, "C_Discord")?;
-    table_set_rust_fn_static(state, discord, "IsEnabled", discord_enabled)?;
     let party = ensure_namespace(state, "C_PartyInfo")?;
     table_set_rust_fn_static(state, party, "GetRestrictPings", party_ping_restriction)?;
     let housing = ensure_namespace(state, "C_Housing")?;
@@ -157,12 +155,6 @@ fn register_tts_settings(state: &mut LuaState) -> LuaResult<()> {
         "MarkCharacterSettingsSaved",
         mark_character_tts_settings_saved,
     )
-}
-
-fn discord_enabled(state: &mut LuaState) -> LuaResult<u32> {
-    let enabled = borrow_state(state)?.cvars.get_bool("discordClientEnabled");
-    state.push(Val::Bool(enabled));
-    Ok(1)
 }
 
 fn ping_enabled(state: &mut LuaState) -> LuaResult<u32> {
