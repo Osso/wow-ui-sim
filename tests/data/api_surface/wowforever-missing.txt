@@ -399,7 +399,6 @@ C_Commentator.SetHardlockWeight # not-yet
 C_Commentator.SetHorizontalAngleThresholdToSmooth # not-yet
 C_Commentator.SetLookAtLerpAmount # not-yet
 C_Commentator.SetMapAndInstanceIndex # not-yet
-C_Commentator.SetMouseDisabled # not-yet
 C_Commentator.SetMoveSpeed # not-yet
 C_Commentator.SetMsToHoldForHorizontalMovement # not-yet
 C_Commentator.SetMsToHoldForVerticalMovement # not-yet
