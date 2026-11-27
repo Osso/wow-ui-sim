@@ -238,7 +238,7 @@ pub(crate) mod c_edit_mode_cache;
 pub(crate) mod c_encounter_journal_map;
 #[cfg(any(feature = "retail-12-1-0", feature = "client-wowforever"))]
 pub(crate) mod c_encounter_timeline;
-#[cfg(feature = "retail-12-0-0")]
+#[cfg(feature = "encounter-warning-settings")]
 pub(crate) mod c_encounter_warnings;
 mod c_engraving;
 pub(crate) mod c_event_scheduler;
@@ -268,7 +268,7 @@ pub mod c_legendary_crafting;
 pub mod c_lfg_info;
 pub(crate) mod c_lfg_list_active_entry;
 pub(crate) mod c_lfg_list_filter;
-#[cfg(feature = "retail-12-0-5")]
+#[cfg(feature = "lfg-endgame-edit-policy")]
 pub mod c_lfg_list_policy;
 pub mod c_lfg_list_search;
 #[cfg(feature = "retail-12-0-0")]

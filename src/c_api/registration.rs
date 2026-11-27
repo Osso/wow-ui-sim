@@ -174,7 +174,7 @@ fn register_interaction_combat(state: &mut LuaState) -> LuaResult<()> {
     super::c_combat_audio_alert::register(state)?;
     #[cfg(feature = "retail-12-0-0")]
     super::c_combat_text::register(state)?;
-    #[cfg(feature = "retail-12-0-0")]
+    #[cfg(feature = "encounter-warning-settings")]
     super::c_encounter_warnings::register_settings(state)?;
     Ok(())
 }

@@ -816,7 +816,7 @@ pub struct SimState {
     /// Last legacy string bytes, including unknown/ambiguous names; no playback implied.
     #[cfg(feature = "client-wrath")]
     pub last_sound_name_requested: Option<Vec<u8>>,
-    #[cfg(feature = "retail-12-0-0")]
+    #[cfg(feature = "encounter-warning-settings")]
     pub encounter_warning_settings: crate::c_api::c_encounter_warnings::WarningSettings,
     /// `C_CooldownViewer` entries keyed by cooldownID; empty until populated.
     pub cooldown_viewer_cooldowns:
@@ -1437,7 +1437,7 @@ pub struct SimState {
     /// Supplied community voice channels; Forever uses the documented empty default.
     #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
     pub voice_channels: Vec<crate::c_api::c_voice_chat_channels::VoiceChannel>,
-    #[cfg(feature = "retail-12-0-5")]
+    #[cfg(feature = "lfg-endgame-edit-policy")]
     pub lfg_endgame_policy: crate::c_api::c_lfg_list_policy::EndgameEditPolicy,
     #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
     pub arena_crowd_control: HashMap<String, crate::c_api::c_pvp_crowd_control::CrowdControlWindow>,

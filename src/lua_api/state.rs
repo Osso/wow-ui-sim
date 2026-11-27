@@ -651,7 +651,7 @@ macro_rules! build_empty_sim_state {
             #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
             auto_complete_realms: Vec::new(),
             weekly_rewards: Default::default(),
-            #[cfg(feature = "retail-12-0-0")]
+            #[cfg(feature = "encounter-warning-settings")]
             encounter_warning_settings: Default::default(),
             #[cfg(feature = "retail-12-1-0")]
             last_sound_request: None,
@@ -1139,7 +1139,7 @@ macro_rules! build_empty_sim_state {
             legacy_unit_voice: HashMap::new(),
             #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
             voice_channels: Vec::new(),
-            #[cfg(feature = "retail-12-0-5")]
+            #[cfg(feature = "lfg-endgame-edit-policy")]
             lfg_endgame_policy: Default::default(),
             #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
             arena_crowd_control: HashMap::new(),

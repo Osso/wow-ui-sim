@@ -551,14 +551,6 @@ C_EncounterJournal.GetEncounterJournalLink # not-yet
 C_EncounterJournal.IsEncounterComplete # not-yet
 C_EncounterJournal.SetPreviewMythicPlusLevel # not-yet
 C_EncounterJournal.SetPreviewPvpTier # not-yet
-C_EncounterWarnings.GetColorForSeverity # not-yet
-C_EncounterWarnings.GetPlayCustomSoundsWhenHidden # not-yet
-C_EncounterWarnings.GetSoundKitForSeverity # not-yet
-C_EncounterWarnings.GetWarningsShown # not-yet
-C_EncounterWarnings.IsFeatureAvailable # not-yet
-C_EncounterWarnings.IsFeatureEnabled # not-yet
-C_EncounterWarnings.SetPlayCustomSoundsWhenHidden # not-yet
-C_EncounterWarnings.SetWarningsShown # not-yet
 C_EndOfMatchUI.GetEndOfMatchDetails # not-yet
 C_EventToastManager.GetLevelUpDisplayToastsFromLevel # not-yet
 C_EventToastManager.GetNextToastToDisplay # not-yet
@@ -964,8 +956,6 @@ C_LFGList.GetOwnedKeystoneActivityAndGroupAndLevel # not-yet
 C_LFGList.GetSearchResultLeaderInfo # not-yet
 C_LFGList.GetSearchResultPlayerInfo # not-yet
 C_LFGList.IsCensoredActiveEntryUnresolved # not-yet
-C_LFGList.IsPlayerValidForEndgameFieldEdits # not-yet
-C_LFGList.ListingUsesEndgameEditRestrictions # not-yet
 C_LFGList.ReportGroupAsAdvertisement # not-yet
 C_LFGList.RevealCensoredActiveEntry # not-yet
 C_LFGList.RevealCensoredSearchResult # not-yet
