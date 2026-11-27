@@ -300,7 +300,7 @@ fn probe(env: &WowLuaEnv) -> bool {
         .unwrap()
 }
 
-#[cfg(feature = "retail-12-0-0")]
+#[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
 mod freeplace_tests {
     use super::WowLuaEnv;
 

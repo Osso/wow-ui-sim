@@ -768,7 +768,6 @@ C_Housing.VisitHouse # not-yet
 C_HousingBasicMode.GetHoveredDecorInfo # not-yet
 C_HousingBasicMode.GetSelectedDecorInfo # not-yet: temporary Lua workaround
 C_HousingBasicMode.IsDecorSelected # not-yet: temporary Lua workaround
-C_HousingBasicMode.IsFreePlaceEnabled # not-yet
 C_HousingBasicMode.IsGridSnapEnabled # not-yet: temporary Lua workaround
 C_HousingBasicMode.IsGridVisible # not-yet: temporary Lua workaround
 C_HousingBasicMode.IsHouseExteriorHovered # not-yet
@@ -777,7 +776,6 @@ C_HousingBasicMode.IsHoveringDecor # not-yet
 C_HousingBasicMode.RemoveSelectedDecor # not-yet
 C_HousingBasicMode.RotateDecor # not-yet
 C_HousingBasicMode.RotateHouseExterior # not-yet
-C_HousingBasicMode.SetFreePlaceEnabled # not-yet
 C_HousingBasicMode.SetGridVisible # not-yet: temporary Lua workaround
 C_HousingBlueprint.CanExportRoom # not-yet
 C_HousingBlueprint.CanExportTypeFromCurrentLocation # not-yet
