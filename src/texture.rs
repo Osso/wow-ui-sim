@@ -11,6 +11,15 @@ use std::time::Duration;
 
 mod preload;
 mod resolve;
+
+/// A texture given by file ID that the interface manifest does not list (world art such as
+/// minimap tiles, which add-ons draw with SetTexture(fileID)): a path the texture manager
+/// resolves by that ID straight from the local CASC.
+pub(crate) const FILE_DATA_ID_PREFIX: &str = "FileDataID\\";
+
+pub(crate) fn file_data_id_texture_path(file_data_id: u32) -> Option<String> {
+    cfg!(feature = "casc").then(|| format!("{FILE_DATA_ID_PREFIX}{file_data_id}"))
+}
 pub(crate) use sim_texture::source_index;
 
 use std::collections::{HashMap, HashSet};

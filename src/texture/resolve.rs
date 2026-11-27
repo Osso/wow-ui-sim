@@ -47,6 +47,30 @@ fn try_casc_resolve(manager: &TextureManager, normalized_path: &str) -> Option<P
 
     let resolver = crate::asset_resolver_config::resolver();
 
+    // A file ID the manifest does not list (crate::texture::file_data_id_texture_path):
+    // extracted by its ID, under its listfile name when the listfile has one.
+    const NORMALIZED_PREFIX: &str = "filedataid/";
+    // (SetTexture(fileID) keeps such a texture's path as the bare number)
+    let id_text = normalized_path
+        .get(..NORMALIZED_PREFIX.len())
+        .filter(|head| head.eq_ignore_ascii_case(NORMALIZED_PREFIX))
+        .map_or(normalized_path, |_| {
+            &normalized_path[NORMALIZED_PREFIX.len()..]
+        });
+    if let Some(fdid) = id_text.parse::<u32>().ok().filter(|&fdid| fdid != 0) {
+        let extract_dir = casc_extract_dir()?;
+        let relative = resolver
+            .resolve_path(fdid)
+            .map(|path| path.replace('\\', "/"))
+            .unwrap_or_else(|| format!("filedataid/{fdid}.blp"));
+        let out_path = extract_dir.join(&relative);
+        if out_path.exists() {
+            return Some(out_path);
+        }
+        std::fs::create_dir_all(out_path.parent()?).ok()?;
+        return resolver.ensure_cached(fdid, &out_path);
+    }
+
     // Listfile entries always include the file extension; our normalized paths usually don't.
     // Try common UI asset extensions.
     let lower = normalized_path.to_ascii_lowercase();
