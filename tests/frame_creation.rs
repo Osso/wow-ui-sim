@@ -405,8 +405,20 @@ fn test_create_frame_default_parent() {
     )
     .unwrap();
 
+    // An explicit nil parent leaves the frame parentless, as in the client: it
+    // stays shown while UIParent is hidden.
+    let parentless: bool = env
+        .eval("return TestDefaultParent:GetParent() == nil")
+        .unwrap();
+    assert!(parentless);
+    let shown_without_ui_parent: bool = env
+        .eval("UIParent:Hide(); local v = TestDefaultParent:IsVisible(); UIParent:Show(); return v")
+        .unwrap();
+    assert!(shown_without_ui_parent);
+
+    // The two-argument form keeps the simulator's UIParent default.
     let parent_name: String = env
-        .eval("return TestDefaultParent:GetParent():GetName()")
+        .eval(r#"return CreateFrame("Frame", "TestTwoArgParent"):GetParent():GetName()"#)
         .unwrap();
     assert_eq!(parent_name, "UIParent");
 }
