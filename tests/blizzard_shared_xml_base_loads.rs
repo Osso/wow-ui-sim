@@ -21,6 +21,14 @@ EventRegistry:TriggerEvent(event, "after-unregister")
 return registration == owner, #owner.received, owner.received[1], owner.received[2]
 "#;
 
+const ORIGINAL_DROPDOWN_TEMPLATE_PROBE: &str = r#"
+local list = DropDownList1
+local button = DropDownList1Button1
+return type(list), list:GetFrameStrata(), not list:IsShown(),
+    button:GetParent() == list, type(button:GetScript("OnClick")),
+    type(DropDownList1Button1NormalText)
+"#;
+
 #[test]
 fn original_shared_xmlbase_callback_registry_dispatches_and_unregisters() {
     use crate::common::blizzard_addon_harness::with_blizzard_addon_closure;
@@ -31,6 +39,29 @@ fn original_shared_xmlbase_callback_registry_dispatches_and_unregisters() {
             .eval(ORIGINAL_CALLBACK_REGISTRY_PROBE)
             .expect("original shared XML callback registry should run");
         assert_eq!(actual, (true, 2, "first".into(), "second".into()));
+    });
+}
+
+#[test]
+fn original_shared_xml_dropdown_template_creates_list_handlers() {
+    use crate::common::blizzard_addon_harness::with_blizzard_addon_closure;
+
+    with_blizzard_addon_closure(&["Blizzard_SharedXML"], &[], |env, loaded| {
+        assert!(loaded.iter().any(|name| name == "Blizzard_SharedXML"));
+        let actual: (String, String, bool, bool, String, String) = env
+            .eval(ORIGINAL_DROPDOWN_TEMPLATE_PROBE)
+            .expect("original shared XML dropdown template should load");
+        assert_eq!(
+            actual,
+            (
+                "table".into(),
+                "FULLSCREEN_DIALOG".into(),
+                true,
+                true,
+                "function".into(),
+                "table".into(),
+            )
+        );
     });
 }
 
