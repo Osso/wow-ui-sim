@@ -1025,7 +1025,6 @@ C_LFGInfo.AreCrossFactionGroupQueuesAllowed # not-yet
 C_LFGInfo.CanPlayerUseLFR # not-yet: temporary Lua workaround
 C_LFGInfo.CanPlayerUsePVP # not-yet
 C_LFGInfo.CanPlayerUseScenarioFinder # not-yet
-C_LFGInfo.ConfirmLfgExpandSearch # not-yet
 C_LFGInfo.DoesActivePartyMeetPremadeLaunchCount # not-yet
 C_LFGInfo.DoesCrossFactionQueueRequireFullPremade # not-yet
 C_LFGInfo.GetActiveLFGDungeonName # not-yet

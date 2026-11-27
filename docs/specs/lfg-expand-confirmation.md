@@ -1,4 +1,4 @@
-# Retail LFG expand-search confirmation
+# LFG expand-search confirmation (Retail and WoW Forever)
 
 `C_LFGInfo.ConfirmLfgExpandSearch` acts on a host-supplied cached prompt record. The original LFG popup binds its accept action to this API.
 
@@ -9,7 +9,7 @@
 
 ## Best-guess basis
 
-`LFGInfoDocumentation.lua:86` declares the function. `Blizzard_GroupFinder/Shared/LFGFrame.lua:92` binds the original accept callback. Retail build 70688 static evidence shows the nonzero-key decision and clearing; actual transport and runtime transitions are not observed.
+`LFGInfoDocumentation.lua:86` declares the function; the Retail and Forever blocks are byte-identical. `A_Admin.ShowLfgExpandSearchPrompt(key, data)` supplies the prompt and fires `SHOW_LFG_EXPAND_SEARCH_PROMPT`. `Blizzard_GroupFinder/Shared/LFGFrame.lua:92` binds the original accept callback. Retail build 70688 static evidence shows the nonzero-key decision and clearing; actual transport and runtime transitions are not observed.
 
 ## How it works
 
@@ -23,6 +23,7 @@
 ## Tests asserting this spec
 
 - `tests/patch_9_0_1_publication_sweep.rs::lfg_expand_prompt_accept_clears_supplied_state` calls the original popup binding with two supplied prompts.
+- `tests/lfg_expand_search_prompt.rs` (Retail and Forever) accepts the original popup with a nonzero and a zero key.
 
 ## Known gaps (current cycle)
 

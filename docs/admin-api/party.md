@@ -123,3 +123,9 @@ Starts an LFG role check. Retail and PTR only.
 ### A_Admin.ClearLFGRoleCheck()
 
 Ends the role check. `GetLFGRoleUpdate()` then returns `false, 0, 0, 0, 0, false` (INFERRED R88g9, native evidence pending: the tuple the simulator reported before this model).
+
+### A_Admin.ShowLfgExpandSearchPrompt(key, data)
+
+Supplies the server's expand-search prompt (Retail and WoW Forever). `key` is a non-negative integer; `data` is an opaque string. It stores the prompt and fires `SHOW_LFG_EXPAND_SEARCH_PROMPT`, so the original `LFGEventFrame` shows the `LFG_QUEUE_EXPAND` popup.
+
+- **Affects:** `C_LFGInfo.ConfirmLfgExpandSearch()` (the popup's accept action) clears a prompt with a nonzero key ([LFG expand confirmation](../specs/lfg-expand-confirmation.md)).
