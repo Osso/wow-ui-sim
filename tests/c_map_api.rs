@@ -1315,38 +1315,52 @@ fn test_minimap_is_inside_quest_blob() {
 
 #[test]
 fn test_minimap_get_view_radius() {
+    use wow_ui_sim::client_profile::{ACTIVE, ClientProfile};
     let env = env();
     let radius: f64 = env.eval("return C_Minimap.GetViewRadius()").unwrap();
     assert!(radius > 0.0);
-    if cfg!(feature = "client-wowforever") {
+    match ACTIVE {
         // WM77: static rows follow any dynamic spell entries and have no spellID.
-        env.exec(
+        ClientProfile::WowForever => env
+            .exec(&format!(
+                "local minCount, maxCount = 23, 25\n{TRACKING_ROWS_PROBE}"
+            ))
+            .unwrap(),
+        // R88f.F.13 (VERIFIED Retail 12.1.5): the count adds 22 static rows to the
+        // dynamic spell count. Row 1 follows the INFERRED R88dp table (87cfb2f0be).
+        ClientProfile::Retail => env
+            .exec(&format!(
+                "local minCount, maxCount = 22, math.huge\n{TRACKING_ROWS_PROBE}"
+            ))
+            .unwrap(),
+        _ => assert_untracked_minimap_defaults(&env),
+    }
+}
+
+const TRACKING_ROWS_PROBE: &str = r#"
+    local count = C_Minimap.GetNumTrackingTypes()
+    assert(count >= minCount and count <= maxCount)
+    local info = C_Minimap.GetTrackingInfo(1)
+    local filter = C_Minimap.GetTrackingFilter(1)
+    assert(info.type == 'other' and info.texture == 136452)
+    assert(info.subType == 2 and info.spellID == nil)
+    assert(filter.filterID == 1 and filter.spellID == nil)
+    assert(C_Minimap.GetTrackingInfo(count + 1) == nil)
+    local invalid = C_Minimap.GetTrackingFilter(count + 1)
+    assert(invalid.filterID == nil and invalid.spellID == nil)
+"#;
+
+fn assert_untracked_minimap_defaults(env: &WowLuaEnv) {
+    let (count, info_is_nil, filter_id, spell_id): (i32, bool, i32, i32) = env
+        .eval(
             r#"
-            local count = C_Minimap.GetNumTrackingTypes()
-            assert(count >= 23 and count <= 25)
-            local info = C_Minimap.GetTrackingInfo(1)
-            local filter = C_Minimap.GetTrackingFilter(1)
-            assert(info.type == 'other' and info.texture == 136452)
-            assert(info.subType == 2 and info.spellID == nil)
-            assert(filter.filterID == 1 and filter.spellID == nil)
-            assert(C_Minimap.GetTrackingInfo(count + 1) == nil)
-            local invalid = C_Minimap.GetTrackingFilter(count + 1)
-            assert(invalid.filterID == nil and invalid.spellID == nil)
+            local filter = C_Minimap.GetTrackingFilter()
+            return C_Minimap.GetNumTrackingTypes(), C_Minimap.GetTrackingInfo(1) == nil,
+                   filter.filterID, filter.spellID
             "#,
         )
         .unwrap();
-    } else {
-        let (count, info_is_nil, filter_id, spell_id): (i32, bool, i32, i32) = env
-            .eval(
-                r#"
-                local filter = C_Minimap.GetTrackingFilter()
-                return C_Minimap.GetNumTrackingTypes(), C_Minimap.GetTrackingInfo(1) == nil,
-                       filter.filterID, filter.spellID
-                "#,
-            )
-            .unwrap();
-        assert_eq!((count, info_is_nil, filter_id, spell_id), (0, true, 0, 0));
-    }
+    assert_eq!((count, info_is_nil, filter_id, spell_id), (0, true, 0, 0));
 }
 
 #[test]
