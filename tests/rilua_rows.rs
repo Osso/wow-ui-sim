@@ -90,6 +90,36 @@ fn rilua_rows_secret_table_predicate_classifies_metadata_in_both_callers() {
         .unwrap();
 }
 
+#[test]
+fn rilua_rows_bucket_uses_normal_limits_out_of_combat() {
+    let directory = tempfile::tempdir().unwrap();
+    let toc = create_script_probe(
+        directory.path(),
+        "NormalThrottleProbe",
+        "local frame = CreateFrame('Frame'); frame:RegisterEvent('PLAYER_ENTERING_WORLD'); \
+         frame:SetScript('OnEvent', function() \
+             ThrottleCalls = (ThrottleCalls or 0) + 1; \
+             local total = 0; \
+             for i = 1, 200000 do total = total + i end \
+         end)",
+    );
+    let env = WowLuaEnv::new().unwrap();
+    env.exec("SetCVar('luaScriptBucketThrottleEnabled', '0'); seterrorhandler(function(err) ThrottleError = err end)")
+        .unwrap();
+    let loader = env.loader_env();
+    wow_ui_sim::loader::load_addon(&loader, &toc).unwrap();
+    // Out of combat the Normal limits apply, whatever the Restricted ones are.
+    env.exec("SetCVar('luaScriptBucketThrottleEnabled', '1'); SetCVar('luaScriptBucketThrottleMaxMsPerSecondNormal', '0'); SetCVar('luaScriptBucketThrottleMaxMsBurstNormal', '1'); ThrottleCalls = 0")
+        .unwrap();
+
+    env.fire_event("PLAYER_ENTERING_WORLD").unwrap();
+    env.exec("assert(ThrottleCalls == 1 and ThrottleError == nil)")
+        .unwrap();
+    env.fire_event("PLAYER_ENTERING_WORLD").unwrap();
+    env.exec("assert(ThrottleCalls == 2 and string.find(ThrottleError, 'insecure scripts exceeded execution limit for addon NormalThrottleProbe', 1, true))")
+        .unwrap();
+}
+
 #[cfg(feature = "retail-12-0-5")]
 #[test]
 fn rilua_rows_ambiguate_transforms_secret_names_without_revealing_or_changing_taint() {
@@ -217,6 +247,7 @@ fn rilua_rows_bucket_skips_loading_and_throttles_after_world_entry() {
     wow_ui_sim::loader::load_addon(&loader, &toc).unwrap();
     env.exec("SetCVar('luaScriptBucketThrottleEnabled', '1'); SetCVar('luaScriptBucketThrottleMaxMsPerSecondRestricted', '0'); SetCVar('luaScriptBucketThrottleMaxMsBurstRestricted', '1'); ThrottleCalls = 0")
         .unwrap();
+    env.state().borrow_mut().player.in_combat = true;
 
     env.fire_event("PLAYER_ENTERING_WORLD").unwrap();
     env.exec("assert(ThrottleCalls == 1 and ThrottleError == nil)")
