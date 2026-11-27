@@ -5,6 +5,7 @@ use wow_ui_sim::loader::{discover_blizzard_addons_for_screen, load_addon};
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::startup::fire_startup_events_for_screen;
+#[cfg(feature = "client-retail")]
 use wow_ui_sim::toc::TocFile;
 
 fn blizzard_ui_dir() -> PathBuf {
@@ -13,6 +14,7 @@ fn blizzard_ui_dir() -> PathBuf {
     )))
 }
 
+#[cfg(feature = "client-retail")]
 fn deprecated_specialization_toc() -> PathBuf {
     blizzard_ui_dir()
         .join("Blizzard_DeprecatedSpecialization/Blizzard_DeprecatedSpecialization.toc")
