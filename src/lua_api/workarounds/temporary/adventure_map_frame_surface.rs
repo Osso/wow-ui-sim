@@ -159,14 +159,31 @@ end
 "#;
 
 pub(crate) fn patch(env: &WowLuaEnv) {
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
+        return;
+    }
     let _ = env.exec(ADVENTURE_MAP_FRAME_SURFACE_LUA);
 }
 
 pub(crate) fn patch_loader(env: &LoaderEnv<'_>) {
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
+        return;
+    }
     let _ = env.exec(ADVENTURE_MAP_FRAME_SURFACE_LUA);
 }
 
-#[cfg(test)]
+#[cfg(all(
+    test,
+    not(any(feature = "client-retail", feature = "client-wowforever"))
+))]
 mod tests {
     use super::*;
 
