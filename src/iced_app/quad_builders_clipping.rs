@@ -69,6 +69,144 @@ pub(in crate::iced_app) fn split_quads_on_client_diagonal(
     }
 }
 
+/// Clip quads whose corners were moved (SetVertexOffset) against `clip`.
+///
+/// The quads are no longer axis-aligned, so each of the two triangles is
+/// clipped as a polygon (Sutherland-Hodgman). A quad wholly inside is left
+/// alone; one wholly outside is hidden; one crossing the edge is hidden and
+/// replaced by the clipped triangles, appended to the batch with every vertex
+/// attribute interpolated. Pending texture requests are extended to cover
+/// the appended vertices.
+pub(in crate::iced_app) fn clip_warped_quads(
+    batch: &mut QuadBatch,
+    vert_before: usize,
+    clip: Rectangle,
+) {
+    let end = vert_before + (batch.vertices.len() - vert_before) / 4 * 4;
+    let (x0, y0) = (clip.x, clip.y);
+    let (x1, y1) = (clip.x + clip.width, clip.y + clip.height);
+    let mut quad_start = vert_before;
+    while quad_start < end {
+        let quad = [
+            batch.vertices[quad_start],
+            batch.vertices[quad_start + 1],
+            batch.vertices[quad_start + 2],
+            batch.vertices[quad_start + 3],
+        ];
+        let inside = |v: &QuadVertex| {
+            v.position[0] >= x0 && v.position[0] <= x1 && v.position[1] >= y0 && v.position[1] <= y1
+        };
+        if quad.iter().all(inside) {
+            quad_start += 4;
+            continue;
+        }
+        for vertex in &mut batch.vertices[quad_start..quad_start + 4] {
+            vertex.color[3] = 0.0;
+        }
+        let appended_start = batch.vertices.len();
+        for triangle in CLIENT_QUAD_TRIANGLES.map(|t| [quad[t[0]], quad[t[1]], quad[t[2]]]) {
+            let polygon = clip_polygon(triangle.to_vec(), x0, y0, x1, y1);
+            if polygon.len() < 3 {
+                continue;
+            }
+            let base = batch.vertices.len() as u32;
+            batch.vertices.extend_from_slice(&polygon);
+            for i in 1..polygon.len() as u32 - 1 {
+                batch
+                    .indices
+                    .extend_from_slice(&[base, base + i, base + i + 1]);
+            }
+        }
+        let appended = (batch.vertices.len() - appended_start) as u32;
+        if appended > 0 {
+            extend_requests(
+                &mut batch.texture_requests,
+                quad_start as u32,
+                appended_start as u32,
+                appended,
+            );
+            extend_requests(
+                &mut batch.mask_texture_requests,
+                quad_start as u32,
+                appended_start as u32,
+                appended,
+            );
+        }
+        quad_start += 4;
+    }
+}
+
+fn extend_requests(
+    requests: &mut Vec<crate::render::TextureRequest>,
+    quad_start: u32,
+    appended_start: u32,
+    appended: u32,
+) {
+    let covering: Vec<_> = requests
+        .iter()
+        .filter(|r| r.vertex_start <= quad_start && quad_start < r.vertex_start + r.vertex_count)
+        .cloned()
+        .collect();
+    for mut request in covering {
+        request.vertex_start = appended_start;
+        request.vertex_count = appended;
+        requests.push(request);
+    }
+}
+
+fn clip_polygon(
+    mut polygon: Vec<QuadVertex>,
+    x0: f32,
+    y0: f32,
+    x1: f32,
+    y1: f32,
+) -> Vec<QuadVertex> {
+    // (axis, limit, keep side is >= limit)
+    for (axis, limit, keep_greater) in
+        [(0, x0, true), (0, x1, false), (1, y0, true), (1, y1, false)]
+    {
+        if polygon.is_empty() {
+            break;
+        }
+        let keeps = |v: &QuadVertex| {
+            if keep_greater {
+                v.position[axis] >= limit
+            } else {
+                v.position[axis] <= limit
+            }
+        };
+        let mut out = Vec::with_capacity(polygon.len() + 2);
+        for i in 0..polygon.len() {
+            let current = polygon[i];
+            let next = polygon[(i + 1) % polygon.len()];
+            let (current_in, next_in) = (keeps(&current), keeps(&next));
+            if current_in {
+                out.push(current);
+            }
+            if current_in != next_in {
+                let t = (limit - current.position[axis])
+                    / (next.position[axis] - current.position[axis]);
+                out.push(lerp_vertex(&current, &next, t));
+            }
+        }
+        polygon = out;
+    }
+    polygon
+}
+
+fn lerp_vertex(a: &QuadVertex, b: &QuadVertex, t: f32) -> QuadVertex {
+    let mix2 = |p: [f32; 2], q: [f32; 2]| [lerp(p[0], q[0], t), lerp(p[1], q[1], t)];
+    let mut v = *a;
+    v.position = mix2(a.position, b.position);
+    v.tex_coords = mix2(a.tex_coords, b.tex_coords);
+    v.local_uv = mix2(a.local_uv, b.local_uv);
+    v.mask_tex_coords = mix2(a.mask_tex_coords, b.mask_tex_coords);
+    for c in 0..4 {
+        v.color[c] = lerp(a.color[c], b.color[c], t);
+    }
+    v
+}
+
 fn clip_vertex(
     chunk: &mut [QuadVertex],
     original: &[QuadVertex; 4],
@@ -142,5 +280,48 @@ mod client_diagonal_tests {
 
         // Only the quads from index 6 on: the first keeps its split.
         assert_eq!(batch.indices, vec![0, 1, 2, 0, 2, 3, 4, 5, 7, 5, 6, 7]);
+    }
+}
+
+#[cfg(test)]
+mod warped_clip_tests {
+    use super::clip_warped_quads;
+    use crate::render::QuadBatch;
+    use iced::{Point, Rectangle, Size};
+
+    #[test]
+    fn moved_corner_quad_is_cut_at_the_clip_edge() {
+        let mut batch = QuadBatch::new();
+        batch.push_solid(
+            Rectangle::new(Point::ORIGIN, Size::new(10.0, 10.0)),
+            [1.0; 4],
+        );
+        batch.push_solid(
+            Rectangle::new(Point::new(2.0, 2.0), Size::new(4.0, 4.0)),
+            [1.0; 4],
+        );
+        // Pull the first quad's lower right corner out past the clip box.
+        batch.vertices[2].position = [16.0, 14.0];
+        let clip = Rectangle::new(Point::ORIGIN, Size::new(10.0, 10.0));
+
+        clip_warped_quads(&mut batch, 0, clip);
+
+        assert!(
+            batch.vertices[..4].iter().all(|v| v.color[3] == 0.0),
+            "crossing quad hidden"
+        );
+        assert!(
+            batch.vertices[4..8].iter().all(|v| v.color[3] == 1.0),
+            "inside quad kept"
+        );
+        let appended = &batch.vertices[8..];
+        assert!(!appended.is_empty(), "clipped triangles appended");
+        for v in appended {
+            let [x, y] = v.position;
+            assert!(
+                (0.0..=10.0).contains(&x) && (0.0..=10.0).contains(&y),
+                "{x},{y} outside clip"
+            );
+        }
     }
 }

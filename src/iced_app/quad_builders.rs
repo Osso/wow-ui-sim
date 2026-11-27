@@ -435,6 +435,10 @@ pub fn emit_frame_quads(
     }
 
     if let Some(clip_bounds) = frame.clip_bounds
+        && warped
+    {
+        clipping::clip_warped_quads(batch, vert_before, clip_bounds);
+    } else if let Some(clip_bounds) = frame.clip_bounds
         && frame.widget.rotation == 0.0
         // clip_recent_quads assumes axis-aligned quad vertex ordering.
         // Line widgets emit rotated quads and need a different clip path.
