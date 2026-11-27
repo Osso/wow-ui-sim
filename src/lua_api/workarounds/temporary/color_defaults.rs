@@ -289,7 +289,7 @@ mod tests {
         assert!(preserves_fallback);
     }
 
-    #[cfg(feature = "retail-12-0-0")]
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     #[test]
     fn patch_12_0_0_color_util_conversions_and_wrapping() {
         let env = WowLuaEnv::new().expect("lua env should initialize");

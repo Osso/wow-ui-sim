@@ -1,4 +1,4 @@
-#![cfg(feature = "client-retail")]
+#![cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 use std::path::PathBuf;
 
 use wow_ui_sim::loader::{discover_blizzard_addons_for_screen, load_addon};
@@ -288,22 +288,19 @@ fn blizzard_deprecated_specialization_get_specialization_mastery_spells_returns_
 prefork_full_ui_case! {
 fn blizzard_deprecated_specialization_get_talent_info_returns_nil_when_backing_returns_nil(env: &WowLuaEnv) {
 
-    let returned_nil: bool = env
+    let returned_nil: (bool, bool) = env
         .eval(
             "do \
-                local ok, result = pcall(GetTalentInfo, 1, 1, 1, false, nil) \
-                return ok and result == nil \
+                local okFirst, first = pcall(GetTalentInfo, 1, 1, 1, false, nil) \
+                local okSecond, second = pcall(GetTalentInfo, 2, 3, 1, false, nil) \
+                return okFirst and first == nil, okSecond and second == nil \
             end",
         )
         .expect("pcall probe of GetTalentInfo should succeed");
     assert!(
-        returned_nil,
-        "Calling GetTalentInfo must NOT throw and must return nil. The wrapper at lines \
-         36-51 builds a query table, calls C_SpecializationInfo.GetTalentInfo(query) \
-         (UNSTUBBED — resolves via namespace `__index` to a no-op closure returning nil), \
-         then hits the `if not talentInfo then return nil end` early-return at lines 44-46. \
-         pcall returns ok=true, result=nil — unlike GetSpecializationMasterySpells, this \
-         wrapper has a guard that handles the unstubbed case gracefully"
+        returned_nil == (true, true),
+        "Both GetTalentInfo calls must preserve the original wrapper's nil-result path \
+         for distinct tier/column inputs without throwing"
     );
 }
 }

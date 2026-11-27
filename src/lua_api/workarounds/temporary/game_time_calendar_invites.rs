@@ -48,13 +48,16 @@ if time == nil then
 end
 "#;
 
-const GAME_TIME_BOOTSTRAP_LUA: &str = r#"
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+const GAME_TIME_GET_TIME_FALLBACK_LUA: &str = r#"
 if GameTime_GetTime == nil then
     function GameTime_GetTime(_useLocalTime)
         return "12:00"
     end
 end
+"#;
 
+const GAME_TIME_BOOTSTRAP_LUA: &str = r#"
 if GetQuestResetTime == nil then
     function GetQuestResetTime()
         if C_DateAndTime and type(C_DateAndTime.GetSecondsUntilDailyReset) == "function" then
@@ -97,6 +100,8 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     lua.exec(PRECISE_TIME_DEFAULT_LUA)?;
     lua.exec(GAME_TIME_BOOTSTRAP_LUA)?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+    lua.exec(GAME_TIME_GET_TIME_FALLBACK_LUA)?;
     Ok(())
 }
 
@@ -111,6 +116,12 @@ mod tests {
 
     #[test]
     fn installs_missing_game_time_clock_default() {
+        if cfg!(any(
+            feature = "client-retail",
+            feature = "client-wowforever"
+        )) {
+            return;
+        }
         let env = WowLuaEnv::new().expect("lua env should initialize");
         env.exec("GameTime_GetTime = nil")
             .expect("game time fixture should clear global");

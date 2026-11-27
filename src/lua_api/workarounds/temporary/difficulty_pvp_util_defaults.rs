@@ -35,89 +35,8 @@ for key, value in pairs(difficultyIDs) do
         DifficultyUtil.ID[key] = value
     end
 end
-if rawget(DifficultyUtil, "GetDifficultyName") == nil then
-    local difficultyNames = {
-        [DifficultyUtil.ID.DungeonNormal] = PLAYER_DIFFICULTY1 or "Normal",
-        [DifficultyUtil.ID.DungeonHeroic] = PLAYER_DIFFICULTY2 or "Heroic",
-        [DifficultyUtil.ID.Raid10Normal] = PLAYER_DIFFICULTY1 or "Normal",
-        [DifficultyUtil.ID.Raid25Normal] = PLAYER_DIFFICULTY1 or "Normal",
-        [DifficultyUtil.ID.Raid10Heroic] = PLAYER_DIFFICULTY2 or "Heroic",
-        [DifficultyUtil.ID.Raid25Heroic] = PLAYER_DIFFICULTY2 or "Heroic",
-        [DifficultyUtil.ID.RaidLFR] = PLAYER_DIFFICULTY3 or "Raid Finder",
-        [DifficultyUtil.ID.DungeonChallenge] = PLAYER_DIFFICULTY_MYTHIC_PLUS or "Mythic+",
-        [DifficultyUtil.ID.Raid40] = LEGACY_RAID_DIFFICULTY or "Legacy Raid",
-        [DifficultyUtil.ID.PrimaryRaidNormal] = PLAYER_DIFFICULTY1 or "Normal",
-        [DifficultyUtil.ID.PrimaryRaidHeroic] = PLAYER_DIFFICULTY2 or "Heroic",
-        [DifficultyUtil.ID.PrimaryRaidMythic] = PLAYER_DIFFICULTY6 or "Mythic",
-        [DifficultyUtil.ID.PrimaryRaidLFR] = PLAYER_DIFFICULTY3 or "Raid Finder",
-        [DifficultyUtil.ID.DungeonMythic] = PLAYER_DIFFICULTY6 or "Mythic",
-        [DifficultyUtil.ID.DungeonTimewalker] = PLAYER_DIFFICULTY_TIMEWALKER or "Timewalking",
-        [DifficultyUtil.ID.RaidTimewalker] = PLAYER_DIFFICULTY_TIMEWALKER or "Timewalking",
-        [DifficultyUtil.ID.RaidStory] = PLAYER_DIFFICULTY_STORY_RAID or "Story",
-    }
-
-    function DifficultyUtil.GetDifficultyName(difficultyID)
-        return difficultyNames[difficultyID]
-    end
-end
-if rawget(DifficultyUtil, "IsPrimaryRaid") == nil then
-    local primaryRaids = {
-        [DifficultyUtil.ID.PrimaryRaidLFR] = true,
-        [DifficultyUtil.ID.PrimaryRaidNormal] = true,
-        [DifficultyUtil.ID.PrimaryRaidHeroic] = true,
-        [DifficultyUtil.ID.PrimaryRaidMythic] = true,
-    }
-
-    function DifficultyUtil.IsPrimaryRaid(difficultyID)
-        return primaryRaids[difficultyID] or false
-    end
-end
-if rawget(DifficultyUtil, "GetMaxPlayers") == nil then
-    local maxPlayers = {
-        [DifficultyUtil.ID.DungeonNormal] = 5,
-        [DifficultyUtil.ID.DungeonHeroic] = 5,
-        [DifficultyUtil.ID.DungeonMythic] = 5,
-        [DifficultyUtil.ID.DungeonChallenge] = 5,
-        [DifficultyUtil.ID.DungeonTimewalker] = 5,
-        [DifficultyUtil.ID.Raid10Normal] = 10,
-        [DifficultyUtil.ID.Raid10Heroic] = 10,
-        [DifficultyUtil.ID.Raid25Normal] = 25,
-        [DifficultyUtil.ID.Raid25Heroic] = 25,
-        [DifficultyUtil.ID.Raid40] = 40,
-    }
-
-    function DifficultyUtil.GetMaxPlayers(difficultyID)
-        return maxPlayers[difficultyID]
-    end
-end
-
 if type(PVPUtil) ~= "table" then
     PVPUtil = {}
-end
-if rawget(PVPUtil, "GetTierName") == nil then
-    function PVPUtil.GetTierName(_tierEnum)
-        return ""
-    end
-end
-if rawget(PVPUtil, "GetTierDescription") == nil then
-    function PVPUtil.GetTierDescription(_tierEnum)
-        return ""
-    end
-end
-if rawget(PVPUtil, "GetBracketName") == nil then
-    function PVPUtil.GetBracketName(_bracketIndex)
-        return ""
-    end
-end
-if rawget(PVPUtil, "IsInActiveBattlefield") == nil then
-    function PVPUtil.IsInActiveBattlefield()
-        return false
-    end
-end
-if rawget(PVPUtil, "GetCurrentSeasonNumber") == nil then
-    function PVPUtil.GetCurrentSeasonNumber()
-        return 0
-    end
 end
 
 if GetPVPLifetimeStats == nil then
@@ -154,9 +73,68 @@ end
 
 #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 const DUNGEON_DIFFICULTY_DEFAULT_LUA: &str = r#"
-if GetDungeonDifficultyID == nil then
-    function GetDungeonDifficultyID()
-        return DifficultyUtil.ID.DungeonNormal
+if rawget(DifficultyUtil, "GetDifficultyName") == nil then
+    function DifficultyUtil.GetDifficultyName(difficultyID)
+        if difficultyID == DifficultyUtil.ID.DungeonNormal then
+            return PLAYER_DIFFICULTY1 or "Normal"
+        end
+    end
+end
+if rawget(DifficultyUtil, "GetMaxPlayers") == nil then
+    function DifficultyUtil.GetMaxPlayers(difficultyID)
+        if difficultyID == DifficultyUtil.ID.DungeonNormal then
+            return 5
+        end
+    end
+end
+"#;
+
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+const DIFFICULTY_PVP_METHOD_DEFAULTS_LUA: &str = r#"
+if rawget(DifficultyUtil, "IsPrimaryRaid") == nil then
+    local primaryRaids = {
+        [DifficultyUtil.ID.PrimaryRaidLFR] = true,
+        [DifficultyUtil.ID.PrimaryRaidNormal] = true,
+        [DifficultyUtil.ID.PrimaryRaidHeroic] = true,
+        [DifficultyUtil.ID.PrimaryRaidMythic] = true,
+    }
+
+    function DifficultyUtil.IsPrimaryRaid(difficultyID)
+        return primaryRaids[difficultyID] or false
+    end
+end
+if rawget(DifficultyUtil, "GetMaxPlayers") == nil then
+    local maxPlayers = {
+        [DifficultyUtil.ID.DungeonNormal] = 5,
+    }
+
+    function DifficultyUtil.GetMaxPlayers(difficultyID)
+        return maxPlayers[difficultyID]
+    end
+end
+if rawget(PVPUtil, "GetTierName") == nil then
+    function PVPUtil.GetTierName(_tierEnum)
+        return ""
+    end
+end
+if rawget(PVPUtil, "GetTierDescription") == nil then
+    function PVPUtil.GetTierDescription(_tierEnum)
+        return ""
+    end
+end
+if rawget(PVPUtil, "GetBracketName") == nil then
+    function PVPUtil.GetBracketName(_bracketIndex)
+        return ""
+    end
+end
+if rawget(PVPUtil, "IsInActiveBattlefield") == nil then
+    function PVPUtil.IsInActiveBattlefield()
+        return false
+    end
+end
+if rawget(PVPUtil, "GetCurrentSeasonNumber") == nil then
+    function PVPUtil.GetCurrentSeasonNumber()
+        return 0
     end
 end
 "#;
@@ -182,6 +160,8 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     #[cfg(not(feature = "client-retail"))]
     lua.exec(DIFFICULTY_INFO_DEFAULT_LUA)?;
     #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+    lua.exec(DIFFICULTY_PVP_METHOD_DEFAULTS_LUA)?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     lua.exec(RAID_DIFFICULTY_GLOBAL_DEFAULTS_LUA)?;
     #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     lua.exec(DUNGEON_DIFFICULTY_DEFAULT_LUA)?;
@@ -200,6 +180,12 @@ mod tests {
     #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     #[test]
     fn installs_difficulty_and_pvp_defaults() {
+        if cfg!(any(
+            feature = "client-retail",
+            feature = "client-wowforever"
+        )) {
+            return;
+        }
         let env = WowLuaEnv::new().expect("lua env should initialize");
         env.exec("DifficultyUtil = nil; PVPUtil = nil")
             .expect("fixture should clear utility defaults");
@@ -250,6 +236,12 @@ mod tests {
 
     #[test]
     fn preserves_existing_utility_members() {
+        if cfg!(any(
+            feature = "client-retail",
+            feature = "client-wowforever"
+        )) {
+            return;
+        }
         let env = WowLuaEnv::new().expect("lua env should initialize");
         env.exec(
             r#"

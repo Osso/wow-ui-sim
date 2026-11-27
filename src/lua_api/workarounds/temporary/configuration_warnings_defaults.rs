@@ -63,29 +63,33 @@ then
         end
     end
 
-    if CheckSystemRequirements == nil then
-        function CheckSystemRequirements(includeSeenWarnings)
-            if type(C_ConfigurationWarnings.GetConfigurationWarnings) ~= "function" then
-                return
-            end
+end
+"#;
 
-            local warnings = C_ConfigurationWarnings.GetConfigurationWarnings(includeSeenWarnings)
-            if type(warnings) ~= "table" then
-                return
-            end
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+const CHECK_SYSTEM_REQUIREMENTS_FALLBACK_LUA: &str = r#"
+if CheckSystemRequirements == nil then
+    function CheckSystemRequirements(includeSeenWarnings)
+        if type(C_ConfigurationWarnings.GetConfigurationWarnings) ~= "function" then
+            return
+        end
 
-            if type(StaticPopup_Queue) ~= "function" then
-                return
-            end
+        local warnings = C_ConfigurationWarnings.GetConfigurationWarnings(includeSeenWarnings)
+        if type(warnings) ~= "table" then
+            return
+        end
 
-            for _, warning in ipairs(warnings) do
-                local text = nil
-                if type(C_ConfigurationWarnings.GetConfigurationWarningString) == "function" then
-                    text = C_ConfigurationWarnings.GetConfigurationWarningString(warning)
-                end
-                if text then
-                    StaticPopup_Queue("CONFIGURATION_WARNING", text, nil, { configurationWarning = warning })
-                end
+        if type(StaticPopup_Queue) ~= "function" then
+            return
+        end
+
+        for _, warning in ipairs(warnings) do
+            local text = nil
+            if type(C_ConfigurationWarnings.GetConfigurationWarningString) == "function" then
+                text = C_ConfigurationWarnings.GetConfigurationWarningString(warning)
+            end
+            if text then
+                StaticPopup_Queue("CONFIGURATION_WARNING", text, nil, { configurationWarning = warning })
             end
         end
     end
@@ -94,6 +98,8 @@ end
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(CONFIGURATION_WARNINGS_DEFAULTS_LUA)?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+    lua.exec(CHECK_SYSTEM_REQUIREMENTS_FALLBACK_LUA)?;
     Ok(())
 }
 
@@ -178,6 +184,12 @@ mod tests {
 
     #[test]
     fn check_system_requirements_queues_warnings_with_text() {
+        if cfg!(any(
+            feature = "client-retail",
+            feature = "client-wowforever"
+        )) {
+            return;
+        }
         let env = WowLuaEnv::new().expect("lua env should initialize");
         env.exec(
             r#"

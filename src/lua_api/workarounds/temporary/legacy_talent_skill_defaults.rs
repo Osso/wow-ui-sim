@@ -58,13 +58,15 @@ if rawget(_G, "GetNumTalentTabs") == nil then
         return 0
     end
 end
+"#;
 
+#[cfg(not(feature = "client-retail"))]
+const LEGACY_TALENT_INFO_DEFAULT_LUA: &str = r#"
 if rawget(_G, "GetTalentInfo") == nil then
     function GetTalentInfo(_tabIndex, _talentIndex)
         return nil
     end
 end
-
 "#;
 
 const LEGACY_TALENT_SKILL_DEFAULTS_LUA: &str = r#"
@@ -140,6 +142,8 @@ end
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Wrath {
         lua.exec(LEGACY_TALENT_ROW_DEFAULTS_LUA)?;
+        #[cfg(not(feature = "client-retail"))]
+        lua.exec(LEGACY_TALENT_INFO_DEFAULT_LUA)?;
     }
     lua.exec(LEGACY_TALENT_SKILL_DEFAULTS_LUA)?;
     if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail {

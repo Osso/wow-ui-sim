@@ -1,28 +1,27 @@
 #![cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 
 use std::path::Path;
-use wow_ui_sim::loader::load_addon;
+use wow_ui_sim::loader::{find_toc_file, load_addon};
 use wow_ui_sim::lua_api::WowLuaEnv;
 
-fn encounter_journal_env() -> WowLuaEnv {
-    let env = WowLuaEnv::new().expect("simulator environment should start");
+fn load_encounter_journal(env: &WowLuaEnv) {
     let addon_dir = wow_ui_sim::client_profile::blizzard_ui_addons_dir_under(Path::new(env!(
         "CARGO_MANIFEST_DIR"
-    )));
-    let toc = addon_dir.join(format!(
-        "Blizzard_EncounterJournal/{}",
-        match wow_ui_sim::client_profile::ACTIVE {
-            wow_ui_sim::client_profile::ClientProfile::Retail => {
-                "Blizzard_EncounterJournal_Mainline.toc"
-            }
-            wow_ui_sim::client_profile::ClientProfile::WowForever => {
-                "Blizzard_EncounterJournal.toc"
-            }
-            _ => unreachable!("this test is limited to Retail and WoW Forever"),
-        }
-    ));
+    )))
+    .join("Blizzard_EncounterJournal");
+    let toc = find_toc_file(&addon_dir).expect("Encounter Journal TOC should resolve");
     load_addon(&env.loader_env(), &toc).expect("Encounter Journal TOC should load");
+}
+
+#[cfg(feature = "client-wowforever")]
+fn encounter_journal_env() -> WowLuaEnv {
+    let env = WowLuaEnv::new().expect("simulator environment should start");
+    env.set_screen_size(1024.0, 768.0);
+    crate::common::load_game_startup_inventory(&env);
+    env.sync_addon_names_to_lua();
     env.apply_post_load_workarounds();
+    wow_ui_sim::startup::fire_startup_events_for_screen(&env, wow_ui_sim::screen::ScreenKind::Game);
+    load_encounter_journal(&env);
     env
 }
 
@@ -101,6 +100,17 @@ fn assert_base_difficulty_queries(env: &WowLuaEnv) {
     assert_eq!(bases, (16, 17, 63));
 }
 
+#[cfg(feature = "client-retail")]
+prefork_full_ui_case! {
+fn encounter_journal_difficulty_queries_use_selected_map(env: &WowLuaEnv) {
+    load_encounter_journal(env);
+    assert_dungeon_difficulty_queries(env);
+    assert_raid_difficulty_queries(env);
+    assert_base_difficulty_queries(env);
+}
+}
+
+#[cfg(feature = "client-wowforever")]
 #[test]
 fn encounter_journal_difficulty_queries_use_selected_map() {
     let env = encounter_journal_env();
@@ -198,6 +208,21 @@ fn assert_updated_raid_lock_boss_overlay(env: &WowLuaEnv, map_id: i32, encounter
     assert_eq!(updated, true);
 }
 
+#[cfg(feature = "client-retail")]
+prefork_full_ui_case! {
+fn encounter_journal_boss_overlay_reads_supplied_raid_locks(env: &WowLuaEnv) {
+    load_encounter_journal(env);
+    let (instance_id, map_id, journal_id, encounter_id, initial_shown) =
+        read_raid_lock_boss_setup(env);
+    assert_eq!(initial_shown, false);
+    assert_omitted_raid_lock_difficulty(env, map_id, encounter_id);
+    update_raid_lock_boss_overlay(env, map_id, encounter_id);
+    assert_updated_raid_lock_boss_overlay(env, map_id, encounter_id);
+    assert!(instance_id > 0 && journal_id > 0);
+}
+}
+
+#[cfg(feature = "client-wowforever")]
 #[test]
 fn encounter_journal_boss_overlay_reads_supplied_raid_locks() {
     let env = encounter_journal_env();

@@ -282,6 +282,50 @@ fn blizzard_frame_xml_util_does_not_publish_patch_12_1_difficulty_color_delegate
 }
 }
 
+const DIFFICULTY_UTIL_BEHAVIOR_PROBE: &str = r#"
+local normal = DifficultyUtil.ID.DungeonNormal
+local heroic = DifficultyUtil.ID.DungeonHeroic
+local names = DifficultyUtil.DifficultyNames
+local primaryRaid = DifficultyUtil.PrimaryRaids[1]
+assert(DifficultyUtil.GetDifficultyName(normal) == names[normal])
+assert(DifficultyUtil.GetDifficultyName(heroic) == names[heroic])
+assert(primaryRaid ~= nil and DifficultyUtil.IsPrimaryRaid(primaryRaid))
+assert(not DifficultyUtil.IsPrimaryRaid(normal))
+return "ok"
+"#;
+
+const PVP_UTIL_BEHAVIOR_PROBE: &str = r#"
+local tierOneName = PVPUtil.GetTierName(1)
+local tierTwoName = PVPUtil.GetTierName(2)
+assert(type(tierOneName) == "string" and tierOneName == PVP_RANK_1_NAME)
+assert(type(tierTwoName) == "string" and tierTwoName == PVP_RANK_2_NAME)
+assert(tierOneName ~= tierTwoName)
+local tierOneDescription = PVPUtil.GetTierDescription(1)
+local tierTwoDescription = PVPUtil.GetTierDescription(2)
+assert(type(tierOneDescription) == "string" and tierOneDescription == PVP_RANK_1_NEXT_RANK_DESC)
+assert(type(tierTwoDescription) == "string" and tierTwoDescription == PVP_RANK_2_NEXT_RANK_DESC)
+local bracketOne = PVPUtil.GetBracketName(1)
+local bracketTwo = PVPUtil.GetBracketName(2)
+assert(type(bracketOne) == "string" and bracketOne == CONQUEST_BRACKET_NAMES[1])
+assert(type(bracketTwo) == "string" and bracketTwo == CONQUEST_BRACKET_NAMES[2])
+assert(bracketOne ~= bracketTwo)
+return "ok"
+"#;
+
+prefork_full_ui_case! {
+fn original_difficulty_util_reads_selected_owner_tables(env: &WowLuaEnv) {
+    let result: String = env.eval(DIFFICULTY_UTIL_BEHAVIOR_PROBE).unwrap();
+    assert_eq!(result, "ok");
+}
+}
+
+prefork_full_ui_case! {
+fn original_pvp_util_reads_selected_owner_rank_and_bracket_tables(env: &WowLuaEnv) {
+    let result: String = env.eval(PVP_UTIL_BEHAVIOR_PROBE).unwrap();
+    assert_eq!(result, "ok");
+}
+}
+
 prefork_full_ui_case! {
 fn blizzard_frame_xml_util_publishes_communities_and_pvp_namespaces(env: &WowLuaEnv) {
 

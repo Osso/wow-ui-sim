@@ -67,6 +67,9 @@ const LEGACY_MACRO_GLOBALS_PART_2: &str = r#"        if type(GetSpellBookItemNam
         if type(itemInfo) ~= "table" then
             return "container_info_type=" .. type(itemInfo)
         end
+        if SpellBook_GetSpellBookSlot(4, 7) ~= 4 or SpellBook_GetSpellBookSlot(8, 3) ~= 8 then
+            return "spellbook_slot"
+        end
 
         return "ok"
 "#;
@@ -121,15 +124,18 @@ fn legacy_spell_globals_exist_for_addons() {
         if type(GetSpellBookItemTexture) ~= "function" then
             return "missing_GetSpellBookItemTexture"
         end
-        if type(SpellBook_GetSpellBookSlot) ~= "function" then
-            return "missing_SpellBook_GetSpellBookSlot"
-        end
 
         if GetSpellBookItemTexture(1) == nil then
             return "missing_spellbook_texture"
         end
+        if type(SpellBook_GetSpellBookSlot) ~= "function" then
+            return "missing_SpellBook_GetSpellBookSlot"
+        end
         if SpellBook_GetSpellBookSlot(4, 7) ~= 4 then
             return "spellbook_slot=" .. tostring(SpellBook_GetSpellBookSlot(4, 7))
+        end
+        if SpellBook_GetSpellBookSlot(8, 3) ~= 8 then
+            return "second_spellbook_slot=" .. tostring(SpellBook_GetSpellBookSlot(8, 3))
         end
 
         return "ok"

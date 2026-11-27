@@ -20,8 +20,8 @@ type GlueRuntimeProbe = (
     bool,
     bool,
     bool,
-    String,
-    f64,
+    Option<String>,
+    Option<f64>,
     String,
     bool,
     bool,
@@ -90,8 +90,8 @@ fn glue_runtime_helpers_exist_with_safe_defaults() {
                    location:IsUnit(),
                    location:IsValid(),
                    rawget(AdventureGuideUtil, "IsAvailable") ~= nil and AdventureGuideUtil.IsAvailable() or false,
-                   DifficultyUtil.GetDifficultyName(DifficultyUtil.ID.DungeonNormal),
-                   DifficultyUtil.GetMaxPlayers(DifficultyUtil.ID.DungeonNormal),
+                   DifficultyUtil.GetDifficultyName and DifficultyUtil.GetDifficultyName(DifficultyUtil.ID.DungeonNormal) or nil,
+                   DifficultyUtil.GetMaxPlayers and DifficultyUtil.GetMaxPlayers(DifficultyUtil.ID.DungeonNormal) or nil,
                    type(PlayerSpellsUtil),
                    type(PlayerSpellsUtil.ToggleSpellBookFrame) == "function",
                    type(PlayerSpellsUtil.ToggleClassTalentFrame) == "function"
@@ -122,8 +122,19 @@ fn glue_runtime_helpers_exist_with_safe_defaults() {
         wow_ui_sim::client_profile::ACTIVE != wow_ui_sim::client_profile::ClientProfile::Retail,
         "Retail waits for the original Game helper; other profiles retain bootstrap"
     );
-    assert!(!dungeon_normal_name.is_empty());
-    assert_eq!(dungeon_normal_max_players, 5.0);
+    let difficulty_fallback_gated = matches!(
+        wow_ui_sim::client_profile::ACTIVE,
+        wow_ui_sim::client_profile::ClientProfile::Retail
+            | wow_ui_sim::client_profile::ClientProfile::WowForever
+    );
+    assert_eq!(dungeon_normal_name.is_some(), !difficulty_fallback_gated);
+    assert_eq!(
+        dungeon_normal_max_players,
+        (!difficulty_fallback_gated).then_some(5.0)
+    );
+    if let Some(name) = dungeon_normal_name {
+        assert!(!name.is_empty());
+    }
     assert_eq!(player_spells_util_type, "table");
     assert!(has_spellbook_toggle);
     assert!(has_talent_toggle);

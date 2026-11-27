@@ -53,6 +53,9 @@ end
 if type(AdventureGuideUtil) ~= "table" then
     AdventureGuideUtil = {}
 end
+"#;
+
+const ADVENTURE_GUIDE_HELPER_DEFAULTS_LUA: &str = r#"
 if rawget(AdventureGuideUtil, "OpenJournalLink") == nil then
     function AdventureGuideUtil.OpenJournalLink(_journalType, _id, _difficultyID)
         if not EncounterJournal and type(EncounterJournal_LoadUI) == "function" then
@@ -104,6 +107,9 @@ end
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(ADVENTURE_JOURNAL_FALLBACKS_LUA)?;
     if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail {
+        lua.exec(ADVENTURE_GUIDE_HELPER_DEFAULTS_LUA)?;
+    }
+    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail {
         lua.exec(AVAILABILITY_FALLBACK_LUA)?;
     }
     Ok(())
@@ -113,11 +119,13 @@ pub(crate) fn update_for_screen_mode(
     lua: &mut rilua::Lua,
     screen: crate::screen::ScreenKind,
 ) -> crate::Result<()> {
-    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail {
-        return Ok(());
-    }
     if screen.is_glue() {
         lua.exec(AVAILABILITY_FALLBACK_LUA)?;
+        return Ok(());
+    }
+    // Retail Game startup loads the original AdventureGuideUtil before consumers.
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+        lua.exec(ADVENTURE_GUIDE_HELPER_DEFAULTS_LUA)?;
         return Ok(());
     }
     // Remove only our Glue fallback, never the original Game owner.
@@ -139,6 +147,9 @@ mod tests {
 
     #[test]
     fn installs_adventure_journal_fallback_shapes_when_missing() {
+        if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+            return;
+        }
         let env = WowLuaEnv::new().expect("lua env should initialize");
         env.exec(
             r#"
