@@ -3,6 +3,7 @@
 //! lock requests (:1621/:1631/:1683/:1693).
 #![cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 
+use crate::common;
 use wow_ui_sim::client_profile::{ACTIVE, ClientProfile};
 use wow_ui_sim::lua_api::WowLuaEnv;
 
@@ -45,6 +46,36 @@ const LOCK_REQUESTS: &str = r#"
     C_Item.UnlockItemByGUID(WaterGUID)
     assert(C_Item.IsLocked(water) == false)
 "#;
+
+#[test]
+fn bag_item_tooltip_resolves_each_item_guid_to_its_link() {
+    common::with_timeout(120, || {
+        let env = WowLuaEnv::new().expect("Lua environment");
+        common::load_game_startup_inventory(&env);
+        env.sync_addon_names_to_lua();
+        env.apply_post_load_workarounds();
+        wow_ui_sim::startup::fire_startup_events_for_screen(
+            &env,
+            wow_ui_sim::screen::ScreenKind::Game,
+        );
+        env.exec(
+            r#"
+            A_Admin.ClearBags()
+            A_Admin.AddBagItem(0, 1, 6948, 1)
+            A_Admin.AddBagItem(0, 2, 159, 1)
+            GameTooltip:SetOwner(UIParent, "ANCHOR_NONE")
+            for _, item in ipairs({ { 1, "Hearthstone", 6948 }, { 2, "Refreshing Spring Water", 159 } }) do
+                GameTooltip:SetBagItem(0, item[1])
+                local name, link, itemID = TooltipUtil.GetDisplayedItem(GameTooltip)
+                assert(name == item[2] and itemID == item[3], tostring(name))
+                assert(link:find("item:" .. item[3] .. ":", 1, true), tostring(link))
+                assert(GameTooltipTextLeft1:GetText() == item[2], item[2])
+            end
+            "#,
+        )
+        .expect("bag tooltips display links resolved from their GUIDs");
+    });
+}
 
 #[test]
 fn item_guid_queries_resolve_the_bag_slot_that_holds_the_item() {
