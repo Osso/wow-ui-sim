@@ -8,9 +8,7 @@ use crate::common;
 
 use common::env_with_shared_xml;
 use wow_ui_sim::lua_api::WowLuaEnv;
-use wow_ui_sim::xml::{
-    FrameChildElement, FrameXml, KeyValueXml, KeyValuesXml, register_template,
-};
+use wow_ui_sim::xml::{FrameChildElement, FrameXml, KeyValueXml, KeyValuesXml, register_template};
 
 /// Pool APIs live in Blizzard_SharedXMLBase/Pools.lua, so we need SharedXML loaded.
 fn env() -> WowLuaEnv {
@@ -350,18 +348,33 @@ fn test_frame_pool_collection_returns_proxy_surface() {
         local frame = coll:Acquire(template)
         assert(frame ~= nil, "Collection Acquire should acquire from the created pool")
         assert(frame:GetObjectType() == "Frame", "Collection Acquire should return a frame")
-
-        local secureenv = rawget(_G, "__secureenv")
-        assert(type(secureenv) == "table", "secureenv should be installed")
-        local secureCreator = rawget(secureenv, "CreateFramePoolCollection")
-        assert(type(secureCreator) == "function", "secureenv should expose CreateFramePoolCollection")
-        local secureColl = secureCreator()
-        assert(secureColl.pools == nil, "Secure collection proxy must not expose the private pool map")
-        assert(type(secureColl.GetPool) == "function", "Secure collection proxy should expose GetPool")
     "#,
     )
     .unwrap();
+    load_secure_shared_xml_consumer(&env);
+    env.exec(SECURE_COLLECTION_PROXY_PROBE).unwrap();
 }
+
+/// R88g.1 (VERIFIED Retail 12.1.5): a prior ordinary load does not count as a
+/// secure load; the loader runs dependencies in the secure table when a
+/// `UseSecureEnvironment` addon loads. Blizzard_CommunitiesSecure.toc:2-3
+/// declares that mode and `RequiredDep: Blizzard_SharedXML`.
+fn load_secure_shared_xml_consumer(env: &WowLuaEnv) {
+    if wow_ui_sim::client_profile::ACTIVE != wow_ui_sim::client_profile::ClientProfile::Wrath {
+        let ui = crate::common::blizzard_ui_dir();
+        crate::common::load_required_blizzard_addon(env, &ui, "Blizzard_CommunitiesSecure");
+    }
+}
+
+const SECURE_COLLECTION_PROXY_PROBE: &str = r#"
+    local secureenv = rawget(_G, "__secureenv")
+    assert(type(secureenv) == "table", "secureenv should be installed")
+    local secureCreator = rawget(secureenv, "CreateFramePoolCollection")
+    assert(type(secureCreator) == "function", "secureenv should expose CreateFramePoolCollection")
+    local secureColl = secureCreator()
+    assert(secureColl.pools == nil, "Secure collection proxy must not expose the private pool map")
+    assert(type(secureColl.GetPool) == "function", "Secure collection proxy should expose GetPool")
+"#;
 
 #[test]
 fn test_frame_pool_collection_acquire_from_pool() {
@@ -662,5 +675,8 @@ fn test_create_line_applies_inherited_line_template_mixins_and_key_values() {
         .expect("create line with inherited texture template");
 
     assert_eq!(has_setup_line, "function");
-    assert!(key_value, "CreateLine should apply inherited template KeyValues");
+    assert!(
+        key_value,
+        "CreateLine should apply inherited template KeyValues"
+    );
 }

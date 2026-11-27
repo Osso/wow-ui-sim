@@ -169,7 +169,9 @@ const CREATE_SECURE_REPLAY_ENV_LUA: &str = r##"
             if value == nil and type(logNilSymbolAccess) == "function" then
                 local isGlobalIndex = debugTable and debugTable.isglobalindex
                 if type(isGlobalIndex) == "function" and isGlobalIndex() then
-                    logNilSymbolAccess("__secureenv_replay", key)
+                    -- The proxy is the secure global scope; report its misses as
+                    -- secure globals (nil_symbol_reports.rs classifies "__secureenv").
+                    logNilSymbolAccess("__secureenv", key)
                 end
             end
             return value

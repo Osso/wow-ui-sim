@@ -206,9 +206,20 @@ fn load_blizzard_addon_by_folder(folder_name: &str) -> (WowLuaEnv, Vec<String>) 
 }
 
 fn load_blizzard_addon_with_login_env(addon_name: &str) -> (WowLuaEnv, Vec<String>) {
+    load_blizzard_addon_on_screen(addon_name, ScreenKind::Login)
+}
+
+/// Game-screen LoD addons: their dependency chains reach Game-only secure
+/// owners (Blizzard_PingUI.toc has no glue AllowLoad), which the native R13
+/// screen rule rejects on Login with DEP_WRONG_ACTIVE_INTERFACE (19ea365ace).
+fn load_blizzard_game_addon_by_folder(addon_name: &str) -> (WowLuaEnv, Vec<String>) {
+    load_blizzard_addon_on_screen(addon_name, ScreenKind::Game)
+}
+
+fn load_blizzard_addon_on_screen(addon_name: &str, screen: ScreenKind) -> (WowLuaEnv, Vec<String>) {
     let env = WowLuaEnv::new().expect("Failed to create Lua environment");
     env.set_screen_size(1024.0, 768.0);
-    env.set_screen_mode(ScreenKind::Login);
+    env.set_screen_mode(screen);
 
     let addons = addon_map_all();
     let warnings = load_blizzard_addon_with_foundations(&env, &addons, addon_name);
@@ -425,29 +436,28 @@ fn test_secure_env_toc_annotations_are_exhaustive() {
     }
     secure_files.sort();
 
-    let expected: Vec<String> = if wow_ui_sim::client_profile::ACTIVE
-        == wow_ui_sim::client_profile::ClientProfile::Wrath
-    {
-        Vec::new()
-    } else if matches!(
-        wow_ui_sim::client_profile::ACTIVE,
-        wow_ui_sim::client_profile::ClientProfile::Mists
-            | wow_ui_sim::client_profile::ClientProfile::Era
-            | wow_ui_sim::client_profile::ClientProfile::Anniversary
-    ) {
-        vec![
-            "Blizzard_ChatFrameBase/Shared/ChatFrameFiltersSecure.lua".to_string(),
-            "Blizzard_RestrictedAddOnEnvironment/RestrictedEnvironment.lua".to_string(),
-        ]
-    } else {
-        vec![
-            "Blizzard_ChatFrameBase/Shared/ChatFrameFiltersSecure.lua".to_string(),
-            "Blizzard_CooldownViewer/CooldownViewerSecure.lua".to_string(),
-            "Blizzard_RestrictedAddOnEnvironment/RestrictedEnvironment.lua".to_string(),
-            "Blizzard_UnitFrame/Shared/TargetFrameAuraButton.lua".to_string(),
-            "Blizzard_UnitFrame/Shared/TargetFrameAuraContainer.lua".to_string(),
-        ]
-    };
+    let expected: Vec<String> =
+        if wow_ui_sim::client_profile::ACTIVE == wow_ui_sim::client_profile::ClientProfile::Wrath {
+            Vec::new()
+        } else if matches!(
+            wow_ui_sim::client_profile::ACTIVE,
+            wow_ui_sim::client_profile::ClientProfile::Mists
+                | wow_ui_sim::client_profile::ClientProfile::Era
+                | wow_ui_sim::client_profile::ClientProfile::Anniversary
+        ) {
+            vec![
+                "Blizzard_ChatFrameBase/Shared/ChatFrameFiltersSecure.lua".to_string(),
+                "Blizzard_RestrictedAddOnEnvironment/RestrictedEnvironment.lua".to_string(),
+            ]
+        } else {
+            vec![
+                "Blizzard_ChatFrameBase/Shared/ChatFrameFiltersSecure.lua".to_string(),
+                "Blizzard_CooldownViewer/CooldownViewerSecure.lua".to_string(),
+                "Blizzard_RestrictedAddOnEnvironment/RestrictedEnvironment.lua".to_string(),
+                "Blizzard_UnitFrame/Shared/TargetFrameAuraButton.lua".to_string(),
+                "Blizzard_UnitFrame/Shared/TargetFrameAuraContainer.lua".to_string(),
+            ]
+        };
     assert_eq!(
         secure_files, expected,
         "the set of [LoadIntoEnvironment secure] files drifted; update this test \
@@ -727,11 +737,10 @@ fn test_load_addon_with_error_handling_loads_account_store_and_preserves_surface
     }
 }
 
-#[cfg(any(
-    feature = "client-retail",
-    feature = "client-ptr",
-    feature = "client-wowforever"
-))]
+// Forever never loads Blizzard_AccountStore: its `AllowLoadGameType: standard, wowlabs`
+// misses the client mask mainline|camelot (native-evidence-70707/TOC_AllowLoadGameType.md
+// section 6; covered by startup_warnings/late.rs).
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
 #[test]
 fn test_account_store_frame_exposes_mixin_methods_after_load() {
     test_timeout! {
@@ -764,11 +773,10 @@ fn test_account_store_frame_exposes_mixin_methods_after_load() {
     }
 }
 
-#[cfg(any(
-    feature = "client-retail",
-    feature = "client-ptr",
-    feature = "client-wowforever"
-))]
+// Forever never loads Blizzard_AccountStore: its `AllowLoadGameType: standard, wowlabs`
+// misses the client mask mainline|camelot (native-evidence-70707/TOC_AllowLoadGameType.md
+// section 6; covered by startup_warnings/late.rs).
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
 #[test]
 fn test_account_store_set_storefront_id_is_safe_after_load() {
     test_timeout! {

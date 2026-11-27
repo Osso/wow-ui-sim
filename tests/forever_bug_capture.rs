@@ -64,6 +64,16 @@ fn load_local_addon_and_fire_loaded(env: &WowLuaEnv, addons: &Path, name: &str) 
 
 #[test]
 fn forever_bug_capture_script_errors_reach_store_counter_and_bugsack_display() {
+    for addon in ["!BugGrabber", "BugSack"] {
+        if crate::common::local_addon_toc_or_skip(
+            "forever_bug_capture_script_errors_reach_store_counter_and_bugsack_display",
+            addon,
+        )
+        .is_none()
+        {
+            return;
+        }
+    }
     let env = load_bug_capture_addons();
     env.exec(
         r#"

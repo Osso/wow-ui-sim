@@ -161,6 +161,8 @@ mod cached_consumer_regression {
                 if !prior_errors.is_empty() {
                     eprintln!("separate PrivateAurasUI closure-load errors: {prior_errors:?}");
                 }
+                // be13309a3c moved the anchor list to the secure namespace on 12.1.5.
+                crate::common::install_private_aura_api_alias(env);
                 env.exec(
                     r#"
                     assert(#SecurePrivateAuras.GetPrivateAuraAnchors() == 0,

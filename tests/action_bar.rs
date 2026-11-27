@@ -79,7 +79,7 @@ fn build_action_bar_env() -> WowLuaEnv {
         state.addon_base_paths = vec![blizzard_ui_dir()];
     }
 
-    if !common::load_classic_game_startup_inventory(&env) {
+    if !common::load_non_retail_game_startup_inventory(&env) {
         for addon_name in ACTION_BAR_ADDONS {
             common::load_required_blizzard_addon(&env, &blizzard_ui_dir(), addon_name);
         }
@@ -158,7 +158,9 @@ fn test_main_action_bar_end_caps_visible_after_startup() {
 
     let env = env_with_action_bar();
 
-    let endcap_texture_access = if cfg!(feature = "client-ptr") {
+    // PTR and Forever (Camelot/MainMenuBarEndCaps.xml:8-12) nest the atlas in a Texture child.
+    let endcap_texture_access = if cfg!(any(feature = "client-ptr", feature = "client-wowforever"))
+    {
         ".Texture"
     } else {
         ""
