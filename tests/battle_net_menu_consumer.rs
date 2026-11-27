@@ -3,11 +3,13 @@
 use crate::common::blizzard_addon_harness::with_blizzard_addon_closure;
 
 const BATTLE_NET_MENU_CASES: &str = r##"
+SetCVar("socialUIEnabledClient", "1")
+A_Admin.SetBattleNetAccountFeatures(false, true, true, true, true)
 ToggleFriendsFrame(FRIEND_TAB_FRIENDS)
-assert(FriendsFrame:IsShown(), "the public friends-frame toggle opens the list")
+assert(SocialUIFrame:IsShown(), "the public friends toggle opens SocialUI")
 
 local function first_online_friend()
-    return FriendsListFrame.ScrollBox:FindFrameByPredicate(function(_, data)
+    return SocialUIFrame.FriendsList.ScrollBox:FindFrameByPredicate(function(_, data)
         return data.accountInfo and data.accountInfo.gameAccountInfo.isOnline
     end)
 end
@@ -26,7 +28,6 @@ end
 
 local friend = first_online_friend()
 assert(friend, "an online Battle.net friend card is visible")
-A_Admin.SetBattleNetAccountFeatures(false, true, true, true, true)
 friend:Click("RightButton")
 assert(Menu.GetManager():IsAnyMenuOpen(), "right-click opens the friend context menu")
 assert(not has_friend_tags_entry(), "disabled friend-tag feature hides its menu entry")
@@ -41,7 +42,11 @@ assert(has_friend_tags_entry(), "enabled friend-tag feature adds its menu entry"
 #[test]
 fn battle_net_friend_menu_tracks_the_supplied_tag_feature() {
     with_blizzard_addon_closure(
-        &["Blizzard_FriendsFrame", "Blizzard_UnitPopup"],
+        &[
+            "Blizzard_SocialUI",
+            "Blizzard_FriendsFrame",
+            "Blizzard_UnitPopup",
+        ],
         &[],
         |env, loaded| {
             assert!(loaded.iter().any(|addon| addon == "Blizzard_FriendsFrame"));
