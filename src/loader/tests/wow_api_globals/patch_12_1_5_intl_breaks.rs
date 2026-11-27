@@ -57,8 +57,7 @@ fn intl_breaks_rejects_invalid_inputs_and_receivers() {
     .unwrap();
 }
 
-// Forever publishes C_Intl (pinned IntlDocumentation.lua); see c_intl.rs.
-crate::c_api::c_intl::intl_absent! {
+#[cfg(not(feature = "retail-12-1-5"))]
 #[test]
 fn intl_breaks_preserves_retail_absence() {
     let env = WowLuaEnv::new().unwrap();
@@ -67,5 +66,4 @@ fn intl_breaks_preserves_retail_absence() {
             .unwrap();
         crate::ptr::compat_bootstrap::apply_post_load(&env);
     }
-}
 }

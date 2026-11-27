@@ -31,8 +31,7 @@ fn locale_context_storage_ptr() {
     .unwrap();
 }
 
-// Forever publishes C_Intl (pinned IntlDocumentation.lua); see c_intl.rs.
-crate::c_api::c_intl::intl_absent! {
+#[cfg(not(feature = "retail-12-1-5"))]
 #[test]
 fn locale_context_storage_retail_absence() {
     let env = WowLuaEnv::new().unwrap();
@@ -47,5 +46,4 @@ fn locale_context_storage_retail_absence() {
         .unwrap();
         crate::ptr::compat_bootstrap::apply_post_load(&env);
     }
-}
 }

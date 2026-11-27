@@ -16,8 +16,6 @@ macro_rules! intl_absent {
         $(#[cfg(not(any(feature = "retail-12-1-5", feature = "client-wowforever")))] $item)*
     };
 }
-#[cfg(test)]
-pub(crate) use intl_absent;
 
 intl_published! {
     mod breaks;
