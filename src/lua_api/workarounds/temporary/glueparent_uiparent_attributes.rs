@@ -5,7 +5,10 @@
 //! attributes normally defined by UIParent XML.
 
 use crate::lua_api::LoaderEnv;
-#[cfg(test)]
+#[cfg(all(
+    test,
+    not(any(feature = "client-retail", feature = "client-wowforever"))
+))]
 use crate::lua_api::WowLuaEnv;
 
 const GLUEPARENT_UIPARENT_ATTRIBUTES_LUA: &str = r#"
@@ -21,16 +24,29 @@ end
 "#;
 
 pub(crate) fn patch(env: &LoaderEnv<'_>) -> Result<(), crate::Error> {
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
+        return Ok(());
+    }
     env.exec(GLUEPARENT_UIPARENT_ATTRIBUTES_LUA)
 }
 
-#[cfg(test)]
+#[cfg(all(
+    test,
+    not(any(feature = "client-retail", feature = "client-wowforever"))
+))]
 fn patch_env(env: &WowLuaEnv) {
     env.exec(GLUEPARENT_UIPARENT_ATTRIBUTES_LUA)
         .expect("GlueParent UIParent attribute patch should install");
 }
 
-#[cfg(test)]
+#[cfg(all(
+    test,
+    not(any(feature = "client-retail", feature = "client-wowforever"))
+))]
 mod tests {
     use super::*;
 

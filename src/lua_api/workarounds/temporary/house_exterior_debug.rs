@@ -10,7 +10,14 @@ use crate::lua_bridge::table_set_rust_fn_static;
 use rilua::{LuaApiMut, LuaResult, Val, vm::state::LuaState};
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
-    if cfg!(feature = "retail-12-0-0") {
+    // No pinned Retail or Forever consumer uses these debug queries.
+    if cfg!(feature = "retail-12-0-0")
+        && !matches!(
+            crate::client_profile::ACTIVE,
+            crate::client_profile::ClientProfile::Retail
+                | crate::client_profile::ClientProfile::WowForever
+        )
+    {
         let state = lua.state_mut();
         let namespace = ensure_namespace(state, "C_HouseExterior")?;
         for name in ["GetFixtureDebugInfoForGUID", "GetSelectedFixtureDebugInfo"] {

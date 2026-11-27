@@ -127,6 +127,9 @@ end
 "#;
 
 pub(crate) fn patch(env: &LoaderEnv<'_>) {
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+        return;
+    }
     let mut result = env
         .exec(super::housing_owned_house_requests::OWNED_HOUSE_REQUESTS_LUA)
         .and_then(|()| env.exec(HOUSING_DASHBOARD_PRELOAD_WORKAROUND_LUA));

@@ -8,6 +8,29 @@ use wow_ui_sim::toc::TocFile;
 #[path = "common/toc_layout.rs"]
 mod toc_layout;
 
+#[test]
+fn model_scene_control_frame_initializes_buttons_from_original_template() {
+    use crate::common::blizzard_addon_harness::with_blizzard_addon_startup_shape;
+
+    with_blizzard_addon_startup_shape(&["Blizzard_SharedXML"], &[], |env, _loaded| {
+        let buttons_initialized: bool = env
+            .eval(
+                r#"
+                local frame = CreateFrame("Frame", nil, UIParent, "ModelSceneControlFrameTemplate")
+                return frame.zoomInButton.zoomAmount == 1
+                    and frame.zoomOutButton.zoomAmount == -1
+                    and frame.rotateLeftButton.rotateDirection == "left"
+                    and frame.rotateRightButton.rotateDirection == "right"
+                "#,
+            )
+            .expect("original ModelSceneControlFrameTemplate consumer must initialize");
+        assert!(
+            buttons_initialized,
+            "original model-scene controls must initialize zoom and rotation buttons"
+        );
+    });
+}
+
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("Blizzard UI cache should be available")

@@ -303,6 +303,8 @@ mod c_perks_categories;
 pub(crate) mod c_perks_program;
 pub mod c_pet_battles;
 pub(crate) mod c_pet_item;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) mod c_pet_journal;
 pub mod c_pet_journal_hover;
 pub(crate) mod c_pet_talent_tree;
 pub mod c_photo_sharing;

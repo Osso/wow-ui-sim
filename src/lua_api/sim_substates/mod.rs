@@ -352,6 +352,8 @@ pub struct PetState {
     /// Current summoned pet portrait texture. Drives `GetPetIcon`; `None`
     /// represents no summoned pet.
     pub icon: Option<String>,
+    /// Supplied battle-pet GUID for `C_PetJournal.IsCurrentlySummoned`.
+    pub summoned_battle_pet_guid: Option<String>,
     /// Supplied CreatureFamily ID of the summoned pet; the simulator has no
     /// creature model to resolve it. Drives `C_PetInfo.GetPetTalentTree`.
     pub creature_family_id: Option<u32>,

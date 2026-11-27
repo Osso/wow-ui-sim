@@ -176,6 +176,20 @@ fn env() -> WowLuaEnv {
     WowLuaEnv::new().expect("failed to create Lua environment")
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn c_pet_journal_matches_summoned_battle_pet_identity() {
+    let env = env();
+    env.exec(
+        r#"A_Admin.SetSummonedBattlePetGUID("BattlePet-1")
+           assert(C_PetJournal.IsCurrentlySummoned("BattlePet-1"))
+           assert(not C_PetJournal.IsCurrentlySummoned("BattlePet-2"))
+           A_Admin.SetSummonedBattlePetGUID("BattlePet-2")
+           assert(C_PetJournal.IsCurrentlySummoned("BattlePet-2"))"#,
+    )
+    .expect("C_PetJournal should match the supplied summoned pet identity");
+}
+
 #[cfg(any(feature = "profile-retail", feature = "client-ptr"))]
 #[test]
 fn c_string_util_escapes_bytes_and_wraps_nonempty_infixes() {

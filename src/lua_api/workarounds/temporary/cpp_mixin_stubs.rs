@@ -24,10 +24,20 @@ end
 "#;
 
 pub(crate) fn patch_after_lua_file(env: &LoaderEnv<'_>) -> Result<(), crate::Error> {
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
+        return Ok(());
+    }
     env.exec(CPP_MIXIN_STUBS_LUA)
 }
 
-#[cfg(test)]
+#[cfg(all(
+    test,
+    not(any(feature = "client-retail", feature = "client-wowforever"))
+))]
 mod tests {
     use crate::lua_api::WowLuaEnv;
 

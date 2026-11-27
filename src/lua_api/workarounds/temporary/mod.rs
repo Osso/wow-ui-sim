@@ -18,8 +18,11 @@ pub(crate) mod session_exit_defaults;
 #[cfg(feature = "client-wrath")]
 pub(crate) mod wrath_startup_defaults;
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod account_store_set_storefront;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod achievement_search_preview;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod achievement_ui_access_defaults;
 #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod addon_compartment_defaults;
@@ -101,6 +104,7 @@ pub(crate) mod game_time_calendar_invites;
 pub(crate) mod gamepad_cursor_control_defaults;
 pub(crate) mod garrison_mission_lists;
 pub(crate) mod global_frame_defaults;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod global_placeholder_tables;
 pub(crate) mod glue_character_select_defaults;
 pub(crate) mod glueparent_uiparent_attributes;

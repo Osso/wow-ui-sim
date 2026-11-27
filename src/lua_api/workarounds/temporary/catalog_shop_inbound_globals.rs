@@ -1,9 +1,8 @@
 //! Temporary catalog-shop inbound globals.
 //!
 //! Blizzard catalog-shop and checkout addons publish these inbound tables from
-//! secure/global environment swaps. Retail's eager Catalog Shop addon owns the main
-//! interface before handlers run; other profiles keep its bootstrap fallback. The
-//! other interfaces keep their fallbacks on every profile.
+//! secure/global environment swaps. Retail and Forever selected addons publish the
+//! interfaces before consumers run; legacy profiles keep bootstrap fallbacks.
 
 const CATALOG_SHOP_INBOUND_GLOBALS_LUA: &str = r#"
 local function ensure_inbound_interface(name)
@@ -54,31 +53,28 @@ local function ensure_inbound_interface(name)
     rawset(_G, name, inbound)
 end
 
-if $INSTALL_MAIN_CATALOG_SHOP_INTERFACE then
-    ensure_inbound_interface("CatalogShopInboundInterface")
-end
+ensure_inbound_interface("CatalogShopInboundInterface")
 ensure_inbound_interface("CatalogShopTopUpFlowInboundInterface")
 ensure_inbound_interface("CatalogShopRefundFlowInboundInterface")
 ensure_inbound_interface("SimpleCheckoutInboundInterface")
 "#;
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
-    // Only Retail has a verified eager owner for the main interface.
-    let install_main_interface =
-        crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail;
-    let bootstrap = CATALOG_SHOP_INBOUND_GLOBALS_LUA.replace(
-        "$INSTALL_MAIN_CATALOG_SHOP_INTERFACE",
-        if install_main_interface {
-            "true"
-        } else {
-            "false"
-        },
-    );
-    lua.exec(&bootstrap)?;
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
+        return Ok(());
+    }
+    lua.exec(CATALOG_SHOP_INBOUND_GLOBALS_LUA)?;
     Ok(())
 }
 
-#[cfg(test)]
+#[cfg(all(
+    test,
+    not(any(feature = "client-retail", feature = "client-wowforever"))
+))]
 mod tests {
     use crate::lua_api::WowLuaEnv;
 

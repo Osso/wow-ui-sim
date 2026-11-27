@@ -15,10 +15,15 @@ end
 "#;
 
 pub(crate) fn patch(env: &WowLuaEnv) {
+    // Retail's GroupFinder setup reads the supplied lock list before its first
+    // queue refresh; Forever does not select GroupFinder.
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+        return;
+    }
     let _ = env.exec(LFG_LOCK_LIST_LUA);
 }
 
-#[cfg(test)]
+#[cfg(all(test, not(feature = "client-retail")))]
 mod tests {
     use super::*;
 
