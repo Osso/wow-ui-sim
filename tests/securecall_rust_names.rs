@@ -6,8 +6,8 @@
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 const NAMED_AND_DIRECT_CALLS: &str = r#"
-    assert(securecall("min", 3, 7) == 3)
-    assert(securecall("max", 3, 7) == 7)
+    assert(securecall("tostring", 42) == "42")
+    assert(securecall("type", {}) == "table")
     assert(securecall(math.floor, 2.5) == 2)
     assert(securecall(math.ceil, 2.5) == 3)
     local first, second = securecall(strsplit, ",", "a,b")
