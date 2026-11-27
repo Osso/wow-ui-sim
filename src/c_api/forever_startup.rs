@@ -287,6 +287,7 @@ fn should_use_player_bags_in_bank(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+#[cfg(feature = "client-wowforever")]
 fn set_should_use_player_bags_in_bank(state: &mut LuaState) -> LuaResult<u32> {
     let Val::Bool(enabled) = stack_val(state, 1) else {
         return Err(rilua::runtime_error(
@@ -318,6 +319,7 @@ fn can_view_bank(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+#[cfg(feature = "client-wowforever")]
 fn set_bank_viewable_types(state: &mut LuaState) -> LuaResult<u32> {
     let types = read_bank_type_ids(state, stack_val(state, 1))?;
     borrow_state_mut(state)?.forever_startup.viewable_bank_types = types;
@@ -359,6 +361,7 @@ fn create_bank_tab_data(state: &mut LuaState, bank_type: i32, tab: &BankTabData)
     )
 }
 
+#[cfg(feature = "client-wowforever")]
 fn set_purchased_bank_tab_data(state: &mut LuaState) -> LuaResult<u32> {
     let bank_type = read_bank_type(stack_val(state, 1))?;
     let tabs = parse_bank_tab_data(state, stack_val(state, 2))?;
@@ -369,6 +372,7 @@ fn set_purchased_bank_tab_data(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
+#[cfg(feature = "client-wowforever")]
 fn parse_bank_tab_data(state: &mut LuaState, value: Val) -> LuaResult<Vec<BankTabData>> {
     let Val::Table(array) = value else {
         return Err(rilua::runtime_error(
@@ -394,6 +398,7 @@ fn parse_bank_tab_data(state: &mut LuaState, value: Val) -> LuaResult<Vec<BankTa
         .collect()
 }
 
+#[cfg(feature = "client-wowforever")]
 fn parse_bank_tab(state: &mut LuaState, row: Val, index: usize) -> LuaResult<BankTabData> {
     if !matches!(row, Val::Table(_)) {
         return Err(rilua::runtime_error(format!(
@@ -410,6 +415,7 @@ fn parse_bank_tab(state: &mut LuaState, row: Val, index: usize) -> LuaResult<Ban
     })
 }
 
+#[cfg(feature = "client-wowforever")]
 fn read_bank_tab_number(
     state: &mut LuaState,
     row: Val,
@@ -430,6 +436,7 @@ fn read_bank_tab_number(
     }
 }
 
+#[cfg(feature = "client-wowforever")]
 fn read_bank_tab_text(
     state: &mut LuaState,
     row: Val,
@@ -458,6 +465,7 @@ fn read_bank_type(value: Val) -> LuaResult<i32> {
     }
 }
 
+#[cfg(feature = "client-wowforever")]
 fn read_bank_type_ids(state: &mut LuaState, value: Val) -> LuaResult<HashSet<i32>> {
     let Val::Table(array) = value else {
         return Err(rilua::runtime_error(

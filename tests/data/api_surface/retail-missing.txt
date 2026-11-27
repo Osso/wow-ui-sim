@@ -113,6 +113,7 @@ C_Bank.DoesBankTypeSupportAutoDeposit # not-yet
 C_Bank.DoesBankTypeSupportMoneyTransfer # not-yet
 C_Bank.FetchBankLockedReason # not-yet
 C_Bank.FetchNextPurchasableBankTabData # not-yet
+C_Bank.FetchPurchasedBankTabData # not-yet
 C_Bank.FetchPurchasedBankTabIDs # not-yet
 C_Bank.FetchViewableBankTypes # not-yet
 C_Bank.HasMaxBankTabs # not-yet
