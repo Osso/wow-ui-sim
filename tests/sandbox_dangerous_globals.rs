@@ -27,6 +27,17 @@ fn env() -> WowLuaEnv {
     WowLuaEnv::new().expect("Failed to create Lua environment")
 }
 
+/// Retail 12.1.5 seeds `__secureenv` from the fixed 39-name native base, which
+/// has no file or module loaders (a2de104d75, secure_env.rs). The other profiles
+/// keep the temporary `_G` snapshot taken before the cleanup.
+fn secure_loader_type() -> &'static str {
+    if cfg!(all(feature = "client-retail", feature = "retail-12-1-5")) {
+        "nil"
+    } else {
+        "function"
+    }
+}
+
 fn probe(env: &WowLuaEnv, name: &str) -> (String, String) {
     let script = format!(
         r#"
@@ -44,8 +55,9 @@ fn dofile_nil_on_g_retained_on_secureenv() {
     let (g, secure) = probe(&env, "dofile");
     assert_eq!(g, "nil", "dofile must be nil on _G");
     assert_eq!(
-        secure, "function",
-        "dofile must remain on __secureenv for secure chunks"
+        secure,
+        secure_loader_type(),
+        "dofile on __secureenv follows the profile's secure base"
     );
 }
 
@@ -55,8 +67,9 @@ fn loadfile_nil_on_g_retained_on_secureenv() {
     let (g, secure) = probe(&env, "loadfile");
     assert_eq!(g, "nil", "loadfile must be nil on _G");
     assert_eq!(
-        secure, "function",
-        "loadfile must remain on __secureenv for secure chunks"
+        secure,
+        secure_loader_type(),
+        "loadfile on __secureenv follows the profile's secure base"
     );
 }
 
@@ -67,8 +80,9 @@ fn require_nil_on_g_retained_on_secureenv() {
     let (g, secure) = probe(&env, "require");
     assert_eq!(g, "nil", "require must be nil on _G");
     assert_eq!(
-        secure, "function",
-        "require must remain on __secureenv for secure chunks"
+        secure,
+        secure_loader_type(),
+        "require on __secureenv follows the profile's secure base"
     );
 }
 
