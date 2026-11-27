@@ -727,11 +727,10 @@ fn test_load_addon_with_error_handling_loads_account_store_and_preserves_surface
     }
 }
 
-#[cfg(any(
-    feature = "client-retail",
-    feature = "client-ptr",
-    feature = "client-wowforever"
-))]
+// Forever never loads Blizzard_AccountStore: its `AllowLoadGameType: standard, wowlabs`
+// misses the client mask mainline|camelot (native-evidence-70707/TOC_AllowLoadGameType.md
+// section 6; covered by startup_warnings/late.rs).
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
 #[test]
 fn test_account_store_frame_exposes_mixin_methods_after_load() {
     test_timeout! {
@@ -764,11 +763,10 @@ fn test_account_store_frame_exposes_mixin_methods_after_load() {
     }
 }
 
-#[cfg(any(
-    feature = "client-retail",
-    feature = "client-ptr",
-    feature = "client-wowforever"
-))]
+// Forever never loads Blizzard_AccountStore: its `AllowLoadGameType: standard, wowlabs`
+// misses the client mask mainline|camelot (native-evidence-70707/TOC_AllowLoadGameType.md
+// section 6; covered by startup_warnings/late.rs).
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
 #[test]
 fn test_account_store_set_storefront_id_is_safe_after_load() {
     test_timeout! {
