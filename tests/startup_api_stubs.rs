@@ -385,10 +385,20 @@ fn startup_lfg_world_timer_and_bn_surfaces_return_empty_safe_shapes() {
     assert_eq!(world_pvp_average, 0.0);
     assert_eq!(world_pvp_queued, 0.0);
     assert!(!world_pvp_suspended);
-    assert_eq!(bn_total, 0);
-    assert_eq!(bn_online, 0);
-    assert_eq!(bn_favorite, 0);
-    assert_eq!(bn_favorite_online, 0);
+    assert_eq!(
+        (bn_total, bn_online, bn_favorite, bn_favorite_online),
+        expected_bnet_counts()
+    );
+}
+
+/// Retail/Forever derive the counts from the default two-friend fixture
+/// (04eaf48352, docs/admin-api/battle-net.md); others keep the inert zeros.
+fn expected_bnet_counts() -> (i32, i32, i32, i32) {
+    if cfg!(any(feature = "client-retail", feature = "client-wowforever")) {
+        (2, 1, 1, 0)
+    } else {
+        (0, 0, 0, 0)
+    }
 }
 
 fn assert_inactive_world_elapsed_contract(env: &wow_ui_sim::lua_api::WowLuaEnv) {
