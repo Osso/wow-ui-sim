@@ -86,6 +86,7 @@ fn build_action_bar_env() -> WowLuaEnv {
     }
 
     env.apply_post_load_workarounds();
+    common::supply_watched_reputation(&env);
     fire_startup_events(&env);
     env
 }

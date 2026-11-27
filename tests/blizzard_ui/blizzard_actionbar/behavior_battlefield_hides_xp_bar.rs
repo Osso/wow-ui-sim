@@ -22,6 +22,7 @@ const EXPECTED_CONTAINER_COUNT: i64 = 2;
 fn active_battlefield_swaps_reputation_for_honor_status_bar() {
     test_timeout! {
     with_blizzard_addon_startup_shape(&[ROOT], &[], |env, _loaded| {
+        common::supply_watched_reputation(env);
         assert_cold_status_bars_are_experience_and_reputation(env);
 
         seed_active_battlefield(env);
