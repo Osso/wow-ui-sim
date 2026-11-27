@@ -1362,8 +1362,6 @@ C_PvP.DoesMatchOutcomeAffectRating # not-yet
 C_PvP.GetActiveMatchBracket # not-yet
 C_PvP.GetActiveMatchDuration # not-yet
 C_PvP.GetActiveMatchWinner # not-yet
-C_PvP.GetArenaCrowdControlDuration # not-yet
-C_PvP.GetArenaCrowdControlInfo # not-yet: temporary Lua workaround
 C_PvP.GetArenaOpponentSpec # not-yet
 C_PvP.GetArenaRewards # not-yet
 C_PvP.GetArenaSkirmishRewards # not-yet
@@ -1431,7 +1429,6 @@ C_PvP.JoinRandomTrainingGroundArena # not-yet
 C_PvP.JoinRandomTrainingGroundBG # not-yet
 C_PvP.JoinRatedBGBlitz # not-yet
 C_PvP.JoinTrainingGround # not-yet
-C_PvP.RequestCrowdControlSpell # not-yet
 C_PvP.SetPVP # not-yet
 C_PvP.SetWarModeDesired # not-yet
 C_PvP.StartSoloRBGWarGameByName # not-yet

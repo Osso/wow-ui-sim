@@ -1420,8 +1420,11 @@ pub struct SimState {
     pub voice_channels: Vec<crate::c_api::c_voice_chat_channels::VoiceChannel>,
     #[cfg(feature = "retail-12-0-5")]
     pub lfg_endgame_policy: crate::c_api::c_lfg_list_policy::EndgameEditPolicy,
-    #[cfg(feature = "retail-12-0-5")]
+    #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
     pub arena_crowd_control: HashMap<String, crate::c_api::c_pvp_crowd_control::CrowdControlWindow>,
+    /// Arena crowd-control removal spell by unit GUID (`A_Admin.SetArenaCrowdControl`).
+    #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
+    pub arena_crowd_control_spells: HashMap<String, i32>,
     #[cfg(feature = "retail-12-0-5")]
     pub hidden_spell_item_enchantments: std::collections::HashSet<u32>,
     #[cfg(feature = "retail-12-0-5")]

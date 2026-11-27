@@ -1127,8 +1127,10 @@ macro_rules! build_empty_sim_state {
             voice_channels: Vec::new(),
             #[cfg(feature = "retail-12-0-5")]
             lfg_endgame_policy: Default::default(),
-            #[cfg(feature = "retail-12-0-5")]
+            #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
             arena_crowd_control: HashMap::new(),
+            #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
+            arena_crowd_control_spells: HashMap::new(),
             #[cfg(feature = "retail-12-0-5")]
             hidden_spell_item_enchantments: std::collections::HashSet::new(),
             #[cfg(feature = "retail-12-0-5")]

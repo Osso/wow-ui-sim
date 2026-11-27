@@ -332,7 +332,7 @@ fn register_social_namespace_surfaces(state: &mut LuaState) -> LuaResult<()> {
     c_api::c_voice_chat_channels::register(state)?;
     #[cfg(feature = "retail-12-0-5")]
     c_api::c_lfg_list_policy::register(state)?;
-    #[cfg(feature = "retail-12-0-5")]
+    #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
     c_api::c_pvp_crowd_control::register(state)?;
     c_api::c_social::register_c_social_surface(state)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]

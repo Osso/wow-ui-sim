@@ -326,7 +326,7 @@ pub(crate) mod c_prof_specs_reminders;
 pub(crate) mod c_prof_specs_skill_lines;
 pub(crate) mod c_prof_specs_tab_state;
 pub mod c_pvp;
-#[cfg(feature = "retail-12-0-5")]
+#[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 pub mod c_pvp_crowd_control;
 pub mod c_quest_hub;
 pub mod c_quest_info_system;

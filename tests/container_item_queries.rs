@@ -45,7 +45,9 @@ const SLOT_KEYS: &str = r#"
 const BAG_PORTRAITS: &str = r#"
     SetCVar("combinedBags", "0")
     local slot = C_Container.ContainerIDToInventoryID(1)
-    for _, bagItem in ipairs({ 4500, 14156 }) do
+    -- The pinned item export has no bag rows; any two exported items with
+    -- distinct icons exercise the equipped-slot lookup.
+    for _, bagItem in ipairs({ 212440, 163924 }) do
         CloseAllBags()
         A_Admin.EquipItem(slot, bagItem)
         ToggleBag(1)
