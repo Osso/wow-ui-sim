@@ -170,9 +170,13 @@ fn format_number(state: &mut LuaState) -> LuaResult<u32> {
         return Err(runtime_error("abbreviated formatter requires a number"));
     };
     let (text, formatter_secret) = format_value(state, stack_val(state, 1), number)?;
-    let value = crate::lua_api::methods::create_string(state, &text);
+    push_text(state, &text, secret || formatter_secret)
+}
+
+fn push_text(state: &mut LuaState, text: &str, secret: bool) -> LuaResult<u32> {
+    let value = crate::lua_api::methods::create_string(state, text);
     state.push(value);
-    let result = if secret || formatter_secret {
+    let result = if secret {
         rilua::table_security::wrap_secret(state, value)?
     } else {
         value
@@ -182,13 +186,58 @@ fn format_number(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+/// `AbbreviateNumbers` and `AbbreviateLargeNumbers(number, options)`
+/// (Retail and Forever `LocalizationDocumentation.lua:10-39`). INFERRED R88g9
+/// (native evidence pending): both format with `options.breakpointData`, else
+/// the default rows of `options.locale` or `GetLocale()` that
+/// `CreateAbbreviatedNumberFormatter` uses. `options.config` is not read.
+pub(crate) fn abbreviate_number(state: &mut LuaState) -> LuaResult<u32> {
+    let input = stack_val(state, 1);
+    let secret = is_secret_value(state, input);
+    let Val::Num(number) = unwrap_secret(state, input)? else {
+        return Err(runtime_error("number abbreviation requires a number"));
+    };
+    let rows = option_rows(state, stack_val(state, 2))?;
+    let (text, rows_secret) = format_rows(state, &rows, number)?;
+    push_text(state, &text, secret || rows_secret)
+}
+
+fn option_rows(state: &mut LuaState, options: Val) -> LuaResult<Vec<Breakpoint>> {
+    if matches!(options, Val::Nil) {
+        return default_rows(state);
+    }
+    let Val::Table(_) = options else {
+        return Err(runtime_error("number abbreviation options must be a table"));
+    };
+    let data = table_get(state, options, "breakpointData");
+    if !matches!(data, Val::Nil) {
+        return config::read_rows(state, data);
+    }
+    match table_get(state, options, "locale") {
+        Val::Nil => default_rows(state),
+        locale => {
+            let locale = val_to_string(state, locale)
+                .ok_or_else(|| runtime_error("options.locale must be a string"))?;
+            locale_default_rows(&locale)
+        }
+    }
+}
+
 /// Host-only NumericFormatter dispatch. Neither receiver nor decoded inputs reach Lua callbacks.
 pub(crate) fn format_value(
     state: &mut LuaState,
     object: Val,
     number: f64,
 ) -> LuaResult<(String, bool)> {
-    let rows = &formatter(state, object)?.rows;
+    let rows = formatter(state, object)?.rows.clone();
+    format_rows(state, &rows, number)
+}
+
+fn format_rows(
+    state: &mut LuaState,
+    rows: &[Breakpoint],
+    number: f64,
+) -> LuaResult<(String, bool)> {
     let secret = rows.iter().any(|row| row.secret);
     if secret && !rilua::api::state_is_secure(state) {
         return Err(runtime_error(
@@ -204,11 +253,16 @@ pub(crate) fn format_value(
     let Some(row) = row else {
         return Ok((text, secret));
     };
+    let (suffix, suffix_secret) = row_suffix(state, &row)?;
+    Ok((format!("{text}{suffix}"), secret || suffix_secret))
+}
+
+fn row_suffix(state: &mut LuaState, row: &Breakpoint) -> LuaResult<(String, bool)> {
     if !row.global {
-        return Ok((format!("{text}{}", row.abbreviation), secret));
+        return Ok((row.abbreviation.clone(), false));
     }
     let abbreviation = super::global_val(state, &row.abbreviation);
-    let secret = secret || is_secret_value(state, abbreviation);
+    let secret = is_secret_value(state, abbreviation);
     let abbreviation = unwrap_secret(state, abbreviation)?;
     let Val::Str(_) = abbreviation else {
         return Err(runtime_error(format!(
@@ -218,5 +272,5 @@ pub(crate) fn format_value(
     };
     let suffix = val_to_string(state, abbreviation)
         .ok_or_else(|| runtime_error("abbreviation global must be UTF-8"))?;
-    Ok((format!("{text}{suffix}"), secret))
+    Ok((suffix, secret))
 }

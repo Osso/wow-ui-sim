@@ -314,8 +314,8 @@ pub struct ReadyCheckState {
 pub struct DiscordState {
     pub oauth_authorized: bool,
     pub auth_refresh_requested: bool,
-    pub guild_linked: bool,
-    pub guild_link_status: Option<i32>,
+    /// Linked `(server name, channel name)` recorded by `C_Discord.GuildLink`.
+    pub guild_link: Option<(String, String)>,
     pub guild_settings: HashMap<String, bool>,
     pub server_update_requested: bool,
     pub guild_lobby_update_requested: bool,
@@ -324,34 +324,42 @@ pub struct DiscordState {
     pub user_names: HashMap<String, String>,
     pub display_name_type: i32,
     pub servers: Vec<DiscordServer>,
-    pub channels: Vec<DiscordChannel>,
 }
 
 impl DiscordState {
-    pub fn channel_name(&self, channel_index: i32) -> Option<&str> {
-        self.channels
+    pub fn server(&self, server_index: i32) -> Option<&DiscordServer> {
+        self.servers.get(one_based_index(server_index)?)
+    }
+
+    pub fn channel_name(&self, server_index: i32, channel_index: i32) -> Option<&str> {
+        self.server(server_index)?
+            .channels
             .get(one_based_index(channel_index)?)
             .map(|channel| channel.name.as_str())
     }
 
     pub fn server_name(&self, server_index: i32) -> Option<&str> {
-        self.servers
-            .get(one_based_index(server_index)?)
-            .map(|server| server.name.as_str())
+        self.server(server_index).map(|server| server.name.as_str())
     }
 
-    pub fn linkable_channel_names(&self) -> Vec<String> {
-        self.channels
-            .iter()
-            .filter(|channel| channel.linkable)
-            .map(|channel| channel.name.clone())
-            .collect()
+    pub fn linkable_channel_names(&self, server_index: i32) -> Vec<String> {
+        self.server(server_index)
+            .map(|server| {
+                server
+                    .channels
+                    .iter()
+                    .filter(|channel| channel.linkable)
+                    .map(|channel| channel.name.clone())
+                    .collect()
+            })
+            .unwrap_or_default()
     }
 }
 
 #[derive(Clone, Debug)]
 pub struct DiscordServer {
     pub name: String,
+    pub channels: Vec<DiscordChannel>,
 }
 
 #[derive(Clone, Debug)]

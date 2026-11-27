@@ -97,5 +97,10 @@ fn normalize_wow_locale(locale: &str) -> String {
 }
 
 pub(crate) fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
-    LuaApiMut::register_function(lua, "BreakUpLargeNumbers", break_up_large_numbers)
+    LuaApiMut::register_function(lua, "BreakUpLargeNumbers", break_up_large_numbers)?;
+    // LocalizationDocumentation.lua:10-39 (Retail and Forever); the breakpoint
+    // model is the C_StringUtil abbreviated-number formatter.
+    let abbreviate = crate::c_api::abbreviated_number_formatter::abbreviate_number;
+    LuaApiMut::register_function(lua, "AbbreviateNumbers", abbreviate)?;
+    LuaApiMut::register_function(lua, "AbbreviateLargeNumbers", abbreviate)
 }

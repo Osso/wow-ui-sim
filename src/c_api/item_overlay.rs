@@ -38,6 +38,7 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
         ("IsCurioItem", curio),
         ("IsRelicItem", relic),
         ("IsDecorItem", decor),
+        ("IsItemConduit", conduit_at_location),
     ] {
         table_set_rust_fn_static(state, item, name, func)?;
     }
@@ -106,3 +107,23 @@ query_flag!(conduit, Conduit);
 query_flag!(curio, Curio);
 query_flag!(relic, Relic);
 query_flag!(decor, Decor);
+
+/// `C_Item.IsItemConduit(itemLoc)` (ItemDocumentation.lua:1392-1406 Retail,
+/// :1430 Forever): the conduit flag of the item at the location. An empty
+/// location answers false.
+fn conduit_at_location(state: &mut LuaState) -> LuaResult<u32> {
+    let location = stack_val(state, 1);
+    if !matches!(location, Val::Table(_)) {
+        return Err(runtime_error("itemLoc must be an ItemLocation"));
+    }
+    let id = super::item_spell::location_item(state, location).map(|(id, _)| id);
+    let result = {
+        let sim = borrow_state(state)?;
+        id.is_some_and(|id| {
+            sim.item_overlay_flags
+                .contains(&(id, ItemOverlayFlag::Conduit))
+        })
+    };
+    state.push(Val::Bool(result));
+    Ok(1)
+}

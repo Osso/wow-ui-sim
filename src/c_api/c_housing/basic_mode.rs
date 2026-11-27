@@ -4,7 +4,7 @@ mod pending_input;
 
 use crate::c_api::helpers::ensure_namespace;
 use crate::lua_api::methods::{borrow_state, borrow_state_mut};
-#[cfg(feature = "retail-12-0-0")]
+#[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
 use crate::lua_bridge::stack_val;
 use crate::lua_bridge::table_set_rust_fn_static;
 use pending_input::read_variant_id;
@@ -53,7 +53,7 @@ fn cancel_active_editing(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
-#[cfg(feature = "retail-12-0-0")]
+#[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
 pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
     let basic_mode = ensure_namespace(state, "C_HousingBasicMode")?;
     table_set_rust_fn_static(
@@ -70,14 +70,14 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
     )
 }
 
-#[cfg(feature = "retail-12-0-0")]
+#[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
 fn is_free_place_enabled(state: &mut LuaState) -> LuaResult<u32> {
     let enabled = !borrow_state(state)?.housing.free_place_disabled;
     state.push(Val::Bool(enabled));
     Ok(1)
 }
 
-#[cfg(feature = "retail-12-0-0")]
+#[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
 fn set_free_place_enabled(state: &mut LuaState) -> LuaResult<u32> {
     // Simulator validation policy; native coercion and exact errors are unverified.
     let Val::Bool(enabled) = stack_val(state, 1) else {

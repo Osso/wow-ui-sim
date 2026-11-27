@@ -48,7 +48,20 @@ pub(crate) fn register_c_container(state: &mut LuaState) -> LuaResult<()> {
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
         crate::c_api::container_purchase::register(state)?;
     }
+    if has_modern_container_queries() {
+        crate::c_api::container_item_queries::register(state)?;
+    }
     crate::c_api::container_inventory::register(state)
+}
+
+/// Retail/PTR and Forever ContainerDocumentation.lua declare the item queries
+/// in `container_item_queries`.
+pub(crate) fn has_modern_container_queries() -> bool {
+    use crate::client_profile::{ACTIVE, ClientProfile};
+    matches!(
+        ACTIVE,
+        ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever
+    )
 }
 
 type ContainerScriptFn = fn(&mut LuaState) -> LuaResult<u32>;

@@ -34,6 +34,7 @@ use rilua::vm::state::LuaState;
 
 #[cfg(feature = "client-wrath")]
 pub(crate) use c_container::c_container_get_bag_name;
+pub(crate) use c_container::has_modern_container_queries;
 #[cfg(feature = "client-wowforever")]
 pub(crate) use c_container::{BAG_SLOT_FLAG_EXCLUDE_JUNK_SELL, bag_slot_flag_is_set};
 pub(crate) use c_container::{

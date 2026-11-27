@@ -138,7 +138,8 @@ fn register_profile_service_methods(state: &mut LuaState) -> LuaResult<()> {
 fn register_profile_widget_methods(state: &mut LuaState) -> LuaResult<()> {
     exterior::register(state)?;
     basic_mode::register_pending(state)?;
-    #[cfg(feature = "retail-12-0-0")]
+    // Forever HousingBasicModeUIDocumentation.lua declares the same free-place pair.
+    #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
     basic_mode::register(state)?;
     #[cfg(feature = "retail-12-0-5")]
     inspect_mode::register(state)?;

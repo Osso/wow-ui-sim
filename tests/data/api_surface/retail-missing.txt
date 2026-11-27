@@ -1,8 +1,6 @@
 # Documented Retail API functions without a runtime function after full
 # Blizzard UI startup. Contract: docs/specs/api-surface-audit.md.
 # Format: <name> # <intentionally-unsupported|not-yet>[: reason]
-AbbreviateLargeNumbers # not-yet: temporary Lua workaround
-AbbreviateNumbers # not-yet: temporary Lua workaround
 AcceptAreaSpiritHeal # not-yet
 AcceptGuild # not-yet
 AcceptQuest # not-yet
@@ -460,13 +458,10 @@ C_ConsoleScriptCollection.GetCollectionDataByTag # not-yet
 C_ConsoleScriptCollection.GetElements # not-yet
 C_ConsoleScriptCollection.GetScriptData # not-yet
 C_Container.ContainerRefundItemPurchase # not-yet
-C_Container.GetContainerItemEquipmentSetInfo # not-yet
 C_Container.GetContainerItemPurchaseCurrency # not-yet
 C_Container.GetContainerItemPurchaseItem # not-yet
 C_Container.GetMaxArenaCurrency # not-yet
 C_Container.IsBattlePayItem # not-yet: temporary Lua workaround
-C_Container.PlayerHasHearthstone # not-yet
-C_Container.SetBagPortraitTexture # not-yet: temporary Lua workaround
 C_Container.ShowContainerSellCursor # not-yet
 C_Container.SocketContainerItem # not-yet
 C_Container.SortAccountBankBags # not-yet
@@ -580,21 +575,8 @@ C_EventToastManager.RemoveCurrentToast # not-yet
 C_ExpansionTrial.OnTrialLevelUpDialogClicked # not-yet
 C_ExpansionTrial.OnTrialLevelUpDialogShown # not-yet
 C_FrameManager.GetFrameVisibilityState # not-yet: temporary Lua workaround
-C_FriendList.AddFriend # not-yet
-C_FriendList.AddIgnore # not-yet
-C_FriendList.AddOrDelIgnore # not-yet
-C_FriendList.AddOrRemoveFriend # not-yet
-C_FriendList.DelIgnore # not-yet
-C_FriendList.DelIgnoreByIndex # not-yet
-C_FriendList.GetSelectedFriend # not-yet
-C_FriendList.IsIgnored # not-yet
 C_FriendList.IsIgnoredByGuid # not-yet
-C_FriendList.IsOnIgnoredList # not-yet
-C_FriendList.RemoveFriend # not-yet
-C_FriendList.RemoveFriendByIndex # not-yet
 C_FriendList.SendWho # not-yet
-C_FriendList.SetFriendNotesByIndex # not-yet
-C_FriendList.SetSelectedFriend # not-yet
 C_FriendList.SortWho # not-yet
 C_FunctionContainers.CreateCallback # not-yet: temporary Lua workaround
 C_GamePad.AddSDLMapping # not-yet
@@ -1050,13 +1032,11 @@ C_Item.GetDelvePreviewItemQuality # not-yet
 C_Item.GetFirstTriggeredSpellForItem # not-yet
 C_Item.GetItemConversionOutputIcon # not-yet
 C_Item.GetItemGemID # not-yet
-C_Item.GetItemInventorySlotKey # not-yet
 C_Item.GetItemLearnTransmogSet # not-yet
 C_Item.GetItemNumAddedSockets # not-yet
 C_Item.GetItemUniquenessByID # not-yet
 C_Item.GetItemUpgradeInfo # not-yet
 C_Item.GetLimitedCurrencyItemInfo # not-yet
-C_Item.IsItemConduit # not-yet
 C_Item.IsItemConvertibleAndValidForPlayer # not-yet
 C_Item.IsItemCorrupted # not-yet
 C_Item.IsItemCorruptionRelated # not-yet
@@ -1364,7 +1344,6 @@ C_PvP.DoesMatchOutcomeAffectRating # not-yet
 C_PvP.GetActiveMatchBracket # not-yet
 C_PvP.GetActiveMatchDuration # not-yet
 C_PvP.GetActiveMatchWinner # not-yet
-C_PvP.GetArenaCrowdControlInfo # not-yet: temporary Lua workaround
 C_PvP.GetArenaOpponentSpec # not-yet
 C_PvP.GetArenaRewards # not-yet
 C_PvP.GetAssignedSpecForBattlefieldQueue # not-yet
@@ -1420,7 +1399,6 @@ C_PvP.IsWarModeFeatureEnabled # not-yet
 C_PvP.JoinBrawl # not-yet
 C_PvP.JoinRandomTrainingGroundBG # not-yet
 C_PvP.JoinRatedBGBlitz # not-yet
-C_PvP.RequestCrowdControlSpell # not-yet
 C_PvP.SetWarModeDesired # not-yet
 C_PvP.StartSoloRBGWarGameByName # not-yet
 C_PvP.StartSpectatorSoloRBGWarGame # not-yet
@@ -1897,7 +1875,6 @@ C_VoiceChat.GetMemberVolume # not-yet
 C_VoiceChat.GetPTTButtonPressedState # not-yet
 C_VoiceChat.GetProcesses # not-yet
 C_VoiceChat.GetPushToTalkBinding # not-yet
-C_VoiceChat.GetRemoteTtsVoices # not-yet
 C_VoiceChat.GetVADSensitivity # not-yet
 C_VoiceChat.IsMemberLocalPlayer # not-yet
 C_VoiceChat.IsMemberMuted # not-yet

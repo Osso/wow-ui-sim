@@ -162,11 +162,25 @@ C_PvP = __wow_color_merge_namespace(C_PvP, {
   IsSoloShuffle = function()
     return false
   end,
-  GetArenaCrowdControlInfo = function(_unit)
-    return nil, 0, 0
-  end,
 })
 "#;
+
+/// Retail 12.0.5+ and Forever publish the modeled
+/// `c_api::c_pvp_crowd_control::GetArenaCrowdControlInfo`.
+const ARENA_CROWD_CONTROL_DEFAULT_LUA: &str = r#"
+if C_PvP ~= nil and rawget(C_PvP, "GetArenaCrowdControlInfo") == nil then
+  C_PvP.GetArenaCrowdControlInfo = function(_unit)
+    return nil, 0, 0
+  end
+end
+"#;
+
+fn has_modeled_arena_crowd_control() -> bool {
+    cfg!(any(
+        feature = "retail-12-0-5",
+        feature = "client-wowforever"
+    ))
+}
 
 // INFERRED: Wrath has no cached FrameXMLBase constants provider.
 const WRATH_QUEST_DIFFICULTY_DEFAULTS_LUA: &str = r#"
@@ -219,6 +233,9 @@ C_ColorOverrides = colorOverrides
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(COLOR_DEFAULTS_LUA)?;
+    if !has_modeled_arena_crowd_control() {
+        lua.exec(ARENA_CROWD_CONTROL_DEFAULT_LUA)?;
+    }
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Wrath {
         lua.exec(WRATH_QUEST_DIFFICULTY_DEFAULTS_LUA)?;
     }
@@ -362,18 +379,32 @@ mod tests {
     #[test]
     fn installs_pvp_defaults_without_replacing_state_backed_methods() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
+        // Modeled profiles return nothing for a unit without a supplied spell;
+        // the fallback keeps `nil, 0, 0`.
+        let count = if super::has_modeled_arena_crowd_control() {
+            0
+        } else {
+            3
+        };
+        env.exec(&format!("CC_RESULT_COUNT = {count}"))
+            .expect("set expected result count");
 
         let result: String = env
             .eval(
-                r#"
+                r##"
                 if C_PvP.IsInBrawl() ~= false then return "brawl" end
                 if C_PvP.IsSoloShuffle() ~= false then return "shuffle" end
+                if select("#", C_PvP.GetArenaCrowdControlInfo("player")) ~= CC_RESULT_COUNT then
+                    return "cc"
+                end
                 local spellID, startTime, duration = C_PvP.GetArenaCrowdControlInfo("player")
-                if spellID ~= nil or startTime ~= 0 or duration ~= 0 then return "cc" end
+                if CC_RESULT_COUNT == 3 and (spellID ~= nil or startTime ~= 0 or duration ~= 0) then
+                    return "cc"
+                end
                 C_PvP.SetLocklistMap(566)
                 if C_PvP.GetLocklistMap(1) ~= 566 then return "state-backed" end
                 return "ok"
-                "#,
+                "##,
             )
             .expect("PvP defaults should be callable");
 

@@ -108,3 +108,18 @@ pub(super) fn is_equipped_item_type(state: &mut LuaState) -> LuaResult<u32> {
     state.push(Val::Bool(found));
     Ok(1)
 }
+
+/// `C_Item.GetItemInventorySlotKey(inventorySlot)` (ItemDocumentation.lua:673
+/// Retail): the WM29 token at the `Enum.InventoryType` index. INFERRED R88g9
+/// (native evidence pending): an index outside the table raises an error.
+pub(super) fn get_item_inventory_slot_key(state: &mut LuaState) -> LuaResult<u32> {
+    let value = rilua::table_security::unwrap_secret(state, stack_val(state, 1))?;
+    let token = match value {
+        Val::Num(index) if index >= 0.0 && index.fract() == 0.0 => TOKENS.get(index as usize),
+        _ => None,
+    }
+    .ok_or_else(|| runtime_error("C_Item.GetItemInventorySlotKey: invalid inventory type"))?;
+    let token = crate::lua_api::methods::create_string(state, token);
+    state.push(token);
+    Ok(1)
+}

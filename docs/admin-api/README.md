@@ -16,11 +16,11 @@ The `A_Admin` namespace provides administrative functions for controlling simula
 - [Loot Journal](loot-journal.md) — SetLootJournalItemSets
 - [Raid locks](raid-locks.md) — SetCompletedEncounters
 - [Kiosk session](kiosk.md) — SetKioskSession
-- [Communities](communities.md) — SetAccountMutedClub, SetClubTypeAllowed
+- [Communities](communities.md) — SetAccountMutedClub, SetClubTypeAllowed, SetDiscordServers, SetDiscordUser
 - [Contribution Collector](contribution-collector.md) — SetContributionCollectors
 - Vignettes (Retail and WoW Forever): `A_Admin.SetVignettes(records)` supplies the session's modeled `C_VignetteInfo` records and fires `VIGNETTES_UPDATED`. Other profiles retain their existing legacy vignette surface. Each record requires `vignetteGUID`, `uiMapID`, `x`, and `y`; documented `VignetteInfo` fields can also be supplied, including `mapPin`. Optional host values are `facing`, `healthPercent`, `minGroupSize`, and `maxGroupSize`. Empty records are the default. Unknown-GUID return behavior is INFERRED (R88g6).
 - [Chat windows](chat-windows.md) — SetChatWindowState
-- [Voice chat](voice-chat.md) — SetCanPlayerUseVoiceChat
+- [Voice chat](voice-chat.md) — SetCanPlayerUseVoiceChat, SetVoiceChatConnected, SetRemoteTtsVoices
 - [Health & Power](health-power.md) — SetPlayerHealth, SetPlayerPower, SetTargetHealth
 - [Targeting](targeting.md) — SetTarget, ClearTarget, SetFocus, ClearFocus
 - [Challenge mode](challenge-mode.md) — SetChallengePowerLevelMods
@@ -38,7 +38,7 @@ The `A_Admin` namespace provides administrative functions for controlling simula
 - [Transmog outfits](transmog-outfits.md) — SetUnlockedOutfitSlots
 - [Economy](economy.md) — SetMoney, SetItemLevel, AddBagItem, RemoveBagItem, SetBagItemDurability, SetEquippedItemGUID
 - [Collections](collections.md) — AddTransmog, RemoveTransmog, CollectMount, UncollectMount, CollectPet, UncollectPet, CollectToy, UncollectToy, CollectCampsite, UncollectCampsite, SetAchievementEarned, EarnAchievement
-- [PvP](pvp.md) — SetPvPEnabled, SetHonorLevel
+- [PvP](pvp.md) — SetPvPEnabled, SetHonorLevel, SetArenaCrowdControl
 - [Guild](guild.md) — SetGuildInfo, ClearGuild, JoinGuild, LeaveGuild
 - [Mail](mail.md) — AddMail, ClearInbox, SetInboxCount
 - [Interactions](interactions.md) — OpenGuildRename, OpenMailbox, CloseMailbox

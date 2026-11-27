@@ -378,6 +378,12 @@ fn register_c_item_inventory_queries(
 fn register_c_item_guid_surface(state: &mut LuaState, table_ref: GcRef<Table>) -> LuaResult<()> {
     if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever) {
         super::item_guid::register_guid_queries(state, table_ref)?;
+        table_set_rust_fn_static(
+            state,
+            table_ref,
+            "GetItemInventorySlotKey",
+            super::item_type::get_item_inventory_slot_key,
+        )?;
     }
     if ACTIVE == ClientProfile::Retail {
         super::item_guid::register_lock_requests(state, table_ref)?;

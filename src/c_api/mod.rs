@@ -225,6 +225,8 @@ pub(crate) mod c_debug;
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) mod c_delves_entrance;
 pub mod c_discord;
+#[cfg(any(feature = "retail-12-1-0", feature = "client-wowforever"))]
+pub(crate) mod c_discord_admin;
 pub mod c_district_utils;
 mod c_dungeon_score_rarity;
 #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
@@ -241,6 +243,8 @@ pub(crate) mod c_encounter_warnings;
 mod c_engraving;
 pub(crate) mod c_event_scheduler;
 pub(crate) mod c_friend_list;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) mod c_friend_list_edit;
 pub(crate) mod c_game_rules;
 mod c_garrison_currency;
 pub(crate) mod c_garrison_damage_classes;
@@ -324,7 +328,7 @@ pub(crate) mod c_prof_specs_reminders;
 pub(crate) mod c_prof_specs_skill_lines;
 pub(crate) mod c_prof_specs_tab_state;
 pub mod c_pvp;
-#[cfg(feature = "retail-12-0-5")]
+#[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 pub mod c_pvp_crowd_control;
 pub mod c_quest_hub;
 pub mod c_quest_info_system;
@@ -341,6 +345,7 @@ pub(crate) mod c_taxi_map;
 pub(crate) mod challenge_run;
 #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
 pub mod combat_log_history;
+pub(crate) mod container_item_queries;
 pub mod container_preferences;
 pub mod container_purchase;
 mod container_purchase_args;
@@ -465,6 +470,7 @@ pub(crate) mod c_voice_chat_activity;
 pub mod c_voice_chat_channels;
 pub mod c_voice_chat_devices;
 pub(crate) mod c_voice_chat_login;
+pub(crate) mod c_voice_chat_remote_voices;
 mod c_voice_chat_settings;
 #[cfg(feature = "retail-12-0-0")]
 mod c_voice_chat_volume;

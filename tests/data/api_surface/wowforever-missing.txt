@@ -1,8 +1,6 @@
 # Documented WoW Forever API functions without a runtime function after full
 # Blizzard UI startup. Contract: docs/specs/api-surface-audit.md.
 # Format: <name> # <intentionally-unsupported|not-yet>[: reason]
-AbbreviateLargeNumbers # not-yet: temporary Lua workaround
-AbbreviateNumbers # not-yet: temporary Lua workaround
 AcceptAreaSpiritHeal # not-yet
 AcceptGuild # not-yet
 AddSourceLocationExclude # not-yet: temporary Lua workaround
@@ -440,14 +438,11 @@ C_ConsoleScriptCollection.GetCollectionDataByTag # not-yet
 C_ConsoleScriptCollection.GetElements # not-yet
 C_ConsoleScriptCollection.GetScriptData # not-yet
 C_Container.ContainerRefundItemPurchase # not-yet
-C_Container.GetContainerItemEquipmentSetInfo # not-yet
 C_Container.GetContainerItemPurchaseCurrency # not-yet
 C_Container.GetContainerItemPurchaseInfo # not-yet: temporary Lua workaround
 C_Container.GetContainerItemPurchaseItem # not-yet
 C_Container.GetMaxArenaCurrency # not-yet
 C_Container.IsBattlePayItem # not-yet: temporary Lua workaround
-C_Container.PlayerHasHearthstone # not-yet
-C_Container.SetBagPortraitTexture # not-yet: temporary Lua workaround
 C_Container.ShowContainerSellCursor # not-yet
 C_Container.SocketContainerItem # not-yet
 C_Container.SortAccountBankBags # not-yet
@@ -567,11 +562,6 @@ C_DelvesUI.HasActiveLair # not-yet
 C_DelvesUI.IsEligibleForActiveDelveRewards # not-yet
 C_DelvesUI.IsInLair # not-yet
 C_DelvesUI.IsTraitTreeForCompanion # not-yet
-C_Discord.GetDiscordChannelName # not-yet
-C_Discord.GetDiscordUserID # not-yet
-C_Discord.GetDiscordUserName # not-yet
-C_Discord.GetGuildLinkStatus # not-yet
-C_Discord.GetNumDiscordChannels # not-yet
 C_Discord.IsVoiceEnabled # not-yet: temporary Lua workaround
 C_EditMode.ConvertLayoutInfoToString # not-yet
 C_EditMode.ConvertStringToLayoutInfo # not-yet
@@ -605,24 +595,9 @@ C_Flyout.GetFlyoutInfo # not-yet
 C_Flyout.GetFlyoutSlotInfo # not-yet
 C_Flyout.GetNumFlyouts # not-yet
 C_FrameManager.GetFrameVisibilityState # not-yet: temporary Lua workaround
-C_FriendList.AddFriend # not-yet
-C_FriendList.AddIgnore # not-yet
-C_FriendList.AddOrDelIgnore # not-yet
-C_FriendList.AddOrRemoveFriend # not-yet
-C_FriendList.DelIgnore # not-yet
-C_FriendList.DelIgnoreByIndex # not-yet
-C_FriendList.GetFriendInfo # not-yet
-C_FriendList.GetSelectedFriend # not-yet
 C_FriendList.GetWhoRaceFilters # not-yet
-C_FriendList.IsIgnored # not-yet
 C_FriendList.IsIgnoredByGuid # not-yet
-C_FriendList.IsOnIgnoredList # not-yet
-C_FriendList.RemoveFriend # not-yet
-C_FriendList.RemoveFriendByIndex # not-yet
 C_FriendList.SendWho # not-yet
-C_FriendList.SetFriendNotes # not-yet
-C_FriendList.SetFriendNotesByIndex # not-yet
-C_FriendList.SetSelectedFriend # not-yet
 C_FriendList.SortWho # not-yet
 C_GamePad.AddSDLMapping # not-yet
 C_GamePad.ApplyConfigs # not-yet
@@ -793,7 +768,6 @@ C_Housing.VisitHouse # not-yet
 C_HousingBasicMode.GetHoveredDecorInfo # not-yet
 C_HousingBasicMode.GetSelectedDecorInfo # not-yet: temporary Lua workaround
 C_HousingBasicMode.IsDecorSelected # not-yet: temporary Lua workaround
-C_HousingBasicMode.IsFreePlaceEnabled # not-yet
 C_HousingBasicMode.IsGridSnapEnabled # not-yet: temporary Lua workaround
 C_HousingBasicMode.IsGridVisible # not-yet: temporary Lua workaround
 C_HousingBasicMode.IsHouseExteriorHovered # not-yet
@@ -802,7 +776,6 @@ C_HousingBasicMode.IsHoveringDecor # not-yet
 C_HousingBasicMode.RemoveSelectedDecor # not-yet
 C_HousingBasicMode.RotateDecor # not-yet
 C_HousingBasicMode.RotateHouseExterior # not-yet
-C_HousingBasicMode.SetFreePlaceEnabled # not-yet
 C_HousingBasicMode.SetGridVisible # not-yet: temporary Lua workaround
 C_HousingBlueprint.CanExportRoom # not-yet
 C_HousingBlueprint.CanExportTypeFromCurrentLocation # not-yet
@@ -1007,7 +980,6 @@ C_Item.GetItemCreationContext # not-yet
 C_Item.GetItemFamily # not-yet
 C_Item.GetItemGem # not-yet
 C_Item.GetItemGemID # not-yet
-C_Item.GetItemInventorySlotKey # not-yet
 C_Item.GetItemLearnTransmogSet # not-yet
 C_Item.GetItemNumAddedSockets # not-yet
 C_Item.GetItemSetInfo # not-yet
@@ -1027,7 +999,6 @@ C_Item.IsEquippedItem # not-yet
 C_Item.IsEquippedItemType # not-yet
 C_Item.IsItemBindToAccount # not-yet
 C_Item.IsItemBindToAccountUntilEquip # not-yet
-C_Item.IsItemConduit # not-yet
 C_Item.IsItemConvertibleAndValidForPlayer # not-yet
 C_Item.IsItemCorrupted # not-yet
 C_Item.IsItemCorruptionRelated # not-yet
@@ -1391,8 +1362,6 @@ C_PvP.DoesMatchOutcomeAffectRating # not-yet
 C_PvP.GetActiveMatchBracket # not-yet
 C_PvP.GetActiveMatchDuration # not-yet
 C_PvP.GetActiveMatchWinner # not-yet
-C_PvP.GetArenaCrowdControlDuration # not-yet
-C_PvP.GetArenaCrowdControlInfo # not-yet: temporary Lua workaround
 C_PvP.GetArenaOpponentSpec # not-yet
 C_PvP.GetArenaRewards # not-yet
 C_PvP.GetArenaSkirmishRewards # not-yet
@@ -1460,7 +1429,6 @@ C_PvP.JoinRandomTrainingGroundArena # not-yet
 C_PvP.JoinRandomTrainingGroundBG # not-yet
 C_PvP.JoinRatedBGBlitz # not-yet
 C_PvP.JoinTrainingGround # not-yet
-C_PvP.RequestCrowdControlSpell # not-yet
 C_PvP.SetPVP # not-yet
 C_PvP.SetWarModeDesired # not-yet
 C_PvP.StartSoloRBGWarGameByName # not-yet
@@ -1995,7 +1963,6 @@ C_VoiceChat.GetMemberVolume # not-yet
 C_VoiceChat.GetPTTButtonPressedState # not-yet
 C_VoiceChat.GetProcesses # not-yet
 C_VoiceChat.GetPushToTalkBinding # not-yet
-C_VoiceChat.GetRemoteTtsVoices # not-yet
 C_VoiceChat.GetVADSensitivity # not-yet
 C_VoiceChat.IsMemberLocalPlayer # not-yet
 C_VoiceChat.IsMemberMuted # not-yet
@@ -2005,7 +1972,6 @@ C_VoiceChat.IsParentalMuted # not-yet
 C_VoiceChat.IsPlayerUsingVoice # not-yet
 C_VoiceChat.IsSilenced # not-yet
 C_VoiceChat.IsSpeakForMeAllowed # not-yet
-C_VoiceChat.IsVoiceChatConnected # not-yet
 C_VoiceChat.LeaveChannel # not-yet
 C_VoiceChat.Login # not-yet
 C_VoiceChat.Logout # not-yet

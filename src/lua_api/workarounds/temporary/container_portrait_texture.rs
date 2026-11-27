@@ -44,6 +44,11 @@ if SetPortraitTextureFromCreatureDisplayID == nil then
   end
 end
 
+"#;
+
+/// Retail/PTR/Forever publish the modeled `C_Container.SetBagPortraitTexture`
+/// (`c_api::container_item_queries`); other profiles keep this Lua fallback.
+const BAG_PORTRAIT_TEXTURE_LUA: &str = r#"
 -- C_Container's metatable can expose generated method stubs through __index;
 -- rawget keeps this workaround tied to the explicit table slot.
 if C_Container ~= nil and type(rawget(C_Container, "SetBagPortraitTexture")) ~= "function" then
@@ -62,6 +67,9 @@ end
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(CONTAINER_PORTRAIT_TEXTURE_LUA)?;
+    if !crate::c_api::item_spell::has_modern_container_queries() {
+        lua.exec(BAG_PORTRAIT_TEXTURE_LUA)?;
+    }
     Ok(())
 }
 
@@ -70,6 +78,11 @@ mod tests {
     use crate::lua_api::WowLuaEnv;
 
     #[test]
+    #[cfg(not(any(
+        feature = "client-retail",
+        feature = "client-ptr",
+        feature = "client-wowforever"
+    )))]
     fn installs_bag_portrait_texture_helper_when_missing() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
         env.exec(
