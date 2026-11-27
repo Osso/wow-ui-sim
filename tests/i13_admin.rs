@@ -72,13 +72,12 @@ fn buff_caster_controls_aura_ownership() {
     // `name, rank, texture, count, debuffType, duration, expirationTime,
     // unitCaster, ...`; the rank-free tuple used by other profiles puts the
     // caster one slot earlier.
-    let caster_index = if wow_ui_sim::client_profile::ACTIVE
-        == wow_ui_sim::client_profile::ClientProfile::Wrath
-    {
-        8
-    } else {
-        7
-    };
+    let caster_index =
+        if wow_ui_sim::client_profile::ACTIVE == wow_ui_sim::client_profile::ClientProfile::Wrath {
+            8
+        } else {
+            7
+        };
     let probe = r#"
         A_Admin.SetPartySize(1)
         A_Admin.SetPartyMember(1, 'Caster', 1, 80)
@@ -122,10 +121,20 @@ fn replacing_seeded_party_member_clears_auras() {
         .unwrap();
 }
 
+/// Retail publishes `IsPlayerSpell` only from its owner,
+/// Blizzard_DeprecatedSpellBook/Deprecated_SpellBook.lua:10-13.
+fn spell_membership_env() -> WowLuaEnv {
+    let env = WowLuaEnv::new().unwrap();
+    if wow_ui_sim::client_profile::ACTIVE != wow_ui_sim::client_profile::ClientProfile::Wrath {
+        let ui = crate::common::panel_fixtures::blizzard_ui_dir();
+        crate::common::load_required_blizzard_addon(&env, &ui, "Blizzard_DeprecatedSpellBook");
+    }
+    env
+}
+
 #[test]
 fn admin_spell_membership_is_consistent() {
-    WowLuaEnv::new()
-        .unwrap()
+    spell_membership_env()
         .eval::<()>(
             r#"
         local id = 9876543
