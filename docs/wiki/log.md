@@ -1,3 +1,7 @@
+## [2026-11-26] implementation | Documented API surface audit
+
+Added the [API surface audit contract](../specs/api-surface-audit.md) and marked the `docs/wow-client-diff` function/namespace diffs as stale in [their README](../wow-client-diff/README.md). **VERIFIED (exact Retail and Forever runs):** Retail has 2,802 documented functions without a raw runtime function or with only a temporary Lua workaround; Forever has 2,453. Each is listed with a category in `tests/data/api_surface/<profile>-missing.txt`. The test fails on a new gap, on a stale entry, and on a wrong workaround label.
+
 ## [2026-11-26] investigation | Restricted environment item helper bindings
 
 Added [the restricted-environment investigation](../investigations/restricted-env-item-helpers.md). **VERIFIED (current simulator):** the tainted Retail full-UI consumer and the Forever selected-addon closure each expose `IsHelpfulItem`, `IsHarmfulItem`, and `HasAction` through the original secure snippet. **UNVERIFIED:** the cause of the earlier nil-call report; no simulator producer was changed.
