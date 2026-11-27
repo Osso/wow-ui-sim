@@ -1650,7 +1650,9 @@ fn test_addon_startup_table_time_and_string_helpers_exist() {
     // removed the bootstrap copy).
     load_blizzard_shared_xml_base(&env);
     let table: StartupTableHelpers = env.eval(STARTUP_TABLE_HELPERS_PROBE).unwrap();
-    let expected = ("function", 2, "b", 2, "b", 2, "function", 7);
+    // The original SecureTypes.lua:217-220 keeps elements in the private `tbl`
+    // field, so `pairs` on the array object sees only that one key.
+    let expected = ("function", 2, "b", 2, "b", 1, "function", 7);
     let table_view = (table.0.as_str(), table.1, table.2.as_str(), table.3);
     assert_eq!(table_view, (expected.0, expected.1, expected.2, expected.3));
     let tail = (table.4.as_str(), table.5, table.6.as_str(), table.7);

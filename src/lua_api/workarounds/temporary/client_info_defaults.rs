@@ -244,7 +244,7 @@ mod tests {
                 if GetClientDisplayExpansionLevel() ~= 10 then return "client_expansion" end
                 if GetAccountExpansionLevel() ~= 10 then return "account_expansion" end
                 if GetMaxPlayerLevel() ~= 80 then return "max_player_level" end
-                if GetMaxLevelForExpansionLevel(0) ~= GetMaxPlayerLevel() then return "max_level" end
+                if GetMaxLevelForExpansionLevel(0) ~= __EXPANSION0_MAX__ then return "max_level" end
                 if GetMaxLevelForPlayerExpansion() ~= GetMaxPlayerLevel() then return "player_max_level" end
                 if PartialPlayTime() ~= false then return "partial_play_time" end
                 if NoPlayTime() ~= false then return "no_play_time" end
@@ -270,6 +270,19 @@ mod tests {
         }
     }
 
+    /// Retail and Forever answer per-expansion caps from the Rust client model
+    /// (d1bdbb7f54; EXPANSION_LEVEL_CAPS gives Classic, expansion 0, cap 60).
+    fn expected_expansion0_max() -> &'static str {
+        if cfg!(any(
+            feature = "client-retail",
+            feature = "client-wowforever"
+        )) {
+            "60"
+        } else {
+            "GetMaxPlayerLevel()"
+        }
+    }
+
     fn client_info_probe() -> String {
         let (version, build) = crate::client_profile::client_identity().unwrap();
         let expansion = crate::client_profile::ACTIVE.expansion_level().to_string();
@@ -282,6 +295,7 @@ mod tests {
             )
             .replace("__EXPANSION__", &expansion)
             .replace("__TRIAL_REMAINING__", expected_trial_remaining())
+            .replace("__EXPANSION0_MAX__", expected_expansion0_max())
     }
 
     #[test]
