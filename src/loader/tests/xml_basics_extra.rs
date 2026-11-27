@@ -732,13 +732,9 @@ fn test_patch_12_1_xml_on_update_mode_and_forbidden_aspects() {
         </Ui>"#,
     );
 
+    load_blizzard_shared_xml_base(&t.env);
     t.assert_lua_true(
-        r#"
-        return FlagsUtil.IsSet(
-            Patch121AuraButton:GetForbiddenAspects(),
-            Enum.ForbiddenAspect.UntrustedScriptExecution
-        )
-        "#,
+        "FlagsUtil.IsSet(Patch121AuraButton:GetForbiddenAspects(), Enum.ForbiddenAspect.UntrustedScriptExecution)",
         "XML ForbiddenAspects should initialize the forbidden bitmask",
     );
 

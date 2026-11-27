@@ -1652,76 +1652,48 @@ fn test_addon_startup_frame_scale_and_merchant_namespaces_exist() {
 }
 }
 
+const STARTUP_TABLE_HELPERS_PROBE: &str = r#"
+    local index, value = FindInTableIf({"a", "b"}, function(v) return v == "b" end)
+    local secureArray = SecureTypes.CreateSecureArray()
+    secureArray:Insert("a")
+    secureArray:Insert("b")
+    local secureIndex, secureValue = secureArray:FindInTableIf(function(v) return v == "b" end)
+    local securePairCount = 0
+    for _ in pairs(secureArray) do
+        securePairCount = securePairCount + 1
+    end
+    return type(FindInTableIf), index, value, secureIndex, secureValue, securePairCount,
+        type(difftime), difftime(10, 3)
+"#;
+
+const STARTUP_TIME_STRING_HELPERS_PROBE: &str = r#"
+    return time({ year = "2024", month = "6", day = "3", hour = "0", min = "41", sec = "7" }),
+        ("Requires a reload"):SetColorOrange(),
+        ("Hello {name}"):K_ReplaceVars({ name = "Palaky" }),
+        UnmuteSoundFile(123)
+"#;
+
+type StartupTableHelpers = (String, i64, String, i64, String, i64, String, i64);
+
 #[test]
 fn test_addon_startup_table_time_and_string_helpers_exist() {
     let env = WowLuaEnv::new().unwrap();
-    let (
-        find_ty,
-        found_index,
-        found_value,
-        secure_found_index,
-        secure_found_value,
-        secure_pair_count,
-        difftime_ty,
-        time_delta,
-        parsed_time,
-        colored,
-        replaced,
-        unmute_result,
-    ): (
-        String,
-        i64,
-        String,
-        i64,
-        String,
-        i64,
-        String,
-        i64,
-        i64,
-        String,
-        String,
-        bool,
-    ) = env
-        .eval(
-            r#"
-            local index, value = FindInTableIf({"a", "b"}, function(v) return v == "b" end)
-            local secureArray = SecureTypes.CreateSecureArray()
-            secureArray:Insert("a")
-            secureArray:Insert("b")
-            local secureIndex, secureValue = secureArray:FindInTableIf(function(v) return v == "b" end)
-            local securePairCount = 0
-            for _ in pairs(secureArray) do
-                securePairCount = securePairCount + 1
-            end
-            return type(FindInTableIf),
-                index,
-                value,
-                secureIndex,
-                secureValue,
-                securePairCount,
-                type(difftime),
-                difftime(10, 3),
-                time({ year = "2024", month = "6", day = "3", hour = "0", min = "41", sec = "7" }),
-                ("Requires a reload"):SetColorOrange(),
-                ("Hello {name}"):K_ReplaceVars({ name = "Palaky" }),
-                UnmuteSoundFile(123)
-            "#,
-        )
-        .unwrap();
-
-    assert_eq!(find_ty, "function");
-    assert_eq!(found_index, 2);
-    assert_eq!(found_value, "b");
-    assert_eq!(secure_found_index, 2);
-    assert_eq!(secure_found_value, "b");
-    assert_eq!(secure_pair_count, 2);
-    assert_eq!(difftime_ty, "function");
-    assert_eq!(time_delta, 7);
+    // SecureTypes comes from the original Blizzard_SharedXMLBase (6a786fbd81
+    // removed the bootstrap copy).
+    load_blizzard_shared_xml_base(&env);
+    let table: StartupTableHelpers = env.eval(STARTUP_TABLE_HELPERS_PROBE).unwrap();
+    let expected = ("function", 2, "b", 2, "b", 2, "function", 7);
+    let table_view = (table.0.as_str(), table.1, table.2.as_str(), table.3);
+    assert_eq!(table_view, (expected.0, expected.1, expected.2, expected.3));
+    let tail = (table.4.as_str(), table.5, table.6.as_str(), table.7);
+    assert_eq!(tail, (expected.4, expected.5, expected.6, expected.7));
+    let (parsed_time, colored, replaced, unmute): (i64, String, String, bool) =
+        env.eval(STARTUP_TIME_STRING_HELPERS_PROBE).unwrap();
     assert!(parsed_time > 0);
     assert!(colored.starts_with("|c"));
     assert!(colored.ends_with("|r"));
     assert_eq!(replaced, "Hello Palaky");
-    assert!(unmute_result);
+    assert!(unmute);
 }
 
 #[cfg(all(feature = "retail-12-0-5", not(feature = "retail-12-0-7")))]
