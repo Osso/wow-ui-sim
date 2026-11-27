@@ -26,6 +26,13 @@ use rilua::{LuaApiMut, LuaResult, Val};
 
 const FIRST_EQUIPMENT_SLOT_ID: i32 = 1;
 const LAST_PROFESSION_SLOT_ID: i32 = 28;
+const DURABILITY_ALERT_SLOT_IDS: [i32; 11] = [1, 3, 5, 6, 7, 8, 9, 10, 16, 17, 18];
+const DURABILITY_WARNING_STATUS: i32 = 1;
+const DURABILITY_BROKEN_STATUS: i32 = 2;
+
+pub(crate) fn is_equipment_slot(slot: i32) -> bool {
+    (FIRST_EQUIPMENT_SLOT_ID..=LAST_PROFESSION_SLOT_ID).contains(&slot)
+}
 
 fn stack_i32(state: &mut LuaState, index: i32) -> Option<i32> {
     match stack_val(state, index) {
@@ -255,9 +262,15 @@ fn get_inventory_item_link(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn get_inventory_item_broken(state: &mut LuaState) -> LuaResult<u32> {
-    let _unit = Option::<String>::from_stack(state, 1)?;
-    let _slot = stack_i32(state, 2);
-    state.push(Val::Bool(false));
+    let unit = Option::<String>::from_stack(state, 1)?.unwrap_or_default();
+    let Some(slot) = stack_i32(state, 2) else {
+        state.push(Val::Bool(false));
+        return Ok(1);
+    };
+    let durability = equipped_item_durability(state, slot)?;
+    let broken = player_equipped_item_id(state, &unit, slot).is_some()
+        && durability.is_some_and(|(current, _)| current == 0);
+    state.push(Val::Bool(broken));
     Ok(1)
 }
 
@@ -266,15 +279,50 @@ fn get_inventory_item_durability(state: &mut LuaState) -> LuaResult<u32> {
         state.push(Val::Nil);
         return Ok(1);
     };
-    let has_equipped_item = player_equipped_item_id(state, "player", slot).is_some();
-    if !has_equipped_item {
+    if player_equipped_item_id(state, "player", slot).is_none() {
         state.push(Val::Nil);
         return Ok(1);
     }
-
-    state.push(Val::Num(100.0));
-    state.push(Val::Num(100.0));
+    let (current, maximum) = equipped_item_durability(state, slot)?.unwrap_or((100, 100));
+    state.push(Val::Num(f64::from(current)));
+    state.push(Val::Num(f64::from(maximum)));
     Ok(2)
+}
+
+fn equipped_item_durability(state: &mut LuaState, slot: i32) -> LuaResult<Option<(u32, u32)>> {
+    Ok(borrow_state(state)?
+        .equipped_item_durability
+        .get(&slot)
+        .copied())
+}
+
+fn get_inventory_alert_status(state: &mut LuaState) -> LuaResult<u32> {
+    let Some(index) = stack_i32(state, 1).filter(|index| (1..=11).contains(index)) else {
+        state.push(Val::Nil);
+        return Ok(1);
+    };
+    let slot = DURABILITY_ALERT_SLOT_IDS[(index - 1) as usize];
+    let status = inventory_alert_status(&borrow_state(state)?, slot);
+    state.push(status.map_or(Val::Nil, |status| Val::Num(f64::from(status))));
+    Ok(1)
+}
+
+fn inventory_alert_status(state: &SimState, slot: i32) -> Option<i32> {
+    if !state.player.equipped_items.contains_key(&slot) {
+        return None;
+    }
+    let (current, maximum) = state
+        .equipped_item_durability
+        .get(&slot)
+        .copied()
+        .unwrap_or((100, 100));
+    if current == 0 {
+        Some(DURABILITY_BROKEN_STATUS)
+    } else if current < maximum {
+        Some(DURABILITY_WARNING_STATUS)
+    } else {
+        None
+    }
 }
 
 fn get_inventory_item_equipped_unusable(state: &mut LuaState) -> LuaResult<u32> {
@@ -333,6 +381,7 @@ pub fn register_all(lua: &mut rilua::Lua) -> crate::Result<()> {
         "GetInventoryItemDurability",
         get_inventory_item_durability,
     )?;
+    LuaApiMut::register_function(lua, "GetInventoryAlertStatus", get_inventory_alert_status)?;
     LuaApiMut::register_function(
         lua,
         "GetInventoryItemEquippedUnusable",
@@ -340,10 +389,5 @@ pub fn register_all(lua: &mut rilua::Lua) -> crate::Result<()> {
     )?;
     LuaApiMut::register_function(lua, "GetInventoryItemQuality", get_inventory_item_quality)?;
     LuaApiMut::register_function(lua, "GetInventoryItemCount", get_inventory_item_count)?;
-    LuaApiMut::register_function(
-        lua,
-        "GetInventoryItemDurability",
-        get_inventory_item_durability,
-    )?;
     Ok(())
 }

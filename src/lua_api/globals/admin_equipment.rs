@@ -8,9 +8,32 @@
 use crate::lua_api::methods::borrow_state_mut;
 use crate::lua_bridge::FromStack;
 use rilua::LuaResult;
+use rilua::runtime_error;
 use rilua::vm::state::LuaState;
 
 // ── Equipment ─────────────────────────────────────────────────────────────────
+
+pub(super) fn set_equipped_item_durability(state: &mut LuaState) -> LuaResult<u32> {
+    let slot = i32::from_stack(state, 1)?;
+    let current = u32::from_stack(state, 2)?;
+    let maximum = u32::from_stack(state, 3)?;
+    if !super::inventory_probes::is_equipment_slot(slot) || maximum == 0 || current > maximum {
+        return Err(runtime_error(
+            "A_Admin.SetEquippedItemDurability: invalid slot or durability",
+        ));
+    }
+    let mut sim = borrow_state_mut(state)?;
+    if !sim.player.equipped_items.contains_key(&slot) {
+        return Err(runtime_error(
+            "A_Admin.SetEquippedItemDurability: slot has no equipped item",
+        ));
+    }
+    sim.equipped_item_durability
+        .insert(slot, (current, maximum));
+    drop(sim);
+    super::state_backed_queries::dispatch_event_now(state, "UPDATE_INVENTORY_ALERTS", &[])?;
+    Ok(0)
+}
 
 pub(super) fn equip_item(state: &mut LuaState) -> LuaResult<u32> {
     let slot = i32::from_stack(state, 1)?;
@@ -50,6 +73,9 @@ fn update_equipped_item(
         },
     );
     st.equipped_item_tooltip_guids.remove(&slot);
+    if previous.as_ref().is_none_or(|item| item.item_id != item_id) {
+        st.equipped_item_durability.remove(&slot);
+    }
     st.player.stats = CharacterStats::compute(&st.player.equipped_items, st.player.class_index);
     Ok(previous)
 }
@@ -64,6 +90,7 @@ pub(super) fn unequip_item(state: &mut LuaState) -> LuaResult<u32> {
     );
     let previous = st.player.equipped_items.remove(&slot);
     st.equipped_item_tooltip_guids.remove(&slot);
+    st.equipped_item_durability.remove(&slot);
     st.player.stats = CharacterStats::compute(&st.player.equipped_items, st.player.class_index);
     drop(st);
     if previous.is_some() && crate::c_api::world_loot_object::is_equippable_spell_slot(slot) {

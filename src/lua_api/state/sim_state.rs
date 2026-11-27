@@ -294,6 +294,8 @@ pub struct SimState {
     pub item_tooltip_sell_price_quantities: HashMap<u32, (u32, u32)>,
     /// Explicit opaque GUIDs for equipped-copy tooltip requests; empty by default.
     pub equipped_item_tooltip_guids: HashMap<i32, String>,
+    /// Host-supplied current and maximum durability by equipped inventory slot.
+    pub equipped_item_durability: HashMap<i32, (u32, u32)>,
     /// Host-supplied socket metadata copied from a selected bag instance.
     pub item_tooltip_socket_projections:
         HashMap<(i32, i32), Vec<crate::c_api::item_tooltip::ItemSocketProjectionRow>>,

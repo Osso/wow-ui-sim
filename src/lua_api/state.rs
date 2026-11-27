@@ -266,6 +266,7 @@ macro_rules! build_empty_sim_state {
             bag_item_tooltip_sell_price_statuses: ::std::collections::HashMap::new(),
             item_tooltip_sell_price_quantities: ::std::collections::HashMap::new(),
             equipped_item_tooltip_guids: ::std::collections::HashMap::new(),
+            equipped_item_durability: ::std::collections::HashMap::new(),
             item_tooltip_socket_projections: ::std::collections::HashMap::new(),
             blocked_auras_by_unit: $collections.blocked_auras_by_unit,
             #[cfg(feature = "client-wowforever")]
