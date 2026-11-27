@@ -441,9 +441,17 @@ assert(ranAfterSet)
 
 #[test]
 fn script_animated_model_scene_template_drains_actions_in_order() {
+    use crate::common::blizzard_addon_harness::{
+        blizzard_ui_dir, load_blizzard_addon_closure_into_env, new_blizzard_addon_env,
+    };
     clear_templates();
     let (_addon, shared) = shared_xml_fixture();
-    let env = WowLuaEnv::new().unwrap();
+    // ModelSceneMixin:SetFromModelSceneID triggers EventRegistry, published by
+    // Blizzard_SharedXML's TOC dependency Blizzard_SharedXMLBase
+    // (GlobalCallbackRegistry.lua:1).
+    let ui = blizzard_ui_dir();
+    let env = new_blizzard_addon_env(&ui);
+    load_blizzard_addon_closure_into_env(&env, &ui, &["Blizzard_SharedXMLBase"], &[]);
     std::fs::write(shared.join("SceneConsumer.xml"), r#"<Ui><ModelScene name="AnimationScene" parent="UIParent" hidden="true" setAllPoints="true" inherits="ScriptAnimatedModelSceneTemplate"/></Ui>"#).unwrap();
     let toc = write_shared_xml_toc(&shared, "SceneConsumer.xml");
     load_addon(&env.loader_env(), &toc).unwrap();
