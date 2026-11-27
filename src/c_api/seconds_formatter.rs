@@ -22,14 +22,14 @@ fn publish_values(
     name: &'static str,
     fields: &[(&'static str, f64)],
 ) -> LuaResult<()> {
+    // A fresh table replaces any compatibility enum published earlier, so only
+    // the documented fields remain (SecondsFormatterSharedDocumentation.lua:6-16).
     let enums = super::helpers::ensure_namespace(state, "Enum")?;
-    let values = Val::Table(crate::c_api::ensure_namespace_table_field(
-        state, enums, name,
-    )?);
+    let values = create_table(state);
     for &(key, value) in fields {
-        crate::c_api::set_namespace_member(state, values, key, Val::Num(value))?;
+        table_set_static(state, values, key, Val::Num(value));
     }
-    Ok(())
+    crate::c_api::set_namespace_member(state, enums, name, values)
 }
 
 fn publish_metadata(

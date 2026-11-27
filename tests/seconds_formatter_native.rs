@@ -224,6 +224,31 @@ fn seconds_formatter_native_addon_configuration_retains_native_secret_consumptio
 }
 
 #[cfg(feature = "client-wowforever")]
+const CUSTOM_AURA_BUTTON: &str = r#"
+    local formatter = NewActionSecondsFormatter()
+    local container = CreateFrame('AuraContainer', nil, UIParent, 'CustomAuraContainerTemplate')
+    local forbidden = __secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable
+    local ran = false
+    local provider = __secureenv.AuraContainerUtil.CreateCustomFrameProvider(
+        forbidden(container), {batchSize=1,
+        templateNames={'CustomAuraButtonTemplate'}, initializeFrame=function(button)
+            local label = button:CreateFontString(nil, 'OVERLAY')
+            button:SetDurationText(label, {textFormatter=formatter})
+            local binding = forbidden(button):GetDurationTextBinding()
+            for _, case in ipairs({{5, '5s'}, {60, '1m'}, {0.125, '0.125s'}}) do
+                local duration = C_DurationUtil.CreateDuration()
+                duration:SetTimeSpan(0, case[1])
+                duration:SetClock(C_DurationUtil.CreateManualClock(0))
+                binding:SetDuration(duration)
+                binding:UpdateFontString()
+                assert(label:GetText() == case[2], label:GetText())
+            end
+            ran = true
+        end})
+    assert(provider:AcquireFrame() ~= nil and ran)
+"#;
+
+#[cfg(feature = "client-wowforever")]
 #[test]
 fn seconds_formatter_native_custom_aura_button_keeps_formatter_handle() {
     crate::common::with_timeout(90, || {
@@ -232,25 +257,7 @@ fn seconds_formatter_native_custom_aura_button_keeps_formatter_handle() {
             &[],
             |env, _| {
                 env.exec(CONFIGURE).unwrap();
-                env.exec(r#"
-                    local formatter = NewActionSecondsFormatter()
-                    local container = CreateFrame('AuraContainer', nil, UIParent, 'CustomAuraContainerTemplate')
-                    local ran = false
-                    local provider = __secureenv.AuraContainerUtil.CreateCustomFrameProvider(
-                        (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(container), {batchSize=1,
-                        templateNames={'CustomAuraButtonTemplate'}, initializeFrame=function(button)
-                            local label = button:CreateFontString(nil, 'OVERLAY')
-                            button:SetDurationText(label, {textFormatter=formatter})
-                            local binding = (__secureenv.GetForbiddenObjectTable or GetForbiddenObjectTable)(button):GetDurationTextBinding()
-                            for _, case in ipairs({{5, '5s'}, {60, '1m'}, {0.125, '0.125s'}}) do
-                                binding:SetDuration(case[1])
-                                binding:UpdateFontString()
-                                assert(label:GetText() == case[2], label:GetText())
-                            end
-                            ran = true
-                        end})
-                    assert(provider:AcquireFrame() ~= nil and ran)
-                "#).unwrap();
+                env.exec(CUSTOM_AURA_BUTTON).unwrap();
             },
         );
     });
