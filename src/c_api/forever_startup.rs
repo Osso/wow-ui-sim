@@ -7,7 +7,7 @@ use crate::client_profile::{ACTIVE, ClientProfile};
 pub use crate::lua_api::globals::auras::GroupBuffAlert;
 use crate::lua_api::methods::{
     borrow_state, borrow_state_mut, create_string, create_table, create_table_with_fields,
-    table_get, table_get_num, val_to_string,
+    table_get, val_to_string,
 };
 use crate::lua_bridge::{FromStack, TableBuilder, stack_val, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
@@ -381,7 +381,12 @@ fn parse_bank_tab_data(state: &mut LuaState, value: Val) -> LuaResult<Vec<BankTa
         .array_len();
     (1..=length)
         .map(|index| {
-            let row = table_get_num(state, array, index as f64);
+            let row = state
+                .gc
+                .tables
+                .get(array)
+                .map(|table| table.get_int(index as i64))
+                .unwrap_or(Val::Nil);
             parse_bank_tab(state, row, index)
         })
         .collect()
@@ -448,7 +453,12 @@ fn read_bank_type_ids(state: &mut LuaState, value: Val) -> LuaResult<HashSet<i32
         .array_len();
     (1..=length)
         .map(|index| {
-            let value = table_get_num(state, array, index as f64);
+            let value = state
+                .gc
+                .tables
+                .get(array)
+                .map(|table| table.get_int(index as i64))
+                .unwrap_or(Val::Nil);
             match value {
                 Val::Num(number)
                     if number.is_finite()
