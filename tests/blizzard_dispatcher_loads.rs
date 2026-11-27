@@ -270,20 +270,16 @@ fn blizzard_dispatcher_state_tables_initialized_empty(env: &WowLuaEnv) {
         .eval(
             "return type(Dispatcher.Events) == 'table' \
                 and type(Dispatcher.Functions) == 'table' \
-                and type(Dispatcher.Functions.Global) == 'table' \
-                and type(Dispatcher.Functions.Owners) == 'table' \
                 and type(Dispatcher.Scripts) == 'table'",
         )
         .expect("Dispatcher state-tables probe should succeed");
+    // The Functions.Global/Owners split belonged to the runtime_surface_bootstrap
+    // fallback that b67f550d02 retired on Retail; the original creates Global lazily.
     assert!(
         tables_ok,
-        "Dispatcher must seed its callback containers as empty tables at construction \
-         (runtime_surface_bootstrap.lua:595-600): Events={{}}, Functions={{Global={{}}, \
-         Owners={{}}}}, Scripts={{}}. Note the simulator splits Functions into Global / \
-         Owners sub-tables — slightly different from the addon's flat \
-         `Functions = {{}}` which uses `Functions.Global` and `Functions[functionOwner]` \
-         keyed by the owner table directly. Tutorial code reads these via the public \
-         Register/Unregister methods, not by direct table access"
+        "Dispatcher must seed its callback containers as tables at construction \
+         (Blizzard_Dispatcher.lua:25-27): Events, Functions and Scripts. The original \
+         creates Functions.Global on the first global RegisterFunction (:268-269)"
     );
 }
 }
