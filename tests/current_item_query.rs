@@ -1,5 +1,5 @@
 //! API-level coverage: no selected Retail FrameXML consumer was found.
-#![cfg(feature = "client-retail")]
+#![cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 
 use wow_ui_sim::lua_api::WowLuaEnv;
 
