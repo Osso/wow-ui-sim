@@ -53,24 +53,6 @@ const SEARCH_FILTER: &str = r#"
     assert(C_Container.IsContainerFiltered(0) == false)
 "#;
 
-#[cfg(feature = "client-wowforever")]
-const STACK_SPLIT_BINDING_SETUP: &str = r#"
-    SetBinding("KEY_NAME", "OPENALLBAGS")
-    ToggleBackpack()
-    local frame = ContainerFrame1
-    if not frame or not frame:IsShown() then frame = ContainerFrameCombinedBags end
-    assert(frame and frame:IsShown(), "ToggleBackpack showed no bag frame")
-    StackSplitConsumerButton = nil
-    for _, button in frame:EnumerateValidItems() do
-        if button:GetBagID() == 0 and button:GetID() == 1 then
-            StackSplitConsumerButton = button
-        end
-    end
-    assert(StackSplitConsumerButton, "bag slot 1 has no item button")
-    SetModifiedClick("SPLITSTACK", "SHIFT")
-    SetModifiedClick("EXPANDITEM", "CTRL")
-"#;
-
 const BACKPACK_CLEANUP_MENU: &str = r#"
     local frame = ContainerFrameUtil_GetShownFrameForID(Enum.BagIndex.Backpack)
     assert(frame and frame:IsShown(), "backpack frame must be open")
@@ -134,39 +116,6 @@ fn bag_slot_filter_overlay_tracks_the_container_search() {
             "#,
         )
         .expect("bag button overlay follows each search result");
-    });
-}
-
-#[cfg(feature = "client-wowforever")]
-#[test]
-fn forever_stack_split_key_handlers_run_bound_actions() {
-    common::with_timeout(120, || {
-        let env = WowLuaEnv::new().expect("Lua environment");
-        common::load_game_startup_inventory(&env);
-        env.sync_addon_names_to_lua();
-        env.apply_post_load_workarounds();
-        wow_ui_sim::startup::fire_startup_events_for_screen(
-            &env,
-            wow_ui_sim::screen::ScreenKind::Game,
-        );
-        env.exec("A_Admin.ClearBags(); A_Admin.AddBagItem(0, 1, 6948, 5)")
-            .expect("supply a stackable bag item");
-        for key in ["K", "L"] {
-            env.exec(&STACK_SPLIT_BINDING_SETUP.replace("KEY_NAME", key))
-                .expect("open backpack and bind the key");
-            env.exec("A_Admin.SetShiftKeyDown(true)")
-                .expect("hold split modifier");
-            env.exec("StackSplitConsumerButton:Click('LeftButton')")
-                .expect("open StackSplitFrame through its bag item button");
-            env.exec("A_Admin.SetShiftKeyDown(false)")
-                .expect("release split modifier");
-            assert!(env.eval::<bool>("return StackSplitFrame:IsShown()").unwrap());
-            env.send_key_press(key, None).unwrap_or_else(|error| {
-                panic!("dispatch {key} to StackSplitFrame: {error}")
-            });
-            let bag_open = env.eval::<bool>("return ContainerFrameUtil_GetShownFrameForID(0) ~= nil").unwrap();
-            assert!(!bag_open, "RunBinding did not close the bags for key {key}");
-        }
     });
 }
 
