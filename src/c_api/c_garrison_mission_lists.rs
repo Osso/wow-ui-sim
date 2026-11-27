@@ -18,6 +18,7 @@ const INPUT_ERROR: &str = "A_Admin.SetGarrisonMissions: expected an array of mis
 #[derive(Clone, Debug, Default)]
 pub struct GarrisonMissionLists {
     pub missions: Vec<GarrisonMission>,
+    pub combat_ally_missions: HashMap<u32, u32>,
     pub follower_quality_tables: HashMap<u32, Vec<(u32, f64)>>,
     /// INFERRED (R88do, native evidence pending): supplied NPC interaction state.
     pub at_garrison_mission_npc: bool,
@@ -72,6 +73,12 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     table_set_rust_fn_static(
         state,
         namespace,
+        "GetCombatAllyMission",
+        get_combat_ally_mission,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        namespace,
         "GetMissionEncounterIconInfo",
         get_mission_encounter_icon_info,
     )?;
@@ -98,6 +105,7 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
 pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
     let builder = builder
         .set_function("SetGarrisonMissions", set_missions)?
+        .set_function("SetGarrisonCombatAllyMission", set_combat_ally_mission)?
         .set_function(
             "SetGarrisonFollowerQualityTable",
             set_follower_quality_table,
@@ -185,6 +193,72 @@ fn get_complete(state: &mut LuaState) -> LuaResult<u32> {
     let result = publish_missions(state, &missions)?;
     state.push(result);
     Ok(1)
+}
+
+fn get_combat_ally_mission(state: &mut LuaState) -> LuaResult<u32> {
+    let follower_type_id = read_follower_type(stack_val(state, 1), 1)?;
+    let mission = {
+        let sim = borrow_state(state)?;
+        let mission_id = sim
+            .garrison_mission_lists
+            .combat_ally_missions
+            .get(&follower_type_id);
+        mission_id.and_then(|mission_id| {
+            sim.garrison_mission_lists
+                .missions
+                .iter()
+                .find(|mission| mission.mission_id == *mission_id)
+                .cloned()
+        })
+    };
+    let result = mission.map_or(Ok(Val::Nil), |mission| publish_mission(state, &mission))?;
+    state.push(result);
+    Ok(1)
+}
+
+fn set_combat_ally_mission(state: &mut LuaState) -> LuaResult<u32> {
+    let follower_type_id = read_follower_type(stack_val(state, 1), 1)?;
+    let mission_id = read_optional_mission_id(stack_val(state, 2))?;
+    let mut sim = borrow_state_mut(state)?;
+    let lists = &mut sim.garrison_mission_lists;
+    match mission_id {
+        Some(mission_id) => {
+            validate_combat_ally_mission(lists, follower_type_id, mission_id)?;
+            lists
+                .combat_ally_missions
+                .insert(follower_type_id, mission_id);
+        }
+        None => {
+            lists.combat_ally_missions.remove(&follower_type_id);
+        }
+    }
+    Ok(0)
+}
+
+fn read_optional_mission_id(value: Val) -> LuaResult<Option<u32>> {
+    match value {
+        Val::Nil => Ok(None),
+        value => read_u32(value)
+            .map(Some)
+            .ok_or_else(|| runtime_error("missionID must be a positive integer or nil")),
+    }
+}
+
+fn validate_combat_ally_mission(
+    lists: &GarrisonMissionLists,
+    follower_type_id: u32,
+    mission_id: u32,
+) -> LuaResult<()> {
+    let belongs_to_follower_type = lists.missions.iter().any(|mission| {
+        mission.mission_id == mission_id && mission.follower_type_id == follower_type_id
+    });
+    if belongs_to_follower_type {
+        Ok(())
+    } else {
+        Err(runtime_error(
+            "missionID must identify a supplied mission of followerTypeID",
+        ))
+    }
 }
 
 fn get_mission_encounter_icon_info(state: &mut LuaState) -> LuaResult<u32> {
