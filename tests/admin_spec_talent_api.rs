@@ -2,8 +2,20 @@
 
 use wow_ui_sim::lua_api::WowLuaEnv;
 
+/// Forever (Camelot) has no legacy `GetSpecialization` global: its
+/// Blizzard_DeprecatedSpecialization alias is excluded (305a9fe8f6), so the
+/// active-spec read is the native `C_SpecializationInfo.GetSpecialization`.
+const ACTIVE_SPECIALIZATION_LUA: &str = if cfg!(feature = "client-wowforever") {
+    "function ActiveSpecialization() return C_SpecializationInfo.GetSpecialization() end"
+} else {
+    "function ActiveSpecialization() return GetSpecialization() end"
+};
+
 fn env() -> WowLuaEnv {
-    WowLuaEnv::new().expect("Failed to create Lua environment")
+    let env = WowLuaEnv::new().expect("Failed to create Lua environment");
+    env.exec(ACTIVE_SPECIALIZATION_LUA)
+        .expect("active specialization reader");
+    env
 }
 
 // ============================================================================
@@ -17,7 +29,7 @@ fn test_set_spec_readable_via_get_specialization() {
         .eval(
             r#"
             A_Admin.SetSpec(3)
-            return GetSpecialization()
+            return ActiveSpecialization()
             "#,
         )
         .unwrap();
@@ -52,7 +64,7 @@ fn test_set_spec_one() {
         .eval(
             r#"
             A_Admin.SetSpec(1)
-            return GetSpecialization()
+            return ActiveSpecialization()
             "#,
         )
         .unwrap();
@@ -66,7 +78,7 @@ fn test_set_spec_two() {
         .eval(
             r#"
             A_Admin.SetSpec(2)
-            return GetSpecialization()
+            return ActiveSpecialization()
             "#,
         )
         .unwrap();
@@ -81,7 +93,7 @@ fn test_set_spec_overrides_previous() {
             r#"
             A_Admin.SetSpec(1)
             A_Admin.SetSpec(4)
-            return GetSpecialization()
+            return ActiveSpecialization()
             "#,
         )
         .unwrap();
