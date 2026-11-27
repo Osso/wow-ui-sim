@@ -295,7 +295,6 @@ fn register_world_activity_surfaces(state: &mut LuaState) -> LuaResult<()> {
     c_api::c_housing_bundles::register_c_housing_bundles(state)?;
     c_api::c_settings_util::register_c_settings_util_surface(state)?;
     c_api::ui_widget_manager::queries::register(state)?;
-    #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
     c_api::ui_widget_manager::button_header::register(state)?;
     anima_diversion::register_anima_diversion_surface(state)?;
     garrison::register_garrison_talent_surface(state)?;

@@ -184,6 +184,7 @@ pub mod recent_allies_location;
 #[cfg(feature = "client-wrath")]
 pub mod recruit_a_friend;
 pub(crate) mod region;
+pub(crate) mod release_timer;
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub(crate) mod run_binding;
 pub(crate) mod secure_helpers;

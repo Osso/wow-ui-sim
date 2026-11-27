@@ -96,7 +96,6 @@ pub(crate) use fixtures::seed_demo_world_quest_widgets;
 pub use inputs::{IconAndTextRecord, UiWidgetInputs, WidgetSetEntry, WidgetSetRecord};
 pub use unit_context::{ProcessingUnit, WidgetUnitContext};
 
-#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
 pub(crate) mod button_header;
 
 /// Modeled numeric key, not a native widget-ID range or availability claim.

@@ -4,6 +4,7 @@
 
 ## Required behavior
 
+- [x] Publish `GetSpacerVisualizationInfo` on WoW Forever too: its pinned UIWidgetManagerDocumentation.lua function and structure are byte-identical to Retail's. `tests/ui_widget_forever_records.rs` feeds two record rounds to the Forever `UIWidgetTopCenterContainerFrame` and reads the frames that its template `Setup` produces.
 - [x] Follow the shared simulator required-number selector boundary: reject missing, nil, string, numeric-string, boolean, table, function and thread arguments with a number-required error. Preserve supplied fractional keys without integer coercion or invented ID ranges.
 - [x] Return one nil for absent records and fresh complete snapshots for explicitly supplied records. No inferred catalogs, default records or fabricated data.
 - [x] Keep inputs environment-local; normal feeds publish record and membership before synchronous notifications. Preserve independent records on membership removal.

@@ -546,12 +546,7 @@ C_DateAndTime.GetServerTimeLocal # not-yet: temporary Lua workaround
 C_DateAndTime.IsDayTime # not-yet: temporary Lua workaround
 C_DeathInfo.GetCorpseMapPosition # not-yet
 C_DeathInfo.GetDeathReleasePosition # not-yet
-C_DeathInfo.GetSelfResurrectOptions # not-yet
 C_DeathInfo.UseSelfResurrectOption # not-yet
-C_DeathRecap.GetRecapEvents # not-yet
-C_DeathRecap.GetRecapLink # not-yet
-C_DeathRecap.GetRecapMaxHealth # not-yet
-C_DeathRecap.HasRecapEvents # not-yet
 C_DelvesUI.GetDelvesAffixSpellsForSeason # not-yet
 C_DelvesUI.GetDelvesFactionForSeason # not-yet
 C_DelvesUI.GetLockedTextForCompanion # not-yet
@@ -699,16 +694,6 @@ C_HeirloomInfo.AreAllCollectionFiltersChecked # not-yet
 C_HeirloomInfo.AreAllSourceFiltersChecked # not-yet
 C_HeirloomInfo.IsUsingDefaultFilters # not-yet: temporary Lua workaround
 C_HeirloomInfo.SetAllCollectionFilters # not-yet
-C_HouseEditor.ActivateHouseEditorMode # not-yet
-C_HouseEditor.EnterHouseEditor # not-yet
-C_HouseEditor.GetActiveHouseEditorMode # not-yet
-C_HouseEditor.GetHouseEditorAvailability # not-yet
-C_HouseEditor.GetHouseEditorModeAvailability # not-yet
-C_HouseEditor.GetHouseEditorPlayerType # not-yet
-C_HouseEditor.IsHouseEditorActive # not-yet
-C_HouseEditor.IsHouseEditorModeActive # not-yet
-C_HouseEditor.IsHouseEditorStatusAvailable # not-yet
-C_HouseEditor.LeaveHouseEditor # not-yet
 C_HouseExterior.GetCoreFixtureOptionsInfo # not-yet: temporary Lua workaround
 C_HouseExterior.GetCurrentHouseExteriorSize # not-yet: temporary Lua workaround
 C_HouseExterior.GetCurrentHouseExteriorType # not-yet: temporary Lua workaround
@@ -1181,21 +1166,6 @@ C_NamePlateManager.IsNamePlateUnitBehindCamera # intentionally-unsupported: 3D c
 C_NamePlateManager.SetNamePlateHitTestInsets # not-yet
 C_NamePlateManager.SetNamePlateSimplified # not-yet
 C_NameUtil.ReplaceSurnameSeparatorWithLinkSeparator # not-yet
-C_NeighborhoodInitiative.GetActiveNeighborhood # not-yet
-C_NeighborhoodInitiative.GetAvailableHouseXP # not-yet
-C_NeighborhoodInitiative.GetInitiativeActivityLogInfo # not-yet
-C_NeighborhoodInitiative.GetInitiativeTaskChatLink # not-yet
-C_NeighborhoodInitiative.GetInitiativeTaskRewardScaling # not-yet
-C_NeighborhoodInitiative.GetNeighborhoodInitiativeInfo # not-yet
-C_NeighborhoodInitiative.GetRequiredLevel # not-yet
-C_NeighborhoodInitiative.IsPlayerInNeighborhoodGroup # not-yet
-C_NeighborhoodInitiative.IsViewingActiveNeighborhood # not-yet
-C_NeighborhoodInitiative.PlayerHasInitiativeAccess # not-yet
-C_NeighborhoodInitiative.PlayerMeetsRequiredLevel # not-yet
-C_NeighborhoodInitiative.RequestInitiativeActivityLog # not-yet
-C_NeighborhoodInitiative.RequestNeighborhoodInitiativeInfo # not-yet
-C_NeighborhoodInitiative.SetActiveNeighborhood # not-yet
-C_NeighborhoodInitiative.SetViewingNeighborhood # not-yet
 C_PaperDollInfo.CanAutoEquipCursorItem # not-yet
 C_PaperDollInfo.CancelTemporaryEnchantment # not-yet
 C_PaperDollInfo.CursorCanGoInSlot # not-yet
@@ -1867,12 +1837,7 @@ C_UI.GetTopRightNotchSafeRegion # not-yet
 C_UI.GetUIParent # not-yet
 C_UI.GetWorldFrame # not-yet
 C_UIColor.GetColors # not-yet: temporary Lua workaround
-C_UIWidgetManager.GetBulletTextListWidgetVisualizationInfo # not-yet
-C_UIWidgetManager.GetButtonHeaderWidgetVisualizationInfo # not-yet
 C_UIWidgetManager.GetPreyHuntProgressWidgetVisualizationInfo # not-yet
-C_UIWidgetManager.GetSpacerVisualizationInfo # not-yet
-C_UIWidgetManager.GetSpellDisplayVisualizationInfo # not-yet
-C_UIWidgetManager.GetTextWithStateWidgetVisualizationInfo # not-yet
 C_UnitAuras.AddAuraSound # not-yet
 C_UnitAuras.AuraIsPrivate # not-yet
 C_UnitAuras.CancelAuraByInstanceID # not-yet
@@ -2062,7 +2027,6 @@ GetPowerRegen # not-yet
 GetPowerRegenForPowerType # not-yet
 GetProtocolTypes # not-yet: temporary Lua workaround
 GetRealmID # not-yet: temporary Lua workaround
-GetReleaseTimeRemaining # not-yet: temporary Lua workaround
 GetResSicknessDuration # not-yet
 GetRuneCooldown # not-yet
 GetRuneCount # not-yet
@@ -2093,7 +2057,6 @@ GetVehicleUIIndicatorSeat # not-yet
 HasDualWieldPenalty # not-yet
 HasFullControl # not-yet
 HasIgnoreDualWieldWeapon # not-yet
-HasNoReleaseAura # not-yet
 InitiateRolePoll # not-yet
 Is64BitClient # not-yet
 IsAccountSecured # not-yet: temporary Lua workaround

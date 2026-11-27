@@ -21,7 +21,7 @@ The `A_Admin` namespace provides administrative functions for controlling simula
 - Vignettes (Retail and WoW Forever): `A_Admin.SetVignettes(records)` supplies the session's modeled `C_VignetteInfo` records and fires `VIGNETTES_UPDATED`. Other profiles retain their existing legacy vignette surface. Each record requires `vignetteGUID`, `uiMapID`, `x`, and `y`; documented `VignetteInfo` fields can also be supplied, including `mapPin`. Optional host values are `facing`, `healthPercent`, `minGroupSize`, and `maxGroupSize`. Empty records are the default. Unknown-GUID return behavior is INFERRED (R88g6).
 - [Chat windows](chat-windows.md) — SetChatWindowState
 - [Voice chat](voice-chat.md) — SetCanPlayerUseVoiceChat, SetVoiceChatConnected, SetRemoteTtsVoices
-- [Health & Power](health-power.md) — SetPlayerHealth, SetPlayerPower, SetTargetHealth
+- [Health & Power](health-power.md) — SetPlayerHealth, SetPlayerPower, SetTargetHealth, SetReleaseTimeRemaining, SetNoReleaseAura, AddSelfResurrectOption, ClearSelfResurrectOptions, AddDeathRecap, ClearDeathRecaps
 - [Targeting](targeting.md) — SetTarget, ClearTarget, SetFocus, ClearFocus
 - [Challenge mode](challenge-mode.md) — SetChallengePowerLevelMods
 - [Party](party.md) — SetPartySize, SetPartyMember, SetPartyMemberHealth, KillPartyMember, ResPartyMember, SetRotDamage, SetLFGRoleCheck, ClearLFGRoleCheck
@@ -34,7 +34,7 @@ The `A_Admin` namespace provides administrative functions for controlling simula
 - [Buffs](buffs.md) — AddBuff, RemoveBuff, ClearBuffs
 - [Loss of Control](../specs/active-loss-of-control.md) — AddLossOfControl, ClearLossOfControl
 - [Zone](zone.md) — SetZone, SetSubZone, SetInstanceInfo, SetInInstance
-- [Housing](housing.md) — SetPlayerOwnedHouses
+- [Housing](housing.md) — SetPlayerOwnedHouses, SetHouseEditorStatus, SetHouseEditorModeAvailability, CompleteHouseEditorModeChange
 - [Equipment locks](equipment.md) — SetEquipmentItemLock, ClearEquipmentItemLock
 - [Transmog outfits](transmog-outfits.md) — SetUnlockedOutfitSlots
 - [Economy](economy.md) — SetMoney, SetItemLevel, AddBagItem, RemoveBagItem, SetBagItemDurability, SetEquippedItemGUID

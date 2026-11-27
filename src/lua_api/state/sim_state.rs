@@ -1032,6 +1032,10 @@ pub struct SimState {
     pub lfg_roles: LfgRoleSelection,
     /// Account region read by `GetCurrentRegion` and `GetCurrentRegionName`.
     pub current_region: crate::lua_api::globals::real::region::RegionInfo,
+    /// Supplied spirit-release timer read by `GetReleaseTimeRemaining`; `None` when alive.
+    pub release_timer: Option<crate::lua_api::globals::real::release_timer::ReleaseTimer>,
+    /// Supplied cannot-release effect read by `HasNoReleaseAura`.
+    pub no_release_aura: Option<crate::lua_api::globals::real::release_timer::ReleaseTimer>,
     /// LFG role check in progress read by `GetLFGRoleUpdate`; `None` when idle.
     pub lfg_role_check: Option<crate::lua_api::globals::real::lfg_role_check::LfgRoleCheck>,
     pub lfd_dungeons: Vec<LfdDungeonInfo>,
@@ -1345,6 +1349,8 @@ pub struct SimState {
     pub trial_boost_level: crate::c_api::c_character_creation_trial_boost::TrialBoostLevelState,
     pub scenario: ScenarioState,
     pub death_recaps: Vec<DeathRecapEntry>,
+    /// Host-supplied `C_DeathInfo.GetSelfResurrectOptions` records.
+    pub self_resurrect_options: Vec<crate::c_api::c_death_info::SelfResurrectOption>,
     pub chat_bubbles: Vec<ChatBubble>,
     pub summon_request: SummonRequestState,
     pub player_map_position: (f64, f64),

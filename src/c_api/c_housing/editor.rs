@@ -4,7 +4,7 @@ use crate::c_api::helpers::ensure_namespace;
 use crate::event::{Event, EventArg};
 use crate::lua_api::SimState;
 use crate::lua_api::methods::{borrow_state, borrow_state_mut};
-use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
+use crate::lua_bridge::{FromStack, stack_val, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 
@@ -47,6 +47,8 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
         ("IsHouseEditorModeActive", is_mode_active),
         ("IsHouseEditorStatusAvailable", status_available),
         ("LeaveHouseEditor", leave),
+        ("GetActiveHouseEditorMode", active_mode),
+        ("GetHouseEditorPlayerType", player_type),
     ] {
         table_set_rust_fn_static(state, ns, name, function)?;
     }
@@ -66,6 +68,18 @@ fn read_mode(state: &LuaState) -> LuaResult<i32> {
             "house editor mode must be an integer in 0..6",
         )),
     }
+}
+
+fn active_mode(state: &mut LuaState) -> LuaResult<u32> {
+    let mode = borrow_state(state)?.housing.active_house_editor_mode;
+    state.push(Val::Num(f64::from(mode)));
+    Ok(1)
+}
+
+fn player_type(state: &mut LuaState) -> LuaResult<u32> {
+    let player_type = borrow_state(state)?.housing.house_editor_player_type;
+    state.push(player_type.map_or(Val::Nil, |value| Val::Num(f64::from(value))));
+    Ok(1)
 }
 
 fn availability(state: &mut LuaState) -> LuaResult<u32> {
@@ -140,19 +154,22 @@ fn request_mode(sim: &mut SimState, mode: i32) -> i32 {
 
 /// Host delivery boundary. Success commits the pending mode; failure preserves active mode.
 pub fn complete_mode_change(sim: &mut SimState, result: i32) {
-    let Some(mode) = sim.housing.editor.pending_mode.take() else {
-        return;
-    };
-    let (name, payload) = if result == SUCCESS {
+    if let Some((name, payload)) = resolve_mode_change(sim, result) {
+        sim.events.push(Event {
+            name: name.into(),
+            args: vec![EventArg::Number(f64::from(payload))],
+        });
+    }
+}
+
+fn resolve_mode_change(sim: &mut SimState, result: i32) -> Option<(&'static str, i32)> {
+    let mode = sim.housing.editor.pending_mode.take()?;
+    Some(if result == SUCCESS {
         sim.housing.active_house_editor_mode = mode;
         ("HOUSE_EDITOR_MODE_CHANGED", mode)
     } else {
         ("HOUSE_EDITOR_MODE_CHANGE_FAILURE", result)
-    };
-    sim.events.push(Event {
-        name: name.into(),
-        args: vec![EventArg::Number(f64::from(payload))],
-    });
+    })
 }
 
 fn leave(state: &mut LuaState) -> LuaResult<u32> {
@@ -165,6 +182,59 @@ fn leave(state: &mut LuaState) -> LuaResult<u32> {
             name: "HOUSE_EDITOR_MODE_CHANGED".into(),
             args: vec![EventArg::Number(f64::from(MODE_NONE))],
         });
+    }
+    Ok(0)
+}
+
+/// `A_Admin.SetHouseEditorStatus(statusAvailable, availability, defaultMode[, playerType])`
+/// supplies the editor gate, `A_Admin.SetHouseEditorModeAvailability(mode, result)`
+/// one mode's `Enum.HousingResult`, and `A_Admin.CompleteHouseEditorModeChange(result)`
+/// the server reply to a pending request (the mode events dispatch at once).
+/// Simulator inputs, not native housing permissions.
+pub(crate) fn register_admin(
+    builder: crate::lua_bridge::TableBuilder,
+) -> LuaResult<crate::lua_bridge::TableBuilder> {
+    builder
+        .set_function("SetHouseEditorStatus", admin_set_status)?
+        .set_function(
+            "SetHouseEditorModeAvailability",
+            admin_set_mode_availability,
+        )?
+        .set_function("CompleteHouseEditorModeChange", admin_complete_mode_change)
+}
+
+fn admin_set_status(state: &mut LuaState) -> LuaResult<u32> {
+    let status_available = bool::from_stack(state, 1)?;
+    let availability = i32::from_stack(state, 2)?;
+    let default_mode = i32::from_stack(state, 3)?;
+    let player_type = Option::<i32>::from_stack(state, 4)?;
+    if !(MODE_BASIC..=LAST_MODE).contains(&default_mode) {
+        return Err(rilua::runtime_error(
+            "A_Admin.SetHouseEditorStatus: defaultMode must be in 1..6",
+        ));
+    }
+    let mut sim = borrow_state_mut(state)?;
+    let editor = &mut sim.housing.editor;
+    editor.status_available = status_available;
+    editor.availability = availability;
+    editor.default_mode = default_mode;
+    sim.housing.house_editor_player_type = player_type;
+    Ok(0)
+}
+
+fn admin_set_mode_availability(state: &mut LuaState) -> LuaResult<u32> {
+    let mode = read_mode(state)?;
+    let result = i32::from_stack(state, 2)?;
+    borrow_state_mut(state)?.housing.editor.mode_availability[mode as usize] = result;
+    Ok(0)
+}
+
+fn admin_complete_mode_change(state: &mut LuaState) -> LuaResult<u32> {
+    let result = i32::from_stack(state, 1)?;
+    let event = resolve_mode_change(&mut *borrow_state_mut(state)?, result);
+    if let Some((name, payload)) = event {
+        let args = [Val::Num(f64::from(payload))];
+        crate::lua_api::globals::state_backed_queries::dispatch_event_now(state, name, &args)?;
     }
     Ok(0)
 }

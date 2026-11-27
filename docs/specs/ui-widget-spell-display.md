@@ -4,6 +4,7 @@ Contract for environment-owned supplied SpellDisplay input, fresh complete neste
 
 ## What it must do
 
+- [x] Publish `GetSpellDisplayVisualizationInfo` on WoW Forever too: its pinned UIWidgetManagerDocumentation.lua function and structure are byte-identical to Retail's. `tests/ui_widget_forever_records.rs` feeds two record rounds to the Forever `UIWidgetTopCenterContainerFrame` and reads the frames that its template `Setup` produces.
 ### Supplied input and query
 
 - [x] Store complete explicit `SpellDisplayRecord` (14 top-level fields) and `WidgetSpellInfoRecord` (16 nested fields), with no default DTO, invented catalog, or Lua `Val` stored input.

@@ -1,4 +1,4 @@
-//! Literal21-field Retail/PTR supplied TextWithState input; no query producer.
+//! Literal21-field Retail/PTR/Forever supplied TextWithState input; no query producer.
 
 /// Complete explicit host record. No native catalog inference or automatic filler.
 #[derive(Debug, Clone, PartialEq)]

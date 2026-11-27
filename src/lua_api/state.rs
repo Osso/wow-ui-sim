@@ -830,6 +830,8 @@ macro_rules! build_empty_sim_state {
             lfd_lock_requests: Default::default(),
             lfg_roles: LfgRoleSelection::default(),
             current_region: Default::default(),
+            release_timer: None,
+            no_release_aura: None,
             lfg_role_check: None,
             lfd_dungeons: default_lfd_dungeons(),
             lfg_tooltip_rewards_ready: false,
@@ -1069,6 +1071,7 @@ macro_rules! build_empty_sim_state {
                 crate::c_api::c_character_creation_trial_boost::TrialBoostLevelState::default(),
             scenario: ScenarioState::default(),
             death_recaps: Vec::new(),
+            self_resurrect_options: Vec::new(),
             // Cached FrameXMLBase/Constants.lua: MAX_TOTEMS = 4.
             totem_slots: vec![None; 4],
             chat_bubbles: Vec::new(),

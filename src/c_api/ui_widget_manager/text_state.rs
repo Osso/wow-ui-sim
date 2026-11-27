@@ -9,7 +9,10 @@ use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 
 pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
-    let publish = matches!(ACTIVE, ClientProfile::Retail | ClientProfile::Ptr);
+    let publish = matches!(
+        ACTIVE,
+        ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever
+    );
     if !publish {
         return Ok(());
     }

@@ -419,7 +419,7 @@ pub struct HousingState {
     pub blueprint_export_availability: i32,
     pub blueprint_feature_availability: i32,
     pub blueprint_import_availability: i32,
-    #[cfg(feature = "retail-12-0-0")]
+    #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
     pub editor: crate::c_api::c_housing::editor::EditorState,
     #[cfg(feature = "retail-12-0-0")]
     pub location: crate::c_api::c_housing::location::LocationState,

@@ -1,9 +1,10 @@
 # UI widget ButtonHeader supplied records
 
-`C_UIWidgetManager.GetButtonHeaderWidgetVisualizationInfo(widgetID)` must expose complete supplied records as independent Lua snapshots. Inputs live in `src/c_api/ui_widget_manager.rs`; the C API query is registered for Retail/PTR. Bounded Retail execution is recorded below. See [C API architecture](../lua-api.md) and [cache provenance](../updating-blizzard-ui-to-a-new-patch.md).
+`C_UIWidgetManager.GetButtonHeaderWidgetVisualizationInfo(widgetID)` must expose complete supplied records as independent Lua snapshots. Inputs live in `src/c_api/ui_widget_manager.rs`; the C API query is registered for Retail, PTR and Forever. Bounded Retail execution is recorded below. See [C API architecture](../lua-api.md) and [cache provenance](../updating-blizzard-ui-to-a-new-patch.md).
 
 ## What it must do
 
+- [x] Publish `GetButtonHeaderWidgetVisualizationInfo` on WoW Forever too: its pinned UIWidgetManagerDocumentation.lua function and structure are byte-identical to Retail's. `tests/ui_widget_forever_records.rs` feeds two record rounds to the Forever `UIWidgetTopCenterContainerFrame` and reads the frames that its template `Setup` produces.
 - [ ] Keep supplied records environment-local. Empty inputs contain no records; never fabricate default records or derive a catalog from ID thresholds.
 - [ ] Return nil for unsupplied numeric IDs and select exact supplied keys without integer narrowing. Numeric-key storage is simulator policy, not a native acceptance-range claim.
 - [ ] Preserve all 17 required header fields and five required nested button fields from cached `UIWidgetManagerDocumentation.lua`, including false, enum zeroes, empty strings, empty arrays and supplied button order. Records represent strings, numbers, booleans and enum values literally; only the complete result is nullable.

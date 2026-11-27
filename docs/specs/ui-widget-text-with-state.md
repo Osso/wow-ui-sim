@@ -4,6 +4,7 @@ Host-supplied TextWithState input belongs to `src/c_api/ui_widget_manager/`; the
 
 ## What it must do
 
+- [x] Publish `GetTextWithStateWidgetVisualizationInfo` on WoW Forever too: its pinned UIWidgetManagerDocumentation.lua function and structure are byte-identical to Retail's. `tests/ui_widget_forever_records.rs` feeds two record rounds to the Forever `UIWidgetTopCenterContainerFrame` and reads the frames that its template `Setup` produces.
 - [x] `C_UIWidgetManager.GetTextWithStateWidgetVisualizationInfo(number)` returns exactly one nil for an unknown input, otherwise a fresh complete21-field snapshot preserving supplied strings/numbers/enums/bool without inferred defaults or consumer clamping. Caller mutation, host replacement/deletion and another environment cannot alter retained snapshots.
 - [x] Numeric keys and strict non-number rejection follow existing `WidgetId` and `queries::read_numeric_id`, not a new ID-range policy. Real host-secret NUMBER arguments are allowed when untainted, denied before supplied/absent lookup when tainted; public IDs and public snapshot fields recover normally. Both cached schemas explicitly declare `SecretArguments = "AllowedWhenUntainted"`; no new secrecy policy is invented.
 - [x] The existing typed host feed accepts TextWithState type8, validates supplied-set existence and entry/visualization type before mutation, stores complete input and membership before synchronous `UPDATE_UI_WIDGET`, and retains independent visualization after membership removal through `UPDATE_ALL_UI_WIDGETS`.
@@ -26,7 +27,7 @@ Explicit fixtures are host-input test policy, not native catalog records. Consum
 - `src/c_api/ui_widget_manager/feed.rs`: public `WidgetVisualization::TextWithState` type8 and insertion in existing feed before notification; no new transport/event implementation.
 - `src/c_api/ui_widget_manager.rs`: public DTO export/module wiring.
 
-- `src/c_api/ui_widget_manager/text_state.rs`: complete fresh projection, existing numeric/secret validator and Retail/PTR publication via the active-profile constant. No padding clamping.
+- `src/c_api/ui_widget_manager/text_state.rs`: complete fresh projection, existing numeric/secret validator and Retail/PTR/Forever publication via the active-profile constant. No padding clamping.
 - `src/c_api/ui_widget_manager/queries.rs`: registration beside existing supplied visualization queries.
 
 ## Tests asserting this spec

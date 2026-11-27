@@ -9,7 +9,10 @@ use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 
 pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
-    if !matches!(ACTIVE, ClientProfile::Retail | ClientProfile::Ptr) {
+    if !matches!(
+        ACTIVE,
+        ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever
+    ) {
         return Ok(());
     }
     let namespace = crate::c_api::ensure_namespace(state, "C_UIWidgetManager")?;

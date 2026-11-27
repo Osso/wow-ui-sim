@@ -542,7 +542,6 @@ C_DateAndTime.GetCalendarTimeFromEpoch # not-yet: temporary Lua workaround
 C_DateAndTime.GetServerTimeLocal # not-yet: temporary Lua workaround
 C_DeathInfo.GetCorpseMapPosition # not-yet
 C_DeathInfo.GetDeathReleasePosition # not-yet
-C_DeathInfo.GetSelfResurrectOptions # not-yet
 C_DeathInfo.UseSelfResurrectOption # not-yet
 C_Debug.DashboardIsEnabled # not-yet
 C_Debug.FrameXMLDebug # not-yet
@@ -2261,7 +2260,6 @@ GetRaidProfileOption # not-yet
 GetRaidProfileSavedPosition # not-yet
 GetRatedBattleGroundInfo # not-yet
 GetRealmID # not-yet: temporary Lua workaround
-GetReleaseTimeRemaining # not-yet: temporary Lua workaround
 GetResSicknessDuration # not-yet
 GetRewardNumSkillUps # not-yet
 GetRewardPackArtifactPower # not-yet
@@ -2333,7 +2331,6 @@ HasIgnoreDualWieldWeapon # not-yet
 HasKey # not-yet
 HasLoadedCUFProfiles # not-yet
 HasLootSpecializations # not-yet
-HasNoReleaseAura # not-yet
 HasWandEquipped # not-yet
 HearthAndResurrectFromArea # not-yet
 HideRepairCursor # not-yet
