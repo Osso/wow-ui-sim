@@ -7,9 +7,12 @@ fn trigger_tutorial_publication_matches_pinned_legacy_consumers() {
     let published: bool = env
         .eval("return type(rawget(_G, 'TriggerTutorial')) == 'function'")
         .expect("raw publication query");
+    // Forever: Camelot/MainMenuBarBagButtons.lua:137 calls TriggerTutorial(50);
+    // 8b25ba6a21 (R88fh) publishes the recorder there.
     let has_consumer = matches!(
         ACTIVE,
-        ClientProfile::Mists
+        ClientProfile::WowForever
+            | ClientProfile::Mists
             | ClientProfile::Era
             | ClientProfile::Anniversary
             | ClientProfile::Wrath
