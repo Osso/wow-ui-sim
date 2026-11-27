@@ -20,10 +20,10 @@ fn hover_bag_slot(env: &WowLuaEnv, slot: i32) -> (String, i64) {
 }
 
 fn assert_hovered_bag_items_resolve_by_guid(env: &WowLuaEnv) {
-    env.exec("A_Admin.ClearBags(); A_Admin.AddBagItem(0, 1, 6948); A_Admin.AddBagItem(0, 2, 2589, 5)")
+    env.exec("A_Admin.ClearBags(); A_Admin.AddBagItem(0, 1, 6948); A_Admin.AddBagItem(0, 2, 1728)")
         .expect("supply two bag items");
     assert_eq!(hover_bag_slot(env, 1), ("6948".to_owned(), 6948));
-    assert_eq!(hover_bag_slot(env, 2), ("2589".to_owned(), 2589));
+    assert_eq!(hover_bag_slot(env, 2), ("1728".to_owned(), 1728));
 }
 
 #[cfg(feature = "client-retail")]

@@ -23,7 +23,7 @@
 ## Tests asserting this spec
 
 - `tests/patch_9_0_1_publication_sweep.rs::lfg_expand_prompt_accept_clears_supplied_state` calls the original popup binding with two supplied prompts.
-- `tests/lfg_expand_search_prompt.rs` (Retail and Forever) accepts the original popup with a nonzero and a zero key.
+- `tests/lfg_expand_search_prompt.rs` accepts the original Retail popup with nonzero and zero keys. Forever excludes Blizzard_GroupFinder (`## ExcludeLoadGameType: camelot`), so its case calls the API directly with the same inputs.
 
 ## Known gaps (current cycle)
 

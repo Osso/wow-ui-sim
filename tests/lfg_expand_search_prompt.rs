@@ -1,12 +1,17 @@
 #![cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 //! `C_LFGInfo.ConfirmLfgExpandSearch` consumes the supplied expand-search
-//! prompt. Original consumer: `LFGEventFrame_OnEvent` shows the
-//! `LFG_QUEUE_EXPAND` popup on `SHOW_LFG_EXPAND_SEARCH_PROMPT`, and the popup's
-//! accept button runs the API (Blizzard_GroupFinder/Shared/LFGFrame.lua:87-96, 264-265).
+//! prompt. Retail consumer: `LFGEventFrame_OnEvent` shows the `LFG_QUEUE_EXPAND`
+//! popup on `SHOW_LFG_EXPAND_SEARCH_PROMPT`, and the popup's accept button runs
+//! the API (Blizzard_GroupFinder/Shared/LFGFrame.lua:87-96, 264-265). Forever
+//! excludes Blizzard_GroupFinder (`## ExcludeLoadGameType: camelot`), so no
+//! original consumer is selected there and the Forever case calls the API.
 
 use wow_ui_sim::lua_api::WowLuaEnv;
 
-const ACCEPT_PROMPT: &str = r#"
+type Prompt = Option<(u64, Vec<u8>)>;
+
+#[cfg(feature = "client-retail")]
+const ACCEPT_POPUP: &str = r#"
 local key, data = ...
 A_Admin.ShowLfgExpandSearchPrompt(key, data)
 local _, dialog = StaticPopup_Visible("LFG_QUEUE_EXPAND")
@@ -15,9 +20,17 @@ dialog:GetButton1():Click()
 return true
 "#;
 
-fn accept_prompt(env: &WowLuaEnv, key: u64, data: &str) -> Option<(u64, Vec<u8>)> {
-    let chunk = format!("return (function(...) {ACCEPT_PROMPT} end)({key}, {data:?})");
-    let shown: bool = env.eval(&chunk).expect("the original LFG popup should run");
+#[cfg(feature = "client-wowforever")]
+const ACCEPT_POPUP: &str = r#"
+local key, data = ...
+A_Admin.ShowLfgExpandSearchPrompt(key, data)
+C_LFGInfo.ConfirmLfgExpandSearch()
+return true
+"#;
+
+fn accept_prompt(env: &WowLuaEnv, key: u64, data: &str) -> Prompt {
+    let chunk = format!("return (function(...) {ACCEPT_POPUP} end)({key}, {data:?})");
+    let shown: bool = env.eval(&chunk).expect("the prompt should be accepted");
     assert!(shown, "SHOW_LFG_EXPAND_SEARCH_PROMPT shows LFG_QUEUE_EXPAND");
     env.state().borrow().lfg_expand_prompt.clone()
 }
@@ -37,7 +50,7 @@ fn lfg_expand_popup_accept_consumes_the_supplied_prompt(env: &WowLuaEnv) {
 
 #[cfg(feature = "client-wowforever")]
 #[test]
-fn forever_lfg_expand_popup_accept_consumes_the_supplied_prompt() {
+fn forever_lfg_expand_confirmation_consumes_the_supplied_prompt() {
     crate::common::with_timeout(120, || {
         let env = crate::common::forever_game_env();
         assert_accept_consumes_nonzero_prompts(&env);
