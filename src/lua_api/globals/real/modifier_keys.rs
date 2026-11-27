@@ -16,6 +16,17 @@ use crate::lua_bridge::{FromStack, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 
+fn make_modifiers(state: &mut LuaState) -> LuaResult<u32> {
+    let modifiers = {
+        let sim = borrow_state(state)?;
+        u8::from(sim.modifier_keys.shift)
+            | (u8::from(sim.modifier_keys.control) << 1)
+            | (u8::from(sim.modifier_keys.alt) << 2)
+    };
+    state.push(Val::Num(f64::from(modifiers)));
+    Ok(1)
+}
+
 pub fn is_key_down(state: &mut LuaState) -> LuaResult<u32> {
     let key = String::from_stack(state, 1)?;
     let key = crate::lua_api::key_dispatch::normalized_key_name(&key);
@@ -150,6 +161,13 @@ pub fn is_modified_click(state: &mut LuaState) -> LuaResult<u32> {
 
 pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
     use rilua::LuaApiMut;
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
+        LuaApiMut::register_function(lua, "MakeModifiers", make_modifiers)?;
+    }
     let state = lua.state_mut();
     let g = state.global;
     table_set_rust_fn_static(state, g, "IsKeyDown", is_key_down)?;

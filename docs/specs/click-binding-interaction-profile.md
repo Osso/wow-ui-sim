@@ -18,9 +18,12 @@
 
 - `src/c_api/c_click_bindings.rs` — per-environment interaction profile and queries.
 - `src/lua_api/env_init/mod.rs` — registers the modeled profile.
-- `src/lua_api/workarounds/temporary/click_bindings_defaults.rs` — unrelated temporary click-binding gaps and modifier helpers.
+- `src/lua_api/globals/real/modifier_keys.rs` — Retail and Forever `MakeModifiers` model backed by modifier-key state.
+- `src/lua_api/workarounds/temporary/click_bindings_defaults.rs` — legacy-profile modifier fallback and other temporary click-binding gaps.
 
 ## Tested scope
+
+- `tests/make_modifiers.rs` exercises Shift+Alt and Control-only inputs through `A_Admin` and the Retail/Forever Rust provider.
 
 - Commit `c00f44d0e`: profile queries, replacement, copied results, effective-button mapping, and reset: 2/2; unchanged Blizzard `SecureUnitButton_OnClick` targets `player` and `party1`: 1/1.
 - Commit `dfcacefbe` replaces the handpicked fixture startup list with production Blizzard Game-screen discovery/loading. Independent inspection of `/tmp/wow-unit-frame-bug/click-production-fixture.log` records `blizzard_full_ui_click_chain_targets_and_casts` PASS 1/1: PlayerFrame and PartyFrame target their units, and spell/action paths cast Flash of Light. The PlayerFrame assertion has no direct `TargetUnit` fallback.
@@ -30,7 +33,8 @@
 
 ## Known gaps (current cycle)
 
-- [ ] Modifier assignments beyond the unmodified default are simulator-defined; native modifier semantics are unverified.
+- [x] **INFERRED R88g9 (native evidence pending):** `MakeModifiers` reads modeled Shift, Control, and Alt state and encodes them as bits 1, 2, and 4. Exact combinations are asserted for two distinct inputs.
+- [ ] Native modifier-bit assignments remain unverified.
 - [ ] Broader GUI hit-testing coverage remains unverified: current retail app-endpoint evidence is not native physical input. MainHand close/hover/leave is bounded application-dispatch proof only.
 - [ ] The target-aura `OnUpdate` root cause is outside the click-chain contract; see [[target-aura-private-count]].
 
