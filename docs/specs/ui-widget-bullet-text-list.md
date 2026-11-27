@@ -4,6 +4,7 @@ BulletTextList type10 belongs to the `src/c_api/ui_widget_manager/` supplied-sta
 
 ## What it must do
 
+- [x] Publish `GetBulletTextListWidgetVisualizationInfo` on WoW Forever too: its pinned UIWidgetManagerDocumentation.lua function and structure are byte-identical to Retail's. `tests/ui_widget_forever_records.rs` feeds two record rounds to the Forever `UIWidgetTopCenterContainerFrame` and reads the frames that its template `Setup` produces.
 ### Public query and supplied-state policy
 
 - [ ] Retail/PTR public `C_UIWidgetManager.GetBulletTextListWidgetVisualizationInfo(widgetID)` rejects supplied nil, string, bool and table selectors with contextual `C_UIWidgetManager.GetBulletTextListWidgetVisualizationInfo: widgetID must be a number` error text. A failure merely caused by an absent function is not successful validation.
