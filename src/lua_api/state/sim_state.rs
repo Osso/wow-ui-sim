@@ -32,6 +32,7 @@ pub struct SimState {
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     pub(crate) configuration_warnings:
         Vec<crate::lua_api::globals::real::configuration_warnings::ConfigurationWarning>,
+    pub(crate) system_requirements_checked: bool,
     /// INFERRED (R88ft (native evidence pending)): per-account script permission, session-only here.
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     pub(crate) dangerous_scripts_allowed: bool,

@@ -373,6 +373,7 @@ fn apply_core_foundation_tracking_defaults(lua: &mut rilua::Lua) -> crate::Resul
     temporary::contribution_collector_defaults::apply_bootstrap(lua)?;
     temporary::content_tracking_defaults::apply_bootstrap(lua)?;
     temporary::cooldown_viewer_defaults::apply_bootstrap(lua)?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::configuration_warnings_defaults::apply_bootstrap(lua)?;
     temporary::container_default_shapes::apply_bootstrap(lua)?;
     temporary::container_portrait_texture::apply_bootstrap(lua)?;

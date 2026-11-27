@@ -72,6 +72,7 @@ pub(crate) mod client_info_defaults;
 pub(crate) mod collections_journal_namespace;
 pub(crate) mod color_defaults;
 pub(crate) mod combat_log_state;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod configuration_warnings_defaults;
 pub(crate) mod container_default_shapes;
 #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]

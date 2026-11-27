@@ -80,6 +80,7 @@ macro_rules! build_empty_sim_state {
             behavioral_messaging_receipts: Vec::new(),
             #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
             configuration_warnings: Vec::new(),
+            system_requirements_checked: false,
             pending_target_spell: Default::default(),
             loot_specialization: 0,
             loot_spec_window: None,

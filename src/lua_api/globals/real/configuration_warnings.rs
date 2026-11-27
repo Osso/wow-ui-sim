@@ -18,6 +18,16 @@ pub(crate) struct ConfigurationWarning {
 }
 
 pub(crate) fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
+    rilua::LuaApiMut::register_function(
+        lua,
+        "HasCheckedSystemRequirements",
+        has_checked_system_requirements,
+    )?;
+    rilua::LuaApiMut::register_function(
+        lua,
+        "SetCheckedSystemRequirements",
+        set_checked_system_requirements,
+    )?;
     let state = lua.state_mut();
     let namespace = ensure_namespace(state, "C_ConfigurationWarnings")?;
     table_set_rust_fn_static(
@@ -42,7 +52,37 @@ pub(crate) fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
 }
 
 pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
-    builder.set_function("SetConfigurationWarnings", set_warnings)
+    builder
+        .set_function("SetConfigurationWarnings", set_warnings)?
+        .set_function(
+            "SetSystemRequirementsChecked",
+            set_system_requirements_checked,
+        )
+}
+
+fn has_checked_system_requirements(state: &mut LuaState) -> LuaResult<u32> {
+    let checked = borrow_state(state)?.system_requirements_checked;
+    state.push(Val::Bool(checked));
+    Ok(1)
+}
+
+fn set_checked_system_requirements(state: &mut LuaState) -> LuaResult<u32> {
+    let checked = read_checked(state, 1)?;
+    borrow_state_mut(state)?.system_requirements_checked = checked;
+    Ok(0)
+}
+
+fn set_system_requirements_checked(state: &mut LuaState) -> LuaResult<u32> {
+    let checked = read_checked(state, 1)?;
+    borrow_state_mut(state)?.system_requirements_checked = checked;
+    Ok(0)
+}
+
+fn read_checked(state: &LuaState, index: i32) -> LuaResult<bool> {
+    match stack_val(state, index) {
+        Val::Bool(value) => Ok(value),
+        _ => Err(runtime_error("checked must be a boolean")),
+    }
 }
 
 fn set_warnings(state: &mut LuaState) -> LuaResult<u32> {
