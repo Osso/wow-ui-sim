@@ -42,12 +42,13 @@ pub(crate) use temporary::session_exit_defaults::register_all as register_sessio
 pub(crate) use temporary::source_patches::patch_lua_source;
 
 use logging::log_step;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+pub(crate) use runtime_surfaces::patch_account_store_set_storefront;
 pub use runtime_surfaces::patch_uiparent_managed_frame_mixin;
 use runtime_surfaces::*;
 pub(crate) use runtime_surfaces::{
-    patch_account_store_set_storefront, patch_glueparent_uiparent_attributes,
-    patch_playerspells_onload_backfill, patch_quest_log_mixin, patch_shared_xml_anim_mixins,
-    patch_unit_position_frame_mixin,
+    patch_glueparent_uiparent_attributes, patch_playerspells_onload_backfill,
+    patch_quest_log_mixin, patch_shared_xml_anim_mixins, patch_unit_position_frame_mixin,
 };
 
 struct WorkaroundStep {
@@ -231,6 +232,7 @@ fn apply_temporary_state_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
 }
 
 fn apply_runtime_state_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::global_placeholder_tables::apply_bootstrap(lua)?;
     temporary::frame_helper_defaults::apply_bootstrap(lua)?;
     crate::c_api::c_event_scheduler::apply_bootstrap(lua)?;
@@ -394,7 +396,9 @@ fn apply_core_foundation_addon_defaults(lua: &mut rilua::Lua) -> crate::Result<(
 }
 
 fn apply_core_foundation_journal_defaults(lua: &mut rilua::Lua) -> crate::Result<()> {
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::achievement_ui_access_defaults::apply_bootstrap(lua)?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::achievement_search_preview::apply_bootstrap(lua)?;
     temporary::alert_frame_defaults::apply_bootstrap(lua)?;
     temporary::adventure_journal_fallbacks::apply_bootstrap(lua)?;
@@ -555,6 +559,7 @@ pub(crate) fn patch_dispatcher_surface_for_addon_load(env: &crate::lua_api::Load
     let _ = temporary::dispatcher_surface::patch_for_addon_load(env);
 }
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) fn patch_achievement_search_preview_for_addon_load(env: &crate::lua_api::LoaderEnv<'_>) {
     let _ = temporary::achievement_search_preview::patch_for_addon_load(env);
 }
@@ -726,11 +731,9 @@ fn patch_runtime_feature_addon_surfaces(env: &crate::lua_api::LoaderEnv<'_>, add
     if addon_name == "Blizzard_AuthChallengeUI" {
         patch_auth_challenge_frame_parent(env);
     }
-    // Retail's TOC loads Blizzard_AccountStore.lua before the frame XML.
-    // Preserve its setter: it updates the title and emits StoreFrontSet.
-    if addon_name == "Blizzard_AccountStore"
-        && crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail
-    {
+    // Retail's Lua source and Rust surface already own the storefront setter.
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+    if addon_name == "Blizzard_AccountStore" {
         let _ = patch_account_store_set_storefront(env);
     }
     if addon_name == "Blizzard_CatalogShop" {

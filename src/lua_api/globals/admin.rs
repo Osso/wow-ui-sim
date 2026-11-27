@@ -29,8 +29,8 @@ use super::admin_actionbars_bags::set_possess_action_slot;
 use super::admin_actionbars_bags::{
     add_bag_item, add_guild_bank_item, add_guild_bank_tab, clear_action_bars, clear_action_slot,
     clear_bags, clear_guild_bank, clear_guild_bank_tabs, remove_bag_item, set_action_slot,
-    set_guild_bank_money, set_guild_bank_rank_permissions, set_guild_bank_tab_cost,
-    set_merchant_items, set_pet_action_slot, set_possess_bar_visible,
+    set_bag_item_durability, set_guild_bank_money, set_guild_bank_rank_permissions,
+    set_guild_bank_tab_cost, set_merchant_items, set_pet_action_slot, set_possess_bar_visible,
 };
 use super::admin_addons::register_test_addon;
 use super::admin_auction_house::{
@@ -45,8 +45,9 @@ use super::admin_collections::{
     add_transmog, add_transmog_appearance, collect_campsite, collect_heirloom, collect_mount,
     collect_pet, collect_toy, earn_achievement, has_achievement, remove_transmog,
     set_achievement_earned, set_campsite_collected, set_can_show_achievement_ui,
-    set_mount_collected, set_pet_collected, set_toy_collected, set_transmog_for_slot,
-    uncollect_campsite, uncollect_heirloom, uncollect_mount, uncollect_pet, uncollect_toy,
+    set_mount_collected, set_pet_collected, set_summoned_battle_pet_guid, set_toy_collected,
+    set_transmog_for_slot, uncollect_campsite, uncollect_heirloom, uncollect_mount, uncollect_pet,
+    uncollect_toy,
 };
 use super::admin_crafting::{
     clear_known_recipes, learn_recipe, relearn_profession, seed_reagents_for_recipe,
@@ -740,6 +741,7 @@ fn register_action_bars_and_bags(b: TableBuilder) -> LuaResult<TableBuilder> {
         .set_function("ClearActionBars", clear_action_bars)?
         .set_function("AddBagItem", add_bag_item)?
         .set_function("RemoveBagItem", remove_bag_item)?
+        .set_function("SetBagItemDurability", set_bag_item_durability)?
         .set_function("ClearBags", clear_bags)?
         .set_function("AddGuildBankItem", add_guild_bank_item)?
         .set_function("SetGuildBankMoney", set_guild_bank_money)?
@@ -823,6 +825,7 @@ const COLLECTIONS_PVP_FUNCTIONS: &[(&str, RustFn)] = &[
     ("SetToyCollected", set_toy_collected),
     ("SetCampsiteCollected", set_campsite_collected),
     ("SetAchievementEarned", set_achievement_earned),
+    ("SetSummonedBattlePetGUID", set_summoned_battle_pet_guid),
     ("SetCanShowAchievementUI", set_can_show_achievement_ui),
     ("HasAchievement", has_achievement),
     ("SetMerchantItems", set_merchant_items),

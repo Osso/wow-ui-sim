@@ -195,6 +195,12 @@ pub(super) fn uncollect_campsite(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
+pub(super) fn set_summoned_battle_pet_guid(state: &mut LuaState) -> LuaResult<u32> {
+    let pet_guid = Option::<String>::from_stack(state, 1)?;
+    borrow_state_mut(state)?.pet.summoned_battle_pet_guid = pet_guid;
+    Ok(0)
+}
+
 pub(super) fn set_can_show_achievement_ui(state: &mut LuaState) -> LuaResult<u32> {
     let available = bool::from_stack(state, 1)?;
     borrow_state_mut(state)?.can_show_achievement_ui = available;

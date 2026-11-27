@@ -47,6 +47,12 @@ Supplies currency-specific transfer eligibility inputs. Fields that are not supp
 - **rules** `table` -- Optional boolean fields: `faction_key_0`, `faction_key_1`, `award_condition_met`, `quantity_cap_reached`, and `weekly_cap_reached`.
 - **Affects:** `C_CurrencyInfo.CanTransferCurrency(currencyID)`
 
+### A_Admin.SetBagItemDurability(bagID, slotIndex, current, maximum)
+
+Supplies the durability pair of an existing bag item on every profile. `maximum` must be positive and `current` must be between 0 and `maximum`. Nil `maximum` clears the pair. An empty bag slot raises an error.
+
+- **Affects:** `C_Container.GetContainerItemDurability(bagID, slotIndex)` (Retail, Forever) and the Wrath `GetContainerItemDurability` global.
+
 ### A_Admin.SetItemTooltipSellPriceQuantities(itemID, currentQuantity, preparedMaxQuantity)
 
 Supplies the Retail no-instance SellPrice quantity pair for one item. Both quantities must be unsigned integers. Passing nil for either quantity clears the pair. The producer uses the prepared maximum only when it exceeds the current quantity; it does not derive either value from `Stackable`.

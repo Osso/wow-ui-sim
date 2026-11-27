@@ -177,8 +177,22 @@ const NO_COMBAT: &[&str] = &[
 ];
 
 const SECURECALL_ORIGIN: &str = "__sim_protected_securecall_origin";
+const ORIGINAL_SECURECALL: &str = "__sim_original_securecall";
+const ORIGINAL_SECURECALLFUNCTION: &str = "__sim_original_securecallfunction";
 
 fn securecall_with_origin(state: &mut LuaState) -> LuaResult<u32> {
+    let original = registry_get(state, ORIGINAL_SECURECALL);
+    call_recording_origin(state, original)
+}
+
+fn securecallfunction_with_origin(state: &mut LuaState) -> LuaResult<u32> {
+    let original = registry_get(state, ORIGINAL_SECURECALLFUNCTION);
+    call_recording_origin(state, original)
+}
+
+/// Calls the original secure-call primitive and records the outermost tainted
+/// caller for `read_caller_origin` while it runs.
+fn call_recording_origin(state: &mut LuaState, original: Val) -> LuaResult<u32> {
     let previous = registry_get(state, SECURECALL_ORIGIN);
     let origin = state.call_stack[..=state.ci]
         .iter()
@@ -194,6 +208,7 @@ fn securecall_with_origin(state: &mut LuaState) -> LuaResult<u32> {
         .map(|i| state.stack_get(i))
         .collect();
     let start = state.top;
+    state.push(original);
     for argument in arguments {
         state.push(argument);
     }
@@ -201,6 +216,28 @@ fn securecall_with_origin(state: &mut LuaState) -> LuaResult<u32> {
     registry_set(state, SECURECALL_ORIGIN, previous);
     result?;
     Ok((state.top - start) as u32)
+}
+
+/// Replaces `securecall`/`securecallfunction` with Rust wrappers around the
+/// registered primitives; the name-accepting lookup stays in the primitive.
+fn install_securecall_origin_wrappers(lua: &mut rilua::Lua) -> crate::Result<()> {
+    type Wrapper = fn(&mut LuaState) -> LuaResult<u32>;
+    let wrappers: [(&str, &str, Wrapper); 2] = [
+        ("securecall", ORIGINAL_SECURECALL, securecall_with_origin),
+        (
+            "securecallfunction",
+            ORIGINAL_SECURECALLFUNCTION,
+            securecallfunction_with_origin,
+        ),
+    ];
+    for (name, key, wrapper) in wrappers {
+        let original = crate::c_api::global_val(lua.state_mut(), name);
+        if matches!(original, Val::Function(_)) {
+            registry_set(lua.state_mut(), key, original);
+            LuaApiMut::register_function(lua, name, wrapper)?;
+        }
+    }
+    Ok(())
 }
 
 /// Taint provenance of the active stack, or the origin recorded by securecall.
@@ -320,13 +357,10 @@ pub(crate) fn install(lua: &mut rilua::Lua) -> crate::Result<()> {
         }
     }
     LuaApiMut::register_function(lua, "__sim_protected_global_refused", refuse_call)?;
-    LuaApiMut::register_function(lua, "__sim_securecall_with_origin", securecall_with_origin)?;
     let mut source = String::from(
         r#"
         local refused = __sim_protected_global_refused
-        local securecallWithOrigin = __sim_securecall_with_origin
         __sim_protected_global_refused = nil
-        __sim_securecall_with_origin = nil
         local function wrap(name, combatOnly)
             local namespace, member = string.match(name, "^([^.]+)%.(.+)$")
             local target, key = _G, name
@@ -356,17 +390,6 @@ pub(crate) fn install(lua: &mut rilua::Lua) -> crate::Result<()> {
             source.push_str(&format!("wrap({name:?}, {combat_only})\n"));
         }
     }
-    source.push_str(
-        r#"
-        local function wrapSecureCall(original)
-            return function(fn, ...)
-                return securecallWithOrigin(original, fn, ...)
-            end
-        end
-        securecall = wrapSecureCall(securecall)
-        securecallfunction = wrapSecureCall(securecallfunction)
-    "#,
-    );
     lua.exec(&source)?;
-    Ok(())
+    install_securecall_origin_wrappers(lua)
 }

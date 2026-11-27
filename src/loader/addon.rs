@@ -712,6 +712,7 @@ fn apply_blizzard_post_load_patches(
         "Blizzard_Dispatcher" => {
             crate::lua_api::workarounds::patch_dispatcher_surface_for_addon_load(env)
         }
+        #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
         "Blizzard_AchievementUI" => {
             crate::lua_api::workarounds::patch_achievement_search_preview_for_addon_load(env)
         }

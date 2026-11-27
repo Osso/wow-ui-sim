@@ -6,7 +6,6 @@ AbbreviateNumbers # not-yet: temporary Lua workaround
 AcceptAreaSpiritHeal # not-yet
 AcceptGuild # not-yet
 AddSourceLocationExclude # not-yet: temporary Lua workaround
-Ambiguate # not-yet: temporary Lua workaround
 AreClassRolesSoftSuggestions # not-yet
 AutoEquipCursorItem # not-yet
 BeginTrade # not-yet
@@ -91,17 +90,12 @@ C_Bank.UpdateBankTabSettings # not-yet
 C_Bank.WithdrawMoney # not-yet
 C_BarberShop.GetCurrentCost # not-yet
 C_BarberShopInternal.SetQAMode # not-yet
-C_BattleNet.AreFriendTagsEnabled # not-yet
 C_BattleNet.AreRealIDFriendsEnabled # not-yet
-C_BattleNet.AreTitleFriendCustomNamesEnabled # not-yet
-C_BattleNet.AreTitleFriendsEnabled # not-yet
 C_BattleNet.BNCheckBattleTagInviteToRecentAlly # not-yet
 C_BattleNet.BNCheckTitleFriendInviteToUnit # not-yet
 C_BattleNet.GetCustomTitleFriendName # not-yet
 C_BattleNet.GetFriendLevelFromInviteText # not-yet
 C_BattleNet.GetGameAccountInfoByID # not-yet
-C_BattleNet.IsBattleNetFriendsListEnabled # not-yet
-C_BattleNet.IsBattleNetFriendsListSupported # not-yet
 C_BattleNet.IsFriendTagSupportedForCurrentGameType # not-yet: temporary Lua workaround
 C_BattleNet.SearchFriends # not-yet
 C_BattleNet.SendTitleFriendInviteByName # not-yet
@@ -287,19 +281,6 @@ C_ColorUtil.ConvertRGBToHSV # not-yet: temporary Lua workaround
 C_ColorUtil.GenerateTextColorCode # not-yet: temporary Lua workaround
 C_ColorUtil.WrapTextInColor # not-yet: temporary Lua workaround
 C_ColorUtil.WrapTextInColorCode # not-yet: temporary Lua workaround
-C_CombatAudioAlert.AddToKnownTargetingList # not-yet
-C_CombatAudioAlert.GetCategoryVoice # not-yet
-C_CombatAudioAlert.GetCategoryVolume # not-yet
-C_CombatAudioAlert.GetFormatSetting # not-yet
-C_CombatAudioAlert.GetSpeakerSpeed # not-yet
-C_CombatAudioAlert.GetSpecSetting # not-yet
-C_CombatAudioAlert.RemoveFromKnownTargetingList # not-yet
-C_CombatAudioAlert.SetCategoryVoice # not-yet
-C_CombatAudioAlert.SetCategoryVolume # not-yet
-C_CombatAudioAlert.SetFormatSetting # not-yet
-C_CombatAudioAlert.SetSpeakerSpeed # not-yet
-C_CombatAudioAlert.SetSpecSetting # not-yet
-C_CombatAudioAlert.SetThrottle # not-yet
 C_CombatLog.ApplyFilterSettings # not-yet: temporary Lua workaround
 C_CombatLog.ClearEntries # not-yet: temporary Lua workaround
 C_CombatLog.DoesObjectMatchFilter # not-yet: temporary Lua workaround
@@ -459,7 +440,6 @@ C_ConsoleScriptCollection.GetCollectionDataByTag # not-yet
 C_ConsoleScriptCollection.GetElements # not-yet
 C_ConsoleScriptCollection.GetScriptData # not-yet
 C_Container.ContainerRefundItemPurchase # not-yet
-C_Container.GetContainerItemDurability # not-yet
 C_Container.GetContainerItemEquipmentSetInfo # not-yet
 C_Container.GetContainerItemPurchaseCurrency # not-yet
 C_Container.GetContainerItemPurchaseInfo # not-yet: temporary Lua workaround
@@ -587,26 +567,12 @@ C_DelvesUI.HasActiveLair # not-yet
 C_DelvesUI.IsEligibleForActiveDelveRewards # not-yet
 C_DelvesUI.IsInLair # not-yet
 C_DelvesUI.IsTraitTreeForCompanion # not-yet
-C_Discord.Authorize # not-yet
 C_Discord.GetDiscordChannelName # not-yet
 C_Discord.GetDiscordUserID # not-yet
 C_Discord.GetDiscordUserName # not-yet
-C_Discord.GetDisplayNameType # not-yet
 C_Discord.GetGuildLinkStatus # not-yet
 C_Discord.GetNumDiscordChannels # not-yet
-C_Discord.GetNumDiscordServers # not-yet
-C_Discord.GetServerLinkableChannels # not-yet
-C_Discord.GetServerName # not-yet
-C_Discord.GuildLink # not-yet
-C_Discord.GuildUnlink # not-yet
-C_Discord.IsGuildChannelLinked # not-yet
-C_Discord.IsGuildSettingSet # not-yet
-C_Discord.IsUserOAuthed # not-yet
 C_Discord.IsVoiceEnabled # not-yet: temporary Lua workaround
-C_Discord.RefreshAuth # not-yet
-C_Discord.SetGuildSetting # not-yet
-C_Discord.UpdateDiscordServers # not-yet
-C_Discord.UpdateGuildLobby # not-yet
 C_EditMode.ConvertLayoutInfoToString # not-yet
 C_EditMode.ConvertStringToLayoutInfo # not-yet
 C_EditMode.IsValidLayoutName # not-yet
@@ -1000,33 +966,6 @@ C_HousingNeighborhood.OnCornerstoneClosed # not-yet: temporary Lua workaround
 C_ImmersiveInteraction.HasImmersiveInteraction # not-yet
 C_InstanceLeaver.IsPlayerLeaver # not-yet
 C_InterfaceFileManifest.GetInterfaceArtFiles # not-yet
-C_Intl.CompareStrings # not-yet
-C_Intl.CreateLocaleContext # not-yet
-C_Intl.FindBreaks # not-yet
-C_Intl.FindStringMatches # not-yet
-C_Intl.FoldCase # not-yet
-C_Intl.FormatCurrency # not-yet
-C_Intl.FormatDate # not-yet
-C_Intl.FormatDateTime # not-yet
-C_Intl.FormatNumber # not-yet
-C_Intl.FormatTime # not-yet
-C_Intl.GetCharacterProperties # not-yet
-C_Intl.GetCurrencyFractionDigits # not-yet
-C_Intl.GetCurrencyName # not-yet
-C_Intl.GetCurrentLocale # not-yet
-C_Intl.GetDisplayName # not-yet
-C_Intl.GetSortKey # not-yet
-C_Intl.IsNormalized # not-yet
-C_Intl.Length # not-yet
-C_Intl.Normalize # not-yet
-C_Intl.ParseCurrency # not-yet
-C_Intl.ParseNumber # not-yet
-C_Intl.SelectPlural # not-yet
-C_Intl.ToLower # not-yet
-C_Intl.ToTitle # not-yet
-C_Intl.ToUpper # not-yet
-C_Intl.TransformLocale # not-yet
-C_Intl.Transliterate # not-yet
 C_InvasionInfo.AreInvasionsAvailable # not-yet
 C_InvasionInfo.GetInvasionForUiMapID # not-yet
 C_InvasionInfo.GetInvasionInfo # not-yet
@@ -1105,7 +1044,6 @@ C_Item.ReplaceEnchant # not-yet
 C_Item.ReplaceTradeEnchant # not-yet
 C_Item.ReplaceTradeskillEnchant # not-yet
 C_Item.RequestLoadItemData # not-yet
-C_Item.RequestLoadItemDataByID # not-yet: temporary Lua workaround
 C_Item.UnlockItem # not-yet
 C_Item.UnlockItemByGUID # not-yet
 C_Item.UseItemByName # not-yet

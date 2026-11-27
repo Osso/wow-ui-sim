@@ -23,7 +23,7 @@ local _, battleTag = BNGetInfo()
 
 ## `A_Admin.SetBattleNetAccountFeatures([friendTags[, titleFriendCustomNames[, titleFriends[, friendsListEnabled[, friendsListSupported]]]]])`
 
-Supplies the five account feature results used by the Retail/Forever social UI. Omitted values default to `true`. **INFERRED (`R88fi (native evidence pending)`):** each API returns its matching supplied boolean.
+Supplies the five account feature results used by the Retail/Forever social UI. Omitted values default to `true`. Before any call, Forever reports friend tags disabled (F4 Q1 native evidence); all other defaults are `true`. **INFERRED (`R88fi (native evidence pending)`):** each API returns its matching supplied boolean.
 
 The arguments map to `C_BattleNet.AreFriendTagsEnabled`, `AreTitleFriendCustomNamesEnabled`, `AreTitleFriendsEnabled`, `IsBattleNetFriendsListEnabled`, and `IsBattleNetFriendsListSupported` in that order.
 

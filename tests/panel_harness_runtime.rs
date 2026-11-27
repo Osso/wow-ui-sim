@@ -3,6 +3,7 @@ use crate::common;
 use std::path::PathBuf;
 use wow_ui_sim::loader::{find_toc_file, load_addon};
 use wow_ui_sim::lua_api::WowLuaEnv;
+use wow_ui_sim::screen::ScreenKind;
 
 // Keep startup order explicit; let the loader select each profile's TOC.
 const PANEL_HARNESS_ADDONS: &[&str] = &[
@@ -120,39 +121,114 @@ fn forever_without_encounter_journal(env: &WowLuaEnv) -> bool {
     true
 }
 
-#[cfg(feature = "client-retail")]
-#[test]
-fn pet_collection_button_uses_supplied_achievement_ui_access() {
+fn load_achievement_ui_consumer() -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("Failed to create Lua environment");
     env.set_screen_size(1024.0, 768.0);
-    env.state().borrow_mut().addon_base_paths = vec![blizzard_ui_dir()];
-    load_panel_harness(&env);
+    env.set_screen_mode(ScreenKind::Game);
+    common::panel_fixtures::seed_addon_search_paths(&env);
+    wow_ui_sim::xml::register_intrinsic_templates();
+    env.exec("A_Admin.SetAchievementEarned(6, true)")
+        .expect("earned achievement input should be accepted");
+    let ui = blizzard_ui_dir();
+    load_panel_harness_addons(&env, &ui);
+    common::panel_fixtures::load_panel_startup_publishers(&env, &ui);
+    env.apply_post_load_workarounds();
+    fire_panel_harness_startup_events(&env);
+    env
+}
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn account_store_consumer_retains_distinct_storefront_ids() {
+    let env = load_achievement_ui_consumer();
+    let loaded: bool = env
+        .eval(r#"return C_AddOns.LoadAddOn("Blizzard_AccountStore") == true"#)
+        .expect("AccountStore load result should be readable");
+    assert_eq!(loaded, cfg!(feature = "client-retail"));
+    if !loaded {
+        return;
+    }
     env.exec(
-        r#"
-        assert(C_AddOns.LoadAddOn("Blizzard_Collections"))
-        assert(CanShowAchievementUI())
-        A_Admin.SetCanShowAchievementUI(false)
-        PetJournalAchievementStatus_OnClick()
-        assert(not C_AddOns.IsAddOnLoaded("Blizzard_AchievementUI"))
-        A_Admin.SetCanShowAchievementUI(true)
-        PetJournalAchievementStatus_OnClick()
-        assert(C_AddOns.IsAddOnLoaded("Blizzard_AchievementUI"))
-        "#,
+        r#"AccountStoreFrame:SetStoreFrontID(37)
+           assert(AccountStoreFrame.storeFrontID == 37)
+           AccountStoreFrame:SetStoreFrontID(81)
+           assert(AccountStoreFrame.storeFrontID == 81)"#,
     )
-    .expect("pet collection consumer should follow supplied UI access");
+    .expect("the original AccountStore consumer should retain both storefront inputs");
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn achievement_search_consumer_handles_two_empty_result_selections() {
+    let env = load_achievement_ui_consumer();
+    env.exec(r#"assert(C_AddOns.LoadAddOn("Blizzard_AchievementUI"))"#)
+        .expect("the original AchievementUI consumer should load");
+    env.exec(
+        r#"local searchBox = AchievementFrame.HeaderDetails.Filters.SearchBox
+           local previews = searchBox.SearchPreviewContainer.searchPreviews
+           SetAchievementSearchString("frame-repairs-no-such-achievement-981743")
+           AchievementFrame_ShowSearchPreviewResults()
+           AchievementFrame_SetSearchPreviewSelection(1)
+           assert(searchBox.selectedIndex == 1)
+           AchievementFrame_SetSearchPreviewSelection(2)
+           assert(searchBox.selectedIndex == 1)
+           assert(not previews[1]:IsShown() and previews[1].achievementID == nil)"#,
+    )
+    .expect("the original achievement search consumer should handle both selections");
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn global_placeholder_tables_are_published_by_original_consumers() {
+    let env = load_achievement_ui_consumer();
+    env.exec(
+        r#"assert(C_AddOns.LoadAddOn("Blizzard_UIParentPanelManager"))
+           assert(UISpecialFrames[1] == "ItemRefTooltip")
+           assert(C_AddOns.LoadAddOn("Blizzard_AuctionHouseUI"))
+           assert(type(StaticPopupDialogs["BUYOUT_AUCTION"]) == "table")
+           assert(type(StaticPopupDialogs["BID_AUCTION"]) == "table")
+           assert(type(SOUNDKIT) == "table")"#,
+    )
+    .expect("original consumers should publish their registries");
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn pet_collection_consumer_uses_profile_selected_surface() {
+    let env = load_achievement_ui_consumer();
+    if cfg!(feature = "client-wowforever") {
+        env.exec(
+            r#"A_Admin.SetSummonedBattlePetGUID("BattlePet-1")
+               assert(C_AddOns.LoadAddOn("Blizzard_Collections"))
+               assert(C_AddOns.IsAddOnLoaded("Blizzard_Collections"))
+               assert(PetJournal)
+               assert(C_PetJournal.IsCurrentlySummoned("BattlePet-1"))
+               assert(not C_PetJournal.IsCurrentlySummoned("BattlePet-2"))"#,
+        )
+        .expect("Forever Collections should load its selected pet-journal consumer");
+        return;
+    }
+    env.exec(
+        r#"assert(C_AddOns.LoadAddOn("Blizzard_Collections"))
+           A_Admin.SetAchievementEarned(6, true)
+           assert(CanShowAchievementUI())
+           A_Admin.SetCanShowAchievementUI(false)
+           PetJournalAchievementStatus_OnClick()
+           assert(not C_AddOns.IsAddOnLoaded("Blizzard_AchievementUI"))
+           A_Admin.SetCanShowAchievementUI(true)
+           PetJournalAchievementStatus_OnClick()
+           assert(C_AddOns.IsAddOnLoaded("Blizzard_AchievementUI"))"#,
+    )
+    .expect("Retail pet collection consumer should follow supplied UI access");
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 #[test]
 fn achievement_microbutton_uses_supplied_ui_access() {
-    let env = WowLuaEnv::new().expect("Failed to create Lua environment");
-    env.set_screen_size(1024.0, 768.0);
-    env.state().borrow_mut().addon_base_paths = vec![blizzard_ui_dir()];
-    load_panel_harness(&env);
-
+    let env = load_achievement_ui_consumer();
     env.exec(
         r#"
+        A_Admin.SetAchievementEarned(6, true)
         assert(CanShowAchievementUI())
         A_Admin.SetCanShowAchievementUI(false)
         AchievementMicroButton:Click()
@@ -163,6 +239,30 @@ fn achievement_microbutton_uses_supplied_ui_access() {
         "#,
     )
     .expect("achievement microbutton should follow supplied UI access");
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn achievement_microbutton_uses_earned_achievement_state() {
+    let env = load_achievement_ui_consumer();
+    env.exec(
+        r#"
+        A_Admin.ClearGuild()
+        A_Admin.SetCanShowAchievementUI(true)
+        A_Admin.SetAchievementEarned(6, false)
+        assert(not IsInGuild())
+        assert(not HasCompletedAnyAchievement())
+        AchievementMicroButton:Click()
+        assert(not C_AddOns.IsAddOnLoaded("Blizzard_AchievementUI"),
+            "no earned achievement must keep the panel closed")
+        A_Admin.SetAchievementEarned(6, true)
+        assert(HasCompletedAnyAchievement())
+        AchievementMicroButton:Click()
+        assert(C_AddOns.IsAddOnLoaded("Blizzard_AchievementUI"),
+            "an earned achievement must open the panel")
+        "#,
+    )
+    .expect("achievement microbutton should follow earned achievement state");
 }
 
 #[test]
