@@ -78,9 +78,8 @@ type ForwardingProbe = (String, String, String, String);
 
 post_wrath_ui_fixture! {
 // Forever 1.60.1.70707 replaces this toggle: Camelot/Blizzard_AchievementUI.lua:13-17
-// routes AchievementFrame_ToggleAchievementFrame to ToggleLegacyChallenges. The
-// AchievementFrame toggle path held there only through the UI-parent toggle
-// workaround retired in 9003cf923b.
+// routes AchievementFrame_ToggleAchievementFrame to ToggleLegacyChallenges, so
+// the Mainline AchievementFrame toggle contract does not apply there.
 #[cfg(not(feature = "client-wowforever"))]
 #[test]
 fn toggle_dispatches_base_tab_onclick_with_index_2_for_guild_and_index_1_for_player() {
