@@ -1980,10 +1980,8 @@ CanCancelScene # not-yet
 CanChangePlayerDifficulty # not-yet
 CanDualWield # not-yet
 CanEditGuildEvent # not-yet
-CanEditGuildTabInfo # not-yet
 CanEjectPassengerFromSeat # not-yet
 CanGamePadControlCursor # not-yet
-CanGuildBankRepair # not-yet
 CanInitiateWarGame # not-yet
 CanItemBeSocketedToArtifact # not-yet
 CanJoinBattlefieldAsGroup # not-yet
