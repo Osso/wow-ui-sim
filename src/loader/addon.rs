@@ -974,13 +974,16 @@ fn should_load_addon_file(
     toc.file_allows_environment(index, pass.use_secure_env(ctx))
 }
 
+/// R88g.1: Retail 12.1.5 loads every dependency file in secure mode, and a prior
+/// ordinary load does not count as a secure load, so its XML runs again there.
 fn skips_loaded_dependency_xml(
     env: &LoaderEnv<'_>,
     ctx: &AddonContext<'_>,
     pass: EnvironmentPass,
     file_rel: &Path,
 ) -> bool {
-    pass == EnvironmentPass::SecureDependency
+    !uses_secure_dependency_pass()
+        && pass == EnvironmentPass::SecureDependency
         && file_rel
             .extension()
             .is_some_and(|extension| extension == "xml")
