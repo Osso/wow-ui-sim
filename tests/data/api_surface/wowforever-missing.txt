@@ -1,3 +1,2474 @@
 # Documented WoW Forever API functions without a runtime function after full
 # Blizzard UI startup. Contract: docs/specs/api-surface-audit.md.
 # Format: <name> # <intentionally-unsupported|not-yet>[: reason]
+AbbreviateLargeNumbers # not-yet: temporary Lua workaround
+AbbreviateNumbers # not-yet: temporary Lua workaround
+AcceptAreaSpiritHeal # not-yet
+AcceptGuild # not-yet
+AddSourceLocationExclude # not-yet: temporary Lua workaround
+Ambiguate # not-yet: temporary Lua workaround
+AreClassRolesSoftSuggestions # not-yet
+AutoEquipCursorItem # not-yet
+BeginTrade # not-yet
+BreakUpLargeNumbers # not-yet: temporary Lua workaround
+C_AchievementInfo.AreGuildAchievementsEnabled # not-yet
+C_AchievementInfo.IsGuildAchievement # not-yet
+C_ActionBar.FindAssistedCombatActionButtons # not-yet
+C_ActionBar.GetProfessionQuality # not-yet
+C_ActionBar.HasPetActionButtons # not-yet
+C_ActionBar.HasPetActionPetBarIndices # not-yet
+C_ActionBar.HasSpellActionButtons # not-yet
+C_ActionBar.IsInterruptAction # not-yet
+C_ActionBar.IsMacroActionWithShowTooltip # not-yet
+C_ActionBar.ShouldShowKeyring # not-yet: temporary Lua workaround
+C_AddOnProfiler.AddMeasuredCallEvent # not-yet
+C_AddOnProfiler.GetTicksPerSecond # not-yet
+C_AddOnProfiler.MeasureCall # not-yet
+C_AddOns.DoesAddOnHaveLoadError # not-yet
+C_AddOns.GetAddOnInterfaceVersion # not-yet
+C_AddOns.GetAddOnOptionalDependencies # not-yet
+C_AddOns.ResetDisabledAddOns # not-yet
+C_AreaPoiInfo.GetDragonridingRacesForMap # not-yet
+C_AreaPoiInfo.IsAreaPOITimed # not-yet
+C_ArtifactUI.CanApplyArtifactRelic # not-yet
+C_ArtifactUI.CanApplyRelicItemIDToEquippedArtifactSlot # not-yet
+C_ArtifactUI.ClearForgeCamera # intentionally-unsupported: 3D camera/model
+C_ArtifactUI.DoesEquippedArtifactHaveAnyRelicsSlotted # not-yet
+C_ArtifactUI.GetEquippedArtifactArtInfo # not-yet
+C_ArtifactUI.GetEquippedArtifactNumRelicSlots # not-yet
+C_ArtifactUI.GetEquippedArtifactRelicInfo # not-yet
+C_ArtifactUI.GetEquippedRelicLockedReason # not-yet
+C_ArtifactUI.GetItemLevelIncreaseProvidedByRelic # not-yet
+C_ArtifactUI.GetRespecArtifactArtInfo # not-yet
+C_ArtifactUI.GetRespecArtifactInfo # not-yet
+C_ArtifactUI.GetRespecCost # not-yet
+C_ArtifactUI.IsArtifactItem # not-yet
+C_ArtifactUI.SetForgeCamera # intentionally-unsupported: 3D camera/model
+C_AuctionHouse.CanCancelAuction # not-yet
+C_AuctionHouse.GetBids # not-yet
+C_AuctionHouse.GetItemKeySampleLink # not-yet
+C_AuctionHouse.GetNumReplicateItems # not-yet
+C_AuctionHouse.GetOwnedAuctions # not-yet
+C_AuctionHouse.GetReplicateItemBattlePetInfo # not-yet
+C_AuctionHouse.GetReplicateItemLink # not-yet
+C_AuctionHouse.GetReplicateItemTimeLeft # not-yet
+C_AuctionHouse.ReplicateItems # not-yet
+C_AuctionHouse.SearchForItemKeys # not-yet
+C_AuraContainerUtil.ProcessCustomAuraButtonCasterNameOptions # not-yet
+C_AutoLoot.SetUseAutoLootToggle # not-yet
+C_AzeriteEmpoweredItem.CanSelectPower # not-yet
+C_AzeriteEmpoweredItem.GetAllTierInfo # not-yet
+C_AzeriteEmpoweredItem.GetAllTierInfoByItemID # not-yet
+C_AzeriteEmpoweredItem.GetPowerInfo # not-yet
+C_AzeriteEmpoweredItem.GetSpecsForPower # not-yet
+C_AzeriteEmpoweredItem.HasAnyUnselectedPowers # not-yet
+C_AzeriteEmpoweredItem.HasBeenViewed # not-yet
+C_AzeriteEmpoweredItem.IsAzeritePreviewSourceDisplayable # not-yet
+C_AzeriteEmpoweredItem.IsPowerSelected # not-yet
+C_AzeriteEmpoweredItem.SetHasBeenViewed # not-yet
+C_AzeriteEssence.CanDeactivateEssence # not-yet
+C_AzeriteEssence.GetNumUsableEssences # not-yet
+C_AzeriteItem.HasActiveAzeriteItem # not-yet
+C_AzeriteItem.IsAzeriteItemByID # not-yet
+C_Bank.AreAnyBankTypesViewable # not-yet
+C_Bank.AutoDepositItemsIntoBank # not-yet
+C_Bank.BankBagTypeAndIDToInvSlot # not-yet
+C_Bank.CanDepositMoney # not-yet
+C_Bank.CanUseBank # not-yet
+C_Bank.CanViewBank # not-yet
+C_Bank.CanWithdrawMoney # not-yet
+C_Bank.CloseBankFrame # not-yet
+C_Bank.DepositMoney # not-yet
+C_Bank.DoesBankTypeSupportAutoDeposit # not-yet
+C_Bank.DoesBankTypeSupportMoneyTransfer # not-yet
+C_Bank.FetchMaxNumBankTabs # not-yet
+C_Bank.FetchPurchasedBankTabData # not-yet: temporary Lua workaround
+C_Bank.FetchPurchasedBankTabIDs # not-yet
+C_Bank.FetchViewableBankTypes # not-yet
+C_Bank.IsItemAllowedInBankType # not-yet
+C_Bank.PurchaseBankTab # not-yet
+C_Bank.ShouldUsePlayerBagsInBank # not-yet: temporary Lua workaround
+C_Bank.UpdateBankTabSettings # not-yet
+C_Bank.WithdrawMoney # not-yet
+C_BarberShop.GetCurrentCost # not-yet
+C_BarberShopInternal.SetQAMode # not-yet
+C_BattleNet.AreFriendTagsEnabled # not-yet
+C_BattleNet.AreRealIDFriendsEnabled # not-yet
+C_BattleNet.AreTitleFriendCustomNamesEnabled # not-yet
+C_BattleNet.AreTitleFriendsEnabled # not-yet
+C_BattleNet.BNCheckBattleTagInviteToRecentAlly # not-yet
+C_BattleNet.BNCheckTitleFriendInviteToUnit # not-yet
+C_BattleNet.GetCustomTitleFriendName # not-yet
+C_BattleNet.GetFriendLevelFromInviteText # not-yet
+C_BattleNet.GetGameAccountInfoByID # not-yet
+C_BattleNet.IsBattleNetFriendsListEnabled # not-yet
+C_BattleNet.IsBattleNetFriendsListSupported # not-yet
+C_BattleNet.IsFriendTagSupportedForCurrentGameType # not-yet: temporary Lua workaround
+C_BattleNet.SearchFriends # not-yet
+C_BattleNet.SendTitleFriendInviteByName # not-yet
+C_BattleNet.SendVerifiedBattleNetFriendInvite # not-yet
+C_BattleNet.SendWhisper # not-yet
+C_BattleNet.SetAFK # not-yet
+C_BattleNet.SetAppearOffline # not-yet
+C_BattleNet.SetBlocked # not-yet
+C_BattleNet.SetCustomMessage # not-yet
+C_BattleNet.SetCustomTitleFriendName # not-yet
+C_BattleNet.SetDND # not-yet
+C_BattleNet.SetFriendTags # not-yet
+C_BlizzCon2026.GetExperience # not-yet
+C_BlizzCon2026.IsActive # not-yet
+C_BlizzCon2026.IsColdSwapFeatureEnabled # not-yet
+C_BlizzCon2026.SetExperience # not-yet
+C_Browser.CloseFullscreenBrowser # not-yet
+C_Calendar.AreNamesReady # not-yet: temporary Lua workaround
+C_Calendar.CanAddEvent # not-yet: temporary Lua workaround
+C_Calendar.CanSendInvite # not-yet: temporary Lua workaround
+C_Calendar.ContextMenuEventSignUp # not-yet
+C_Calendar.ContextMenuInviteAvailable # not-yet
+C_Calendar.ContextMenuInviteDecline # not-yet
+C_Calendar.ContextMenuInviteRemove # not-yet
+C_Calendar.ContextMenuInviteTentative # not-yet
+C_Calendar.EventAvailable # not-yet
+C_Calendar.EventCanEdit # not-yet
+C_Calendar.EventClearModerator # not-yet
+C_Calendar.EventDecline # not-yet
+C_Calendar.EventGetTypes # not-yet
+C_Calendar.EventInvite # not-yet
+C_Calendar.EventRemoveInvite # not-yet
+C_Calendar.EventRemoveInviteByGuid # not-yet
+C_Calendar.EventSelectInvite # not-yet
+C_Calendar.EventSetInviteStatus # not-yet
+C_Calendar.EventSetModerator # not-yet
+C_Calendar.EventSignUp # not-yet
+C_Calendar.EventSortInvites # not-yet
+C_Calendar.EventTentative # not-yet
+C_Calendar.GetDefaultGuildFilter # not-yet: temporary Lua workaround
+C_Calendar.GetEventInfo # not-yet
+C_Calendar.GetGuildEventInfo # not-yet
+C_Calendar.GetMaxCreateDate # not-yet: temporary Lua workaround
+C_Calendar.GetMinDate # not-yet: temporary Lua workaround
+C_Calendar.GetNumGuildEvents # not-yet: temporary Lua workaround
+C_Calendar.IsActionPending # not-yet: temporary Lua workaround
+C_Calendar.IsEventOpen # not-yet
+C_Calendar.MassInviteCommunity # not-yet
+C_Calendar.MassInviteGuild # not-yet
+C_Calendar.OpenCalendar # not-yet: temporary Lua workaround
+C_CampaignInfo.GetAvailableCampaigns # not-yet
+C_CampaignInfo.GetCampaignChapterInfo # not-yet
+C_CampaignInfo.GetCurrentChapterID # not-yet
+C_CampaignInfo.GetFailureReason # not-yet
+C_CampaignInfo.IsCampaignQuest # not-yet
+C_CampaignInfo.SortAsNormalQuest # not-yet
+C_CatalogShop.BulkPurchaseProducts # not-yet
+C_CatalogShop.BulkRefundDecors # not-yet
+C_CatalogShop.FindBestCurrencyProductForNeededAmount # not-yet: temporary Lua workaround
+C_CatalogShop.GetAvailableCategoryIDs # not-yet: temporary Lua workaround
+C_CatalogShop.GetAvailableTransmogRaceInfos # not-yet
+C_CatalogShop.GetCategoryInfo # not-yet: temporary Lua workaround
+C_CatalogShop.GetFailureInfo # not-yet: temporary Lua workaround
+C_CatalogShop.GetFirstCategoryByProductID # not-yet: temporary Lua workaround
+C_CatalogShop.GetNewProducts # not-yet
+C_CatalogShop.GetProductAvailabilityTimeRemainingSecs # not-yet: temporary Lua workaround
+C_CatalogShop.GetProductIDsForCategory # not-yet: temporary Lua workaround
+C_CatalogShop.GetProductIDsForCategorySection # not-yet: temporary Lua workaround
+C_CatalogShop.GetProductSortOrder # not-yet: temporary Lua workaround
+C_CatalogShop.GetRefundableDecors # not-yet: temporary Lua workaround
+C_CatalogShop.GetSpellVisualInfoForMount # not-yet: temporary Lua workaround
+C_CatalogShop.GetVirtualCurrencyBalance # not-yet: temporary Lua workaround
+C_CatalogShop.HasNewProducts # not-yet: temporary Lua workaround
+C_CatalogShop.IsProductIncludedInAnyBundle # not-yet: temporary Lua workaround
+C_CatalogShop.OpenCatalogShopInteractionFromHouse # not-yet: temporary Lua workaround
+C_CatalogShop.OpenCatalogShopInteractionFromShop # not-yet: temporary Lua workaround
+C_CatalogShop.RefreshRefundableDecors # not-yet
+C_CatalogShop.ShouldShowHousingWarning # not-yet: temporary Lua workaround
+C_CatalogShop.StartHousingVCPurchaseConfirmation # not-yet
+C_ChallengeMode.CanUseKeystoneInCurrentMap # not-yet
+C_ChallengeMode.ClearKeystone # not-yet
+C_ChallengeMode.CloseKeystoneFrame # not-yet
+C_ChallengeMode.GetDungeonScoreRarityColor # not-yet
+C_ChallengeMode.GetGuildLeaders # not-yet
+C_ChallengeMode.GetKeystoneLevelRarityColor # not-yet
+C_ChallengeMode.GetMapScoreInfo # not-yet
+C_ChallengeMode.GetOverallDungeonScore # not-yet
+C_ChallengeMode.GetSlottedKeystoneInfo # not-yet
+C_ChallengeMode.GetSpecificDungeonOverallScoreRarityColor # not-yet
+C_ChallengeMode.GetSpecificDungeonScoreRarityColor # not-yet
+C_ChallengeMode.GetStartTime # not-yet
+C_ChallengeMode.HasSlottedKeystone # not-yet
+C_ChallengeMode.IsChallengeModeResettable # not-yet
+C_ChallengeMode.RemoveKeystone # not-yet
+C_ChallengeMode.Reset # not-yet
+C_ChallengeMode.SlotKeystone # not-yet
+C_ChallengeMode.StartChallengeMode # not-yet
+C_ChatInfo.GetChannelRosterInfo # not-yet
+C_ChatInfo.GetChatLineSenderGUID # not-yet
+C_ChatInfo.GetChatLineSenderName # not-yet
+C_ChatInfo.GetChatTypeName # not-yet
+C_ChatInfo.GetClubStreamIDs # not-yet
+C_ChatInfo.GetColorForChatType # not-yet
+C_ChatInfo.GetMentorChannelID # not-yet
+C_ChatInfo.GetNumReservedChatWindows # not-yet: temporary Lua workaround
+C_ChatInfo.InChatMessagingLockdown # not-yet
+C_ChatInfo.IsChatLineCensored # not-yet
+C_ChatInfo.IsLoggingChat # not-yet
+C_ChatInfo.IsLoggingCombat # not-yet
+C_ChatInfo.IsPartyChannelType # not-yet
+C_ChatInfo.IsValidCombatFilterName # not-yet
+C_ChatInfo.PerformEmote # not-yet: temporary Lua workaround
+C_ChatInfo.ReplaceIconAndGroupExpressions # not-yet: temporary Lua workaround
+C_ChatInfo.RequestCanLocalWhisperTarget # not-yet
+C_ChatInfo.ResetDefaultZoneChannels # not-yet
+C_ChatInfo.SwapChatChannelsByChannelIndex # not-yet
+C_ChromieTime.CloseUI # not-yet
+C_ChromieTime.GetChromieTimeExpansionOption # not-yet
+C_ChromieTime.GetChromieTimeExpansionOptions # not-yet
+C_ChromieTime.SelectChromieTimeOption # not-yet
+C_ClassTalents.CanCreateNewConfig # not-yet
+C_ClassTalents.CommitConfig # not-yet
+C_ClassTalents.DeleteConfig # not-yet
+C_ClassTalents.ImportLoadout # not-yet
+C_ClassTalents.IsConfigPopulated # not-yet
+C_ClassTalents.RenameConfig # not-yet
+C_ClassTalents.RequestNewConfig # not-yet
+C_ClassTalents.SaveConfig # not-yet
+C_ClassTalents.SetUsesSharedActionBars # not-yet
+C_ClassTalents.ViewLoadout # not-yet
+C_ClickBindings.GetBindingType # not-yet: temporary Lua workaround
+C_Club.AcceptInvitation # not-yet
+C_Club.AddClubStreamChatChannel # not-yet
+C_Club.CanResolvePlayerLocationFromClubMessageData # not-yet
+C_Club.ClearAutoAdvanceStreamViewMarker # not-yet
+C_Club.ClearClubPresenceSubscription # not-yet
+C_Club.CompareBattleNetDisplayName # not-yet
+C_Club.CreateStream # not-yet
+C_Club.CreateTicket # not-yet
+C_Club.DeclineInvitation # not-yet
+C_Club.DestroyClub # not-yet
+C_Club.DestroyMessage # not-yet
+C_Club.DestroyStream # not-yet
+C_Club.DestroyTicket # not-yet
+C_Club.DoesCommunityHaveMembersOfTheOppositeFaction # not-yet
+C_Club.EditClub # not-yet
+C_Club.EditMessage # not-yet
+C_Club.EditStream # not-yet
+C_Club.Flush # not-yet
+C_Club.FocusCommunityStreams # not-yet
+C_Club.GetAvatarIdList # not-yet
+C_Club.GetCommunityNameResultText # not-yet
+C_Club.GetInfoFromLastCommunityChatLine # not-yet
+C_Club.GetInvitationInfo # not-yet
+C_Club.GetLastTicketResponse # not-yet
+C_Club.GetMessagesInRange # not-yet
+C_Club.GetTickets # not-yet
+C_Club.LeaveClub # not-yet
+C_Club.RedeemTicket # not-yet
+C_Club.RequestTicket # not-yet
+C_Club.RequestTickets # not-yet
+C_Club.SendCharacterInvitation # not-yet
+C_Club.SetClubPresenceSubscription # not-yet
+C_Club.SetClubStreamNotificationSettings # not-yet
+C_Club.SetCommunityID # not-yet
+C_Club.SetFavorite # not-yet
+C_Club.SetSocialQueueingEnabled # not-yet
+C_Club.UnfocusAllStreams # not-yet
+C_Club.UnfocusMembers # not-yet
+C_Club.ValidateText # not-yet
+C_ClubFinder.CheckAllPlayerApplicantSettings # not-yet
+C_ClubFinder.ClearAllFinderCache # not-yet
+C_ClubFinder.ClearClubApplicantsCache # not-yet
+C_ClubFinder.ClearClubFinderPostingsCache # not-yet
+C_ClubFinder.GetPlayerSettingsFocusFlagsSelectedCount # not-yet
+C_ClubFinder.GetPostingIDFromClubFinderGUID # not-yet
+C_ClubFinder.GetRecruitingClubInfoFromFinderGUID # not-yet
+C_ClubFinder.ShouldShowClubFinder # not-yet
+C_ColorUtil.ConvertHSLToHSV # not-yet: temporary Lua workaround
+C_ColorUtil.ConvertHSVToHSL # not-yet: temporary Lua workaround
+C_ColorUtil.ConvertHSVToRGB # not-yet: temporary Lua workaround
+C_ColorUtil.ConvertRGBToHSV # not-yet: temporary Lua workaround
+C_ColorUtil.GenerateTextColorCode # not-yet: temporary Lua workaround
+C_ColorUtil.WrapTextInColor # not-yet: temporary Lua workaround
+C_ColorUtil.WrapTextInColorCode # not-yet: temporary Lua workaround
+C_CombatAudioAlert.AddToKnownTargetingList # not-yet
+C_CombatAudioAlert.GetCategoryVoice # not-yet
+C_CombatAudioAlert.GetCategoryVolume # not-yet
+C_CombatAudioAlert.GetFormatSetting # not-yet
+C_CombatAudioAlert.GetSpeakerSpeed # not-yet
+C_CombatAudioAlert.GetSpecSetting # not-yet
+C_CombatAudioAlert.RemoveFromKnownTargetingList # not-yet
+C_CombatAudioAlert.SetCategoryVoice # not-yet
+C_CombatAudioAlert.SetCategoryVolume # not-yet
+C_CombatAudioAlert.SetFormatSetting # not-yet
+C_CombatAudioAlert.SetSpeakerSpeed # not-yet
+C_CombatAudioAlert.SetSpecSetting # not-yet
+C_CombatAudioAlert.SetThrottle # not-yet
+C_CombatLog.ApplyFilterSettings # not-yet: temporary Lua workaround
+C_CombatLog.ClearEntries # not-yet: temporary Lua workaround
+C_CombatLog.DoesObjectMatchFilter # not-yet: temporary Lua workaround
+C_CombatLog.IsCombatLogRestricted # not-yet
+C_CombatLog.RefilterEntries # not-yet: temporary Lua workaround
+C_CombatLog.SetEntryRetentionTime # not-yet: temporary Lua workaround
+C_CombatLog.SetFilteredEventsEnabled # not-yet: temporary Lua workaround
+C_CombatLog.SetMessageLimit # not-yet: temporary Lua workaround
+C_CombatLogSecure.AddEventFilter # intentionally-unsupported: SecureOnly, native secure environment only
+C_CombatLogSecure.ClearEventFilters # intentionally-unsupported: SecureOnly, native secure environment only
+C_CombatLogSecure.CreateCombatLogMessage # not-yet: temporary Lua workaround
+C_CombatText.GetCurrentEventInfo # not-yet: temporary Lua workaround
+C_Commentator.AddPlayerOverrideName # not-yet
+C_Commentator.AddTrackedDefensiveAuras # not-yet
+C_Commentator.AddTrackedOffensiveAuras # not-yet
+C_Commentator.AreTeamsSwapped # not-yet
+C_Commentator.AssignPlayerToTeam # not-yet
+C_Commentator.AssignPlayersToTeam # not-yet
+C_Commentator.AssignPlayersToTeamInCurrentInstance # not-yet
+C_Commentator.CanUseCommentatorCheats # not-yet
+C_Commentator.ClearCameraTarget # intentionally-unsupported: 3D camera/model
+C_Commentator.ClearFollowTarget # not-yet
+C_Commentator.ClearLookAtTarget # not-yet
+C_Commentator.EnterInstance # not-yet
+C_Commentator.ExitInstance # not-yet
+C_Commentator.FindSpectatedUnit # not-yet
+C_Commentator.FindTeamNameInCurrentInstance # not-yet
+C_Commentator.FindTeamNameInDirectory # not-yet
+C_Commentator.FlushCommentatorHistory # not-yet
+C_Commentator.FollowPlayer # not-yet
+C_Commentator.FollowUnit # not-yet
+C_Commentator.ForceFollowTransition # not-yet
+C_Commentator.GetAdditionalCameraWeight # intentionally-unsupported: 3D camera/model
+C_Commentator.GetAdditionalCameraWeightByToken # intentionally-unsupported: 3D camera/model
+C_Commentator.GetAllPlayerOverrideNames # not-yet
+C_Commentator.GetCamera # intentionally-unsupported: 3D camera/model
+C_Commentator.GetCameraCollision # intentionally-unsupported: 3D camera/model
+C_Commentator.GetCameraPosition # intentionally-unsupported: 3D camera/model
+C_Commentator.GetCombatEventInfo # not-yet
+C_Commentator.GetCommentatorHistory # not-yet
+C_Commentator.GetCommentatorMatchDataState # not-yet
+C_Commentator.GetCurrentMapID # not-yet
+C_Commentator.GetDampeningPercent # not-yet
+C_Commentator.GetDistanceBeforeForcedHorizontalConvergence # not-yet
+C_Commentator.GetDurationToForceHorizontalConvergence # not-yet
+C_Commentator.GetExcludeDistance # not-yet
+C_Commentator.GetHardlockWeight # not-yet
+C_Commentator.GetHorizontalAngleThresholdToSmooth # not-yet
+C_Commentator.GetIndirectSpellID # not-yet
+C_Commentator.GetInstanceInfo # not-yet
+C_Commentator.GetLookAtLerpAmount # not-yet
+C_Commentator.GetMapInfo # not-yet
+C_Commentator.GetMatchDuration # not-yet
+C_Commentator.GetMaxNumPlayersPerTeam # not-yet
+C_Commentator.GetMaxNumTeams # not-yet
+C_Commentator.GetMode # not-yet
+C_Commentator.GetMsToHoldForHorizontalMovement # not-yet
+C_Commentator.GetMsToHoldForVerticalMovement # not-yet
+C_Commentator.GetMsToSmoothHorizontalChange # not-yet
+C_Commentator.GetMsToSmoothVerticalChange # not-yet
+C_Commentator.GetNumMaps # not-yet
+C_Commentator.GetNumPlayers # not-yet
+C_Commentator.GetOrCreateSeries # not-yet
+C_Commentator.GetPlayerAuraInfo # not-yet
+C_Commentator.GetPlayerAuraInfoByUnit # not-yet
+C_Commentator.GetPlayerCooldownInfo # not-yet
+C_Commentator.GetPlayerCooldownInfoByUnit # not-yet
+C_Commentator.GetPlayerCrowdControlInfo # not-yet
+C_Commentator.GetPlayerCrowdControlInfoByUnit # not-yet
+C_Commentator.GetPlayerData # not-yet
+C_Commentator.GetPlayerFlagInfo # not-yet
+C_Commentator.GetPlayerFlagInfoByUnit # not-yet
+C_Commentator.GetPlayerItemCooldownInfo # not-yet
+C_Commentator.GetPlayerItemCooldownInfoByUnit # not-yet
+C_Commentator.GetPlayerOverrideName # not-yet
+C_Commentator.GetPlayerSpellCharges # not-yet
+C_Commentator.GetPlayerSpellChargesByUnit # not-yet
+C_Commentator.GetPositionLerpAmount # not-yet
+C_Commentator.GetSmoothFollowTransitioning # not-yet
+C_Commentator.GetSoftlockWeight # not-yet
+C_Commentator.GetSpeedFactor # not-yet
+C_Commentator.GetStartLocation # not-yet
+C_Commentator.GetTeamColor # not-yet
+C_Commentator.GetTeamColorByUnit # not-yet
+C_Commentator.GetTimeLeftInMatch # not-yet
+C_Commentator.GetTrackedSpellID # not-yet
+C_Commentator.GetTrackedSpells # not-yet
+C_Commentator.GetTrackedSpellsByUnit # not-yet
+C_Commentator.GetUnitData # not-yet
+C_Commentator.GetWargameInfo # not-yet
+C_Commentator.HasTrackedAuras # not-yet
+C_Commentator.IsSmartCameraLocked # intentionally-unsupported: 3D camera/model
+C_Commentator.IsTrackedDefensiveAura # not-yet
+C_Commentator.IsTrackedOffensiveAura # not-yet
+C_Commentator.IsTrackedSpell # not-yet
+C_Commentator.IsTrackedSpellByUnit # not-yet
+C_Commentator.IsUsingSmartCamera # intentionally-unsupported: 3D camera/model
+C_Commentator.LookAtPlayer # not-yet
+C_Commentator.RemoveAllOverrideNames # not-yet
+C_Commentator.RemovePlayerOverrideName # not-yet
+C_Commentator.RequestPlayerCooldownInfo # not-yet
+C_Commentator.ResetFoVTarget # not-yet
+C_Commentator.ResetSeriesScores # not-yet
+C_Commentator.ResetSettings # not-yet
+C_Commentator.ResetTrackedAuras # not-yet
+C_Commentator.SendAddonMessage # not-yet: temporary Lua workaround
+C_Commentator.SendAddonMessageLogged # not-yet
+C_Commentator.SetAdditionalCameraWeight # intentionally-unsupported: 3D camera/model
+C_Commentator.SetAdditionalCameraWeightByToken # intentionally-unsupported: 3D camera/model
+C_Commentator.SetBlocklistedAuras # not-yet
+C_Commentator.SetBlocklistedCooldowns # not-yet
+C_Commentator.SetBlocklistedItemCooldowns # not-yet
+C_Commentator.SetCamera # intentionally-unsupported: 3D camera/model
+C_Commentator.SetCameraCollision # intentionally-unsupported: 3D camera/model
+C_Commentator.SetCameraPosition # intentionally-unsupported: 3D camera/model
+C_Commentator.SetCheatsEnabled # not-yet
+C_Commentator.SetCommentatorHistory # not-yet
+C_Commentator.SetDistanceBeforeForcedHorizontalConvergence # not-yet
+C_Commentator.SetDurationToForceHorizontalConvergence # not-yet
+C_Commentator.SetExcludeDistance # not-yet
+C_Commentator.SetHardlockWeight # not-yet
+C_Commentator.SetHorizontalAngleThresholdToSmooth # not-yet
+C_Commentator.SetLookAtLerpAmount # not-yet
+C_Commentator.SetMapAndInstanceIndex # not-yet
+C_Commentator.SetMouseDisabled # not-yet
+C_Commentator.SetMoveSpeed # not-yet
+C_Commentator.SetMsToHoldForHorizontalMovement # not-yet
+C_Commentator.SetMsToHoldForVerticalMovement # not-yet
+C_Commentator.SetMsToSmoothHorizontalChange # not-yet
+C_Commentator.SetMsToSmoothVerticalChange # not-yet
+C_Commentator.SetPositionLerpAmount # not-yet
+C_Commentator.SetRequestedDebuffCooldowns # not-yet
+C_Commentator.SetRequestedDefensiveCooldowns # not-yet
+C_Commentator.SetRequestedItemCooldowns # not-yet
+C_Commentator.SetRequestedOffensiveCooldowns # not-yet
+C_Commentator.SetSeriesScore # not-yet
+C_Commentator.SetSeriesScores # not-yet
+C_Commentator.SetSmartCameraLocked # intentionally-unsupported: 3D camera/model
+C_Commentator.SetSmoothFollowTransitioning # not-yet
+C_Commentator.SetSoftlockWeight # not-yet
+C_Commentator.SetSpeedFactor # not-yet
+C_Commentator.SetTargetHeightOffset # not-yet
+C_Commentator.SetUseSmartCamera # intentionally-unsupported: 3D camera/model
+C_Commentator.SnapCameraLookAtPoint # intentionally-unsupported: 3D camera/model
+C_Commentator.SpellUsesItemCharges # not-yet
+C_Commentator.StartWargame # not-yet
+C_Commentator.SwapTeamSides # not-yet
+C_Commentator.ToggleCheats # not-yet
+C_Commentator.UpdateMapInfo # not-yet
+C_Commentator.UpdatePlayerInfo # not-yet
+C_Commentator.ZoomIn # intentionally-unsupported: 3D camera/model
+C_Commentator.ZoomIn_Position # intentionally-unsupported: 3D camera/model
+C_Commentator.ZoomOut # intentionally-unsupported: 3D camera/model
+C_Commentator.ZoomOut_Position # intentionally-unsupported: 3D camera/model
+C_ConsoleScriptCollection.GetCollectionDataByID # not-yet
+C_ConsoleScriptCollection.GetCollectionDataByTag # not-yet
+C_ConsoleScriptCollection.GetElements # not-yet
+C_ConsoleScriptCollection.GetScriptData # not-yet
+C_Container.ContainerRefundItemPurchase # not-yet
+C_Container.GetBankAutosortDisabled # not-yet
+C_Container.GetContainerItemDurability # not-yet
+C_Container.GetContainerItemEquipmentSetInfo # not-yet
+C_Container.GetContainerItemPurchaseCurrency # not-yet
+C_Container.GetContainerItemPurchaseInfo # not-yet: temporary Lua workaround
+C_Container.GetContainerItemPurchaseItem # not-yet
+C_Container.GetInsertItemsLeftToRight # not-yet
+C_Container.GetMaxArenaCurrency # not-yet
+C_Container.GetSortBagsRightToLeft # not-yet
+C_Container.IsBattlePayItem # not-yet: temporary Lua workaround
+C_Container.IsContainerFiltered # not-yet: temporary Lua workaround
+C_Container.PlayerHasHearthstone # not-yet
+C_Container.SetBackpackAutosortDisabled # not-yet
+C_Container.SetBackpackSellJunkDisabled # not-yet
+C_Container.SetBagPortraitTexture # not-yet: temporary Lua workaround
+C_Container.SetBankAutosortDisabled # not-yet
+C_Container.SetInsertItemsLeftToRight # not-yet
+C_Container.SetSortBagsRightToLeft # not-yet
+C_Container.ShowContainerSellCursor # not-yet
+C_Container.SocketContainerItem # not-yet
+C_Container.SortAccountBankBags # not-yet
+C_Container.SortBags # not-yet
+C_Container.SortBank # not-yet
+C_Container.SortBankBags # not-yet
+C_Container.UseHearthstone # not-yet
+C_ContentTracking.GetBestMapForTrackable # not-yet
+C_ContentTracking.GetCurrentTrackingTarget # not-yet
+C_ContentTracking.GetEncounterTrackingInfo # not-yet
+C_ContentTracking.GetNextWaypointForTrackable # not-yet
+C_ContentTracking.GetObjectiveText # not-yet
+C_ContentTracking.GetTitle # not-yet
+C_ContentTracking.GetVendorTrackingInfo # not-yet
+C_ContentTracking.GetWaypointText # not-yet
+C_ContentTracking.IsNavigable # not-yet
+C_ContentTracking.IsTrackable # not-yet
+C_ContentTracking.StartTracking # not-yet
+C_ContentTracking.StopTracking # not-yet
+C_ContentTracking.ToggleTracking # not-yet
+C_ContributionCollector.Close # not-yet
+C_ContributionCollector.Contribute # not-yet
+C_ContributionCollector.HasPendingContribution # not-yet
+C_ContributionCollector.IsAwaitingRewardQuestData # not-yet
+C_CooldownViewer.GetLayoutData # not-yet
+C_CooldownViewer.GetValidAlertTypes # not-yet
+C_CooldownViewer.SetLayoutData # not-yet
+C_CovenantPreview.CloseFromUI # not-yet
+C_CovenantPreview.GetCovenantInfoForPlayerChoiceResponseID # not-yet
+C_CovenantSanctumUI.CanAccessReservoir # not-yet
+C_CovenantSanctumUI.CanDepositAnima # not-yet: temporary Lua workaround
+C_CovenantSanctumUI.DepositAnima # not-yet: temporary Lua workaround
+C_CovenantSanctumUI.EndInteraction # not-yet: temporary Lua workaround
+C_CovenantSanctumUI.GetAnimaInfo # not-yet: temporary Lua workaround
+C_CovenantSanctumUI.GetCurrentTalentTreeID # not-yet: temporary Lua workaround
+C_CovenantSanctumUI.GetFeatures # not-yet: temporary Lua workaround
+C_CovenantSanctumUI.GetRenownLevel # not-yet
+C_CovenantSanctumUI.GetRenownLevels # not-yet
+C_CovenantSanctumUI.GetRenownRewardsForLevel # not-yet: temporary Lua workaround
+C_CovenantSanctumUI.GetSanctumType # not-yet
+C_CovenantSanctumUI.GetSoulCurrencies # not-yet: temporary Lua workaround
+C_CovenantSanctumUI.HasMaximumRenown # not-yet
+C_CovenantSanctumUI.IsPlayerInRenownCatchUpMode # not-yet
+C_CovenantSanctumUI.IsWeeklyRenownCapped # not-yet
+C_CovenantSanctumUI.RequestCatchUpState # not-yet
+C_CraftingOrders.CalculateCraftingOrderPostingFee # not-yet
+C_CraftingOrders.CancelOrder # not-yet
+C_CraftingOrders.ClaimOrder # not-yet
+C_CraftingOrders.CloseCustomerCraftingOrders # not-yet
+C_CraftingOrders.FulfillOrder # not-yet
+C_CraftingOrders.GetCustomerCategories # not-yet
+C_CraftingOrders.GetCustomerOptions # not-yet
+C_CraftingOrders.GetCustomerOrders # not-yet
+C_CraftingOrders.GetDefaultOrdersSkillLine # not-yet
+C_CraftingOrders.GetMyOrders # not-yet
+C_CraftingOrders.GetNumFavoriteCustomerOptions # not-yet
+C_CraftingOrders.IsCustomerOptionFavorited # not-yet
+C_CraftingOrders.ListMyOrders # not-yet
+C_CraftingOrders.OpenCustomerCraftingOrders # not-yet
+C_CraftingOrders.ParseCustomerOptions # not-yet
+C_CraftingOrders.PlaceNewOrder # not-yet
+C_CraftingOrders.RejectOrder # not-yet
+C_CraftingOrders.ReleaseOrder # not-yet
+C_CraftingOrders.RequestCrafterOrders # not-yet
+C_CraftingOrders.RequestCustomerOrders # not-yet
+C_CraftingOrders.SetCustomerOptionFavorited # not-yet
+C_CreatureInfo.GetCreatureID # not-yet
+C_CurrencyInfo.CanTransferCurrency # not-yet
+C_CurrencyInfo.DoesCurrentFilterRequireAccountCurrencyData # not-yet
+C_CurrencyInfo.DoesWarModeBonusApply # not-yet
+C_CurrencyInfo.ExpandCurrencyList # not-yet
+C_CurrencyInfo.FetchCurrencyTransferTransactions # not-yet
+C_CurrencyInfo.GetCurrencyDescription # not-yet
+C_CurrencyInfo.GetCurrencyFilter # not-yet
+C_CurrencyInfo.GetCurrencyIDFromLink # not-yet
+C_CurrencyInfo.GetDragonIslesSuppliesCurrencyID # not-yet
+C_CurrencyInfo.GetFactionGrantedByCurrency # not-yet
+C_CurrencyInfo.GetPlayerCurrencyCategoryInfo # not-yet
+C_CurrencyInfo.IsAccountCharacterCurrencyDataReady # not-yet
+C_CurrencyInfo.IsAccountTransferableCurrency # not-yet
+C_CurrencyInfo.IsAccountWideCurrency # not-yet
+C_CurrencyInfo.IsCurrencyContainer # not-yet
+C_CurrencyInfo.IsCurrencyTransferInProgress # not-yet
+C_CurrencyInfo.IsCurrencyTransferTransactionDataReady # not-yet
+C_CurrencyInfo.PickupCurrency # not-yet
+C_CurrencyInfo.PlayerHasMaxQuantity # not-yet
+C_CurrencyInfo.PlayerHasMaxWeeklyQuantity # not-yet
+C_CurrencyInfo.RequestCurrencyDataForAccountCharacters # not-yet
+C_CurrencyInfo.RequestCurrencyFromAccountCharacter # not-yet
+C_CurrencyInfo.SetCurrencyBackpack # not-yet
+C_CurrencyInfo.SetCurrencyBackpackByID # not-yet
+C_CurrencyInfo.SetCurrencyFilter # not-yet
+C_CurrencyInfo.SetCurrencyUnused # not-yet
+C_CurveUtil.EvaluateColorFromBoolean # not-yet
+C_CurveUtil.EvaluateColorValueFromBoolean # not-yet
+C_CurveUtil.EvaluateGameCurve # not-yet
+C_DateAndTime.AdjustTimeByDays # not-yet: temporary Lua workaround
+C_DateAndTime.AdjustTimeByMinutes # not-yet: temporary Lua workaround
+C_DateAndTime.AdjustTimeByMonths # not-yet
+C_DateAndTime.GetCalendarTimeFromEpoch # not-yet: temporary Lua workaround
+C_DateAndTime.GetServerTimeLocal # not-yet: temporary Lua workaround
+C_DateAndTime.IsDayTime # not-yet: temporary Lua workaround
+C_DeathInfo.GetCorpseMapPosition # not-yet
+C_DeathInfo.GetDeathReleasePosition # not-yet
+C_DeathInfo.GetSelfResurrectOptions # not-yet
+C_DeathInfo.UseSelfResurrectOption # not-yet
+C_DeathRecap.GetRecapEvents # not-yet
+C_DeathRecap.GetRecapLink # not-yet
+C_DeathRecap.GetRecapMaxHealth # not-yet
+C_DeathRecap.HasRecapEvents # not-yet
+C_DelvesUI.GetDelvesAffixSpellsForSeason # not-yet
+C_DelvesUI.GetDelvesFactionForSeason # not-yet
+C_DelvesUI.GetLockedTextForCompanion # not-yet
+C_DelvesUI.GetModelSceneForCompanion # not-yet
+C_DelvesUI.GetTieredEntranceType # not-yet
+C_DelvesUI.HasActiveLFGLair # not-yet
+C_DelvesUI.HasActiveLair # not-yet
+C_DelvesUI.IsEligibleForActiveDelveRewards # not-yet
+C_DelvesUI.IsInLair # not-yet
+C_DelvesUI.IsTraitTreeForCompanion # not-yet
+C_Discord.Authorize # not-yet
+C_Discord.GetDiscordChannelName # not-yet
+C_Discord.GetDiscordUserID # not-yet
+C_Discord.GetDiscordUserName # not-yet
+C_Discord.GetDisplayNameType # not-yet
+C_Discord.GetGuildLinkStatus # not-yet
+C_Discord.GetNumDiscordChannels # not-yet
+C_Discord.GetNumDiscordServers # not-yet
+C_Discord.GetServerLinkableChannels # not-yet
+C_Discord.GetServerName # not-yet
+C_Discord.GuildLink # not-yet
+C_Discord.GuildUnlink # not-yet
+C_Discord.IsGuildChannelLinked # not-yet
+C_Discord.IsGuildSettingSet # not-yet
+C_Discord.IsUserOAuthed # not-yet
+C_Discord.IsVoiceEnabled # not-yet: temporary Lua workaround
+C_Discord.RefreshAuth # not-yet
+C_Discord.SetGuildSetting # not-yet
+C_Discord.UpdateDiscordServers # not-yet
+C_Discord.UpdateGuildLobby # not-yet
+C_EditMode.ConvertLayoutInfoToString # not-yet
+C_EditMode.ConvertStringToLayoutInfo # not-yet
+C_EditMode.IsValidLayoutName # not-yet
+C_EditMode.OnEditModeExit # not-yet
+C_EditMode.OnLayoutAdded # not-yet
+C_EditMode.OnLayoutDeleted # not-yet
+C_EncounterJournal.GetEncounterJournalLink # not-yet
+C_EncounterJournal.IsEncounterComplete # not-yet
+C_EncounterJournal.SetPreviewMythicPlusLevel # not-yet
+C_EncounterJournal.SetPreviewPvpTier # not-yet
+C_EncounterWarnings.GetColorForSeverity # not-yet
+C_EncounterWarnings.GetPlayCustomSoundsWhenHidden # not-yet
+C_EncounterWarnings.GetSoundKitForSeverity # not-yet
+C_EncounterWarnings.GetWarningsShown # not-yet
+C_EncounterWarnings.IsFeatureAvailable # not-yet
+C_EncounterWarnings.IsFeatureEnabled # not-yet
+C_EncounterWarnings.SetPlayCustomSoundsWhenHidden # not-yet
+C_EncounterWarnings.SetWarningsShown # not-yet
+C_EndOfMatchUI.GetEndOfMatchDetails # not-yet
+C_EventScheduler.GetActiveContinentName # not-yet: temporary Lua workaround
+C_EventToastManager.GetLevelUpDisplayToastsFromLevel # not-yet
+C_EventToastManager.GetNextToastToDisplay # not-yet
+C_EventToastManager.RemoveCurrentToast # not-yet
+C_ExpansionTrial.OnTrialLevelUpDialogClicked # not-yet
+C_ExpansionTrial.OnTrialLevelUpDialogShown # not-yet
+C_ExternalEventURL.LaunchURL # not-yet
+C_Flyout.FlyoutHasSpell # not-yet
+C_Flyout.GetFlyoutID # not-yet
+C_Flyout.GetFlyoutInfo # not-yet
+C_Flyout.GetFlyoutSlotInfo # not-yet
+C_Flyout.GetNumFlyouts # not-yet
+C_FrameManager.GetFrameVisibilityState # not-yet: temporary Lua workaround
+C_FriendList.AddFriend # not-yet
+C_FriendList.AddIgnore # not-yet
+C_FriendList.AddOrDelIgnore # not-yet
+C_FriendList.AddOrRemoveFriend # not-yet
+C_FriendList.DelIgnore # not-yet
+C_FriendList.DelIgnoreByIndex # not-yet
+C_FriendList.GetFriendInfo # not-yet
+C_FriendList.GetSelectedFriend # not-yet
+C_FriendList.GetWhoRaceFilters # not-yet
+C_FriendList.IsIgnored # not-yet
+C_FriendList.IsIgnoredByGuid # not-yet
+C_FriendList.IsOnIgnoredList # not-yet
+C_FriendList.RemoveFriend # not-yet
+C_FriendList.RemoveFriendByIndex # not-yet
+C_FriendList.SendWho # not-yet
+C_FriendList.SetFriendNotes # not-yet
+C_FriendList.SetFriendNotesByIndex # not-yet
+C_FriendList.SetSelectedFriend # not-yet
+C_FriendList.SortWho # not-yet
+C_GamePad.AddSDLMapping # not-yet
+C_GamePad.ApplyConfigs # not-yet
+C_GamePad.AxisIndexToConfigName # not-yet
+C_GamePad.ButtonBindingToIndex # not-yet
+C_GamePad.ButtonIndexToBinding # not-yet
+C_GamePad.ButtonIndexToConfigName # not-yet
+C_GamePad.ClearLedColor # not-yet
+C_GamePad.DeleteConfig # not-yet
+C_GamePad.GetActiveDeviceID # not-yet
+C_GamePad.GetAllConfigIDs # not-yet
+C_GamePad.GetAllDeviceIDs # not-yet
+C_GamePad.GetCombinedDeviceID # not-yet
+C_GamePad.GetConfig # not-yet
+C_GamePad.GetDeviceRawState # not-yet
+C_GamePad.GetLedColor # not-yet
+C_GamePad.GetPowerLevel # not-yet
+C_GamePad.SetConfig # not-yet
+C_GamePad.SetLedColor # not-yet
+C_GamePad.SetVibration # not-yet
+C_GamePad.StopVibration # not-yet
+C_GameRules.AutoConnectToGameModeRealm # not-yet
+C_GameRules.GetCurrentGameModeRecordID # not-yet
+C_GameRules.GetForeverExperiencePreset # not-yet: temporary Lua workaround
+C_GameRules.GetGameModePromoGlobalString # not-yet
+C_GameRules.IsCharacterlessLoginActive # not-yet
+C_GameRules.IsClassAllowedForGameMode # not-yet
+C_GameRules.IsPersonalResourceDisplayEnabled # not-yet
+C_GameRules.SetForeverExperiencePresetPostLogin # not-yet
+C_GamepadTargeting.Disable # not-yet
+C_GamepadTargeting.Enable # not-yet
+C_GamepadTargeting.SetFilter # not-yet
+C_GamepadUI.GetFirstGamepadActionBarStorageSlotIndexForActiveStance # not-yet
+C_GamepadUI.IsValidGamepadActionStorageSlotIndex # not-yet
+C_GamepadUI.IsValidGamepadPossessBarStorageSlotIndex # not-yet
+C_Garrison.AddFollowerToMission # not-yet
+C_Garrison.GetAutoMissionBoardState # not-yet
+C_Garrison.GetAutoMissionEnvironmentEffect # not-yet
+C_Garrison.GetAutoMissionTargetingInfo # not-yet
+C_Garrison.GetAutoMissionTargetingInfoForSpell # not-yet
+C_Garrison.GetAutoTroops # not-yet
+C_Garrison.GetCombatLogSpellInfo # not-yet
+C_Garrison.GetCurrentCypherEquipmentLevel # not-yet
+C_Garrison.GetCurrentGarrTalentTreeFriendshipFactionID # not-yet
+C_Garrison.GetCurrentGarrTalentTreeID # not-yet
+C_Garrison.GetCyphersToNextEquipmentLevel # not-yet
+C_Garrison.GetFollowerAutoCombatSpells # not-yet
+C_Garrison.GetFollowerAutoCombatStats # not-yet
+C_Garrison.GetFollowerMissionCompleteInfo # not-yet
+C_Garrison.GetGarrisonTalentTreeCurrencyTypes # not-yet
+C_Garrison.GetGarrisonTalentTreeType # not-yet
+C_Garrison.GetMaxCypherEquipmentLevel # not-yet
+C_Garrison.GetMissionCompleteEncounters # not-yet
+C_Garrison.GetMissionDeploymentInfo # not-yet
+C_Garrison.GetTalentPointsSpentInTalentTree # not-yet
+C_Garrison.GetTalentTreeIDsByClassID # not-yet
+C_Garrison.GetTalentTreeInfo # not-yet
+C_Garrison.GetTalentTreeResetInfo # not-yet
+C_Garrison.GetTalentTreeTalentPointResearchInfo # not-yet
+C_Garrison.HasAdventures # not-yet
+C_Garrison.IsAtGarrisonMissionNPC # not-yet
+C_Garrison.IsEnvironmentCountered # not-yet
+C_Garrison.IsFollowerOnCompletedMission # not-yet
+C_Garrison.IsLandingPageMinimapButtonVisible # not-yet
+C_Garrison.IsTalentConditionMet # not-yet
+C_Garrison.RegenerateCombatLog # not-yet
+C_Garrison.RemoveFollowerFromMission # not-yet
+C_Garrison.RushHealAllFollowers # not-yet
+C_Garrison.RushHealFollower # not-yet
+C_Garrison.SetAutoCombatSpellFastForward # not-yet
+C_GenericWidgetDisplay.Acknowledge # not-yet
+C_GenericWidgetDisplay.Close # not-yet
+C_GossipInfo.ForceGossip # not-yet
+C_GossipInfo.GetCompletedOptionDescriptionString # not-yet
+C_GossipInfo.GetCustomGossipDescriptionString # not-yet
+C_GossipInfo.GetNumActiveQuests # not-yet
+C_GossipInfo.GetNumAvailableQuests # not-yet
+C_GossipInfo.GetOptionUIWidgetSetsAndTypesByOptionID # not-yet
+C_GossipInfo.RefreshOptions # not-yet
+C_GossipInfo.SelectOption # not-yet
+C_GossipInfo.SelectOptionByIndex # not-yet
+C_GuildInfo.Demote # not-yet
+C_GuildInfo.Disband # not-yet
+C_GuildInfo.GetGuildRankOrder # not-yet
+C_GuildInfo.GetPreferredPlaySettings # not-yet
+C_GuildInfo.IsEncounterGuildNewsEnabled # not-yet
+C_GuildInfo.MemberExistsByName # not-yet
+C_GuildInfo.QueryGuildMemberRecipes # not-yet
+C_GuildInfo.QueryGuildMembersForRecipe # not-yet
+C_GuildInfo.RemoveFromGuild # not-yet
+C_GuildInfo.RequestGuildRename # not-yet
+C_GuildInfo.RequestGuildRenameRefund # not-yet
+C_GuildInfo.RequestPreferredPlaySettings # not-yet
+C_GuildInfo.RequestRenameNameCheck # not-yet
+C_GuildInfo.SetLeader # not-yet
+C_GuildInfo.SetNote # not-yet
+C_GuildInfo.SetPreferredPlaySettings # not-yet
+C_HeirloomInfo.AreAllCollectionFiltersChecked # not-yet
+C_HeirloomInfo.AreAllSourceFiltersChecked # not-yet
+C_HeirloomInfo.IsUsingDefaultFilters # not-yet: temporary Lua workaround
+C_HeirloomInfo.SetAllCollectionFilters # not-yet
+C_HouseEditor.ActivateHouseEditorMode # not-yet
+C_HouseEditor.EnterHouseEditor # not-yet
+C_HouseEditor.GetActiveHouseEditorMode # not-yet
+C_HouseEditor.GetHouseEditorAvailability # not-yet
+C_HouseEditor.GetHouseEditorModeAvailability # not-yet
+C_HouseEditor.GetHouseEditorPlayerType # not-yet
+C_HouseEditor.IsHouseEditorActive # not-yet
+C_HouseEditor.IsHouseEditorModeActive # not-yet
+C_HouseEditor.IsHouseEditorStatusAvailable # not-yet
+C_HouseEditor.LeaveHouseEditor # not-yet
+C_HouseExterior.GetCoreFixtureOptionsInfo # not-yet: temporary Lua workaround
+C_HouseExterior.GetCurrentHouseExteriorSize # not-yet: temporary Lua workaround
+C_HouseExterior.GetCurrentHouseExteriorType # not-yet: temporary Lua workaround
+C_HouseExterior.GetHouseExteriorSizeOptions # not-yet: temporary Lua workaround
+C_HouseExterior.GetHouseExteriorTypeOptions # not-yet: temporary Lua workaround
+C_HouseExterior.GetSelectedFixturePointInfo # not-yet: temporary Lua workaround
+C_HouseExterior.HasHoveredFixture # not-yet: temporary Lua workaround
+C_HouseExterior.HasSelectedFixturePoint # not-yet: temporary Lua workaround
+C_HouseExterior.IsAnyDecorAttachedToCoreFixture # not-yet: temporary Lua workaround
+C_HouseExterior.IsAnyDecorAttachedToDoor # not-yet: temporary Lua workaround
+C_HouseExterior.IsAnyDecorAttachedToHouseExterior # not-yet: temporary Lua workaround
+C_HouseExterior.IsAnyDecorAttachedToSelectedFixturePoint # not-yet: temporary Lua workaround
+C_HouseExterior.IsExteriorDecorHidden # not-yet: temporary Lua workaround
+C_HouseExterior.SetExteriorDecorHidden # not-yet: temporary Lua workaround
+C_Housing.AcceptNeighborhoodOwnership # not-yet
+C_Housing.CanEditCharter # not-yet
+C_Housing.CanTakeReportScreenshot # not-yet
+C_Housing.CreateGuildNeighborhood # not-yet
+C_Housing.CreateNeighborhoodCharter # not-yet
+C_Housing.DeclineNeighborhoodOwnership # not-yet
+C_Housing.EditNeighborhoodCharter # not-yet
+C_Housing.GetCurrentHouseInfo # not-yet
+C_Housing.GetCurrentHouseRefundAmount # not-yet
+C_Housing.GetCurrentNeighborhoodGUID # not-yet
+C_Housing.GetHouseLevelRewardsForLevel # not-yet
+C_Housing.GetHousingAccessFlags # not-yet
+C_Housing.GetOthersOwnedHouses # not-yet
+C_Housing.HouseFinderDeclineNeighborhoodInvitation # not-yet
+C_Housing.HouseFinderRequestReservationAndPort # not-yet
+C_Housing.IsHousingMarketCartFullRemoveEnabled # not-yet
+C_Housing.IsHousingMarketEnabled # not-yet
+C_Housing.IsHousingMarketShopEnabled # not-yet
+C_Housing.IsInsidePlot # not-yet
+C_Housing.IsOnNeighborhoodMap # not-yet
+C_Housing.LeaveHouse # not-yet
+C_Housing.OnCharterConfirmationAccepted # not-yet
+C_Housing.OnCharterConfirmationClosed # not-yet
+C_Housing.OnCreateCharterNeighborhoodClosed # not-yet
+C_Housing.OnCreateGuildNeighborhoodClosed # not-yet
+C_Housing.OnHouseFinderClickPlot # not-yet
+C_Housing.OnRequestSignatureClicked # not-yet
+C_Housing.OnSignCharterClicked # not-yet
+C_Housing.RelinquishHouse # not-yet
+C_Housing.RequestCurrentHouseInfo # not-yet
+C_Housing.RequestPlayerCharacterList # not-yet
+C_Housing.ResetHouse # not-yet
+C_Housing.ReturnAfterVisitingHouse # not-yet
+C_Housing.SaveHouseSettings # not-yet
+C_Housing.SearchBNetFriendNeighborhoods # not-yet
+C_Housing.SearchBNetFriendNeighborhoodsByID # not-yet
+C_Housing.SetTrackedHouseGuid # not-yet
+C_Housing.TeleportHome # not-yet
+C_Housing.TryRenameNeighborhood # not-yet
+C_Housing.ValidateCreateGuildNeighborhoodSize # not-yet
+C_Housing.ValidateNeighborhoodName # not-yet
+C_Housing.VisitHouse # not-yet
+C_HousingBasicMode.GetHoveredDecorInfo # not-yet
+C_HousingBasicMode.GetSelectedDecorInfo # not-yet: temporary Lua workaround
+C_HousingBasicMode.IsDecorSelected # not-yet: temporary Lua workaround
+C_HousingBasicMode.IsFreePlaceEnabled # not-yet
+C_HousingBasicMode.IsGridSnapEnabled # not-yet: temporary Lua workaround
+C_HousingBasicMode.IsGridVisible # not-yet: temporary Lua workaround
+C_HousingBasicMode.IsHouseExteriorHovered # not-yet
+C_HousingBasicMode.IsHouseExteriorSelected # not-yet: temporary Lua workaround
+C_HousingBasicMode.IsHoveringDecor # not-yet
+C_HousingBasicMode.RemoveSelectedDecor # not-yet
+C_HousingBasicMode.RotateDecor # not-yet
+C_HousingBasicMode.RotateHouseExterior # not-yet
+C_HousingBasicMode.SetFreePlaceEnabled # not-yet
+C_HousingBasicMode.SetGridVisible # not-yet: temporary Lua workaround
+C_HousingBlueprint.CanExportRoom # not-yet
+C_HousingBlueprint.CanExportTypeFromCurrentLocation # not-yet
+C_HousingBlueprint.CanImportTypeFromCurrentLocation # not-yet
+C_HousingBlueprint.DeleteBlueprint # not-yet
+C_HousingBlueprint.ExportBlueprint # not-yet
+C_HousingBlueprint.ExportRoomBlueprint # not-yet
+C_HousingBlueprint.GetBlueprintHyperlink # not-yet
+C_HousingBlueprint.GetBlueprintTypeForCode # not-yet
+C_HousingBlueprint.GetExportAvailability # not-yet
+C_HousingBlueprint.GetFeatureAvailability # not-yet
+C_HousingBlueprint.GetImportAvailability # not-yet
+C_HousingBlueprint.ImportBlueprint # not-yet
+C_HousingBlueprint.IsShareCodeValid # not-yet
+C_HousingBlueprint.RenameBlueprint # not-yet
+C_HousingBlueprint.RequestBlueprintCollection # not-yet
+C_HousingBlueprint.RequestBlueprintContents # not-yet
+C_HousingBlueprint.RequestBlueprintContentsForContext # not-yet
+C_HousingBlueprint.StartImportRoomBlueprint # not-yet
+C_HousingBlueprint.UpdateBlueprintStringFromInput # not-yet
+C_HousingCatalog.GetAllFilterTagGroups # not-yet: temporary Lua workaround
+C_HousingCatalog.GetCartSizeLimit # not-yet: temporary Lua workaround
+C_HousingCatalog.GetCatalogCategoryAndSubcategoryNames # not-yet
+C_HousingCatalog.GetCatalogEntryRefundTimeStampByRecordID # not-yet: temporary Lua workaround
+C_HousingCatalog.GetDecorMaxOwnedCount # not-yet: temporary Lua workaround
+C_HousingCatalog.GetDecorTotalOwnedCount # not-yet: temporary Lua workaround
+C_HousingCatalog.GetFeaturedSmallProducts # not-yet: temporary Lua workaround
+C_HousingCatalog.GetMarketInfoForDecor # not-yet: temporary Lua workaround
+C_HousingCatalog.HasFeaturedEntries # not-yet: temporary Lua workaround
+C_HousingCatalog.HousingMarketActionAddToCart # not-yet: temporary Lua workaround
+C_HousingCatalog.HousingMarketActionClearCart # not-yet: temporary Lua workaround
+C_HousingCatalog.HousingMarketActionRemoveFromCart # not-yet: temporary Lua workaround
+C_HousingCatalog.HousingMarketActionViewInStore # not-yet: temporary Lua workaround
+C_HousingCatalog.IsPreviewCartItemShown # not-yet: temporary Lua workaround
+C_HousingCatalog.PromotePreviewDecor # not-yet: temporary Lua workaround
+C_HousingCatalog.SetPreviewCartItemShown # not-yet: temporary Lua workaround
+C_HousingCleanupMode.GetHoveredDecorInfo # not-yet
+C_HousingCleanupMode.IsHoveringDecor # not-yet
+C_HousingCleanupMode.RemoveSelectedDecor # not-yet
+C_HousingCustomizeMode.ApplyDyeToSelectedDecor # not-yet
+C_HousingCustomizeMode.ApplyPetToSelectedDecor # not-yet
+C_HousingCustomizeMode.ClearDyesForSelectedDecor # not-yet
+C_HousingCustomizeMode.CommitDyesForSelectedDecor # not-yet: temporary Lua workaround
+C_HousingCustomizeMode.GetHoveredDecorInfo # not-yet
+C_HousingCustomizeMode.GetHoveredRoomComponentInfo # not-yet: temporary Lua workaround
+C_HousingCustomizeMode.GetNumDyesToRemoveOnSelectedDecor # not-yet: temporary Lua workaround
+C_HousingCustomizeMode.GetNumDyesToSpendOnSelectedDecor # not-yet: temporary Lua workaround
+C_HousingCustomizeMode.GetPreviewDyesOnSelectedDecor # not-yet: temporary Lua workaround
+C_HousingCustomizeMode.GetRecentlyUsedDyes # not-yet: temporary Lua workaround
+C_HousingCustomizeMode.GetRecentlyUsedThemeSets # not-yet: temporary Lua workaround
+C_HousingCustomizeMode.GetRecentlyUsedWallpapers # not-yet: temporary Lua workaround
+C_HousingCustomizeMode.GetSelectedDecorInfo # not-yet: temporary Lua workaround
+C_HousingCustomizeMode.GetSelectedDecorPetInfo # not-yet
+C_HousingCustomizeMode.GetSelectedRoomComponentInfo # not-yet: temporary Lua workaround
+C_HousingCustomizeMode.GetThemeSetInfo # not-yet: temporary Lua workaround
+C_HousingCustomizeMode.GetWallpapersForRoomComponentType # not-yet: temporary Lua workaround
+C_HousingCustomizeMode.IsDecorSelected # not-yet: temporary Lua workaround
+C_HousingCustomizeMode.IsHouseExteriorDoorHovered # not-yet
+C_HousingCustomizeMode.IsHoveringDecor # not-yet
+C_HousingCustomizeMode.IsHoveringRoomComponent # not-yet: temporary Lua workaround
+C_HousingCustomizeMode.IsRoomComponentSelected # not-yet: temporary Lua workaround
+C_HousingCustomizeMode.RoomComponentSupportsVariant # not-yet: temporary Lua workaround
+C_HousingCustomizeMode.RoomConnectionSupportsDoorType # not-yet
+C_HousingDecor.AnyDecorPlacedInRoom # not-yet
+C_HousingDecor.EnterPreviewState # not-yet: temporary Lua workaround
+C_HousingDecor.ExitPreviewState # not-yet: temporary Lua workaround
+C_HousingDecor.GetAllMaxPlacementBudgets # not-yet
+C_HousingDecor.GetAllPlacedDecor # not-yet: temporary Lua workaround
+C_HousingDecor.GetAllSpentPlacementBudgets # not-yet
+C_HousingDecor.GetDecorAssignedPetName # not-yet
+C_HousingDecor.GetDecorCanAttachPet # not-yet
+C_HousingDecor.GetDecorHyperlink # not-yet: temporary Lua workaround
+C_HousingDecor.GetDecorIcon # not-yet: temporary Lua workaround
+C_HousingDecor.GetDecorInstanceInfoForGUID # not-yet: temporary Lua workaround
+C_HousingDecor.GetDecorName # not-yet: temporary Lua workaround
+C_HousingDecor.GetHoveredDecorInfo # not-yet: temporary Lua workaround
+C_HousingDecor.GetMaxPetPlacementBudget # not-yet
+C_HousingDecor.GetNumDecorPlaced # not-yet: temporary Lua workaround
+C_HousingDecor.GetNumPreviewDecor # not-yet: temporary Lua workaround
+C_HousingDecor.GetSelectedDecorInfo # not-yet: temporary Lua workaround
+C_HousingDecor.GetSpentPetPlacementBudget # not-yet
+C_HousingDecor.HasMaxPlacementBudget # not-yet: temporary Lua workaround
+C_HousingDecor.IsDecorSelected # not-yet: temporary Lua workaround
+C_HousingDecor.IsGridVisible # not-yet: temporary Lua workaround
+C_HousingDecor.IsHouseExteriorDoorHovered # not-yet
+C_HousingDecor.IsHouseExteriorHovered # not-yet: temporary Lua workaround
+C_HousingDecor.IsHoveringDecor # not-yet: temporary Lua workaround
+C_HousingDecor.IsModeDisabledForPreviewState # not-yet: temporary Lua workaround
+C_HousingDecor.IsPreviewState # not-yet: temporary Lua workaround
+C_HousingDecor.SetGridVisible # not-yet: temporary Lua workaround
+C_HousingDecor.SetPlacedDecorEntryHovered # not-yet: temporary Lua workaround
+C_HousingDecor.SetPlacedDecorEntrySelected # not-yet: temporary Lua workaround
+C_HousingExpertMode.CommitDecorMovement # not-yet
+C_HousingExpertMode.CommitHouseExteriorPosition # not-yet
+C_HousingExpertMode.GetHoveredDecorInfo # not-yet
+C_HousingExpertMode.GetPrecisionSubmode # not-yet: temporary Lua workaround
+C_HousingExpertMode.GetPrecisionSubmodeRestriction # not-yet: temporary Lua workaround
+C_HousingExpertMode.GetSelectedDecorInfo # not-yet: temporary Lua workaround
+C_HousingExpertMode.IsDecorSelected # not-yet: temporary Lua workaround
+C_HousingExpertMode.IsGridVisible # not-yet
+C_HousingExpertMode.IsHouseExteriorHovered # not-yet
+C_HousingExpertMode.IsHouseExteriorSelected # not-yet: temporary Lua workaround
+C_HousingExpertMode.IsHoveringDecor # not-yet
+C_HousingExpertMode.RemoveSelectedDecor # not-yet
+C_HousingExpertMode.SelectNextRotationAxis # not-yet
+C_HousingExpertMode.SetGridVisible # not-yet
+C_HousingExpertMode.SetPrecisionIncrementingActive # not-yet
+C_HousingInspectMode.EnterInspectMode # not-yet
+C_HousingInspectMode.ExitInspectMode # not-yet
+C_HousingInspectMode.GetHoveredDecorGUID # not-yet
+C_HousingInspectMode.IsHoveringDecor # not-yet
+C_HousingInspectMode.IsInInspectMode # not-yet
+C_HousingLayout.AnyRoomsOnFloor # not-yet: temporary Lua workaround
+C_HousingLayout.CanSetViewedFloor # not-yet
+C_HousingLayout.ConfirmStairChoice # not-yet
+C_HousingLayout.DeselectRoomOrDoor # not-yet
+C_HousingLayout.GetBaseRoomFloor # not-yet
+C_HousingLayout.GetHighestOccupiedFloorIndex # not-yet
+C_HousingLayout.GetLowestOccupiedFloorIndex # not-yet
+C_HousingLayout.GetNumActiveRooms # not-yet
+C_HousingLayout.GetRoomPlayerIsIn # not-yet
+C_HousingLayout.GetSelectedBlueprintFloorplan # not-yet
+C_HousingLayout.GetSelectedDoor # not-yet: temporary Lua workaround
+C_HousingLayout.GetSelectedFloorplan # not-yet: temporary Lua workaround
+C_HousingLayout.GetSelectedRoom # not-yet
+C_HousingLayout.GetSelectedStairwellRoomCount # not-yet
+C_HousingLayout.GetViewedFloor # not-yet: temporary Lua workaround
+C_HousingLayout.HasAnySelections # not-yet: temporary Lua workaround
+C_HousingLayout.HasRoomPlacementBudget # not-yet: temporary Lua workaround
+C_HousingLayout.HasSelectedBlueprintFloorplan # not-yet
+C_HousingLayout.HasSelectedDoor # not-yet
+C_HousingLayout.HasSelectedFloorplan # not-yet
+C_HousingLayout.HasSelectedRoom # not-yet
+C_HousingLayout.HasStairs # not-yet
+C_HousingLayout.HasValidConnection # not-yet: temporary Lua workaround
+C_HousingLayout.IsBaseRoom # not-yet: temporary Lua workaround
+C_HousingLayout.IsDraggingRoom # not-yet: temporary Lua workaround
+C_HousingLayout.MoveDraggedRoom # not-yet
+C_HousingLayout.MoveLayoutCamera # intentionally-unsupported: 3D camera/model
+C_HousingLayout.RoomHasStairs # not-yet
+C_HousingLayout.RotateFocusedRoom # not-yet
+C_HousingLayout.ZoomLayoutCamera # intentionally-unsupported: 3D camera/model
+C_HousingNeighborhood.CanReturnAfterVisitingHouse # not-yet: temporary Lua workaround
+C_HousingNeighborhood.GetCornerstoneHouseInfo # not-yet: temporary Lua workaround
+C_HousingNeighborhood.GetCornerstoneNeighborhoodInfo # not-yet: temporary Lua workaround
+C_HousingNeighborhood.GetCornerstonePurchaseMode # not-yet: temporary Lua workaround
+C_HousingNeighborhood.GetCurrentNeighborhoodTextureSuffix # not-yet: temporary Lua workaround
+C_HousingNeighborhood.GetDiscountedMovePrice # not-yet: temporary Lua workaround
+C_HousingNeighborhood.GetMoveCooldownTime # not-yet: temporary Lua workaround
+C_HousingNeighborhood.GetNeighborhoodMapData # not-yet: temporary Lua workaround
+C_HousingNeighborhood.GetNeighborhoodName # not-yet: temporary Lua workaround
+C_HousingNeighborhood.GetNeighborhoodPlotName # not-yet: temporary Lua workaround
+C_HousingNeighborhood.GetPreviousHouseIdentifier # not-yet: temporary Lua workaround
+C_HousingNeighborhood.HasPermissionToPurchase # not-yet: temporary Lua workaround
+C_HousingNeighborhood.IsNeighborhoodManager # not-yet: temporary Lua workaround
+C_HousingNeighborhood.IsNeighborhoodOwner # not-yet: temporary Lua workaround
+C_HousingNeighborhood.IsPlayerInOtherPlayersPlot # not-yet: temporary Lua workaround
+C_HousingNeighborhood.IsPlotAvailableForPurchase # not-yet: temporary Lua workaround
+C_HousingNeighborhood.IsPlotOwnedByPlayer # not-yet: temporary Lua workaround
+C_HousingNeighborhood.OnCornerstoneClosed # not-yet: temporary Lua workaround
+C_ImmersiveInteraction.HasImmersiveInteraction # not-yet
+C_InstanceLeaver.IsPlayerLeaver # not-yet
+C_InterfaceFileManifest.GetInterfaceArtFiles # not-yet
+C_Intl.CompareStrings # not-yet
+C_Intl.CreateLocaleContext # not-yet
+C_Intl.FindBreaks # not-yet
+C_Intl.FindStringMatches # not-yet
+C_Intl.FoldCase # not-yet
+C_Intl.FormatCurrency # not-yet
+C_Intl.FormatDate # not-yet
+C_Intl.FormatDateTime # not-yet
+C_Intl.FormatNumber # not-yet
+C_Intl.FormatTime # not-yet
+C_Intl.GetCharacterProperties # not-yet
+C_Intl.GetCurrencyFractionDigits # not-yet
+C_Intl.GetCurrencyName # not-yet
+C_Intl.GetCurrentLocale # not-yet
+C_Intl.GetDisplayName # not-yet
+C_Intl.GetSortKey # not-yet
+C_Intl.IsNormalized # not-yet
+C_Intl.Length # not-yet
+C_Intl.Normalize # not-yet
+C_Intl.ParseCurrency # not-yet
+C_Intl.ParseNumber # not-yet
+C_Intl.SelectPlural # not-yet
+C_Intl.ToLower # not-yet
+C_Intl.ToTitle # not-yet
+C_Intl.ToUpper # not-yet
+C_Intl.TransformLocale # not-yet
+C_Intl.Transliterate # not-yet
+C_InvasionInfo.AreInvasionsAvailable # not-yet
+C_InvasionInfo.GetInvasionForUiMapID # not-yet
+C_InvasionInfo.GetInvasionInfo # not-yet
+C_InvasionInfo.GetInvasionTimeLeft # not-yet
+C_IslandsQueue.CloseIslandsQueueScreen # not-yet
+C_IslandsQueue.GetIslandDifficultyInfo # not-yet
+C_IslandsQueue.GetIslandsMaxGroupSize # not-yet
+C_IslandsQueue.GetIslandsWeeklyQuestID # not-yet
+C_IslandsQueue.QueueForIsland # not-yet
+C_IslandsQueue.RequestPreloadRewardData # not-yet
+C_Item.ActionBindsItem # not-yet
+C_Item.BindEnchant # not-yet
+C_Item.CanBeRefunded # not-yet
+C_Item.CanItemTransmogAppearance # not-yet
+C_Item.CanScrapItem # not-yet
+C_Item.CanViewItemPowers # not-yet
+C_Item.ConfirmBindOnUse # not-yet
+C_Item.ConfirmDeleteItem # not-yet
+C_Item.ConfirmNoRefundOnUse # not-yet
+C_Item.ConfirmOnUse # not-yet
+C_Item.DeleteItem # not-yet
+C_Item.DoesItemContainSpec # not-yet
+C_Item.DoesItemMatchBonusTreeReplacement # not-yet
+C_Item.DoesItemMatchSpellItemCondition # not-yet
+C_Item.DoesItemMatchTargetEnchantingSpell # not-yet
+C_Item.DoesItemMatchTrackJump # not-yet
+C_Item.EndBoundTradeable # not-yet
+C_Item.EndRefund # not-yet
+C_Item.EquipItemByName # not-yet
+C_Item.GetAppliedItemTransmogInfo # not-yet
+C_Item.GetBaseItemTransmogInfo # not-yet
+C_Item.GetCurrentItemTransmogInfo # not-yet
+C_Item.GetDelvePreviewItemLink # not-yet
+C_Item.GetDelvePreviewItemQuality # not-yet
+C_Item.GetFirstTriggeredSpellForItem # not-yet
+C_Item.GetItemChildInfo # not-yet
+C_Item.GetItemConversionOutputIcon # not-yet
+C_Item.GetItemCreationContext # not-yet
+C_Item.GetItemFamily # not-yet
+C_Item.GetItemGem # not-yet
+C_Item.GetItemGemID # not-yet
+C_Item.GetItemIDByGUID # not-yet
+C_Item.GetItemInventorySlotKey # not-yet
+C_Item.GetItemLearnTransmogSet # not-yet
+C_Item.GetItemLinkByGUID # not-yet
+C_Item.GetItemLocation # not-yet
+C_Item.GetItemNumAddedSockets # not-yet
+C_Item.GetItemSetInfo # not-yet
+C_Item.GetItemSpecInfo # not-yet
+C_Item.GetItemStatDelta # not-yet
+C_Item.GetItemStats # not-yet
+C_Item.GetItemUniqueness # not-yet
+C_Item.GetItemUniquenessByID # not-yet
+C_Item.GetItemUpgradeInfo # not-yet
+C_Item.GetLimitedCurrencyItemInfo # not-yet
+C_Item.GetSetBonusesForSpecializationByItemID # not-yet
+C_Item.IsAnimaItemByID # not-yet
+C_Item.IsArtifactPowerItem # not-yet
+C_Item.IsCurrentItem # not-yet
+C_Item.IsDressableItemByID # not-yet
+C_Item.IsEquippedItem # not-yet
+C_Item.IsEquippedItemType # not-yet
+C_Item.IsItemBindToAccount # not-yet
+C_Item.IsItemBindToAccountUntilEquip # not-yet
+C_Item.IsItemConduit # not-yet
+C_Item.IsItemConvertibleAndValidForPlayer # not-yet
+C_Item.IsItemCorrupted # not-yet
+C_Item.IsItemCorruptionRelated # not-yet
+C_Item.IsItemCorruptionResistant # not-yet
+C_Item.IsItemGUIDInInventory # not-yet
+C_Item.IsItemKeystoneByID # not-yet
+C_Item.IsItemSpecificToPlayerClass # not-yet
+C_Item.IsLocked # not-yet
+C_Item.IsUsableItem # not-yet
+C_Item.ItemHasRange # not-yet
+C_Item.LockItem # not-yet
+C_Item.LockItemByGUID # not-yet
+C_Item.PickupItem # not-yet
+C_Item.ReplaceEnchant # not-yet
+C_Item.ReplaceTradeEnchant # not-yet
+C_Item.ReplaceTradeskillEnchant # not-yet
+C_Item.RequestLoadItemData # not-yet
+C_Item.RequestLoadItemDataByID # not-yet: temporary Lua workaround
+C_Item.UnlockItem # not-yet
+C_Item.UnlockItemByGUID # not-yet
+C_Item.UseItemByName # not-yet
+C_ItemInteraction.GetChargeInfo # not-yet
+C_ItemInteraction.GetItemConversionCurrencyCost # not-yet
+C_ItemInteraction.GetItemInteractionSpellId # not-yet
+C_ItemInteraction.PerformItemInteraction # not-yet
+C_ItemUpgrade.CloseItemUpgrade # not-yet
+C_ItemUpgrade.GetHighWatermarkForItem # not-yet
+C_ItemUpgrade.GetHighWatermarkForSlot # not-yet
+C_ItemUpgrade.GetHighWatermarkSlotForItem # not-yet
+C_ItemUpgrade.GetItemHyperlink # not-yet
+C_ItemUpgrade.GetItemUpgradeCurrentLevel # not-yet
+C_ItemUpgrade.GetItemUpgradeEffect # not-yet
+C_ItemUpgrade.GetItemUpgradeItemInfo # not-yet
+C_ItemUpgrade.GetItemUpgradePvpItemLevelDeltaValues # not-yet
+C_ItemUpgrade.GetNumItemUpgradeEffects # not-yet
+C_ItemUpgrade.IsItemBound # not-yet
+C_ItemUpgrade.SetItemUpgradeFromCursorItem # not-yet
+C_ItemUpgrade.UpgradeItem # not-yet
+C_KeyBindings.ActivateBindingContext # not-yet
+C_KeyBindings.DeactivateBindingContext # not-yet
+C_KeyBindings.GetTurnStrafeStyle # not-yet
+C_KeyBindings.IsBindingContextActive # not-yet
+C_KeyBindings.SetTurnStrafeStyle # not-yet
+C_KeyBindings.UpdateTurnStrafeBindingsForCharacter # not-yet
+C_LFGInfo.AreCrossFactionGroupQueuesAllowed # not-yet
+C_LFGInfo.CanPlayerUseLFR # not-yet: temporary Lua workaround
+C_LFGInfo.CanPlayerUsePVP # not-yet
+C_LFGInfo.CanPlayerUseScenarioFinder # not-yet
+C_LFGInfo.ConfirmLfgExpandSearch # not-yet
+C_LFGInfo.DoesActivePartyMeetPremadeLaunchCount # not-yet
+C_LFGInfo.DoesCrossFactionQueueRequireFullPremade # not-yet
+C_LFGInfo.GetActiveLFGDungeonName # not-yet
+C_LFGInfo.GetDungeonInfo # not-yet: temporary Lua workaround
+C_LFGInfo.GetLFDLockStates # not-yet: temporary Lua workaround
+C_LFGInfo.GetLevelUpInstances # not-yet
+C_LFGInfo.GetRoleCheckDifficultyDetails # not-yet
+C_LFGInfo.IsInMatchmadeRaidWithoutRoleRequirements # not-yet
+C_LFGInfo.IsLFREnabled # not-yet
+C_LFGList.CanActiveEntryUseAutoAccept # not-yet
+C_LFGList.ClearApplicationTextFields # not-yet
+C_LFGList.ClearCreationTextFields # not-yet
+C_LFGList.ConfirmCensoredActiveEntry # not-yet
+C_LFGList.CopyActiveEntryInfoToCreationFields # not-yet
+C_LFGList.CreateScenarioListing # not-yet
+C_LFGList.DoesCensoredTextMatch # not-yet
+C_LFGList.DoesEntryTitleMatchPrebuiltTitle # not-yet
+C_LFGList.GetApplicantBestDungeonScore # not-yet
+C_LFGList.GetApplicantDungeonScoreForListing # not-yet
+C_LFGList.GetApplicantInfo # not-yet
+C_LFGList.GetApplicantPvpRatingInfoForListing # not-yet
+C_LFGList.GetKeystoneForActivity # not-yet
+C_LFGList.GetOwnedKeystoneActivityAndGroupAndLevel # not-yet
+C_LFGList.GetSearchResultLeaderInfo # not-yet
+C_LFGList.GetSearchResultPlayerInfo # not-yet
+C_LFGList.IsCensoredActiveEntryUnresolved # not-yet
+C_LFGList.IsPlayerValidForEndgameFieldEdits # not-yet
+C_LFGList.ListingUsesEndgameEditRestrictions # not-yet
+C_LFGList.ReportGroupAsAdvertisement # not-yet
+C_LFGList.RevealCensoredActiveEntry # not-yet
+C_LFGList.RevealCensoredSearchResult # not-yet
+C_LFGList.SetEntryTitle # not-yet
+C_LFGList.SetSearchToScenarioID # not-yet
+C_LFGList.ValidateRequiredDungeonScore # not-yet
+C_LFGList.ValidateRequiredPvpRatingForActivity # not-yet
+C_LFGListRoles.GetRoles # not-yet
+C_LFGListRoles.GetSavedRoles # not-yet
+C_LFGListRoles.SetRoles # not-yet
+C_LegendaryCrafting.CraftRuneforgeLegendary # not-yet
+C_LegendaryCrafting.GetRuneforgeItemPreviewInfo # not-yet
+C_LegendaryCrafting.GetRuneforgeLegendaryComponentInfo # not-yet
+C_LegendaryCrafting.GetRuneforgeLegendaryCost # not-yet
+C_LegendaryCrafting.GetRuneforgeLegendaryCraftSpellID # not-yet
+C_LegendaryCrafting.GetRuneforgeLegendaryCurrencies # not-yet
+C_LegendaryCrafting.GetRuneforgeLegendaryUpgradeCost # not-yet
+C_LegendaryCrafting.GetRuneforgeModifierInfo # not-yet
+C_LegendaryCrafting.GetRuneforgeModifiers # not-yet
+C_LegendaryCrafting.GetRuneforgePowerInfo # not-yet
+C_LegendaryCrafting.GetRuneforgePowerSlots # not-yet
+C_LegendaryCrafting.GetRuneforgePowers # not-yet
+C_LegendaryCrafting.IsRuneforgeLegendary # not-yet
+C_LegendaryCrafting.IsRuneforgeLegendaryMaxLevel # not-yet
+C_LegendaryCrafting.IsUpgradeItemValidForRuneforgeLegendary # not-yet
+C_LegendaryCrafting.IsValidRuneforgeBaseItem # not-yet
+C_LegendaryCrafting.MakeRuneforgeCraftDescription # not-yet
+C_LegendaryCrafting.UpgradeRuneforgeLegendary # not-yet
+C_LevelSquish.ConvertFollowerLevel # not-yet
+C_LevelSquish.ConvertPlayerLevel # not-yet
+C_LimitedInput.LimitedInputAllowed # not-yet
+C_LiveEvent.OnLiveEventBannerClicked # intentionally-unsupported: Glue-only in retail-12-1-5-70688.csv
+C_LiveEvent.OnLiveEventPopupClicked # intentionally-unsupported: Glue-only in retail-12-1-5-70688.csv
+C_LobbyMatchmakerInfo.AbandonQueue # not-yet
+C_LobbyMatchmakerInfo.EnterQueue # not-yet
+C_LobbyMatchmakerInfo.GetCurrQueuePlaylistEntry # not-yet
+C_LobbyMatchmakerInfo.GetCurrQueueState # not-yet
+C_LobbyMatchmakerInfo.GetQueueStartTime # not-yet
+C_LobbyMatchmakerInfo.RespondToQueuePop # not-yet
+C_Log.LogMessageWithPriority # not-yet
+C_Log.LogWarningMessage # not-yet
+C_Loot.GetLootRollDuration # not-yet
+C_Loot.IsLegacyLootModeEnabled # not-yet
+C_LootFrame.TryAutoLoot # not-yet
+C_LoreText.RequestLoreTextForCampaignID # not-yet
+C_Macro.SetMacroExecuteLineCallback # not-yet
+C_Mail.GetCraftingOrderMailInfo # not-yet
+C_Mail.IsCommandPending # not-yet
+C_MajorFactions.GetMajorFactionProgressionInfo # not-yet
+C_MajorFactions.GetMajorFactionRenownInfo # not-yet
+C_MajorFactions.GetRenownNPCFactionID # not-yet: temporary Lua workaround
+C_MajorFactions.GetTotalReputationForRenownLevel # not-yet
+C_MajorFactions.IsMajorFactionHiddenFromExpansionPage # not-yet: temporary Lua workaround
+C_MajorFactions.IsWeeklyRenownCapped # not-yet
+C_MajorFactions.ShouldDisplayMajorFactionAsJourney # not-yet: temporary Lua workaround
+C_MajorFactions.ShouldUseJourneyRewardTrack # not-yet: temporary Lua workaround
+C_Map.CloseWorldMapInteraction # not-yet
+C_Map.GetAreaInfo # not-yet: temporary Lua workaround
+C_Map.GetBountySetMaps # not-yet
+C_Map.GetMapArtZoneTextPosition # not-yet
+C_Map.GetMapDisplayInfo # not-yet
+C_Map.GetMapHighlightInfoAtPosition # not-yet
+C_Map.GetMapHighlightPulseInfo # not-yet
+C_Map.GetMapLevels # not-yet
+C_Map.GetMapWorldSize # not-yet: temporary Lua workaround
+C_Map.GetUserWaypointFromHyperlink # not-yet
+C_Map.GetUserWaypointHyperlink # not-yet
+C_Map.IsCityMap # not-yet
+C_Map.IsMapValidForNavBarDropdown # not-yet
+C_Map.MapHasArt # not-yet: temporary Lua workaround
+C_Map.OpenWorldMap # not-yet
+C_MerchantFrame.GetBuybackItemID # not-yet
+C_MerchantFrame.GetMerchantCurrencies # not-yet
+C_MerchantFrame.SellAllJunkItems # not-yet
+C_Minimap.CanTrackBattlePets # not-yet
+C_Minimap.ClearMinimapInsetInfo # not-yet
+C_Minimap.GetDrawGroundTextures # not-yet
+C_Minimap.GetNumQuestPOIWorldEffects # not-yet
+C_Minimap.GetPOITextureCoords # not-yet
+C_Minimap.GetUiMapID # not-yet
+C_Minimap.GetViewRadius # not-yet: temporary Lua workaround
+C_Minimap.IsRotateMinimapIgnored # not-yet
+C_Minimap.IsTrackingAccountCompletedQuests # not-yet
+C_Minimap.IsTrackingBattlePets # not-yet
+C_Minimap.IsTrackingHiddenQuests # not-yet
+C_Minimap.SetDrawGroundTextures # not-yet
+C_Minimap.SetIgnoreRotateMinimap # not-yet
+C_Minimap.SetMinimapInsetInfo # not-yet
+C_ModifiedInstance.GetModifiedInstanceInfoFromMapID # not-yet
+C_MountJournal.ApplyMountEquipment # not-yet
+C_MountJournal.GetAllCreatureDisplayIDsForMountID # not-yet
+C_MountJournal.GetCollectedDragonridingMounts # not-yet
+C_MountJournal.GetDisplayedMountAllCreatureDisplayInfo # not-yet
+C_MountJournal.GetDisplayedMountInfoExtra # not-yet
+C_MountJournal.GetMountFromItem # not-yet
+C_MountJournal.GetMountFromSpell # not-yet
+C_MountJournal.Pickup # not-yet
+C_MountJournal.SetAllTypeFilters # not-yet
+C_MythicPlus.GetCurrentSeasonValues # not-yet
+C_MythicPlus.GetEndOfRunGearSequenceLevel # not-yet
+C_MythicPlus.GetLastWeeklyBestInformation # not-yet
+C_MythicPlus.GetRewardLevelForDifficultyLevel # not-yet
+C_MythicPlus.GetRewardLevelFromKeystoneLevel # not-yet
+C_MythicPlus.GetSeasonBestForMap # not-yet
+C_MythicPlus.GetSeasonBestMythicRatingFromThisExpansion # not-yet
+C_NamePlate.GetNamePlateSize # not-yet
+C_NamePlateManager.GetNamePlateHitTestInsets # not-yet
+C_NamePlateManager.IsNamePlateUnitBehindCamera # intentionally-unsupported: 3D camera/model
+C_NamePlateManager.SetNamePlateHitTestInsets # not-yet
+C_NamePlateManager.SetNamePlateSimplified # not-yet
+C_NameUtil.ReplaceSurnameSeparatorWithLinkSeparator # not-yet
+C_NeighborhoodInitiative.GetActiveNeighborhood # not-yet
+C_NeighborhoodInitiative.GetAvailableHouseXP # not-yet
+C_NeighborhoodInitiative.GetInitiativeActivityLogInfo # not-yet
+C_NeighborhoodInitiative.GetInitiativeTaskChatLink # not-yet
+C_NeighborhoodInitiative.GetInitiativeTaskRewardScaling # not-yet
+C_NeighborhoodInitiative.GetNeighborhoodInitiativeInfo # not-yet
+C_NeighborhoodInitiative.GetRequiredLevel # not-yet
+C_NeighborhoodInitiative.IsPlayerInNeighborhoodGroup # not-yet
+C_NeighborhoodInitiative.IsViewingActiveNeighborhood # not-yet
+C_NeighborhoodInitiative.PlayerHasInitiativeAccess # not-yet
+C_NeighborhoodInitiative.PlayerMeetsRequiredLevel # not-yet
+C_NeighborhoodInitiative.RequestInitiativeActivityLog # not-yet
+C_NeighborhoodInitiative.RequestNeighborhoodInitiativeInfo # not-yet
+C_NeighborhoodInitiative.SetActiveNeighborhood # not-yet
+C_NeighborhoodInitiative.SetViewingNeighborhood # not-yet
+C_PaperDollInfo.CanAutoEquipCursorItem # not-yet
+C_PaperDollInfo.CancelTemporaryEnchantment # not-yet
+C_PaperDollInfo.CursorCanGoInSlot # not-yet
+C_PaperDollInfo.GetInspectAzeriteItemEmpoweredChoices # not-yet
+C_PaperDollInfo.GetInspectItemLevel # not-yet
+C_PaperDollInfo.GetInspectRatedBGBlitzData # not-yet
+C_PaperDollInfo.GetInspectRatedBGData # not-yet
+C_PaperDollInfo.GetInspectRatedSoloShuffleData # not-yet
+C_PaperDollInfo.OffhandHasShield # not-yet
+C_PartyInfo.AllowedToDoPartyConversion # not-yet: temporary Lua workaround
+C_PartyInfo.CanFormCrossFactionParties # not-yet
+C_PartyInfo.CanInvite # not-yet
+C_PartyInfo.CanStartInstanceAbandonVote # not-yet: temporary Lua workaround
+C_PartyInfo.ChallengeModeRestrictionsActive # not-yet
+C_PartyInfo.ConfirmConvertToRaid # not-yet
+C_PartyInfo.ConfirmInviteTravelPass # not-yet
+C_PartyInfo.ConfirmInviteUnit # not-yet
+C_PartyInfo.ConfirmLeaveParty # not-yet
+C_PartyInfo.ConfirmRequestInviteFromUnit # not-yet
+C_PartyInfo.ConvertToParty # not-yet
+C_PartyInfo.DelveTeleportOut # not-yet
+C_PartyInfo.DoCountdown # not-yet
+C_PartyInfo.GetInstanceAbandonVoteCooldownTime # not-yet
+C_PartyInfo.GetLootMethodStyle # not-yet
+C_PartyInfo.GetMinItemLevel # not-yet
+C_PartyInfo.GetMinLevel # not-yet
+C_PartyInfo.IsChallengeModeActive # not-yet
+C_PartyInfo.IsDelveComplete # not-yet
+C_PartyInfo.IsDelveInProgress # not-yet
+C_PartyInfo.IsPartyInJailersTower # not-yet: temporary Lua workaround
+C_PartyInfo.IsPartyWalkIn # not-yet: temporary Lua workaround
+C_PartyInfo.IsRaidListEnabled # not-yet
+C_PartyInfo.IsRaidListSupported # not-yet
+C_PartyInfo.RequestInviteFromUnit # not-yet
+C_PartyInfo.SetLootMethod # not-yet
+C_PartyInfo.SetRestrictPings # not-yet
+C_PartyInfo.StartInstanceAbandonVote # not-yet: temporary Lua workaround
+C_PartyPose.ExtraAction # not-yet
+C_PartyPose.GetPartyPoseInfoByID # not-yet
+C_PartyPose.GetPartyPoseInfoByMapID # not-yet
+C_PartyPose.HasExtraAction # not-yet
+C_PerksProgram.ClearFrozenPerksVendorItem # not-yet
+C_PerksProgram.CloseInteraction # not-yet
+C_PerksProgram.GetAvailableCategoryIDs # not-yet
+C_PerksProgram.GetCategoryInfo # not-yet
+C_PerksProgram.GetDraggedPerksVendorItem # not-yet
+C_PerksProgram.GetFrozenPerksVendorItemInfo # not-yet
+C_PerksProgram.GetPerksProgramItemDisplayInfo # not-yet
+C_PerksProgram.GetTimeRemaining # not-yet
+C_PerksProgram.GetVendorItemInfoRefundTimeLeft # not-yet
+C_PerksProgram.IsAttackAnimToggleEnabled # not-yet
+C_PerksProgram.IsFrozenPerksVendorItem # not-yet
+C_PerksProgram.IsMountSpecialAnimToggleEnabled # not-yet
+C_PerksProgram.ItemSelectedTelemetry # not-yet
+C_PerksProgram.PickupPerksVendorItem # not-yet
+C_PerksProgram.RequestCartCheckout # not-yet
+C_PerksProgram.RequestPurchase # not-yet
+C_PerksProgram.RequestRefund # not-yet
+C_PerksProgram.ResetHeldItemDragAndDrop # not-yet
+C_PerksProgram.SetFrozenPerksVendorItem # not-yet
+C_PetInfo.CanPetEatItem # not-yet
+C_PetInfo.GetPetFoodTypes # not-yet
+C_PetInfo.GetPetHappiness # not-yet
+C_PetInfo.GetPetLoyalty # not-yet
+C_PetInfo.GetPetTalentTree # not-yet
+C_PetInfo.GetPetTrainingPoints # not-yet
+C_PetInfo.GetPetUIModelSceneID # not-yet
+C_PetInfo.PetAbandon # not-yet
+C_PetInfo.PetAssistMode # not-yet
+C_PetInfo.PetRename # not-yet
+C_PetJournal.ClearSearchFilter # not-yet
+C_PetJournal.DismissSummonedPet # not-yet
+C_PetJournal.GetDisplayIDByIndex # not-yet
+C_PetJournal.GetDisplayProbabilityByIndex # not-yet
+C_PetJournal.GetNonBattlePetLinkByIndex # not-yet
+C_PetJournal.GetNumDisplays # not-yet
+C_PetJournal.GetNumPetsInJournal # not-yet
+C_PetJournal.GetOwnedPetIDs # not-yet
+C_PetJournal.GetPetInfoTableByPetID # not-yet
+C_PetJournal.GetPetInfoTableBySpeciesID # not-yet
+C_PetJournal.GetSearchFilter # not-yet
+C_PetJournal.IsCurrentlySummoned # not-yet
+C_PetJournal.PetUsesRandomDisplay # not-yet
+C_PhotoSharing.BeginAuthorizationFlow # not-yet
+C_PhotoSharing.ClearAuthorization # not-yet
+C_PhotoSharing.CompleteAuthorizationFlow # not-yet
+C_PhotoSharing.GetCropRatio # not-yet
+C_PhotoSharing.GetPhotoSharingAuthURL # not-yet
+C_PhotoSharing.GetStatus # not-yet
+C_PhotoSharing.SetScreenshotPreviewTexture # not-yet
+C_PhotoSharing.TakePhoto # not-yet
+C_PhotoSharing.UploadPhotoToService # not-yet
+C_Ping.GetCooldownInfo # not-yet
+C_Ping.GetTextureKitForType # not-yet
+C_Ping.SendMacroPing # not-yet: temporary Lua workaround
+C_Ping.TogglePingListener # not-yet
+C_PingSecure.ClearHitTestPingInfo # intentionally-unsupported: SecureOnly, native secure environment only
+C_PingSecure.DisplayError # intentionally-unsupported: SecureOnly, native secure environment only
+C_PingSecure.GetTargetPingReceiver # intentionally-unsupported: SecureOnly, native secure environment only
+C_PingSecure.SendHitTestPing # intentionally-unsupported: SecureOnly, native secure environment only
+C_PingSecure.SendPlayerItemPing # intentionally-unsupported: SecureOnly, native secure environment only
+C_PingSecure.SendPlayerSpellCategoryPing # intentionally-unsupported: SecureOnly, native secure environment only
+C_PingSecure.SendPlayerSpellPing # intentionally-unsupported: SecureOnly, native secure environment only
+C_PingSecure.SendUnitPing # intentionally-unsupported: SecureOnly, native secure environment only
+C_PingSecure.SetHitTestPingTarget # intentionally-unsupported: SecureOnly, native secure environment only
+C_PingSecure.SetHitTestTargetAndSendPing # intentionally-unsupported: SecureOnly, native secure environment only
+C_PlayerInfo.CanPlayerEnterChromieTime # not-yet
+C_PlayerInfo.CanPlayerUseAreaLoot # not-yet
+C_PlayerInfo.CanUseItem # not-yet
+C_PlayerInfo.GetClass # not-yet
+C_PlayerInfo.GetInstancesUnlockedAtLevel # not-yet
+C_PlayerInfo.GetName # not-yet
+C_PlayerInfo.GetPetStableCreatureDisplayInfoID # not-yet
+C_PlayerInfo.GetPlayerCharacterData # not-yet
+C_PlayerInfo.GetRace # not-yet
+C_PlayerInfo.GetSex # not-yet
+C_PlayerInfo.HasAccountInventoryLock # not-yet
+C_PlayerInfo.HasVisibleInvSlot # not-yet
+C_PlayerInfo.IsAccountBankEnabled # not-yet
+C_PlayerInfo.IsCharacterBankEnabled # not-yet
+C_PlayerInfo.IsConnected # not-yet
+C_PlayerInfo.IsDisplayRaceNative # not-yet
+C_PlayerInfo.IsExpansionLandingPageUnlockedForPlayer # not-yet
+C_PlayerInfo.IsMirrorImage # not-yet
+C_PlayerInfo.IsPlayerInChromieTime # not-yet
+C_PlayerInfo.IsPlayerInTimerunningHeroicWorldTier # not-yet
+C_PlayerInfo.IsReturningCharacter # not-yet
+C_PlayerInfo.IsSelfFoundActive # not-yet
+C_PlayerInfo.ShouldDisplaySurname # not-yet
+C_PlayerInfo.UnitIsSameServer # not-yet
+C_PlayerInteractionManager.ConfirmationInteraction # not-yet
+C_PlayerInteractionManager.InteractUnit # not-yet
+C_PlayerInteractionManager.IsValidNPCInteraction # not-yet
+C_PlayerInteractionManager.ReopenInteraction # not-yet
+C_PlayerInteractionManager.ShardTransferConfirm # not-yet
+C_ProfSpecs.CanRefundPath # not-yet
+C_ProfSpecs.CanUnlockTab # not-yet
+C_ProfSpecs.GetChildrenForPath # not-yet
+C_ProfSpecs.GetDescriptionForPath # not-yet
+C_ProfSpecs.GetDescriptionForPerk # not-yet
+C_ProfSpecs.GetEntryIDForPerk # not-yet
+C_ProfSpecs.GetPerksForPath # not-yet
+C_ProfSpecs.GetRootPathForTab # not-yet
+C_ProfSpecs.GetSourceTextForPath # not-yet
+C_ProfSpecs.GetSpendCurrencyForPath # not-yet
+C_ProfSpecs.GetSpendEntryForPath # not-yet
+C_ProfSpecs.GetStateForPath # not-yet
+C_ProfSpecs.GetStateForPerk # not-yet
+C_ProfSpecs.GetStateForTab # not-yet
+C_ProfSpecs.GetUnlockEntryForPath # not-yet
+C_ProfSpecs.GetUnlockRankForPerk # not-yet
+C_ProfSpecs.ShouldShowPointsReminderForSkillLine # not-yet
+C_PvP.ArePvpTalentsUnlocked # not-yet
+C_PvP.AreTrainingGroundsEnabled # not-yet
+C_PvP.CanDisplayDeaths # not-yet
+C_PvP.CanDisplayHonorableKills # not-yet
+C_PvP.CanPlayerUseRatedPVPUI # not-yet
+C_PvP.CanPlayerUseTrainingGroundsUI # not-yet
+C_PvP.CanSurrenderArena # not-yet
+C_PvP.CanToggleWarMode # not-yet
+C_PvP.CanToggleWarModeInArea # not-yet
+C_PvP.DoesMatchOutcomeAffectRating # not-yet
+C_PvP.GetActiveMatchBracket # not-yet
+C_PvP.GetActiveMatchDuration # not-yet
+C_PvP.GetActiveMatchWinner # not-yet
+C_PvP.GetArenaCrowdControlDuration # not-yet
+C_PvP.GetArenaCrowdControlInfo # not-yet: temporary Lua workaround
+C_PvP.GetArenaOpponentSpec # not-yet
+C_PvP.GetArenaRewards # not-yet
+C_PvP.GetArenaSkirmishRewards # not-yet
+C_PvP.GetAssignedSpecForBattlefieldQueue # not-yet
+C_PvP.GetBattlefieldFlagPosition # not-yet
+C_PvP.GetBattlefieldVehicleInfo # not-yet
+C_PvP.GetBattlefieldVehicles # not-yet
+C_PvP.GetBattlegroundInfo # not-yet
+C_PvP.GetBrawlRewards # not-yet
+C_PvP.GetBrawlSoloRBGMinItemLevel # not-yet
+C_PvP.GetGlobalPvpScalingInfoForSpecID # not-yet
+C_PvP.GetLevelUpBattlegrounds # not-yet
+C_PvP.GetMatchPVPStatColumn # not-yet
+C_PvP.GetMatchPVPStatColumns # not-yet
+C_PvP.GetNextHonorLevelForReward # not-yet
+C_PvP.GetPVPActiveMatchPersonalRatedInfo # not-yet
+C_PvP.GetPVPActiveRatedMatchDeserterPenalty # not-yet
+C_PvP.GetPVPSeasonRewardAchievementID # not-yet
+C_PvP.GetPersonalRatedBGBlitzSpecStats # not-yet
+C_PvP.GetPersonalRatedSoloShuffleSpecStats # not-yet
+C_PvP.GetPostMatchCurrencyRewards # not-yet
+C_PvP.GetPostMatchItemRewards # not-yet
+C_PvP.GetPvpTierID # not-yet
+C_PvP.GetPvpTierInfo # not-yet
+C_PvP.GetRandomBGRewards # not-yet
+C_PvP.GetRandomEpicBGRewards # not-yet
+C_PvP.GetRandomTrainingGroundArenaRewards # not-yet
+C_PvP.GetRandomTrainingGroundBGRewards # not-yet
+C_PvP.GetRatedBGRewards # not-yet
+C_PvP.GetRatedSoloRBGMinItemLevel # not-yet
+C_PvP.GetRatedSoloRBGRewards # not-yet
+C_PvP.GetRatedSoloShuffleMinItemLevel # not-yet
+C_PvP.GetRatedSoloShuffleRewards # not-yet
+C_PvP.GetRewardItemLevelsByTierEnum # not-yet
+C_PvP.GetScoreInfo # not-yet
+C_PvP.GetScoreInfoByPlayerGuid # not-yet
+C_PvP.GetSeasonBestInfo # not-yet
+C_PvP.GetSkirmishInfo # not-yet
+C_PvP.GetTeamInfo # not-yet
+C_PvP.GetTrainingGrounds # not-yet
+C_PvP.GetUIDisplaySeason # not-yet
+C_PvP.GetWeeklyChestInfo # not-yet
+C_PvP.HasArenaSkirmishWinToday # not-yet
+C_PvP.HasMatchStarted # not-yet
+C_PvP.HasRandomTrainingGroundArenaWinToday # not-yet
+C_PvP.HasRandomTrainingGroundBGWinToday # not-yet
+C_PvP.IsActiveMatchRegistered # not-yet
+C_PvP.IsArena # not-yet
+C_PvP.IsBattleground # not-yet
+C_PvP.IsBattlegroundEnlistmentBonusActive # not-yet
+C_PvP.IsBrawlSoloRBG # not-yet
+C_PvP.IsBrawlSoloShuffle # not-yet
+C_PvP.IsInBrawl # not-yet: temporary Lua workaround
+C_PvP.IsInRatedMatchWithDeserterPenalty # not-yet
+C_PvP.IsMatchFactional # not-yet
+C_PvP.IsPVPMap # not-yet
+C_PvP.IsSoloShuffle # not-yet: temporary Lua workaround
+C_PvP.IsSubZonePVPPOI # not-yet
+C_PvP.IsTrainingGroundsArena # not-yet
+C_PvP.IsTrainingGroundsBG # not-yet
+C_PvP.IsWarModeActive # not-yet
+C_PvP.IsWarModeFeatureEnabled # not-yet
+C_PvP.JoinBrawl # not-yet
+C_PvP.JoinRandomTrainingGroundArena # not-yet
+C_PvP.JoinRandomTrainingGroundBG # not-yet
+C_PvP.JoinRatedBGBlitz # not-yet
+C_PvP.JoinTrainingGround # not-yet
+C_PvP.RequestCrowdControlSpell # not-yet
+C_PvP.SetPVP # not-yet
+C_PvP.SetWarModeDesired # not-yet
+C_PvP.StartSoloRBGWarGameByName # not-yet
+C_PvP.StartSpectatorSoloRBGWarGame # not-yet
+C_PvP.TogglePVP # not-yet
+C_PvP.ToggleWarMode # not-yet
+C_QuestHub.IsAreaPOICurrentlyRelatedToHub # not-yet
+C_QuestHub.IsQuestCurrentlyRelatedToHub # not-yet
+C_QuestInfoSystem.GetQuestLogRewardFavor # not-yet
+C_QuestInfoSystem.GetQuestRewardSpellInfo # not-yet
+C_QuestInfoSystem.GetQuestShouldToastCompletion # not-yet
+C_QuestInfoSystem.HasQuestRewardCurrencies # not-yet
+C_QuestInfoSystem.HasQuestRewardSpells # not-yet
+C_QuestItemUse.CanUseQuestItemOnObject # not-yet
+C_QuestLine.GetQuestLineInfo # not-yet
+C_QuestLine.GetQuestLineQuests # not-yet
+C_QuestLine.IsComplete # not-yet
+C_QuestLine.QuestLineIgnoresAccountCompletedFiltering # not-yet
+C_QuestLine.RequestQuestLinesForMap # not-yet
+C_QuestLog.AbandonQuest # not-yet
+C_QuestLog.AddWorldQuestWatch # not-yet
+C_QuestLog.DoesQuestAwardReputationWithFaction # not-yet
+C_QuestLog.GetAbandonQuest # not-yet
+C_QuestLog.GetAbandonQuestItems # not-yet
+C_QuestLog.GetActivePreyQuest # not-yet
+C_QuestLog.GetActiveThreatMaps # not-yet
+C_QuestLog.GetDistanceSqToQuest # not-yet
+C_QuestLog.GetHeaderIndexForQuest # not-yet
+C_QuestLog.GetQuestLogMajorFactionReputationRewards # not-yet
+C_QuestLog.GetQuestLogPortraitGiver # not-yet
+C_QuestLog.GetQuestRewardCurrencyInfo # not-yet
+C_QuestLog.GetQuestType # not-yet
+C_QuestLog.GetTitleForLogIndex # not-yet
+C_QuestLog.IsQuestCriteriaForBounty # not-yet
+C_QuestLog.IsQuestFromContentPush # not-yet
+C_QuestLog.IsQuestInvasion # not-yet
+C_QuestLog.IsQuestReplayedRecently # not-yet
+C_QuestLog.IsQuestTrivial # not-yet
+C_QuestLog.QuestContainsFirstTimeRepBonusForPlayer # not-yet
+C_QuestLog.QuestIgnoresAccountCompletedFiltering # not-yet
+C_QuestLog.RemoveWorldQuestWatch # not-yet
+C_QuestLog.SetAbandonQuest # not-yet
+C_QuestLog.ShouldDisplayTimeRemaining # not-yet
+C_QuestLog.UnitIsRelatedToActiveQuest # not-yet
+C_QuestOffer.GetQuestRewardCurrencyInfo # not-yet
+C_QuestSession.RequestSessionStart # not-yet
+C_QuestSession.RequestSessionStop # not-yet
+C_QuestSession.SendSessionBeginResponse # not-yet
+C_QuestSession.SetQuestIsSuperTracked # not-yet
+C_RaidLocks.GetRedirectedDifficultyID # not-yet
+C_RaidLocks.IsRaidLockExtendFeatureEnabled # not-yet
+C_RaidLocks.IsRaidLockExtendFeatureSupported # not-yet
+C_RecentAllies.CanSetRecentAllyNote # not-yet
+C_RecentAllies.GetRecentAllyByFullName # not-yet
+C_RecentAllies.GetRecentAllyByGUID # not-yet
+C_RecentAllies.IsRecentAllyDataReady # not-yet
+C_RecentAllies.IsRecentAllyPinned # not-yet
+C_RecentAllies.SetRecentAllyNote # not-yet
+C_RecentAllies.SetRecentAllyPinned # not-yet
+C_RecentAllies.TryRequestRecentAlliesData # not-yet
+C_RecruitAFriend.ClaimActivityReward # not-yet
+C_RecruitAFriend.ClaimNextReward # not-yet
+C_RecruitAFriend.GenerateRecruitmentLink # not-yet
+C_RecruitAFriend.GetRecruitActivityRequirementsText # not-yet
+C_RecruitAFriend.IsRecruitAFriendLinked # not-yet
+C_RecruitAFriend.IsSystemEnabled # not-yet: temporary Lua workaround
+C_RecruitAFriend.IsSystemSupported # not-yet
+C_RecruitAFriend.RemoveRAFRecruit # not-yet
+C_RecruitAFriend.RequestUpdatedRecruitmentInfo # not-yet
+C_RemixArtifactUI.ClearRemixArtifactItem # not-yet
+C_RemixArtifactUI.GetAppearanceInfoByID # not-yet
+C_RemixArtifactUI.GetArtifactArtInfo # not-yet
+C_RemixArtifactUI.GetArtifactItemInfo # not-yet
+C_RemixArtifactUI.GetCurrArtifactItemID # not-yet
+C_RemixArtifactUI.GetCurrItemSpecIndex # not-yet
+C_RemixArtifactUI.GetCurrTraitTreeID # not-yet
+C_RemixArtifactUI.ItemInSlotIsRemixArtifact # not-yet
+C_ReportSystem.CanReportPlayer # not-yet
+C_ReportSystem.CanReportPlayerForLanguage # not-yet
+C_ReportSystem.GetMajorCategoriesForReportType # not-yet
+C_ReportSystem.GetMajorCategoryString # not-yet
+C_ReportSystem.GetMinorCategoriesForReportTypeAndMajorCategory # not-yet
+C_ReportSystem.GetMinorCategoryString # not-yet
+C_ReportSystem.ReportServerLag # not-yet
+C_ReportSystem.ReportStuckInCombat # not-yet
+C_ReportSystem.RequiresScreenshotForReportType # not-yet
+C_ReportSystem.SendReport # not-yet
+C_ReportSystem.SetScreenshotPreviewTexture # not-yet
+C_ReportSystem.TakeReportScreenshot # not-yet
+C_Reputation.GetGuildRepExpirationTime # not-yet
+C_RestrictedActions.CheckAllowProtectedFunctions # not-yet: temporary Lua workaround
+C_RestrictedActions.InCombatLockdown # not-yet
+C_ScenarioInfo.GetJailersTowerTypeString # not-yet
+C_ScenarioInfo.GetScenarioIconInfo # not-yet
+C_ScrappingMachineUI.DropPendingScrapItemFromCursor # not-yet
+C_ScrappingMachineUI.GetScrapSpellID # not-yet
+C_ScrappingMachineUI.GetScrappingMachineName # not-yet
+C_ScrappingMachineUI.RemoveCurrentScrappingItem # not-yet
+C_ScrappingMachineUI.RemoveItemToScrap # not-yet
+C_ScrappingMachineUI.ScrapItems # not-yet
+C_ScriptedAnimations.GetAllScriptedAnimationEffects # not-yet: temporary Lua workaround
+C_SeasonInfo.GetCurrentDisplaySeasonExpansion # not-yet
+C_SeasonInfo.GetTimeUntilCurrentPVPSeasonEnd # not-yet
+C_Secrets.CanCompareUnitTokens # not-yet
+C_Secrets.GetPowerTypeSecrecy # not-yet
+C_Secrets.GetSpellCastSecrecy # not-yet
+C_Secrets.GetSpellCooldownSecrecy # not-yet
+C_Secrets.HasSecretRestrictions # not-yet
+C_Secrets.ShouldActionCooldownBeSecret # not-yet
+C_Secrets.ShouldCooldownsBeSecret # not-yet
+C_Secrets.ShouldSpellAuraBeSecret # not-yet
+C_Secrets.ShouldSpellBookItemCooldownBeSecret # not-yet
+C_Secrets.ShouldSpellCooldownBeSecret # not-yet
+C_Secrets.ShouldTotemSlotBeSecret # not-yet
+C_Secrets.ShouldTotemSpellBeSecret # not-yet
+C_Secrets.ShouldUnitAuraIndexBeSecret # not-yet
+C_Secrets.ShouldUnitAuraInstanceBeSecret # not-yet
+C_Secrets.ShouldUnitAuraSlotBeSecret # not-yet
+C_Secrets.ShouldUnitComparisonBeSecret # not-yet
+C_Secrets.ShouldUnitHealthMaxBeSecret # not-yet
+C_Secrets.ShouldUnitPowerBeSecret # not-yet
+C_Secrets.ShouldUnitPowerMaxBeSecret # not-yet
+C_Secrets.ShouldUnitSpellCastBeSecret # not-yet
+C_Secrets.ShouldUnitStatsBeSecret # not-yet
+C_Secrets.ShouldUnitThreatStateBeSecret # not-yet
+C_Secrets.ShouldUnitThreatValuesBeSecret # not-yet
+C_SecureTransfer.AcceptTrade # not-yet
+C_SecureTransfer.Cancel # not-yet
+C_SecureTransfer.CompleteHousingPurchase # not-yet
+C_SecureTransfer.CompleteHousingVCPurchase # not-yet
+C_SecureTransfer.GetHousingPurchaseCost # not-yet
+C_SecureTransfer.GetHousingPurchaseQuantity # not-yet
+C_SecureTransfer.GetHousingVCPurchaseProductID # not-yet
+C_SecureTransfer.GetMailReceiveInfo # not-yet
+C_SecureTransfer.GetMailSendInfo # not-yet
+C_SecureTransfer.GetTradePartner # not-yet
+C_SecureTransfer.SendMail # not-yet
+C_SecureTransfer.ShouldShowTradeOfferWarning # not-yet
+C_SecureTransfer.ShouldShowTradeRMTWarning # not-yet
+C_SecureTransfer.TakeMailMoney # not-yet
+C_SettingsUtil.NotifySettingsLoaded # not-yet
+C_SkillInfo.AbandonSkill # not-yet
+C_SkillInfo.CollapseSkillHeader # not-yet
+C_SkillInfo.ExpandSkillHeader # not-yet
+C_SkillInfo.GetNumSkillLines # not-yet
+C_SkillInfo.GetSelectedSkill # not-yet
+C_SkillInfo.GetSkillLineInfo # not-yet
+C_SkillInfo.GetSkillLineInfoByID # not-yet
+C_SkillInfo.SetSelectedSkill # not-yet
+C_SocialRestrictions.AcknowledgeAgeVerificationRestriction # not-yet
+C_SocialRestrictions.AcknowledgeRegionalChatDisabled # not-yet
+C_SocialRestrictions.CanSendChat # not-yet
+C_SocialRestrictions.IsAgeVerificationRestrictedMinor # not-yet
+C_SocialRestrictions.IsSquelched # not-yet
+C_SocialRestrictions.SetChatDisabled # not-yet
+C_Soulbinds.ActivateSoulbind # not-yet
+C_Soulbinds.CanActivateSoulbind # not-yet
+C_Soulbinds.CanModifySoulbind # not-yet
+C_Soulbinds.CanResetConduitsInSoulbind # not-yet
+C_Soulbinds.CanSwitchActiveSoulbindTreeBranch # not-yet
+C_Soulbinds.CloseUI # not-yet
+C_Soulbinds.CommitPendingConduitsInSoulbind # not-yet
+C_Soulbinds.FindNodeIDActuallyInstalled # not-yet
+C_Soulbinds.FindNodeIDAppearingInstalled # not-yet
+C_Soulbinds.FindNodeIDPendingInstall # not-yet
+C_Soulbinds.FindNodeIDPendingUninstall # not-yet
+C_Soulbinds.GetConduitCollectionCount # not-yet
+C_Soulbinds.GetConduitCollectionDataAtCursor # not-yet
+C_Soulbinds.GetConduitCollectionDataByVirtualID # not-yet
+C_Soulbinds.GetConduitDisplayed # not-yet
+C_Soulbinds.GetConduitHyperlink # not-yet
+C_Soulbinds.GetConduitIDPendingInstall # not-yet
+C_Soulbinds.GetConduitQuality # not-yet
+C_Soulbinds.GetConduitRank # not-yet
+C_Soulbinds.GetConduitSpellID # not-yet
+C_Soulbinds.GetInstalledConduitID # not-yet
+C_Soulbinds.GetNode # not-yet
+C_Soulbinds.GetSpecsAssignedToSoulbind # not-yet
+C_Soulbinds.GetTree # not-yet
+C_Soulbinds.HasAnyInstalledConduitInSoulbind # not-yet
+C_Soulbinds.HasAnyPendingConduits # not-yet
+C_Soulbinds.HasPendingConduitsInSoulbind # not-yet
+C_Soulbinds.IsConduitInstalledInSoulbind # not-yet
+C_Soulbinds.IsNodePendingModify # not-yet
+C_Soulbinds.IsUnselectedConduitPendingInSoulbind # not-yet
+C_Soulbinds.ModifyNode # not-yet
+C_Soulbinds.SelectNode # not-yet
+C_Soulbinds.UnmodifyNode # not-yet
+C_Sound.GetSoundScaledVolume # not-yet: temporary Lua workaround
+C_Sound.IsPlaying # not-yet: temporary Lua workaround
+C_Sound.PlayItemSound # not-yet: temporary Lua workaround
+C_Sound.PlaySoundWithOptions # not-yet
+C_Sound.PlayVocalErrorSound # not-yet: temporary Lua workaround
+C_SpecializationInfo.GetInspectSpecialization # not-yet
+C_SpecializationInfo.HasPlayerEarnedATalentPoint # not-yet: temporary Lua workaround
+C_SpecializationInfo.MatchesCurrentSpecSet # not-yet
+C_SpecializationInfo.SetActiveSpecGroup # not-yet
+C_SpecializationInfo.SetPetSpecialization # not-yet
+C_Spell.CancelAutoRepeatSpell # not-yet
+C_Spell.CancelItemTempEnchantment # not-yet
+C_Spell.CancelSpellByID # not-yet
+C_Spell.EnableSpellRangeCheck # not-yet
+C_Spell.GetAuraStatChanges # not-yet
+C_Spell.GetDeadlyDebuffInfo # not-yet
+C_Spell.GetItemModifiedAppearancesApplied # not-yet
+C_Spell.GetLastCategoryCooldownSource # not-yet
+C_Spell.GetMawPowerLinkBySpellID # not-yet
+C_Spell.GetSpellAutoCast # not-yet
+C_Spell.GetSpellDescriptionForItemLocation # not-yet
+C_Spell.GetSpellLossOfControlCooldownDuration # not-yet
+C_Spell.GetSpellMaxCumulativeAuraApplications # not-yet
+C_Spell.GetSpellSkillLineAbilityRank # not-yet
+C_Spell.IsActiveSpell # not-yet
+C_Spell.IsAutoRepeatSpell # not-yet
+C_Spell.IsClassTalentSpell # not-yet
+C_Spell.IsConsumableSpell # not-yet
+C_Spell.IsExternalDefensive # not-yet
+C_Spell.IsPressHoldReleaseSpell # not-yet: temporary Lua workaround
+C_Spell.IsPriorityAura # not-yet: temporary Lua workaround
+C_Spell.IsPvPTalentSpell # not-yet
+C_Spell.IsSpellCrowdControl # not-yet
+C_Spell.IsSpellDisabled # not-yet
+C_Spell.IsSpellImportant # not-yet
+C_Spell.PlaceTargetingSpellAtCursor # not-yet
+C_Spell.RequestLoadSpellData # not-yet: temporary Lua workaround
+C_Spell.SetSpellAutoCastEnabled # not-yet
+C_Spell.SpellHasRange # not-yet
+C_Spell.TargetSpellChecksItemCondition # not-yet: temporary Lua workaround
+C_Spell.ToggleSpellAutoCast # not-yet
+C_SpellBook.AbortSpellIntro # not-yet
+C_SpellBook.ContainsAnyDisenchantSpell # not-yet
+C_SpellBook.FindBaseSpellByID # not-yet: temporary Lua workaround
+C_SpellBook.FindFlyoutSlotBySpellID # not-yet: temporary Lua workaround
+C_SpellBook.FindSpellOverrideByID # not-yet: temporary Lua workaround
+C_SpellBook.GetCurrentLevelSpells # not-yet
+C_SpellBook.GetSkillLineIndexByID # not-yet
+C_SpellBook.GetSpellBookItemCastCount # not-yet
+C_SpellBook.GetSpellBookItemCharges # not-yet
+C_SpellBook.GetSpellBookItemCooldownDuration # not-yet
+C_SpellBook.GetSpellBookItemDescription # not-yet
+C_SpellBook.GetSpellBookItemLevelLearned # not-yet
+C_SpellBook.GetSpellBookItemLink # not-yet
+C_SpellBook.GetSpellBookItemLossOfControlCooldownDuration # not-yet
+C_SpellBook.GetSpellBookItemSkillLineIndex # not-yet
+C_SpellBook.GetSpellBookItemTradeSkillLink # not-yet
+C_SpellBook.IsAutoAttackSpellBookItem # not-yet
+C_SpellBook.IsClassTalentSpellBookItem # not-yet
+C_SpellBook.IsPvPTalentSpellBookItem # not-yet
+C_SpellBook.IsRangedAutoAttackSpellBookItem # not-yet
+C_SpellBook.IsSpellBookItemHarmful # not-yet
+C_SpellBook.IsSpellBookItemHelpful # not-yet
+C_SpellBook.IsSpellBookItemInRange # not-yet
+C_SpellBook.IsSpellBookItemOffSpec # not-yet
+C_SpellBook.IsSpellBookItemPassive # not-yet
+C_SpellBook.IsSpellBookItemUsable # not-yet
+C_SpellBook.SetBarSlotFromIntro # not-yet
+C_SpellBook.SpellBookItemHasRange # not-yet
+C_SplashScreen.AcknowledgeSplash # not-yet
+C_SplashScreen.CanViewSplashScreen # not-yet
+C_SplashScreen.RequestLatestSplashScreen # not-yet
+C_SplashScreen.SendSplashScreenActionLaunchedTelem # not-yet
+C_SplashScreen.SendSplashScreenCloseTelem # not-yet
+C_StableInfo.BuyStableSlot # not-yet
+C_StableInfo.ClosePetStables # not-yet
+C_StableInfo.GetActivePetList # not-yet
+C_StableInfo.GetAvailablePetSpecInfos # not-yet
+C_StableInfo.GetNumActivePets # not-yet
+C_StableInfo.GetStablePetFoodTypes # not-yet
+C_StableInfo.GetStabledPetList # not-yet
+C_StableInfo.IsAtStableMaster # not-yet
+C_StableInfo.IsBonusPetSlotAvailable # not-yet
+C_StableInfo.IsPetFavorite # not-yet
+C_StableInfo.PickupStablePet # not-yet
+C_StableInfo.SetPetFavorite # not-yet
+C_StableInfo.SetPetSlot # not-yet
+C_StorePublic.EventStoreUISetShown # not-yet: temporary Lua workaround
+C_StringUtil.CreateAbbreviatedNumberFormatter # not-yet
+C_StringUtil.EscapeLuaFormatString # not-yet
+C_StringUtil.EscapeLuaPatterns # not-yet
+C_StringUtil.FloorToNearestString # not-yet
+C_StringUtil.RemoveContiguousSpaces # not-yet
+C_StringUtil.RoundToNearestString # not-yet
+C_StringUtil.StripTextureMarkupForLooseFiles # not-yet
+C_StringUtil.TruncateWhenZero # not-yet
+C_StringUtil.WrapString # not-yet
+C_SummonInfo.CancelSummon # not-yet
+C_SummonInfo.ConfirmSummon # not-yet
+C_SummonInfo.GetSummonConfirmAreaName # not-yet
+C_SummonInfo.GetSummonConfirmSummoner # not-yet
+C_SuperTrack.SetSuperTrackedMapPin # not-yet
+C_SuperTrack.SetSuperTrackedVignette # not-yet
+C_SwingTimer.EnableRangeCheck # not-yet
+C_SwingTimer.IsTargetWithinSwingRange # not-yet
+C_SystemVisibilityManager.IsSystemVisible # not-yet
+C_TTSSettings.GetSetting # not-yet: temporary Lua workaround
+C_TTSSettings.ShouldOverrideMessage # not-yet
+C_TaskQuest.GetQuestProgressBarInfo # not-yet
+C_TaskQuest.GetQuestZoneID # not-yet
+C_TaskQuest.GetThreatQuests # not-yet
+C_TaskQuest.RequestPreloadRewardData # not-yet
+C_Texture.ClearTitleIconTexture # not-yet
+C_Texture.GetAtlasElementID # not-yet
+C_Texture.GetAtlasElements # not-yet
+C_Texture.GetAtlasID # not-yet
+C_Texture.GetFilenameFromFileDataID # not-yet: temporary Lua workaround
+C_Texture.GetTitleIconTexture # not-yet
+C_Texture.IsTitleIconTextureReady # not-yet
+C_Texture.SetTitleIconTexture # not-yet
+C_Texture.SetURLTexture # not-yet
+C_TimerunningUI.GetActiveTimerunningSeasonID # not-yet
+C_TradeSkillUI.CancelProfessionRespec # not-yet
+C_TradeSkillUI.CheckRespecNPC # not-yet
+C_TradeSkillUI.ConfirmProfessionRespec # not-yet
+C_TradeSkillUI.CraftEnchant # not-yet
+C_TradeSkillUI.CraftSalvage # not-yet
+C_TradeSkillUI.DoesRecraftingRecipeAcceptItem # not-yet
+C_TradeSkillUI.GetCraftingOperationInfo # not-yet
+C_TradeSkillUI.GetCraftingOperationInfoForOrder # not-yet
+C_TradeSkillUI.GetCraftingReagentBonusText # not-yet
+C_TradeSkillUI.GetCraftingTargetItems # not-yet
+C_TradeSkillUI.GetEnchantItems # not-yet
+C_TradeSkillUI.GetGatheringOperationInfo # not-yet
+C_TradeSkillUI.GetHideUnownedFlags # not-yet
+C_TradeSkillUI.GetItemCraftedQualityByItemInfo # not-yet
+C_TradeSkillUI.GetItemReagentQualityByItemInfo # not-yet
+C_TradeSkillUI.GetOriginalCraftRecipeID # not-yet
+C_TradeSkillUI.GetProfessionChildSkillLineID # not-yet
+C_TradeSkillUI.GetProfessionForCursorItem # not-yet
+C_TradeSkillUI.GetProfessionInfoBySkillLineID # not-yet
+C_TradeSkillUI.GetProfessionNameForSkillLineAbility # not-yet
+C_TradeSkillUI.GetProfessionSpells # not-yet
+C_TradeSkillUI.GetQualitiesForRecipe # not-yet
+C_TradeSkillUI.GetReagentDifficultyText # not-yet
+C_TradeSkillUI.GetReagentSlotStatus # not-yet
+C_TradeSkillUI.GetRecipeInfoForSkillLineAbility # not-yet
+C_TradeSkillUI.GetRecraftItems # not-yet
+C_TradeSkillUI.GetSalvagableItemIDs # not-yet
+C_TradeSkillUI.GetSkillLineForGear # not-yet
+C_TradeSkillUI.HasFavoriteOrderRecipes # not-yet
+C_TradeSkillUI.IsEnchantTargetValid # not-yet
+C_TradeSkillUI.IsGuildTradeSkillsEnabled # not-yet: temporary Lua workaround
+C_TradeSkillUI.IsNearProfessionSpellFocus # not-yet
+C_TradeSkillUI.IsOriginalCraftRecipeLearned # not-yet
+C_TradeSkillUI.IsRecipeFirstCraft # not-yet
+C_TradeSkillUI.IsRecipeInBaseSkillLine # not-yet
+C_TradeSkillUI.IsRecipeProfessionLearned # not-yet
+C_TradeSkillUI.IsRecraftReagentValid # not-yet
+C_TradeSkillUI.OpenRecipe # not-yet
+C_TradeSkillUI.RecraftRecipe # not-yet
+C_TradeSkillUI.RecraftRecipeForOrder # not-yet
+C_TradeSkillUI.SetOnlyShowAvailableForOrders # not-yet
+C_Traits.CanEditConfig # not-yet
+C_Traits.CanRefundRank # not-yet
+C_Traits.CascadeRepurchaseRanks # not-yet
+C_Traits.ClearCascadeRepurchaseHistory # not-yet
+C_Traits.CloseTraitSystemInteraction # not-yet
+C_Traits.CommitConfig # not-yet
+C_Traits.GenerateInspectImportString # not-yet
+C_Traits.GetConfigVariationID # not-yet
+C_Traits.GetConfigsByType # not-yet
+C_Traits.GetIncreasedTraitData # not-yet
+C_Traits.GetMaxAvailableTraitCurrency # not-yet
+C_Traits.GetSystemIDByTreeID # not-yet
+C_Traits.GetTraitCurrencyForAchievement # not-yet
+C_Traits.GetTraitSystemWidgetSetID # not-yet
+C_Traits.HasValidInspectData # not-yet
+C_Traits.IsReadyForCommit # not-yet
+C_Traits.PurchaseAllRanks # not-yet
+C_Traits.RefundAllRanks # not-yet
+C_Traits.ResetTree # not-yet
+C_Traits.ResetTreeByCurrency # not-yet
+C_Traits.RollbackConfig # not-yet
+C_Traits.StageConfig # not-yet
+C_Traits.TalentTestUnlearnSpells # not-yet
+C_Traits.TryPurchaseAllRanks # not-yet
+C_Traits.TryPurchaseToNode # not-yet
+C_Traits.TryRefundToNode # not-yet
+C_Transmog.CanHaveSecondaryAppearanceForSlotID # not-yet
+C_Transmog.ExtractTransmogIDList # not-yet
+C_Transmog.GetItemIDForSource # not-yet
+C_Transmog.GetSlotForInventoryType # not-yet
+C_Transmog.GetSlotVisualInfo # not-yet
+C_TransmogCollection.AccountCanCollectSource # not-yet
+C_TransmogCollection.AreAllCollectionTypeFiltersChecked # not-yet
+C_TransmogCollection.AreAllSourceTypeFiltersChecked # not-yet
+C_TransmogCollection.CanAppearanceHaveIllusion # not-yet
+C_TransmogCollection.ClearNewAppearance # not-yet
+C_TransmogCollection.GetAppearanceCameraIDBySource # intentionally-unsupported: 3D camera/model
+C_TransmogCollection.GetAppearanceInfoBySource # not-yet
+C_TransmogCollection.GetAppearanceSourceDrops # not-yet
+C_TransmogCollection.GetArtifactAppearanceStrings # not-yet
+C_TransmogCollection.GetCategoryCollectedCount # not-yet
+C_TransmogCollection.GetCategoryForItem # not-yet
+C_TransmogCollection.GetCategoryTotal # not-yet
+C_TransmogCollection.GetFallbackWeaponAppearance # not-yet
+C_TransmogCollection.GetIllusionInfo # not-yet
+C_TransmogCollection.GetIllusionStrings # not-yet
+C_TransmogCollection.GetInspectItemTransmogInfoList # not-yet
+C_TransmogCollection.GetIsAppearanceFavorite # not-yet
+C_TransmogCollection.GetPairedArtifactAppearance # not-yet
+C_TransmogCollection.GetSourceIcon # not-yet
+C_TransmogCollection.GetSourceItemID # not-yet
+C_TransmogCollection.GetSourceRequiredHoliday # not-yet
+C_TransmogCollection.HasFavorites # not-yet
+C_TransmogCollection.IsCategoryValidForItem # not-yet
+C_TransmogCollection.IsSpellItemEnchantmentHiddenVisual # not-yet
+C_TransmogCollection.PlayerCanCollectSource # not-yet
+C_TransmogCollection.SetAllCollectionTypeFilters # not-yet
+C_TransmogCollection.SetIsAppearanceFavorite # not-yet
+C_TransmogCollection.UpdateUsableAppearances # not-yet
+C_TransmogOutfitInfo.CanPlayerTransmogSlot # not-yet
+C_TransmogOutfitInfo.ChangeDisplayedOutfit # not-yet
+C_TransmogOutfitInfo.ChangeToOutfit # not-yet: temporary Lua workaround
+C_TransmogOutfitInfo.ChangeViewedOutfit # not-yet
+C_TransmogOutfitInfo.ClearAllPendingSituations # not-yet
+C_TransmogOutfitInfo.ClearAllPendingTransmogs # not-yet
+C_TransmogOutfitInfo.ClearDisplayedOutfit # not-yet
+C_TransmogOutfitInfo.ClearOutfit # not-yet: temporary Lua workaround
+C_TransmogOutfitInfo.CommitAndApplyAllPending # not-yet
+C_TransmogOutfitInfo.CommitOutfitInfo # not-yet
+C_TransmogOutfitInfo.CommitPendingSituations # not-yet
+C_TransmogOutfitInfo.GetActiveOutfitID # not-yet: temporary Lua workaround
+C_TransmogOutfitInfo.GetAllSlotLocationInfo # not-yet: temporary Lua workaround
+C_TransmogOutfitInfo.GetAllTransmogOutfitOptionSheatheCategoryInfo # not-yet: temporary Lua workaround
+C_TransmogOutfitInfo.GetCollectionInfoForSlotAndOption # not-yet
+C_TransmogOutfitInfo.GetCurrentlyViewedOutfitID # not-yet: temporary Lua workaround
+C_TransmogOutfitInfo.GetEquippedSlotOptionFromTransmogSlot # not-yet
+C_TransmogOutfitInfo.GetIllusionDefaultIMAIDForCollectionType # not-yet
+C_TransmogOutfitInfo.GetItemModifiedAppearanceEffectiveCategory # not-yet
+C_TransmogOutfitInfo.GetLinkedSlotInfo # not-yet: temporary Lua workaround
+C_TransmogOutfitInfo.GetMaxNumberOfTotalOutfitsForSource # not-yet
+C_TransmogOutfitInfo.GetMaxNumberOfUsableOutfits # not-yet
+C_TransmogOutfitInfo.GetNextOutfitCost # not-yet
+C_TransmogOutfitInfo.GetNumberOfOutfitsUnlockedForSource # not-yet
+C_TransmogOutfitInfo.GetOptionsForSlot # not-yet
+C_TransmogOutfitInfo.GetOutfitInfoByName # not-yet
+C_TransmogOutfitInfo.GetOutfitInfoByPlayerFacingIndex # not-yet
+C_TransmogOutfitInfo.GetOutfitSituation # not-yet
+C_TransmogOutfitInfo.GetOutfitSituationsEnabled # not-yet
+C_TransmogOutfitInfo.GetPendingTransmogCost # not-yet
+C_TransmogOutfitInfo.GetSecondarySlotState # not-yet
+C_TransmogOutfitInfo.GetSetSourcesForSlot # not-yet
+C_TransmogOutfitInfo.GetSlotGroupInfo # not-yet
+C_TransmogOutfitInfo.GetSourceIDsForSlot # not-yet
+C_TransmogOutfitInfo.GetTransmogOutfitSlotForInventoryType # not-yet
+C_TransmogOutfitInfo.GetTransmogOutfitSlotFromInventorySlot # not-yet: temporary Lua workaround
+C_TransmogOutfitInfo.GetUISituationCategoriesAndOptions # not-yet
+C_TransmogOutfitInfo.GetUnassignedAtlasForSlot # not-yet
+C_TransmogOutfitInfo.GetUnassignedDisplayAtlasForSlot # not-yet
+C_TransmogOutfitInfo.GetViewedOutfitSlotInfo # not-yet
+C_TransmogOutfitInfo.HasPendingOutfitSituations # not-yet
+C_TransmogOutfitInfo.HasPendingOutfitTransmogs # not-yet
+C_TransmogOutfitInfo.InTransmogEvent # not-yet
+C_TransmogOutfitInfo.IsEquippedGearOutfitDisplayed # not-yet
+C_TransmogOutfitInfo.IsSlotWeaponSlot # not-yet
+C_TransmogOutfitInfo.IsUsableDiscountAvailable # not-yet
+C_TransmogOutfitInfo.PickupOutfit # not-yet
+C_TransmogOutfitInfo.ResetOutfitSituations # not-yet
+C_TransmogOutfitInfo.RevertPendingTransmog # not-yet
+C_TransmogOutfitInfo.SetOutfitSituationsEnabled # not-yet
+C_TransmogOutfitInfo.SetOutfitToCustomSet # not-yet
+C_TransmogOutfitInfo.SetOutfitToOutfit # not-yet
+C_TransmogOutfitInfo.SetOutfitToSet # not-yet
+C_TransmogOutfitInfo.SetPendingTransmog # not-yet
+C_TransmogOutfitInfo.SetPendingTransmogSheatheCategory # not-yet: temporary Lua workaround
+C_TransmogOutfitInfo.SetSecondarySlotState # not-yet
+C_TransmogOutfitInfo.SetViewedOptionForSlot # not-yet
+C_TransmogOutfitInfo.SlotHasSecondary # not-yet
+C_TransmogOutfitInfo.TransmogEventActive # not-yet
+C_TransmogOutfitInfo.UpdatePendingSituation # not-yet
+C_TransmogSets.ClearLatestSource # not-yet
+C_TransmogSets.ClearNewSource # not-yet
+C_TransmogSets.ClearSetNewSourcesForSlot # not-yet
+C_TransmogSets.GetAllSourceIDs # not-yet
+C_TransmogSets.GetBaseSetsFilter # not-yet
+C_TransmogSets.GetCameraIDs # intentionally-unsupported: 3D camera/model
+C_TransmogSets.GetFilteredBaseSetsCounts # not-yet
+C_TransmogSets.GetFullBaseSetsCounts # not-yet
+C_TransmogSets.GetIsFavorite # not-yet
+C_TransmogSets.GetLatestSource # not-yet
+C_TransmogSets.GetSetNewSources # not-yet
+C_TransmogSets.GetSetsContainingSourceID # not-yet
+C_TransmogSets.GetSourceIDsForSlot # not-yet
+C_TransmogSets.GetTransmogSetsClassFilter # not-yet
+C_TransmogSets.GetValidBaseSetsCountsForCharacter # not-yet
+C_TransmogSets.GetValidClassForSet # not-yet
+C_TransmogSets.HasUsableSets # not-yet
+C_TransmogSets.IsNewSource # not-yet
+C_TransmogSets.IsSetVisible # not-yet
+C_TransmogSets.IsUsingDefaultBaseSetsFilters # not-yet
+C_TransmogSets.SetBaseSetsFilter # not-yet
+C_TransmogSets.SetDefaultBaseSetsFilters # not-yet
+C_TransmogSets.SetHasNewSources # not-yet
+C_TransmogSets.SetHasNewSourcesForSlot # not-yet
+C_TransmogSets.SetIsFavorite # not-yet
+C_TransmogSets.SetTransmogSetsClassFilter # not-yet
+C_Tutorial.SendTutorialStartButtonTelem # not-yet
+C_UI.GetTopRightNotchSafeRegion # not-yet
+C_UI.GetUIParent # not-yet
+C_UI.GetWorldFrame # not-yet
+C_UIColor.GetColors # not-yet: temporary Lua workaround
+C_UIWidgetManager.GetBulletTextListWidgetVisualizationInfo # not-yet
+C_UIWidgetManager.GetButtonHeaderWidgetVisualizationInfo # not-yet
+C_UIWidgetManager.GetPreyHuntProgressWidgetVisualizationInfo # not-yet
+C_UIWidgetManager.GetSpacerVisualizationInfo # not-yet
+C_UIWidgetManager.GetSpellDisplayVisualizationInfo # not-yet
+C_UIWidgetManager.GetTextWithStateWidgetVisualizationInfo # not-yet
+C_UnitAuras.AddAuraSound # not-yet
+C_UnitAuras.AuraIsPrivate # not-yet
+C_UnitAuras.CancelAuraByInstanceID # not-yet
+C_UnitAuras.ClearBlockedAuras # not-yet
+C_UnitAuras.DoesAuraHaveExpirationTime # not-yet
+C_UnitAuras.GetAuraApplicationDisplayCount # not-yet
+C_UnitAuras.GetAuraBaseDuration # not-yet
+C_UnitAuras.GetAuraDuration # not-yet
+C_UnitAuras.GetCooldownAuraBySpellID # not-yet
+C_UnitAuras.GetRefreshExtendedDuration # not-yet
+C_UnitAuras.GetUnitAuraBySpellID # not-yet
+C_UnitAuras.IsAuraFilteredOutByInstanceID # not-yet
+C_UnitAuras.RemoveAuraSound # not-yet
+C_UnitAuras.WantsAlteredForm # not-yet
+C_UserFeedback.SubmitBug # not-yet
+C_UserFeedback.SubmitSuggestion # not-yet
+C_VoiceChat.ActivateChannel # not-yet
+C_VoiceChat.ActivateChannelTranscription # not-yet
+C_VoiceChat.BeginLocalCapture # not-yet
+C_VoiceChat.CreateChannel # not-yet
+C_VoiceChat.DeactivateChannel # not-yet
+C_VoiceChat.DeactivateChannelTranscription # not-yet
+C_VoiceChat.EndLocalCapture # not-yet
+C_VoiceChat.GetActiveVoiceProviderID # not-yet: temporary Lua workaround
+C_VoiceChat.GetCommunicationMode # not-yet
+C_VoiceChat.GetInputVolume # not-yet
+C_VoiceChat.GetLocalPlayerActiveChannelMemberInfo # not-yet
+C_VoiceChat.GetLocalPlayerMemberID # not-yet
+C_VoiceChat.GetMemberGUID # not-yet
+C_VoiceChat.GetMemberID # not-yet
+C_VoiceChat.GetMemberInfo # not-yet
+C_VoiceChat.GetMemberName # not-yet
+C_VoiceChat.GetMemberVolume # not-yet
+C_VoiceChat.GetPTTButtonPressedState # not-yet
+C_VoiceChat.GetProcesses # not-yet
+C_VoiceChat.GetPushToTalkBinding # not-yet
+C_VoiceChat.GetRemoteTtsVoices # not-yet
+C_VoiceChat.GetVADSensitivity # not-yet
+C_VoiceChat.IsMemberLocalPlayer # not-yet
+C_VoiceChat.IsMemberMuted # not-yet
+C_VoiceChat.IsMemberMutedForAll # not-yet
+C_VoiceChat.IsMemberSilenced # not-yet
+C_VoiceChat.IsParentalMuted # not-yet
+C_VoiceChat.IsPlayerUsingVoice # not-yet
+C_VoiceChat.IsSilenced # not-yet
+C_VoiceChat.IsSpeakForMeAllowed # not-yet
+C_VoiceChat.IsVoiceChatConnected # not-yet
+C_VoiceChat.LeaveChannel # not-yet
+C_VoiceChat.Login # not-yet
+C_VoiceChat.Logout # not-yet
+C_VoiceChat.MarkChannelsDiscovered # not-yet
+C_VoiceChat.RequestJoinAndActivateCommunityStreamChannel # not-yet
+C_VoiceChat.RequestJoinChannelByChannelType # not-yet
+C_VoiceChat.RestoreActiveVoiceProvider # not-yet
+C_VoiceChat.SetActiveVoiceProvider # not-yet
+C_VoiceChat.SetCommunicationMode # not-yet
+C_VoiceChat.SetDeafened # not-yet
+C_VoiceChat.SetInputDevice # not-yet
+C_VoiceChat.SetInputVolume # not-yet
+C_VoiceChat.SetMasterVolumeScale # not-yet
+C_VoiceChat.SetMemberMuted # not-yet
+C_VoiceChat.SetMemberVolume # not-yet
+C_VoiceChat.SetMuted # not-yet
+C_VoiceChat.SetOutputDevice # not-yet
+C_VoiceChat.SetOutputVolume # not-yet
+C_VoiceChat.SetPortraitTexture # not-yet
+C_VoiceChat.SetPushToTalkBinding # not-yet
+C_VoiceChat.SetVADSensitivity # not-yet
+C_VoiceChat.ShouldDiscoverChannels # not-yet
+C_VoiceChat.SpeakRemoteTextSample # not-yet
+C_VoiceChat.ToggleDeafened # not-yet
+C_VoiceChat.ToggleMemberMuted # not-yet
+C_VoiceChat.ToggleMuted # not-yet
+C_Weather.GetCurrentWeather # not-yet
+C_WeeklyRewards.AreRewardsForCurrentRewardPeriod # not-yet
+C_WeeklyRewards.ClaimReward # not-yet
+C_WeeklyRewards.CloseInteraction # not-yet
+C_WeeklyRewards.GetActivityEncounterInfo # not-yet
+C_WeeklyRewards.GetDifficultyIDForActivityTier # not-yet
+C_WeeklyRewards.GetExampleRewardItemHyperlinks # not-yet
+C_WeeklyRewards.GetItemHyperlink # not-yet
+C_WeeklyRewards.GetNextActivitiesIncrease # not-yet
+C_WeeklyRewards.GetNextMythicPlusIncrease # not-yet
+C_WeeklyRewards.GetNumCompletedDungeonRuns # not-yet
+C_WeeklyRewards.GetSortedProgressForActivity # not-yet
+C_WeeklyRewards.HasGeneratedRewards # not-yet
+C_WeeklyRewards.HasInteraction # not-yet
+C_WeeklyRewards.IsWeeklyChestRetired # not-yet
+C_WeeklyRewards.OnUIInteract # not-yet
+C_WeeklyRewards.ShouldShowFinalRetirementMessage # not-yet
+C_WeeklyRewards.ShouldShowRetirementMessage # not-yet
+C_WorldSafeLocsUIInternal.GetWorldSafeLocs # not-yet
+C_WowSurvey.OpenSurvey # not-yet
+C_WowSurvey.TriggerSurveyServe # not-yet
+C_WowTokenUI.StartTokenSell # not-yet
+C_XMLUtil.GetTemplates # not-yet
+CalculateStringEditDistance # not-yet: temporary Lua workaround
+CanChangePlayerDifficulty # not-yet
+CanDualWield # not-yet
+CanEjectPassengerFromSeat # not-yet
+CanMapChangeDifficulty # not-yet
+CanShowResetInstances # not-yet
+CanShowSetRoleButton # not-yet: temporary Lua workaround
+CanSwitchVehicleSeat # not-yet
+CanUpgradeToCurrentExpansion # not-yet
+CancelAreaSpiritHeal # not-yet
+CancelPendingEquip # not-yet
+CancelPreloadingMovie # not-yet
+CaseAccentInsensitiveParse # not-yet
+CheckTalentMasterDist # not-yet
+CinematicFinished # not-yet
+CinematicStarted # not-yet
+ClearCursorHoveredItem # not-yet: temporary Lua workaround
+ClearOutage # not-yet
+ClearPendingBindConversionItem # not-yet
+ClearRaidMarker # not-yet
+ClosestGameObjectPosition # not-yet
+ClosestUnitPosition # not-yet
+ConfirmTalentWipe # not-yet
+ConsoleEcho # not-yet
+ConsoleExec # not-yet
+ConsoleGetColorFromType # not-yet: temporary Lua workaround
+ConsoleGetFontHeight # not-yet: temporary Lua workaround
+ConsoleIsActive # not-yet
+ConsolePrintAllMatchingCommands # not-yet
+ConsoleSetFontHeight # not-yet: temporary Lua workaround
+ConvertItemToBindToAccount # not-yet
+CreateAbbreviateConfig # not-yet: temporary Lua workaround
+CreateFrameWithOptions # not-yet
+CursorHasMoney # not-yet
+CursorHasSpell # not-yet
+DeclineGuild # not-yet
+DeclineName # not-yet
+DestroyTotem # not-yet
+Dismount # not-yet
+DoesCurrentLocaleSellExpansionLevels # not-yet
+EjectPassengerFromSeat # not-yet
+EquipPendingItem # not-yet
+FollowUnit # not-yet
+GetAccountExpansionLevel # not-yet: temporary Lua workaround
+GetAllowLowLevelRaid # not-yet
+GetAreaSpiritHealerTime # not-yet
+GetAreaText # not-yet
+GetAvailableBandwidth # not-yet: temporary Lua workaround
+GetAvailableLocales # not-yet
+GetBackgroundLoadingStatus # not-yet: temporary Lua workaround
+GetBaseDifficultyID # not-yet
+GetBillingTimeRested # not-yet: temporary Lua workaround
+GetBuildInfo # not-yet: temporary Lua workaround
+GetCallstackHeight # not-yet: temporary Lua workaround
+GetCemeteryPreference # not-yet
+GetClientDisplayExpansionLevel # not-yet: temporary Lua workaround
+GetCollapsingStarCost # not-yet
+GetCorpseRecoveryDelay # not-yet
+GetCurrentCinematicSummary # not-yet
+GetCurrentEventID # not-yet
+GetCurrentRegionName # not-yet: temporary Lua workaround
+GetCursorCenterPosition # not-yet
+GetCursorDelta # not-yet
+GetDefaultAbbreviationBreakpoints # not-yet
+GetDifficultyInfo # not-yet: temporary Lua workaround
+GetDownloadedPercentage # not-yet: temporary Lua workaround
+GetDungeonDifficultyID # not-yet: temporary Lua workaround
+GetErrorCallstackHeight # not-yet: temporary Lua workaround
+GetEventCPUUsage # not-yet: temporary Lua workaround
+GetEventTime # not-yet
+GetEvictionTimeRemaining # not-yet
+GetExpansionDisplayInfo # not-yet: temporary Lua workaround
+GetExpansionForLevel # not-yet
+GetExpansionLevel # not-yet: temporary Lua workaround
+GetFileIDFromPath # not-yet
+GetFileStreamingStatus # not-yet: temporary Lua workaround
+GetFrameCPUUsage # not-yet: temporary Lua workaround
+GetFunctionCPUUsage # not-yet: temporary Lua workaround
+GetGameMessageInfo # not-yet
+GetGlancingBlowChance # not-yet
+GetGlancingBlowPenalty # not-yet
+GetInstanceBootTimeRemaining # not-yet
+GetInstanceLockTimeRemaining # not-yet
+GetInstanceLockTimeRemainingEncounter # not-yet
+GetJailersTowerLevel # not-yet
+GetLocale # not-yet: temporary Lua workaround
+GetMastery # not-yet
+GetMaxLevelForExpansionLevel # not-yet: temporary Lua workaround
+GetMaxLevelForPlayerExpansion # not-yet: temporary Lua workaround
+GetMaxPlayerLevel # not-yet: temporary Lua workaround
+GetMaximumExpansionLevel # not-yet
+GetMouseButtonName # not-yet
+GetMovieDownloadProgress # not-yet: temporary Lua workaround
+GetNativeRealmID # not-yet
+GetNetIpTypes # not-yet
+GetNumDeclensionSets # not-yet
+GetOSLocale # not-yet
+GetPVPGearStatRules # not-yet
+GetPVPLifetimeStats # not-yet: temporary Lua workaround
+GetPVPSessionStats # not-yet
+GetPVPYesterdayStats # not-yet
+GetPetCritChance # not-yet
+GetPetDodgeChance # not-yet
+GetPetHitChanceModifier # not-yet
+GetPetMeleeHaste # not-yet
+GetPetSpellHitChanceModifier # not-yet
+GetPowerRegen # not-yet
+GetPowerRegenForPowerType # not-yet
+GetProtocolTypes # not-yet: temporary Lua workaround
+GetRealmID # not-yet: temporary Lua workaround
+GetReleaseTimeRemaining # not-yet: temporary Lua workaround
+GetResSicknessDuration # not-yet
+GetRuneCooldown # not-yet
+GetRuneCount # not-yet
+GetScreenDPIScale # not-yet: temporary Lua workaround
+GetScriptBucketThrottleLimits # not-yet
+GetScriptCPUUsage # not-yet: temporary Lua workaround
+GetSecondsUntilParentalControlsKick # not-yet
+GetSessionTime # not-yet
+GetSheathState # not-yet
+GetSourceLocation # not-yet
+GetSpecializationInfoForSpecID # not-yet: temporary Lua workaround
+GetSturdiness # not-yet
+GetTaxiBenchmarkMode # not-yet
+GetThreatStatusColor # not-yet: temporary Lua workaround
+GetTotemCannotDismiss # not-yet
+GetTotemDuration # not-yet
+GetTotemTimeLeft # not-yet
+GetUnitChargedPowerPoints # not-yet
+GetUnitEmpowerMinHoldTime # not-yet
+GetUnitHealthModifier # not-yet
+GetUnitPowerBarInfoByID # not-yet
+GetUnitPowerBarStrings # not-yet
+GetUnitPowerBarStringsByID # not-yet
+GetUnitPowerBarTextureInfo # not-yet
+GetUnitPowerBarTextureInfoByID # not-yet
+GetUnitPowerModifier # not-yet
+GetUpgradeExpansionLevel # not-yet: temporary Lua workaround
+GetVehicleUIIndicator # not-yet
+GetVehicleUIIndicatorSeat # not-yet
+HasDualWieldPenalty # not-yet
+HasFullControl # not-yet
+HasIgnoreDualWieldWeapon # not-yet
+HasNoReleaseAura # not-yet
+InitiateRolePoll # not-yet
+Is64BitClient # not-yet
+IsAccountSecured # not-yet: temporary Lua workaround
+IsCemeterySelectionAvailable # not-yet
+IsCollisionEnabled # not-yet
+IsCpuBound # not-yet
+IsDebugBuild # not-yet
+IsDemonHunterAvailable # not-yet
+IsEuropeanNumbers # not-yet
+IsInsane # not-yet
+IsItemPreferredArmorType # not-yet
+IsJailersTowerLayerTimeLocked # not-yet
+IsLeftMetaKeyDown # not-yet
+IsLegacyDifficulty # not-yet
+IsLinuxClient # not-yet
+IsMacClient # not-yet: temporary Lua workaround
+IsMovieLocal # not-yet
+IsMoviePlayable # not-yet
+IsMovieReadable # not-yet
+IsOnTournamentRealm # not-yet: temporary Lua workaround
+IsOutOfBounds # not-yet
+IsPlayerInGuildFromGUID # not-yet
+IsRaidMarkerActive # not-yet
+IsRaidMarkerSystemEnabled # not-yet
+IsRightMetaKeyDown # not-yet
+IsUsingFixedTimeStep # not-yet
+IsUsingMouse # not-yet
+IsWindowsClient # not-yet: temporary Lua workaround
+LoadURLIndex # not-yet
+MouseOverrideCinematicDisable # not-yet
+NoPlayTime # not-yet: temporary Lua workaround
+NotWhileDeadError # not-yet
+OpeningCinematic # not-yet
+OutageDetected # not-yet
+PartialPlayTime # not-yet: temporary Lua workaround
+PlaceRaidMarker # not-yet
+PlatformIsHandheld # not-yet
+PlayerEffectiveAttackPower # not-yet
+PlayerIsInCombat # not-yet
+PlayerIsSpellTarget # not-yet
+PlayerVehicleHasComboPoints # not-yet
+PortGraveyard # not-yet
+PreloadMovie # not-yet
+RandomRoll # not-yet
+RegisterEventCallback # not-yet: temporary Lua workaround
+RegisterUnitEventCallback # not-yet: temporary Lua workaround
+RemoveRaidTargets # not-yet
+RepopMe # not-yet
+ReportBug # not-yet
+ReportPlayerIsPVPAFK # not-yet
+ReportSuggestion # not-yet
+RequestTimePlayed # not-yet: temporary Lua workaround
+ResetInstances # not-yet
+ResistancePercent # not-yet
+RespondInstanceLock # not-yet
+RestartGx # not-yet
+ResurrectHasSickness # not-yet
+ResurrectHasTimer # not-yet
+RunScript # not-yet: temporary Lua workaround
+Screenshot # not-yet
+SelectedRealmName # not-yet
+SellCursorItem # not-yet
+SendSubscriptionInterstitialResponse # not-yet
+SetAllowLowLevelRaid # not-yet
+SetCemeteryPreference # not-yet
+SetConsoleKey # not-yet
+SetCursorByMode # not-yet
+SetCursorHoveredItem # not-yet: temporary Lua workaround
+SetCursorHoveredItemTradeItem # not-yet: temporary Lua workaround
+SetCursorPosition # not-yet
+SetCursorVirtualItem # not-yet
+SetDungeonDifficultyID # not-yet
+SetErrorCallstackHeight # not-yet: temporary Lua workaround
+SetEuropeanNumbers # not-yet
+SetLegacyRaidDifficultyID # not-yet
+SetPortraitTexture # not-yet: temporary Lua workaround
+SetPortraitTextureFromCreatureDisplayID # not-yet: temporary Lua workaround
+SetRaidDifficultyID # not-yet
+SetTaxiBenchmarkMode # not-yet
+SetUnitCursorTexture # not-yet
+ShouldDisplayRaidRolesInSocialFrame # not-yet
+ShouldDisplayStoryModeTooltipInSocialFrame # not-yet
+ShouldShowExpansionUpgradeBanner # not-yet: temporary Lua workaround
+ShouldShowIslandsWeeklyPOI # not-yet
+ShouldShowSpecialSplashScreen # not-yet
+ShowCloak # not-yet
+ShowHelm # not-yet
+ShowingCloak # not-yet
+ShowingHelm # not-yet
+SimulateMouseClick # not-yet
+SimulateMouseDown # not-yet
+SimulateMouseUp # not-yet
+SimulateMouseWheel # not-yet
+SitStandOrDescendStart # not-yet
+SplashFrameCanBeShown # not-yet
+StartAttack # not-yet
+Stuck # not-yet
+TargetDirectionEnemy # not-yet
+TargetDirectionFinished # not-yet
+TargetDirectionFriend # not-yet
+TargetLastEnemy # not-yet
+TargetLastFriend # not-yet
+TargetNearest # not-yet
+TargetNearestEnemyPlayer # not-yet
+TargetNearestFriendPlayer # not-yet
+TargetNearestPartyMember # not-yet
+TargetNearestRaidMember # not-yet
+TargetPriorityHighlightEnd # not-yet
+TargetPriorityHighlightStart # not-yet
+TargetToggle # not-yet
+TargetTotem # not-yet
+TimeoutResurrect # not-yet
+ToggleAnimKitDisplay # not-yet
+ToggleCollision # not-yet
+ToggleCollisionDisplay # not-yet
+ToggleDebugAIDisplay # not-yet
+ToggleGravity # not-yet
+TogglePlayerBounds # not-yet
+TogglePortals # not-yet
+ToggleSelfHighlight # not-yet
+ToggleSheath # not-yet
+ToggleSit # not-yet
+ToggleTris # not-yet
+UIReload # not-yet
+UnitAlliedRaceInfo # not-yet
+UnitBattlePetSpeciesID # not-yet
+UnitCanPetBattle # not-yet
+UnitChromieTimeID # not-yet
+UnitEmpoweredStageDurations # not-yet
+UnitHasMouseoverHighlight # not-yet
+UnitHasPowerType # not-yet
+UnitHealthMissing # not-yet
+UnitInAnyGroup # not-yet
+UnitInPartyShard # not-yet
+UnitInVehicleControlSeat # not-yet
+UnitInVehicleHidesPetFrame # not-yet
+UnitIsControlling # not-yet
+UnitIsInMyGuild # not-yet
+UnitIsLieutenant # not-yet
+UnitIsMercenary # not-yet
+UnitIsMinion # not-yet
+UnitIsNPCAsPlayer # not-yet
+UnitIsPVPSanctuary # not-yet
+UnitIsSameServer # not-yet
+UnitIsTrivial # not-yet
+UnitNameplateShowsWidgetsOnly # not-yet
+UnitNumPowerBarTimers # not-yet
+UnitOwnerGUID # not-yet
+UnitPartialPower # not-yet
+UnitPercentHealthFromGUID # not-yet
+UnitPowerDisplayMod # not-yet: temporary Lua workaround
+UnitPowerMissing # not-yet
+UnitPvpClassification # not-yet
+UnitSelectionType # not-yet
+UnitSetRole # not-yet
+UnitSetRoleEnum # not-yet
+UnitShouldDisplayName # not-yet
+UnitShouldDisplaySpellTargetName # not-yet
+UnitSpellTargetClass # not-yet
+UnitSpellTargetName # not-yet
+UnitSwitchToVehicleSeat # not-yet
+UnitThreatLeadSituation # not-yet
+UnitUsingVehicle # not-yet
+UnitVehicleSeatCount # not-yet
+UnitVehicleSeatInfo # not-yet
+UnitWeaponAttackPower # not-yet
+UnitWidgetSet # not-yet
+UnregisterEventCallback # not-yet: temporary Lua workaround
+UnregisterUnitEventCallback # not-yet: temporary Lua workaround
+UpdateWindow # not-yet
+WorldLootObjectExists # not-yet: temporary Lua workaround
+canaccesssecrets # not-yet
+dropsecretaccess # not-yet
+hasanysecretvalues # not-yet
+issecrettable # not-yet
+secretunwrap # not-yet
+string.contains # not-yet
+string.endswith # not-yet
+string.ltrim # not-yet
+string.rtrim # not-yet
+string.startswith # not-yet
+table.freeze # not-yet
+table.getcountinfo # not-yet
+table.isfrozen # not-yet
