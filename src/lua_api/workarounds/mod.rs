@@ -431,6 +431,7 @@ fn apply_dispatcher_and_date_defaults(lua: &mut rilua::Lua) -> crate::Result<()>
     #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::dispatcher_callback_defaults::apply_bootstrap(lua)?;
     #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::dispatcher_surface::apply_bootstrap(lua)?;
     temporary::date_and_time_defaults::apply_bootstrap(lua)?;
     Ok(())
@@ -576,6 +577,7 @@ fn should_use_temporary_shared_xml_defaults() -> bool {
     )
 }
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) fn patch_dispatcher_surface_for_addon_load(env: &crate::lua_api::LoaderEnv<'_>) {
     let _ = temporary::dispatcher_surface::patch_for_addon_load(env);

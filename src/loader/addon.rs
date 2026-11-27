@@ -710,6 +710,7 @@ fn apply_blizzard_post_load_patches(
         }
         "Blizzard_PlayerSpells" => patch_playerspells_onload_backfill(env, result),
         #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+        #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
         "Blizzard_Dispatcher" => {
             crate::lua_api::workarounds::patch_dispatcher_surface_for_addon_load(env)
         }
