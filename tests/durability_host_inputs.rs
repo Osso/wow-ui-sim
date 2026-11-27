@@ -6,7 +6,7 @@ const DURABILITY_CASES: &str = r##"
 A_Admin.EquipItem(1, 211993)
 assert(not pcall(A_Admin.SetEquippedItemDurability, 1, 101, 100), "reject current above maximum")
 assert(not pcall(A_Admin.SetEquippedItemDurability, 1, 0, 0), "reject zero maximum")
-assert(not pcall(A_Admin.SetEquippedItemDurability, 2, 50, 100), "reject unequipped slot")
+assert(not pcall(A_Admin.SetEquippedItemDurability, 0, 50, 100), "reject slot zero")
 
 local function assert_alert(current, expected)
     A_Admin.SetEquippedItemDurability(1, current, 100)
