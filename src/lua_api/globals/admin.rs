@@ -213,6 +213,8 @@ fn register_admin_combat(mut builder: TableBuilder) -> LuaResult<TableBuilder> {
     #[cfg(feature = "player-cast-durations")]
     let builder = register_channel_inputs(builder)?;
     let builder = register_targeting_party(builder)?;
+    #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
+    let builder = crate::c_api::combat_log_history::register_admin(builder)?;
     Ok(builder)
 }
 

@@ -611,7 +611,9 @@ fn encounter_journal_global_filters_and_tier_are_numeric() {
     assert_eq!(values.9, UNSELECTED_DIFFICULTY_VALID);
 }
 
-#[cfg(not(feature = "retail-12-0-0"))]
+// Forever: Blizzard_DeprecatedCombatLog owns these globals since dbcc3df879;
+// forever_combat_namespace covers them through that owner.
+#[cfg(not(any(feature = "retail-12-0-0", feature = "client-wowforever")))]
 #[test]
 fn combat_log_globals_have_stable_stub_behavior() {
     let env = env();
@@ -1857,29 +1859,52 @@ mod forever_combat_namespace {
         );
     }
 
+    /// The Rust history (398dcad617) is supplied through A_Admin, not `_state`.
+    const SHARED_HISTORY_ENTRIES: &str = r#"
+        assert(type(C_CombatLogInternal) == "table")
+        assert(type(C_CombatLogInternal.GetCurrentEventInfo) == "function")
+        assert(type(C_CombatLogSecure.GetCurrentEventInfo) == "function")
+        A_Admin.SetCombatLogEntries({{"SPELL_DAMAGE", 19750, 150}, {"SPELL_HEAL", 19750, 275}})
+        local event, spell, amount = C_CombatLogInternal.GetCurrentEventInfo()
+        assert(event == "SPELL_HEAL" and spell == 19750 and amount == 275)
+        assert(C_CombatLogSecure.SeekToPreviousEntry())
+        event, spell, amount = C_CombatLogSecure.GetCurrentEventInfo()
+        assert(event == "SPELL_DAMAGE" and spell == 19750 and amount == 150)
+        event, spell, amount = C_CombatLogInternal.GetCurrentEventInfo()
+        assert(event == "SPELL_DAMAGE" and spell == 19750 and amount == 150)
+        assert(C_CombatLogSecure.SeekToNewestEntry())
+        event = C_CombatLogInternal.GetCurrentEventInfo()
+        assert(event == "SPELL_HEAL")
+        C_CombatLog.ClearEntries()
+        assert(C_CombatLogInternal.GetCurrentEventInfo() == nil)
+        assert(C_CombatLogSecure.GetCurrentEventInfo() == nil)
+    "#;
+
     #[test]
     fn documented_getters_share_concrete_fixture_entries() {
-        let env = env();
-        env.exec(
-            r#"
-            assert(type(C_CombatLogInternal) == "table")
-            assert(type(C_CombatLogInternal.GetCurrentEventInfo) == "function")
-            assert(type(C_CombatLogSecure.GetCurrentEventInfo) == "function")
-            local state = C_CombatLog._state
-            state.entries = {{"SPELL_DAMAGE", 19750, 150}, {"SPELL_HEAL", 19750, 275}}
-            state.currentIndex = 1
-            local event, spell, amount = C_CombatLogInternal.GetCurrentEventInfo()
-            assert(event == "SPELL_DAMAGE" and spell == 19750 and amount == 150)
-            assert(C_CombatLogSecure.SeekToNewestEntry())
-            event, spell, amount = C_CombatLogSecure.GetCurrentEventInfo()
-            assert(event == "SPELL_HEAL" and spell == 19750 and amount == 275)
-            event, spell, amount = C_CombatLogInternal.GetCurrentEventInfo()
-            assert(event == "SPELL_HEAL" and spell == 19750 and amount == 275)
-            C_CombatLog.ClearEntries()
-            assert(C_CombatLogInternal.GetCurrentEventInfo() == nil)
-            assert(C_CombatLogSecure.GetCurrentEventInfo() == nil)
-        "#,
-        )
-        .unwrap();
+        env().exec(SHARED_HISTORY_ENTRIES).unwrap();
+    }
+
+    /// dbcc3df879 left the legacy history globals to their Blizzard owner,
+    /// Blizzard_DeprecatedCombatLog/Deprecated_CombatLog.lua:14-23.
+    const DEPRECATED_HISTORY_GLOBALS: &str = r#"
+        assert(CombatLogGetNumEntries() == 0 and CombatLogShowCurrentEntry() == false)
+        A_Admin.SetCombatLogEntries({{"SPELL_DAMAGE", 1}, {"SPELL_HEAL", 2}})
+        assert(CombatLogGetNumEntries() == 2 and CombatLogShowCurrentEntry() == true)
+        assert(CombatLogGetRetentionTime() == C_CombatLog.GetEntryRetentionTime())
+        assert(CombatLog_Object_IsA(0x21, 0x01) == true)
+        assert(CombatLog_Object_IsA(0x20, 0x01) == false)
+    "#;
+
+    #[test]
+    fn deprecated_publisher_projects_supplied_history_through_legacy_globals() {
+        crate::common::blizzard_addon_harness::with_blizzard_addon_closure(
+            &["Blizzard_DeprecatedCombatLog"],
+            &[],
+            |env, loaded| {
+                assert!(loaded.iter().any(|n| n == "Blizzard_DeprecatedCombatLog"));
+                env.exec(DEPRECATED_HISTORY_GLOBALS).unwrap();
+            },
+        );
     }
 }

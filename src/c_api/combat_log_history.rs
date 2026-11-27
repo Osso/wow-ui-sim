@@ -3,11 +3,12 @@
 //! It preserves the temporary fixture's Lua-visible traversal, settings state and return shapes.
 //! Host code supplies history explicitly; the simulator invents no combat events.
 
-use crate::lua_api::methods::{borrow_state, borrow_state_mut, create_string};
+use crate::lua_api::methods::{borrow_state, borrow_state_mut, create_string, val_to_string};
+use crate::lua_bridge::TableBuilder;
 use crate::lua_bridge::{FromStack, table_set_rust_fn_static};
 use rilua::api::LuaApiMut;
 use rilua::vm::state::LuaState;
-use rilua::{LuaResult, Val};
+use rilua::{LuaResult, Val, runtime_error};
 
 #[derive(Clone, Debug, PartialEq)]
 pub enum CombatLogValue {
@@ -312,4 +313,55 @@ fn set_filter_settings(state: &mut LuaState) -> LuaResult<u32> {
     let value = Val::from_stack(state, 1)?;
     borrow_state_mut(state)?.combat_log_history.filter_settings = Some(value);
     Ok(0)
+}
+
+/// `A_Admin.SetCombatLogEntries(entries)`: replace the host-supplied history.
+/// Each entry is an array of the values `GetCurrentEventInfo` returns, oldest
+/// first. Only boolean, number and string values are accepted.
+pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
+    builder.set_function("SetCombatLogEntries", set_combat_log_entries)
+}
+
+fn set_combat_log_entries(state: &mut LuaState) -> LuaResult<u32> {
+    let rows = read_admin_array(state, crate::lua_bridge::stack_val(state, 1), "entries")?;
+    let mut entries = Vec::with_capacity(rows.len());
+    for (index, row) in rows.into_iter().enumerate() {
+        let label = format!("entries[{}]", index + 1);
+        let values = read_admin_array(state, row, &label)?
+            .into_iter()
+            .map(|value| admin_value(state, value, &label))
+            .collect::<LuaResult<Vec<_>>>()?;
+        entries.push(CombatLogEntry { values });
+    }
+    let mut sim = borrow_state_mut(state)?;
+    sim.combat_log_history.entries = entries;
+    sim.combat_log_history.current_index = None;
+    Ok(0)
+}
+
+fn read_admin_array(state: &LuaState, value: Val, label: &str) -> LuaResult<Vec<Val>> {
+    let error = || {
+        runtime_error(format!(
+            "A_Admin.SetCombatLogEntries: {label} must be an array"
+        ))
+    };
+    let Val::Table(reference) = value else {
+        return Err(error());
+    };
+    let table = state.gc.tables.get(reference).ok_or_else(error)?;
+    let len = table.len(&state.gc.string_arena);
+    Ok((1..=len).map(|index| table.get_int(index as i64)).collect())
+}
+
+fn admin_value(state: &LuaState, value: Val, label: &str) -> LuaResult<CombatLogValue> {
+    match value {
+        Val::Bool(value) => Ok(CombatLogValue::Boolean(value)),
+        Val::Num(value) if value.is_finite() => Ok(CombatLogValue::Number(value)),
+        Val::Str(_) => Ok(CombatLogValue::String(
+            val_to_string(state, value).unwrap_or_default(),
+        )),
+        _ => Err(runtime_error(format!(
+            "A_Admin.SetCombatLogEntries: {label} values must be booleans, finite numbers or strings"
+        ))),
+    }
 }
