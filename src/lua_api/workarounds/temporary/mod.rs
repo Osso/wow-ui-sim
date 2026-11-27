@@ -124,6 +124,10 @@ pub(crate) mod gamepad_cursor_control_defaults;
 pub(crate) mod garrison_mission_lists;
 pub(crate) mod global_frame_defaults;
 #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+#[cfg(any(
+    test,
+    not(any(feature = "client-retail", feature = "client-wowforever"))
+))]
 pub(crate) mod global_placeholder_tables;
 pub(crate) mod glue_character_select_defaults;
 pub(crate) mod glueparent_uiparent_attributes;
