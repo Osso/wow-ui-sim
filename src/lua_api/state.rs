@@ -1002,7 +1002,7 @@ macro_rules! build_empty_sim_state {
             bnet_account_features: Default::default(),
             bnet_friend_invites: Vec::new(),
             bnet_appear_offline: false,
-            #[cfg(feature = "retail-12-0-0")]
+            #[cfg(feature = "bnet-chat")]
             bnet_custom_message: String::new(),
             social_friends: default_social_friends(),
             #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
@@ -1147,7 +1147,7 @@ macro_rules! build_empty_sim_state {
             arena_crowd_control_spells: HashMap::new(),
             #[cfg(feature = "retail-12-0-5")]
             hidden_spell_item_enchantments: std::collections::HashSet::new(),
-            #[cfg(feature = "retail-12-0-5")]
+            #[cfg(feature = "bnet-presence")]
             bnet_presence: Default::default(),
             #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
             voice_chat_speak_requests: Vec::new(),

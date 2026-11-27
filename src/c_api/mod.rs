@@ -166,7 +166,7 @@ pub mod c_azerite_essence;
 pub mod c_azerite_item;
 pub mod c_barber_shop;
 pub mod c_battle_net;
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "bnet-friend-social")]
 pub(crate) mod c_battle_net_friend_search;
 #[cfg(feature = "retail-12-0-7")]
 pub(crate) mod c_battle_net_invite;

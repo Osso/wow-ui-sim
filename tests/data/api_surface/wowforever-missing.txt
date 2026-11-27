@@ -86,22 +86,10 @@ C_BarberShop.GetCurrentCost # not-yet
 C_BarberShopInternal.SetQAMode # not-yet
 C_BattleNet.AreRealIDFriendsEnabled # not-yet
 C_BattleNet.BNCheckBattleTagInviteToRecentAlly # not-yet
-C_BattleNet.BNCheckTitleFriendInviteToUnit # not-yet
-C_BattleNet.GetCustomTitleFriendName # not-yet
 C_BattleNet.GetFriendLevelFromInviteText # not-yet
 C_BattleNet.GetGameAccountInfoByID # not-yet
 C_BattleNet.IsFriendTagSupportedForCurrentGameType # not-yet: temporary Lua workaround
-C_BattleNet.SearchFriends # not-yet
-C_BattleNet.SendTitleFriendInviteByName # not-yet
-C_BattleNet.SendVerifiedBattleNetFriendInvite # not-yet
-C_BattleNet.SendWhisper # not-yet
-C_BattleNet.SetAFK # not-yet
-C_BattleNet.SetAppearOffline # not-yet
 C_BattleNet.SetBlocked # not-yet
-C_BattleNet.SetCustomMessage # not-yet
-C_BattleNet.SetCustomTitleFriendName # not-yet
-C_BattleNet.SetDND # not-yet
-C_BattleNet.SetFriendTags # not-yet
 C_BlizzCon2026.GetExperience # not-yet
 C_BlizzCon2026.IsActive # not-yet
 C_BlizzCon2026.IsColdSwapFeatureEnabled # not-yet

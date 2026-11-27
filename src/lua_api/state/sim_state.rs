@@ -1263,7 +1263,7 @@ pub struct SimState {
     pub bnet_friend_invites: Vec<BnetFriendInvite>,
     pub bnet_appear_offline: bool,
     /// INFERRED local broadcast input; no network service or persistence.
-    #[cfg(feature = "retail-12-0-0")]
+    #[cfg(feature = "bnet-chat")]
     pub bnet_custom_message: String,
     pub social_friends: Vec<SocialFriend>,
     /// INFERRED host-supplied ignore rows for Retail/Forever FriendsFrame.
@@ -1446,7 +1446,7 @@ pub struct SimState {
     pub arena_crowd_control_spells: HashMap<String, i32>,
     #[cfg(feature = "retail-12-0-5")]
     pub hidden_spell_item_enchantments: std::collections::HashSet<u32>,
-    #[cfg(feature = "retail-12-0-5")]
+    #[cfg(feature = "bnet-presence")]
     pub bnet_presence: crate::c_api::c_battle_net::Presence,
     /// Accepted public SpeakText requests in call order; no audio playback.
     #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]

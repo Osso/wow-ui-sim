@@ -51,7 +51,7 @@ pub(super) fn register_chat(state: &mut LuaState) -> LuaResult<()> {
     )
 }
 
-#[cfg(feature = "retail-12-0-0")]
+#[cfg(feature = "bnet-chat")]
 pub(super) fn register_bnet_chat(
     state: &mut LuaState,
     namespace: rilua::vm::gc::arena::GcRef<rilua::vm::table::Table>,
@@ -60,7 +60,7 @@ pub(super) fn register_bnet_chat(
     table_set_rust_fn_static(state, namespace, "SetCustomMessage", set_custom_message)
 }
 
-#[cfg(feature = "retail-12-0-0")]
+#[cfg(feature = "bnet-chat")]
 fn send_whisper(state: &mut LuaState) -> LuaResult<u32> {
     let account = unwrap_secret(state, stack_val(state, 1))?;
     let Val::Num(account) = account else {
@@ -94,7 +94,7 @@ fn send_whisper(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-#[cfg(feature = "retail-12-0-0")]
+#[cfg(feature = "bnet-chat")]
 fn chat_is_locked(sim: &SimState) -> bool {
     #[cfg(feature = "retail-12-0-5")]
     {
@@ -107,7 +107,7 @@ fn chat_is_locked(sim: &SimState) -> bool {
     }
 }
 
-#[cfg(feature = "retail-12-0-0")]
+#[cfg(feature = "bnet-chat")]
 fn set_custom_message(state: &mut LuaState) -> LuaResult<u32> {
     let text = read_string(state, unwrap_secret(state, stack_val(state, 1))?, 1)?;
     // INFERRED: bounded local broadcast, not a remote Battle.net acknowledgement.
