@@ -411,6 +411,13 @@ fn test_category_num_updates_with_earned() {
 #[test]
 fn test_has_completed_any_achievement_is_available_for_ui_gating() {
     let env = env();
+    // Retail and Forever read the earned-achievement model (10216db198).
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    {
+        let before: bool = env.eval("return HasCompletedAnyAchievement()").unwrap();
+        assert!(!before, "no earned achievement must report false");
+    }
+    env.exec("A_Admin.SetAchievementEarned(6, true)").unwrap();
     let completed_any: bool = env.eval("return HasCompletedAnyAchievement()").unwrap();
     assert!(completed_any);
 }
