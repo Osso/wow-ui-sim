@@ -57,7 +57,8 @@ fn intl_normalization_rejects_invalid_input() {
     "#).unwrap();
 }
 
-#[cfg(not(feature = "retail-12-1-5"))]
+// Forever publishes C_Intl (pinned IntlDocumentation.lua); see c_intl.rs.
+crate::c_api::c_intl::intl_absent! {
 #[test]
 fn intl_normalization_retail_absence() {
     let env = WowLuaEnv::new().unwrap();
@@ -66,4 +67,5 @@ fn intl_normalization_retail_absence() {
             .unwrap();
         crate::ptr::compat_bootstrap::apply_post_load(&env);
     }
+}
 }

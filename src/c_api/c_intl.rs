@@ -1,34 +1,43 @@
-//! PTR locale storage, ICU4X text operations, and ICU4C number formatting.
-#[cfg(feature = "retail-12-1-5")]
-mod breaks;
-#[cfg(feature = "retail-12-1-5")]
-mod casing;
-#[cfg(feature = "retail-12-1-5")]
-mod character_properties;
-#[cfg(feature = "retail-12-1-5")]
-mod collation;
-#[cfg(feature = "retail-12-1-5")]
-mod currency_metadata;
-#[cfg(feature = "retail-12-1-5")]
-mod date_formatting;
-#[cfg(feature = "retail-12-1-5")]
-mod display_transliteration;
-#[cfg(feature = "retail-12-1-5")]
-mod normalization;
-#[cfg(feature = "retail-12-1-5")]
-mod number_formatting;
-#[cfg(feature = "retail-12-1-5")]
-mod plurals;
-#[cfg(feature = "retail-12-1-5")]
-mod string_matches;
-#[cfg(feature = "retail-12-1-5")]
-mod text;
-#[cfg(feature = "retail-12-1-5")]
-mod transform;
+//! C_Intl locale storage, ICU4X text operations, and ICU4C number formatting.
+//!
+//! Published where the pinned `Blizzard_APIDocumentationGenerated/IntlDocumentation.lua`
+//! declares `C_Intl`: Retail 12.1.5+ and Forever 1.60.1 (the Forever and Retail
+//! files are byte-identical). Retail 12.0.5 and older epochs keep it absent.
+
+/// Applies the C_Intl publication gate to each item.
+macro_rules! intl_published {
+    ($($item:item)*) => {
+        $(#[cfg(any(feature = "retail-12-1-5", feature = "client-wowforever"))] $item)*
+    };
+}
+/// Applies the inverse C_Intl publication gate to each item.
+macro_rules! intl_absent {
+    ($($item:item)*) => {
+        $(#[cfg(not(any(feature = "retail-12-1-5", feature = "client-wowforever")))] $item)*
+    };
+}
+#[cfg(test)]
+pub(crate) use intl_absent;
+
+intl_published! {
+    mod breaks;
+    mod casing;
+    mod character_properties;
+    mod collation;
+    mod currency_metadata;
+    mod date_formatting;
+    mod display_transliteration;
+    mod normalization;
+    mod number_formatting;
+    mod plurals;
+    mod string_matches;
+    mod text;
+    mod transform;
+}
 use rilua::LuaResult;
 use rilua::vm::state::LuaState;
 
-#[cfg(not(feature = "retail-12-1-5"))]
+intl_absent! {
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     let absent = super::ensure_namespace(state, "__wow_absent_namespaces")?;
     crate::lua_api::methods::table_set_static(
@@ -39,9 +48,11 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     );
     Ok(())
 }
+}
 
-#[cfg(feature = "retail-12-1-5")]
-pub(crate) use storage::register;
+intl_published! {
+    pub(crate) use storage::register;
+}
 
 #[cfg(feature = "native-duration-formatting")]
 pub(super) fn parse_locale(bytes: &[u8], operation: &str) -> LuaResult<icu_locale_core::Locale> {
@@ -58,7 +69,7 @@ pub(super) fn parse_locale(bytes: &[u8], operation: &str) -> LuaResult<icu_local
     })
 }
 
-#[cfg(feature = "retail-12-1-5")]
+intl_published! {
 mod storage {
     use super::*;
     use crate::lua_api::methods::{call_function_state, table_set_static};
@@ -203,4 +214,5 @@ mod storage {
         state.push(Val::Str(value));
         Ok(1)
     }
+}
 }
