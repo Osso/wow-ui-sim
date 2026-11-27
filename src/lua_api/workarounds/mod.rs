@@ -344,6 +344,7 @@ fn apply_core_foundation_environment_defaults(lua: &mut rilua::Lua) -> crate::Re
     temporary::difficulty_pvp_util_defaults::apply_bootstrap(lua)?;
     #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::edit_mode_cache_defaults::apply_bootstrap(lua)?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::equipment_set_lock_defaults::apply_bootstrap(lua)?;
     temporary::global_frame_defaults::apply_bootstrap(lua)?;
     temporary::gossip_poi_defaults::apply_bootstrap(lua)?;
