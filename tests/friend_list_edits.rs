@@ -7,6 +7,7 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 const FRIENDS_FRAME_CONSUMER: &str = r#"
     C_FriendList.AddFriend("Varian")
     C_FriendList.AddFriend("Jaina")
+    A_Admin.FireEvent("FRIENDLIST_UPDATE")
     ShowUIPanel(FriendsFrame)
     for _, expected in ipairs({ "Varian", "Jaina" }) do
         local button = FriendsListFrame.ScrollBox:FindFrameByPredicate(function(frame)
