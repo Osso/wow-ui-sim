@@ -335,6 +335,12 @@ fn test_status_tracking_xp_and_reputation_bars_layout_locked() {
     wrath_action_case!(status_layout);
 
     let env = env_with_action_bar();
+    // UpdateBarsShown defers while a container fades (StatusTrackingManager.lua:65-70);
+    // the startup XP fade-in lasts 0.5 s (StatusTrackingBar.xml:11), so settle it first.
+    for _ in 0..3 {
+        env.fire_on_update(0.6)
+            .expect("status tracking fade OnUpdate");
+    }
     let result: String = env
         .eval(
             r#"
