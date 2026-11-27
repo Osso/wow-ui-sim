@@ -236,12 +236,13 @@ fn apply_runtime_state_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     temporary::global_placeholder_tables::apply_bootstrap(lua)?;
     temporary::frame_helper_defaults::apply_bootstrap(lua)?;
     crate::c_api::c_event_scheduler::apply_bootstrap(lua)?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::event_scheduler_state::apply_bootstrap(lua)?;
     temporary::combat_log_state::apply_bootstrap(lua)?;
     temporary::encounter_state::apply_bootstrap(lua)?;
     temporary::housing_catalog_state::apply_bootstrap(lua)?;
     temporary::housing_owned_house_requests::apply_bootstrap(lua)?;
-    #[cfg(feature = "client-wowforever")]
+    #[cfg(all(test, feature = "client-wowforever"))]
     temporary::forever_bank_capability_defaults::apply_bootstrap(lua)?;
     temporary::house_exterior_debug::apply_bootstrap(lua)?;
     temporary::map_runtime_state::apply_bootstrap(lua)?;
@@ -373,6 +374,7 @@ fn apply_core_foundation_tracking_defaults(lua: &mut rilua::Lua) -> crate::Resul
     temporary::contribution_collector_defaults::apply_bootstrap(lua)?;
     temporary::content_tracking_defaults::apply_bootstrap(lua)?;
     temporary::cooldown_viewer_defaults::apply_bootstrap(lua)?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::configuration_warnings_defaults::apply_bootstrap(lua)?;
     temporary::container_default_shapes::apply_bootstrap(lua)?;
     temporary::container_portrait_texture::apply_bootstrap(lua)?;
@@ -456,6 +458,7 @@ fn apply_format_and_game_defaults(lua: &mut rilua::Lua) -> crate::Result<()> {
 }
 
 fn apply_inventory_and_spell_defaults(lua: &mut rilua::Lua) -> crate::Result<()> {
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::dye_color_defaults::apply_bootstrap(lua)?;
     temporary::inventory_query_defaults::apply_bootstrap(lua)?;
     #[cfg(feature = "client-wowforever")]

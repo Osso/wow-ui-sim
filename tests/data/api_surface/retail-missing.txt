@@ -566,7 +566,6 @@ C_EncounterJournal.GetEncounterJournalLink # not-yet
 C_EncounterJournal.SetPreviewMythicPlusLevel # not-yet
 C_EncounterJournal.SetPreviewPvpTier # not-yet
 C_EndOfMatchUI.GetEndOfMatchDetails # not-yet
-C_EventScheduler.GetActiveContinentName # not-yet: temporary Lua workaround
 C_EventToastManager.GetLevelUpDisplayToastsFromLevel # not-yet
 C_EventToastManager.GetNextToastToDisplay # not-yet
 C_EventToastManager.RemoveCurrentToast # not-yet
@@ -642,7 +641,6 @@ C_Garrison.GetBuildings # not-yet
 C_Garrison.GetBuildingsForPlot # not-yet
 C_Garrison.GetBuildingsForSize # not-yet
 C_Garrison.GetClassSpecCategoryInfo # not-yet
-C_Garrison.GetCombatAllyMission # not-yet: temporary Lua workaround
 C_Garrison.GetCompleteTalent # not-yet
 C_Garrison.GetCurrentCypherEquipmentLevel # not-yet
 C_Garrison.GetCyphersToNextEquipmentLevel # not-yet

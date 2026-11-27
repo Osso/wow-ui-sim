@@ -66,24 +66,20 @@ C_AzeriteEssence.CanDeactivateEssence # not-yet
 C_AzeriteEssence.GetNumUsableEssences # not-yet
 C_AzeriteItem.HasActiveAzeriteItem # not-yet
 C_AzeriteItem.IsAzeriteItemByID # not-yet
-C_Bank.AreAnyBankTypesViewable # not-yet
 C_Bank.AutoDepositItemsIntoBank # not-yet
 C_Bank.BankBagTypeAndIDToInvSlot # not-yet
 C_Bank.CanDepositMoney # not-yet
 C_Bank.CanUseBank # not-yet
-C_Bank.CanViewBank # not-yet
 C_Bank.CanWithdrawMoney # not-yet
 C_Bank.CloseBankFrame # not-yet
 C_Bank.DepositMoney # not-yet
 C_Bank.DoesBankTypeSupportAutoDeposit # not-yet
 C_Bank.DoesBankTypeSupportMoneyTransfer # not-yet
 C_Bank.FetchMaxNumBankTabs # not-yet
-C_Bank.FetchPurchasedBankTabData # not-yet: temporary Lua workaround
 C_Bank.FetchPurchasedBankTabIDs # not-yet
 C_Bank.FetchViewableBankTypes # not-yet
 C_Bank.IsItemAllowedInBankType # not-yet
 C_Bank.PurchaseBankTab # not-yet
-C_Bank.ShouldUsePlayerBagsInBank # not-yet: temporary Lua workaround
 C_Bank.UpdateBankTabSettings # not-yet
 C_Bank.WithdrawMoney # not-yet
 C_BarberShop.GetCurrentCost # not-yet
@@ -576,7 +572,6 @@ C_EncounterWarnings.IsFeatureEnabled # not-yet
 C_EncounterWarnings.SetPlayCustomSoundsWhenHidden # not-yet
 C_EncounterWarnings.SetWarningsShown # not-yet
 C_EndOfMatchUI.GetEndOfMatchDetails # not-yet
-C_EventScheduler.GetActiveContinentName # not-yet: temporary Lua workaround
 C_EventToastManager.GetLevelUpDisplayToastsFromLevel # not-yet
 C_EventToastManager.GetNextToastToDisplay # not-yet
 C_EventToastManager.RemoveCurrentToast # not-yet

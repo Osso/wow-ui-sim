@@ -72,6 +72,7 @@ pub(crate) mod client_info_defaults;
 pub(crate) mod collections_journal_namespace;
 pub(crate) mod color_defaults;
 pub(crate) mod combat_log_state;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod configuration_warnings_defaults;
 pub(crate) mod container_default_shapes;
 #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
@@ -99,6 +100,7 @@ pub(crate) mod dispatcher_callback_defaults;
 #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod dispatcher_surface;
 pub(crate) mod dropdown_list_defaults;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod dye_color_defaults;
 #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod edit_mode_cache_defaults;
@@ -106,10 +108,11 @@ pub(crate) mod encounter_state;
 pub(crate) mod environment_cleanup_restore;
 #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod equipment_set_lock_defaults;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod event_scheduler_state;
 #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod fog_of_war_pin;
-#[cfg(feature = "client-wowforever")]
+#[cfg(all(test, feature = "client-wowforever"))]
 pub(crate) mod forever_bank_capability_defaults;
 pub(crate) mod forever_glue_display_defaults;
 #[cfg(feature = "client-wowforever")]
