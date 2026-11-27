@@ -17,6 +17,31 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     ] {
         table_set_rust_fn_static(state, ns, name, function)?;
     }
+    register_binding_context_enum(state)
+}
+
+fn register_binding_context_enum(state: &mut LuaState) -> LuaResult<()> {
+    let final_context = match crate::client_profile::ACTIVE {
+        crate::client_profile::ClientProfile::Retail => "ReservedFutureFeatureBinding01",
+        crate::client_profile::ClientProfile::WowForever => "GamepadModeInGameCore",
+        _ => return Ok(()),
+    };
+    let enums = ensure_namespace(state, "Enum")?;
+    let contexts = crate::c_api::ensure_namespace_table_field(state, enums, "BindingContext")?;
+    for (name, value) in [
+        ("None", 0.0),
+        ("HousingEditor", 1.0),
+        ("HousingEditorBasicDecorMode", 2.0),
+        ("HousingEditorExpertDecorMode", 3.0),
+        ("HousingEditorCustomizeMode", 4.0),
+        ("HousingEditorCleanupMode", 5.0),
+        ("HousingEditorLayoutMode", 6.0),
+        ("HousingEditorBasicAndExpertDecorMode", 7.0),
+        ("HousingEditorExteriorCustomizationMode", 8.0),
+        (final_context, 9.0),
+    ] {
+        crate::c_api::set_namespace_member(state, Val::Table(contexts), name, Val::Num(value))?;
+    }
     Ok(())
 }
 
