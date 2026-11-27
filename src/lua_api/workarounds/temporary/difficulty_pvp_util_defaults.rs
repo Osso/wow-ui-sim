@@ -125,6 +125,11 @@ if GetPVPLifetimeStats == nil then
         return 0, 0
     end
 end
+"#;
+
+/// Retail registers the Rust `GetDifficultyInfo` (`globals/real/difficulty_info.rs`).
+#[cfg(not(feature = "client-retail"))]
+const DIFFICULTY_INFO_DEFAULT_LUA: &str = r#"
 if GetDifficultyInfo == nil then
     function GetDifficultyInfo(difficultyID)
         return DifficultyUtil.GetDifficultyName(difficultyID) or PLAYER_DIFFICULTY1 or "Normal",
@@ -174,6 +179,8 @@ end
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(DIFFICULTY_PVP_UTIL_DEFAULTS_LUA)?;
+    #[cfg(not(feature = "client-retail"))]
+    lua.exec(DIFFICULTY_INFO_DEFAULT_LUA)?;
     #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     lua.exec(RAID_DIFFICULTY_GLOBAL_DEFAULTS_LUA)?;
     #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]

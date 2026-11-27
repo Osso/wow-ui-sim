@@ -2128,7 +2128,6 @@ GetCursorDelta # not-yet
 GetDailyQuestsCompleted # not-yet
 GetDefaultAbbreviationBreakpoints # not-yet
 GetDemotionRank # not-yet
-GetDifficultyInfo # not-yet: temporary Lua workaround
 GetDownloadedPercentage # not-yet: temporary Lua workaround
 GetDungeonForRandomSlot # not-yet
 GetEditBoxMetatable # not-yet: temporary Lua workaround
@@ -2406,7 +2405,6 @@ IsItemPreferredArmorType # not-yet
 IsJailersTowerLayerTimeLocked # not-yet
 IsLFGComplete # not-yet
 IsLeftMetaKeyDown # not-yet
-IsLegacyDifficulty # not-yet
 IsLinuxClient # not-yet
 IsMasterLooter # not-yet
 IsMouselooking # intentionally-unsupported: 3D camera/model

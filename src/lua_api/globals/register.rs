@@ -95,6 +95,8 @@ fn register_bootstrap_runtime_globals(lua: &mut rilua::Lua) -> crate::Result<()>
     super::keybindings::register_all(lua)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     super::real::run_binding::register_all(lua)?;
+    #[cfg(feature = "client-retail")]
+    super::real::difficulty_info::register_all(lua)?;
     super::permanent_shims::register_all(lua.state_mut());
     super::action_bar_api::register_all(lua)?;
     LuaApiMut::register_function(lua, "UpdateUIParentPosition", update_ui_parent_position)?;
