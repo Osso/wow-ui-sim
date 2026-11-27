@@ -1,4 +1,4 @@
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "fullscreen-browser-close")]
 use super::permanent_shims::c_browser;
 use super::permanent_shims::{c_fog_of_war, c_nameplate};
 use super::{
@@ -157,7 +157,7 @@ fn register_interaction_combat(state: &mut LuaState) -> LuaResult<()> {
     super::c_talking_head::register(state)?;
     #[cfg(feature = "client-wowforever")]
     super::c_combat_log::register_publication(state)?;
-    #[cfg(feature = "retail-12-0-0")]
+    #[cfg(feature = "rest-policy-flags")]
     {
         super::c_combat_log::register_restriction(state)?;
         super::c_limited_input::register(state)?;
@@ -257,7 +257,7 @@ fn register_interaction_appearance(state: &mut LuaState) -> LuaResult<()> {
     super::forever_outfits::register(state)?;
     c_ardenweald_gardening::register_c_ardenweald_gardening_surface(state)?;
     c_arrow_callout_manager::register_c_arrow_callout_manager_surface(state)?;
-    #[cfg(feature = "retail-12-1-0")]
+    #[cfg(feature = "fullscreen-browser-close")]
     c_browser::register_c_browser_surface(state)?;
     super::c_sound::register(state)?;
     if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Wrath {

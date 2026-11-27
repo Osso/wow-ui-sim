@@ -271,7 +271,7 @@ pub(crate) mod c_lfg_list_filter;
 #[cfg(feature = "lfg-endgame-edit-policy")]
 pub mod c_lfg_list_policy;
 pub mod c_lfg_list_search;
-#[cfg(feature = "retail-12-0-0")]
+#[cfg(feature = "rest-policy-flags")]
 mod c_limited_input;
 pub(crate) mod c_log;
 pub mod c_login;

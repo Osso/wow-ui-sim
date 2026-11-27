@@ -638,11 +638,11 @@ macro_rules! build_empty_sim_state {
             prey_inputs: Default::default(),
             button_header_inputs: Default::default(),
             ui_widget_inputs: crate::c_api::ui_widget_manager::seed_demo_world_quest_widgets(),
-            #[cfg(feature = "retail-12-0-0")]
+            #[cfg(feature = "rest-policy-flags")]
             combat_log_restricted: false,
-            #[cfg(feature = "retail-12-0-0")]
+            #[cfg(feature = "rest-policy-flags")]
             pet_bonus_slot_available: false,
-            #[cfg(feature = "retail-12-0-0")]
+            #[cfg(feature = "rest-policy-flags")]
             limited_input_allowed: [false; 4],
             #[cfg(feature = "action-spell-range")]
             action_spell_ranges: Default::default(),

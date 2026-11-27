@@ -94,7 +94,6 @@ C_BlizzCon2026.GetExperience # not-yet
 C_BlizzCon2026.IsActive # not-yet
 C_BlizzCon2026.IsColdSwapFeatureEnabled # not-yet
 C_BlizzCon2026.SetExperience # not-yet
-C_Browser.CloseFullscreenBrowser # not-yet
 C_Calendar.AreNamesReady # not-yet: temporary Lua workaround
 C_Calendar.CanAddEvent # not-yet: temporary Lua workaround
 C_Calendar.CanSendInvite # not-yet: temporary Lua workaround
@@ -142,7 +141,6 @@ C_CatalogShop.GetAvailableTransmogRaceInfos # not-yet
 C_CatalogShop.GetCategoryInfo # not-yet: temporary Lua workaround
 C_CatalogShop.GetFailureInfo # not-yet: temporary Lua workaround
 C_CatalogShop.GetFirstCategoryByProductID # not-yet: temporary Lua workaround
-C_CatalogShop.GetNewProducts # not-yet
 C_CatalogShop.GetProductAvailabilityTimeRemainingSecs # not-yet: temporary Lua workaround
 C_CatalogShop.GetProductIDsForCategory # not-yet: temporary Lua workaround
 C_CatalogShop.GetProductIDsForCategorySection # not-yet: temporary Lua workaround
@@ -262,7 +260,6 @@ C_ColorUtil.WrapTextInColorCode # not-yet: temporary Lua workaround
 C_CombatLog.ApplyFilterSettings # not-yet: temporary Lua workaround
 C_CombatLog.ClearEntries # not-yet: temporary Lua workaround
 C_CombatLog.DoesObjectMatchFilter # not-yet: temporary Lua workaround
-C_CombatLog.IsCombatLogRestricted # not-yet
 C_CombatLog.RefilterEntries # not-yet: temporary Lua workaround
 C_CombatLog.SetEntryRetentionTime # not-yet: temporary Lua workaround
 C_CombatLog.SetFilteredEventsEnabled # not-yet: temporary Lua workaround
@@ -514,8 +511,6 @@ C_CurrencyInfo.SetCurrencyBackpack # not-yet
 C_CurrencyInfo.SetCurrencyBackpackByID # not-yet
 C_CurrencyInfo.SetCurrencyFilter # not-yet
 C_CurrencyInfo.SetCurrencyUnused # not-yet
-C_CurveUtil.EvaluateColorFromBoolean # not-yet
-C_CurveUtil.EvaluateColorValueFromBoolean # not-yet
 C_CurveUtil.EvaluateGameCurve # not-yet
 C_DateAndTime.AdjustTimeByDays # not-yet: temporary Lua workaround
 C_DateAndTime.AdjustTimeByMinutes # not-yet: temporary Lua workaround
@@ -530,10 +525,7 @@ C_DelvesUI.GetDelvesFactionForSeason # not-yet
 C_DelvesUI.GetLockedTextForCompanion # not-yet
 C_DelvesUI.GetModelSceneForCompanion # not-yet
 C_DelvesUI.GetTieredEntranceType # not-yet
-C_DelvesUI.HasActiveLFGLair # not-yet
-C_DelvesUI.HasActiveLair # not-yet
 C_DelvesUI.IsEligibleForActiveDelveRewards # not-yet
-C_DelvesUI.IsInLair # not-yet
 C_DelvesUI.IsTraitTreeForCompanion # not-yet
 C_Discord.IsVoiceEnabled # not-yet: temporary Lua workaround
 C_EditMode.ConvertLayoutInfoToString # not-yet
@@ -834,17 +826,13 @@ C_Item.BindEnchant # not-yet
 C_Item.CanBeRefunded # not-yet
 C_Item.CanScrapItem # not-yet
 C_Item.CanViewItemPowers # not-yet
-C_Item.ConfirmBindOnUse # not-yet
 C_Item.ConfirmDeleteItem # not-yet
-C_Item.ConfirmNoRefundOnUse # not-yet
-C_Item.ConfirmOnUse # not-yet
 C_Item.DeleteItem # not-yet
 C_Item.DoesItemContainSpec # not-yet
 C_Item.DoesItemMatchBonusTreeReplacement # not-yet
 C_Item.DoesItemMatchSpellItemCondition # not-yet
 C_Item.DoesItemMatchTargetEnchantingSpell # not-yet
 C_Item.DoesItemMatchTrackJump # not-yet
-C_Item.EndBoundTradeable # not-yet
 C_Item.EndRefund # not-yet
 C_Item.EquipItemByName # not-yet
 C_Item.GetAppliedItemTransmogInfo # not-yet
@@ -925,7 +913,6 @@ C_LFGInfo.GetDungeonInfo # not-yet: temporary Lua workaround
 C_LFGInfo.GetLFDLockStates # not-yet: temporary Lua workaround
 C_LFGInfo.GetLevelUpInstances # not-yet
 C_LFGInfo.GetRoleCheckDifficultyDetails # not-yet
-C_LFGInfo.IsInMatchmadeRaidWithoutRoleRequirements # not-yet
 C_LFGInfo.IsLFREnabled # not-yet
 C_LFGList.CanActiveEntryUseAutoAccept # not-yet
 C_LFGList.ClearApplicationTextFields # not-yet
@@ -974,7 +961,6 @@ C_LegendaryCrafting.MakeRuneforgeCraftDescription # not-yet
 C_LegendaryCrafting.UpgradeRuneforgeLegendary # not-yet
 C_LevelSquish.ConvertFollowerLevel # not-yet
 C_LevelSquish.ConvertPlayerLevel # not-yet
-C_LimitedInput.LimitedInputAllowed # not-yet
 C_LiveEvent.OnLiveEventBannerClicked # intentionally-unsupported: Glue-only in retail-12-1-5-70688.csv
 C_LiveEvent.OnLiveEventPopupClicked # intentionally-unsupported: Glue-only in retail-12-1-5-70688.csv
 C_LobbyMatchmakerInfo.AbandonQueue # not-yet
@@ -1050,7 +1036,6 @@ C_MythicPlus.GetSeasonBestForMap # not-yet
 C_MythicPlus.GetSeasonBestMythicRatingFromThisExpansion # not-yet
 C_NameUtil.ReplaceSurnameSeparatorWithLinkSeparator # not-yet
 C_PaperDollInfo.CanAutoEquipCursorItem # not-yet
-C_PaperDollInfo.CancelTemporaryEnchantment # not-yet
 C_PaperDollInfo.CursorCanGoInSlot # not-yet
 C_PaperDollInfo.GetInspectAzeriteItemEmpoweredChoices # not-yet
 C_PaperDollInfo.GetInspectItemLevel # not-yet
@@ -1256,7 +1241,6 @@ C_PvP.StartSoloRBGWarGameByName # not-yet
 C_PvP.StartSpectatorSoloRBGWarGame # not-yet
 C_PvP.ToggleWarMode # not-yet
 C_QuestHub.IsAreaPOICurrentlyRelatedToHub # not-yet
-C_QuestHub.IsQuestCurrentlyRelatedToHub # not-yet
 C_QuestInfoSystem.GetQuestLogRewardFavor # not-yet
 C_QuestInfoSystem.GetQuestRewardSpellInfo # not-yet
 C_QuestInfoSystem.GetQuestShouldToastCompletion # not-yet
@@ -1505,14 +1489,12 @@ C_SplashScreen.RequestLatestSplashScreen # not-yet
 C_SplashScreen.SendSplashScreenActionLaunchedTelem # not-yet
 C_SplashScreen.SendSplashScreenCloseTelem # not-yet
 C_StableInfo.BuyStableSlot # not-yet
-C_StableInfo.ClosePetStables # not-yet
 C_StableInfo.GetActivePetList # not-yet
 C_StableInfo.GetAvailablePetSpecInfos # not-yet
 C_StableInfo.GetNumActivePets # not-yet
 C_StableInfo.GetStablePetFoodTypes # not-yet
 C_StableInfo.GetStabledPetList # not-yet
 C_StableInfo.IsAtStableMaster # not-yet
-C_StableInfo.IsBonusPetSlotAvailable # not-yet
 C_StableInfo.IsPetFavorite # not-yet
 C_StableInfo.PickupStablePet # not-yet
 C_StableInfo.SetPetFavorite # not-yet

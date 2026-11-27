@@ -1,4 +1,4 @@
-#![cfg(feature = "retail-12-0-0")]
+#![cfg(feature = "rest-policy-flags")]
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 #[test]
@@ -48,4 +48,16 @@ fn p1200_rest_new_catalog_products_empty() {
     "#,
     )
     .unwrap();
+}
+
+#[test]
+fn close_pet_stables_closes_and_reports_once() {
+    let env = WowLuaEnv::new().unwrap();
+    env.state().borrow_mut().pet_stables_open = true;
+    env.state().borrow_mut().events.drain();
+    env.exec("C_StableInfo.ClosePetStables(); assert(not C_StableInfo.IsAtPetStable())")
+        .unwrap();
+    let events = env.state().borrow_mut().events.drain();
+    let names: Vec<&str> = events.iter().map(|event| event.name.as_str()).collect();
+    assert_eq!(names, vec!["PET_STABLE_CLOSED"]);
 }

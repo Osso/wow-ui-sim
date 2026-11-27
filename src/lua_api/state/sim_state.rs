@@ -383,11 +383,11 @@ pub struct SimState {
     pub button_header_inputs: crate::c_api::ui_widget_manager::ButtonHeaderInputs,
     pub ui_widget_inputs: crate::c_api::ui_widget_manager::UiWidgetInputs,
     /// INFERRED host policy snapshots, initially inactive; not combat-derived.
-    #[cfg(feature = "retail-12-0-0")]
+    #[cfg(feature = "rest-policy-flags")]
     pub combat_log_restricted: bool,
-    #[cfg(feature = "retail-12-0-0")]
+    #[cfg(feature = "rest-policy-flags")]
     pub pet_bonus_slot_available: bool,
-    #[cfg(feature = "retail-12-0-0")]
+    #[cfg(feature = "rest-policy-flags")]
     pub limited_input_allowed: [bool; 4],
     /// INFERRED empty host range inputs and tier-completion snapshots.
     #[cfg(feature = "action-spell-range")]

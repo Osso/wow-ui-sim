@@ -107,7 +107,7 @@ fn battle_net_high_res_toggle_follows_installed_textures() {
     assert!(after);
 }
 
-#[cfg(feature = "client-retail")]
+#[cfg(feature = "lair-state-queries")]
 #[test]
 fn delves_lair_state_drives_lair_and_matchmade_raid_queries() {
     let env = WowLuaEnv::new().unwrap();
@@ -224,7 +224,7 @@ fn cancel_aura_by_instance_id_removes_player_buff_and_fires_unit_aura() {
     );
 }
 
-#[cfg(feature = "client-retail")]
+#[cfg(feature = "temporary-enchant-cancel")]
 #[test]
 fn cancel_temporary_enchantment_clears_only_temporary_weapon_enchants() {
     use wow_ui_sim::c_api::weapon_enchants::{TEMPORARY_ENCHANT_TYPE, WeaponEnchant};
@@ -381,7 +381,7 @@ fn recent_allies_search_filters_text_status_and_interests() {
     assert_eq!(search(""), "");
 }
 
-#[cfg(feature = "client-retail")]
+#[cfg(feature = "quest-hub-relations")]
 #[test]
 fn quest_hub_relation_reads_hub_quests() {
     let env = WowLuaEnv::new().unwrap();
@@ -446,7 +446,7 @@ fn random_training_ground_joins_queue_battlefield() {
     assert_eq!(queued_updates, 2);
 }
 
-#[cfg(feature = "client-retail")]
+#[cfg(feature = "fullscreen-browser-close")]
 #[test]
 fn close_fullscreen_browser_is_callable_without_browser() {
     let env = WowLuaEnv::new().unwrap();
