@@ -854,8 +854,9 @@ C_HeirloomInfo.AreAllCollectionFiltersChecked # not-yet
 C_HeirloomInfo.AreAllSourceFiltersChecked # not-yet
 C_HeirloomInfo.IsUsingDefaultFilters # not-yet: temporary Lua workaround
 C_HeirloomInfo.SetAllCollectionFilters # not-yet
-C_HouseExterior.GetCoreFixtureOptionsInfo # not-yet: temporary Lua workaround
+C_HouseExterior.GetFixtureDebugInfoForGUID # not-yet
 C_HouseExterior.GetHoveredFixtureDebugInfo # not-yet: temporary Lua workaround
+C_HouseExterior.GetSelectedFixtureDebugInfo # not-yet
 C_HouseExterior.HasHoveredFixture # not-yet: temporary Lua workaround
 C_HouseExterior.IsAnyDecorAttachedToCoreFixture # not-yet: temporary Lua workaround
 C_HouseExterior.IsAnyDecorAttachedToDoor # not-yet: temporary Lua workaround
@@ -1288,7 +1289,6 @@ C_PetJournal.GetOwnedPetIDs # not-yet
 C_PetJournal.GetPetTeamAverageLevel # not-yet
 C_PetJournal.GetSearchFilter # not-yet
 C_PetJournal.GetSummonRandomFavoritePetGUID # not-yet
-C_PetJournal.IsCurrentlySummoned # not-yet
 C_PetJournal.IsJournalReadOnly # not-yet
 C_PetJournal.PetCanBeReleased # not-yet
 C_PetJournal.PetIsCapturable # not-yet
@@ -2352,7 +2352,6 @@ GuildMasterAbsent # not-yet
 GuildNewsSetSticky # not-yet
 HandleAtlasMemberCommand # not-yet
 HasArtifactEquipped # not-yet: temporary Lua workaround
-HasCompletedAnyAchievement # not-yet: temporary Lua workaround
 HasDualWieldPenalty # not-yet
 HasFullControl # not-yet
 HasIgnoreDualWieldWeapon # not-yet
