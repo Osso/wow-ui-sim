@@ -725,9 +725,24 @@ fn test_format_alias() {
 // Math library aliases
 // ============================================================================
 
+/// Environment with the global math/table aliases' original owner loaded.
+/// Outside Wrath, Blizzard_SharedXMLBase/Compat.lua publishes them; 3ce91a8feb
+/// gated the duplicate bootstrap copies to Wrath.
+fn compat_alias_env() -> WowLuaEnv {
+    let env = env();
+    #[cfg(not(feature = "client-wrath"))]
+    {
+        let ui = wow_ui_sim::blizzard_ui_sync::default_cache_addons_path().expect("Blizzard UI cache");
+        let source = std::fs::read_to_string(ui.join("Blizzard_SharedXMLBase/Compat.lua"))
+            .expect("cached Blizzard Compat.lua");
+        env.exec(&source).expect("cached Blizzard Compat.lua executes");
+    }
+    env
+}
+
 #[test]
 fn test_math_aliases() {
-    let env = env();
+    let env = compat_alias_env();
     let val: i32 = env.eval("return abs(-5)").unwrap();
     assert_eq!(val, 5);
     let val: i32 = env.eval("return ceil(1.2)").unwrap();
@@ -787,7 +802,7 @@ fn test_bit_shifts() {
 
 #[test]
 fn test_sort_alias() {
-    let env = env();
+    let env = compat_alias_env();
     let val: i32 = env
         .eval(
             r#"
