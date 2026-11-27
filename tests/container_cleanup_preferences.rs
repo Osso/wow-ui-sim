@@ -4,6 +4,7 @@
 //! the backpack setters only through local menu callbacks.
 #![cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 
+use crate::common;
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 const PREFERENCE_PAIRS: &str = r#"
@@ -51,6 +52,38 @@ const SEARCH_FILTER: &str = r#"
     C_Container.SetItemSearch("")
     assert(C_Container.IsContainerFiltered(0) == false)
 "#;
+
+#[test]
+fn bag_slot_filter_overlay_tracks_the_container_search() {
+    common::with_timeout(120, || {
+        let env = WowLuaEnv::new().expect("Lua environment");
+        common::load_game_startup_inventory(&env);
+        env.sync_addon_names_to_lua();
+        env.apply_post_load_workarounds();
+        wow_ui_sim::startup::fire_startup_events_for_screen(
+            &env,
+            wow_ui_sim::screen::ScreenKind::Game,
+        );
+        env.exec(
+            r#"
+            A_Admin.ClearBags()
+            A_Admin.AddBagItem(0, 1, 6948, 1)
+            OpenAllBags()
+            local backpack = MainMenuBarBackpackButton
+            for _, case in ipairs({ { "water", true }, { "hearth", false } }) do
+                C_Container.SetItemSearch(case[1])
+                A_Admin.FireEvent("INVENTORY_SEARCH_UPDATE")
+                local filtered = C_Container.IsContainerFiltered(0)
+                assert(filtered == case[2], case[1])
+                assert(backpack.ItemContextOverlay:IsShown() == filtered, case[1])
+            end
+            C_Container.SetItemSearch("")
+            A_Admin.FireEvent("INVENTORY_SEARCH_UPDATE")
+            "#,
+        )
+        .expect("bag button overlay follows each search result");
+    });
+}
 
 #[test]
 fn container_cleanup_preferences_and_search_filter_follow_inputs() {

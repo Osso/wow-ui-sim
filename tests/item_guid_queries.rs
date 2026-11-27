@@ -3,6 +3,7 @@
 //! lock requests (:1621/:1631/:1683/:1693).
 #![cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 
+use crate::common;
 use wow_ui_sim::client_profile::{ACTIVE, ClientProfile};
 use wow_ui_sim::lua_api::WowLuaEnv;
 
@@ -30,6 +31,17 @@ const GUID_QUERIES: &str = r#"
     A_Admin.AddBagItem(0, 1, 6948, 1)
 "#;
 
+const ITEM_OBJECT_LOCATION: &str = r#"
+    A_Admin.ClearBags()
+    A_Admin.AddBagItem(0, 1, 6948, 1)
+    A_Admin.AddBagItem(0, 2, 159, 1)
+    for _, slot in ipairs({ 1, 2 }) do
+        local guid = C_Item.GetItemGUID({ bagID = 0, slotIndex = slot })
+        local location = Item:CreateFromItemGUID(guid):GetItemLocation()
+        assert(location.bagID == 0 and location.slotIndex == slot, slot)
+    end
+"#;
+
 const LOCK_REQUESTS: &str = r#"
     local hearth, water = { bagID = 0, slotIndex = 1 }, { bagID = 0, slotIndex = 2 }
     assert(C_Item.IsLocked(hearth) == false)
@@ -45,6 +57,22 @@ const LOCK_REQUESTS: &str = r#"
     C_Item.UnlockItemByGUID(WaterGUID)
     assert(C_Item.IsLocked(water) == false)
 "#;
+
+#[test]
+fn item_object_location_consumer_resolves_distinct_bag_guids() {
+    common::with_timeout(120, || {
+        let env = WowLuaEnv::new().expect("Lua environment");
+        common::load_game_startup_inventory(&env);
+        env.sync_addon_names_to_lua();
+        env.apply_post_load_workarounds();
+        wow_ui_sim::startup::fire_startup_events_for_screen(
+            &env,
+            wow_ui_sim::screen::ScreenKind::Game,
+        );
+        env.exec(ITEM_OBJECT_LOCATION)
+            .expect("Item:GetItemLocation resolves both supplied GUIDs");
+    });
+}
 
 #[test]
 fn item_guid_queries_resolve_the_bag_slot_that_holds_the_item() {

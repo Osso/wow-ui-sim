@@ -2,6 +2,7 @@
 //! Retail) over the pinned Retail 12.1.5.70961 Difficulty DB2 rows.
 #![cfg(feature = "client-retail")]
 
+use crate::common;
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 const DIFFICULTY_ROWS: &str = r#"
@@ -31,6 +32,35 @@ const LEGACY_ROWS: &str = r#"
     assert(IsLegacyDifficulty(16) == false)
     assert(IsLegacyDifficulty(999) == nil)
 "#;
+
+#[test]
+fn instance_difficulty_banner_uses_supplied_difficulty_flags() {
+    common::with_timeout(120, || {
+        let env = WowLuaEnv::new().expect("Lua environment");
+        common::load_game_startup_inventory(&env);
+        env.sync_addon_names_to_lua();
+        env.apply_post_load_workarounds();
+        wow_ui_sim::startup::fire_startup_events_for_screen(
+            &env,
+            wow_ui_sim::screen::ScreenKind::Game,
+        );
+        env.exec(
+            r#"
+            A_Admin.SetManualClock(0)
+            local banner = MinimapCluster.InstanceDifficulty
+            for _, case in ipairs({ { 2, "HeroicTexture" }, { 16, "MythicTexture" } }) do
+                A_Admin.SetInstanceInfo("Test Instance", "party", case[1], 5)
+                A_Admin.FireEvent("UPDATE_INSTANCE_INFO")
+                A_Admin.AdvanceTime(0.3)
+                assert(banner.Default[case[2]]:IsShown(), case[2])
+                local other = case[2] == "HeroicTexture" and "MythicTexture" or "HeroicTexture"
+                assert(not banner.Default[other]:IsShown(), other)
+            end
+            "#,
+        )
+        .expect("instance banner textures follow each supplied difficulty");
+    });
+}
 
 #[test]
 fn difficulty_info_reads_the_pinned_difficulty_rows() {
