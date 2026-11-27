@@ -21,7 +21,7 @@ const DIFFICULTY_ROWS: &str = r#"
     assert(flexHeroic[3] == false and flexHeroic[5] == true)
     assert(flexHeroic[9] == 10 and flexHeroic[10] == 30)
     assert(info(7)[8] == true)
-    assert(select("#", GetDifficultyInfo(999)) == 0)
+    assert(select('#', GetDifficultyInfo(999)) == 0)
 "#;
 
 const LEGACY_ROWS: &str = r#"
