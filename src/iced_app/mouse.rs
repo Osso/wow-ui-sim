@@ -764,7 +764,7 @@ impl App {
 
     /// Replay accepted `SimulateMouse*` input at the current cursor through the same
     /// handlers as physical input. Input queued by these handlers waits for the next tick.
-    #[cfg(feature = "retail-12-0-7")]
+    #[cfg(feature = "simulated-mouse-input")]
     pub(super) fn dispatch_simulated_mouse_inputs(&mut self) {
         use crate::lua_api::globals::real::simulate_mouse::{
             SimulatedMouseButton::{Left, Right},

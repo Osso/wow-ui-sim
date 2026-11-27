@@ -115,7 +115,7 @@ impl SimState {
         self.active_drag_frame = None;
         self.active_slider_thumb_drag_frame = None;
         self.chat_edit_open_state = None;
-        #[cfg(feature = "retail-12-0-7")]
+        #[cfg(feature = "simulated-mouse-input")]
         self.simulated_mouse_inputs.clear();
     }
 }

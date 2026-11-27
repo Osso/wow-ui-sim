@@ -976,7 +976,7 @@ pub struct SimState {
     pub pressed_keys: HashSet<String>,
     pub mouse_buttons: MouseButtons,
     /// Accepted `SimulateMouse*` input awaiting the GUI mouse dispatcher.
-    #[cfg(feature = "retail-12-0-7")]
+    #[cfg(feature = "simulated-mouse-input")]
     pub simulated_mouse_inputs:
         VecDeque<crate::lua_api::globals::real::simulate_mouse::SimulatedMouseInput>,
     pub game_rules: GameRulesState,

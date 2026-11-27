@@ -179,9 +179,12 @@ bnet-presence = []
 # C_BattleNet title-friend, tag and search model with the friendLevel/friendTags/
 # classFilename struct fields: Retail 12.1.0 and Forever (byte-identical blocks).
 bnet-friend-social = []
+# SimulateMouseClick/Down/Up/Wheel queue: Retail 12.0.7 and Forever
+# (byte-identical InputDocumentation blocks).
+simulated-mouse-input = []
 retail-12-0-0 = ["bnet-chat", "aura-instance-enumeration", "action-spell-range", "housing-host-state"]
 retail-12-0-5 = ["retail-12-0-0", "bnet-presence", "housing-inspect-mode", "house-exterior-model", "unit-aura-queries", "native-duration-formatting", "base-spell-relationships", "aura-spell-classifications", "maw-power-model"]
-retail-12-0-7 = ["retail-12-0-5", "maw-power-rarity-info", "housing-room-queries"]
+retail-12-0-7 = ["retail-12-0-5", "simulated-mouse-input", "maw-power-rarity-info", "housing-room-queries"]
 retail-12-1-0 = ["retail-12-0-7", "bnet-friend-social", "housing-blueprints", "aura-instance-cancel", "aura-xml-widgets", "on-update-modes", "player-cast-durations", "forbidden-aspects", "numeric-rule-formatters", "aura-containers"]
 retail-12-1-5 = ["retail-12-1-0", "timed-signal-maps", "forbidden-animation-aspects", "sim-data-profile/retail-12-1-5"]
 # Private ICU duration rendering; this capability does not publish C_Intl.
@@ -225,7 +228,7 @@ client-wrath = ["action-spell-range", "sim-data-profile/client-wrath"]
 client-mists = ["prefork-full-ui", "sim-data-profile/client-mists"]
 client-era = ["aura-spell-classifications", "sim-data-profile/client-era"]
 client-anniversary = ["aura-spell-classifications", "sim-data-profile/client-anniversary"]
-client-wowforever = ["bnet-chat", "bnet-presence", "bnet-friend-social", "timed-signal-maps", "profession-spec-paths", "housing-blueprints", "housing-host-state", "housing-inspect-mode", "house-exterior-model", "unit-aura-queries", "aura-instance-cancel", "aura-xml-widgets", "on-update-modes", "player-cast-durations", "forbidden-animation-aspects", "numeric-rule-formatters", "aura-containers", "native-duration-formatting", "base-spell-relationships", "action-spell-range", "aura-spell-classifications", "maw-power-rarity-info", "sim-data-profile/client-wowforever"]
+client-wowforever = ["simulated-mouse-input", "bnet-chat", "bnet-presence", "bnet-friend-social", "timed-signal-maps", "profession-spec-paths", "housing-blueprints", "housing-host-state", "housing-inspect-mode", "house-exterior-model", "unit-aura-queries", "aura-instance-cancel", "aura-xml-widgets", "on-update-modes", "player-cast-durations", "forbidden-animation-aspects", "numeric-rule-formatters", "aura-containers", "native-duration-formatting", "base-spell-relationships", "action-spell-range", "aura-spell-classifications", "maw-power-rarity-info", "sim-data-profile/client-wowforever"]
 
 [profile.release]
 lto = false

@@ -568,7 +568,7 @@ macro_rules! build_empty_sim_state {
             active_drag_frame: $runtime.active_drag_frame,
             active_slider_thumb_drag_frame: $runtime.active_slider_thumb_drag_frame,
             mouse_buttons: $runtime.mouse_buttons,
-            #[cfg(feature = "retail-12-0-7")]
+            #[cfg(feature = "simulated-mouse-input")]
             simulated_mouse_inputs: ::std::collections::VecDeque::new(),
             next_report_token: $runtime.next_report_token,
             party_members: $collections.party_members,

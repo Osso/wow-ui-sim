@@ -1999,10 +1999,6 @@ ShouldDisplayStoryModeTooltipInSocialFrame # not-yet
 ShouldShowExpansionUpgradeBanner # not-yet: temporary Lua workaround
 ShouldShowIslandsWeeklyPOI # not-yet
 ShouldShowSpecialSplashScreen # not-yet
-SimulateMouseClick # not-yet
-SimulateMouseDown # not-yet
-SimulateMouseUp # not-yet
-SimulateMouseWheel # not-yet
 SitStandOrDescendStart # not-yet
 SplashFrameCanBeShown # not-yet
 StartAttack # not-yet
