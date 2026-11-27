@@ -19,6 +19,7 @@ pub(crate) mod session_exit_defaults;
 pub(crate) mod wrath_startup_defaults;
 
 #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod account_store_set_storefront;
 #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod achievement_search_preview;
@@ -30,8 +31,10 @@ pub(crate) mod addon_compartment_defaults;
 pub(crate) mod addons_beta_policy_defaults;
 pub(crate) mod adventure_journal_fallbacks;
 pub(crate) mod adventure_map_frame_surface;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod alert_frame_defaults;
 pub(crate) mod artifact_ui_show_panel_guard;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod assisted_combat_manager_defaults;
 pub(crate) mod auction_house_search_context_aliases;
 pub(crate) mod auth_challenge_frame_parent;
@@ -89,6 +92,11 @@ pub(crate) mod difficulty_pvp_util_defaults;
     not(any(feature = "client-retail", feature = "client-wowforever"))
 ))]
 pub(crate) mod dispatcher_callback_defaults;
+#[cfg(any(
+    test,
+    not(any(feature = "client-retail", feature = "client-wowforever"))
+))]
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod dispatcher_surface;
 pub(crate) mod dropdown_list_defaults;
 pub(crate) mod dye_color_defaults;
@@ -110,16 +118,20 @@ pub(crate) mod formatting_utility_defaults;
 pub(crate) mod frame_helper_defaults;
 pub(crate) mod game_rules_namespace_fallback;
 pub(crate) mod game_time_calendar_invites;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod gamepad_cursor_control_defaults;
 pub(crate) mod garrison_mission_lists;
 pub(crate) mod global_frame_defaults;
 #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+#[cfg(any(
+    test,
+    not(any(feature = "client-retail", feature = "client-wowforever"))
+))]
 pub(crate) mod global_placeholder_tables;
 pub(crate) mod glue_character_select_defaults;
 pub(crate) mod glueparent_uiparent_attributes;
 pub(crate) mod gossip_poi_defaults;
 pub(crate) mod guild_info_namespace_fallback;
-#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod house_exterior_debug;
 pub(crate) mod housing_catalog_state;
 pub(crate) mod housing_dashboard_preload;
@@ -138,6 +150,7 @@ pub(crate) mod legacy_action_bar_globals;
 pub(crate) mod legacy_container_globals;
 pub(crate) mod legacy_spell_globals;
 pub(crate) mod legacy_talent_skill_defaults;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod level_link_spell_lock_state;
 pub(crate) mod lfg_legacy_defaults;
 pub(crate) mod lfg_lock_list;

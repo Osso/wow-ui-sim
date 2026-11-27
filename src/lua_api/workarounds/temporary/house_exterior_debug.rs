@@ -1,22 +1,17 @@
-//! Temporary publication-only fixture diagnostics. Neither cached
-//! HouseExteriorUIDocumentation.lua nor cached consumers retain these two
-//! signatures/payloads. INFERRED: nil means unavailable debug data; not native
-//! arity/payload parity. Retire when a native fixture-debug contract and a
-//! GUID-indexed/selected fixture diagnostic model are available. Do not make
-//! this permanent merely because fixture meshes are outside 2D rendering.
+//! Temporary house-exterior debug query payloads.
+//!
+//! VERIFIED: Retail's native publication table lists both methods in
+//! `src/c_api/secure_publication_data.rs`. INFERRED R88g9: without a fixture
+//! debug model, unavailable diagnostics return one nil value. Forever has no
+//! matching publication evidence, so keep these methods absent there.
 
 use crate::c_api::ensure_namespace;
 use crate::lua_bridge::table_set_rust_fn_static;
 use rilua::{LuaApiMut, LuaResult, Val, vm::state::LuaState};
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
-    // No pinned Retail or Forever consumer uses these debug queries.
     if cfg!(feature = "retail-12-0-0")
-        && !matches!(
-            crate::client_profile::ACTIVE,
-            crate::client_profile::ClientProfile::Retail
-                | crate::client_profile::ClientProfile::WowForever
-        )
+        && crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail
     {
         let state = lua.state_mut();
         let namespace = ensure_namespace(state, "C_HouseExterior")?;

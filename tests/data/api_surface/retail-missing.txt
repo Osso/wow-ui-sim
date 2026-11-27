@@ -836,9 +836,7 @@ C_HeirloomInfo.AreAllSourceFiltersChecked # not-yet
 C_HeirloomInfo.IsUsingDefaultFilters # not-yet: temporary Lua workaround
 C_HeirloomInfo.SetAllCollectionFilters # not-yet
 C_HouseExterior.GetCoreFixtureOptionsInfo # not-yet: temporary Lua workaround
-C_HouseExterior.GetFixtureDebugInfoForGUID # not-yet
 C_HouseExterior.GetHoveredFixtureDebugInfo # not-yet: temporary Lua workaround
-C_HouseExterior.GetSelectedFixtureDebugInfo # not-yet
 C_HouseExterior.HasHoveredFixture # not-yet: temporary Lua workaround
 C_HouseExterior.IsAnyDecorAttachedToCoreFixture # not-yet: temporary Lua workaround
 C_HouseExterior.IsAnyDecorAttachedToDoor # not-yet: temporary Lua workaround

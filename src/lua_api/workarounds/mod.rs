@@ -243,7 +243,6 @@ fn apply_runtime_state_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     temporary::housing_owned_house_requests::apply_bootstrap(lua)?;
     #[cfg(feature = "client-wowforever")]
     temporary::forever_bank_capability_defaults::apply_bootstrap(lua)?;
-    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::house_exterior_debug::apply_bootstrap(lua)?;
     temporary::map_runtime_state::apply_bootstrap(lua)?;
     temporary::perks_activities_state::apply_bootstrap(lua)?;
@@ -403,6 +402,7 @@ fn apply_core_foundation_journal_defaults(lua: &mut rilua::Lua) -> crate::Result
     temporary::achievement_ui_access_defaults::apply_bootstrap(lua)?;
     #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::achievement_search_preview::apply_bootstrap(lua)?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::alert_frame_defaults::apply_bootstrap(lua)?;
     temporary::adventure_journal_fallbacks::apply_bootstrap(lua)?;
     #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
@@ -430,6 +430,8 @@ fn apply_core_dispatcher_and_format_defaults(lua: &mut rilua::Lua) -> crate::Res
 fn apply_dispatcher_and_date_defaults(lua: &mut rilua::Lua) -> crate::Result<()> {
     #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::dispatcher_callback_defaults::apply_bootstrap(lua)?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::dispatcher_surface::apply_bootstrap(lua)?;
     temporary::date_and_time_defaults::apply_bootstrap(lua)?;
     Ok(())
@@ -441,6 +443,7 @@ fn apply_format_and_game_defaults(lua: &mut rilua::Lua) -> crate::Result<()> {
     }
     temporary::formatting_utility_defaults::apply_bootstrap(lua)?;
     temporary::game_time_calendar_invites::apply_bootstrap(lua)?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::gamepad_cursor_control_defaults::apply_bootstrap(lua)?;
     temporary::game_rules_namespace_fallback::apply_bootstrap(lua)?;
     #[cfg(not(feature = "client-wrath"))]
@@ -471,6 +474,7 @@ fn apply_inventory_and_spell_defaults(lua: &mut rilua::Lua) -> crate::Result<()>
 fn apply_core_legacy_defaults(lua: &mut rilua::Lua) -> crate::Result<()> {
     #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::kiosk_namespace_defaults::apply_bootstrap(lua)?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::level_link_spell_lock_state::apply_bootstrap(lua)?;
     temporary::lfg_legacy_defaults::apply_bootstrap(lua)?;
     temporary::legacy_action_bar_globals::apply_bootstrap(lua)?;
@@ -493,6 +497,7 @@ fn apply_feature_temporary_namespace_bootstrap(lua: &mut rilua::Lua) -> crate::R
 }
 
 fn apply_feature_tool_defaults(lua: &mut rilua::Lua) -> crate::Result<()> {
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::assisted_combat_manager_defaults::apply_bootstrap(lua)?;
     if should_use_temporary_shared_xml_defaults() {
         temporary::callback_registry_defaults::apply_bootstrap(lua)?;
@@ -573,6 +578,8 @@ fn should_use_temporary_shared_xml_defaults() -> bool {
     )
 }
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) fn patch_dispatcher_surface_for_addon_load(env: &crate::lua_api::LoaderEnv<'_>) {
     let _ = temporary::dispatcher_surface::patch_for_addon_load(env);
 }

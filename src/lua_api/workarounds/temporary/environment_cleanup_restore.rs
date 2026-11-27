@@ -21,6 +21,7 @@ pub(crate) fn restore_post_cleanup_globals(
     crate::lua_api::globals::real::secure_helpers::register(lua)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     crate::lua_api::globals::real::input_interface::register_all(lua)?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     super::gamepad_cursor_control_defaults::apply_bootstrap(lua)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     {
