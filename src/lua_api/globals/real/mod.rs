@@ -119,6 +119,7 @@ pub mod legacy_skills;
 pub(crate) mod legacy_sound;
 #[cfg(feature = "client-retail")]
 pub mod lfd_lock_requests;
+pub mod lfg_role_check;
 pub mod locale_info;
 pub mod loot_method;
 pub mod loot_specialization;

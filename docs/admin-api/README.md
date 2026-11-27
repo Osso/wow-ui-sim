@@ -24,7 +24,7 @@ The `A_Admin` namespace provides administrative functions for controlling simula
 - [Health & Power](health-power.md) — SetPlayerHealth, SetPlayerPower, SetTargetHealth
 - [Targeting](targeting.md) — SetTarget, ClearTarget, SetFocus, ClearFocus
 - [Challenge mode](challenge-mode.md) — SetChallengePowerLevelMods
-- [Party](party.md) — SetPartySize, SetPartyMember, SetPartyMemberHealth, KillPartyMember, ResPartyMember, SetRotDamage
+- [Party](party.md) — SetPartySize, SetPartyMember, SetPartyMemberHealth, KillPartyMember, ResPartyMember, SetRotDamage, SetLFGRoleCheck, ClearLFGRoleCheck
 - [Movement](movement.md) — SetMoving, SetMounted, SetFlying, SetFalling, SetSwimming
 - [Navigation target](navigation.md) — SetNavigationTarget
 - [Taxi map](taxi-map.md) — SetTaxiMapNodes, SetTaxiMapID, OpenTaxiMap

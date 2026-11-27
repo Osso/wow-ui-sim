@@ -830,6 +830,7 @@ macro_rules! build_empty_sim_state {
             lfd_lock_requests: Default::default(),
             lfg_roles: LfgRoleSelection::default(),
             current_region: Default::default(),
+            lfg_role_check: None,
             lfd_dungeons: default_lfd_dungeons(),
             lfg_tooltip_rewards_ready: false,
             lfg_tooltip_reward_groups: Vec::new(),

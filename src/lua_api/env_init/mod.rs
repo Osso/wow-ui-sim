@@ -169,6 +169,7 @@ fn register_runtime_api_functions(lua: &mut rilua::Lua) -> crate::Result<()> {
     #[cfg(feature = "client-retail")]
     super::globals::real::taxi_map::register(lua)?;
     super::globals::real::region::register(lua)?;
+    super::globals::real::lfg_role_check::register(lua)?;
     super::globals::real::secure_helpers::register(lua)?;
     super::globals::real::totems::register(lua)?;
     super::globals::real::bank_reagents::register(lua)?;

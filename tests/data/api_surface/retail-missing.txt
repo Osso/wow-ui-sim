@@ -2165,7 +2165,6 @@ GetLFGInviteRoleRestrictions # not-yet
 GetLFGReadyCheckUpdate # not-yet: temporary Lua workaround
 GetLFGReadyCheckUpdateBattlegroundInfo # not-yet
 GetLFGRoleShortageRewards # not-yet: temporary Lua workaround
-GetLFGRoleUpdate # not-yet: temporary Lua workaround
 GetLFGRoleUpdateBattlegroundInfo # not-yet
 GetLFGRoleUpdateMember # not-yet
 GetLFGRoleUpdateSlot # not-yet
