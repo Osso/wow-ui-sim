@@ -31,7 +31,7 @@ A_Admin.SetSubZone("The Valley of Strength")
 print(GetSubZoneText())     -- "The Valley of Strength"
 ```
 
-### A_Admin.SetInstanceInfo(name, instanceType, difficulty, maxPlayers, lfgDungeonID?)
+### A_Admin.SetInstanceInfo(name, instanceType, difficulty, maxPlayers, lfgDungeonID?, isDynamic?)
 
 Configures the current instance information and sets `in_instance` to true.
 
@@ -40,7 +40,8 @@ Configures the current instance information and sets `in_instance` to true.
 - **difficulty** `number` -- Difficulty ID (e.g., `1` = Normal, `2` = Heroic, `14` = Normal Raid)
 - **maxPlayers** `number` -- Maximum group size for this instance
 - **lfgDungeonID** `number?` -- Current LFG dungeon ID; omitted or nil clears the previous ID. Stored without catalog validation or inference from other inputs.
-- **Affects:** `GetInstanceInfo()` -- existing first four inputs retain their outputs; tenth result is the supplied LFG ID or nil. `IsInLFGDungeon()` reports active instance with any supplied ID. `C_LFGInfo.IsInLFGFollowerDungeon()` reports active instance with a known follower-classified ID; unknown/missing/non-follower IDs return false.
+- **isDynamic** `boolean?` -- Dynamic-instance state returned in `GetInstanceInfo()` result seven. Omitted or nil sets it to false.
+- **Affects:** `GetInstanceInfo()` -- result seven reports `isDynamic`; result ten is the supplied LFG ID or nil. `IsInLFGDungeon()` reports active instance with any supplied ID. `C_LFGInfo.IsInLFGFollowerDungeon()` reports active instance with a known follower-classified ID; unknown/missing/non-follower IDs return false.
 - **Example:**
 ```lua
 A_Admin.SetInstanceInfo("Blackrock Depths", "party", 1, 5)
