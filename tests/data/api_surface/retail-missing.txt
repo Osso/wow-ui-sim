@@ -2776,7 +2776,6 @@ issecurevalue # not-yet
 loadstring_untainted # not-yet
 pcallwithenv # not-yet
 secretunwrap # not-yet
-securecall # not-yet: temporary Lua workaround
 setsecurehookforbidden # not-yet
 strsplittable # not-yet: temporary Lua workaround
 table.removemulti # not-yet
