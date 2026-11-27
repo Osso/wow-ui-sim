@@ -76,12 +76,6 @@ if rawget(_G, "GetTalentInfoBySpecialization") == nil then
     end
 end
 
-if rawget(_G, "GetArenaOpponentSpec") == nil then
-    function GetArenaOpponentSpec(_opponentIndex)
-        return 0
-    end
-end
-
 "#;
 
 const LEGACY_PVP_TALENT_SLOT_INFO_DEFAULT_LUA: &str = r#"

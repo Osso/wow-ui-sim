@@ -1440,6 +1440,8 @@ pub struct SimState {
     #[cfg(feature = "retail-12-0-5")]
     pub lfg_endgame_policy: crate::c_api::c_lfg_list_policy::EndgameEditPolicy,
     #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
+    pub arena_opponents: HashMap<String, crate::c_api::c_pvp_crowd_control::ArenaOpponent>,
+    #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
     pub arena_crowd_control: HashMap<String, crate::c_api::c_pvp_crowd_control::CrowdControlWindow>,
     /// Arena crowd-control removal spell by unit GUID (`A_Admin.SetArenaCrowdControl`).
     #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]

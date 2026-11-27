@@ -537,7 +537,13 @@ pub(crate) fn unit_exists_in_state(st: &crate::lua_api::state::SimState, unit: &
             .is_some_and(|unit| !unit.interaction.is_game_object),
         "target" => st.current_target.is_some(),
         "focus" => st.current_focus.is_some(),
-        other => active_group_member_index(st, other).is_some(),
+        other => {
+            #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
+            if st.arena_opponents.contains_key(other) {
+                return true;
+            }
+            active_group_member_index(st, other).is_some()
+        }
     }
 }
 
@@ -690,9 +696,7 @@ fn unit_class(state: &mut LuaState) -> LuaResult<u32> {
                 .as_ref()
                 .map(|target| target.class_index)
                 .unwrap_or(2),
-            other => visible_party_member(&st, other)
-                .map(|member| member.class_index)
-                .unwrap_or(2),
+            other => arena_or_group_class(&st, other),
         }
     };
     let (class_name, class_file, class_id) = class_info(class_index);
@@ -702,6 +706,16 @@ fn unit_class(state: &mut LuaState) -> LuaResult<u32> {
     state.push(class_file_val);
     state.push(Val::Num(class_id as f64));
     super::real::unit_secret_predicates::finish_identity_restricted(state, &[&unit], 3)
+}
+
+fn arena_or_group_class(st: &crate::lua_api::state::SimState, unit: &str) -> u32 {
+    #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
+    if let Some(opponent) = st.arena_opponents.get(unit) {
+        return opponent.class_index;
+    }
+    visible_party_member(st, unit)
+        .map(|member| member.class_index)
+        .unwrap_or(2)
 }
 
 pub(super) fn visible_party_member<'a>(

@@ -1142,6 +1142,7 @@ macro_rules! build_empty_sim_state {
             #[cfg(feature = "retail-12-0-5")]
             lfg_endgame_policy: Default::default(),
             #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
+            arena_opponents: HashMap::new(),
             arena_crowd_control: HashMap::new(),
             #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
             arena_crowd_control_spells: HashMap::new(),
