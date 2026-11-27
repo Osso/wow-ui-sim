@@ -258,7 +258,7 @@ pub mod c_input_interface_style;
 pub mod c_instance_encounter;
 pub mod c_intl;
 pub mod c_item_interaction;
-#[cfg(feature = "retail-12-0-0")]
+#[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
 pub(crate) mod c_key_bindings;
 pub mod c_legendary_crafting;
 pub mod c_lfg_info;
@@ -563,7 +563,7 @@ pub(crate) mod container_inventory;
 pub(crate) mod cooldown_duration;
 pub(crate) mod duration_clock;
 pub(crate) mod duration_text_binding;
-#[cfg(feature = "retail-12-0-5")]
+#[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 pub mod intl_native;
 pub mod item_location;
 pub mod item_spell;

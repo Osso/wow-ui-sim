@@ -19,7 +19,7 @@ pub(crate) mod bit_library;
 pub(crate) mod bnet_blocked_list;
 #[cfg(feature = "client-retail")]
 pub(crate) mod bnet_friend_index;
-#[cfg(feature = "retail-12-0-5")]
+#[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 pub(crate) mod break_up_large_numbers;
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub(crate) mod camera_fov_defaults;
@@ -198,7 +198,7 @@ pub(crate) mod spell_confirmation_prompts;
 pub mod spell_flyout_legacy;
 #[cfg(not(feature = "retail-12-0-0"))]
 pub mod spell_tabs;
-#[cfg(feature = "retail-12-1-5")]
+#[cfg(any(feature = "retail-12-1-5", feature = "client-wowforever"))]
 pub mod string_extensions;
 pub mod table_extensions;
 pub mod table_freeze;

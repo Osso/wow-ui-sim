@@ -10,7 +10,6 @@ Ambiguate # not-yet: temporary Lua workaround
 AreClassRolesSoftSuggestions # not-yet
 AutoEquipCursorItem # not-yet
 BeginTrade # not-yet
-BreakUpLargeNumbers # not-yet: temporary Lua workaround
 C_AchievementInfo.AreGuildAchievementsEnabled # not-yet
 C_AchievementInfo.IsGuildAchievement # not-yet
 C_ActionBar.FindAssistedCombatActionButtons # not-yet
@@ -2251,7 +2250,6 @@ GetScreenDPIScale # not-yet: temporary Lua workaround
 GetScriptBucketThrottleLimits # not-yet
 GetScriptCPUUsage # not-yet: temporary Lua workaround
 GetSecondsUntilParentalControlsKick # not-yet
-GetSessionTime # not-yet
 GetSheathState # not-yet
 GetSourceLocation # not-yet
 GetSturdiness # not-yet
@@ -2446,11 +2444,4 @@ dropsecretaccess # not-yet
 hasanysecretvalues # not-yet
 issecrettable # not-yet
 secretunwrap # not-yet
-string.contains # not-yet
-string.endswith # not-yet
-string.ltrim # not-yet
-string.rtrim # not-yet
-string.startswith # not-yet
-table.freeze # not-yet
 table.getcountinfo # not-yet
-table.isfrozen # not-yet

@@ -26,7 +26,10 @@ fn freeze(state: &mut LuaState) -> LuaResult<u32> {
         .get_mut(table)
         .ok_or_else(|| runtime_error("table has been collected"))?
         .make_read_only();
-    if cfg!(feature = "retail-12-1-5") {
+    if cfg!(any(
+        feature = "retail-12-1-5",
+        feature = "client-wowforever"
+    )) {
         state.push(Val::Table(table));
         Ok(1)
     } else {
