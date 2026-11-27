@@ -224,7 +224,6 @@ C_ChatInfo.RequestCanLocalWhisperTarget # not-yet
 C_ChatInfo.ResetDefaultZoneChannels # not-yet
 C_ChatInfo.SendAddonMessageLogged # not-yet
 C_ChatInfo.SwapChatChannelsByChannelIndex # not-yet
-C_CinematicList.GetUICinematicList # intentionally-unsupported: Glue-only in retail-12-1-5-70688.csv
 C_ClassTalents.CanCreateNewConfig # not-yet
 C_ClassTalents.CommitConfig # not-yet
 C_ClassTalents.DeleteConfig # not-yet
@@ -571,7 +570,6 @@ C_EventToastManager.GetNextToastToDisplay # not-yet
 C_EventToastManager.RemoveCurrentToast # not-yet
 C_ExpansionTrial.OnTrialLevelUpDialogClicked # not-yet
 C_ExpansionTrial.OnTrialLevelUpDialogShown # not-yet
-C_FrameManager.GetFrameVisibilityState # not-yet: temporary Lua workaround
 C_FriendList.IsIgnoredByGuid # not-yet
 C_FriendList.SendWho # not-yet
 C_FriendList.SortWho # not-yet
