@@ -2220,7 +2220,6 @@ GetNumQuestItemDrops # not-yet
 GetNumQuestLogRewardFactions # not-yet
 GetNumQuestLogTasks # not-yet
 GetNumRaidProfiles # not-yet
-GetNumRoutes # not-yet
 GetNumScenarios # not-yet
 GetNumTreasurePickerItems # not-yet
 GetNumUnspentPvpTalents # not-yet
@@ -2456,7 +2455,6 @@ NeutralPlayerSelectFaction # not-yet
 NextView # intentionally-unsupported: 3D camera/model
 NoPlayTime # not-yet: temporary Lua workaround
 NotWhileDeadError # not-yet
-NumTaxiNodes # not-yet
 OfferPetition # not-yet
 OpenTrainer # not-yet
 OpeningCinematic # not-yet
@@ -2665,16 +2663,6 @@ TargetPriorityHighlightEnd # not-yet
 TargetPriorityHighlightStart # not-yet
 TargetToggle # not-yet
 TargetTotem # not-yet
-TaxiGetDestX # not-yet
-TaxiGetDestY # not-yet
-TaxiGetNodeSlot # not-yet
-TaxiGetSrcX # not-yet
-TaxiGetSrcY # not-yet
-TaxiIsDirectFlight # not-yet
-TaxiNodeCost # not-yet
-TaxiNodeGetType # not-yet
-TaxiNodeName # not-yet
-TaxiNodePosition # not-yet
 TimeoutResurrect # not-yet
 ToggleAnimKitDisplay # not-yet
 ToggleAutoRun # not-yet

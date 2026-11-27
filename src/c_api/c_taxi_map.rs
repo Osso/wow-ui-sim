@@ -35,6 +35,10 @@ pub struct TaxiMapNode {
     pub use_special_icon: bool,
     pub special_icon_cost_string: Option<String>,
     pub map_layer_transition: bool,
+    /// Copper cost read by `TaxiNodeCost`; 0 when the host supplies none.
+    pub cost: u64,
+    /// Hops `(sourceSlot, destinationSlot)` from the current node to this node.
+    pub routes: Vec<(u32, u32)>,
 }
 
 #[derive(Clone, Debug, Default, PartialEq)]
@@ -196,7 +200,54 @@ fn read_taxi_map_node(state: &mut LuaState, value: Val) -> LuaResult<TaxiMapNode
         use_special_icon: read_bool(state, table, "useSpecialIcon")?,
         special_icon_cost_string: read_optional_string(state, table, "specialIconCostString")?,
         map_layer_transition: read_bool(state, table, "isMapLayerTransition")?,
+        cost: read_optional_integer(state, table, "cost", u64::MAX as f64)?.unwrap_or(0) as u64,
+        routes: read_routes(state, table)?,
     })
+}
+
+fn read_optional_integer(
+    state: &mut LuaState,
+    table: GcRef<Table>,
+    key: &str,
+    max: f64,
+) -> LuaResult<Option<i64>> {
+    match table_get(state, Val::Table(table), key) {
+        Val::Nil => Ok(None),
+        _ => read_integer(state, table, key, 0.0, max).map(Some),
+    }
+}
+
+fn read_routes(state: &mut LuaState, table: GcRef<Table>) -> LuaResult<Vec<(u32, u32)>> {
+    let routes = match table_get(state, Val::Table(table), "routes") {
+        Val::Nil => return Ok(Vec::new()),
+        Val::Table(routes) => routes,
+        _ => return Err(invalid_field("routes")),
+    };
+    let length = state
+        .gc
+        .tables
+        .get(routes)
+        .map_or(0, |array| array.len(&state.gc.string_arena));
+    (1..=length)
+        .map(|index| {
+            let hop = state
+                .gc
+                .tables
+                .get(routes)
+                .map_or(Val::Nil, |array| array.get_int(index as i64));
+            read_route_hop(state, hop)
+        })
+        .collect()
+}
+
+fn read_route_hop(state: &mut LuaState, hop: Val) -> LuaResult<(u32, u32)> {
+    let Val::Table(hop) = hop else {
+        return Err(invalid_field("routes"));
+    };
+    let max = f64::from(u32::MAX);
+    let source = read_integer(state, hop, "sourceSlot", 1.0, max)? as u32;
+    let destination = read_integer(state, hop, "destinationSlot", 1.0, max)? as u32;
+    Ok((source, destination))
 }
 
 fn read_number(state: &mut LuaState, table: GcRef<Table>, key: &str) -> LuaResult<f64> {
