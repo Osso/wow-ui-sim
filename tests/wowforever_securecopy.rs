@@ -37,12 +37,15 @@ fn securecopy_preserves_graph_structure_and_userdata_identity() {
 
 #[test]
 fn aura_defaults_are_exported_as_independent_tables() {
-    let env = WowLuaEnv::new().unwrap();
-    let addons = wow_ui_sim::blizzard_ui_sync::default_cache_addons_path().unwrap();
-    for dependency in [
-        "Blizzard_SharedXML/TimeUtil.lua",
-        "Blizzard_SharedXMLBase/AnchorUtil.lua",
-    ] {
+    use crate::common::blizzard_addon_harness::{
+        blizzard_ui_dir, load_blizzard_addon_closure_into_env, new_blizzard_addon_env,
+    };
+    // AnchorUtil.lua:112 calls GenerateClosure (FunctionUtil.lua); 096d8a1f8c
+    // retired the bootstrap copy, so load the whole Blizzard_SharedXMLBase TOC.
+    let addons = blizzard_ui_dir();
+    let env = new_blizzard_addon_env(&addons);
+    load_blizzard_addon_closure_into_env(&env, &addons, &["Blizzard_SharedXMLBase"], &[]);
+    for dependency in ["Blizzard_SharedXML/TimeUtil.lua"] {
         let source = std::fs::read_to_string(addons.join(dependency))
             .expect("synced Forever aura dependency");
         env.exec(&source).unwrap();
