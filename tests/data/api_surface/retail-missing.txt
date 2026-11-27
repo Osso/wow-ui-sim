@@ -2331,7 +2331,6 @@ HasIgnoreDualWieldWeapon # not-yet
 HasKey # not-yet
 HasLoadedCUFProfiles # not-yet
 HasLootSpecializations # not-yet
-HasNoReleaseAura # not-yet
 HasWandEquipped # not-yet
 HearthAndResurrectFromArea # not-yet
 HideRepairCursor # not-yet

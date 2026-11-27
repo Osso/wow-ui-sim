@@ -2057,7 +2057,6 @@ GetVehicleUIIndicatorSeat # not-yet
 HasDualWieldPenalty # not-yet
 HasFullControl # not-yet
 HasIgnoreDualWieldWeapon # not-yet
-HasNoReleaseAura # not-yet
 InitiateRolePoll # not-yet
 Is64BitClient # not-yet
 IsAccountSecured # not-yet: temporary Lua workaround

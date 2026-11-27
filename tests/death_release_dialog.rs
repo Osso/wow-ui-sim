@@ -10,6 +10,8 @@
 //! GetSelfResurrectDialogOptions` (GameDialogDefsUtil.lua:3-22): the DEATH
 //! dialog shows button 2 only with an option, and its `OnUpdate` labels and
 //! enables that button from the first option after the usable-first sort.
+//! The same `OnUpdate` disables the release button while `HasNoReleaseAura`
+//! reports a cannot-release effect and shows its whole seconds.
 
 use wow_ui_sim::lua_api::WowLuaEnv;
 
@@ -74,11 +76,35 @@ fn assert_resurrect_options_follow_inputs(env: &WowLuaEnv) {
     env.exec("A_Admin.ClearSelfResurrectOptions()").expect("clear options");
 }
 
+const RELEASE_BUTTON: &str = r#"
+local _, dialog = StaticPopup_Visible("DEATH")
+return dialog:GetButton1():IsEnabled(), dialog:GetButton1():GetText(), DEATH_RELEASE
+"#;
+
+fn release_button(env: &WowLuaEnv, no_release_seconds: f64) -> (bool, String, String) {
+    env.exec(&format!("A_Admin.SetNoReleaseAura({no_release_seconds})"))
+        .expect("supply the cannot-release effect");
+    env.fire_on_update(0.1)
+        .expect("the DEATH dialog OnUpdate should run");
+    env.eval(RELEASE_BUTTON).expect("button 1 should be readable")
+}
+
+fn assert_no_release_aura_blocks_release(env: &WowLuaEnv) {
+    // Reopen the DEATH dialog without resurrect options (button 2 hidden).
+    assert!(!offer_resurrects(env, "{}"));
+    let (enabled, text, release) = release_button(env, 45.0);
+    let seconds: f64 = text.parse().expect("the button shows whole seconds");
+    assert!(!enabled && (44.0..=45.0).contains(&seconds), "{text}");
+    assert_eq!(release_button(env, -1.0), (false, release.clone(), release.clone()));
+    assert_eq!(release_button(env, 0.0), (true, release.clone(), release));
+}
+
 fn assert_death_dialog_follows_inputs(env: &WowLuaEnv) {
     assert_eq!(die(env, 360.0, "11"), (true, 360.0, true));
     assert_eq!(die(env, -1.0, "nil"), (true, -1.0, false));
     assert_eq!(die(env, 0.0, "11"), (false, 0.0, false));
     assert_resurrect_options_follow_inputs(env);
+    assert_no_release_aura_blocks_release(env);
 }
 
 #[cfg(feature = "client-retail")]
