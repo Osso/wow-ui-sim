@@ -153,10 +153,12 @@ fn forever_stack_split_key_handlers_run_bound_actions() {
         for key in ["K", "L"] {
             env.exec(&STACK_SPLIT_BINDING_SETUP.replace("KEY_NAME", key))
                 .expect("open backpack and bind the key");
-            env.send_key_down("SHIFT", None).expect("press split modifier");
+            env.exec("A_Admin.SetShiftKeyDown(true)")
+                .expect("hold split modifier");
             env.exec("StackSplitConsumerButton:Click('LeftButton')")
                 .expect("open StackSplitFrame through its bag item button");
-            env.send_key_up("SHIFT");
+            env.exec("A_Admin.SetShiftKeyDown(false)")
+                .expect("release split modifier");
             assert!(env.eval::<bool>("return StackSplitFrame:IsShown()").unwrap());
             env.send_key_press(key, None).unwrap_or_else(|error| {
                 panic!("dispatch {key} to StackSplitFrame: {error}")
