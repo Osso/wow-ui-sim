@@ -165,6 +165,8 @@ fn register_admin_calendar_services(builder: TableBuilder) -> LuaResult<TableBui
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     let builder = crate::c_api::c_adventure_journal::register_admin(builder)?;
     let builder = crate::c_api::c_voice_chat_login::register_admin(builder)?;
+    #[cfg(any(feature = "retail-12-1-0", feature = "client-wowforever"))]
+    let builder = crate::c_api::c_discord_admin::register_admin(builder)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     let builder = crate::c_api::c_cooldown_viewer::register_admin(builder)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]

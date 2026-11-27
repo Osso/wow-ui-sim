@@ -225,6 +225,8 @@ pub(crate) mod c_debug;
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) mod c_delves_entrance;
 pub mod c_discord;
+#[cfg(any(feature = "retail-12-1-0", feature = "client-wowforever"))]
+pub(crate) mod c_discord_admin;
 pub mod c_district_utils;
 mod c_dungeon_score_rarity;
 #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]

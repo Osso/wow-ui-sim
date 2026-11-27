@@ -577,57 +577,39 @@ fn test_patch_12_1_removed_namespace_keys_accept_blizzard_fallback_assignments()
 }
 
 #[cfg(feature = "retail-12-1-0")]
+const DISCORD_STATE_SURFACE: &str = r#"
+    A_Admin.SetDiscordServers({ { name = "Sim Server", channels = { { name = "raid-chat" } } } })
+    A_Admin.SetDiscordUser("discord-user-1", "Sim User")
+    C_Discord.Authorize()
+    C_Discord.GuildLink(1, 1)
+    C_Discord.RefreshAuth()
+    C_Discord.SetGuildSetting("raid", true)
+    C_Discord.UpdateDiscordServers()
+    C_Discord.UpdateGuildLobby()
+    local linkable = C_Discord.GetServerLinkableChannels(1)
+    if C_Discord.GetDiscordUserID() ~= "discord-user-1" then return "user-id" end
+    if C_Discord.GetDisplayNameType() ~= 2 then return "display-type" end
+    local linked, channel, server = C_Discord.GetGuildLinkStatus()
+    if not linked or channel ~= "raid-chat" or server ~= "Sim Server" then return "guild-status" end
+    if C_Discord.GetNumDiscordServers() ~= 1 then return "servers" end
+    if C_Discord.GetServerName(1) ~= "Sim Server" then return "server-name" end
+    if C_Discord.GetNumDiscordChannels(1) ~= 1 then return "channels" end
+    if C_Discord.GetDiscordChannelName(1, 1) ~= "raid-chat" then return "channel-name" end
+    if linkable[1] ~= "raid-chat" then return "linkable" end
+    if C_Discord.IsUserOAuthed() ~= true then return "oauth" end
+    if C_Discord.IsGuildChannelLinked() ~= true then return "linked" end
+    if C_Discord.IsGuildSettingSet("raid") ~= true then return "setting" end
+    C_Discord.GuildUnlink()
+    if C_Discord.IsGuildChannelLinked() ~= false then return "unlinked" end
+    return "ok"
+"#;
+
+#[cfg(feature = "retail-12-1-0")]
 #[test]
 fn test_patch_12_1_discord_state_surface() {
     let env = WowLuaEnv::new().unwrap();
-    {
-        let mut state = env.state().borrow_mut();
-        state.discord.user_id = Some("discord-user-1".to_string());
-        state.discord.display_name_type = 2;
-        state.discord.guild_link_status = Some(4);
-        state
-            .discord
-            .servers
-            .push(crate::lua_api::state::DiscordServer {
-                name: "Sim Server".to_string(),
-            });
-        state
-            .discord
-            .channels
-            .push(crate::lua_api::state::DiscordChannel {
-                name: "raid-chat".to_string(),
-                linkable: true,
-            });
-    }
-
-    let result: String = env
-        .eval(
-            r#"
-            C_Discord.Authorize()
-            C_Discord.GuildLink()
-            C_Discord.RefreshAuth()
-            C_Discord.SetGuildSetting("raid", true)
-            C_Discord.UpdateDiscordServers()
-            C_Discord.UpdateGuildLobby()
-            local linkable = C_Discord.GetServerLinkableChannels()
-            if C_Discord.GetDiscordUserID() ~= "discord-user-1" then return "user-id" end
-            if C_Discord.GetDisplayNameType() ~= 2 then return "display-type" end
-            if C_Discord.GetGuildLinkStatus() ~= 4 then return "guild-status" end
-            if C_Discord.GetNumDiscordServers() ~= 1 then return "servers" end
-            if C_Discord.GetServerName(1) ~= "Sim Server" then return "server-name" end
-            if C_Discord.GetNumDiscordChannels() ~= 1 then return "channels" end
-            if C_Discord.GetDiscordChannelName(1) ~= "raid-chat" then return "channel-name" end
-            if linkable[1] ~= "raid-chat" then return "linkable" end
-            if C_Discord.IsUserOAuthed() ~= true then return "oauth" end
-            if C_Discord.IsGuildChannelLinked() ~= true then return "linked" end
-            if C_Discord.IsGuildSettingSet("raid") ~= true then return "setting" end
-            C_Discord.GuildUnlink()
-            if C_Discord.IsGuildChannelLinked() ~= false then return "unlinked" end
-            return "ok"
-            "#,
-        )
-        .unwrap();
-
+    env.state().borrow_mut().discord.display_name_type = 2;
+    let result: String = env.eval(DISCORD_STATE_SURFACE).unwrap();
     assert_eq!(result, "ok");
     let state = env.state().borrow();
     assert!(state.discord.oauth_authorized);
@@ -961,9 +943,9 @@ fn test_patch_12_1_discord_state_bridges() {
             SetCVar("discordClientEnabled", "0")
             if C_Discord.IsEnabled() ~= false then return "discord-disabled-cvar" end
             if C_Discord.IsUserOAuthed() ~= false then return "discord-oauth" end
-            if C_Discord.GetNumDiscordChannels() ~= 0 then return "discord-channels" end
+            if C_Discord.GetNumDiscordChannels(1) ~= 0 then return "discord-channels" end
             if C_Discord.GetNumDiscordServers() ~= 0 then return "discord-servers" end
-            if type(C_Discord.GetServerLinkableChannels()) ~= "table" then return "discord-linkable" end
+            if type(C_Discord.GetServerLinkableChannels(1)) ~= "table" then return "discord-linkable" end
             return "ok"
         "#,
     );
@@ -975,16 +957,16 @@ fn test_patch_12_1_discord_mutation_and_query_bridges() {
     assert_patch_12_1_safe_global_bridge(
         r#"
             C_Discord.Authorize()
-            C_Discord.GuildLink()
+            C_Discord.GuildLink(1, 1)
             C_Discord.GuildUnlink()
             C_Discord.RefreshAuth()
             C_Discord.SetGuildSetting("setting", true)
             C_Discord.UpdateDiscordServers()
             C_Discord.UpdateGuildLobby()
-            if C_Discord.GetDiscordChannelName(1) ~= nil then return "discord-channel-name" end
-            if C_Discord.GetDiscordUserID() ~= nil then return "discord-user-id" end
+            if C_Discord.GetDiscordChannelName(1, 1) ~= "" then return "discord-channel-name" end
+            if C_Discord.GetDiscordUserID() ~= "" then return "discord-user-id" end
             if C_Discord.GetDisplayNameType() ~= 0 then return "discord-display-type" end
-            if C_Discord.GetGuildLinkStatus() ~= nil then return "discord-guild-status" end
+            if C_Discord.GetGuildLinkStatus() ~= false then return "discord-guild-status" end
             if C_Discord.GetServerName(1) ~= nil then return "discord-server-name" end
             if C_Discord.IsGuildChannelLinked(1) ~= false then return "discord-linked" end
             if C_Discord.IsGuildSettingSet("setting") ~= true then return "discord-setting" end

@@ -565,11 +565,6 @@ C_DelvesUI.HasActiveLair # not-yet
 C_DelvesUI.IsEligibleForActiveDelveRewards # not-yet
 C_DelvesUI.IsInLair # not-yet
 C_DelvesUI.IsTraitTreeForCompanion # not-yet
-C_Discord.GetDiscordChannelName # not-yet
-C_Discord.GetDiscordUserID # not-yet
-C_Discord.GetDiscordUserName # not-yet
-C_Discord.GetGuildLinkStatus # not-yet
-C_Discord.GetNumDiscordChannels # not-yet
 C_Discord.IsVoiceEnabled # not-yet: temporary Lua workaround
 C_EditMode.ConvertLayoutInfoToString # not-yet
 C_EditMode.ConvertStringToLayoutInfo # not-yet
