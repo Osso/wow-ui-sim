@@ -4,13 +4,16 @@
 //! simulator has a full account/character-service state model. Keep those
 //! defaults explicit here until that backing model owns them.
 
-const GLUE_CHARACTER_SELECT_DEFAULTS_LUA: &str = r#"
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+const SPECIALIZATION_INFO_DEFAULT_LUA: &str = r#"
 if GetSpecializationInfoForSpecID == nil then
   function GetSpecializationInfoForSpecID(_specID)
     return nil, ""
   end
 end
+"#;
 
+const GLUE_CHARACTER_SELECT_DEFAULTS_LUA: &str = r#"
 if GetCharacterUndeleteStatus == nil then
   function GetCharacterUndeleteStatus()
     return false, false, 0, 0
@@ -104,6 +107,8 @@ end
 "#;
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+    lua.exec(SPECIALIZATION_INFO_DEFAULT_LUA)?;
     lua.exec(GLUE_CHARACTER_SELECT_DEFAULTS_LUA)?;
     #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     lua.exec(NATIVE_GLUE_CHARACTER_SELECT_DEFAULTS_LUA)?;

@@ -4,7 +4,8 @@
 //! startup Lua, but they are still shallow compatibility defaults rather than a
 //! modeled formatting subsystem.
 
-const FORMATTING_UTILITY_DEFAULTS_LUA: &str = r##"
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+const GET_TEXT_DEFAULT_LUA: &str = r##"
 if GetText == nil then
   function GetText(token)
     if type(token) ~= "string" then
@@ -14,7 +15,9 @@ if GetText == nil then
     return value ~= nil and value or token
   end
 end
+"##;
 
+const FORMATTING_UTILITY_DEFAULTS_LUA: &str = r##"
 BACK = BACK or "Back"
 NEXT = NEXT or "Next"
 PREVIEW = PREVIEW or "Preview"
@@ -197,6 +200,8 @@ end
 "##;
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+    lua.exec(GET_TEXT_DEFAULT_LUA)?;
     lua.exec(FORMATTING_UTILITY_DEFAULTS_LUA)?;
     // Preserve the verified Retail string.split alias; keep this wrapper elsewhere. Evidence: pr46-49-decomp-answers.md, sections R88y.y2.
     if !crate::client_profile::is_active_retail_12_1_5() {

@@ -75,6 +75,66 @@ pub const RETAIL_API_INTERFACE_VERSION: u32 = ACTIVE_RETAIL_API_EPOCH.interface_
 
 pub const ACTIVE_INTERFACE_VERSION: u32 = ACTIVE.interface_version();
 
+/// Simulator locale policy shared by `GetLocale` and `C_Intl`.
+pub const SIMULATOR_LOCALE: &str = "enUS";
+
+/// Pinned Blizzard_FrameXMLBase/{Cata,Mists}/Constants.lua expansion caps.
+/// INFERRED R88g9 (native evidence pending) for the legacy global projection.
+pub const EXPANSION_LEVEL_CAPS: &[(i32, i32)] = &[(0, 60), (1, 70), (2, 80), (3, 85), (4, 90)];
+
+/// INFERRED R88g9 (native evidence pending): inherited compatibility build date.
+pub(crate) const CLIENT_BUILD_DATE: &str = "Jun 17 2026";
+
+#[cfg(not(feature = "client-ptr"))]
+pub(crate) const CLIENT_VERSION: &str = if cfg!(feature = "client-wowforever") {
+    "1.60.1"
+} else if cfg!(feature = "retail-12-1-5") {
+    "12.1.5"
+} else if cfg!(feature = "retail-12-1-0") {
+    "12.1.0"
+} else {
+    "12.0.7"
+};
+
+#[cfg(not(feature = "client-ptr"))]
+pub(crate) const CLIENT_BUILD: &str = if cfg!(feature = "client-wowforever") {
+    // data/blizzard-ui-builds/wowforever.json
+    "70707"
+} else if cfg!(feature = "retail-12-1-5") {
+    // data/blizzard-ui-builds/retail.json
+    "70783"
+} else {
+    "68256"
+};
+
+pub(crate) const CLIENT_DISPLAY_EXPANSION_LEVEL: u32 = if cfg!(feature = "client-mists") {
+    4
+} else {
+    10
+};
+
+pub(crate) const CLIENT_INTERFACE: u32 =
+    if cfg!(feature = "client-ptr") || cfg!(feature = "client-wowforever") {
+        ACTIVE_INTERFACE_VERSION
+    } else if cfg!(feature = "retail-12-1-5") {
+        120105
+    } else if cfg!(feature = "retail-12-1-0") {
+        120100
+    } else {
+        120007
+    };
+
+pub(crate) fn client_identity() -> crate::Result<(String, String)> {
+    #[cfg(feature = "client-ptr")]
+    {
+        let identity = crate::blizzard_ui_sync::ptr_client_identity()?;
+        return Ok((identity.version, identity.build));
+    }
+
+    #[cfg(not(feature = "client-ptr"))]
+    Ok((CLIENT_VERSION.to_owned(), CLIENT_BUILD.to_owned()))
+}
+
 pub fn is_active_retail_12_1_5() -> bool {
     ACTIVE == ClientProfile::Retail && ACTIVE_RETAIL_API_EPOCH == RetailApiEpoch::Retail12_1_5
 }

@@ -1,14 +1,14 @@
 # Spell confirmation prompts
 
-Bounded Mainline retail 12.0.5+ pending-prompt input, query and actions (`retail-12-0-5` plus `profile-retail` or `client-ptr`). `A_Admin.QueueSpellConfirmationPrompt(record)` is an explicit simulator input, not a native WoW API. Fixtures use actual registered APIs, never generic event injection or test-time replacements. [Audit context](../wiki/investigations/patch-12-0-5-api-audit.md).
+Retail and Forever expose the state-backed `GetSpellConfirmationPromptsInfo()` query and the explicit simulator input `A_Admin.QueueSpellConfirmationPrompt(record)`. PTR uses the Mainline 12.0.5 query/input/action surface. Accept/decline actions are registered only with `retail-12-0-5` plus `profile-retail` or `client-ptr`. The Forever query and admin input are simulator behavior; native Forever parity is unverified. The admin input is not a native WoW API. Fixtures use actual registered APIs, never generic event injection or test-time replacements. [Audit context](../wiki/investigations/patch-12-0-5-api-audit.md).
 
 ## What it must do
 
-- [x] Begin with no pending prompts; `GetSpellConfirmationPromptsInfo()` returns exactly one empty table. Empty state is simulator policy, not a native-default claim.
-- [x] Accept a complete caller-supplied record through `A_Admin.QueueSpellConfirmationPrompt(record)`. All ten fields below are explicit and nonnil; do not fabricate spell, item, currency, difficulty or timing values.
+- [x] Begin with no pending prompts on Retail and Forever; `GetSpellConfirmationPromptsInfo()` returns exactly one empty table. Empty state is simulator policy, not a native-default claim.
+- [x] Accept a complete caller-supplied record through `A_Admin.QueueSpellConfirmationPrompt(record)` on Retail and Forever. All ten fields below are explicit and nonnil; do not fabricate spell, item, currency, difficulty or timing values.
 - [x] Retain the record before synchronously dispatching exactly ten `SPELL_CONFIRMATION_PROMPT` arguments. A real frame listener querying pending state during dispatch must see the new record before the admin call returns.
 - [x] Retain two different spell IDs independently, with all supplied values preserved. No native query ordering is asserted.
-- [x] Infer pending lifecycle only: accept/decline remove only the matching spell ID; absent IDs do nothing; repeated queue input for one spell ID replaces its entire record without adding a duplicate.
+- [x] On Retail/PTR, infer pending lifecycle only: accept/decline remove only the matching spell ID; absent IDs do nothing; repeated queue input for one spell ID replaces its entire record without adding a duplicate. Forever exposes no accept/decline action surface.
 - [x] Return independent record/sequence snapshots and copy caller input; mutations cannot change retained data, earlier snapshots, subsequent queries or another environment's state.
 
 ### Source-grounded event/query mapping
@@ -46,7 +46,7 @@ Cached sources ground event names, positions, nilability, synchronous designatio
 
 - `tests/spell_confirmation_prompts.rs`: six independently audited passing behavioral fixtures, gated to `profile-retail` + `retail-12-0-5`; discovered by the existing generated integration harness, no new Cargo target.
 - `src/lua_api/globals/real/spell_confirmation_prompts.rs`: host-owned complete records, admin parsing/publication, snapshot query and matching-ID actions. Numeric `spellID` keys preserve finite values without integer truncation; signed zero shares one identity.
-- `src/lua_api/state/sim_state.rs` and `state.rs`: per-environment pending map, empty by default, under the same Mainline epoch/profile gate.
+- `src/lua_api/state/sim_state.rs` and `state.rs`: per-environment pending map, empty by default, under Retail/Forever profile gates.
 - `src/lua_api/globals/{real/mod.rs,register.rs,admin.rs}`: gated public globals and admin input wiring.
 - `src/lua_api/workarounds/temporary/inert_global_defaults.rs`: exact inert query moved to a separately cfg-selected bootstrap for earlier/nonmainline profiles; modeled profiles never execute that fallback. Runtime source search found no pre-existing accept/decline stub registrations to supersede; those profiles retain their prior action surface.
 - `src/event/valid_events_c.rs`: existing event-name registration, unchanged.

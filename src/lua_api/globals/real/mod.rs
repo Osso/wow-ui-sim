@@ -23,6 +23,10 @@ pub(crate) mod bnet_friend_index;
 pub(crate) mod break_up_large_numbers;
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub(crate) mod camera_fov_defaults;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) mod chat_type_index;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) mod client_info;
 pub mod combat_probes;
 pub mod combat_stats;
 pub mod combo_points;
@@ -34,12 +38,18 @@ pub(crate) mod cursor_presentation;
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub(crate) mod dangerous_scripts;
 pub(crate) mod display_scale;
-#[cfg(feature = "retail-12-0-0")]
+#[cfg(any(
+    feature = "client-retail",
+    feature = "client-wowforever",
+    feature = "retail-12-0-0"
+))]
 pub mod event_callbacks;
 #[cfg(feature = "client-wowforever")]
 pub mod forever_stat_contributions;
 pub mod frame_level_helpers;
 pub(crate) mod game_clock;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) mod global_text;
 #[cfg(any(
     feature = "client-retail",
     feature = "client-ptr",
@@ -86,6 +96,8 @@ pub(crate) mod heal_prediction;
     feature = "client-wowforever"
 ))]
 pub mod input_interface;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) mod instance_legacy;
 #[cfg(all(
     feature = "retail-12-0-5",
     any(feature = "profile-retail", feature = "client-ptr")
@@ -174,9 +186,13 @@ pub mod specialization_helpers;
 pub mod specialization_legacy;
 #[cfg(feature = "client-retail")]
 pub(crate) mod specialization_system;
-#[cfg(all(
-    feature = "retail-12-0-5",
-    any(feature = "profile-retail", feature = "client-ptr")
+#[cfg(any(
+    all(
+        feature = "retail-12-0-5",
+        any(feature = "profile-retail", feature = "client-ptr")
+    ),
+    feature = "client-retail",
+    feature = "client-wowforever"
 ))]
 pub(crate) mod spell_confirmation_prompts;
 pub mod spell_flyout_legacy;
@@ -263,7 +279,10 @@ pub mod inventory_candidates;
 #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
 pub(crate) mod cinematic_summary;
 
-#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+#[cfg(any(
+    all(feature = "profile-retail", feature = "retail-12-1-5"),
+    feature = "client-wowforever"
+))]
 pub(crate) mod set_role_button;
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
