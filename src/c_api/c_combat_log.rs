@@ -9,7 +9,7 @@ use rilua::LuaApiMut;
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 
-#[cfg(feature = "retail-12-0-0")]
+#[cfg(feature = "rest-policy-flags")]
 pub(crate) fn register_restriction(state: &mut LuaState) -> LuaResult<()> {
     let ns = super::ensure_namespace(state, "C_CombatLog")?;
     crate::lua_bridge::table_set_rust_fn_static(state, ns, "IsCombatLogRestricted", |s| {

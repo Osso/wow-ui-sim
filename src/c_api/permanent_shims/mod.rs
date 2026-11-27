@@ -1,4 +1,4 @@
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "fullscreen-browser-close")]
 pub mod c_browser;
 pub mod c_fog_of_war;
 pub mod c_glue;

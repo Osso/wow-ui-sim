@@ -87,7 +87,10 @@ pub(crate) fn register_admin(
 pub(crate) fn register_c_housing_surface(state: &mut LuaState) -> LuaResult<()> {
     register_profile_surface(state)?;
     let housing = ensure_namespace(state, "C_Housing")?;
-    if cfg!(feature = "retail-12-0-0") {
+    if cfg!(any(
+        feature = "retail-12-0-0",
+        feature = "client-wowforever"
+    )) {
         market::register(state, housing)?;
     }
     let blueprints = ensure_namespace(state, "C_HousingBlueprint")?;
@@ -106,13 +109,16 @@ fn register_profile_surface(state: &mut LuaState) -> LuaResult<()> {
 }
 
 fn register_profile_service_methods(state: &mut LuaState) -> LuaResult<()> {
-    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
-        charter::register(state)?;
-    }
+    // Forever HousingUIDocumentation.lua declares CanEditCharter and
+    // GetCurrentHouseInfo byte-identically to Retail.
     if matches!(
         crate::client_profile::ACTIVE,
-        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever
     ) {
+        charter::register(state)?;
+    }
+    if crate::client_profile::ACTIVE.shares_retail_12_api() {
         current_house::register(state)?;
     }
     #[cfg(feature = "client-retail")]

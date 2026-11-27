@@ -55,7 +55,7 @@ pub(crate) fn register_c_paper_doll_info_surface(state: &mut LuaState) -> LuaRes
             crate::c_api::item_spell::cursor_slot_compatibility::can_cursor_go_in_slot,
         )?;
     }
-    #[cfg(feature = "retail-12-1-0")]
+    #[cfg(feature = "temporary-enchant-cancel")]
     table_set_rust_fn_static(
         state,
         ns,
@@ -84,7 +84,7 @@ fn weapon_enchant_slot(inventory_slot: i32) -> Option<usize> {
 
 /// Removes temporary enchants from a weapon slot; permanent enchants and other
 /// slots are untouched. INFERRED: a removal reports WEAPON_ENCHANT_CHANGED.
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "temporary-enchant-cancel")]
 fn cancel_temporary_enchantment(state: &mut LuaState) -> LuaResult<u32> {
     let Some(weapon_slot) = weapon_enchant_slot(i32::from_stack(state, 1)?) else {
         return Ok(0);

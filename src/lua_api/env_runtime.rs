@@ -510,8 +510,18 @@ impl WowLuaEnv {
         };
         match reply {
             HouseFinderReply::Neighborhoods { success, rows } => {
+                let first_plots = rows.first().map(|row| row.plots.clone());
                 let payload = encode_neighborhoods(self.lua.borrow_mut().state_mut(), rows);
-                self.fire_event_with_args("NEIGHBORHOOD_LIST_UPDATED", &[success, payload])
+                self.fire_event_with_args("NEIGHBORHOOD_LIST_UPDATED", &[success, payload])?;
+                // Blizzard_HousingHouseFinder.lua:67-69: the server provides the first
+                // neighborhood's data with the list, so the consumer does not request it.
+                if let Some(plots) = first_plots {
+                    let mut state = self.state.borrow_mut();
+                    state
+                        .pending_house_finder_replies
+                        .push_back(HouseFinderReply::Plots(plots));
+                }
+                Ok(())
             }
             HouseFinderReply::Plots(plots) => {
                 let payload = encode_plots(self.lua.borrow_mut().state_mut(), plots);

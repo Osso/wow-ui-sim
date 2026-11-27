@@ -183,7 +183,7 @@ fn lookup_unit_stats(sim: &SimState, unit: &str) -> UnitStats {
     }
 }
 
-#[cfg(feature = "client-retail")]
+#[cfg(feature = "explicit-stat-inputs")]
 fn unit_weapon_attack_power(state: &mut LuaState) -> LuaResult<u32> {
     // Decode only this documented AllowedWhenUntainted selector; preserve caller taint.
     let value = rilua::table_security::unwrap_secret(state, stack_val(state, 1))?;
@@ -651,7 +651,7 @@ const UNIT_STAT_GLOBALS: &[(&str, RustFn)] = &[
 ];
 
 pub fn register_all(lua: &mut rilua::Lua) -> crate::Result<()> {
-    #[cfg(feature = "client-retail")]
+    #[cfg(feature = "explicit-stat-inputs")]
     LuaApiMut::register_function(lua, "UnitWeaponAttackPower", unit_weapon_attack_power)?;
     for &(name, function) in UNIT_STAT_GLOBALS {
         LuaApiMut::register_function(lua, name, function)?;

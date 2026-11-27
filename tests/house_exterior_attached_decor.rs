@@ -1,10 +1,7 @@
 //! Batch70 controls plus Batch73 removal inputs. Main owns compiled RED/GREEN gates.
 use wow_ui_sim::lua_api::WowLuaEnv;
 
-#[cfg(all(
-    feature = "retail-12-0-5",
-    any(feature = "profile-retail", feature = "client-ptr")
-))]
+#[cfg(feature = "house-exterior-model")]
 mod modern {
     use super::*;
     use rilua::LuaApiMut;
@@ -2066,10 +2063,7 @@ mod modern {
     }
 }
 
-#[cfg(not(all(
-    feature = "retail-12-0-5",
-    any(feature = "profile-retail", feature = "client-ptr")
-)))]
+#[cfg(not(feature = "house-exterior-model"))]
 #[test]
 fn legacy_inverse_control_preserves_seeded_queries_and_noop_mutators() {
     let env = WowLuaEnv::new().unwrap();

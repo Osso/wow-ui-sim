@@ -1,6 +1,6 @@
 //! Row394 and its consumer prerequisite. Carryover, nil/error and secret policies
 //! are INFERRED simulator contracts, not native-verified semantics.
-#![cfg(feature = "retail-12-0-5")]
+#![cfg(feature = "unit-aura-queries")]
 
 use rilua::LuaApiMut;
 use rilua::table_security::wrap_host_secret_number;

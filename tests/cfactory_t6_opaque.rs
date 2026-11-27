@@ -53,7 +53,11 @@ fn original_aura_util_reads_declared_defensive_classification() {
         "#,
     )
     .unwrap();
-    if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::Ptr) {
+    // Forever publishes AuraIsPrivate (UnitAuraDocumentation.lua:70, byte-identical).
+    if matches!(
+        ACTIVE,
+        ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever
+    ) {
         env.exec("assert(C_UnitAuras.AuraIsPrivate(101) == false)")
             .unwrap();
     } else {

@@ -1,7 +1,8 @@
-#![cfg(feature = "retail-12-0-5")]
+#![cfg(feature = "encounter-warning-visibility")]
 
 use wow_ui_sim::lua_api::WowLuaEnv;
 
+#[cfg(feature = "retail-12-0-5")]
 #[test]
 fn patch_12_0_1_audio_category_settings_are_independent() {
     let env = WowLuaEnv::new().unwrap();

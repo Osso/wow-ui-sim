@@ -157,7 +157,7 @@ pub(crate) fn register_c_spell_surface(state: &mut LuaState) -> LuaResult<()> {
         // SpellDocumentation.lua declare this query. Sharing inputs is INFERRED.
         table_set_rust_fn_static(state, ns, "GetVisibilityInfo", get_visibility_info)?;
     }
-    #[cfg(feature = "retail-12-0-0")]
+    #[cfg(feature = "spell-classification-queries")]
     super::c_spell_classification::register(state)?;
     if cfg!(feature = "client-mists") {
         register_legacy_spell_globals(state)?;

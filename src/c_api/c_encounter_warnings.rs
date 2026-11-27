@@ -1,13 +1,13 @@
 //! Severity colors and synthetic Edit Mode previews, not encounter warning storage or dispatch.
 use rilua::vm::state::LuaState;
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "encounter-warning-previews")]
 use rilua::vm::{gc::arena::GcRef, table::Table};
 use rilua::{LuaResult, Val, runtime_error};
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "encounter-warning-previews")]
 use crate::lua_api::methods::{call_function_state, create_string, create_table, table_set};
 use crate::lua_bridge::stack_val;
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "encounter-warning-previews")]
 use crate::lua_bridge::table_set_rust_fn_static;
 
 /// INFERRED explicit availability and severity sound inputs. Zero means no sound.
@@ -20,7 +20,7 @@ pub struct WarningSettings {
     pub sound_kits: [u32; 3],
 }
 
-#[cfg(feature = "retail-12-0-0")]
+#[cfg(feature = "encounter-warning-settings")]
 pub(crate) fn register_settings(state: &mut LuaState) -> LuaResult<()> {
     let ns = super::ensure_namespace(state, "C_EncounterWarnings")?;
     crate::lua_bridge::table_set_rust_fn_static(state, ns, "IsFeatureAvailable", |s| {
@@ -42,7 +42,7 @@ pub(crate) fn register_settings(state: &mut LuaState) -> LuaResult<()> {
         s.push(Val::Bool(enabled));
         Ok(1)
     })?;
-    #[cfg(feature = "retail-12-0-5")]
+    #[cfg(feature = "encounter-warning-visibility")]
     register_visibility_settings(state, ns)?;
     crate::lua_bridge::table_set_rust_fn_static(state, ns, "GetSoundKitForSeverity", |s| {
         let severity = read_severity(s)?;
@@ -54,7 +54,7 @@ pub(crate) fn register_settings(state: &mut LuaState) -> LuaResult<()> {
     })
 }
 
-#[cfg(feature = "retail-12-0-5")]
+#[cfg(feature = "encounter-warning-visibility")]
 fn register_visibility_settings(
     state: &mut LuaState,
     ns: rilua::vm::gc::arena::GcRef<rilua::vm::table::Table>,
@@ -100,10 +100,10 @@ fn read_severity(state: &LuaState) -> LuaResult<u8> {
     }
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "encounter-warning-previews")]
 pub(crate) use previews::register_preview;
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "encounter-warning-previews")]
 mod previews {
     use super::*;
     const PREVIEW_DURATION_SECONDS: f64 = 5.0;

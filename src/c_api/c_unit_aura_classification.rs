@@ -39,7 +39,7 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
             aura_is_big_defensive,
         )?;
     }
-    #[cfg(feature = "retail-12-0-5")]
+    #[cfg(feature = "unit-aura-queries")]
     if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Mists {
         table_set_rust_fn_static(state, namespace, "AuraIsPrivate", aura_is_private)?;
     }
@@ -68,7 +68,7 @@ fn aura_is_big_defensive(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-#[cfg(feature = "retail-12-0-5")]
+#[cfg(feature = "unit-aura-queries")]
 fn aura_is_private(state: &mut LuaState) -> LuaResult<u32> {
     let classification = read_spell_classification(state, "C_UnitAuras.AuraIsPrivate")?;
     state.push(Val::Bool(classification.is_private));

@@ -1,5 +1,5 @@
 //! Behavioral coverage for remaining 12.0.0 namespace producers.
-#![cfg(feature = "retail-12-0-0")]
+#![cfg(feature = "bnet-chat")]
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 #[test]

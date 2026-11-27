@@ -1,5 +1,5 @@
 //! Retail hit-test inset parsing and the simulator's limited read/write state.
-#![cfg(feature = "retail-12-0-5")]
+#![cfg(feature = "nameplate-hit-test-insets")]
 
 use wow_ui_sim::lua_api::WowLuaEnv;
 

@@ -1,5 +1,7 @@
 //! Retail 12.1.0 added Global API functions: state-backed behavior.
-#![cfg(feature = "client-retail")]
+//! Tests without a `client-retail` cfg also run on Forever, whose generated
+//! documentation declares the same function blocks byte-identically.
+#![cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 
 use wow_ui_sim::lua_api::WowLuaEnv;
 
@@ -8,6 +10,7 @@ fn eval_ok(env: &WowLuaEnv, code: &str) {
     assert_eq!(result, "ok");
 }
 
+#[cfg(feature = "client-retail")]
 #[test]
 fn discord_user_name_reads_known_users() {
     let env = WowLuaEnv::new().unwrap();
@@ -104,6 +107,7 @@ fn battle_net_high_res_toggle_follows_installed_textures() {
     assert!(after);
 }
 
+#[cfg(feature = "lair-state-queries")]
 #[test]
 fn delves_lair_state_drives_lair_and_matchmade_raid_queries() {
     let env = WowLuaEnv::new().unwrap();
@@ -134,6 +138,7 @@ fn delves_lair_state_drives_lair_and_matchmade_raid_queries() {
     assert_eq!(raid, "true true true true");
 }
 
+#[cfg(feature = "client-retail")]
 #[test]
 fn spell_last_category_cooldown_source_tracks_latest_start() {
     let env = WowLuaEnv::new().unwrap();
@@ -166,6 +171,7 @@ fn spell_last_category_cooldown_source_tracks_latest_start() {
     );
 }
 
+#[cfg(feature = "client-retail")]
 #[test]
 fn spell_description_for_item_location_uses_spell_text() {
     let env = WowLuaEnv::new().unwrap();
@@ -218,6 +224,7 @@ fn cancel_aura_by_instance_id_removes_player_buff_and_fires_unit_aura() {
     );
 }
 
+#[cfg(feature = "temporary-enchant-cancel")]
 #[test]
 fn cancel_temporary_enchantment_clears_only_temporary_weapon_enchants() {
     use wow_ui_sim::c_api::weapon_enchants::{TEMPORARY_ENCHANT_TYPE, WeaponEnchant};
@@ -249,6 +256,7 @@ fn cancel_temporary_enchantment_clears_only_temporary_weapon_enchants() {
     assert_eq!(off_hand, vec![7002]);
 }
 
+#[cfg(feature = "client-retail")]
 #[test]
 fn transmog_slot_availability_follows_player_class() {
     let env = WowLuaEnv::new().unwrap();
@@ -267,6 +275,7 @@ fn transmog_slot_availability_follows_player_class() {
     assert_eq!(hunter, "true true true false");
 }
 
+#[cfg(feature = "client-retail")]
 #[test]
 fn transmog_enabled_reads_supplied_availability() {
     let env = WowLuaEnv::new().unwrap();
@@ -282,6 +291,7 @@ fn transmog_enabled_reads_supplied_availability() {
     assert!(!disabled);
 }
 
+#[cfg(feature = "client-retail")]
 #[test]
 fn roleset_filters_round_trip_through_active_lists() {
     let env = WowLuaEnv::new().unwrap();
@@ -305,6 +315,7 @@ fn roleset_filters_round_trip_through_active_lists() {
     );
 }
 
+#[cfg(feature = "client-retail")]
 #[test]
 fn recent_allies_search_filters_text_status_and_interests() {
     use wow_ui_sim::c_api::c_recent_allies::{
@@ -370,6 +381,7 @@ fn recent_allies_search_filters_text_status_and_interests() {
     assert_eq!(search(""), "");
 }
 
+#[cfg(feature = "quest-hub-relations")]
 #[test]
 fn quest_hub_relation_reads_hub_quests() {
     let env = WowLuaEnv::new().unwrap();
@@ -388,6 +400,7 @@ fn quest_hub_relation_reads_hub_quests() {
     );
 }
 
+#[cfg(feature = "client-retail")]
 #[test]
 fn initiative_task_reward_scaling_applies_task_scale() {
     let env = WowLuaEnv::new().unwrap();
@@ -406,6 +419,7 @@ fn initiative_task_reward_scaling_applies_task_scale() {
     );
 }
 
+#[cfg(feature = "client-retail")]
 #[test]
 fn random_training_ground_joins_queue_battlefield() {
     let env = WowLuaEnv::new().unwrap();
@@ -432,6 +446,7 @@ fn random_training_ground_joins_queue_battlefield() {
     assert_eq!(queued_updates, 2);
 }
 
+#[cfg(feature = "fullscreen-browser-close")]
 #[test]
 fn close_fullscreen_browser_is_callable_without_browser() {
     let env = WowLuaEnv::new().unwrap();

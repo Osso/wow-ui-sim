@@ -134,7 +134,7 @@ pub struct DecorQuantity {
 
 pub(crate) fn register_c_catalog_shop_products(state: &mut LuaState) -> LuaResult<()> {
     let namespace = ensure_namespace(state, "C_CatalogShop")?;
-    #[cfg(feature = "retail-12-0-0")]
+    #[cfg(feature = "rest-policy-flags")]
     table_set_rust_fn_static(state, namespace, "GetNewProducts", |s| {
         let ids = borrow_state(s)?
             .catalog_shop_products

@@ -329,7 +329,7 @@ fn register_social_namespace_surfaces(state: &mut LuaState) -> LuaResult<()> {
     // Forever VoiceChatDocumentation.lua:177-191 declares GetChannelForCommunityStream.
     #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
     c_api::c_voice_chat_channels::register(state)?;
-    #[cfg(feature = "retail-12-0-5")]
+    #[cfg(feature = "lfg-endgame-edit-policy")]
     c_api::c_lfg_list_policy::register(state)?;
     #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
     c_api::c_pvp_crowd_control::register(state)?;

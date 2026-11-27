@@ -1,4 +1,4 @@
-#![cfg(feature = "retail-12-0-0")]
+#![cfg(feature = "encounter-warning-settings")]
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 #[test]

@@ -123,8 +123,16 @@ fn install_c_unit_auras_methods(state: &mut LuaState, ns: Val) {
             ("GetAuraDataByIndex", get_aura_data_by_index),
             ("GetBuffDataByIndex", get_buff_data_by_index),
             ("GetDebuffDataByIndex", get_debuff_data_by_index),
-            ("GetPlayerAuraBySpellID", get_player_aura_by_spell_id),
         ],
+    );
+    // Retail 12.0.5 and Forever use the SpellIdentifier query in
+    // c_unit_aura_spell_queries.rs (byte-identical UnitAuraDocumentation block).
+    #[cfg(not(feature = "unit-aura-queries"))]
+    install(
+        state,
+        ns,
+        "GetPlayerAuraBySpellID",
+        get_player_aura_by_spell_id,
     );
 }
 
@@ -590,7 +598,7 @@ fn push_spell_keyed_aura(
 // ── Aura lookup helpers ──────────────────────────────────────────────────────
 
 /// Unblocked lookup over existing stores/fixtures, returning the established DTO.
-#[cfg(feature = "retail-12-0-5")]
+#[cfg(feature = "unit-aura-queries")]
 pub(crate) fn push_aura_by_spell_id(
     state: &mut LuaState,
     unit: &str,
@@ -1086,7 +1094,7 @@ pub(crate) fn full_update_info(state: &mut LuaState, unit: &str) -> Val {
 }
 
 /// Native `UnitAuraUpdateInfo` for an incremental removal.
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "aura-instance-cancel")]
 pub(crate) fn removal_info(state: &mut LuaState, instance_ids: &[i32]) -> Val {
     let info = create_table(state);
     table_set(state, info, "isFullUpdate", Val::Bool(false));

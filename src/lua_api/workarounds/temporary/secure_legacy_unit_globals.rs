@@ -54,7 +54,6 @@ const RETAIL_PTR_FOREVER_PROFILES: &[ClientProfile] = &[
     ClientProfile::Ptr,
     ClientProfile::WowForever,
 ];
-const RETAIL_ONLY_PROFILE: &[ClientProfile] = &[ClientProfile::Retail];
 const UNIT_IN_SUBGROUP_PROFILES: &[ClientProfile] = &[
     ClientProfile::Retail,
     ClientProfile::Ptr,
@@ -1101,8 +1100,8 @@ const MASTER_SNAPSHOT_UNIT_GLOBALS: &[MasterUnitGlobal] = &[
     ),
     unit_global(
         "UnitWeaponAttackPower",
-        RETAIL_ONLY_PROFILE,
-        RETAIL_ONLY_PROFILE,
+        RETAIL_FOREVER_PROFILES,
+        RETAIL_FOREVER_PROFILES,
         "src/lua_api/globals/unit_stats.rs:655",
     ),
     unit_global(

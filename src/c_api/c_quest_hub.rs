@@ -7,12 +7,23 @@ use crate::lua_api::methods::{borrow_state, create_table, table_set_num};
 #[cfg(any(feature = "retail-12-0-7", feature = "retail-12-1-0"))]
 use crate::lua_bridge::table_set_rust_fn_static;
 use rilua::LuaResult;
-#[cfg(any(feature = "retail-12-0-7", feature = "retail-12-1-0"))]
+#[cfg(any(
+    feature = "retail-12-0-7",
+    feature = "retail-12-1-0",
+    feature = "quest-hub-relations"
+))]
 use rilua::Val;
 use rilua::vm::state::LuaState;
 
 pub(crate) fn register_c_quest_hub_surface(state: &mut LuaState) -> LuaResult<()> {
     let quest_hub = ensure_namespace(state, "C_QuestHub")?;
+    #[cfg(feature = "quest-hub-relations")]
+    crate::lua_bridge::table_set_rust_fn_static(
+        state,
+        quest_hub,
+        "IsQuestCurrentlyRelatedToHub",
+        is_quest_currently_related_to_hub,
+    )?;
     register_patch_12_0_7_quest_hub_surface(state, quest_hub)
 }
 
@@ -27,22 +38,15 @@ fn register_patch_12_0_7_quest_hub_surface(
         "GetDragonridingRacesForAreaPOI",
         get_dragonriding_races_for_area_poi,
     )?;
-    #[cfg(feature = "retail-12-1-0")]
-    table_set_rust_fn_static(
-        state,
-        quest_hub,
-        "IsQuestCurrentlyRelatedToHub",
-        is_quest_currently_related_to_hub,
-    )?;
     Ok(())
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "quest-hub-relations")]
 fn is_quest_currently_related_to_hub(state: &mut LuaState) -> LuaResult<u32> {
     use crate::lua_bridge::FromStack;
     let quest_id = i32::from_stack(state, 1)?;
     let hub_area_poi_id = i32::from_stack(state, 2)?;
-    let related = borrow_state(state)?
+    let related = crate::lua_api::methods::borrow_state(state)?
         .quest_hub_related_quests
         .get(&hub_area_poi_id)
         .is_some_and(|quests| quests.contains(&quest_id));

@@ -363,6 +363,9 @@ fn register_c_item_inventory_queries(
 ) -> LuaResult<()> {
     register_c_item_guid_surface(state, table_ref)?;
     register_c_item_supplied_queries(state, table_ref)?;
+    if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever) {
+        register_c_item_use_confirmations(state, table_ref)?;
+    }
     if ACTIVE == ClientProfile::Retail {
         register_c_item_retail_inventory_queries(state, table_ref)?;
     } else if ACTIVE == ClientProfile::WowForever {
@@ -483,7 +486,15 @@ fn register_c_item_retail_inventory_query_group_three(
         "GetItemUniqueness",
         super::item_uniqueness::get_item_uniqueness,
     )?;
-    // ItemDocumentation.lua:80, :84, :88, :199, :209 and :1703.
+    Ok(())
+}
+
+/// ItemDocumentation.lua:80, :84, :88, :199, :209 and :1703; Forever declares
+/// the same blocks byte-identically over the shared pending-use model.
+fn register_c_item_use_confirmations(
+    state: &mut LuaState,
+    table_ref: GcRef<Table>,
+) -> LuaResult<()> {
     for name in ["ConfirmBindOnUse", "ConfirmNoRefundOnUse", "ConfirmOnUse"] {
         table_set_rust_fn_static(
             state,
@@ -492,19 +503,18 @@ fn register_c_item_retail_inventory_query_group_three(
             super::item_use_confirm::confirm_on_use,
         )?;
     }
-    Ok(())
+    table_set_rust_fn_static(
+        state,
+        table_ref,
+        "EndBoundTradeable",
+        super::item_use_confirm::end_bound_tradeable,
+    )
 }
 
 fn register_c_item_retail_inventory_query_group_four(
     state: &mut LuaState,
     table_ref: GcRef<Table>,
 ) -> LuaResult<()> {
-    table_set_rust_fn_static(
-        state,
-        table_ref,
-        "EndBoundTradeable",
-        super::item_use_confirm::end_bound_tradeable,
-    )?;
     table_set_rust_fn_static(
         state,
         table_ref,

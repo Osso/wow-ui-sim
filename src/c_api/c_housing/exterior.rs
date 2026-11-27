@@ -5,10 +5,7 @@ mod runtime;
 
 pub(super) const EXTERIOR_CUSTOMIZATION_MODE: i32 = 6;
 
-pub(crate) const MODELED: bool = cfg!(all(
-    feature = "retail-12-0-5",
-    any(feature = "profile-retail", feature = "client-ptr")
-));
+pub(crate) const MODELED: bool = cfg!(feature = "house-exterior-model");
 
 pub(super) fn register(state: &mut rilua::vm::state::LuaState) -> rilua::LuaResult<()> {
     #[cfg(feature = "housing-host-state")]

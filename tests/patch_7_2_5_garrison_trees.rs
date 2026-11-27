@@ -1,5 +1,5 @@
-//! Bounded current-retail tree context; no reconstructed Legion catalog claim.
-#![cfg(feature = "client-retail")]
+//! Bounded Retail/Forever tree context; no reconstructed Legion catalog claim.
+#![cfg(feature = "garrison-host-inputs")]
 
 use wow_ui_sim::c_api::c_garrison_trees::GarrisonTalentTree;
 use wow_ui_sim::lua_api::WowLuaEnv;
