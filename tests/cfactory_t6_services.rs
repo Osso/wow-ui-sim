@@ -22,7 +22,8 @@ fn cfactory_t6_error_messages_reach_console_sink() {
 #[test]
 fn cfactory_t6_secure_combat_filter_reset_contract() {
     let env = documented_env("CombatLogSecureDocumentation.lua", "ClearEventFilters");
-    env.exec("assert(select('#', C_CombatLogSecure.ClearEventFilters()) == 0)")
+    // R88y flag 2: C_CombatLogSecure is published only in the secure environment.
+    env.exec("assert(select('#', __secureenv.C_CombatLogSecure.ClearEventFilters()) == 0)")
         .unwrap();
 }
 
