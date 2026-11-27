@@ -1,6 +1,5 @@
 //! Retail 12.1.5 `C_ProfSpecs.GetChildrenForPath` (R88as).
 
-use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::methods::{borrow_state, create_table, table_set_num};
 use crate::lua_bridge::table_set_rust_fn_static;
 use crate::screen::ScreenKind;
@@ -10,7 +9,7 @@ use rilua::{LuaResult, Val};
 const USAGE: &str = "Usage: local childIDs = C_ProfSpecs.GetChildrenForPath(pathID)";
 
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
-    if ACTIVE != ClientProfile::Retail || borrow_state(state)?.screen_kind != ScreenKind::Game {
+    if borrow_state(state)?.screen_kind != ScreenKind::Game {
         return Ok(());
     }
     let namespace = super::ensure_namespace(state, "C_ProfSpecs")?;

@@ -156,6 +156,9 @@ housing-blueprints = ["housing-room-queries"]
 # Housing location snapshot (12.0.0) and decor inspect mode (12.0.5): Forever's
 # HousingUI/HousingDecorUI/HousingInspectModeUI docs are byte-identical.
 housing-host-state = []
+# C_ProfSpecs path/perk/tab queries over supplied inputs: Retail 12.1.5 and
+# Forever (ProfessionSpecUIDocumentation.lua is byte-identical).
+profession-spec-paths = []
 housing-inspect-mode = []
 retail-12-0-0 = ["aura-instance-enumeration", "action-spell-range", "housing-host-state"]
 retail-12-0-5 = ["retail-12-0-0", "housing-inspect-mode", "native-duration-formatting", "base-spell-relationships", "aura-spell-classifications", "maw-power-model"]
@@ -197,13 +200,13 @@ prefork-full-ui = []
 # public client-retail bundle preserves the current retail epoch; profile-retail
 # allows historical retail epoch tests against the same retail source cache.
 profile-retail = ["sim-data-profile/profile-retail"]
-client-retail = ["profile-retail", "retail-12-1-5", "prefork-full-ui"]
+client-retail = ["profile-retail", "retail-12-1-5", "prefork-full-ui", "profession-spec-paths"]
 client-ptr = ["retail-12-1-5", "sim-data-profile/client-ptr"]
 client-wrath = ["action-spell-range", "sim-data-profile/client-wrath"]
 client-mists = ["prefork-full-ui", "sim-data-profile/client-mists"]
 client-era = ["aura-spell-classifications", "sim-data-profile/client-era"]
 client-anniversary = ["aura-spell-classifications", "sim-data-profile/client-anniversary"]
-client-wowforever = ["timed-signal-maps", "housing-blueprints", "housing-host-state", "housing-inspect-mode", "aura-xml-widgets", "on-update-modes", "player-cast-durations", "forbidden-animation-aspects", "numeric-rule-formatters", "aura-containers", "native-duration-formatting", "base-spell-relationships", "action-spell-range", "aura-spell-classifications", "maw-power-rarity-info", "sim-data-profile/client-wowforever"]
+client-wowforever = ["timed-signal-maps", "profession-spec-paths", "housing-blueprints", "housing-host-state", "housing-inspect-mode", "aura-xml-widgets", "on-update-modes", "player-cast-durations", "forbidden-animation-aspects", "numeric-rule-formatters", "aura-containers", "native-duration-formatting", "base-spell-relationships", "action-spell-range", "aura-spell-classifications", "maw-power-rarity-info", "sim-data-profile/client-wowforever"]
 
 [profile.release]
 lto = false
