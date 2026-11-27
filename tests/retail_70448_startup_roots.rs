@@ -2,9 +2,22 @@
 #![cfg(feature = "client-retail")]
 use wow_ui_sim::lua_api::WowLuaEnv;
 
+/// UnitFrameUtil.lua:289 reads CVarCallbackRegistry, whose original owner is
+/// Blizzard_SharedXMLBase/CvarUtil.lua since e35289a6a1 retired the
+/// modern-profile callback defaults.
+fn shared_xml_base_env() -> WowLuaEnv {
+    use crate::common::blizzard_addon_harness::{
+        blizzard_ui_dir, load_blizzard_addon_closure_into_env, new_blizzard_addon_env,
+    };
+    let ui = blizzard_ui_dir();
+    let env = new_blizzard_addon_env(&ui);
+    load_blizzard_addon_closure_into_env(&env, &ui, &["Blizzard_SharedXMLBase"], &[]);
+    env
+}
+
 #[test]
 fn original_shared_unit_frame_util_loads_with_real_texture_metatable() {
-    let env = WowLuaEnv::new().unwrap();
+    let env = shared_xml_base_env();
     let root = wow_ui_sim::paths::default_blizzard_ui_addons_path().unwrap();
     let source = root.join("Blizzard_UnitFrame/Shared/UnitFrameUtil.lua");
     env.exec(&std::fs::read_to_string(source).unwrap()).unwrap();
@@ -25,7 +38,7 @@ fn original_shared_unit_frame_util_loads_with_real_texture_metatable() {
 
 #[test]
 fn original_arena_spec_display_accepts_secret_atlas_and_preserves_read_policy() {
-    let env = WowLuaEnv::new().unwrap();
+    let env = shared_xml_base_env();
     let root = wow_ui_sim::paths::default_blizzard_ui_addons_path().unwrap();
     env.exec(
         &std::fs::read_to_string(root.join("Blizzard_UnitFrame/Shared/UnitFrameUtil.lua")).unwrap(),
