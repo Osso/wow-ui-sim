@@ -11,6 +11,8 @@ Retail 12.0.5 adds `C_StringUtil.CreateAbbreviatedNumberFormatter`. The typed mo
 - [ ] Support actual duration FormatElapsedDuration, FormatRemainingDuration and FormatTotalDuration, including modifier selection.
 - [ ] Reject secret arguments/configuration under tainted callers without clearing taint; preserve secret output and copied configuration provenance. Plain numbers produce plain strings with plain configuration.
 
+- [ ] Retail 12.0.5+ and Forever publish `AbbreviateNumbers` and `AbbreviateLargeNumbers(number, options)` (`LocalizationDocumentation.lua:10-39`) in Rust. INFERRED R88g9 (native evidence pending): both use `options.breakpointData`, else the default rows for `options.locale` or `GetLocale()`; `options.config` is not read, and the two functions share one policy. The Lua fallbacks remain only on the other profiles. Test: `abbreviate_numbers_globals::abbreviated_numbers_follow_the_breakpoint_rows` (original `FormattingUtil.GetCostString` consumer).
+
 ## How it works
 
 - [Duration core](../wiki/systems/duration-core.md)

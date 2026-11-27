@@ -1,8 +1,6 @@
 # Documented Retail API functions without a runtime function after full
 # Blizzard UI startup. Contract: docs/specs/api-surface-audit.md.
 # Format: <name> # <intentionally-unsupported|not-yet>[: reason]
-AbbreviateLargeNumbers # not-yet: temporary Lua workaround
-AbbreviateNumbers # not-yet: temporary Lua workaround
 AcceptAreaSpiritHeal # not-yet
 AcceptGuild # not-yet
 AcceptQuest # not-yet

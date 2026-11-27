@@ -157,6 +157,11 @@ if ConsoleSetFontHeight == nil then
   end
 end
 
+"##;
+
+/// Retail 12.0.5+ and Forever register the Rust abbreviation globals instead.
+#[cfg(not(any(feature = "retail-12-0-5", feature = "client-wowforever")))]
+const ABBREVIATION_DEFAULTS_LUA: &str = r##"
 if AbbreviateLargeNumbers == nil then
   function AbbreviateLargeNumbers(value)
     return tostring(math.floor(tonumber(value) or 0))
@@ -203,6 +208,8 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     lua.exec(GET_TEXT_DEFAULT_LUA)?;
     lua.exec(FORMATTING_UTILITY_DEFAULTS_LUA)?;
+    #[cfg(not(any(feature = "retail-12-0-5", feature = "client-wowforever")))]
+    lua.exec(ABBREVIATION_DEFAULTS_LUA)?;
     // Preserve the verified Retail string.split alias; keep this wrapper elsewhere. Evidence: pr46-49-decomp-answers.md, sections R88y.y2.
     if !crate::client_profile::is_active_retail_12_1_5() {
         lua.exec(STRING_SPLIT_METHOD_COMPAT_LUA)?;
@@ -264,8 +271,6 @@ mod tests {
                 ConsoleSetFontHeight(18)
                 if ConsoleGetFontHeight() ~= 18 then return "console_font" end
                 if type(ConsoleGetColorFromType(0).GetRGB) ~= "function" then return "console_color" end
-                if AbbreviateLargeNumbers(123.9) ~= "123" then return "abbrev" end
-                if AbbreviateNumbers(456.7) ~= "456.7" then return "abbrev_numbers" end
                 return "ok"
                 "#;
 
@@ -310,17 +315,19 @@ mod tests {
     }
 
     fn assert_active_profile_formatter(env: &WowLuaEnv) {
-        let grouped: String = env
-            .eval("return BreakUpLargeNumbers(12345)")
+        let formatted: (String, String, String) = env
+            .eval(
+                "return BreakUpLargeNumbers(12345), \
+                 AbbreviateLargeNumbers(123.9), AbbreviateNumbers(456.7)",
+            )
             .expect("active profile formatter should run after bootstrap reapplication");
-        let expected = if cfg!(any(
+        let rust = cfg!(any(
             feature = "retail-12-0-5",
             feature = "client-wowforever"
-        )) {
-            "12,345"
-        } else {
-            "12345"
-        };
-        assert_eq!(grouped, expected);
+        ));
+        let grouped = if rust { "12,345" } else { "12345" };
+        let large = if rust { "123.9" } else { "123" };
+        let expected = (grouped.into(), large.into(), "456.7".into());
+        assert_eq!(formatted, expected);
     }
 }
