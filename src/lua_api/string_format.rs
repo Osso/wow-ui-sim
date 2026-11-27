@@ -258,6 +258,14 @@ fn is_secret_number(state: &LuaState, value: Val) -> bool {
         == Some(rilua::table_security::SecretPayloadKind::Number)
 }
 
+/// Native argument errors drop the function name only without a caller debug
+/// frame; a frame with no resolvable name reports `'?'` (VERIFIED R88, Retail
+/// 12.1.5.70688, pr46-49-decomp-answers.md:14748). Frame 0 is the host base,
+/// so a call at frame 1 came straight from the host.
+fn has_debug_caller(state: &LuaState) -> bool {
+    state.ci > 1
+}
+
 fn format_type_error(state: &LuaState, argument_index: usize, expected: &str) -> rilua::LuaError {
     let stack_index = state.base + argument_index;
     let actual = if stack_index < state.top {
@@ -265,7 +273,7 @@ fn format_type_error(state: &LuaState, argument_index: usize, expected: &str) ->
     } else {
         "no value"
     };
-    if rilua::vm::debug_info::getfuncname(state, state.ci, &state.gc.string_arena).is_none() {
+    if !has_debug_caller(state) {
         return runtime_error(format!(
             "bad argument #{} ({expected} expected, got {actual})",
             argument_index + 1
@@ -290,7 +298,7 @@ fn format_argument_error(
     argument_number: usize,
     message: &str,
 ) -> rilua::LuaError {
-    if rilua::vm::debug_info::getfuncname(state, state.ci, &state.gc.string_arena).is_none() {
+    if !has_debug_caller(state) {
         return runtime_error(format!("bad argument #{argument_number} ({message})"));
     }
     rilua::stdlib::arg_error(state, argument_number, message)
