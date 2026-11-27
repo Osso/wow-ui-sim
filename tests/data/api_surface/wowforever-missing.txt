@@ -10,7 +10,6 @@ Ambiguate # not-yet: temporary Lua workaround
 AreClassRolesSoftSuggestions # not-yet
 AutoEquipCursorItem # not-yet
 BeginTrade # not-yet
-BreakUpLargeNumbers # not-yet: temporary Lua workaround
 C_AchievementInfo.AreGuildAchievementsEnabled # not-yet
 C_AchievementInfo.IsGuildAchievement # not-yet
 C_ActionBar.FindAssistedCombatActionButtons # not-yet
@@ -460,24 +459,15 @@ C_ConsoleScriptCollection.GetCollectionDataByTag # not-yet
 C_ConsoleScriptCollection.GetElements # not-yet
 C_ConsoleScriptCollection.GetScriptData # not-yet
 C_Container.ContainerRefundItemPurchase # not-yet
-C_Container.GetBankAutosortDisabled # not-yet
 C_Container.GetContainerItemDurability # not-yet
 C_Container.GetContainerItemEquipmentSetInfo # not-yet
 C_Container.GetContainerItemPurchaseCurrency # not-yet
 C_Container.GetContainerItemPurchaseInfo # not-yet: temporary Lua workaround
 C_Container.GetContainerItemPurchaseItem # not-yet
-C_Container.GetInsertItemsLeftToRight # not-yet
 C_Container.GetMaxArenaCurrency # not-yet
-C_Container.GetSortBagsRightToLeft # not-yet
 C_Container.IsBattlePayItem # not-yet: temporary Lua workaround
-C_Container.IsContainerFiltered # not-yet: temporary Lua workaround
 C_Container.PlayerHasHearthstone # not-yet
-C_Container.SetBackpackAutosortDisabled # not-yet
-C_Container.SetBackpackSellJunkDisabled # not-yet
 C_Container.SetBagPortraitTexture # not-yet: temporary Lua workaround
-C_Container.SetBankAutosortDisabled # not-yet
-C_Container.SetInsertItemsLeftToRight # not-yet
-C_Container.SetSortBagsRightToLeft # not-yet
 C_Container.ShowContainerSellCursor # not-yet
 C_Container.SocketContainerItem # not-yet
 C_Container.SortAccountBankBags # not-yet
@@ -544,7 +534,6 @@ C_CraftingOrders.ReleaseOrder # not-yet
 C_CraftingOrders.RequestCrafterOrders # not-yet
 C_CraftingOrders.RequestCustomerOrders # not-yet
 C_CraftingOrders.SetCustomerOptionFavorited # not-yet
-C_CreatureInfo.GetCreatureID # not-yet
 C_CurrencyInfo.CanTransferCurrency # not-yet
 C_CurrencyInfo.DoesCurrentFilterRequireAccountCurrencyData # not-yet
 C_CurrencyInfo.DoesWarModeBonusApply # not-yet
@@ -1079,11 +1068,8 @@ C_Item.GetItemCreationContext # not-yet
 C_Item.GetItemFamily # not-yet
 C_Item.GetItemGem # not-yet
 C_Item.GetItemGemID # not-yet
-C_Item.GetItemIDByGUID # not-yet
 C_Item.GetItemInventorySlotKey # not-yet
 C_Item.GetItemLearnTransmogSet # not-yet
-C_Item.GetItemLinkByGUID # not-yet
-C_Item.GetItemLocation # not-yet
 C_Item.GetItemNumAddedSockets # not-yet
 C_Item.GetItemSetInfo # not-yet
 C_Item.GetItemSpecInfo # not-yet
@@ -1107,7 +1093,6 @@ C_Item.IsItemConvertibleAndValidForPlayer # not-yet
 C_Item.IsItemCorrupted # not-yet
 C_Item.IsItemCorruptionRelated # not-yet
 C_Item.IsItemCorruptionResistant # not-yet
-C_Item.IsItemGUIDInInventory # not-yet
 C_Item.IsItemKeystoneByID # not-yet
 C_Item.IsItemSpecificToPlayerClass # not-yet
 C_Item.IsLocked # not-yet
@@ -1141,10 +1126,7 @@ C_ItemUpgrade.GetNumItemUpgradeEffects # not-yet
 C_ItemUpgrade.IsItemBound # not-yet
 C_ItemUpgrade.SetItemUpgradeFromCursorItem # not-yet
 C_ItemUpgrade.UpgradeItem # not-yet
-C_KeyBindings.ActivateBindingContext # not-yet
-C_KeyBindings.DeactivateBindingContext # not-yet
 C_KeyBindings.GetTurnStrafeStyle # not-yet
-C_KeyBindings.IsBindingContextActive # not-yet
 C_KeyBindings.SetTurnStrafeStyle # not-yet
 C_KeyBindings.UpdateTurnStrafeBindingsForCharacter # not-yet
 C_LFGInfo.AreCrossFactionGroupQueuesAllowed # not-yet
@@ -1817,15 +1799,6 @@ C_StableInfo.PickupStablePet # not-yet
 C_StableInfo.SetPetFavorite # not-yet
 C_StableInfo.SetPetSlot # not-yet
 C_StorePublic.EventStoreUISetShown # not-yet: temporary Lua workaround
-C_StringUtil.CreateAbbreviatedNumberFormatter # not-yet
-C_StringUtil.EscapeLuaFormatString # not-yet
-C_StringUtil.EscapeLuaPatterns # not-yet
-C_StringUtil.FloorToNearestString # not-yet
-C_StringUtil.RemoveContiguousSpaces # not-yet
-C_StringUtil.RoundToNearestString # not-yet
-C_StringUtil.StripTextureMarkupForLooseFiles # not-yet
-C_StringUtil.TruncateWhenZero # not-yet
-C_StringUtil.WrapString # not-yet
 C_SummonInfo.CancelSummon # not-yet
 C_SummonInfo.ConfirmSummon # not-yet
 C_SummonInfo.GetSummonConfirmAreaName # not-yet
@@ -2251,7 +2224,6 @@ GetScreenDPIScale # not-yet: temporary Lua workaround
 GetScriptBucketThrottleLimits # not-yet
 GetScriptCPUUsage # not-yet: temporary Lua workaround
 GetSecondsUntilParentalControlsKick # not-yet
-GetSessionTime # not-yet
 GetSheathState # not-yet
 GetSourceLocation # not-yet
 GetSturdiness # not-yet
@@ -2446,11 +2418,4 @@ dropsecretaccess # not-yet
 hasanysecretvalues # not-yet
 issecrettable # not-yet
 secretunwrap # not-yet
-string.contains # not-yet
-string.endswith # not-yet
-string.ltrim # not-yet
-string.rtrim # not-yet
-string.startswith # not-yet
-table.freeze # not-yet
 table.getcountinfo # not-yet
-table.isfrozen # not-yet

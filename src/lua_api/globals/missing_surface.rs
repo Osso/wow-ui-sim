@@ -71,6 +71,8 @@ pub(crate) fn item_link_for_id(item_id: u32) -> Option<String> {
 
 pub(crate) fn register_secure_environment_base_globals(lua: &mut rilua::Lua) -> LuaResult<()> {
     register_string_globals(lua)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    super::real::lua_time::register_all(lua)?;
     install_date_alias(lua)
 }
 

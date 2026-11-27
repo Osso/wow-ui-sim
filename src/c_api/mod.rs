@@ -110,7 +110,7 @@ pub(crate) mod vignette_info;
 #[cfg(feature = "client-wrath")]
 pub mod who_routing;
 
-#[cfg(feature = "retail-12-0-5")]
+#[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 pub(crate) mod abbreviated_number_formatter;
 #[cfg(feature = "retail-12-0-5")]
 pub mod action_count_info;
@@ -258,7 +258,7 @@ pub mod c_input_interface_style;
 pub mod c_instance_encounter;
 pub mod c_intl;
 pub mod c_item_interaction;
-#[cfg(feature = "retail-12-0-0")]
+#[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
 pub(crate) mod c_key_bindings;
 pub mod c_legendary_crafting;
 pub mod c_lfg_info;
@@ -339,6 +339,7 @@ pub(crate) mod c_taxi_map;
 pub(crate) mod challenge_run;
 #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
 pub mod combat_log_history;
+pub mod container_preferences;
 pub mod container_purchase;
 mod container_purchase_args;
 pub mod container_quest;
@@ -563,7 +564,7 @@ pub(crate) mod container_inventory;
 pub(crate) mod cooldown_duration;
 pub(crate) mod duration_clock;
 pub(crate) mod duration_text_binding;
-#[cfg(feature = "retail-12-0-5")]
+#[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 pub mod intl_native;
 pub mod item_location;
 pub mod item_spell;

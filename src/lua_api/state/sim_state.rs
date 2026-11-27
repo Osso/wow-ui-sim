@@ -1439,6 +1439,8 @@ pub struct SimState {
     pub social_contract_accepted: bool,
     /// Current `C_Container.SetItemSearch` text; empty means no search.
     pub item_search_text: String,
+    /// Bag cleanup preferences set through `C_Container`.
+    pub container_preferences: crate::c_api::container_preferences::ContainerPreferences,
     /// Ordered `C_AchievementTelemetry` reports.
     pub achievement_telemetry:
         Vec<crate::c_api::c_achievement_telemetry::AchievementTelemetryEvent>,

@@ -34,10 +34,17 @@ fn get_cursor_item(state: &mut LuaState) -> LuaResult<u32> {
         state.push(Val::Nil);
         return Ok(1);
     };
-    let location = build_location_table(state, origin);
-    attach_item_location_mixin(state, location);
+    let location = item_location_val(state, origin);
     state.push(location);
     Ok(1)
+}
+
+/// An `ItemLocation`-shaped table for a bag or equipment origin, with the
+/// `ItemLocationMixin` methods merged in when that mixin is loaded.
+pub(crate) fn item_location_val(state: &mut LuaState, origin: CursorItemOrigin) -> Val {
+    let location = build_location_table(state, origin);
+    attach_item_location_mixin(state, location);
+    location
 }
 
 /// Reads the cursor's current item origin and returns it only when it

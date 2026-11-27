@@ -207,7 +207,7 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     if !crate::client_profile::is_active_retail_12_1_5() {
         lua.exec(STRING_SPLIT_METHOD_COMPAT_LUA)?;
     }
-    #[cfg(not(feature = "retail-12-0-5"))]
+    #[cfg(not(any(feature = "retail-12-0-5", feature = "client-wowforever")))]
     lua.exec(
         r#"
         if BreakUpLargeNumbers == nil then
@@ -313,7 +313,10 @@ mod tests {
         let grouped: String = env
             .eval("return BreakUpLargeNumbers(12345)")
             .expect("active profile formatter should run after bootstrap reapplication");
-        let expected = if cfg!(feature = "retail-12-0-5") {
+        let expected = if cfg!(any(
+            feature = "retail-12-0-5",
+            feature = "client-wowforever"
+        )) {
             "12,345"
         } else {
             "12345"
