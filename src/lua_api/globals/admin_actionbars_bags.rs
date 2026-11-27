@@ -136,6 +136,33 @@ pub(super) fn add_bag_item(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
+/// `A_Admin.SetBagItemDurability(bag, slot, current, maximum)`; nil `maximum`
+/// clears the pair. Requires an existing bag item and `current <= maximum`.
+pub(super) fn set_bag_item_durability(state: &mut LuaState) -> LuaResult<u32> {
+    let location = (i32::from_stack(state, 1)?, i32::from_stack(state, 2)?);
+    let current = Option::<u32>::from_stack(state, 3)?;
+    let maximum = Option::<u32>::from_stack(state, 4)?;
+    let durability = match (current, maximum) {
+        (Some(current), Some(maximum)) if maximum > 0 && current <= maximum => {
+            Some((current, maximum))
+        }
+        (_, None) => None,
+        _ => {
+            return Err(rilua::runtime_error(
+                "SetBagItemDurability requires 0 <= current <= maximum and maximum > 0",
+            ));
+        }
+    };
+    let mut sim = borrow_state_mut(state)?;
+    let Some(item) = sim.bag_items.get_mut(&location) else {
+        return Err(rilua::runtime_error(
+            "SetBagItemDurability requires an item at the bag slot",
+        ));
+    };
+    item.durability = durability;
+    Ok(0)
+}
+
 pub(super) fn remove_bag_item(state: &mut LuaState) -> LuaResult<u32> {
     let bag = i32::from_stack(state, 1)?;
     let slot = i32::from_stack(state, 2)?;

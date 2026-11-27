@@ -36,7 +36,7 @@ The `A_Admin` namespace provides administrative functions for controlling simula
 - [Housing](housing.md) — SetPlayerOwnedHouses
 - [Equipment locks](equipment.md) — SetEquipmentItemLock, ClearEquipmentItemLock
 - [Transmog outfits](transmog-outfits.md) — SetUnlockedOutfitSlots
-- [Economy](economy.md) — SetMoney, SetItemLevel, AddBagItem, RemoveBagItem, SetEquippedItemGUID
+- [Economy](economy.md) — SetMoney, SetItemLevel, AddBagItem, RemoveBagItem, SetBagItemDurability, SetEquippedItemGUID
 - [Collections](collections.md) — AddTransmog, RemoveTransmog, CollectMount, UncollectMount, CollectPet, UncollectPet, CollectToy, UncollectToy, CollectCampsite, UncollectCampsite, SetAchievementEarned, EarnAchievement
 - [PvP](pvp.md) — SetPvPEnabled, SetHonorLevel
 - [Guild](guild.md) — SetGuildInfo, ClearGuild, JoinGuild, LeaveGuild

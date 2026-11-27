@@ -37,8 +37,8 @@ pub(crate) use c_container::c_container_get_bag_name;
 #[cfg(feature = "client-wowforever")]
 pub(crate) use c_container::{BAG_SLOT_FLAG_EXCLUDE_JUNK_SELL, bag_slot_flag_is_set};
 pub(crate) use c_container::{
-    c_container_get_container_item_cooldown, c_container_get_item_id, c_container_get_item_link,
-    c_container_get_num_slots,
+    c_container_get_container_item_cooldown, c_container_get_item_durability,
+    c_container_get_item_id, c_container_get_item_link, c_container_get_num_slots,
 };
 pub(crate) use c_item::location_item;
 pub(crate) use c_item::{

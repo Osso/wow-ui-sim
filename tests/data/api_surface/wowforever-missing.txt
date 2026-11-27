@@ -459,7 +459,6 @@ C_ConsoleScriptCollection.GetCollectionDataByTag # not-yet
 C_ConsoleScriptCollection.GetElements # not-yet
 C_ConsoleScriptCollection.GetScriptData # not-yet
 C_Container.ContainerRefundItemPurchase # not-yet
-C_Container.GetContainerItemDurability # not-yet
 C_Container.GetContainerItemEquipmentSetInfo # not-yet
 C_Container.GetContainerItemPurchaseCurrency # not-yet
 C_Container.GetContainerItemPurchaseInfo # not-yet: temporary Lua workaround

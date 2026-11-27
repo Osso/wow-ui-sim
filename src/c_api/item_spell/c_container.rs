@@ -114,6 +114,11 @@ fn register_cleanup_and_search_methods(
         table_ref,
         &[
             ("IsContainerFiltered", c_container_is_container_filtered),
+            // ContainerDocumentation.lua:140 (Retail and Forever).
+            (
+                "GetContainerItemDurability",
+                c_container_get_item_durability,
+            ),
             (
                 "SetBackpackAutosortDisabled",
                 c_container_set_backpack_autosort_disabled,
@@ -135,6 +140,22 @@ fn register_container_methods(
         table_set_rust_fn_static(state, table_ref, name, func)?;
     }
     Ok(())
+}
+
+/// Supplied bag-item durability (`A_Admin.SetBagItemDurability`); an item
+/// without a durability pair or an empty slot returns nothing.
+pub(crate) fn c_container_get_item_durability(state: &mut LuaState) -> LuaResult<u32> {
+    let location = (i32::from_stack(state, 1)?, i32::from_stack(state, 2)?);
+    let durability = borrow_state(state)?
+        .bag_items
+        .get(&location)
+        .and_then(|item| item.durability);
+    let Some((current, maximum)) = durability else {
+        return Ok(0);
+    };
+    state.push(Val::Num(f64::from(current)));
+    state.push(Val::Num(f64::from(maximum)));
+    Ok(2)
 }
 
 pub(crate) fn c_container_get_num_slots(state: &mut LuaState) -> LuaResult<u32> {
