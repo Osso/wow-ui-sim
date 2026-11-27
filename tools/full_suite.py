@@ -541,6 +541,12 @@ def read_cvars(source):
                   "mtime_ns": stat.st_mtime_ns, "ctime_ns": stat.st_ctime_ns}
 
 
+def cvar_identity(record):
+    """Content and inode identity; atime is logged but excluded because any
+    concurrent read (including an isolated byte-copy) updates it."""
+    return {key: value for key, value in record.items() if key != "atime_ns"}
+
+
 @contextmanager
 def isolated_cvars(env, log):
     source = Path(env.get("XDG_DATA_HOME", str(Path.home() / ".local/share"))) / "wow-sim/cvars.json"
@@ -557,7 +563,7 @@ def isolated_cvars(env, log):
         try:
             _, after = read_cvars(source)
             log.write(f"cvar-after {json.dumps(after)}\n")
-            if before != after:
+            if cvar_identity(before) != cvar_identity(after):
                 raise ValueError("persisted CVar file changed during suite")
         except (OSError, ValueError) as error:
             if not isinstance(active_error, SlotStateUnknown):
