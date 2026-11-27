@@ -101,16 +101,21 @@ A_Admin.SetGuildBankRankPermissions(1, 0, {3,3,3,3,3,3}, {10,10,10,10,10,10}, fa
 }
 
 #[cfg(feature = "client-wowforever")]
+fn new_forever_game_env() -> WowLuaEnv {
+    let env = WowLuaEnv::new().expect("create Forever Lua environment");
+    crate::common::load_game_startup_inventory(&env);
+    env.sync_addon_names_to_lua();
+    env.apply_post_load_workarounds();
+    let game = wow_ui_sim::screen::ScreenKind::Game;
+    wow_ui_sim::startup::fire_startup_events_for_screen(&env, game);
+    env
+}
+
+#[cfg(feature = "client-wowforever")]
 #[test]
 fn forever_guild_bank_frame_shows_supplied_money() {
     crate::common::with_timeout(120, || {
-        let env = WowLuaEnv::new().expect("create Forever Lua environment");
-        crate::common::load_game_startup_inventory(&env);
-        env.sync_addon_names_to_lua();
-        env.apply_post_load_workarounds();
-        let game = wow_ui_sim::screen::ScreenKind::Game;
-        wow_ui_sim::startup::fire_startup_events_for_screen(&env, game);
-        guild_bank_frame_shows_supplied_money::run(&env);
-        guild_bank_withdraw_state_uses_supplied_permissions::run(&env);
+        guild_bank_frame_shows_supplied_money::run(&new_forever_game_env());
+        guild_bank_withdraw_state_uses_supplied_permissions::run(&new_forever_game_env());
     });
 }
