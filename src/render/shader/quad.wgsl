@@ -96,7 +96,6 @@ fn vs_main(in: VertexInput) -> VertexOutput {
 const BLEND_ALPHA: u32 = 0u;
 const BLEND_ADDITIVE: u32 = 1u;
 const TEX_INDEX_GLYPH: i32 = 5;
-const ATLAS_SIZE: f32 = 4096.0;
 const MAX_ATLAS_UV: f32 = 4095.5 / 4096.0;
 const DISPLAY_RGB_MAX_BYTE: f32 = 255.0;
 const DISPLAY_RGB_ROUNDING_HALF: f32 = 0.5;
@@ -147,8 +146,9 @@ fn clamp_cell_uv_for_mip(
     cell_origin: vec2<f32>,
     cell_uv: f32,
     mip_level: f32,
+    atlas_size: f32,
 ) -> vec2<f32> {
-    let half_texel = 0.5 * exp2(mip_level) / ATLAS_SIZE;
+    let half_texel = 0.5 * exp2(mip_level) / atlas_size;
     let min_uv = cell_origin + half_texel;
     let max_uv = max(min_uv, cell_origin + cell_uv - half_texel);
     return clamp(uv, min_uv, max_uv);
@@ -168,8 +168,9 @@ fn sample_tier_mip(
     cell_origin: vec2<f32>,
     cell_uv: f32,
     lod: f32,
+    atlas_size: f32,
 ) -> vec4<f32> {
-    let mip_uv = clamp_cell_uv_for_mip(uv, cell_origin, cell_uv, lod);
+    let mip_uv = clamp_cell_uv_for_mip(uv, cell_origin, cell_uv, lod, atlas_size);
     return textureSampleLevel(tex, texture_sampler, mip_uv, lod);
 }
 
@@ -181,12 +182,14 @@ fn sample_tier_trilinear(
     grid_size: f32,
     max_lod: f32,
 ) -> vec4<f32> {
-    let rho = max(length(ddx * ATLAS_SIZE), length(ddy * ATLAS_SIZE));
+    // A tier's atlas is grid_size cells of 2^max_lod texels a side (atlas.rs tier_atlas_size).
+    let atlas_size = grid_size * exp2(max_lod);
+    let rho = max(length(ddx * atlas_size), length(ddy * atlas_size));
     let lod = clamp(log2(max(rho, 1.0)), 0.0, max_lod);
     let cell_origin = floor(uv * grid_size) / grid_size;
     let cell_uv = 1.0 / grid_size;
     let mip_floor = floor(lod);
-    var sample_floor = sample_tier_mip(tex, uv, cell_origin, cell_uv, mip_floor);
+    var sample_floor = sample_tier_mip(tex, uv, cell_origin, cell_uv, mip_floor, atlas_size);
     let frac_lod = fract(lod);
     if frac_lod <= 0.001 {
         return select(unpremultiply_sample(sample_floor), sample_floor, mip_floor == 0.0);
@@ -195,7 +198,7 @@ fn sample_tier_trilinear(
         sample_floor = vec4<f32>(sample_floor.rgb * sample_floor.a, sample_floor.a);
     }
     let mip_ceil = min(mip_floor + 1.0, max_lod);
-    let sample_ceil = sample_tier_mip(tex, uv, cell_origin, cell_uv, mip_ceil);
+    let sample_ceil = sample_tier_mip(tex, uv, cell_origin, cell_uv, mip_ceil, atlas_size);
     return unpremultiply_sample(mix(sample_floor, sample_ceil, frac_lod));
 }
 
@@ -208,8 +211,8 @@ fn sample_rgba_tier(
     switch tex_index {
         case 0: { return sample_tier_trilinear(tier_64, uv, ddx, ddy, 64.0, 6.0); }
         case 1: { return sample_tier_trilinear(tier_128, uv, ddx, ddy, 32.0, 7.0); }
-        case 2: { return sample_tier_trilinear(tier_256, uv, ddx, ddy, 16.0, 8.0); }
-        case 3: { return sample_tier_trilinear(tier_512, uv, ddx, ddy, 8.0, 9.0); }
+        case 2: { return sample_tier_trilinear(tier_256, uv, ddx, ddy, 32.0, 8.0); }
+        case 3: { return sample_tier_trilinear(tier_512, uv, ddx, ddy, 16.0, 9.0); }
         default: { return sample_tier_trilinear(tier_2048, uv, ddx, ddy, 2.0, 11.0); }
     }
 }

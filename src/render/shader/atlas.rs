@@ -32,6 +32,20 @@ pub const NUM_TIERS: usize = 5;
 
 /// Size of each tier's atlas texture.
 const ATLAS_SIZE: u32 = 4096;
+
+/// A tier's atlas side in texels. The 256 and 512 tiers are 8192 (1024 and 256 cells): a view showing many
+/// 256- and 512-texel textures (map tiles, model textures) needs more than a 4096 atlas holds (256 and 64 cells),
+/// and past that textures went to a smaller tier and were drawn downsized (blurred), where the client draws each
+/// texture at its own size. Cells are never freed, so the count is every texture drawn since load. 8192 is
+/// wgpu's default 2D limit. The shader derives the size from the tier's grid (quad.wgsl sample_rgba_tier: grid
+/// 32 for tier 2, 16 for tier 3).
+const fn tier_atlas_size(cell_size: u32) -> u32 {
+    if cell_size == 256 || cell_size == 512 {
+        8192
+    } else {
+        ATLAS_SIZE
+    }
+}
 const GLYPH_ATLAS_SIZE: u32 = 2048;
 
 /// Entry for a texture in the atlas.
@@ -73,6 +87,8 @@ struct TierAtlas {
     texture: wgpu::Texture,
     view: wgpu::TextureView,
     cell_size: u32,
+    /// Side of the atlas texture in texels (tier_atlas_size).
+    atlas_size: u32,
     mip_level_count: u32,
     /// Grid dimensions (how many cells fit in each direction).
     grid_size: u32,
@@ -82,7 +98,8 @@ struct TierAtlas {
 
 impl TierAtlas {
     fn new(device: &wgpu::Device, cell_size: u32, tier_index: usize) -> Self {
-        let grid_size = ATLAS_SIZE / cell_size;
+        let atlas_size = tier_atlas_size(cell_size);
+        let grid_size = atlas_size / cell_size;
         let mip_level_count = tier_mip_level_count(cell_size);
 
         let texture = device.create_texture(&wgpu::TextureDescriptor {
@@ -91,8 +108,8 @@ impl TierAtlas {
                 tier_index, cell_size, cell_size
             )),
             size: wgpu::Extent3d {
-                width: ATLAS_SIZE,
-                height: ATLAS_SIZE,
+                width: atlas_size,
+                height: atlas_size,
                 depth_or_array_layers: 1,
             },
             mip_level_count,
@@ -113,6 +130,7 @@ impl TierAtlas {
             texture,
             view,
             cell_size,
+            atlas_size,
             mip_level_count,
             grid_size,
             next_slot: 0,
@@ -141,7 +159,7 @@ impl TierAtlas {
 
     /// Get UV offset for a grid position.
     fn uv_offset(&self, grid_x: u32, grid_y: u32) -> (f32, f32) {
-        let cell_uv = self.cell_size as f32 / ATLAS_SIZE as f32;
+        let cell_uv = self.cell_size as f32 / self.atlas_size as f32;
         (grid_x as f32 * cell_uv, grid_y as f32 * cell_uv)
     }
 }
@@ -258,6 +276,11 @@ impl GpuTextureAtlas {
 
         let tier_idx = self.select_tier(width, height)?;
         let cell_size = self.tiers[tier_idx].cell_size;
+        if width.max(height) > cell_size && width.max(height) <= TIER_SIZES[NUM_TIERS - 1] {
+            eprintln!(
+                "Texture atlas full: {path} ({width}x{height}) drawn downsized to {cell_size}x{cell_size}"
+            );
+        }
         let (grid_x, grid_y) = self.tiers[tier_idx].allocate_slot()?;
 
         upload_cell_to_gpu(
@@ -418,7 +441,7 @@ impl GpuTextureAtlas {
     pub fn memory_stats(&self) -> TierStats {
         let mut stats = TierStats::default();
         for (i, tier) in self.tiers.iter().enumerate() {
-            let tier_bytes = mip_chain_bytes(ATLAS_SIZE, tier.mip_level_count);
+            let tier_bytes = mip_chain_bytes(tier.atlas_size, tier.mip_level_count);
             stats.allocated_bytes += tier_bytes;
             stats.used_slots[i] = tier.next_slot as usize;
             let slot_bytes = mip_chain_bytes(tier.cell_size, tier.mip_level_count);
@@ -573,13 +596,11 @@ fn compute_texture_entry(
     cell_size: u32,
 ) -> TextureEntry {
     let (uv_base_x, uv_base_y) = tier.uv_offset(grid_x, grid_y);
-    let cell_uv_size = cell_size as f32 / ATLAS_SIZE as f32;
+    let atlas_size = tier.atlas_size as f32;
+    let cell_uv_size = cell_size as f32 / atlas_size;
 
     let (uv_width, uv_height) = if width <= cell_size && height <= cell_size {
-        (
-            width as f32 / ATLAS_SIZE as f32,
-            height as f32 / ATLAS_SIZE as f32,
-        )
+        (width as f32 / atlas_size, height as f32 / atlas_size)
     } else {
         (cell_uv_size, cell_uv_size)
     };
@@ -661,8 +682,29 @@ mod tests {
                 tier.mip_level_count,
                 tier_mip_level_count(TIER_SIZES[index])
             );
-            assert_eq!(tier.grid_size, ATLAS_SIZE / TIER_SIZES[index]);
+            assert_eq!(
+                tier.grid_size,
+                tier_atlas_size(TIER_SIZES[index]) / TIER_SIZES[index]
+            );
             assert_eq!(tier.next_slot, 0);
+        }
+    }
+
+    #[test]
+    fn shader_grid_sizes_match_tier_atlas_sizes() {
+        // quad.wgsl samples each tier by its grid size; it must match the atlas
+        // the tier was created with, or every UV lands in the wrong cell.
+        let shader = include_str!("quad.wgsl");
+        for (index, name) in ["tier_64", "tier_128", "tier_256", "tier_512", "tier_2048"]
+            .into_iter()
+            .enumerate()
+        {
+            let grid = tier_atlas_size(TIER_SIZES[index]) / TIER_SIZES[index];
+            let call = format!("sample_tier_trilinear({name}, uv, ddx, ddy, {grid}.0,");
+            assert!(
+                shader.contains(&call),
+                "quad.wgsl should sample {name} with grid {grid}"
+            );
         }
     }
 
