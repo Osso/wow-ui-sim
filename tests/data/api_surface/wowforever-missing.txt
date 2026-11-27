@@ -90,17 +90,12 @@ C_Bank.UpdateBankTabSettings # not-yet
 C_Bank.WithdrawMoney # not-yet
 C_BarberShop.GetCurrentCost # not-yet
 C_BarberShopInternal.SetQAMode # not-yet
-C_BattleNet.AreFriendTagsEnabled # not-yet
 C_BattleNet.AreRealIDFriendsEnabled # not-yet
-C_BattleNet.AreTitleFriendCustomNamesEnabled # not-yet
-C_BattleNet.AreTitleFriendsEnabled # not-yet
 C_BattleNet.BNCheckBattleTagInviteToRecentAlly # not-yet
 C_BattleNet.BNCheckTitleFriendInviteToUnit # not-yet
 C_BattleNet.GetCustomTitleFriendName # not-yet
 C_BattleNet.GetFriendLevelFromInviteText # not-yet
 C_BattleNet.GetGameAccountInfoByID # not-yet
-C_BattleNet.IsBattleNetFriendsListEnabled # not-yet
-C_BattleNet.IsBattleNetFriendsListSupported # not-yet
 C_BattleNet.IsFriendTagSupportedForCurrentGameType # not-yet: temporary Lua workaround
 C_BattleNet.SearchFriends # not-yet
 C_BattleNet.SendTitleFriendInviteByName # not-yet
