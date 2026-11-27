@@ -195,7 +195,9 @@ fn validate_format_argument(
     conversion: u8,
 ) -> LuaResult<bool> {
     match conversion {
-        b's' if matches!(value, Val::Str(_) | Val::Num(_)) => Ok(false),
+        b's' if matches!(value, Val::Str(_) | Val::Num(_)) || is_secret_string(state, value) => {
+            Ok(false)
+        }
         b's' => Err(format_type_error(state, argument_position, "string")),
         b'q' => match value {
             Val::Str(_) => Ok(false),
@@ -256,6 +258,13 @@ fn check_signed_integer_range(number: f64) -> LuaResult<()> {
 fn is_secret_number(state: &LuaState, value: Val) -> bool {
     rilua::table_security::secret_payload_kind(state, value)
         == Some(rilua::table_security::SecretPayloadKind::Number)
+}
+
+/// Secret `%s` stays opaque: rilua's formatter keeps the full payload secret
+/// (docs/specs/secret-string-formatting.md). 8d65b8b3b9 rejected it as userdata.
+fn is_secret_string(state: &LuaState, value: Val) -> bool {
+    rilua::table_security::secret_payload_kind(state, value)
+        == Some(rilua::table_security::SecretPayloadKind::String)
 }
 
 /// Native argument errors drop the function name only without a caller debug
