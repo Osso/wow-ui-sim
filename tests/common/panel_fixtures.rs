@@ -183,7 +183,7 @@ pub fn load_panel_addons(env: &WowLuaEnv) {
     super::blizzard_addon_harness::load_discovered_blizzard_addons_into_env(env, addons);
     // ContainerFrame.lua:2174-2177 creates BackpackTokenFrame when TokenUI's
     // completion event arrives; 9b601ab361 removed the Retail repair.
-    super::fire_original_addon_loaded(env, "Blizzard_TokenUI");
+    crate::common::fire_original_addon_loaded(env, "Blizzard_TokenUI");
     load_panel_startup_publishers(env, &ui);
 }
 
