@@ -45,3 +45,11 @@ A_Admin.SetHouseFinderNeighborhoods({}) -- clear the supplied list
 Each list entry supplies `neighborhoodGUID`, `neighborhoodName`, `neighborhoodType`, `neighborhoodOwnerType`, `suggestionReason`, `uiMapID`, `textureSuffix`, `factionMatches`, and `plots`. Use an empty `plots` array when a neighborhood has no plots. Each plot supplies `mapPosition` and `ownerType`; `plotID`, `plotCost`, and `ownerName` are optional. Setters replace all scenario records. `HouseFinderRequestNeighborhoods` and `RequestHouseFinderNeighborhoodData` queue their matching consumer events for a later timer tick. `StartTutorial` follows the consumer-facing flow as **INFERRED (R88g1; native evidence pending)**. The supplied values describe a test scenario, not live neighborhood or faction data.
 
 See the [housing service contract](../specs/c-factory-m5-services.md).
+
+## House editor (Retail 12.0+ and WoW Forever)
+
+- `A_Admin.SetHouseEditorStatus(statusAvailable, availability, defaultMode[, playerType])` supplies the editor gate read by `IsHouseEditorStatusAvailable` and `GetHouseEditorAvailability`, the mode that `EnterHouseEditor` requests (`1`..`6`), and the `GetHouseEditorPlayerType` result (nil when omitted).
+- `A_Admin.SetHouseEditorModeAvailability(mode, result)` supplies one mode's `Enum.HousingResult` for `GetHouseEditorModeAvailability`, `ActivateHouseEditorMode` and `EnterHouseEditor`.
+- `A_Admin.CompleteHouseEditorModeChange(result)` delivers the server reply to a pending request. `Enum.HousingResult.Success` makes the requested mode active and dispatches `HOUSE_EDITOR_MODE_CHANGED(mode)`; any other result keeps the active mode and dispatches `HOUSE_EDITOR_MODE_CHANGE_FAILURE(result)`.
+- Without inputs every request returns `GenericFailure` (existing INFERRED default). These are scenario inputs, not native housing permissions.
+
