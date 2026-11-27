@@ -5,17 +5,14 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 /// Forever (Camelot) has no legacy `GetSpecialization` global: its
 /// Blizzard_DeprecatedSpecialization alias is excluded (305a9fe8f6), so the
 /// active-spec read is the native `C_SpecializationInfo.GetSpecialization`.
-const ACTIVE_SPECIALIZATION_LUA: &str = if cfg!(feature = "client-wowforever") {
-    "function ActiveSpecialization() return C_SpecializationInfo.GetSpecialization() end"
+const SPEC_GETTER: &str = if cfg!(feature = "client-wowforever") {
+    "C_SpecializationInfo.GetSpecialization"
 } else {
-    "function ActiveSpecialization() return GetSpecialization() end"
+    "GetSpecialization"
 };
 
 fn env() -> WowLuaEnv {
-    let env = WowLuaEnv::new().expect("Failed to create Lua environment");
-    env.exec(ACTIVE_SPECIALIZATION_LUA)
-        .expect("active specialization reader");
-    env
+    WowLuaEnv::new().expect("Failed to create Lua environment")
 }
 
 // ============================================================================
@@ -26,12 +23,12 @@ fn env() -> WowLuaEnv {
 fn test_set_spec_readable_via_get_specialization() {
     let env = env();
     let spec: i32 = env
-        .eval(
+        .eval(&format!(
             r#"
             A_Admin.SetSpec(3)
-            return ActiveSpecialization()
-            "#,
-        )
+            return {SPEC_GETTER}()
+            "#
+        ))
         .unwrap();
     assert_eq!(spec, 3);
 }
@@ -61,12 +58,12 @@ fn test_specialization_role_by_id_returns_role_token() {
 fn test_set_spec_one() {
     let env = env();
     let spec: i32 = env
-        .eval(
+        .eval(&format!(
             r#"
             A_Admin.SetSpec(1)
-            return ActiveSpecialization()
-            "#,
-        )
+            return {SPEC_GETTER}()
+            "#
+        ))
         .unwrap();
     assert_eq!(spec, 1);
 }
@@ -75,12 +72,12 @@ fn test_set_spec_one() {
 fn test_set_spec_two() {
     let env = env();
     let spec: i32 = env
-        .eval(
+        .eval(&format!(
             r#"
             A_Admin.SetSpec(2)
-            return ActiveSpecialization()
-            "#,
-        )
+            return {SPEC_GETTER}()
+            "#
+        ))
         .unwrap();
     assert_eq!(spec, 2);
 }
@@ -89,13 +86,13 @@ fn test_set_spec_two() {
 fn test_set_spec_overrides_previous() {
     let env = env();
     let spec: i32 = env
-        .eval(
+        .eval(&format!(
             r#"
             A_Admin.SetSpec(1)
             A_Admin.SetSpec(4)
-            return ActiveSpecialization()
-            "#,
-        )
+            return {SPEC_GETTER}()
+            "#
+        ))
         .unwrap();
     assert_eq!(spec, 4);
 }
