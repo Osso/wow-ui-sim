@@ -223,26 +223,18 @@ pub(crate) fn apply_bootstrap(_lua: &mut rilua::Lua) -> crate::Result<()> {
 #[cfg(test)]
 mod tests {
     non_mists_client_identity_fixture! {
-    #[test]
-    fn installs_client_info_defaults() {
-        use crate::lua_api::WowLuaEnv;
-        let env = WowLuaEnv::new().expect("lua env should initialize");
-
-        let (expected_version, expected_build) = crate::client_profile::client_identity().unwrap();
-        let expected_interface = crate::client_profile::CLIENT_INTERFACE;
-        let script = format!(
-            r#"
+    const CLIENT_INFO_PROBE: &str = r#"
                 local version, build, date, interface = GetBuildInfo()
-                if version ~= "{}" or build ~= "{}" or date ~= "Jun 17 2026" or interface ~= {} then
+                if version ~= "__VERSION__" or build ~= "__BUILD__" or date ~= "Jun 17 2026" or interface ~= __INTERFACE__ then
                   return "build"
                 end
                 if GetRealmName() ~= "SimulatedRealm" or GetNormalizedRealmName() ~= "SimulatedRealm" then return "realm" end
                 if GetRealmID() ~= 1 then return "realm_id" end
-                if GetExpansionLevel() ~= {} then return "expansion" end
+                if GetExpansionLevel() ~= __EXPANSION__ then return "expansion" end
                 if GetUpgradeExpansionLevel() ~= 80 then return "upgrade_expansion" end
                 if IsExpansionTrial() ~= false then return "expansion_trial" end
                 local isExpansionTrial, expansionTrialRemaining = GetExpansionTrialInfo()
-                if isExpansionTrial ~= false or expansionTrialRemaining ~= 0 then return "expansion_trial_info" end
+                if isExpansionTrial ~= false or expansionTrialRemaining ~= __TRIAL_REMAINING__ then return "expansion_trial_info" end
                 if IsTrialAccount() ~= false or IsRestrictedAccount() ~= false then return "account_restrictions" end
                 if IsVeteranTrialAccount() ~= false or IsAccountSecured() ~= true then return "account_status" end
                 if IsMacClient() ~= false or IsWindowsClient() ~= false then return "platform" end
@@ -263,14 +255,41 @@ mod tests {
                 if GetFileStreamingStatus() ~= 0 or GetBackgroundLoadingStatus() ~= 0 then return "streaming_status" end
                 if GetWebTicket() ~= nil then return "web_ticket" end
                 return "ok"
-                "#,
-            expected_version,
-            expected_build,
-            expected_interface,
-            crate::client_profile::ACTIVE.expansion_level()
-        );
+"#;
+
+    /// Retail and Forever read the supplied account-type model (39619d4f1e,
+    /// INFERRED R88fw), which returns no remaining time outside a trial.
+    fn expected_trial_remaining() -> &'static str {
+        if cfg!(any(
+            feature = "client-retail",
+            feature = "client-wowforever"
+        )) {
+            "nil"
+        } else {
+            "0"
+        }
+    }
+
+    fn client_info_probe() -> String {
+        let (version, build) = crate::client_profile::client_identity().unwrap();
+        let expansion = crate::client_profile::ACTIVE.expansion_level().to_string();
+        CLIENT_INFO_PROBE
+            .replace("__VERSION__", &version)
+            .replace("__BUILD__", &build)
+            .replace(
+                "__INTERFACE__",
+                &crate::client_profile::CLIENT_INTERFACE.to_string(),
+            )
+            .replace("__EXPANSION__", &expansion)
+            .replace("__TRIAL_REMAINING__", expected_trial_remaining())
+    }
+
+    #[test]
+    fn installs_client_info_defaults() {
+        use crate::lua_api::WowLuaEnv;
+        let env = WowLuaEnv::new().expect("lua env should initialize");
         let result: String = env
-            .eval(&script)
+            .eval(&client_info_probe())
             .expect("client info defaults probe should run");
 
         assert_eq!(result, "ok");
