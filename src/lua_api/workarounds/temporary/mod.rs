@@ -96,10 +96,7 @@ pub(crate) mod dye_color_defaults;
 pub(crate) mod edit_mode_cache_defaults;
 pub(crate) mod encounter_state;
 pub(crate) mod environment_cleanup_restore;
-#[cfg(any(
-    test,
-    not(any(feature = "client-retail", feature = "client-wowforever"))
-))]
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod equipment_set_lock_defaults;
 pub(crate) mod event_scheduler_state;
 #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
