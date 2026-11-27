@@ -18,6 +18,7 @@ The `A_Admin` namespace provides administrative functions for controlling simula
 - [Kiosk session](kiosk.md) — SetKioskSession
 - [Communities](communities.md) — SetAccountMutedClub, SetClubTypeAllowed, SetDiscordServers, SetDiscordUser
 - [Contribution Collector](contribution-collector.md) — SetContributionCollectors
+- [Reputation](reputation.md) — SetReputationFactions
 - Vignettes (Retail and WoW Forever): `A_Admin.SetVignettes(records)` supplies the session's modeled `C_VignetteInfo` records and fires `VIGNETTES_UPDATED`. Other profiles retain their existing legacy vignette surface. Each record requires `vignetteGUID`, `uiMapID`, `x`, and `y`; documented `VignetteInfo` fields can also be supplied, including `mapPin`. Optional host values are `facing`, `healthPercent`, `minGroupSize`, and `maxGroupSize`. Empty records are the default. Unknown-GUID return behavior is INFERRED (R88g6).
 - [Chat windows](chat-windows.md) — SetChatWindowState
 - [Voice chat](voice-chat.md) — SetCanPlayerUseVoiceChat, SetVoiceChatConnected, SetRemoteTtsVoices
