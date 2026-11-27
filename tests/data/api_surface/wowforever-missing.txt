@@ -1307,7 +1307,6 @@ C_PetJournal.GetOwnedPetIDs # not-yet
 C_PetJournal.GetPetInfoTableByPetID # not-yet
 C_PetJournal.GetPetInfoTableBySpeciesID # not-yet
 C_PetJournal.GetSearchFilter # not-yet
-C_PetJournal.IsCurrentlySummoned # not-yet
 C_PetJournal.PetUsesRandomDisplay # not-yet
 C_PhotoSharing.BeginAuthorizationFlow # not-yet
 C_PhotoSharing.ClearAuthorization # not-yet
