@@ -43,7 +43,8 @@ fn read_channel(state: &mut LuaState, entry: Val) -> LuaResult<DiscordChannel> {
 
 fn read_server(state: &mut LuaState, entry: Val) -> LuaResult<DiscordServer> {
     let name = read_name(state, entry)?;
-    let channels = array_entries(state, table_get(state, entry, "channels"))?
+    let channel_list = table_get(state, entry, "channels");
+    let channels = array_entries(state, channel_list)?
         .into_iter()
         .map(|channel| read_channel(state, channel))
         .collect::<LuaResult<_>>()?;
