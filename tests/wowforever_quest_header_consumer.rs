@@ -10,7 +10,10 @@ fn load_header_consumer_env() -> WowLuaEnv {
         .expect("locate synced Forever cache");
     // Same whole-cache loading style as wowforever_quest_difficulty.rs.
     // No source slicing, rewriting, target-body copying, or C API substitution.
+    // TimeUtil.lua owns SecondsFormatter, read by QuestUtils.lua at file scope;
+    // b20797e67a retired the bootstrap formatter copy.
     for file in [
+        "Blizzard_SharedXML/TimeUtil.lua",
         "Blizzard_FrameXMLUtil/Mainline/QuestUtils.lua",
         "Blizzard_UIPanels_Game/Mainline/QuestMapFrame.lua",
     ] {
