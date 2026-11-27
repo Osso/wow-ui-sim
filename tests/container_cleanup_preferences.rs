@@ -68,6 +68,7 @@ const STACK_SPLIT_BINDING_SETUP: &str = r#"
     end
     assert(StackSplitConsumerButton, "bag slot 1 has no item button")
     SetModifiedClick("SPLITSTACK", "SHIFT")
+    SetModifiedClick("EXPANDITEM", "CTRL")
 "#;
 
 const BACKPACK_CLEANUP_MENU: &str = r#"
