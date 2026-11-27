@@ -70,3 +70,30 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(UI_FRAME_MANAGER_DEFAULTS_LUA)?;
     Ok(())
 }
+
+#[cfg(test)]
+mod tests {
+    use crate::lua_api::WowLuaEnv;
+
+    #[test]
+    fn preserves_existing_manager_members() {
+        let env = WowLuaEnv::new().expect("lua env should initialize");
+        env.exec(
+            r#"
+            UIFrameManager.RegisterFrameForFrameType = function() return "existing" end
+            "#,
+        )
+        .expect("fixture should override an existing manager member");
+
+        {
+            let mut lua = env.lua.borrow_mut();
+            super::apply_bootstrap(&mut lua).expect("UIFrameManager defaults should apply");
+        }
+
+        let result: String = env
+            .eval("return UIFrameManager.RegisterFrameForFrameType()")
+            .expect("existing manager member should be callable");
+
+        assert_eq!(result, "existing");
+    }
+}
