@@ -14,6 +14,17 @@ fn assert_rgb(actual: (f64, f64, f64), expected: (f64, f64, f64), what: &str) {
     );
 }
 
+/// `NORMAL_FONT_COLOR` itself. Retail publishes it from GlobalColor row 1,
+/// packed 0xffffd200 (25de2cf94e, global_colors_retail.rs), since 7705112fd5
+/// retired the (1, .82, 0) fallback; literal `g=.82` fonts are unaffected.
+fn normal_font_color() -> (f64, f64, f64) {
+    if cfg!(feature = "client-retail") {
+        (1.0, 210.0 / 255.0, 0.0)
+    } else {
+        (1.0, 0.82, 0.0)
+    }
+}
+
 #[test]
 fn blizzard_gold_fonts_carry_their_colour_into_font_strings() {
     with_blizzard_addon_closure(
@@ -51,7 +62,7 @@ fn blizzard_gold_fonts_carry_their_colour_into_font_strings() {
                 .expect("font colours");
             assert_rgb(
                 (sr, sg, sb),
-                (1.0, 0.82, 0.0),
+                normal_font_color(),
                 "GameFontNormalSmall <Color color=NORMAL_FONT_COLOR>",
             );
             assert_rgb(
@@ -61,7 +72,7 @@ fn blizzard_gold_fonts_carry_their_colour_into_font_strings() {
             );
             assert_rgb(
                 (fr, fg, fb),
-                (1.0, 0.82, 0.0),
+                normal_font_color(),
                 "a FontString inheriting GameFontNormalSmall",
             );
             assert_rgb(
@@ -71,7 +82,7 @@ fn blizzard_gold_fonts_carry_their_colour_into_font_strings() {
             );
             assert_rgb(
                 (lr, lg, lb),
-                (1.0, 0.82, 0.0),
+                normal_font_color(),
                 "GameFontNormalLarge inherits GameFontNormal's colour",
             );
         },
