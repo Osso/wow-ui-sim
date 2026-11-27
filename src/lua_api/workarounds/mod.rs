@@ -433,7 +433,9 @@ fn apply_dispatcher_and_date_defaults(lua: &mut rilua::Lua) -> crate::Result<()>
 }
 
 fn apply_format_and_game_defaults(lua: &mut rilua::Lua) -> crate::Result<()> {
-    temporary::dropdown_list_defaults::apply_bootstrap(lua)?;
+    if should_use_temporary_shared_xml_defaults() {
+        temporary::dropdown_list_defaults::apply_bootstrap(lua)?;
+    }
     temporary::formatting_utility_defaults::apply_bootstrap(lua)?;
     temporary::game_time_calendar_invites::apply_bootstrap(lua)?;
     temporary::gamepad_cursor_control_defaults::apply_bootstrap(lua)?;
@@ -489,7 +491,7 @@ fn apply_feature_temporary_namespace_bootstrap(lua: &mut rilua::Lua) -> crate::R
 
 fn apply_feature_tool_defaults(lua: &mut rilua::Lua) -> crate::Result<()> {
     temporary::assisted_combat_manager_defaults::apply_bootstrap(lua)?;
-    if callback_registry_defaults_enabled() {
+    if should_use_temporary_shared_xml_defaults() {
         temporary::callback_registry_defaults::apply_bootstrap(lua)?;
     }
     temporary::macro_defaults::apply_bootstrap(lua)?;
@@ -555,12 +557,12 @@ pub(crate) fn apply_cpp_mixin_stubs_after_lua_file(env: &crate::lua_api::LoaderE
 }
 
 pub(crate) fn patch_callback_registry_defaults(env: &crate::lua_api::LoaderEnv<'_>) {
-    if callback_registry_defaults_enabled() {
+    if should_use_temporary_shared_xml_defaults() {
         let _ = temporary::callback_registry_defaults::patch_for_addon_load(env);
     }
 }
 
-fn callback_registry_defaults_enabled() -> bool {
+fn should_use_temporary_shared_xml_defaults() -> bool {
     !matches!(
         crate::client_profile::ACTIVE,
         crate::client_profile::ClientProfile::Retail
