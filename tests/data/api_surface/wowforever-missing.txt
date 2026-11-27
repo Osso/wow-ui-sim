@@ -1313,12 +1313,8 @@ C_ProfSpecs.GetUnlockEntryForPath # not-yet
 C_ProfSpecs.GetUnlockRankForPerk # not-yet
 C_ProfSpecs.ShouldShowPointsReminderForSkillLine # not-yet
 C_PvP.ArePvpTalentsUnlocked # not-yet
-C_PvP.AreTrainingGroundsEnabled # not-yet
 C_PvP.CanDisplayDeaths # not-yet
 C_PvP.CanDisplayHonorableKills # not-yet
-C_PvP.CanPlayerUseRatedPVPUI # not-yet
-C_PvP.CanPlayerUseTrainingGroundsUI # not-yet
-C_PvP.CanSurrenderArena # not-yet
 C_PvP.CanToggleWarMode # not-yet
 C_PvP.CanToggleWarModeInArea # not-yet
 C_PvP.DoesMatchOutcomeAffectRating # not-yet
@@ -1327,12 +1323,10 @@ C_PvP.GetActiveMatchDuration # not-yet
 C_PvP.GetActiveMatchWinner # not-yet
 C_PvP.GetArenaOpponentSpec # not-yet
 C_PvP.GetArenaRewards # not-yet
-C_PvP.GetArenaSkirmishRewards # not-yet
 C_PvP.GetAssignedSpecForBattlefieldQueue # not-yet
 C_PvP.GetBattlefieldFlagPosition # not-yet
 C_PvP.GetBattlefieldVehicleInfo # not-yet
 C_PvP.GetBattlefieldVehicles # not-yet
-C_PvP.GetBattlegroundInfo # not-yet
 C_PvP.GetBrawlRewards # not-yet
 C_PvP.GetBrawlSoloRBGMinItemLevel # not-yet
 C_PvP.GetGlobalPvpScalingInfoForSpecID # not-yet
@@ -1349,8 +1343,6 @@ C_PvP.GetPostMatchCurrencyRewards # not-yet
 C_PvP.GetPostMatchItemRewards # not-yet
 C_PvP.GetPvpTierID # not-yet
 C_PvP.GetPvpTierInfo # not-yet
-C_PvP.GetRandomBGRewards # not-yet
-C_PvP.GetRandomEpicBGRewards # not-yet
 C_PvP.GetRandomTrainingGroundArenaRewards # not-yet
 C_PvP.GetRandomTrainingGroundBGRewards # not-yet
 C_PvP.GetRatedBGRewards # not-yet
@@ -1364,17 +1356,14 @@ C_PvP.GetScoreInfoByPlayerGuid # not-yet
 C_PvP.GetSeasonBestInfo # not-yet
 C_PvP.GetSkirmishInfo # not-yet
 C_PvP.GetTeamInfo # not-yet
-C_PvP.GetTrainingGrounds # not-yet
 C_PvP.GetUIDisplaySeason # not-yet
 C_PvP.GetWeeklyChestInfo # not-yet
 C_PvP.HasArenaSkirmishWinToday # not-yet
-C_PvP.HasMatchStarted # not-yet
 C_PvP.HasRandomTrainingGroundArenaWinToday # not-yet
 C_PvP.HasRandomTrainingGroundBGWinToday # not-yet
 C_PvP.IsActiveMatchRegistered # not-yet
 C_PvP.IsArena # not-yet
 C_PvP.IsBattleground # not-yet
-C_PvP.IsBattlegroundEnlistmentBonusActive # not-yet
 C_PvP.IsBrawlSoloRBG # not-yet
 C_PvP.IsBrawlSoloShuffle # not-yet
 C_PvP.IsInBrawl # not-yet: temporary Lua workaround
@@ -1382,21 +1371,14 @@ C_PvP.IsInRatedMatchWithDeserterPenalty # not-yet
 C_PvP.IsMatchFactional # not-yet
 C_PvP.IsPVPMap # not-yet
 C_PvP.IsSoloShuffle # not-yet: temporary Lua workaround
-C_PvP.IsSubZonePVPPOI # not-yet
-C_PvP.IsTrainingGroundsArena # not-yet
-C_PvP.IsTrainingGroundsBG # not-yet
 C_PvP.IsWarModeActive # not-yet
 C_PvP.IsWarModeFeatureEnabled # not-yet
 C_PvP.JoinBrawl # not-yet
-C_PvP.JoinRandomTrainingGroundArena # not-yet
 C_PvP.JoinRandomTrainingGroundBG # not-yet
 C_PvP.JoinRatedBGBlitz # not-yet
-C_PvP.JoinTrainingGround # not-yet
-C_PvP.SetPVP # not-yet
 C_PvP.SetWarModeDesired # not-yet
 C_PvP.StartSoloRBGWarGameByName # not-yet
 C_PvP.StartSpectatorSoloRBGWarGame # not-yet
-C_PvP.TogglePVP # not-yet
 C_PvP.ToggleWarMode # not-yet
 C_QuestHub.IsAreaPOICurrentlyRelatedToHub # not-yet
 C_QuestHub.IsQuestCurrentlyRelatedToHub # not-yet
