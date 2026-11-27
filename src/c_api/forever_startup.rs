@@ -13,6 +13,8 @@ use crate::lua_bridge::{FromStack, TableBuilder, stack_val, table_set_rust_fn_st
 use rilua::vm::state::LuaState;
 use rilua::{LuaApiMut, LuaResult, Val};
 
+const BANK_TYPE_IDS: [i32; 3] = [0, 1, 2];
+
 /// Explicit inputs for 70532 consumers whose native policy is not established.
 /// Empty collections mean the host supplied no entries; false flags describe
 /// the empty simulator world, not an inferred native account or character.
@@ -307,7 +309,7 @@ fn are_any_bank_types_viewable(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn can_view_bank(state: &mut LuaState) -> LuaResult<u32> {
-    let bank_type = i32::from_stack(state, 1)?;
+    let bank_type = read_bank_type(stack_val(state, 1))?;
     let viewable = borrow_state(state)?
         .forever_startup
         .viewable_bank_types
@@ -323,7 +325,7 @@ fn set_bank_viewable_types(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn fetch_purchased_bank_tab_data(state: &mut LuaState) -> LuaResult<u32> {
-    let bank_type = i32::from_stack(state, 1)?;
+    let bank_type = read_bank_type(stack_val(state, 1))?;
     let tabs = borrow_state(state)?
         .forever_startup
         .purchased_bank_tabs
@@ -358,7 +360,7 @@ fn create_bank_tab_data(state: &mut LuaState, bank_type: i32, tab: &BankTabData)
 }
 
 fn set_purchased_bank_tab_data(state: &mut LuaState) -> LuaResult<u32> {
-    let bank_type = i32::from_stack(state, 1)?;
+    let bank_type = read_bank_type(stack_val(state, 1))?;
     let tabs = parse_bank_tab_data(state, stack_val(state, 2))?;
     borrow_state_mut(state)?
         .forever_startup
@@ -439,6 +441,23 @@ fn read_bank_tab_text(
         .ok_or_else(|| rilua::runtime_error(format!("bank tabs[{index}].{field} must be a string")))
 }
 
+fn read_bank_type(value: Val) -> LuaResult<i32> {
+    match value {
+        Val::Num(number)
+            if number.is_finite()
+                && number.fract() == 0.0
+                && number >= f64::from(i32::MIN)
+                && number <= f64::from(i32::MAX)
+                && BANK_TYPE_IDS.contains(&(number as i32)) =>
+        {
+            Ok(number as i32)
+        }
+        _ => Err(rilua::runtime_error(
+            "bankType must be a documented Enum.BankType value",
+        )),
+    }
+}
+
 fn read_bank_type_ids(state: &mut LuaState, value: Val) -> LuaResult<HashSet<i32>> {
     let Val::Table(array) = value else {
         return Err(rilua::runtime_error(
@@ -464,7 +483,8 @@ fn read_bank_type_ids(state: &mut LuaState, value: Val) -> LuaResult<HashSet<i32
                     if number.is_finite()
                         && number.fract() == 0.0
                         && number >= f64::from(i32::MIN)
-                        && number <= f64::from(i32::MAX) =>
+                        && number <= f64::from(i32::MAX)
+                        && BANK_TYPE_IDS.contains(&(number as i32)) =>
                 {
                     Ok(number as i32)
                 }

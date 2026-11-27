@@ -29,6 +29,8 @@ fn original_bank_interaction_consumes_supplied_tab_data() {
                     tabNameEditBoxHeader = "Rename second tab",
                 },
             })
+            assert(not pcall(A_Admin.SetBankViewableTypes, { 999 }))
+            assert(not pcall(A_Admin.SetPurchasedBankTabData, 999, {}))
             A_Admin.FireEvent(
                 "PLAYER_INTERACTION_MANAGER_FRAME_SHOW",
                 Enum.PlayerInteractionType.Banker

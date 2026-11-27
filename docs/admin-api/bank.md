@@ -4,13 +4,15 @@ Forever bank APIs use simulator host inputs. No bank types or purchased tab reco
 
 ### `A_Admin.SetBankViewableTypes(bankTypes)`
 
-Supplies the bank types that the original bank UI can open. `bankTypes` must be a dense array of integer `Enum.BankType` values. An empty array means no bank type is viewable.
+Supplies the bank types that the original bank UI can open. `bankTypes` must be a dense array of integer `Enum.BankType` values: `Character` (0), `Guild` (1), or `Account` (2). An empty array means no bank type is viewable.
 
 ### `A_Admin.SetShouldUsePlayerBagsInBank(enabled)`
 
 Sets the boolean returned by `C_Bank.ShouldUsePlayerBagsInBank()`. The default is `false` because the host supplied no capability value.
 
 ### `A_Admin.SetPurchasedBankTabData(bankType, records)`
+
+`bankType` must be one of the documented `Enum.BankType` values: `Character` (0), `Guild` (1), or `Account` (2).
 
 Supplies records returned by `C_Bank.FetchPurchasedBankTabData(bankType)`. `records` must be a dense array. Each row requires:
 
