@@ -302,7 +302,8 @@ fn get_inventory_alert_status(state: &mut LuaState) -> LuaResult<u32> {
         return Ok(1);
     };
     let slot = DURABILITY_ALERT_SLOT_IDS[(index - 1) as usize];
-    let status = inventory_alert_status(&borrow_state(state)?, slot);
+    let sim = borrow_state(state)?;
+    let status = inventory_alert_status(&sim, slot);
     state.push(status.map_or(Val::Nil, |status| Val::Num(f64::from(status))));
     Ok(1)
 }
