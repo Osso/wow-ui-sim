@@ -1,12 +1,21 @@
 //! Complete supplied ButtonHeader records projected as fresh Lua snapshots.
 
 use super::{ButtonHeaderRecord, WidgetId, WidgetSpellButtonRecord};
+use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::methods::{borrow_state, create_string, create_table, table_set};
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val, runtime_error};
 
+/// Retail, PTR and Forever UIWidgetManagerDocumentation.lua declare the same
+/// function and `ButtonHeaderWidgetVisualizationInfo` structure.
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
+    if !matches!(
+        ACTIVE,
+        ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever
+    ) {
+        return Ok(());
+    }
     let namespace = crate::c_api::ensure_namespace(state, "C_UIWidgetManager")?;
     table_set_rust_fn_static(
         state,

@@ -1837,12 +1837,7 @@ C_UI.GetTopRightNotchSafeRegion # not-yet
 C_UI.GetUIParent # not-yet
 C_UI.GetWorldFrame # not-yet
 C_UIColor.GetColors # not-yet: temporary Lua workaround
-C_UIWidgetManager.GetBulletTextListWidgetVisualizationInfo # not-yet
-C_UIWidgetManager.GetButtonHeaderWidgetVisualizationInfo # not-yet
 C_UIWidgetManager.GetPreyHuntProgressWidgetVisualizationInfo # not-yet
-C_UIWidgetManager.GetSpacerVisualizationInfo # not-yet
-C_UIWidgetManager.GetSpellDisplayVisualizationInfo # not-yet
-C_UIWidgetManager.GetTextWithStateWidgetVisualizationInfo # not-yet
 C_UnitAuras.AddAuraSound # not-yet
 C_UnitAuras.AuraIsPrivate # not-yet
 C_UnitAuras.CancelAuraByInstanceID # not-yet

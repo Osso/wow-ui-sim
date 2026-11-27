@@ -1,5 +1,5 @@
 //! Complete host-supplied BulletTextListWidgetVisualizationInfo; no inferred defaults.
-//! Cached Retail/PTR UIWidgetManagerDocumentation.lua:1252-1272.
+//! Cached Retail/PTR UIWidgetManagerDocumentation.lua:1252-1272; Forever's structure is byte-identical.
 #[derive(Debug, Clone, PartialEq)]
 pub struct BulletTextListRecord {
     pub shown_state: u32,
