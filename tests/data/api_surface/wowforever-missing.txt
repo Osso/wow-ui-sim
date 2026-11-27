@@ -687,42 +687,28 @@ C_HeirloomInfo.AreAllSourceFiltersChecked # not-yet
 C_HeirloomInfo.IsUsingDefaultFilters # not-yet: temporary Lua workaround
 C_HeirloomInfo.SetAllCollectionFilters # not-yet
 C_HouseExterior.GetCoreFixtureOptionsInfo # not-yet: temporary Lua workaround
-C_HouseExterior.GetCurrentHouseExteriorSize # not-yet: temporary Lua workaround
-C_HouseExterior.GetCurrentHouseExteriorType # not-yet: temporary Lua workaround
-C_HouseExterior.GetHouseExteriorSizeOptions # not-yet: temporary Lua workaround
-C_HouseExterior.GetHouseExteriorTypeOptions # not-yet: temporary Lua workaround
-C_HouseExterior.GetSelectedFixturePointInfo # not-yet: temporary Lua workaround
 C_HouseExterior.HasHoveredFixture # not-yet: temporary Lua workaround
-C_HouseExterior.HasSelectedFixturePoint # not-yet: temporary Lua workaround
 C_HouseExterior.IsAnyDecorAttachedToCoreFixture # not-yet: temporary Lua workaround
 C_HouseExterior.IsAnyDecorAttachedToDoor # not-yet: temporary Lua workaround
-C_HouseExterior.IsAnyDecorAttachedToHouseExterior # not-yet: temporary Lua workaround
-C_HouseExterior.IsAnyDecorAttachedToSelectedFixturePoint # not-yet: temporary Lua workaround
 C_HouseExterior.IsExteriorDecorHidden # not-yet: temporary Lua workaround
 C_HouseExterior.SetExteriorDecorHidden # not-yet: temporary Lua workaround
 C_Housing.AcceptNeighborhoodOwnership # not-yet
-C_Housing.CanEditCharter # not-yet
 C_Housing.CanTakeReportScreenshot # not-yet
 C_Housing.CreateGuildNeighborhood # not-yet
 C_Housing.CreateNeighborhoodCharter # not-yet
 C_Housing.DeclineNeighborhoodOwnership # not-yet
 C_Housing.EditNeighborhoodCharter # not-yet
-C_Housing.GetCurrentHouseInfo # not-yet
 C_Housing.GetCurrentHouseRefundAmount # not-yet
 C_Housing.GetHouseLevelRewardsForLevel # not-yet
 C_Housing.GetHousingAccessFlags # not-yet
 C_Housing.GetOthersOwnedHouses # not-yet
 C_Housing.HouseFinderDeclineNeighborhoodInvitation # not-yet
 C_Housing.HouseFinderRequestReservationAndPort # not-yet
-C_Housing.IsHousingMarketCartFullRemoveEnabled # not-yet
-C_Housing.IsHousingMarketEnabled # not-yet
-C_Housing.IsHousingMarketShopEnabled # not-yet
 C_Housing.LeaveHouse # not-yet
 C_Housing.OnCharterConfirmationAccepted # not-yet
 C_Housing.OnCharterConfirmationClosed # not-yet
 C_Housing.OnCreateCharterNeighborhoodClosed # not-yet
 C_Housing.OnCreateGuildNeighborhoodClosed # not-yet
-C_Housing.OnHouseFinderClickPlot # not-yet
 C_Housing.OnRequestSignatureClicked # not-yet
 C_Housing.OnSignCharterClicked # not-yet
 C_Housing.RelinquishHouse # not-yet

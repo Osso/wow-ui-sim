@@ -1,4 +1,4 @@
-#![cfg(feature = "retail-12-0-5")]
+#![cfg(feature = "house-exterior-model")]
 
 use wow_ui_sim::c_api::c_housing::catalog::{
     HousingCatalogEntryID, HousingCatalogEntryRecord, HousingCatalogEntryVariantID,

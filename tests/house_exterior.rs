@@ -121,18 +121,12 @@ const HOUSE_EXTERIOR_SCRIPT: &str = r#"
 
 fn env() -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("Failed to create Lua environment");
-    #[cfg(all(
-        feature = "retail-12-0-5",
-        any(feature = "profile-retail", feature = "client-ptr")
-    ))]
+    #[cfg(feature = "house-exterior-model")]
     modern_fixture::seed(&env);
     env
 }
 
-#[cfg(all(
-    feature = "retail-12-0-5",
-    any(feature = "profile-retail", feature = "client-ptr")
-))]
+#[cfg(feature = "house-exterior-model")]
 mod modern_fixture {
     use super::WowLuaEnv;
     use wow_ui_sim::c_api::c_housing::catalog::HousingCatalogEntryVariantID;

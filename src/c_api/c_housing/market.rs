@@ -13,7 +13,8 @@ pub(super) fn register(state: &mut LuaState, housing: GcRef<Table>) -> LuaResult
         "IsHousingMarketShopEnabled",
         is_market_shop_enabled,
     )?;
-    #[cfg(feature = "retail-12-0-5")]
+    // Forever HousingUIDocumentation.lua declares this byte-identically.
+    #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
     table_set_rust_fn_static(
         state,
         housing,
