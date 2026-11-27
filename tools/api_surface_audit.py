@@ -25,7 +25,8 @@ CAMERA = re.compile(
     r"|SetMouselookOverrideBinding|(Next|Prev|Reset|Save)View|ZoomIn|ZoomOut)"
 )
 FUNCTION = re.compile(r'Name = "(\w+)",\n\t\t\tType = "Function",\n((?:\t\t\t\w+ = [^\n]*\n)*)')
-CALL = r"(?<![.:\w])(?:function\s+)?[A-Za-z_]\w*(?:\.[A-Za-z_]\w*)?\s*\("
+# rg has no look-around: keep a leading "."/":" and drop those method calls later.
+CALL = r"[.:]?(?:function\s+)?[A-Za-z_]\w*(?:\.[A-Za-z_]\w*)?\s*\("
 
 
 def allowlist_path(profile):
@@ -103,11 +104,11 @@ def bless(profile, log_path):
 
 def call_site_counts(profile):
     addons = CACHE / profile / "AddOns"
-    argv = ["rg", "-o", "-N", "--no-filename", "-P", "-g", "*.lua",
+    argv = ["rg", "-o", "-N", "--no-filename", "-g", "*.lua",
             "-g", "!Blizzard_APIDocumentation*/**", CALL, str(addons)]
     output = subprocess.run(argv, check=True, capture_output=True, text=True).stdout
     tokens = (re.sub(r"\s*\($", "", token) for token in output.splitlines())
-    return collections.Counter(t for t in tokens if not t.startswith("function"))
+    return collections.Counter(t for t in tokens if not t.startswith(("function", ".", ":")))
 
 
 def rank(profile, limit):
