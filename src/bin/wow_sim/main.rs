@@ -62,6 +62,11 @@ struct Args {
     #[arg(long, value_name = "MS")]
     delay: Option<u64>,
 
+    /// How many times slower the simulator runs add-on Lua than the client;
+    /// the script watchdog and bucket throttle limits are scaled by it.
+    #[arg(long, value_name = "FACTOR", default_value_t = 1.0, global = true)]
+    script_time_scale: f64,
+
     /// Execute Lua code after startup (runs after first frame in GUI, after events in screenshot/dump-tree).
     /// Prefix with @ to load from file (e.g., --exec-lua @/tmp/debug.lua).
     #[arg(long, value_name = "CODE")]
@@ -315,6 +320,7 @@ fn run_main() -> Result<(), Box<dyn std::error::Error>> {
         wow_ui_sim::asset_resolver_config::configure_casc_install_env(settings.as_ref());
     }
     wow_ui_sim::blizzard_ui_sync::set_allow_ui_version_mismatch(args.allow_ui_version_mismatch);
+    wow_ui_sim::lua_api::set_script_time_scale(args.script_time_scale);
     let selection = class_spec::parse_selection(
         args.class.as_deref(),
         args.spec.as_deref(),
