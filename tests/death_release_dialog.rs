@@ -1,0 +1,55 @@
+#![cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+//! `GetReleaseTimeRemaining` and `C_DeathRecap.HasRecapEvents` read the host
+//! release timer and recap list. Original consumers: the `PLAYER_DEAD` handler
+//! `GameEvent.HandlePlayerDead` (Blizzard_Game Mainline/EventImplementation.lua:
+//! 221-231 on Retail, Camelot/EventImplementation.lua:17-29 on Forever) shows
+//! the DEATH dialog only for a positive or `-1` timer, and its `OnShow`
+//! (Blizzard_StaticPopup_Game/Mainline/GameDialogDefs.lua:192-221) copies the
+//! timer to `dialog.timeleft` and enables the recap button only with recap events.
+
+use wow_ui_sim::lua_api::WowLuaEnv;
+
+const DIE: &str = r#"
+local seconds, recapID = ...
+StaticPopup_Hide("DEATH")
+A_Admin.ClearDeathRecaps()
+if recapID then A_Admin.AddDeathRecap(recapID, true, 100, 40, 60) end
+A_Admin.SetReleaseTimeRemaining(seconds)
+A_Admin.FireEvent("PLAYER_DEAD")
+local _, dialog = StaticPopup_Visible("DEATH")
+if not dialog then return false, 0, false end
+return true, dialog.timeleft, dialog:GetButton4():IsEnabled()
+"#;
+
+fn die(env: &WowLuaEnv, seconds: f64, recap: &str) -> (bool, f64, bool) {
+    let chunk = format!("return (function(...) {DIE} end)({seconds}, {recap})");
+    env.eval(&chunk)
+        .expect("the original death handler should run")
+}
+
+fn assert_death_dialog_follows_inputs(env: &WowLuaEnv) {
+    assert_eq!(die(env, 360.0, "11"), (true, 360.0, true));
+    assert_eq!(die(env, -1.0, "nil"), (true, -1.0, false));
+    assert_eq!(die(env, 0.0, "11"), (false, 0.0, false));
+}
+
+#[cfg(feature = "client-retail")]
+prefork_full_ui_case! {
+fn death_dialog_follows_the_release_timer_and_recaps(env: &WowLuaEnv) {
+    assert_death_dialog_follows_inputs(env);
+}
+}
+
+#[cfg(feature = "client-wowforever")]
+#[test]
+fn forever_death_dialog_follows_the_release_timer_and_recaps() {
+    crate::common::with_timeout(120, || {
+        let env = WowLuaEnv::new().expect("create Forever Lua environment");
+        crate::common::load_game_startup_inventory(&env);
+        env.sync_addon_names_to_lua();
+        env.apply_post_load_workarounds();
+        let game = wow_ui_sim::screen::ScreenKind::Game;
+        wow_ui_sim::startup::fire_startup_events_for_screen(&env, game);
+        assert_death_dialog_follows_inputs(&env);
+    });
+}

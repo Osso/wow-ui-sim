@@ -2261,7 +2261,6 @@ GetRaidProfileOption # not-yet
 GetRaidProfileSavedPosition # not-yet
 GetRatedBattleGroundInfo # not-yet
 GetRealmID # not-yet: temporary Lua workaround
-GetReleaseTimeRemaining # not-yet: temporary Lua workaround
 GetResSicknessDuration # not-yet
 GetRewardNumSkillUps # not-yet
 GetRewardPackArtifactPower # not-yet

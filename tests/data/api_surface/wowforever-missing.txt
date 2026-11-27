@@ -548,10 +548,6 @@ C_DeathInfo.GetCorpseMapPosition # not-yet
 C_DeathInfo.GetDeathReleasePosition # not-yet
 C_DeathInfo.GetSelfResurrectOptions # not-yet
 C_DeathInfo.UseSelfResurrectOption # not-yet
-C_DeathRecap.GetRecapEvents # not-yet
-C_DeathRecap.GetRecapLink # not-yet
-C_DeathRecap.GetRecapMaxHealth # not-yet
-C_DeathRecap.HasRecapEvents # not-yet
 C_DelvesUI.GetDelvesAffixSpellsForSeason # not-yet
 C_DelvesUI.GetDelvesFactionForSeason # not-yet
 C_DelvesUI.GetLockedTextForCompanion # not-yet
@@ -2047,7 +2043,6 @@ GetPowerRegen # not-yet
 GetPowerRegenForPowerType # not-yet
 GetProtocolTypes # not-yet: temporary Lua workaround
 GetRealmID # not-yet: temporary Lua workaround
-GetReleaseTimeRemaining # not-yet: temporary Lua workaround
 GetResSicknessDuration # not-yet
 GetRuneCooldown # not-yet
 GetRuneCount # not-yet

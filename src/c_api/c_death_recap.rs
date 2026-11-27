@@ -10,22 +10,26 @@
 use crate::c_api::helpers::{ensure_namespace, set_table_array};
 use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::methods::{
-    borrow_state, call_function_state, create_string, create_table, table_get, table_set,
-    val_to_string,
+    borrow_state, borrow_state_mut, call_function_state, create_string, create_table, table_get,
+    table_set, val_to_string,
 };
-use crate::lua_api::state::{DeathRecapEntry, KillingBlowInfo};
-use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
+use crate::lua_api::state::{DeathRecapEntry, DeathRecapEventInfo, KillingBlowInfo};
+use crate::lua_bridge::{FromStack, TableBuilder, stack_val, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 
 pub(crate) fn register_c_death_recap_surface(state: &mut LuaState) -> LuaResult<()> {
     let table_ref = ensure_namespace(state, "C_DeathRecap")?;
-    if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::Ptr) {
+    // Forever DeathRecapDocumentation.lua:10-66 is byte-identical to Retail's.
+    if matches!(
+        ACTIVE,
+        ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever
+    ) {
         table_set_rust_fn_static(state, table_ref, "GetRecapEvents", get_recap_events)?;
         table_set_rust_fn_static(state, table_ref, "HasRecapEvents", has_recap_events)?;
         table_set_rust_fn_static(state, table_ref, "GetRecapLink", get_recap_link)?;
     }
-    #[cfg(feature = "retail-12-0-5")]
+    #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
     table_set_rust_fn_static(state, table_ref, "GetRecapMaxHealth", get_recap_max_health)?;
     table_set_rust_fn_static(
         state,
@@ -40,6 +44,44 @@ pub(crate) fn register_c_death_recap_surface(state: &mut LuaState) -> LuaResult<
         c_death_recap_get_most_recent_death_recap,
     )?;
     Ok(())
+}
+
+/// `A_Admin.AddDeathRecap(recapID, defaultEligible, maxHealth[, currentHP, amount])`
+/// appends one host recap (with one event when `currentHP` is given);
+/// `A_Admin.ClearDeathRecaps()` empties the list. Simulator input, not native
+/// combat-log capture.
+pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
+    builder
+        .set_function("AddDeathRecap", add_death_recap)?
+        .set_function("ClearDeathRecaps", |state| {
+            borrow_state_mut(state)?.death_recaps.clear();
+            Ok(0)
+        })
+}
+
+fn add_death_recap(state: &mut LuaState) -> LuaResult<u32> {
+    let recap_id = u32::from_stack(state, 1)?;
+    let default_eligible = bool::from_stack(state, 2)?;
+    let max_health = u64::from(u32::from_stack(state, 3)?);
+    let event = Option::<u32>::from_stack(state, 4)?.map(|current_hp| DeathRecapEventInfo {
+        current_hp: u64::from(current_hp),
+        amount: None,
+        timestamp: None,
+        source_guid: None,
+    });
+    let amount = Option::<i64>::from_stack(state, 5)?;
+    borrow_state_mut(state)?.death_recaps.push(DeathRecapEntry {
+        recap_id,
+        default_eligible,
+        events: event
+            .map(|e| DeathRecapEventInfo { amount, ..e })
+            .into_iter()
+            .collect(),
+        max_health,
+        zone_name: String::new(),
+        killing_blows: Vec::new(),
+    });
+    Ok(0)
 }
 
 fn read_recap_id(state: &LuaState) -> LuaResult<Option<i32>> {
@@ -149,9 +191,8 @@ fn get_recap_events(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-#[cfg(feature = "retail-12-0-5")]
+#[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 fn get_recap_max_health(state: &mut LuaState) -> LuaResult<u32> {
-    use crate::lua_bridge::FromStack;
     let id = Option::<u32>::from_stack(state, 1)?;
     let maximum = {
         let sim = borrow_state(state)?;

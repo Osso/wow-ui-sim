@@ -1032,6 +1032,8 @@ pub struct SimState {
     pub lfg_roles: LfgRoleSelection,
     /// Account region read by `GetCurrentRegion` and `GetCurrentRegionName`.
     pub current_region: crate::lua_api::globals::real::region::RegionInfo,
+    /// Supplied spirit-release timer read by `GetReleaseTimeRemaining`; `None` when alive.
+    pub release_timer: Option<crate::lua_api::globals::real::release_timer::ReleaseTimer>,
     /// LFG role check in progress read by `GetLFGRoleUpdate`; `None` when idle.
     pub lfg_role_check: Option<crate::lua_api::globals::real::lfg_role_check::LfgRoleCheck>,
     pub lfd_dungeons: Vec<LfdDungeonInfo>,
