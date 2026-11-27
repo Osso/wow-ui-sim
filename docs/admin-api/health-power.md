@@ -73,6 +73,25 @@ A_Admin.SetReleaseTimeRemaining(360)
 A_Admin.FireEvent("PLAYER_DEAD")    -- the original handler shows the DEATH dialog
 ```
 
+### A_Admin.SetNoReleaseAura(seconds)
+
+Supplies a cannot-release effect on the player (Retail, PTR and WoW Forever).
+
+- **seconds** `number` -- positive seconds until the effect ends, `-1` for an until-cancelled effect, or `0` to clear it.
+- **Affects:** `HasNoReleaseAura()` returns `hasCannotReleaseEffect`, `longestDuration` and `hasUntilCancelledDuration`. The DEATH dialog `OnUpdate` disables its release button and shows the whole seconds of a timed effect.
+- **INFERRED R88g9 (native evidence pending):** a timed effect counts down on the simulation clock and ends at 0; an until-cancelled effect reports a duration of 0.
+
+### A_Admin.AddSelfResurrectOption(name, optionType, id, canUse, isLimited, priority)
+
+Appends one `SelfResurrectOption` record (Retail, PTR and WoW Forever). `optionType` is an `Enum.SelfResurrectOptionType` value.
+
+- **Affects:** `C_DeathInfo.GetSelfResurrectOptions()` returns the records in supply order. The DEATH dialog shows button 2 (and button 3 during an encounter that limits resurrections) and labels it from the first option after its usable-first sort.
+- **INFERRED R88g9 (native evidence pending):** without a supplied option the call returns nothing.
+
+### A_Admin.ClearSelfResurrectOptions()
+
+Removes all supplied self-resurrect options.
+
 ### A_Admin.AddDeathRecap(recapID, defaultEligible, maxHealth[, currentHP, amount])
 
 Appends one death recap. With `currentHP` the recap carries one event (`currentHP` and the optional `amount`). `defaultEligible` marks the recap that `C_DeathRecap` calls without a `recapID` select.
