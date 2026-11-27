@@ -65,6 +65,7 @@ const GUILD_BANK_GLOBALS: &[(&str, RustFn)] = &[
         get_guild_bank_withdraw_gold_limit,
     ),
     ("CanGuildBankRepair", can_guild_bank_repair),
+    ("CanEditGuildTabInfo", can_edit_guild_tab_info),
     (
         "SetGuildBankWithdrawGoldLimit",
         set_guild_bank_withdraw_gold_limit,
@@ -344,6 +345,16 @@ fn can_guild_bank_repair(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn can_edit_guild_bank_tab_info(state: &mut LuaState) -> LuaResult<u32> {
+    let tab = borrow_state(state)?.current_guild_bank_tab;
+    can_edit_guild_tab(state, tab)
+}
+
+fn can_edit_guild_tab_info(state: &mut LuaState) -> LuaResult<u32> {
+    let tab = i32::from_stack(state, 1).unwrap_or(1);
+    can_edit_guild_tab(state, tab)
+}
+
+fn can_edit_guild_tab(state: &mut LuaState, tab: i32) -> LuaResult<u32> {
     #[cfg(feature = "client-mists")]
     let allowed = true;
     #[cfg(not(feature = "client-mists"))]
@@ -351,7 +362,7 @@ fn can_edit_guild_bank_tab_info(state: &mut LuaState) -> LuaResult<u32> {
         let sim = borrow_state(state)?;
         let selected = sim.world.guild_selected_rank.checked_sub(1);
         let index = selected.and_then(|rank| usize::try_from(rank).ok());
-        let tab = usize::try_from(sim.current_guild_bank_tab.saturating_sub(1)).ok();
+        let tab = usize::try_from(tab.saturating_sub(1)).ok();
         index
             .and_then(|index| sim.world.guild_bank_rank_permissions.get(&index))
             .zip(tab)

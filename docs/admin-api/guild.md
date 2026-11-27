@@ -119,6 +119,7 @@ Retail and WoW Forever return these empty-state values:
 | `CanWithdrawGuildBankMoney()` | `false` |
 | `CanEditGuildBankTabInfo()` | `false` |
 | `CanGuildBankRepair()` | `false` |
+| `CanEditGuildTabInfo(tab)` | `false` |
 
 Mists keeps its previous money default (123456 copper), unlimited withdraw-money value (-1), and true `CanWithdrawGuildBankMoney()` / `CanEditGuildBankTabInfo()` defaults. Its `GetGuildBankWithdrawGoldLimit()` remains 0. Values and behavior beyond the documented inputs are INFERRED R88g9 (native evidence pending).
 
