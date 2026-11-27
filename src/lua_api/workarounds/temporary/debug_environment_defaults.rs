@@ -241,7 +241,7 @@ mod tests {
                 if secretunwrap(wrapped)() ~= "wrapped" then return "secretwrap" end
                 traceDebugGetters("after_secretwrap", marker)
                 traceDebugGetters("before_callstack_height", marker)
-                if GetCallstackHeight() ~= 0 then return "callstack_height" end
+                if __CALLSTACK_FALLBACK__ and GetCallstackHeight() ~= 0 then return "callstack_height" end
                 if GetErrorCallstackHeight() ~= 0 then return "error_callstack_height" end
                 if type(debugstack) ~= "function" then return "debugstack_type" end
                 if not string.find(debugstack(1), "in main chunk", 1, true) then return "debugstack_value" end
@@ -265,6 +265,18 @@ mod tests {
             .replace(
                 "__TRACE_GETTERS_ENABLED__",
                 if trace_enabled { "true" } else { "false" },
+            )
+            .replace(
+                "__CALLSTACK_FALLBACK__",
+                // Retail/Forever use the Rust GetCallstackHeight (tests/callstack_height.rs).
+                if cfg!(any(
+                    feature = "client-retail",
+                    feature = "client-wowforever"
+                )) {
+                    "false"
+                } else {
+                    "true"
+                },
             )
             .replace(
                 "__RETAIL_SECRET_VALUES__",
