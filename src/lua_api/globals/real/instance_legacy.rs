@@ -19,7 +19,7 @@ pub(crate) fn register_all(lua: &mut Lua) -> LuaResult<()> {
 }
 
 fn get_dungeon_difficulty_id(state: &mut LuaState) -> LuaResult<u32> {
-    // INFERRED "R88g9 (native evidence pending)": report the current world difficulty.
+    // INFERRED (R88g9, native evidence pending): use current difficulty; default to normal when unset.
     let difficulty = match borrow_state(state)?.world.instance_difficulty {
         id if id > 0 => id,
         _ => DEFAULT_DUNGEON_DIFFICULTY_ID,
