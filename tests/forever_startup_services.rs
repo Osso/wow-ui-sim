@@ -20,6 +20,46 @@ fn startup() -> WowLuaEnv {
     env
 }
 
+const DISCORD_GUILD_CONTROL_MENU: &str = r#"
+    local function pick_data(description, data)
+        for _, entry in description:EnumerateElementDescriptions() do
+            if entry:GetData() == data then
+                assert(entry:Pick(MenuInputContext.MouseButton, "LeftButton"))
+                return
+            end
+        end
+        error("menu description missing data " .. data)
+    end
+    A_Admin.SetGuildInfo("Test Guild", "Guild Master", 1)
+    SetCVar("discordClientEnabled", "1")
+    A_Admin.SetDiscordServers({
+        { name = "North", channels = { { name = "general" }, { name = "raids" } } },
+        { name = "South", channels = { { name = "guild" } } },
+    })
+    ShowUIPanel(GuildControlUI)
+    GuildControlUI.dropdown:Click()
+    pick_data(GuildControlUI.dropdown:GetMenuDescription(), 4)
+    assert(GuildControlUI.selectedTab == 4)
+    DiscordUnlinkFrame.button:Click()
+    assert(C_Discord.IsUserOAuthed())
+    local serverDropdown = GuildControlUI.discordFrame.serverDropdown
+    serverDropdown:Click()
+    pick_data(serverDropdown:GetMenuDescription(), 1)
+    assert(GuildControlUI.discordFrame.channelListTitle:GetText():find("North", 1, true))
+    local channelDropdown = GuildControlUI.discordFrame.channelDropdown
+    channelDropdown:Click()
+    local channels = channelDropdown:GetMenuDescription()
+    assert(channels:HasElements())
+    pick_data(channels, 2)
+    assert(GuildControlUI.selectedDiscordChannel == 2)
+    serverDropdown:Click()
+    pick_data(serverDropdown:GetMenuDescription(), 2)
+    assert(GuildControlUI.discordFrame.channelListTitle:GetText():find("South", 1, true))
+    channelDropdown:Click()
+    pick_data(channelDropdown:GetMenuDescription(), 1)
+    assert(GuildControlUI.selectedDiscordChannel == 1)
+"#;
+
 #[test]
 fn forever_gamepad_core_binding_context_tracks_interface_events() {
     let env = startup();
@@ -36,6 +76,13 @@ fn forever_gamepad_core_binding_context_tracks_interface_events() {
         "#,
     )
     .expect("Gamepad Core activates and deactivates its binding context");
+}
+
+#[test]
+fn forever_guild_control_menus_follow_supplied_discord_servers() {
+    let env = startup();
+    env.exec(DISCORD_GUILD_CONTROL_MENU)
+        .expect("Guild Control menus show supplied Discord server and channel choices");
 }
 
 #[test]
