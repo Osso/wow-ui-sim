@@ -1297,6 +1297,30 @@ fn test_old_stack_startup_globals_exist_on_rilua_path() {
     assert!(active_spec_id > 0);
     assert!(!active_spec_name.is_empty());
 }
+const OLD_STACK_POWER_LFG_PROBE: &str = r#"
+    local ptype, ptoken = UnitPowerType("player")
+    return UnitPower("player"), UnitPower("player", 0), UnitPowerMax("player"), ptype, ptoken,
+        type(C_LFGInfo.CanPlayerUseLFD), type(C_LFGInfo.CanPlayerUseLFR),
+        C_LFGInfo.CanPlayerUseLFD(), C_LFGInfo.CanPlayerUseLFR(),
+        type(FACTION_RED_COLOR.GetRGBA)
+"#;
+
+type OldStackPowerLfg = (
+    i64,
+    i64,
+    i64,
+    i64,
+    String,
+    String,
+    String,
+    bool,
+    bool,
+    String,
+);
+
+// Blizzard_EnvironmentCleanup clears the public C_WowTokenSecure binding
+// (EnvironmentCleanup.lua:224); since ba4c5c08b9 the post-cleanup restore
+// leaves it absent. The token model is covered by tests/wowtoken_secure.rs.
 #[test]
 fn test_old_stack_power_lfg_and_cleanup_globals_exist_on_rilua_path() {
     let env = WowLuaEnv::new().unwrap();
@@ -1304,74 +1328,17 @@ fn test_old_stack_power_lfg_and_cleanup_globals_exist_on_rilua_path() {
     env.exec("LE_GAME_ERR_SPELL_COOLDOWN = nil").unwrap();
     env.restore_post_cleanup_globals();
 
-    let (
-        unit_power,
-        unit_power_with_type,
-        unit_power_max,
-        power_type,
-        power_token,
-        lfg_lfd_ty,
-        lfg_lfr_ty,
-        can_use_lfd,
-        can_use_lfr,
-        faction_rgba_ty,
-        token_secure_ty,
-        token_count,
-        price_lock_duration,
-        spell_cooldown_err,
-    ): (
-        i64,
-        i64,
-        i64,
-        i64,
-        String,
-        String,
-        String,
-        bool,
-        bool,
-        String,
-        String,
-        i64,
-        i64,
-        i64,
-    ) = env
-        .eval(
-            r#"
-            local ptype, ptoken = UnitPowerType("player")
-            local canUseLFD = C_LFGInfo.CanPlayerUseLFD()
-            local canUseLFR = C_LFGInfo.CanPlayerUseLFR()
-            return UnitPower("player"),
-                UnitPower("player", 0),
-                UnitPowerMax("player"),
-                ptype,
-                ptoken,
-                type(C_LFGInfo.CanPlayerUseLFD),
-                type(C_LFGInfo.CanPlayerUseLFR),
-                canUseLFD,
-                canUseLFR,
-                type(FACTION_RED_COLOR.GetRGBA),
-                type(C_WowTokenSecure.GetTokenCount),
-                C_WowTokenSecure.GetTokenCount(),
-                C_WowTokenSecure.GetPriceLockDuration(),
-                LE_GAME_ERR_SPELL_COOLDOWN
-            "#,
-        )
-        .unwrap();
+    let values: OldStackPowerLfg = env.eval(OLD_STACK_POWER_LFG_PROBE).unwrap();
+    let power = (values.0, values.1, values.2, values.3, values.4.as_str());
+    assert_eq!(power, (50_000, 50_000, 100_000, 0, "MANA"));
+    let lfg = (values.5.as_str(), values.6.as_str(), values.7, values.8);
+    assert_eq!(lfg, ("function", "function", true, true));
+    assert_eq!(values.9, "function");
 
-    assert_eq!(unit_power, 50_000);
-    assert_eq!(unit_power_with_type, 50_000);
-    assert_eq!(unit_power_max, 100_000);
-    assert_eq!(power_type, 0);
-    assert_eq!(power_token, "MANA");
-    assert_eq!(lfg_lfd_ty, "function");
-    assert_eq!(lfg_lfr_ty, "function");
-    assert!(can_use_lfd);
-    assert!(can_use_lfr);
-    assert_eq!(faction_rgba_ty, "function");
-    assert_eq!(token_secure_ty, "function");
-    assert_eq!(token_count, 2);
-    assert_eq!(price_lock_duration, 900);
-    assert_eq!(spell_cooldown_err, 61);
+    let cleanup: (String, i64) = env
+        .eval("return type(rawget(_G, 'C_WowTokenSecure')), LE_GAME_ERR_SPELL_COOLDOWN")
+        .unwrap();
+    assert_eq!(cleanup, ("nil".to_string(), 61));
 }
 #[test]
 fn test_startup_social_and_lfg_globals_exist() {
