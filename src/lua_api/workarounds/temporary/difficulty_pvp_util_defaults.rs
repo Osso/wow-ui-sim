@@ -68,11 +68,6 @@ end
 
 #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 const DUNGEON_DIFFICULTY_DEFAULT_LUA: &str = r#"
-if GetDungeonDifficultyID == nil then
-    function GetDungeonDifficultyID()
-        return DifficultyUtil.ID.DungeonNormal
-    end
-end
 if rawget(DifficultyUtil, "GetDifficultyName") == nil then
     function DifficultyUtil.GetDifficultyName(difficultyID)
         if difficultyID == DifficultyUtil.ID.DungeonNormal then
