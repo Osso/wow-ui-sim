@@ -17,7 +17,8 @@ const CREATURE_FACTION_INFO_HASH_FIELDS: usize = 3;
 
 pub(super) fn register_creature_info_surface(state: &mut LuaState) -> LuaResult<()> {
     let table_ref = ensure_namespace(state, "C_CreatureInfo")?;
-    #[cfg(feature = "retail-12-0-0")]
+    // Forever 70707 CreatureInfoDocumentation.lua declares the same signature.
+    #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
     table_set_rust_fn_static(
         state,
         table_ref,

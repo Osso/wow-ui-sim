@@ -543,7 +543,6 @@ C_CraftingOrders.ReleaseOrder # not-yet
 C_CraftingOrders.RequestCrafterOrders # not-yet
 C_CraftingOrders.RequestCustomerOrders # not-yet
 C_CraftingOrders.SetCustomerOptionFavorited # not-yet
-C_CreatureInfo.GetCreatureID # not-yet
 C_CurrencyInfo.CanTransferCurrency # not-yet
 C_CurrencyInfo.DoesCurrentFilterRequireAccountCurrencyData # not-yet
 C_CurrencyInfo.DoesWarModeBonusApply # not-yet
@@ -1140,10 +1139,7 @@ C_ItemUpgrade.GetNumItemUpgradeEffects # not-yet
 C_ItemUpgrade.IsItemBound # not-yet
 C_ItemUpgrade.SetItemUpgradeFromCursorItem # not-yet
 C_ItemUpgrade.UpgradeItem # not-yet
-C_KeyBindings.ActivateBindingContext # not-yet
-C_KeyBindings.DeactivateBindingContext # not-yet
 C_KeyBindings.GetTurnStrafeStyle # not-yet
-C_KeyBindings.IsBindingContextActive # not-yet
 C_KeyBindings.SetTurnStrafeStyle # not-yet
 C_KeyBindings.UpdateTurnStrafeBindingsForCharacter # not-yet
 C_LFGInfo.AreCrossFactionGroupQueuesAllowed # not-yet
