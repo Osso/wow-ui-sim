@@ -5,11 +5,14 @@ use common::panel_fixtures::{clear_recorded_lua_errors, recorded_lua_errors};
 
 const ROOT: &str = "Blizzard_AuthChallengeUI";
 const SUBMIT_PROBE_LUA: &str = r##"
+-- INFERRED (simulator mapping: secure namespace distinct per R88g.2, applied by
+-- e93399f5e3). Same probe route as blizzard_auth_challenge_ui_secure_env.rs.
+local authNamespace = __secureenv.C_AuthChallenge
 local callCount = 0
 local argCount = nil
-local originalSubmit = C_AuthChallenge.Submit
+local originalSubmit = authNamespace.Submit
 
-C_AuthChallenge.Submit = function(...)
+authNamespace.Submit = function(...)
   callCount = callCount + 1
   argCount = select("#", ...)
 end
