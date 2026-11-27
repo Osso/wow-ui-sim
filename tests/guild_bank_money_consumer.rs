@@ -45,7 +45,9 @@ fn guild_bank_frame_shows_supplied_money(env: &WowLuaEnv) {
     assert_eq!(shown_guild_bank_coins(env), "987/65/43");
     assert_eq!(guild_bank_lua_errors(env), Vec::<String>::new());
 }
+}
 
+prefork_full_ui_case! {
 fn guild_bank_withdraw_state_uses_supplied_permissions(env: &WowLuaEnv) {
     env.exec(OPEN_EMPTY_GUILD_BANK).expect("original guild bank opens empty");
     assert_eq!(shown_guild_bank_coins(env), "0/00/00");
