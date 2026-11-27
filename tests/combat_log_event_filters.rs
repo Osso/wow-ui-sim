@@ -1,5 +1,9 @@
 //! Original-consumer filter-state RED; not native event-matching proof.
-#![cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#![cfg(any(
+    feature = "client-retail",
+    feature = "client-ptr",
+    feature = "client-wowforever"
+))]
 
 #[test]
 fn original_processor_replaces_and_clears_filter_records() {

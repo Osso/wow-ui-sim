@@ -188,9 +188,13 @@ fn register_admin_calendar_services(builder: TableBuilder) -> LuaResult<TableBui
 
 fn register_admin_combat(mut builder: TableBuilder) -> LuaResult<TableBuilder> {
     builder = register_combat_casting(builder)?;
-    #[cfg(all(
-        feature = "retail-12-0-5",
-        any(feature = "profile-retail", feature = "client-ptr")
+    #[cfg(any(
+        all(
+            feature = "retail-12-0-5",
+            any(feature = "profile-retail", feature = "client-ptr")
+        ),
+        feature = "client-retail",
+        feature = "client-wowforever"
     ))]
     let builder = super::real::spell_confirmation_prompts::register_admin(builder)?;
     #[cfg(feature = "player-cast-durations")]
@@ -390,7 +394,7 @@ fn register_player_classic_fields(b: TableBuilder) -> LuaResult<TableBuilder> {
 }
 
 fn register_player_modern_fields(b: TableBuilder) -> LuaResult<TableBuilder> {
-    #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     let b = b.set_function("SetGuildFactionGroupFlags", set_guild_faction_group_flags)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     let b = b.set_function(
@@ -573,6 +577,10 @@ fn register_guild_basics(b: TableBuilder) -> LuaResult<TableBuilder> {
 
 fn register_guild_details_and_rules(b: TableBuilder) -> LuaResult<TableBuilder> {
     b.set_function("SetGameRule", super::game_rules::admin_set_game_rule)?
+        .set_function(
+            "SetGameRuleByID",
+            super::game_rules::admin_set_game_rule_by_id,
+        )?
         .set_function(
             "SetActiveGameMode",
             super::game_rules::admin_set_active_game_mode,
@@ -889,7 +897,7 @@ fn set_player_race(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
-#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn set_guild_faction_group_flags(state: &mut LuaState) -> LuaResult<u32> {
     let race_id = i32::from_stack(state, 1)?;
     let flags = u32::from_stack(state, 2)?;
