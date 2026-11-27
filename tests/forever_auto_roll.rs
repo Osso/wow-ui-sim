@@ -5,7 +5,7 @@
 use std::path::Path;
 
 use wow_ui_sim::loader::{
-    MissingRequirement, MissingRequirementKind,
+    BlizzardAddonOverride, MissingRequirement, MissingRequirementKind,
     discover_blizzard_addon_closure_for_screen_with_overrides, load_addon,
 };
 use wow_ui_sim::lua_api::WowLuaEnv;
@@ -14,9 +14,14 @@ use wow_ui_sim::screen::ScreenKind;
 
 // OptionPanel.lua consumes Settings registration and section-header initializers.
 // Their definitions live in this cached root and its actual TOC dependency closure.
+const BLIZZARD_ROOTS: &[&str] = &["Blizzard_Settings_Shared"];
 // Blizzard_Registration.lua:10 calls RegisterUIPanel, owned by
-// Blizzard_UIParentPanelManager (no synthetic default since 6dfb0ee167).
-const BLIZZARD_ROOTS: &[&str] = &["Blizzard_UIParentPanelManager", "Blizzard_Settings_Shared"];
+// Blizzard_UIParentPanelManager (no synthetic default since 6dfb0ee167); Game
+// startup loads that owner first.
+const SETTINGS_PANEL_OWNER: [BlizzardAddonOverride<'static>; 1] = [BlizzardAddonOverride {
+    addon: "Blizzard_Settings_Shared",
+    extra_roots: &["Blizzard_UIParentPanelManager"],
+}];
 const ITEM_NAME: &str = "AutoRoll Integration Sword";
 const ITEM_TEXTURE: &str = "Interface\\Icons\\INV_Sword_04";
 
@@ -108,7 +113,7 @@ fn load_auto_roll_in_configured_world(
         &ui,
         ScreenKind::Game,
         BLIZZARD_ROOTS,
-        &[],
+        &SETTINGS_PANEL_OWNER,
     );
     assert!(
         !dependencies.is_empty(),
