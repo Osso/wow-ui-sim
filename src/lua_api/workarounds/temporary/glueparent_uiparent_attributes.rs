@@ -5,7 +5,10 @@
 //! attributes normally defined by UIParent XML.
 
 use crate::lua_api::LoaderEnv;
-#[cfg(test)]
+#[cfg(all(
+    test,
+    not(any(feature = "client-retail", feature = "client-wowforever"))
+))]
 use crate::lua_api::WowLuaEnv;
 
 const GLUEPARENT_UIPARENT_ATTRIBUTES_LUA: &str = r#"
