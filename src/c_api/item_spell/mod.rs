@@ -10,10 +10,12 @@ pub mod item_child;
 mod item_classifiers;
 mod item_creation_context_data;
 mod item_cursor_grid;
+mod item_data_request;
 mod item_drop_on_unit;
 mod item_effects;
 pub mod item_equip;
 mod item_gem;
+mod item_guid;
 mod item_pickup;
 pub mod item_range;
 mod item_set;
@@ -35,8 +37,8 @@ pub(crate) use c_container::c_container_get_bag_name;
 #[cfg(feature = "client-wowforever")]
 pub(crate) use c_container::{BAG_SLOT_FLAG_EXCLUDE_JUNK_SELL, bag_slot_flag_is_set};
 pub(crate) use c_container::{
-    c_container_get_container_item_cooldown, c_container_get_item_id, c_container_get_item_link,
-    c_container_get_num_slots,
+    c_container_get_container_item_cooldown, c_container_get_item_durability,
+    c_container_get_item_id, c_container_get_item_link, c_container_get_num_slots,
 };
 pub(crate) use c_item::location_item;
 pub(crate) use c_item::{

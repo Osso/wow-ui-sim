@@ -654,9 +654,9 @@ macro_rules! build_empty_sim_state {
             current_combat_text: None,
             combat_audio_speaker_volume: 100.0,
             combat_audio_format_settings: HashMap::new(),
-            #[cfg(feature = "retail-12-0-0")]
+            #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
             combat_audio_spec_settings: HashMap::new(),
-            #[cfg(feature = "retail-12-0-5")]
+            #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
             combat_audio_categories: Default::default(),
             #[cfg(not(feature = "client-wrath"))]
             combat_audio_throttles: HashMap::new(),
@@ -863,7 +863,13 @@ macro_rules! build_empty_sim_state {
             bank_frame_open: false,
             guild_bank_frame_open: false,
             bank_purchased_slots: 0,
+            #[cfg(feature = "client-mists")]
             guild_bank_money: 123_456,
+            #[cfg(not(feature = "client-mists"))]
+            guild_bank_money: 0,
+            guild_bank_can_repair: false,
+            guild_bank_tab_cost: 0,
+            guild_bank_text: ::std::collections::HashMap::new(),
             current_guild_bank_tab: 1,
             guild_bank_items: ::std::collections::HashMap::new(),
             guild_bank_tabs: Vec::new(),
@@ -1136,6 +1142,7 @@ macro_rules! build_empty_sim_state {
             voice_chat_speak_stop_count: 0,
             achievement_telemetry: Vec::new(),
             item_search_text: String::new(),
+            container_preferences: Default::default(),
             social_contract_accepted: true,
             spell_activation_overlays: ::std::collections::HashSet::new(),
             challenge_completion: Default::default(),

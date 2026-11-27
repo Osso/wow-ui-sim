@@ -1,6 +1,6 @@
 //! B74 exact415: Ambiguate context NeverSecret; row416 remains unmodeled.
 //! Public mappings and rejection ordering/message are simulator requirements, not native parity.
-#![cfg(feature = "retail-12-0-5")]
+#![cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 
 use rilua::table_security::{
     wrap_host_secret_bool, wrap_host_secret_number, wrap_host_secret_string,

@@ -8,6 +8,8 @@
 ))]
 use crate::lua_api::WowLuaEnv;
 
+/// Retail and Forever register the Rust `time` (`globals/real/lua_time.rs`) instead.
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 const GAME_TIME_SECURE_ENVIRONMENT_BASE_LUA: &str = r#"
 local function __wow_normalize_time_table(dateTable)
     if type(dateTable) ~= "table" then
@@ -82,13 +84,19 @@ if GetTimePreciseSec == nil then
 end
 "#;
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) fn register_secure_environment_base(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(GAME_TIME_SECURE_ENVIRONMENT_BASE_LUA)?;
     Ok(())
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) fn register_secure_environment_base(_lua: &mut rilua::Lua) -> crate::Result<()> {
+    Ok(())
+}
+
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
-    lua.exec(GAME_TIME_SECURE_ENVIRONMENT_BASE_LUA)?;
+    register_secure_environment_base(lua)?;
     #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     lua.exec(PRECISE_TIME_DEFAULT_LUA)?;
     lua.exec(GAME_TIME_BOOTSTRAP_LUA)?;
@@ -133,6 +141,8 @@ mod tests {
     #[test]
     fn installs_missing_game_time_globals() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
+        // Retail and Forever `time` is the Rust producer, which the bootstrap does not replace.
+        #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
         env.exec("time = nil")
             .expect("game time fixture should clear globals");
 

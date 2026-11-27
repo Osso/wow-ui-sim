@@ -768,7 +768,7 @@ pub struct SimState {
     pub combat_audio_speaker_speed: f64,
     /// Unit tokens are resolved again when the targeting list is scanned.
     pub combat_audio_known_targets: Vec<CombatAudioUnitToken>,
-    #[cfg(feature = "retail-12-0-5")]
+    #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
     pub combat_audio_categories: crate::c_api::c_combat_audio_alert::CategorySettings,
     /// Explicit selection only; no combat-text event routing or native identity.
     pub combat_text_active_unit: Option<String>,
@@ -778,7 +778,7 @@ pub struct SimState {
     /// Numeric unit/type setting state only; no formatting or CVar coupling.
     pub combat_audio_format_settings: HashMap<(i32, i32), f64>,
     /// INFERRED per-active-spec-index settings; unconfigured zero, no CVar/playback coupling.
-    #[cfg(feature = "retail-12-0-0")]
+    #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
     pub combat_audio_spec_settings: HashMap<(i32, i32), f64>,
     /// INFERRED shared throttle seconds by throttle type; unconfigured zero.
     #[cfg(not(feature = "client-wrath"))]
@@ -1083,6 +1083,9 @@ pub struct SimState {
     pub guild_bank_frame_open: bool,
     pub bank_purchased_slots: i32,
     pub guild_bank_money: i64,
+    pub guild_bank_can_repair: bool,
+    pub guild_bank_tab_cost: i64,
+    pub guild_bank_text: HashMap<i32, String>,
     pub current_guild_bank_tab: i32,
     pub guild_bank_items: HashMap<(i32, i32), BagItem>,
     pub guild_bank_tabs: Vec<GuildBankTab>,
@@ -1439,6 +1442,8 @@ pub struct SimState {
     pub social_contract_accepted: bool,
     /// Current `C_Container.SetItemSearch` text; empty means no search.
     pub item_search_text: String,
+    /// Bag cleanup preferences set through `C_Container`.
+    pub container_preferences: crate::c_api::container_preferences::ContainerPreferences,
     /// Ordered `C_AchievementTelemetry` reports.
     pub achievement_telemetry:
         Vec<crate::c_api::c_achievement_telemetry::AchievementTelemetryEvent>,

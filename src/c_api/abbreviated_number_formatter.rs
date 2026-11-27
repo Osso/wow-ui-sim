@@ -106,6 +106,8 @@ fn formatter(state: &LuaState, value: Val) -> LuaResult<&AbbreviatedNumberFormat
 }
 
 /// Test actual host-owned identity without consulting Lua methods or metatables.
+/// Only the Retail duration `Format*` methods dispatch on formatter identity.
+#[cfg(feature = "retail-12-0-5")]
 pub(crate) fn is_formatter(state: &LuaState, object: Val) -> bool {
     formatter(state, object).is_ok()
 }

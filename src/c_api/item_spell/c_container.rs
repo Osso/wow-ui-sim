@@ -43,6 +43,7 @@ fn c_item_upgrade_clear(state: &mut LuaState) -> LuaResult<u32> {
 pub(crate) fn register_c_container(state: &mut LuaState) -> LuaResult<()> {
     let table_ref = ensure_namespace(state, "C_Container")?;
     register_container_query_methods(state, table_ref)?;
+    register_cleanup_and_search_methods(state, table_ref)?;
     crate::c_api::container_quest::register(state)?;
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
         crate::c_api::container_purchase::register(state)?;
@@ -98,6 +99,38 @@ fn register_container_query_methods(
     )
 }
 
+/// ContainerDocumentation.lua:405/:440/:450 (Retail and Forever).
+fn register_cleanup_and_search_methods(
+    state: &mut LuaState,
+    table_ref: GcRef<Table>,
+) -> LuaResult<()> {
+    use crate::client_profile::{ACTIVE, ClientProfile};
+    if !matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever) {
+        return Ok(());
+    }
+    crate::c_api::container_preferences::register(state)?;
+    register_container_methods(
+        state,
+        table_ref,
+        &[
+            ("IsContainerFiltered", c_container_is_container_filtered),
+            // ContainerDocumentation.lua:140 (Retail and Forever).
+            (
+                "GetContainerItemDurability",
+                c_container_get_item_durability,
+            ),
+            (
+                "SetBackpackAutosortDisabled",
+                c_container_set_backpack_autosort_disabled,
+            ),
+            (
+                "SetBackpackSellJunkDisabled",
+                c_container_set_backpack_sell_junk_disabled,
+            ),
+        ],
+    )
+}
+
 fn register_container_methods(
     state: &mut LuaState,
     table_ref: GcRef<Table>,
@@ -107,6 +140,22 @@ fn register_container_methods(
         table_set_rust_fn_static(state, table_ref, name, func)?;
     }
     Ok(())
+}
+
+/// Supplied bag-item durability (`A_Admin.SetBagItemDurability`); an item
+/// without a durability pair or an empty slot returns nothing.
+pub(crate) fn c_container_get_item_durability(state: &mut LuaState) -> LuaResult<u32> {
+    let location = (i32::from_stack(state, 1)?, i32::from_stack(state, 2)?);
+    let durability = borrow_state(state)?
+        .bag_items
+        .get(&location)
+        .and_then(|item| item.durability);
+    let Some((current, maximum)) = durability else {
+        return Ok(0);
+    };
+    state.push(Val::Num(f64::from(current)));
+    state.push(Val::Num(f64::from(maximum)));
+    Ok(2)
 }
 
 pub(crate) fn c_container_get_num_slots(state: &mut LuaState) -> LuaResult<u32> {
@@ -384,8 +433,45 @@ fn c_container_set_bag_slot_flag(state: &mut LuaState) -> LuaResult<u32> {
     let bag = i32::from_stack(state, 1)?;
     let flag = i32::from_stack(state, 2)?;
     let value = matches!(stack_val(state, 3), Val::Bool(true));
+    set_bag_slot_flag(state, bag, flag, value);
+    Ok(0)
+}
+
+fn set_bag_slot_flag(state: &mut LuaState, bag: i32, flag: i32, value: bool) {
     let storage = bag_slot_flags_storage(state);
     let key = bag_slot_flag_key(bag, flag);
     table_set(state, storage, &key, Val::Bool(value));
+}
+
+/// INFERRED: R88g9 (native evidence pending). The backpack setters write the
+/// same backpack flags that the existing getters read.
+fn c_container_set_backpack_autosort_disabled(state: &mut LuaState) -> LuaResult<u32> {
+    let disable = crate::c_api::container_preferences::truthy_argument(state)?;
+    let flag = BAG_SLOT_FLAG_DISABLE_AUTO_SORT;
+    set_bag_slot_flag(state, BACKPACK_BAG_INDEX, flag, disable);
     Ok(0)
+}
+
+fn c_container_set_backpack_sell_junk_disabled(state: &mut LuaState) -> LuaResult<u32> {
+    let disable = crate::c_api::container_preferences::truthy_argument(state)?;
+    let flag = BAG_SLOT_FLAG_EXCLUDE_JUNK_SELL;
+    set_bag_slot_flag(state, BACKPACK_BAG_INDEX, flag, disable);
+    Ok(0)
+}
+
+/// Retail 12.1.5 VERIFIED: false without filter context. INFERRED: R88g9
+/// (native evidence pending): with an active item search, a bag is filtered
+/// when none of its items match, the same name match `isFiltered` uses.
+fn c_container_is_container_filtered(state: &mut LuaState) -> LuaResult<u32> {
+    let bag = i32::from_stack(state, 1)?;
+    let filtered = {
+        let sim = borrow_state(state)?;
+        let search = sim.item_search_text.as_str();
+        !search.is_empty()
+            && (1..=sim.bag_num_slots(bag))
+                .filter_map(|slot| sim.get_bag_item(bag, slot))
+                .all(|(item_id, _)| is_filtered_by_search(search, items::get_item(item_id)))
+    };
+    state.push(Val::Bool(filtered));
+    Ok(1)
 }

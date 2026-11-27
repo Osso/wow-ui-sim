@@ -9,7 +9,7 @@ pub(crate) fn creature_id_from_guid(guid: &str) -> Option<i32> {
     parts.nth(4)?.parse().ok()
 }
 
-#[cfg(feature = "retail-12-0-0")]
+#[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
 pub(crate) fn get_creature_id(state: &mut rilua::vm::state::LuaState) -> rilua::LuaResult<u32> {
     use crate::lua_bridge::FromStack;
 

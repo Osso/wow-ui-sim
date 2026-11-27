@@ -63,7 +63,7 @@ fn register_bootstrap_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
 fn register_bootstrap_time_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
     LuaApiMut::register_function(lua, "GetTime", get_time)?;
     LuaApiMut::register_function(lua, "GetTimePreciseSec", get_time)?;
-    #[cfg(feature = "client-retail")]
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     LuaApiMut::register_function(lua, "GetSessionTime", get_time)?;
     LuaApiMut::register_function(lua, "GetServerTime", get_server_time)?;
     LuaApiMut::register_function(lua, "GetRaidDifficultyID", get_raid_difficulty_id)?;
@@ -93,6 +93,10 @@ fn register_bootstrap_runtime_globals(lua: &mut rilua::Lua) -> crate::Result<()>
     super::real::camera_fov_defaults::register_all(lua)?;
     super::real::source_location::register_all(lua)?;
     super::keybindings::register_all(lua)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    super::real::run_binding::register_all(lua)?;
+    #[cfg(feature = "client-retail")]
+    super::real::difficulty_info::register_all(lua)?;
     super::permanent_shims::register_all(lua.state_mut());
     super::action_bar_api::register_all(lua)?;
     LuaApiMut::register_function(lua, "UpdateUIParentPosition", update_ui_parent_position)?;
@@ -189,11 +193,13 @@ fn register_frame_foundation_globals(lua: &mut rilua::Lua) -> crate::Result<()> 
     super::real::math_extensions::register_all(lua)?;
     #[cfg(any(feature = "retail-12-1-5", feature = "client-wowforever"))]
     super::real::table_extensions::register_all(lua)?;
-    #[cfg(feature = "retail-12-0-5")]
+    // Forever 70707 publishes the Retail table/string extensions and
+    // BreakUpLargeNumbers with the same signatures (see the api-gaps-1 report).
+    #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
     super::real::table_freeze::register_all(lua)?;
-    #[cfg(feature = "retail-12-1-5")]
+    #[cfg(any(feature = "retail-12-1-5", feature = "client-wowforever"))]
     super::real::string_extensions::register_all(lua)?;
-    #[cfg(feature = "retail-12-0-5")]
+    #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
     super::real::break_up_large_numbers::register_all(lua)?;
     super::real::net_stats::register_all(lua)?;
     super::real::game_clock::register_all(lua)?;

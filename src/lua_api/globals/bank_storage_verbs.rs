@@ -64,6 +64,8 @@ const GUILD_BANK_GLOBALS: &[(&str, RustFn)] = &[
         "GetGuildBankWithdrawGoldLimit",
         get_guild_bank_withdraw_gold_limit,
     ),
+    ("CanGuildBankRepair", can_guild_bank_repair),
+    ("CanEditGuildTabInfo", can_edit_guild_tab_info),
     (
         "SetGuildBankWithdrawGoldLimit",
         set_guild_bank_withdraw_gold_limit,
@@ -164,18 +166,36 @@ fn get_guild_bank_tab_info(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn get_guild_bank_tab_cost(state: &mut LuaState) -> LuaResult<u32> {
-    state.push(Val::Num(0.0));
+    let cost = borrow_state(state)?.guild_bank_tab_cost;
+    state.push(Val::Num(cost as f64));
     Ok(1)
 }
 
 fn get_guild_bank_text(state: &mut LuaState) -> LuaResult<u32> {
-    let text = create_string(state, "");
+    let tab = i32::from_stack(state, 1).unwrap_or(1);
+    let text = borrow_state(state)?
+        .guild_bank_text
+        .get(&tab)
+        .cloned()
+        .unwrap_or_default();
+    let text = create_string(state, &text);
     state.push(text);
     Ok(1)
 }
 
-fn set_guild_bank_text(_state: &mut LuaState) -> LuaResult<u32> {
-    Ok(0)
+fn set_guild_bank_text(state: &mut LuaState) -> LuaResult<u32> {
+    #[cfg(feature = "client-mists")]
+    {
+        let _ = state;
+        return Ok(0);
+    }
+    #[cfg(not(feature = "client-mists"))]
+    {
+        let tab = i32::from_stack(state, 1)?;
+        let text = String::from_stack(state, 2)?;
+        borrow_state_mut(state)?.guild_bank_text.insert(tab, text);
+        Ok(0)
+    }
 }
 
 fn query_guild_bank_tab(state: &mut LuaState) -> LuaResult<u32> {
@@ -234,18 +254,63 @@ fn get_guild_bank_money(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+#[cfg(not(feature = "client-mists"))]
+fn guild_bank_money_limit(state: &LuaState) -> LuaResult<Option<i64>> {
+    let sim = borrow_state(state)?;
+    let selected = sim.world.guild_selected_rank.checked_sub(1);
+    let index = selected.and_then(|rank| usize::try_from(rank).ok());
+    Ok(index
+        .and_then(|index| sim.world.guild_bank_rank_permissions.get(&index))
+        .map(|permissions| permissions.money_per_day))
+}
+
 fn get_guild_bank_withdraw_money(state: &mut LuaState) -> LuaResult<u32> {
-    state.push(Val::Num(-1.0));
+    #[cfg(feature = "client-mists")]
+    let _ = state;
+    #[cfg(feature = "client-mists")]
+    let limit = -1;
+    #[cfg(not(feature = "client-mists"))]
+    let limit = guild_bank_money_limit(state)?.unwrap_or(0);
+    state.push(Val::Num(limit as f64));
     Ok(1)
 }
 
 fn get_guild_bank_withdraw_gold_limit(state: &mut LuaState) -> LuaResult<u32> {
-    state.push(Val::Num(0.0));
+    #[cfg(feature = "client-mists")]
+    let _ = state;
+    #[cfg(feature = "client-mists")]
+    let gold = 0;
+    #[cfg(not(feature = "client-mists"))]
+    let gold = guild_bank_money_limit(state)?.unwrap_or(0);
+    let gold = if gold < 0 { gold } else { gold / 10_000 };
+    state.push(Val::Num(gold as f64));
     Ok(1)
 }
 
-fn set_guild_bank_withdraw_gold_limit(_state: &mut LuaState) -> LuaResult<u32> {
-    Ok(0)
+fn set_guild_bank_withdraw_gold_limit(state: &mut LuaState) -> LuaResult<u32> {
+    #[cfg(feature = "client-mists")]
+    {
+        let _ = state;
+        return Ok(0);
+    }
+    #[cfg(not(feature = "client-mists"))]
+    {
+        let gold = i64::from_stack(state, 1)?;
+        let selected = borrow_state(state)?
+            .world
+            .guild_selected_rank
+            .checked_sub(1);
+        if let Some(index) = selected.and_then(|rank| usize::try_from(rank).ok()) {
+            if let Some(permissions) = borrow_state_mut(state)?
+                .world
+                .guild_bank_rank_permissions
+                .get_mut(&index)
+            {
+                permissions.money_per_day = gold.saturating_mul(10_000);
+            }
+        }
+        Ok(0)
+    }
 }
 
 fn deposit_guild_bank_money(state: &mut LuaState) -> LuaResult<u32> {
@@ -270,12 +335,54 @@ fn pickup_guild_bank_money(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn can_withdraw_guild_bank_money(state: &mut LuaState) -> LuaResult<u32> {
-    state.push(Val::Bool(true));
+    #[cfg(feature = "client-mists")]
+    let _ = state;
+    #[cfg(feature = "client-mists")]
+    let allowed = true;
+    #[cfg(not(feature = "client-mists"))]
+    let allowed = guild_bank_money_limit(state)?.is_some_and(|limit| limit != 0);
+    state.push(Val::Bool(allowed));
+    Ok(1)
+}
+
+fn can_guild_bank_repair(state: &mut LuaState) -> LuaResult<u32> {
+    let allowed = borrow_state(state)?.guild_bank_can_repair;
+    state.push(Val::Bool(allowed));
     Ok(1)
 }
 
 fn can_edit_guild_bank_tab_info(state: &mut LuaState) -> LuaResult<u32> {
-    state.push(Val::Bool(true));
+    let tab = borrow_state(state)?.current_guild_bank_tab;
+    can_edit_guild_tab(state, tab)
+}
+
+fn can_edit_guild_tab_info(state: &mut LuaState) -> LuaResult<u32> {
+    let tab = i32::from_stack(state, 1).unwrap_or(1);
+    can_edit_guild_tab(state, tab)
+}
+
+fn can_edit_guild_tab(state: &mut LuaState, tab: i32) -> LuaResult<u32> {
+    #[cfg(feature = "client-mists")]
+    let _ = tab;
+    #[cfg(feature = "client-mists")]
+    let allowed = true;
+    #[cfg(not(feature = "client-mists"))]
+    let allowed = {
+        let sim = borrow_state(state)?;
+        let selected = sim.world.guild_selected_rank.checked_sub(1);
+        let index = selected.and_then(|rank| usize::try_from(rank).ok());
+        let tab = usize::try_from(tab.saturating_sub(1)).ok();
+        index
+            .and_then(|index| sim.world.guild_bank_rank_permissions.get(&index))
+            .zip(tab)
+            .is_some_and(|(permissions, tab)| {
+                permissions
+                    .tab_rights
+                    .get(tab)
+                    .is_some_and(|rights| rights & 0x4 != 0)
+            })
+    };
+    state.push(Val::Bool(allowed));
     Ok(1)
 }
 

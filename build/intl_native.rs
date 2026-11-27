@@ -20,7 +20,8 @@ pub(super) fn build() {
     }
     let mut compiler = cc::Build::new();
     compiler.files(["native/intl/text.c", "native/intl/duration_units.c"]);
-    #[cfg(feature = "retail-12-0-5")]
+    // Forever 70707 publishes BreakUpLargeNumbers through the number formatter.
+    #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
     compiler.files([
         "native/intl/number_format.c",
         "native/intl/currency_metadata.c",

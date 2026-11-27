@@ -7,12 +7,12 @@
 
 use crate::lua_api::methods::borrow_state_mut;
 use crate::lua_api::script_helpers::fire_named_event_state;
-use crate::lua_api::state::PetActionSlot;
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 use crate::lua_api::state::PossessActionSlot;
+use crate::lua_api::state::{GuildBankRankPermissions, PetActionSlot};
 use crate::lua_bridge::{FromStack, stack_val};
 use rilua::vm::state::LuaState;
-use rilua::{LuaResult, Val};
+use rilua::{LuaResult, Val, runtime_error};
 
 // ── Action bars ───────────────────────────────────────────────────────────────
 
@@ -136,6 +136,33 @@ pub(super) fn add_bag_item(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
+/// `A_Admin.SetBagItemDurability(bag, slot, current, maximum)`; nil `maximum`
+/// clears the pair. Requires an existing bag item and `current <= maximum`.
+pub(super) fn set_bag_item_durability(state: &mut LuaState) -> LuaResult<u32> {
+    let location = (i32::from_stack(state, 1)?, i32::from_stack(state, 2)?);
+    let current = Option::<u32>::from_stack(state, 3)?;
+    let maximum = Option::<u32>::from_stack(state, 4)?;
+    let durability = match (current, maximum) {
+        (Some(current), Some(maximum)) if maximum > 0 && current <= maximum => {
+            Some((current, maximum))
+        }
+        (_, None) => None,
+        _ => {
+            return Err(rilua::runtime_error(
+                "SetBagItemDurability requires 0 <= current <= maximum and maximum > 0",
+            ));
+        }
+    };
+    let mut sim = borrow_state_mut(state)?;
+    let Some(item) = sim.bag_items.get_mut(&location) else {
+        return Err(rilua::runtime_error(
+            "SetBagItemDurability requires an item at the bag slot",
+        ));
+    };
+    item.durability = durability;
+    Ok(0)
+}
+
 pub(super) fn remove_bag_item(state: &mut LuaState) -> LuaResult<u32> {
     let bag = i32::from_stack(state, 1)?;
     let slot = i32::from_stack(state, 2)?;
@@ -219,6 +246,76 @@ pub(super) fn add_guild_bank_tab(state: &mut LuaState) -> LuaResult<u32> {
 
 pub(super) fn clear_guild_bank_tabs(state: &mut LuaState) -> LuaResult<u32> {
     borrow_state_mut(state)?.guild_bank_tabs.clear();
+    Ok(0)
+}
+
+pub(super) fn set_guild_bank_tab_cost(state: &mut LuaState) -> LuaResult<u32> {
+    let cost = i64::from_stack(state, 1)?;
+    if cost < 0 {
+        return Err(runtime_error("Guild bank tab cost must be nonnegative"));
+    }
+    borrow_state_mut(state)?.guild_bank_tab_cost = cost;
+    fire_named_event_state(state, "GUILDBANK_UPDATE_TABS", &[]);
+    Ok(0)
+}
+
+fn guild_bank_permission_values(state: &LuaState, argument: i32) -> LuaResult<Vec<i32>> {
+    let Val::Table(reference) = stack_val(state, argument) else {
+        return Err(runtime_error("Guild bank permissions must be tables"));
+    };
+    let values = state
+        .gc
+        .tables
+        .get(reference)
+        .map(|table| {
+            table
+                .array_slice()
+                .iter()
+                .filter_map(|value| match value {
+                    Val::Num(number)
+                        if number.is_finite()
+                            && number.fract() == 0.0
+                            && *number >= i32::MIN as f64
+                            && *number <= i32::MAX as f64 =>
+                    {
+                        Some(*number as i32)
+                    }
+                    _ => None,
+                })
+                .collect()
+        })
+        .unwrap_or_default();
+    Ok(values)
+}
+
+pub(super) fn set_guild_bank_rank_permissions(state: &mut LuaState) -> LuaResult<u32> {
+    let rank = i32::from_stack(state, 1)?;
+    let money_per_day = i64::from_stack(state, 2)?;
+    let can_repair = bool::from_stack(state, 5)?;
+    let rights = guild_bank_permission_values(state, 3)?;
+    let stacks = guild_bank_permission_values(state, 4)?;
+    if !(1..=10).contains(&rank) || rights.len() != 6 || stacks.len() != 6 {
+        return Err(runtime_error("Invalid guild bank rank permission input"));
+    }
+    if rights.iter().any(|value| !(0..=7).contains(value)) || stacks.iter().any(|value| *value < 0)
+    {
+        return Err(runtime_error("Invalid guild bank rank permission values"));
+    }
+    let mut sim = borrow_state_mut(state)?;
+    let rank = usize::try_from(rank).expect("validated positive rank");
+    sim.world.guild_selected_rank = rank as i32;
+    sim.guild_bank_can_repair = can_repair;
+    sim.world.guild_bank_rank_permissions.insert(
+        rank - 1,
+        GuildBankRankPermissions {
+            money_per_day,
+            tab_rights: rights.try_into().expect("validated six rights"),
+            tab_stacks_per_day: stacks.try_into().expect("validated six stacks"),
+        },
+    );
+    drop(sim);
+    fire_named_event_state(state, "GUILDBANK_UPDATE_WITHDRAWMONEY", &[]);
+    fire_named_event_state(state, "GUILDBANK_UPDATE_TABS", &[]);
     Ok(0)
 }
 

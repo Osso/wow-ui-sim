@@ -19,6 +19,11 @@ return GuildBankMoneyFrameGoldButton:GetText() .. "/"
     .. GuildBankMoneyFrameCopperButton:GetText()
 "#;
 
+const OPEN_EMPTY_GUILD_BANK: &str = r#"
+A_Admin.SetGuildInfo("Vault Keepers", "Banker", 12)
+A_Admin.OpenGuildBank()
+"#;
+
 fn shown_guild_bank_coins(env: &WowLuaEnv) -> String {
     env.eval(SHOWN_COINS)
         .expect("GuildBankMoneyFrame coin buttons read")
@@ -42,16 +47,89 @@ fn guild_bank_frame_shows_supplied_money(env: &WowLuaEnv) {
 }
 }
 
+fn assert_empty_guild_bank_state(env: &WowLuaEnv) {
+    let money: i64 = env.eval("return GetGuildBankMoney()").unwrap();
+    let allowance: i64 = env.eval("return GetGuildBankWithdrawMoney()").unwrap();
+    let gold_limit: i64 = env.eval("return GetGuildBankWithdrawGoldLimit()").unwrap();
+    let can_withdraw: bool = env.eval("return CanWithdrawGuildBankMoney()").unwrap();
+    let can_edit: bool = env.eval("return CanEditGuildBankTabInfo()").unwrap();
+    let tab_cost: i64 = env.eval("return GetGuildBankTabCost()").unwrap();
+    assert_eq!((money, allowance, gold_limit), (0, 0, 0));
+    assert_eq!(tab_cost, 0);
+    assert!(!can_withdraw);
+    assert!(!can_edit);
+}
+
+fn supply_first_guild_bank_withdraw_state(env: &WowLuaEnv) {
+    env.exec(r#"
+A_Admin.AddGuildBankTab("General", "Interface\\Icons\\INV_Misc_QuestionMark", true, true, 3, 2, false)
+A_Admin.SetGuildBankMoney(500000)
+A_Admin.SetGuildBankRankPermissions(1, 300000, {7,7,7,7,7,7}, {10,10,10,10,10,10}, false)
+"#).expect("first withdrawal permission snapshot is supplied");
+}
+
+fn first_guild_bank_remaining_text(env: &WowLuaEnv) -> String {
+    let enabled: bool = env
+        .eval("return GuildBankFrame.WithdrawButton:IsEnabled()")
+        .unwrap();
+    assert!(enabled);
+    let limit: i64 = env.eval("return GetGuildBankWithdrawMoney()").unwrap();
+    assert_eq!(limit, 300000);
+    env.eval("return GuildBankFrame.LimitLabel:GetText()")
+        .unwrap()
+}
+
+fn supply_second_guild_bank_withdraw_state(env: &WowLuaEnv) {
+    env.exec(r#"
+A_Admin.ClearGuildBankTabs()
+A_Admin.AddGuildBankTab("General", "Interface\\Icons\\INV_Misc_QuestionMark", true, true, 3, 1, false)
+A_Admin.SetGuildBankRankPermissions(1, 0, {3,3,3,3,3,3}, {10,10,10,10,10,10}, false)
+"#).expect("second withdrawal permission snapshot is supplied");
+}
+
+fn assert_second_guild_bank_withdraw_state(env: &WowLuaEnv) -> String {
+    let enabled: bool = env
+        .eval("return GuildBankFrame.WithdrawButton:IsEnabled()")
+        .unwrap();
+    assert!(!enabled);
+    let limit: i64 = env.eval("return GetGuildBankWithdrawMoney()").unwrap();
+    assert_eq!(limit, 0);
+    env.eval("return GuildBankFrame.LimitLabel:GetText()")
+        .unwrap()
+}
+
+prefork_full_ui_case! {
+fn guild_bank_withdraw_state_uses_supplied_permissions(env: &WowLuaEnv) {
+    assert_empty_guild_bank_state(env);
+    env.exec(OPEN_EMPTY_GUILD_BANK).expect("original guild bank opens empty");
+    assert_eq!(shown_guild_bank_coins(env), "0/0/0");
+    let enabled: bool = env.eval("return GuildBankFrame.WithdrawButton:IsEnabled()").unwrap();
+    assert!(!enabled);
+    supply_first_guild_bank_withdraw_state(env);
+    let first_remaining = first_guild_bank_remaining_text(env);
+    supply_second_guild_bank_withdraw_state(env);
+    let second_remaining = assert_second_guild_bank_withdraw_state(env);
+    assert_ne!(first_remaining, second_remaining);
+    assert_eq!(guild_bank_lua_errors(env), Vec::<String>::new());
+}
+}
+
+#[cfg(feature = "client-wowforever")]
+fn new_forever_game_env() -> WowLuaEnv {
+    let env = WowLuaEnv::new().expect("create Forever Lua environment");
+    crate::common::load_game_startup_inventory(&env);
+    env.sync_addon_names_to_lua();
+    env.apply_post_load_workarounds();
+    let game = wow_ui_sim::screen::ScreenKind::Game;
+    wow_ui_sim::startup::fire_startup_events_for_screen(&env, game);
+    env
+}
+
 #[cfg(feature = "client-wowforever")]
 #[test]
 fn forever_guild_bank_frame_shows_supplied_money() {
     crate::common::with_timeout(120, || {
-        let env = WowLuaEnv::new().expect("create Forever Lua environment");
-        crate::common::load_game_startup_inventory(&env);
-        env.sync_addon_names_to_lua();
-        env.apply_post_load_workarounds();
-        let game = wow_ui_sim::screen::ScreenKind::Game;
-        wow_ui_sim::startup::fire_startup_events_for_screen(&env, game);
-        guild_bank_frame_shows_supplied_money::run(&env);
+        guild_bank_frame_shows_supplied_money::run(&new_forever_game_env());
+        guild_bank_withdraw_state_uses_supplied_permissions::run(&new_forever_game_env());
     });
 }
