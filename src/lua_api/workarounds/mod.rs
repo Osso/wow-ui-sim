@@ -426,6 +426,7 @@ fn apply_core_dispatcher_and_format_defaults(lua: &mut rilua::Lua) -> crate::Res
 }
 
 fn apply_dispatcher_and_date_defaults(lua: &mut rilua::Lua) -> crate::Result<()> {
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::dispatcher_callback_defaults::apply_bootstrap(lua)?;
     temporary::dispatcher_surface::apply_bootstrap(lua)?;
     temporary::date_and_time_defaults::apply_bootstrap(lua)?;

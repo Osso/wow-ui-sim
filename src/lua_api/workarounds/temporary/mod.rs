@@ -84,6 +84,10 @@ pub(crate) mod date_and_time_defaults;
 pub(crate) mod debug_environment_defaults;
 pub(crate) mod details_saved_variables;
 pub(crate) mod difficulty_pvp_util_defaults;
+#[cfg(any(
+    test,
+    not(any(feature = "client-retail", feature = "client-wowforever"))
+))]
 pub(crate) mod dispatcher_callback_defaults;
 pub(crate) mod dispatcher_surface;
 pub(crate) mod dropdown_list_defaults;
