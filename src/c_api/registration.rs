@@ -311,10 +311,10 @@ pub(crate) fn register_map_environment_tables(state: &mut LuaState) -> LuaResult
 }
 
 pub(crate) fn register_nameplate_tables(state: &mut LuaState) -> LuaResult<()> {
-    #[cfg(feature = "retail-12-0-5")]
+    #[cfg(feature = "nameplate-hit-test-insets")]
     super::c_nameplate_manager::register(state)?;
     c_nameplate::register_c_nameplate(state)?;
-    #[cfg(feature = "retail-12-0-0")]
+    #[cfg(feature = "nameplate-configuration")]
     super::c_nameplate_manager::register_configuration(state)?;
     Ok(())
 }

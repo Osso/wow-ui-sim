@@ -295,7 +295,10 @@ pub(crate) mod c_mount_spell_lookup;
 pub mod c_mythic_plus;
 #[cfg(feature = "retail-12-0-7")]
 pub mod c_mythic_plus_calendar;
-#[cfg(feature = "retail-12-0-0")]
+#[cfg(any(
+    feature = "nameplate-configuration",
+    feature = "nameplate-hit-test-insets"
+))]
 pub(crate) mod c_nameplate_manager;
 #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 pub(crate) mod c_navigation;
@@ -400,7 +403,7 @@ mod c_spectating_ui;
 pub mod c_spell;
 pub(crate) mod c_spell_activation_overlay;
 pub mod c_spell_book;
-#[cfg(feature = "retail-12-0-0")]
+#[cfg(feature = "spell-classification-queries")]
 pub mod c_spell_classification;
 #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
 pub(crate) mod c_spell_counts;

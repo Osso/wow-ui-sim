@@ -99,7 +99,7 @@ fn register_viewer_members(state: &mut LuaState, namespace: GcRef<Table>) -> Lua
 }
 
 fn register_cooldown_queries(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
-    #[cfg(feature = "retail-12-0-0")]
+    #[cfg(feature = "cooldown-alert-types")]
     table_set_rust_fn_static(
         state,
         namespace,
@@ -292,7 +292,7 @@ fn query_availability(state: &mut LuaState) -> LuaResult<u32> {
     Ok(2)
 }
 
-#[cfg(feature = "retail-12-0-0")]
+#[cfg(feature = "cooldown-alert-types")]
 fn get_valid_alert_types(state: &mut LuaState) -> LuaResult<u32> {
     let value = rilua::table_security::unwrap_secret(state, stack_val(state, 1))?;
     let Val::Num(id) = value else {

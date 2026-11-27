@@ -82,7 +82,7 @@ pub struct SimState {
         u64,
         crate::lua_api::globals::real::spell_confirmation_prompts::SpellConfirmationPrompt,
     >,
-    #[cfg(feature = "retail-12-0-5")]
+    #[cfg(feature = "nameplate-hit-test-insets")]
     pub(crate) nameplate_hit_test_insets: crate::c_api::c_nameplate_manager::NamePlateHitTestInsets,
     pub(crate) input_interface_style: crate::c_api::c_input_interface_style::InputInterfaceStyle,
     #[cfg(any(
@@ -366,9 +366,9 @@ pub struct SimState {
     pub last_account_store_storefront_info_request: Option<i64>,
     pub account_store_categories: HashMap<i64, AccountStoreCategoryInfo>,
     pub account_store_items: HashMap<i64, AccountStoreItemInfo>,
-    #[cfg(feature = "retail-12-0-0")]
+    #[cfg(feature = "spell-classification-queries")]
     pub spell_classifications: crate::c_api::c_spell_classification::SpellClassifications,
-    #[cfg(feature = "retail-12-0-0")]
+    #[cfg(feature = "nameplate-configuration")]
     pub nameplate_configuration: crate::c_api::c_nameplate_manager::NamePlateConfiguration,
     pub recipe_quality_inputs: crate::c_api::c_trade_skill_quality::RecipeQualityInputs,
     /// Host-supplied recipe source text, keyed by recipe ID.

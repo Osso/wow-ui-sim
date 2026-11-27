@@ -452,7 +452,6 @@ C_ContributionCollector.Contribute # not-yet
 C_ContributionCollector.HasPendingContribution # not-yet
 C_ContributionCollector.IsAwaitingRewardQuestData # not-yet
 C_CooldownViewer.GetLayoutData # not-yet
-C_CooldownViewer.GetValidAlertTypes # not-yet
 C_CooldownViewer.SetLayoutData # not-yet
 C_CovenantPreview.CloseFromUI # not-yet
 C_CovenantPreview.GetCovenantInfoForPlayerChoiceResponseID # not-yet
@@ -1060,11 +1059,6 @@ C_MythicPlus.GetRewardLevelForDifficultyLevel # not-yet
 C_MythicPlus.GetRewardLevelFromKeystoneLevel # not-yet
 C_MythicPlus.GetSeasonBestForMap # not-yet
 C_MythicPlus.GetSeasonBestMythicRatingFromThisExpansion # not-yet
-C_NamePlate.GetNamePlateSize # not-yet
-C_NamePlateManager.GetNamePlateHitTestInsets # not-yet
-C_NamePlateManager.IsNamePlateUnitBehindCamera # intentionally-unsupported: 3D camera/model
-C_NamePlateManager.SetNamePlateHitTestInsets # not-yet
-C_NamePlateManager.SetNamePlateSimplified # not-yet
 C_NameUtil.ReplaceSurnameSeparatorWithLinkSeparator # not-yet
 C_PaperDollInfo.CanAutoEquipCursorItem # not-yet
 C_PaperDollInfo.CancelTemporaryEnchantment # not-yet
@@ -1481,14 +1475,10 @@ C_Spell.GetSpellSkillLineAbilityRank # not-yet
 C_Spell.IsActiveSpell # not-yet
 C_Spell.IsAutoRepeatSpell # not-yet
 C_Spell.IsClassTalentSpell # not-yet
-C_Spell.IsConsumableSpell # not-yet
-C_Spell.IsExternalDefensive # not-yet
 C_Spell.IsPressHoldReleaseSpell # not-yet: temporary Lua workaround
 C_Spell.IsPriorityAura # not-yet: temporary Lua workaround
 C_Spell.IsPvPTalentSpell # not-yet
-C_Spell.IsSpellCrowdControl # not-yet
 C_Spell.IsSpellDisabled # not-yet
-C_Spell.IsSpellImportant # not-yet
 C_Spell.PlaceTargetingSpellAtCursor # not-yet
 C_Spell.RequestLoadSpellData # not-yet: temporary Lua workaround
 C_Spell.SetSpellAutoCastEnabled # not-yet

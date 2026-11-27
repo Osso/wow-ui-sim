@@ -106,7 +106,7 @@ macro_rules! build_empty_sim_state {
                 feature = "client-wowforever"
             ))]
             pending_spell_confirmation_prompts: HashMap::new(),
-            #[cfg(feature = "retail-12-0-5")]
+            #[cfg(feature = "nameplate-hit-test-insets")]
             nameplate_hit_test_insets:
                 crate::c_api::c_nameplate_manager::NamePlateHitTestInsets::default(),
             input_interface_style:
@@ -626,9 +626,9 @@ macro_rules! build_empty_sim_state {
             cooldown_viewer_cooldowns: Default::default(),
             cooldown_viewer_group_buffs: Vec::new(),
             cooldown_viewer_availability: Default::default(),
-            #[cfg(feature = "retail-12-0-0")]
+            #[cfg(feature = "spell-classification-queries")]
             spell_classifications: Default::default(),
-            #[cfg(feature = "retail-12-0-0")]
+            #[cfg(feature = "nameplate-configuration")]
             nameplate_configuration: Default::default(),
             recipe_quality_inputs: Default::default(),
             recipe_source_text: Default::default(),
