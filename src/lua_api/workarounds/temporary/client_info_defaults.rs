@@ -19,81 +19,10 @@ pub(crate) const CLASSIC_EXPANSION_LEVEL: f64 = match crate::client_profile::ACT
     _ => 10.0,
 };
 
-#[cfg(not(feature = "client-ptr"))]
-const CLIENT_VERSION: &str = if cfg!(feature = "client-wowforever") {
-    "1.60.1"
-} else if cfg!(feature = "retail-12-1-5") {
-    "12.1.5"
-} else if cfg!(feature = "retail-12-1-0") {
-    "12.1.0"
-} else {
-    "12.0.7"
-};
-
-#[cfg(not(feature = "client-ptr"))]
-const CLIENT_BUILD: &str = if cfg!(feature = "client-wowforever") {
-    // Gethe forever aff0d8cd53bf4d9ef1c1dd2786b94461a276fb16 version.txt.
-    "70707"
-} else {
-    "68256"
-};
-
-const CLIENT_DISPLAY_EXPANSION_LEVEL: u32 = if cfg!(feature = "client-mists") {
-    4
-} else {
-    10
-};
-
-const CLIENT_INTERFACE: u32 = if cfg!(feature = "client-ptr") || cfg!(feature = "client-wowforever")
-{
-    crate::client_profile::ACTIVE_INTERFACE_VERSION
-} else if cfg!(feature = "retail-12-1-5") {
-    120105
-} else if cfg!(feature = "retail-12-1-0") {
-    120100
-} else {
-    120007
-};
-
-fn client_identity() -> crate::Result<(String, String)> {
-    #[cfg(feature = "client-ptr")]
-    {
-        let identity = crate::blizzard_ui_sync::ptr_client_identity()?;
-        return Ok((identity.version, identity.build));
-    }
-
-    #[cfg(not(feature = "client-ptr"))]
-    Ok((CLIENT_VERSION.to_owned(), CLIENT_BUILD.to_owned()))
-}
-
 const CLIENT_INFO_DEFAULTS_LUA: &str = r#"
-if GetBuildInfo == nil then
-  function GetBuildInfo()
-    return "__WOW_CLIENT_VERSION__", "__WOW_CLIENT_BUILD__", "Jun 17 2026", __WOW_CLIENT_INTERFACE__, "", " "
-  end
-end
-
-if GetRealmName == nil then
-  function GetRealmName()
-    return "SimulatedRealm"
-  end
-end
-
-if GetNormalizedRealmName == nil then
-  function GetNormalizedRealmName()
-    return "SimulatedRealm"
-  end
-end
-
 if GetRealmID == nil then
   function GetRealmID()
     return 1
-  end
-end
-
-if GetExpansionLevel == nil then
-  function GetExpansionLevel()
-    return __WOW_EXPANSION_LEVEL__
   end
 end
 
@@ -103,51 +32,9 @@ if GetUpgradeExpansionLevel == nil then
   end
 end
 
-if IsExpansionTrial == nil then
-  function IsExpansionTrial()
-    return false
-  end
-end
-
-if GetExpansionTrialInfo == nil then
-  function GetExpansionTrialInfo()
-    return false, 0
-  end
-end
-
-if IsTrialAccount == nil then
-  function IsTrialAccount()
-    return false
-  end
-end
-
-if IsRestrictedAccount == nil then
-  function IsRestrictedAccount()
-    return false
-  end
-end
-
-if IsVeteranTrialAccount == nil then
-  function IsVeteranTrialAccount()
-    return false
-  end
-end
-
 if IsAccountSecured == nil then
   function IsAccountSecured()
     return true
-  end
-end
-
-if IsMacClient == nil then
-  function IsMacClient()
-    return false
-  end
-end
-
-if IsWindowsClient == nil then
-  function IsWindowsClient()
-    return false
   end
 end
 
@@ -159,36 +46,6 @@ end
 
 if RequestTimePlayed == nil then
   function RequestTimePlayed()
-  end
-end
-
-if GetClientDisplayExpansionLevel == nil then
-  function GetClientDisplayExpansionLevel()
-    return __WOW_CLIENT_DISPLAY_EXPANSION_LEVEL__
-  end
-end
-
-if GetAccountExpansionLevel == nil then
-  function GetAccountExpansionLevel()
-    return GetClientDisplayExpansionLevel()
-  end
-end
-
-if GetMaxPlayerLevel == nil then
-  function GetMaxPlayerLevel()
-    return 80
-  end
-end
-
-if GetMaxLevelForExpansionLevel == nil then
-  function GetMaxLevelForExpansionLevel(_expansion_level)
-    return GetMaxPlayerLevel()
-  end
-end
-
-if GetMaxLevelForPlayerExpansion == nil then
-  function GetMaxLevelForPlayerExpansion()
-    return GetMaxLevelForExpansionLevel(GetAccountExpansionLevel())
   end
 end
 
@@ -251,21 +108,115 @@ if GetWebTicket == nil then
 end
 "#;
 
-pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
-    let (version, build) = client_identity()?;
-    let code = CLIENT_INFO_DEFAULTS_LUA
-        .replace("__WOW_CLIENT_VERSION__", &version)
-        .replace("__WOW_CLIENT_BUILD__", &build)
-        .replace("__WOW_CLIENT_INTERFACE__", &CLIENT_INTERFACE.to_string())
-        .replace(
-            "__WOW_CLIENT_DISPLAY_EXPANSION_LEVEL__",
-            &CLIENT_DISPLAY_EXPANSION_LEVEL.to_string(),
-        )
-        .replace(
-            "__WOW_EXPANSION_LEVEL__",
-            &crate::client_profile::ACTIVE.expansion_level().to_string(),
-        );
-    lua.exec(&code)?;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+const CLIENT_IDENTITY_DEFAULTS_LUA: &str = r#"
+if GetBuildInfo == nil then
+  function GetBuildInfo()
+    return "__WOW_CLIENT_VERSION__", "__WOW_CLIENT_BUILD__", "__WOW_CLIENT_DATE__", __WOW_CLIENT_INTERFACE__, "", " "
+  end
+end
+
+if GetExpansionLevel == nil then
+  function GetExpansionLevel()
+    return __WOW_EXPANSION_LEVEL__
+  end
+end
+
+if GetClientDisplayExpansionLevel == nil then
+  function GetClientDisplayExpansionLevel()
+    return __WOW_CLIENT_DISPLAY_EXPANSION_LEVEL__
+  end
+end
+
+if GetAccountExpansionLevel == nil then
+  function GetAccountExpansionLevel()
+    return GetClientDisplayExpansionLevel()
+  end
+end
+
+if GetMaxPlayerLevel == nil then
+  function GetMaxPlayerLevel()
+    return 80
+  end
+end
+
+if GetMaxLevelForExpansionLevel == nil then
+  function GetMaxLevelForExpansionLevel(_expansion_level)
+    return GetMaxPlayerLevel()
+  end
+end
+
+if GetMaxLevelForPlayerExpansion == nil then
+  function GetMaxLevelForPlayerExpansion()
+    return GetMaxLevelForExpansionLevel(GetAccountExpansionLevel())
+  end
+end
+
+if IsMacClient == nil then
+  function IsMacClient()
+    return false
+  end
+end
+
+if IsWindowsClient == nil then
+  function IsWindowsClient()
+    return false
+  end
+end
+"#;
+
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+const CLIENT_IDENTITY_ACCOUNT_DEFAULTS_LUA: &str = r#"
+if GetRealmName == nil then
+  function GetRealmName() return "SimulatedRealm" end
+end
+if GetNormalizedRealmName == nil then
+  function GetNormalizedRealmName() return "SimulatedRealm" end
+end
+if IsExpansionTrial == nil then
+  function IsExpansionTrial() return false end
+end
+if GetExpansionTrialInfo == nil then
+  function GetExpansionTrialInfo() return false, 0 end
+end
+if IsTrialAccount == nil then
+  function IsTrialAccount() return false end
+end
+if IsRestrictedAccount == nil then
+  function IsRestrictedAccount() return false end
+end
+if IsVeteranTrialAccount == nil then
+  function IsVeteranTrialAccount() return false end
+end
+"#;
+
+pub(crate) fn apply_bootstrap(_lua: &mut rilua::Lua) -> crate::Result<()> {
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+    {
+        let (version, build) = crate::client_profile::client_identity()?;
+        let code = CLIENT_IDENTITY_DEFAULTS_LUA
+            .replace("__WOW_CLIENT_VERSION__", &version)
+            .replace("__WOW_CLIENT_BUILD__", &build)
+            .replace(
+                "__WOW_CLIENT_DATE__",
+                crate::client_profile::CLIENT_BUILD_DATE,
+            )
+            .replace(
+                "__WOW_CLIENT_INTERFACE__",
+                &crate::client_profile::CLIENT_INTERFACE.to_string(),
+            )
+            .replace(
+                "__WOW_CLIENT_DISPLAY_EXPANSION_LEVEL__",
+                &crate::client_profile::CLIENT_DISPLAY_EXPANSION_LEVEL.to_string(),
+            )
+            .replace(
+                "__WOW_EXPANSION_LEVEL__",
+                &crate::client_profile::ACTIVE.expansion_level().to_string(),
+            );
+        _lua.exec(&code)?;
+        _lua.exec(CLIENT_IDENTITY_ACCOUNT_DEFAULTS_LUA)?;
+    }
+    _lua.exec(CLIENT_INFO_DEFAULTS_LUA)?;
     Ok(())
 }
 
@@ -277,8 +228,8 @@ mod tests {
         use crate::lua_api::WowLuaEnv;
         let env = WowLuaEnv::new().expect("lua env should initialize");
 
-        let (expected_version, expected_build) = super::client_identity().unwrap();
-        let expected_interface = super::CLIENT_INTERFACE;
+        let (expected_version, expected_build) = crate::client_profile::client_identity().unwrap();
+        let expected_interface = crate::client_profile::CLIENT_INTERFACE;
         let script = format!(
             r#"
                 local version, build, date, interface = GetBuildInfo()

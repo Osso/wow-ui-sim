@@ -52,15 +52,19 @@ Retail 12.1.5 currency tooltips publish R84/R84b `C_TooltipInfo` data through th
 ## Known gaps (current cycle)
 
 - [ ] The host supplies selected quest source results; reward, required-objective and choice source lists are not inferred. Resolver-miss Lua results remain UNKNOWN.
-  Reason: R84 leaves source resolution and missing-result behavior UNKNOWN; no source list can be implemented from this evidence.
+  Classification: (c) source-list mapping and miss publication are UNKNOWN in R84. Existing quest objective and reward state does not supply the currency source rows; do not infer them from unrelated fields.
 - [ ] The balance-helper formula, runtime number-format mode, locale grouping and total-row prefix selection are not modeled; tests supply explicit values or formatted text.
-  Reason: R84 does not establish these formulas or locale inputs; the simulator must not invent them.
-- [ ] CurrencyContainer row content and amount-dependent description formatting are host-supplied. No 70688 text catalog is claimed.
-  Reason: R84 proves selection rules but not the actual 70688 text records.
-- [ ] The conditional error row, recharge calculation and locale-table aliases remain unmodeled.
-  Reason: R84 leaves the error predicate and aliases unknown, and the recharge result is not consumed by the tooltip path.
+  Classification: (c) native-only inputs or formulas. R84 does not establish the balance formula or locale selection; no values may be invented.
+- [x] CurrencyContainer row content and amount-dependent description formatting are host-supplied. No 70688 text catalog is claimed.
+  Behavioral proof: `tests/tooltip_currency_r84.rs::set_hyperlink_resolves_currency_links` drives the original `SetHyperlink` consumer with a supplied matching range and with no amount; it checks distinct selected title, description and amount output. No 70688 text catalog is claimed.
+- [ ] The recharge calculation remains unmodeled. R84 verifies the standalone clock/offset, cycle, wrapping and cap formula, but the effective-quantity caller discards its result. Current `CurrencyInfo` and `CurrencyTooltipInputs` have no recharge start, end, duration, amount, cap or time-offset fields, so there is no tooltip effect to assert.
+  Classification: (c) missing backing fields and no established tooltip result. Do not invent recharge state or a row.
+- [ ] The conditional error row remains unmodeled. R84 verifies a type-41 row after color remapping, but its predicate requires successful results from two unresolved helpers.
+  Classification: (c) native-only predicate and text inputs.
+- [ ] Locale-table aliases remain unmodeled.
+  Classification: (c) R84 does not establish the locale table or aliases.
 
 ## Out of scope
 
 - Other non-Retail currency producer changes and currency getters.
-- Guessed quest-list sources, missing-result behavior, error-row predicates, balance formulas or formatter modes.
+- Guessed quest-list sources, missing-result behavior, error-row predicates, recharge state, balance formulas or formatter modes.

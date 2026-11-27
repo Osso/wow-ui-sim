@@ -121,6 +121,7 @@ pub(super) fn add_bag_item(state: &mut LuaState) -> LuaResult<u32> {
         &mut sim,
         crate::c_api::item_location::ItemSlot::Bag(bag, slot),
     );
+    sim.item_tooltip_socket_projections.remove(&(bag, slot));
     sim.bag_items.insert(
         (bag, slot),
         BagItem {
@@ -144,6 +145,7 @@ pub(super) fn remove_bag_item(state: &mut LuaState) -> LuaResult<u32> {
         crate::c_api::item_location::ItemSlot::Bag(bag, slot),
     );
     sim.bag_items.remove(&(bag, slot));
+    sim.item_tooltip_socket_projections.remove(&(bag, slot));
     Ok(0)
 }
 
@@ -151,6 +153,7 @@ pub(super) fn clear_bags(state: &mut LuaState) -> LuaResult<u32> {
     let mut sim = borrow_state_mut(state)?;
     crate::c_api::item_upgrade_eligibility::discard_bags(&mut sim);
     sim.bag_items.clear();
+    sim.item_tooltip_socket_projections.clear();
     Ok(0)
 }
 
@@ -216,6 +219,17 @@ pub(super) fn add_guild_bank_tab(state: &mut LuaState) -> LuaResult<u32> {
 
 pub(super) fn clear_guild_bank_tabs(state: &mut LuaState) -> LuaResult<u32> {
     borrow_state_mut(state)?.guild_bank_tabs.clear();
+    Ok(0)
+}
+
+/// Supplies the copper amount returned by `GetGuildBankMoney()`.
+/// INFERRED R88g9 (native evidence pending): a guild-money change reaches the
+/// UI as `GUILDBANK_UPDATE_MONEY`, the event the original `MoneyFrame.lua:158-165`
+/// GUILDBANK money type and `Blizzard_GuildBankUI.lua:21` register for.
+pub(super) fn set_guild_bank_money(state: &mut LuaState) -> LuaResult<u32> {
+    let copper = i64::from_stack(state, 1)?;
+    borrow_state_mut(state)?.guild_bank_money = copper;
+    fire_named_event_state(state, "GUILDBANK_UPDATE_MONEY", &[]);
     Ok(0)
 }
 

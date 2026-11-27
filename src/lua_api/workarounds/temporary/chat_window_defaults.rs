@@ -3,16 +3,19 @@
 //! Retail and WoW Forever chat-window state is backed by `SimState.chat_windows`.
 //! Other profiles keep the temporary Lua compatibility state.
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+const CHAT_TYPE_INDEX_DEFAULT_LUA: &str = r#"
+if GetChatTypeIndex == nil then
+  function GetChatTypeIndex(_chatType) return 1 end
+end
+"#;
+
 const CHAT_WINDOW_DEFAULTS_LUA: &str = r#"
 ChatTypeInfo = ChatTypeInfo or {}
 ChatTypeInfo.SYSTEM = ChatTypeInfo.SYSTEM or { r = 1, g = 1, b = 0, id = 1 }
 ChatTypeInfo.BN_WHISPER = ChatTypeInfo.BN_WHISPER or {
   r = 0, g = 1, b = 0.96470594406128, id = 19,
 }
-
-if GetChatTypeIndex == nil then
-  function GetChatTypeIndex(_chatType) return 1 end
-end
 
 ChatFrameUtil = ChatFrameUtil or {}
 if ChatFrameUtil.GetChatWindowName == nil then
@@ -107,6 +110,8 @@ pub(crate) fn apply_bootstrap(
     lua: &mut rilua::Lua,
     skip_chat_frame_placeholder: bool,
 ) -> crate::Result<()> {
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+    lua.exec(CHAT_TYPE_INDEX_DEFAULT_LUA)?;
     lua.exec(CHAT_WINDOW_DEFAULTS_LUA)?;
     #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     lua.exec(CHAT_WINDOW_STATE_LUA)?;
@@ -123,15 +128,23 @@ mod tests {
     #[test]
     fn installs_chat_type_defaults() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
+        let index_check = if cfg!(any(
+            feature = "client-retail",
+            feature = "client-wowforever"
+        )) {
+            r#"if GetChatTypeIndex("SAY") ~= 2 or GetChatTypeIndex("GUILD") ~= 5 then return "index" end"#
+        } else {
+            r#"if GetChatTypeIndex("SAY") ~= 1 then return "index" end"#
+        };
         let result: String = env
-            .eval(
+            .eval(&format!(
                 r#"
                 if ChatTypeInfo.SYSTEM.id ~= 1 then return "system" end
                 if ChatTypeInfo.BN_WHISPER.id ~= 19 then return "whisper" end
-                if GetChatTypeIndex("SAY") ~= 1 then return "index" end
+                {index_check}
                 return "ok"
                 "#,
-            )
+            ))
             .expect("chat defaults probe should run");
         assert_eq!(result, "ok");
     }

@@ -89,7 +89,7 @@ fn dispatch_event_clean(state: &mut LuaState, event_name: &str, args: &[Val]) ->
     crate::c_api::restricted_actions::apply_host_event(state, event_name)?;
     #[cfg(feature = "retail-12-0-5")]
     crate::c_api::aura_entry::apply_entry_event(state, event_name)?;
-    #[cfg(feature = "retail-12-0-0")]
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     super::real::event_callbacks::dispatch_event_callbacks(state, event_name, args)?;
     let listeners = get_event_listeners(state, event_name);
     for widget_id in listeners {

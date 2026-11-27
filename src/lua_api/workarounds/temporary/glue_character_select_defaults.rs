@@ -4,13 +4,16 @@
 //! simulator has a full account/character-service state model. Keep those
 //! defaults explicit here until that backing model owns them.
 
-const GLUE_CHARACTER_SELECT_DEFAULTS_LUA: &str = r#"
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+const SPECIALIZATION_INFO_DEFAULT_LUA: &str = r#"
 if GetSpecializationInfoForSpecID == nil then
   function GetSpecializationInfoForSpecID(_specID)
     return nil, ""
   end
 end
+"#;
 
+const GLUE_CHARACTER_SELECT_DEFAULTS_LUA: &str = r#"
 if GetCharacterUndeleteStatus == nil then
   function GetCharacterUndeleteStatus()
     return false, false, 0, 0
@@ -32,48 +35,6 @@ end
 if GetCharacterListGroupsInfo == nil then
   function GetCharacterListGroupsInfo()
     return {}
-  end
-end
-
-local __wow_char_select_model_frame_name = nil
-local __wow_char_select_map_scene_frame_name = nil
-local __wow_character_screen_initialized = false
-
-if SetWorldFrameStrata == nil then
-  function SetWorldFrameStrata(frame)
-    if type(frame) == "table" and type(frame.SetFrameStrata) == "function" then
-      frame:SetFrameStrata("BACKGROUND")
-    end
-  end
-end
-
-if SetCharSelectModelFrame == nil then
-  function SetCharSelectModelFrame(frameName)
-    __wow_char_select_model_frame_name = frameName
-  end
-end
-
-if SetCharSelectMapSceneFrame == nil then
-  function SetCharSelectMapSceneFrame(frameName)
-    __wow_char_select_map_scene_frame_name = frameName
-  end
-end
-
-if InitializeCharacterScreenData == nil then
-  function InitializeCharacterScreenData()
-    __wow_character_screen_initialized = true
-  end
-end
-
-if GetMaxWarbandGroupCount == nil then
-  function GetMaxWarbandGroupCount()
-    return 4
-  end
-end
-
-if GetActiveTimerunningSeasonID == nil then
-  function GetActiveTimerunningSeasonID()
-    return nil
   end
 end
 
@@ -109,8 +70,48 @@ if GetCharacterListUpdate == nil then
 end
 "#;
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+const NATIVE_GLUE_CHARACTER_SELECT_DEFAULTS_LUA: &str = r#"
+local __wow_char_select_model_frame_name = nil
+local __wow_char_select_map_scene_frame_name = nil
+local __wow_character_screen_initialized = false
+
+if SetWorldFrameStrata == nil then
+  function SetWorldFrameStrata(frame)
+    if type(frame) == "table" and type(frame.SetFrameStrata) == "function" then
+      frame:SetFrameStrata("BACKGROUND")
+    end
+  end
+end
+if SetCharSelectModelFrame == nil then
+  function SetCharSelectModelFrame(frameName)
+    __wow_char_select_model_frame_name = frameName
+  end
+end
+if SetCharSelectMapSceneFrame == nil then
+  function SetCharSelectMapSceneFrame(frameName)
+    __wow_char_select_map_scene_frame_name = frameName
+  end
+end
+if InitializeCharacterScreenData == nil then
+  function InitializeCharacterScreenData()
+    __wow_character_screen_initialized = true
+  end
+end
+if GetMaxWarbandGroupCount == nil then
+  function GetMaxWarbandGroupCount() return 4 end
+end
+if GetActiveTimerunningSeasonID == nil then
+  function GetActiveTimerunningSeasonID() return nil end
+end
+"#;
+
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+    lua.exec(SPECIALIZATION_INFO_DEFAULT_LUA)?;
     lua.exec(GLUE_CHARACTER_SELECT_DEFAULTS_LUA)?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+    lua.exec(NATIVE_GLUE_CHARACTER_SELECT_DEFAULTS_LUA)?;
     Ok(())
 }
 

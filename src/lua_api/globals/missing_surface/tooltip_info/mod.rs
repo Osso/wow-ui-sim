@@ -10,6 +10,8 @@ use crate::lua_api::methods::{
     call_function_state, create_string, table_get, table_set, val_to_string,
 };
 use crate::lua_bridge::table_set_rust_fn_static;
+#[cfg(feature = "client-retail")]
+pub(crate) use builders::empty_untyped_tooltip;
 pub(crate) use builders::{
     build_item_interaction_cleansing_tooltip, build_quest_party_progress_tooltip,
     build_unresolved_conversion_item_tooltip,
@@ -230,6 +232,20 @@ pub(crate) fn tooltip_for_item_context(
 ) -> rilua::Val {
     match item {
         Some(item) => builders::tooltip_for_item_info(state, item_id, item),
+        None => builders::empty_tooltip(state, super::TOOLTIP_TYPE_ITEM),
+    }
+}
+
+pub(crate) fn tooltip_for_item_context_with_socket_projection(
+    state: &mut LuaState,
+    item_id: u32,
+    item: Option<&crate::items::ItemInfo>,
+    projection: &[crate::c_api::item_tooltip::ItemSocketProjectionRow],
+) -> rilua::Val {
+    match item {
+        Some(item) => {
+            builders::tooltip_for_item_info_with_socket_projection(state, item_id, item, projection)
+        }
         None => builders::empty_tooltip(state, super::TOOLTIP_TYPE_ITEM),
     }
 }

@@ -24,35 +24,37 @@ if BNGetNumFriendInvites == nil then
 end
 "#;
 
-const INERT_GLOBAL_DEFAULTS_LUA: &str = r#"
-if GetCurrentRegionName == nil then
-    function GetCurrentRegionName() return "US" end
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+const DISPLAY_CHANNEL_DEFAULTS_LUA: &str = r#"
+if GetNumDisplayChannels == nil then
+    function GetNumDisplayChannels()
+        return 0
+    end
 end
-if GetDefaultLanguage == nil then
-    function GetDefaultLanguage() return "Common", 1 end
-end
-if GetAlternativeDefaultLanguage == nil then
-    function GetAlternativeDefaultLanguage() return nil end
-end
-if GetNumLanguages == nil then
-    function GetNumLanguages() return 1 end
-end
-if GetLanguageByIndex == nil then
-    function GetLanguageByIndex(index)
-        if index == 1 then
-            return GetDefaultLanguage()
-        end
+if GetChannelDisplayInfo == nil then
+    function GetChannelDisplayInfo(_index)
         return nil
     end
 end
-if GetMaxBattlefieldID == nil then
-    function GetMaxBattlefieldID() return 0 end
+"#;
+
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+const GUILD_FACTION_DEFAULT_LUA: &str = r#"
+if GetGuildFactionGroup == nil then
+    function GetGuildFactionGroup() return 1 end
 end
-if IsActiveBattlefieldArena == nil then
-    function IsActiveBattlefieldArena() return false end
+"#;
+
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+const CAN_SHOW_ROLE_DEFAULT_LUA: &str = r#"
+if CanShowSetRoleButton == nil then
+    function CanShowSetRoleButton() return false end
 end
-if IsPVPTimerRunning == nil then
-    function IsPVPTimerRunning() return false end
+"#;
+
+const INERT_GLOBAL_DEFAULTS_LUA: &str = r#"
+if GetCurrentRegionName == nil then
+    function GetCurrentRegionName() return "US" end
 end
 if HasArtifactEquipped == nil then
     function HasArtifactEquipped() return false end
@@ -112,16 +114,6 @@ if IsOnTournamentRealm == nil then
         return false
     end
 end
-if GetNumDisplayChannels == nil then
-    function GetNumDisplayChannels()
-        return 0
-    end
-end
-if GetChannelDisplayInfo == nil then
-    function GetChannelDisplayInfo(_index)
-        return nil
-    end
-end
 
 if BNGetFriendInfo == nil then
     function BNGetFriendInfo() return nil end
@@ -129,21 +121,9 @@ end
 if AreTalentsLocked == nil then
     function AreTalentsLocked() return false end
 end
-
-if GetGuildFactionGroup == nil then
-    function GetGuildFactionGroup()
-        return 1
-    end
-end
 if WorldLootObjectExists == nil then
     function WorldLootObjectExists(_unit)
         return false
-    end
-end
-
-if GetActiveLootRollIDs == nil then
-    function GetActiveLootRollIDs()
-        return {}
     end
 end
 
@@ -186,6 +166,37 @@ end
 "#;
 
 #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+const NATIVE_REGISTERED_GLOBAL_DEFAULTS_LUA: &str = r#"
+if GetDefaultLanguage == nil then
+    function GetDefaultLanguage() return "Common", 1 end
+end
+if GetAlternativeDefaultLanguage == nil then
+    function GetAlternativeDefaultLanguage() return nil end
+end
+if GetNumLanguages == nil then
+    function GetNumLanguages() return 1 end
+end
+if GetLanguageByIndex == nil then
+    function GetLanguageByIndex(index)
+        if index == 1 then return GetDefaultLanguage() end
+        return nil
+    end
+end
+if GetMaxBattlefieldID == nil then
+    function GetMaxBattlefieldID() return 0 end
+end
+if IsActiveBattlefieldArena == nil then
+    function IsActiveBattlefieldArena() return false end
+end
+if IsPVPTimerRunning == nil then
+    function IsPVPTimerRunning() return false end
+end
+if GetActiveLootRollIDs == nil then
+    function GetActiveLootRollIDs() return {} end
+end
+"#;
+
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 const INERT_GUILD_PERKS_DEFAULT_LUA: &str = r#"
 if GetNumGuildPerks == nil then
     function GetNumGuildPerks() return 0 end
@@ -203,9 +214,13 @@ end
 "#;
 
 // Historical/nonmainline profiles retain only their prior inert query.
-#[cfg(not(all(
-    feature = "retail-12-0-5",
-    any(feature = "profile-retail", feature = "client-ptr")
+#[cfg(not(any(
+    all(
+        feature = "retail-12-0-5",
+        any(feature = "profile-retail", feature = "client-ptr")
+    ),
+    feature = "client-retail",
+    feature = "client-wowforever"
 )))]
 const UNMODELED_SPELL_CONFIRMATION_QUERY_LUA: &str = r#"
 if GetSpellConfirmationPromptsInfo == nil then
@@ -244,22 +259,29 @@ if type(GetBuildInfo) == "function" and select(4, GetBuildInfo()) >= 120100 then
         function C_SocialRestrictions.IsFriendsDisabled() return false end
     end
 end
-if CanShowSetRoleButton == nil then
-    function CanShowSetRoleButton()
-        return false
-    end
-end
 "#;
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
-    #[cfg(not(all(
-        feature = "retail-12-0-5",
-        any(feature = "profile-retail", feature = "client-ptr")
+    #[cfg(not(any(
+        all(
+            feature = "retail-12-0-5",
+            any(feature = "profile-retail", feature = "client-ptr")
+        ),
+        feature = "client-retail",
+        feature = "client-wowforever"
     )))]
     lua.exec(UNMODELED_SPELL_CONFIRMATION_QUERY_LUA)?;
     #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     lua.exec(UNMODELED_WORLD_PRESENCE_LUA)?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+    lua.exec(DISPLAY_CHANNEL_DEFAULTS_LUA)?;
     lua.exec(INERT_GLOBAL_DEFAULTS_LUA)?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+    lua.exec(GUILD_FACTION_DEFAULT_LUA)?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+    lua.exec(CAN_SHOW_ROLE_DEFAULT_LUA)?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+    lua.exec(NATIVE_REGISTERED_GLOBAL_DEFAULTS_LUA)?;
     #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     lua.exec(INERT_GUILD_PERKS_DEFAULT_LUA)?;
     #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
@@ -330,12 +352,14 @@ return "ok"
 "#;
 
     fn configure_expected_defaults(env: &WowLuaEnv) {
-        let expected_guild_faction =
-            if cfg!(all(feature = "profile-retail", feature = "retail-12-1-5")) {
-                -1
-            } else {
-                1
-            };
+        let expected_guild_faction = if cfg!(any(
+            feature = "client-retail",
+            feature = "client-wowforever"
+        )) {
+            -1
+        } else {
+            1
+        };
         let expected_bnet_counts = if cfg!(any(
             feature = "client-retail",
             feature = "client-wowforever"

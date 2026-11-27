@@ -64,7 +64,7 @@ const POST_LOAD_WORKAROUNDS: &[WorkaroundStep] = &[
         label: "init_edit_mode_layout",
         apply: init_edit_mode_layout,
     },
-    #[cfg(not(feature = "client-retail"))]
+    #[cfg(all(not(feature = "client-retail"), not(feature = "client-wowforever")))]
     WorkaroundStep {
         label: "patch_ui_parent_panel_toggles",
         apply: patch_ui_parent_panel_toggles,
@@ -81,7 +81,7 @@ const POST_LOAD_WORKAROUNDS: &[WorkaroundStep] = &[
         label: "patch_chat_voice_button_surface",
         apply: patch_chat_voice_button_surface,
     },
-    #[cfg(not(feature = "client-retail"))]
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     WorkaroundStep {
         label: "patch_character_select_selected_name",
         apply: patch_character_select_selected_name,
@@ -113,7 +113,7 @@ const POST_LOAD_WORKAROUNDS: &[WorkaroundStep] = &[
         label: "ensure_adventure_map_frame_surface",
         apply: ensure_adventure_map_frame_surface,
     },
-    #[cfg(not(feature = "client-retail"))]
+    #[cfg(all(not(feature = "client-retail"), not(feature = "client-wowforever")))]
     WorkaroundStep {
         label: "patch_paging_controls_page_text",
         apply: patch_paging_controls_page_text,
@@ -138,8 +138,8 @@ const POST_LOAD_WORKAROUNDS: &[WorkaroundStep] = &[
         label: "patch_tooltip_nineslice_surface",
         apply: patch_tooltip_nineslice_surface,
     },
-    // Retail startup dispatches per-addon ADDON_LOADED and owns this XML frame.
-    #[cfg(not(feature = "client-retail"))]
+    // Retail and Forever startup dispatch per-addon ADDON_LOADED and own this XML frame.
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     WorkaroundStep {
         label: "patch_container_frame_token_tracker",
         apply: patch_container_frame_token_tracker,
@@ -340,6 +340,7 @@ fn apply_core_foundation_environment_defaults(lua: &mut rilua::Lua) -> crate::Re
     apply_core_foundation_tracking_defaults(lua)?;
     temporary::debug_environment_defaults::apply_bootstrap(lua)?;
     temporary::difficulty_pvp_util_defaults::apply_bootstrap(lua)?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::edit_mode_cache_defaults::apply_bootstrap(lua)?;
     temporary::equipment_set_lock_defaults::apply_bootstrap(lua)?;
     temporary::global_frame_defaults::apply_bootstrap(lua)?;
@@ -373,7 +374,7 @@ fn apply_core_foundation_tracking_defaults(lua: &mut rilua::Lua) -> crate::Resul
     temporary::container_default_shapes::apply_bootstrap(lua)?;
     temporary::container_portrait_texture::apply_bootstrap(lua)?;
     temporary::minimap_tracking_defaults::apply_bootstrap(lua)?;
-    #[cfg(not(feature = "client-retail"))]
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::map_art_help_text_defaults::apply_bootstrap(lua)?;
     temporary::super_track_defaults::apply_bootstrap(lua)
 }
@@ -680,7 +681,7 @@ fn patch_runtime_core_addon_surfaces(env: &crate::lua_api::LoaderEnv<'_>, addon_
     ) {
         temporary::chat_voice_button_surface::patch_loader(env);
     }
-    #[cfg(not(feature = "client-retail"))]
+    #[cfg(all(not(feature = "client-retail"), not(feature = "client-wowforever")))]
     if addon_name == "Blizzard_PagedContent" {
         temporary::paging_controls_page_text::patch_loader(env);
     }
@@ -702,7 +703,7 @@ fn patch_runtime_core_addon_surfaces(env: &crate::lua_api::LoaderEnv<'_>, addon_
 
 fn patch_runtime_journal_addon_surfaces(env: &crate::lua_api::LoaderEnv<'_>, addon_name: &str) {
     if addon_name == "Blizzard_Collections" {
-        #[cfg(not(feature = "client-retail"))]
+        #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
         patch_toggle_collections_journal_for_runtime_addon_load(env);
         temporary::collections_journal_namespace::patch(env);
     }

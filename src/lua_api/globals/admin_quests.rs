@@ -3,8 +3,12 @@
 use crate::lua_api::globals::quest_surface::data::{QUEST_LOG, QuestLogEntry};
 use crate::lua_api::globals::state_backed_queries::dispatch_event_now;
 use crate::lua_api::methods::borrow_state_mut;
+#[cfg(any(feature = "profile-retail", feature = "client-wowforever"))]
+use crate::lua_api::methods::table_get;
 use crate::lua_api::sim_substates::{GossipQuestRow, GossipState, QuestRewardItem};
 use crate::lua_api::state::QuestLogEntry as RichQuestLogEntry;
+#[cfg(any(feature = "profile-retail", feature = "client-wowforever"))]
+use crate::lua_bridge::stack_val;
 use crate::lua_bridge::{FromStack, TableBuilder};
 #[cfg(not(feature = "client-wrath"))]
 use rilua::Val;
@@ -21,6 +25,9 @@ const COMPLETED_REWARD_TEXTURE: &str = "Interface\\Icons\\INV_Box_01";
 const QUEST_GREETING_TEXT: &str = "How can I help you, adventurer?";
 const SET_QUEST_LOG_ENTRY_USAGE: &str =
     "Usage: A_Admin.SetQuestLogEntry(questID, title, isComplete)";
+#[cfg(any(feature = "profile-retail", feature = "client-wowforever"))]
+const SET_QUEST_LOG_REWARD_ITEMS_ERROR: &str =
+    "SetQuestLogRewardItems: expected an existing quest and valid reward rows";
 
 pub(super) fn register_quests(b: TableBuilder) -> LuaResult<TableBuilder> {
     #[cfg(all(feature = "profile-retail", feature = "retail-12-0-5"))]
@@ -52,8 +59,10 @@ pub(super) fn register_quests(b: TableBuilder) -> LuaResult<TableBuilder> {
 }
 
 fn register_quest_state_inputs(b: TableBuilder) -> LuaResult<TableBuilder> {
-    b.set_function("SetQuestLogEntry", set_quest_log_entry)?
-        .set_function("SetQuestGroupCreatable", set_quest_group_creatable)?
+    let b = b.set_function("SetQuestLogEntry", set_quest_log_entry)?;
+    #[cfg(any(feature = "profile-retail", feature = "client-wowforever"))]
+    let b = b.set_function("SetQuestLogRewardItems", set_quest_log_reward_items)?;
+    b.set_function("SetQuestGroupCreatable", set_quest_group_creatable)?
         .set_function("SetQuestLogSpecialItem", set_quest_log_special_item)
 }
 
@@ -138,6 +147,81 @@ fn set_supplied_quest_log_entry(
             is_complete,
         ));
     sim.quest_log.push(quest_id as u32);
+}
+
+#[cfg(any(feature = "profile-retail", feature = "client-wowforever"))]
+fn set_quest_log_reward_items(state: &mut LuaState) -> LuaResult<u32> {
+    let quest_id = i32::from_stack(state, 1)?;
+    let items = decode_quest_reward_items(state)?;
+    if quest_id <= 0 || !items.iter().all(valid_quest_reward_item) {
+        return Err(runtime_error(SET_QUEST_LOG_REWARD_ITEMS_ERROR));
+    }
+    let mut sim = borrow_state_mut(state)?;
+    let Some(entry) = sim
+        .quest_log_entries
+        .entries
+        .iter_mut()
+        .find(|entry| entry.quest_id == quest_id)
+    else {
+        return Err(runtime_error(SET_QUEST_LOG_REWARD_ITEMS_ERROR));
+    };
+    entry.reward_items = items;
+    Ok(0)
+}
+
+#[cfg(any(feature = "profile-retail", feature = "client-wowforever"))]
+fn decode_quest_reward_items(state: &mut LuaState) -> LuaResult<Vec<QuestRewardItem>> {
+    let Val::Table(rows_ref) = stack_val(state, 2) else {
+        return Err(runtime_error(SET_QUEST_LOG_REWARD_ITEMS_ERROR));
+    };
+    let row_values = {
+        let rows = state
+            .gc
+            .tables
+            .get(rows_ref)
+            .ok_or_else(|| runtime_error(SET_QUEST_LOG_REWARD_ITEMS_ERROR))?;
+        (1..=rows.len(&state.gc.string_arena))
+            .map(|index| rows.get_int(index as i64))
+            .collect::<Vec<_>>()
+    };
+    row_values
+        .into_iter()
+        .map(|row| decode_quest_reward_item(state, row))
+        .collect()
+}
+
+#[cfg(any(feature = "profile-retail", feature = "client-wowforever"))]
+fn decode_quest_reward_item(state: &mut LuaState, row: Val) -> LuaResult<QuestRewardItem> {
+    if !matches!(row, Val::Table(_)) {
+        return Err(runtime_error(SET_QUEST_LOG_REWARD_ITEMS_ERROR));
+    }
+    Ok(QuestRewardItem {
+        name: read_reward_field(state, row, "name")?,
+        texture: read_reward_field(state, row, "texture")?,
+        count: read_reward_field(state, row, "count")?,
+        quality: read_reward_field(state, row, "quality")?,
+        is_usable: read_reward_field(state, row, "isUsable")?,
+        item_id: read_reward_field(state, row, "itemID")?,
+    })
+}
+
+#[cfg(any(feature = "profile-retail", feature = "client-wowforever"))]
+fn read_reward_field<T: FromStack>(state: &mut LuaState, row: Val, key: &str) -> LuaResult<T> {
+    let top = state.top;
+    let field = table_get(state, row, key);
+    state.push(field);
+    let value = T::from_stack(state, -1);
+    state.top = top;
+    value
+}
+
+#[cfg(any(feature = "profile-retail", feature = "client-wowforever"))]
+fn valid_quest_reward_item(item: &QuestRewardItem) -> bool {
+    !item.name.is_empty()
+        && !item.texture.is_empty()
+        && item.count > 0
+        && (0..=7).contains(&item.quality)
+        && item.item_id.is_none_or(|item_id| item_id > 0)
 }
 
 fn set_quest_group_creatable(state: &mut LuaState) -> LuaResult<u32> {

@@ -28,7 +28,19 @@ pub(super) fn open_mailbox(state: &mut LuaState) -> LuaResult<u32> {
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub(super) fn open_guild_rename(state: &mut LuaState) -> LuaResult<u32> {
-    let interaction_type = player_interaction_type("GuildRename");
+    show_player_interaction(state, "GuildRename")
+}
+
+/// The guild-bank NPC interaction registered by the original
+/// `Blizzard_GuildBankUI_Bootstrap.lua:22-31` (`GuildBanker`).
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(super) fn open_guild_bank(state: &mut LuaState) -> LuaResult<u32> {
+    show_player_interaction(state, "GuildBanker")
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn show_player_interaction(state: &mut LuaState, name: &str) -> LuaResult<u32> {
+    let interaction_type = player_interaction_type(name);
     borrow_state_mut(state)?
         .active_player_interactions
         .insert(interaction_type);

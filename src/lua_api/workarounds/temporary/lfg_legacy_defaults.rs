@@ -98,12 +98,6 @@ if GetLFGRoleShortageRewards == nil then
     end
 end
 
-if rawget(C_LFGInfo or {}, "CanPlayerUseGroupFinder") == nil then
-    C_LFGInfo = C_LFGInfo or __wow_namespace()
-    function C_LFGInfo.CanPlayerUseGroupFinder()
-        return false, ""
-    end
-end
 if rawget(C_LFGInfo or {}, "CanPlayerUseLFR") == nil then
     C_LFGInfo = C_LFGInfo or __wow_namespace()
     function C_LFGInfo.CanPlayerUseLFR()
@@ -128,33 +122,9 @@ if rawget(C_LFGInfo or {}, "GetAllEntriesForCategory") == nil then
         return {}
     end
 end
-if GetLFGProposal == nil then
-    function GetLFGProposal()
-        return false, 0, 0, 0, "", "", "", false, 0, 0, 0, false, false, nil, false
-    end
-end
-if GetLFGProposalEncounter == nil then
-    function GetLFGProposalEncounter(_i)
-        return "", "", false
-    end
-end
-if GetLFGInfoServer == nil then
-    function GetLFGInfoServer()
-        return false, false, false, false, false, 0, 0, 0, ""
-    end
-end
 if GetLFGRoleUpdate == nil then
     function GetLFGRoleUpdate()
         return false, 0, 0, 0, 0, false
-    end
-end
-if GetLFGQueuedList == nil then
-    function GetLFGQueuedList(_category, queuedList)
-        queuedList = queuedList or {}
-        for key in pairs(queuedList) do
-            queuedList[key] = nil
-        end
-        return queuedList
     end
 end
 if GetLFGReadyCheckUpdate == nil then
@@ -170,6 +140,36 @@ if GetLFGDeserterExpiration == nil then
 end
 "#;
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+const NATIVE_LFG_DEFAULTS_LUA: &str = r#"
+if rawget(C_LFGInfo or {}, "CanPlayerUseGroupFinder") == nil then
+    C_LFGInfo = C_LFGInfo or __wow_namespace()
+    function C_LFGInfo.CanPlayerUseGroupFinder()
+        return false, ""
+    end
+end
+if GetLFGProposal == nil then
+    function GetLFGProposal()
+        return false, 0, 0, 0, "", "", "", false, 0, 0, 0, false, false, nil, false
+    end
+end
+if GetLFGProposalEncounter == nil then
+    function GetLFGProposalEncounter(_i) return "", "", false end
+end
+if GetLFGInfoServer == nil then
+    function GetLFGInfoServer()
+        return false, false, false, false, false, 0, 0, 0, ""
+    end
+end
+if GetLFGQueuedList == nil then
+    function GetLFGQueuedList(_category, queuedList)
+        queuedList = queuedList or {}
+        for key in pairs(queuedList) do queuedList[key] = nil end
+        return queuedList
+    end
+end
+"#;
+
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     // Forever's pinned Blizzard_GroupFinder.toc:10 excludes camelot. Do not
     // publish a synthetic LFGListFrame for a consumer the runtime cannot load.
@@ -177,6 +177,8 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
         lua.exec(LFG_LIST_FRAME_DEFAULTS_LUA)?;
     }
     lua.exec(LFG_LEGACY_DEFAULTS_LUA)?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+    lua.exec(NATIVE_LFG_DEFAULTS_LUA)?;
     Ok(())
 }
 
@@ -314,6 +316,7 @@ mod tests {
     }
 
     #[test]
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     fn installs_legacy_lfg_fallback_shapes_when_missing() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
         env.exec(

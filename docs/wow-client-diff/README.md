@@ -3,6 +3,13 @@
 Discovery data collected 2026-02-23 by running `WowDiscovery` and `WowBehaviorTest` addons against
 live WoW client, then diffing against what the simulator exposes.
 
+> **Stale (2026-11-26):** the `diff_*` files other than the method baselines last changed in
+> 2026-04/05 (hand edits after the 2026-02-23 capture). No tool regenerates them; a refresh needs a
+> new live-client `WowDiscovery` capture. Do not use `diff_c_functions_*`, `diff_c_namespaces_*` or `diff_global_functions_*` to
+> find API gaps. The current per-profile list of documented functions that the simulator does not
+> register is `tests/data/api_surface/<profile>-missing.txt`, which
+> `tests/api_surface_audit.rs` keeps current ([contract](../specs/api-surface-audit.md)).
+
 Source files in this directory:
 - `WowDiscovery.lua` — addon that dumps live client API surface
 - `WowBehaviorTest.lua` — addon that records actual values for edge-case behaviors

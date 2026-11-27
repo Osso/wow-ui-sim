@@ -55,24 +55,20 @@ The native ranges listed between the backpack range and the equipment range are
 unnamed (UNKNOWN), and the bank is not part of the modelled carried inventory, so
 neither is searched.
 
-## Known gaps (current cycle)
+- [x] **VERIFIED (Retail 12.1.5.70688; Forever 1.60.1.70707):** the found instance's gem/socket projection is copied before item construction. **VERIFIED (simulator test):** two bag instances of the same item retain distinct `socketType`, `gemIcon`, and `gemItemID` rows through the original `GameTooltip:SetInventoryItemByID` consumer; the original `GemSocket` rule renders the supplied gem and empty-socket textures.
+- [ ] **UNKNOWN (native):** which items or instance states trigger each socket row. The simulator emits only explicit host-supplied instance rows.
+- [ ] **INFERRED (simulator mapping):** supplied socket metadata uses `Enum.TooltipDataLineType.GemSocket` (3), declared by pinned `TooltipInfoSharedDocumentation.lua:37` and consumed by `TooltipDataRules.lua:18-33`; native row selection and complete row fields are not established.
 
-- [ ] The gem/socket projection is VERIFIED as an instance data copy before the
-      item enters the builder, and the socket metadata row shape (`socketType`,
-      `gemIcon`, `gemItemID`) is VERIFIED. Which items trigger which row and its
-      line type are UNKNOWN, and the shared item producer emits no socket rows,
-      so the projection has no observable output and is not modelled.
-  Reason: The source-data shape is known, but row selection and line type are UNKNOWN, so no observable native-compatible implementation is supported.
-- [ ] `guid` is published only for a bag copy. An equipped copy has no simulator
-      GUID string: `C_Item.GetItemGUID` models bag locations only.
-  Reason: The current simulator has no equipped-item GUID input, and the native equipped-copy publication is not established here.
-- [ ] The two per-item state and usability tests of the native search are
-      recorded but their gameplay meaning is UNKNOWN, so only a missing item or a
-      missing catalog record rejects a candidate.
-  Reason: Native behavior records the tests but does not identify their gameplay meaning or rejection rules.
+## Known gaps (current cycle)
+- [x] **INFERRED (simulator mapping):** an equipped copy publishes the explicit opaque GUID supplied by `A_Admin.SetEquippedItemGUID`. The original `GameTooltip:SetInventoryItemByID` consumer receives it on Retail and Forever.
+- [ ] **UNKNOWN (native):** the equipped-item GUID writer, format and actual equipped-copy publication remain unestablished. The simulator host input does not prove them.
+- [ ] The native per-item state test runs before the item-ID comparison, but its gameplay meaning and rejection rule are UNKNOWN. No simulator predicate is inferred.
+  Classification: (c) native-only for this lane.
+- [ ] The native usability test runs before the item-ID comparison, but its gameplay meaning and rejection rule are UNKNOWN. No simulator predicate is inferred.
+  Classification: (c) native-only for this lane.
 - [ ] Exact native argument-error text is not modelled; the shared signed reader
       reports its own message.
-  Reason: The evidence does not provide the exact native error text.
+  Classification: (c) native-only for this lane. The evidence does not provide the exact native error text.
 
 ## Out of scope
 
@@ -88,10 +84,14 @@ neither is searched.
 ## Implementation inventory
 
 - `src/c_api/c_tooltip_info_inventory_by_id.rs`: argument reader, ordered
-  inventory scan, instance GUID and tooltip publication.
+  inventory scan, instance GUID/socket projection, equipped-GUID admin input, and tooltip publication.
+- `src/c_api/item_tooltip.rs` and `src/lua_api/globals/missing_surface/tooltip_info/builders.rs`: explicit socket-row input and GemSocket publication.
 - `src/lua_api/globals/missing_surface/tooltip_info/`: shared item tooltip
   producer.
 
 ## Tests asserting this spec
 
 - `tests/tooltip_inventory_item_by_id.rs`
+- `tests/tooltip_verified_lane.rs::inventory_tooltip_copies_each_instance_socket_projection`
+- `tests/tooltip_residual_prefork.rs::tooltip_residual_equipped_copy_publishes_supplied_guid` — original Retail accessor with a validated equipped GUID input.
+- `tests/tooltip_inventory_item_by_id.rs::forever_inventory_item_by_id_publishes_supplied_equipped_guid` — original Forever accessor with the same modeled input.

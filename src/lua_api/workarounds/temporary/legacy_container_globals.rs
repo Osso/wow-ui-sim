@@ -3,12 +3,16 @@
 //! `C_Container` is the state-backed API surface. These globals exist for older
 //! Blizzard/addon callers that still use pre-namespace names.
 
-const LEGACY_CONTAINER_GLOBALS_LUA: &str = r#"
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+const LEGACY_LOCALE_DEFAULT_LUA: &str = r#"
 if GetLocale == nil then
     function GetLocale()
         return "enUS"
     end
 end
+"#;
+
+const LEGACY_CONTAINER_GLOBALS_LUA: &str = r#"
 if GAME_LOCALE == nil then
     GAME_LOCALE = GetLocale()
 end
@@ -30,6 +34,8 @@ end
 "#;
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+    lua.exec(LEGACY_LOCALE_DEFAULT_LUA)?;
     lua.exec(LEGACY_CONTAINER_GLOBALS_LUA)?;
     #[cfg(not(feature = "client-retail"))]
     lua.exec(LEGACY_CONTAINER_SCAFFOLD_LUA)?;

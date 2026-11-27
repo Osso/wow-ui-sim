@@ -8,16 +8,17 @@ use rilua::vm::state::LuaState;
 use rilua::{LuaApiMut, LuaResult, Val};
 
 const SIM_REALM: &str = "SimRealm";
-#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 const FACTION_GROUP_FLAG_1: u32 = 1;
-#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 const FACTION_GROUP_FLAG_2: u32 = 2;
-#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 const FACTION_GROUP_FLAG_4: u32 = 4;
 
-// VERIFIED (pr46-49-decomp-answers.md §R88ap part A.2): native flag priority:
+// VERIFIED Retail (pr46-49-decomp-answers.md §R88ap part A.2); Forever is INFERRED
+// "R88g9 (native evidence pending)". Native flag priority:
 // flag 4 returns 0, flag 2 returns 1, flag 1 returns 0, otherwise -1.
-#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn faction_group_from_flags(flags: u32) -> i32 {
     if flags & FACTION_GROUP_FLAG_4 != 0 {
         0
@@ -30,7 +31,7 @@ fn faction_group_from_flags(flags: u32) -> i32 {
     }
 }
 
-#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn get_guild_faction_group(state: &mut LuaState) -> LuaResult<u32> {
     let group = {
         let sim = borrow_state(state)?;
@@ -176,7 +177,7 @@ pub fn register_all(lua: &mut rilua::Lua) -> crate::Result<()> {
         )?;
     }
     LuaApiMut::register_function(lua, "GetPlayerInfoByGUID", get_player_info_by_guid)?;
-    #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     LuaApiMut::register_function(lua, "GetGuildFactionGroup", get_guild_faction_group)?;
     #[cfg(feature = "player-cast-durations")]
     LuaApiMut::register_function(lua, "UnitNameFromGUID", unit_name_from_guid)?;

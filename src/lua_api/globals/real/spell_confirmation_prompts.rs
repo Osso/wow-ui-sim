@@ -166,6 +166,10 @@ fn push_prompt_snapshot(state: &mut LuaState, prompt: &SpellConfirmationPrompt) 
     row
 }
 
+#[cfg(all(
+    feature = "retail-12-0-5",
+    any(feature = "profile-retail", feature = "client-ptr")
+))]
 fn remove_prompt(state: &mut LuaState) -> LuaResult<u32> {
     let spell_id = require_number(stack_val(state, 1), "spellID")?;
     borrow_state_mut(state)?
@@ -178,8 +182,16 @@ pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
     builder.set_function("QueueSpellConfirmationPrompt", queue_prompt)
 }
 
+pub(crate) fn register_query(lua: &mut rilua::Lua) -> LuaResult<()> {
+    LuaApiMut::register_function(lua, "GetSpellConfirmationPromptsInfo", get_prompts)
+}
+
+#[cfg(all(
+    feature = "retail-12-0-5",
+    any(feature = "profile-retail", feature = "client-ptr")
+))]
 pub(crate) fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
-    LuaApiMut::register_function(lua, "GetSpellConfirmationPromptsInfo", get_prompts)?;
+    register_query(lua)?;
     LuaApiMut::register_function(lua, "AcceptSpellConfirmationPrompt", remove_prompt)?;
     LuaApiMut::register_function(lua, "DeclineSpellConfirmationPrompt", remove_prompt)
 }

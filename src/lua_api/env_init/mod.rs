@@ -147,6 +147,8 @@ fn register_temporary_bootstrap(
     trace_debug_getter_values(lua, "before_temporary_bootstrap");
     #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
     crate::c_api::c_combat_log::register_filters(lua)?;
+    #[cfg(feature = "client-wowforever")]
+    crate::c_api::c_combat_log::register_filters(lua)?;
     crate::lua_api::workarounds::apply_temporary_bootstrap(lua, skip_chat_frame_placeholder)?;
     trace_debug_getter_values(lua, "after_temporary_bootstrap");
     Ok(())

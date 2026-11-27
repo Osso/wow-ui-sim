@@ -1243,6 +1243,35 @@ fn test_get_club_calendar_events_defaults_empty() {
 }
 
 #[test]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn test_get_club_calendar_events_filters_supplied_records() {
+    let env = env();
+    let result: String = env
+        .eval(
+            r#"
+            A_Admin.SetCalendarClubEvents([=[
+                [{"eventId":"event-3","clubId":"guild-1","title":"March 3",
+                  "startTime":{"year":2026,"month":3,"monthDay":3,"hour":10,"minute":0}},
+                 {"eventId":"event-4","clubId":"guild-1","title":"March 4",
+                  "startTime":{"year":2026,"month":3,"monthDay":4,"hour":10,"minute":0}}]
+            ]=])
+            local function get(day)
+                return C_Calendar.GetClubCalendarEvents(
+                    "guild-1",
+                    {year=2026, month=3, monthDay=day, hour=0, minute=0},
+                    {year=2026, month=3, monthDay=day, hour=23, minute=59}
+                )
+            end
+            local third, fourth = get(3), get(4)
+            return #third .. ":" .. third[1].title .. "/" .. #fourth .. ":" .. fourth[1].title
+            "#,
+        )
+        .expect("club calendar queries should use supplied records");
+
+    assert_eq!(result, "1:March 3/1:March 4");
+}
+
+#[test]
 fn test_get_server_time_local() {
     let env = env();
     let time: i32 = env

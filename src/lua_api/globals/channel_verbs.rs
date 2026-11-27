@@ -459,6 +459,45 @@ fn swap_chat_channel_links(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn get_num_display_channels(state: &mut LuaState) -> LuaResult<u32> {
+    let count = borrow_state(state)?.chat_channels.len();
+    state.push(Val::Num(count as f64));
+    Ok(1)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn get_channel_display_info(state: &mut LuaState) -> LuaResult<u32> {
+    let Some(index) = stack_i32(state, 1).filter(|index| *index > 0) else {
+        return Ok(0);
+    };
+    let channel = borrow_state(state)?
+        .chat_channels
+        .get(index as usize - 1)
+        .cloned();
+    let Some(channel) = channel else {
+        return Ok(0);
+    };
+    push_channel_display_info(state, index, &channel);
+    Ok(8)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn push_channel_display_info(state: &mut LuaState, index: i32, channel: &ChatChannel) {
+    // INFERRED "R88g9 (native evidence pending)": joined channels are active, ungrouped rows;
+    // `ChatChannel` stores names and members, while the displayed ID is its 1-based position.
+    let name = create_string(state, &channel.name);
+    let category = create_string(state, "");
+    state.push(name);
+    state.push(Val::Bool(false));
+    state.push(Val::Bool(false));
+    state.push(Val::Num(f64::from(index)));
+    state.push(Val::Num((channel.members.len() + 1) as f64));
+    state.push(Val::Bool(true));
+    state.push(category);
+    state.push(Val::Num(channel_type(&channel.name)));
+}
+
 fn register_channel_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
     LuaApiMut::register_function(lua, "GetChannelList", get_channel_list)?;
     LuaApiMut::register_function(lua, "GetChannelName", get_channel_name)?;
@@ -474,6 +513,10 @@ fn register_channel_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
     LuaApiMut::register_function(lua, "ChannelModerator", channel_moderator)?;
     LuaApiMut::register_function(lua, "ChannelUnmoderator", channel_unmoderator)?;
     LuaApiMut::register_function(lua, "SwapChatChannelLinks", swap_chat_channel_links)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    LuaApiMut::register_function(lua, "GetNumDisplayChannels", get_num_display_channels)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    LuaApiMut::register_function(lua, "GetChannelDisplayInfo", get_channel_display_info)?;
     Ok(())
 }
 

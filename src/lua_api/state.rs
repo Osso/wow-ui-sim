@@ -93,9 +93,13 @@ macro_rules! build_empty_sim_state {
             events: EventQueue::default(),
             private_aura_anchors: crate::c_api::private_aura_anchors::PrivateAuraAnchors::default(),
             private_aura_data: Default::default(),
-            #[cfg(all(
-                feature = "retail-12-0-5",
-                any(feature = "profile-retail", feature = "client-ptr")
+            #[cfg(any(
+                all(
+                    feature = "retail-12-0-5",
+                    any(feature = "profile-retail", feature = "client-ptr")
+                ),
+                feature = "client-retail",
+                feature = "client-wowforever"
             ))]
             pending_spell_confirmation_prompts: HashMap::new(),
             #[cfg(feature = "retail-12-0-5")]
@@ -257,6 +261,8 @@ macro_rules! build_empty_sim_state {
             item_tooltip_sell_price_unit_prices: ::std::collections::HashMap::new(),
             bag_item_tooltip_sell_price_statuses: ::std::collections::HashMap::new(),
             item_tooltip_sell_price_quantities: ::std::collections::HashMap::new(),
+            equipped_item_tooltip_guids: ::std::collections::HashMap::new(),
+            item_tooltip_socket_projections: ::std::collections::HashMap::new(),
             blocked_auras_by_unit: $collections.blocked_auras_by_unit,
             #[cfg(feature = "client-wowforever")]
             auras_secret_in_context: false,

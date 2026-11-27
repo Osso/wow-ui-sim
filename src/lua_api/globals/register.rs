@@ -78,6 +78,16 @@ fn register_bootstrap_time_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
 
 fn register_bootstrap_runtime_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
     super::strings::register_all_ui_strings(lua)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    super::real::client_info::register_all(lua)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    super::real::global_text::register_all(lua)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    super::real::instance_legacy::register_all(lua)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    super::real::spell_confirmation_prompts::register_query(lua)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    super::real::chat_type_index::register_all(lua)?;
     super::security::register_all(lua)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     super::real::camera_fov_defaults::register_all(lua)?;
@@ -151,7 +161,7 @@ fn register_frame_foundation_globals(lua: &mut rilua::Lua) -> crate::Result<()> 
     super::font_strings_collection::register_all(lua)?;
     super::utility_system_spell::register_all(lua)?;
     super::real::frame_level_helpers::register_all(lua)?;
-    #[cfg(feature = "retail-12-0-0")]
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     {
         LuaApiMut::register_function(
             lua,
@@ -457,7 +467,7 @@ fn register_compat_and_admin(lua: &mut rilua::Lua) -> crate::Result<()> {
     }
     super::bank_storage_verbs::register_guild_tabard_files(lua)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
-    super::bank_storage_verbs::register_current_guild_bank_tab(lua)?;
+    super::bank_storage_verbs::register_guild_bank_globals(lua)?;
     #[cfg(any(feature = "client-mists", feature = "client-wrath"))]
     super::auction_verbs::register_all(lua)?;
     #[cfg(feature = "client-mists")]

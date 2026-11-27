@@ -47,6 +47,9 @@ const BLIZZARD_ADDONS: &[&str] = &[
     "Blizzard_GameMenu",
     "Blizzard_ClassMenu",
     "Blizzard_MicroMenu",
+    "Blizzard_ManagedFrameSystem",
+    "Blizzard_Game",
+    "Blizzard_UIParentUtil",
     "Blizzard_EditMode",
     "Blizzard_GarrisonBase",
     "Blizzard_HousingEventHandler",
@@ -75,12 +78,7 @@ const BLIZZARD_ADDONS: &[&str] = &[
 fn setup_env() -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("Failed to create Lua environment");
     env.set_screen_size(1024.0, 768.0);
-
-    // Set addon_base_paths for runtime on-demand loading
-    {
-        let mut state = env.state().borrow_mut();
-        state.addon_base_paths = vec![blizzard_ui_dir()];
-    }
+    env.state().borrow_mut().addon_base_paths = vec![blizzard_ui_dir()];
 
     if cfg!(feature = "client-wrath") {
         common::load_profile_framexml(&env);
@@ -306,6 +304,39 @@ fn micro_menu_game_menu_button_opens_game_menu(env: &WowLuaEnv) {
         "GameMenuFrame should be shown after clicking MainMenuMicroButton"
     );
 }
+}
+
+#[cfg(feature = "client-wowforever")]
+#[test]
+fn main_menu_microbutton_click_toggles_game_menu() {
+    let env = setup_env();
+    env.exec("A_Admin.SetMouseOverFrame(MainMenuMicroButton)")
+        .expect("mouse-over fixture should select MainMenuMicroButton");
+    env.exec("MainMenuMicroButton:Click()")
+        .expect("MainMenuMicroButton first click failed");
+    assert!(frame_is_shown(&env, "GameMenuFrame"));
+    env.exec("MainMenuMicroButton:Click()")
+        .expect("MainMenuMicroButton second click failed");
+    assert!(!frame_is_shown(&env, "GameMenuFrame"));
+}
+
+#[cfg(any(feature = "client-wowforever", feature = "client-retail"))]
+#[test]
+fn friends_frame_starts_hidden_and_close_all_windows_hides_it() {
+    let env = setup_env();
+    assert!(
+        !frame_is_shown(&env, "FriendsFrame"),
+        "FriendsFrame should start hidden after startup"
+    );
+    env.exec("ShowUIPanel(FriendsFrame)")
+        .expect("FriendsFrame should open through the original panel manager");
+    assert!(frame_is_shown(&env, "FriendsFrame"), "ShowUIPanel should show FriendsFrame");
+    env.exec("CloseAllWindows()")
+        .expect("CloseAllWindows should run through the original panel manager");
+    assert!(
+        !frame_is_shown(&env, "FriendsFrame"),
+        "CloseAllWindows should hide FriendsFrame"
+    );
 }
 
 #[cfg(all(feature = "client-retail", feature = "optional-tests"))]

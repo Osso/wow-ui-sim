@@ -66,9 +66,13 @@ pub struct SimState {
     pub(crate) private_aura_anchors: crate::c_api::private_aura_anchors::PrivateAuraAnchors,
     pub private_aura_data: crate::c_api::private_aura_data::PrivateAuraData,
     /// Explicit pending records only; empty default and lifecycle are simulator policy.
-    #[cfg(all(
-        feature = "retail-12-0-5",
-        any(feature = "profile-retail", feature = "client-ptr")
+    #[cfg(any(
+        all(
+            feature = "retail-12-0-5",
+            any(feature = "profile-retail", feature = "client-ptr")
+        ),
+        feature = "client-retail",
+        feature = "client-wowforever"
     ))]
     pub(crate) pending_spell_confirmation_prompts: HashMap<
         u64,
@@ -284,6 +288,11 @@ pub struct SimState {
     /// UNKNOWN Retail SellPrice inputs: item ID to (current, prepared maximum) quantity.
     /// Empty by default; these values are not derived from Stackable.
     pub item_tooltip_sell_price_quantities: HashMap<u32, (u32, u32)>,
+    /// Explicit opaque GUIDs for equipped-copy tooltip requests; empty by default.
+    pub equipped_item_tooltip_guids: HashMap<i32, String>,
+    /// Host-supplied socket metadata copied from a selected bag instance.
+    pub item_tooltip_socket_projections:
+        HashMap<(i32, i32), Vec<crate::c_api::item_tooltip::ItemSocketProjectionRow>>,
     pub blocked_auras_by_unit: HashMap<String, HashSet<i32>>,
     /// Explicit test scenario only; no combat or spell-secrecy inference.
     #[cfg(feature = "client-wowforever")]

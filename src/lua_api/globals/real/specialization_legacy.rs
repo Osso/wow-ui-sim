@@ -59,7 +59,31 @@ pub(crate) fn register_legacy_specialization_globals(state: &mut LuaState) -> Lu
     for (name, rust_fn) in LEGACY_SPECIALIZATION_GLOBALS {
         table_set_rust_fn_static(state, state.global, name, *rust_fn)?;
     }
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    table_set_rust_fn_static(
+        state,
+        state.global,
+        "GetSpecializationInfoForSpecID",
+        get_specialization_info_for_spec_id,
+    )?;
     Ok(())
+}
+
+// INFERRED "R88g9 (native evidence pending)": IDs and fields come from the loaded specialization catalog.
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn get_specialization_info_for_spec_id(state: &mut LuaState) -> LuaResult<u32> {
+    let spec_id = match stack_val(state, 1) {
+        Val::Num(number) => number as u32,
+        _ => 0,
+    };
+    let Some(spec) = specializations::spec_by_id(spec_id) else {
+        state.push(Val::Nil);
+        let description = create_string(state, "");
+        state.push(description);
+        return Ok(2);
+    };
+    push_class_specialization_info(state, spec);
+    Ok(9)
 }
 
 fn get_num_spec_groups(state: &mut LuaState) -> LuaResult<u32> {

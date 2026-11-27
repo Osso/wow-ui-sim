@@ -44,11 +44,16 @@ if GetPVPLifetimeStats == nil then
         return 0, 0
     end
 end
-if GetDungeonDifficultyID == nil then
-    function GetDungeonDifficultyID()
-        return DifficultyUtil.ID.DungeonNormal
+if GetDifficultyInfo == nil then
+    function GetDifficultyInfo(difficultyID)
+        return DifficultyUtil.GetDifficultyName(difficultyID) or PLAYER_DIFFICULTY1 or "Normal",
+            0, false, false, false, false
     end
 end
+"#;
+
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+const RAID_DIFFICULTY_GLOBAL_DEFAULTS_LUA: &str = r#"
 if GetRaidDifficultyID == nil then
     function GetRaidDifficultyID()
         return DifficultyUtil.ID.PrimaryRaidNormal
@@ -59,10 +64,13 @@ if GetLegacyRaidDifficultyID == nil then
         return 1
     end
 end
-if GetDifficultyInfo == nil then
-    function GetDifficultyInfo(difficultyID)
-        return DifficultyUtil.GetDifficultyName(difficultyID) or PLAYER_DIFFICULTY1 or "Normal",
-            0, false, false, false, false
+"#;
+
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+const DUNGEON_DIFFICULTY_DEFAULT_LUA: &str = r#"
+if GetDungeonDifficultyID == nil then
+    function GetDungeonDifficultyID()
+        return DifficultyUtil.ID.DungeonNormal
     end
 end
 if rawget(DifficultyUtil, "GetDifficultyName") == nil then
@@ -131,9 +139,11 @@ if rawget(PVPUtil, "GetCurrentSeasonNumber") == nil then
 end
 "#;
 
-/// Retail 12.0.7 `GetBaseDifficultyID`. Missing backing system: Difficulty.db2
-/// variant-to-base relationships; until modeled every ID is its own base.
-#[cfg(feature = "retail-12-0-7")]
+/// Retail 12.0.7 fallback remains outside the modeled profiles.
+#[cfg(all(
+    feature = "retail-12-0-7",
+    not(any(feature = "client-retail", feature = "client-wowforever"))
+))]
 const BASE_DIFFICULTY_DEFAULTS_LUA: &str = r#"
 if GetBaseDifficultyID == nil then
     function GetBaseDifficultyID(difficultyID)
@@ -149,7 +159,14 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(DIFFICULTY_PVP_UTIL_DEFAULTS_LUA)?;
     #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     lua.exec(DIFFICULTY_PVP_METHOD_DEFAULTS_LUA)?;
-    #[cfg(feature = "retail-12-0-7")]
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+    lua.exec(RAID_DIFFICULTY_GLOBAL_DEFAULTS_LUA)?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+    lua.exec(DUNGEON_DIFFICULTY_DEFAULT_LUA)?;
+    #[cfg(all(
+        feature = "retail-12-0-7",
+        not(any(feature = "client-retail", feature = "client-wowforever"))
+    ))]
     lua.exec(BASE_DIFFICULTY_DEFAULTS_LUA)?;
     Ok(())
 }
@@ -158,6 +175,7 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
 mod tests {
     use crate::lua_api::WowLuaEnv;
 
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     #[test]
     fn installs_difficulty_and_pvp_defaults() {
         if cfg!(any(

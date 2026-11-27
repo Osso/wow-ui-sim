@@ -150,3 +150,26 @@ tooltip_selection_getters_fixture! {
         .unwrap();
     }
 }
+
+#[cfg(feature = "client-wowforever")]
+#[test]
+fn forever_inventory_item_by_id_publishes_supplied_equipped_guid() {
+    let env = tooltip_full_env_helpers::load_full_env_without_post_load();
+    env.exec(
+        r#"
+        A_Admin.EquipItem(16, 231268)
+        A_Admin.SetEquippedItemGUID(16, 'supplied-forever-equipped-guid')
+        GameTooltip:SetOwner(UIParent, 'ANCHOR_NONE')
+        GameTooltip:SetInventoryItemByID(231268)
+        local info = GameTooltip:GetPrimaryTooltipInfo()
+        local data = GameTooltip:GetPrimaryTooltipData()
+        assert(info and info.getterName == 'GetInventoryItemByID',
+            'the original inventory accessor must select GetInventoryItemByID')
+        assert(data and data.id == 231268 and data.guid == 'supplied-forever-equipped-guid',
+            'an equipped copy must publish its supplied instance GUID')
+        assert(GameTooltip:GetLeftLine(1):GetText() == 'Blastfurious Machete',
+            'the equipped copy must retain its ordinary item tooltip')
+        "#,
+    )
+    .unwrap();
+}

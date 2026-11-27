@@ -13,6 +13,7 @@ if IsArtifactRelicItem == nil then
 end
 "#;
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 const INVENTORY_SLOT_DEFAULT_LUA: &str = r#"
 if GetInventoryItemsForSlot == nil then
     function GetInventoryItemsForSlot()
@@ -45,12 +46,8 @@ end
 "#;
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
-    if !matches!(
-        crate::client_profile::ACTIVE,
-        crate::client_profile::ClientProfile::Wrath
-            | crate::client_profile::ClientProfile::Retail
-            | crate::client_profile::ClientProfile::WowForever
-    ) {
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Wrath {
         lua.exec(INVENTORY_SLOT_DEFAULT_LUA)?;
     }
     #[cfg(not(feature = "retail-12-0-0"))]
