@@ -353,6 +353,7 @@ fn register_c_item_inventory_queries(
     state: &mut LuaState,
     table_ref: GcRef<Table>,
 ) -> LuaResult<()> {
+    register_c_item_guid_surface(state, table_ref)?;
     if ACTIVE == ClientProfile::Retail {
         register_c_item_retail_inventory_queries(state, table_ref)?;
     } else if ACTIVE == ClientProfile::WowForever {
@@ -364,6 +365,16 @@ fn register_c_item_inventory_queries(
         )?;
     }
     register_c_item_general_inventory_queries(state, table_ref)
+}
+
+fn register_c_item_guid_surface(state: &mut LuaState, table_ref: GcRef<Table>) -> LuaResult<()> {
+    if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever) {
+        super::item_guid::register_guid_queries(state, table_ref)?;
+    }
+    if ACTIVE == ClientProfile::Retail {
+        super::item_guid::register_lock_requests(state, table_ref)?;
+    }
+    Ok(())
 }
 
 fn register_c_item_retail_inventory_queries(

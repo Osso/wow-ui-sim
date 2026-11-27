@@ -1068,11 +1068,8 @@ C_Item.GetItemCreationContext # not-yet
 C_Item.GetItemFamily # not-yet
 C_Item.GetItemGem # not-yet
 C_Item.GetItemGemID # not-yet
-C_Item.GetItemIDByGUID # not-yet
 C_Item.GetItemInventorySlotKey # not-yet
 C_Item.GetItemLearnTransmogSet # not-yet
-C_Item.GetItemLinkByGUID # not-yet
-C_Item.GetItemLocation # not-yet
 C_Item.GetItemNumAddedSockets # not-yet
 C_Item.GetItemSetInfo # not-yet
 C_Item.GetItemSpecInfo # not-yet
@@ -1096,7 +1093,6 @@ C_Item.IsItemConvertibleAndValidForPlayer # not-yet
 C_Item.IsItemCorrupted # not-yet
 C_Item.IsItemCorruptionRelated # not-yet
 C_Item.IsItemCorruptionResistant # not-yet
-C_Item.IsItemGUIDInInventory # not-yet
 C_Item.IsItemKeystoneByID # not-yet
 C_Item.IsItemSpecificToPlayerClass # not-yet
 C_Item.IsLocked # not-yet

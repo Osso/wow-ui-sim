@@ -14,6 +14,7 @@ mod item_drop_on_unit;
 mod item_effects;
 pub mod item_equip;
 mod item_gem;
+mod item_guid;
 mod item_pickup;
 pub mod item_range;
 mod item_set;

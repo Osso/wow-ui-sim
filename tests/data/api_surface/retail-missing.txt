@@ -1051,11 +1051,8 @@ C_Item.GetDelvePreviewItemQuality # not-yet
 C_Item.GetFirstTriggeredSpellForItem # not-yet
 C_Item.GetItemConversionOutputIcon # not-yet
 C_Item.GetItemGemID # not-yet
-C_Item.GetItemIDByGUID # not-yet
 C_Item.GetItemInventorySlotKey # not-yet
 C_Item.GetItemLearnTransmogSet # not-yet
-C_Item.GetItemLinkByGUID # not-yet
-C_Item.GetItemLocation # not-yet
 C_Item.GetItemNumAddedSockets # not-yet
 C_Item.GetItemUniquenessByID # not-yet
 C_Item.GetItemUpgradeInfo # not-yet
@@ -1065,16 +1062,11 @@ C_Item.IsItemConvertibleAndValidForPlayer # not-yet
 C_Item.IsItemCorrupted # not-yet
 C_Item.IsItemCorruptionRelated # not-yet
 C_Item.IsItemCorruptionResistant # not-yet
-C_Item.IsItemGUIDInInventory # not-yet
 C_Item.IsItemSpecificToPlayerClass # not-yet
-C_Item.LockItem # not-yet
-C_Item.LockItemByGUID # not-yet
 C_Item.ReplaceEnchant # not-yet
 C_Item.ReplaceTradeEnchant # not-yet
 C_Item.ReplaceTradeskillEnchant # not-yet
 C_Item.RequestLoadItemDataByID # not-yet: temporary Lua workaround
-C_Item.UnlockItem # not-yet
-C_Item.UnlockItemByGUID # not-yet
 C_ItemInteraction.GetChargeInfo # not-yet
 C_ItemInteraction.GetItemConversionCurrencyCost # not-yet
 C_ItemInteraction.GetItemInteractionSpellId # not-yet
