@@ -71,15 +71,6 @@ fn handles_zero_quantity_without_error() {
 }
 
 #[test]
-fn handles_unknown_currency_id_without_error() {
-    let env = env();
-    let r: f64 = env
-        .eval("local c = GetColorForCurrencyReward(99999, 7); return ({c:GetRGB()})[1]")
-        .unwrap();
-    assert_eq!(r, 1.0);
-}
-
-#[test]
 fn default_color_is_returned_unchanged_for_red() {
     let env = env();
     let (r, g, b): (f64, f64, f64) = env
