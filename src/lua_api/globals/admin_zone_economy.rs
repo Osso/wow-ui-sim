@@ -40,7 +40,15 @@ pub(super) fn set_instance_info(state: &mut LuaState) -> LuaResult<u32> {
     let difficulty = i32::from_stack(state, 3)?;
     let max_players = i32::from_stack(state, 4)?;
     let lfg_dungeon_id = Option::<i32>::from_stack(state, 5)?;
-    let is_dynamic = Option::<bool>::from_stack(state, 6)?.unwrap_or(false);
+    let is_dynamic = match stack_val(state, 6) {
+        Val::Nil => false,
+        Val::Bool(value) => value,
+        _ => {
+            return Err(runtime_error(
+                "SetInstanceInfo: isDynamic must be a boolean or nil",
+            ));
+        }
+    };
     let mut st = borrow_state_mut(state)?;
     st.world.instance_name = name;
     st.world.instance_type = inst_type;
