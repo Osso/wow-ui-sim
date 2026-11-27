@@ -439,21 +439,7 @@ fn timed_signal_map_finalizer_drops_pending_signals() {
 
 #[test]
 fn timer_util_callback_map_uses_native_timed_signal_userdata() {
-    let env = WowLuaEnv::new().unwrap();
-    #[cfg(not(feature = "client-wowforever"))]
-    let timer_util = std::path::PathBuf::from(concat!(
-        env!("CARGO_MANIFEST_DIR"),
-        "/data/ptr-fixtures/TimerUtil-12.1.5.69594.lua"
-    ));
-    #[cfg(feature = "client-wowforever")]
-    let timer_util = wow_ui_sim::blizzard_ui_sync::default_cache_addons_path()
-        .unwrap()
-        .join("Blizzard_SharedXMLBase/TimerUtil.lua");
-    env.exec_named(
-        &std::fs::read_to_string(timer_util).unwrap(),
-        "TimerUtil.lua",
-    )
-    .unwrap();
+    let env = timer_util_env();
     env.exec(
         r#"
         timer_util_calls = 0
@@ -472,4 +458,33 @@ fn timer_util_callback_map_uses_native_timed_signal_userdata() {
     );
     assert_eq!(env.process_timers().unwrap(), 1);
     assert_eq!(env.eval::<i64>("return timer_util_calls").unwrap(), 1);
+}
+
+/// TimerUtil.lua:7 calls CreateCounter, owned by Blizzard_SharedXMLBase
+/// FunctionUtil.lua since 096d8a1f8c retired the bootstrap copy.
+fn timer_util_env() -> WowLuaEnv {
+    use crate::common::blizzard_addon_harness::{
+        blizzard_ui_dir, load_blizzard_addon_closure_into_env, new_blizzard_addon_env,
+    };
+    let ui = blizzard_ui_dir();
+    let env = new_blizzard_addon_env(&ui);
+    load_blizzard_addon_closure_into_env(&env, &ui, &["Blizzard_SharedXMLBase"], &[]);
+    let source = std::fs::read_to_string(timer_util_path()).unwrap();
+    env.exec_named(&source, "TimerUtil.lua").unwrap();
+    env
+}
+
+#[cfg(not(feature = "client-wowforever"))]
+fn timer_util_path() -> std::path::PathBuf {
+    std::path::PathBuf::from(concat!(
+        env!("CARGO_MANIFEST_DIR"),
+        "/data/ptr-fixtures/TimerUtil-12.1.5.69594.lua"
+    ))
+}
+
+#[cfg(feature = "client-wowforever")]
+fn timer_util_path() -> std::path::PathBuf {
+    wow_ui_sim::blizzard_ui_sync::default_cache_addons_path()
+        .unwrap()
+        .join("Blizzard_SharedXMLBase/TimerUtil.lua")
 }
