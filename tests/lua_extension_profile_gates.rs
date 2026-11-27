@@ -4,6 +4,7 @@
 //! LocalizationDocumentation.lua:42 and SystemTimeDocumentation.lua:39.
 #![cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 
+use crate::common;
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 const STRING_EXTENSIONS: &str = r#"
@@ -42,6 +43,35 @@ const SESSION_TIME: &str = r#"
     A_Admin.AdvanceTime(25)
     assert(GetSessionTime() == 125, GetSessionTime())
 "#;
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn bnet_time_alert_text_tracks_the_session_clock() {
+    common::with_timeout(120, || {
+        let env = WowLuaEnv::new().expect("Lua environment");
+        common::load_game_startup_inventory(&env);
+        env.exec("A_Admin.SetManualClock(0)")
+            .expect("set the session clock");
+        env.sync_addon_names_to_lua();
+        env.apply_post_load_workarounds();
+        wow_ui_sim::startup::fire_startup_events_for_screen(
+            &env,
+            wow_ui_sim::screen::ScreenKind::Game,
+        );
+        env.exec(
+            r#"
+            A_Admin.FireEvent("SESSION_TIME_ALERT", 100000000)
+            A_Admin.AdvanceTime(0)
+            local first = TimeAlertFrame.Text:GetText()
+            A_Admin.AdvanceTime(3600)
+            local second = TimeAlertFrame.Text:GetText()
+            assert(TimeAlertFrame:IsShown())
+            assert(first ~= second, first .. " / " .. second)
+            "#,
+        )
+        .expect("BNet time alert reflects the advanced session time");
+    });
+}
 
 #[test]
 fn lua_extensions_number_grouping_and_session_time_follow_their_inputs() {
