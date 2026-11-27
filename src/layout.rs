@@ -27,28 +27,30 @@ fn scroll_edge_offset(child: &crate::widget::Frame, parent: &crate::widget::Fram
     }
 }
 
+/// The frame whose presentation offset this one shares: the frame its first anchor is
+/// relative to, else its parent. A frame inside a scroll child but anchored to a frame
+/// outside it (an overlay anchored to the scroll frame itself) is not moved by the
+/// scroll, as in the client: only what is positioned from the scroll child scrolls with it.
+fn offset_source(frame: &crate::widget::Frame) -> Option<u64> {
+    frame
+        .anchors
+        .first()
+        .and_then(|anchor| anchor.relative_to_id)
+        .map(|id| id as u64)
+        .or(frame.parent_id)
+}
+
+/// Longest anchor chain followed for scroll offsets (a guard against anchor cycles).
+const MAX_OFFSET_CHAIN: usize = 256;
+
 /// Translate presentation geometry without changing logical anchors or layout.
 /// Each designated scroll-child edge contributes once, including nested views.
-pub fn apply_scroll_offsets(
-    registry: &WidgetRegistry,
-    id: u64,
-    mut rect: LayoutRect,
-) -> LayoutRect {
-    let mut current_id = id;
-    while let Some(child) = registry.get(current_id) {
-        let Some(parent) = child.parent_id.and_then(|id| registry.get(id)) else {
-            break;
-        };
-        let (x, y) = scroll_edge_offset(child, parent);
-        rect.x -= x;
-        rect.y -= y;
-        current_id = parent.id;
-    }
-    rect
+pub fn apply_scroll_offsets(registry: &WidgetRegistry, id: u64, rect: LayoutRect) -> LayoutRect {
+    ScrollOffsetCache::default().apply(registry, id, rect)
 }
 
 /// Cumulative presentation offsets for one traversal of an unchanged registry.
-/// Descendants reuse their ancestors' offsets rather than walking to the root.
+/// Frames reuse the offsets of the frames they are positioned from.
 #[derive(Default)]
 pub struct ScrollOffsetCache {
     offsets: FxHashMap<u64, (f32, f32)>,
@@ -63,15 +65,18 @@ impl ScrollOffsetCache {
     ) -> LayoutRect {
         let mut missing = Vec::new();
         let mut current_id = id;
-        while !self.offsets.contains_key(&current_id) {
+        while !self.offsets.contains_key(&current_id) && missing.len() < MAX_OFFSET_CHAIN {
             let Some(frame) = registry.get(current_id) else {
                 break;
             };
+            if missing.contains(&current_id) {
+                break;
+            }
             missing.push(current_id);
-            let Some(parent_id) = frame.parent_id else {
+            let Some(source_id) = offset_source(frame) else {
                 break;
             };
-            current_id = parent_id;
+            current_id = source_id;
         }
 
         let mut total = self.offsets.get(&current_id).copied().unwrap_or_default();

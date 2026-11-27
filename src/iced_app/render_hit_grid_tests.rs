@@ -28,7 +28,7 @@ mod hit_grid_tests {
                 ScrollHitViewport:SetScrollChild(child)
                 ScrollHitContent = CreateFrame("Button", "ScrollHitContent", child)
                 ScrollHitContent:SetSize(20, 20)
-                ScrollHitContent:SetPoint("TOPLEFT", UIParent, "TOPLEFT", 70, -70)
+                ScrollHitContent:SetPoint("TOPLEFT", child, "TOPLEFT", 50, -50)
                 ScrollHitContent:EnableMouse(true)
                 ScrollHitContent:RegisterForClicks("LeftButtonUp")
                 ScrollHitChrome = CreateFrame("Button", "ScrollHitChrome", ScrollHitViewport)

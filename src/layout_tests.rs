@@ -202,3 +202,43 @@ fn anchor_cycle_does_not_recurse_until_stack_overflow() {
     assert_eq!(rect.width, 100.0);
     assert_eq!(rect.height, 40.0);
 }
+
+#[test]
+fn scroll_offset_follows_the_anchor_not_the_parent() {
+    // 2 is a scroll frame scrolled down 30; 3 its scroll child. 4 and 5 are both
+    // children of the scroll child: 4 is anchored to it and scrolls, 5 is anchored
+    // to the scroll frame itself and stays where its anchor puts it.
+    let mut registry = WidgetRegistry::new();
+    register_ui_parent(&mut registry);
+    let to = |id| {
+        vec![Anchor::from_relative_id(
+            AnchorPoint::TopLeft,
+            Some(id),
+            AnchorPoint::TopLeft,
+        )]
+    };
+    let mut scroll = make_frame(2, Some(1), 100.0, 100.0, vec![3], to(1));
+    scroll.widget_type = WidgetType::ScrollFrame;
+    scroll.scroll_child_id = Some(3);
+    scroll.scroll_vertical = 30.0;
+    for (frame, id) in [
+        (scroll, 2),
+        (make_frame(3, Some(2), 200.0, 200.0, vec![4, 5], to(2)), 3),
+        (make_frame(4, Some(3), 20.0, 20.0, vec![], to(3)), 4),
+        (make_frame(5, Some(3), 20.0, 20.0, vec![], to(2)), 5),
+    ] {
+        let mut frame = frame;
+        frame.effective_scale = 1.0;
+        assert_eq!(frame.id, id);
+        registry.register(frame);
+    }
+    let origin = LayoutRect {
+        x: 0.0,
+        y: 0.0,
+        width: 20.0,
+        height: 20.0,
+    };
+
+    assert_eq!(apply_scroll_offsets(&registry, 4, origin).y, -30.0);
+    assert_eq!(apply_scroll_offsets(&registry, 5, origin).y, 0.0);
+}
