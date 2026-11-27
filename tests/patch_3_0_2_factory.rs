@@ -142,13 +142,15 @@ fn bare_framexml_and_tooltip_handler_have_precise_limits() {
 }
 
 #[test]
-fn click_modifier_default_does_not_discriminate_unknown_actions() {
+fn click_modifier_bare_env_returns_nil_for_undeclared_actions() {
+    // Decomp answers R22-3 (VERIFIED, Retail 70688): an unknown action returns one nil
+    // (b0718ad9c2). The bare env loads no Bindings.xml, so FOCUSCAST is undeclared too.
     let env = WowLuaEnv::new().unwrap();
-    let observed: (String, String) = env
+    let observed: (Option<String>, Option<String>) = env
         .eval("return GetModifiedClick('FOCUSCAST'), GetModifiedClick('P302_UNKNOWN_MODIFIER')")
         .unwrap();
     eprintln!("click modifier control: {observed:?}");
-    assert_eq!(observed, ("NONE".into(), "NONE".into()));
+    assert_eq!(observed, (None, None));
 }
 
 #[test]

@@ -172,6 +172,7 @@
   "wt-global-api-VehiclePrevSeat-223",
   "wt-global-api-ZoomOut-394",
   "wt-global-api-getprinthandler-146",
+  "wt-global-api-setprinthandler-145",
   "wt-global-api-tostringall-147",
   "wt-widgets-Button:GetFont-482",
   "wt-widgets-Button:GetTextColor-484",
