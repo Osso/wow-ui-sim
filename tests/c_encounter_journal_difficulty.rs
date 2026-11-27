@@ -1,30 +1,6 @@
 #![cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 
-use std::path::Path;
-use wow_ui_sim::loader::load_addon;
 use wow_ui_sim::lua_api::WowLuaEnv;
-
-fn encounter_journal_env() -> WowLuaEnv {
-    let env = WowLuaEnv::new().expect("simulator environment should start");
-    let addon_dir = wow_ui_sim::client_profile::blizzard_ui_addons_dir_under(Path::new(env!(
-        "CARGO_MANIFEST_DIR"
-    )));
-    let toc = addon_dir.join(format!(
-        "Blizzard_EncounterJournal/{}",
-        match wow_ui_sim::client_profile::ACTIVE {
-            wow_ui_sim::client_profile::ClientProfile::Retail => {
-                "Blizzard_EncounterJournal_Mainline.toc"
-            }
-            wow_ui_sim::client_profile::ClientProfile::WowForever => {
-                "Blizzard_EncounterJournal.toc"
-            }
-            _ => unreachable!("this test is limited to Retail and WoW Forever"),
-        }
-    ));
-    load_addon(&env.loader_env(), &toc).expect("Encounter Journal TOC should load");
-    env.apply_post_load_workarounds();
-    env
-}
 
 const DUNGEON_DIFFICULTY_QUERY: &str = r#"
             local hasNormal = C_EncounterJournal.InstanceHasDifficultyID(1)
@@ -101,12 +77,12 @@ fn assert_base_difficulty_queries(env: &WowLuaEnv) {
     assert_eq!(bases, (16, 17, 63));
 }
 
-#[test]
-fn encounter_journal_difficulty_queries_use_selected_map() {
-    let env = encounter_journal_env();
-    assert_dungeon_difficulty_queries(&env);
-    assert_raid_difficulty_queries(&env);
-    assert_base_difficulty_queries(&env);
+prefork_full_ui_case! {
+fn encounter_journal_difficulty_queries_use_selected_map(env: &WowLuaEnv) {
+    assert_dungeon_difficulty_queries(env);
+    assert_raid_difficulty_queries(env);
+    assert_base_difficulty_queries(env);
+}
 }
 
 const RAID_LOCK_BOSS_SETUP: &str = r#"
@@ -198,14 +174,14 @@ fn assert_updated_raid_lock_boss_overlay(env: &WowLuaEnv, map_id: i32, encounter
     assert_eq!(updated, true);
 }
 
-#[test]
-fn encounter_journal_boss_overlay_reads_supplied_raid_locks() {
-    let env = encounter_journal_env();
+prefork_full_ui_case! {
+fn encounter_journal_boss_overlay_reads_supplied_raid_locks(env: &WowLuaEnv) {
     let (instance_id, map_id, journal_id, encounter_id, initial_shown) =
-        read_raid_lock_boss_setup(&env);
+        read_raid_lock_boss_setup(env);
     assert_eq!(initial_shown, false);
-    assert_omitted_raid_lock_difficulty(&env, map_id, encounter_id);
-    update_raid_lock_boss_overlay(&env, map_id, encounter_id);
-    assert_updated_raid_lock_boss_overlay(&env, map_id, encounter_id);
+    assert_omitted_raid_lock_difficulty(env, map_id, encounter_id);
+    update_raid_lock_boss_overlay(env, map_id, encounter_id);
+    assert_updated_raid_lock_boss_overlay(env, map_id, encounter_id);
     assert!(instance_id > 0 && journal_id > 0);
+}
 }
