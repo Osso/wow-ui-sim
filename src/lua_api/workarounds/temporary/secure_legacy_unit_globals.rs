@@ -291,8 +291,8 @@ const MASTER_SNAPSHOT_UNIT_GLOBALS: &[MasterUnitGlobal] = &[
     ),
     unit_global(
         "UnitEmpoweredStageDurations",
-        RETAIL_PTR_PROFILES,
-        RETAIL_PTR_PROFILES,
+        RETAIL_PTR_FOREVER_PROFILES,
+        RETAIL_PTR_FOREVER_PROFILES,
         "src/lua_api/channeling/durations.rs:20",
     ),
     unit_global(
@@ -399,8 +399,8 @@ const MASTER_SNAPSHOT_UNIT_GLOBALS: &[MasterUnitGlobal] = &[
     ),
     unit_global(
         "UnitHasPowerType",
-        RETAIL_PTR_PROFILES,
-        RETAIL_PTR_PROFILES,
+        RETAIL_PTR_FOREVER_PROFILES,
+        RETAIL_PTR_FOREVER_PROFILES,
         "src/lua_api/globals/utility_system_spell/spell_api.rs:611",
     ),
     unit_global(
@@ -435,8 +435,8 @@ const MASTER_SNAPSHOT_UNIT_GLOBALS: &[MasterUnitGlobal] = &[
     ),
     unit_global(
         "UnitHealthMissing",
-        RETAIL_PTR_PROFILES,
-        RETAIL_PTR_PROFILES,
+        RETAIL_PTR_FOREVER_PROFILES,
+        RETAIL_PTR_FOREVER_PROFILES,
         "src/lua_api/globals/utility_system_spell/spell_api.rs:606",
     ),
     unit_global(
@@ -651,20 +651,20 @@ const MASTER_SNAPSHOT_UNIT_GLOBALS: &[MasterUnitGlobal] = &[
     ),
     unit_global(
         "UnitIsLieutenant",
-        RETAIL_PTR_PROFILES,
-        RETAIL_PTR_PROFILES,
+        RETAIL_PTR_FOREVER_PROFILES,
+        RETAIL_PTR_FOREVER_PROFILES,
         "src/lua_api/globals/real/publication_unit_12_0_0.rs:128",
     ),
     unit_global(
         "UnitIsMinion",
-        RETAIL_PTR_PROFILES,
-        RETAIL_PTR_PROFILES,
+        RETAIL_PTR_FOREVER_PROFILES,
+        RETAIL_PTR_FOREVER_PROFILES,
         "src/lua_api/globals/real/publication_unit_12_0_0.rs:129",
     ),
     unit_global(
         "UnitIsNPCAsPlayer",
-        RETAIL_PTR_PROFILES,
-        RETAIL_PTR_PROFILES,
+        RETAIL_PTR_FOREVER_PROFILES,
+        RETAIL_PTR_FOREVER_PROFILES,
         "src/lua_api/globals/real/publication_unit_12_0_0.rs:130",
     ),
     unit_global(
@@ -909,8 +909,8 @@ const MASTER_SNAPSHOT_UNIT_GLOBALS: &[MasterUnitGlobal] = &[
     ),
     unit_global(
         "UnitPowerMissing",
-        RETAIL_PTR_PROFILES,
-        RETAIL_PTR_PROFILES,
+        RETAIL_PTR_FOREVER_PROFILES,
+        RETAIL_PTR_FOREVER_PROFILES,
         "src/lua_api/globals/utility_system_spell/spell_api.rs:613",
     ),
     unit_global(
@@ -1005,8 +1005,8 @@ const MASTER_SNAPSHOT_UNIT_GLOBALS: &[MasterUnitGlobal] = &[
     ),
     unit_global(
         "UnitShouldDisplaySpellTargetName",
-        RETAIL_PTR_PROFILES,
-        RETAIL_PTR_PROFILES,
+        RETAIL_PTR_FOREVER_PROFILES,
+        RETAIL_PTR_FOREVER_PROFILES,
         "src/lua_api/globals/real/publication_unit_12_0_0.rs:133",
     ),
     unit_global(
@@ -1017,8 +1017,8 @@ const MASTER_SNAPSHOT_UNIT_GLOBALS: &[MasterUnitGlobal] = &[
     ),
     unit_global(
         "UnitSpellTargetClass",
-        RETAIL_PTR_PROFILES,
-        RETAIL_PTR_PROFILES,
+        RETAIL_PTR_FOREVER_PROFILES,
+        RETAIL_PTR_FOREVER_PROFILES,
         "src/lua_api/globals/real/publication_unit_12_0_0.rs:136",
     ),
     unit_global(
@@ -1047,8 +1047,8 @@ const MASTER_SNAPSHOT_UNIT_GLOBALS: &[MasterUnitGlobal] = &[
     ),
     unit_global(
         "UnitThreatLeadSituation",
-        RETAIL_PTR_PROFILES,
-        RETAIL_PTR_PROFILES,
+        RETAIL_PTR_FOREVER_PROFILES,
+        RETAIL_PTR_FOREVER_PROFILES,
         "src/lua_api/globals/real/publication_unit_12_0_0.rs:137",
     ),
     unit_global(

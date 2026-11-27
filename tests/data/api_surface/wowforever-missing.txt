@@ -1976,7 +1976,6 @@ GetAvailableLocales # not-yet
 GetBackgroundLoadingStatus # not-yet: temporary Lua workaround
 GetBillingTimeRested # not-yet: temporary Lua workaround
 GetCemeteryPreference # not-yet
-GetCollapsingStarCost # not-yet
 GetCorpseRecoveryDelay # not-yet
 GetCurrentCinematicSummary # not-yet
 GetCurrentEventID # not-yet
@@ -2074,7 +2073,6 @@ IsOnTournamentRealm # not-yet: temporary Lua workaround
 IsOutOfBounds # not-yet
 IsPlayerInGuildFromGUID # not-yet
 IsRaidMarkerActive # not-yet
-IsRaidMarkerSystemEnabled # not-yet
 IsRightMetaKeyDown # not-yet
 IsUsingFixedTimeStep # not-yet
 IsUsingMouse # not-yet
@@ -2117,7 +2115,6 @@ SetConsoleKey # not-yet
 SetCursorByMode # not-yet
 SetCursorHoveredItem # not-yet: temporary Lua workaround
 SetCursorHoveredItemTradeItem # not-yet: temporary Lua workaround
-SetCursorPosition # not-yet
 SetCursorVirtualItem # not-yet
 SetDungeonDifficultyID # not-yet
 SetErrorCallstackHeight # not-yet: temporary Lua workaround
@@ -2133,10 +2130,6 @@ ShouldDisplayStoryModeTooltipInSocialFrame # not-yet
 ShouldShowExpansionUpgradeBanner # not-yet: temporary Lua workaround
 ShouldShowIslandsWeeklyPOI # not-yet
 ShouldShowSpecialSplashScreen # not-yet
-ShowCloak # not-yet
-ShowHelm # not-yet
-ShowingCloak # not-yet
-ShowingHelm # not-yet
 SimulateMouseClick # not-yet
 SimulateMouseDown # not-yet
 SimulateMouseUp # not-yet
@@ -2176,20 +2169,14 @@ UnitAlliedRaceInfo # not-yet
 UnitBattlePetSpeciesID # not-yet
 UnitCanPetBattle # not-yet
 UnitChromieTimeID # not-yet
-UnitEmpoweredStageDurations # not-yet
 UnitHasMouseoverHighlight # not-yet
-UnitHasPowerType # not-yet
-UnitHealthMissing # not-yet
 UnitInAnyGroup # not-yet
 UnitInPartyShard # not-yet
 UnitInVehicleControlSeat # not-yet
 UnitInVehicleHidesPetFrame # not-yet
 UnitIsControlling # not-yet
 UnitIsInMyGuild # not-yet
-UnitIsLieutenant # not-yet
 UnitIsMercenary # not-yet
-UnitIsMinion # not-yet
-UnitIsNPCAsPlayer # not-yet
 UnitIsPVPSanctuary # not-yet
 UnitIsSameServer # not-yet
 UnitIsTrivial # not-yet
@@ -2199,17 +2186,13 @@ UnitOwnerGUID # not-yet
 UnitPartialPower # not-yet
 UnitPercentHealthFromGUID # not-yet
 UnitPowerDisplayMod # not-yet: temporary Lua workaround
-UnitPowerMissing # not-yet
 UnitPvpClassification # not-yet
 UnitSelectionType # not-yet
 UnitSetRole # not-yet
 UnitSetRoleEnum # not-yet
 UnitShouldDisplayName # not-yet
-UnitShouldDisplaySpellTargetName # not-yet
-UnitSpellTargetClass # not-yet
 UnitSpellTargetName # not-yet
 UnitSwitchToVehicleSeat # not-yet
-UnitThreatLeadSituation # not-yet
 UnitUsingVehicle # not-yet
 UnitVehicleSeatCount # not-yet
 UnitVehicleSeatInfo # not-yet
@@ -2217,9 +2200,5 @@ UnitWeaponAttackPower # not-yet
 UnitWidgetSet # not-yet
 UpdateWindow # not-yet
 WorldLootObjectExists # not-yet: temporary Lua workaround
-canaccesssecrets # not-yet
-dropsecretaccess # not-yet
-hasanysecretvalues # not-yet
-issecrettable # not-yet
 secretunwrap # not-yet
 table.getcountinfo # not-yet

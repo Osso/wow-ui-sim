@@ -29,7 +29,6 @@ fn get_cursor_position(state: &mut LuaState) -> LuaResult<u32> {
     Ok(2)
 }
 
-#[cfg(feature = "retail-12-0-0")]
 fn set_cursor_position(state: &mut LuaState) -> LuaResult<u32> {
     let x = read_cursor_coordinate(state, 1)?;
     let y = read_cursor_coordinate(state, 2)?;
@@ -48,7 +47,6 @@ fn set_cursor_position(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
-#[cfg(feature = "retail-12-0-0")]
 fn read_cursor_coordinate(state: &LuaState, index: i32) -> LuaResult<f32> {
     let value =
         rilua::table_security::unwrap_secret(state, crate::lua_bridge::stack_val(state, index))?;
@@ -125,8 +123,9 @@ pub(crate) fn update_screen_registration(env: &WowLuaEnv, is_glue: bool) -> crat
 
 pub fn register_all(lua: &mut rilua::Lua) -> crate::Result<()> {
     LuaApiMut::register_function(lua, "GetCursorPosition", get_cursor_position)?;
-    #[cfg(feature = "retail-12-0-0")]
-    LuaApiMut::register_function(lua, "SetCursorPosition", set_cursor_position)?;
+    if crate::client_profile::ACTIVE.shares_retail_12_api() {
+        LuaApiMut::register_function(lua, "SetCursorPosition", set_cursor_position)?;
+    }
     LuaApiMut::register_function(lua, "GetMouseFocus", get_mouse_focus)?;
     LuaApiMut::register_function(lua, "GetMouseFoci", get_mouse_foci)?;
     LuaApiMut::register_function(lua, "IsMouseButtonDown", is_mouse_button_down)?;

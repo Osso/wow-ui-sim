@@ -1,6 +1,6 @@
 //! UnitHasPowerType capability queries; grouped in the integration target.
 
-#[cfg(feature = "retail-12-0-5")]
+#[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 mod retail {
     use wow_ui_sim::lua_api::WowLuaEnv;
     use wow_ui_sim::lua_api::state::{PartyMember, SecondaryPowerState, TargetInfo};
@@ -200,7 +200,9 @@ mod retail {
     }
 }
 
-#[cfg(not(feature = "retail-12-0-5"))]
+// Forever UnitDocumentation.lua:1410 declares the Retail block, so Forever
+// moved from this absence contract to the published one above.
+#[cfg(not(any(feature = "retail-12-0-5", feature = "client-wowforever")))]
 #[test]
 fn unit_has_power_type_is_not_published_before_epoch() {
     let env = wow_ui_sim::lua_api::WowLuaEnv::new().expect("Lua environment");

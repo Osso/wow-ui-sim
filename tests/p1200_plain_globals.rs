@@ -1,7 +1,8 @@
-#![cfg(feature = "retail-12-0-0")]
+#![cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
 
 use wow_ui_sim::lua_api::WowLuaEnv;
 
+#[cfg(feature = "retail-12-0-0")]
 #[test]
 fn p1200_removed_plain_globals_are_not_simulator_published() {
     let env = WowLuaEnv::new().unwrap();

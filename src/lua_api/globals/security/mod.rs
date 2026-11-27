@@ -28,7 +28,6 @@ mod cmd_option;
 pub(crate) use cmd_option::{resolve_cmd_option, resolve_cmd_option_with_unit};
 mod environment;
 mod loader_env;
-#[cfg(feature = "retail-12-0-0")]
 mod retail_secret_helpers;
 pub(super) mod secret_values;
 mod secure_env;
@@ -98,8 +97,10 @@ fn register_secure_value_access(lua: &mut rilua::Lua) -> LuaResult<()> {
         value_access::mark_slot_taint,
     )?;
     value_access::register_value_access_fallbacks(lua)?;
-    #[cfg(feature = "retail-12-0-0")]
-    retail_secret_helpers::register(lua)?;
+    // Forever FrameScriptDocumentation.lua declares the same four helpers.
+    if crate::client_profile::ACTIVE.uses_secret_values() {
+        retail_secret_helpers::register(lua)?;
+    }
     secret_values::register_scrub_fallbacks(lua)
 }
 

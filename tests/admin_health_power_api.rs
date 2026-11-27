@@ -258,7 +258,7 @@ fn test_set_player_health_full() {
     assert_eq!(max, 100000);
 }
 
-#[cfg(feature = "retail-12-0-0")]
+#[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
 #[test]
 fn unit_health_missing_player_tracks_health_without_mutation() {
     env()
@@ -283,7 +283,7 @@ fn unit_health_missing_player_tracks_health_without_mutation() {
         .unwrap();
 }
 
-#[cfg(feature = "retail-12-0-0")]
+#[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
 #[test]
 fn unit_health_missing_target_tracks_health_without_mutation() {
     env()
@@ -363,7 +363,7 @@ fn test_set_player_power_both_values() {
     assert_eq!(max, 80000);
 }
 
-#[cfg(feature = "retail-12-0-0")]
+#[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
 #[test]
 fn unit_power_missing_player_primary_tracks_pool_without_mutation() {
     env()
@@ -390,7 +390,7 @@ fn unit_power_missing_player_primary_tracks_pool_without_mutation() {
         .unwrap();
 }
 
-#[cfg(feature = "retail-12-0-0")]
+#[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
 #[test]
 fn unit_power_missing_target_primary_tracks_pool_without_mutation() {
     env()
@@ -418,7 +418,7 @@ fn unit_power_missing_target_primary_tracks_pool_without_mutation() {
         .unwrap();
 }
 
-#[cfg(feature = "retail-12-0-0")]
+#[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
 #[test]
 fn unit_power_missing_player_secondary_preserves_primary_pool() {
     env()
