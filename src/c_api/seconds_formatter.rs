@@ -29,7 +29,7 @@ fn publish_values(
     for &(key, value) in fields {
         table_set_static(state, values, key, Val::Num(value));
     }
-    crate::c_api::set_namespace_member(state, enums, name, values)
+    crate::c_api::set_namespace_member(state, Val::Table(enums), name, values)
 }
 
 fn publish_metadata(

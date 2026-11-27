@@ -13,10 +13,12 @@ use crate::lua_api::methods::{
     val_to_string,
 };
 use crate::lua_bridge::{TableBuilder, stack_val, table_set_rust_fn_static};
+use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
+use rilua::vm::table::Table;
 use rilua::{LuaResult, Val, runtime_error};
 
-pub(crate) fn register(state: &mut LuaState, namespace: Val) -> LuaResult<()> {
+pub(crate) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
     table_set_rust_fn_static(
         state,
         namespace,
