@@ -19,6 +19,8 @@
 
 Retail `Blizzard_APIDocumentationGenerated/PartyInfoDocumentation.lua:323` and PTR `:332` declare `GetMinLevel(category?) -> number`; an omitted category uses the active party. The bounded consumer calls it without arguments at `Blizzard_GroupFinder/Shared/ScenarioFinder_Shared.lua:58`. Retail selects `Blizzard_GroupFinder_Mainline.toc`; PTR selects the unified `Blizzard_GroupFinder.toc` with `[Family]` and `AllowLoadGameType` filtering.
 
+WoW Forever publishes the same `GetMinLevel` (its `PartyInfoDocumentation.lua:322-335` block is byte-identical to Retail's). Forever excludes Blizzard_GroupFinder (`## ExcludeLoadGameType: camelot`), so no original consumer is selected there; `tests/party_min_level_forever.rs` calls the API with supplied player and party levels.
+
 ## Implementation inventory
 
 - `tests/cfactory_party_minlevel.rs` — isolated lane-owned original selected-consumer selectors for Retail/PTR.

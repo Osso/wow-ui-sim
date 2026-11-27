@@ -1188,7 +1188,6 @@ C_PartyInfo.DoCountdown # not-yet
 C_PartyInfo.GetInstanceAbandonVoteCooldownTime # not-yet
 C_PartyInfo.GetLootMethodStyle # not-yet
 C_PartyInfo.GetMinItemLevel # not-yet
-C_PartyInfo.GetMinLevel # not-yet
 C_PartyInfo.IsChallengeModeActive # not-yet
 C_PartyInfo.IsDelveComplete # not-yet
 C_PartyInfo.IsDelveInProgress # not-yet

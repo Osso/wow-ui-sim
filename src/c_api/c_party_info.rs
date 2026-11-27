@@ -93,8 +93,11 @@ pub(crate) fn register_c_party_info_surface(state: &mut LuaState) -> LuaResult<(
     table_set_rust_fn_static(state, table_ref, "InviteUnit", invite_unit)?;
     if matches!(
         crate::client_profile::ACTIVE,
-        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::Ptr
+            | crate::client_profile::ClientProfile::WowForever
     ) {
+        // PartyInfoDocumentation.lua:322-335 is byte-identical on Retail and Forever.
         table_set_rust_fn_static(state, table_ref, "GetMinLevel", c_party_info_get_min_level)?;
     } else if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Mists {
         // Mists 5.5.4.70268 PartyInfoDocumentation.lua:125–135; omitted category at130.
