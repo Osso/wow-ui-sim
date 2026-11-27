@@ -36,6 +36,7 @@
 //!   to the initial player map. Native equivalence is not established.
 //! - `C_Map.MapHasArt(uiMapID)` — true for positive map ids.
 //! - `C_Map.RequestPreloadMap(uiMapID)` — queues map art + overlay textures.
+//! - `C_Map.OpenWorldMap([uiMapID])` — calls the world map's `OpenWorldMap(mapID)`.
 
 use super::helpers::{ensure_namespace, set_table_array};
 use crate::lua_api::globals::unit_api::parse_party_index;
@@ -129,6 +130,7 @@ const C_MAP_METHODS: &[(&str, RustLuaFn)] = &[
     ("GetFallbackWorldMapID", c_map_get_fallback_world_map_id),
     ("MapHasArt", c_map_map_has_art),
     ("RequestPreloadMap", c_map_request_preload_map),
+    ("OpenWorldMap", c_map_open_world_map),
 ];
 
 pub(crate) fn register_c_map_surface(state: &mut LuaState) -> LuaResult<()> {
@@ -1206,6 +1208,22 @@ fn c_map_map_has_art(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+/// `C_Map.OpenWorldMap([uiMapID])`: opens the world map, on that map when given; the same as the
+/// Blizzard_WorldMap global `OpenWorldMap(mapID)` the client's own map key and links use.
+fn c_map_open_world_map(state: &mut LuaState) -> LuaResult<u32> {
+    let map_id = stack_val(state, 1);
+    let open = rilua::LuaApiMut::get_global_val(state, "OpenWorldMap");
+    if matches!(open, Val::Function(_)) {
+        let args = if matches!(map_id, Val::Nil) {
+            vec![]
+        } else {
+            vec![map_id]
+        };
+        let _ = crate::lua_api::script_helpers::protected_lua_pcall_state(state, open, &args);
+    }
+    Ok(0)
+}
+
 fn c_map_request_preload_map(state: &mut LuaState) -> LuaResult<u32> {
     let ui_map_id = i32::from_stack(state, 1)?;
     let queued_paths = collect_preload_paths_for_map(ui_map_id);
@@ -1242,4 +1260,27 @@ fn collect_preload_paths_for_map(ui_map_id: i32) -> Vec<String> {
 fn file_data_id_to_wow_path(file_data_id: u32) -> Option<String> {
     let path = crate::manifest_interface_data::get_texture_path(file_data_id)?;
     Some(format!("Interface\\{}", path.replace('/', "\\")))
+}
+
+#[cfg(test)]
+mod open_world_map_tests {
+    use crate::lua_api::WowLuaEnv;
+
+    #[test]
+    fn open_world_map_opens_the_world_map_on_the_given_map() {
+        let env = WowLuaEnv::new().unwrap();
+        env.exec(
+            r#"
+            OpenedWorldMap = {}
+            OpenWorldMap = function(mapID) table.insert(OpenedWorldMap, tostring(mapID)) end
+            C_Map.OpenWorldMap(1429)
+            C_Map.OpenWorldMap()
+            "#,
+        )
+        .unwrap();
+        let opened: String = env
+            .eval("return table.concat(OpenedWorldMap, ',')")
+            .unwrap();
+        assert_eq!(opened, "1429,nil");
+    }
 }
