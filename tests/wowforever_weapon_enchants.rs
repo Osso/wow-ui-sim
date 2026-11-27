@@ -84,7 +84,14 @@ fn forever_ranged_weapon_enchants_preserve_legacy_returns() {
 
 #[test]
 fn forever_buff_consumer_reads_current_enchants() {
-    let env = WowLuaEnv::new().unwrap();
+    use crate::common::blizzard_addon_harness::{
+        load_blizzard_addon_closure_into_env, new_blizzard_addon_env,
+    };
+    // The consumer calls GenerateClosure and CVarCallbackRegistry, owned by
+    // Blizzard_SharedXMLBase; 096d8a1f8c retired the bootstrap copies.
+    let ui = common::blizzard_ui_dir();
+    let env = new_blizzard_addon_env(&ui);
+    load_blizzard_addon_closure_into_env(&env, &ui, &["Blizzard_SharedXMLBase"], &[]);
     let source = std::fs::read_to_string(
         common::blizzard_ui_dir().join("Blizzard_BuffFrame/BuffFrame.lua"),
     )
