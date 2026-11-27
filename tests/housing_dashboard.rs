@@ -1,4 +1,8 @@
-#![cfg(feature = "gui")]
+// Housing Dashboard, Tutorials and House Finder TOCs say `AllowLoadGameType: standard`
+// (pinned Forever Blizzard_HousingDashboard.toc:5, Blizzard_HousingTutorials.toc:3,
+// Blizzard_HousingHouseFinder.toc:5). Only standard mainline clients load them: Forever's
+// mask is mainline|camelot (native-evidence-70707/TOC_AllowLoadGameType.md section 6).
+#![cfg(all(feature = "gui", any(feature = "client-retail", feature = "client-ptr")))]
 
 use crate::common;
 
