@@ -66,6 +66,8 @@ fn bag_item_tooltip_resolves_each_item_guid_to_its_link() {
             GameTooltip:SetOwner(UIParent, "ANCHOR_NONE")
             for _, item in ipairs({ { 1, "Hearthstone", 6948 }, { 2, "Refreshing Spring Water", 159 } }) do
                 GameTooltip:SetBagItem(0, item[1])
+                local tooltipData = GameTooltip:GetPrimaryTooltipData()
+                assert(tooltipData and tooltipData.guid, tostring(tooltipData and tooltipData.guid))
                 local name, link, itemID = TooltipUtil.GetDisplayedItem(GameTooltip)
                 assert(name == item[2] and itemID == item[3], tostring(name))
                 assert(link:find("item:" .. item[3] .. ":", 1, true), tostring(link))
