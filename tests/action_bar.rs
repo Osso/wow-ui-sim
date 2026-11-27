@@ -79,7 +79,9 @@ fn build_action_bar_env() -> WowLuaEnv {
         state.addon_base_paths = vec![blizzard_ui_dir()];
     }
 
-    if !common::load_non_retail_game_startup_inventory(&env) {
+    if cfg!(feature = "client-retail") {
+        common::load_game_startup_inventory(&env);
+    } else if !common::load_non_retail_game_startup_inventory(&env) {
         for addon_name in ACTION_BAR_ADDONS {
             common::load_required_blizzard_addon(&env, &blizzard_ui_dir(), addon_name);
         }
@@ -554,23 +556,12 @@ fn test_bag_bar_layout_locked() {
         let (loaded, applied): (bool, bool) = env
             .eval("return BagsBar ~= nil, BagsBar ~= nil and BagsBar.systemInfo ~= nil")
             .unwrap();
-        assert_eq!(
-            loaded,
-            cfg!(feature = "client-ptr"),
-            "bag fixture load stage"
-        );
-        assert_eq!(
-            applied,
-            cfg!(feature = "client-ptr"),
-            "bag preset application stage"
-        );
+        assert!(loaded, "bag fixture load stage");
+        assert!(applied, "bag preset application stage");
     }
-    // Retail loads this system below, AFTER startup. OnSystemLoad only registers it
-    // (Shared/EditModeSystemTemplates.lua:3-30); RegisterSystemFrame only inserts it
-    // (Retail Shared/EditModeManager.lua:210-212; PTR:220-222). Retail therefore checks
-    // the XML anchor BEFORE the next layout update, not the startup steady state.
-    // PTR loads it before startup and applies Standard's preset offset (10).
-    let expected_bar_y = if cfg!(feature = "client-ptr") {
+    // Retail and PTR load Blizzard_MainMenuBarBagButtons in the production startup
+    // inventory, so startup applies Standard's preset offset (10) to BagsBar.
+    let expected_bar_y = if cfg!(any(feature = "client-retail", feature = "client-ptr")) {
         "10"
     } else {
         "0"
