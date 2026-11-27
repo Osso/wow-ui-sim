@@ -747,16 +747,13 @@ fn date_and_time_defaults_compose_with_modeled_calendar_comparison() {
 
 #[test]
 fn contribution_collector_defaults_are_not_c_api_temporary_shims() {
+    // 0fb551d456 (R88cx) made src/c_api/c_contribution_collector.rs the
+    // host-supplied model; only the unmodeled defaults stay out of c_api.
     let temporary_shims = c_api_temporary_shims_source();
-    let c_api = include_str!("../src/c_api/mod.rs");
 
     assert!(
         !temporary_shims.contains("c_contribution_collector"),
         "unmodeled C_ContributionCollector empty/default shapes belong in lua_api::workarounds::temporary"
-    );
-    assert!(
-        !c_api.contains("c_contribution_collector"),
-        "C_ContributionCollector empty/default shapes should not be wired through c_api registration"
     );
 }
 
