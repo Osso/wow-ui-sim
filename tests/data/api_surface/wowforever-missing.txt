@@ -546,7 +546,6 @@ C_DateAndTime.GetServerTimeLocal # not-yet: temporary Lua workaround
 C_DateAndTime.IsDayTime # not-yet: temporary Lua workaround
 C_DeathInfo.GetCorpseMapPosition # not-yet
 C_DeathInfo.GetDeathReleasePosition # not-yet
-C_DeathInfo.GetSelfResurrectOptions # not-yet
 C_DeathInfo.UseSelfResurrectOption # not-yet
 C_DelvesUI.GetDelvesAffixSpellsForSeason # not-yet
 C_DelvesUI.GetDelvesFactionForSeason # not-yet

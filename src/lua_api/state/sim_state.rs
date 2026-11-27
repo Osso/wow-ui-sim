@@ -1347,6 +1347,8 @@ pub struct SimState {
     pub trial_boost_level: crate::c_api::c_character_creation_trial_boost::TrialBoostLevelState,
     pub scenario: ScenarioState,
     pub death_recaps: Vec<DeathRecapEntry>,
+    /// Host-supplied `C_DeathInfo.GetSelfResurrectOptions` records.
+    pub self_resurrect_options: Vec<crate::c_api::c_death_info::SelfResurrectOption>,
     pub chat_bubbles: Vec<ChatBubble>,
     pub summon_request: SummonRequestState,
     pub player_map_position: (f64, f64),

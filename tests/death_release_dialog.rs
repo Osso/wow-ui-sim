@@ -6,6 +6,10 @@
 //! the DEATH dialog only for a positive or `-1` timer, and its `OnShow`
 //! (Blizzard_StaticPopup_Game/Mainline/GameDialogDefs.lua:192-221) copies the
 //! timer to `dialog.timeleft` and enables the recap button only with recap events.
+//! `C_DeathInfo.GetSelfResurrectOptions` feeds `GameDialogDefsUtil.
+//! GetSelfResurrectDialogOptions` (GameDialogDefsUtil.lua:3-22): the DEATH
+//! dialog shows button 2 only with an option, and its `OnUpdate` labels and
+//! enables that button from the first option after the usable-first sort.
 
 use wow_ui_sim::lua_api::WowLuaEnv;
 
@@ -27,10 +31,54 @@ fn die(env: &WowLuaEnv, seconds: f64, recap: &str) -> (bool, f64, bool) {
         .expect("the original death handler should run")
 }
 
+const RESURRECT: &str = r#"
+local options = ...
+StaticPopup_Hide("DEATH")
+A_Admin.ClearDeathRecaps()
+A_Admin.ClearSelfResurrectOptions()
+for _, o in ipairs(options) do
+    A_Admin.AddSelfResurrectOption(o[1], Enum.SelfResurrectOptionType.Spell, o[2], o[3], false, o[4])
+end
+A_Admin.SetReleaseTimeRemaining(360)
+A_Admin.FireEvent("PLAYER_DEAD")
+local _, dialog = StaticPopup_Visible("DEATH")
+return dialog:GetButton2():IsShown()
+"#;
+
+const BUTTON2: &str = r#"
+local _, dialog = StaticPopup_Visible("DEATH")
+local button = dialog:GetButton2()
+return button:GetText(), button:IsEnabled(), button.option and button.option.id or 0
+"#;
+
+fn offer_resurrects(env: &WowLuaEnv, options: &str) -> bool {
+    let chunk = format!("return (function(...) {RESURRECT} end)({options})");
+    env.eval(&chunk)
+        .expect("the original death handler should run")
+}
+
+fn first_resurrect_button(env: &WowLuaEnv) -> (String, bool, f64) {
+    env.fire_on_update(0.1).expect("the DEATH dialog OnUpdate should run");
+    env.eval(BUTTON2).expect("button 2 should be readable")
+}
+
+fn assert_resurrect_options_follow_inputs(env: &WowLuaEnv) {
+    assert!(!offer_resurrects(env, "{}"));
+    let usable_second = r#"{{"Soulstone", 20707, false, 1}, {"Reincarnation", 20608, true, 2}}"#;
+    assert!(offer_resurrects(env, usable_second));
+    let expected = ("Reincarnation".to_owned(), true, 20608.0);
+    assert_eq!(first_resurrect_button(env), expected);
+    assert!(offer_resurrects(env, r#"{{"Soulstone", 20707, false, 1}}"#));
+    let expected = ("Soulstone".to_owned(), false, 20707.0);
+    assert_eq!(first_resurrect_button(env), expected);
+    env.exec("A_Admin.ClearSelfResurrectOptions()").expect("clear options");
+}
+
 fn assert_death_dialog_follows_inputs(env: &WowLuaEnv) {
     assert_eq!(die(env, 360.0, "11"), (true, 360.0, true));
     assert_eq!(die(env, -1.0, "nil"), (true, -1.0, false));
     assert_eq!(die(env, 0.0, "11"), (false, 0.0, false));
+    assert_resurrect_options_follow_inputs(env);
 }
 
 #[cfg(feature = "client-retail")]

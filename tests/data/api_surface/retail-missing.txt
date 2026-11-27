@@ -542,7 +542,6 @@ C_DateAndTime.GetCalendarTimeFromEpoch # not-yet: temporary Lua workaround
 C_DateAndTime.GetServerTimeLocal # not-yet: temporary Lua workaround
 C_DeathInfo.GetCorpseMapPosition # not-yet
 C_DeathInfo.GetDeathReleasePosition # not-yet
-C_DeathInfo.GetSelfResurrectOptions # not-yet
 C_DeathInfo.UseSelfResurrectOption # not-yet
 C_Debug.DashboardIsEnabled # not-yet
 C_Debug.FrameXMLDebug # not-yet
