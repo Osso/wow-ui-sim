@@ -982,12 +982,27 @@ fn skips_loaded_dependency_xml(
     pass: EnvironmentPass,
     file_rel: &Path,
 ) -> bool {
-    !uses_secure_dependency_pass()
-        && pass == EnvironmentPass::SecureDependency
+    if uses_secure_dependency_pass() {
+        return is_secure_raid_warning_frame_xml(ctx, pass, file_rel);
+    }
+    pass == EnvironmentPass::SecureDependency
         && file_rel
             .extension()
             .is_some_and(|extension| extension == "xml")
         && addon_loaded_in_environment(env, ctx.name, false)
+}
+
+/// Workaround (2686d181a7): RaidWarningFrame's OnLoad calls EditModeSystemMixin,
+/// which Blizzard_EditMode.toc loads only with `AllowLoadEnvironment Global`.
+/// Native secure-env handling of that OnLoad is UNKNOWN; retire with evidence.
+fn is_secure_raid_warning_frame_xml(
+    ctx: &AddonContext<'_>,
+    pass: EnvironmentPass,
+    file_rel: &Path,
+) -> bool {
+    pass.use_secure_env(ctx)
+        && ctx.name == "Blizzard_RaidWarning"
+        && file_rel == Path::new("RaidWarning.xml")
 }
 
 fn addon_file_context<'a>(
