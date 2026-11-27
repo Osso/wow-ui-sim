@@ -494,7 +494,7 @@ pub(crate) mod encoding_util;
 pub mod equipment_set_command;
 pub(crate) mod equipment_set_locks;
 pub mod map_world_coordinates;
-#[cfg(feature = "retail-12-0-7")]
+#[cfg(any(feature = "retail-12-0-7", feature = "housing-room-queries"))]
 pub(crate) mod patch_12_0_7_inputs;
 mod spell_cooldown_output;
 pub mod spell_tooltip;

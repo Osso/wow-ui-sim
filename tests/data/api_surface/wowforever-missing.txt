@@ -737,7 +737,6 @@ C_Housing.OnSignCharterClicked # not-yet
 C_Housing.RelinquishHouse # not-yet
 C_Housing.RequestCurrentHouseInfo # not-yet
 C_Housing.RequestPlayerCharacterList # not-yet
-C_Housing.ResetHouse # not-yet
 C_Housing.ReturnAfterVisitingHouse # not-yet
 C_Housing.SaveHouseSettings # not-yet
 C_Housing.SearchBNetFriendNeighborhoods # not-yet
@@ -760,28 +759,8 @@ C_HousingBasicMode.RemoveSelectedDecor # not-yet
 C_HousingBasicMode.RotateDecor # not-yet
 C_HousingBasicMode.RotateHouseExterior # not-yet
 C_HousingBasicMode.SetGridVisible # not-yet: temporary Lua workaround
-C_HousingBlueprint.CanExportRoom # not-yet
-C_HousingBlueprint.CanExportTypeFromCurrentLocation # not-yet
-C_HousingBlueprint.CanImportTypeFromCurrentLocation # not-yet
-C_HousingBlueprint.DeleteBlueprint # not-yet
-C_HousingBlueprint.ExportBlueprint # not-yet
-C_HousingBlueprint.ExportRoomBlueprint # not-yet
-C_HousingBlueprint.GetBlueprintHyperlink # not-yet
-C_HousingBlueprint.GetBlueprintTypeForCode # not-yet
-C_HousingBlueprint.GetExportAvailability # not-yet
-C_HousingBlueprint.GetFeatureAvailability # not-yet
-C_HousingBlueprint.GetImportAvailability # not-yet
-C_HousingBlueprint.ImportBlueprint # not-yet
-C_HousingBlueprint.IsShareCodeValid # not-yet
-C_HousingBlueprint.RenameBlueprint # not-yet
-C_HousingBlueprint.RequestBlueprintCollection # not-yet
-C_HousingBlueprint.RequestBlueprintContents # not-yet
-C_HousingBlueprint.RequestBlueprintContentsForContext # not-yet
-C_HousingBlueprint.StartImportRoomBlueprint # not-yet
-C_HousingBlueprint.UpdateBlueprintStringFromInput # not-yet
 C_HousingCatalog.GetAllFilterTagGroups # not-yet: temporary Lua workaround
 C_HousingCatalog.GetCartSizeLimit # not-yet: temporary Lua workaround
-C_HousingCatalog.GetCatalogCategoryAndSubcategoryNames # not-yet
 C_HousingCatalog.GetCatalogEntryRefundTimeStampByRecordID # not-yet: temporary Lua workaround
 C_HousingCatalog.GetDecorMaxOwnedCount # not-yet: temporary Lua workaround
 C_HousingCatalog.GetDecorTotalOwnedCount # not-yet: temporary Lua workaround
@@ -799,7 +778,6 @@ C_HousingCleanupMode.GetHoveredDecorInfo # not-yet
 C_HousingCleanupMode.IsHoveringDecor # not-yet
 C_HousingCleanupMode.RemoveSelectedDecor # not-yet
 C_HousingCustomizeMode.ApplyDyeToSelectedDecor # not-yet
-C_HousingCustomizeMode.ApplyPetToSelectedDecor # not-yet
 C_HousingCustomizeMode.ClearDyesForSelectedDecor # not-yet
 C_HousingCustomizeMode.CommitDyesForSelectedDecor # not-yet: temporary Lua workaround
 C_HousingCustomizeMode.GetHoveredDecorInfo # not-yet
@@ -811,7 +789,6 @@ C_HousingCustomizeMode.GetRecentlyUsedDyes # not-yet: temporary Lua workaround
 C_HousingCustomizeMode.GetRecentlyUsedThemeSets # not-yet: temporary Lua workaround
 C_HousingCustomizeMode.GetRecentlyUsedWallpapers # not-yet: temporary Lua workaround
 C_HousingCustomizeMode.GetSelectedDecorInfo # not-yet: temporary Lua workaround
-C_HousingCustomizeMode.GetSelectedDecorPetInfo # not-yet
 C_HousingCustomizeMode.GetSelectedRoomComponentInfo # not-yet: temporary Lua workaround
 C_HousingCustomizeMode.GetThemeSetInfo # not-yet: temporary Lua workaround
 C_HousingCustomizeMode.GetWallpapersForRoomComponentType # not-yet: temporary Lua workaround
@@ -821,25 +798,17 @@ C_HousingCustomizeMode.IsHoveringDecor # not-yet
 C_HousingCustomizeMode.IsHoveringRoomComponent # not-yet: temporary Lua workaround
 C_HousingCustomizeMode.IsRoomComponentSelected # not-yet: temporary Lua workaround
 C_HousingCustomizeMode.RoomComponentSupportsVariant # not-yet: temporary Lua workaround
-C_HousingCustomizeMode.RoomConnectionSupportsDoorType # not-yet
-C_HousingDecor.AnyDecorPlacedInRoom # not-yet
 C_HousingDecor.EnterPreviewState # not-yet: temporary Lua workaround
 C_HousingDecor.ExitPreviewState # not-yet: temporary Lua workaround
-C_HousingDecor.GetAllMaxPlacementBudgets # not-yet
 C_HousingDecor.GetAllPlacedDecor # not-yet: temporary Lua workaround
-C_HousingDecor.GetAllSpentPlacementBudgets # not-yet
-C_HousingDecor.GetDecorAssignedPetName # not-yet
-C_HousingDecor.GetDecorCanAttachPet # not-yet
 C_HousingDecor.GetDecorHyperlink # not-yet: temporary Lua workaround
 C_HousingDecor.GetDecorIcon # not-yet: temporary Lua workaround
 C_HousingDecor.GetDecorInstanceInfoForGUID # not-yet: temporary Lua workaround
 C_HousingDecor.GetDecorName # not-yet: temporary Lua workaround
 C_HousingDecor.GetHoveredDecorInfo # not-yet: temporary Lua workaround
-C_HousingDecor.GetMaxPetPlacementBudget # not-yet
 C_HousingDecor.GetNumDecorPlaced # not-yet: temporary Lua workaround
 C_HousingDecor.GetNumPreviewDecor # not-yet: temporary Lua workaround
 C_HousingDecor.GetSelectedDecorInfo # not-yet: temporary Lua workaround
-C_HousingDecor.GetSpentPetPlacementBudget # not-yet
 C_HousingDecor.HasMaxPlacementBudget # not-yet: temporary Lua workaround
 C_HousingDecor.IsDecorSelected # not-yet: temporary Lua workaround
 C_HousingDecor.IsGridVisible # not-yet: temporary Lua workaround
@@ -872,15 +841,9 @@ C_HousingInspectMode.GetHoveredDecorGUID # not-yet
 C_HousingInspectMode.IsHoveringDecor # not-yet
 C_HousingInspectMode.IsInInspectMode # not-yet
 C_HousingLayout.AnyRoomsOnFloor # not-yet: temporary Lua workaround
-C_HousingLayout.CanSetViewedFloor # not-yet
 C_HousingLayout.ConfirmStairChoice # not-yet
 C_HousingLayout.DeselectRoomOrDoor # not-yet
-C_HousingLayout.GetBaseRoomFloor # not-yet
-C_HousingLayout.GetHighestOccupiedFloorIndex # not-yet
-C_HousingLayout.GetLowestOccupiedFloorIndex # not-yet
 C_HousingLayout.GetNumActiveRooms # not-yet
-C_HousingLayout.GetRoomPlayerIsIn # not-yet
-C_HousingLayout.GetSelectedBlueprintFloorplan # not-yet
 C_HousingLayout.GetSelectedDoor # not-yet: temporary Lua workaround
 C_HousingLayout.GetSelectedFloorplan # not-yet: temporary Lua workaround
 C_HousingLayout.GetSelectedRoom # not-yet
@@ -888,7 +851,6 @@ C_HousingLayout.GetSelectedStairwellRoomCount # not-yet
 C_HousingLayout.GetViewedFloor # not-yet: temporary Lua workaround
 C_HousingLayout.HasAnySelections # not-yet: temporary Lua workaround
 C_HousingLayout.HasRoomPlacementBudget # not-yet: temporary Lua workaround
-C_HousingLayout.HasSelectedBlueprintFloorplan # not-yet
 C_HousingLayout.HasSelectedDoor # not-yet
 C_HousingLayout.HasSelectedFloorplan # not-yet
 C_HousingLayout.HasSelectedRoom # not-yet
@@ -898,7 +860,6 @@ C_HousingLayout.IsBaseRoom # not-yet: temporary Lua workaround
 C_HousingLayout.IsDraggingRoom # not-yet: temporary Lua workaround
 C_HousingLayout.MoveDraggedRoom # not-yet
 C_HousingLayout.MoveLayoutCamera # intentionally-unsupported: 3D camera/model
-C_HousingLayout.RoomHasStairs # not-yet
 C_HousingLayout.RotateFocusedRoom # not-yet
 C_HousingLayout.ZoomLayoutCamera # intentionally-unsupported: 3D camera/model
 C_HousingNeighborhood.CanReturnAfterVisitingHouse # not-yet: temporary Lua workaround
