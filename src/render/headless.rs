@@ -369,7 +369,9 @@ pub fn render_to_image(
     render_scene_to_image(batch, tex_mgr, width, height, glyph_atlas_data, None)
 }
 
-pub(crate) fn render_scene_to_image(
+/// Render a batch laid out on a `scene_size` UI canvas, fitted to a
+/// `width` x `height` image (see [`scene_viewport`]).
+pub fn render_scene_to_image(
     batch: &QuadBatch,
     tex_mgr: &mut TextureManager,
     width: u32,

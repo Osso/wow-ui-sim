@@ -134,7 +134,7 @@ impl GlyphAtlas {
         Self::with_raster_scale(1.0)
     }
 
-    pub(crate) fn with_raster_scale(raster_scale: f32) -> Self {
+    pub fn with_raster_scale(raster_scale: f32) -> Self {
         assert!(raster_scale.is_finite() && raster_scale > 0.0);
         Self {
             raster_scale,
