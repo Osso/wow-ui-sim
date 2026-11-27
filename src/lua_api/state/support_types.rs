@@ -388,7 +388,7 @@ pub struct HousingState {
     pub house_finder_selected_plot: Option<i32>,
     pub catalog: crate::c_api::c_housing::catalog::HousingCatalogState,
     pub exterior: crate::c_api::c_housing::exterior::HouseExteriorState,
-    #[cfg(feature = "retail-12-0-5")]
+    #[cfg(feature = "housing-inspect-mode")]
     pub inspect_mode: crate::c_api::c_housing::inspect_mode::InspectModeState,
     /// Inferred pending request only; never a selected or placed decor instance.
     pub pending_new_decor: Option<crate::c_api::c_housing::catalog::HousingCatalogEntryVariantID>,
@@ -421,7 +421,7 @@ pub struct HousingState {
     pub blueprint_import_availability: i32,
     #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
     pub editor: crate::c_api::c_housing::editor::EditorState,
-    #[cfg(feature = "retail-12-0-0")]
+    #[cfg(feature = "housing-host-state")]
     pub location: crate::c_api::c_housing::location::LocationState,
     pub active_house_editor_mode: i32,
     pub house_editor_player_type: Option<i32>,

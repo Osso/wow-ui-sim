@@ -153,8 +153,12 @@ intern-stats = ["rilua/intern-stats"]
 # and Forever (HousingLayout/HousingBlueprint/HousingDecor docs are byte-identical).
 housing-room-queries = []
 housing-blueprints = ["housing-room-queries"]
-retail-12-0-0 = ["aura-instance-enumeration", "action-spell-range"]
-retail-12-0-5 = ["retail-12-0-0", "native-duration-formatting", "base-spell-relationships", "aura-spell-classifications", "maw-power-model"]
+# Housing location snapshot (12.0.0) and decor inspect mode (12.0.5): Forever's
+# HousingUI/HousingDecorUI/HousingInspectModeUI docs are byte-identical.
+housing-host-state = []
+housing-inspect-mode = []
+retail-12-0-0 = ["aura-instance-enumeration", "action-spell-range", "housing-host-state"]
+retail-12-0-5 = ["retail-12-0-0", "housing-inspect-mode", "native-duration-formatting", "base-spell-relationships", "aura-spell-classifications", "maw-power-model"]
 retail-12-0-7 = ["retail-12-0-5", "maw-power-rarity-info", "housing-room-queries"]
 retail-12-1-0 = ["retail-12-0-7", "housing-blueprints", "aura-xml-widgets", "on-update-modes", "player-cast-durations", "forbidden-aspects", "numeric-rule-formatters", "aura-containers"]
 retail-12-1-5 = ["retail-12-1-0", "timed-signal-maps", "forbidden-animation-aspects", "sim-data-profile/retail-12-1-5"]
@@ -199,7 +203,7 @@ client-wrath = ["action-spell-range", "sim-data-profile/client-wrath"]
 client-mists = ["prefork-full-ui", "sim-data-profile/client-mists"]
 client-era = ["aura-spell-classifications", "sim-data-profile/client-era"]
 client-anniversary = ["aura-spell-classifications", "sim-data-profile/client-anniversary"]
-client-wowforever = ["timed-signal-maps", "housing-blueprints", "aura-xml-widgets", "on-update-modes", "player-cast-durations", "forbidden-animation-aspects", "numeric-rule-formatters", "aura-containers", "native-duration-formatting", "base-spell-relationships", "action-spell-range", "aura-spell-classifications", "maw-power-rarity-info", "sim-data-profile/client-wowforever"]
+client-wowforever = ["timed-signal-maps", "housing-blueprints", "housing-host-state", "housing-inspect-mode", "aura-xml-widgets", "on-update-modes", "player-cast-durations", "forbidden-animation-aspects", "numeric-rule-formatters", "aura-containers", "native-duration-formatting", "base-spell-relationships", "action-spell-range", "aura-spell-classifications", "maw-power-rarity-info", "sim-data-profile/client-wowforever"]
 
 [profile.release]
 lto = false

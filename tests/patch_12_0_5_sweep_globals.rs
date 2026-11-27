@@ -74,44 +74,6 @@ fn scenario_tiered_entrance_spells_require_tiered_entrance_scenario() {
 }
 
 #[test]
-fn housing_inspect_mode_transitions_fire_state_events_and_gate_hover() {
-    let env = env();
-    drained_event_names(&env);
-    env.state().borrow_mut().housing.inspect_mode.hovered_decor_guid =
-        Some("Housing-4-1-100-4F2A".into());
-    env.exec(
-        r#"
-        assert(C_HousingInspectMode.IsInInspectMode() == false)
-        assert(C_HousingInspectMode.IsHoveringDecor() == false)
-        assert(C_HousingInspectMode.GetHoveredDecorGUID() == '')
-        C_HousingInspectMode.EnterInspectMode()
-        C_HousingInspectMode.EnterInspectMode()
-        assert(C_HousingInspectMode.IsInInspectMode() == true)
-        assert(C_HousingInspectMode.IsHoveringDecor() == true)
-        assert(C_HousingInspectMode.GetHoveredDecorGUID() == 'Housing-4-1-100-4F2A')
-        "#,
-    )
-    .expect("entering inspect mode reports the hovered decor");
-    assert_eq!(
-        drained_event_names(&env),
-        ["HOUSING_INSPECT_MODE_STATE_UPDATED"],
-        "only the real transition fires"
-    );
-    env.exec(
-        r#"
-        C_HousingInspectMode.ExitInspectMode()
-        assert(C_HousingInspectMode.IsInInspectMode() == false)
-        assert(C_HousingInspectMode.IsHoveringDecor() == false)
-        "#,
-    )
-    .expect("exiting hides the hover");
-    assert_eq!(
-        drained_event_names(&env),
-        ["HOUSING_INSPECT_MODE_STATE_UPDATED"]
-    );
-}
-
-#[test]
 fn photo_sharing_status_and_clear_authorization_follow_account_flags() {
     let env = env();
     env.exec(

@@ -20,9 +20,9 @@ mod charter;
 #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
 pub mod editor;
 pub mod exterior;
-#[cfg(feature = "retail-12-0-5")]
+#[cfg(feature = "housing-inspect-mode")]
 pub mod inspect_mode;
-#[cfg(feature = "retail-12-0-0")]
+#[cfg(feature = "housing-host-state")]
 pub mod location;
 mod market;
 #[cfg(feature = "housing-room-queries")]
@@ -123,7 +123,7 @@ fn register_profile_service_methods(state: &mut LuaState) -> LuaResult<()> {
     // Forever HouseEditorUIDocumentation.lua is byte-identical to Retail's.
     #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
     editor::register(state)?;
-    #[cfg(feature = "retail-12-0-0")]
+    #[cfg(feature = "housing-host-state")]
     location::register(state)?;
     Ok(())
 }
@@ -134,7 +134,7 @@ fn register_profile_widget_methods(state: &mut LuaState) -> LuaResult<()> {
     // Forever HousingBasicModeUIDocumentation.lua declares the same free-place pair.
     #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
     basic_mode::register(state)?;
-    #[cfg(feature = "retail-12-0-5")]
+    #[cfg(feature = "housing-inspect-mode")]
     inspect_mode::register(state)?;
     #[cfg(any(
         feature = "client-retail",
