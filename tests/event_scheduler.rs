@@ -1,5 +1,25 @@
 use wow_ui_sim::lua_api::WowLuaEnv;
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn active_continent_name_uses_host_supplied_event_state() {
+    let env = env();
+    let result: (String, String, bool) = env
+        .eval(
+            r#"
+            A_Admin.SetActiveEventContinentName("Kalimdor")
+            local first = C_EventScheduler.GetActiveContinentName()
+            A_Admin.SetActiveEventContinentName("Eastern Kingdoms")
+            local second = C_EventScheduler.GetActiveContinentName()
+            A_Admin.SetActiveEventContinentName(nil)
+            return first, second, C_EventScheduler.GetActiveContinentName() == nil
+            "#,
+        )
+        .expect("active continent query should return supplied state");
+
+    assert_eq!(result, ("Kalimdor".into(), "Eastern Kingdoms".into(), true));
+}
+
 fn env() -> WowLuaEnv {
     WowLuaEnv::new().expect("Failed to create Lua environment")
 }

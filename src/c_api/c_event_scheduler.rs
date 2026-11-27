@@ -2,6 +2,17 @@
 //!
 //! Retains existing demo inputs; host updates `_state` lists before publishing an event.
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+use crate::c_api::helpers::ensure_namespace;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+use crate::lua_api::methods::{borrow_state, borrow_state_mut, create_string};
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+use crate::lua_bridge::{FromStack, TableBuilder, table_set_rust_fn_static};
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+use rilua::vm::state::LuaState;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+use rilua::{LuaResult, Val};
+
 const EVENT_SCHEDULER_STATE_LUA: &str = r#"
 if type(C_EventScheduler) ~= "table" then
     C_EventScheduler = {}
@@ -173,7 +184,41 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
         lua.exec("rawset(_G, '__wow_event_scheduler_retail_display_info', true)")?;
     }
     lua.exec(EVENT_SCHEDULER_STATE_LUA)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    {
+        let state = lua.state_mut();
+        let namespace = ensure_namespace(state, "C_EventScheduler")?;
+        table_set_rust_fn_static(
+            state,
+            namespace,
+            "GetActiveContinentName",
+            get_active_continent_name,
+        )?;
+    }
     Ok(())
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
+    builder.set_function("SetActiveEventContinentName", set_active_continent_name)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn get_active_continent_name(state: &mut LuaState) -> LuaResult<u32> {
+    let name = borrow_state(state)?.active_event_continent_name.clone();
+    let result = match name {
+        Some(name) => create_string(state, &name),
+        None => Val::Nil,
+    };
+    state.push(result);
+    Ok(1)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn set_active_continent_name(state: &mut LuaState) -> LuaResult<u32> {
+    let name = Option::<String>::from_stack(state, 1)?;
+    borrow_state_mut(state)?.active_event_continent_name = name;
+    Ok(0)
 }
 
 #[cfg(test)]

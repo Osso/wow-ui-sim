@@ -48,6 +48,7 @@ The `A_Admin` namespace provides administrative functions for controlling simula
 - [Premade Groups](premade-groups.md) — AddPremadeListing, ClearPremadeListings, UpdatePremadeListing
 - [Quests](quests.md) — simulator-only selected completed quest turn-in
 - [Events](events.md) — FireEvent
+- [Event scheduler](event-scheduler.md) — SetActiveEventContinentName
 - [Scripted animations](scripted-animations.md) — SetScriptedAnimationEffects
 - [Performance metrics](performance-metrics.md) — SetFramerate, SetAddOnUsage
 - [Video capabilities](video-capabilities.md) — SetMultiSampleAntiAliasingSupported, SetAntiAliasingSupported
