@@ -12,8 +12,9 @@ local function assert_alert(current, expected)
     A_Admin.SetEquippedItemDurability(1, current, 100)
     assert(DurabilityFrame:IsShown() and DurabilityHead:IsShown(), "head alert is visible")
     local r, g, b = DurabilityHead:GetVertexColor()
-    assert(r == expected.r and g == expected.g and b == expected.b,
-        "head alert color for durability " .. current)
+    assert(math.abs(r - expected.r) < 0.01 and math.abs(g - expected.g) < 0.01
+        and math.abs(b - expected.b) < 0.01,
+        "head alert color for durability " .. current .. ": " .. r .. "," .. g .. "," .. b)
 end
 
 assert_alert(40, INVENTORY_ALERT_COLORS[1])
