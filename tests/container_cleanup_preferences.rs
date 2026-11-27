@@ -120,6 +120,43 @@ fn bag_slot_filter_overlay_tracks_the_container_search() {
 }
 
 #[test]
+fn container_frame_rows_render_each_supplied_bag_item() {
+    common::with_timeout(120, || {
+        let env = WowLuaEnv::new().expect("Lua environment");
+        common::load_game_startup_inventory(&env);
+        env.sync_addon_names_to_lua();
+        env.apply_post_load_workarounds();
+        wow_ui_sim::startup::fire_startup_events_for_screen(
+            &env,
+            wow_ui_sim::screen::ScreenKind::Game,
+        );
+        env.exec(
+            r#"
+            A_Admin.ClearBags()
+            A_Admin.AddBagItem(0, 1, 6948, 2)
+            A_Admin.AddBagItem(0, 2, 159, 3)
+            ToggleBackpack()
+            local frame = ContainerFrame1
+            if not frame or not frame:IsShown() then frame = ContainerFrameCombinedBags end
+            assert(frame and frame:IsShown(), "ToggleBackpack showed no container frame")
+            local function find_slot(bag, slot)
+                for _, button in frame:EnumerateValidItems() do
+                    if button:GetBagID() == bag and button:GetID() == slot then return button end
+                end
+            end
+            local first, second = find_slot(0, 1), find_slot(0, 2)
+            assert(first and second, "supplied bag slots have no rendered item buttons")
+            assert(first.icon:GetTexture() == C_Item.GetItemIconByID(6948), "first icon mismatch")
+            assert(first.Count:GetText() == "2", "first count mismatch")
+            assert(second.icon:GetTexture() == C_Item.GetItemIconByID(159), "second icon mismatch")
+            assert(second.Count:GetText() == "3", "second count mismatch")
+            "#,
+        )
+        .expect("ContainerFrame renders both supplied bag item records");
+    });
+}
+
+#[test]
 fn backpack_cleanup_menu_updates_container_preferences() {
     common::with_timeout(120, || {
         let env = WowLuaEnv::new().expect("Lua environment");
