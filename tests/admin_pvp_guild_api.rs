@@ -384,7 +384,9 @@ fn test_guild_control_set_rank_does_not_error() {
 fn test_get_guild_faction_group_returns_default_faction() {
     let env = env();
     let faction: i32 = env.eval("return GetGuildFactionGroup()").unwrap();
-    let expected = if cfg!(all(feature = "profile-retail", feature = "retail-12-1-5")) {
+    // 9cae54e47d models the empty-default race-flag lookup on Retail and Forever
+    // (VERIFIED Retail R88ap; Forever INFERRED R88g9); no supplied row gives -1.
+    let expected = if cfg!(any(feature = "client-retail", feature = "client-wowforever")) {
         -1
     } else {
         1
