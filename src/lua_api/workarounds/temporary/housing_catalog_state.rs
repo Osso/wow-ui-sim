@@ -6,10 +6,6 @@
 const HOUSING_CATALOG_STATE_LUA: &str = include_str!("housing_catalog_state.lua");
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
-    // Forever excludes the catalog consumers that use this legacy seed.
-    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever {
-        return Ok(());
-    }
     // Only inverse profiles publish the original seeded exterior members.
     // Modern profiles install real state-backed APIs; no missing-method fallback.
     let install_legacy = if crate::c_api::c_housing::exterior::MODELED {
@@ -24,7 +20,7 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     Ok(())
 }
 
-#[cfg(all(test, not(feature = "client-wowforever")))]
+#[cfg(test)]
 mod tests {
     use crate::lua_api::WowLuaEnv;
 

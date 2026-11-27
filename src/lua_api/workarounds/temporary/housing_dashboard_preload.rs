@@ -127,11 +127,7 @@ end
 "#;
 
 pub(crate) fn patch(env: &LoaderEnv<'_>) {
-    if matches!(
-        crate::client_profile::ACTIVE,
-        crate::client_profile::ClientProfile::Retail
-            | crate::client_profile::ClientProfile::WowForever
-    ) {
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
         return;
     }
     let mut result = env
@@ -145,10 +141,7 @@ pub(crate) fn patch(env: &LoaderEnv<'_>) {
     }
 }
 
-#[cfg(all(
-    test,
-    not(any(feature = "client-retail", feature = "client-wowforever"))
-))]
+#[cfg(all(test, not(feature = "client-retail")))]
 mod tests {
     use super::*;
     use crate::lua_api::WowLuaEnv;
