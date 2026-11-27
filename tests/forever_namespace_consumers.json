@@ -47,6 +47,7 @@
     "Blizzard_SharedXML/TreeListDataProvider.lua": "d8dbe138ec0e0bf4848cf68812d12ab542a40ddb3811eeb28e18ffd28ba77755",
     "Blizzard_SharedXMLBase/CallbackRegistry.lua": "f52df8a32d710214c9979554af0d4651bf228680cbcfb3428536ec88dff1adc6",
     "Blizzard_SharedXMLBase/EnumUtil.lua": "07fd7b2ee7b475caecb2eb9d3ddc642a9b9dfabc1738c4339fa8c69fa6b76b8c",
+    "Blizzard_SharedXMLBase/FunctionUtil.lua": "ba04825d9434cd4fa7fd10c275fd3093d863032c6e9b96326c29c6bd7520f55b",
     "Blizzard_SharedXMLBase/MathUtil.lua": "90e9eabc033847f297a391fa60306fc8d8aeb16353ecb979fa4970c08323829d",
     "Blizzard_SharedXMLBase/TableUtil.lua": "659d2bed4266dd176c1a6dd9989d6c65c9f90252ba146bf181e5d969bf57127a",
     "Blizzard_SocialUIShared/SocialUIControl.lua": "f80665eead701471177d1fc21e2933c55f1f6acbb076d0e7afe52a56d3e10977",

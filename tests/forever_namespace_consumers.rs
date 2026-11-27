@@ -319,8 +319,12 @@ fn classic_original_combat_text_unit_switch_uses_shared_state() {
 #[cfg(feature = "client-wowforever")]
 fn load_recent_allies_templates(env: &WowLuaEnv) {
     load_recent_allies_util(env);
+    // CallbackRegistry needs CreateCounter and GenerateClosure from their original
+    // owners; 096d8a1f8c retired the duplicate startup copies.
     for name in [
         "Blizzard_SharedXMLBase/EnumUtil.lua",
+        "Blizzard_SharedXMLBase/MathUtil.lua",
+        "Blizzard_SharedXMLBase/FunctionUtil.lua",
         "Blizzard_SharedXMLBase/CallbackRegistry.lua",
         "Blizzard_SharedXML/DataProvider.lua",
         "Blizzard_SharedXML/TreeListDataProvider.lua",

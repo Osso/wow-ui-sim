@@ -14,7 +14,9 @@ use wow_ui_sim::screen::ScreenKind;
 
 // OptionPanel.lua consumes Settings registration and section-header initializers.
 // Their definitions live in this cached root and its actual TOC dependency closure.
-const BLIZZARD_ROOTS: &[&str] = &["Blizzard_Settings_Shared"];
+// Blizzard_Registration.lua:10 calls RegisterUIPanel, owned by
+// Blizzard_UIParentPanelManager (no synthetic default since 6dfb0ee167).
+const BLIZZARD_ROOTS: &[&str] = &["Blizzard_UIParentPanelManager", "Blizzard_Settings_Shared"];
 const ITEM_NAME: &str = "AutoRoll Integration Sword";
 const ITEM_TEXTURE: &str = "Interface\\Icons\\INV_Sword_04";
 
