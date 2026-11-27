@@ -117,7 +117,7 @@ fn cast_spell_book_item_blocked_while_casting() {
             .expect("first cast");
 
         // Observe numeric castBarID on the new tuple, legacy castID otherwise.
-        let identity_query = if cfg!(feature = "retail-12-1-0") {
+        let identity_query = if cfg!(feature = "player-cast-durations") {
             "return select(10, UnitCastingInfo('player'))"
         } else {
             "return select(7, UnitCastingInfo('player'))"

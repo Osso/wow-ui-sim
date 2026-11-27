@@ -607,8 +607,9 @@ fn test_spell_get_spell_name_unknown() {
 #[test]
 fn test_spell_get_maw_power_border_atlas_by_spell_id_follows_retirement_epoch() {
     let env = env();
-    // The 12.0.7 source register removes this member from the native surface.
-    let expression = if cfg!(feature = "retail-12-0-7") {
+    // The 12.0.7 source register removes this member from the native surface;
+    // Forever shares it through maw-power-rarity-info (a9ffb9d1b0).
+    let expression = if cfg!(feature = "maw-power-rarity-info") {
         "return C_Spell.GetMawPowerBorderAtlasBySpellID == nil"
     } else {
         "return C_Spell.GetMawPowerBorderAtlasBySpellID(12345) == nil"

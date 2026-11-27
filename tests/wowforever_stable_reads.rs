@@ -223,7 +223,14 @@ fn forever_stable_slot_original_consumer_populated_and_empty() {
     };
     let ui = blizzard_ui_dir();
     let env = new_blizzard_addon_env(&ui);
-    load_blizzard_addon_closure_into_env(&env, &ui, &["Blizzard_StableUI"], &[]);
+    // Camelot/Blizzard_StableUI.lua:357 calls SetItemButtonTexture, owned on
+    // Forever by Blizzard_ItemButton (loaded earlier in Game startup).
+    load_blizzard_addon_closure_into_env(
+        &env,
+        &ui,
+        &["Blizzard_ItemButton", "Blizzard_StableUI"],
+        &[],
+    );
     {
         let mut state = env.state().borrow_mut();
         state.stable_reads.owned_slots = 2;

@@ -122,7 +122,19 @@ fn original_world_map_does_not_add_fog_callback_to_highlight_pin() {
     }
 }
 
-// Classic WorldMap source does not install the fog provider.
+const FOG_PIN_AFTER_MAP_CHANGE_LUA: &str = r#"
+    local pin = FogPinUnderTest
+    assert(pin:GetUiMapID() == WorldMapFrame:GetMapID(), 'fog pin follows canvas map')
+    assert(C_FogOfWar.GetFogOfWarForMap(pin:GetUiMapID()) == nil, 'map has no fog data')
+    assert(not pin:IsShown(), 'missing fog data stays hidden')
+"#;
+
+// Classic WorldMap source does not install the fog provider. Retail retired the
+// post-load fog repair in 85083ed3ea: SetUiMapID now dispatches the XML
+// OnUiMapChanged script (FogOfWarFrameTemplates.xml:8), and FOG_OF_WAR_UPDATED
+// forces the original TryFindingBestFogOfWarID refresh. The original
+// UpdateFogOfWar only hides a fogless pin; clearing its atlases was the retired
+// repair's behaviour.
 #[cfg(feature = "client-retail")]
 #[test]
 fn original_world_map_fog_pin_still_refreshes_and_clears_missing_fog() {
@@ -134,27 +146,15 @@ fn original_world_map_fog_pin_still_refreshes_and_clears_missing_fog() {
         "#,
     )
     .unwrap();
-    for map in [84, 85, 0] {
+    for map in [84, 85] {
         env.exec(&format!(
-            "WorldMapFrame.mapID = {map}; \
-             FogPinUnderTest:SetFogOfWarBackgroundAtlas('stale-background'); \
-             FogPinUnderTest:SetFogOfWarMaskAtlas('stale-mask'); FogPinUnderTest:Show()"
+            "FogPinUnderTest:SetFogOfWarBackgroundAtlas('stale-background'); \
+             FogPinUnderTest:SetFogOfWarMaskAtlas('stale-mask'); FogPinUnderTest:Show(); \
+             WorldMapFrame:SetMapID({map})"
         ))
         .unwrap();
-        env.apply_post_load_workarounds();
-        env.exec(
-            r#"
-            local pin = FogPinUnderTest
-            local mapID = WorldMapFrame:GetMapID()
-            local expected = mapID == 0 and C_Map.GetCurrentMapID() or mapID
-            assert(pin:GetUiMapID() == expected, 'fog pin follows canvas/current map')
-            assert(pin:GetFogOfWarBackgroundAtlas() == nil, 'stale fog background cleared')
-            assert(pin:GetFogOfWarMaskAtlas() == nil, 'stale fog mask cleared')
-            assert(not pin:IsShown(), 'missing fog data stays hidden')
-            pin:OnMapChanged()
-            assert(not pin:IsShown(), 'fog map callback remains callable and hidden')
-            "#,
-        )
-        .expect("fog-only repair remains active on original pin");
+        env.fire_event("FOG_OF_WAR_UPDATED").unwrap();
+        env.exec(FOG_PIN_AFTER_MAP_CHANGE_LUA)
+            .expect("original fog pin refreshes through the map-change script");
     }
 }

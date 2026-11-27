@@ -240,7 +240,7 @@ fn test_is_spell_known() {
 
 #[test]
 fn test_item_button_icon_has_anchors() {
-    let env = env();
+    let env = crate::support::item_button_env();
     let result: String = env
         .eval(
             r#"
@@ -274,7 +274,7 @@ fn test_item_button_icon_has_anchors() {
 
 #[test]
 fn test_item_button_icon_identity() {
-    let env = env();
+    let env = crate::support::item_button_env();
     let result: String = env
         .eval(
             r#"

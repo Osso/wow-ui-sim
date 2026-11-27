@@ -5,15 +5,18 @@ use common::panel_fixtures::{clear_recorded_lua_errors, recorded_lua_errors};
 
 const ROOT: &str = "Blizzard_AuthChallengeUI";
 const ONLOAD_PROBE_LUA: &str = r#"
+-- INFERRED (simulator mapping: secure namespace distinct per R88g.2, applied by
+-- e93399f5e3). Same probe route as blizzard_auth_challenge_ui_secure_env.rs.
+local authNamespace = __secureenv.C_AuthChallenge
 local calls = {}
-local originalSetFrame = C_AuthChallenge.SetFrame
+local originalSetFrame = authNamespace.SetFrame
 
-C_AuthChallenge.SetFrame = function(frame)
+authNamespace.SetFrame = function(frame)
   table.insert(calls, frame)
 end
 
 AuthChallengeUI_OnLoad(AuthChallengeFrame)
-C_AuthChallenge.SetFrame = originalSetFrame
+authNamespace.SetFrame = originalSetFrame
 
 return #calls, calls[1] == AuthChallengeFrame
 "#;

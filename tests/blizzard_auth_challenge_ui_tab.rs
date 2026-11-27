@@ -5,12 +5,15 @@ use common::panel_fixtures::{clear_recorded_lua_errors, recorded_lua_errors};
 
 const ROOT: &str = "Blizzard_AuthChallengeUI";
 const TAB_PROBE_LUA: &str = r#"
+-- INFERRED (simulator mapping: secure namespace distinct per R88g.2, applied by
+-- e93399f5e3). Same probe route as blizzard_auth_challenge_ui_secure_env.rs.
+local authNamespace = __secureenv.C_AuthChallenge
 local calls = {}
-local originalOnTabPressed = C_AuthChallenge.OnTabPressed
+local originalOnTabPressed = authNamespace.OnTabPressed
 local originalIsShiftKeyDown = IsShiftKeyDown
 local originalSecureIsShiftKeyDown = __secureenv and __secureenv.IsShiftKeyDown
 
-C_AuthChallenge.OnTabPressed = function(frame, isShiftPressed)
+authNamespace.OnTabPressed = function(frame, isShiftPressed)
   table.insert(calls, { frame = frame, isShiftPressed = isShiftPressed })
 end
 
@@ -29,7 +32,7 @@ AuthChallengeUI_OnTabPressed(AuthChallengeFrame.InputFrame.Input1)
 setShiftStub(true)
 AuthChallengeUI_OnTabPressed(AuthChallengeFrame.InputFrame.Input1)
 
-C_AuthChallenge.OnTabPressed = originalOnTabPressed
+authNamespace.OnTabPressed = originalOnTabPressed
 IsShiftKeyDown = originalIsShiftKeyDown
 if type(__secureenv) == "table" then
   __secureenv.IsShiftKeyDown = originalSecureIsShiftKeyDown

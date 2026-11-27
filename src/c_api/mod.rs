@@ -444,6 +444,7 @@ pub(crate) mod mists_r88ah;
 pub(crate) mod mists_r88ai;
 #[cfg(feature = "client-mists")]
 pub(crate) mod mists_reputation_list;
+pub(crate) mod reputation_admin;
 pub mod reputation_model;
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub(crate) mod secure_transfer;

@@ -5,11 +5,14 @@ use common::panel_fixtures::{clear_recorded_lua_errors, recorded_lua_errors};
 
 const ROOT: &str = "Blizzard_AuthChallengeUI";
 const CANCEL_PROBE_LUA: &str = r##"
+-- INFERRED (simulator mapping: secure namespace distinct per R88g.2, applied by
+-- e93399f5e3). Same probe route as blizzard_auth_challenge_ui_secure_env.rs.
+local authNamespace = __secureenv.C_AuthChallenge
 local callCount = 0
 local argCounts = {}
-local originalCancel = C_AuthChallenge.Cancel
+local originalCancel = authNamespace.Cancel
 
-C_AuthChallenge.Cancel = function(...)
+authNamespace.Cancel = function(...)
   callCount = callCount + 1
   table.insert(argCounts, select("#", ...))
 end

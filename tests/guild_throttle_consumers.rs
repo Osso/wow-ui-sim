@@ -31,7 +31,7 @@ const GUILD_NEWS_CONSUMER_SCRIPT: &str = r#"
 "#;
 
 fn load_communities() -> WowLuaEnv {
-    let env = prefork_full_ui_preload::preload_full_game_ui()
+    let env = prefork_full_ui_preload::load_full_game_ui()
         .expect("full Blizzard UI should load for Communities consumer tests");
     env.exec("assert(C_AddOns.IsAddOnLoaded('Blizzard_Communities'))")
         .expect("the active profile selected Blizzard_Communities from its TOC");

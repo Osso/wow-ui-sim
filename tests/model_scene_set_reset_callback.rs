@@ -119,7 +119,7 @@ fn allied_races_on_show_pattern_executes_without_error() {
     // Mirrors AlliedRacesFrameMixin:OnShow line 98 — the closure is
     // generated on the fly and immediately handed to SetResetCallback. If
     // the method is missing or rejects valid input, this script throws.
-    let env = WowLuaEnv::new().expect("env");
+    let env = shared_xml_base_env();
     env.exec(
         r#"
             local scene = CreateFrame("ModelScene", "TestSceneOnShow")
@@ -136,4 +136,16 @@ fn allied_races_on_show_pattern_executes_without_error() {
         fired, 1.0,
         "stored closure must be callable and bound to the original owner"
     );
+}
+
+/// GenerateClosure is owned by Blizzard_SharedXMLBase FunctionUtil.lua since
+/// 096d8a1f8c retired the bootstrap copy.
+fn shared_xml_base_env() -> WowLuaEnv {
+    use crate::common::blizzard_addon_harness::{
+        blizzard_ui_dir, load_blizzard_addon_closure_into_env, new_blizzard_addon_env,
+    };
+    let ui = blizzard_ui_dir();
+    let env = new_blizzard_addon_env(&ui);
+    load_blizzard_addon_closure_into_env(&env, &ui, &["Blizzard_SharedXMLBase"], &[]);
+    env
 }

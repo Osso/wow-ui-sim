@@ -475,6 +475,40 @@ pub fn fire_original_addon_loaded(env: &WowLuaEnv, addon_name: &str) {
 
 pub use event_helpers::fire_player_entering_world;
 
+/// Host input for one watched ordinary faction. Retail and Forever back
+/// `C_Reputation` with the empty host-fed model since 8fd3fd2819, so tests that
+/// need a watched reputation supply it through `A_Admin.SetReputationFactions`
+/// (docs/admin-api/reputation.md). Other profiles keep their seeded fixture.
+pub const WATCHED_REPUTATION_LUA: &str = r#"
+    A_Admin.SetReputationFactions({ {
+        factionID = 2590, name = "Council of Dornogal", reaction = 5,
+        currentReactionThreshold = 3000, nextReactionThreshold = 9000,
+        currentStanding = 4500, isWatched = true,
+    } })
+"#;
+
+pub fn supply_watched_reputation(env: &WowLuaEnv) {
+    use wow_ui_sim::client_profile::{ACTIVE, ClientProfile};
+    if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever) {
+        env.exec(WATCHED_REPUTATION_LUA)
+            .expect("A_Admin.SetReputationFactions accepts one watched faction");
+    }
+}
+
+/// Host input for a connected Battle.net account. Retail and Forever model the
+/// connection since 390f4b6309 (INFERRED R88fi): `BNConnected()` is false until
+/// `A_Admin.SetPlayerBattleNetInfo` supplies `connected` (docs/admin-api/battle-net.md).
+pub fn supply_connected_battle_net(env: &WowLuaEnv) {
+    use wow_ui_sim::client_profile::{ACTIVE, ClientProfile};
+    if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever) {
+        env.exec(
+            r#"A_Admin.SetPlayerBattleNetInfo("Uther#1234", 42, nil, nil, nil, nil, nil, true, true)
+            assert(BNConnected())"#,
+        )
+        .expect("A_Admin.SetPlayerBattleNetInfo supplies a connected account");
+    }
+}
+
 pub fn call_global_if_present(env: &WowLuaEnv, function_name: &str) {
     let is_present = env
         .eval::<bool>(&format!("return type(_G[{function_name:?}]) == 'function'"))

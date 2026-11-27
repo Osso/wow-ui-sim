@@ -490,14 +490,15 @@ fn test_spell_count_missing_data_matches_epoch_domains() {
     let env = env();
     let cast_count: i64 = env.eval("return C_Spell.GetSpellCastCount(116)").unwrap();
     assert_eq!(cast_count, 0);
-    #[cfg(feature = "retail-12-0-5")]
+    // Forever display returns the documented string since a430b9ffb1.
+    #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
     {
         let display_count: String = env
             .eval("return C_Spell.GetSpellDisplayCount(116, 99)")
             .unwrap();
         assert_eq!(display_count, "");
     }
-    #[cfg(not(feature = "retail-12-0-5"))]
+    #[cfg(not(any(feature = "retail-12-0-5", feature = "client-wowforever")))]
     {
         let display_count: i64 = env
             .eval("return C_Spell.GetSpellDisplayCount(116, 99)")

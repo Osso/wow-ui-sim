@@ -3,10 +3,15 @@
 #[test]
 #[cfg(feature = "client-wowforever")]
 fn wowforever_texture_metatable_loads_unit_frame_util() {
-    let env = wow_ui_sim::lua_api::WowLuaEnv::new().unwrap();
-    let root = wow_ui_sim::blizzard_ui_sync::default_cache_addons_path()
-        .unwrap()
-        .join("Blizzard_UnitFrame");
+    use crate::common::blizzard_addon_harness::{
+        blizzard_ui_dir, load_blizzard_addon_closure_into_env, new_blizzard_addon_env,
+    };
+    // UnitFrameUtil.lua:327 reads CVarCallbackRegistry, published by the
+    // Blizzard_SharedXMLBase TOC dependency (CvarUtil.lua:114).
+    let ui = blizzard_ui_dir();
+    let env = new_blizzard_addon_env(&ui);
+    load_blizzard_addon_closure_into_env(&env, &ui, &["Blizzard_SharedXMLBase"], &[]);
+    let root = ui.join("Blizzard_UnitFrame");
     let style =
         std::fs::read_to_string(root.join("Camelot/UnitFramePvPIndicatorStyle.lua")).unwrap();
     let source = std::fs::read_to_string(root.join("Shared/UnitFrameUtil.lua")).unwrap();

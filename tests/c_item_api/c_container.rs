@@ -397,6 +397,14 @@ fn test_default_backpack_skinning_knife_slot4() {
     assert_eq!(icon, 135637);
 }
 
+/// Retail, PTR and Forever publish the modeled C_Container.SetBagPortraitTexture
+/// (88e8de1931); tests/container_item_queries.rs covers it through the original
+/// ContainerFrame consumer. This covers the Lua fallback the other profiles keep.
+#[cfg(not(any(
+    feature = "client-retail",
+    feature = "client-ptr",
+    feature = "client-wowforever"
+)))]
 #[test]
 fn test_c_container_set_bag_portrait_texture_uses_equipped_bag_icon() {
     let env = env();

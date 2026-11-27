@@ -349,52 +349,58 @@ fn c_keybindings_index_resolves_registry_rows() {
     assert!(tags_empty);
 }
 
+const MODIFIED_CLICKS_LUA: &str = r#"
+    local before = GetModifiedClick("SELFCAST")
+    local focus = GetModifiedClick("FOCUSCAST")
+    local autoLoot = GetModifiedClick("AUTOLOOTTOGGLE")
+    SetModifiedClick("SELFCAST", "CTRL")
+    return before, focus, autoLoot, GetModifiedClick("SELFCAST"),
+           GetModifiedClick("UNKNOWN_ACTION")
+"#;
+
+/// VERIFIED (Retail 12.1.5.70688, pr46-49 decomp answers): `GetModifiedClick`
+/// returns one nil for an unknown action; b0718ad9c2 models that on Retail.
+const UNKNOWN_MODIFIED_CLICK: Option<&str> = if cfg!(feature = "client-retail") {
+    None
+} else {
+    Some("NONE")
+};
+
+// loader/addon.rs:537 loads selected Bindings XML defaults; Forever
+// Bindings_Camelot.xml:1533 supplies SELFCAST=ALT, not the bare environment.
+#[cfg(any(
+    feature = "client-retail",
+    feature = "client-ptr",
+    feature = "client-wowforever"
+))]
+fn modified_click_env() -> WowLuaEnv {
+    let (env, loaded) = crate::common::blizzard_addon_harness::build_blizzard_addon_closure_env(
+        &crate::common::blizzard_addon_harness::blizzard_ui_dir(),
+        &["Blizzard_FrameXML"],
+        &[],
+    );
+    assert!(loaded.iter().any(|name| name == "Blizzard_FrameXML"));
+    env
+}
+
+#[cfg(not(any(
+    feature = "client-retail",
+    feature = "client-ptr",
+    feature = "client-wowforever"
+)))]
+fn modified_click_env() -> WowLuaEnv {
+    env()
+}
+
 #[test]
 fn modified_clicks_round_trip_through_runtime_surface() {
-    // loader/addon.rs:537 loads selected Bindings XML defaults; Forever
-    // Bindings_Camelot.xml:1533 supplies SELFCAST=ALT, not the bare environment.
-    #[cfg(any(
-        feature = "client-retail",
-        feature = "client-ptr",
-        feature = "client-wowforever"
-    ))]
-    let env = {
-        let (env, loaded) = crate::common::blizzard_addon_harness::build_blizzard_addon_closure_env(
-            &crate::common::blizzard_addon_harness::blizzard_ui_dir(),
-            &["Blizzard_FrameXML"],
-            &[],
-        );
-        assert!(loaded.iter().any(|name| name == "Blizzard_FrameXML"));
-        env
-    };
-    #[cfg(not(any(
-        feature = "client-retail",
-        feature = "client-ptr",
-        feature = "client-wowforever"
-    )))]
-    let env = env();
-    let (
-        default_self_cast,
-        default_focus_cast,
-        default_auto_loot,
-        updated_self_cast,
-        unknown_default,
-    ): (String, String, String, String, String) = env
-        .eval(
-            r#"
-            local before = GetModifiedClick("SELFCAST")
-            local focus = GetModifiedClick("FOCUSCAST")
-            local autoLoot = GetModifiedClick("AUTOLOOTTOGGLE")
-            SetModifiedClick("SELFCAST", "CTRL")
-            return before, focus, autoLoot, GetModifiedClick("SELFCAST"),
-                   GetModifiedClick("UNKNOWN_ACTION")
-            "#,
-        )
-        .unwrap();
+    type Clicks = (String, String, String, String, Option<String>);
+    let (self_cast, focus_cast, auto_loot, updated_self_cast, unknown): Clicks =
+        modified_click_env().eval(MODIFIED_CLICKS_LUA).unwrap();
 
-    assert_eq!(default_self_cast, "ALT");
-    assert_eq!(default_focus_cast, "NONE");
-    assert_eq!(default_auto_loot, "SHIFT");
+    assert_eq!(self_cast, "ALT");
+    assert_eq!(focus_cast, "NONE");
+    assert_eq!(auto_loot, "SHIFT");
     assert_eq!(updated_self_cast, "CTRL");
-    assert_eq!(unknown_default, "NONE");
+    assert_eq!(unknown.as_deref(), UNKNOWN_MODIFIED_CLICK);
 }

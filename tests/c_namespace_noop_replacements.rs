@@ -277,6 +277,9 @@ fn store_glue_methods_are_state_backed() {
     );
 }
 
+/// Covers the Lua `_state` fallback. Retail and Forever read the display
+/// model instead (ab05d8291e, 0c7a779843; tests/screen_mode.rs).
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn video_options_set_window_size_updates_current_size() {
     let env = env();
@@ -345,6 +348,9 @@ fn video_options_set_window_size_updates_current_size() {
     assert_eq!(last_set_y, 900, "last set height should be tracked");
 }
 
+/// Covers the Lua `_state` fallback. Retail and Forever read the display
+/// model instead (ab05d8291e, 0c7a779843; tests/screen_mode.rs).
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn video_options_official_api_surface_returns_stable_shapes() {
     let env = env();
@@ -561,80 +567,48 @@ fn perks_program_pending_chest_rewards_return_empty_table() {
     );
 }
 
+const EJ_FILTERS_AND_TIER_LUA: &str = r#"
+    local tierBefore = EJ_GetCurrentTier()
+    local classBefore, specBefore = EJ_GetLootFilter()
+    EJ_SetLootFilter(4, 7)
+    local numericClass, numericSpec = EJ_GetLootFilter()
+    EJ_SetLootFilter("3", nil)
+    local stringClass, nilSpec = EJ_GetLootFilter()
+    EJ_SetLootFilter("invalid", 2.5)
+    local invalidClass, nonIntegralSpec = EJ_GetLootFilter()
+    EJ_SelectTier(11)
+    return type(tierBefore), classBefore >= 0 and specBefore >= 0,
+        numericClass, numericSpec, stringClass, nilSpec, invalidClass, nonIntegralSpec,
+        EJ_GetCurrentTier(), EJ_IsValidInstanceDifficulty(14)
+"#;
+
+/// Retail and Forever validate a difficulty against the selected instance's
+/// supplied mask (9d2a9017dd, tests/c_encounter_journal_difficulty.rs); no
+/// instance is selected here, so only the fallback profiles accept 14.
+const UNSELECTED_DIFFICULTY_VALID: bool =
+    !cfg!(any(feature = "client-retail", feature = "client-wowforever"));
+
 #[test]
 fn encounter_journal_global_filters_and_tier_are_numeric() {
-    let env = env();
-    let (
-        tier_type,
-        class_before,
-        spec_before,
-        numeric_class,
-        numeric_spec,
-        string_class,
-        nil_spec,
-        invalid_class,
-        non_integral_spec,
-        tier_after,
-        has_valid_difficulty,
-    ): (String, i64, i64, i64, i64, i64, i64, i64, i64, i64, bool) = env
-        .eval(
-            r#"
-            local tierBefore = EJ_GetCurrentTier()
-            local classBefore, specBefore = EJ_GetLootFilter()
-
-            EJ_SetLootFilter(4, 7)
-            local numericClass, numericSpec = EJ_GetLootFilter()
-
-            EJ_SetLootFilter("3", nil)
-            local stringClass, nilSpec = EJ_GetLootFilter()
-
-            EJ_SetLootFilter("invalid", 2.5)
-            local invalidClass, nonIntegralSpec = EJ_GetLootFilter()
-
-            EJ_SelectTier(11)
-            local tierAfter = EJ_GetCurrentTier()
-
-            return type(tierBefore),
-                classBefore,
-                specBefore,
-                numericClass,
-                numericSpec,
-                stringClass,
-                nilSpec,
-                invalidClass,
-                nonIntegralSpec,
-                tierAfter,
-                EJ_IsValidInstanceDifficulty(14)
-            "#,
-        )
-        .unwrap();
-
+    type Values = (String, bool, i64, i64, i64, i64, i64, i64, i64, bool);
+    let values: Values = env().eval(EJ_FILTERS_AND_TIER_LUA).unwrap();
+    let (tier_type, filters_numeric, class4, spec7, class3, spec_nil, class_bad, spec_frac) = (
+        values.0.as_str(),
+        values.1,
+        values.2,
+        values.3,
+        values.4,
+        values.5,
+        values.6,
+        values.7,
+    );
     assert_eq!(tier_type, "number", "EJ_GetCurrentTier should be numeric");
-    assert!(class_before >= 0, "default class filter should be numeric");
-    assert!(spec_before >= 0, "default spec filter should be numeric");
-    assert_eq!(
-        numeric_class, 4,
-        "numeric class filters should be preserved"
-    );
-    assert_eq!(numeric_spec, 7, "numeric spec filters should be preserved");
-    assert_eq!(
-        string_class, 3,
-        "class filter should normalize numeric strings"
-    );
-    assert_eq!(nil_spec, 0, "spec filter should normalize nil input to 0");
-    assert_eq!(
-        invalid_class, 0,
-        "class filter should normalize invalid strings to 0"
-    );
-    assert_eq!(
-        non_integral_spec, 0,
-        "spec filter should normalize non-integral numbers to 0"
-    );
-    assert_eq!(tier_after, 11, "EJ_SelectTier should update current tier");
-    assert!(
-        has_valid_difficulty,
-        "numeric difficulties should be treated as valid"
-    );
+    assert!(filters_numeric, "default loot filters should be numeric");
+    assert_eq!((class4, spec7), (4, 7), "numeric filters are preserved");
+    assert_eq!((class3, spec_nil), (3, 0), "numeric strings and nil normalize");
+    assert_eq!((class_bad, spec_frac), (0, 0), "invalid inputs normalize to 0");
+    assert_eq!(values.8, 11, "EJ_SelectTier should update current tier");
+    assert_eq!(values.9, UNSELECTED_DIFFICULTY_VALID);
 }
 
 #[cfg(not(feature = "retail-12-0-0"))]

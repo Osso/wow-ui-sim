@@ -18,6 +18,12 @@ fn widths(text_a: &str, text_b: &str) -> (f64, f64) {
     .unwrap()
 }
 
+/// VERIFIED R88f.L.2 (47237b8fbc): text after an icon advances from the
+/// snapped absolute icon right edge, so a fractional prefix moves the advance.
+fn snapped_icon_advance(prefix: f64, icon_width: f64) -> f64 {
+    f64::from((prefix as f32 + icon_width as f32 + 0.5).floor()) - prefix
+}
+
 // VERIFIED R88e.6: accepted width contributes. The exact 20-unit size is INFERRED.
 #[test]
 fn atlas_icon_adds_its_width() {
@@ -75,9 +81,11 @@ fn texture_zero_height_uses_inferred_line_metric() {
             "#,
         )
         .unwrap();
+    let (prefix, _) = widths("a", "a");
+    let advance = snapped_icon_advance(prefix, line);
     assert!(
-        line > 0.0 && (with_icon - plain - line).abs() < 0.01,
-        "plain {plain}, with icon {with_icon}, line {line}"
+        line > 0.0 && (with_icon - plain - advance).abs() < 0.01,
+        "plain {plain}, with icon {with_icon}, line {line}, prefix {prefix}"
     );
 }
 
@@ -99,7 +107,7 @@ fn atlas_zero_width_uses_inferred_line_metric() {
     let (plain, with_icon) = widths("ab", "a|A:hud-backpack:24:0|ab");
     let (_, line) = widths("ab", "|A:hud-backpack:0:0|a");
     let (prefix, _) = widths("a", "a");
-    let expected_advance = f64::from((prefix as f32 + line as f32 + 0.5).floor()) - prefix;
+    let expected_advance = snapped_icon_advance(prefix, line);
     assert!(
         prefix.fract() != 0.0,
         "prefix must be fractional to exercise icon-edge snapping: {prefix}"
@@ -140,9 +148,10 @@ fn texture_icon_width_overrides_its_height() {
         "x",
         "x|TInterface\\Buttons\\WHITE8X8:1:110:0:0:8:8:0:8:0:8:110:110:110|t",
     );
+    let (prefix, _) = widths("x", "x");
     assert!(
-        (with_icon - plain - 110.0).abs() < 0.01,
-        "plain {plain}, with icon {with_icon}"
+        (with_icon - plain - snapped_icon_advance(prefix, 110.0)).abs() < 0.01,
+        "plain {plain}, with icon {with_icon}, prefix {prefix}"
     );
 }
 
