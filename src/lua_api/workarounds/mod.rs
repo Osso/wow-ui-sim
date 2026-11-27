@@ -470,6 +470,7 @@ fn apply_inventory_and_spell_defaults(lua: &mut rilua::Lua) -> crate::Result<()>
 fn apply_core_legacy_defaults(lua: &mut rilua::Lua) -> crate::Result<()> {
     #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::kiosk_namespace_defaults::apply_bootstrap(lua)?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::level_link_spell_lock_state::apply_bootstrap(lua)?;
     temporary::lfg_legacy_defaults::apply_bootstrap(lua)?;
     temporary::legacy_action_bar_globals::apply_bootstrap(lua)?;
