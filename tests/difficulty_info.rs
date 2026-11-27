@@ -47,7 +47,7 @@ fn instance_difficulty_banner_uses_supplied_difficulty_flags() {
         env.exec(
             r#"
             A_Admin.SetManualClock(0)
-            local banner = Minimap.InstanceDifficulty
+            local banner = MinimapCluster.InstanceDifficulty
             for _, case in ipairs({ { 2, "HeroicTexture" }, { 16, "MythicTexture" } }) do
                 A_Admin.SetInstanceInfo("Test Instance", "party", case[1], 5)
                 A_Admin.FireEvent("UPDATE_INSTANCE_INFO")
