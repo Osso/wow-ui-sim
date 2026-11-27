@@ -82,8 +82,8 @@ fn blizzard_gold_fonts_carry_their_colour_into_font_strings() {
             );
             assert_rgb(
                 (lr, lg, lb),
-                normal_font_color(),
-                "GameFontNormalLarge inherits GameFontNormal's colour",
+                (1.0, 0.82, 0.0),
+                "GameFontNormalLarge <Color r=1.0 g=0.82 b=0>",
             );
         },
     );
