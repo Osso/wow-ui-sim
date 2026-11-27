@@ -14,6 +14,8 @@ Mists exposes the pinned `C_DeathInfo.GetCorpseMapPosition(uiMapID: number)` que
 
 - [Consumer and state notes](../wiki/systems/mists-corpse-map-position.md).
 
+Retail, PTR and WoW Forever publish the same query (their `DeathInfoDocumentation.lua:10-22` blocks are byte-identical). There the coordinates come from `A_Admin.SetCorpseMapPosition`; see [health and power inputs](../admin-api/health-power.md). Test: `tests/corpse_map_position.rs`.
+
 ## Implementation inventory
 
 - `src/lua_api/state/sim_state.rs` — explicit corpse map observations alongside existing corpse availability.
@@ -31,4 +33,4 @@ None. Original-consumer RED/GREEN, producer-only RED, raw stock delta and warnin
 
 ## Out of scope
 
-Native corpse discovery, automatic coordinate capture, map-space transforms, other DeathInfo APIs, other-profile publication, and native death/ghost timing are not inferred from the signature. Coordinates are explicit supplied observations.
+Native corpse discovery, automatic coordinate capture, map-space transforms, other DeathInfo APIs, and native death/ghost timing are not inferred from the signature. Coordinates are explicit supplied observations.

@@ -7,6 +7,12 @@
 //! canUse, isLimited, priority)` in supply order; `A_Admin.ClearSelfResurrectOptions()`
 //! removes them. INFERRED R88g9 (native evidence pending): without a supplied
 //! option the call returns nothing, which the DEATH dialog treats as no option.
+//!
+//! `C_DeathInfo.GetCorpseMapPosition(uiMapID)` (DeathInfoDocumentation.lua:10-22,
+//! byte-identical on Retail and Forever) reads the corpse observations supplied by
+//! `A_Admin.SetCorpseMapPosition(uiMapID, x, y)`; `A_Admin.ClearCorpse()` removes
+//! the corpse. INFERRED R88g9 (native evidence pending): a supplied position also
+//! marks the corpse as available, the same flag `RetrieveCorpse` clears.
 
 use crate::c_api::helpers::set_table_array;
 use crate::c_api::{ensure_namespace, global_val};
@@ -36,7 +42,13 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
         let namespace = ensure_namespace(state, "C_DeathInfo")?;
         table_set_rust_fn_static(state, namespace, "GetSelfResurrectOptions", query_options)?;
     }
-    if ACTIVE != ClientProfile::Mists {
+    if !matches!(
+        ACTIVE,
+        ClientProfile::Retail
+            | ClientProfile::Ptr
+            | ClientProfile::WowForever
+            | ClientProfile::Mists
+    ) {
         return Ok(());
     }
     let namespace = ensure_namespace(state, "C_DeathInfo")?;
@@ -54,7 +66,33 @@ pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
         .set_function("ClearSelfResurrectOptions", |state| {
             borrow_state_mut(state)?.self_resurrect_options.clear();
             Ok(0)
-        })
+        })?
+        .set_function("SetCorpseMapPosition", set_corpse_map_position)?
+        .set_function("ClearCorpse", clear_corpse)
+}
+
+/// `A_Admin.SetCorpseMapPosition(uiMapID, x, y)`: a positive map ID and
+/// normalized map coordinates in `[0, 1]`.
+fn set_corpse_map_position(state: &mut LuaState) -> LuaResult<u32> {
+    let map_id = i32::from_stack(state, 1)?;
+    let x = f64::from_stack(state, 2)?;
+    let y = f64::from_stack(state, 3)?;
+    if map_id <= 0 || ![x, y].iter().all(|value| (0.0..=1.0).contains(value)) {
+        return Err(rilua::runtime_error(
+            "SetCorpseMapPosition: uiMapID must be positive and x, y within [0, 1]",
+        ));
+    }
+    let mut sim = borrow_state_mut(state)?;
+    sim.corpse_map_positions.insert(map_id, (x, y));
+    sim.corpse_available = true;
+    Ok(0)
+}
+
+fn clear_corpse(state: &mut LuaState) -> LuaResult<u32> {
+    let mut sim = borrow_state_mut(state)?;
+    sim.corpse_map_positions.clear();
+    sim.corpse_available = false;
+    Ok(0)
 }
 
 fn add_option(state: &mut LuaState) -> LuaResult<u32> {

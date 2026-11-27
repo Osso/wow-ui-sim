@@ -102,3 +102,19 @@ Appends one death recap. With `currentHP` the recap carries one event (`currentH
 
 Removes all supplied death recaps.
 
+### A_Admin.SetCorpseMapPosition(uiMapID, x, y)
+
+Supplies the player's corpse position on one UI map (Retail, PTR, WoW Forever and Mists). `uiMapID` must be positive; `x` and `y` are normalized map coordinates in `[0, 1]`. Invalid values raise an error.
+
+- **Affects:** `C_DeathInfo.GetCorpseMapPosition(uiMapID)` returns a `Vector2DMixin` for that map while the player is dead (`health <= 0`); other maps return nil. The WorldMap `DeathMapDataProvider` shows a `CorpsePinTemplate` pin at the position.
+- **INFERRED R88g9 (native evidence pending):** supplying a position also marks the corpse as available; `RetrieveCorpse()` clears that flag.
+- **Example:**
+```lua
+A_Admin.SetPlayerHealth(0, 100)
+A_Admin.SetCorpseMapPosition(84, 0.625, 0.375)
+OpenWorldMap(84)    -- the original provider adds the corpse pin
+```
+
+### A_Admin.ClearCorpse()
+
+Removes the supplied corpse and all its map positions.
