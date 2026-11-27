@@ -28,7 +28,10 @@ fn read_data() -> Data {
     let data: Data =
         serde_json::from_str(include_str!("data/patch_12_0_0_deprecated.json")).unwrap();
     assert_eq!(data.rows.len(), 21);
-    assert!(data.known_successor_gaps.is_empty(), "all successors must be proven");
+    assert!(
+        data.known_successor_gaps.is_empty(),
+        "all successors must be proven"
+    );
     assert_eq!(data.summary_id, "deprecated api-removal-summary-128");
     for (id, row) in &data.rows {
         assert_eq!(row.successor.is_some(), row.probe.is_some(), "{id}");
@@ -90,13 +93,24 @@ fn seed_successor_inputs(env: &WowLuaEnv) {
             charge_mod_rate: 1.25,
         },
     );
-    state.spell_cast_counts.extend([(19750, 7), (642, 2)]);
     state.known_spells.insert(19750);
     state.known_spells.remove(&999999999);
     state.merchant_items = vec![6948];
     state.artifact_relic_items.clear();
     state.artifact_relic_items.insert(12345);
+    drop(state);
+    env.exec(SPELL_CAST_COUNT_INPUTS)
+        .expect("supply spell cast count reagents");
 }
+
+/// The Retail 12.1.5 cast count divides owned reagents by the spell's reagent
+/// quantity (VERIFIED R88p.p3), so the 7 and 2 casts are supplied as reagents.
+const SPELL_CAST_COUNT_INPUTS: &str = r#"
+    A_Admin.SetSpellReagent(19750, 19751, 1)
+    A_Admin.SetReagentCount(19751, 7)
+    A_Admin.SetSpellReagent(642, 643, 1)
+    A_Admin.SetReagentCount(643, 2)
+"#;
 
 fn observe_cached_retirement(env: &WowLuaEnv, data: &Data) -> Vec<String> {
     let aliases = sweep::read_deprecated_aliases(env);
