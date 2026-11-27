@@ -21,6 +21,24 @@ fn startup() -> WowLuaEnv {
 }
 
 #[test]
+fn forever_gamepad_core_binding_context_tracks_interface_events() {
+    let env = startup();
+    env.exec(
+        r#"
+        local context = Enum.BindingContext.GamepadModeInGameCore
+        assert(C_KeyBindings.IsBindingContextActive(context) == false)
+        A_Admin.SetUsingGamepad(true)
+        A_Admin.FireEvent("INPUT_DEVICE_INTERFACE_TRANSITION", Enum.InputDeviceInterfaceType.Gamepad, Enum.InputDeviceInterfaceType.Mkb)
+        assert(C_KeyBindings.IsBindingContextActive(context) == true)
+        A_Admin.SetUsingGamepad(false)
+        A_Admin.FireEvent("INPUT_DEVICE_INTERFACE_TRANSITION", Enum.InputDeviceInterfaceType.Mkb, Enum.InputDeviceInterfaceType.Gamepad)
+        assert(C_KeyBindings.IsBindingContextActive(context) == false)
+        "#,
+    )
+    .expect("Gamepad Core activates and deactivates its binding context");
+}
+
+#[test]
 fn forever_original_guild_menu_projects_discord_cvar() {
     let env = startup();
     env.state()
