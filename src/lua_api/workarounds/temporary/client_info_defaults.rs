@@ -1,10 +1,9 @@
 //! Temporary client/build/realm defaults for startup compatibility.
 //!
 //! These globals describe simulated client identity and account expansion state.
-//! They are compatibility defaults until the simulator has a real client/session
-//! metadata model.
-//!
-//! Mists uses this fallback because no modeled client/session metadata source
+//! Retail and Forever register their runtime values before temporary bootstrap, so
+//! this fallback remains disabled for those profiles. Mists uses it because no
+//! modeled client/session metadata source
 //! supplies its display-expansion level. Native value 4 is VERIFIED for 5.5.4.70631
 //! only (R88ao). Remove the Mists branch when profile-scoped metadata supplies
 //! this value from verified Mists inputs.
@@ -19,6 +18,10 @@ pub(crate) const CLASSIC_EXPANSION_LEVEL: f64 = match crate::client_profile::ACT
     _ => 10.0,
 };
 
+#[cfg(any(
+    test,
+    not(any(feature = "client-retail", feature = "client-wowforever"))
+))]
 const CLIENT_INFO_DEFAULTS_LUA: &str = r#"
 if GetRealmID == nil then
   function GetRealmID()
@@ -190,6 +193,10 @@ if IsVeteranTrialAccount == nil then
 end
 "#;
 
+#[cfg(any(
+    test,
+    not(any(feature = "client-retail", feature = "client-wowforever"))
+))]
 pub(crate) fn apply_bootstrap(_lua: &mut rilua::Lua) -> crate::Result<()> {
     #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     {
