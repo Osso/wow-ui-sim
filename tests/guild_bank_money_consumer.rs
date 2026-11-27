@@ -50,7 +50,7 @@ fn guild_bank_frame_shows_supplied_money(env: &WowLuaEnv) {
 prefork_full_ui_case! {
 fn guild_bank_withdraw_state_uses_supplied_permissions(env: &WowLuaEnv) {
     env.exec(OPEN_EMPTY_GUILD_BANK).expect("original guild bank opens empty");
-    assert_eq!(shown_guild_bank_coins(env), "0/00/00");
+    assert_eq!(shown_guild_bank_coins(env), "0/0/0");
     let empty_withdraw_enabled: bool = env
         .eval("return GuildBankFrame.WithdrawButton:IsEnabled()")
         .unwrap();
