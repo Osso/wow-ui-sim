@@ -12,7 +12,6 @@ use super::{
     is_nil_global, set_global_fn, stub_false, stub_nil, stub_repair_all_cost, stub_true, stub_zero,
 };
 
-const CURRENT_REGION_ID: f64 = 1.0;
 const NUM_EXPANSIONS: f64 = 11.0;
 
 static GLOBAL_NIL_STUBS: &[&str] = &[
@@ -251,7 +250,7 @@ static GLOBAL_CUSTOM_STUBS: &[(&'static str, RustFn)] = &[
     ("ClassicExpansionAtLeast", stub_classic_expansion_at_least),
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     ("ClassicExpansionAtMost", classic_expansion_at_most),
-    ("GetCurrentRegion", stub_current_region),
+    // GetCurrentRegion is SimState-backed in real/region.rs, not a stub.
     ("GetServerExpansionLevel", stub_current_expansion_level),
     ("GetNumExpansions", stub_num_expansions),
     ("GetRepairAllCost", stub_repair_all_cost),
@@ -267,11 +266,6 @@ static GLOBAL_CUSTOM_STUBS: &[(&'static str, RustFn)] = &[
 
 fn stub_current_expansion_level(state: &mut LuaState) -> rilua::LuaResult<u32> {
     state.push(rilua::Val::Num(CLASSIC_EXPANSION_LEVEL));
-    Ok(1)
-}
-
-fn stub_current_region(state: &mut LuaState) -> rilua::LuaResult<u32> {
-    state.push(rilua::Val::Num(CURRENT_REGION_ID));
     Ok(1)
 }
 

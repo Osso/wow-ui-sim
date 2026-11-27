@@ -1025,6 +1025,8 @@ pub struct SimState {
     #[cfg(feature = "client-retail")]
     pub lfd_lock_requests: crate::lua_api::globals::real::lfd_lock_requests::LfdLockRequestState,
     pub lfg_roles: LfgRoleSelection,
+    /// Account region read by `GetCurrentRegion` and `GetCurrentRegionName`.
+    pub current_region: crate::lua_api::globals::real::region::RegionInfo,
     pub lfd_dungeons: Vec<LfdDungeonInfo>,
     /// Host-supplied LFG tooltip reward cache; empty and not ready by default.
     pub lfg_tooltip_rewards_ready: bool,

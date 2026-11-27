@@ -2095,7 +2095,6 @@ GetCurrentGraphicsAPI # not-yet
 GetCurrentGraphicsSetting # not-yet
 GetCurrentKeyBoardFocus # not-yet
 GetCurrentLevelFeatures # not-yet
-GetCurrentRegionName # not-yet: temporary Lua workaround
 GetCurrentScaledResolution # not-yet
 GetCursorDelta # not-yet
 GetDailyQuestsCompleted # not-yet

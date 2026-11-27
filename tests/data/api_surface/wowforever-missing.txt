@@ -2076,7 +2076,6 @@ GetCollapsingStarCost # not-yet
 GetCorpseRecoveryDelay # not-yet
 GetCurrentCinematicSummary # not-yet
 GetCurrentEventID # not-yet
-GetCurrentRegionName # not-yet: temporary Lua workaround
 GetCursorCenterPosition # not-yet
 GetCursorDelta # not-yet
 GetDefaultAbbreviationBreakpoints # not-yet
