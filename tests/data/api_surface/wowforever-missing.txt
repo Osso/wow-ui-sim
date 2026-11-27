@@ -1995,7 +1995,6 @@ C_VoiceChat.GetMemberVolume # not-yet
 C_VoiceChat.GetPTTButtonPressedState # not-yet
 C_VoiceChat.GetProcesses # not-yet
 C_VoiceChat.GetPushToTalkBinding # not-yet
-C_VoiceChat.GetRemoteTtsVoices # not-yet
 C_VoiceChat.GetVADSensitivity # not-yet
 C_VoiceChat.IsMemberLocalPlayer # not-yet
 C_VoiceChat.IsMemberMuted # not-yet
@@ -2005,7 +2004,6 @@ C_VoiceChat.IsParentalMuted # not-yet
 C_VoiceChat.IsPlayerUsingVoice # not-yet
 C_VoiceChat.IsSilenced # not-yet
 C_VoiceChat.IsSpeakForMeAllowed # not-yet
-C_VoiceChat.IsVoiceChatConnected # not-yet
 C_VoiceChat.LeaveChannel # not-yet
 C_VoiceChat.Login # not-yet
 C_VoiceChat.Logout # not-yet

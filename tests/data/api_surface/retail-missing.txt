@@ -1897,7 +1897,6 @@ C_VoiceChat.GetMemberVolume # not-yet
 C_VoiceChat.GetPTTButtonPressedState # not-yet
 C_VoiceChat.GetProcesses # not-yet
 C_VoiceChat.GetPushToTalkBinding # not-yet
-C_VoiceChat.GetRemoteTtsVoices # not-yet
 C_VoiceChat.GetVADSensitivity # not-yet
 C_VoiceChat.IsMemberLocalPlayer # not-yet
 C_VoiceChat.IsMemberMuted # not-yet

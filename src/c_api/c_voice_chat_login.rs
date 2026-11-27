@@ -30,7 +30,8 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
         namespace,
         "IsChannelJoinPending",
         is_channel_join_pending,
-    )
+    )?;
+    super::c_voice_chat_remote_voices::register(state, namespace)
 }
 
 pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
@@ -39,12 +40,14 @@ pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
     }
     builder
         .set_function("SetVoiceChatLoggedIn", set_logged_in)?
+        .set_function("SetVoiceChatConnected", set_connected)?
         .set_function("SetCanPlayerUseVoiceChat", set_can_use_voice_chat)?
         .set_function(
             "SetJoinClubVoiceChannelError",
             set_join_club_voice_channel_error,
         )?
         .set_function("SetChannelJoinPending", set_channel_join_pending)
+        .and_then(super::c_voice_chat_remote_voices::register_admin)
 }
 
 fn publishes_login_state() -> bool {
@@ -151,6 +154,18 @@ fn set_join_club_voice_channel_error(state: &mut LuaState) -> LuaResult<u32> {
                 .remove(&club_id);
         }
     }
+    Ok(0)
+}
+
+/// Supplies the service connection read by `C_VoiceChat.IsVoiceChatConnected`.
+/// It does not fire `VOICE_CHAT_CONNECTION_SUCCESS` or `VOICE_CHAT_ERROR`.
+fn set_connected(state: &mut LuaState) -> LuaResult<u32> {
+    let Val::Bool(connected) = unwrap_secret(state, stack_val(state, 1))? else {
+        return Err(runtime_error(
+            "A_Admin.SetVoiceChatConnected: expected boolean",
+        ));
+    };
+    borrow_state_mut(state)?.voice_chat.connection_ready = connected;
     Ok(0)
 }
 

@@ -463,6 +463,7 @@ pub(crate) mod c_voice_chat_activity;
 pub mod c_voice_chat_channels;
 pub mod c_voice_chat_devices;
 pub(crate) mod c_voice_chat_login;
+pub(crate) mod c_voice_chat_remote_voices;
 mod c_voice_chat_settings;
 #[cfg(feature = "retail-12-0-0")]
 mod c_voice_chat_volume;

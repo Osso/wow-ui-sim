@@ -465,6 +465,9 @@ pub struct VoiceChatState {
     pub join_club_voice_channel_errors: HashMap<String, i32>,
     /// INFERRED R88fv (native evidence pending): community voice joins in progress.
     pub pending_channel_joins: HashSet<(i32, Option<String>, Option<String>)>,
+    /// Supplied remote (Speak For Me) TTS voices as `(voiceID, name)`.
+    /// INFERRED R88g9 (native evidence pending): empty until supplied.
+    pub remote_tts_voices: Vec<(i32, String)>,
 }
 
 impl Default for VoiceChatState {
@@ -512,6 +515,7 @@ impl Default for VoiceChatState {
             can_use_voice_chat: true,
             join_club_voice_channel_errors: HashMap::new(),
             pending_channel_joins: HashSet::new(),
+            remote_tts_voices: Vec::new(),
         }
     }
 }
