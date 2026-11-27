@@ -8,6 +8,32 @@ use wow_ui_sim::toc::TocFile;
 #[path = "common/toc_layout.rs"]
 mod toc_layout;
 
+const ORIGINAL_CALLBACK_REGISTRY_PROBE: &str = r#"
+local event = "Lane.CallbackRegistry.Consumer"
+local owner = { received = {} }
+local registration = EventRegistry:RegisterCallback(event, function(self, value)
+    table.insert(self.received, value)
+end, owner)
+EventRegistry:TriggerEvent(event, "first")
+EventRegistry:TriggerEvent(event, "second")
+EventRegistry:UnregisterCallback(event, owner)
+EventRegistry:TriggerEvent(event, "after-unregister")
+return registration == owner, #owner.received, owner.received[1], owner.received[2]
+"#;
+
+#[test]
+fn original_shared_xmlbase_callback_registry_dispatches_and_unregisters() {
+    use crate::common::blizzard_addon_harness::with_blizzard_addon_closure;
+
+    with_blizzard_addon_closure(&["Blizzard_SharedXMLBase"], &[], |env, loaded| {
+        assert!(loaded.iter().any(|name| name == "Blizzard_SharedXMLBase"));
+        let actual: (bool, i64, String, String) = env
+            .eval(ORIGINAL_CALLBACK_REGISTRY_PROBE)
+            .expect("original shared XML callback registry should run");
+        assert_eq!(actual, (true, 2, "first".into(), "second".into()));
+    });
+}
+
 #[test]
 fn model_scene_control_frame_initializes_buttons_from_original_template() {
     use crate::common::blizzard_addon_harness::with_blizzard_addon_startup_shape;
@@ -73,7 +99,10 @@ fn forever_shared_xml_base_anchor_applies_original_point_and_offsets() {
             "#,
         )
         .expect("original AnchorUtil must apply the anchor");
-    assert!(matches, "the frame must receive all five original anchor values");
+    assert!(
+        matches,
+        "the frame must receive all five original anchor values"
+    );
 }
 
 #[cfg(feature = "client-wowforever")]
@@ -125,13 +154,24 @@ fn retail_shared_xml_base_defines_mixin_factory_before_addon_performance_uses_it
     assert!(!present, "Retail must not install a bootstrap fallback");
     let loaded =
         load_blizzard_addon_closure_into_env(&env, &ui, &["Blizzard_AddOnPerformance"], &[]);
-    let shared = loaded.iter().position(|name| name == "Blizzard_SharedXMLBase");
-    let consumer = loaded.iter().position(|name| name == "Blizzard_AddOnPerformance");
-    assert!(shared.zip(consumer).is_some_and(|(shared, consumer)| shared < consumer));
+    let shared = loaded
+        .iter()
+        .position(|name| name == "Blizzard_SharedXMLBase");
+    let consumer = loaded
+        .iter()
+        .position(|name| name == "Blizzard_AddOnPerformance");
+    assert!(
+        shared
+            .zip(consumer)
+            .is_some_and(|(shared, consumer)| shared < consumer)
+    );
     let initialized: bool = env
         .eval("return type(AddOnPerformance) == 'table'")
         .expect("query AddOnPerformance after loading its real consumer");
-    assert!(initialized, "AddOnPerformance must initialize through the Lua factory");
+    assert!(
+        initialized,
+        "AddOnPerformance must initialize through the Lua factory"
+    );
 }
 
 const FOUNDATION_MIXINS: &[&str] = &[
