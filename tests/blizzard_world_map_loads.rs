@@ -710,9 +710,10 @@ fn world_map_tracking_filters_default_to_visible() {
         r#"
         local button = CreateFromMixins(WorldMapTrackingOptionsButtonMixin)
         button:BuildFilterTable()
-        for _, name in ipairs({'trivialQuests', 'showAccountCompletedQuests'}) do
-            assert(button:GetWorldMapFilter(name):Get() == true)
-        end
+        -- Retail 70688 default tracking mask 0x2f5aef (minimap_tracking_defaults.rs:6-7)
+        -- sets AccountCompletedQuests (2097152) and clears TrivialQuests (1024).
+        assert(button:GetWorldMapFilter('showAccountCompletedQuests'):Get() == true)
+        assert(button:GetWorldMapFilter('trivialQuests'):Get() == false)
         assert(not pcall(C_Minimap.IsFilteredOut, {}))
     "#,
     )
