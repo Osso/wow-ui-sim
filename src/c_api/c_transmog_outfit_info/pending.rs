@@ -30,7 +30,10 @@ pub(super) fn read_slot_key(state: &LuaState) -> LuaResult<SlotKey> {
         i32::from_stack(state, 2)?,
         i32::from_stack(state, 3)?,
     );
-    if !(0..=14).contains(&key.0) || !(0..=1).contains(&key.1) || !(0..=11).contains(&key.2) {
+    if !(0..=14).contains(&key.0)
+        || !(0..=1).contains(&key.1)
+        || !(0..=super::slots::max_slot_option()).contains(&key.2)
+    {
         return Err(rilua::runtime_error("invalid transmog slot/type/option"));
     }
     Ok(key)

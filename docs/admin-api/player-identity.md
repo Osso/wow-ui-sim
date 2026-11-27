@@ -128,3 +128,12 @@ A_Admin.SetAccountType({
 local isTrial, remaining = GetExpansionTrialInfo()
 local level, money, profession = GetRestrictedAccountData()
 ```
+
+## A_Admin.SetCurrentRegion(regionID, regionName)
+
+Supplies the account region.
+
+- **regionID** `number` -- a positive integer
+- **regionName** `string` -- a non-empty region name, for example `"US"` or `"EU"`
+- **Affects:** `GetCurrentRegion()`, `GetCurrentRegionName()` (Retail, PTR and WoW Forever)
+- **Default:** region 1 named `"US"`. INFERRED R88g9 (native evidence pending): this is the pair the simulator reported before the region model.

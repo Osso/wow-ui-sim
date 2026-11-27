@@ -494,7 +494,8 @@ pub struct SimState {
         feature = "retail-12-0-0",
         feature = "client-mists",
         feature = "client-era",
-        feature = "client-anniversary"
+        feature = "client-anniversary",
+        feature = "client-wowforever"
     ))]
     pub transmog_illusions: Vec<crate::c_api::c_transmog_collection::IllusionInfo>,
     /// Explicit itemModifiedAppearanceID-keyed inputs only.
@@ -516,7 +517,8 @@ pub struct SimState {
         feature = "retail-12-0-0",
         feature = "client-mists",
         feature = "client-era",
-        feature = "client-anniversary"
+        feature = "client-anniversary",
+        feature = "client-wowforever"
     ))]
     pub viewed_outfit_slots: HashMap<(i32, i32, i32), ViewedOutfitSlotInfo>,
     /// Explicit host snapshot only; absence does not fabricate a price.
@@ -524,7 +526,8 @@ pub struct SimState {
         feature = "retail-12-0-0",
         feature = "client-mists",
         feature = "client-era",
-        feature = "client-anniversary"
+        feature = "client-anniversary",
+        feature = "client-wowforever"
     ))]
     pub pending_transmog_cost: Option<crate::c_api::c_transmog_outfit_info::PendingTransmogCost>,
     pub transmog_outfit_locks: HashSet<i64>,
@@ -549,7 +552,8 @@ pub struct SimState {
         feature = "retail-12-0-0",
         feature = "client-mists",
         feature = "client-era",
-        feature = "client-anniversary"
+        feature = "client-anniversary",
+        feature = "client-wowforever"
     ))]
     pub active_transmog_outfit_id: Option<i64>,
     /// Explicit catalog-backed viewed selection; independent of active/pending state.
@@ -557,7 +561,8 @@ pub struct SimState {
         feature = "retail-12-0-0",
         feature = "client-mists",
         feature = "client-era",
-        feature = "client-anniversary"
+        feature = "client-anniversary",
+        feature = "client-wowforever"
     ))]
     pub viewed_transmog_outfit_id: Option<i64>,
     /// Global setting only; no per-outfit or pending-situation behavior.
@@ -1025,6 +1030,10 @@ pub struct SimState {
     #[cfg(feature = "client-retail")]
     pub lfd_lock_requests: crate::lua_api::globals::real::lfd_lock_requests::LfdLockRequestState,
     pub lfg_roles: LfgRoleSelection,
+    /// Account region read by `GetCurrentRegion` and `GetCurrentRegionName`.
+    pub current_region: crate::lua_api::globals::real::region::RegionInfo,
+    /// LFG role check in progress read by `GetLFGRoleUpdate`; `None` when idle.
+    pub lfg_role_check: Option<crate::lua_api::globals::real::lfg_role_check::LfgRoleCheck>,
     pub lfd_dungeons: Vec<LfdDungeonInfo>,
     /// Host-supplied LFG tooltip reward cache; empty and not ready by default.
     pub lfg_tooltip_rewards_ready: bool,

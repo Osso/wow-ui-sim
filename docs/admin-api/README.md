@@ -6,7 +6,7 @@ The `A_Admin` namespace provides administrative functions for controlling simula
 
 ## Sections
 
-- [Player Identity](player-identity.md) — SetPlayerName, SetPlayerClass, SetPlayerRace, SetPlayerLevel, SetPlayerSex
+- [Player Identity](player-identity.md) — SetPlayerName, SetPlayerClass, SetPlayerRace, SetPlayerLevel, SetPlayerSex, SetCurrentRegion
 - [Battle.net Account State](battle-net.md) — SetPlayerBattleNetInfo, SetBattleNetAccountFeatures
 - [Behavioral messaging](behavioral-messaging.md) — QueueBehavioralNotification, GetBehavioralNotificationReceipts
 - [Beta script policy](beta-script-policy.md) — SetScriptsDisallowedForBeta
@@ -24,9 +24,10 @@ The `A_Admin` namespace provides administrative functions for controlling simula
 - [Health & Power](health-power.md) — SetPlayerHealth, SetPlayerPower, SetTargetHealth
 - [Targeting](targeting.md) — SetTarget, ClearTarget, SetFocus, ClearFocus
 - [Challenge mode](challenge-mode.md) — SetChallengePowerLevelMods
-- [Party](party.md) — SetPartySize, SetPartyMember, SetPartyMemberHealth, KillPartyMember, ResPartyMember, SetRotDamage
+- [Party](party.md) — SetPartySize, SetPartyMember, SetPartyMemberHealth, KillPartyMember, ResPartyMember, SetRotDamage, SetLFGRoleCheck, ClearLFGRoleCheck
 - [Movement](movement.md) — SetMoving, SetMounted, SetFlying, SetFalling, SetSwimming
 - [Navigation target](navigation.md) — SetNavigationTarget
+- [Taxi map](taxi-map.md) — SetTaxiMapNodes, SetTaxiMapID, OpenTaxiMap
 - [Talents](talents.md) — SetSpec, SetTalentRank, SetTalentSelection, ResetTalents
 - [Profession specializations](profession-specs.md) — SetProfessionSpecSkillLines, SetProfessionSpecTabInfo
 - Wrath spellbook: `A_Admin.SetWrathSpellBookSlot(book, slot, spellID, name, rank, icon[, eligibleTradeSkillLine, shapeshiftForm])` supplies a slot record. The optional trade-skill line represents an eligible ability with no trade-skill link; the optional form represents its first aura-36 effect. `A_Admin.SetWrathSpellBookSelection(tradeSkillLine, shapeshiftForm)` supplies current state; nil clears each input. `pet` selects the pet book, case-insensitively; other book strings select the player book. Slots are 1–1024. These setters do not alter known-spell membership or emit events. Empty rank is a scenario default, not a native claim.

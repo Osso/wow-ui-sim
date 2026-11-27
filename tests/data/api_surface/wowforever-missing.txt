@@ -952,7 +952,6 @@ C_IslandsQueue.RequestPreloadRewardData # not-yet
 C_Item.ActionBindsItem # not-yet
 C_Item.BindEnchant # not-yet
 C_Item.CanBeRefunded # not-yet
-C_Item.CanItemTransmogAppearance # not-yet
 C_Item.CanScrapItem # not-yet
 C_Item.CanViewItemPowers # not-yet
 C_Item.ConfirmBindOnUse # not-yet
@@ -1278,7 +1277,6 @@ C_PetJournal.GetOwnedPetIDs # not-yet
 C_PetJournal.GetPetInfoTableByPetID # not-yet
 C_PetJournal.GetPetInfoTableBySpeciesID # not-yet
 C_PetJournal.GetSearchFilter # not-yet
-C_PetJournal.IsCurrentlySummoned # not-yet
 C_PetJournal.PetUsesRandomDisplay # not-yet
 C_PhotoSharing.BeginAuthorizationFlow # not-yet
 C_PhotoSharing.ClearAuthorization # not-yet
@@ -1801,7 +1799,6 @@ C_Transmog.CanHaveSecondaryAppearanceForSlotID # not-yet
 C_Transmog.ExtractTransmogIDList # not-yet
 C_Transmog.GetItemIDForSource # not-yet
 C_Transmog.GetSlotForInventoryType # not-yet
-C_Transmog.GetSlotVisualInfo # not-yet
 C_TransmogCollection.AccountCanCollectSource # not-yet
 C_TransmogCollection.AreAllCollectionTypeFiltersChecked # not-yet
 C_TransmogCollection.AreAllSourceTypeFiltersChecked # not-yet
@@ -1830,66 +1827,15 @@ C_TransmogCollection.PlayerCanCollectSource # not-yet
 C_TransmogCollection.SetAllCollectionTypeFilters # not-yet
 C_TransmogCollection.SetIsAppearanceFavorite # not-yet
 C_TransmogCollection.UpdateUsableAppearances # not-yet
-C_TransmogOutfitInfo.CanPlayerTransmogSlot # not-yet
-C_TransmogOutfitInfo.ChangeDisplayedOutfit # not-yet
 C_TransmogOutfitInfo.ChangeToOutfit # not-yet: temporary Lua workaround
-C_TransmogOutfitInfo.ChangeViewedOutfit # not-yet
-C_TransmogOutfitInfo.ClearAllPendingSituations # not-yet
-C_TransmogOutfitInfo.ClearAllPendingTransmogs # not-yet
-C_TransmogOutfitInfo.ClearDisplayedOutfit # not-yet
 C_TransmogOutfitInfo.ClearOutfit # not-yet: temporary Lua workaround
-C_TransmogOutfitInfo.CommitAndApplyAllPending # not-yet
-C_TransmogOutfitInfo.CommitOutfitInfo # not-yet
-C_TransmogOutfitInfo.CommitPendingSituations # not-yet
 C_TransmogOutfitInfo.GetActiveOutfitID # not-yet: temporary Lua workaround
 C_TransmogOutfitInfo.GetAllSlotLocationInfo # not-yet: temporary Lua workaround
 C_TransmogOutfitInfo.GetAllTransmogOutfitOptionSheatheCategoryInfo # not-yet: temporary Lua workaround
-C_TransmogOutfitInfo.GetCollectionInfoForSlotAndOption # not-yet
 C_TransmogOutfitInfo.GetCurrentlyViewedOutfitID # not-yet: temporary Lua workaround
-C_TransmogOutfitInfo.GetEquippedSlotOptionFromTransmogSlot # not-yet
-C_TransmogOutfitInfo.GetIllusionDefaultIMAIDForCollectionType # not-yet
-C_TransmogOutfitInfo.GetItemModifiedAppearanceEffectiveCategory # not-yet
 C_TransmogOutfitInfo.GetLinkedSlotInfo # not-yet: temporary Lua workaround
-C_TransmogOutfitInfo.GetMaxNumberOfTotalOutfitsForSource # not-yet
-C_TransmogOutfitInfo.GetMaxNumberOfUsableOutfits # not-yet
-C_TransmogOutfitInfo.GetNextOutfitCost # not-yet
-C_TransmogOutfitInfo.GetNumberOfOutfitsUnlockedForSource # not-yet
-C_TransmogOutfitInfo.GetOptionsForSlot # not-yet
-C_TransmogOutfitInfo.GetOutfitInfoByName # not-yet
-C_TransmogOutfitInfo.GetOutfitInfoByPlayerFacingIndex # not-yet
-C_TransmogOutfitInfo.GetOutfitSituation # not-yet
-C_TransmogOutfitInfo.GetOutfitSituationsEnabled # not-yet
-C_TransmogOutfitInfo.GetPendingTransmogCost # not-yet
-C_TransmogOutfitInfo.GetSecondarySlotState # not-yet
-C_TransmogOutfitInfo.GetSetSourcesForSlot # not-yet
-C_TransmogOutfitInfo.GetSlotGroupInfo # not-yet
-C_TransmogOutfitInfo.GetSourceIDsForSlot # not-yet
-C_TransmogOutfitInfo.GetTransmogOutfitSlotForInventoryType # not-yet
 C_TransmogOutfitInfo.GetTransmogOutfitSlotFromInventorySlot # not-yet: temporary Lua workaround
-C_TransmogOutfitInfo.GetUISituationCategoriesAndOptions # not-yet
-C_TransmogOutfitInfo.GetUnassignedAtlasForSlot # not-yet
-C_TransmogOutfitInfo.GetUnassignedDisplayAtlasForSlot # not-yet
-C_TransmogOutfitInfo.GetViewedOutfitSlotInfo # not-yet
-C_TransmogOutfitInfo.HasPendingOutfitSituations # not-yet
-C_TransmogOutfitInfo.HasPendingOutfitTransmogs # not-yet
-C_TransmogOutfitInfo.InTransmogEvent # not-yet
-C_TransmogOutfitInfo.IsEquippedGearOutfitDisplayed # not-yet
-C_TransmogOutfitInfo.IsSlotWeaponSlot # not-yet
-C_TransmogOutfitInfo.IsUsableDiscountAvailable # not-yet
-C_TransmogOutfitInfo.PickupOutfit # not-yet
-C_TransmogOutfitInfo.ResetOutfitSituations # not-yet
-C_TransmogOutfitInfo.RevertPendingTransmog # not-yet
-C_TransmogOutfitInfo.SetOutfitSituationsEnabled # not-yet
-C_TransmogOutfitInfo.SetOutfitToCustomSet # not-yet
-C_TransmogOutfitInfo.SetOutfitToOutfit # not-yet
-C_TransmogOutfitInfo.SetOutfitToSet # not-yet
-C_TransmogOutfitInfo.SetPendingTransmog # not-yet
 C_TransmogOutfitInfo.SetPendingTransmogSheatheCategory # not-yet: temporary Lua workaround
-C_TransmogOutfitInfo.SetSecondarySlotState # not-yet
-C_TransmogOutfitInfo.SetViewedOptionForSlot # not-yet
-C_TransmogOutfitInfo.SlotHasSecondary # not-yet
-C_TransmogOutfitInfo.TransmogEventActive # not-yet
-C_TransmogOutfitInfo.UpdatePendingSituation # not-yet
 C_TransmogSets.ClearLatestSource # not-yet
 C_TransmogSets.ClearNewSource # not-yet
 C_TransmogSets.ClearSetNewSourcesForSlot # not-yet
@@ -2076,7 +2022,6 @@ GetCollapsingStarCost # not-yet
 GetCorpseRecoveryDelay # not-yet
 GetCurrentCinematicSummary # not-yet
 GetCurrentEventID # not-yet
-GetCurrentRegionName # not-yet: temporary Lua workaround
 GetCursorCenterPosition # not-yet
 GetCursorDelta # not-yet
 GetDefaultAbbreviationBreakpoints # not-yet

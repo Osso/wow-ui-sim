@@ -119,6 +119,7 @@ pub mod legacy_skills;
 pub(crate) mod legacy_sound;
 #[cfg(feature = "client-retail")]
 pub mod lfd_lock_requests;
+pub mod lfg_role_check;
 pub mod locale_info;
 pub mod loot_method;
 pub mod loot_specialization;
@@ -180,6 +181,7 @@ pub(crate) mod raid_targets;
 pub mod recent_allies_location;
 #[cfg(feature = "client-wrath")]
 pub mod recruit_a_friend;
+pub(crate) mod region;
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub(crate) mod run_binding;
 pub(crate) mod secure_helpers;

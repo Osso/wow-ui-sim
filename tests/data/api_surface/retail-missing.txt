@@ -837,7 +837,9 @@ C_HeirloomInfo.AreAllSourceFiltersChecked # not-yet
 C_HeirloomInfo.IsUsingDefaultFilters # not-yet: temporary Lua workaround
 C_HeirloomInfo.SetAllCollectionFilters # not-yet
 C_HouseExterior.GetCoreFixtureOptionsInfo # not-yet: temporary Lua workaround
+C_HouseExterior.GetFixtureDebugInfoForGUID # not-yet
 C_HouseExterior.GetHoveredFixtureDebugInfo # not-yet: temporary Lua workaround
+C_HouseExterior.GetSelectedFixtureDebugInfo # not-yet
 C_HouseExterior.HasHoveredFixture # not-yet: temporary Lua workaround
 C_HouseExterior.IsAnyDecorAttachedToCoreFixture # not-yet: temporary Lua workaround
 C_HouseExterior.IsAnyDecorAttachedToDoor # not-yet: temporary Lua workaround
@@ -1268,7 +1270,6 @@ C_PetJournal.GetOwnedPetIDs # not-yet
 C_PetJournal.GetPetTeamAverageLevel # not-yet
 C_PetJournal.GetSearchFilter # not-yet
 C_PetJournal.GetSummonRandomFavoritePetGUID # not-yet
-C_PetJournal.IsCurrentlySummoned # not-yet
 C_PetJournal.IsJournalReadOnly # not-yet
 C_PetJournal.PetCanBeReleased # not-yet
 C_PetJournal.PetIsCapturable # not-yet
@@ -2095,7 +2096,6 @@ GetCurrentGraphicsAPI # not-yet
 GetCurrentGraphicsSetting # not-yet
 GetCurrentKeyBoardFocus # not-yet
 GetCurrentLevelFeatures # not-yet
-GetCurrentRegionName # not-yet: temporary Lua workaround
 GetCurrentScaledResolution # not-yet
 GetCursorDelta # not-yet
 GetDailyQuestsCompleted # not-yet
@@ -2166,7 +2166,6 @@ GetLFGInviteRoleRestrictions # not-yet
 GetLFGReadyCheckUpdate # not-yet: temporary Lua workaround
 GetLFGReadyCheckUpdateBattlegroundInfo # not-yet
 GetLFGRoleShortageRewards # not-yet: temporary Lua workaround
-GetLFGRoleUpdate # not-yet: temporary Lua workaround
 GetLFGRoleUpdateBattlegroundInfo # not-yet
 GetLFGRoleUpdateMember # not-yet
 GetLFGRoleUpdateSlot # not-yet
@@ -2220,7 +2219,6 @@ GetNumQuestItemDrops # not-yet
 GetNumQuestLogRewardFactions # not-yet
 GetNumQuestLogTasks # not-yet
 GetNumRaidProfiles # not-yet
-GetNumRoutes # not-yet
 GetNumScenarios # not-yet
 GetNumTreasurePickerItems # not-yet
 GetNumUnspentPvpTalents # not-yet
@@ -2332,7 +2330,6 @@ GuildMasterAbsent # not-yet
 GuildNewsSetSticky # not-yet
 HandleAtlasMemberCommand # not-yet
 HasArtifactEquipped # not-yet: temporary Lua workaround
-HasCompletedAnyAchievement # not-yet: temporary Lua workaround
 HasDualWieldPenalty # not-yet
 HasFullControl # not-yet
 HasIgnoreDualWieldWeapon # not-yet
@@ -2456,7 +2453,6 @@ NeutralPlayerSelectFaction # not-yet
 NextView # intentionally-unsupported: 3D camera/model
 NoPlayTime # not-yet: temporary Lua workaround
 NotWhileDeadError # not-yet
-NumTaxiNodes # not-yet
 OfferPetition # not-yet
 OpenTrainer # not-yet
 OpeningCinematic # not-yet
@@ -2665,16 +2661,6 @@ TargetPriorityHighlightEnd # not-yet
 TargetPriorityHighlightStart # not-yet
 TargetToggle # not-yet
 TargetTotem # not-yet
-TaxiGetDestX # not-yet
-TaxiGetDestY # not-yet
-TaxiGetNodeSlot # not-yet
-TaxiGetSrcX # not-yet
-TaxiGetSrcY # not-yet
-TaxiIsDirectFlight # not-yet
-TaxiNodeCost # not-yet
-TaxiNodeGetType # not-yet
-TaxiNodeName # not-yet
-TaxiNodePosition # not-yet
 TimeoutResurrect # not-yet
 ToggleAnimKitDisplay # not-yet
 ToggleAutoRun # not-yet
