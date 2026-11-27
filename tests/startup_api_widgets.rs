@@ -455,6 +455,13 @@ fn expansion_zero_max_level() -> f64 {
     }
 }
 
+/// Retail/Forever model IsThreatWarningEnabled from the threatWarning CVar
+/// (default 2: group or instance) and the default party fixture is a group
+/// (b929905c1d, INFERRED R88dz). Other profiles keep the disabled stub.
+fn threat_warning_enabled_by_default() -> bool {
+    cfg!(any(feature = "client-retail", feature = "client-wowforever"))
+}
+
 #[test]
 fn startup_expansion_and_threat_stubs_return_safe_values() {
     let env = env();
@@ -486,9 +493,10 @@ fn startup_expansion_and_threat_stubs_return_safe_values() {
         result.6,
         "player should resolve as a human player in the sim"
     );
-    assert!(
-        !result.7,
-        "threat warning UI should default disabled in the sim"
+    assert_eq!(
+        result.7,
+        threat_warning_enabled_by_default(),
+        "threat warning follows the threatWarning CVar and group state"
     );
     assert_eq!(result.8, 0.0);
     assert_eq!(result.9, 0.0);
