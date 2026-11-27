@@ -22,6 +22,61 @@ pub(crate) fn build_texture_quads(
     bar_fill: Option<&StatusBarFill>,
     alpha: f32,
 ) {
+    let vertex_start = batch.vertices.len();
+    build_texture_quads_unwarped(batch, bounds, f, bar_fill, alpha);
+    if let Some(offsets) = f.vertex_offsets {
+        apply_vertex_offsets(
+            &mut batch.vertices[vertex_start..],
+            bounds,
+            offsets,
+            f.effective_scale * crate::render::texture::UI_SCALE,
+        );
+    }
+}
+
+/// SetVertexOffset: each corner of the region moved by its own offset, in the
+/// region's units (scaled like its size), y up. Corners are 1 UpperLeft,
+/// 2 LowerLeft, 3 UpperRight, 4 LowerRight. Every emitted vertex moves by the
+/// offsets interpolated at its place in the region, so a single quad gets
+/// exactly its four corners moved.
+fn apply_vertex_offsets(
+    vertices: &mut [crate::render::QuadVertex],
+    bounds: Rectangle,
+    offsets: [(f32, f32); 4],
+    pixels_per_unit: f32,
+) {
+    if offsets.iter().all(|&(x, y)| x == 0.0 && y == 0.0) {
+        return;
+    }
+    let [ul, ll, ur, lr] = offsets;
+    let width = if bounds.width.abs() > f32::EPSILON {
+        bounds.width
+    } else {
+        1.0
+    };
+    let height = if bounds.height.abs() > f32::EPSILON {
+        bounds.height
+    } else {
+        1.0
+    };
+    for vertex in vertices {
+        let u = ((vertex.position[0] - bounds.x) / width).clamp(0.0, 1.0);
+        let v = ((vertex.position[1] - bounds.y) / height).clamp(0.0, 1.0);
+        let lerp = |a: f32, b: f32, t: f32| a + (b - a) * t;
+        let dx = lerp(lerp(ul.0, ur.0, u), lerp(ll.0, lr.0, u), v);
+        let dy = lerp(lerp(ul.1, ur.1, u), lerp(ll.1, lr.1, u), v);
+        vertex.position[0] += dx * pixels_per_unit;
+        vertex.position[1] -= dy * pixels_per_unit;
+    }
+}
+
+fn build_texture_quads_unwarped(
+    batch: &mut QuadBatch,
+    bounds: Rectangle,
+    f: &crate::widget::Frame,
+    bar_fill: Option<&StatusBarFill>,
+    alpha: f32,
+) {
     if let Some(ref ns) = f.nine_slice_atlas {
         super::super::nine_slice::emit_nine_slice_atlas(batch, bounds, ns, alpha);
         return;
@@ -818,6 +873,26 @@ mod tests {
             tint: [1.0, 1.0, 1.0, 1.0],
             blend: BlendMode::Alpha,
         }
+    }
+
+    #[test]
+    fn vertex_offsets_move_each_corner_by_its_own_offset() {
+        let mut batch = QuadBatch::new();
+        let mut frame = Frame::new(WidgetType::Texture, None, None);
+        frame.texture = Some(r"Interface\Buttons\WHITE8X8".into());
+        frame.effective_scale = 2.0;
+        // SetVertexOffset corners: 1 UpperLeft, 2 LowerLeft, 3 UpperRight, 4 LowerRight; y up.
+        frame.vertex_offsets = Some([(0.0, 0.0), (0.0, 0.0), (0.0, 0.0), (10.0, 5.0)]);
+        let bounds = Rectangle::new(Point::new(10.0, 20.0), Size::new(100.0, 50.0));
+
+        build_texture_quads(&mut batch, bounds, &frame, None, 1.0);
+
+        let positions: Vec<[f32; 2]> = batch.vertices.iter().map(|v| v.position).collect();
+        // Vertex order: upper left, upper right, lower right, lower left.
+        assert_eq!(
+            positions,
+            vec![[10.0, 20.0], [110.0, 20.0], [130.0, 60.0], [10.0, 70.0]]
+        );
     }
 
     #[test]
