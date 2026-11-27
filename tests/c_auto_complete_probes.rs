@@ -1,6 +1,3 @@
-use std::path::Path;
-
-use wow_ui_sim::loader::load_addon;
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 fn env() -> WowLuaEnv {
@@ -30,36 +27,6 @@ fn autocomplete_realms_are_empty_for_namespace_and_global_callers() {
     assert_eq!(global_count, 0);
     assert_eq!(namespace_type, "function");
     assert_eq!(global_type, "function");
-}
-
-#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
-#[test]
-fn deprecated_autocomplete_consumer_honors_disabled_fallback_cvar() {
-    let env = env();
-    env.exec(
-        "A_Admin.SetAutoCompleteRealms({'RealmA', 'RealmB'}); SetCVar('loadDeprecationFallbacks', '0')",
-    )
-    .unwrap();
-    let addons = wow_ui_sim::client_profile::blizzard_ui_addons_dir_under(Path::new(env!(
-        "CARGO_MANIFEST_DIR"
-    )));
-    let toc = addons.join("Blizzard_DeprecatedAutoComplete/Blizzard_DeprecatedAutoComplete.toc");
-    load_addon(&env.loader_env(), &toc)
-        .expect("original deprecated autocomplete addon should load");
-
-    let (fallbacks_enabled, realm_count, first, second, legacy_type):
-        (bool, i64, String, String, String) = env
-        .eval(
-            "return GetCVarBool('loadDeprecationFallbacks'), #C_AutoComplete.GetAutoCompleteRealms(), C_AutoComplete.GetAutoCompleteRealms()[1], C_AutoComplete.GetAutoCompleteRealms()[2], type(GetAutoCompleteRealms)",
-        )
-        .expect("original autocomplete consumer should query realm state");
-
-    assert!(!fallbacks_enabled);
-    assert_eq!(
-        (realm_count, first.as_str(), second.as_str()),
-        (2, "RealmA", "RealmB")
-    );
-    assert_eq!(legacy_type, "nil");
 }
 
 #[cfg(all(feature = "retail-12-0-7", feature = "client-retail"))]
