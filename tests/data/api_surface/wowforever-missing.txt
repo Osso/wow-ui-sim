@@ -309,8 +309,8 @@ C_CombatLog.RefilterEntries # not-yet: temporary Lua workaround
 C_CombatLog.SetEntryRetentionTime # not-yet: temporary Lua workaround
 C_CombatLog.SetFilteredEventsEnabled # not-yet: temporary Lua workaround
 C_CombatLog.SetMessageLimit # not-yet: temporary Lua workaround
-C_CombatLogSecure.AddEventFilter # intentionally-unsupported: SecureOnly, native secure environment only
-C_CombatLogSecure.ClearEventFilters # intentionally-unsupported: SecureOnly, native secure environment only
+C_CombatLogSecure.AddEventFilter # not-yet: temporary Lua workaround
+C_CombatLogSecure.ClearEventFilters # not-yet: temporary Lua workaround
 C_CombatLogSecure.CreateCombatLogMessage # not-yet: temporary Lua workaround
 C_CombatText.GetCurrentEventInfo # not-yet: temporary Lua workaround
 C_Commentator.AddPlayerOverrideName # not-yet
@@ -2150,7 +2150,6 @@ CanDualWield # not-yet
 CanEjectPassengerFromSeat # not-yet
 CanMapChangeDifficulty # not-yet
 CanShowResetInstances # not-yet
-CanShowSetRoleButton # not-yet: temporary Lua workaround
 CanSwitchVehicleSeat # not-yet
 CanUpgradeToCurrentExpansion # not-yet
 CancelAreaSpiritHeal # not-yet
@@ -2187,19 +2186,15 @@ DoesCurrentLocaleSellExpansionLevels # not-yet
 EjectPassengerFromSeat # not-yet
 EquipPendingItem # not-yet
 FollowUnit # not-yet
-GetAccountExpansionLevel # not-yet: temporary Lua workaround
 GetAllowLowLevelRaid # not-yet
 GetAreaSpiritHealerTime # not-yet
 GetAreaText # not-yet
 GetAvailableBandwidth # not-yet: temporary Lua workaround
 GetAvailableLocales # not-yet
 GetBackgroundLoadingStatus # not-yet: temporary Lua workaround
-GetBaseDifficultyID # not-yet
 GetBillingTimeRested # not-yet: temporary Lua workaround
-GetBuildInfo # not-yet: temporary Lua workaround
 GetCallstackHeight # not-yet: temporary Lua workaround
 GetCemeteryPreference # not-yet
-GetClientDisplayExpansionLevel # not-yet: temporary Lua workaround
 GetCollapsingStarCost # not-yet
 GetCorpseRecoveryDelay # not-yet
 GetCurrentCinematicSummary # not-yet
@@ -2210,14 +2205,12 @@ GetCursorDelta # not-yet
 GetDefaultAbbreviationBreakpoints # not-yet
 GetDifficultyInfo # not-yet: temporary Lua workaround
 GetDownloadedPercentage # not-yet: temporary Lua workaround
-GetDungeonDifficultyID # not-yet: temporary Lua workaround
 GetErrorCallstackHeight # not-yet: temporary Lua workaround
 GetEventCPUUsage # not-yet: temporary Lua workaround
 GetEventTime # not-yet
 GetEvictionTimeRemaining # not-yet
 GetExpansionDisplayInfo # not-yet: temporary Lua workaround
 GetExpansionForLevel # not-yet
-GetExpansionLevel # not-yet: temporary Lua workaround
 GetFileIDFromPath # not-yet
 GetFileStreamingStatus # not-yet: temporary Lua workaround
 GetFrameCPUUsage # not-yet: temporary Lua workaround
@@ -2229,11 +2222,7 @@ GetInstanceBootTimeRemaining # not-yet
 GetInstanceLockTimeRemaining # not-yet
 GetInstanceLockTimeRemainingEncounter # not-yet
 GetJailersTowerLevel # not-yet
-GetLocale # not-yet: temporary Lua workaround
 GetMastery # not-yet
-GetMaxLevelForExpansionLevel # not-yet: temporary Lua workaround
-GetMaxLevelForPlayerExpansion # not-yet: temporary Lua workaround
-GetMaxPlayerLevel # not-yet: temporary Lua workaround
 GetMaximumExpansionLevel # not-yet
 GetMouseButtonName # not-yet
 GetMovieDownloadProgress # not-yet: temporary Lua workaround
@@ -2265,7 +2254,6 @@ GetSecondsUntilParentalControlsKick # not-yet
 GetSessionTime # not-yet
 GetSheathState # not-yet
 GetSourceLocation # not-yet
-GetSpecializationInfoForSpecID # not-yet: temporary Lua workaround
 GetSturdiness # not-yet
 GetTaxiBenchmarkMode # not-yet
 GetThreatStatusColor # not-yet: temporary Lua workaround
@@ -2303,7 +2291,6 @@ IsJailersTowerLayerTimeLocked # not-yet
 IsLeftMetaKeyDown # not-yet
 IsLegacyDifficulty # not-yet
 IsLinuxClient # not-yet
-IsMacClient # not-yet: temporary Lua workaround
 IsMovieLocal # not-yet
 IsMoviePlayable # not-yet
 IsMovieReadable # not-yet
@@ -2315,7 +2302,6 @@ IsRaidMarkerSystemEnabled # not-yet
 IsRightMetaKeyDown # not-yet
 IsUsingFixedTimeStep # not-yet
 IsUsingMouse # not-yet
-IsWindowsClient # not-yet: temporary Lua workaround
 LoadURLIndex # not-yet
 MouseOverrideCinematicDisable # not-yet
 NoPlayTime # not-yet: temporary Lua workaround
@@ -2332,8 +2318,6 @@ PlayerVehicleHasComboPoints # not-yet
 PortGraveyard # not-yet
 PreloadMovie # not-yet
 RandomRoll # not-yet
-RegisterEventCallback # not-yet: temporary Lua workaround
-RegisterUnitEventCallback # not-yet: temporary Lua workaround
 RemoveRaidTargets # not-yet
 RepopMe # not-yet
 ReportBug # not-yet
@@ -2455,8 +2439,6 @@ UnitVehicleSeatCount # not-yet
 UnitVehicleSeatInfo # not-yet
 UnitWeaponAttackPower # not-yet
 UnitWidgetSet # not-yet
-UnregisterEventCallback # not-yet: temporary Lua workaround
-UnregisterUnitEventCallback # not-yet: temporary Lua workaround
 UpdateWindow # not-yet
 WorldLootObjectExists # not-yet: temporary Lua workaround
 canaccesssecrets # not-yet
