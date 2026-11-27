@@ -249,11 +249,11 @@ pub(crate) mod c_game_rules;
 mod c_garrison_currency;
 pub(crate) mod c_garrison_damage_classes;
 mod c_garrison_follower_xp;
-#[cfg(feature = "client-retail")]
+#[cfg(feature = "garrison-host-inputs")]
 pub(crate) mod c_garrison_landing_page;
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub(crate) mod c_garrison_mission_lists;
-#[cfg(feature = "client-retail")]
+#[cfg(feature = "garrison-host-inputs")]
 pub mod c_garrison_trees;
 pub mod c_glue;
 pub mod c_housing;
@@ -760,7 +760,7 @@ pub(crate) fn register_utility_bootstrap_tables(state: &mut LuaState) -> LuaResu
         c_super_track::register(state)?;
     }
     c_garrison_damage_classes::register(state)?;
-    #[cfg(feature = "client-retail")]
+    #[cfg(feature = "garrison-host-inputs")]
     {
         c_garrison_landing_page::register(state)?;
         c_garrison_trees::register(state)?;

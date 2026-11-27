@@ -220,9 +220,9 @@ macro_rules! build_empty_sim_state {
             garrison_mission_lists: Default::default(),
             hyperlink_tooltip: Default::default(),
             trade_skill_crafting_ui_inputs: Default::default(),
-            #[cfg(feature = "client-retail")]
+            #[cfg(feature = "garrison-host-inputs")]
             garrison_trees: crate::c_api::c_garrison_trees::GarrisonTrees::default(),
-            #[cfg(feature = "client-retail")]
+            #[cfg(feature = "garrison-host-inputs")]
             garrison_landing_page:
                 crate::c_api::c_garrison_landing_page::GarrisonLandingPage::default(),
             clipboard: ClipboardState::default(),

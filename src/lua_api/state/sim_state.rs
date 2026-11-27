@@ -179,9 +179,9 @@ pub struct SimState {
     pub garrison_talents: GarrisonTalentState,
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     pub garrison_mission_lists: crate::c_api::c_garrison_mission_lists::GarrisonMissionLists,
-    #[cfg(feature = "client-retail")]
+    #[cfg(feature = "garrison-host-inputs")]
     pub garrison_trees: crate::c_api::c_garrison_trees::GarrisonTrees,
-    #[cfg(feature = "client-retail")]
+    #[cfg(feature = "garrison-host-inputs")]
     pub garrison_landing_page: crate::c_api::c_garrison_landing_page::GarrisonLandingPage,
     pub clipboard: ClipboardState,
     pub chat_edit_open_state: Option<ChatEditOpenState>,

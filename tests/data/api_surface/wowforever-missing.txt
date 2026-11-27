@@ -194,10 +194,6 @@ C_ChatInfo.ReplaceIconAndGroupExpressions # not-yet: temporary Lua workaround
 C_ChatInfo.RequestCanLocalWhisperTarget # not-yet
 C_ChatInfo.ResetDefaultZoneChannels # not-yet
 C_ChatInfo.SwapChatChannelsByChannelIndex # not-yet
-C_ChromieTime.CloseUI # not-yet
-C_ChromieTime.GetChromieTimeExpansionOption # not-yet
-C_ChromieTime.GetChromieTimeExpansionOptions # not-yet
-C_ChromieTime.SelectChromieTimeOption # not-yet
 C_ClassTalents.CanCreateNewConfig # not-yet
 C_ClassTalents.CommitConfig # not-yet
 C_ClassTalents.DeleteConfig # not-yet
@@ -608,8 +604,6 @@ C_Garrison.GetAutoMissionTargetingInfoForSpell # not-yet
 C_Garrison.GetAutoTroops # not-yet
 C_Garrison.GetCombatLogSpellInfo # not-yet
 C_Garrison.GetCurrentCypherEquipmentLevel # not-yet
-C_Garrison.GetCurrentGarrTalentTreeFriendshipFactionID # not-yet
-C_Garrison.GetCurrentGarrTalentTreeID # not-yet
 C_Garrison.GetCyphersToNextEquipmentLevel # not-yet
 C_Garrison.GetFollowerAutoCombatSpells # not-yet
 C_Garrison.GetFollowerAutoCombatStats # not-yet
@@ -620,14 +614,12 @@ C_Garrison.GetMaxCypherEquipmentLevel # not-yet
 C_Garrison.GetMissionCompleteEncounters # not-yet
 C_Garrison.GetMissionDeploymentInfo # not-yet
 C_Garrison.GetTalentPointsSpentInTalentTree # not-yet
-C_Garrison.GetTalentTreeIDsByClassID # not-yet
 C_Garrison.GetTalentTreeInfo # not-yet
 C_Garrison.GetTalentTreeResetInfo # not-yet
 C_Garrison.GetTalentTreeTalentPointResearchInfo # not-yet
 C_Garrison.HasAdventures # not-yet
 C_Garrison.IsEnvironmentCountered # not-yet
 C_Garrison.IsFollowerOnCompletedMission # not-yet
-C_Garrison.IsLandingPageMinimapButtonVisible # not-yet
 C_Garrison.IsTalentConditionMet # not-yet
 C_Garrison.RegenerateCombatLog # not-yet
 C_Garrison.RemoveFollowerFromMission # not-yet
@@ -645,8 +637,6 @@ C_GossipInfo.GetOptionUIWidgetSetsAndTypesByOptionID # not-yet
 C_GossipInfo.RefreshOptions # not-yet
 C_GossipInfo.SelectOption # not-yet
 C_GossipInfo.SelectOptionByIndex # not-yet
-C_GuildInfo.Demote # not-yet
-C_GuildInfo.Disband # not-yet
 C_GuildInfo.GetGuildRankOrder # not-yet
 C_GuildInfo.GetPreferredPlaySettings # not-yet
 C_GuildInfo.IsEncounterGuildNewsEnabled # not-yet
@@ -658,7 +648,6 @@ C_GuildInfo.RequestGuildRename # not-yet
 C_GuildInfo.RequestGuildRenameRefund # not-yet
 C_GuildInfo.RequestPreferredPlaySettings # not-yet
 C_GuildInfo.RequestRenameNameCheck # not-yet
-C_GuildInfo.SetLeader # not-yet
 C_GuildInfo.SetNote # not-yet
 C_GuildInfo.SetPreferredPlaySettings # not-yet
 C_HeirloomInfo.AreAllCollectionFiltersChecked # not-yet

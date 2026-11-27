@@ -199,6 +199,9 @@ nameplate-configuration = []
 # PlayerEffectiveAttackPower/GetPetMeleeHaste/UnitWeaponAttackPower inputs:
 # Retail and Forever (byte-identical PlayerScript/UnitDocumentation blocks).
 explicit-stat-inputs = []
+# C_Garrison talent-tree context and landing-page minimap visibility host inputs:
+# Retail and Forever (byte-identical GarrisonInfoDocumentation blocks).
+garrison-host-inputs = []
 nameplate-hit-test-insets = []
 # C_CooldownViewer.GetValidAlertTypes host alert capabilities: Retail 12.0.0
 # and Forever (byte-identical CooldownViewerDocumentation block).
@@ -249,13 +252,13 @@ prefork-full-ui = []
 # public client-retail bundle preserves the current retail epoch; profile-retail
 # allows historical retail epoch tests against the same retail source cache.
 profile-retail = ["sim-data-profile/profile-retail"]
-client-retail = ["profile-retail", "explicit-stat-inputs", "retail-12-1-5", "prefork-full-ui", "profession-spec-paths"]
+client-retail = ["profile-retail", "garrison-host-inputs", "explicit-stat-inputs", "retail-12-1-5", "prefork-full-ui", "profession-spec-paths"]
 client-ptr = ["retail-12-1-5", "sim-data-profile/client-ptr"]
 client-wrath = ["action-spell-range", "sim-data-profile/client-wrath"]
 client-mists = ["prefork-full-ui", "sim-data-profile/client-mists"]
 client-era = ["aura-spell-classifications", "sim-data-profile/client-era"]
 client-anniversary = ["aura-spell-classifications", "sim-data-profile/client-anniversary"]
-client-wowforever = ["explicit-stat-inputs", "nameplate-configuration", "nameplate-hit-test-insets", "cooldown-alert-types", "spell-classification-queries", "lfg-endgame-edit-policy", "encounter-warning-settings", "encounter-warning-visibility", "encounter-warning-previews", "simulated-mouse-input", "bnet-chat", "bnet-presence", "bnet-friend-social", "timed-signal-maps", "profession-spec-paths", "housing-blueprints", "housing-host-state", "housing-inspect-mode", "house-exterior-model", "unit-aura-queries", "aura-instance-cancel", "aura-xml-widgets", "on-update-modes", "player-cast-durations", "forbidden-animation-aspects", "numeric-rule-formatters", "aura-containers", "native-duration-formatting", "base-spell-relationships", "action-spell-range", "aura-spell-classifications", "maw-power-rarity-info", "sim-data-profile/client-wowforever"]
+client-wowforever = ["garrison-host-inputs", "explicit-stat-inputs", "nameplate-configuration", "nameplate-hit-test-insets", "cooldown-alert-types", "spell-classification-queries", "lfg-endgame-edit-policy", "encounter-warning-settings", "encounter-warning-visibility", "encounter-warning-previews", "simulated-mouse-input", "bnet-chat", "bnet-presence", "bnet-friend-social", "timed-signal-maps", "profession-spec-paths", "housing-blueprints", "housing-host-state", "housing-inspect-mode", "house-exterior-model", "unit-aura-queries", "aura-instance-cancel", "aura-xml-widgets", "on-update-modes", "player-cast-durations", "forbidden-animation-aspects", "numeric-rule-formatters", "aura-containers", "native-duration-formatting", "base-spell-relationships", "action-spell-range", "aura-spell-classifications", "maw-power-rarity-info", "sim-data-profile/client-wowforever"]
 
 [profile.release]
 lto = false
