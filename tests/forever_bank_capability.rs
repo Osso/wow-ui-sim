@@ -14,11 +14,19 @@ fn original_bank_interaction_consumes_supplied_tab_data() {
             A_Admin.SetPurchasedBankTabData(bankType, {
                 {
                     ID = Enum.BagIndex.CharacterBankTab_1,
-                    name = "Host supplied bank tab",
+                    name = "First host tab",
                     icon = 123,
                     depositFlags = 0,
-                    tabCleanupConfirmation = "Confirm cleanup",
-                    tabNameEditBoxHeader = "Rename tab",
+                    tabCleanupConfirmation = "Confirm first cleanup",
+                    tabNameEditBoxHeader = "Rename first tab",
+                },
+                {
+                    ID = Enum.BagIndex.CharacterBankTab_2,
+                    name = "Second host tab",
+                    icon = 456,
+                    depositFlags = 1,
+                    tabCleanupConfirmation = "Confirm second cleanup",
+                    tabNameEditBoxHeader = "Rename second tab",
                 },
             })
             A_Admin.FireEvent(
@@ -27,8 +35,10 @@ fn original_bank_interaction_consumes_supplied_tab_data() {
             )
             assert(BankFrame:IsShown(), "the original banker interaction opens BankFrame")
             local tabs = BankFrame.BankPanel.purchasedBankTabData
-            assert(#tabs == 1 and tabs[1].name == "Host supplied bank tab")
-            assert(tabs[1].bankType == bankType)
+            assert(#tabs == 2)
+            assert(tabs[1].name == "First host tab" and tabs[1].bankType == bankType)
+            assert(tabs[2].name == "Second host tab" and tabs[2].bankType == bankType)
+            assert(tabs[2].icon == 456 and tabs[2].depositFlags == 1)
             "#,
         )
         .expect("selected bank interaction should consume supplied C_Bank state");
