@@ -1,10 +1,8 @@
 use std::path::PathBuf;
 
+use crate::common::blizzard_addon_harness::load_blizzard_addon_closure_into_env;
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
-use crate::common::blizzard_addon_harness::{
-    load_blizzard_addon_closure_into_env, new_blizzard_addon_env,
-};
-use wow_ui_sim::loader::load_addon;
+use crate::common::blizzard_addon_harness::new_blizzard_addon_env;
 use wow_ui_sim::loader::{discover_blizzard_addons_for_screen, find_toc_file};
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::screen::ScreenKind;
@@ -136,6 +134,19 @@ fn fresh_game_env() -> WowLuaEnv {
     }
     wow_ui_sim::xml::register_intrinsic_templates();
     env
+}
+
+// Loads the TOC dependencies (Blizzard_StaticPopup_Game, Blizzard_GameTooltip)
+// first, as the client does; Retail and Forever no longer seed placeholder
+// StaticPopupDialogs (c1b07efb79).
+fn load_transmog_shared_closure(env: &WowLuaEnv) {
+    let loaded = load_blizzard_addon_closure_into_env(
+        env,
+        &blizzard_ui_dir(),
+        &["Blizzard_TransmogShared"],
+        &[],
+    );
+    assert!(loaded.iter().any(|name| name == "Blizzard_TransmogShared"));
 }
 
 // Literal cached inputs absent from Wrath manifest1-382/cache; behavior cases stay enabled.
@@ -371,8 +382,7 @@ fn direct_load_keeps_removed_inventory_slot_global_private() {
     let before: bool = env
         .eval("return GetInventorySlotInfo ~= nil")
         .expect("GetInventorySlotInfo surface probe");
-    load_addon(&env.loader_env(), &transmog_shared_toc())
-        .expect("Blizzard_TransmogShared must load via Rust loader");
+    load_transmog_shared_closure(&env);
 
     let result: String = env
         .eval(
@@ -410,8 +420,7 @@ post_wrath_ui_fixture! {
 #[test]
 fn explicit_load_publishes_transmog_util_table() {
     let env = fresh_game_env();
-    load_addon(&env.loader_env(), &transmog_shared_toc())
-        .expect("Blizzard_TransmogShared must load via Rust loader");
+    load_transmog_shared_closure(&env);
 
     let kind: String = env
         .eval("return type(TransmogUtil)")
@@ -443,8 +452,7 @@ post_wrath_ui_fixture! {
 #[test]
 fn explicit_load_publishes_transmog_location_mixin() {
     let env = fresh_game_env();
-    load_addon(&env.loader_env(), &transmog_shared_toc())
-        .expect("Blizzard_TransmogShared must load via Rust loader");
+    load_transmog_shared_closure(&env);
 
     let kind: String = env
         .eval("return type(TransmogLocationMixin)")
@@ -544,8 +552,7 @@ post_wrath_ui_fixture! {
 #[test]
 fn explicit_load_publishes_item_model_base_mixin() {
     let env = fresh_game_env();
-    load_addon(&env.loader_env(), &transmog_shared_toc())
-        .expect("Blizzard_TransmogShared must load via Rust loader");
+    load_transmog_shared_closure(&env);
 
     let kind: String = env
         .eval("return type(ItemModelBaseMixin)")
@@ -579,8 +586,7 @@ post_wrath_ui_fixture! {
 #[test]
 fn explicit_load_publishes_wardrobe_sets_data_provider_mixin() {
     let env = fresh_game_env();
-    load_addon(&env.loader_env(), &transmog_shared_toc())
-        .expect("Blizzard_TransmogShared must load via Rust loader");
+    load_transmog_shared_closure(&env);
 
     let kind: String = env
         .eval("return type(WardrobeSetsDataProviderMixin)")
@@ -634,8 +640,7 @@ fn pinned_transmog_slot_order() -> Vec<String> {
 #[test]
 fn explicit_load_publishes_transmog_slot_order() {
     let env = fresh_game_env();
-    load_addon(&env.loader_env(), &transmog_shared_toc())
-        .expect("Blizzard_TransmogShared must load via Rust loader");
+    load_transmog_shared_closure(&env);
 
     let kind: String = env
         .eval("return type(TransmogSlotOrder)")
@@ -677,8 +682,7 @@ post_wrath_ui_fixture! {
 #[test]
 fn explicit_load_initializes_empty_transmog_slots_table() {
     let env = fresh_game_env();
-    load_addon(&env.loader_env(), &transmog_shared_toc())
-        .expect("Blizzard_TransmogShared must load via Rust loader");
+    load_transmog_shared_closure(&env);
 
     let kind: String = env
         .eval("return type(TRANSMOG_SLOTS)")
@@ -700,8 +704,7 @@ post_wrath_ui_fixture! {
 #[test]
 fn explicit_load_publishes_initialize_slot_location_info_global() {
     let env = fresh_game_env();
-    load_addon(&env.loader_env(), &transmog_shared_toc())
-        .expect("Blizzard_TransmogShared must load via Rust loader");
+    load_transmog_shared_closure(&env);
 
     let kind: String = env
         .eval("return type(InitializeSlotLocationInfo)")
@@ -722,8 +725,7 @@ post_wrath_ui_fixture! {
 #[test]
 fn explicit_load_registers_static_popup_dialog() {
     let env = fresh_game_env();
-    load_addon(&env.loader_env(), &transmog_shared_toc())
-        .expect("Blizzard_TransmogShared must load via Rust loader");
+    load_transmog_shared_closure(&env);
 
     let kind: String = env
         .eval("return type(StaticPopupDialogs['TRANSMOG_FAVORITE_WARNING'])")
@@ -751,8 +753,7 @@ fn explicit_load_emits_no_addon_specific_errors() {
         state.lua_error_counts.clear();
     }
 
-    load_addon(&env.loader_env(), &transmog_shared_toc())
-        .expect("Blizzard_TransmogShared must load via Rust loader");
+    load_transmog_shared_closure(&env);
 
     let errors: Vec<String> = env.state().borrow().lua_errors.clone();
     let addon_specific: Vec<&String> = errors
@@ -764,8 +765,8 @@ fn explicit_load_emits_no_addon_specific_errors() {
 
     assert!(
         addon_specific.is_empty(),
-        "Loading Blizzard_TransmogShared as the first addon must emit \
-         zero addon-specific errors. The do-block at lua:613-647 \
+        "Loading Blizzard_TransmogShared after its TOC dependencies must \
+         emit zero addon-specific errors. The do-block at lua:613-647 \
          invokes InitializeSlotLocationInfo immediately, which calls \
          C_TransmogOutfitInfo.GetAllSlotLocationInfo — that stub must \
          tolerate an empty/nil return without raising. Found: \
@@ -779,8 +780,7 @@ post_wrath_ui_fixture! {
 #[test]
 fn wardrobe_sets_provider_reads_supplied_base_and_variant_relations() {
     let env = fresh_game_env();
-    load_addon(&env.loader_env(), &transmog_shared_toc())
-        .expect("Blizzard_TransmogShared must load via Rust loader");
+    load_transmog_shared_closure(&env);
     env.exec(
         r#"
         A_Admin.SetTransmogSetCatalog({
