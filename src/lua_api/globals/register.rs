@@ -434,20 +434,8 @@ fn register_progression_state_probes(lua: &mut rilua::Lua) -> crate::Result<()> 
 }
 
 fn register_world_state_probes(lua: &mut rilua::Lua) -> crate::Result<()> {
-    use crate::client_profile::{ACTIVE, ClientProfile};
     super::real::mouse_probes::register_all(lua)?;
-    if cfg!(feature = "retail-12-0-0")
-        || matches!(ACTIVE, ClientProfile::Era | ClientProfile::Anniversary)
-    {
-        super::real::publication_12_0_0::register_raid_marker_capability(lua)?;
-    }
-    if matches!(ACTIVE, ClientProfile::Era | ClientProfile::Anniversary) {
-        super::real::publication_12_0_0::register_classic_marker_state(lua)?;
-    }
-    #[cfg(feature = "retail-12-0-0")]
-    super::real::publication_12_0_0::register_all(lua)?;
-    #[cfg(feature = "retail-12-0-0")]
-    super::real::publication_unit_12_0_0::register_all(lua)?;
+    register_plain_host_globals(lua)?;
     #[cfg(feature = "retail-12-0-7")]
     super::real::simulate_mouse::register_all(lua)?;
     super::movement_probes::register_all(lua)?;
@@ -457,6 +445,23 @@ fn register_world_state_probes(lua: &mut rilua::Lua) -> crate::Result<()> {
     super::instance_info::register_all(lua)?;
     super::state_backed_queries::register_all(lua)?;
     super::archaeology::register_all(lua)?;
+    Ok(())
+}
+
+fn register_plain_host_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
+    use crate::client_profile::{ACTIVE, ClientProfile};
+    let modern_plain_globals = ACTIVE.shares_retail_12_api();
+    let classic_markers = matches!(ACTIVE, ClientProfile::Era | ClientProfile::Anniversary);
+    if modern_plain_globals || classic_markers {
+        super::real::publication_12_0_0::register_raid_marker_capability(lua)?;
+    }
+    if classic_markers {
+        super::real::publication_12_0_0::register_classic_marker_state(lua)?;
+    }
+    if modern_plain_globals {
+        super::real::publication_12_0_0::register_all(lua)?;
+        super::real::publication_unit_12_0_0::register_all(lua)?;
+    }
     Ok(())
 }
 

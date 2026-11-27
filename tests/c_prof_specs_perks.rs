@@ -1,4 +1,4 @@
-#![cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+#![cfg(feature = "profession-spec-paths")]
 
 use wow_ui_sim::c_api::profession_spec_inputs::ProfessionPerkRankEntry;
 use wow_ui_sim::lua_api::WowLuaEnv;

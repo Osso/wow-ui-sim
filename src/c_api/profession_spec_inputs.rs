@@ -5,19 +5,19 @@
 
 use std::collections::{HashMap, HashSet};
 
-#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+#[cfg(feature = "profession-spec-paths")]
 pub(crate) const PROF_SPEC_PATH_LOCKED: i32 = 0;
-#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+#[cfg(feature = "profession-spec-paths")]
 pub(crate) const PROF_SPEC_PATH_PROGRESSING: i32 = 1;
-#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+#[cfg(feature = "profession-spec-paths")]
 pub(crate) const PROF_SPEC_PATH_COMPLETED: i32 = 2;
-#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+#[cfg(feature = "profession-spec-paths")]
 pub(crate) const PROF_SPEC_PERK_UNEARNED: i32 = 0;
-#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+#[cfg(feature = "profession-spec-paths")]
 pub(crate) const PROF_SPEC_PERK_PENDING: i32 = 1;
-#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+#[cfg(feature = "profession-spec-paths")]
 pub(crate) const PROF_SPEC_PERK_EARNED: i32 = 2;
-#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+#[cfg(feature = "profession-spec-paths")]
 pub(crate) const PROF_SPEC_PERK_IS_MAJOR_BONUS: u32 = 2;
 
 /// Supplied profession specialization results. Empty defaults make both
@@ -116,7 +116,7 @@ impl ProfessionSpecInputs {
             .find(|record| record.skill_line_id == skill_line_id)
     }
     /// INFERRED (simulator mapping): return perk nodes in the supplied path group order.
-    #[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+    #[cfg(feature = "profession-spec-paths")]
     pub(crate) fn perks_for_path(&self, path_id: i32) -> Vec<(i32, bool)> {
         let Some(group_id) = self.path_perk_group_ids.get(&path_id) else {
             return Vec::new();
@@ -135,7 +135,7 @@ impl ProfessionSpecInputs {
     }
 
     /// INFERRED (simulator mapping): classify supplied perk ranks for one config.
-    #[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+    #[cfg(feature = "profession-spec-paths")]
     pub(crate) fn state_for_perk(&self, perk_id: i32, config_id: i32) -> i32 {
         if !self.trait_config_ids.contains(&config_id) {
             return PROF_SPEC_PERK_UNEARNED;
@@ -167,7 +167,7 @@ impl ProfessionSpecInputs {
     }
 
     /// INFERRED (simulator mapping): classify supplied path ranks for one config.
-    #[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+    #[cfg(feature = "profession-spec-paths")]
     pub(crate) fn state_for_path(&self, path_id: i32, config_id: i32) -> i32 {
         if !self.trait_config_ids.contains(&config_id) {
             return PROF_SPEC_PATH_LOCKED;
@@ -188,7 +188,7 @@ impl ProfessionSpecInputs {
     }
 
     /// INFERRED (simulator mapping): return supplied children for one path ID.
-    #[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+    #[cfg(feature = "profession-spec-paths")]
     pub(crate) fn children_for_path(&self, path_id: i32) -> Vec<i32> {
         self.path_group_ids
             .get(&path_id)

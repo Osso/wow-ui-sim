@@ -51,10 +51,8 @@ pub use brawl_info::{PvpBrawlInfo, SpecialEventBrawlInfo};
 
 pub mod catalog;
 use crate::c_api::ensure_namespace;
-#[cfg(feature = "retail-12-1-0")]
 use crate::lua_bridge::table_set_rust_fn_static;
 use rilua::LuaResult;
-#[cfg(feature = "retail-12-1-0")]
 use rilua::Val;
 use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
@@ -69,17 +67,7 @@ pub enum TrainingGroundKind {
 
 pub(crate) fn register_c_pvp_surface(state: &mut LuaState) -> LuaResult<()> {
     let ns = ensure_namespace(state, "C_PvP")?;
-    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
-        // Retail PvpInfoDocumentation.lua:1205-1214,1260-1264.
-        crate::lua_bridge::table_set_rust_fn_static(state, ns, "SetPVP", set_pvp)?;
-        crate::lua_bridge::table_set_rust_fn_static(state, ns, "TogglePVP", toggle_pvp)?;
-        crate::lua_bridge::table_set_rust_fn_static(
-            state,
-            ns,
-            "IsSubZonePVPPOI",
-            area_poi::is_subzone_pvp_poi,
-        )?;
-    }
+    register_supplied_pvp_inputs(state, ns)?;
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Mists {
         battlefield_vehicles::register(state, ns)?;
     }
@@ -112,12 +100,6 @@ pub(crate) fn register_c_pvp_surface(state: &mut LuaState) -> LuaResult<()> {
             is_match_complete,
         )?;
     }
-    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
-        battleground_enlistment::register(state, ns)?;
-        reward_cache::register_random_bg(state, ns)?;
-        reward_cache::register_arena(state, ns)?;
-        reward_cache::register_epic_bg(state, ns)?;
-    }
     if cfg!(any(feature = "client-retail", feature = "client-ptr")) {
         war_mode::register(state, ns)?;
     }
@@ -140,6 +122,24 @@ pub(crate) fn register_c_pvp_surface(state: &mut LuaState) -> LuaResult<()> {
     active_brawl::register(state, ns)?;
     register_patch_12_1_c_pvp_surface(state, ns)?;
     register_training_grounds(state, ns)
+}
+
+/// Retail PvpInfoDocumentation.lua:1205-1214,1260-1264 and the enlistment and
+/// reward-cache blocks; Forever declares byte-identical blocks. Every query
+/// reads supplied SimState inputs, so both profiles share the model.
+fn register_supplied_pvp_inputs(state: &mut LuaState, ns: GcRef<Table>) -> LuaResult<()> {
+    use crate::client_profile::{ACTIVE, ClientProfile};
+    if !matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever) {
+        return Ok(());
+    }
+    crate::lua_bridge::table_set_rust_fn_static(state, ns, "SetPVP", set_pvp)?;
+    crate::lua_bridge::table_set_rust_fn_static(state, ns, "TogglePVP", toggle_pvp)?;
+    let poi = area_poi::is_subzone_pvp_poi;
+    crate::lua_bridge::table_set_rust_fn_static(state, ns, "IsSubZonePVPPOI", poi)?;
+    battleground_enlistment::register(state, ns)?;
+    reward_cache::register_random_bg(state, ns)?;
+    reward_cache::register_arena(state, ns)?;
+    reward_cache::register_epic_bg(state, ns)
 }
 
 fn set_pvp(state: &mut LuaState) -> LuaResult<u32> {
@@ -183,8 +183,13 @@ fn is_match_complete(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-#[cfg(feature = "retail-12-1-5")]
 fn register_training_grounds(state: &mut LuaState, ns: GcRef<Table>) -> LuaResult<()> {
+    if !crate::client_profile::ACTIVE.shares_retail_12_api() {
+        // Prevent the namespace fallback from fabricating Retail-only queries.
+        let removed = &["IsTrainingGroundsArena", "IsTrainingGroundsBG"];
+        crate::c_api::mark_namespace_keys_removed(state, ns, removed);
+        return Ok(());
+    }
     table_set_rust_fn_static(state, ns, "IsTrainingGroundsArena", |state| {
         query_training_ground(state, TrainingGroundKind::Arena)
     })?;
@@ -193,18 +198,6 @@ fn register_training_grounds(state: &mut LuaState, ns: GcRef<Table>) -> LuaResul
     })
 }
 
-#[cfg(not(feature = "retail-12-1-5"))]
-fn register_training_grounds(state: &mut LuaState, ns: GcRef<Table>) -> LuaResult<()> {
-    // Prevent the namespace fallback from fabricating PTR-only queries.
-    crate::c_api::mark_namespace_keys_removed(
-        state,
-        ns,
-        &["IsTrainingGroundsArena", "IsTrainingGroundsBG"],
-    );
-    Ok(())
-}
-
-#[cfg(feature = "retail-12-1-5")]
 fn read_training_dungeon_id(state: &LuaState) -> LuaResult<i32> {
     let Val::Num(id) = crate::lua_bridge::stack_val(state, 1) else {
         return Err(rilua::runtime_error("LFG dungeon ID must be a number"));
@@ -219,7 +212,6 @@ fn read_training_dungeon_id(state: &LuaState) -> LuaResult<i32> {
     Ok(id as i32)
 }
 
-#[cfg(feature = "retail-12-1-5")]
 fn query_training_ground(state: &mut LuaState, kind: TrainingGroundKind) -> LuaResult<u32> {
     let id = read_training_dungeon_id(state)?;
     let matches = {
@@ -233,8 +225,10 @@ fn query_training_ground(state: &mut LuaState, kind: TrainingGroundKind) -> LuaR
     Ok(1)
 }
 
-#[cfg(feature = "retail-12-1-0")]
 fn register_patch_12_1_c_pvp_surface(state: &mut LuaState, ns: GcRef<Table>) -> LuaResult<()> {
+    if !crate::client_profile::ACTIVE.shares_retail_12_api() {
+        return Ok(());
+    }
     // 12.1.0 split the random Training Grounds join into arena/battleground calls.
     crate::c_api::mark_namespace_keys_removed(state, ns, &["JoinRandomTrainingGround"]);
     table_set_rust_fn_static(
@@ -254,26 +248,18 @@ fn register_patch_12_1_c_pvp_surface(state: &mut LuaState, ns: GcRef<Table>) -> 
 
 /// Random training-ground queues occupy the single modeled battlefield slot,
 /// named after the PVPUI queue option that issues them.
-#[cfg(feature = "retail-12-1-0")]
 fn join_random_training_ground_arena(state: &mut LuaState) -> LuaResult<u32> {
     let name = "Random Training Ground Arena".to_string();
     crate::lua_api::globals::battlefield_verbs::queue_battlefield(state, 1, name)?;
     Ok(0)
 }
 
-#[cfg(feature = "retail-12-1-0")]
 fn join_random_training_ground_battleground(state: &mut LuaState) -> LuaResult<u32> {
     let name = "Random Training Ground".to_string();
     crate::lua_api::globals::battlefield_verbs::queue_battlefield(state, 1, name)?;
     Ok(0)
 }
 
-#[cfg(not(feature = "retail-12-1-0"))]
-fn register_patch_12_1_c_pvp_surface(_state: &mut LuaState, _ns: GcRef<Table>) -> LuaResult<()> {
-    Ok(())
-}
-
-#[cfg(feature = "retail-12-1-0")]
 fn can_surrender_arena(state: &mut LuaState) -> LuaResult<u32> {
     // The simulator does not model active rated-arena matches.
     state.push(Val::Bool(false));

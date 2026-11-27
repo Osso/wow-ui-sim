@@ -16,7 +16,6 @@ pub(super) fn register(lua: &mut rilua::Lua) -> LuaResult<()> {
     LuaApiMut::register_function(lua, "UnitCastingDuration", casting)?;
     LuaApiMut::register_function(lua, "UnitChannelDuration", channel)?;
     LuaApiMut::register_function(lua, "UnitEmpoweredChannelDuration", empowered)?;
-    #[cfg(feature = "retail-12-0-0")]
     LuaApiMut::register_function(lua, "UnitEmpoweredStageDurations", stage_durations)?;
     LuaApiMut::register_function(lua, "UnitEmpoweredStagePercentages", stage_percentages)
 }
@@ -65,7 +64,6 @@ fn stage_percentages(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-#[cfg(feature = "retail-12-0-0")]
 fn stage_durations(state: &mut LuaState) -> LuaResult<u32> {
     let unit = rilua::table_security::unwrap_secret(state, crate::lua_bridge::stack_val(state, 1))?;
     if !matches!(unit, Val::Str(_)) {
@@ -88,7 +86,6 @@ fn stage_durations(state: &mut LuaState) -> LuaResult<u32> {
     push_stage_durations(state, start, sections)
 }
 
-#[cfg(feature = "retail-12-0-0")]
 fn push_stage_durations(
     state: &mut LuaState,
     mut start: f64,

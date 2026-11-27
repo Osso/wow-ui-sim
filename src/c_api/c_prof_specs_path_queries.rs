@@ -1,6 +1,5 @@
 //! Retail 12.1.5 `C_ProfSpecs` path state and entry queries (R88ax.1, R88ax.3).
 
-use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::methods::{borrow_state, create_table, table_set_static};
 use crate::lua_bridge::table_set_rust_fn_static;
 use crate::screen::ScreenKind;
@@ -19,7 +18,7 @@ const PERK_UNLOCK_RANK_USAGE: &str =
 const PERK_ENTRY_USAGE: &str = "Usage: local entryID = C_ProfSpecs.GetEntryIDForPerk(perkID)";
 
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
-    if ACTIVE != ClientProfile::Retail || borrow_state(state)?.screen_kind != ScreenKind::Game {
+    if borrow_state(state)?.screen_kind != ScreenKind::Game {
         return Ok(());
     }
     let namespace = super::ensure_namespace(state, "C_ProfSpecs")?;

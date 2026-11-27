@@ -20,12 +20,12 @@ mod charter;
 #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
 pub mod editor;
 pub mod exterior;
-#[cfg(feature = "retail-12-0-5")]
+#[cfg(feature = "housing-inspect-mode")]
 pub mod inspect_mode;
-#[cfg(feature = "retail-12-0-0")]
+#[cfg(feature = "housing-host-state")]
 pub mod location;
 mod market;
-#[cfg(feature = "retail-12-0-7")]
+#[cfg(feature = "housing-room-queries")]
 pub(crate) mod patch_12_0_7;
 #[cfg(any(
     feature = "client-retail",
@@ -41,39 +41,39 @@ pub(crate) mod house_finder;
 pub(crate) mod owned_houses;
 
 use crate::c_api::helpers::ensure_namespace;
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "housing-blueprints")]
 use crate::lua_api::methods::{
     borrow_state, borrow_state_mut, create_string, create_table, table_set,
 };
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "housing-blueprints")]
 use crate::lua_api::state::HousingState;
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "housing-blueprints")]
 use crate::lua_bridge::FromStack;
-#[cfg(any(feature = "retail-12-0-7", feature = "retail-12-1-0"))]
+#[cfg(feature = "housing-room-queries")]
 use crate::lua_bridge::table_set_rust_fn_static;
 use rilua::LuaResult;
-#[cfg(any(feature = "retail-12-0-7", feature = "retail-12-1-0"))]
+#[cfg(feature = "housing-blueprints")]
 use rilua::Val;
 use rilua::vm::state::LuaState;
 
-#[cfg(feature = "retail-12-0-7")]
+#[cfg(feature = "housing-room-queries")]
 type NamespaceTable = rilua::vm::gc::arena::GcRef<rilua::vm::table::Table>;
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "housing-blueprints")]
 const BLUEPRINT_CODE_PREFIX: &str = "wow-ui-sim:blueprint:";
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "housing-blueprints")]
 const ROOM_BLUEPRINT_CODE_PREFIX: &str = "wow-ui-sim:room-blueprint:";
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "housing-blueprints")]
 const BLUEPRINT_TYPE_HOUSE: i32 = 1;
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "housing-blueprints")]
 const BLUEPRINT_TYPE_ROOM: i32 = 2;
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "housing-blueprints")]
 const BLUEPRINT_TYPE_INTERIOR: i32 = 3;
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "housing-blueprints")]
 const BLUEPRINT_TYPE_EXTERIOR: i32 = 4;
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "housing-blueprints")]
 const BUDGET_TYPE_DECOR: i32 = 1;
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "housing-blueprints")]
 const BUDGET_TYPE_PET_DECOR: i32 = 2;
 
 #[cfg(feature = "client-retail")]
@@ -123,7 +123,7 @@ fn register_profile_service_methods(state: &mut LuaState) -> LuaResult<()> {
     // Forever HouseEditorUIDocumentation.lua is byte-identical to Retail's.
     #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
     editor::register(state)?;
-    #[cfg(feature = "retail-12-0-0")]
+    #[cfg(feature = "housing-host-state")]
     location::register(state)?;
     Ok(())
 }
@@ -134,7 +134,7 @@ fn register_profile_widget_methods(state: &mut LuaState) -> LuaResult<()> {
     // Forever HousingBasicModeUIDocumentation.lua declares the same free-place pair.
     #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
     basic_mode::register(state)?;
-    #[cfg(feature = "retail-12-0-5")]
+    #[cfg(feature = "housing-inspect-mode")]
     inspect_mode::register(state)?;
     #[cfg(any(
         feature = "client-retail",
@@ -145,7 +145,7 @@ fn register_profile_widget_methods(state: &mut LuaState) -> LuaResult<()> {
     Ok(())
 }
 
-#[cfg(any(feature = "retail-12-0-7", feature = "retail-12-1-0"))]
+#[cfg(feature = "housing-room-queries")]
 fn register_patch_12_0_7_housing_surface(
     state: &mut LuaState,
     customize_mode: NamespaceTable,
@@ -156,7 +156,7 @@ fn register_patch_12_0_7_housing_surface(
     register_patch_12_0_7_layout_methods(state, layout)
 }
 
-#[cfg(not(any(feature = "retail-12-0-7", feature = "retail-12-1-0")))]
+#[cfg(not(feature = "housing-room-queries"))]
 fn register_patch_12_0_7_housing_surface(
     _state: &mut LuaState,
     _customize_mode: rilua::vm::gc::arena::GcRef<rilua::vm::table::Table>,
@@ -165,7 +165,7 @@ fn register_patch_12_0_7_housing_surface(
     Ok(())
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "housing-blueprints")]
 fn register_patch_12_1_c_housing_surface(
     state: &mut LuaState,
     housing: NamespaceTable,
@@ -181,7 +181,7 @@ fn register_patch_12_1_c_housing_surface(
     register_layout_methods(state, layout)
 }
 
-#[cfg(not(feature = "retail-12-1-0"))]
+#[cfg(not(feature = "housing-blueprints"))]
 fn register_patch_12_1_c_housing_surface(
     _state: &mut LuaState,
     _housing: rilua::vm::gc::arena::GcRef<rilua::vm::table::Table>,
@@ -193,7 +193,7 @@ fn register_patch_12_1_c_housing_surface(
     Ok(())
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "housing-blueprints")]
 fn register_housing_methods(state: &mut LuaState, housing: NamespaceTable) -> LuaResult<()> {
     table_set_rust_fn_static(
         state,
@@ -212,7 +212,7 @@ fn register_housing_methods(state: &mut LuaState, housing: NamespaceTable) -> Lu
     table_set_rust_fn_static(state, housing, "ResetHouse", reset_house)
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "housing-blueprints")]
 fn register_blueprint_methods(state: &mut LuaState, blueprints: NamespaceTable) -> LuaResult<()> {
     table_set_rust_fn_static(
         state,
@@ -300,7 +300,7 @@ fn register_blueprint_methods(state: &mut LuaState, blueprints: NamespaceTable) 
     )
 }
 
-#[cfg(any(feature = "retail-12-0-7", feature = "retail-12-1-0"))]
+#[cfg(feature = "housing-room-queries")]
 fn register_catalog_methods(state: &mut LuaState) -> LuaResult<()> {
     let catalog = ensure_namespace(state, "C_HousingCatalog")?;
     table_set_rust_fn_static(
@@ -311,7 +311,7 @@ fn register_catalog_methods(state: &mut LuaState) -> LuaResult<()> {
     )
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "housing-blueprints")]
 fn register_customize_mode_methods(
     state: &mut LuaState,
     customize_mode: NamespaceTable,
@@ -331,7 +331,7 @@ fn register_customize_mode_methods(
     register_patch_12_0_7_customize_mode_methods(state, customize_mode)
 }
 
-#[cfg(any(feature = "retail-12-0-7", feature = "retail-12-1-0"))]
+#[cfg(feature = "housing-room-queries")]
 fn register_patch_12_0_7_customize_mode_methods(
     state: &mut LuaState,
     customize_mode: NamespaceTable,
@@ -344,7 +344,7 @@ fn register_patch_12_0_7_customize_mode_methods(
     )
 }
 
-#[cfg(any(feature = "retail-12-0-7", feature = "retail-12-1-0"))]
+#[cfg(feature = "housing-room-queries")]
 fn register_patch_12_0_7_layout_methods(
     state: &mut LuaState,
     layout: NamespaceTable,
@@ -352,7 +352,7 @@ fn register_patch_12_0_7_layout_methods(
     table_set_rust_fn_static(state, layout, "CanSetViewedFloor", can_set_viewed_floor)
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "housing-blueprints")]
 fn register_decor_methods(state: &mut LuaState, decor: NamespaceTable) -> LuaResult<()> {
     table_set_rust_fn_static(
         state,
@@ -372,18 +372,8 @@ fn register_decor_methods(state: &mut LuaState, decor: NamespaceTable) -> LuaRes
         "GetAllSpentPlacementBudgets",
         get_all_spent_placement_budgets,
     )?;
-    table_set_rust_fn_static(
-        state,
-        decor,
-        "GetBothMaxPlacementBudgets",
-        get_both_max_placement_budgets,
-    )?;
-    table_set_rust_fn_static(
-        state,
-        decor,
-        "GetBothSpentPlacementBudgets",
-        get_both_spent_placement_budgets,
-    )?;
+    #[cfg(feature = "retail-12-1-0")]
+    register_both_placement_budgets(state, decor)?;
     table_set_rust_fn_static(
         state,
         decor,
@@ -410,7 +400,25 @@ fn register_decor_methods(state: &mut LuaState, decor: NamespaceTable) -> LuaRes
     )
 }
 
+/// Neither Retail nor Forever API docs declare the GetBoth* pair; Retail keeps
+/// publishing it, Forever does not.
 #[cfg(feature = "retail-12-1-0")]
+fn register_both_placement_budgets(state: &mut LuaState, decor: NamespaceTable) -> LuaResult<()> {
+    table_set_rust_fn_static(
+        state,
+        decor,
+        "GetBothMaxPlacementBudgets",
+        get_both_max_placement_budgets,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        decor,
+        "GetBothSpentPlacementBudgets",
+        get_both_spent_placement_budgets,
+    )
+}
+
+#[cfg(feature = "housing-blueprints")]
 fn register_layout_methods(state: &mut LuaState, layout: NamespaceTable) -> LuaResult<()> {
     table_set_rust_fn_static(state, layout, "GetBaseRoomFloor", get_base_room_floor)?;
     table_set_rust_fn_static(
@@ -441,30 +449,18 @@ fn register_layout_methods(state: &mut LuaState, layout: NamespaceTable) -> LuaR
     )
 }
 
-#[cfg(feature = "retail-12-0-7")]
+#[cfg(feature = "housing-room-queries")]
 use patch_12_0_7::{
     can_view_floor as can_set_viewed_floor, names as get_catalog_category_and_subcategory_names,
     supports_door as room_connection_supports_door_type,
 };
 
-#[cfg(all(feature = "retail-12-1-0", not(feature = "retail-12-0-7")))]
-fn get_catalog_category_and_subcategory_names(state: &mut LuaState) -> LuaResult<u32> {
-    state.push(Val::Nil);
-    Ok(1)
-}
-
-#[cfg(all(feature = "retail-12-1-0", not(feature = "retail-12-0-7")))]
-fn room_connection_supports_door_type(state: &mut LuaState) -> LuaResult<u32> {
-    state.push(Val::Bool(false));
-    Ok(1)
-}
-
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "housing-blueprints")]
 fn house_finder_ignore_neighborhood(_state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "housing-blueprints")]
 fn is_inside_owned_house_or_plot(state: &mut LuaState) -> LuaResult<u32> {
     let is_inside = {
         let sim = borrow_state(state)?;
@@ -474,40 +470,40 @@ fn is_inside_owned_house_or_plot(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "housing-blueprints")]
 fn is_inside_owned_house(state: &mut LuaState) -> LuaResult<u32> {
     let inside_owned_house = { borrow_state(state)?.housing.inside_owned_house };
     state.push(Val::Bool(inside_owned_house));
     Ok(1)
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "housing-blueprints")]
 fn is_inside_owned_plot(state: &mut LuaState) -> LuaResult<u32> {
     let inside_owned_plot = { borrow_state(state)?.housing.inside_owned_plot };
     state.push(Val::Bool(inside_owned_plot));
     Ok(1)
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "housing-blueprints")]
 fn reset_house(state: &mut LuaState) -> LuaResult<u32> {
     let mut sim = borrow_state_mut(state)?;
     sim.housing = HousingState::default();
     Ok(0)
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "housing-blueprints")]
 fn can_import_type_from_current_location(state: &mut LuaState) -> LuaResult<u32> {
     is_inside_owned_house_or_plot(state)
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "housing-blueprints")]
 fn delete_blueprint(state: &mut LuaState) -> LuaResult<u32> {
     let blueprint_id = Option::<String>::from_stack(state, 1)?;
     borrow_state_mut(state)?.housing.last_deleted_blueprint_id = blueprint_id;
     Ok(0)
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "housing-blueprints")]
 fn export_blueprint(state: &mut LuaState) -> LuaResult<u32> {
     let blueprint_id = string_arg_or_empty(state, 1)?;
     borrow_state_mut(state)?.housing.last_exported_blueprint_id = Some(blueprint_id.clone());
@@ -515,7 +511,7 @@ fn export_blueprint(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "housing-blueprints")]
 fn export_room_blueprint(state: &mut LuaState) -> LuaResult<u32> {
     let blueprint_id = string_arg_or_empty(state, 1)?;
     borrow_state_mut(state)?
@@ -528,7 +524,7 @@ fn export_room_blueprint(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "housing-blueprints")]
 fn get_blueprint_hyperlink(state: &mut LuaState) -> LuaResult<u32> {
     let code = Option::<String>::from_stack(state, 1)?;
     match code.filter(|code| is_valid_share_code(code)) {
@@ -541,7 +537,7 @@ fn get_blueprint_hyperlink(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "housing-blueprints")]
 fn get_blueprint_type_for_code(state: &mut LuaState) -> LuaResult<u32> {
     let blueprint_type =
         Option::<String>::from_stack(state, 1)?.and_then(|code| blueprint_type_for_code(&code));
@@ -552,7 +548,7 @@ fn get_blueprint_type_for_code(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "housing-blueprints")]
 fn import_blueprint(state: &mut LuaState) -> LuaResult<u32> {
     let code = Option::<String>::from_stack(state, 1)?.filter(|code| is_valid_share_code(code));
     borrow_state_mut(state)?
@@ -561,7 +557,7 @@ fn import_blueprint(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "housing-blueprints")]
 fn is_share_code_valid(state: &mut LuaState) -> LuaResult<u32> {
     let valid =
         Option::<String>::from_stack(state, 1)?.is_some_and(|code| is_valid_share_code(&code));
@@ -569,7 +565,7 @@ fn is_share_code_valid(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "housing-blueprints")]
 fn rename_blueprint(state: &mut LuaState) -> LuaResult<u32> {
     let blueprint_id = string_arg_or_empty(state, 1)?;
     let name = string_arg_or_empty(state, 2)?;
@@ -577,7 +573,7 @@ fn rename_blueprint(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "housing-blueprints")]
 fn request_blueprint_collection(state: &mut LuaState) -> LuaResult<u32> {
     borrow_state_mut(state)?
         .housing
@@ -585,7 +581,7 @@ fn request_blueprint_collection(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "housing-blueprints")]
 fn request_blueprint_contents(state: &mut LuaState) -> LuaResult<u32> {
     borrow_state_mut(state)?
         .housing
@@ -593,7 +589,7 @@ fn request_blueprint_contents(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "housing-blueprints")]
 fn request_blueprint_contents_for_context(state: &mut LuaState) -> LuaResult<u32> {
     borrow_state_mut(state)?
         .housing
@@ -601,7 +597,7 @@ fn request_blueprint_contents_for_context(state: &mut LuaState) -> LuaResult<u32
     Ok(0)
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "housing-blueprints")]
 fn start_import_room_blueprint(state: &mut LuaState) -> LuaResult<u32> {
     let code =
         Option::<String>::from_stack(state, 1)?.filter(|code| is_valid_room_blueprint_code(code));
@@ -611,35 +607,35 @@ fn start_import_room_blueprint(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "housing-blueprints")]
 fn get_export_availability(state: &mut LuaState) -> LuaResult<u32> {
     let availability = { borrow_state(state)?.housing.blueprint_export_availability };
     state.push(Val::Num(f64::from(availability)));
     Ok(1)
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "housing-blueprints")]
 fn get_feature_availability(state: &mut LuaState) -> LuaResult<u32> {
     let availability = { borrow_state(state)?.housing.blueprint_feature_availability };
     state.push(Val::Num(f64::from(availability)));
     Ok(1)
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "housing-blueprints")]
 fn get_import_availability(state: &mut LuaState) -> LuaResult<u32> {
     let availability = { borrow_state(state)?.housing.blueprint_import_availability };
     state.push(Val::Num(f64::from(availability)));
     Ok(1)
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "housing-blueprints")]
 fn apply_pet_to_selected_decor(state: &mut LuaState) -> LuaResult<u32> {
     borrow_state_mut(state)?.housing.selected_decor_pet_guid =
         Option::<String>::from_stack(state, 1)?;
     Ok(0)
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "housing-blueprints")]
 fn get_selected_decor_pet_info(state: &mut LuaState) -> LuaResult<u32> {
     let pet_info = {
         let sim = borrow_state(state)?;
@@ -658,7 +654,7 @@ fn get_selected_decor_pet_info(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "housing-blueprints")]
 fn any_decor_placed_in_room(state: &mut LuaState) -> LuaResult<u32> {
     let room_id = i32::from_stack(state, 1)?;
     let has_decor = borrow_state(state)?
@@ -693,7 +689,7 @@ fn get_both_spent_placement_budgets(state: &mut LuaState) -> LuaResult<u32> {
     push_optional_pair(state, budgets)
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "housing-blueprints")]
 fn get_decor_assigned_pet_name(state: &mut LuaState) -> LuaResult<u32> {
     let decor_guid = string_arg_or_empty(state, 1)?;
     let pet_name = borrow_state(state)?
@@ -705,7 +701,7 @@ fn get_decor_assigned_pet_name(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "housing-blueprints")]
 fn get_decor_can_attach_pet(state: &mut LuaState) -> LuaResult<u32> {
     let decor_guid = string_arg_or_empty(state, 1)?;
     let can_attach = borrow_state(state)?
@@ -716,27 +712,21 @@ fn get_decor_can_attach_pet(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "housing-blueprints")]
 fn get_max_pet_placement_budget(state: &mut LuaState) -> LuaResult<u32> {
     let budget = { borrow_state(state)?.housing.max_pet_placement_budget };
     push_optional_i32(state, budget);
     Ok(1)
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "housing-blueprints")]
 fn get_spent_pet_placement_budget(state: &mut LuaState) -> LuaResult<u32> {
     let budget = { borrow_state(state)?.housing.spent_pet_placement_budget };
     push_optional_i32(state, budget);
     Ok(1)
 }
 
-#[cfg(all(feature = "retail-12-1-0", not(feature = "retail-12-0-7")))]
-fn can_set_viewed_floor(state: &mut LuaState) -> LuaResult<u32> {
-    state.push(Val::Bool(false));
-    Ok(1)
-}
-
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "housing-blueprints")]
 fn get_base_room_floor(state: &mut LuaState) -> LuaResult<u32> {
     let room_id = i32::from_stack(state, 1)?;
     let floor = borrow_state(state)?
@@ -748,21 +738,21 @@ fn get_base_room_floor(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "housing-blueprints")]
 fn get_room_player_is_in(state: &mut LuaState) -> LuaResult<u32> {
     let room_id = { borrow_state(state)?.housing.room_player_is_in };
     push_optional_i32(state, room_id);
     Ok(1)
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "housing-blueprints")]
 fn get_selected_blueprint_floorplan(state: &mut LuaState) -> LuaResult<u32> {
     let floorplan = { borrow_state(state)?.housing.selected_blueprint_floorplan };
     push_optional_i32(state, floorplan);
     Ok(1)
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "housing-blueprints")]
 fn has_selected_blueprint_floorplan(state: &mut LuaState) -> LuaResult<u32> {
     let has_floorplan = borrow_state(state)?
         .housing
@@ -772,14 +762,14 @@ fn has_selected_blueprint_floorplan(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "housing-blueprints")]
 fn get_highest_occupied_floor_index(state: &mut LuaState) -> LuaResult<u32> {
     let (_, highest) = occupied_floor_range(state)?;
     state.push(Val::Num(f64::from(highest)));
     Ok(1)
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "housing-blueprints")]
 fn get_lowest_occupied_floor_index(state: &mut LuaState) -> LuaResult<u32> {
     let (lowest, _) = occupied_floor_range(state)?;
     state.push(Val::Num(f64::from(lowest)));
@@ -787,7 +777,7 @@ fn get_lowest_occupied_floor_index(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 /// `(lowest, highest)` floor holding a modeled room; an empty layout occupies only floor 0.
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "housing-blueprints")]
 fn occupied_floor_range(state: &LuaState) -> LuaResult<(i32, i32)> {
     let sim = borrow_state(state)?;
     let floors = sim.housing.base_room_floors.values().copied();
@@ -796,7 +786,7 @@ fn occupied_floor_range(state: &LuaState) -> LuaResult<(i32, i32)> {
     Ok((lowest, highest))
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "housing-blueprints")]
 fn room_has_stairs(state: &mut LuaState) -> LuaResult<u32> {
     // Documented: invalid room GUIDs return false.
     let has_stairs = match room_arg(state) {
@@ -807,7 +797,7 @@ fn room_has_stairs(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "housing-blueprints")]
 fn can_export_room(state: &mut LuaState) -> LuaResult<u32> {
     // INFERRED from Blizzard_HouseEditorLayoutModePin: a false result shows
     // ERR_HOUSING_LAYOUT_RESTRICTION_BASE_ROOM, so the base room is the refusal case.
@@ -822,7 +812,7 @@ fn can_export_room(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "housing-blueprints")]
 fn can_export_type_from_current_location(state: &mut LuaState) -> LuaResult<u32> {
     let blueprint_type = Option::<i32>::from_stack(state, 1)?;
     let location_valid = {
@@ -843,7 +833,7 @@ fn can_export_type_from_current_location(state: &mut LuaState) -> LuaResult<u32>
     Ok(1)
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "housing-blueprints")]
 fn update_blueprint_string_from_input(state: &mut LuaState) -> LuaResult<u32> {
     let input = string_arg_or_empty(state, 1)?;
     // INFERRED: pasted blueprint hyperlinks normalize to their bare share code.
@@ -855,7 +845,7 @@ fn update_blueprint_string_from_input(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "housing-blueprints")]
 fn share_code_from_input(input: &str) -> &str {
     let trimmed = input.trim();
     trimmed
@@ -864,7 +854,7 @@ fn share_code_from_input(input: &str) -> &str {
         .map_or(trimmed, |(code, _)| code)
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "housing-blueprints")]
 fn get_all_max_placement_budgets(state: &mut LuaState) -> LuaResult<u32> {
     let budgets = {
         let housing = &borrow_state(state)?.housing;
@@ -881,7 +871,7 @@ fn get_all_max_placement_budgets(state: &mut LuaState) -> LuaResult<u32> {
     push_budget_maps(state, budgets)
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "housing-blueprints")]
 fn get_all_spent_placement_budgets(state: &mut LuaState) -> LuaResult<u32> {
     let budgets = {
         let housing = &borrow_state(state)?.housing;
@@ -898,14 +888,14 @@ fn get_all_spent_placement_budgets(state: &mut LuaState) -> LuaResult<u32> {
     push_budget_maps(state, budgets)
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "housing-blueprints")]
 fn owned_location(housing: &HousingState) -> bool {
     housing.inside_owned_house || housing.inside_owned_plot
 }
 
 /// Pushes `(interior, exterior)` HousingBudgetType maps, or two nils outside an
 /// owned house/plot. Budget types the simulator does not track stay absent.
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "housing-blueprints")]
 fn push_budget_maps(
     state: &mut LuaState,
     budgets: Option<([(i32, Option<i32>); 2], [(i32, Option<i32>); 1])>,
@@ -922,7 +912,7 @@ fn push_budget_maps(
     Ok(2)
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "housing-blueprints")]
 fn budget_map(state: &mut LuaState, entries: &[(i32, Option<i32>)]) -> Val {
     let map = create_table(state);
     let Val::Table(table) = map else {
@@ -942,7 +932,7 @@ fn budget_map(state: &mut LuaState, entries: &[(i32, Option<i32>)]) -> Val {
 }
 
 /// Room identifiers are the simulator's numeric room keys; anything else is invalid.
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "housing-blueprints")]
 fn room_arg(state: &LuaState) -> Option<i32> {
     match crate::lua_bridge::stack_val(state, 1) {
         Val::Num(room) if room.fract() == 0.0 => Some(room as i32),
@@ -950,18 +940,18 @@ fn room_arg(state: &LuaState) -> Option<i32> {
     }
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "housing-blueprints")]
 fn string_arg_or_empty(state: &mut LuaState, index: i32) -> LuaResult<String> {
     Ok(Option::<String>::from_stack(state, index)?.unwrap_or_default())
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "housing-blueprints")]
 fn push_string(state: &mut LuaState, value: &str) {
     let value = create_string(state, value);
     state.push(value);
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "housing-blueprints")]
 fn push_optional_string(state: &mut LuaState, value: Option<&str>) {
     match value {
         Some(value) => push_string(state, value),
@@ -969,7 +959,7 @@ fn push_optional_string(state: &mut LuaState, value: Option<&str>) {
     }
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "housing-blueprints")]
 fn push_optional_i32(state: &mut LuaState, value: Option<i32>) {
     match value {
         Some(value) => state.push(Val::Num(f64::from(value))),
@@ -992,7 +982,7 @@ fn push_optional_pair(state: &mut LuaState, pair: (Option<i32>, Option<i32>)) ->
     Ok(2)
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "housing-blueprints")]
 fn selected_pet_table(state: &mut LuaState, guid: &str, name: Option<&str>) -> Val {
     let table = create_table(state);
     let guid = create_string(state, guid);
@@ -1004,23 +994,23 @@ fn selected_pet_table(state: &mut LuaState, guid: &str, name: Option<&str>) -> V
     table
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "housing-blueprints")]
 fn blueprint_code(prefix: &str, blueprint_id: &str) -> String {
     format!("{prefix}{blueprint_id}")
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "housing-blueprints")]
 fn is_valid_share_code(code: &str) -> bool {
     blueprint_type_for_code(code).is_some()
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "housing-blueprints")]
 fn is_valid_room_blueprint_code(code: &str) -> bool {
     code.strip_prefix(ROOM_BLUEPRINT_CODE_PREFIX)
         .is_some_and(|id| !id.is_empty())
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "housing-blueprints")]
 fn blueprint_type_for_code(code: &str) -> Option<i32> {
     if code
         .strip_prefix(BLUEPRINT_CODE_PREFIX)
