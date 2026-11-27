@@ -265,48 +265,72 @@ fn ptr_map_art_help_text_position_keeps_existing_temporary_default() {
     assert_eq!(positions, (2, 2));
 }
 
+// Retail answers child queries from the client UiMap catalog as well as the
+// seeded maps (efb1212843); the other profiles see only the seeded tree.
+#[cfg(feature = "client-retail")]
+const MAP_CHILD_COUNTS: MapChildCounts = MapChildCounts {
+    eastern_kingdoms: 58,
+    azeroth_descendants: 1280,
+    azeroth_zones: 179,
+    stormwind: 3,
+};
+#[cfg(not(feature = "client-retail"))]
+const MAP_CHILD_COUNTS: MapChildCounts = MapChildCounts {
+    eastern_kingdoms: 1,
+    azeroth_descendants: 2,
+    azeroth_zones: 1,
+    stormwind: 0,
+};
+
+struct MapChildCounts {
+    eastern_kingdoms: i32,
+    azeroth_descendants: i32,
+    azeroth_zones: i32,
+    stormwind: i32,
+}
+
+const STORMWIND_CHILD_PROBE: &str = r#"
+    local children = C_Map.GetMapChildrenInfo(13)
+    local allDirect = true
+    local stormwind
+    for _, child in ipairs(children) do
+        allDirect = allDirect and child.parentMapID == 13
+        if child.mapID == 84 then stormwind = child end
+    end
+    return #children, allDirect, stormwind.name, stormwind.mapType, stormwind.parentMapID
+"#;
+
 #[test]
 fn get_map_children_info_returns_direct_children() {
     let env = env();
-    let (count, first_id, first_name, first_type, first_parent): (i32, i32, String, i32, i32) = env
-        .eval(
-            r#"
-            local children = C_Map.GetMapChildrenInfo(13)
-            local first = children[1]
-            return #children, first.mapID, first.name, first.mapType, first.parentMapID
-            "#,
-        )
-        .unwrap();
-    assert_eq!(
-        count, 1,
-        "Eastern Kingdoms has one seeded child (Stormwind)"
-    );
-    assert_eq!(first_id, 84);
-    assert_eq!(first_name, "Stormwind City");
-    assert_eq!(first_type, 3, "Zone");
-    assert_eq!(first_parent, 13);
+    let (count, all_direct, name, map_type, parent): (i32, bool, String, i32, i32) =
+        env.eval(STORMWIND_CHILD_PROBE).unwrap();
+    assert_eq!(count, MAP_CHILD_COUNTS.eastern_kingdoms);
+    assert!(all_direct, "every direct child of 13 names 13 as parent");
+    assert_eq!(name, "Stormwind City");
+    assert_eq!(map_type, 3, "Zone");
+    assert_eq!(parent, 13);
 }
+
+const DESCENDANT_PROBE: &str = r#"
+    local function has(list, id)
+        for _, child in ipairs(list) do
+            if child.mapID == id then return true end
+        end
+        return false
+    end
+    local children = C_Map.GetMapChildrenInfo(947, nil, true)
+    return #children, has(children, 13), has(children, 84)
+"#;
 
 #[test]
 fn get_map_children_info_with_all_descendants_walks_tree() {
     let env = env();
-    let (count, ids): (i32, Vec<i32>) = env
-        .eval(
-            r#"
-            local function array(tbl, key)
-                local out = {}
-                for i = 1, #tbl do out[i] = tbl[i][key] end
-                return out
-            end
-            local children = C_Map.GetMapChildrenInfo(947, nil, true)
-            return #children, array(children, "mapID")
-            "#,
-        )
-        .unwrap();
-    assert_eq!(count, 2, "Azeroth → Eastern Kingdoms → Stormwind");
-    let mut sorted = ids;
-    sorted.sort();
-    assert_eq!(sorted, vec![13, 84]);
+    let (count, has_continent, has_zone): (i32, bool, bool) =
+        env.eval(DESCENDANT_PROBE).unwrap();
+    assert_eq!(count, MAP_CHILD_COUNTS.azeroth_descendants);
+    assert!(has_continent, "Azeroth → Eastern Kingdoms");
+    assert!(has_zone, "Eastern Kingdoms → Stormwind");
 }
 
 #[test]
@@ -326,29 +350,37 @@ fn get_map_info_exposes_cosmic_parent_for_seeded_world_maps() {
     assert_eq!(dorn_parent, 947, "Isle of Dorn's nearest seeded ancestor");
 }
 
+const ZONE_FILTER_PROBE: &str = r#"
+    local zones = C_Map.GetMapChildrenInfo(947, 3, true)
+    local allZones, hasStormwind = true, false
+    for _, zone in ipairs(zones) do
+        allZones = allZones and zone.mapType == 3
+        hasStormwind = hasStormwind or zone.mapID == 84
+    end
+    return #zones, allZones, hasStormwind
+"#;
+
 #[test]
 fn get_map_children_info_filters_by_map_type() {
     let env = env();
-    // Azeroth (947) has a Continent (13) and Stormwind (84, Zone).
-    // Ask for Zones only with allDescendants=true — we should get 84.
-    let (count, first_id, first_type): (i32, i32, i32) = env
-        .eval(
-            r#"
-            local zones = C_Map.GetMapChildrenInfo(947, 3, true)
-            return #zones, zones[1].mapID, zones[1].mapType
-            "#,
-        )
-        .unwrap();
-    assert_eq!(count, 1);
-    assert_eq!(first_id, 84);
-    assert_eq!(first_type, 3);
+    // Zones only, with allDescendants=true, under Azeroth (947).
+    let (count, all_zones, has_stormwind): (i32, bool, bool) =
+        env.eval(ZONE_FILTER_PROBE).unwrap();
+    assert_eq!(count, MAP_CHILD_COUNTS.azeroth_zones);
+    assert!(all_zones, "the mapType filter keeps only Zones");
+    assert!(has_stormwind);
 }
 
 #[test]
 fn get_map_children_info_returns_empty_array_for_childless_map() {
     let env = env();
     let count: i32 = env.eval("return #C_Map.GetMapChildrenInfo(84)").unwrap();
-    assert_eq!(count, 0, "Stormwind City has no seeded children");
+    assert_eq!(count, MAP_CHILD_COUNTS.stormwind);
+    #[cfg(feature = "client-retail")]
+    {
+        let childless: i32 = env.eval("return #C_Map.GetMapChildrenInfo(225)").unwrap();
+        assert_eq!(childless, 0, "The Stockade has no UiMap children");
+    }
 }
 
 #[test]
