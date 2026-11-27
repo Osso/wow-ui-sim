@@ -45,6 +45,13 @@ pub(super) fn open_world_map_interaction(state: &mut LuaState) -> LuaResult<u32>
     show_player_interaction(state, "WorldMap")
 }
 
+/// The contribution-collector NPC interaction registered by the original
+/// `Blizzard_Contribution/Blizzard_Contribution_Bootstrap.lua:7-14`.
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(super) fn open_contribution_collector(state: &mut LuaState) -> LuaResult<u32> {
+    show_player_interaction(state, "ContributionCollector")
+}
+
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn show_player_interaction(state: &mut LuaState, name: &str) -> LuaResult<u32> {
     let interaction_type = player_interaction_type(name);
