@@ -798,6 +798,10 @@ fn micro_menu_ej_button_loads_and_opens_panel() {
 
 prefork_full_ui_case! {
 fn game_menu_buttons_display_text(env: &WowLuaEnv) {
+    // MainMenuMicroButtonMixin:OnClick acts only when IsMouseOver() is true
+    // (MainMenuBarMicroButtons.lua:1844-1845), as the sibling click tests seed.
+    env.exec("A_Admin.SetMouseOverFrame(MainMenuMicroButton)")
+        .expect("mouse-over fixture should select MainMenuMicroButton");
     click_button(&env, "MainMenuMicroButton").expect("MainMenuMicroButton click failed");
     assert!(
         frame_is_shown(&env, "GameMenuFrame"),
