@@ -390,6 +390,18 @@ pub fn load_game_startup_inventory(env: &WowLuaEnv) {
     env.sync_string_metatable_to_global_string();
 }
 
+/// Classic profiles and Forever load production's selected startup TOCs, not
+/// a Retail-shaped addon list: Forever's Camelot `[Game]` variants select
+/// different owners (Blizzard_ActionBar.toc MainMenuBarEndCaps, Blizzard_Minimap).
+/// Returns true when the fixture needs no hand-written addon list.
+pub fn load_non_retail_game_startup_inventory(env: &WowLuaEnv) -> bool {
+    if wow_ui_sim::client_profile::ACTIVE != wow_ui_sim::client_profile::ClientProfile::WowForever {
+        return load_classic_game_startup_inventory(env);
+    }
+    load_game_startup_inventory(env);
+    true
+}
+
 /// Production game-screen startup (inventory, post-load workarounds, startup events).
 #[cfg(feature = "client-wowforever")]
 pub fn forever_game_env() -> WowLuaEnv {
