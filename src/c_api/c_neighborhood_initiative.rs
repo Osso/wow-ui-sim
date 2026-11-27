@@ -20,28 +20,23 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
         return Ok(());
     }
     let namespace = ensure_namespace(state, "C_NeighborhoodInitiative")?;
-    if cfg!(feature = "retail-12-0-0") {
+    // Forever 1.60.1 pins the same NeighborhoodInitiativeDocumentation.lua as
+    // Retail (byte-identical; publication members at lines 20-193).
+    let forever = crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever;
+    if cfg!(feature = "retail-12-0-0") || forever {
         publication::register(state, namespace)?;
     }
-    table_set_rust_fn_static(
-        state,
-        namespace,
-        "GetTrackedInitiativeTasks",
-        get_tracked_tasks,
-    )?;
-    table_set_rust_fn_static(
-        state,
-        namespace,
-        "AddTrackedInitiativeTask",
-        add_tracked_task,
-    )?;
-    table_set_rust_fn_static(
-        state,
-        namespace,
-        "RemoveTrackedInitiativeTask",
-        remove_tracked_task,
-    )?;
-    if cfg!(feature = "retail-12-1-0") {
+    for (name, callback) in [
+        (
+            "GetTrackedInitiativeTasks",
+            get_tracked_tasks as rilua::RustFn,
+        ),
+        ("AddTrackedInitiativeTask", add_tracked_task),
+        ("RemoveTrackedInitiativeTask", remove_tracked_task),
+    ] {
+        table_set_rust_fn_static(state, namespace, name, callback)?;
+    }
+    if cfg!(feature = "retail-12-1-0") || forever {
         table_set_rust_fn_static(
             state,
             namespace,

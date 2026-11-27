@@ -16,7 +16,11 @@ use rilua::{LuaResult, RustFn, Val, runtime_error};
 use serde::Serialize;
 
 pub(super) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
-    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
         table_set_rust_fn_static(
             state,
             namespace,
@@ -24,6 +28,11 @@ pub(super) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResu
             get_available_house_xp,
         )?;
     }
+    register_task_reads(state, namespace)?;
+    register_neighborhood_methods(state, namespace)
+}
+
+fn register_task_reads(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
     // VERIFIED for Retail; INFERRED for PTR, which shares the Retail UI path.
     if matches!(
         crate::client_profile::ACTIVE,
@@ -42,6 +51,10 @@ pub(super) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResu
             get_initiative_task_info,
         )?;
     }
+    Ok(())
+}
+
+fn register_neighborhood_methods(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
     for (name, callback) in [
         ("GetActiveNeighborhood", get_active_neighborhood as RustFn),
         ("SetActiveNeighborhood", set_active_neighborhood),
