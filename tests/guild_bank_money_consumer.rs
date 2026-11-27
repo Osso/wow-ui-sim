@@ -51,25 +51,40 @@ prefork_full_ui_case! {
 fn guild_bank_withdraw_state_uses_supplied_permissions(env: &WowLuaEnv) {
     env.exec(OPEN_EMPTY_GUILD_BANK).expect("original guild bank opens empty");
     assert_eq!(shown_guild_bank_coins(env), "0/00/00");
-    assert!(!env.eval("return GuildBankFrame.WithdrawButton:IsEnabled()").unwrap());
+    let empty_withdraw_enabled: bool = env
+        .eval("return GuildBankFrame.WithdrawButton:IsEnabled()")
+        .unwrap();
+    assert!(!empty_withdraw_enabled);
 
     env.exec(r#"
 A_Admin.AddGuildBankTab("General", "Interface\\Icons\\INV_Misc_QuestionMark", true, true, 3, 2, false)
 A_Admin.SetGuildBankMoney(500000)
 A_Admin.SetGuildBankRankPermissions(1, 300000, {7,7,7,7,7,7}, {10,10,10,10,10,10})
 "#).expect("first withdrawal permission snapshot is supplied");
-    assert!(env.eval("return GuildBankFrame.WithdrawButton:IsEnabled()").unwrap());
-    assert_eq!(env.eval("return GetGuildBankWithdrawMoney()").unwrap(), 300000);
-    let first_remaining = env.eval("return GuildBankFrame.LimitLabel:GetText()").unwrap();
+    let first_withdraw_enabled: bool = env
+        .eval("return GuildBankFrame.WithdrawButton:IsEnabled()")
+        .unwrap();
+    assert!(first_withdraw_enabled);
+    let first_limit: i64 = env.eval("return GetGuildBankWithdrawMoney()").unwrap();
+    assert_eq!(first_limit, 300000);
+    let first_remaining: String = env
+        .eval("return GuildBankFrame.LimitLabel:GetText()")
+        .unwrap();
 
     env.exec(r#"
 A_Admin.ClearGuildBankTabs()
 A_Admin.AddGuildBankTab("General", "Interface\\Icons\\INV_Misc_QuestionMark", true, true, 3, 1, false)
 A_Admin.SetGuildBankRankPermissions(1, 0, {3,3,3,3,3,3}, {10,10,10,10,10,10})
 "#).expect("second withdrawal permission snapshot is supplied");
-    assert!(!env.eval("return GuildBankFrame.WithdrawButton:IsEnabled()").unwrap());
-    assert_eq!(env.eval("return GetGuildBankWithdrawMoney()").unwrap(), 0);
-    let second_remaining = env.eval("return GuildBankFrame.LimitLabel:GetText()").unwrap();
+    let second_withdraw_enabled: bool = env
+        .eval("return GuildBankFrame.WithdrawButton:IsEnabled()")
+        .unwrap();
+    assert!(!second_withdraw_enabled);
+    let second_limit: i64 = env.eval("return GetGuildBankWithdrawMoney()").unwrap();
+    assert_eq!(second_limit, 0);
+    let second_remaining: String = env
+        .eval("return GuildBankFrame.LimitLabel:GetText()")
+        .unwrap();
     assert_ne!(first_remaining, second_remaining);
     assert_eq!(guild_bank_lua_errors(env), Vec::<String>::new());
 }
