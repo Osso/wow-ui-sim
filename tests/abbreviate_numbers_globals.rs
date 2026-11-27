@@ -3,6 +3,8 @@
 //! consumer is `FormattingUtil.GetCostString` (Blizzard_SharedXML/FormattingUtil.lua:191-201).
 #![cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 
+use wow_ui_sim::lua_api::WowLuaEnv;
+
 const COST_STRINGS: &str = r#"
     local function cost(quantity)
         return FormattingUtil.GetCostString(134400, quantity, "", true):match("^(%S+)")
