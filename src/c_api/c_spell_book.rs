@@ -281,7 +281,12 @@ fn register_retail_spell_book_item_actions(
     state: &mut LuaState,
     table_ref: rilua::vm::gc::arena::GcRef<rilua::vm::table::Table>,
 ) -> LuaResult<()> {
-    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail {
+    // Forever SpellBookDocumentation.lua declares these three blocks byte-identically.
+    if !matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
         return Ok(());
     }
     table_set_rust_fn_static(

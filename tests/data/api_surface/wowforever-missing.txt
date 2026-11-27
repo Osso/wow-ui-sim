@@ -1507,9 +1507,6 @@ C_Spell.TargetSpellChecksItemCondition # not-yet: temporary Lua workaround
 C_Spell.ToggleSpellAutoCast # not-yet
 C_SpellBook.AbortSpellIntro # not-yet
 C_SpellBook.ContainsAnyDisenchantSpell # not-yet
-C_SpellBook.FindBaseSpellByID # not-yet: temporary Lua workaround
-C_SpellBook.FindFlyoutSlotBySpellID # not-yet: temporary Lua workaround
-C_SpellBook.FindSpellOverrideByID # not-yet: temporary Lua workaround
 C_SpellBook.GetCurrentLevelSpells # not-yet
 C_SpellBook.GetSkillLineIndexByID # not-yet
 C_SpellBook.GetSpellBookItemCastCount # not-yet
