@@ -1110,7 +1110,6 @@ C_MajorFactions.IsMajorFactionHiddenFromExpansionPage # not-yet: temporary Lua w
 C_MajorFactions.IsWeeklyRenownCapped # not-yet
 C_MajorFactions.ShouldDisplayMajorFactionAsJourney # not-yet: temporary Lua workaround
 C_MajorFactions.ShouldUseJourneyRewardTrack # not-yet: temporary Lua workaround
-C_Map.CloseWorldMapInteraction # not-yet
 C_Map.GetAreaInfo # not-yet: temporary Lua workaround
 C_Map.GetBountySetMaps # not-yet
 C_Map.GetMapArtZoneTextPosition # not-yet

@@ -34,3 +34,11 @@ This activates `Enum.PlayerInteractionType.GuildRename` and fires `PLAYER_INTERA
 
 - `A_Admin.OpenMailbox()` activates `MailInfo` and fires the profile's mailbox-open event.
 - `A_Admin.CloseMailbox()` clears `MailInfo` and fires the matching close event when the interaction was active.
+
+## World map interaction (Retail and WoW Forever)
+
+```lua
+A_Admin.OpenWorldMapInteraction()
+```
+
+This activates `Enum.PlayerInteractionType.WorldMap` (the map-table NPC interaction) and fires `PLAYER_INTERACTION_MANAGER_FRAME_SHOW`. The original registration (`WorldMapFrame.lua:1-7`) has a no-op show function, so the map itself still opens through `OpenWorldMap` or `ToggleWorldMap`. Closing the world map runs `C_Map.CloseWorldMapInteraction()`, which ends the interaction and fires `PLAYER_INTERACTION_MANAGER_FRAME_HIDE`.
