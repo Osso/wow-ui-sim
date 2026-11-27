@@ -583,7 +583,6 @@ C_Flyout.GetFlyoutInfo # not-yet
 C_Flyout.GetFlyoutSlotInfo # not-yet
 C_Flyout.GetNumFlyouts # not-yet
 C_FrameManager.GetFrameVisibilityState # not-yet: temporary Lua workaround
-C_FriendList.GetWhoRaceFilters # not-yet
 C_FriendList.IsIgnoredByGuid # not-yet
 C_FriendList.SendWho # not-yet
 C_FriendList.SortWho # not-yet

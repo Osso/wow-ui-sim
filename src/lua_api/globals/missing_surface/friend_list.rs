@@ -74,6 +74,9 @@ pub(super) fn register_friend_list_surface(state: &mut LuaState) -> LuaResult<()
     table_set_rust_fn_static(state, table_ref, "GetWhoInfo", get_who_info)?;
     table_set_rust_fn_static(state, table_ref, "GetNumWhoResults", get_num_who_results)?;
     table_set_rust_fn_static(state, table_ref, "SetWhoToUi", set_who_to_ui)?;
+    // Forever 70707 FriendListDocumentation.lua:219 declares GetWhoRaceFilters.
+    #[cfg(feature = "client-wowforever")]
+    table_set_rust_fn_static(state, table_ref, "GetWhoRaceFilters", get_who_race_filters)?;
     table_set_rust_fn_static(state, table_ref, "ShowFriends", show_friends)?;
     Ok(())
 }
@@ -170,6 +173,48 @@ fn get_who_info(state: &mut LuaState) -> LuaResult<u32> {
     };
     let who_info = build_who_info_table(state, row);
     state.push(who_info);
+    Ok(1)
+}
+
+/// Best guess (UNVERIFIED native roster): the core playable races of the
+/// character-create race fixture, keyed by ChrRaces ID.
+/// See docs/specs/forever-lfg-vanilla-style-inputs.md.
+#[cfg(feature = "client-wowforever")]
+const WHO_RACE_FILTERS: &[(i32, &str)] = &[
+    (1, "Human"),
+    (2, "Orc"),
+    (3, "Dwarf"),
+    (4, "Night Elf"),
+    (5, "Undead"),
+    (6, "Tauren"),
+    (7, "Gnome"),
+    (8, "Troll"),
+    (9, "Goblin"),
+    (10, "Blood Elf"),
+    (11, "Draenei"),
+    (22, "Worgen"),
+    (24, "Pandaren"),
+];
+
+/// Returns a fresh `WhoFilter` array; the WhoList consumer sorts it in place.
+#[cfg(feature = "client-wowforever")]
+fn get_who_race_filters(state: &mut LuaState) -> LuaResult<u32> {
+    let filters = create_table(state);
+    state.push(filters);
+    let Val::Table(filters_ref) = filters else {
+        return Ok(1);
+    };
+    for (index, (race_id, race_name)) in WHO_RACE_FILTERS.iter().enumerate() {
+        let filter = create_table(state);
+        if let Some(table) = state.gc.tables.get_mut(filters_ref) {
+            let key = Val::Num((index + 1) as f64);
+            let _ = table.raw_set(key, filter, &state.gc.string_arena);
+        }
+        state.gc.barrier_back(filters_ref);
+        let name = create_string(state, race_name);
+        table_set_static(state, filter, "name", name);
+        table_set_static(state, filter, "ID", Val::Num(f64::from(*race_id)));
+    }
     Ok(1)
 }
 
