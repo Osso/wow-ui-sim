@@ -18,7 +18,7 @@ local function has_tag_entry()
     if not menu then return false end
     for _, child in ipairs({ menu:GetChildren() }) do
         local description = child.GetElementDescription and child:GetElementDescription()
-        if description and description:GetText() == tagLabel then return true end
+        if description and description.GetText and description:GetText() == tagLabel then return true end
     end
     return false
 end
