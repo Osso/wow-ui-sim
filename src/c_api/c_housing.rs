@@ -17,7 +17,7 @@ pub enum HousingArea {
 mod basic_mode;
 pub mod catalog;
 mod charter;
-#[cfg(feature = "retail-12-0-0")]
+#[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
 pub mod editor;
 pub mod exterior;
 #[cfg(feature = "retail-12-0-5")]
@@ -91,20 +91,12 @@ pub(crate) fn register_c_housing_surface(state: &mut LuaState) -> LuaResult<()> 
         market::register(state, housing)?;
     }
     let blueprints = ensure_namespace(state, "C_HousingBlueprint")?;
-    let house_editor = ensure_namespace(state, "C_HouseEditor")?;
+    ensure_namespace(state, "C_HouseEditor")?;
     let customize_mode = ensure_namespace(state, "C_HousingCustomizeMode")?;
     let decor = ensure_namespace(state, "C_HousingDecor")?;
     let layout = ensure_namespace(state, "C_HousingLayout")?;
     register_patch_12_0_7_housing_surface(state, customize_mode, layout)?;
-    register_patch_12_1_c_housing_surface(
-        state,
-        housing,
-        blueprints,
-        house_editor,
-        customize_mode,
-        decor,
-        layout,
-    )
+    register_patch_12_1_c_housing_surface(state, housing, blueprints, customize_mode, decor, layout)
 }
 
 fn register_profile_surface(state: &mut LuaState) -> LuaResult<()> {
@@ -128,7 +120,8 @@ fn register_profile_service_methods(state: &mut LuaState) -> LuaResult<()> {
         owned_houses::register(state)?;
         house_finder::register(state)?;
     }
-    #[cfg(feature = "retail-12-0-0")]
+    // Forever HouseEditorUIDocumentation.lua is byte-identical to Retail's.
+    #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
     editor::register(state)?;
     #[cfg(feature = "retail-12-0-0")]
     location::register(state)?;
@@ -177,14 +170,12 @@ fn register_patch_12_1_c_housing_surface(
     state: &mut LuaState,
     housing: NamespaceTable,
     blueprints: NamespaceTable,
-    house_editor: NamespaceTable,
     customize_mode: NamespaceTable,
     decor: NamespaceTable,
     layout: NamespaceTable,
 ) -> LuaResult<()> {
     register_housing_methods(state, housing)?;
     register_blueprint_methods(state, blueprints)?;
-    register_house_editor_methods(state, house_editor)?;
     register_customize_mode_methods(state, customize_mode)?;
     register_decor_methods(state, decor)?;
     register_layout_methods(state, layout)
@@ -195,7 +186,6 @@ fn register_patch_12_1_c_housing_surface(
     _state: &mut LuaState,
     _housing: rilua::vm::gc::arena::GcRef<rilua::vm::table::Table>,
     _blueprints: rilua::vm::gc::arena::GcRef<rilua::vm::table::Table>,
-    _house_editor: rilua::vm::gc::arena::GcRef<rilua::vm::table::Table>,
     _customize_mode: rilua::vm::gc::arena::GcRef<rilua::vm::table::Table>,
     _decor: rilua::vm::gc::arena::GcRef<rilua::vm::table::Table>,
     _layout: rilua::vm::gc::arena::GcRef<rilua::vm::table::Table>,
@@ -307,25 +297,6 @@ fn register_blueprint_methods(state: &mut LuaState, blueprints: NamespaceTable) 
         blueprints,
         "StartImportRoomBlueprint",
         start_import_room_blueprint,
-    )
-}
-
-#[cfg(feature = "retail-12-1-0")]
-fn register_house_editor_methods(
-    state: &mut LuaState,
-    house_editor: NamespaceTable,
-) -> LuaResult<()> {
-    table_set_rust_fn_static(
-        state,
-        house_editor,
-        "GetActiveHouseEditorMode",
-        get_active_house_editor_mode,
-    )?;
-    table_set_rust_fn_static(
-        state,
-        house_editor,
-        "GetHouseEditorPlayerType",
-        get_house_editor_player_type,
     )
 }
 
@@ -658,20 +629,6 @@ fn get_feature_availability(state: &mut LuaState) -> LuaResult<u32> {
 fn get_import_availability(state: &mut LuaState) -> LuaResult<u32> {
     let availability = { borrow_state(state)?.housing.blueprint_import_availability };
     state.push(Val::Num(f64::from(availability)));
-    Ok(1)
-}
-
-#[cfg(feature = "retail-12-1-0")]
-fn get_active_house_editor_mode(state: &mut LuaState) -> LuaResult<u32> {
-    let mode = { borrow_state(state)?.housing.active_house_editor_mode };
-    state.push(Val::Num(f64::from(mode)));
-    Ok(1)
-}
-
-#[cfg(feature = "retail-12-1-0")]
-fn get_house_editor_player_type(state: &mut LuaState) -> LuaResult<u32> {
-    let player_type = { borrow_state(state)?.housing.house_editor_player_type };
-    push_optional_i32(state, player_type);
     Ok(1)
 }
 

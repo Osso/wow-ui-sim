@@ -695,16 +695,6 @@ C_HeirloomInfo.AreAllCollectionFiltersChecked # not-yet
 C_HeirloomInfo.AreAllSourceFiltersChecked # not-yet
 C_HeirloomInfo.IsUsingDefaultFilters # not-yet: temporary Lua workaround
 C_HeirloomInfo.SetAllCollectionFilters # not-yet
-C_HouseEditor.ActivateHouseEditorMode # not-yet
-C_HouseEditor.EnterHouseEditor # not-yet
-C_HouseEditor.GetActiveHouseEditorMode # not-yet
-C_HouseEditor.GetHouseEditorAvailability # not-yet
-C_HouseEditor.GetHouseEditorModeAvailability # not-yet
-C_HouseEditor.GetHouseEditorPlayerType # not-yet
-C_HouseEditor.IsHouseEditorActive # not-yet
-C_HouseEditor.IsHouseEditorModeActive # not-yet
-C_HouseEditor.IsHouseEditorStatusAvailable # not-yet
-C_HouseEditor.LeaveHouseEditor # not-yet
 C_HouseExterior.GetCoreFixtureOptionsInfo # not-yet: temporary Lua workaround
 C_HouseExterior.GetCurrentHouseExteriorSize # not-yet: temporary Lua workaround
 C_HouseExterior.GetCurrentHouseExteriorType # not-yet: temporary Lua workaround

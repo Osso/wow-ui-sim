@@ -101,6 +101,8 @@ pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
     let builder = super::real::region::register_admin(builder)?;
     let builder = super::real::release_timer::register_admin(builder)?;
     let builder = crate::c_api::c_death_recap::register_admin(builder)?;
+    #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
+    let builder = crate::c_api::c_housing::editor::register_admin(builder)?;
     let builder = super::real::lfg_role_check::register_admin(builder)?;
     let builder = register_admin_calendar_services(builder)?;
     let builder = register_admin_combat(builder)?;
