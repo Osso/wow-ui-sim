@@ -48,6 +48,7 @@ pub(super) fn equip_item(state: &mut LuaState) -> LuaResult<u32> {
             &[],
         )?;
     }
+    super::state_backed_queries::dispatch_event_now(state, "UPDATE_INVENTORY_ALERTS", &[])?;
     Ok(0)
 }
 
@@ -100,6 +101,7 @@ pub(super) fn unequip_item(state: &mut LuaState) -> LuaResult<u32> {
             &[],
         )?;
     }
+    super::state_backed_queries::dispatch_event_now(state, "UPDATE_INVENTORY_ALERTS", &[])?;
     Ok(0)
 }
 
