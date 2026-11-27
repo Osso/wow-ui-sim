@@ -13,6 +13,17 @@ fn native_tooltip_anchors() -> bool {
     )
 }
 
+/// Retail R88n.5r-q3 (ed8aba6218) anchors cursor tooltips to the reserved
+/// geometry root `clamp_geometry::COORDINATE_ROOT` (id 0; widget IDs start at
+/// 1), never to the owner. Other profiles keep an unparented screen anchor.
+fn cursor_anchor_target() -> Option<usize> {
+    matches!(
+        wow_ui_sim::client_profile::ACTIVE,
+        wow_ui_sim::client_profile::ClientProfile::Retail
+    )
+    .then_some(0)
+}
+
 #[test]
 fn test_tooltip_anchor_right_sets_anchors() {
     let env = WowLuaEnv::new().unwrap();
@@ -402,8 +413,9 @@ fn test_tooltip_anchor_cursor_uses_absolute_position() {
             AnchorPoint::TopLeft
         }
     );
-    assert!(
-        anchor.relative_to_id.is_none(),
+    assert_eq!(
+        anchor.relative_to_id,
+        cursor_anchor_target(),
         "ANCHOR_CURSOR should not reference owner"
     );
     assert!(
@@ -458,7 +470,7 @@ fn test_tooltip_side_cursor_anchors_use_absolute_position() {
             AnchorPoint::BottomLeft
         };
         assert_eq!(anchor.point, expected_point);
-        assert!(anchor.relative_to_id.is_none());
+        assert_eq!(anchor.relative_to_id, cursor_anchor_target());
         assert!(
             (anchor.x_offset - 200.0).abs() < 0.1,
             "{anchor_kind} x_offset should be mouse x"
@@ -512,7 +524,7 @@ fn test_tooltip_anchor_cursor_tracks_mouse_movement() {
             AnchorPoint::TopLeft
         }
     );
-    assert!(anchor.relative_to_id.is_none());
+    assert_eq!(anchor.relative_to_id, cursor_anchor_target());
     assert!(
         (anchor.x_offset
             - if native_tooltip_anchors() {
