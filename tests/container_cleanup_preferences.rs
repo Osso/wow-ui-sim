@@ -53,6 +53,40 @@ const SEARCH_FILTER: &str = r#"
     assert(C_Container.IsContainerFiltered(0) == false)
 "#;
 
+const BACKPACK_CLEANUP_MENU: &str = r#"
+    local frame = ContainerFrameUtil_GetShownFrameForID(Enum.BagIndex.Backpack)
+    assert(frame and frame:IsShown(), "backpack frame must be open")
+    local function pick_checkbox(index)
+        frame.PortraitButton:Click()
+        local root = frame.PortraitButton:GetMenuDescription()
+        local checkboxIndex, selected = 0, nil
+        for _, entry in root:EnumerateElementDescriptions() do
+            if entry:IsCheckbox() then
+                checkboxIndex = checkboxIndex + 1
+                if checkboxIndex == index then selected = entry end
+            end
+        end
+        if not selected then return false end
+        assert(selected:Pick(MenuInputContext.MouseButton, "LeftButton"))
+        return true
+    end
+    local function select_preference(getter)
+        for index = 1, 16 do
+            if not pick_checkbox(index) then break end
+            if getter() then return index end
+        end
+        error("backpack cleanup menu did not enable the preference")
+    end
+    assert(C_Container.GetBackpackAutosortDisabled() == false)
+    local autosortIndex = select_preference(C_Container.GetBackpackAutosortDisabled)
+    assert(C_Container.GetBackpackAutosortDisabled() == true)
+    assert(pick_checkbox(autosortIndex))
+    assert(C_Container.GetBackpackAutosortDisabled() == false)
+    assert(C_Container.GetBackpackSellJunkDisabled() == false)
+    select_preference(C_Container.GetBackpackSellJunkDisabled)
+    assert(C_Container.GetBackpackSellJunkDisabled() == true)
+"#;
+
 #[test]
 fn bag_slot_filter_overlay_tracks_the_container_search() {
     common::with_timeout(120, || {
@@ -82,6 +116,29 @@ fn bag_slot_filter_overlay_tracks_the_container_search() {
             "#,
         )
         .expect("bag button overlay follows each search result");
+    });
+}
+
+#[test]
+fn backpack_cleanup_menu_updates_container_preferences() {
+    common::with_timeout(120, || {
+        let env = WowLuaEnv::new().expect("Lua environment");
+        common::load_game_startup_inventory(&env);
+        env.sync_addon_names_to_lua();
+        env.apply_post_load_workarounds();
+        wow_ui_sim::startup::fire_startup_events_for_screen(
+            &env,
+            wow_ui_sim::screen::ScreenKind::Game,
+        );
+        env.exec(
+            r#"
+            SetCVar("combinedBags", "0")
+            ToggleBag(Enum.BagIndex.Backpack)
+            "#,
+        )
+        .expect("open backpack through ContainerFrame");
+        env.exec(BACKPACK_CLEANUP_MENU)
+            .expect("menu checkbox picks update the supplied preferences");
     });
 }
 
