@@ -170,7 +170,7 @@ fn register_interaction_combat(state: &mut LuaState) -> LuaResult<()> {
     // cache, whose declarations, enums and default constants match.
     #[cfg(feature = "client-mists")]
     super::mists_r88ai::register(state)?;
-    #[cfg(feature = "retail-12-0-0")]
+    #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
     super::c_combat_audio_alert::register(state)?;
     #[cfg(feature = "retail-12-0-0")]
     super::c_combat_text::register(state)?;

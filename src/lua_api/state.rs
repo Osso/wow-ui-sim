@@ -654,9 +654,9 @@ macro_rules! build_empty_sim_state {
             current_combat_text: None,
             combat_audio_speaker_volume: 100.0,
             combat_audio_format_settings: HashMap::new(),
-            #[cfg(feature = "retail-12-0-0")]
+            #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
             combat_audio_spec_settings: HashMap::new(),
-            #[cfg(feature = "retail-12-0-5")]
+            #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
             combat_audio_categories: Default::default(),
             #[cfg(not(feature = "client-wrath"))]
             combat_audio_throttles: HashMap::new(),

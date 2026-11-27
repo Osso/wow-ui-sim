@@ -8,7 +8,7 @@ use rilua::{LuaResult, Val};
 
 /// INFERRED: unconfigured category values are zero; categories are independent,
 /// shared across specs, and not coupled to playback or CVars.
-#[cfg(feature = "retail-12-0-5")]
+#[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 #[derive(Debug, Default)]
 pub struct CategorySettings {
     pub voices: std::collections::HashMap<i32, f64>,
@@ -19,9 +19,12 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
     let namespace = ensure_namespace(state, "C_CombatAudioAlert")?;
     if matches!(
         crate::client_profile::ACTIVE,
-        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::Ptr
+            | crate::client_profile::ClientProfile::WowForever
     ) {
-        // Retail CombatAudioAlertDocumentation.lua:11-23 and 121-133.
+        // Retail CombatAudioAlertDocumentation.lua:11-23 and 121-133; Forever 1.60.1
+        // ships a byte-identical CombatAudioAlertDocumentation.lua.
         table_set_rust_fn_static(
             state,
             namespace,
@@ -35,18 +38,18 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
             remove_known_target,
         )?;
     }
-    #[cfg(feature = "retail-12-0-5")]
+    #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
     register_category_settings(state, namespace)?;
     table_set_rust_fn_static(state, namespace, "GetSpeakerSpeed", get_speaker_speed)?;
     table_set_rust_fn_static(state, namespace, "SetSpeakerSpeed", set_speaker_speed)?;
-    #[cfg(not(feature = "retail-12-0-5"))]
+    #[cfg(not(any(feature = "retail-12-0-5", feature = "client-wowforever")))]
     {
         table_set_rust_fn_static(state, namespace, "GetSpeakerVolume", get_speaker_volume)?;
         table_set_rust_fn_static(state, namespace, "SetSpeakerVolume", set_speaker_volume)?;
     }
     table_set_rust_fn_static(state, namespace, "GetFormatSetting", get_format_setting)?;
     table_set_rust_fn_static(state, namespace, "SetFormatSetting", set_format_setting)?;
-    #[cfg(feature = "retail-12-0-0")]
+    #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
     {
         table_set_rust_fn_static(state, namespace, "GetSpecSetting", get_spec_setting)?;
         table_set_rust_fn_static(state, namespace, "SetSpecSetting", set_spec_setting)?;
@@ -134,7 +137,7 @@ fn token_guid(
     crate::lua_api::globals::unit_misc::existing_guid_for_unit(sim, &token)
 }
 
-#[cfg(feature = "retail-12-0-5")]
+#[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 fn register_category_settings(
     state: &mut LuaState,
     namespace: rilua::vm::gc::arena::GcRef<rilua::vm::table::Table>,
@@ -153,7 +156,7 @@ fn register_category_settings(
     })
 }
 
-#[cfg(feature = "retail-12-0-5")]
+#[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 fn get_category_setting(state: &mut LuaState, voice: bool) -> LuaResult<u32> {
     let category = numeric_arg(state, 1, "category")? as i32;
     let value = {
@@ -169,7 +172,7 @@ fn get_category_setting(state: &mut LuaState, voice: bool) -> LuaResult<u32> {
     Ok(1)
 }
 
-#[cfg(feature = "retail-12-0-5")]
+#[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 fn set_category_setting(state: &mut LuaState, voice: bool) -> LuaResult<u32> {
     let category = numeric_arg(state, 1, "category")? as i32;
     let value = numeric_arg(state, 2, "newVal")?;
@@ -196,14 +199,14 @@ fn numeric_arg(state: &LuaState, index: i32, what: &str) -> LuaResult<f64> {
 
 /// Spec settings belong to the active specialization; switching spec exposes that
 /// spec's own (initially zero) values. INFERRED: per-spec scope, unset reads zero.
-#[cfg(feature = "retail-12-0-0")]
+#[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
 fn spec_setting_key(state: &LuaState) -> LuaResult<(i32, i32)> {
     let setting = numeric_arg(state, 1, "SpecSetting setting")? as i32;
     let spec = borrow_state(state)?.player.active_spec_index;
     Ok((spec, setting))
 }
 
-#[cfg(feature = "retail-12-0-0")]
+#[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
 fn get_spec_setting(state: &mut LuaState) -> LuaResult<u32> {
     let key = spec_setting_key(state)?;
     let value = borrow_state(state)?
@@ -215,7 +218,7 @@ fn get_spec_setting(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-#[cfg(feature = "retail-12-0-0")]
+#[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
 fn set_spec_setting(state: &mut LuaState) -> LuaResult<u32> {
     let key = spec_setting_key(state)?;
     let value = numeric_arg(state, 2, "SetSpecSetting newVal")?;
@@ -261,14 +264,14 @@ fn set_format_setting(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-#[cfg(not(feature = "retail-12-0-5"))]
+#[cfg(not(any(feature = "retail-12-0-5", feature = "client-wowforever")))]
 fn get_speaker_volume(state: &mut LuaState) -> LuaResult<u32> {
     let volume = borrow_state(state)?.combat_audio_speaker_volume;
     state.push(Val::Num(volume));
     Ok(1)
 }
 
-#[cfg(not(feature = "retail-12-0-5"))]
+#[cfg(not(any(feature = "retail-12-0-5", feature = "client-wowforever")))]
 fn set_speaker_volume(state: &mut LuaState) -> LuaResult<u32> {
     let Val::Num(volume) = stack_val(state, 1) else {
         return Err(rilua::runtime_error("SetSpeakerVolume requires a number"));

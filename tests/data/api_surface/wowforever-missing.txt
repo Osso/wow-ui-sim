@@ -281,19 +281,6 @@ C_ColorUtil.ConvertRGBToHSV # not-yet: temporary Lua workaround
 C_ColorUtil.GenerateTextColorCode # not-yet: temporary Lua workaround
 C_ColorUtil.WrapTextInColor # not-yet: temporary Lua workaround
 C_ColorUtil.WrapTextInColorCode # not-yet: temporary Lua workaround
-C_CombatAudioAlert.AddToKnownTargetingList # not-yet
-C_CombatAudioAlert.GetCategoryVoice # not-yet
-C_CombatAudioAlert.GetCategoryVolume # not-yet
-C_CombatAudioAlert.GetFormatSetting # not-yet
-C_CombatAudioAlert.GetSpeakerSpeed # not-yet
-C_CombatAudioAlert.GetSpecSetting # not-yet
-C_CombatAudioAlert.RemoveFromKnownTargetingList # not-yet
-C_CombatAudioAlert.SetCategoryVoice # not-yet
-C_CombatAudioAlert.SetCategoryVolume # not-yet
-C_CombatAudioAlert.SetFormatSetting # not-yet
-C_CombatAudioAlert.SetSpeakerSpeed # not-yet
-C_CombatAudioAlert.SetSpecSetting # not-yet
-C_CombatAudioAlert.SetThrottle # not-yet
 C_CombatLog.ApplyFilterSettings # not-yet: temporary Lua workaround
 C_CombatLog.ClearEntries # not-yet: temporary Lua workaround
 C_CombatLog.DoesObjectMatchFilter # not-yet: temporary Lua workaround
