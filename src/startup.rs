@@ -127,6 +127,10 @@ pub fn apply_delay(delay: Option<u64>) {
 }
 
 /// Dispatch headless timers and updates for the requested real-time delay.
+///
+/// Frames are paced like a client frame loop: the sleep only fills what is
+/// left of the 16 ms tick, so a frame whose Lua work takes longer than a tick
+/// is followed at once by the next one, not by another full sleep.
 pub fn apply_delay_with_tick(env: &WowLuaEnv, delay: Option<u64>) {
     let Some(ms) = delay else { return };
     let duration = std::time::Duration::from_millis(ms);
@@ -135,7 +139,7 @@ pub fn apply_delay_with_tick(env: &WowLuaEnv, delay: Option<u64>) {
     let mut previous = start;
     while previous.duration_since(start) < duration {
         let remaining = duration.saturating_sub(previous.duration_since(start));
-        std::thread::sleep(remaining.min(tick_interval));
+        std::thread::sleep(frame_sleep(remaining, tick_interval, previous.elapsed()));
         let now = std::time::Instant::now();
         process_pending_timers(env);
         env.state().borrow_mut().ensure_layout_rects();
@@ -145,6 +149,16 @@ pub fn apply_delay_with_tick(env: &WowLuaEnv, delay: Option<u64>) {
         normalize_headless_frame_positions(env);
         previous = now;
     }
+}
+
+/// Time to sleep before the next headless frame: the rest of the tick after
+/// the work already `spent` since the last frame started, never past the delay.
+fn frame_sleep(
+    remaining: std::time::Duration,
+    tick: std::time::Duration,
+    spent: std::time::Duration,
+) -> std::time::Duration {
+    remaining.min(tick.saturating_sub(spent))
 }
 
 /// Demand-load Blizzard_PlayerSpells during game-screen startup and keep it hidden.
@@ -800,6 +814,16 @@ mod seed_buff_duration_tests {
             "a frame carrying a stale negative timeLeft must not render it; \
              this is the case only the timeLeft>0 guard catches"
         );
+    }
+
+    #[test]
+    fn frame_sleep_fills_only_the_rest_of_the_tick() {
+        use std::time::Duration;
+        let ms = Duration::from_millis;
+        assert_eq!(frame_sleep(ms(1000), ms(16), ms(0)), ms(16));
+        assert_eq!(frame_sleep(ms(1000), ms(16), ms(10)), ms(6));
+        assert_eq!(frame_sleep(ms(1000), ms(16), ms(40)), ms(0));
+        assert_eq!(frame_sleep(ms(3), ms(16), ms(0)), ms(3));
     }
 
     /// `--delay` has to reach a timer that came due while sleeping and to
