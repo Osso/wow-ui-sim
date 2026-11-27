@@ -4,18 +4,21 @@ use crate::common::blizzard_addon_harness::with_blizzard_addon_closure;
 
 const DIFFICULTY_CASES: &str = r##"
 local primaryNormal = DifficultyUtil.ID.PrimaryRaidNormal
-local function primary_raid_normal_checked()
-    local button = { GetDifficultyID = function() return primaryNormal end }
-    return UnitPopupRaidDifficulty1ButtonMixin:IsChecked(button, {})
-end
+local observedForce
+CanChangePlayerDifficulty = function() return true end
+SetRaidDifficultyID = function(_, force) observedForce = force end
+SetLegacyRaidDifficultyID = function() end
+GetLegacyRaidDifficultyID = function() return DifficultyUtil.ID.Raid10Normal end
 
 A_Admin.SetInstanceInfo("Legacy Raid", "raid", DifficultyUtil.ID.Raid10Normal, 10, nil, false)
+SetRaidDifficulties(true, primaryNormal)
 assert(not select(7, GetInstanceInfo()), "static instance state is returned")
-assert(not primary_raid_normal_checked(), "static legacy difficulty does not select primary normal")
+assert(observedForce == nil, "static legacy difficulty does not force the primary setting")
 
 A_Admin.SetInstanceInfo("Legacy Raid", "raid", DifficultyUtil.ID.Raid10Normal, 10, nil, true)
+SetRaidDifficulties(true, primaryNormal)
 assert(select(7, GetInstanceInfo()), "dynamic instance state is returned")
-assert(primary_raid_normal_checked(), "dynamic legacy difficulty selects primary normal")
+assert(observedForce == true, "dynamic legacy difficulty forces the primary setting")
 "##;
 
 #[test]
