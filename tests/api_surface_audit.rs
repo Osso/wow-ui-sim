@@ -12,11 +12,19 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 const SECURE_PUBLICATION_CSV: &str = "data/secure-publication/retail-12-1-5-70688.csv";
 const TEMPORARY_WORKAROUNDS: &str = "src/lua_api/workarounds/temporary";
 const CATEGORIES: [&str; 2] = ["intentionally-unsupported", "not-yet"];
+const WORKAROUND: &str = "not-yet: temporary Lua workaround";
 
 /// Sandbox for `Blizzard_APIDocumentationGenerated/*.lua`: each file only
 /// builds a local table and passes it to `APIDocumentation:AddDocumentationTable`.
+/// Value references such as `Enum.X.Y` resolve to an inert placeholder.
 /// `ScriptObject` tables document widget methods, not global functions.
 const DOC_COLLECTOR: &str = r#"
+local placeholder, inert = {}, {}
+for _, event in ipairs({ "index", "add", "sub", "mul", "div", "mod", "pow", "unm", "concat" }) do
+    inert["__" .. event] = function() return placeholder end
+end
+setmetatable(placeholder, inert)
+setmetatable(_G, { __index = function() return placeholder end })
 APIDocumentation = { names = {} }
 function APIDocumentation:AddDocumentationTable(doc)
     if doc.Type ~= "System" then return end
@@ -168,9 +176,10 @@ fn defines_lua_function(source: &str, name: &str) -> bool {
         .any(|line| assigns_member(line, member) || declares_member(line, member))
 }
 
-/// Documented names without a raw runtime function, plus names whose runtime
-/// function is simulator-embedded Lua defined in a temporary workaround.
-fn runtime_gaps(env: &WowLuaEnv, documented: &BTreeSet<String>) -> BTreeSet<String> {
+/// Documented names without a raw runtime function (`false`), plus names whose
+/// runtime function is simulator-embedded Lua defined in a temporary workaround
+/// (`true`): those stubs do not count as implemented.
+fn runtime_gaps(env: &WowLuaEnv, documented: &BTreeSet<String>) -> BTreeMap<String, bool> {
     env.exec(&lua_string_list(documented))
         .expect("publish probe names");
     let report: String = env.eval(RUNTIME_PROBE).expect("runtime surface probe");
@@ -178,9 +187,9 @@ fn runtime_gaps(env: &WowLuaEnv, documented: &BTreeSet<String>) -> BTreeSet<Stri
     report
         .lines()
         .filter_map(|line| match line.split_once(' ') {
-            Some(("missing", name)) => Some(name.to_owned()),
+            Some(("missing", name)) => Some((name.to_owned(), false)),
             Some(("lua", name)) if defines_lua_function(&workarounds, name) => {
-                Some(name.to_owned())
+                Some((name.to_owned(), true))
             }
             Some(("lua", _)) => None,
             _ => panic!("unexpected probe line {line:?}"),
@@ -222,29 +231,45 @@ fn read_allowlist(path: &Path) -> BTreeMap<String, String> {
     entries
 }
 
-fn assert_allowlist_matches(gaps: &BTreeSet<String>, path: &Path) {
+fn suggested_entry(name: &str, workaround: bool) -> String {
+    let category = if workaround { WORKAROUND } else { "not-yet" };
+    format!("{name} # {category}")
+}
+
+/// Gap names whose allowlist label disagrees with the runtime workaround flag.
+fn mislabelled(gaps: &BTreeMap<String, bool>, allowlist: &BTreeMap<String, String>) -> Vec<String> {
+    gaps.iter()
+        .filter(|(name, workaround)| {
+            let label = allowlist.get(*name);
+            label.is_some_and(|label| label.starts_with(WORKAROUND) != **workaround)
+        })
+        .map(|(name, workaround)| suggested_entry(name, *workaround))
+        .collect()
+}
+
+fn assert_allowlist_matches(gaps: &BTreeMap<String, bool>, path: &Path) {
     let allowlist = read_allowlist(path);
     let unlisted: Vec<String> = gaps
         .iter()
-        .filter(|name| !allowlist.contains_key(*name))
-        .map(|name| format!("{name} # not-yet"))
+        .filter(|(name, _)| !allowlist.contains_key(*name))
+        .map(|(name, workaround)| suggested_entry(name, *workaround))
         .collect();
-    let stale: Vec<&String> = allowlist
+    let stale: Vec<&str> = allowlist
         .keys()
-        .filter(|name| !gaps.contains(*name))
+        .filter(|name| !gaps.contains_key(*name))
+        .map(String::as_str)
         .collect();
+    let relabel = mislabelled(gaps, &allowlist);
     assert!(
-        unlisted.is_empty() && stale.is_empty(),
-        "{}: {} documented names missing and not allowlisted:\n{}\n{} stale entries (now present or undocumented):\n{}",
+        unlisted.is_empty() && stale.is_empty() && relabel.is_empty(),
+        "{}\n{} documented names missing and not allowlisted:\n{}\n{} stale entries (now present or undocumented):\n{}\n{} entries to relabel:\n{}",
         path.display(),
         unlisted.len(),
         unlisted.join("\n"),
         stale.len(),
-        stale
-            .iter()
-            .map(|name| name.as_str())
-            .collect::<Vec<_>>()
-            .join("\n"),
+        stale.join("\n"),
+        relabel.len(),
+        relabel.join("\n"),
     );
 }
 
