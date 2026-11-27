@@ -1730,19 +1730,7 @@ C_UI.GetWorldFrame # not-yet
 C_UIColor.GetColors # not-yet: temporary Lua workaround
 C_UIWidgetManager.GetPreyHuntProgressWidgetVisualizationInfo # not-yet
 C_UnitAuras.AddAuraSound # not-yet
-C_UnitAuras.AuraIsPrivate # not-yet
-C_UnitAuras.CancelAuraByInstanceID # not-yet
-C_UnitAuras.ClearBlockedAuras # not-yet
-C_UnitAuras.DoesAuraHaveExpirationTime # not-yet
-C_UnitAuras.GetAuraApplicationDisplayCount # not-yet
-C_UnitAuras.GetAuraBaseDuration # not-yet
-C_UnitAuras.GetAuraDuration # not-yet
-C_UnitAuras.GetCooldownAuraBySpellID # not-yet
-C_UnitAuras.GetRefreshExtendedDuration # not-yet
-C_UnitAuras.GetUnitAuraBySpellID # not-yet
-C_UnitAuras.IsAuraFilteredOutByInstanceID # not-yet
 C_UnitAuras.RemoveAuraSound # not-yet
-C_UnitAuras.WantsAlteredForm # not-yet
 C_UserFeedback.SubmitBug # not-yet
 C_UserFeedback.SubmitSuggestion # not-yet
 C_VoiceChat.ActivateChannel # not-yet

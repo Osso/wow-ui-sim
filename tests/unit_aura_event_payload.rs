@@ -97,7 +97,7 @@ fn full_update_publishes_added_auras_from_state() {
     assert!(removed_absent);
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "aura-instance-cancel")]
 #[test]
 fn incremental_removal_publishes_removed_instance_ids() {
     let env = WowLuaEnv::new().unwrap();

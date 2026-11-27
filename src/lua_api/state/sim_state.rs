@@ -669,7 +669,7 @@ pub struct SimState {
     /// Selected interaction/spell bindings do not establish eligibility.
     #[cfg(feature = "retail-12-0-5")]
     pub click_bindable_spells: HashSet<u32>,
-    #[cfg(feature = "retail-12-0-5")]
+    #[cfg(feature = "unit-aura-queries")]
     pub cooldown_aura_associations:
         crate::c_api::c_unit_aura_cooldown_spells::CooldownAuraAssociations,
     /// INFERRED explicit spell flags only; no classification catalog or acquisition.

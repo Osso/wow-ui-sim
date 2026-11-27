@@ -535,7 +535,7 @@ macro_rules! build_empty_sim_state {
             curio_links: HashMap::new(),
             #[cfg(feature = "retail-12-0-5")]
             click_bindable_spells: HashSet::new(),
-            #[cfg(feature = "retail-12-0-5")]
+            #[cfg(feature = "unit-aura-queries")]
             cooldown_aura_associations: Default::default(),
             aura_spell_classifications: Default::default(),
             #[cfg(feature = "retail-12-0-5")]

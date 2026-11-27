@@ -164,10 +164,17 @@ housing-inspect-mode = []
 # (HouseExteriorUIDocumentation.lua and HouseExteriorConstantsDocumentation.lua
 # are byte-identical).
 house-exterior-model = []
+# C_UnitAuras 12.0.5 instance/spell queries, durations and altered form:
+# Retail 12.0.5 and Forever (each function block in UnitAuraDocumentation.lua
+# is byte-identical).
+unit-aura-queries = []
+# C_UnitAuras.CancelAuraByInstanceID and its incremental UNIT_AURA removal
+# payload: Retail 12.1.0 and Forever (byte-identical UnitAuraDocumentation block).
+aura-instance-cancel = []
 retail-12-0-0 = ["aura-instance-enumeration", "action-spell-range", "housing-host-state"]
-retail-12-0-5 = ["retail-12-0-0", "housing-inspect-mode", "house-exterior-model", "native-duration-formatting", "base-spell-relationships", "aura-spell-classifications", "maw-power-model"]
+retail-12-0-5 = ["retail-12-0-0", "housing-inspect-mode", "house-exterior-model", "unit-aura-queries", "native-duration-formatting", "base-spell-relationships", "aura-spell-classifications", "maw-power-model"]
 retail-12-0-7 = ["retail-12-0-5", "maw-power-rarity-info", "housing-room-queries"]
-retail-12-1-0 = ["retail-12-0-7", "housing-blueprints", "aura-xml-widgets", "on-update-modes", "player-cast-durations", "forbidden-aspects", "numeric-rule-formatters", "aura-containers"]
+retail-12-1-0 = ["retail-12-0-7", "housing-blueprints", "aura-instance-cancel", "aura-xml-widgets", "on-update-modes", "player-cast-durations", "forbidden-aspects", "numeric-rule-formatters", "aura-containers"]
 retail-12-1-5 = ["retail-12-1-0", "timed-signal-maps", "forbidden-animation-aspects", "sim-data-profile/retail-12-1-5"]
 # Private ICU duration rendering; this capability does not publish C_Intl.
 native-duration-formatting = ["dep:cc", "dep:pkg-config", "dep:vcpkg"]
@@ -210,7 +217,7 @@ client-wrath = ["action-spell-range", "sim-data-profile/client-wrath"]
 client-mists = ["prefork-full-ui", "sim-data-profile/client-mists"]
 client-era = ["aura-spell-classifications", "sim-data-profile/client-era"]
 client-anniversary = ["aura-spell-classifications", "sim-data-profile/client-anniversary"]
-client-wowforever = ["timed-signal-maps", "profession-spec-paths", "housing-blueprints", "housing-host-state", "housing-inspect-mode", "house-exterior-model", "aura-xml-widgets", "on-update-modes", "player-cast-durations", "forbidden-animation-aspects", "numeric-rule-formatters", "aura-containers", "native-duration-formatting", "base-spell-relationships", "action-spell-range", "aura-spell-classifications", "maw-power-rarity-info", "sim-data-profile/client-wowforever"]
+client-wowforever = ["timed-signal-maps", "profession-spec-paths", "housing-blueprints", "housing-host-state", "housing-inspect-mode", "house-exterior-model", "unit-aura-queries", "aura-instance-cancel", "aura-xml-widgets", "on-update-modes", "player-cast-durations", "forbidden-animation-aspects", "numeric-rule-formatters", "aura-containers", "native-duration-formatting", "base-spell-relationships", "action-spell-range", "aura-spell-classifications", "maw-power-rarity-info", "sim-data-profile/client-wowforever"]
 
 [profile.release]
 lto = false
