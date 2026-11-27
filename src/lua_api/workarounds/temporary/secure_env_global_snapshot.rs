@@ -58,14 +58,18 @@ const REFRESH_MISSING_GLOBALS_IN_SECUREENV_LUA: &str = r##"
     end
 "##;
 
-/// Add globals that appeared after startup to Forever's existing secure snapshot.
+/// Add globals that appeared after startup to the snapshot-model secureenv.
 /// This is INFERRED from the temporary snapshot model; native publication is unknown.
+/// Retail 12.1.5 has no snapshot: its secureenv is the VERIFIED fixed base plus
+/// the R88y publisher (R88g.1, R88y.y1), so copying `_G` there would leak
+/// `debug`, `coroutine` and every ordinary-only global into secure code.
 pub(crate) fn refresh_missing_globals_for_secure_addon(state: &mut LuaState) -> LuaResult<()> {
-    if !matches!(
+    let snapshot_profile = matches!(
         crate::client_profile::ACTIVE,
         crate::client_profile::ClientProfile::Retail
             | crate::client_profile::ClientProfile::WowForever
-    ) {
+    );
+    if !snapshot_profile || crate::client_profile::is_active_retail_12_1_5() {
         return Ok(());
     }
     let chunk = LuaApiMut::load(state, REFRESH_MISSING_GLOBALS_IN_SECUREENV_LUA)?;
