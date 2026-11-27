@@ -22,7 +22,11 @@ local function set_case(guid, spell, duration)
     assert(UnitGUID("arena1") == guid and GetNumArenaOpponents() == 1, "arena GUID and count")
     assert(GetNumArenaOpponentSpecs() == 1 and GetArenaOpponentSpec(1) == 62, "arena spec queries")
     A_Admin.SetArenaCrowdControl("arena1", spell, GetTime(), duration)
-    assert(cc:IsShown() and cc.Icon:GetTexture() == C_Spell.GetSpellTexture(spell), "CC icon for " .. spell)
+    local texture = cc.Icon:GetTexture()
+    local expected = C_Spell.GetSpellTexture(spell)
+    assert(cc:IsShown() and texture == expected,
+        "CC icon " .. spell .. ", shown=" .. tostring(cc:IsShown()) ..
+        ", texture=" .. tostring(texture) .. ", expected=" .. tostring(expected))
     local start, length = cc.Cooldown:GetCooldownTimes()
     assert(math.abs(start / 1000 - GetTime()) < 0.1, "CC cooldown start for " .. spell)
     assert(math.abs(length / 1000 - duration) < 0.1, "CC cooldown length for " .. spell)
