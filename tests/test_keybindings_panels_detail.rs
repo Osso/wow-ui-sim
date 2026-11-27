@@ -48,7 +48,8 @@ pub(crate) fn world_map_floor_dropdown_hidden_without_subzone_or_map_group(env: 
 
                 local mapID = WorldMapFrame:GetMapID()
                 local groupID = C_Map.GetMapGroupID(mapID)
-                local members = C_Map.GetMapGroupMembersInfo(groupID)
+                -- MapDocumentation.lua:255 declares uiMapGroupID non-nilable.
+                local members = groupID and C_Map.GetMapGroupMembersInfo(groupID)
                 local memberCount = 0
                 if type(members) == "table" then
                     for _ in ipairs(members) do
@@ -338,16 +339,9 @@ pub(crate) fn world_map_exploration_pin_has_visible_overlay_textures_after_openi
                     return "missing_fog_pin"
                 end
 
-                if fogPin:IsShown() then
-                    return string.format(
-                        "fog_pin_should_be_hidden:type=%s:map=%s:bg=%s:mask=%s",
-                        tostring(fogPin:GetObjectType()),
-                        tostring(fogPin.GetUiMapID and fogPin:GetUiMapID()),
-                        tostring(fogPin:GetFogOfWarBackgroundAtlas()),
-                        tostring(fogPin:GetFogOfWarMaskAtlas())
-                    )
-                end
-
+                -- 85083ed3ea retired the post-load fog repair that hid this pin. Without
+                -- FOG_OF_WAR_UPDATED, a nil fog ID leaves the shown state unchanged
+                -- (FogOfWarFrameTemplates.lua:14-19,38-42); only the assets stay unset.
                 if fogPin:GetFogOfWarBackgroundAtlas() or fogPin:GetFogOfWarMaskAtlas() then
                     return string.format(
                         "fog_pin_should_not_have_assets:bg=%s:mask=%s",
