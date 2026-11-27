@@ -35,8 +35,9 @@ const MAP_INFO_OBSERVER_SETUP: &str = r#"
         assert(event == "CHALLENGE_MODE_MAPS_UPDATE")
         assert(not MapInfoHandlerActive and MapInfoHandlerReturned)
         MapInfoEventCount = MapInfoEventCount + 1
-        local maps = C_ChallengeMode.GetMapTable()
-        local name, id, _, _, _, mapId = C_ChallengeMode.GetMapUIInfo(maps[1])
+        -- efb372390a: GetMapTable lists the display season's tracked maps;
+        -- the supplied record is read by its challenge map ID.
+        local name, id, _, _, _, mapId = C_ChallengeMode.GetMapUIInfo(2)
         MapInfoObservedName = name
         MapInfoObservedId = id
         MapInfoObservedMapId = mapId
