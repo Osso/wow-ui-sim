@@ -32,8 +32,8 @@ local function set_case(guid, spell, duration)
     assert(math.abs(length / 1000 - duration) < 0.1, "CC cooldown length for " .. spell)
 end
 
-set_case("Player-0000-00000081", 336126, 120)
-set_case("Player-0000-00000082", 42292, 90)
+set_case("Player-0000-00000081", 19750, 120)
+set_case("Player-0000-00000082", 6603, 90)
 "##;
 
 #[test]
