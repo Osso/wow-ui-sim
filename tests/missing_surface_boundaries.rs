@@ -20,6 +20,9 @@ fn loaded_global_table_owners_publish_tables() {
     assert_eq!(special_frames, "table");
 }
 
+// c1b07efb79 retired the Retail/Forever UISpecialFrames placeholder; the
+// original UIParentPanelManager.lua owner is covered by the test above.
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn global_special_frame_bootstrap_aliases_share_identity() {
     let env = wow_ui_sim::lua_api::WowLuaEnv::new().expect("Failed to create Lua environment");
