@@ -529,9 +529,45 @@ pub fn build_quad_batch_with_cache(
         .map(|name| collect_subtree_ids(params.registry, name));
     let collected = collect_hittable_frames(params.registry, params.strata_buckets);
 
+    if shown_textures_over_client_limit(params.registry) {
+        // The client draws none of the interface past its shown-texture limit.
+        return (batch, collected);
+    }
     emit_cached_strata(&mut batch, &mut params, &visible_ids);
     append_hover_highlight(&mut batch, &params, &visible_ids);
     (batch, collected)
+}
+
+/// The client's limit on shown textures. Measured in client 1.60.1 with a test
+/// add-on that shows N plain textures on one frame: with the interface hidden,
+/// 16,380 test textures plus the add-on's own 3 drew and 16,381 + 3 did not
+/// (checked twice); with the interface shown the count stopped lower, the
+/// interface's own textures taking the rest. Splitting the textures over
+/// frames, frame levels, strata, draw layers, sublevels, files, vertex
+/// colours, blend modes or texture coordinates did not raise it; hidden
+/// textures did not count. Past it the client draws none of the interface,
+/// not only the excess.
+pub const CLIENT_SHOWN_TEXTURE_LIMIT: usize = 16_384;
+
+/// Shown textures as the client counts them for its limit: Texture and Line
+/// regions shown with every parent shown (IsVisible), wherever they are and
+/// whatever their size. Mask textures are not drawn and are not counted;
+/// FontStrings are not counted (the measured boundary leaves no room for the
+/// question box's four).
+pub fn shown_texture_count(registry: &WidgetRegistry) -> usize {
+    registry
+        .iter_ids()
+        .filter(|&id| {
+            registry.get(id).is_some_and(|f| {
+                matches!(f.widget_type, WidgetType::Texture | WidgetType::Line) && !f.is_mask
+            }) && registry.is_ancestor_visible(id)
+        })
+        .count()
+}
+
+/// True when more textures are shown than the client draws.
+pub fn shown_textures_over_client_limit(registry: &WidgetRegistry) -> bool {
+    shown_texture_count(registry) > CLIENT_SHOWN_TEXTURE_LIMIT
 }
 
 fn build_background_batch(screen_size: (f32, f32)) -> QuadBatch {
@@ -653,6 +689,37 @@ fn clip_hover_highlight(batch: &mut QuadBatch, before: usize, id: u64, registry:
 mod tests {
     use super::{build_render_list, resolve_eff_alpha};
     use crate::widget::{AnchorPoint, Frame, WidgetRegistry, WidgetType};
+
+    #[test]
+    fn shown_texture_limit_counts_only_shown_textures() {
+        use super::{
+            CLIENT_SHOWN_TEXTURE_LIMIT, shown_texture_count, shown_textures_over_client_limit,
+        };
+        let env = crate::lua_api::WowLuaEnv::new().unwrap();
+        let baseline = shown_texture_count(&env.state().borrow().widgets);
+        let fill = CLIENT_SHOWN_TEXTURE_LIMIT - baseline;
+        env.exec(&format!(
+            r#"
+            LimitHolder = CreateFrame("Frame", "LimitHolder", UIParent)
+            for i = 1, {fill} do LimitHolder:CreateTexture():SetColorTexture(1, 1, 1) end
+            "#
+        ))
+        .unwrap();
+        assert!(!shown_textures_over_client_limit(
+            &env.state().borrow().widgets
+        ));
+
+        env.exec("LimitHolder:CreateTexture():SetColorTexture(1, 1, 1)")
+            .unwrap();
+        assert!(shown_textures_over_client_limit(
+            &env.state().borrow().widgets
+        ));
+
+        env.exec("LimitHolder:Hide()").unwrap();
+        assert!(!shown_textures_over_client_limit(
+            &env.state().borrow().widgets
+        ));
+    }
 
     #[test]
     fn slider_thumb_render_rect_tracks_mutations_without_query_side_effects() {

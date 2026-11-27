@@ -123,8 +123,9 @@ pub use render::{DirtyStrataRebuildParams, rebuild_dirty_strata_batches_for_regi
 pub use state::{CanvasMessage, InspectorState};
 #[cfg(feature = "gui")]
 pub use strata_emit::{
-    RegistryQuadBatchParams, build_hittable_rects, build_quad_batch_for_registry,
-    build_quad_batch_for_registry_with_quest_blobs,
+    CLIENT_SHOWN_TEXTURE_LIMIT, RegistryQuadBatchParams, build_hittable_rects,
+    build_quad_batch_for_registry, build_quad_batch_for_registry_with_quest_blobs,
+    shown_texture_count, shown_textures_over_client_limit,
 };
 #[cfg(feature = "gui")]
 pub use styles::palette;
