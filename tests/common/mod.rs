@@ -18,10 +18,10 @@ pub mod game_menu_fixture;
 pub mod grouped_fixture;
 pub mod lua_error_assertions;
 pub mod panel_fixtures;
-#[cfg(feature = "client-retail")]
-pub mod store_catalog_fixture;
 #[cfg(target_os = "linux")]
 pub(crate) mod prefork_process;
+#[cfg(feature = "client-retail")]
+pub mod store_catalog_fixture;
 #[cfg(target_os = "linux")]
 mod timeout_reexec;
 pub(crate) mod workload_gate;
@@ -400,6 +400,25 @@ pub fn forever_game_env() -> WowLuaEnv {
     let game = wow_ui_sim::screen::ScreenKind::Game;
     wow_ui_sim::startup::fire_startup_events_for_screen(&env, game);
     env
+}
+
+/// Local third-party addon TOC under the gitignored `Interface/AddOns/*`
+/// (`.gitignore:8`). A checkout without it cannot run the consumer, so the
+/// caller skips with an explicit log line naming the missing path.
+#[cfg(feature = "client-wowforever")]
+pub fn local_addon_toc_or_skip(test: &str, addon: &str) -> Option<PathBuf> {
+    let toc = Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("Interface/AddOns")
+        .join(addon)
+        .join(format!("{addon}.toc"));
+    if toc.is_file() {
+        return Some(toc);
+    }
+    eprintln!(
+        "SKIPPED {test}: local addon TOC {} is absent (gitignored, not part of the repository)",
+        toc.display()
+    );
+    None
 }
 
 pub fn is_classic_ui_profile() -> bool {
