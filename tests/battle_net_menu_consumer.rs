@@ -37,9 +37,13 @@ assert(has_tag_entry(), "enabled friend-tag feature adds its menu entry")
 
 #[test]
 fn battle_net_friend_menu_tracks_the_supplied_tag_feature() {
-    with_blizzard_addon_closure(&["Blizzard_UnitPopup"], &[], |env, loaded| {
-        assert!(loaded.iter().any(|addon| addon == "Blizzard_UnitPopup"));
-        env.exec(BATTLE_NET_MENU_CASES)
-            .expect("original Battle.net friend menu should follow the account feature");
-    });
+    with_blizzard_addon_closure(
+        &["Blizzard_ObjectAPI", "Blizzard_UnitPopup"],
+        &[],
+        |env, loaded| {
+            assert!(loaded.iter().any(|addon| addon == "Blizzard_UnitPopup"));
+            env.exec(BATTLE_NET_MENU_CASES)
+                .expect("original Battle.net friend menu should follow the account feature");
+        },
+    );
 }
