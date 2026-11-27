@@ -241,7 +241,11 @@ pub(crate) fn patch_for_addon_load(env: &crate::lua_api::LoaderEnv<'_>) -> crate
     env.exec(CALLBACK_REGISTRY_DEFAULTS_LUA)
 }
 
-#[cfg(test)]
+// Retail and Forever load the original SharedXML CallbackRegistry (fallback retired by e35289a6a1).
+#[cfg(all(
+    test,
+    not(any(feature = "client-retail", feature = "client-wowforever"))
+))]
 mod tests {
     use crate::lua_api::WowLuaEnv;
 

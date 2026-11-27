@@ -183,6 +183,8 @@ pub(crate) fn apply_bootstrap(_: &mut rilua::Lua) -> crate::Result<()> {
 mod tests {
     use crate::lua_api::WowLuaEnv;
 
+    // The Lua fallback is compiled only outside Retail and Forever (86dc74b163); those profiles use the selected Blizzard providers.
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     #[test]
     fn keeps_legacy_bonus_bar_offset_global_backed_by_c_action_bar() {
         let env = WowLuaEnv::new().expect("lua env should initialize");

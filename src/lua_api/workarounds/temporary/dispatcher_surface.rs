@@ -417,11 +417,14 @@ pub(crate) fn patch_for_addon_load(env: &crate::lua_api::LoaderEnv<'_>) -> crate
     env.exec(DISPATCHER_SURFACE_LUA)
 }
 
-#[cfg(test)]
+// Retail and Forever keep the original Blizzard Dispatcher (611ff9a47e).
+#[cfg(all(
+    test,
+    not(any(feature = "client-retail", feature = "client-wowforever"))
+))]
 mod tests {
     use crate::lua_api::WowLuaEnv;
 
-    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     #[test]
     fn installs_dispatcher_surface() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
