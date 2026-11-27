@@ -37,6 +37,8 @@ pub mod cursor_model;
 pub(crate) mod cursor_presentation;
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub(crate) mod dangerous_scripts;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) mod debug_environment;
 #[cfg(feature = "client-retail")]
 pub(crate) mod difficulty_info;
 pub(crate) mod display_scale;

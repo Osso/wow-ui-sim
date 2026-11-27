@@ -521,6 +521,9 @@ pub fn register_all(lua: &mut rilua::Lua) -> crate::Result<()> {
     register_world_pvp_globals(lua)?;
     register_battleground_globals(lua)?;
     use crate::client_profile::{ACTIVE, ClientProfile};
+    if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever) {
+        LuaApiMut::register_function(lua, "GetPVPLifetimeStats", get_pvp_lifetime_stats)?;
+    }
     if matches!(
         ACTIVE,
         ClientProfile::Mists | ClientProfile::Era | ClientProfile::Anniversary

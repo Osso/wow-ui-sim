@@ -31,12 +31,6 @@ if secretwrap == nil then
   end
 end
 
-if GetCallstackHeight == nil then
-  function GetCallstackHeight()
-    return 0
-  end
-end
-
 if SetErrorCallstackHeight == nil then
   function SetErrorCallstackHeight()
   end
@@ -197,6 +191,13 @@ if AddSourceLocationExclude == nil then
 end
 "#;
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+const GET_CALLSTACK_HEIGHT_DEFAULT_LUA: &str = r#"
+if GetCallstackHeight == nil then
+  function GetCallstackHeight() return 0 end
+end
+"#;
+
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     if !crate::client_profile::is_active_retail_12_1_5() {
         lua.exec(SOURCE_LOCATION_EXCLUDE_FALLBACK_LUA)?;
@@ -204,6 +205,8 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(DEBUG_ENVIRONMENT_DEFAULTS_LUA)?;
     #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     lua.exec(CALL_ERROR_HANDLER_FALLBACK_LUA)?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+    lua.exec(GET_CALLSTACK_HEIGHT_DEFAULT_LUA)?;
     Ok(())
 }
 

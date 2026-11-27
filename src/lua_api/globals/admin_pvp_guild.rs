@@ -27,6 +27,18 @@ pub(super) fn set_honor_level(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
+/// Seed the supplied lifetime honor snapshot used by GetPVPLifetimeStats.
+pub(super) fn set_pvp_lifetime_stats(state: &mut LuaState) -> LuaResult<u32> {
+    let honorable_kills = i32::from_stack(state, 1)?;
+    let dishonorable_kills = i32::from_stack(state, 2)?;
+    let highest_rank = i32::from_stack(state, 3)?;
+    let mut sim = borrow_state_mut(state)?;
+    sim.pvp_honor.lifetime_honorable_kills = honorable_kills;
+    sim.pvp_honor.lifetime_dishonorable_kills = dishonorable_kills;
+    sim.pvp_honor.lifetime_highest_rank = highest_rank;
+    Ok(0)
+}
+
 pub(super) fn set_battlefield_max_id(state: &mut LuaState) -> LuaResult<u32> {
     let max_id = i32::from_stack(state, 1)?;
     borrow_state_mut(state)?.max_battlefield_id = max_id;

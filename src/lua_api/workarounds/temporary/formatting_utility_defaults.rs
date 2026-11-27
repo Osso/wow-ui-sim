@@ -29,41 +29,6 @@ ERR_QUEST_SESSION_RESULT_RESYNC = ERR_QUEST_SESSION_RESULT_RESYNC or "Resync"
 CLASS_SORT_ORDER = CLASS_SORT_ORDER or { "WARRIOR", "PALADIN", "HUNTER", "ROGUE", "PRIEST", "DEATHKNIGHT", "SHAMAN", "MAGE", "WARLOCK", "MONK", "DRUID", "DEMONHUNTER", "EVOKER" }
 MAX_CLASSES = MAX_CLASSES or #CLASS_SORT_ORDER
 
-if CalculateStringEditDistance == nil then
-  function CalculateStringEditDistance(firstString, secondString)
-    if type(firstString) ~= "string" or type(secondString) ~= "string" then
-      return 0
-    end
-    local firstLen = #firstString
-    local secondLen = #secondString
-    if firstLen == 0 then return secondLen end
-    if secondLen == 0 then return firstLen end
-
-    local previousRow = {}
-    for column = 0, secondLen do
-      previousRow[column] = column
-    end
-
-    local currentRow = {}
-    for row = 1, firstLen do
-      currentRow[0] = row
-      local firstChar = firstString:byte(row)
-      for column = 1, secondLen do
-        local substitutionCost = (firstChar == secondString:byte(column)) and 0 or 1
-        local deletion = previousRow[column] + 1
-        local insertion = currentRow[column - 1] + 1
-        local substitution = previousRow[column - 1] + substitutionCost
-        currentRow[column] = math.min(deletion, insertion, substitution)
-      end
-      for column = 0, secondLen do
-        previousRow[column] = currentRow[column]
-      end
-    end
-
-    return previousRow[secondLen]
-  end
-end
-
 if strsplittable == nil then
   function strsplittable(delimiter, input, limit)
     return { strsplit(delimiter, input, limit) }
@@ -175,6 +140,27 @@ if AbbreviateNumbers == nil then
 end
 "##;
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+const CALCULATE_STRING_EDIT_DISTANCE_DEFAULT_LUA: &str = r##"
+if CalculateStringEditDistance == nil then
+  function CalculateStringEditDistance(firstString, secondString)
+    if type(firstString) ~= "string" or type(secondString) ~= "string" then return 0 end
+    local previous = {}
+    for column = 0, #secondString do previous[column] = column end
+    for row = 1, #firstString do
+      local current = { [0] = row }
+      for column = 1, #secondString do
+        local cost = firstString:byte(row) == secondString:byte(column) and 0 or 1
+        current[column] = math.min(previous[column] + 1, current[column - 1] + 1,
+          previous[column - 1] + cost)
+      end
+      previous = current
+    end
+    return previous[#secondString]
+  end
+end
+"##;
+
 const STRING_SPLIT_METHOD_COMPAT_LUA: &str = r##"
 do
   local stringMeta = getmetatable("")
@@ -210,6 +196,8 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(FORMATTING_UTILITY_DEFAULTS_LUA)?;
     #[cfg(not(any(feature = "retail-12-0-5", feature = "client-wowforever")))]
     lua.exec(ABBREVIATION_DEFAULTS_LUA)?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+    lua.exec(CALCULATE_STRING_EDIT_DISTANCE_DEFAULT_LUA)?;
     // Preserve the verified Retail string.split alias; keep this wrapper elsewhere. Evidence: pr46-49-decomp-answers.md, sections R88y.y2.
     if !crate::client_profile::is_active_retail_12_1_5() {
         lua.exec(STRING_SPLIT_METHOD_COMPAT_LUA)?;

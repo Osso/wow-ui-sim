@@ -1949,7 +1949,6 @@ C_WowTokenSecure.SetBalanceAmountString # not-yet
 C_WowTokenSecure.WillKickFromWorld # not-yet
 C_WowTokenUI.StartTokenSell # not-yet
 C_XMLUtil.GetTemplates # not-yet
-CalculateStringEditDistance # not-yet: temporary Lua workaround
 CallCompanion # not-yet
 CameraOrSelectOrMoveStart # intentionally-unsupported: 3D camera/model
 CameraOrSelectOrMoveStop # intentionally-unsupported: 3D camera/model
@@ -2086,7 +2085,6 @@ GetBattlegroundPoints # not-yet
 GetBestFlexRaidChoice # not-yet
 GetBillingTimeRested # not-yet: temporary Lua workaround
 GetButtonMetatable # not-yet: temporary Lua workaround
-GetCallstackHeight # not-yet: temporary Lua workaround
 GetCemeteryPreference # not-yet
 GetClickFrame # not-yet
 GetCompanionInfo # not-yet
@@ -2227,7 +2225,6 @@ GetNumWarGameTypes # not-yet
 GetOSLocale # not-yet
 GetOptOutOfLoot # not-yet
 GetPVPGearStatRules # not-yet
-GetPVPLifetimeStats # not-yet: temporary Lua workaround
 GetPVPSessionStats # not-yet
 GetPVPYesterdayStats # not-yet
 GetPartyLFGBackfillInfo # not-yet

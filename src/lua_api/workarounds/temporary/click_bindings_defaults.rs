@@ -47,22 +47,6 @@ if rawget(C_ClickBindings, "GetTutorialShown") == nil then
     end
 end
 
-if rawget(_G, "MakeModifiers") == nil then
-    function MakeModifiers()
-        local modifiers = 0
-        if type(IsShiftKeyDown) == "function" and IsShiftKeyDown() then
-            modifiers = modifiers + 1
-        end
-        if type(IsControlKeyDown) == "function" and IsControlKeyDown() then
-            modifiers = modifiers + 2
-        end
-        if type(IsAltKeyDown) == "function" and IsAltKeyDown() then
-            modifiers = modifiers + 4
-        end
-        return modifiers
-    end
-end
-
 if publishLegacyNative and rawget(C_ClickBindings, "MakeModifiers") == nil then
     function C_ClickBindings.MakeModifiers()
         return MakeModifiers()
@@ -71,6 +55,19 @@ end
 
 if rawget(C_ClickBindings, "SetTutorialShown") == nil then
     function C_ClickBindings.SetTutorialShown(_shown)
+    end
+end
+"#;
+
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+const MAKE_MODIFIERS_DEFAULT_LUA: &str = r#"
+if MakeModifiers == nil then
+    function MakeModifiers()
+        local modifiers = 0
+        if type(IsShiftKeyDown) == "function" and IsShiftKeyDown() then modifiers = modifiers + 1 end
+        if type(IsControlKeyDown) == "function" and IsControlKeyDown() then modifiers = modifiers + 2 end
+        if type(IsAltKeyDown) == "function" and IsAltKeyDown() then modifiers = modifiers + 4 end
+        return modifiers
     end
 end
 "#;
@@ -84,6 +81,8 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
         &bootstrap,
         &[rilua::Val::Bool(!cfg!(feature = "retail-12-0-7"))],
     )?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+    lua.exec(MAKE_MODIFIERS_DEFAULT_LUA)?;
     Ok(())
 }
 
