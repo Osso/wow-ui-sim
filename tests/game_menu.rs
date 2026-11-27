@@ -420,7 +420,11 @@ fn test_game_menu_hide() {
 }
 
 post_wrath_ui_fixture! {
-#[cfg(any(feature = "client-ptr", feature = "client-retail"))]
+#[cfg(any(
+    feature = "client-ptr",
+    feature = "client-retail",
+    feature = "client-wowforever"
+))]
 #[test]
 fn test_game_menu_shop_button_opens_store_and_menu_can_reopen_after_store_closes() {
     test_timeout! {
