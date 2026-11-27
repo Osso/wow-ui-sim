@@ -33,6 +33,7 @@ pub(crate) mod adventure_map_frame_surface;
 #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod alert_frame_defaults;
 pub(crate) mod artifact_ui_show_panel_guard;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod assisted_combat_manager_defaults;
 pub(crate) mod auction_house_search_context_aliases;
 pub(crate) mod auth_challenge_frame_parent;

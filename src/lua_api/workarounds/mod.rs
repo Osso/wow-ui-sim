@@ -497,6 +497,7 @@ fn apply_feature_temporary_namespace_bootstrap(lua: &mut rilua::Lua) -> crate::R
 }
 
 fn apply_feature_tool_defaults(lua: &mut rilua::Lua) -> crate::Result<()> {
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::assisted_combat_manager_defaults::apply_bootstrap(lua)?;
     if should_use_temporary_shared_xml_defaults() {
         temporary::callback_registry_defaults::apply_bootstrap(lua)?;
