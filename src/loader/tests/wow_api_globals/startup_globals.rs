@@ -1616,6 +1616,19 @@ fn test_addon_startup_time_and_difficulty_globals_exist() {
 }
 
 retail_namespace_fixture! {
+// C_RaidLocks.IsEncounterComplete takes mapID and encounterID, both
+// non-nilable (RaidLocksDocumentation.lua); the supplied model (6836951469)
+// rejects a missing encounterID.
+const FRAME_SCALE_MERCHANT_RAID_PROBE: &str = r#"
+    local itemInfo = C_MerchantFrame.GetItemInfo(1)
+    return type(GetScreenDPIScale),
+        GetScreenDPIScale(),
+        type(C_MerchantFrame),
+        type(itemInfo),
+        type(C_RaidLocks),
+        C_RaidLocks.IsEncounterComplete(1, 2)
+"#;
+
 #[test]
 fn test_addon_startup_frame_scale_and_merchant_namespaces_exist() {
     let env = WowLuaEnv::new().unwrap();
@@ -1626,19 +1639,7 @@ fn test_addon_startup_frame_scale_and_merchant_namespaces_exist() {
         String,
         String,
         bool,
-    ) = env
-        .eval(
-            r#"
-            local itemInfo = C_MerchantFrame.GetItemInfo(1)
-            return type(GetScreenDPIScale),
-                GetScreenDPIScale(),
-                type(C_MerchantFrame),
-                type(itemInfo),
-                type(C_RaidLocks),
-                C_RaidLocks.IsEncounterComplete(1)
-            "#,
-        )
-        .unwrap();
+    ) = env.eval(FRAME_SCALE_MERCHANT_RAID_PROBE).unwrap();
 
     assert_eq!(dpi_ty, "function");
     assert_eq!(dpi_scale, 1.0);
