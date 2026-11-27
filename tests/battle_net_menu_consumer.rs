@@ -4,6 +4,8 @@ use crate::common::blizzard_addon_harness::with_blizzard_addon_closure;
 
 const BATTLE_NET_MENU_CASES: &str = r##"
 SetCVar("socialUIEnabledClient", "1")
+assert(GetCVar("socialUIEnabledClient") == "1", "SocialUI CVar is enabled")
+assert(C_SocialUI.IsSystemEnabled(), "SocialUI system is enabled")
 A_Admin.SetBattleNetAccountFeatures(false, true, true, true, true)
 ToggleFriendsFrame(FRIEND_TAB_FRIENDS)
 assert(SocialUIFrame:IsShown(), "the public friends toggle opens SocialUI")
@@ -43,6 +45,8 @@ assert(has_friend_tags_entry(), "enabled friend-tag feature adds its menu entry"
 fn battle_net_friend_menu_tracks_the_supplied_tag_feature() {
     with_blizzard_addon_closure(
         &[
+            "Blizzard_AuraContainer",
+            "Blizzard_SocialUIShared",
             "Blizzard_SocialUI",
             "Blizzard_FriendsFrame",
             "Blizzard_UnitPopup",
@@ -50,6 +54,7 @@ fn battle_net_friend_menu_tracks_the_supplied_tag_feature() {
         &[],
         |env, loaded| {
             assert!(loaded.iter().any(|addon| addon == "Blizzard_FriendsFrame"));
+            assert!(loaded.iter().any(|addon| addon == "Blizzard_SocialUI"));
             env.exec(BATTLE_NET_MENU_CASES)
                 .expect("original Battle.net friend menu should follow the account feature");
         },
