@@ -3,6 +3,7 @@
 use crate::common::blizzard_addon_harness::with_blizzard_addon_closure;
 
 const BATTLE_NET_MENU_CASES: &str = r##"
+A_Admin.SetBattleNetFriendState(1, true, false, false)
 local accountInfo = C_BattleNet.GetFriendAccountInfo(1)
 assert(accountInfo and accountInfo.bnetAccountID, "a supplied account can open its friend menu")
 local menuContext = {
@@ -23,13 +24,13 @@ local function has_tag_entry()
 end
 
 A_Admin.SetBattleNetAccountFeatures(false, true, true, true, true)
-UnitPopup_OpenMenu("BN_FRIEND", menuContext)
+UnitPopup_OpenMenu("BN_FRIEND_OFFLINE", menuContext)
 assert(Menu.GetManager():IsAnyMenuOpen(), "the public UnitPopup path opens the BNet friend menu")
 assert(not has_tag_entry(), "disabled friend-tag feature hides its menu entry")
 
 Menu.GetManager():CloseMenus()
 A_Admin.SetBattleNetAccountFeatures(true, true, true, true, true)
-UnitPopup_OpenMenu("BN_FRIEND", menuContext)
+UnitPopup_OpenMenu("BN_FRIEND_OFFLINE", menuContext)
 assert(Menu.GetManager():IsAnyMenuOpen(), "the public UnitPopup path reopens the BNet friend menu")
 assert(has_tag_entry(), "enabled friend-tag feature adds its menu entry")
 "##;
