@@ -222,6 +222,7 @@ fn register_admin_world_collections(mut builder: TableBuilder) -> LuaResult<Tabl
     builder = register_world(builder)?;
     builder = register_collections_pvp(builder)?;
     builder = register_inventory_misc(builder)?;
+    builder = crate::c_api::transmog_availability::register_admin(builder)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     let builder = crate::c_api::c_raid_locks::register_admin(builder)?;
     #[cfg(feature = "client-retail")]

@@ -43,7 +43,7 @@ The `A_Admin` namespace provides administrative functions for controlling simula
 - [Economy](economy.md) — SetMoney, SetItemLevel, AddBagItem, RemoveBagItem, SetBagItemDurability, SetEquippedItemGUID
 - [Bank state](bank.md) — SetBankViewableTypes, SetShouldUsePlayerBagsInBank, SetPurchasedBankTabData
 - [Dye colors](dye-colors.md) — SetDyeColorsForItem
-- [Collections](collections.md) — AddTransmog, RemoveTransmog, CollectMount, UncollectMount, CollectPet, UncollectPet, CollectToy, UncollectToy, CollectCampsite, UncollectCampsite, SetAchievementEarned, EarnAchievement
+- [Collections](collections.md) — AddTransmog, RemoveTransmog, SetTransmogAvailability, CollectMount, UncollectMount, CollectPet, UncollectPet, CollectToy, UncollectToy, CollectCampsite, UncollectCampsite, SetAchievementEarned, EarnAchievement
 - [PvP](pvp.md) — SetPvPEnabled, SetHonorLevel, SetArenaCrowdControl
 - [Guild](guild.md) — SetGuildInfo, ClearGuild, JoinGuild, LeaveGuild
 - [Mail](mail.md) — AddMail, ClearInbox, SetInboxCount
