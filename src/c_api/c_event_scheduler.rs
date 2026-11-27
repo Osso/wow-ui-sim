@@ -11,7 +11,7 @@ use crate::lua_bridge::{FromStack, TableBuilder, table_set_rust_fn_static};
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 use rilua::vm::state::LuaState;
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
-use rilua::{LuaResult, Val};
+use rilua::{LuaApiMut, LuaResult, Val};
 
 const EVENT_SCHEDULER_STATE_LUA: &str = r#"
 if type(C_EventScheduler) ~= "table" then
