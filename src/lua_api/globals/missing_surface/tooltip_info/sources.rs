@@ -144,7 +144,31 @@ pub(super) fn tooltip_for_bag_item(state: &mut LuaState, bag: i32, slot: i32) ->
             state.top = saved_top;
         }
     }
+    stamp_bag_item_guid(state, tooltip, bag, slot);
     tooltip
+}
+
+/// INFERRED R88g9 (native evidence pending): the bag tooltip carries the
+/// item's GUID as top-level `guid`, the field that `TooltipUtil.GetDisplayedItem`
+/// (Blizzard_SharedXMLGame/Tooltip/TooltipUtil.lua:9-19) resolves through
+/// `C_Item.GetItemLinkByGUID`. Same GUID as `GetInventoryItemByID` tooltips.
+fn stamp_bag_item_guid(state: &mut LuaState, tooltip: Val, bag: i32, slot: i32) {
+    use crate::client_profile::{ACTIVE, ClientProfile};
+    if !matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever) {
+        return;
+    }
+    let item_id = borrow_state(state)
+        .ok()
+        .and_then(|sim| sim.get_bag_item(bag, slot).map(|(item_id, _)| item_id));
+    let Some(item_id) = item_id.filter(|item_id| *item_id > 0) else {
+        return;
+    };
+    let guid = crate::c_api::item_spell::item_guid_for_bag_slot(bag, slot, item_id);
+    let saved_top = state.top;
+    state.push(tooltip);
+    let guid = crate::lua_api::methods::create_string(state, &guid);
+    table_set(state, tooltip, "guid", guid);
+    state.top = saved_top;
 }
 
 fn supplied_bag_repair_cost(state: &LuaState, bag: i32, slot: i32) -> Option<i32> {
