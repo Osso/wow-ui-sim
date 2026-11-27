@@ -222,6 +222,7 @@ fn original_order_hall_consumer_receives_supplied_combat_ally_mission() {
             })
             A_Admin.SetGarrisonCombatAllyMission(followerTypeID, 900111)
             CovenantMissionFrame:Show()
+            CovenantMissionFrame.MissionTab.Tab1:Click()
             local list = CovenantMissionFrame.MissionTab.MissionList
             return list.combatAllyMission and list.combatAllyMission.missionID or -1
             "#,
