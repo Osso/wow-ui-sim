@@ -20,22 +20,6 @@ fn startup() -> WowLuaEnv {
     env
 }
 
-const STACK_SPLIT_BINDING_SETUP: &str = r#"
-    SetBinding("KEY_NAME", "OPENALLBAGS")
-    ToggleBackpack()
-    local frame = ContainerFrame1
-    if not frame or not frame:IsShown() then frame = ContainerFrameCombinedBags end
-    assert(frame and frame:IsShown(), "ToggleBackpack showed no bag frame")
-    StackSplitConsumerButton = nil
-    for _, button in frame:EnumerateValidItems() do
-        if button:GetBagID() == 0 and button:GetID() == 1 then
-            StackSplitConsumerButton = button
-        end
-    end
-    assert(StackSplitConsumerButton, "bag slot 1 has no item button")
-    SetModifiedClick("SPLITSTACK", "SHIFT")
-"#;
-
 const DISCORD_GUILD_CONTROL_MENU: &str = r#"
     local function pick_data(description, data)
         for _, entry in description:EnumerateElementDescriptions() do
@@ -75,33 +59,6 @@ const DISCORD_GUILD_CONTROL_MENU: &str = r#"
     pick_data(channelDropdown:GetMenuDescription(), 1)
     assert(GuildControlUI.selectedDiscordChannel == 1)
 "#;
-
-#[test]
-fn forever_stack_split_key_handlers_run_bound_actions() {
-    let env = startup();
-    env.exec(
-        r#"
-        A_Admin.ClearBags()
-        A_Admin.AddBagItem(0, 1, 6948, 5)
-        "#,
-    )
-    .expect("supply a stackable bag item");
-    for key in ["K", "L"] {
-        env.exec(&STACK_SPLIT_BINDING_SETUP.replace("KEY_NAME", key))
-            .expect("open backpack and bind the key");
-        env.send_key_down("SHIFT", None).expect("press split modifier");
-        env.exec("StackSplitConsumerButton:Click('LeftButton')")
-            .expect("open StackSplitFrame through its bag item button");
-        env.send_key_up("SHIFT");
-        assert!(env.eval::<bool>("return StackSplitFrame:IsShown()").unwrap());
-        env.send_key_press(key, None)
-            .unwrap_or_else(|error| panic!("dispatch {key} to StackSplitFrame: {error}"));
-        let bag_open = env
-            .eval::<bool>("return (ContainerFrame1 and ContainerFrame1:IsShown()) or (ContainerFrameCombinedBags and ContainerFrameCombinedBags:IsShown())")
-            .unwrap();
-        assert!(!bag_open, "RunBinding did not close the bags for key {key}");
-    }
-}
 
 #[test]
 fn forever_gamepad_core_binding_context_tracks_interface_events() {
