@@ -1850,7 +1850,6 @@ GetInstanceBootTimeRemaining # not-yet
 GetInstanceLockTimeRemaining # not-yet
 GetInstanceLockTimeRemainingEncounter # not-yet
 GetJailersTowerLevel # not-yet
-GetMastery # not-yet
 GetMaximumExpansionLevel # not-yet
 GetMouseButtonName # not-yet
 GetMovieDownloadProgress # not-yet: temporary Lua workaround
@@ -1864,10 +1863,7 @@ GetPVPYesterdayStats # not-yet
 GetPetCritChance # not-yet
 GetPetDodgeChance # not-yet
 GetPetHitChanceModifier # not-yet
-GetPetMeleeHaste # not-yet
 GetPetSpellHitChanceModifier # not-yet
-GetPowerRegen # not-yet
-GetPowerRegenForPowerType # not-yet
 GetProtocolTypes # not-yet: temporary Lua workaround
 GetRealmID # not-yet: temporary Lua workaround
 GetResSicknessDuration # not-yet
@@ -1879,7 +1875,6 @@ GetScriptCPUUsage # not-yet: temporary Lua workaround
 GetSecondsUntilParentalControlsKick # not-yet
 GetSheathState # not-yet
 GetSourceLocation # not-yet
-GetSturdiness # not-yet
 GetTaxiBenchmarkMode # not-yet
 GetThreatStatusColor # not-yet: temporary Lua workaround
 GetTotemCannotDismiss # not-yet
@@ -1934,7 +1929,6 @@ OutageDetected # not-yet
 PartialPlayTime # not-yet: temporary Lua workaround
 PlaceRaidMarker # not-yet
 PlatformIsHandheld # not-yet
-PlayerEffectiveAttackPower # not-yet
 PlayerIsInCombat # not-yet
 PlayerIsSpellTarget # not-yet
 PlayerVehicleHasComboPoints # not-yet
@@ -2041,7 +2035,6 @@ UnitSwitchToVehicleSeat # not-yet
 UnitUsingVehicle # not-yet
 UnitVehicleSeatCount # not-yet
 UnitVehicleSeatInfo # not-yet
-UnitWeaponAttackPower # not-yet
 UnitWidgetSet # not-yet
 UpdateWindow # not-yet
 WorldLootObjectExists # not-yet: temporary Lua workaround

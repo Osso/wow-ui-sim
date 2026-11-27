@@ -304,7 +304,7 @@ pub struct SimState {
     /// Explicit stat-output policy input; no combat or aura activation inference.
     pub unit_stats_restricted: bool,
     /// Explicit weapon contributions keyed by existing unit GUID; rows do not create units.
-    #[cfg(feature = "client-retail")]
+    #[cfg(feature = "explicit-stat-inputs")]
     pub weapon_attack_power: HashMap<String, crate::lua_api::state_types::WeaponAttackPower>,
     pub quest_blobs: HashMap<u64, QuestBlobState>,
     /// Supplied per-quest minimap containment observations.

@@ -271,7 +271,7 @@ macro_rules! build_empty_sim_state {
             #[cfg(feature = "client-wowforever")]
             auras_secret_in_context: false,
             unit_stats_restricted: false,
-            #[cfg(feature = "client-retail")]
+            #[cfg(feature = "explicit-stat-inputs")]
             weapon_attack_power: ::std::collections::HashMap::new(),
             quest_blobs: $collections.quest_blobs,
             minimap_quest_blob_inside: HashMap::new(),
@@ -1268,7 +1268,7 @@ pub use super::state_types::{
     SEEDED_LOCAL_CHARACTER_NAME, ScenarioState, ScenarioStep, SecondaryPowerState, SocialFriend,
     SocialRestrictionsState, SummonRequestState, TokenAuctionInfo, WorldState, WowTokenState,
 };
-#[cfg(feature = "client-retail")]
+#[cfg(feature = "explicit-stat-inputs")]
 pub use super::state_types::{EffectiveAttackPower, PowerRegen, WeaponAttackPower};
 pub use super::tracked_recipes::TrackedRecipes;
 

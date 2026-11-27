@@ -345,7 +345,7 @@ pub struct PetState {
     pub reaction: u8,
     pub control_mask: u32,
     /// Independent summoned-pet melee haste percentage; None means no stat input.
-    #[cfg(feature = "client-retail")]
+    #[cfg(feature = "explicit-stat-inputs")]
     pub melee_haste_pct: Option<f64>,
     /// Independent summoned-pet spell bonus damage; None means no stat input.
     pub spell_bonus_damage: Option<f64>,

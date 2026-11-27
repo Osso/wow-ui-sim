@@ -32,7 +32,7 @@ pub struct CharacterStats {
     /// Explicit reverse conversion percentage, not converted spell power.
     pub attack_power_to_spell_power: f64,
     /// Explicit durability-loss reduction percentage; default zero is a guess.
-    #[cfg(feature = "client-retail")]
+    #[cfg(feature = "explicit-stat-inputs")]
     pub sturdiness_pct: f64,
     #[cfg(feature = "client-wowforever")]
     pub quiver_haste_pct: f64,
@@ -142,7 +142,7 @@ impl CharacterStats {
 }
 
 /// Explicit per-second regeneration inputs; missing pools use zero by simulator policy.
-#[cfg(feature = "client-retail")]
+#[cfg(feature = "explicit-stat-inputs")]
 #[derive(Debug, Clone, Copy, Default)]
 pub struct PowerRegen {
     pub base: f64,
@@ -150,7 +150,7 @@ pub struct PowerRegen {
 }
 
 /// Effective and base AP in the documented PlayerEffectiveAttackPower return order.
-#[cfg(feature = "client-retail")]
+#[cfg(feature = "explicit-stat-inputs")]
 #[derive(Debug, Clone, Copy)]
 pub struct EffectiveAttackPower {
     pub main_hand: f64,
@@ -161,7 +161,7 @@ pub struct EffectiveAttackPower {
 }
 
 /// Independent weapon contributions; these are not total/effective attack power.
-#[cfg(feature = "client-retail")]
+#[cfg(feature = "explicit-stat-inputs")]
 #[derive(Debug, Clone, Copy, Default)]
 pub struct WeaponAttackPower {
     pub main_hand: f64,
@@ -266,10 +266,10 @@ pub struct PlayerState {
     #[cfg(feature = "client-retail")]
     pub power_display_modifiers: HashMap<i32, f64>,
     /// Explicit regen pairs indexed by power type; no mana/player-stat alias.
-    #[cfg(feature = "client-retail")]
+    #[cfg(feature = "explicit-stat-inputs")]
     pub power_regen: HashMap<i32, PowerRegen>,
     /// None returns no values, a simulator guess for unavailable effective AP.
-    #[cfg(feature = "client-retail")]
+    #[cfg(feature = "explicit-stat-inputs")]
     pub effective_attack_power: Option<EffectiveAttackPower>,
     /// Wrath/Forever target owning the last combo input; unused on player-pool profiles.
     pub combo_points_target_guid: Option<String>,
