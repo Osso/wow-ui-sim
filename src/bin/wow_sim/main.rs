@@ -62,6 +62,11 @@ struct Args {
     #[arg(long, value_name = "MS")]
     delay: Option<u64>,
 
+    /// End --delay early once this Lua expression is true (checked after
+    /// every headless frame); --delay is then a timeout.
+    #[arg(long, value_name = "LUA", global = true)]
+    delay_until: Option<String>,
+
     /// Execute Lua code after startup (runs after first frame in GUI, after events in screenshot/dump-tree).
     /// Prefix with @ to load from file (e.g., --exec-lua @/tmp/debug.lua).
     #[arg(long, value_name = "CODE")]
@@ -315,6 +320,7 @@ fn run_main() -> Result<(), Box<dyn std::error::Error>> {
         wow_ui_sim::asset_resolver_config::configure_casc_install_env(settings.as_ref());
     }
     wow_ui_sim::blizzard_ui_sync::set_allow_ui_version_mismatch(args.allow_ui_version_mismatch);
+    wow_ui_sim::startup::set_delay_until(args.delay_until.clone());
     let selection = class_spec::parse_selection(
         args.class.as_deref(),
         args.spec.as_deref(),
