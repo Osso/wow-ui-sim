@@ -1,11 +1,7 @@
 //! Tests for frame-level, security, render layer, window, and visual state methods.
 use super::*;
 
-#[test]
-fn test_frame_level_methods_follow_parent_level_and_raise_state() {
-    let env = WowLuaEnv::new().unwrap();
-    env.exec(
-        r#"
+const FRAME_LEVEL_ROUND_TRIP_LUA: &str = r#"
         ParentLevelFrame = CreateFrame("Frame", "ParentLevelFrame", UIParent)
         ChildLevelFrame = CreateFrame("Frame", "ChildLevelFrame", ParentLevelFrame)
         GrandchildLevelFrame = CreateFrame("Frame", "GrandchildLevelFrame", ChildLevelFrame)
@@ -29,9 +25,10 @@ fn test_frame_level_methods_follow_parent_level_and_raise_state() {
 
         ParentLevelFrame:SetFrameLevel(20)
 
-        assert(ChildLevelFrame:GetFrameLevel() == 30, "fixed child level should survive parent level changes")
+        assert(ChildLevelFrame:GetFrameLevel() == 40, "fixed child level shifts by the parent level delta (frame-level-propagation spec, INFERRED R14 Q6)")
+        assert(GrandchildLevelFrame:GetFrameLevel() == 41, "grandchild shifts by the same delta")
         assert(SiblingLevelFrame:GetFrameLevel() == 21, "sibling should continue inheriting updated parent level")
-        assert(ParentLevelFrame:GetHighestFrameLevel(true) == 31, "highest level should reflect deepest descendant")
+        assert(ParentLevelFrame:GetHighestFrameLevel(true) == 41, "highest level should reflect deepest descendant")
 
         ChildLevelFrame:Raise()
         assert(ChildLevelFrame:GetRaisedFrameLevel() == 0, "retail keeps simple raised frame level hidden from Lua")
@@ -44,9 +41,12 @@ fn test_frame_level_methods_follow_parent_level_and_raise_state() {
         assert(GrandchildLevelFrame:GetFrameLevel() == 22, "grandchild should re-inherit from updated child level")
 
         FRAME_LEVEL_METHODS_OK = true
-    "#,
-    )
-    .unwrap();
+    "#;
+
+#[test]
+fn test_frame_level_methods_follow_parent_level_and_raise_state() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(FRAME_LEVEL_ROUND_TRIP_LUA).unwrap();
 
     let ok: bool = env.eval("return FRAME_LEVEL_METHODS_OK == true").unwrap();
     assert!(ok, "frame level method round-trip should succeed");
