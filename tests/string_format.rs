@@ -109,6 +109,10 @@ fn flag_characters_are_preserved() {
     assert_eq!(out, "1    |+2|00003");
 }
 
+// Retail 12.1.5 reports a missing positional argument as `no value`
+// (VERIFIED R88af.3, docs/specs/wow-lua-stdlib-deviations.md; 8d65b8b3b9,
+// 24120fa41d). The other profiles keep the legacy formatter's nil.
+#[cfg(not(all(feature = "client-retail", feature = "retail-12-1-5")))]
 #[test]
 fn positional_index_out_of_range_yields_nil_arg() {
     // args[3] is nil; string.format called with nil for %s prints "nil".
