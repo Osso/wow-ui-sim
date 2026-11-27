@@ -2562,7 +2562,6 @@ RestartGx # not-yet
 RestoreRaidProfileFromCopy # not-yet
 ResurrectHasSickness # not-yet
 ResurrectHasTimer # not-yet
-RunBinding # not-yet
 RunScript # not-yet: temporary Lua workaround
 SaveRaidProfileCopy # not-yet
 SaveView # intentionally-unsupported: 3D camera/model
@@ -2785,4 +2784,3 @@ securecall # not-yet: temporary Lua workaround
 setsecurehookforbidden # not-yet
 strsplittable # not-yet: temporary Lua workaround
 table.removemulti # not-yet
-time # not-yet: temporary Lua workaround

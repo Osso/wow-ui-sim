@@ -120,6 +120,8 @@ pub mod lfd_lock_requests;
 pub mod locale_info;
 pub mod loot_method;
 pub mod loot_specialization;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) mod lua_time;
 pub(crate) mod macro_getters;
 pub mod math_extensions;
 pub(crate) mod merchant_affordability;
@@ -176,6 +178,8 @@ pub(crate) mod raid_targets;
 pub mod recent_allies_location;
 #[cfg(feature = "client-wrath")]
 pub mod recruit_a_friend;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) mod run_binding;
 pub(crate) mod secure_helpers;
 pub mod session_exit;
 pub mod shapeshift;

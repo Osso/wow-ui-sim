@@ -512,7 +512,7 @@ pub(crate) fn dispatch_key_binding_release(lua: &mut rilua::Lua, key: &str) -> c
     Ok(())
 }
 
-fn execute_binding_body(
+pub(crate) fn execute_binding_body(
     state: &mut LuaState,
     body: &crate::lua_api::sim_substates::BindingBody,
     key_state: &str,
