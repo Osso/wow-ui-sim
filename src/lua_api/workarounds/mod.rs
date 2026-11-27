@@ -456,6 +456,7 @@ fn apply_format_and_game_defaults(lua: &mut rilua::Lua) -> crate::Result<()> {
 }
 
 fn apply_inventory_and_spell_defaults(lua: &mut rilua::Lua) -> crate::Result<()> {
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::dye_color_defaults::apply_bootstrap(lua)?;
     temporary::inventory_query_defaults::apply_bootstrap(lua)?;
     #[cfg(feature = "client-wowforever")]

@@ -99,6 +99,7 @@ pub(crate) mod dispatcher_callback_defaults;
 #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod dispatcher_surface;
 pub(crate) mod dropdown_list_defaults;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod dye_color_defaults;
 #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod edit_mode_cache_defaults;
