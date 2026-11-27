@@ -36,10 +36,8 @@ pub struct StartupInputs {
     pub should_use_player_bags_in_bank: bool,
     pub viewable_bank_types: HashSet<i32>,
     pub purchased_bank_tabs: HashMap<i32, Vec<BankTabData>>,
-    pub enabled_tts_settings: HashSet<i32>,
     pub match_complete: bool,
     pub target_spell_id: Option<i32>,
-    pub character_tts_settings_saved: bool,
     pub external_event: Option<ExternalEvent>,
     pub group_buff_alerts: Vec<GroupBuffAlert>,
 }
@@ -146,25 +144,9 @@ fn register_services(state: &mut LuaState) -> LuaResult<()> {
     let party = ensure_namespace(state, "C_PartyInfo")?;
     table_set_rust_fn_static(state, party, "GetRestrictPings", party_ping_restriction)?;
     let housing = ensure_namespace(state, "C_Housing")?;
-    table_set_rust_fn_static(state, housing, "IsInsideHouseOrPlot", inside_house_or_plot)?;
-    register_tts_settings(state)
-}
-
-fn register_tts_settings(state: &mut LuaState) -> LuaResult<()> {
-    let tts = ensure_namespace(state, "C_TTSSettings")?;
-    table_set_rust_fn_static(state, tts, "GetSetting", tts_bool_setting)?;
-    table_set_rust_fn_static(
-        state,
-        tts,
-        "GetCharacterSettingsSaved",
-        character_tts_settings_saved,
-    )?;
-    table_set_rust_fn_static(
-        state,
-        tts,
-        "MarkCharacterSettingsSaved",
-        mark_character_tts_settings_saved,
-    )
+    // C_TTSSettings is owned by the persisted c_tts_settings model, which
+    // init_lua_state registers after these globals (docs/specs/c-factory-cf2-tts.md).
+    table_set_rust_fn_static(state, housing, "IsInsideHouseOrPlot", inside_house_or_plot)
 }
 
 fn ping_enabled(state: &mut LuaState) -> LuaResult<u32> {
@@ -179,35 +161,10 @@ fn party_ping_restriction(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-fn tts_bool_setting(state: &mut LuaState) -> LuaResult<u32> {
-    let setting = i32::from_stack(state, 1)?;
-    let enabled = borrow_state(state)?
-        .forever_startup
-        .enabled_tts_settings
-        .contains(&setting);
-    state.push(Val::Bool(enabled));
-    Ok(1)
-}
-
 fn inside_house_or_plot(state: &mut LuaState) -> LuaResult<u32> {
     let inside = borrow_state(state)?.housing.current_housing_area.is_some();
     state.push(Val::Bool(inside));
     Ok(1)
-}
-
-fn character_tts_settings_saved(state: &mut LuaState) -> LuaResult<u32> {
-    let saved = borrow_state(state)?
-        .forever_startup
-        .character_tts_settings_saved;
-    state.push(Val::Bool(saved));
-    Ok(1)
-}
-
-fn mark_character_tts_settings_saved(state: &mut LuaState) -> LuaResult<u32> {
-    borrow_state_mut(state)?
-        .forever_startup
-        .character_tts_settings_saved = true;
-    Ok(0)
 }
 
 fn register_character_queries(state: &mut LuaState) -> LuaResult<()> {
