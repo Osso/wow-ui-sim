@@ -213,7 +213,7 @@ fn original_order_hall_consumer_receives_supplied_combat_ally_mission() {
     let mission_id: i64 = env
         .eval(
             r#"
-            local followerTypeID = CovenantMissionFrame.followerTypeID
+            local followerTypeID = Enum.GarrisonFollowerType.FollowerType_9_0_GarrisonFollower
             A_Admin.SetGarrisonMissions({
                 { missionID = 900111, name = "Combat ally", followerTypeID = followerTypeID,
                   level = 80, durationSeconds = 3600, duration = "1 hour", timeLeft = "",
@@ -221,7 +221,8 @@ fn original_order_hall_consumer_receives_supplied_combat_ally_mission() {
                   completed = false },
             })
             A_Admin.SetGarrisonCombatAllyMission(followerTypeID, 900111)
-            CovenantMissionFrame:Show()
+            A_Admin.SetAtGarrisonMissionNPC(true)
+            ShowGarrisonMissionFrameForFollowerType(followerTypeID)
             local list = CovenantMissionFrame.MissionTab.MissionList
             list.Tab1:Click()
             return list.combatAllyMission and list.combatAllyMission.missionID or -1
