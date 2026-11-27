@@ -1190,11 +1190,9 @@ C_PetJournal.GetPetInfoTableBySpeciesID # not-yet
 C_PetJournal.GetSearchFilter # not-yet
 C_PetJournal.PetUsesRandomDisplay # not-yet
 C_PhotoSharing.BeginAuthorizationFlow # not-yet
-C_PhotoSharing.ClearAuthorization # not-yet
 C_PhotoSharing.CompleteAuthorizationFlow # not-yet
 C_PhotoSharing.GetCropRatio # not-yet
 C_PhotoSharing.GetPhotoSharingAuthURL # not-yet
-C_PhotoSharing.GetStatus # not-yet
 C_PhotoSharing.SetScreenshotPreviewTexture # not-yet
 C_PhotoSharing.TakePhoto # not-yet
 C_PhotoSharing.UploadPhotoToService # not-yet
