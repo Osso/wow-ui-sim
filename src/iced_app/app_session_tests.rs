@@ -113,7 +113,7 @@ fn failed_reload_preserves_previous_save_and_allows_repair() {
     assert!(
         app.log_messages
             .iter()
-            .any(|message| message.contains("ReloadUI failed"))
+            .any(|message| message.contains("UI transition failed"))
     );
     assert_eq!(std::fs::read(&path).unwrap(), prior);
     assert!(!app.env.borrow().state().borrow().ui_reload_requested);
