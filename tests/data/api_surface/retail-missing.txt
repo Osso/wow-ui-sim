@@ -2105,7 +2105,6 @@ GMSurveyCommentSubmit # not-yet
 GMSurveyNumAnswers # not-yet
 GMSurveyQuestion # not-yet
 GMSurveySubmit # not-yet
-GetAccountExpansionLevel # not-yet: temporary Lua workaround
 GetAchievementNumRewards # not-yet
 GetAchievementReward # not-yet
 GetActiveArtifactByRace # not-yet
@@ -2118,7 +2117,6 @@ GetArenaOpponentSpec # not-yet: temporary Lua workaround
 GetAvailableLevel # not-yet
 GetAvailableLocales # not-yet
 GetBackgroundLoadingStatus # not-yet: temporary Lua workaround
-GetBaseDifficultyID # not-yet: temporary Lua workaround
 GetBattlefieldArenaFaction # not-yet
 GetBattlefieldEstimatedWaitTime # not-yet
 GetBattlefieldInstanceExpiration # not-yet
@@ -2130,14 +2128,10 @@ GetBattlefieldWinner # not-yet
 GetBattlegroundPoints # not-yet
 GetBestFlexRaidChoice # not-yet
 GetBillingTimeRested # not-yet: temporary Lua workaround
-GetBuildInfo # not-yet: temporary Lua workaround
 GetButtonMetatable # not-yet: temporary Lua workaround
 GetCallstackHeight # not-yet: temporary Lua workaround
 GetCemeteryPreference # not-yet
-GetChannelDisplayInfo # not-yet: temporary Lua workaround
-GetChatTypeIndex # not-yet: temporary Lua workaround
 GetClickFrame # not-yet
-GetClientDisplayExpansionLevel # not-yet: temporary Lua workaround
 GetCompanionInfo # not-yet
 GetCorpseRecoveryDelay # not-yet
 GetCurrentEventID # not-yet
@@ -2153,7 +2147,6 @@ GetDefaultAbbreviationBreakpoints # not-yet
 GetDemotionRank # not-yet
 GetDifficultyInfo # not-yet: temporary Lua workaround
 GetDownloadedPercentage # not-yet: temporary Lua workaround
-GetDungeonDifficultyID # not-yet: temporary Lua workaround
 GetDungeonForRandomSlot # not-yet
 GetEditBoxMetatable # not-yet: temporary Lua workaround
 GetEquipmentNameFromSpell # not-yet
@@ -2161,7 +2154,6 @@ GetErrorCallstackHeight # not-yet: temporary Lua workaround
 GetEventTime # not-yet
 GetExpansionDisplayInfo # not-yet: temporary Lua workaround
 GetExpansionForLevel # not-yet
-GetExpansionLevel # not-yet: temporary Lua workaround
 GetFailedPVPTalentIDs # not-yet
 GetFailedTalentIDs # not-yet
 GetFileIDFromPath # not-yet
@@ -2229,17 +2221,13 @@ GetLatestCompletedComparisonAchievements # not-yet
 GetLatestThreeSenders # not-yet
 GetLatestUpdatedComparisonStats # not-yet
 GetLatestUpdatedStats # not-yet
-GetLocale # not-yet: temporary Lua workaround
 GetLootInfo # not-yet
 GetLootSourceInfo # not-yet
 GetLootThreshold # not-yet
 GetMacroItem # not-yet
 GetMacroSpell # not-yet
 GetMasterLootCandidate # not-yet
-GetMaxLevelForExpansionLevel # not-yet: temporary Lua workaround
-GetMaxLevelForPlayerExpansion # not-yet: temporary Lua workaround
 GetMaxNumCUFProfiles # not-yet
-GetMaxPlayerLevel # not-yet: temporary Lua workaround
 GetMaxRewardCurrencies # not-yet
 GetMaxTalentTier # not-yet
 GetMaximumExpansionLevel # not-yet
@@ -2263,7 +2251,6 @@ GetNumChannelMembers # not-yet
 GetNumCompanions # not-yet
 GetNumComparisonCompletedAchievements # not-yet
 GetNumDeclensionSets # not-yet
-GetNumDisplayChannels # not-yet: temporary Lua workaround
 GetNumDungeonForRandomSlot # not-yet
 GetNumFlexRaidDungeons # not-yet
 GetNumFlyouts # not-yet
@@ -2348,7 +2335,6 @@ GetSelectedWarGameType # not-yet
 GetSheathState # not-yet
 GetSoundEntryCount # not-yet
 GetSourceLocation # not-yet
-GetSpecializationInfoForSpecID # not-yet: temporary Lua workaround
 GetSpecializationSpells # not-yet
 GetSpecsForSpell # not-yet
 GetSpellBaseCooldown # not-yet
@@ -2362,7 +2348,6 @@ GetTalentTierInfo # not-yet
 GetTargetTradeCurrency # not-yet
 GetTaskPOIs # not-yet
 GetTaxiBenchmarkMode # not-yet
-GetText # not-yet: temporary Lua workaround
 GetThreatStatusColor # not-yet: temporary Lua workaround
 GetTotemCannotDismiss # not-yet
 GetTotemTimeLeft # not-yet
@@ -2440,7 +2425,6 @@ IsLFGComplete # not-yet
 IsLeftMetaKeyDown # not-yet
 IsLegacyDifficulty # not-yet
 IsLinuxClient # not-yet
-IsMacClient # not-yet: temporary Lua workaround
 IsMasterLooter # not-yet
 IsMouselooking # intentionally-unsupported: 3D camera/model
 IsMovieLocal # not-yet
@@ -2469,7 +2453,6 @@ IsUsingVehicleControls # not-yet
 IsVehicleAimAngleAdjustable # not-yet
 IsVehicleAimPowerAdjustable # not-yet
 IsWargame # not-yet
-IsWindowsClient # not-yet: temporary Lua workaround
 ItemCanTargetGarrisonFollowerAbility # not-yet
 ItemTextGetCreator # not-yet
 ItemTextGetItem # not-yet
