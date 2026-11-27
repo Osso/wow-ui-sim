@@ -10,6 +10,7 @@ pub mod item_child;
 mod item_classifiers;
 mod item_creation_context_data;
 mod item_cursor_grid;
+mod item_data_request;
 mod item_drop_on_unit;
 mod item_effects;
 pub mod item_equip;

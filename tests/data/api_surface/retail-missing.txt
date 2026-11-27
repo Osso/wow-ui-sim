@@ -1066,7 +1066,6 @@ C_Item.IsItemSpecificToPlayerClass # not-yet
 C_Item.ReplaceEnchant # not-yet
 C_Item.ReplaceTradeEnchant # not-yet
 C_Item.ReplaceTradeskillEnchant # not-yet
-C_Item.RequestLoadItemDataByID # not-yet: temporary Lua workaround
 C_ItemInteraction.GetChargeInfo # not-yet
 C_ItemInteraction.GetItemConversionCurrencyCost # not-yet
 C_ItemInteraction.GetItemInteractionSpellId # not-yet

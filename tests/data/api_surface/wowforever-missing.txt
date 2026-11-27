@@ -1078,7 +1078,6 @@ C_Item.ReplaceEnchant # not-yet
 C_Item.ReplaceTradeEnchant # not-yet
 C_Item.ReplaceTradeskillEnchant # not-yet
 C_Item.RequestLoadItemData # not-yet
-C_Item.RequestLoadItemDataByID # not-yet: temporary Lua workaround
 C_Item.UnlockItem # not-yet
 C_Item.UnlockItemByGUID # not-yet
 C_Item.UseItemByName # not-yet
