@@ -110,6 +110,7 @@ pub(crate) mod formatting_utility_defaults;
 pub(crate) mod frame_helper_defaults;
 pub(crate) mod game_rules_namespace_fallback;
 pub(crate) mod game_time_calendar_invites;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod gamepad_cursor_control_defaults;
 pub(crate) mod garrison_mission_lists;
 pub(crate) mod global_frame_defaults;

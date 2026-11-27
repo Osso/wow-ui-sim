@@ -440,6 +440,7 @@ fn apply_format_and_game_defaults(lua: &mut rilua::Lua) -> crate::Result<()> {
     }
     temporary::formatting_utility_defaults::apply_bootstrap(lua)?;
     temporary::game_time_calendar_invites::apply_bootstrap(lua)?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::gamepad_cursor_control_defaults::apply_bootstrap(lua)?;
     temporary::game_rules_namespace_fallback::apply_bootstrap(lua)?;
     #[cfg(not(feature = "client-wrath"))]
