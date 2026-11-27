@@ -1297,6 +1297,30 @@ fn test_old_stack_startup_globals_exist_on_rilua_path() {
     assert!(active_spec_id > 0);
     assert!(!active_spec_name.is_empty());
 }
+const OLD_STACK_POWER_LFG_PROBE: &str = r#"
+    local ptype, ptoken = UnitPowerType("player")
+    return UnitPower("player"), UnitPower("player", 0), UnitPowerMax("player"), ptype, ptoken,
+        type(C_LFGInfo.CanPlayerUseLFD), type(C_LFGInfo.CanPlayerUseLFR),
+        C_LFGInfo.CanPlayerUseLFD(), C_LFGInfo.CanPlayerUseLFR(),
+        type(FACTION_RED_COLOR.GetRGBA)
+"#;
+
+type OldStackPowerLfg = (
+    i64,
+    i64,
+    i64,
+    i64,
+    String,
+    String,
+    String,
+    bool,
+    bool,
+    String,
+);
+
+// Blizzard_EnvironmentCleanup clears the public C_WowTokenSecure binding
+// (EnvironmentCleanup.lua:224); since ba4c5c08b9 the post-cleanup restore
+// leaves it absent. The token model is covered by tests/wowtoken_secure.rs.
 #[test]
 fn test_old_stack_power_lfg_and_cleanup_globals_exist_on_rilua_path() {
     let env = WowLuaEnv::new().unwrap();
@@ -1304,74 +1328,17 @@ fn test_old_stack_power_lfg_and_cleanup_globals_exist_on_rilua_path() {
     env.exec("LE_GAME_ERR_SPELL_COOLDOWN = nil").unwrap();
     env.restore_post_cleanup_globals();
 
-    let (
-        unit_power,
-        unit_power_with_type,
-        unit_power_max,
-        power_type,
-        power_token,
-        lfg_lfd_ty,
-        lfg_lfr_ty,
-        can_use_lfd,
-        can_use_lfr,
-        faction_rgba_ty,
-        token_secure_ty,
-        token_count,
-        price_lock_duration,
-        spell_cooldown_err,
-    ): (
-        i64,
-        i64,
-        i64,
-        i64,
-        String,
-        String,
-        String,
-        bool,
-        bool,
-        String,
-        String,
-        i64,
-        i64,
-        i64,
-    ) = env
-        .eval(
-            r#"
-            local ptype, ptoken = UnitPowerType("player")
-            local canUseLFD = C_LFGInfo.CanPlayerUseLFD()
-            local canUseLFR = C_LFGInfo.CanPlayerUseLFR()
-            return UnitPower("player"),
-                UnitPower("player", 0),
-                UnitPowerMax("player"),
-                ptype,
-                ptoken,
-                type(C_LFGInfo.CanPlayerUseLFD),
-                type(C_LFGInfo.CanPlayerUseLFR),
-                canUseLFD,
-                canUseLFR,
-                type(FACTION_RED_COLOR.GetRGBA),
-                type(C_WowTokenSecure.GetTokenCount),
-                C_WowTokenSecure.GetTokenCount(),
-                C_WowTokenSecure.GetPriceLockDuration(),
-                LE_GAME_ERR_SPELL_COOLDOWN
-            "#,
-        )
-        .unwrap();
+    let values: OldStackPowerLfg = env.eval(OLD_STACK_POWER_LFG_PROBE).unwrap();
+    let power = (values.0, values.1, values.2, values.3, values.4.as_str());
+    assert_eq!(power, (50_000, 50_000, 100_000, 0, "MANA"));
+    let lfg = (values.5.as_str(), values.6.as_str(), values.7, values.8);
+    assert_eq!(lfg, ("function", "function", true, true));
+    assert_eq!(values.9, "function");
 
-    assert_eq!(unit_power, 50_000);
-    assert_eq!(unit_power_with_type, 50_000);
-    assert_eq!(unit_power_max, 100_000);
-    assert_eq!(power_type, 0);
-    assert_eq!(power_token, "MANA");
-    assert_eq!(lfg_lfd_ty, "function");
-    assert_eq!(lfg_lfr_ty, "function");
-    assert!(can_use_lfd);
-    assert!(can_use_lfr);
-    assert_eq!(faction_rgba_ty, "function");
-    assert_eq!(token_secure_ty, "function");
-    assert_eq!(token_count, 2);
-    assert_eq!(price_lock_duration, 900);
-    assert_eq!(spell_cooldown_err, 61);
+    let cleanup: (String, i64) = env
+        .eval("return type(rawget(_G, 'C_WowTokenSecure')), LE_GAME_ERR_SPELL_COOLDOWN")
+        .unwrap();
+    assert_eq!(cleanup, ("nil".to_string(), 61));
 }
 #[test]
 fn test_startup_social_and_lfg_globals_exist() {
@@ -1616,6 +1583,19 @@ fn test_addon_startup_time_and_difficulty_globals_exist() {
 }
 
 retail_namespace_fixture! {
+// C_RaidLocks.IsEncounterComplete takes mapID and encounterID, both
+// non-nilable (RaidLocksDocumentation.lua); the supplied model (6836951469)
+// rejects a missing encounterID.
+const FRAME_SCALE_MERCHANT_RAID_PROBE: &str = r#"
+    local itemInfo = C_MerchantFrame.GetItemInfo(1)
+    return type(GetScreenDPIScale),
+        GetScreenDPIScale(),
+        type(C_MerchantFrame),
+        type(itemInfo),
+        type(C_RaidLocks),
+        C_RaidLocks.IsEncounterComplete(1, 2)
+"#;
+
 #[test]
 fn test_addon_startup_frame_scale_and_merchant_namespaces_exist() {
     let env = WowLuaEnv::new().unwrap();
@@ -1626,19 +1606,7 @@ fn test_addon_startup_frame_scale_and_merchant_namespaces_exist() {
         String,
         String,
         bool,
-    ) = env
-        .eval(
-            r#"
-            local itemInfo = C_MerchantFrame.GetItemInfo(1)
-            return type(GetScreenDPIScale),
-                GetScreenDPIScale(),
-                type(C_MerchantFrame),
-                type(itemInfo),
-                type(C_RaidLocks),
-                C_RaidLocks.IsEncounterComplete(1)
-            "#,
-        )
-        .unwrap();
+    ) = env.eval(FRAME_SCALE_MERCHANT_RAID_PROBE).unwrap();
 
     assert_eq!(dpi_ty, "function");
     assert_eq!(dpi_scale, 1.0);
@@ -1652,76 +1620,50 @@ fn test_addon_startup_frame_scale_and_merchant_namespaces_exist() {
 }
 }
 
+const STARTUP_TABLE_HELPERS_PROBE: &str = r#"
+    local index, value = FindInTableIf({"a", "b"}, function(v) return v == "b" end)
+    local secureArray = SecureTypes.CreateSecureArray()
+    secureArray:Insert("a")
+    secureArray:Insert("b")
+    local secureIndex, secureValue = secureArray:FindInTableIf(function(v) return v == "b" end)
+    local securePairCount = 0
+    for _ in pairs(secureArray) do
+        securePairCount = securePairCount + 1
+    end
+    return type(FindInTableIf), index, value, secureIndex, secureValue, securePairCount,
+        type(difftime), difftime(10, 3)
+"#;
+
+const STARTUP_TIME_STRING_HELPERS_PROBE: &str = r#"
+    return time({ year = "2024", month = "6", day = "3", hour = "0", min = "41", sec = "7" }),
+        ("Requires a reload"):SetColorOrange(),
+        ("Hello {name}"):K_ReplaceVars({ name = "Palaky" }),
+        UnmuteSoundFile(123)
+"#;
+
+type StartupTableHelpers = (String, i64, String, i64, String, i64, String, i64);
+
 #[test]
 fn test_addon_startup_table_time_and_string_helpers_exist() {
     let env = WowLuaEnv::new().unwrap();
-    let (
-        find_ty,
-        found_index,
-        found_value,
-        secure_found_index,
-        secure_found_value,
-        secure_pair_count,
-        difftime_ty,
-        time_delta,
-        parsed_time,
-        colored,
-        replaced,
-        unmute_result,
-    ): (
-        String,
-        i64,
-        String,
-        i64,
-        String,
-        i64,
-        String,
-        i64,
-        i64,
-        String,
-        String,
-        bool,
-    ) = env
-        .eval(
-            r#"
-            local index, value = FindInTableIf({"a", "b"}, function(v) return v == "b" end)
-            local secureArray = SecureTypes.CreateSecureArray()
-            secureArray:Insert("a")
-            secureArray:Insert("b")
-            local secureIndex, secureValue = secureArray:FindInTableIf(function(v) return v == "b" end)
-            local securePairCount = 0
-            for _ in pairs(secureArray) do
-                securePairCount = securePairCount + 1
-            end
-            return type(FindInTableIf),
-                index,
-                value,
-                secureIndex,
-                secureValue,
-                securePairCount,
-                type(difftime),
-                difftime(10, 3),
-                time({ year = "2024", month = "6", day = "3", hour = "0", min = "41", sec = "7" }),
-                ("Requires a reload"):SetColorOrange(),
-                ("Hello {name}"):K_ReplaceVars({ name = "Palaky" }),
-                UnmuteSoundFile(123)
-            "#,
-        )
-        .unwrap();
-
-    assert_eq!(find_ty, "function");
-    assert_eq!(found_index, 2);
-    assert_eq!(found_value, "b");
-    assert_eq!(secure_found_index, 2);
-    assert_eq!(secure_found_value, "b");
-    assert_eq!(secure_pair_count, 2);
-    assert_eq!(difftime_ty, "function");
-    assert_eq!(time_delta, 7);
+    // SecureTypes comes from the original Blizzard_SharedXMLBase (6a786fbd81
+    // removed the bootstrap copy).
+    load_blizzard_shared_xml_base(&env);
+    let table: StartupTableHelpers = env.eval(STARTUP_TABLE_HELPERS_PROBE).unwrap();
+    // The original SecureTypes.lua:217-220 keeps elements in the private `tbl`
+    // field, so `pairs` on the array object sees only that one key.
+    let expected = ("function", 2, "b", 2, "b", 1, "function", 7);
+    let table_view = (table.0.as_str(), table.1, table.2.as_str(), table.3);
+    assert_eq!(table_view, (expected.0, expected.1, expected.2, expected.3));
+    let tail = (table.4.as_str(), table.5, table.6.as_str(), table.7);
+    assert_eq!(tail, (expected.4, expected.5, expected.6, expected.7));
+    let (parsed_time, colored, replaced, unmute): (i64, String, String, bool) =
+        env.eval(STARTUP_TIME_STRING_HELPERS_PROBE).unwrap();
     assert!(parsed_time > 0);
     assert!(colored.starts_with("|c"));
     assert!(colored.ends_with("|r"));
     assert_eq!(replaced, "Hello Palaky");
-    assert!(unmute_result);
+    assert!(unmute);
 }
 
 #[cfg(all(feature = "retail-12-0-5", not(feature = "retail-12-0-7")))]

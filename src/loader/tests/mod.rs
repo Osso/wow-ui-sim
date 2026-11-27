@@ -103,6 +103,17 @@ fn blizzard_ui_dir() -> PathBuf {
 }
 }
 
+/// Load the original Blizzard_SharedXMLBase (FlagsUtil, SecureTypes); the
+/// bootstrap copies were removed by 6a786fbd81.
+pub(super) fn load_blizzard_shared_xml_base(env: &WowLuaEnv) {
+    let addons = crate::client_profile::blizzard_ui_addons_dir_under(std::path::Path::new(env!(
+        "CARGO_MANIFEST_DIR"
+    )));
+    let toc = find_toc_file(&addons.join("Blizzard_SharedXMLBase"))
+        .expect("Blizzard_SharedXMLBase TOC should resolve");
+    load_addon(&env.loader_env(), &toc).expect("Blizzard_SharedXMLBase should load");
+}
+
 /// Create a test environment, write XML content, load it, return context.
 pub(super) fn load_test_xml(dir_suffix: &str, xml_content: &str) -> TestCtx {
     let env = WowLuaEnv::new().unwrap();

@@ -1,4 +1,8 @@
 //! Tests for UIDropDownMenu system (dropdown_api.rs).
+//!
+//! Retail and Forever no longer install the DropDownList frame defaults
+//! (c41f3201e2); tests that read those frames run only where the defaults
+//! remain.
 
 use wow_ui_sim::lua_api::WowLuaEnv;
 
@@ -38,6 +42,7 @@ fn test_open_dropdownmenus_is_table() {
 // DropDownList Frames
 // ============================================================================
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn test_dropdown_list_frames_exist() {
     let env = env();
@@ -49,6 +54,7 @@ fn test_dropdown_list_frames_exist() {
     }
 }
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn test_dropdown_list_is_hidden_initially() {
     let env = env();
@@ -56,6 +62,7 @@ fn test_dropdown_list_is_hidden_initially() {
     assert!(!visible, "DropDownList1 should be hidden initially");
 }
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn test_dropdown_list_buttons_exist() {
     let env = env();
@@ -69,6 +76,7 @@ fn test_dropdown_list_buttons_exist() {
     }
 }
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn test_dropdown_list_button_text_frames_exist() {
     let env = env();
@@ -78,6 +86,7 @@ fn test_dropdown_list_button_text_frames_exist() {
     assert!(exists, "Button NormalText child should exist");
 }
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn test_dropdown_dynamic_buttons_create_named_children() {
     let env = env();
@@ -112,6 +121,7 @@ fn test_dropdown_dynamic_buttons_create_named_children() {
     );
 }
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn test_dropdown_add_button_creates_buttons_past_seeded_range() {
     let env = env();
@@ -171,6 +181,7 @@ fn test_dropdown_createframes_attribute_refires_for_delegate() {
     );
 }
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn test_dropdown_list_num_buttons_initially_zero() {
     let env = env();
@@ -234,6 +245,7 @@ fn test_initialize_stores_init_function() {
 // UIDropDownMenu_AddButton
 // ============================================================================
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn test_add_button_increments_num_buttons() {
     let env = env();
@@ -249,6 +261,7 @@ fn test_add_button_increments_num_buttons() {
     assert_eq!(num, 1);
 }
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn test_add_button_sets_text() {
     let env = env();
@@ -264,6 +277,7 @@ fn test_add_button_sets_text() {
     assert_eq!(text, "Test Option");
 }
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn test_add_button_copies_info_properties() {
     let env = env();
@@ -363,6 +377,7 @@ fn test_set_and_get_selected_value() {
 // ToggleDropDownMenu / CloseDropDownMenus
 // ============================================================================
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn test_toggle_dropdown_menu_shows_list() {
     let env = env();
@@ -374,6 +389,7 @@ fn test_toggle_dropdown_menu_shows_list() {
     assert!(after, "DropDownList1 should be visible after toggle");
 }
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn test_toggle_dropdown_menu_hides_on_second_toggle() {
     let env = env();
@@ -386,6 +402,7 @@ fn test_toggle_dropdown_menu_hides_on_second_toggle() {
     );
 }
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn test_close_dropdown_menus() {
     let env = env();
@@ -404,6 +421,7 @@ fn test_close_dropdown_menus() {
     assert!(!l2_after);
 }
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn test_close_dropdown_menus_from_level() {
     let env = env();
@@ -441,6 +459,7 @@ fn test_enable_disable_dropdown() {
 // UIDropDownMenu_AddSeparator / AddSpace
 // ============================================================================
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn test_add_separator_adds_button() {
     let env = env();
@@ -451,6 +470,7 @@ fn test_add_separator_adds_button() {
     assert_eq!(after, before + 1);
 }
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn test_add_space_adds_button() {
     let env = env();
@@ -566,6 +586,7 @@ fn test_set_initialize_function() {
 // UIDropDownMenu_SetFrameStrata
 // ============================================================================
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn test_set_frame_strata() {
     let env = env();
@@ -579,6 +600,7 @@ fn test_set_frame_strata() {
     assert_eq!(strata, "DIALOG");
 }
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn test_set_frame_strata_blizzard_is_ignored() {
     let env = env();

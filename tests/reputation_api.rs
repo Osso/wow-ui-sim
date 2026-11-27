@@ -6,6 +6,10 @@ fn env() -> WowLuaEnv {
     WowLuaEnv::new().expect("Failed to create Lua environment")
 }
 
+// Retail/Forever rows come from explicit host state that starts empty
+// (8fd3fd2819, reputation_model::active); tests/reputation_host_consumer.rs
+// covers them. These cases read the seeded list kept by the other profiles.
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn test_get_num_factions_positive() {
     let env = env();
@@ -13,6 +17,10 @@ fn test_get_num_factions_positive() {
     assert!(count > 0);
 }
 
+// Retail/Forever rows come from explicit host state that starts empty
+// (8fd3fd2819, reputation_model::active); tests/reputation_host_consumer.rs
+// covers them. These cases read the seeded list kept by the other profiles.
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn test_first_faction_is_header() {
     let env = env();
@@ -22,6 +30,10 @@ fn test_first_faction_is_header() {
     assert!(is_header);
 }
 
+// Retail/Forever rows come from explicit host state that starts empty
+// (8fd3fd2819, reputation_model::active); tests/reputation_host_consumer.rs
+// covers them. These cases read the seeded list kept by the other profiles.
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn test_second_faction_is_child() {
     let env = env();
@@ -44,6 +56,10 @@ fn test_out_of_range_returns_nil() {
     assert!(is_nil);
 }
 
+// Retail/Forever rows come from explicit host state that starts empty
+// (8fd3fd2819, reputation_model::active); tests/reputation_host_consumer.rs
+// covers them. These cases read the seeded list kept by the other profiles.
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn test_faction_by_id() {
     let env = env();
@@ -71,6 +87,10 @@ fn test_selected_faction_returns_zero() {
     assert_eq!(sel, 0);
 }
 
+// Retail/Forever rows come from explicit host state that starts empty
+// (8fd3fd2819, reputation_model::active); tests/reputation_host_consumer.rs
+// covers them. These cases read the seeded list kept by the other profiles.
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn test_watched_faction_data() {
     let env = env();
@@ -80,6 +100,10 @@ fn test_watched_faction_data() {
     assert!(has_name);
 }
 
+// Retail/Forever rows come from explicit host state that starts empty
+// (8fd3fd2819, reputation_model::active); tests/reputation_host_consumer.rs
+// covers them. These cases read the seeded list kept by the other profiles.
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn test_collapse_header_hides_children() {
     let env = env();
@@ -120,6 +144,10 @@ fn test_collapse_all_shows_only_headers() {
     assert_eq!(count, headers);
 }
 
+// Retail/Forever rows come from explicit host state that starts empty
+// (8fd3fd2819, reputation_model::active); tests/reputation_host_consumer.rs
+// covers them. These cases read the seeded list kept by the other profiles.
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn test_expand_all_shows_more_than_headers() {
     let env = env();
@@ -137,6 +165,10 @@ fn test_max_reputation_reaction_constant() {
     assert_eq!(val, 8);
 }
 
+// Retail/Forever rows come from explicit host state that starts empty
+// (8fd3fd2819, reputation_model::active); tests/reputation_host_consumer.rs
+// covers them. These cases read the seeded list kept by the other profiles.
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn test_standing_text_via_gettext() {
     let env = env();
@@ -201,6 +233,10 @@ fn test_legacy_reputations_shown_persists() {
     assert!(!after, "legacy reps shown should persist as false");
 }
 
+// Retail/Forever rows come from explicit host state that starts empty
+// (8fd3fd2819, reputation_model::active); tests/reputation_host_consumer.rs
+// covers them. These cases read the seeded list kept by the other profiles.
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn test_account_wide_reputation_for_tww_major_faction() {
     let env = env();
@@ -234,6 +270,10 @@ fn test_account_wide_reputation_unknown_faction() {
     assert!(!is_account_wide);
 }
 
+// Retail/Forever rows come from explicit host state that starts empty
+// (8fd3fd2819, reputation_model::active); tests/reputation_host_consumer.rs
+// covers them. These cases read the seeded list kept by the other profiles.
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn test_faction_data_exposes_is_account_wide() {
     let env = env();
@@ -254,6 +294,10 @@ fn test_faction_data_exposes_is_account_wide() {
     assert!(!not_account_wide);
 }
 
+// Retail/Forever rows come from explicit host state that starts empty
+// (8fd3fd2819, reputation_model::active); tests/reputation_host_consumer.rs
+// covers them. These cases read the seeded list kept by the other profiles.
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn test_legacy_marker_on_classic_factions() {
     let env = env();

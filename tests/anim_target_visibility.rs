@@ -128,10 +128,28 @@ fn cast_bar_cast_time_string_exists() {
     .unwrap();
 }
 
+// Retail and Forever take GameRulesUtil from the original Blizzard_SharedXML
+// (ef3c368835 retired the constant-true fallback there).
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn game_rules_env() -> WowLuaEnv {
+    use crate::common::blizzard_addon_harness::{
+        blizzard_ui_dir, load_blizzard_addon_closure_into_env, new_blizzard_addon_env,
+    };
+    let ui = blizzard_ui_dir();
+    let env = new_blizzard_addon_env(&ui);
+    load_blizzard_addon_closure_into_env(&env, &ui, &["Blizzard_SharedXML"], &[]);
+    env
+}
+
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+fn game_rules_env() -> WowLuaEnv {
+    setup()
+}
+
 /// GameRulesUtil.ShouldShowPlayerCastBar must exist for UpdateShownState to work.
 #[test]
 fn game_rules_util_should_show_player_cast_bar() {
-    let env = setup();
+    let env = game_rules_env();
     env.exec(
         r#"
         assert(GameRulesUtil ~= nil,

@@ -241,6 +241,8 @@ mod tests {
         assert!(pet_can_be_released);
     }
 
+    // The popup guard is not installed on Retail (6e6710a75d).
+    #[cfg(not(feature = "client-retail"))]
     #[test]
     fn guards_dynamic_flight_animation_when_popup_is_missing() {
         let env = WowLuaEnv::new().expect("lua env should initialize");

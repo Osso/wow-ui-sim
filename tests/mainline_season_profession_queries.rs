@@ -18,7 +18,9 @@ const PROBE: &str = r#"
 fn mainline_queries_report_configured_season_market_and_account_completion() {
     let env = WowLuaEnv::new().expect("create mainline query environment");
     let before: String = env.eval(PROBE).expect("query defaults");
-    assert_eq!(before, "0|false|false|false|false");
+    // Default display season is the highest DisplaySeasonID, 37 (INFERRED R88ew,
+    // efb372390a/d825069718, docs/specs/challenge-mode-run.md).
+    assert_eq!(before, "37|false|false|false|false");
 
     {
         let mut sim = env.state().borrow_mut();

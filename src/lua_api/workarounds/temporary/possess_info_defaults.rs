@@ -17,7 +17,11 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     Ok(())
 }
 
-#[cfg(test)]
+// Retail and Forever publish the supplied-slot Rust GetPossessInfo (c58a87bd4b).
+#[cfg(all(
+    test,
+    not(any(feature = "client-retail", feature = "client-wowforever"))
+))]
 mod tests {
     use crate::lua_api::WowLuaEnv;
 

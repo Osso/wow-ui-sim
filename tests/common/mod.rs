@@ -461,6 +461,18 @@ pub fn fire_addon_loaded(env: &WowLuaEnv, addon_name: &str) {
     let _ = env.fire_event_with_args("ADDON_LOADED", &[env.lua_string(addon_name)]);
 }
 
+/// Dispatch the completion event that application startup sends after an addon
+/// finishes loading. The low-level `load_addon` path does not send it.
+pub fn fire_original_addon_loaded(env: &WowLuaEnv, addon_name: &str) {
+    let arguments = wow_ui_sim::loader::addon_loaded_arguments(
+        &env.state().borrow(),
+        addon_name,
+        env.lua_string(addon_name),
+    );
+    env.fire_event_with_args("ADDON_LOADED", &arguments)
+        .expect("original addon owners receive their load-completion event");
+}
+
 pub use event_helpers::fire_player_entering_world;
 
 pub fn call_global_if_present(env: &WowLuaEnv, function_name: &str) {

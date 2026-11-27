@@ -2,10 +2,7 @@ use crate::common;
 
 use std::path::PathBuf;
 
-use common::blizzard_addon_harness::{
-    with_blizzard_addon_closure, with_blizzard_addon_glue_smoke_shape,
-    with_blizzard_addon_smoke_shape,
-};
+use common::blizzard_addon_harness::{with_blizzard_addon_closure, with_blizzard_addon_smoke_shape};
 use common::panel_fixtures::{blizzard_ui_dir, clear_recorded_lua_errors, recorded_lua_errors};
 use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::toc::TocFile;
@@ -58,9 +55,8 @@ fn blizzard_auto_complete_allowload_both_loads_in_game_and_glue_scopes() {
                 assert_loaded_in_scope(env, loaded, false, "game");
             });
 
-            with_blizzard_addon_glue_smoke_shape(&[ROOT], &[], |env, loaded| {
-                assert_loaded_in_scope(env, loaded, true, "glue");
-            });
+            let (env, loaded) = load_root_in_glue_after_shared_xml_base();
+            assert_loaded_in_scope(&env, &loaded, true, "glue");
         });
     });
 }
@@ -110,6 +106,23 @@ fn blizzard_auto_complete_toc_dependencies_load_before_autocomplete() {
         });
     });
 }
+}
+
+/// AutoComplete.lua:135 reads EventRegistry. Glue startup loads its original
+/// owner, Blizzard_SharedXMLBase (AllowLoad Both), first; e35289a6a1 retired the
+/// modern-profile copy. The two closures share no addon.
+fn load_root_in_glue_after_shared_xml_base() -> (wow_ui_sim::lua_api::WowLuaEnv, Vec<String>) {
+    use common::blizzard_addon_harness::{
+        load_blizzard_addon_closure_for_screen_into_env, new_blizzard_addon_glue_env,
+    };
+    let ui = blizzard_ui_dir();
+    let env = new_blizzard_addon_glue_env(&ui);
+    let screen = ScreenKind::CharacterSelect;
+    let owner = ["Blizzard_SharedXMLBase"];
+    load_blizzard_addon_closure_for_screen_into_env(&env, &ui, screen, &owner, &[]);
+    clear_recorded_lua_errors(&env);
+    let loaded = load_blizzard_addon_closure_for_screen_into_env(&env, &ui, screen, &[ROOT], &[]);
+    (env, loaded)
 }
 
 fn assert_toc_declares_fonts_shared_dep() {

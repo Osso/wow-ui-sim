@@ -143,9 +143,28 @@ fn test_get_action_info_returns_nil_for_empty_slot() {
     assert!(is_nil);
 }
 
+// Retail and Forever publish the legacy global from the original
+// Blizzard_DeprecatedActionBar addon (86dc74b163 retired the forwarding
+// fallback there).
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn bonus_bar_env() -> WowLuaEnv {
+    use crate::common::blizzard_addon_harness::{
+        blizzard_ui_dir, load_blizzard_addon_closure_into_env, new_blizzard_addon_env,
+    };
+    let ui = blizzard_ui_dir();
+    let env = new_blizzard_addon_env(&ui);
+    load_blizzard_addon_closure_into_env(&env, &ui, &["Blizzard_DeprecatedActionBar"], &[]);
+    env
+}
+
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+fn bonus_bar_env() -> WowLuaEnv {
+    env()
+}
+
 #[test]
 fn test_bonus_bar_offset_tracks_bonus_bar_index_above_main_pages() {
-    let env = env();
+    let env = bonus_bar_env();
     let (namespace_offset, global_offset): (i32, i32) = env
         .eval(
             r#"

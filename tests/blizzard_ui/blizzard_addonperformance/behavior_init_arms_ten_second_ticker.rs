@@ -36,7 +36,15 @@ type InitTickerProbe = (String, bool, String, bool, i64, String, bool);
 fn build_env_with_ticker_spy() -> wow_ui_sim::lua_api::WowLuaEnv {
     let ui_dir = blizzard_ui_dir();
     let env = new_blizzard_addon_env(&ui_dir);
-    load_blizzard_addon_closure_into_env(&env, &ui_dir, &["Blizzard_SharedXML"], &[]);
+    // AddOnPerformance.lua registers StaticPopupDialogs at load; the client
+    // loads Blizzard_StaticPopup_Game first, and Retail/Forever no longer seed a
+    // placeholder table (c1b07efb79).
+    load_blizzard_addon_closure_into_env(
+        &env,
+        &ui_dir,
+        &["Blizzard_SharedXML", "Blizzard_StaticPopup_Game"],
+        &[],
+    );
     install_ticker_spy(&env);
     env
 }

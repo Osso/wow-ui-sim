@@ -59,8 +59,14 @@ fn retail_talking_head_apis_project_explicit_host_inputs() {
 
 #[test]
 fn original_blizzard_talking_head_and_splash_consumers_use_the_model() {
+    // SplashFrameMixin:OnHide refreshes ObjectiveTrackerFrame, owned by
+    // Blizzard_ObjectiveTracker on Retail.
     with_blizzard_addon_closure(
-        &["Blizzard_FrameXML", "Blizzard_SplashFrame"],
+        &[
+            "Blizzard_FrameXML",
+            "Blizzard_SplashFrame",
+            "Blizzard_ObjectiveTracker",
+        ],
         &[],
         |env, loaded| {
             assert!(loaded.iter().any(|addon| addon == "Blizzard_FrameXML"));

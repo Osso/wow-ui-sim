@@ -159,12 +159,21 @@ fn test_bn_connected() {
     );
 }
 
+/// Retail/Forever derive the counts from the default two-friend fixture, one
+/// online (04eaf48352, docs/admin-api/battle-net.md); others keep the inert 0.
+fn expected_bnet_total_online() -> (i32, i32) {
+    if cfg!(any(feature = "client-retail", feature = "client-wowforever")) {
+        (2, 1)
+    } else {
+        (0, 0)
+    }
+}
+
 #[test]
 fn test_bn_get_num_friends() {
     let env = env();
-    let (total, online): (i32, i32) = env.eval("return BNGetNumFriends()").unwrap();
-    assert_eq!(total, 0);
-    assert_eq!(online, 0);
+    let counts: (i32, i32) = env.eval("return BNGetNumFriends()").unwrap();
+    assert_eq!(counts, expected_bnet_total_online());
 }
 
 #[test]

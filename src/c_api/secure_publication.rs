@@ -794,10 +794,10 @@ mod tests {
                         and type(rawget(securePrivateAuras, "GetPrivateAuraAnchors")) == "function",
                     type(privateAuras) == "table"
                         and rawget(privateAuras, "GetPrivateAuraAnchors") == nil,
-                    (type(privateAuras) ~= "table"
-                        or rawget(privateAuras, "AnchorPrivateAura") == nil)
-                        and (type(securePrivateAuras) ~= "table"
-                            or rawget(securePrivateAuras, "AnchorPrivateAura") == nil),
+                    type(securePrivateAuras) == "table"
+                        and type(rawget(securePrivateAuras, "AnchorPrivateAura")) == "function"
+                        and type(privateAuras) == "table"
+                        and rawget(privateAuras, "AnchorPrivateAura") == nil,
                     (type(catalog) ~= "table"
                         or rawget(catalog, "GetAvailableTransmogRaceInfos") == nil)
                         and (type(secureCatalog) ~= "table"

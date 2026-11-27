@@ -19,9 +19,22 @@ fn load_original(env: &WowLuaEnv, name: &str) {
         .expect("original complete chunk");
 }
 
+/// e35289a6a1 and c1b07efb79 retired the modern-profile EventRegistry,
+/// CallbackRegistry and StaticPopupDialogs copies, so the cached consumers run
+/// after their original owner addons.
 #[cfg(feature = "client-retail")]
 fn consumer_env() -> WowLuaEnv {
-    let env = WowLuaEnv::new().unwrap();
+    consumer_env_after(&["Blizzard_SharedXMLBase"])
+}
+
+#[cfg(feature = "client-retail")]
+fn consumer_env_after(owner_roots: &[&str]) -> WowLuaEnv {
+    use crate::common::blizzard_addon_harness::{
+        blizzard_ui_dir, load_blizzard_addon_closure_into_env, new_blizzard_addon_env,
+    };
+    let ui = blizzard_ui_dir();
+    let env = new_blizzard_addon_env(&ui);
+    load_blizzard_addon_closure_into_env(&env, &ui, owner_roots, &[]);
     env.exec("NamespaceErrors = {}; seterrorhandler(function(e) NamespaceErrors[#NamespaceErrors+1] = tostring(e) end)").unwrap();
     env
 }
@@ -197,7 +210,7 @@ fn original_retail_frame_manager_applies_visibility_on_registration_and_refresh(
 #[cfg(feature = "client-retail")]
 #[test]
 fn original_retail_lfd_update_reaches_role_warning_not_lobby_block() {
-    let env = consumer_env();
+    let env = consumer_env_after(&["Blizzard_StaticPopup_Game"]);
     load_original(&env, "Blizzard_GroupFinder/Shared/LFGFrame.lua");
     load_original(&env, "Blizzard_GroupFinder/Mainline/LFDFrame.lua");
     env.exec(

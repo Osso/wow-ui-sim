@@ -52,42 +52,7 @@ fn test_create_frame_exposes_core_event_methods() {
 }
 
 #[cfg(feature = "retail-12-1-0")]
-#[test]
-fn test_patch_12_1_frame_texture_statusbar_method_surface() {
-    let env = WowLuaEnv::new().unwrap();
-    let (
-        forbidden_ty,
-        object_table_ty,
-        roleset_ty,
-        roleset_names_ty,
-        on_update_mode,
-        radial_percent,
-        radial_reverse,
-        status_render_mode,
-        minimap_icon_scale_ty,
-        clear_scripts_ty,
-        vector_ty,
-        vector_object_type,
-        vector_has_svg,
-        vector_file_id,
-    ): (
-        String,
-        String,
-        String,
-        String,
-        i32,
-        f64,
-        bool,
-        String,
-        String,
-        String,
-        String,
-        String,
-        bool,
-        i64,
-    ) = env
-        .eval(
-            r#"
+const PATCH_12_1_METHOD_SURFACE_PROBE: &str = r#"
             local frame = CreateFrame("Frame")
             frame:AddForbiddenAspects(Enum.ForbiddenAspect.UntrustedScriptExecution)
             frame:SetRolesets("combat,healer")
@@ -117,39 +82,77 @@ fn test_patch_12_1_frame_texture_statusbar_method_surface() {
                 vector:GetObjectType(),
                 vector:HasSVG(),
                 vector:GetSVGFileID()
-            "#,
-        )
-        .unwrap();
+"#;
 
-    assert_eq!(forbidden_ty, "function");
-    assert_eq!(object_table_ty, "table");
-    assert_eq!(roleset_ty, "function");
-    assert_eq!(roleset_names_ty, "table");
-    assert_eq!(on_update_mode, 4);
-    assert_eq!(radial_percent, 0.75);
-    assert!(radial_reverse);
-    assert_eq!(status_render_mode, "Standard");
-    assert_eq!(minimap_icon_scale_ty, "function");
-    assert_eq!(clear_scripts_ty, "function");
-    assert_eq!(vector_ty, "function");
-    assert_eq!(vector_object_type, "VectorGraphics");
-    assert!(vector_has_svg);
-    assert_eq!(vector_file_id, 12345);
-
-    let (forbidden_mask_ty, inheritable_mask_ty, is_set): (String, String, bool) = env
-        .eval(
-            r#"
+#[cfg(feature = "retail-12-1-0")]
+const PATCH_12_1_FORBIDDEN_MASK_PROBE: &str = r#"
             local frame = CreateFrame("Frame")
             frame:AddForbiddenAspects(Enum.ForbiddenAspect.UntrustedScriptExecution)
             return type(frame:GetForbiddenAspects()),
                 type(frame:GetInheritableForbiddenAspects(Enum.ScriptObjectPropagationPath.Hierarchy)),
                 FlagsUtil.IsSet(frame:GetForbiddenAspects(), Enum.ForbiddenAspect.UntrustedScriptExecution)
-            "#,
-        )
-        .unwrap();
-    assert_eq!(forbidden_mask_ty, "number");
-    assert_eq!(inheritable_mask_ty, "number");
-    assert!(is_set);
+"#;
+
+#[cfg(feature = "retail-12-1-0")]
+type Patch121MethodSurface = (
+    String,
+    String,
+    String,
+    String,
+    i32,
+    f64,
+    bool,
+    String,
+    String,
+    String,
+    String,
+    String,
+    bool,
+    i64,
+);
+
+#[cfg(feature = "retail-12-1-0")]
+fn assert_patch_12_1_method_surface(surface: &Patch121MethodSurface) {
+    let (forbidden, object_table, roleset, roleset_names, mode, percent, reverse) = (
+        &surface.0, &surface.1, &surface.2, &surface.3, surface.4, surface.5, surface.6,
+    );
+    assert_eq!(
+        (forbidden.as_str(), object_table.as_str()),
+        ("function", "table")
+    );
+    assert_eq!(
+        (roleset.as_str(), roleset_names.as_str()),
+        ("function", "table")
+    );
+    assert_eq!((mode, percent, reverse), (4, 0.75, true));
+    let (render_mode, icon_scale, clear_scripts, vector) =
+        (&surface.7, &surface.8, &surface.9, &surface.10);
+    assert_eq!(
+        (render_mode.as_str(), icon_scale.as_str()),
+        ("Standard", "function")
+    );
+    assert_eq!(
+        (clear_scripts.as_str(), vector.as_str()),
+        ("function", "function")
+    );
+    assert_eq!(
+        (surface.11.as_str(), surface.12, surface.13),
+        ("VectorGraphics", true, 12345)
+    );
+}
+
+#[cfg(feature = "retail-12-1-0")]
+#[test]
+fn test_patch_12_1_frame_texture_statusbar_method_surface() {
+    let env = WowLuaEnv::new().unwrap();
+    let surface: Patch121MethodSurface = env.eval(PATCH_12_1_METHOD_SURFACE_PROBE).unwrap();
+    assert_patch_12_1_method_surface(&surface);
+
+    // FlagsUtil comes from the original Blizzard_SharedXMLBase (6a786fbd81
+    // removed the bootstrap copy).
+    load_blizzard_shared_xml_base(&env);
+    let masks: (String, String, bool) = env.eval(PATCH_12_1_FORBIDDEN_MASK_PROBE).unwrap();
+    assert_eq!(masks, ("number".to_string(), "number".to_string(), true));
 }
 
 #[cfg(feature = "retail-12-1-0")]

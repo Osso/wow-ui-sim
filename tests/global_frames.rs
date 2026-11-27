@@ -333,6 +333,9 @@ fn test_settings_panel_container_structure() {
     assert_eq!(text, "");
 }
 
+// Retail and Forever take the tracker header from the original
+// Blizzard_ObjectiveTracker XML (b3fe876c63).
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn test_objective_tracker_frame_header() {
     let env = env();
@@ -476,6 +479,8 @@ fn alert_frame_systems_use_selected_framexml_provider() {
     );
 }
 
+// Retail owns ContainerFrameContainer in the original ContainerFrame.xml (886b0b8f33).
+#[cfg(not(feature = "client-retail"))]
 #[test]
 fn test_container_frame_container_has_container_frames() {
     let env = env();
@@ -485,6 +490,9 @@ fn test_container_frame_container_has_container_frames() {
     assert!(is_table);
 }
 
+// Retail and Forever create the party pool in the original PartyFrame
+// (379b0a1ea8 retired the SharedXML pool shims there).
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn test_party_member_frame_pool() {
     let env = env();
@@ -512,6 +520,9 @@ fn test_party_member_frame_pool() {
 // Table Globals
 // ============================================================================
 
+// Retail and Forever publish UISpecialFrames from the original UIParent
+// (c1b07efb79 retired the placeholder table).
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn test_ui_special_frames_exists() {
     let env = env();
@@ -521,6 +532,9 @@ fn test_ui_special_frames_exists() {
     assert!(is_table);
 }
 
+// Retail and Forever publish StaticPopupDialogs from the original
+// Blizzard_StaticPopup addons (c1b07efb79 retired the placeholder table).
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn test_static_popup_dialogs_exists() {
     let env = env();

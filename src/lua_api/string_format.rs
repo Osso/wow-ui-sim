@@ -195,7 +195,9 @@ fn validate_format_argument(
     conversion: u8,
 ) -> LuaResult<bool> {
     match conversion {
-        b's' if matches!(value, Val::Str(_) | Val::Num(_)) => Ok(false),
+        b's' if matches!(value, Val::Str(_) | Val::Num(_)) || is_secret_string(state, value) => {
+            Ok(false)
+        }
         b's' => Err(format_type_error(state, argument_position, "string")),
         b'q' => match value {
             Val::Str(_) => Ok(false),
@@ -258,6 +260,21 @@ fn is_secret_number(state: &LuaState, value: Val) -> bool {
         == Some(rilua::table_security::SecretPayloadKind::Number)
 }
 
+/// Secret `%s` stays opaque: rilua's formatter keeps the full payload secret
+/// (docs/specs/secret-string-formatting.md). 8d65b8b3b9 rejected it as userdata.
+fn is_secret_string(state: &LuaState, value: Val) -> bool {
+    rilua::table_security::secret_payload_kind(state, value)
+        == Some(rilua::table_security::SecretPayloadKind::String)
+}
+
+/// Native argument errors drop the function name only without a caller debug
+/// frame; a frame with no resolvable name reports `'?'` (VERIFIED R88, Retail
+/// 12.1.5.70688, pr46-49-decomp-answers.md:14748). Frame 0 is the host base,
+/// so a call at frame 1 came straight from the host.
+fn has_debug_caller(state: &LuaState) -> bool {
+    state.ci > 1
+}
+
 fn format_type_error(state: &LuaState, argument_index: usize, expected: &str) -> rilua::LuaError {
     let stack_index = state.base + argument_index;
     let actual = if stack_index < state.top {
@@ -265,7 +282,7 @@ fn format_type_error(state: &LuaState, argument_index: usize, expected: &str) ->
     } else {
         "no value"
     };
-    if rilua::vm::debug_info::getfuncname(state, state.ci, &state.gc.string_arena).is_none() {
+    if !has_debug_caller(state) {
         return runtime_error(format!(
             "bad argument #{} ({expected} expected, got {actual})",
             argument_index + 1
@@ -290,7 +307,7 @@ fn format_argument_error(
     argument_number: usize,
     message: &str,
 ) -> rilua::LuaError {
-    if rilua::vm::debug_info::getfuncname(state, state.ci, &state.gc.string_arena).is_none() {
+    if !has_debug_caller(state) {
         return runtime_error(format!("bad argument #{argument_number} ({message})"));
     }
     rilua::stdlib::arg_error(state, argument_number, message)

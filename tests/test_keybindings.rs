@@ -123,6 +123,9 @@ fn load_base_blizzard_addons(env: &WowLuaEnv) {
     let ui = blizzard_ui_dir();
     for name in BLIZZARD_ADDONS {
         common::load_required_blizzard_addon(env, &ui, name);
+        // ContainerFrameSettingsManager creates BackpackTokenFrame on this event
+        // (ContainerFrame.lua:2174-2177); 9b601ab361 removed the Retail repair.
+        common::fire_original_addon_loaded(env, name);
         env.apply_runtime_addon_load_workarounds(name);
     }
     common::panel_fixtures::load_panel_startup_publishers(env, &ui);

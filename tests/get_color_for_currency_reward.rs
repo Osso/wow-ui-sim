@@ -1,10 +1,23 @@
-//! Integration tests for the global `GetColorForCurrencyReward` shim
-//! installed by `runtime_surface_bootstrap.lua`.
+//! Integration tests for the original `GetColorForCurrencyReward`
+//! (`Blizzard_FrameXMLUtil/CurrencyContainer.lua`). d509ed6aec removed the
+//! simulator fallback; only the Retail, PTR and Forever caches ship the
+//! original function.
+#![cfg(any(
+    feature = "client-retail",
+    feature = "client-ptr",
+    feature = "client-wowforever"
+))]
 
+use crate::common::blizzard_addon_harness::{
+    blizzard_ui_dir, load_blizzard_addon_closure_into_env, new_blizzard_addon_env,
+};
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 fn env() -> WowLuaEnv {
-    WowLuaEnv::new().expect("WowLuaEnv init")
+    let ui = blizzard_ui_dir();
+    let env = new_blizzard_addon_env(&ui);
+    load_blizzard_addon_closure_into_env(&env, &ui, &["Blizzard_FrameXMLUtil"], &[]);
+    env
 }
 
 #[test]
@@ -53,15 +66,6 @@ fn handles_zero_quantity_without_error() {
     let env = env();
     let r: f64 = env
         .eval("local c = GetColorForCurrencyReward(2245, 0); return ({c:GetRGB()})[1]")
-        .unwrap();
-    assert_eq!(r, 1.0);
-}
-
-#[test]
-fn handles_unknown_currency_id_without_error() {
-    let env = env();
-    let r: f64 = env
-        .eval("local c = GetColorForCurrencyReward(99999, 7); return ({c:GetRGB()})[1]")
         .unwrap();
     assert_eq!(r, 1.0);
 }

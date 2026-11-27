@@ -14,7 +14,9 @@ fn trigger_tutorial_publication_matches_pinned_legacy_consumers() {
             | ClientProfile::Anniversary
             | ClientProfile::Wrath
     );
-    assert_eq!(published, has_consumer);
+    // Retail 12.1.5 publishes `_G.TriggerTutorial` (VERIFIED R88y row, e93399f5e3).
+    let retail_published = cfg!(all(feature = "client-retail", feature = "retail-12-1-5"));
+    assert_eq!(published, has_consumer || retail_published);
     assert!(env.state().borrow().tutorial_requests.is_empty());
 }
 

@@ -85,10 +85,24 @@ fn flush_state_at_host_boundary_with_mode(
     }
 }
 
+/// Host boundaries without pending notifications must not need a mutable
+/// state borrow, so callers may keep reading `SimState` across `eval`.
+fn has_pending_text_changes(sim: &SimState, defer_user_input: bool) -> bool {
+    sim.widgets.iter_editbox_ids().any(|id| {
+        sim.widgets
+            .get(id)
+            .and_then(|frame| frame.editbox_presentation.as_ref())
+            .is_some_and(|presentation| presentation.has_text_change(defer_user_input))
+    })
+}
+
 fn take_pending_text_changes(
     sim: &Rc<RefCell<SimState>>,
     defer_user_input: bool,
 ) -> Vec<(u64, bool)> {
+    if !has_pending_text_changes(&sim.borrow(), defer_user_input) {
+        return Vec::new();
+    }
     let mut sim = sim.borrow_mut();
     let mut ids = sim.widgets.iter_editbox_ids().collect::<Vec<_>>();
     ids.sort_unstable();

@@ -36,6 +36,8 @@ fn setup_env_with_bootstrap_loaded_token_ui() -> WowLuaEnv {
             .chain(std::iter::once(BLIZZARD_TOKEN_UI_ADDON))
         {
             common::load_required_blizzard_addon(&env, &ui, addon_name);
+            // ContainerFrame.lua:2174-2177 creates the token tracker on this event.
+            common::fire_original_addon_loaded(&env, addon_name);
         }
     }
 

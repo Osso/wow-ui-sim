@@ -381,6 +381,9 @@ fn test_unit_state_bootstrap_functions_exist() {
     assert!(!dead_value);
 }
 
+// Retail and Forever take UISpecialFrames from the original UIParent; the
+// placeholder tables are compiled out there (c1b07efb79).
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn test_ui_special_frames_table() {
     let env = WowLuaEnv::new().unwrap();
@@ -401,6 +404,9 @@ fn test_game_tooltip_methods() {
     }
 }
 
+// Retail and Forever take StaticPopup from the original Blizzard_StaticPopup
+// addons; the bare-environment defaults are a no-op there (1cf0851a44, 1a2ba976fe).
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn test_static_popup() {
     let env = WowLuaEnv::new().unwrap();

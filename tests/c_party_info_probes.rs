@@ -132,11 +132,24 @@ fn get_active_categories_home_when_grouped() {
 
 // ── GetInviteConfirmationInfo ─────────────────────────────────────────────────
 
+/// Retail/Forever publish the modeled global (fb72bce3a2; R88y `_G` row) and
+/// retired the C_PartyInfo placeholder; other profiles keep the placeholder.
+fn invite_confirmation_info_function() -> &'static str {
+    if cfg!(any(feature = "client-retail", feature = "client-wowforever")) {
+        "GetInviteConfirmationInfo"
+    } else {
+        "C_PartyInfo.GetInviteConfirmationInfo"
+    }
+}
+
 #[test]
 fn get_invite_confirmation_info_returns_nil() {
     let env = env();
     let count: i32 = env
-        .eval(r#"return select('#', C_PartyInfo.GetInviteConfirmationInfo("Player-1234-ABCDEF"))"#)
+        .eval(&format!(
+            r#"return select('#', {}("Player-1234-ABCDEF"))"#,
+            invite_confirmation_info_function()
+        ))
         .unwrap();
     assert_eq!(count, 0, "no pending invite returns nothing");
 }
