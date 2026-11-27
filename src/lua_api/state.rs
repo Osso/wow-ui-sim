@@ -867,6 +867,7 @@ macro_rules! build_empty_sim_state {
             guild_bank_money: 123_456,
             #[cfg(not(feature = "client-mists"))]
             guild_bank_money: 0,
+            guild_bank_can_repair: false,
             guild_bank_tab_cost: 0,
             guild_bank_text: ::std::collections::HashMap::new(),
             current_guild_bank_tab: 1,

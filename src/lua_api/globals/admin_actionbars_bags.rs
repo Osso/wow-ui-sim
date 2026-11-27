@@ -263,6 +263,7 @@ fn guild_bank_permission_values(state: &LuaState, argument: i32) -> LuaResult<Ve
 pub(super) fn set_guild_bank_rank_permissions(state: &mut LuaState) -> LuaResult<u32> {
     let rank = i32::from_stack(state, 1)?;
     let money_per_day = i64::from_stack(state, 2)?;
+    let can_repair = bool::from_stack(state, 5)?;
     let rights = guild_bank_permission_values(state, 3)?;
     let stacks = guild_bank_permission_values(state, 4)?;
     if !(1..=10).contains(&rank) || rights.len() != 6 || stacks.len() != 6 {
@@ -275,6 +276,7 @@ pub(super) fn set_guild_bank_rank_permissions(state: &mut LuaState) -> LuaResult
     let mut sim = borrow_state_mut(state)?;
     let rank = usize::try_from(rank).expect("validated positive rank");
     sim.world.guild_selected_rank = rank as i32;
+    sim.guild_bank_can_repair = can_repair;
     sim.world.guild_bank_rank_permissions.insert(
         rank - 1,
         GuildBankRankPermissions {

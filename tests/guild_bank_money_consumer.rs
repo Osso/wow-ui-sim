@@ -59,7 +59,7 @@ fn guild_bank_withdraw_state_uses_supplied_permissions(env: &WowLuaEnv) {
     env.exec(r#"
 A_Admin.AddGuildBankTab("General", "Interface\\Icons\\INV_Misc_QuestionMark", true, true, 3, 2, false)
 A_Admin.SetGuildBankMoney(500000)
-A_Admin.SetGuildBankRankPermissions(1, 300000, {7,7,7,7,7,7}, {10,10,10,10,10,10})
+A_Admin.SetGuildBankRankPermissions(1, 300000, {7,7,7,7,7,7}, {10,10,10,10,10,10}, false)
 "#).expect("first withdrawal permission snapshot is supplied");
     let first_withdraw_enabled: bool = env
         .eval("return GuildBankFrame.WithdrawButton:IsEnabled()")
@@ -74,7 +74,7 @@ A_Admin.SetGuildBankRankPermissions(1, 300000, {7,7,7,7,7,7}, {10,10,10,10,10,10
     env.exec(r#"
 A_Admin.ClearGuildBankTabs()
 A_Admin.AddGuildBankTab("General", "Interface\\Icons\\INV_Misc_QuestionMark", true, true, 3, 1, false)
-A_Admin.SetGuildBankRankPermissions(1, 0, {3,3,3,3,3,3}, {10,10,10,10,10,10})
+A_Admin.SetGuildBankRankPermissions(1, 0, {3,3,3,3,3,3}, {10,10,10,10,10,10}, false)
 "#).expect("second withdrawal permission snapshot is supplied");
     let second_withdraw_enabled: bool = env
         .eval("return GuildBankFrame.WithdrawButton:IsEnabled()")

@@ -64,6 +64,7 @@ const GUILD_BANK_GLOBALS: &[(&str, RustFn)] = &[
         "GetGuildBankWithdrawGoldLimit",
         get_guild_bank_withdraw_gold_limit,
     ),
+    ("CanGuildBankRepair", can_guild_bank_repair),
     (
         "SetGuildBankWithdrawGoldLimit",
         set_guild_bank_withdraw_gold_limit,
@@ -332,6 +333,12 @@ fn can_withdraw_guild_bank_money(state: &mut LuaState) -> LuaResult<u32> {
     let allowed = true;
     #[cfg(not(feature = "client-mists"))]
     let allowed = guild_bank_money_limit(state)?.is_some_and(|limit| limit != 0);
+    state.push(Val::Bool(allowed));
+    Ok(1)
+}
+
+fn can_guild_bank_repair(state: &mut LuaState) -> LuaResult<u32> {
+    let allowed = borrow_state(state)?.guild_bank_can_repair;
     state.push(Val::Bool(allowed));
     Ok(1)
 }
