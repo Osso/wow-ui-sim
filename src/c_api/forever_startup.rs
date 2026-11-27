@@ -13,6 +13,7 @@ use crate::lua_bridge::{FromStack, TableBuilder, stack_val, table_set_rust_fn_st
 use rilua::vm::state::LuaState;
 use rilua::{LuaApiMut, LuaResult, Val};
 
+// BankType values follow pinned ItemConstantsDocumentation.lua:17-27.
 const BANK_TYPE_IDS: [i32; 3] = [0, 1, 2];
 
 /// Explicit inputs for 70532 consumers whose native policy is not established.
