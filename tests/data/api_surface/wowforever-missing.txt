@@ -66,24 +66,20 @@ C_AzeriteEssence.CanDeactivateEssence # not-yet
 C_AzeriteEssence.GetNumUsableEssences # not-yet
 C_AzeriteItem.HasActiveAzeriteItem # not-yet
 C_AzeriteItem.IsAzeriteItemByID # not-yet
-C_Bank.AreAnyBankTypesViewable # not-yet
 C_Bank.AutoDepositItemsIntoBank # not-yet
 C_Bank.BankBagTypeAndIDToInvSlot # not-yet
 C_Bank.CanDepositMoney # not-yet
 C_Bank.CanUseBank # not-yet
-C_Bank.CanViewBank # not-yet
 C_Bank.CanWithdrawMoney # not-yet
 C_Bank.CloseBankFrame # not-yet
 C_Bank.DepositMoney # not-yet
 C_Bank.DoesBankTypeSupportAutoDeposit # not-yet
 C_Bank.DoesBankTypeSupportMoneyTransfer # not-yet
 C_Bank.FetchMaxNumBankTabs # not-yet
-C_Bank.FetchPurchasedBankTabData # not-yet: temporary Lua workaround
 C_Bank.FetchPurchasedBankTabIDs # not-yet
 C_Bank.FetchViewableBankTypes # not-yet
 C_Bank.IsItemAllowedInBankType # not-yet
 C_Bank.PurchaseBankTab # not-yet
-C_Bank.ShouldUsePlayerBagsInBank # not-yet: temporary Lua workaround
 C_Bank.UpdateBankTabSettings # not-yet
 C_Bank.WithdrawMoney # not-yet
 C_BarberShop.GetCurrentCost # not-yet
@@ -576,7 +572,6 @@ C_EncounterWarnings.IsFeatureEnabled # not-yet
 C_EncounterWarnings.SetPlayCustomSoundsWhenHidden # not-yet
 C_EncounterWarnings.SetWarningsShown # not-yet
 C_EndOfMatchUI.GetEndOfMatchDetails # not-yet
-C_EventScheduler.GetActiveContinentName # not-yet: temporary Lua workaround
 C_EventToastManager.GetLevelUpDisplayToastsFromLevel # not-yet
 C_EventToastManager.GetNextToastToDisplay # not-yet
 C_EventToastManager.RemoveCurrentToast # not-yet
@@ -715,7 +710,6 @@ C_Housing.DeclineNeighborhoodOwnership # not-yet
 C_Housing.EditNeighborhoodCharter # not-yet
 C_Housing.GetCurrentHouseInfo # not-yet
 C_Housing.GetCurrentHouseRefundAmount # not-yet
-C_Housing.GetCurrentNeighborhoodGUID # not-yet
 C_Housing.GetHouseLevelRewardsForLevel # not-yet
 C_Housing.GetHousingAccessFlags # not-yet
 C_Housing.GetOthersOwnedHouses # not-yet
@@ -724,8 +718,6 @@ C_Housing.HouseFinderRequestReservationAndPort # not-yet
 C_Housing.IsHousingMarketCartFullRemoveEnabled # not-yet
 C_Housing.IsHousingMarketEnabled # not-yet
 C_Housing.IsHousingMarketShopEnabled # not-yet
-C_Housing.IsInsidePlot # not-yet
-C_Housing.IsOnNeighborhoodMap # not-yet
 C_Housing.LeaveHouse # not-yet
 C_Housing.OnCharterConfirmationAccepted # not-yet
 C_Housing.OnCharterConfirmationClosed # not-yet
@@ -737,12 +729,10 @@ C_Housing.OnSignCharterClicked # not-yet
 C_Housing.RelinquishHouse # not-yet
 C_Housing.RequestCurrentHouseInfo # not-yet
 C_Housing.RequestPlayerCharacterList # not-yet
-C_Housing.ResetHouse # not-yet
 C_Housing.ReturnAfterVisitingHouse # not-yet
 C_Housing.SaveHouseSettings # not-yet
 C_Housing.SearchBNetFriendNeighborhoods # not-yet
 C_Housing.SearchBNetFriendNeighborhoodsByID # not-yet
-C_Housing.SetTrackedHouseGuid # not-yet
 C_Housing.TeleportHome # not-yet
 C_Housing.TryRenameNeighborhood # not-yet
 C_Housing.ValidateCreateGuildNeighborhoodSize # not-yet
@@ -760,28 +750,8 @@ C_HousingBasicMode.RemoveSelectedDecor # not-yet
 C_HousingBasicMode.RotateDecor # not-yet
 C_HousingBasicMode.RotateHouseExterior # not-yet
 C_HousingBasicMode.SetGridVisible # not-yet: temporary Lua workaround
-C_HousingBlueprint.CanExportRoom # not-yet
-C_HousingBlueprint.CanExportTypeFromCurrentLocation # not-yet
-C_HousingBlueprint.CanImportTypeFromCurrentLocation # not-yet
-C_HousingBlueprint.DeleteBlueprint # not-yet
-C_HousingBlueprint.ExportBlueprint # not-yet
-C_HousingBlueprint.ExportRoomBlueprint # not-yet
-C_HousingBlueprint.GetBlueprintHyperlink # not-yet
-C_HousingBlueprint.GetBlueprintTypeForCode # not-yet
-C_HousingBlueprint.GetExportAvailability # not-yet
-C_HousingBlueprint.GetFeatureAvailability # not-yet
-C_HousingBlueprint.GetImportAvailability # not-yet
-C_HousingBlueprint.ImportBlueprint # not-yet
-C_HousingBlueprint.IsShareCodeValid # not-yet
-C_HousingBlueprint.RenameBlueprint # not-yet
-C_HousingBlueprint.RequestBlueprintCollection # not-yet
-C_HousingBlueprint.RequestBlueprintContents # not-yet
-C_HousingBlueprint.RequestBlueprintContentsForContext # not-yet
-C_HousingBlueprint.StartImportRoomBlueprint # not-yet
-C_HousingBlueprint.UpdateBlueprintStringFromInput # not-yet
 C_HousingCatalog.GetAllFilterTagGroups # not-yet: temporary Lua workaround
 C_HousingCatalog.GetCartSizeLimit # not-yet: temporary Lua workaround
-C_HousingCatalog.GetCatalogCategoryAndSubcategoryNames # not-yet
 C_HousingCatalog.GetCatalogEntryRefundTimeStampByRecordID # not-yet: temporary Lua workaround
 C_HousingCatalog.GetDecorMaxOwnedCount # not-yet: temporary Lua workaround
 C_HousingCatalog.GetDecorTotalOwnedCount # not-yet: temporary Lua workaround
@@ -799,7 +769,6 @@ C_HousingCleanupMode.GetHoveredDecorInfo # not-yet
 C_HousingCleanupMode.IsHoveringDecor # not-yet
 C_HousingCleanupMode.RemoveSelectedDecor # not-yet
 C_HousingCustomizeMode.ApplyDyeToSelectedDecor # not-yet
-C_HousingCustomizeMode.ApplyPetToSelectedDecor # not-yet
 C_HousingCustomizeMode.ClearDyesForSelectedDecor # not-yet
 C_HousingCustomizeMode.CommitDyesForSelectedDecor # not-yet: temporary Lua workaround
 C_HousingCustomizeMode.GetHoveredDecorInfo # not-yet
@@ -811,39 +780,28 @@ C_HousingCustomizeMode.GetRecentlyUsedDyes # not-yet: temporary Lua workaround
 C_HousingCustomizeMode.GetRecentlyUsedThemeSets # not-yet: temporary Lua workaround
 C_HousingCustomizeMode.GetRecentlyUsedWallpapers # not-yet: temporary Lua workaround
 C_HousingCustomizeMode.GetSelectedDecorInfo # not-yet: temporary Lua workaround
-C_HousingCustomizeMode.GetSelectedDecorPetInfo # not-yet
 C_HousingCustomizeMode.GetSelectedRoomComponentInfo # not-yet: temporary Lua workaround
 C_HousingCustomizeMode.GetThemeSetInfo # not-yet: temporary Lua workaround
 C_HousingCustomizeMode.GetWallpapersForRoomComponentType # not-yet: temporary Lua workaround
 C_HousingCustomizeMode.IsDecorSelected # not-yet: temporary Lua workaround
-C_HousingCustomizeMode.IsHouseExteriorDoorHovered # not-yet
 C_HousingCustomizeMode.IsHoveringDecor # not-yet
 C_HousingCustomizeMode.IsHoveringRoomComponent # not-yet: temporary Lua workaround
 C_HousingCustomizeMode.IsRoomComponentSelected # not-yet: temporary Lua workaround
 C_HousingCustomizeMode.RoomComponentSupportsVariant # not-yet: temporary Lua workaround
-C_HousingCustomizeMode.RoomConnectionSupportsDoorType # not-yet
-C_HousingDecor.AnyDecorPlacedInRoom # not-yet
 C_HousingDecor.EnterPreviewState # not-yet: temporary Lua workaround
 C_HousingDecor.ExitPreviewState # not-yet: temporary Lua workaround
-C_HousingDecor.GetAllMaxPlacementBudgets # not-yet
 C_HousingDecor.GetAllPlacedDecor # not-yet: temporary Lua workaround
-C_HousingDecor.GetAllSpentPlacementBudgets # not-yet
-C_HousingDecor.GetDecorAssignedPetName # not-yet
-C_HousingDecor.GetDecorCanAttachPet # not-yet
 C_HousingDecor.GetDecorHyperlink # not-yet: temporary Lua workaround
 C_HousingDecor.GetDecorIcon # not-yet: temporary Lua workaround
 C_HousingDecor.GetDecorInstanceInfoForGUID # not-yet: temporary Lua workaround
 C_HousingDecor.GetDecorName # not-yet: temporary Lua workaround
 C_HousingDecor.GetHoveredDecorInfo # not-yet: temporary Lua workaround
-C_HousingDecor.GetMaxPetPlacementBudget # not-yet
 C_HousingDecor.GetNumDecorPlaced # not-yet: temporary Lua workaround
 C_HousingDecor.GetNumPreviewDecor # not-yet: temporary Lua workaround
 C_HousingDecor.GetSelectedDecorInfo # not-yet: temporary Lua workaround
-C_HousingDecor.GetSpentPetPlacementBudget # not-yet
 C_HousingDecor.HasMaxPlacementBudget # not-yet: temporary Lua workaround
 C_HousingDecor.IsDecorSelected # not-yet: temporary Lua workaround
 C_HousingDecor.IsGridVisible # not-yet: temporary Lua workaround
-C_HousingDecor.IsHouseExteriorDoorHovered # not-yet
 C_HousingDecor.IsHouseExteriorHovered # not-yet: temporary Lua workaround
 C_HousingDecor.IsHoveringDecor # not-yet: temporary Lua workaround
 C_HousingDecor.IsModeDisabledForPreviewState # not-yet: temporary Lua workaround
@@ -866,21 +824,9 @@ C_HousingExpertMode.RemoveSelectedDecor # not-yet
 C_HousingExpertMode.SelectNextRotationAxis # not-yet
 C_HousingExpertMode.SetGridVisible # not-yet
 C_HousingExpertMode.SetPrecisionIncrementingActive # not-yet
-C_HousingInspectMode.EnterInspectMode # not-yet
-C_HousingInspectMode.ExitInspectMode # not-yet
-C_HousingInspectMode.GetHoveredDecorGUID # not-yet
-C_HousingInspectMode.IsHoveringDecor # not-yet
-C_HousingInspectMode.IsInInspectMode # not-yet
 C_HousingLayout.AnyRoomsOnFloor # not-yet: temporary Lua workaround
-C_HousingLayout.CanSetViewedFloor # not-yet
 C_HousingLayout.ConfirmStairChoice # not-yet
 C_HousingLayout.DeselectRoomOrDoor # not-yet
-C_HousingLayout.GetBaseRoomFloor # not-yet
-C_HousingLayout.GetHighestOccupiedFloorIndex # not-yet
-C_HousingLayout.GetLowestOccupiedFloorIndex # not-yet
-C_HousingLayout.GetNumActiveRooms # not-yet
-C_HousingLayout.GetRoomPlayerIsIn # not-yet
-C_HousingLayout.GetSelectedBlueprintFloorplan # not-yet
 C_HousingLayout.GetSelectedDoor # not-yet: temporary Lua workaround
 C_HousingLayout.GetSelectedFloorplan # not-yet: temporary Lua workaround
 C_HousingLayout.GetSelectedRoom # not-yet
@@ -888,7 +834,6 @@ C_HousingLayout.GetSelectedStairwellRoomCount # not-yet
 C_HousingLayout.GetViewedFloor # not-yet: temporary Lua workaround
 C_HousingLayout.HasAnySelections # not-yet: temporary Lua workaround
 C_HousingLayout.HasRoomPlacementBudget # not-yet: temporary Lua workaround
-C_HousingLayout.HasSelectedBlueprintFloorplan # not-yet
 C_HousingLayout.HasSelectedDoor # not-yet
 C_HousingLayout.HasSelectedFloorplan # not-yet
 C_HousingLayout.HasSelectedRoom # not-yet
@@ -898,7 +843,6 @@ C_HousingLayout.IsBaseRoom # not-yet: temporary Lua workaround
 C_HousingLayout.IsDraggingRoom # not-yet: temporary Lua workaround
 C_HousingLayout.MoveDraggedRoom # not-yet
 C_HousingLayout.MoveLayoutCamera # intentionally-unsupported: 3D camera/model
-C_HousingLayout.RoomHasStairs # not-yet
 C_HousingLayout.RotateFocusedRoom # not-yet
 C_HousingLayout.ZoomLayoutCamera # intentionally-unsupported: 3D camera/model
 C_HousingNeighborhood.CanReturnAfterVisitingHouse # not-yet: temporary Lua workaround
@@ -959,7 +903,6 @@ C_Item.GetFirstTriggeredSpellForItem # not-yet
 C_Item.GetItemChildInfo # not-yet
 C_Item.GetItemConversionOutputIcon # not-yet
 C_Item.GetItemCreationContext # not-yet
-C_Item.GetItemFamily # not-yet
 C_Item.GetItemGem # not-yet
 C_Item.GetItemGemID # not-yet
 C_Item.GetItemLearnTransmogSet # not-yet
@@ -975,9 +918,7 @@ C_Item.GetLimitedCurrencyItemInfo # not-yet
 C_Item.GetSetBonusesForSpecializationByItemID # not-yet
 C_Item.IsAnimaItemByID # not-yet
 C_Item.IsArtifactPowerItem # not-yet
-C_Item.IsCurrentItem # not-yet
 C_Item.IsDressableItemByID # not-yet
-C_Item.IsEquippedItem # not-yet
 C_Item.IsEquippedItemType # not-yet
 C_Item.IsItemBindToAccount # not-yet
 C_Item.IsItemBindToAccountUntilEquip # not-yet
@@ -1244,11 +1185,9 @@ C_PetJournal.GetPetInfoTableBySpeciesID # not-yet
 C_PetJournal.GetSearchFilter # not-yet
 C_PetJournal.PetUsesRandomDisplay # not-yet
 C_PhotoSharing.BeginAuthorizationFlow # not-yet
-C_PhotoSharing.ClearAuthorization # not-yet
 C_PhotoSharing.CompleteAuthorizationFlow # not-yet
 C_PhotoSharing.GetCropRatio # not-yet
 C_PhotoSharing.GetPhotoSharingAuthURL # not-yet
-C_PhotoSharing.GetStatus # not-yet
 C_PhotoSharing.SetScreenshotPreviewTexture # not-yet
 C_PhotoSharing.TakePhoto # not-yet
 C_PhotoSharing.UploadPhotoToService # not-yet
@@ -1297,28 +1236,14 @@ C_PlayerInteractionManager.ReopenInteraction # not-yet
 C_PlayerInteractionManager.ShardTransferConfirm # not-yet
 C_ProfSpecs.CanRefundPath # not-yet
 C_ProfSpecs.CanUnlockTab # not-yet
-C_ProfSpecs.GetChildrenForPath # not-yet
 C_ProfSpecs.GetDescriptionForPath # not-yet
 C_ProfSpecs.GetDescriptionForPerk # not-yet
-C_ProfSpecs.GetEntryIDForPerk # not-yet
-C_ProfSpecs.GetPerksForPath # not-yet
 C_ProfSpecs.GetRootPathForTab # not-yet
 C_ProfSpecs.GetSourceTextForPath # not-yet
-C_ProfSpecs.GetSpendCurrencyForPath # not-yet
-C_ProfSpecs.GetSpendEntryForPath # not-yet
-C_ProfSpecs.GetStateForPath # not-yet
-C_ProfSpecs.GetStateForPerk # not-yet
-C_ProfSpecs.GetStateForTab # not-yet
-C_ProfSpecs.GetUnlockEntryForPath # not-yet
-C_ProfSpecs.GetUnlockRankForPerk # not-yet
 C_ProfSpecs.ShouldShowPointsReminderForSkillLine # not-yet
 C_PvP.ArePvpTalentsUnlocked # not-yet
-C_PvP.AreTrainingGroundsEnabled # not-yet
 C_PvP.CanDisplayDeaths # not-yet
 C_PvP.CanDisplayHonorableKills # not-yet
-C_PvP.CanPlayerUseRatedPVPUI # not-yet
-C_PvP.CanPlayerUseTrainingGroundsUI # not-yet
-C_PvP.CanSurrenderArena # not-yet
 C_PvP.CanToggleWarMode # not-yet
 C_PvP.CanToggleWarModeInArea # not-yet
 C_PvP.DoesMatchOutcomeAffectRating # not-yet
@@ -1327,12 +1252,10 @@ C_PvP.GetActiveMatchDuration # not-yet
 C_PvP.GetActiveMatchWinner # not-yet
 C_PvP.GetArenaOpponentSpec # not-yet
 C_PvP.GetArenaRewards # not-yet
-C_PvP.GetArenaSkirmishRewards # not-yet
 C_PvP.GetAssignedSpecForBattlefieldQueue # not-yet
 C_PvP.GetBattlefieldFlagPosition # not-yet
 C_PvP.GetBattlefieldVehicleInfo # not-yet
 C_PvP.GetBattlefieldVehicles # not-yet
-C_PvP.GetBattlegroundInfo # not-yet
 C_PvP.GetBrawlRewards # not-yet
 C_PvP.GetBrawlSoloRBGMinItemLevel # not-yet
 C_PvP.GetGlobalPvpScalingInfoForSpecID # not-yet
@@ -1349,8 +1272,6 @@ C_PvP.GetPostMatchCurrencyRewards # not-yet
 C_PvP.GetPostMatchItemRewards # not-yet
 C_PvP.GetPvpTierID # not-yet
 C_PvP.GetPvpTierInfo # not-yet
-C_PvP.GetRandomBGRewards # not-yet
-C_PvP.GetRandomEpicBGRewards # not-yet
 C_PvP.GetRandomTrainingGroundArenaRewards # not-yet
 C_PvP.GetRandomTrainingGroundBGRewards # not-yet
 C_PvP.GetRatedBGRewards # not-yet
@@ -1364,17 +1285,14 @@ C_PvP.GetScoreInfoByPlayerGuid # not-yet
 C_PvP.GetSeasonBestInfo # not-yet
 C_PvP.GetSkirmishInfo # not-yet
 C_PvP.GetTeamInfo # not-yet
-C_PvP.GetTrainingGrounds # not-yet
 C_PvP.GetUIDisplaySeason # not-yet
 C_PvP.GetWeeklyChestInfo # not-yet
 C_PvP.HasArenaSkirmishWinToday # not-yet
-C_PvP.HasMatchStarted # not-yet
 C_PvP.HasRandomTrainingGroundArenaWinToday # not-yet
 C_PvP.HasRandomTrainingGroundBGWinToday # not-yet
 C_PvP.IsActiveMatchRegistered # not-yet
 C_PvP.IsArena # not-yet
 C_PvP.IsBattleground # not-yet
-C_PvP.IsBattlegroundEnlistmentBonusActive # not-yet
 C_PvP.IsBrawlSoloRBG # not-yet
 C_PvP.IsBrawlSoloShuffle # not-yet
 C_PvP.IsInBrawl # not-yet: temporary Lua workaround
@@ -1382,21 +1300,14 @@ C_PvP.IsInRatedMatchWithDeserterPenalty # not-yet
 C_PvP.IsMatchFactional # not-yet
 C_PvP.IsPVPMap # not-yet
 C_PvP.IsSoloShuffle # not-yet: temporary Lua workaround
-C_PvP.IsSubZonePVPPOI # not-yet
-C_PvP.IsTrainingGroundsArena # not-yet
-C_PvP.IsTrainingGroundsBG # not-yet
 C_PvP.IsWarModeActive # not-yet
 C_PvP.IsWarModeFeatureEnabled # not-yet
 C_PvP.JoinBrawl # not-yet
-C_PvP.JoinRandomTrainingGroundArena # not-yet
 C_PvP.JoinRandomTrainingGroundBG # not-yet
 C_PvP.JoinRatedBGBlitz # not-yet
-C_PvP.JoinTrainingGround # not-yet
-C_PvP.SetPVP # not-yet
 C_PvP.SetWarModeDesired # not-yet
 C_PvP.StartSoloRBGWarGameByName # not-yet
 C_PvP.StartSpectatorSoloRBGWarGame # not-yet
-C_PvP.TogglePVP # not-yet
 C_PvP.ToggleWarMode # not-yet
 C_QuestHub.IsAreaPOICurrentlyRelatedToHub # not-yet
 C_QuestHub.IsQuestCurrentlyRelatedToHub # not-yet
@@ -1976,7 +1887,6 @@ GetAvailableLocales # not-yet
 GetBackgroundLoadingStatus # not-yet: temporary Lua workaround
 GetBillingTimeRested # not-yet: temporary Lua workaround
 GetCemeteryPreference # not-yet
-GetCollapsingStarCost # not-yet
 GetCorpseRecoveryDelay # not-yet
 GetCurrentCinematicSummary # not-yet
 GetCurrentEventID # not-yet
@@ -2074,7 +1984,6 @@ IsOnTournamentRealm # not-yet: temporary Lua workaround
 IsOutOfBounds # not-yet
 IsPlayerInGuildFromGUID # not-yet
 IsRaidMarkerActive # not-yet
-IsRaidMarkerSystemEnabled # not-yet
 IsRightMetaKeyDown # not-yet
 IsUsingFixedTimeStep # not-yet
 IsUsingMouse # not-yet
@@ -2117,7 +2026,6 @@ SetConsoleKey # not-yet
 SetCursorByMode # not-yet
 SetCursorHoveredItem # not-yet: temporary Lua workaround
 SetCursorHoveredItemTradeItem # not-yet: temporary Lua workaround
-SetCursorPosition # not-yet
 SetCursorVirtualItem # not-yet
 SetDungeonDifficultyID # not-yet
 SetErrorCallstackHeight # not-yet: temporary Lua workaround
@@ -2133,10 +2041,6 @@ ShouldDisplayStoryModeTooltipInSocialFrame # not-yet
 ShouldShowExpansionUpgradeBanner # not-yet: temporary Lua workaround
 ShouldShowIslandsWeeklyPOI # not-yet
 ShouldShowSpecialSplashScreen # not-yet
-ShowCloak # not-yet
-ShowHelm # not-yet
-ShowingCloak # not-yet
-ShowingHelm # not-yet
 SimulateMouseClick # not-yet
 SimulateMouseDown # not-yet
 SimulateMouseUp # not-yet
@@ -2176,20 +2080,14 @@ UnitAlliedRaceInfo # not-yet
 UnitBattlePetSpeciesID # not-yet
 UnitCanPetBattle # not-yet
 UnitChromieTimeID # not-yet
-UnitEmpoweredStageDurations # not-yet
 UnitHasMouseoverHighlight # not-yet
-UnitHasPowerType # not-yet
-UnitHealthMissing # not-yet
 UnitInAnyGroup # not-yet
 UnitInPartyShard # not-yet
 UnitInVehicleControlSeat # not-yet
 UnitInVehicleHidesPetFrame # not-yet
 UnitIsControlling # not-yet
 UnitIsInMyGuild # not-yet
-UnitIsLieutenant # not-yet
 UnitIsMercenary # not-yet
-UnitIsMinion # not-yet
-UnitIsNPCAsPlayer # not-yet
 UnitIsPVPSanctuary # not-yet
 UnitIsSameServer # not-yet
 UnitIsTrivial # not-yet
@@ -2199,17 +2097,13 @@ UnitOwnerGUID # not-yet
 UnitPartialPower # not-yet
 UnitPercentHealthFromGUID # not-yet
 UnitPowerDisplayMod # not-yet: temporary Lua workaround
-UnitPowerMissing # not-yet
 UnitPvpClassification # not-yet
 UnitSelectionType # not-yet
 UnitSetRole # not-yet
 UnitSetRoleEnum # not-yet
 UnitShouldDisplayName # not-yet
-UnitShouldDisplaySpellTargetName # not-yet
-UnitSpellTargetClass # not-yet
 UnitSpellTargetName # not-yet
 UnitSwitchToVehicleSeat # not-yet
-UnitThreatLeadSituation # not-yet
 UnitUsingVehicle # not-yet
 UnitVehicleSeatCount # not-yet
 UnitVehicleSeatInfo # not-yet
@@ -2217,9 +2111,5 @@ UnitWeaponAttackPower # not-yet
 UnitWidgetSet # not-yet
 UpdateWindow # not-yet
 WorldLootObjectExists # not-yet: temporary Lua workaround
-canaccesssecrets # not-yet
-dropsecretaccess # not-yet
-hasanysecretvalues # not-yet
-issecrettable # not-yet
 secretunwrap # not-yet
 table.getcountinfo # not-yet

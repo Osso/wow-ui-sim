@@ -1,4 +1,6 @@
-#![cfg(feature = "retail-12-0-0")]
+//! Forever HousingUIDocumentation.lua, HousingDecorUIDocumentation.lua and
+//! HousingLayoutUIDocumentation.lua declare these queries byte-identically.
+#![cfg(feature = "housing-host-state")]
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 #[test]
@@ -50,11 +52,17 @@ fn p1127_housing_host_location_is_not_owned_or_tracked_location() {
 #[test]
 fn p1127_housing_exterior_door_hover_uses_existing_host_snapshot() {
     let env = WowLuaEnv::new().unwrap();
-    env.exec("assert(C_HousingDecor.IsHouseExteriorDoorHovered() == false)")
-        .unwrap();
+    env.exec(
+        "assert(C_HousingDecor.IsHouseExteriorDoorHovered() == false)
+         assert(C_HousingCustomizeMode.IsHouseExteriorDoorHovered() == false)",
+    )
+    .unwrap();
     env.state().borrow_mut().housing.exterior.entry_door_hovered = true;
-    env.exec("assert(C_HousingDecor.IsHouseExteriorDoorHovered() == true)")
-        .unwrap();
+    env.exec(
+        "assert(C_HousingDecor.IsHouseExteriorDoorHovered() == true)
+         assert(C_HousingCustomizeMode.IsHouseExteriorDoorHovered() == true)",
+    )
+    .unwrap();
 }
 
 #[test]

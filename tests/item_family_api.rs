@@ -1,5 +1,5 @@
 //! API-level test: no pinned retail Blizzard consumer calls GetItemFamily.
-#![cfg(feature = "client-retail")]
+#![cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 
 use wow_ui_sim::lua_api::WowLuaEnv;
 

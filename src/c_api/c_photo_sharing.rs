@@ -15,7 +15,6 @@
 //! Admin: `A_Admin.SetPhotoSharingAuthorized(b?)` /
 //! `A_Admin.SetPhotoSharingEnabled(b?)` — no-arg defaults to true.
 
-#[cfg(feature = "retail-12-0-5")]
 use crate::event::{Event, EventArg};
 use crate::lua_api::methods::{borrow_state, borrow_state_mut, create_table};
 use crate::lua_bridge::{FromStack, table_set_rust_fn_static};
@@ -25,11 +24,8 @@ use rilua::vm::table::Table;
 use rilua::{LuaResult, Val};
 
 // Enum.PhotoSharingStatus values (ImageSharingConstantsDocumentation.lua).
-#[cfg(feature = "retail-12-0-5")]
 const STATUS_DISABLED: f64 = 0.0;
-#[cfg(feature = "retail-12-0-5")]
 const STATUS_NOT_CONFIGURED: f64 = 1.0;
-#[cfg(feature = "retail-12-0-5")]
 const STATUS_CONFIGURED: f64 = 2.0;
 
 pub fn is_authorized(state: &mut LuaState) -> LuaResult<u32> {
@@ -46,7 +42,6 @@ pub fn is_enabled(state: &mut LuaState) -> LuaResult<u32> {
 
 /// INFERRED: Expired, ParentalControl and the other restriction statuses need
 /// account restrictions the simulator does not model.
-#[cfg(feature = "retail-12-0-5")]
 fn get_status(state: &mut LuaState) -> LuaResult<u32> {
     let sim = borrow_state(state)?;
     let status = match (sim.photo_sharing_enabled, sim.photo_sharing_authorized) {
@@ -61,7 +56,6 @@ fn get_status(state: &mut LuaState) -> LuaResult<u32> {
 
 /// Unlinks the account; INFERRED: the update event (without a notification)
 /// fires only when an authorization was actually cleared.
-#[cfg(feature = "retail-12-0-5")]
 fn clear_authorization(state: &mut LuaState) -> LuaResult<u32> {
     let mut sim = borrow_state_mut(state)?;
     if sim.photo_sharing_authorized {
@@ -102,12 +96,17 @@ pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
     let table_ref = ensure_c_photo_sharing_table(state);
     table_set_rust_fn_static(state, table_ref, "IsAuthorized", is_authorized)?;
     table_set_rust_fn_static(state, table_ref, "IsEnabled", is_enabled)?;
-    #[cfg(feature = "retail-12-0-5")]
-    {
+    // Forever PhotoSharingUIDocumentation.lua declares the account-link pair
+    // byte-identically; the external-service shims stay Retail-only.
+    if cfg!(any(
+        feature = "retail-12-0-5",
+        feature = "client-wowforever"
+    )) {
         table_set_rust_fn_static(state, table_ref, "GetStatus", get_status)?;
         table_set_rust_fn_static(state, table_ref, "ClearAuthorization", clear_authorization)?;
-        super::permanent_shims::c_photo_sharing_service::register(state, table_ref)?;
     }
+    #[cfg(feature = "retail-12-0-5")]
+    super::permanent_shims::c_photo_sharing_service::register(state, table_ref)?;
     Ok(())
 }
 

@@ -154,7 +154,6 @@ fn unit_health_max(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-#[cfg(feature = "retail-12-0-0")]
 fn unit_health_missing(state: &mut LuaState) -> LuaResult<u32> {
     let unit = val_to_string(state, stack_val(state, 1)).unwrap_or_else(|| "player".to_string());
     let vitals = lookup_unit_vitals(state, &unit);
@@ -194,7 +193,6 @@ fn unit_power(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-#[cfg(feature = "retail-12-0-5")]
 fn unit_has_power_type(state: &mut LuaState) -> LuaResult<u32> {
     if !matches!(stack_val(state, 1), Val::Str(_)) {
         return Err(rilua::runtime_error(
@@ -214,7 +212,6 @@ fn unit_has_power_type(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-#[cfg(feature = "retail-12-0-5")]
 fn read_power_capability_type(state: &LuaState) -> LuaResult<i32> {
     match stack_val(state, 2) {
         Val::Num(number)
@@ -246,7 +243,6 @@ fn unit_power_max(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-#[cfg(feature = "retail-12-0-0")]
 fn unit_power_missing(state: &mut LuaState) -> LuaResult<u32> {
     let unit = val_to_string(state, stack_val(state, 1)).unwrap_or_else(|| "player".to_string());
     let vitals = lookup_unit_vitals(state, &unit);
@@ -597,20 +593,24 @@ fn push_channel_info(state: &mut LuaState, cast_info: &CastInfoSnapshot) -> u32 
 
 // ── Registration ─────────────────────────────────────────────────────────────
 
+/// Forever UnitDocumentation.lua declares the Retail blocks byte-identically.
+fn register_unit_capacity_globals(lua: &mut rilua::Lua) -> LuaResult<()> {
+    LuaApiMut::register_function(lua, "UnitHealthMissing", unit_health_missing)?;
+    LuaApiMut::register_function(lua, "UnitHasPowerType", unit_has_power_type)?;
+    LuaApiMut::register_function(lua, "UnitPowerMissing", unit_power_missing)
+}
+
 pub(super) fn register_spell_globals(lua: &mut rilua::Lua) -> LuaResult<()> {
+    if crate::client_profile::ACTIVE.shares_retail_12_api() {
+        register_unit_capacity_globals(lua)?;
+    }
     #[cfg(feature = "player-cast-durations")]
     crate::lua_api::channeling::register_queries(lua)?;
     LuaApiMut::register_function(lua, "UnitHealth", unit_health)?;
     LuaApiMut::register_function(lua, "UnitHealthMax", unit_health_max)?;
-    #[cfg(feature = "retail-12-0-0")]
-    LuaApiMut::register_function(lua, "UnitHealthMissing", unit_health_missing)?;
     LuaApiMut::register_function(lua, "UnitHealthPercent", unit_health_percent)?;
     LuaApiMut::register_function(lua, "UnitPower", unit_power)?;
     LuaApiMut::register_function(lua, "UnitPowerMax", unit_power_max)?;
-    #[cfg(feature = "retail-12-0-5")]
-    LuaApiMut::register_function(lua, "UnitHasPowerType", unit_has_power_type)?;
-    #[cfg(feature = "retail-12-0-0")]
-    LuaApiMut::register_function(lua, "UnitPowerMissing", unit_power_missing)?;
     LuaApiMut::register_function(lua, "UnitPowerPercent", unit_power_percent)?;
     LuaApiMut::register_function(lua, "UnitPowerBarID", unit_power_bar_id)?;
     LuaApiMut::register_function(lua, "UnitPowerType", unit_power_type)?;

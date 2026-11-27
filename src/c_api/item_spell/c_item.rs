@@ -362,6 +362,7 @@ fn register_c_item_inventory_queries(
     table_ref: GcRef<Table>,
 ) -> LuaResult<()> {
     register_c_item_guid_surface(state, table_ref)?;
+    register_c_item_supplied_queries(state, table_ref)?;
     if ACTIVE == ClientProfile::Retail {
         register_c_item_retail_inventory_queries(state, table_ref)?;
     } else if ACTIVE == ClientProfile::WowForever {
@@ -373,6 +374,26 @@ fn register_c_item_inventory_queries(
         )?;
     }
     register_c_item_general_inventory_queries(state, table_ref)
+}
+
+/// ItemDocumentation.lua: Forever declares these supplied-state queries
+/// byte-identically to Retail (item families, equipment, current items).
+fn register_c_item_supplied_queries(
+    state: &mut LuaState,
+    table_ref: GcRef<Table>,
+) -> LuaResult<()> {
+    if !matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever) {
+        return Ok(());
+    }
+    register_c_item_methods(
+        state,
+        table_ref,
+        &[
+            ("GetItemFamily", c_item_get_item_family),
+            ("IsEquippedItem", c_item_is_equipped_item),
+            ("IsCurrentItem", c_item_is_current_item),
+        ],
+    )
 }
 
 fn register_c_item_guid_surface(state: &mut LuaState, table_ref: GcRef<Table>) -> LuaResult<()> {
@@ -415,7 +436,6 @@ fn register_c_item_retail_inventory_query_group_one(
                 "IsEquippedItemType",
                 super::item_type::is_equipped_item_type,
             ),
-            ("GetItemFamily", c_item_get_item_family),
             ("GetItemChildInfo", super::item_child::get_item_child_info),
             ("GetItemCreationContext", c_item_creation_context),
             (
@@ -517,10 +537,6 @@ fn register_c_item_general_inventory_queries(
             ("IsBoundToAccountUntilEquip", c_item_is_bound),
             ("IsConsumableItem", c_item_is_consumable_item),
             ("IsEquippableItem", c_item_is_equippable_item),
-            #[cfg(feature = "client-retail")]
-            ("IsEquippedItem", c_item_is_equipped_item),
-            #[cfg(feature = "client-retail")]
-            ("IsCurrentItem", c_item_is_current_item),
             ("IsItemInRange", c_item_is_item_in_range),
             (
                 "GetItemInventorySlotInfo",
@@ -589,7 +605,6 @@ fn c_item_is_dressable_item_by_id(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-#[cfg(feature = "client-retail")]
 fn c_item_is_current_item(state: &mut LuaState) -> LuaResult<u32> {
     let value = rilua::table_security::unwrap_secret(state, stack_val(state, 1))?;
     let item_id = parse_item_id_key(state, value);
@@ -601,7 +616,6 @@ fn c_item_is_current_item(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-#[cfg(feature = "client-retail")]
 fn c_item_is_equipped_item(state: &mut LuaState) -> LuaResult<u32> {
     let value = rilua::table_security::unwrap_secret(state, stack_val(state, 1))?;
     let item_id = parse_item_id_key(state, value);

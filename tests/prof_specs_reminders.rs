@@ -2,7 +2,11 @@
 //! Blacksmithing (164) and Mining (186) are the simulator's stored
 //! professions; related lines and tabs come from 70391 data, with WM55
 //! answers to Q2–Q4.
-#![cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#![cfg(any(
+    feature = "client-retail",
+    feature = "client-ptr",
+    feature = "client-wowforever"
+))]
 
 use wow_ui_sim::c_api::profession_spec_inputs::{ProfessionSpecInputs, SkillRank};
 use wow_ui_sim::lua_api::WowLuaEnv;
@@ -198,7 +202,7 @@ fn an_ineligible_candidate_reads_no_currency() {
 }
 
 /// WM87: one numeric state from the supplied tab state; no relation is native 0.
-#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+#[cfg(feature = "profession-spec-paths")]
 #[test]
 fn get_state_for_tab_reads_supplied_tab_state_and_validates_arguments() {
     let mut inputs = blacksmithing_tab(2);

@@ -640,7 +640,7 @@ fn test_patch_12_1_battle_net_presence_state() {
     assert!(!env.state().borrow().bnet_appear_offline);
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "housing-blueprints")]
 #[test]
 fn test_patch_12_1_housing_inside_owned_state_and_reset() {
     let env = WowLuaEnv::new().unwrap();
@@ -690,7 +690,7 @@ fn test_patch_12_1_housing_inside_owned_state_and_reset() {
     assert!(state.housing.level_thresholds.is_empty());
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "housing-blueprints")]
 #[test]
 fn test_patch_12_1_housing_blueprint_availability_state() {
     let env = WowLuaEnv::new().unwrap();
@@ -715,7 +715,7 @@ fn test_patch_12_1_housing_blueprint_availability_state() {
     assert_eq!(result, "ok");
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "housing-blueprints")]
 #[test]
 fn test_patch_12_1_housing_blueprint_best_effort_state() {
     let env = WowLuaEnv::new().unwrap();
@@ -757,7 +757,7 @@ fn test_patch_12_1_housing_blueprint_best_effort_state() {
     );
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "housing-blueprints")]
 #[test]
 fn test_patch_12_1_housing_editor_decor_layout_state() {
     let env = WowLuaEnv::new().unwrap();
@@ -790,16 +790,12 @@ fn test_patch_12_1_housing_editor_decor_layout_state() {
         .eval(
             r#"
             local petInfo = C_HousingCustomizeMode.GetSelectedDecorPetInfo()
-            local maxIndoor, maxOutdoor = C_HousingDecor.GetBothMaxPlacementBudgets()
-            local spentIndoor, spentOutdoor = C_HousingDecor.GetBothSpentPlacementBudgets()
             if C_HouseEditor.GetActiveHouseEditorMode() ~= Enum.HouseEditorMode.None then return "editor-mode" end
             if C_HouseEditor.GetHouseEditorPlayerType() ~= 7 then return "editor-type" end
             if petInfo.petGUID ~= "pet-1" or petInfo.petName ~= "Biscuit" then return "pet-info" end
             if C_HousingDecor.AnyDecorPlacedInRoom(11) ~= true then return "room-decor" end
             if C_HousingDecor.GetDecorAssignedPetName("decor-1") ~= "Biscuit" then return "pet-name" end
             if C_HousingDecor.GetDecorCanAttachPet("decor-1") ~= true then return "can-attach" end
-            if maxIndoor ~= 100 or maxOutdoor ~= 50 then return "max-budgets" end
-            if spentIndoor ~= 20 or spentOutdoor ~= 5 then return "spent-budgets" end
             if C_HousingDecor.GetMaxPetPlacementBudget() ~= 3 then return "max-pets" end
             if C_HousingDecor.GetSpentPetPlacementBudget() ~= 1 then return "spent-pets" end
             if C_HousingLayout.GetBaseRoomFloor(11) ~= 2 then return "base-floor" end
@@ -811,6 +807,25 @@ fn test_patch_12_1_housing_editor_decor_layout_state() {
         )
         .unwrap();
 
+    assert_eq!(result, "ok");
+    #[cfg(feature = "retail-12-1-0")]
+    assert_both_placement_budgets(&env);
+}
+
+/// Retail-only: neither profile's API docs declare the GetBoth* pair.
+#[cfg(feature = "retail-12-1-0")]
+fn assert_both_placement_budgets(env: &WowLuaEnv) {
+    let result: String = env
+        .eval(
+            r#"
+            local maxIndoor, maxOutdoor = C_HousingDecor.GetBothMaxPlacementBudgets()
+            local spentIndoor, spentOutdoor = C_HousingDecor.GetBothSpentPlacementBudgets()
+            if maxIndoor ~= 100 or maxOutdoor ~= 50 then return "max-budgets" end
+            if spentIndoor ~= 20 or spentOutdoor ~= 5 then return "spent-budgets" end
+            return "ok"
+            "#,
+        )
+        .unwrap();
     assert_eq!(result, "ok");
 }
 

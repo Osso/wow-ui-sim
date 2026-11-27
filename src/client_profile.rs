@@ -154,6 +154,13 @@ impl ClientProfile {
         }
     }
 
+    /// Retail, PTR and Forever publish these Retail 12.x API surfaces: Forever's
+    /// generated documentation declares byte-identical blocks, and the models
+    /// read profile-neutral supplied state.
+    pub const fn shares_retail_12_api(self) -> bool {
+        matches!(self, Self::Retail | Self::Ptr | Self::WowForever)
+    }
+
     /// Retail and Forever use the supplied C_VignetteInfo model.
     pub const fn uses_vignette_info_model(self) -> bool {
         matches!(self, Self::Retail | Self::WowForever)

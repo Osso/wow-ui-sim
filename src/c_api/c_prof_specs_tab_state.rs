@@ -13,11 +13,16 @@ const TAB_STATE_LOCKED: i32 = 0;
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     // PTR 70493 ProfessionsSpecializationsTemplates.lua:144 consumes this API.
     // Same contract as Retail WM87; INFERRED for PTR pending native evidence.
+    // Forever ProfessionSpecUIDocumentation.lua declares it byte-identically.
     if !matches!(
         crate::client_profile::ACTIVE,
-        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
-    ) || !cfg!(feature = "retail-12-1-5")
-    {
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::Ptr
+            | crate::client_profile::ClientProfile::WowForever
+    ) || !cfg!(any(
+        feature = "retail-12-1-5",
+        feature = "client-wowforever"
+    )) {
         return Ok(());
     }
     let namespace = super::ensure_namespace(state, "C_ProfSpecs")?;

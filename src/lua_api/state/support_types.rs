@@ -388,7 +388,7 @@ pub struct HousingState {
     pub house_finder_selected_plot: Option<i32>,
     pub catalog: crate::c_api::c_housing::catalog::HousingCatalogState,
     pub exterior: crate::c_api::c_housing::exterior::HouseExteriorState,
-    #[cfg(feature = "retail-12-0-5")]
+    #[cfg(feature = "housing-inspect-mode")]
     pub inspect_mode: crate::c_api::c_housing::inspect_mode::InspectModeState,
     /// Inferred pending request only; never a selected or placed decor instance.
     pub pending_new_decor: Option<crate::c_api::c_housing::catalog::HousingCatalogEntryVariantID>,
@@ -421,7 +421,7 @@ pub struct HousingState {
     pub blueprint_import_availability: i32,
     #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
     pub editor: crate::c_api::c_housing::editor::EditorState,
-    #[cfg(feature = "retail-12-0-0")]
+    #[cfg(feature = "housing-host-state")]
     pub location: crate::c_api::c_housing::location::LocationState,
     pub active_house_editor_mode: i32,
     pub house_editor_player_type: Option<i32>,
@@ -436,13 +436,13 @@ pub struct HousingState {
     pub spent_outdoor_placement_budget: Option<i32>,
     pub max_pet_placement_budget: Option<i32>,
     pub spent_pet_placement_budget: Option<i32>,
-    #[cfg(feature = "retail-12-0-7")]
+    #[cfg(feature = "housing-room-queries")]
     pub room_connection_door_types: HashMap<(String, i32), std::collections::HashSet<i32>>,
     pub base_room_floors: HashMap<i32, i32>,
     /// The house's undeletable base room; never exportable as a room blueprint.
     pub base_room: Option<i32>,
     pub stairwell_rooms: Vec<i32>,
-    #[cfg(feature = "retail-12-0-7")]
+    #[cfg(feature = "housing-room-queries")]
     pub viewed_floor_permissions: HashMap<i32, bool>,
     pub room_player_is_in: Option<i32>,
     pub selected_blueprint_floorplan: Option<i32>,

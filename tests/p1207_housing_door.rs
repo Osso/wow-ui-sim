@@ -1,4 +1,4 @@
-#![cfg(feature = "retail-12-0-7")]
+#![cfg(feature = "housing-room-queries")]
 use rilua::LuaApiMut;
 use rilua::table_security::{wrap_host_secret_number, wrap_host_secret_string};
 use wow_ui_sim::lua_api::WowLuaEnv;

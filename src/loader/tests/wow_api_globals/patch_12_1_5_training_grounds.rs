@@ -1,7 +1,7 @@
 //! Synthetic catalog classifications; no native Training Grounds IDs are asserted.
 use crate::lua_api::WowLuaEnv;
 
-#[cfg(feature = "retail-12-1-5")]
+#[cfg(any(feature = "retail-12-1-5", feature = "client-wowforever"))]
 fn seed_training_catalog(env: &WowLuaEnv) {
     use crate::c_api::c_pvp::TrainingGroundKind;
     let mut state = env.state().borrow_mut();
@@ -19,7 +19,7 @@ fn seed_training_catalog(env: &WowLuaEnv) {
     }
 }
 
-#[cfg(feature = "retail-12-1-5")]
+#[cfg(any(feature = "retail-12-1-5", feature = "client-wowforever"))]
 #[test]
 fn training_grounds_queries_catalog_classification_and_updates() {
     use crate::c_api::c_pvp::TrainingGroundKind;
@@ -58,7 +58,7 @@ fn training_grounds_queries_catalog_classification_and_updates() {
     ).unwrap();
 }
 
-#[cfg(feature = "retail-12-1-5")]
+#[cfg(any(feature = "retail-12-1-5", feature = "client-wowforever"))]
 #[test]
 fn training_grounds_validates_ids_and_leaves_default_catalog_unclassified() {
     let env = WowLuaEnv::new().unwrap();
@@ -86,7 +86,9 @@ fn training_grounds_validates_ids_and_leaves_default_catalog_unclassified() {
     .unwrap();
 }
 
-#[cfg(not(feature = "retail-12-1-5"))]
+// Forever PvpInfoDocumentation.lua declares both queries byte-identically to
+// Retail, so Forever moved from this absence contract to the queries above.
+#[cfg(not(any(feature = "retail-12-1-5", feature = "client-wowforever")))]
 #[test]
 fn training_grounds_preserves_retail_absence() {
     let env = WowLuaEnv::new().unwrap();

@@ -1,6 +1,7 @@
-#![cfg(feature = "retail-12-0-0")]
+#![cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
 use wow_ui_sim::lua_api::WowLuaEnv;
 
+#[cfg(feature = "retail-12-0-0")]
 #[test]
 fn p1200_rest_crafting_quality_missing() {
     let env = WowLuaEnv::new().unwrap();
@@ -103,6 +104,7 @@ fn p1200_rest_pvp_catalog_empty() {
     env.exec("assert(C_PvP.HasMatchStarted())").unwrap();
 }
 
+#[cfg(feature = "retail-12-0-0")]
 #[test]
 fn p1200_rest_prey_missing() {
     let env = WowLuaEnv::new().unwrap();

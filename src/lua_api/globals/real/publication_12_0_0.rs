@@ -1,4 +1,4 @@
-//! Host inputs for plain globals added in Retail 12.0.0.
+//! Host inputs for plain globals added in Retail 12.0.0 and declared by Forever.
 //! INFERRED: no native producer/default evidence; cost zero, marker system on,
 //! clothing shown, empty role/threat/class inputs. No persistence or 3D rendering.
 
@@ -86,10 +86,8 @@ pub(crate) fn register_classic_marker_state(lua: &mut rilua::Lua) -> LuaResult<(
     LuaApiMut::register_function(lua, "IsRaidMarkerActive", is_raid_marker_active)
 }
 
-#[cfg(feature = "retail-12-0-0")]
 pub(crate) use retail::register_all;
 
-#[cfg(feature = "retail-12-0-0")]
 mod retail {
     use super::*;
     use crate::lua_api::methods::borrow_state_mut;

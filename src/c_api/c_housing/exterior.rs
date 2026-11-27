@@ -11,7 +11,7 @@ pub(crate) const MODELED: bool = cfg!(all(
 ));
 
 pub(super) fn register(state: &mut rilua::vm::state::LuaState) -> rilua::LuaResult<()> {
-    #[cfg(feature = "retail-12-0-0")]
+    #[cfg(feature = "housing-host-state")]
     {
         let ns = crate::c_api::ensure_namespace(state, "C_HousingCustomizeMode")?;
         crate::lua_bridge::table_set_rust_fn_static(
