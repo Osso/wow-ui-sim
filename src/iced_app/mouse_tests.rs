@@ -309,68 +309,68 @@ fn drag_start_can_transfer_to_delegate_and_abort_before_mouse_up() {
         "mouse up should not fire OnDragStop after AbortDrag already cleared the drag"
     );
 }
+const MOVING_DRAG_SETUP_LUA: &str = r#"
+    MovingDragFrame = CreateFrame("Frame", "MovingDragFrame", UIParent)
+    MovingDragFrame:SetSize(100, 100)
+    MovingDragFrame:SetPoint("CENTER", UIParent, "TOPLEFT", 150, -150)
+    MovingDragFrame:SetMovable(true)
+    MovingDragFrame:EnableMouse(true)
+    MovingDragFrame:RegisterForDrag("LeftButton")
+    MovingDragFrame:SetScript("OnDragStart", function(self)
+        self:StartMoving()
+    end)
+"#;
+
+type MovingDragPoint = (i64, String, String, String, f64, f64);
+
+/// Retail ordinary movement anchors to the guarded coordinate root, which is
+/// never published as a relative frame (VERIFIED R88n.5r-q3.1,
+/// docs/layout-system.md). Other profiles keep the parent target.
+fn expected_moving_drag_target() -> &'static str {
+    if crate::widget::clamp_geometry::uses_retail_clamp_producers() {
+        "nil"
+    } else {
+        "UIParent"
+    }
+}
+
+fn read_moving_drag_point(app: &App, frame: &str) -> MovingDragPoint {
+    let script = format!(
+        "local point, relativeTo, relativePoint, x, y = {frame}:GetPoint(1)
+        local relativeName = relativeTo and relativeTo:GetName() or 'nil'
+        return {frame}:GetNumPoints(), point, relativeName, relativePoint, x, y"
+    );
+    app.env
+        .borrow()
+        .eval(&script)
+        .expect("moving drag anchor query should succeed")
+}
+
+fn drag_from_to(app: &mut App, from: f32, to: f32) {
+    rebuild_hittable_cache(app);
+    app.handle_mouse_move(Point::new(from, from));
+    app.handle_mouse_down(Point::new(from, from));
+    app.handle_mouse_move(Point::new(to, to));
+}
+
 #[test]
 fn moving_drag_updates_frame_anchor_to_follow_mouse() {
     let mut app = build_test_app(ScreenKind::Game);
-
-    {
-        let env = app.env.borrow();
-        env.exec(
-            r#"
-            MovingDragFrame = CreateFrame("Frame", "MovingDragFrame", UIParent)
-            MovingDragFrame:SetSize(100, 100)
-            MovingDragFrame:SetPoint("CENTER", UIParent, "TOPLEFT", 150, -150)
-            MovingDragFrame:SetMovable(true)
-            MovingDragFrame:EnableMouse(true)
-            MovingDragFrame:RegisterForDrag("LeftButton")
-            MovingDragFrame:SetScript("OnDragStart", function(self)
-                self:StartMoving()
-            end)
-            "#,
-        )
-        .expect("moving drag frame setup should succeed");
-    }
-
-    rebuild_hittable_cache(&app);
-    app.handle_mouse_move(Point::new(150.0, 150.0));
-    app.handle_mouse_down(Point::new(150.0, 150.0));
-    app.handle_mouse_move(Point::new(170.0, 170.0));
-
-    let (num_points, point, relative_to, relative_point, x, y): (
-        i64,
-        String,
-        String,
-        String,
-        f64,
-        f64,
-    ) = app
-        .env
+    app.env
         .borrow()
-        .eval(
-            r#"
-            local point, relativeTo, relativePoint, x, y = MovingDragFrame:GetPoint(1)
-            local relativeName = relativeTo and relativeTo:GetName() or "nil"
-            return MovingDragFrame:GetNumPoints(), point, relativeName, relativePoint, x, y
-        "#,
-        )
-        .expect("moving drag anchor query should succeed");
+        .exec(MOVING_DRAG_SETUP_LUA)
+        .expect("moving drag frame setup should succeed");
+    drag_from_to(&mut app, 150.0, 170.0);
 
+    let (num_points, point, relative_to, relative_point, x, y) =
+        read_moving_drag_point(&app, "MovingDragFrame");
     assert_eq!(
         num_points, 1,
-        "moving drag should collapse anchors to one TOPLEFT point"
+        "moving drag should collapse anchors to one point"
     );
-    assert_eq!(
-        point, "TOPLEFT",
-        "moving drag should re-anchor the frame by TOPLEFT"
-    );
-    assert_eq!(
-        relative_to, "UIParent",
-        "moving drag should anchor relative to the parent"
-    );
-    assert_eq!(
-        relative_point, "TOPLEFT",
-        "moving drag should use the parent's TOPLEFT as its target"
-    );
+    assert_eq!(point, "TOPLEFT", "moving drag should re-anchor by TOPLEFT");
+    assert_eq!(relative_to, expected_moving_drag_target());
+    assert_eq!(relative_point, "TOPLEFT");
     assert_eq!(x, 120.0, "mouse delta should advance the frame x offset");
     assert_eq!(y, -120.0, "mouse delta should advance the frame y offset");
 }
@@ -405,100 +405,68 @@ fn scaled_moving_drag_converts_screen_delta_to_anchor_offset() {
     assert_eq!(y, -140.0, "20 screen pixels should become 40 UI units");
 }
 
+const DELEGATED_DRAG_SETUP_LUA: &str = r#"
+    DelegatedDragParent = CreateFrame("Frame", "DelegatedDragParent", UIParent)
+    DelegatedDragParent:SetSize(100, 100)
+    DelegatedDragParent:SetPoint("TOPLEFT", UIParent, "TOPLEFT", 100, -100)
+    DelegatedDragParent:SetMovable(true)
+
+    DelegatedDragSelection = CreateFrame("Frame", "DelegatedDragSelection", DelegatedDragParent)
+    DelegatedDragSelection:SetAllPoints()
+    DelegatedDragSelection:EnableMouse(true)
+    DelegatedDragSelection:RegisterForDrag("LeftButton")
+    DelegatedDragSelection:SetScript("OnDragStart", function()
+        DelegatedDragParent:StartMoving()
+    end)
+    DelegatedDragSelection:SetScript("OnDragStop", function()
+        DelegatedDragParent:StopMovingOrSizing()
+    end)
+"#;
+
 #[test]
 fn drag_start_on_child_moves_parent_started_by_handler() {
     let mut app = build_test_app(ScreenKind::Game);
-
-    {
-        let env = app.env.borrow();
-        env.exec(
-            r#"
-            DelegatedDragParent = CreateFrame("Frame", "DelegatedDragParent", UIParent)
-            DelegatedDragParent:SetSize(100, 100)
-            DelegatedDragParent:SetPoint("TOPLEFT", UIParent, "TOPLEFT", 100, -100)
-            DelegatedDragParent:SetMovable(true)
-
-            DelegatedDragSelection = CreateFrame("Frame", "DelegatedDragSelection", DelegatedDragParent)
-            DelegatedDragSelection:SetAllPoints()
-            DelegatedDragSelection:EnableMouse(true)
-            DelegatedDragSelection:RegisterForDrag("LeftButton")
-            DelegatedDragSelection:SetScript("OnDragStart", function()
-                DelegatedDragParent:StartMoving()
-            end)
-            DelegatedDragSelection:SetScript("OnDragStop", function()
-                DelegatedDragParent:StopMovingOrSizing()
-            end)
-            "#,
-        )
-        .expect("delegated drag frame setup should succeed");
-    }
-
-    rebuild_hittable_cache(&app);
-    app.handle_mouse_move(Point::new(120.0, 120.0));
-    app.handle_mouse_down(Point::new(120.0, 120.0));
-    app.handle_mouse_move(Point::new(140.0, 140.0));
-
-    let (point, relative_to, relative_point, x, y): (String, String, String, f64, f64) = app
-        .env
+    app.env
         .borrow()
-        .eval(
-            r#"
-            local point, relativeTo, relativePoint, x, y = DelegatedDragParent:GetPoint(1)
-            local relativeName = relativeTo and relativeTo:GetName() or "nil"
-            return point, relativeName, relativePoint, x, y
-            "#,
-        )
-        .expect("delegated moving drag anchor query should succeed");
+        .exec(DELEGATED_DRAG_SETUP_LUA)
+        .expect("delegated drag frame setup should succeed");
+    drag_from_to(&mut app, 120.0, 140.0);
 
+    let (_, point, relative_to, relative_point, x, y) =
+        read_moving_drag_point(&app, "DelegatedDragParent");
     assert_eq!(point, "TOPLEFT");
-    assert_eq!(relative_to, "UIParent");
+    assert_eq!(relative_to, expected_moving_drag_target());
     assert_eq!(relative_point, "TOPLEFT");
     assert_eq!(x, 120.0, "parent started by child drag should move in x");
     assert_eq!(y, -120.0, "parent started by child drag should move in y");
 }
 
+const CLAMPED_MOVING_DRAG_SETUP_LUA: &str = r#"
+    ClampedMovingDragFrame = CreateFrame("Frame", "ClampedMovingDragFrame", UIParent)
+    ClampedMovingDragFrame:SetSize(100, 100)
+    ClampedMovingDragFrame:SetPoint("TOPLEFT", UIParent, "TOPLEFT", 10, -10)
+    ClampedMovingDragFrame:SetMovable(true)
+    ClampedMovingDragFrame:SetClampedToScreen(true)
+    ClampedMovingDragFrame:EnableMouse(true)
+    ClampedMovingDragFrame:RegisterForDrag("LeftButton")
+    ClampedMovingDragFrame:SetScript("OnDragStart", function(self)
+        self:StartMoving()
+    end)
+"#;
+
 #[test]
 fn moving_drag_clamps_frame_to_screen_when_enabled() {
     let mut app = build_test_app(ScreenKind::Game);
-
-    {
-        let env = app.env.borrow();
-        env.exec(
-            r#"
-            ClampedMovingDragFrame = CreateFrame("Frame", "ClampedMovingDragFrame", UIParent)
-            ClampedMovingDragFrame:SetSize(100, 100)
-            ClampedMovingDragFrame:SetPoint("TOPLEFT", UIParent, "TOPLEFT", 10, -10)
-            ClampedMovingDragFrame:SetMovable(true)
-            ClampedMovingDragFrame:SetClampedToScreen(true)
-            ClampedMovingDragFrame:EnableMouse(true)
-            ClampedMovingDragFrame:RegisterForDrag("LeftButton")
-            ClampedMovingDragFrame:SetScript("OnDragStart", function(self)
-                self:StartMoving()
-            end)
-            "#,
-        )
-        .expect("clamped moving drag frame setup should succeed");
-    }
-
-    rebuild_hittable_cache(&app);
-    app.handle_mouse_move(Point::new(20.0, 20.0));
-    app.handle_mouse_down(Point::new(20.0, 20.0));
-    app.handle_mouse_move(Point::new(-80.0, -80.0));
-
-    let (point, relative_to, relative_point, x, y): (String, String, String, f64, f64) = app
-        .env
+    app.env
         .borrow()
-        .eval(
-            r#"
-            local point, relativeTo, relativePoint, x, y = ClampedMovingDragFrame:GetPoint(1)
-            local relativeName = relativeTo and relativeTo:GetName() or "nil"
-            return point, relativeName, relativePoint, x, y
-        "#,
-        )
-        .expect("clamped moving drag anchor query should succeed");
+        .exec(CLAMPED_MOVING_DRAG_SETUP_LUA)
+        .expect("clamped moving drag frame setup should succeed");
+    drag_from_to(&mut app, 20.0, -80.0);
 
+    let (_, point, relative_to, relative_point, x, y) =
+        read_moving_drag_point(&app, "ClampedMovingDragFrame");
     assert_eq!(point, "TOPLEFT");
-    assert_eq!(relative_to, "UIParent");
+    assert_eq!(relative_to, expected_moving_drag_target());
     assert_eq!(relative_point, "TOPLEFT");
     assert_eq!(
         x, 0.0,
