@@ -221,10 +221,19 @@ fn mount_item_player_choice_original_consumer_tracks_live_supplied_relation() {
 }
 
 fn load_player_choice_closure(env: &WowLuaEnv, ui: &Path) {
-    let overrides = [BlizzardAddonOverride {
-        addon: "Blizzard_PlayerChoice",
-        extra_roots: &["Blizzard_ItemButton", "Blizzard_SharedXML"],
-    }];
+    // UIWidgetPowerBarFrame.xml parents to EncounterBar, which Game startup
+    // creates earlier in Blizzard_UnitFrame (UnitPowerBarAlt.xml); since
+    // 4ae06b7901 a missing XML parent is reported as a load warning.
+    let overrides = [
+        BlizzardAddonOverride {
+            addon: "Blizzard_PlayerChoice",
+            extra_roots: &["Blizzard_ItemButton", "Blizzard_SharedXML"],
+        },
+        BlizzardAddonOverride {
+            addon: "Blizzard_UIWidgets",
+            extra_roots: &["Blizzard_UnitFrame"],
+        },
+    ];
     let addons = discover_blizzard_addon_closure_for_screen_with_overrides(
         ui,
         ScreenKind::Game,
