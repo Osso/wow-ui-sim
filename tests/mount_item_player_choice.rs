@@ -233,6 +233,13 @@ fn load_player_choice_closure(env: &WowLuaEnv, ui: &Path) {
             addon: "Blizzard_UIWidgets",
             extra_roots: &["Blizzard_UnitFrame"],
         },
+        // TargetFrameAuraContainer.lua [LoadIntoEnvironment secure] reads
+        // AuraContainerUtil, published by the secure Blizzard_AuraContainer
+        // that Game startup loads before Blizzard_UnitFrame.
+        BlizzardAddonOverride {
+            addon: "Blizzard_UnitFrame",
+            extra_roots: &["Blizzard_AuraContainer"],
+        },
     ];
     let addons = discover_blizzard_addon_closure_for_screen_with_overrides(
         ui,
