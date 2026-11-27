@@ -22,6 +22,24 @@ pub(crate) fn build_texture_quads(
     bar_fill: Option<&StatusBarFill>,
     alpha: f32,
 ) {
+    let vertex_start = batch.vertices.len();
+    build_texture_quads_unblended(batch, bounds, f, bar_fill, alpha);
+    if f.color_texture.is_some() && f.blend_mode != BlendMode::Alpha {
+        // Colour textures are pushed as plain alpha quads; SetBlendMode applies
+        // to them as to file textures.
+        for vertex in &mut batch.vertices[vertex_start..] {
+            vertex.flags = (vertex.flags & !0xFF) | f.blend_mode as u32;
+        }
+    }
+}
+
+fn build_texture_quads_unblended(
+    batch: &mut QuadBatch,
+    bounds: Rectangle,
+    f: &crate::widget::Frame,
+    bar_fill: Option<&StatusBarFill>,
+    alpha: f32,
+) {
     if let Some(ref ns) = f.nine_slice_atlas {
         super::super::nine_slice::emit_nine_slice_atlas(batch, bounds, ns, alpha);
         return;
