@@ -1,0 +1,3 @@
+# Documented Retail API functions without a runtime function after full
+# Blizzard UI startup. Contract: docs/specs/api-surface-audit.md.
+# Format: <name> # <intentionally-unsupported|not-yet>[: reason]
