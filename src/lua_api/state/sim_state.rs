@@ -32,6 +32,7 @@ pub struct SimState {
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     pub(crate) configuration_warnings:
         Vec<crate::lua_api::globals::real::configuration_warnings::ConfigurationWarning>,
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     pub(crate) system_requirements_checked: bool,
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     pub(crate) active_event_continent_name: Option<String>,
