@@ -595,24 +595,9 @@ C_Flyout.GetFlyoutInfo # not-yet
 C_Flyout.GetFlyoutSlotInfo # not-yet
 C_Flyout.GetNumFlyouts # not-yet
 C_FrameManager.GetFrameVisibilityState # not-yet: temporary Lua workaround
-C_FriendList.AddFriend # not-yet
-C_FriendList.AddIgnore # not-yet
-C_FriendList.AddOrDelIgnore # not-yet
-C_FriendList.AddOrRemoveFriend # not-yet
-C_FriendList.DelIgnore # not-yet
-C_FriendList.DelIgnoreByIndex # not-yet
-C_FriendList.GetFriendInfo # not-yet
-C_FriendList.GetSelectedFriend # not-yet
 C_FriendList.GetWhoRaceFilters # not-yet
-C_FriendList.IsIgnored # not-yet
 C_FriendList.IsIgnoredByGuid # not-yet
-C_FriendList.IsOnIgnoredList # not-yet
-C_FriendList.RemoveFriend # not-yet
-C_FriendList.RemoveFriendByIndex # not-yet
 C_FriendList.SendWho # not-yet
-C_FriendList.SetFriendNotes # not-yet
-C_FriendList.SetFriendNotesByIndex # not-yet
-C_FriendList.SetSelectedFriend # not-yet
 C_FriendList.SortWho # not-yet
 C_GamePad.AddSDLMapping # not-yet
 C_GamePad.ApplyConfigs # not-yet

@@ -999,6 +999,8 @@ macro_rules! build_empty_sim_state {
             #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
             selected_social_ignore: None,
             #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            selected_social_friend: None,
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
             selected_bnet_block: None,
             social_restrictions: SocialRestrictionsState::default(),
             #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]

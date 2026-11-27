@@ -313,10 +313,18 @@ fn register_social_namespace_surfaces(state: &mut LuaState) -> LuaResult<()> {
     c_api::c_club_finder::register(state)?;
     c_api::c_club::register_club_info_surface(state)?;
     friend_list::register_friend_list_surface(state)?;
-    #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+    // Forever FriendListDocumentation.lua:90-106,343-359 declares the same
+    // GetFriendInfo/SetFriendNotes and no GetFriendInfoByName.
+    #[cfg(any(
+        feature = "client-retail",
+        feature = "client-ptr",
+        feature = "client-wowforever"
+    ))]
     c_api::c_friend_list::current::register(state)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     c_api::c_friend_list::selected_ignore::register(state)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    c_api::c_friend_list_edit::register(state)?;
     recruit_a_friend::register_recruit_a_friend_surface(state)?;
     voice_chat::register_voice_chat_surface(state)?;
     // Forever VoiceChatDocumentation.lua:177-191 declares GetChannelForCommunityStream.

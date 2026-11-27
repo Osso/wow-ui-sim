@@ -225,7 +225,6 @@ pub(crate) mod c_debug;
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) mod c_delves_entrance;
 pub mod c_discord;
-pub(crate) mod container_item_queries;
 #[cfg(any(feature = "retail-12-1-0", feature = "client-wowforever"))]
 pub(crate) mod c_discord_admin;
 pub mod c_district_utils;
@@ -244,6 +243,8 @@ pub(crate) mod c_encounter_warnings;
 mod c_engraving;
 pub(crate) mod c_event_scheduler;
 pub(crate) mod c_friend_list;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) mod c_friend_list_edit;
 pub(crate) mod c_game_rules;
 mod c_garrison_currency;
 pub(crate) mod c_garrison_damage_classes;
@@ -342,6 +343,7 @@ pub(crate) mod c_taxi_map;
 pub(crate) mod challenge_run;
 #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
 pub mod combat_log_history;
+pub(crate) mod container_item_queries;
 pub mod container_preferences;
 pub mod container_purchase;
 mod container_purchase_args;

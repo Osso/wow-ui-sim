@@ -1258,6 +1258,9 @@ pub struct SimState {
     /// Selected ignore identity; None means no supplied selection.
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     pub selected_social_ignore: Option<String>,
+    /// Friend name chosen by `C_FriendList.SetSelectedFriend`.
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub selected_social_friend: Option<String>,
     /// Selected Battle.net block identity; None means no supplied selection.
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     pub selected_bnet_block: Option<i32>,

@@ -199,7 +199,11 @@ pub(crate) mod selected_ignore {
     }
 }
 
-#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[cfg(any(
+    feature = "client-retail",
+    feature = "client-ptr",
+    feature = "client-wowforever"
+))]
 pub(crate) mod current {
     use super::build_friend_info_table;
     use crate::c_api::helpers::{ensure_namespace, mark_namespace_keys_removed};
