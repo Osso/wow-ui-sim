@@ -413,21 +413,24 @@ macro_rules! build_empty_sim_state {
                 feature = "retail-12-0-0",
                 feature = "client-mists",
                 feature = "client-era",
-                feature = "client-anniversary"
+                feature = "client-anniversary",
+                feature = "client-wowforever"
             ))]
             transmog_illusions: Vec::new(),
             #[cfg(any(
                 feature = "retail-12-0-0",
                 feature = "client-mists",
                 feature = "client-era",
-                feature = "client-anniversary"
+                feature = "client-anniversary",
+                feature = "client-wowforever"
             ))]
             viewed_outfit_slots: HashMap::new(),
             #[cfg(any(
                 feature = "retail-12-0-0",
                 feature = "client-mists",
                 feature = "client-era",
-                feature = "client-anniversary"
+                feature = "client-anniversary",
+                feature = "client-wowforever"
             ))]
             pending_transmog_cost: None,
             transmog_outfit_locks: HashSet::new(),
@@ -451,14 +454,16 @@ macro_rules! build_empty_sim_state {
                 feature = "retail-12-0-0",
                 feature = "client-mists",
                 feature = "client-era",
-                feature = "client-anniversary"
+                feature = "client-anniversary",
+                feature = "client-wowforever"
             ))]
             active_transmog_outfit_id: None,
             #[cfg(any(
                 feature = "retail-12-0-0",
                 feature = "client-mists",
                 feature = "client-era",
-                feature = "client-anniversary"
+                feature = "client-anniversary",
+                feature = "client-wowforever"
             ))]
             viewed_transmog_outfit_id: None,
             // Simulator initial policy; native default is unverified.

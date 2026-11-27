@@ -6,13 +6,16 @@ use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
 use rilua::vm::{gc::arena::GcRef, state::LuaState, table::Table};
 use rilua::{LuaResult, Val};
 
+/// Forever keeps its pinned temporary `GetCurrentlyViewedOutfitID` fallback.
 pub(super) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
-    table_set_rust_fn_static(
-        state,
-        namespace,
-        "GetCurrentlyViewedOutfitID",
-        get_currently_viewed_outfit_id,
-    )?;
+    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::WowForever {
+        table_set_rust_fn_static(
+            state,
+            namespace,
+            "GetCurrentlyViewedOutfitID",
+            get_currently_viewed_outfit_id,
+        )?;
+    }
     table_set_rust_fn_static(state, namespace, "ChangeViewedOutfit", change_viewed_outfit)
 }
 
