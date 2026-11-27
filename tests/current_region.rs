@@ -20,19 +20,28 @@ fn ticket_for_region(env: &WowLuaEnv, id: i32, name: &str) -> (i32, String, Stri
 }
 
 fn assert_region_tickets_follow_input(env: &WowLuaEnv) {
-    let (us_id, us_name, us_character, us_battle_net) = ticket_for_region(env, 1, "US");
-    let (eu_id, eu_name, eu_character, eu_battle_net) = ticket_for_region(env, 3, "EU");
-    assert_eq!((us_id, us_name.as_str(), eu_id, eu_name.as_str()), (1, "US", 3, "EU"));
-    for (ticket, region) in [
-        (&us_character, "US"),
-        (&us_battle_net, "US"),
-        (&eu_character, "EU"),
-        (&eu_battle_net, "EU"),
-    ] {
-        assert!(ticket.contains(region), "{ticket} should name {region}");
-    }
-    assert_ne!(us_character, eu_character);
-    assert_ne!(us_battle_net, eu_battle_net);
+    // Character links carry the region; Battle.net links switch host only for CN.
+    let faction: String = env
+        .eval("return (UnitFactionGroup('player'))")
+        .expect("the player faction should be readable");
+    assert_eq!(
+        ticket_for_region(env, 1, "US"),
+        (
+            1,
+            "US".to_string(),
+            format!("https://www.worldofwarcraft.com/invite/T1?region=US&faction={faction}"),
+            "https://blizzard.com/invite/T2".to_string(),
+        )
+    );
+    assert_eq!(
+        ticket_for_region(env, 5, "CN"),
+        (
+            5,
+            "CN".to_string(),
+            format!("https://www.wowchina.com/invite/T1?region=CN&faction={faction}"),
+            "https://blizzardgames.cn/invite/T2".to_string(),
+        )
+    );
 }
 
 #[cfg(feature = "client-retail")]
