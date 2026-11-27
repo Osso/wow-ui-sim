@@ -283,30 +283,32 @@ fn blizzard_frame_xml_util_does_not_publish_patch_12_1_difficulty_color_delegate
 }
 
 const DIFFICULTY_UTIL_BEHAVIOR_PROBE: &str = r#"
-local normal, heroic = 1, 2
-local names = { [normal] = "Fixture Normal", [heroic] = "Fixture Heroic" }
-local primary = { 14 }
-DifficultyUtil.DifficultyNames = names
-DifficultyUtil.PrimaryRaids = primary
+local normal = DifficultyUtil.ID.DungeonNormal
+local heroic = DifficultyUtil.ID.DungeonHeroic
+local names = DifficultyUtil.DifficultyNames
+local primaryRaid = DifficultyUtil.PrimaryRaids[1]
 assert(DifficultyUtil.GetDifficultyName(normal) == names[normal])
 assert(DifficultyUtil.GetDifficultyName(heroic) == names[heroic])
-assert(DifficultyUtil.IsPrimaryRaid(14) == true)
-assert(DifficultyUtil.IsPrimaryRaid(heroic) == false)
+assert(primaryRaid ~= nil and DifficultyUtil.IsPrimaryRaid(primaryRaid))
+assert(not DifficultyUtil.IsPrimaryRaid(normal))
 return "ok"
 "#;
 
 const PVP_UTIL_BEHAVIOR_PROBE: &str = r#"
-PVP_RANK_1_NAME = "Fixture Bronze"
-PVP_RANK_2_NAME = "Fixture Silver"
-PVP_RANK_1_NEXT_RANK_DESC = "Fixture Bronze description"
-PVP_RANK_2_NEXT_RANK_DESC = "Fixture Silver description"
-CONQUEST_BRACKET_NAMES = { [1] = "Fixture 2v2", [2] = "Fixture 3v3" }
-assert(PVPUtil.GetTierName(1) == "Fixture Bronze")
-assert(PVPUtil.GetTierName(2) == "Fixture Silver")
-assert(PVPUtil.GetTierDescription(1) == "Fixture Bronze description")
-assert(PVPUtil.GetTierDescription(2) == "Fixture Silver description")
-assert(PVPUtil.GetBracketName(1) == "Fixture 2v2")
-assert(PVPUtil.GetBracketName(2) == "Fixture 3v3")
+local tierOneName = PVPUtil.GetTierName(1)
+local tierTwoName = PVPUtil.GetTierName(2)
+assert(type(tierOneName) == "string" and tierOneName == PVP_RANK_1_NAME)
+assert(type(tierTwoName) == "string" and tierTwoName == PVP_RANK_2_NAME)
+assert(tierOneName ~= tierTwoName)
+local tierOneDescription = PVPUtil.GetTierDescription(1)
+local tierTwoDescription = PVPUtil.GetTierDescription(2)
+assert(type(tierOneDescription) == "string" and tierOneDescription == PVP_RANK_1_NEXT_RANK_DESC)
+assert(type(tierTwoDescription) == "string" and tierTwoDescription == PVP_RANK_2_NEXT_RANK_DESC)
+local bracketOne = PVPUtil.GetBracketName(1)
+local bracketTwo = PVPUtil.GetBracketName(2)
+assert(type(bracketOne) == "string" and bracketOne == CONQUEST_BRACKET_NAMES[1])
+assert(type(bracketTwo) == "string" and bracketTwo == CONQUEST_BRACKET_NAMES[2])
+assert(bracketOne ~= bracketTwo)
 return "ok"
 "#;
 
