@@ -71,14 +71,29 @@ fn social_panel_uses_current_provider_without_legacy_wow_friend_rows() {
                     FriendsList_Update(true)
 
                     local provider = FriendsListFrame.ScrollBox:GetDataProvider()
+                    -- BNGetNumFriends counts the supplied BNet friends since
+                    -- 04eaf48352, so their rows and dividers are expected here.
+                    local bnetRowTypes = {
+                        [FRIENDS_BUTTON_TYPE_BNET] = true,
+                        [FRIENDS_BUTTON_TYPE_DIVIDER] = true,
+                        [FRIENDS_BUTTON_TYPE_INVITE_HEADER] = true,
+                        [FRIENDS_BUTTON_TYPE_INVITE] = true,
+                    }
                     local providerRowCount = 0
+                    local bnetFriendRows = 0
                     local hasLegacyWowRow = false
                     for _, elementData in FriendsListFrame.ScrollBox:EnumerateDataProviderEntireRange() do
-                        providerRowCount = providerRowCount + 1
+                        if not bnetRowTypes[elementData.buttonType] then
+                            providerRowCount = providerRowCount + 1
+                        end
+                        if elementData.buttonType == FRIENDS_BUTTON_TYPE_BNET then
+                            bnetFriendRows = bnetFriendRows + 1
+                        end
                         if elementData.buttonType == FRIENDS_BUTTON_TYPE_WOW then
                             hasLegacyWowRow = true
                         end
                     end
+                    assert(bnetFriendRows == BNGetNumFriends(), "one row per supplied BNet friend")
 
                     local onlineNames = {}
                     local offlineName = ""
