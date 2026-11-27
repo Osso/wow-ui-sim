@@ -652,7 +652,6 @@ C_Garrison.GetTalentTreeInfo # not-yet
 C_Garrison.GetTalentTreeResetInfo # not-yet
 C_Garrison.GetTalentTreeTalentPointResearchInfo # not-yet
 C_Garrison.HasAdventures # not-yet
-C_Garrison.IsAtGarrisonMissionNPC # not-yet
 C_Garrison.IsEnvironmentCountered # not-yet
 C_Garrison.IsFollowerOnCompletedMission # not-yet
 C_Garrison.IsLandingPageMinimapButtonVisible # not-yet

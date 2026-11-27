@@ -20,6 +20,8 @@
 - [Lua API architecture](../lua-api.md)
 - [Addon loading pipeline](../addon-loading-pipeline.md)
 
+WoW Forever publishes `C_Garrison.IsAtGarrisonMissionNPC` (its `GarrisonInfoDocumentation.lua:437-446` block is byte-identical to Retail's) and `A_Admin.SetAtGarrisonMissionNPC(bool)`. Forever excludes Blizzard_GarrisonUI (`## ExcludeLoadGameType: camelot`); `tests/garrison_mission_npc_forever.rs` calls the API with both states.
+
 ## Implementation inventory
 
 - `src/c_api/c_garrison_mission_lists.rs` — mission records, query functions, and `A_Admin.SetGarrisonMissions`.

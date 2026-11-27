@@ -81,18 +81,26 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
         "GetFollowerQualityTable",
         get_follower_quality_table,
     )?;
-    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
-        table_set_rust_fn_static(
-            state,
-            namespace,
-            "IsAtGarrisonMissionNPC",
-            is_at_garrison_mission_npc,
-        )?;
-        table_set_rust_fn_static(state, namespace, "CloseMissionNPC", close_mission_npc)?;
-        table_set_rust_fn_static(state, namespace, "ShouldShowMapTab", should_show_map_tab)
-    } else {
-        Ok(())
+    register_mission_npc(state, namespace)
+}
+
+fn register_mission_npc(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
+    use crate::client_profile::{ACTIVE, ClientProfile};
+    if !matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever) {
+        return Ok(());
     }
+    // GarrisonInfoDocumentation.lua:437-446 is byte-identical on Retail and Forever.
+    table_set_rust_fn_static(
+        state,
+        namespace,
+        "IsAtGarrisonMissionNPC",
+        is_at_garrison_mission_npc,
+    )?;
+    if ACTIVE != ClientProfile::Retail {
+        return Ok(());
+    }
+    table_set_rust_fn_static(state, namespace, "CloseMissionNPC", close_mission_npc)?;
+    table_set_rust_fn_static(state, namespace, "ShouldShowMapTab", should_show_map_tab)
 }
 
 pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
@@ -102,13 +110,16 @@ pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
             "SetGarrisonFollowerQualityTable",
             set_follower_quality_table,
         )?;
-    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
-        builder
-            .set_function("SetAtGarrisonMissionNPC", set_at_garrison_mission_npc)?
-            .set_function(
-                "SetShouldShowGarrisonMissionMapTab",
-                set_should_show_map_tab,
-            )
+    use crate::client_profile::{ACTIVE, ClientProfile};
+    if !matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever) {
+        return Ok(builder);
+    }
+    let builder = builder.set_function("SetAtGarrisonMissionNPC", set_at_garrison_mission_npc)?;
+    if ACTIVE == ClientProfile::Retail {
+        builder.set_function(
+            "SetShouldShowGarrisonMissionMapTab",
+            set_should_show_map_tab,
+        )
     } else {
         Ok(builder)
     }
