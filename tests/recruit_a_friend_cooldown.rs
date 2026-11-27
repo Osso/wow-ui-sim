@@ -21,7 +21,7 @@ fn raf_cooldown_unsupplied_has_zero_timing_and_disabled_timer() {
 #[cfg(feature = "client-retail")]
 #[test]
 fn original_retail_social_card_receives_supplied_cooldown_and_enable_flag() {
-    let env = WowLuaEnv::new().unwrap();
+    let env = shared_xml_base_env();
     load_original_retail_social_card_sources(&env);
     assert_retail_social_card_starts_without_cooldown(&env);
     env.state().borrow_mut().summon_friend_cooldown = SummonFriendCooldown {
@@ -36,6 +36,19 @@ fn original_retail_social_card_receives_supplied_cooldown_and_enable_flag() {
         .enable_cooldown_timer = false;
     assert_retail_social_card_timer_can_be_disabled(&env);
     assert!(env.state().borrow().lua_errors.is_empty());
+}
+
+/// FriendsListTemplates.lua:361 reads EnumUtil, whose original owner is
+/// Blizzard_SharedXMLBase since 096d8a1f8c retired the bootstrap copy.
+#[cfg(feature = "client-retail")]
+fn shared_xml_base_env() -> WowLuaEnv {
+    use crate::common::blizzard_addon_harness::{
+        blizzard_ui_dir, load_blizzard_addon_closure_into_env, new_blizzard_addon_env,
+    };
+    let ui = blizzard_ui_dir();
+    let env = new_blizzard_addon_env(&ui);
+    load_blizzard_addon_closure_into_env(&env, &ui, &["Blizzard_SharedXMLBase"], &[]);
+    env
 }
 
 #[cfg(feature = "client-retail")]
