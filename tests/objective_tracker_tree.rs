@@ -264,6 +264,12 @@ fn objective_tracker_quest_module_header_shows_quests_text(env: &WowLuaEnv) {
 
 prefork_full_ui_case! {
 fn objective_tracker_quest_module_header_recovers_after_runtime_corruption(env: &WowLuaEnv) {
+    // The header repair is the objective_tracker_quest_header workaround, retired on
+    // Retail by 578c900baf. The original module sets the header text only in OnLoad
+    // (Blizzard_ObjectiveTrackerModule.lua:47-52,121-123), so UpdateAll does not restore it.
+    if wow_ui_sim::client_profile::ACTIVE == wow_ui_sim::client_profile::ClientProfile::Retail {
+        return;
+    }
     env.exec(
         r#"
         local module = QuestObjectiveTracker
