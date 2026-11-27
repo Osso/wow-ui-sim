@@ -232,6 +232,8 @@ fn register_admin_world_collections(mut builder: TableBuilder) -> LuaResult<Tabl
     let builder = crate::c_api::c_garrison_mission_lists::register_admin(builder)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     let builder = crate::c_api::c_event_scheduler::register_admin(builder)?;
+    #[cfg(feature = "client-wowforever")]
+    let builder = crate::c_api::forever_startup::register_admin(builder)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     let builder = crate::c_api::c_taxi_map::register_admin(builder)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]

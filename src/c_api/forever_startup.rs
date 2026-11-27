@@ -2,13 +2,14 @@
 
 use std::collections::{HashMap, HashSet};
 
-use crate::c_api::helpers::ensure_namespace;
+use crate::c_api::helpers::{ensure_namespace, set_table_array};
 use crate::client_profile::{ACTIVE, ClientProfile};
 pub use crate::lua_api::globals::auras::GroupBuffAlert;
 use crate::lua_api::methods::{
     borrow_state, borrow_state_mut, create_string, create_table, create_table_with_fields,
+    table_get, table_get_num, val_to_string,
 };
-use crate::lua_bridge::{FromStack, table_set_rust_fn_static};
+use crate::lua_bridge::{FromStack, TableBuilder, stack_val, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
 use rilua::{LuaApiMut, LuaResult, Val};
 
@@ -26,6 +27,9 @@ pub struct StartupInputs {
     pub bank_locked_reasons: HashMap<i32, i32>,
     pub max_bank_tab_types: HashSet<i32>,
     pub next_bank_tabs: HashMap<i32, PurchasableBankTab>,
+    pub should_use_player_bags_in_bank: bool,
+    pub viewable_bank_types: HashSet<i32>,
+    pub purchased_bank_tabs: HashMap<i32, Vec<BankTabData>>,
     pub enabled_tts_settings: HashSet<i32>,
     pub match_complete: bool,
     pub target_spell_id: Option<i32>,
@@ -203,6 +207,25 @@ fn mark_character_tts_settings_saved(state: &mut LuaState) -> LuaResult<u32> {
 fn register_character_queries(state: &mut LuaState) -> LuaResult<()> {
     LuaApiMut::register_function(state, "IsCursorVisible", cursor_visible)?;
     let bank = ensure_namespace(state, "C_Bank")?;
+    table_set_rust_fn_static(
+        state,
+        bank,
+        "ShouldUsePlayerBagsInBank",
+        should_use_player_bags_in_bank,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        bank,
+        "AreAnyBankTypesViewable",
+        are_any_bank_types_viewable,
+    )?;
+    table_set_rust_fn_static(state, bank, "CanViewBank", can_view_bank)?;
+    table_set_rust_fn_static(
+        state,
+        bank,
+        "FetchPurchasedBankTabData",
+        fetch_purchased_bank_tab_data,
+    )?;
     table_set_rust_fn_static(state, bank, "CanPurchaseBankTab", can_purchase_bank_tab)?;
     table_set_rust_fn_static(state, bank, "FetchBankLockedReason", bank_locked_reason)?;
     table_set_rust_fn_static(state, bank, "HasMaxBankTabs", has_max_bank_tabs)?;
@@ -238,6 +261,209 @@ fn can_purchase_bank_tab(state: &mut LuaState) -> LuaResult<u32> {
         .contains(&bank_type);
     state.push(Val::Bool(allowed));
     Ok(1)
+}
+
+pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
+    if ACTIVE == ClientProfile::WowForever {
+        builder
+            .set_function(
+                "SetShouldUsePlayerBagsInBank",
+                set_should_use_player_bags_in_bank,
+            )?
+            .set_function("SetBankViewableTypes", set_bank_viewable_types)?
+            .set_function("SetPurchasedBankTabData", set_purchased_bank_tab_data)
+    } else {
+        Ok(builder)
+    }
+}
+
+fn should_use_player_bags_in_bank(state: &mut LuaState) -> LuaResult<u32> {
+    let enabled = borrow_state(state)?
+        .forever_startup
+        .should_use_player_bags_in_bank;
+    state.push(Val::Bool(enabled));
+    Ok(1)
+}
+
+fn set_should_use_player_bags_in_bank(state: &mut LuaState) -> LuaResult<u32> {
+    let Val::Bool(enabled) = stack_val(state, 1) else {
+        return Err(rilua::runtime_error(
+            "A_Admin.SetShouldUsePlayerBagsInBank expects a boolean",
+        ));
+    };
+    borrow_state_mut(state)?
+        .forever_startup
+        .should_use_player_bags_in_bank = enabled;
+    Ok(0)
+}
+
+fn are_any_bank_types_viewable(state: &mut LuaState) -> LuaResult<u32> {
+    let viewable = !borrow_state(state)?
+        .forever_startup
+        .viewable_bank_types
+        .is_empty();
+    state.push(Val::Bool(viewable));
+    Ok(1)
+}
+
+fn can_view_bank(state: &mut LuaState) -> LuaResult<u32> {
+    let bank_type = i32::from_stack(state, 1)?;
+    let viewable = borrow_state(state)?
+        .forever_startup
+        .viewable_bank_types
+        .contains(&bank_type);
+    state.push(Val::Bool(viewable));
+    Ok(1)
+}
+
+fn set_bank_viewable_types(state: &mut LuaState) -> LuaResult<u32> {
+    let types = read_bank_type_ids(state, stack_val(state, 1))?;
+    borrow_state_mut(state)?.forever_startup.viewable_bank_types = types;
+    Ok(0)
+}
+
+fn fetch_purchased_bank_tab_data(state: &mut LuaState) -> LuaResult<u32> {
+    let bank_type = i32::from_stack(state, 1)?;
+    let tabs = borrow_state(state)?
+        .forever_startup
+        .purchased_bank_tabs
+        .get(&bank_type)
+        .cloned()
+        .unwrap_or_default();
+    let result = create_table(state);
+    for (index, tab) in tabs.iter().enumerate() {
+        let row = create_bank_tab_data(state, bank_type, tab);
+        set_table_array(state, result, (index + 1) as i64, row);
+    }
+    state.push(result);
+    Ok(1)
+}
+
+fn create_bank_tab_data(state: &mut LuaState, bank_type: i32, tab: &BankTabData) -> Val {
+    let name = create_string(state, &tab.name);
+    let cleanup = create_string(state, &tab.tab_cleanup_confirmation);
+    let header = create_string(state, &tab.tab_name_edit_box_header);
+    create_table_with_fields(
+        state,
+        &[
+            ("ID", Val::Num(f64::from(tab.id))),
+            ("bankType", Val::Num(f64::from(bank_type))),
+            ("name", name),
+            ("icon", Val::Num(f64::from(tab.icon))),
+            ("depositFlags", Val::Num(f64::from(tab.deposit_flags))),
+            ("tabCleanupConfirmation", cleanup),
+            ("tabNameEditBoxHeader", header),
+        ],
+    )
+}
+
+fn set_purchased_bank_tab_data(state: &mut LuaState) -> LuaResult<u32> {
+    let bank_type = i32::from_stack(state, 1)?;
+    let tabs = parse_bank_tab_data(state, stack_val(state, 2))?;
+    borrow_state_mut(state)?
+        .forever_startup
+        .purchased_bank_tabs
+        .insert(bank_type, tabs);
+    Ok(0)
+}
+
+fn parse_bank_tab_data(state: &mut LuaState, value: Val) -> LuaResult<Vec<BankTabData>> {
+    let Val::Table(array) = value else {
+        return Err(rilua::runtime_error(
+            "A_Admin.SetPurchasedBankTabData expects an array",
+        ));
+    };
+    let length = state
+        .gc
+        .tables
+        .get(array)
+        .ok_or_else(|| rilua::runtime_error("invalid bank tab array"))?
+        .array_len();
+    (1..=length)
+        .map(|index| {
+            let row = table_get_num(state, array, index as f64);
+            parse_bank_tab(state, row, index)
+        })
+        .collect()
+}
+
+fn parse_bank_tab(state: &mut LuaState, row: Val, index: usize) -> LuaResult<BankTabData> {
+    if !matches!(row, Val::Table(_)) {
+        return Err(rilua::runtime_error(format!(
+            "bank tabs[{index}] must be a record table"
+        )));
+    }
+    Ok(BankTabData {
+        id: read_bank_tab_number(state, row, "ID", index)?,
+        name: read_bank_tab_text(state, row, "name", index)?,
+        icon: read_bank_tab_number(state, row, "icon", index)?,
+        deposit_flags: read_bank_tab_number(state, row, "depositFlags", index)?,
+        tab_cleanup_confirmation: read_bank_tab_text(state, row, "tabCleanupConfirmation", index)?,
+        tab_name_edit_box_header: read_bank_tab_text(state, row, "tabNameEditBoxHeader", index)?,
+    })
+}
+
+fn read_bank_tab_number(
+    state: &mut LuaState,
+    row: Val,
+    field: &str,
+    index: usize,
+) -> LuaResult<u32> {
+    match table_get(state, row, field) {
+        Val::Num(value)
+            if value.is_finite()
+                && value.fract() == 0.0
+                && (0.0..=f64::from(u32::MAX)).contains(&value) =>
+        {
+            Ok(value as u32)
+        }
+        _ => Err(rilua::runtime_error(format!(
+            "bank tabs[{index}].{field} must be an unsigned integer"
+        ))),
+    }
+}
+
+fn read_bank_tab_text(
+    state: &mut LuaState,
+    row: Val,
+    field: &str,
+    index: usize,
+) -> LuaResult<String> {
+    let value = table_get(state, row, field);
+    val_to_string(state, value)
+        .ok_or_else(|| rilua::runtime_error(format!("bank tabs[{index}].{field} must be a string")))
+}
+
+fn read_bank_type_ids(state: &mut LuaState, value: Val) -> LuaResult<HashSet<i32>> {
+    let Val::Table(array) = value else {
+        return Err(rilua::runtime_error(
+            "A_Admin.SetBankViewableTypes expects an array",
+        ));
+    };
+    let length = state
+        .gc
+        .tables
+        .get(array)
+        .ok_or_else(|| rilua::runtime_error("invalid bank type array"))?
+        .array_len();
+    (1..=length)
+        .map(|index| {
+            let value = table_get_num(state, array, index as f64);
+            match value {
+                Val::Num(number)
+                    if number.is_finite()
+                        && number.fract() == 0.0
+                        && number >= f64::from(i32::MIN)
+                        && number <= f64::from(i32::MAX) =>
+                {
+                    Ok(number as i32)
+                }
+                _ => Err(rilua::runtime_error(format!(
+                    "bank types[{index}] must be an integer"
+                ))),
+            }
+        })
+        .collect()
 }
 
 fn next_bank_tab(state: &mut LuaState) -> LuaResult<u32> {
@@ -375,6 +601,16 @@ pub struct PurchasableBankTab {
     pub purchase_prompt_title: String,
     pub purchase_prompt_body: String,
     pub purchase_prompt_confirmation: String,
+}
+
+#[derive(Debug, Clone)]
+pub struct BankTabData {
+    pub id: u32,
+    pub name: String,
+    pub icon: u32,
+    pub deposit_flags: u32,
+    pub tab_cleanup_confirmation: String,
+    pub tab_name_edit_box_header: String,
 }
 
 #[derive(Debug)]
