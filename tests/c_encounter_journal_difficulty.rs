@@ -1,6 +1,17 @@
 #![cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 
+use std::path::Path;
+use wow_ui_sim::loader::{find_toc_file, load_addon};
 use wow_ui_sim::lua_api::WowLuaEnv;
+
+fn load_encounter_journal(env: &WowLuaEnv) {
+    let addon_dir = wow_ui_sim::client_profile::blizzard_ui_addons_dir_under(Path::new(env!(
+        "CARGO_MANIFEST_DIR"
+    )));
+    let addon_dir = addon_dir.join("Blizzard_EncounterJournal");
+    let toc = find_toc_file(&addon_dir).expect("Encounter Journal TOC should resolve");
+    load_addon(&env.loader_env(), &toc).expect("Encounter Journal TOC should load");
+}
 
 const DUNGEON_DIFFICULTY_QUERY: &str = r#"
             local hasNormal = C_EncounterJournal.InstanceHasDifficultyID(1)
@@ -79,6 +90,7 @@ fn assert_base_difficulty_queries(env: &WowLuaEnv) {
 
 prefork_full_ui_case! {
 fn encounter_journal_difficulty_queries_use_selected_map(env: &WowLuaEnv) {
+    load_encounter_journal(env);
     assert_dungeon_difficulty_queries(env);
     assert_raid_difficulty_queries(env);
     assert_base_difficulty_queries(env);
@@ -176,6 +188,7 @@ fn assert_updated_raid_lock_boss_overlay(env: &WowLuaEnv, map_id: i32, encounter
 
 prefork_full_ui_case! {
 fn encounter_journal_boss_overlay_reads_supplied_raid_locks(env: &WowLuaEnv) {
+    load_encounter_journal(env);
     let (instance_id, map_id, journal_id, encounter_id, initial_shown) =
         read_raid_lock_boss_setup(env);
     assert_eq!(initial_shown, false);
