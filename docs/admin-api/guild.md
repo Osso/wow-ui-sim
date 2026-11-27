@@ -72,11 +72,31 @@ A_Admin.SetGuildPerks(83944, 1, 83940, 2)
 
 Sets the copper amount returned by `GetGuildBankMoney()`, then fires `GUILDBANK_UPDATE_MONEY`. The original `GuildBankMoneyFrame` (`Blizzard_GuildBankUI/Mainline/Blizzard_GuildBankUI.xml:534-541`, `MoneyFrame.lua:158-165`) shows the new amount.
 
-The event is INFERRED R88g9 (native evidence pending).
+Retail and WoW Forever default to 0 copper. Mists retains its prior 123456-copper scenario default.
+
+The event and profile defaults are INFERRED R88g9 (native evidence pending).
+
+### A_Admin.SetGuildBankTabCost(copper)
+
+Supplies a nonnegative tab cost returned by `GetGuildBankTabCost()`. The default is 0.
+
+The setter and default are INFERRED R88g9 (native evidence pending).
+
+### A_Admin.SetGuildBankRankPermissions(rank, moneyPerDay, tabRights, tabStacksPerDay)
+
+Supplies one guild rank's bank permissions and selects that rank. `rank` is 1–10. `moneyPerDay` is copper; negative values represent unlimited allowance. Each of `tabRights` and `tabStacksPerDay` must contain six numbers. Rights use bit 1 for view, bit 2 for deposit and bit 4 for edit-tab-info; stack limits must be nonnegative. A zero money limit means the player cannot withdraw guild-bank money. The bank UI updates when this input changes.
+
+With no selected permission row, `GetGuildBankWithdrawMoney()` and `GetGuildBankWithdrawGoldLimit()` return 0, and `CanWithdrawGuildBankMoney()` and `CanEditGuildBankTabInfo()` return false. The selected-rank projection and empty defaults are INFERRED R88g9 (native evidence pending).
 
 ### A_Admin.OpenGuildBank()
 
 Retail and WoW Forever only. Starts the `Enum.PlayerInteractionType.GuildBanker` interaction and fires `PLAYER_INTERACTION_MANAGER_FRAME_SHOW`. The original `Blizzard_GuildBankUI_Bootstrap.lua` registration loads `Blizzard_GuildBankUI` and shows `GuildBankFrame`.
+
+### Legacy guild-bank getters with no supplied state
+
+Retail and WoW Forever return these empty-state values: `GetCurrentGuildBankTab()` returns 1; `GetNumGuildBankTabs()` returns 0; `GetGuildBankTabInfo()` returns no values; `GetGuildBankTabCost()` returns 0; `GetGuildBankText(tab)` returns an empty string; `GetGuildBankItemInfo()` returns no values; `GetGuildBankItemLink()` returns nil; `GetGuildBankMoney()` returns 0; `GetGuildBankWithdrawMoney()` and `GetGuildBankWithdrawGoldLimit()` return 0; `CanWithdrawGuildBankMoney()` and `CanEditGuildBankTabInfo()` return false. `QueryGuildBankTab()` selects the requested tab. The corresponding setters and money operations return no values. `PickupGuildBankItem()` has no supplied item to pick up.
+
+Mists keeps its previous money default (123456 copper), unlimited withdraw-money value (-1), and true `CanWithdrawGuildBankMoney()` / `CanEditGuildBankTabInfo()` defaults. Its `GetGuildBankWithdrawGoldLimit()` remains 0. Values and behavior beyond the documented inputs are INFERRED R88g9 (native evidence pending).
 
 - **Example:**
 ```lua

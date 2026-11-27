@@ -19,6 +19,11 @@ return GuildBankMoneyFrameGoldButton:GetText() .. "/"
     .. GuildBankMoneyFrameCopperButton:GetText()
 "#;
 
+const OPEN_EMPTY_GUILD_BANK: &str = r#"
+A_Admin.SetGuildInfo("Vault Keepers", "Banker", 12)
+A_Admin.OpenGuildBank()
+"#;
+
 fn shown_guild_bank_coins(env: &WowLuaEnv) -> String {
     env.eval(SHOWN_COINS)
         .expect("GuildBankMoneyFrame coin buttons read")
@@ -40,6 +45,32 @@ fn guild_bank_frame_shows_supplied_money(env: &WowLuaEnv) {
     assert_eq!(shown_guild_bank_coins(env), "987/65/43");
     assert_eq!(guild_bank_lua_errors(env), Vec::<String>::new());
 }
+
+fn guild_bank_withdraw_state_uses_supplied_permissions(env: &WowLuaEnv) {
+    env.exec(OPEN_EMPTY_GUILD_BANK).expect("original guild bank opens empty");
+    assert_eq!(shown_guild_bank_coins(env), "0/00/00");
+    assert!(!env.eval("return GuildBankFrame.WithdrawButton:IsEnabled()").unwrap());
+
+    env.exec(r#"
+A_Admin.AddGuildBankTab("General", "Interface\\Icons\\INV_Misc_QuestionMark", true, true, 3, 2, false)
+A_Admin.SetGuildBankMoney(500000)
+A_Admin.SetGuildBankRankPermissions(1, 300000, {7,7,7,7,7,7}, {10,10,10,10,10,10})
+"#).expect("first withdrawal permission snapshot is supplied");
+    assert!(env.eval("return GuildBankFrame.WithdrawButton:IsEnabled()").unwrap());
+    assert_eq!(env.eval("return GetGuildBankWithdrawMoney()").unwrap(), 300000);
+    let first_remaining = env.eval("return GuildBankFrame.LimitLabel:GetText()").unwrap();
+
+    env.exec(r#"
+A_Admin.ClearGuildBankTabs()
+A_Admin.AddGuildBankTab("General", "Interface\\Icons\\INV_Misc_QuestionMark", true, true, 3, 1, false)
+A_Admin.SetGuildBankRankPermissions(1, 0, {3,3,3,3,3,3}, {10,10,10,10,10,10})
+"#).expect("second withdrawal permission snapshot is supplied");
+    assert!(!env.eval("return GuildBankFrame.WithdrawButton:IsEnabled()").unwrap());
+    assert_eq!(env.eval("return GetGuildBankWithdrawMoney()").unwrap(), 0);
+    let second_remaining = env.eval("return GuildBankFrame.LimitLabel:GetText()").unwrap();
+    assert_ne!(first_remaining, second_remaining);
+    assert_eq!(guild_bank_lua_errors(env), Vec::<String>::new());
+}
 }
 
 #[cfg(feature = "client-wowforever")]
@@ -53,5 +84,6 @@ fn forever_guild_bank_frame_shows_supplied_money() {
         let game = wow_ui_sim::screen::ScreenKind::Game;
         wow_ui_sim::startup::fire_startup_events_for_screen(&env, game);
         guild_bank_frame_shows_supplied_money::run(&env);
+        guild_bank_withdraw_state_uses_supplied_permissions::run(&env);
     });
 }

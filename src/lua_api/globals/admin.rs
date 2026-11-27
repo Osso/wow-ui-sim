@@ -29,7 +29,8 @@ use super::admin_actionbars_bags::set_possess_action_slot;
 use super::admin_actionbars_bags::{
     add_bag_item, add_guild_bank_item, add_guild_bank_tab, clear_action_bars, clear_action_slot,
     clear_bags, clear_guild_bank, clear_guild_bank_tabs, remove_bag_item, set_action_slot,
-    set_guild_bank_money, set_merchant_items, set_pet_action_slot, set_possess_bar_visible,
+    set_guild_bank_money, set_guild_bank_rank_permissions, set_guild_bank_tab_cost,
+    set_merchant_items, set_pet_action_slot, set_possess_bar_visible,
 };
 use super::admin_addons::register_test_addon;
 use super::admin_auction_house::{
@@ -696,6 +697,11 @@ fn register_photo_sharing(b: TableBuilder) -> LuaResult<TableBuilder> {
 fn register_query_catalog_inputs(b: TableBuilder) -> LuaResult<TableBuilder> {
     b.set_function("AddGuildBankTab", add_guild_bank_tab)?
         .set_function("ClearGuildBankTabs", clear_guild_bank_tabs)?
+        .set_function("SetGuildBankTabCost", set_guild_bank_tab_cost)?
+        .set_function(
+            "SetGuildBankRankPermissions",
+            set_guild_bank_rank_permissions,
+        )?
         .set_function(
             "AddRAFVersion",
             crate::c_api::c_recruit_a_friend::add_version_input,

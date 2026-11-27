@@ -7,12 +7,12 @@
 
 use crate::lua_api::methods::borrow_state_mut;
 use crate::lua_api::script_helpers::fire_named_event_state;
-use crate::lua_api::state::PetActionSlot;
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 use crate::lua_api::state::PossessActionSlot;
+use crate::lua_api::state::{GuildBankRankPermissions, PetActionSlot};
 use crate::lua_bridge::{FromStack, stack_val};
 use rilua::vm::state::LuaState;
-use rilua::{LuaResult, Val};
+use rilua::{LuaResult, Val, runtime_error};
 
 // ── Action bars ───────────────────────────────────────────────────────────────
 
@@ -219,6 +219,43 @@ pub(super) fn add_guild_bank_tab(state: &mut LuaState) -> LuaResult<u32> {
 
 pub(super) fn clear_guild_bank_tabs(state: &mut LuaState) -> LuaResult<u32> {
     borrow_state_mut(state)?.guild_bank_tabs.clear();
+    Ok(0)
+}
+
+pub(super) fn set_guild_bank_tab_cost(state: &mut LuaState) -> LuaResult<u32> {
+    let cost = i64::from_stack(state, 1)?;
+    if cost < 0 {
+        return Err(runtime_error("Guild bank tab cost must be nonnegative"));
+    }
+    borrow_state_mut(state)?.guild_bank_tab_cost = cost;
+    Ok(0)
+}
+
+pub(super) fn set_guild_bank_rank_permissions(state: &mut LuaState) -> LuaResult<u32> {
+    let rank = usize::from_stack(state, 1)?;
+    let money_per_day = i64::from_stack(state, 2)?;
+    let rights = Vec::<i32>::from_stack(state, 3)?;
+    let stacks = Vec::<i32>::from_stack(state, 4)?;
+    if rank == 0 || rank > 10 || rights.len() != 6 || stacks.len() != 6 {
+        return Err(runtime_error("Invalid guild bank rank permission input"));
+    }
+    if rights.iter().any(|value| !(0..=7).contains(value)) || stacks.iter().any(|value| *value < 0)
+    {
+        return Err(runtime_error("Invalid guild bank rank permission values"));
+    }
+    let mut sim = borrow_state_mut(state)?;
+    sim.world.guild_selected_rank = rank as i32;
+    sim.world.guild_bank_rank_permissions.insert(
+        rank - 1,
+        GuildBankRankPermissions {
+            money_per_day,
+            tab_rights: rights.try_into().expect("validated six rights"),
+            tab_stacks_per_day: stacks.try_into().expect("validated six stacks"),
+        },
+    );
+    drop(sim);
+    fire_named_event_state(state, "GUILDBANK_UPDATE_WITHDRAWMONEY", &[]);
+    fire_named_event_state(state, "GUILDBANK_UPDATE_TABS", &[]);
     Ok(0)
 }
 

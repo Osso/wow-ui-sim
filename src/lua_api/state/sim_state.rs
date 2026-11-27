@@ -1083,6 +1083,8 @@ pub struct SimState {
     pub guild_bank_frame_open: bool,
     pub bank_purchased_slots: i32,
     pub guild_bank_money: i64,
+    pub guild_bank_tab_cost: i64,
+    pub guild_bank_text: HashMap<i32, String>,
     pub current_guild_bank_tab: i32,
     pub guild_bank_items: HashMap<(i32, i32), BagItem>,
     pub guild_bank_tabs: Vec<GuildBankTab>,
