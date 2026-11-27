@@ -2203,7 +2203,6 @@ GetNetIpTypes # not-yet
 GetNumDeclensionSets # not-yet
 GetOSLocale # not-yet
 GetPVPGearStatRules # not-yet
-GetPVPLifetimeStats # not-yet: temporary Lua workaround
 GetPVPSessionStats # not-yet
 GetPVPYesterdayStats # not-yet
 GetPetCritChance # not-yet

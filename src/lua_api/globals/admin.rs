@@ -77,7 +77,7 @@ use super::admin_premade::{add_premade_listing, clear_premade_listings, update_p
 use super::admin_pvp_guild::{
     clear_guild, join_guild, leave_guild, set_battlefield_arena, set_battlefield_max_id,
     set_battlefield_queue, set_guild_info, set_guild_perks, set_honor_level, set_player_present,
-    set_pvp_enabled, set_pvp_timer,
+    set_pvp_enabled, set_pvp_lifetime_stats, set_pvp_timer,
 };
 use super::admin_spec::{reset_talents, set_spec, set_talent_rank, set_talent_selection};
 use super::admin_vault::{clear_vault, set_vault_activity, set_vault_rewards};
@@ -837,6 +837,7 @@ const COLLECTIONS_PVP_FUNCTIONS: &[(&str, RustFn)] = &[
     ("EarnAchievement", earn_achievement),
     ("SetPvPEnabled", set_pvp_enabled),
     ("SetHonorLevel", set_honor_level),
+    ("SetPVPLifetimeStats", set_pvp_lifetime_stats),
     ("SetGuildInfo", set_guild_info),
     ("JoinGuild", join_guild),
     ("ClearGuild", clear_guild),

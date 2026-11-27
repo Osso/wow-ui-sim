@@ -2255,7 +2255,6 @@ GetNumWarGameTypes # not-yet
 GetOSLocale # not-yet
 GetOptOutOfLoot # not-yet
 GetPVPGearStatRules # not-yet
-GetPVPLifetimeStats # not-yet: temporary Lua workaround
 GetPVPSessionStats # not-yet
 GetPVPYesterdayStats # not-yet
 GetPartyLFGBackfillInfo # not-yet
