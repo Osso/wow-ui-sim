@@ -1,8 +1,11 @@
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 use std::path::Path;
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 use wow_ui_sim::loader::load_addon;
 use wow_ui_sim::lua_api::WowLuaEnv;
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 const DEPRECATED_AUTOCOMPLETE_CVAR_QUERY: &str = r#"
 return GetCVarBool('loadDeprecationFallbacks'),
     #C_AutoComplete.GetAutoCompleteRealms(),
