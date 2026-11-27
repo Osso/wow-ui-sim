@@ -56,14 +56,14 @@ pub(crate) fn truthy_argument(state: &LuaState) -> LuaResult<bool> {
 }
 
 fn read(state: &mut LuaState, field: Field) -> LuaResult<u32> {
-    let value = *field(&mut borrow_state_mut(state)?);
+    let value = *field(&mut *borrow_state_mut(state)?);
     state.push(Val::Bool(value));
     Ok(1)
 }
 
 fn write(state: &mut LuaState, field: Field) -> LuaResult<u32> {
     let value = truthy_argument(state)?;
-    *field(&mut borrow_state_mut(state)?) = value;
+    *field(&mut *borrow_state_mut(state)?) = value;
     Ok(0)
 }
 

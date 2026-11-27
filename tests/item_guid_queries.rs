@@ -9,18 +9,18 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 const SETUP: &str = r#"
     A_Admin.ClearBags()
     A_Admin.AddBagItem(0, 1, 6948, 1)
-    A_Admin.AddBagItem(0, 2, 6256, 1)
+    A_Admin.AddBagItem(0, 2, 159, 1)
     HearthGUID = C_Item.GetItemGUID({ bagID = 0, slotIndex = 1 })
-    PoleGUID = C_Item.GetItemGUID({ bagID = 0, slotIndex = 2 })
+    WaterGUID = C_Item.GetItemGUID({ bagID = 0, slotIndex = 2 })
 "#;
 
 const GUID_QUERIES: &str = r#"
     assert(C_Item.GetItemIDByGUID(HearthGUID) == 6948)
-    assert(C_Item.GetItemIDByGUID(PoleGUID) == 6256)
-    assert(C_Item.GetItemLinkByGUID(HearthGUID):find("Hitem:6948", 1, true))
-    assert(C_Item.GetItemLinkByGUID(PoleGUID):find("Hitem:6256", 1, true))
-    assert(C_Item.IsItemGUIDInInventory(PoleGUID) == true)
-    local location = C_Item.GetItemLocation(PoleGUID)
+    assert(C_Item.GetItemIDByGUID(WaterGUID) == 159)
+    assert(C_Item.GetItemLinkByGUID(HearthGUID):find("Hitem:6948:", 1, true))
+    assert(C_Item.GetItemLinkByGUID(WaterGUID):find("Hitem:159:", 1, true))
+    assert(C_Item.IsItemGUIDInInventory(WaterGUID) == true)
+    local location = C_Item.GetItemLocation(WaterGUID)
     assert(location.bagID == 0 and location.slotIndex == 2)
     A_Admin.RemoveBagItem(0, 1)
     assert(C_Item.IsItemGUIDInInventory(HearthGUID) == false)
@@ -31,19 +31,19 @@ const GUID_QUERIES: &str = r#"
 "#;
 
 const LOCK_REQUESTS: &str = r#"
-    local hearth, pole = { bagID = 0, slotIndex = 1 }, { bagID = 0, slotIndex = 2 }
+    local hearth, water = { bagID = 0, slotIndex = 1 }, { bagID = 0, slotIndex = 2 }
     assert(C_Item.IsLocked(hearth) == false)
     C_Item.LockItem(hearth)
     assert(C_Item.IsLocked(hearth) == true)
-    assert(C_Item.IsLocked(pole) == false)
+    assert(C_Item.IsLocked(water) == false)
     assert(C_Container.GetContainerItemInfo(0, 1).isLocked == true)
     C_Item.UnlockItem(hearth)
     assert(C_Item.IsLocked(hearth) == false)
-    C_Item.LockItemByGUID(PoleGUID)
-    assert(C_Item.IsLocked(pole) == true)
+    C_Item.LockItemByGUID(WaterGUID)
+    assert(C_Item.IsLocked(water) == true)
     assert(C_Item.IsLocked(hearth) == false)
-    C_Item.UnlockItemByGUID(PoleGUID)
-    assert(C_Item.IsLocked(pole) == false)
+    C_Item.UnlockItemByGUID(WaterGUID)
+    assert(C_Item.IsLocked(water) == false)
 "#;
 
 #[test]

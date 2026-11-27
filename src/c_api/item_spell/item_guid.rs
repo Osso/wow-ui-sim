@@ -54,7 +54,7 @@ fn read_guid(state: &LuaState) -> LuaResult<String> {
 
 fn resolved_guid(state: &LuaState) -> LuaResult<Option<(i32, i32, u32)>> {
     let guid = read_guid(state)?;
-    Ok(resolve_guid(&borrow_state(state)?, &guid))
+    Ok(resolve_guid(&*borrow_state(state)?, &guid))
 }
 
 fn get_item_id_by_guid(state: &mut LuaState) -> LuaResult<u32> {
