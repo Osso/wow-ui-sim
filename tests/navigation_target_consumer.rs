@@ -56,4 +56,3 @@ fn navigation_target_drives_super_tracked_frame(env: &WowLuaEnv) {
     assert_eq!(destroyed, (true, 0, 0), "destroyed target clears its consumer anchors");
 }
 }
-
