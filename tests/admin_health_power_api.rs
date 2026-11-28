@@ -931,14 +931,17 @@ fn rogue_combo_point_bar_uses_supplied_charged_power_points() {
     let env = crate::common::blizzard_addon_harness::new_blizzard_addon_env(&ui_dir);
     env.exec("A_Admin.SetPlayerClass(4); A_Admin.SetPlayerPower(3, 6, 4)")
         .expect("seed Rogue combo points before Blizzard UI loads");
+    let overrides = [wow_ui_sim::loader::BlizzardAddonOverride {
+        addon: "Blizzard_UnitFrame",
+        extra_roots: &["Blizzard_AuraContainer"],
+    }];
     let loaded = crate::common::blizzard_addon_harness::load_blizzard_addon_closure_into_env(
         &env,
         &ui_dir,
         &["Blizzard_UnitFrame", "Blizzard_QuickJoin"],
-        &[],
+        &overrides,
     );
     assert!(loaded.iter().any(|name| name == "Blizzard_UnitFrame"));
-    wow_ui_sim::startup::settle_headless_startup(&env);
     env.exec(ROGUE_CHARGED_POWER_CONSUMER)
         .expect("original Rogue combo point bar reads charged power indices");
 }
