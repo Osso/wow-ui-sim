@@ -310,6 +310,10 @@ The [Round 7 getter contract](../specs/tooltip-r7-getters.md) and [Lua API](syst
 
 [GlobalColor catalog](systems/global-color-catalog.md) links the [Retail `C_UIColor.GetColors` contract](../specs/c-ui-color-get-colors.md) and pinned source provenance. **VERIFIED (local CASC Retail 12.1.5.70783):** FileDataID 4328468 contains 367 decoded rows with no unreadable records. **VERIFIED (native Retail 12.1.5.70688, R88o.3):** `GetColors` uses flag 3, ignores arguments, copies `ColorMixin`, decodes ARGB with f32 reciprocal multiplication, keeps first tag collisions, applies no empty-tag/flag filters, and exports in tag-byte order. **VERIFIED (simulator generated catalog):** the static export has 361 tags. **VERIFIED (CSV exporter):** the CSV omits invalid-index and excluded-row state. **UNKNOWN (70783 cursor mapping):** native 70688 evidence identifies no corresponding 70783 row IDs. **INFERRED (70688 rules applied to 70783):** native output matches only if no additional cursor skips apply. **PRESERVATION:** hand-set Retail colors remain until every consumer's load order is proved. **UNKNOWN:** live cache contents and update schedule.
 
+## [2026-11-27] investigation | Forever hero icon and Camelot spellbook regressions
+
+[Hero atlas and render snapshot](investigations/hero-spec-icon-bug.md) records stale layout, obsolete file identity and an incomplete isolated GPU reference scene. [Camelot spellbook](systems/forever-camelot-spellbook.md#first-open-geometry-forever-70707) records XML/Lua-derived minimized geometry and real passive-page navigation.
+
 ## [2026-11-20] implementation | Shared Retail/Forever outfit catalog
 
 The [outfit catalog contract](../specs/outfit-catalog-lookups.md), [Forever spellbook contract](../specs/forever-camelot-spellbook.md), [Forever spellbook model](systems/forever-camelot-spellbook.md), and [tooltip contract](../specs/tooltip-outfit.md) record one outfit-record store: `SimState.transmog_outfit_catalog`. Forever's empty catalog returns no values, inferred from its `MayReturnNothing` declaration and guarded UI consumers.
@@ -4801,7 +4805,7 @@ The sixteen retail 12.0.0 `Enum.EditModeDamageMeterSetting.*` and `Enum.EditMode
 | [[display-size-ui-scale-events]] | Live probe proved retail fires `DISPLAY_SIZE_CHANGED` → `UI_SCALE_CHANGED` as an ordered pair on every display/scale change (resize, slider, maximize, resolution) — never one alone; sim resize path and inverted test fixed |
 | [[ptr-pixel-rounding-probe]] | Staged read-only `wowxptr` 12.1.5 pixel-rounding probe with passive ClickBinding/Collections bootstrap observations; native LoD and anchor-versus-final-edge rounding remain unproven pending PTR SavedVariables capture |
 | [[hero-spec-dialog-anchors]] | LIGHTSMITH/TEMPLAR selection dialog: layer-children batched out of XML order + runtime templates skipped named-anchor re-resolution, dropping panel content to spec-frame edge |
-| [[hero-spec-icon-bug]] | Retired — 5 layers of evidence confirm icon renders correctly |
+| [[hero-spec-icon-bug]] | Retired original report; Forever 70707 stale render layout, retained placeholder ID and overlapping GPU reference scene |
 | [[xml-scale-attribute]] | XML `scale` attribute was silently dropped (no `FrameXml` field); hero talents `scale="0.85"` never applied, node buttons overflowed the fixed 284×362 backplate |
 | [[hit-testing]] | HitGrid ordering, event-specific targets, and Forever scroll controls |
 | [[journeys-midnight-empty]] | Journeys tab was empty because current expansion was Midnight but default major-faction data only seeded War Within rows |

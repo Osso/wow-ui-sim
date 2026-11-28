@@ -150,32 +150,7 @@ fn check_rect(registry: &WidgetRegistry, name: &str, sw: f32, sh: f32, expected:
 }
 
 post_wrath_ui_fixture! {
-#[test]
-fn spellbook_passive_item_border_and_icon_match_master_geometry() {
-    test_timeout! {
-        let env = setup_full_ui();
-        open_spellbook(&env);
-
-        let (
-            lua_button_w,
-            lua_button_h,
-            lua_icon_w,
-            lua_icon_h,
-            lua_border_w,
-            lua_border_h,
-            lua_mask_w,
-            lua_mask_h,
-            scaled_button_w,
-            scaled_button_h,
-            scaled_icon_w,
-            scaled_icon_h,
-            scaled_border_w,
-            scaled_border_h,
-            scaled_mask_w,
-            scaled_mask_h,
-        ): PassiveItemGeometry = env
-            .eval(
-                r#"
+const PASSIVE_ITEM_GEOMETRY: &str = r#"
                 local paged = assert(PlayerSpellsFrame and PlayerSpellsFrame.SpellBookFrame and PlayerSpellsFrame.SpellBookFrame.PagedSpellsFrame, "missing paged spells frame")
                 for _, frame in paged:EnumerateFrames() do
                     if frame
@@ -201,79 +176,129 @@ fn spellbook_passive_item_border_and_icon_match_master_geometry() {
                     end
                 end
                 error("no passive item found")
-                "#,
-            )
-            .expect("Passive spell item geometry should be queryable from Lua");
+                "#;
 
+fn open_passive_spell_page(env: &WowLuaEnv) {
+    if cfg!(feature = "client-wowforever") {
+        env.exec("SetCVar('spellBookHidePassives', false)").unwrap();
+    }
+    open_spellbook(env);
+    if cfg!(feature = "client-wowforever") {
+        env.exec(include_str!("fixtures/forever/spellbook_passive_page.lua"))
+            .expect("original Camelot category and paging buttons must reach the passive spells");
+    }
+}
+
+fn assert_passive_lua_geometry(geometry: PassiveItemGeometry) -> [(f32, f32); 4] {
+    // Lua returns button, icon, border and mask pairs, first logical then scaled.
+    // Shared SpellBookItem.xml:107-154,201-210 and SpellBookItem.lua:704-722.
+    for (label, width, height, expected) in [
+        ("button", geometry.0, geometry.1, 40.0),
+        ("icon", geometry.2, geometry.3, 36.0),
+        ("border", geometry.4, geometry.5, 40.0),
+        ("mask", geometry.6, geometry.7, 36.0),
+    ] {
+        assert!(
+            (width - expected).abs() <= 0.1,
+            "Passive {label} GetRect width should be {expected}, got {width}"
+        );
+        assert!(
+            (height - expected).abs() <= 0.1,
+            "Passive {label} GetRect height should be {expected}, got {height}"
+        );
+    }
+    [
+        (geometry.8, geometry.9),
+        (geometry.10, geometry.11),
+        (geometry.12, geometry.13),
+        (geometry.14, geometry.15),
+    ]
+}
+
+fn passive_item_render_rects(registry: &WidgetRegistry) -> [wow_ui_sim::LayoutRect; 4] {
+    let item_ids = find_spell_item_ids(registry);
+    assert!(!item_ids.is_empty(), "Should have spell items");
+    let (button, icon, border, mask) = find_first_passive_spell_item(registry, &item_ids)
+        .expect("Should find a passive spellbook item with the circle border art set");
+    [button, icon, border, mask].map(|id| compute_frame_rect(registry, id, 1024.0, 768.0))
+}
+
+fn assert_passive_render_dimensions(rects: &[wow_ui_sim::LayoutRect; 4], scaled: [(f32, f32); 4]) {
+    for ((label, rect), (width, height)) in ["button", "icon", "border", "mask"]
+        .into_iter()
+        .zip(rects)
+        .zip(scaled)
+    {
+        assert!(
+            (rect.width - width).abs() <= 0.1,
+            "Rendered passive {label} width should match GetScaledRect: render={} lua={width}",
+            rect.width
+        );
+        assert!(
+            (rect.height - height).abs() <= 0.1,
+            "Rendered passive {label} height should match GetScaledRect: render={} lua={height}",
+            rect.height
+        );
+    }
+}
+
+fn request_at_rect<'a>(
+    batch: &wow_ui_sim::render::QuadBatch,
+    requests: &'a [wow_ui_sim::render::TextureRequest],
+    rect: wow_ui_sim::LayoutRect,
+    label: &str,
+) -> &'a wow_ui_sim::render::TextureRequest {
+    requests
+        .iter()
+        .find(|request| bounds_match_rect(quad_bounds(batch, request), rect))
+        .unwrap_or_else(|| panic!("Passive {label} should emit a quad matching its layout rect"))
+}
+
+fn assert_passive_texture_requests(
+    batch: &wow_ui_sim::render::QuadBatch,
+    rects: [wow_ui_sim::LayoutRect; 4],
+) {
+    let [_, icon, border, mask] = rects;
+    let border_request = request_at_rect(batch, &batch.texture_requests, border, "border");
+    let icon_request = request_at_rect(batch, &batch.texture_requests, icon, "icon");
+    let mask_request = request_at_rect(batch, &batch.mask_texture_requests, mask, "icon mask");
+    assert!(
+        border_request
+            .path
+            .contains(r"Interface\talentframe\talents"),
+        "Passive border should come from the talents atlas, got {}",
+        border_request.path
+    );
+    assert!(
+        mask_request
+            .path
+            .contains(r"Interface\talentframe\talentsmasknodecircle"),
+        "Passive mask should come from the circle mask texture, got {}",
+        mask_request.path
+    );
+    assert_ne!(
+        icon_request.path, border_request.path,
+        "Passive icon and border should not collapse onto the same textured quad request"
+    );
+}
+
+#[test]
+fn spellbook_passive_item_border_and_icon_match_master_geometry() {
+    test_timeout! {
+        let env = setup_full_ui();
+        open_passive_spell_page(&env);
+        let geometry: PassiveItemGeometry = env.eval(PASSIVE_ITEM_GEOMETRY)
+            .expect("Passive spell item geometry should be queryable from Lua");
+        let scaled = assert_passive_lua_geometry(geometry);
         let buckets = build_strata_buckets(&env);
         let state = env.state().borrow();
         let registry = &state.widgets;
-        let item_ids = find_spell_item_ids(registry);
-        assert!(!item_ids.is_empty(), "Should have spell items");
-
-        let (button_id, icon_id, border_id, mask_id) = find_first_passive_spell_item(registry, &item_ids)
-            .expect("Should find a passive spellbook item with the circle border art set");
-
-        let button_rect = compute_frame_rect(registry, button_id, 1024.0, 768.0);
-        let icon_rect = compute_frame_rect(registry, icon_id, 1024.0, 768.0);
-        let border_rect = compute_frame_rect(registry, border_id, 1024.0, 768.0);
-        let mask_rect = compute_frame_rect(registry, mask_id, 1024.0, 768.0);
-
-        assert!((lua_button_w - 40.0).abs() <= 0.1, "Passive button GetRect width should be 40, got {}", lua_button_w);
-        assert!((lua_button_h - 40.0).abs() <= 0.1, "Passive button GetRect height should be 40, got {}", lua_button_h);
-        assert!((lua_icon_w - 36.0).abs() <= 0.1, "Passive icon GetRect width should be 36, got {}", lua_icon_w);
-        assert!((lua_icon_h - 36.0).abs() <= 0.1, "Passive icon GetRect height should be 36, got {}", lua_icon_h);
-        assert!((lua_border_w - 40.0).abs() <= 0.1, "Passive border GetRect width should stay 40, got {}", lua_border_w);
-        assert!((lua_border_h - 40.0).abs() <= 0.1, "Passive border GetRect height should stay 40, got {}", lua_border_h);
-        assert!((lua_mask_w - 36.0).abs() <= 0.1, "Passive mask GetRect width should be 36, got {}", lua_mask_w);
-        assert!((lua_mask_h - 36.0).abs() <= 0.1, "Passive mask GetRect height should be 36, got {}", lua_mask_h);
-
-        assert!((button_rect.width - scaled_button_w).abs() <= 0.1, "Rendered passive button width should match GetScaledRect: render={} lua={}", button_rect.width, scaled_button_w);
-        assert!((button_rect.height - scaled_button_h).abs() <= 0.1, "Rendered passive button height should match GetScaledRect: render={} lua={}", button_rect.height, scaled_button_h);
-        assert!((icon_rect.width - scaled_icon_w).abs() <= 0.1, "Rendered passive icon width should match GetScaledRect: render={} lua={}", icon_rect.width, scaled_icon_w);
-        assert!((icon_rect.height - scaled_icon_h).abs() <= 0.1, "Rendered passive icon height should match GetScaledRect: render={} lua={}", icon_rect.height, scaled_icon_h);
-        assert!((border_rect.width - scaled_border_w).abs() <= 0.1, "Rendered passive border width should match GetScaledRect: render={} lua={}", border_rect.width, scaled_border_w);
-        assert!((border_rect.height - scaled_border_h).abs() <= 0.1, "Rendered passive border height should match GetScaledRect: render={} lua={}", border_rect.height, scaled_border_h);
-        assert!((mask_rect.width - scaled_mask_w).abs() <= 0.1, "Rendered passive mask width should match GetScaledRect: render={} lua={}", mask_rect.width, scaled_mask_w);
-        assert!((mask_rect.height - scaled_mask_h).abs() <= 0.1, "Rendered passive mask height should match GetScaledRect: render={} lua={}", mask_rect.height, scaled_mask_h);
-
+        let rects = passive_item_render_rects(registry);
+        assert_passive_render_dimensions(&rects, scaled);
         let batch = build_quad_batch_for_registry(RegistryQuadBatchParams::new(
-            registry,
-            (1024.0, 768.0),
-            &buckets,
+            registry, (1024.0, 768.0), &buckets,
         ));
-
-        let border_request = batch
-            .texture_requests
-            .iter()
-            .find(|request| bounds_match_rect(quad_bounds(&batch, request), border_rect))
-            .expect("Passive border should emit a textured quad matching its layout rect");
-        let icon_request = batch
-            .texture_requests
-            .iter()
-            .find(|request| bounds_match_rect(quad_bounds(&batch, request), icon_rect))
-            .expect("Passive icon should emit a textured quad matching its layout rect");
-        let mask_request = batch
-            .mask_texture_requests
-            .iter()
-            .find(|request| bounds_match_rect(quad_bounds(&batch, request), mask_rect))
-            .expect("Passive icon mask should emit a mask quad matching its layout rect");
-
-        assert!(
-            border_request.path.contains(r"Interface\talentframe\talents"),
-            "Passive border should come from the talents atlas, got {}",
-            border_request.path
-        );
-        assert!(
-            mask_request.path.contains(r"Interface\talentframe\talentsmasknodecircle"),
-            "Passive mask should come from the circle mask texture, got {}",
-            mask_request.path
-        );
-        assert_ne!(
-            icon_request.path,
-            border_request.path,
-            "Passive icon and border should not collapse onto the same textured quad request"
-        );
+        assert_passive_texture_requests(&batch, rects);
     }
 }
 }
@@ -322,68 +347,138 @@ fn spellbook_texture_requests_match_between_opens() {
 }
 
 post_wrath_ui_fixture! {
+fn expected_spellbook_panel_rect(sw: f32, sh: f32) -> ExpectedRect {
+    if cfg!(feature = "client-wowforever") {
+        // Camelot/Blizzard_PlayerSpellsFrame.xml:5-12 and .lua:37-54,94-110;
+        // Blizzard_PlayerSpellsRegistration.lua:4-11 and SharedXMLBase/FrameUtil.lua:169-178.
+        let scale = 1.0_f32.min(sw / (577.0 + 200.0)).min(sh / (720.0 + 140.0));
+        let height = 720.0 * scale;
+        // UIParentPanelManager.lua:244-258,656-681,1007-1020; UIPanelLayoutFrame.lua:1-9.
+        // The first center-slot panel changes its area to left during auto-minimize.
+        let y = (116.0_f32 - 75.0).min(sh - 140.0 - height).max(10.0);
+        return ExpectedRect {
+            x: 16.0 + 32.0,
+            y,
+            width: 577.0 * scale,
+            height,
+        };
+    }
+    ExpectedRect {
+        x: 56.3,
+        y: 41.0,
+        width: 911.3,
+        height: 497.4,
+    }
+}
+
+fn assert_forever_spellbook_child_rect(
+    registry: &WidgetRegistry,
+    panel: &wow_ui_sim::widget::Frame,
+    book: &wow_ui_sim::widget::Frame,
+    screen: (f32, f32),
+) {
+    // Camelot/Blizzard_PlayerSpellsFrame.xml:51-59: 574x702 minimized,
+    // BOTTOMLEFT +4. The shared mixin changes only the width.
+    assert_eq!((book.width, book.height), (574.0, 702.0));
+    let panel_rect = compute_frame_rect(registry, panel.id, screen.0, screen.1);
+    let book_rect = compute_frame_rect(registry, book.id, screen.0, screen.1);
+    let scale = panel_rect.width / 577.0;
+    assert!((book_rect.x - panel_rect.x).abs() <= 1.0);
+    assert!((book_rect.y - (panel_rect.y + (720.0 - 702.0 - 4.0) * scale)).abs() <= 1.0);
+    assert!((book_rect.width - 574.0 * scale).abs() <= 1.0);
+    assert!((book_rect.height - 702.0 * scale).abs() <= 1.0);
+}
+
+fn assert_spellbook_child_size(
+    registry: &WidgetRegistry,
+    panel: &wow_ui_sim::widget::Frame,
+    sw: f32,
+    sh: f32,
+) {
+    let sb = registry.get(panel.children_keys["SpellBookFrame"]).unwrap();
+    if cfg!(feature = "client-wowforever") {
+        assert_forever_spellbook_child_rect(registry, panel, sb, (sw, sh));
+        return;
+    }
+    assert!(
+        sb.width > 900.0,
+        "SpellBookFrame stored width {} should be > 900",
+        sb.width
+    );
+    assert!(
+        sb.height > 500.0,
+        "SpellBookFrame stored height {} should be > 500",
+        sb.height
+    );
+}
+
+fn assert_spellbook_border(
+    registry: &WidgetRegistry,
+    panel: &wow_ui_sim::widget::Frame,
+    sw: f32,
+    sh: f32,
+) {
+    let nine_id = panel.children_keys["NineSlice"];
+    let nine_rect = compute_frame_rect(registry, nine_id, sw, sh);
+    let psf_rect = compute_frame_rect(registry, panel.id, sw, sh);
+    assert!(
+        (nine_rect.x - psf_rect.x).abs() <= 1.0,
+        "NineSlice x should match PlayerSpellsFrame"
+    );
+    assert!(
+        (nine_rect.width - psf_rect.width).abs() <= 1.0,
+        "NineSlice width should match"
+    );
+}
+
+fn assert_spellbook_tabs(
+    registry: &WidgetRegistry,
+    panel: &wow_ui_sim::widget::Frame,
+    sw: f32,
+    sh: f32,
+) {
+    if cfg!(feature = "client-wowforever") {
+        // Camelot/Blizzard_PlayerSpellsFrame.lua:57-62: no outer tab system.
+        let tabs = registry.get(panel.children_keys["TabSystem"]).unwrap();
+        assert!(!tabs.visible, "Camelot outer TabSystem should be hidden");
+        return;
+    }
+    if let Some(&tab_id) = panel.children_keys.get("tabSystem") {
+        let psf_rect = compute_frame_rect(registry, panel.id, sw, sh);
+        let tab_rect = compute_frame_rect(registry, tab_id, sw, sh);
+        assert!(
+            tab_rect.y > psf_rect.y + psf_rect.height - 50.0,
+            "tabSystem y={} should be near bottom of PlayerSpellsFrame (bottom={})",
+            tab_rect.y,
+            psf_rect.y + psf_rect.height
+        );
+        assert!(
+            tab_rect.width > 100.0,
+            "tabSystem should have width > 100, got {}",
+            tab_rect.width
+        );
+    }
+}
+
 #[test]
 fn spellbook_frame_positions() {
     test_timeout! {
         let env = setup_full_ui();
         open_spellbook(&env);
-
         let state = env.state().borrow();
         let registry = &state.widgets;
         let (sw, sh) = (1024.0, 768.0);
-
-        // PlayerSpellsFrame — main container
-        check_rect(
-            registry,
-            "PlayerSpellsFrame",
-            sw,
-            sh,
-            ExpectedRect {
-                x: 56.3,
-                y: 41.0,
-                width: 911.3,
-                height: 497.4,
-            },
-        );
-
-        let psf_id = registry.get_id_by_name("PlayerSpellsFrame").expect("PlayerSpellsFrame exists");
-        let psf = registry.get(psf_id).unwrap();
-
-        // SpellBookFrame — verify stored dimensions
-        let sb_id = *psf.children_keys.get("SpellBookFrame").expect("SpellBookFrame child key");
-        let sb = registry.get(sb_id).unwrap();
-        assert!(sb.width > 900.0, "SpellBookFrame stored width {} should be > 900", sb.width);
-        assert!(sb.height > 500.0, "SpellBookFrame stored height {} should be > 500", sb.height);
-
-        // NineSlice border — should match PlayerSpellsFrame bounds
-        let nine_id = *psf.children_keys.get("NineSlice").expect("NineSlice exists");
-        let nine_rect = compute_frame_rect(registry, nine_id, sw, sh);
-        let psf_rect = compute_frame_rect(registry, psf_id, sw, sh);
-        assert!((nine_rect.x - psf_rect.x).abs() <= 1.0, "NineSlice x should match PlayerSpellsFrame");
-        assert!((nine_rect.width - psf_rect.width).abs() <= 1.0, "NineSlice width should match");
-
-        // tabSystem — should be near bottom of PlayerSpellsFrame
-        if let Some(&tab_id) = psf.children_keys.get("tabSystem") {
-            let tab_rect = compute_frame_rect(registry, tab_id, sw, sh);
-            assert!(tab_rect.y > psf_rect.y + psf_rect.height - 50.0,
-                "tabSystem y={} should be near bottom of PlayerSpellsFrame (bottom={})",
-                tab_rect.y, psf_rect.y + psf_rect.height);
-            assert!(tab_rect.width > 100.0, "tabSystem should have width > 100, got {}", tab_rect.width);
-        }
+        check_rect(registry, "PlayerSpellsFrame", sw, sh, expected_spellbook_panel_rect(sw, sh));
+        let panel = registry.get_by_name("PlayerSpellsFrame").expect("PlayerSpellsFrame exists");
+        assert_spellbook_child_size(registry, panel, sw, sh);
+        assert_spellbook_border(registry, panel, sw, sh);
+        assert_spellbook_tabs(registry, panel, sw, sh);
     }
 }
 }
 
 post_wrath_ui_fixture! {
-#[test]
-fn spellbook_layout_stays_locked() {
-    test_timeout! {
-        let env = setup_full_ui();
-        open_spellbook(&env);
-
-        let result: String = env
-            .eval(
-                r#"
+const RETAIL_SPELLBOOK_LAYOUT_LOCK: &str = r#"
                 local EPS = 1.5
 
                 local function approx(actual, expected, eps)
@@ -581,10 +676,19 @@ fn spellbook_layout_stays_locked() {
                 end
 
                 return "ok"
-                "#,
-            )
-            .unwrap();
+                "#;
 
+#[test]
+fn spellbook_layout_stays_locked() {
+    test_timeout! {
+        let env = setup_full_ui();
+        open_spellbook(&env);
+        let lock = if cfg!(feature = "client-wowforever") {
+            include_str!("fixtures/forever/spellbook_layout.lua")
+        } else {
+            RETAIL_SPELLBOOK_LAYOUT_LOCK
+        };
+        let result: String = env.eval(lock).unwrap();
         assert_eq!(result, "ok", "Spellbook layout should remain locked: {result}");
     }
 }

@@ -218,12 +218,14 @@ fn apply_temporary_state_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
 
     temporary::garrison_mission_lists::apply_bootstrap(lua)?;
     apply_runtime_state_bootstrap(lua)?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     apply_account_and_social_state_bootstrap(lua)?;
     apply_player_state_bootstrap(lua)?;
     apply_secure_and_store_state_bootstrap(lua)?;
     apply_unit_state_bootstrap(lua)?;
     temporary::uiparent_onupdate_worklists::apply_bootstrap(lua)?;
     temporary::forever_glue_display_defaults::apply_bootstrap(lua)?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::video_options_state::apply_bootstrap(lua)?;
     // Replace the legacy shim's mission-list functions, not its combat-ally stub.
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
@@ -250,14 +252,14 @@ fn apply_runtime_state_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     temporary::ptr_bank_default::apply_bootstrap(lua)?;
     crate::c_api::private_aura_callbacks::apply_bootstrap(lua)?;
     temporary::private_aura_state::apply_bootstrap(lua)?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::reputation_state::apply_bootstrap(lua)?;
     temporary::zone_story_default::apply_bootstrap(lua)
 }
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 fn apply_account_and_social_state_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
-    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::battle_net_account_defaults::apply_bootstrap(lua)?;
-    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::social_queue_defaults::apply_bootstrap(lua)?;
     temporary::merchant_filter_state::apply_bootstrap(lua)
 }
@@ -278,6 +280,7 @@ fn apply_secure_and_store_state_bootstrap(lua: &mut rilua::Lua) -> crate::Result
 }
 
 fn apply_unit_state_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::unit_auras_state::apply_bootstrap(lua)?;
     #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::unit_stagger_defaults::apply_bootstrap(lua)?;
@@ -415,6 +418,7 @@ fn apply_core_foundation_journal_defaults(lua: &mut rilua::Lua) -> crate::Result
 }
 
 fn apply_core_foundation_state_defaults(lua: &mut rilua::Lua) -> crate::Result<()> {
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::pet_battle_runtime_state::apply_bootstrap(lua)?;
     temporary::pet_battle_action_legality_defaults::apply_bootstrap(lua)?;
     temporary::settings_surface_defaults::apply_bootstrap(lua)?;
@@ -505,6 +509,7 @@ fn apply_feature_tool_defaults(lua: &mut rilua::Lua) -> crate::Result<()> {
     if should_use_temporary_shared_xml_defaults() {
         temporary::callback_registry_defaults::apply_bootstrap(lua)?;
     }
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::macro_defaults::apply_bootstrap(lua)?;
     temporary::navigation_defaults::apply_bootstrap(lua)?;
     temporary::object_api_request_load_callbacks::apply_bootstrap(lua)?;

@@ -9,6 +9,7 @@ use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val, runtime_error};
 
 /// Mists fixture policy; native account-wide reputation behavior is unknown.
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) fn fixture_account_wide_default() -> bool {
     crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Mists
 }
