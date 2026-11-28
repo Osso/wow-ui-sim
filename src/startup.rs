@@ -144,6 +144,17 @@ pub fn apply_delay_with_tick(env: &WowLuaEnv, delay: Option<u64>) {
         }
         normalize_headless_frame_positions(env);
         previous = now;
+        // Quit()/ForceQuit() end the session, as they close the client.
+        if env.state().borrow().simulator_exit_requested {
+            log_with_timestamp(
+                env,
+                &format!(
+                    "[delay] quit requested; ending delay after {:.1?}",
+                    start.elapsed()
+                ),
+            );
+            break;
+        }
     }
 }
 
@@ -799,6 +810,22 @@ mod seed_buff_duration_tests {
             stale_negative, "none",
             "a frame carrying a stale negative timeLeft must not render it; \
              this is the case only the timeLeft>0 guard catches"
+        );
+    }
+
+    #[test]
+    fn apply_delay_with_tick_ends_when_the_session_quits() {
+        let env = WowLuaEnv::new().unwrap();
+        env.exec(r#"C_Timer.After(0.05, function() ForceQuit() end)"#)
+            .unwrap();
+
+        let started = std::time::Instant::now();
+        apply_delay_with_tick(&env, Some(20_000));
+
+        assert!(
+            started.elapsed() < std::time::Duration::from_secs(10),
+            "ForceQuit must end the delay, took {:?}",
+            started.elapsed()
         );
     }
 
