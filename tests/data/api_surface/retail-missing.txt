@@ -2061,7 +2061,6 @@ GetAllowLowLevelRaid # not-yet
 GetArchaeologyRaceInfoByID # not-yet
 GetAreaSpiritHealerTime # not-yet
 GetAreaText # not-yet
-GetArenaOpponentSpec # not-yet: temporary Lua workaround
 GetAvailableLevel # not-yet
 GetAvailableLocales # not-yet
 GetBackgroundLoadingStatus # not-yet: temporary Lua workaround
@@ -2187,8 +2186,6 @@ GetMouseButtonName # not-yet
 GetMovieDownloadProgress # not-yet: temporary Lua workaround
 GetNativeRealmID # not-yet
 GetNetIpTypes # not-yet
-GetNumArenaOpponentSpecs # not-yet: temporary Lua workaround
-GetNumArenaOpponents # not-yet: temporary Lua workaround
 GetNumBattlefieldScores # not-yet
 GetNumBattlefieldVehicles # not-yet
 GetNumChannelMembers # not-yet

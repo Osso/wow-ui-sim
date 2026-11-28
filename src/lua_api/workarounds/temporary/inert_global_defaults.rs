@@ -127,17 +127,6 @@ if WorldLootObjectExists == nil then
     end
 end
 
-if GetNumArenaOpponents == nil then
-    function GetNumArenaOpponents()
-        return 0
-    end
-end
-if GetNumArenaOpponentSpecs == nil then
-    function GetNumArenaOpponentSpecs()
-        return 0
-    end
-end
-
 if ClearCursorHoveredItem == nil then
     function ClearCursorHoveredItem()
         return nil

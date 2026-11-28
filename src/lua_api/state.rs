@@ -266,6 +266,7 @@ macro_rules! build_empty_sim_state {
             bag_item_tooltip_sell_price_statuses: ::std::collections::HashMap::new(),
             item_tooltip_sell_price_quantities: ::std::collections::HashMap::new(),
             equipped_item_tooltip_guids: ::std::collections::HashMap::new(),
+            equipped_item_durability: ::std::collections::HashMap::new(),
             item_tooltip_socket_projections: ::std::collections::HashMap::new(),
             blocked_auras_by_unit: $collections.blocked_auras_by_unit,
             #[cfg(feature = "client-wowforever")]
@@ -1141,6 +1142,8 @@ macro_rules! build_empty_sim_state {
             voice_channels: Vec::new(),
             #[cfg(feature = "lfg-endgame-edit-policy")]
             lfg_endgame_policy: Default::default(),
+            #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
+            arena_opponents: HashMap::new(),
             #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
             arena_crowd_control: HashMap::new(),
             #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]

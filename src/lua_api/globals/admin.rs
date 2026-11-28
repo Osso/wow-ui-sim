@@ -61,7 +61,7 @@ use super::admin_encounter::{
 };
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 use super::admin_equipment::set_equipped_item_guid;
-use super::admin_equipment::{equip_item, unequip_item};
+use super::admin_equipment::{equip_item, set_equipped_item_durability, unequip_item};
 use super::admin_events::{fire_event_admin, toggle_debug_anchors, toggle_debug_borders};
 use super::admin_interactions::{close_mailbox, open_mailbox};
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
@@ -458,7 +458,8 @@ fn register_player_progression(b: TableBuilder) -> LuaResult<TableBuilder> {
         .set_function("RemoveBuff", remove_buff)?
         .set_function("ClearBuffs", clear_buffs)?
         .set_function("EquipItem", equip_item)?
-        .set_function("UnequipItem", unequip_item)?;
+        .set_function("UnequipItem", unequip_item)?
+        .set_function("SetEquippedItemDurability", set_equipped_item_durability)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     let b = b.set_function("SetEquippedItemGUID", set_equipped_item_guid)?;
     Ok(b)
