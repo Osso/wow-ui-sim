@@ -9,6 +9,7 @@ Persisted loader bytecode belongs to the exact Rilua Git revision resolved in `C
 - [ ] Reopen same-compiler packs and replay the stored bytecode without rewriting them during read-only access.
 - [ ] Ignore obsolete loose `.luac` files and unversioned/legacy keys rather than migrating or promoting unknown-compiler artifacts.
 - [ ] Preserve whitelist-ABI validation, bounded pack storage, torn-entry recovery, read-only immutability and prefork cache modes.
+- [ ] Concurrent writable cache users must not interleave pack entries or repair a pack while another writer appends to or replaces it.
 
 ## How it works
 
@@ -34,5 +35,5 @@ Persisted loader bytecode belongs to the exact Rilua Git revision resolved in `C
 
 ## Out of scope
 
-- Package pin changes, manual deletion of user caches, new parser dependencies, generalized cache infrastructure, new cross-process locking, or legacy artifact compatibility.
+- Package pin changes, manual deletion of user caches, new parser dependencies, generalized cache infrastructure, or legacy artifact compatibility.
 - Builds without a uniquely identified Git-sourced Rilua package in `Cargo.lock`; these must fail rather than reuse unverifiable bytecode.
