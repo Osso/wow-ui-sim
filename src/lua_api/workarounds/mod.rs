@@ -505,6 +505,7 @@ fn apply_feature_tool_defaults(lua: &mut rilua::Lua) -> crate::Result<()> {
     if should_use_temporary_shared_xml_defaults() {
         temporary::callback_registry_defaults::apply_bootstrap(lua)?;
     }
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::macro_defaults::apply_bootstrap(lua)?;
     temporary::navigation_defaults::apply_bootstrap(lua)?;
     temporary::object_api_request_load_callbacks::apply_bootstrap(lua)?;
