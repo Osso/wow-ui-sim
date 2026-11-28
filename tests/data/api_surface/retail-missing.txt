@@ -2236,7 +2236,6 @@ GetThreatStatusColor # not-yet: temporary Lua workaround
 GetTrainerGreetingText # not-yet
 GetTrainerServiceItemLink # not-yet
 GetTreasurePickerItemInfo # not-yet
-GetUnitChargedPowerPoints # not-yet
 GetUnitEmpowerMinHoldTime # not-yet
 GetUnitHealthModifier # not-yet
 GetUnitPowerBarInfoByID # not-yet

@@ -454,6 +454,11 @@ fn register_player_identity(b: TableBuilder) -> LuaResult<TableBuilder> {
         .set_function("SetPlayerSex", set_player_sex)?
         .set_function("SetPlayerHealth", set_player_health)?
         .set_function("SetPlayerPower", set_player_power)?;
+    #[cfg(feature = "charged-power-points")]
+    let builder = builder.set_function(
+        "SetUnitChargedPowerPoints",
+        super::real::unit_charged_power_points::admin_set_unit_charged_power_points,
+    )?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     let builder = super::admin_account_type::register_admin(builder)?;
     Ok(builder)

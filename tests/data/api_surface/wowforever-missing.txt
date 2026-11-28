@@ -1795,7 +1795,6 @@ GetSecondsUntilParentalControlsKick # not-yet
 GetSourceLocation # not-yet
 GetTaxiBenchmarkMode # not-yet
 GetThreatStatusColor # not-yet: temporary Lua workaround
-GetUnitChargedPowerPoints # not-yet
 GetUnitEmpowerMinHoldTime # not-yet
 GetUnitHealthModifier # not-yet
 GetUnitPowerBarInfoByID # not-yet
