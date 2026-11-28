@@ -129,3 +129,19 @@ Ends the role check. `GetLFGRoleUpdate()` then returns `false, 0, 0, 0, 0, false
 Supplies the server's expand-search prompt (Retail and WoW Forever). `key` is a non-negative integer; `data` is an opaque string. It stores the prompt and fires `SHOW_LFG_EXPAND_SEARCH_PROMPT`, so the original `LFGEventFrame` shows the `LFG_QUEUE_EXPAND` popup.
 
 - **Affects:** `C_LFGInfo.ConfirmLfgExpandSearch()` (the popup's accept action) clears a prompt with a nonzero key ([LFG expand confirmation](../specs/lfg-expand-confirmation.md)).
+
+## Loot threshold and opt-out (Retail)
+
+`GetLootThreshold()` reads the group-loot quality threshold (initially 2,
+Uncommon). `SetLootThreshold(quality)` changes it only for the leader of a group
+supplied with `A_Admin.SetPartySize`/`A_Admin.SetPartyLeader`, only to 2–4, and
+fires `PARTY_LOOT_METHOD_CHANGED` when the value changes.
+`SetOptOutOfLoot(1|nil)` stores the opt-out flag read by `GetOptOutOfLoot()`.
+INFERRED (R-ag10-16). Implementation: `src/lua_api/globals/real/loot_method.rs`.
+
+## Chat and combat logging (Retail)
+
+`LoggingChat([on])` and `LoggingCombat([on])` back the `/chatlog` and
+`/combatlog` slash commands: with an argument they set the toggle, and they
+return the resulting state. Both start off and no log file is written.
+INFERRED (R-ag10-17). Implementation: `src/lua_api/globals/real/session_logging.rs`.

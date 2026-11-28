@@ -253,168 +253,228 @@ fn request_matches_rect(
 }
 
 post_wrath_ui_fixture! {
-#[test]
-fn hero_spec_icon_full_ui_render_matches_isolated_crop_render() {
-    if common::try_create_gpu_device().is_none() {
-        eprintln!("Skipping GPU sampling test: no adapter available");
-        return;
+fn hero_icon_geometry(env: &WowLuaEnv) -> ((f32, f32, f32, f32), String) {
+    let state = env.state().borrow();
+    let registry = &state.widgets;
+    let mut id = registry.get_id_by_name("PlayerSpellsFrame").unwrap();
+    for key in [
+        "TalentsFrame",
+        "HeroTalentsContainer",
+        "HeroSpecButton",
+        "Icon1",
+    ] {
+        id = registry.get(id).unwrap().children_keys[key];
     }
+    let rect = wow_ui_sim::iced_app::compute_frame_rect(registry, id, 1024.0, 768.0);
+    let path = registry
+        .get(id)
+        .unwrap()
+        .texture
+        .clone()
+        .expect("Icon1 source");
+    ((rect.x, rect.y, rect.width, rect.height), path)
+}
 
-    let env = setup_full_ui();
-    open_class_talent_frame(&env);
-
-    let (icon_rect, icon_path) = {
-        let state = env.state().borrow();
-        let player_spells_id = state
-            .widgets
-            .get_id_by_name("PlayerSpellsFrame")
-            .expect("PlayerSpellsFrame should exist");
-        let talents_frame_id = *state
-            .widgets
-            .get(player_spells_id)
-            .and_then(|frame| frame.children_keys.get("TalentsFrame"))
-            .expect("TalentsFrame child should exist");
-        let hero_container_id = *state
-            .widgets
-            .get(talents_frame_id)
-            .and_then(|frame| frame.children_keys.get("HeroTalentsContainer"))
-            .expect("HeroTalentsContainer child should exist");
-        let button_id = *state
-            .widgets
-            .get(hero_container_id)
-            .and_then(|frame| frame.children_keys.get("HeroSpecButton"))
-            .expect("HeroSpecButton child should exist");
-        let button = state.widgets.get(button_id).unwrap();
-        let icon_id = *button.children_keys.get("Icon1").expect("Icon1 child");
-        let icon_rect =
-            wow_ui_sim::iced_app::compute_frame_rect(&state.widgets, icon_id, 1024.0, 768.0);
-        let icon_path = state
-            .widgets
-            .get(icon_id)
-            .and_then(|frame| frame.texture.clone())
-            .expect("Icon1 should have a texture path");
-        (icon_rect, icon_path)
-    };
-
+fn build_hero_render_batch(env: &WowLuaEnv) -> QuadBatch {
     let buckets = {
         let mut state = env.state().borrow_mut();
         let _ = state.get_strata_buckets();
         state.strata_buckets.as_ref().unwrap().clone()
     };
     let state = env.state().borrow();
-    let batch = build_quad_batch_for_registry(RegistryQuadBatchParams::new(
+    build_quad_batch_for_registry(RegistryQuadBatchParams::new(
         &state.widgets,
         (1024.0, 768.0),
         &buckets,
-    ));
+    ))
+}
 
-    let icon_crop_prefix = format!("{icon_path}@crop:");
-    let icon_request = batch
+fn hero_crop_request<'a>(
+    batch: &'a QuadBatch,
+    rect: (f32, f32, f32, f32),
+    icon_path: &str,
+) -> &'a wow_ui_sim::render::TextureRequest {
+    let prefix = format!("{icon_path}@crop:");
+    batch
         .texture_requests
         .iter()
         .find(|request| {
-            request.path.starts_with(&icon_crop_prefix)
-                && request_matches_rect(
-                    &batch,
-                    request,
-                    (icon_rect.x, icon_rect.y, icon_rect.width, icon_rect.height),
-                )
+            request.path.starts_with(&prefix) && request_matches_rect(batch, request, rect)
         })
-        .expect("HeroSpecButton.Icon1 should emit a cropped atlas request");
+        .expect("HeroSpecButton.Icon1 should emit a cropped atlas request")
+}
 
-    let overlapping_requests: Vec<_> = batch
-        .texture_requests
+fn load_hero_crop(request: &wow_ui_sim::render::TextureRequest) -> RgbaImage {
+    let mut manager = make_texture_manager();
+    let crop = load_texture_or_crop(&mut manager, &request.path)
+        .expect("cropped hero spec icon texture should load");
+    RgbaImage::from_raw(crop.width, crop.height, crop.rgba.to_vec())
+        .expect("cropped hero spec icon should decode into an image")
+}
+
+// A request can span several quads, and the overlap can contain solid triangles
+// and multiple masked textures. Select draw triangles rather than first quads
+// of requests, then preserve their exact draw order and all request ranges.
+fn overlapping_triangles(batch: &QuadBatch, rect: (f32, f32, f32, f32)) -> Vec<[u32; 3]> {
+    batch
+        .indices
+        .chunks_exact(3)
+        .filter_map(|indices| {
+            let triangle = [indices[0], indices[1], indices[2]];
+            let vertices = triangle.map(|index| batch.vertices[index as usize]);
+            bounds_overlap_rect(quad_bounds_from_vertices(&vertices), rect).then_some(triangle)
+        })
+        .collect()
+}
+
+fn compact_scene_vertices(
+    batch: &QuadBatch,
+    triangles: &[[u32; 3]],
+) -> (Vec<wow_ui_sim::render::QuadVertex>, Vec<Option<u32>>) {
+    let mut selected = vec![false; batch.vertices.len()];
+    for index in triangles.iter().flatten() {
+        selected[*index as usize] = true;
+    }
+    let mut vertices = Vec::new();
+    let mut remap = Vec::with_capacity(batch.vertices.len());
+    for (vertex, keep) in batch.vertices.iter().zip(selected) {
+        if !keep {
+            remap.push(None);
+            continue;
+        }
+        remap.push(Some(vertices.len() as u32));
+        vertices.push(*vertex);
+    }
+    (vertices, remap)
+}
+
+fn remap_scene_requests(
+    requests: &[wow_ui_sim::render::TextureRequest],
+    remap: &[Option<u32>],
+) -> Vec<wow_ui_sim::render::TextureRequest> {
+    requests
         .iter()
-        .filter(|request| {
-            request_overlaps_rect(
-                &batch,
-                request,
-                (icon_rect.x, icon_rect.y, icon_rect.width, icon_rect.height),
-            )
+        .filter_map(|request| {
+            let start = request.vertex_start as usize;
+            let end = start + request.vertex_count as usize;
+            let mut selected = remap[start..end].iter().flatten().copied();
+            let new_start = selected.next()?;
+            let vertex_count = 1 + selected.count() as u32;
+            Some(wow_ui_sim::render::TextureRequest::new_with_uv_inset(
+                request.path.clone(),
+                new_start,
+                vertex_count,
+                request.use_uv_inset,
+            ))
         })
-        .collect();
+        .collect()
+}
 
-    let mask_request = batch
+fn isolate_scene_at_rect(batch: &QuadBatch, rect: (f32, f32, f32, f32)) -> QuadBatch {
+    let triangles = overlapping_triangles(batch, rect);
+    let (vertices, remap) = compact_scene_vertices(batch, &triangles);
+    let indices = triangles
+        .iter()
+        .flatten()
+        .map(|index| remap[*index as usize].unwrap())
+        .collect();
+    QuadBatch {
+        vertices,
+        indices,
+        texture_requests: remap_scene_requests(&batch.texture_requests, &remap),
+        mask_texture_requests: remap_scene_requests(&batch.mask_texture_requests, &remap),
+    }
+}
+
+fn assert_isolated_crop_and_mask(
+    batch: &QuadBatch,
+    isolated: &QuadBatch,
+    rect: (f32, f32, f32, f32),
+    icon_path: &str,
+) {
+    assert!(
+        isolated.indices.len() < batch.indices.len(),
+        "isolated draw must be smaller than the full UI"
+    );
+    assert!(
+        isolated.texture_requests.len() < batch.texture_requests.len(),
+        "isolated atlas must omit unrelated textures"
+    );
+    let full_icon = hero_crop_request(batch, rect, icon_path);
+    let isolated_icon = hero_crop_request(isolated, rect, icon_path);
+    assert_eq!(full_icon.path, isolated_icon.path);
+    assert_eq!(full_icon.vertex_count, isolated_icon.vertex_count);
+    let full_mask = mask_covering_request(batch, full_icon);
+    let isolated_mask = mask_covering_request(isolated, isolated_icon);
+    assert_eq!(
+        full_mask.path, isolated_mask.path,
+        "preserve the real icon mask"
+    );
+}
+
+fn mask_covering_request<'a>(
+    batch: &'a QuadBatch,
+    icon: &wow_ui_sim::render::TextureRequest,
+) -> &'a wow_ui_sim::render::TextureRequest {
+    batch
         .mask_texture_requests
         .iter()
-        .find(|request| {
-            request_matches_rect(
-                &batch,
-                request,
-                (icon_rect.x, icon_rect.y, icon_rect.width, icon_rect.height),
-            )
+        .find(|mask| {
+            mask.vertex_start <= icon.vertex_start
+                && mask.vertex_start + mask.vertex_count >= icon.vertex_start + icon.vertex_count
         })
-        .map(|request| request.path.clone());
+        .expect("the actual hero icon must have a mask request")
+}
 
-    let mut crop_mgr = make_texture_manager();
-    let crop = load_texture_or_crop(&mut crop_mgr, &icon_request.path)
-        .expect("cropped hero spec icon texture should load");
-    let crop_image = RgbaImage::from_raw(crop.width, crop.height, crop.rgba.to_vec())
-        .expect("cropped hero spec icon should decode into an image");
+fn report_overlap_layers(batch: &QuadBatch, rect: (f32, f32, f32, f32)) {
+    let multi_quad_paths: Vec<_> = batch
+        .texture_requests
+        .iter()
+        .filter(|request| request.vertex_count > 4 && request_overlaps_rect(batch, request, rect))
+        .map(|request| (&request.path, request.vertex_count))
+        .collect();
+    let top_center = (rect.0 + 0.50 * rect.2, rect.1 + 0.35 * rect.3, 1.0, 1.0);
+    let solid_colors: Vec<_> = overlapping_triangles(batch, top_center)
+        .iter()
+        .filter_map(|triangle| {
+            let vertex = batch.vertices[triangle[0] as usize];
+            (vertex.tex_index == -1).then_some((triangle[0], vertex.color))
+        })
+        .collect();
+    eprintln!(
+        "Hero overlap: top-center solid vertices={solid_colors:?}, multi-quad texture ranges={multi_quad_paths:?}"
+    );
+}
 
-    let mut isolated_batch = QuadBatch::default();
-    let mut icon_isolated_start = None;
-    for request in &overlapping_requests {
-        let request_bounds = quad_bounds(&batch, request);
-        isolated_batch.push_textured_path(
-            Rectangle::new(
-                Point::new(request_bounds.0, request_bounds.1),
-                Size::new(
-                    request_bounds.2 - request_bounds.0,
-                    request_bounds.3 - request_bounds.1,
-                ),
-            ),
-            &request.path,
-            [1.0, 1.0, 1.0, 1.0],
-            BlendMode::Alpha,
-        );
-        let isolated_start = isolated_batch.vertices.len() - 4;
-        let source_start = request.vertex_start as usize;
-        for offset in 0..4 {
-            isolated_batch.vertices[isolated_start + offset] =
-                batch.vertices[source_start + offset];
-        }
-        if request.vertex_start == icon_request.vertex_start && request.path == icon_request.path {
-            icon_isolated_start = Some(isolated_start as u32);
-        }
-    }
-    if let (Some(mask_path), Some(icon_isolated_start)) = (mask_request, icon_isolated_start) {
-        isolated_batch
-            .mask_texture_requests
-            .push(wow_ui_sim::render::TextureRequest::new(
-                mask_path,
-                icon_isolated_start,
-                4,
-            ));
-    }
+const HERO_SAMPLE_POINTS: [(f32, f32, &str); 5] = [
+    (0.50, 0.35, "top-center"),
+    (0.35, 0.50, "center-left"),
+    (0.50, 0.50, "center"),
+    (0.65, 0.50, "center-right"),
+    (0.50, 0.65, "bottom-center"),
+];
 
-    let mut isolated_mgr = make_texture_manager();
-    let isolated_render = render_to_image(&isolated_batch, &mut isolated_mgr, 1024, 768, None);
-    let mut full_render_mgr = make_texture_manager();
-    let full_render = render_to_image(&batch, &mut full_render_mgr, 1024, 768, None);
-    let rendered_rect = (icon_rect.x, icon_rect.y, icon_rect.width, icon_rect.height);
+fn assert_hero_render_samples(
+    crop_image: &RgbaImage,
+    isolated_render: &RgbaImage,
+    full_render: &RgbaImage,
+    rendered_rect: (f32, f32, f32, f32),
+) {
     let crop_rect = (
         0.0,
         0.0,
         crop_image.width() as f32,
         crop_image.height() as f32,
     );
-
-    for (u, v, label) in [
-        (0.50, 0.35, "top-center"),
-        (0.35, 0.50, "center-left"),
-        (0.50, 0.50, "center"),
-        (0.65, 0.50, "center-right"),
-        (0.50, 0.65, "bottom-center"),
-    ] {
-        let source = sample_rect_pixel(&crop_image, crop_rect, u, v);
+    for (u, v, label) in HERO_SAMPLE_POINTS {
+        let source = sample_rect_pixel(crop_image, crop_rect, u, v);
         assert!(
             source[3] >= 200,
             "{label} crop sample should be substantially opaque: sample={source:?}"
         );
-
-        let isolated_pixel = sample_rect_pixel(&isolated_render, rendered_rect, u, v);
-        let full_render_pixel = sample_rect_pixel(&full_render, rendered_rect, u, v);
+        let isolated_pixel = sample_rect_pixel(isolated_render, rendered_rect, u, v);
+        let full_render_pixel = sample_rect_pixel(full_render, rendered_rect, u, v);
+        eprintln!("{label}: full={full_render_pixel:?} isolated={isolated_pixel:?}");
         assert_rgb_close(
             full_render_pixel,
             isolated_pixel,
@@ -422,6 +482,31 @@ fn hero_spec_icon_full_ui_render_matches_isolated_crop_render() {
             &format!("HeroSpecButton.Icon1 full render sample {label}"),
         );
     }
+}
+
+#[test]
+fn hero_spec_icon_full_ui_render_matches_isolated_crop_render() {
+    if common::try_create_gpu_device().is_none() {
+        eprintln!("Skipping GPU sampling test: no adapter available");
+        return;
+    }
+    let env = setup_full_ui();
+    open_class_talent_frame(&env);
+    let (rect, icon_path) = hero_icon_geometry(&env);
+    let batch = build_hero_render_batch(&env);
+    let crop_image = load_hero_crop(hero_crop_request(&batch, rect, &icon_path));
+    let isolated_batch = isolate_scene_at_rect(&batch, rect);
+    assert_isolated_crop_and_mask(&batch, &isolated_batch, rect, &icon_path);
+    report_overlap_layers(&batch, rect);
+    let isolated_render = render_to_image(
+        &isolated_batch,
+        &mut make_texture_manager(),
+        1024,
+        768,
+        None,
+    );
+    let full_render = render_to_image(&batch, &mut make_texture_manager(), 1024, 768, None);
+    assert_hero_render_samples(&crop_image, &isolated_render, &full_render, rect);
 }
 }
 

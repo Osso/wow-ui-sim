@@ -22,6 +22,7 @@ The `A_Admin` namespace provides administrative functions for controlling simula
 - [Garrison missions](garrison-missions.md) — SetGarrisonCombatAllyMission
 - [Configuration warnings](configuration-warnings.md) — SetConfigurationWarnings, SetSystemRequirementsChecked
 - Vignettes (Retail and WoW Forever): `A_Admin.SetVignettes(records)` supplies the session's modeled `C_VignetteInfo` records and fires `VIGNETTES_UPDATED`. Other profiles retain their existing legacy vignette surface. Each record requires `vignetteGUID`, `uiMapID`, `x`, and `y`; documented `VignetteInfo` fields can also be supplied, including `mapPin`. Optional host values are `facing`, `healthPercent`, `minGroupSize`, and `maxGroupSize`. Empty records are the default. Unknown-GUID return behavior is INFERRED (R88g6).
+- [Server dialogs](server-dialogs.md) — OpenItemText, ReceiveGuildInvite, OpenPetition, RequestDuel, SetAreaSpiritHealer
 - [Chat windows](chat-windows.md) — SetChatWindowState
 - [Voice chat](voice-chat.md) — SetCanPlayerUseVoiceChat, SetVoiceChatConnected, SetRemoteTtsVoices
 - [Health & Power](health-power.md) — SetPlayerHealth, SetPlayerPower, SetTargetHealth, SetReleaseTimeRemaining, SetNoReleaseAura, AddSelfResurrectOption, ClearSelfResurrectOptions, AddDeathRecap, ClearDeathRecaps, SetCorpseMapPosition, ClearCorpse
@@ -55,5 +56,6 @@ The `A_Admin` namespace provides administrative functions for controlling simula
 - [Scripted animations](scripted-animations.md) — SetScriptedAnimationEffects
 - [Performance metrics](performance-metrics.md) — SetFramerate, SetAddOnUsage
 - [Video capabilities](video-capabilities.md) — SetMultiSampleAntiAliasingSupported, SetAntiAliasingSupported
+- [Merchant items](merchant-items.md) — SetMerchantItems
 - [Macros](macros.md) — SetMacroRows, SetMacroIconCatalog
 - [Examples](examples.md) — Usage examples (raid healing, combat testing, transmog)

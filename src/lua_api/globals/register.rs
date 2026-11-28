@@ -279,6 +279,16 @@ fn register_frame_context_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
     super::real::vehicle_seats::register_all(lua)?;
     #[cfg(feature = "client-retail")]
     super::real::lfd_lock_requests::register_all(lua)?;
+    #[cfg(feature = "interaction-dialogs")]
+    super::real::interaction_dialogs::register_all(lua)?;
+    #[cfg(feature = "quest-giver-requests")]
+    super::real::quest_giver_requests::register_all(lua)?;
+    #[cfg(feature = "player-requests")]
+    super::real::player_requests::register_all(lua)?;
+    #[cfg(feature = "client-retail")]
+    super::real::merchant_purchases::register_all(lua)?;
+    #[cfg(feature = "client-retail")]
+    super::real::session_logging::register_all(lua)?;
     super::real::merchant_buyback::register_all(lua)?;
     super::real::merchant_affordability::register_all(lua)?;
     super::real::merchant_filter::register_all(lua)?;
@@ -325,6 +335,8 @@ fn register_core_surfaces(lua: &mut rilua::Lua) -> crate::Result<()> {
     super::real::achievement_ui_access::register(lua)?;
     crate::c_api::encoding_util::register(lua.state_mut())?;
     super::quest_surface::register_all(lua)?;
+    #[cfg(feature = "client-retail")]
+    super::real::quest_reward_reads::register_all(lua)?;
     #[cfg(any(
         feature = "client-retail",
         feature = "client-ptr",

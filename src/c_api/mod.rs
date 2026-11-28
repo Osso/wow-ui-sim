@@ -443,9 +443,9 @@ pub(crate) mod c_trade_info;
 pub(crate) mod c_trade_skill_cooldown;
 pub mod c_trade_skill_crafting_ui;
 pub(crate) mod c_trade_skill_favorites;
-pub(crate) mod c_trade_skill_profession_info;
 pub(crate) mod c_trade_skill_filter;
 pub(crate) mod c_trade_skill_first_craft;
+pub(crate) mod c_trade_skill_profession_info;
 pub mod c_trade_skill_quality;
 mod c_trade_skill_source;
 #[cfg(feature = "client-mists")]

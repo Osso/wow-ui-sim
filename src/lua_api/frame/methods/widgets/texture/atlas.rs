@@ -161,6 +161,7 @@ pub(crate) fn apply_atlas_to_frame(
     let info = lookup.info;
     frame.atlas = Some(atlas_name.to_string());
     frame.texture = Some(info.file.to_string());
+    frame.texture_file_data_id = None;
     frame.texture_source_dimensions = None;
     frame.tex_coords = Some(tex_coords);
     frame.atlas_tex_coords = Some(tex_coords);

@@ -89,7 +89,7 @@ fn confirm_accept_quest(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
-fn append_quest_log_entry(quest_log: &mut Vec<u32>, quest_id: u32) {
+pub(crate) fn append_quest_log_entry(quest_log: &mut Vec<u32>, quest_id: u32) {
     if !quest_log.contains(&quest_id) {
         quest_log.push(quest_id);
     }

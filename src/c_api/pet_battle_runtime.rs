@@ -208,3 +208,39 @@ fn forfeit(state: &mut LuaState) -> LuaResult<u32> {
     borrow_state_mut(state)?.pet_battles.battle_state = 6;
     Ok(0)
 }
+
+#[cfg(test)]
+mod tests {
+    use crate::lua_api::WowLuaEnv;
+
+    #[test]
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    fn runtime_members_read_supplied_state() {
+        let env = WowLuaEnv::new().expect("lua env should initialize");
+        env.exec(
+            "A_Admin.SetPetBattleEffectName('Supplied effect'); \
+             A_Admin.SetPetBattleTeamState(true, false, true, true); \
+             A_Admin.SetPetBattleState(1)",
+        )
+        .expect("pet-battle state inputs");
+        let result: String = env
+            .eval(
+                r##"
+                local effects = {C_PetBattles.GetAllEffectNames()}
+                if effects[1] ~= "Supplied effect" then return "effects" end
+                if C_PetBattles.IsPlayerNPC(2) ~= true then return "player-npc" end
+                if C_PetBattles.ShouldShowPetSelect() ~= true then return "pet-select" end
+                A_Admin.SetPetBattleState(2)
+                A_Admin.SetPetBattleAvailability(1, true, 4)
+                local available, reason = C_PetBattles.IsTrapAvailable()
+                if not available or reason ~= 0 then return "trap-available" end
+                A_Admin.SetPetBattleAvailability(0, true, 4)
+                available, reason = C_PetBattles.IsTrapAvailable()
+                if available or reason ~= 4 then return "trap-unavailable" end
+                return "ok"
+                "##,
+            )
+            .expect("Rust-backed pet-battle inputs should be callable");
+        assert_eq!(result, "ok");
+    }
+}

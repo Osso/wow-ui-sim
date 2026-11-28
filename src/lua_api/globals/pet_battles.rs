@@ -9,6 +9,8 @@
 //! `A_Admin.SetPetBattleState(state?)` — missing args default to 0.
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+use crate::c_api::pet_battle_runtime_model::PetBattleMatchmaking;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 use crate::lua_api::methods::val_to_string;
 use crate::lua_api::methods::{borrow_state, borrow_state_mut, create_table};
 #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
@@ -166,6 +168,56 @@ pub fn admin_set_pet_battle_team_state(state: &mut LuaState) -> LuaResult<u32> {
     runtime.local_team_should_select = should_select;
     runtime.opponent_is_npc = opponent_is_npc;
     Ok(0)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub fn admin_set_pet_battle_matchmaking_info(state: &mut LuaState) -> LuaResult<u32> {
+    let status = read_matchmaking_status(state)?;
+    let estimated_time = read_nonnegative_integer(state, 2, "estimatedTime")?;
+    let queued_time_ms = read_nonnegative_integer(state, 3, "queuedTimeMilliseconds")?;
+    let can_accept = read_boolean(state, 4)?;
+    borrow_state_mut(state)?.pet_battles.runtime.matchmaking = PetBattleMatchmaking {
+        status,
+        estimated_time,
+        queued_time_ms,
+        can_accept,
+    };
+    Ok(0)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn read_matchmaking_status(state: &mut LuaState) -> LuaResult<u8> {
+    let value = stack_val(state, 1);
+    let status = match value {
+        Val::Nil => return Ok(0),
+        Val::Str(_) => val_to_string(state, value),
+        _ => None,
+    };
+    match status.as_deref() {
+        Some("queued") => Ok(1),
+        Some("suspended") => Ok(2),
+        Some("proposal") => Ok(3),
+        Some("entry") => Ok(4),
+        _ => Err(runtime_error(
+            "pet battle matchmaking status must be nil, queued, suspended, proposal, or entry",
+        )),
+    }
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn read_nonnegative_integer(state: &LuaState, index: i32, field: &str) -> LuaResult<i32> {
+    match stack_val(state, index) {
+        Val::Num(value)
+            if value.is_finite()
+                && value.fract() == 0.0
+                && (0.0..=f64::from(i32::MAX)).contains(&value) =>
+        {
+            Ok(value as i32)
+        }
+        _ => Err(runtime_error(format!(
+            "pet battle matchmaking {field} must be a nonnegative integer"
+        ))),
+    }
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]

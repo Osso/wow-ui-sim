@@ -24,6 +24,14 @@ Paired raw stock remains 26 keys/26 occurrences, with no additions, removals or 
 
 Retail impact check: the removed supplied-state field was Forever-only, and Retail's `c_transmog_outfit_info::catalog::get_outfits_info` implementation is unchanged. The current Retail `--lib --test integration --no-run` build passes with zero compiler warnings. The legacy direct Retail outfit-catalog test is gated by `retail-12-0-5`, which is not enabled in the current Retail profile; no current Retail runtime query result is claimed.
 
+## First-open geometry (Forever 70707)
+
+**VERIFIED (selected Blizzard files and simulator tests):** the first open of Player Spells on the Forever Camelot branch automatically minimizes it. Its parent and book sizes are 577×720 and 574×702; the book anchors to the parent bottom-left with a +4 Y inset. The parent is fitted using `min(1, screenWidth / 777, screenHeight / 860)` from the 200/140 fit buffers. At the test viewport (1024×768), the physical parent rectangle is approximately (48, 10, 515.3, 643.0). This is not the Retail expanded-panel observation.
+
+`SpellBookFrameMixin:SetMinimized` uses one view with two columns and swaps the split paper for `BookBGHalved`. The Camelot top bar has zero height and the corner flipbook is hidden. The shared page-control layout derives its width from PageText plus two 32px buttons and two 8px gaps; the default General category has one page. The passive-art test selects Protection and clicks the real next-page button to display spell 85043. The 40×40 passive button and border, centered 36×36 icon/mask, real mask and independent texture requests retain their prior contracts.
+
+The cached `Blizzard_PlayerSpells.toc:31-46` selects `Camelot/Blizzard_PlayerSpellsFrame.xml:5-12,51-59` and `.lua:37-62,94-110`; `Blizzard_PlayerSpellsRegistration.lua:4-11`, SharedXMLBase `FrameUtil.lua:169-178` and UIParentPanelManager supply fit and location. The selected shared `SpellBook/Blizzard_SpellBookFrame.lua:285-319`, Camelot `SpellBook/Blizzard_SpellBookTemplates.xml:19-54`, and shared `SpellBook/Blizzard_SpellBookItem.xml:101-154,201-210` provide the art and child dimensions. The [geometry lock](../../../tests/fixtures/forever/spellbook_layout.lua) records the exact anchors and paging sources; the [passive page fixture](../../../tests/fixtures/forever/spellbook_passive_page.lua) drives the real category navigation. No simulator spellbook code or panel dimensions changed for these five former Retail-only assertions. Native client pixel rounding remains unverified.
+
 ## Sources
 
 - [Contract](../../specs/forever-camelot-spellbook.md)

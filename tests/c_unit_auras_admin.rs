@@ -21,6 +21,26 @@ fn env() -> WowLuaEnv {
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn selected_aura_util_consumes_distinct_admin_supplied_buffs() {
+    let env = crate::common::panel_fixtures::setup_env();
+    env.exec(
+        r#"
+        A_Admin.ClearBuffs()
+        A_Admin.AddBuff(12345, "Supplied First", 135841, 60, 1)
+        A_Admin.AddBuff(12346, "Supplied Second", 135842, 60, 2)
+        local observed = {}
+        AuraUtil.ForEachAura("player", "HELPFUL", nil, function(aura)
+            observed[aura.spellId] = aura.name
+        end, true)
+        assert(observed[12345] == "Supplied First")
+        assert(observed[12346] == "Supplied Second")
+        "#,
+    )
+    .expect("selected Blizzard AuraUtil should query both supplied auras");
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn group_buff_consumer_env() -> WowLuaEnv {
     let env = env();
     let ui = wow_ui_sim::blizzard_ui_sync::default_cache_addons_path().unwrap();

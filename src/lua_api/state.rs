@@ -906,6 +906,12 @@ macro_rules! build_empty_sim_state {
             allow_recent_allies_see_location: true,
             #[cfg(feature = "client-wowforever")]
             stable_reads: crate::c_api::c_stable_info::forever::StableReadState::default(),
+            #[cfg(feature = "interaction-dialogs")]
+            interaction_dialogs: Default::default(),
+            #[cfg(feature = "player-requests")]
+            player_requests: Default::default(),
+            #[cfg(feature = "client-retail")]
+            session_logging: Default::default(),
             merchant_items: Vec::new(),
             merchant_filter: 0,
             merchant_item_refundable: HashMap::new(),

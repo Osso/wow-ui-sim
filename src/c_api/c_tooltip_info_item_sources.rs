@@ -60,7 +60,7 @@ pub(crate) fn get_guild_bank_item(state: &mut LuaState) -> LuaResult<u32> {
     publish_item_tooltip(state, item_id)
 }
 
-fn active_dialog_quest_id(state: &LuaState) -> LuaResult<Option<i32>> {
+pub(crate) fn active_dialog_quest_id(state: &LuaState) -> LuaResult<Option<i32>> {
     let sim = borrow_state(state)?;
     let Some((quest_id, _)) = sim.quest_log_entries.readiness.dialog else {
         return Ok(None);
@@ -73,7 +73,7 @@ fn active_dialog_quest_id(state: &LuaState) -> LuaResult<Option<i32>> {
     .then_some(quest_id))
 }
 
-fn quest_item_id(
+pub(crate) fn quest_item_id(
     state: &LuaState,
     quest_id: i32,
     selector: &str,

@@ -2,9 +2,7 @@
 # Blizzard UI startup. Contract: docs/specs/api-surface-audit.md.
 # Format: <name> # <intentionally-unsupported|not-yet>[: reason]
 AddSourceLocationExclude # not-yet: temporary Lua workaround
-AreClassRolesSoftSuggestions # not-yet
 AutoEquipCursorItem # not-yet
-BeginTrade # not-yet
 C_AchievementInfo.IsGuildAchievement # not-yet
 C_ActionBar.FindAssistedCombatActionButtons # not-yet
 C_ActionBar.GetProfessionQuality # not-yet
@@ -1771,9 +1769,6 @@ GetFunctionCPUUsage # not-yet: temporary Lua workaround
 GetGameMessageInfo # not-yet
 GetGlancingBlowChance # not-yet
 GetGlancingBlowPenalty # not-yet
-GetInstanceBootTimeRemaining # not-yet
-GetInstanceLockTimeRemaining # not-yet
-GetInstanceLockTimeRemainingEncounter # not-yet
 GetJailersTowerLevel # not-yet
 GetMaximumExpansionLevel # not-yet
 GetMouseButtonName # not-yet
@@ -1813,7 +1808,6 @@ GetUpgradeExpansionLevel # not-yet: temporary Lua workaround
 HasDualWieldPenalty # not-yet
 HasFullControl # not-yet
 HasIgnoreDualWieldWeapon # not-yet
-InitiateRolePoll # not-yet
 Is64BitClient # not-yet
 IsAccountSecured # not-yet: temporary Lua workaround
 IsCollisionEnabled # not-yet

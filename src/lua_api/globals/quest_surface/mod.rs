@@ -6,6 +6,8 @@
 
 pub mod data;
 mod handlers;
+#[cfg(feature = "client-retail")]
+pub(crate) use handlers::push_quest_reward_item;
 mod legacy_globals;
 mod register;
 mod task_quest;

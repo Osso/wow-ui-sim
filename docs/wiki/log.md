@@ -1,3 +1,7 @@
+## [2026-11-27] investigation | Forever hero icon and Camelot spellbook regressions
+
+Updated [the hero icon investigation](investigations/hero-spec-icon-bug.md) and [Camelot geometry](systems/forever-camelot-spellbook.md#first-open-geometry-forever-70707). **VERIFIED (simulator and selected XML/Lua):** render buckets consumed stale layout, atlas replacement retained the old numeric texture ID, and the old GPU reference excluded real overlapping solid and multi-quad draws. Forever first opens the Camelot spellbook minimized and uses one view; the new geometry lock follows the selected XML/Lua and the passive test clicks to Protection page two. No vendor UI changes.
+
 ## [2026-11-26] implementation | Documented API surface audit
 
 Added the [API surface audit contract](../specs/api-surface-audit.md) and marked the `docs/wow-client-diff` function/namespace diffs as stale in [their README](../wow-client-diff/README.md). **VERIFIED (exact Retail and Forever runs):** Retail has 2,802 documented functions without a raw runtime function or with only a temporary Lua workaround; Forever has 2,453. Each is listed with a category in `tests/data/api_surface/<profile>-missing.txt`. The test fails on a new gap, on a stale entry, and on a wrong workaround label.

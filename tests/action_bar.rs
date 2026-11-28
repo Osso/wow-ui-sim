@@ -442,6 +442,46 @@ fn supply_watched_reputation_row(env: &WowLuaEnv) {
     settle_status_bar_fades(env);
 }
 
+#[test]
+fn original_status_manager_uses_distinct_host_supplied_reputation_rows() {
+    let env = env_with_action_bar();
+    env.exec(
+        r#"A_Admin.SetReputationFactions({
+            { factionID = 72, name = "", reaction = 5,
+              currentReactionThreshold = 0, nextReactionThreshold = 1000,
+              currentStanding = 250, isWatched = true },
+        }); StatusTrackingBarManager:UpdateBarsShown()"#,
+    )
+    .expect("first supplied row should reach the original status manager");
+    settle_status_bar_fades(&env);
+    let without_name = status_manager_shows_reputation(&env);
+
+    env.exec(
+        r#"A_Admin.SetReputationFactions({
+            { factionID = 2570, name = "Hallowfall Arathi", reaction = 6,
+              currentReactionThreshold = 1000, nextReactionThreshold = 5000,
+              currentStanding = 3000, isWatched = true },
+        }); StatusTrackingBarManager:UpdateBarsShown()"#,
+    )
+    .expect("second supplied row should reach the original status manager");
+    settle_status_bar_fades(&env);
+    let with_name = status_manager_shows_reputation(&env);
+
+    assert_eq!((without_name, with_name), (false, true));
+}
+
+fn status_manager_shows_reputation(env: &WowLuaEnv) -> bool {
+    env.eval(
+        r#"local manager = StatusTrackingBarManager
+        local reputation = StatusTrackingBarInfo.BarsEnum.Reputation
+        for _, bar in ipairs(manager.shownBarIndices) do
+            if bar == reputation then return true end
+        end
+        return false"#,
+    )
+    .expect("read selected status manager output")
+}
+
 /// Moving XP from the main to the secondary container fades both out first, then
 /// `onFinishedAnimating` re-runs UpdateBarsShown (Shared/StatusTrackingManager.lua:41-44, 74-85).
 fn settle_status_bar_fades(env: &WowLuaEnv) {
