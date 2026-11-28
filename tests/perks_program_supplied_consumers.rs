@@ -179,7 +179,7 @@ fn pending_chest_rewards_drive_original_monthly_activity_glows() {
     env.exec(&format!("A_Admin.SetPerksActivities([==[{MONTHLY_ACTIVITIES}]==])"))
         .expect("A_Admin should accept the supplied activities and thresholds");
     env.exec(
-        "SetCVar('perksActivitiesLastPoints', '200'); ShowUIPanel(EncounterJournal); EncounterJournal.MonthlyActivitiesTab:Click()",
+        "SetCVar('perksActivitiesCurrentMonth', '11'); SetCVar('perksActivitiesLastPoints', '200'); ShowUIPanel(EncounterJournal); EncounterJournal.MonthlyActivitiesTab:Click()",
     )
     .expect("original Encounter Journal tab should open Monthly Activities");
     supply_pending_chest_rewards(&env);
