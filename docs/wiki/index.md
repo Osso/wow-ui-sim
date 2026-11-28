@@ -1,6 +1,6 @@
 ## [2026-11-28] investigation | Retail secure dependency XML replay
 
-[Retail secure dependency XML replay](investigations/retail-secure-dependency-xml-replay.md) records the unresolved simulator conflict. **VERIFIED (Retail exact runs at e260b5c21):** the AutoComplete secure-dependency test fails while six selected Glue tests pass. **INFERRED (R88g.1, R88t.t1/t2):** the native evidence does not establish XML replay for an already ordinary-loaded dependency; R88h4 is pending.
+[Retail secure dependency XML replay](investigations/retail-secure-dependency-xml-replay.md) records the unresolved simulator conflict. **VERIFIED (exact final Retail run at 373c970dd):** the AutoComplete secure-dependency test still fails after the CreateFrame change, while six selected Glue tests pass. **INFERRED (R88g.1, R88t.t1/t2):** the native evidence does not establish XML replay for an already ordinary-loaded dependency; R88h4 is pending.
 
 ## [2026-11-26] investigation | Restricted environment item helper bindings
 

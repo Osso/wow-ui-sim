@@ -10,13 +10,13 @@
 
 **VERIFIED (commit `5a7104d29b` and the prior lane report):** replaying dependency XML made the AutoComplete secure-dependency test pass. **VERIFIED (Retail simulator trace):** the same broad replay produced duplicate Glue XML lifecycle errors, including nil `AccountLogin` in `GlueParent` and nil `AddLuaErrorHandler` in `ScriptErrorsFrame`.
 
-**VERIFIED (commit `4a972b832`):** the current loader skips all XML in `SecureDependency` when that addon is already ordinarily loaded; eligible Lua files still load securely, and the special Retail `RaidWarning.xml` guard remains. **VERIFIED (exact Retail runs at `e260b5c21c8d302934f443f0c37b69b0cccbffd0`):** six selected Glue tests pass, while `retail_catalog_shop_secure_dependency_publishes_autocomplete_names_without_overwrite` fails. Its probe returns `(false, false, true, true, true)` instead of `(true, true, true, true, true)`; `AutoComplete.lua:135` also reports nil `EventRegistry`.
+**VERIFIED (commit `4a972b832`):** the current loader skips all XML in `SecureDependency` when that addon is already ordinarily loaded; eligible Lua files still load securely, and the special Retail `RaidWarning.xml` guard remains. **VERIFIED (exact Retail runs at `e260b5c21c8d302934f443f0c37b69b0cccbffd0` and final code `373c970dddbbd6f836ae9bb7cdc9eee18c69e64d`):** six selected Glue tests pass, while `retail_catalog_shop_secure_dependency_publishes_autocomplete_names_without_overwrite` still fails after the CreateFrame change. Its final probe returns `(false, false, true, true, true)` instead of `(true, true, true, true, true)`.
 
 **INFERRED (R88g.1, R88t.t1/t2):** these results expose opposing simulator outcomes, but the cited native evidence does not justify either broad XML replay or a TOC/`addToSecureEnv` exception. Keep the current loader rule and leave the AutoComplete test failing until R88h4 answers whether the native secure pass replays XML for an already ordinary-loaded dependency.
 
 ## Proof
 
-**VERIFIED (Retail exact runs at `e260b5c21c8d302934f443f0c37b69b0cccbffd0`):** the AutoComplete secure-dependency test fails with the missing secure names above; all six selected Glue tests pass. The empty-roster test still logs its explicitly non-asserted post-transition CharacterCreate setup diagnostics; its transition assertion passes. See the lane report for receipts and exact test logs.
+**VERIFIED (exact final Retail run at `373c970dddbbd6f836ae9bb7cdc9eee18c69e64d`):** the AutoComplete secure-dependency test still fails with the missing secure names above after the CreateFrame change. **VERIFIED (exact Retail runs at the same final code):** all six selected Glue tests pass. The empty-roster test still logs its explicitly non-asserted post-transition CharacterCreate setup diagnostics; its transition assertion passes. See the lane report for receipts and exact test logs.
 
 ## Pending native question
 

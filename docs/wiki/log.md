@@ -1,6 +1,6 @@
 ## [2026-11-28] investigation | Retail secure dependency XML replay
 
-Updated [the investigation](investigations/retail-secure-dependency-xml-replay.md) with the current conflict and pending R88h4 question. **VERIFIED (Retail exact runs at e260b5c21):** the AutoComplete secure-dependency test fails, while six selected Glue tests pass. **INFERRED (R88g.1, R88t.t1/t2):** the cited evidence does not establish XML replay for an already ordinary-loaded dependency, so the loader rule remains unchanged.
+Updated [the investigation](investigations/retail-secure-dependency-xml-replay.md) with the final-code result and pending R88h4 question. **VERIFIED (exact final Retail run at 373c970dd):** the AutoComplete secure-dependency test still fails after the CreateFrame change, while six selected Glue tests pass. **INFERRED (R88g.1, R88t.t1/t2):** the cited evidence does not establish XML replay for an already ordinary-loaded dependency, so the loader rule remains unchanged.
 
 ## [2026-11-27] investigation | Forever hero icon and Camelot spellbook regressions
 
