@@ -148,6 +148,8 @@ fn register_admin_player_services(builder: TableBuilder) -> LuaResult<TableBuild
         .set_function("SetPlayerNPERestricted", set_player_npe_restricted)?;
     let builder = register_player(builder)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let builder = crate::c_api::c_player_info_travelers_log::register_admin(builder)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     let builder = register_admin_modeled_services(builder)?;
     #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
     let builder = crate::c_api::c_navigation::register_admin(builder)?;
@@ -202,6 +204,7 @@ fn register_admin_calendar_services(builder: TableBuilder) -> LuaResult<TableBui
     let builder = crate::c_api::c_date_and_time::register_admin(builder)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     let builder = crate::c_api::c_perks_program::register_admin(builder)?;
+    let builder = crate::c_api::perks_activities::register_admin(builder)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     let builder = crate::c_api::target_spell::register_admin(builder)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]

@@ -457,3 +457,50 @@ fn blizzard_questnavigation_toc_is_absent_from_classic_caches() {
     assert!(wow_ui_sim::loader::find_toc_file(&dir).is_none());
 }
 }
+
+#[cfg(feature = "client-wowforever")]
+fn tick_and_read_forever_navigation_target(
+    env: &WowLuaEnv,
+    input: &str,
+) -> (String, i32, bool, bool, bool) {
+    env.exec(input).expect("supply selected navigation target");
+    env.fire_on_update(1.0 / 60.0)
+        .expect("tick original navigation consumer");
+    env.eval(
+        "return SuperTrackedFrame.DistanceText:GetText(), C_Navigation.GetTargetState(), C_Navigation.GetFrame() ~= nil, C_Navigation.HasValidScreenPosition(), C_Navigation.WasClampedToScreen()",
+    )
+    .expect("read original navigation consumer")
+}
+
+#[cfg(feature = "client-wowforever")]
+#[test]
+fn forever_navigation_target_drives_original_super_tracked_frame() {
+    let env = load_full_game_ui();
+    let first = tick_and_read_forever_navigation_target(
+        &env,
+        r#"
+        C_SuperTrack.SetSuperTrackedContent(Enum.ContentTrackingType.Achievement, 80002)
+        A_Admin.SetNavigationTarget({state=Enum.NavigationState.InRange, distance=125,
+            clamped=false, screenX=10, screenY=20})
+        "#,
+    );
+    let second = tick_and_read_forever_navigation_target(
+        &env,
+        "A_Admin.SetNavigationTarget({state=Enum.NavigationState.Occluded, distance=40, clamped=false, screenX=0, screenY=0})",
+    );
+
+    assert!(first.0.contains("125"));
+    assert_eq!((first.1, first.2, first.3, first.4), (2, true, true, false));
+    assert!(second.0.contains("40"));
+    assert_eq!((second.1, second.2, second.3, second.4), (1, true, false, false));
+    assert_ne!(first.0, second.0);
+
+    env.exec("A_Admin.SetNavigationTarget(nil)")
+        .expect("clear navigation input");
+    env.fire_on_update(1.0 / 60.0)
+        .expect("tick destroyed navigation consumer");
+    let cleared: (bool, i32, i32) = env
+        .eval("return C_Navigation.GetFrame() == nil, C_Navigation.GetTargetState(), SuperTrackedFrame:GetNumPoints()")
+        .expect("read cleared navigation state");
+    assert_eq!(cleared, (true, 0, 0));
+}

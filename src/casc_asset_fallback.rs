@@ -133,9 +133,29 @@ fn parse_hex_16(hex: &str) -> Option<[u8; 16]> {
 
 #[cfg(feature = "casc")]
 fn write_asset(out_path: &Path, bytes: &[u8]) -> Result<(), String> {
-    let parent = out_path
-        .parent()
-        .ok_or_else(|| format!("missing parent for {}", out_path.display()))?;
-    std::fs::create_dir_all(parent).map_err(|err| format!("mkdir {}: {err}", parent.display()))?;
-    std::fs::write(out_path, bytes).map_err(|err| format!("write {}: {err}", out_path.display()))
+    sim_texture::resolve::write_cache_file_atomically(out_path, |temporary| {
+        std::fs::write(temporary, bytes)
+    })
+    .map_err(|err| format!("write {}: {err}", out_path.display()))
+}
+
+#[cfg(all(test, feature = "casc"))]
+mod tests {
+    use super::*;
+    use std::io::Read;
+
+    #[test]
+    fn extracted_asset_readers_keep_their_complete_file() {
+        let root = tempfile::tempdir().unwrap();
+        let path = root.path().join("asset.blp");
+        write_asset(&path, b"first complete asset").unwrap();
+        let mut reader = std::fs::File::open(&path).unwrap();
+        std::thread::scope(|scope| {
+            scope.spawn(|| write_asset(&path, b"second complete asset").unwrap());
+        });
+        let mut opened = Vec::new();
+        reader.read_to_end(&mut opened).unwrap();
+        assert_eq!(opened, b"first complete asset");
+        assert_eq!(std::fs::read(&path).unwrap(), b"second complete asset");
+    }
 }

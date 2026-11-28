@@ -181,7 +181,9 @@ pub(crate) mod misc_global_frame_defaults;
 pub(crate) mod modified_click_defaults;
 #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod mount_journal_dynamic_flight_popup;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod mythic_plus_cache_defaults;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod navigation_defaults;
 pub(crate) mod object_api_request_load_callbacks;
 pub(crate) mod objective_tracker_quest_header;
@@ -193,6 +195,7 @@ pub(crate) mod party_info_instance_abandon_defaults;
 pub(crate) mod party_info_static_defaults;
 pub(crate) mod patch_12_1_inert_defaults;
 pub(crate) mod performance_metric_defaults;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod perks_activities_state;
 #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod perks_program_defaults;
@@ -230,6 +233,7 @@ pub(crate) mod scripted_animation_effect_defaults;
 pub(crate) mod secure_env_global_snapshot;
 pub(crate) mod secure_legacy_unit_globals;
 pub(crate) mod secure_reference_defaults;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod secure_transfer_state;
 pub(crate) mod secure_types_defaults;
 pub(crate) mod settings_canvas_visibility;
@@ -255,8 +259,10 @@ pub(crate) mod startup_namespace_defaults;
 pub(crate) mod startup_service_capability_defaults;
 pub(crate) mod startup_windows;
 pub(crate) mod static_popup_defaults;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod store_glue_state;
 pub(crate) mod store_public_defaults;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod super_track_defaults;
 #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod talent_edge_frame_level_sync;

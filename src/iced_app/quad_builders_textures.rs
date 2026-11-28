@@ -64,7 +64,9 @@ fn resolve_texture_path(f: &crate::widget::Frame) -> Option<Cow<'_, str>> {
     }
 
     let file_data_id = u32::try_from(f.texture_file_data_id?).ok()?;
-    let path = crate::manifest_interface_data::get_texture_path(file_data_id)?;
+    let Some(path) = crate::manifest_interface_data::get_texture_path(file_data_id) else {
+        return crate::texture::file_data_id_texture_path(file_data_id).map(Cow::Owned);
+    };
     Some(Cow::Owned(format!(
         "Interface\\{}",
         path.replace('/', "\\")
@@ -817,6 +819,27 @@ mod tests {
             ),
             tint: [1.0, 1.0, 1.0, 1.0],
             blend: BlendMode::Alpha,
+        }
+    }
+
+    #[test]
+    fn unlisted_file_id_produces_a_texture_request() {
+        let file_data_id = 999_999_999;
+        assert!(crate::manifest_interface_data::get_texture_path(file_data_id).is_none());
+        let mut frame = Frame::new(WidgetType::Texture, None, None);
+        frame.texture_file_data_id = Some(i64::from(file_data_id));
+        let bounds = Rectangle::new(Point::ORIGIN, Size::new(32.0, 32.0));
+        let mut batch = QuadBatch::new();
+
+        build_texture_quads(&mut batch, bounds, &frame, None, 1.0);
+
+        if cfg!(feature = "casc") {
+            assert_eq!(batch.texture_requests.len(), 1);
+            assert_eq!(batch.texture_requests[0].path, r"FileDataID\999999999");
+            assert_eq!(batch.vertices.len(), 4);
+        } else {
+            assert!(batch.texture_requests.is_empty());
+            assert!(batch.vertices.is_empty());
         }
     }
 

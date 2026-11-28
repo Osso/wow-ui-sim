@@ -46,9 +46,20 @@ fn try_casc_resolve(manager: &TextureManager, normalized_path: &str) -> Option<P
     }
 
     let resolver = crate::asset_resolver_config::resolver();
+    if let Some(file_data_id) = file_data_id_from_path(normalized_path) {
+        return resolve_file_data_id(manager, resolver, file_data_id);
+    }
 
+    let (file_data_id, listfile_path) = lookup_texture_asset(resolver, normalized_path)?;
+    extract_casc_asset(manager, resolver, file_data_id, &listfile_path)
+}
+
+#[cfg(feature = "casc")]
+fn lookup_texture_asset(
+    resolver: &asset_resolver::CascListfileResolver,
+    normalized_path: &str,
+) -> Option<(u32, String)> {
     // Listfile entries always include the file extension; our normalized paths usually don't.
-    // Try common UI asset extensions.
     let lower = normalized_path.to_ascii_lowercase();
     let prefixed =
         (!lower.starts_with("interface/")).then(|| format!("Interface/{normalized_path}"));
@@ -56,15 +67,45 @@ fn try_casc_resolve(manager: &TextureManager, normalized_path: &str) -> Option<P
         .chain(prefixed)
         .collect();
     let candidates: &[&str] = &["blp", "BLP", "tga", "TGA", "ttf", "TTF", "otf", "OTF"];
-    let (fdid, listfile_path) = bases
+    bases
         .iter()
         .flat_map(|b| {
             std::iter::once(b.clone()).chain(candidates.iter().map(move |ext| format!("{b}.{ext}")))
         })
-        .find_map(|p| lookup_casc_path(resolver, &p))?;
+        .find_map(|p| lookup_casc_path(resolver, &p))
+}
 
+#[cfg(feature = "casc")]
+fn file_data_id_from_path(normalized_path: &str) -> Option<u32> {
+    let prefix = "filedataid/";
+    let id = normalized_path
+        .get(..prefix.len())
+        .filter(|head| head.eq_ignore_ascii_case(prefix))
+        .map_or(normalized_path, |_| &normalized_path[prefix.len()..]);
+    id.parse::<u32>().ok().filter(|&id| id != 0)
+}
+
+#[cfg(feature = "casc")]
+fn resolve_file_data_id(
+    manager: &TextureManager,
+    resolver: &asset_resolver::CascListfileResolver,
+    file_data_id: u32,
+) -> Option<PathBuf> {
+    let relative = resolver
+        .resolve_path(file_data_id)
+        .unwrap_or_else(|| format!("filedataid/{file_data_id}.blp"));
+    extract_casc_asset(manager, resolver, file_data_id, &relative)
+}
+
+#[cfg(feature = "casc")]
+fn extract_casc_asset(
+    manager: &TextureManager,
+    resolver: &asset_resolver::CascListfileResolver,
+    file_data_id: u32,
+    relative_path: &str,
+) -> Option<PathBuf> {
     let extract_dir = casc_extract_dir()?;
-    let safe_relative = listfile_path.replace('\\', "/");
+    let safe_relative = relative_path.replace('\\', "/");
     let out_path = extract_dir.join(&safe_relative);
     if let Some(parent) = out_path.parent() {
         std::fs::create_dir_all(parent).ok()?;
@@ -76,14 +117,27 @@ fn try_casc_resolve(manager: &TextureManager, normalized_path: &str) -> Option<P
         index.observe_source(&extract_dir, &safe_relative);
         index.observe_entry(&out_path);
     }
-
     if out_path.exists() {
         return Some(out_path);
     }
+    extract_into_cache(resolver, file_data_id, &out_path)
+        .or_else(|| crate::casc_asset_fallback::ensure_known_asset_cached(relative_path, &out_path))
+}
 
-    resolver.ensure_cached(fdid, &out_path).or_else(|| {
-        crate::casc_asset_fallback::ensure_known_asset_cached(&listfile_path, &out_path)
+#[cfg(feature = "casc")]
+fn extract_into_cache(
+    resolver: &asset_resolver::CascListfileResolver,
+    fdid: u32,
+    path: &Path,
+) -> Option<PathBuf> {
+    write_cache_file_atomically(path, |temporary| {
+        resolver
+            .ensure_cached(fdid, temporary)
+            .map(|_| ())
+            .ok_or_else(|| std::io::Error::other("CASC extraction failed"))
     })
+    .ok()?;
+    Some(path.to_path_buf())
 }
 
 #[cfg(feature = "casc")]
@@ -400,6 +454,48 @@ mod tests {
         assert_eq!(cached.width, 1);
         assert_eq!(cached.height, 2);
         assert_eq!(cached.pixels, stored.pixels);
+    }
+
+    #[test]
+    fn persistent_crop_cache_readers_keep_their_complete_image() {
+        use sim_texture::resolve::{
+            load_persistent_sub_region_cache, store_persistent_sub_region_cache,
+        };
+        let root = tempfile::tempdir().unwrap();
+        let key = "Interface/Foo/Atlas#crop";
+        let original = pixel_fixture(12);
+        let replacement = pixel_fixture(93);
+        store_persistent_sub_region_cache(root.path(), key, &original);
+        let reader =
+            std::fs::File::open(persistent_sub_region_cache_path(root.path(), key)).unwrap();
+        std::thread::scope(|scope| {
+            scope.spawn(|| store_persistent_sub_region_cache(root.path(), key, &replacement));
+        });
+        let opened = decode_opened_image(reader);
+        assert_eq!(opened.as_raw().as_slice(), original.pixels.as_ref());
+        assert_eq!(
+            load_persistent_sub_region_cache(root.path(), key)
+                .unwrap()
+                .pixels,
+            replacement.pixels
+        );
+    }
+
+    fn pixel_fixture(color: u8) -> TextureData {
+        TextureData {
+            width: 1,
+            height: 1,
+            pixels: Arc::from([color, 0, 0, 255]),
+        }
+    }
+
+    fn decode_opened_image(reader: std::fs::File) -> image::RgbaImage {
+        image::ImageReader::new(std::io::BufReader::new(reader))
+            .with_guessed_format()
+            .unwrap()
+            .decode()
+            .unwrap()
+            .to_rgba8()
     }
 
     #[test]

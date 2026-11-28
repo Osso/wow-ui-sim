@@ -9,6 +9,7 @@ Environment-owned source lookup reduces repeated filesystem enumeration in `SetT
 - [ ] Discover file creation/deletion and root changes without retaining stale negative decisions; invalidate source listings and CPU negatives on root changes and UI reload. Unchanged repeated frame loads must not repeatedly enumerate missing-source directories.
 - [ ] Repeated assignments retain field, secret, atlas, color and tiling effects, including nil/empty clears.
 - [ ] Bound directory opens for repeated mixed-case requests, measured against a concrete filesystem fixture rather than internal calls.
+- [ ] Publish shared CASC extractions and persistent PNG crops only after the complete asset is written. Readers that opened the previous complete file keep its contents.
 
 ## How it works
 
