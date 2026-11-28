@@ -57,8 +57,7 @@ fn supply_pending_chest_reward_snapshot(env: &WowLuaEnv, rewards: &str) {
 }
 
 #[cfg(feature = "client-retail")]
-fn load_monthly_activities_consumer() -> WowLuaEnv {
-    let ui = crate::common::blizzard_addon_harness::blizzard_ui_dir();
+fn assert_monthly_activities_toc_selects_consumer(ui: &std::path::Path) {
     let toc_path = find_toc_file(&ui.join("Blizzard_EncounterJournal"))
         .expect("Encounter Journal TOC should resolve");
     let toc = TocFile::from_file(&toc_path).expect("Encounter Journal TOC should parse");
@@ -66,7 +65,12 @@ fn load_monthly_activities_consumer() -> WowLuaEnv {
     assert!(toc.files.iter().any(|file| {
         file == std::path::Path::new("Mainline/Blizzard_MonthlyActivities.lua")
     }));
+}
 
+#[cfg(feature = "client-retail")]
+fn load_monthly_activities_consumer() -> WowLuaEnv {
+    let ui = crate::common::blizzard_addon_harness::blizzard_ui_dir();
+    assert_monthly_activities_toc_selects_consumer(&ui);
     let env = WowLuaEnv::new().expect("Lua environment should initialize");
     env.set_screen_size(1024.0, 768.0);
     env.set_screen_mode(ScreenKind::Game);
