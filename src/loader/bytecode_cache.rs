@@ -566,10 +566,15 @@ fn truncate_pack(path: &Path, len: usize) -> std::io::Result<()> {
 }
 
 fn write_pack_entry(file: &mut std::fs::File, hash: u64, bytecode: &[u8]) -> std::io::Result<()> {
-    file.write_all(&hash.to_le_bytes())?;
-    file.write_all(&(bytecode.len() as u32).to_le_bytes())?;
-    file.write_all(bytecode)?;
-    Ok(())
+    // One write for the whole entry: the pack is opened for append by every
+    // simulator process, and an append is placed at the end as one piece, so
+    // two processes adding entries at once cannot interleave their headers
+    // and bytes (three writes could).
+    let mut entry = Vec::with_capacity(PACK_ENTRY_HEADER_LEN + bytecode.len());
+    entry.extend_from_slice(&hash.to_le_bytes());
+    entry.extend_from_slice(&(bytecode.len() as u32).to_le_bytes());
+    entry.extend_from_slice(bytecode);
+    file.write_all(&entry)
 }
 
 #[cfg(test)]
@@ -969,6 +974,48 @@ mod tests {
         assert_eq!(state.values, original_values);
         assert_eq!(state.index, original_index);
         assert_eq!(state.pack_exists, original_pack_exists);
+    }
+
+    #[test]
+    fn concurrent_appends_keep_each_entry_whole() {
+        let (_dir, path) = temp_pack_path("concurrent-append");
+        std::fs::write(&path, b"").unwrap();
+        let writers: Vec<_> = (0..4u8)
+            .map(|writer| {
+                let path = path.clone();
+                std::thread::spawn(move || {
+                    let mut file = std::fs::OpenOptions::new()
+                        .append(true)
+                        .open(&path)
+                        .unwrap();
+                    for n in 0..200u64 {
+                        let bytecode = vec![writer; 64 + (n as usize % 7) * 100];
+                        write_pack_entry(&mut file, u64::from(writer) << 32 | n, &bytecode)
+                            .unwrap();
+                    }
+                })
+            })
+            .collect();
+        for writer in writers {
+            writer.join().unwrap();
+        }
+
+        let bytes = std::fs::read(&path).unwrap();
+        let mut pos = 0;
+        let mut entries = 0;
+        while pos < bytes.len() {
+            let hash = u64::from_le_bytes(bytes[pos..pos + 8].try_into().unwrap());
+            let len = u32::from_le_bytes(bytes[pos + 8..pos + 12].try_into().unwrap()) as usize;
+            let body = &bytes[pos + PACK_ENTRY_HEADER_LEN..pos + PACK_ENTRY_HEADER_LEN + len];
+            let writer = (hash >> 32) as u8;
+            assert!(
+                body.iter().all(|&b| b == writer),
+                "entry {entries} interleaved"
+            );
+            pos += PACK_ENTRY_HEADER_LEN + len;
+            entries += 1;
+        }
+        assert_eq!(entries, 800);
     }
 
     fn temp_pack_path(test_name: &str) -> (tempfile::TempDir, PathBuf) {

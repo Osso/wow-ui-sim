@@ -39,6 +39,30 @@ fn casc_extract_dir() -> Option<PathBuf> {
     Some(dir)
 }
 
+/// Extract a CASC file into the shared extract cache without another process
+/// ever seeing it half written: it is written under a name of this process's
+/// own and renamed into place (the cache is shared by simulator processes
+/// running at the same time, and a reader takes any file that exists).
+#[cfg(feature = "casc")]
+fn extract_into_place(
+    resolver: &asset_resolver::CascListfileResolver,
+    fdid: u32,
+    out_path: &std::path::Path,
+) -> Option<PathBuf> {
+    let mut temp_name = out_path.file_name()?.to_os_string();
+    temp_name.push(format!(".{}.part", std::process::id()));
+    let temp_path = out_path.with_file_name(temp_name);
+    resolver.ensure_cached(fdid, &temp_path)?;
+    if std::fs::rename(&temp_path, out_path).is_err() {
+        // Another process put the same file in place first (and may have it open).
+        let _ = std::fs::remove_file(&temp_path);
+        if !out_path.exists() {
+            return None;
+        }
+    }
+    Some(out_path.to_path_buf())
+}
+
 #[cfg(feature = "casc")]
 fn try_casc_resolve(manager: &TextureManager, normalized_path: &str) -> Option<PathBuf> {
     if !casc_enabled() {
@@ -81,7 +105,7 @@ fn try_casc_resolve(manager: &TextureManager, normalized_path: &str) -> Option<P
         return Some(out_path);
     }
 
-    resolver.ensure_cached(fdid, &out_path).or_else(|| {
+    extract_into_place(resolver, fdid, &out_path).or_else(|| {
         crate::casc_asset_fallback::ensure_known_asset_cached(&listfile_path, &out_path)
     })
 }
