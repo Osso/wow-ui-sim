@@ -50,8 +50,16 @@ fn try_casc_resolve(manager: &TextureManager, normalized_path: &str) -> Option<P
         return resolve_file_data_id(manager, resolver, file_data_id);
     }
 
+    let (file_data_id, listfile_path) = lookup_texture_asset(resolver, normalized_path)?;
+    extract_casc_asset(manager, resolver, file_data_id, &listfile_path)
+}
+
+#[cfg(feature = "casc")]
+fn lookup_texture_asset(
+    resolver: &asset_resolver::CascListfileResolver,
+    normalized_path: &str,
+) -> Option<(u32, String)> {
     // Listfile entries always include the file extension; our normalized paths usually don't.
-    // Try common UI asset extensions.
     let lower = normalized_path.to_ascii_lowercase();
     let prefixed =
         (!lower.starts_with("interface/")).then(|| format!("Interface/{normalized_path}"));
@@ -59,34 +67,12 @@ fn try_casc_resolve(manager: &TextureManager, normalized_path: &str) -> Option<P
         .chain(prefixed)
         .collect();
     let candidates: &[&str] = &["blp", "BLP", "tga", "TGA", "ttf", "TTF", "otf", "OTF"];
-    let (fdid, listfile_path) = bases
+    bases
         .iter()
         .flat_map(|b| {
             std::iter::once(b.clone()).chain(candidates.iter().map(move |ext| format!("{b}.{ext}")))
         })
-        .find_map(|p| lookup_casc_path(resolver, &p))?;
-
-    let extract_dir = casc_extract_dir()?;
-    let safe_relative = listfile_path.replace('\\', "/");
-    let out_path = extract_dir.join(&safe_relative);
-    if let Some(parent) = out_path.parent() {
-        std::fs::create_dir_all(parent).ok()?;
-    }
-    // Observe after our own directory creation so an unchanged extraction miss
-    // stays cheap. Native CASC availability retains the existing reload boundary.
-    {
-        let mut index = manager.source_index.borrow_mut();
-        index.observe_source(&extract_dir, &safe_relative);
-        index.observe_entry(&out_path);
-    }
-
-    if out_path.exists() {
-        return Some(out_path);
-    }
-
-    resolver.ensure_cached(fdid, &out_path).or_else(|| {
-        crate::casc_asset_fallback::ensure_known_asset_cached(&listfile_path, &out_path)
-    })
+        .find_map(|p| lookup_casc_path(resolver, &p))
 }
 
 #[cfg(feature = "casc")]
@@ -105,13 +91,27 @@ fn resolve_file_data_id(
     resolver: &asset_resolver::CascListfileResolver,
     file_data_id: u32,
 ) -> Option<PathBuf> {
-    let extract_dir = casc_extract_dir()?;
     let relative = resolver
         .resolve_path(file_data_id)
         .unwrap_or_else(|| format!("filedataid/{file_data_id}.blp"));
-    let safe_relative = relative.replace('\\', "/");
+    extract_casc_asset(manager, resolver, file_data_id, &relative)
+}
+
+#[cfg(feature = "casc")]
+fn extract_casc_asset(
+    manager: &TextureManager,
+    resolver: &asset_resolver::CascListfileResolver,
+    file_data_id: u32,
+    relative_path: &str,
+) -> Option<PathBuf> {
+    let extract_dir = casc_extract_dir()?;
+    let safe_relative = relative_path.replace('\\', "/");
     let out_path = extract_dir.join(&safe_relative);
-    std::fs::create_dir_all(out_path.parent()?).ok()?;
+    if let Some(parent) = out_path.parent() {
+        std::fs::create_dir_all(parent).ok()?;
+    }
+    // Observe after our own directory creation so an unchanged extraction miss
+    // stays cheap. Native CASC availability retains the existing reload boundary.
     {
         let mut index = manager.source_index.borrow_mut();
         index.observe_source(&extract_dir, &safe_relative);
@@ -122,7 +122,7 @@ fn resolve_file_data_id(
     }
     resolver
         .ensure_cached(file_data_id, &out_path)
-        .or_else(|| crate::casc_asset_fallback::ensure_known_asset_cached(&relative, &out_path))
+        .or_else(|| crate::casc_asset_fallback::ensure_known_asset_cached(relative_path, &out_path))
 }
 
 #[cfg(feature = "casc")]
