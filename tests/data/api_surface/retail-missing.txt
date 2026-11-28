@@ -1132,8 +1132,6 @@ C_LoreText.RequestLoreTextForCampaignID # not-yet
 C_Macro.SetMacroExecuteLineCallback # not-yet
 C_Mail.GetCraftingOrderMailInfo # not-yet
 C_Mail.IsCommandPending # not-yet
-C_MajorFactions.GetRenownNPCFactionID # not-yet: temporary Lua workaround
-C_MajorFactions.IsMajorFactionHiddenFromExpansionPage # not-yet: temporary Lua workaround
 C_MajorFactions.IsWeeklyRenownCapped # not-yet
 C_Map.GetMapArtZoneTextPosition # not-yet
 C_Map.GetMapHighlightInfoAtPosition # not-yet

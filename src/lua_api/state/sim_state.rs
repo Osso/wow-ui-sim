@@ -477,6 +477,10 @@ pub struct SimState {
     /// INFERRED current-player object snapshot with host-supplied candidates.
     pub possession_object: Option<crate::c_api::c_tooltip_info_possession::PossessionObjectInput>,
     pub major_factions: HashMap<i64, MajorFactionData>,
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub major_factions_hidden: HashSet<i64>,
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub renown_npc_faction_id: i64,
     pub major_faction_renown_levels: HashMap<i64, Vec<RenownLevelInfo>>,
     /// Explicit pair-keyed reward inputs only; no fabricated default rows.
     pub major_faction_renown_rewards:

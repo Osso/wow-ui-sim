@@ -21,17 +21,17 @@ pub(crate) use renown_admin::register_admin as register_renown_admin;
 pub use renown_rewards::RenownRewardInfo;
 
 use crate::c_api::helpers::ensure_namespace;
-#[cfg(feature = "client-retail")]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 use crate::lua_api::methods::borrow_state_mut;
 use crate::lua_api::methods::{
     borrow_state, call_function_state, create_string, create_table, create_table_with_fields,
     table_set_num, table_set_static,
 };
 use crate::lua_api::state::RenownLevelInfo;
-#[cfg(feature = "client-retail")]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 use crate::lua_bridge::TableBuilder;
 use crate::lua_bridge::{FromStack, table_set_rust_fn_static};
-#[cfg(feature = "client-retail")]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 use rilua::runtime_error;
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
@@ -55,32 +55,48 @@ pub(crate) fn register_c_major_factions_surface(state: &mut LuaState) -> LuaResu
         renown_rewards::get_renown_rewards_for_level,
     )?;
     table_set_rust_fn_static(state, ns, "GetMajorFactionIDs", get_major_faction_ids)?;
-    #[cfg(feature = "client-retail")]
-    {
-        table_set_rust_fn_static(
-            state,
-            ns,
-            "ShouldDisplayMajorFactionAsJourney",
-            should_display_as_journey,
-        )?;
-        table_set_rust_fn_static(
-            state,
-            ns,
-            "ShouldUseJourneyRewardTrack",
-            should_use_journey_reward_track,
-        )?;
-    }
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    register_display_policy(state, ns)?;
     table_set_rust_fn_static(state, ns, "GetCurrentRenownLevel", get_current_renown_level)?;
     table_set_rust_fn_static(state, ns, "HasMaximumRenown", has_maximum_renown)?;
     Ok(())
 }
 
-#[cfg(feature = "client-retail")]
-pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
-    builder.set_function("SetMajorFactionJourneyFlags", set_journey_flags)
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn register_display_policy(
+    state: &mut LuaState,
+    ns: rilua::vm::gc::arena::GcRef<rilua::vm::table::Table>,
+) -> LuaResult<()> {
+    table_set_rust_fn_static(
+        state,
+        ns,
+        "ShouldDisplayMajorFactionAsJourney",
+        should_display_as_journey,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        ns,
+        "ShouldUseJourneyRewardTrack",
+        should_use_journey_reward_track,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        ns,
+        "IsMajorFactionHiddenFromExpansionPage",
+        faction_is_hidden,
+    )?;
+    table_set_rust_fn_static(state, ns, "GetRenownNPCFactionID", renown_npc_faction_id)
 }
 
-#[cfg(feature = "client-retail")]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
+    builder
+        .set_function("SetMajorFactionJourneyFlags", set_journey_flags)?
+        .set_function("SetMajorFactionHidden", set_faction_hidden)?
+        .set_function("SetRenownNPCFactionID", set_renown_npc_faction_id)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 // INFERRED (R88cu): unknown faction IDs return false; native evidence is pending.
 fn should_display_as_journey(state: &mut LuaState) -> LuaResult<u32> {
     let should_display = read_journey_flags(state)?.is_some_and(|(display, _)| display);
@@ -88,7 +104,7 @@ fn should_display_as_journey(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-#[cfg(feature = "client-retail")]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 // INFERRED (R88cu): read each supplied faction's reward-track selection.
 fn should_use_journey_reward_track(state: &mut LuaState) -> LuaResult<u32> {
     let should_use_track =
@@ -97,7 +113,7 @@ fn should_use_journey_reward_track(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-#[cfg(feature = "client-retail")]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn read_journey_flags(state: &LuaState) -> LuaResult<Option<(bool, bool)>> {
     let Ok(faction_id) = i64::from_stack(state, 1) else {
         return Ok(None);
@@ -113,7 +129,7 @@ fn read_journey_flags(state: &LuaState) -> LuaResult<Option<(bool, bool)>> {
         }))
 }
 
-#[cfg(feature = "client-retail")]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn set_journey_flags(state: &mut LuaState) -> LuaResult<u32> {
     let faction_id = i64::from_stack(state, 1)?;
     let should_display = bool::from_stack(state, 2)?;
@@ -126,6 +142,56 @@ fn set_journey_flags(state: &mut LuaState) -> LuaResult<u32> {
     };
     data.should_display_as_journey = should_display;
     data.should_use_journey_reward_track = should_use_track;
+    Ok(0)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn faction_is_hidden(state: &mut LuaState) -> LuaResult<u32> {
+    let id = i64::from_stack(state, 1)?;
+    let hidden = borrow_state(state)?.major_factions_hidden.contains(&id);
+    state.push(Val::Bool(hidden));
+    Ok(1)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn renown_npc_faction_id(state: &mut LuaState) -> LuaResult<u32> {
+    let id = borrow_state(state)?.renown_npc_faction_id;
+    state.push(number(id));
+    Ok(1)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn set_faction_hidden(state: &mut LuaState) -> LuaResult<u32> {
+    let id = i64::from_stack(state, 1)?;
+    let Val::Bool(hidden) = crate::lua_bridge::stack_val(state, 2) else {
+        return Err(runtime_error(
+            "A_Admin.SetMajorFactionHidden: expected a boolean",
+        ));
+    };
+    let mut sim = borrow_state_mut(state)?;
+    if !sim.major_factions.contains_key(&id) {
+        return Err(runtime_error(
+            "A_Admin.SetMajorFactionHidden: unknown faction ID",
+        ));
+    }
+    if hidden {
+        sim.major_factions_hidden.insert(id);
+    } else {
+        sim.major_factions_hidden.remove(&id);
+    }
+    Ok(0)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn set_renown_npc_faction_id(state: &mut LuaState) -> LuaResult<u32> {
+    let id = i64::from_stack(state, 1)?;
+    let mut sim = borrow_state_mut(state)?;
+    if id != 0 && !sim.major_factions.contains_key(&id) {
+        return Err(runtime_error(
+            "A_Admin.SetRenownNPCFactionID: unknown faction ID",
+        ));
+    }
+    sim.renown_npc_faction_id = id;
     Ok(0)
 }
 

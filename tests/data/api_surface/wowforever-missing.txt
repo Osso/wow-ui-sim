@@ -961,12 +961,8 @@ C_Mail.GetCraftingOrderMailInfo # not-yet
 C_Mail.IsCommandPending # not-yet
 C_MajorFactions.GetMajorFactionProgressionInfo # not-yet
 C_MajorFactions.GetMajorFactionRenownInfo # not-yet
-C_MajorFactions.GetRenownNPCFactionID # not-yet: temporary Lua workaround
 C_MajorFactions.GetTotalReputationForRenownLevel # not-yet
-C_MajorFactions.IsMajorFactionHiddenFromExpansionPage # not-yet: temporary Lua workaround
 C_MajorFactions.IsWeeklyRenownCapped # not-yet
-C_MajorFactions.ShouldDisplayMajorFactionAsJourney # not-yet: temporary Lua workaround
-C_MajorFactions.ShouldUseJourneyRewardTrack # not-yet: temporary Lua workaround
 C_Map.GetAreaInfo # not-yet: temporary Lua workaround
 C_Map.GetBountySetMaps # not-yet
 C_Map.GetMapArtZoneTextPosition # not-yet

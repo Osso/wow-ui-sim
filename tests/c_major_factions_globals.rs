@@ -5,6 +5,54 @@
 
 use wow_ui_sim::lua_api::{MajorFactionData, RenownLevelInfo, WowLuaEnv};
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn load_selected_faction_list_ui() -> WowLuaEnv {
+    let env = WowLuaEnv::new().unwrap();
+    let screen = wow_ui_sim::screen::ScreenKind::Game;
+    env.set_screen_mode(screen);
+    env.set_screen_size(1024.0, 768.0);
+    wow_ui_sim::xml::register_intrinsic_templates();
+    let ui = wow_ui_sim::paths::default_blizzard_ui_addons_path().unwrap();
+    let addons = wow_ui_sim::loader::discover_blizzard_addons_for_screen(&ui, screen);
+    for (name, toc) in &addons {
+        wow_ui_sim::loader::load_addon(&env.loader_env(), toc)
+            .unwrap_or_else(|error| panic!("{name}: {error}"));
+    }
+    assert!(addons.iter().any(|(name, _)| name == "Blizzard_MajorFactions"));
+    env.apply_post_load_workarounds();
+    wow_ui_sim::startup::fire_startup_events_for_screen(&env, screen);
+    env
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn original_major_faction_list_excludes_each_supplied_hidden_faction() {
+    let env = load_selected_faction_list_ui();
+    env.exec(r#"
+        A_Admin.SetMajorFactionRenown(2507, 2, 10)
+        A_Admin.SetMajorFactionRenown(2510, 3, 10)
+        A_Admin.SetMajorFactionHidden(2507, true)
+        A_Admin.SetMajorFactionHidden(2510, false)
+        A_Admin.SetRenownNPCFactionID(2510)
+        assert(C_MajorFactions.GetRenownNPCFactionID() == 2510)
+        local list = LandingPageMajorFactionList.Create(UIParent)
+        local function contains(id)
+            for _, row in list.ScrollBox:GetDataProvider():EnumerateEntireRange() do
+                if row.factionID == id then return true end
+            end
+            return false
+        end
+        list:Hide(); list:Show()
+        assert(not contains(2507) and contains(2510))
+        A_Admin.SetMajorFactionHidden(2507, false)
+        A_Admin.SetMajorFactionHidden(2510, true)
+        A_Admin.SetRenownNPCFactionID(2507)
+        assert(C_MajorFactions.GetRenownNPCFactionID() == 2507)
+        list:Hide(); list:Show()
+        assert(contains(2507) and not contains(2510))
+    "#).expect("original vendor list must use supplied visibility policy");
+}
+
 fn sample_faction(faction_id: i64) -> MajorFactionData {
     MajorFactionData {
         faction_id,

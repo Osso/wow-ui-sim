@@ -165,6 +165,7 @@ pub(crate) mod loot_journal_defaults;
 pub(crate) mod macro_defaults;
 #[cfg(all(not(feature = "client-retail"), not(feature = "client-wowforever")))]
 pub(crate) mod main_menu_microbutton_click;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod major_faction_display_defaults;
 #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod map_art_help_text_defaults;

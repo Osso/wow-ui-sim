@@ -388,6 +388,10 @@ macro_rules! build_empty_sim_state {
             possession_spell_id: None,
             possession_object: None,
             major_factions: HashMap::new(),
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            major_factions_hidden: HashSet::new(),
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            renown_npc_faction_id: 0,
             #[cfg(feature = "client-wowforever")]
             reincarnation: Default::default(),
             major_faction_renown_levels: HashMap::new(),
