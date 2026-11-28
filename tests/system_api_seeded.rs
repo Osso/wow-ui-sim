@@ -7,7 +7,10 @@ fn env() -> WowLuaEnv {
     WowLuaEnv::new().expect("Failed to create Lua environment")
 }
 
-#[cfg(not(feature = "retail-12-1-0"))]
+// Forever uses the Rust timeline model with the feature unavailable and an
+// empty default list (f5e8f23b6e, docs/specs/encounter-timeline-script-core.md);
+// tests/encounter_timeline_forever.rs covers it.
+#[cfg(not(any(feature = "retail-12-1-0", feature = "client-wowforever")))]
 #[test]
 fn test_c_encounter_timeline_returns_seeded_visible_event() {
     let env = env();
