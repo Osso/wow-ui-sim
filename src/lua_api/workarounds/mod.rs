@@ -418,6 +418,7 @@ fn apply_core_foundation_journal_defaults(lua: &mut rilua::Lua) -> crate::Result
 }
 
 fn apply_core_foundation_state_defaults(lua: &mut rilua::Lua) -> crate::Result<()> {
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::pet_battle_runtime_state::apply_bootstrap(lua)?;
     temporary::pet_battle_action_legality_defaults::apply_bootstrap(lua)?;
     temporary::settings_surface_defaults::apply_bootstrap(lua)?;
