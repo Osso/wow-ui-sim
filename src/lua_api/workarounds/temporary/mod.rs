@@ -218,6 +218,7 @@ pub(crate) mod quest_objective_defaults;
 pub(crate) mod quest_progress_requirements;
 #[cfg(not(feature = "client-wowforever"))]
 pub(crate) mod reincarnation_defaults;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod reputation_state;
 pub(crate) mod restricted_actions_protected;
 pub(crate) mod scenario_defaults;

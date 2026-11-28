@@ -250,6 +250,7 @@ fn apply_runtime_state_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     temporary::ptr_bank_default::apply_bootstrap(lua)?;
     crate::c_api::private_aura_callbacks::apply_bootstrap(lua)?;
     temporary::private_aura_state::apply_bootstrap(lua)?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::reputation_state::apply_bootstrap(lua)?;
     temporary::zone_story_default::apply_bootstrap(lua)
 }
