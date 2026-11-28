@@ -503,13 +503,18 @@ fn blizzard_weeklyrewards_toc_is_absent_from_classic_caches() {
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn show_weekly_rewards_with_supplied_maps(env: &WowLuaEnv) {
-    env.exec("A_Admin.SetManualClock(0)")
-        .expect("manual clock should defer the original response event");
     env.exec(
         r#"
+        A_Admin.SetManualClock(0)
         A_Admin.SetChallengeModeMapInfo(42, {name="Cache probe alpha", id=42,
             timeLimit=1500, texture=321, backgroundTexture=654, mapID=142})
-        WeeklyRewards_ShowUI()
+        "#,
+    )
+    .expect("manual clock and the first challenge map should be set before panel load");
+    load_weekly_rewards(env);
+    env.exec(
+        r#"
+        ShowUIPanel(WeeklyRewardsFrame)
         assert(WeeklyRewardsFrame:IsShown())
         assert(WeeklyRewardsFrame:IsEventRegistered("CHALLENGE_MODE_MAPS_UPDATE"))
         A_Admin.SetChallengeModeMapInfo(43, {name="Cache probe beta", id=43,
