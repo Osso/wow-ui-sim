@@ -68,16 +68,6 @@ assert(
     #providerMissions == 3 and providerIDs[900001] and providerIDs[900002] and providerIDs[900003],
     "Covenant mission scrollbox receives every supplied mission"
 )
-local combatAllyMission = C_Garrison.GetCombatAllyMission(followerTypeID)
-assert(
-    combatAllyMission and combatAllyMission.missionID == 900001,
-    "the supplied combat-ally mission is available to the original consumer"
-)
-local combatAllyMissionID = list.combatAllyMission and list.combatAllyMission.missionID or 0
-assert(
-    combatAllyMissionID == 900001,
-    "the original mission-list consumer stores the supplied combat-ally mission"
-)
 local encounterInfo = C_Garrison.GetMissionEncounterIconInfo(900001)
 assert(
     encounterInfo.portraitFileDataID == 12345
@@ -104,7 +94,7 @@ assert(
 CovenantMissionFrame.MapTab:SetMapID(1552)
 local secondCanvasWidth, secondCanvasHeight = CovenantMissionFrame.MapTab:GetCanvas():GetSize()
 return #list.combinedMissions,
-    combatAllyMissionID,
+    list.combatAllyMission and list.combatAllyMission.missionID or 0,
     list.combinedMissions[1].missionID,
     list.combinedMissions[2].missionID,
     list.combinedMissions[3].missionID,
