@@ -405,8 +405,8 @@ fn build_screenshot_batch(
         let limit = wow_ui_sim::iced_app::CLIENT_SHOWN_TEXTURE_LIMIT;
         eprintln!(
             "Shown textures: {shown} (client limit {limit}){}",
-            if shown > limit {
-                "; over the limit: the interface is not drawn"
+            if shown >= limit {
+                "; at the limit: the interface is not drawn"
             } else {
                 ""
             }

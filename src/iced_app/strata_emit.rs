@@ -545,8 +545,8 @@ pub fn build_quad_batch_with_cache(
 /// interface's own textures taking the rest. Splitting the textures over
 /// frames, frame levels, strata, draw layers, sublevels, files, vertex
 /// colours, blend modes or texture coordinates did not raise it; hidden
-/// textures did not count. Past it the client draws none of the interface,
-/// not only the excess.
+/// textures did not count. So 16,383 shown textures draw and 16,384 do not: at
+/// this count the client draws none of the interface, not only the excess.
 pub const CLIENT_SHOWN_TEXTURE_LIMIT: usize = 16_384;
 
 /// Shown textures as the client counts them for its limit: Texture and Line
@@ -565,9 +565,9 @@ pub fn shown_texture_count(registry: &WidgetRegistry) -> usize {
         .count()
 }
 
-/// True when more textures are shown than the client draws.
+/// True when as many textures are shown as stop the client drawing.
 pub fn shown_textures_over_client_limit(registry: &WidgetRegistry) -> bool {
-    shown_texture_count(registry) > CLIENT_SHOWN_TEXTURE_LIMIT
+    shown_texture_count(registry) >= CLIENT_SHOWN_TEXTURE_LIMIT
 }
 
 fn build_background_batch(screen_size: (f32, f32)) -> QuadBatch {
@@ -697,7 +697,7 @@ mod tests {
         };
         let env = crate::lua_api::WowLuaEnv::new().unwrap();
         let baseline = shown_texture_count(&env.state().borrow().widgets);
-        let fill = CLIENT_SHOWN_TEXTURE_LIMIT - baseline;
+        let fill = CLIENT_SHOWN_TEXTURE_LIMIT - 1 - baseline;
         env.exec(&format!(
             r#"
             LimitHolder = CreateFrame("Frame", "LimitHolder", UIParent)
