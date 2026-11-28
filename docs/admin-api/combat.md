@@ -1,5 +1,11 @@
 # Combat State
 
+### A_Admin.SetSpellOverrideObservation(spellID, specID, onlyKnown, ignoreOverrideSpellID, overrideSpellID)
+
+Retail and WoW Forever: provide the exact result for a `C_Spell.GetOverrideSpell` query. `specID=0` resolves the active player's specialization when read or supplied. Spell IDs must be positive; spec and ignored spell ID must be nonnegative integers, and onlyKnown must be boolean (query default true). The empty model returns the resolved input spell ID when no observation matches, as documented. No event is emitted; this is a supplied observation, not native eligible-override discovery.
+
+VERIFIED shapes: Retail `SpellDocumentation.lua:165–181`; Forever `:206–222`. Both `Blizzard_SharedTalentUI.toc:5` select `Blizzard_SharedTalentUtil.lua:110–120`; its replacement-name utility reads the result via `GetSpellName`.
+
 ### A_Admin.SetSpellUiFlags(spellID, pressHoldRelease, priorityAura)
 
 Retail and WoW Forever: supply the two observed boolean flags for a positive integer spell ID (maximum `i32::MAX`). Both arguments must be booleans; invalid input raises an error before mutation. The empty model reports false. A call replaces that spell's row and emits no event. Supply rows before the original UI caches them, or send the normal action-slot update event after changing action assignments.
