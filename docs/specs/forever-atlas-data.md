@@ -6,7 +6,7 @@
 - Explicit `wow-cli generate atlas --csv-dir DIR --listfile FILE --output FILE --elements-output FILE` reads slice data only from DIR. Without options, existing input/output paths and retail slice override remain unchanged.
 - Atlas CSV requires named `ID`, `FileDataID`, `UiTextureAtlasSetID`, `AtlasWidth`, `AtlasHeight`, and `UiCanvasID` columns in any order. Missing columns and rows whose field count differs from the header fail explicitly; numeric errors identify the row and column. No positional or set/canvas defaults are accepted.
 - Named CSV atlas dimensions account for set/canvas columns. Public element names resolve from default-set (`1`), atlas-canvas (`1`) members. A member with canvas `2` yields no alias when a matching 1× member exists, regardless of row order; otherwise its logical alias dimensions are half its physical dimensions, except where `OverrideWidth` or `OverrideHeight` explicitly supplies that axis. Committed member names retain their own dimensions and UVs remain physical atlas coordinates. Existing 1× aliases remain unchanged. This is an inference from build `1.60.1.69913` DB2 member metadata and paired 1×/2× rows, not native canvas-selection conformance.
-- Element 35224 (`UI-HUD-Minimap-Frame-Cycle`) exposes 42×42 geometry with UV bounds 256/512 to 298/512 from atlas 3944, FDID 8026705.
+- Element 35224 (`UI-HUD-Minimap-Frame-Cycle`) exposes 42×42 geometry from atlas 3944, FDID 8026705. In 70959 member 39256 retains horizontal bounds 256/512 to 298/512 and changes vertical bounds from 256/512–298/512 to 281/512–323/512.
 
 ## Reproduction
 

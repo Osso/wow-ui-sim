@@ -1,4 +1,4 @@
-//! Build 1.60.1.69913 atlas geometry from UiTextureAtlas/Member CSVs.
+//! Build 1.60.1.70959 atlas geometry from UiTextureAtlas/Member CSVs.
 #![cfg(feature = "client-wowforever")]
 
 #[test]
@@ -40,8 +40,8 @@ fn forever_minimap_cycle_resolves_element_geometry() {
         assert(info.width == 42 and info.height == 42)
         assert(math.abs(info.leftTexCoord - 256/512) < 0.000001)
         assert(math.abs(info.rightTexCoord - 298/512) < 0.000001)
-        assert(math.abs(info.topTexCoord - 256/512) < 0.000001)
-        assert(math.abs(info.bottomTexCoord - 298/512) < 0.000001)
+        assert(math.abs(info.topTexCoord - 281/512) < 0.000001)
+        assert(math.abs(info.bottomTexCoord - 323/512) < 0.000001)
     "#,
     )
     .unwrap();
