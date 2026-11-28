@@ -277,7 +277,7 @@ fn parse_create_frame_args(state: &mut LuaState) -> LuaResult<CreateFrameArgs> {
     } else {
         Val::Nil
     };
-    let default_parent_allowed = arg_count >= 2 && matches!(arg2, Val::Str(_) | Val::Nil);
+    let default_parent_allowed = arg_count == 2 && matches!(arg2, Val::Str(_) | Val::Nil);
     let inherits = val_to_string(state, stack_val(state, 4));
     let id = parse_frame_id(stack_val(state, 5));
     let template_initializer = parse_template_initializer(state, stack_val(state, 6))?;
