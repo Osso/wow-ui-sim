@@ -133,11 +133,16 @@ pub fn apply_delay_with_tick(env: &WowLuaEnv, delay: Option<u64>) {
     let tick_interval = std::time::Duration::from_millis(16);
     let start = std::time::Instant::now();
     let mut previous = start;
-    while previous.duration_since(start) < duration {
+    while previous.duration_since(start) < duration
+        && !env.state().borrow().simulator_exit_requested
+    {
         let remaining = duration.saturating_sub(previous.duration_since(start));
         std::thread::sleep(remaining.min(tick_interval));
         let now = std::time::Instant::now();
         process_pending_timers(env);
+        if env.state().borrow().simulator_exit_requested {
+            break;
+        }
         env.state().borrow_mut().ensure_layout_rects();
         if let Err(error) = env.fire_on_update(now.duration_since(previous).as_secs_f64()) {
             log_with_timestamp(env, &format!("[delay OnUpdate] error: {error}"));
@@ -828,5 +833,18 @@ mod seed_buff_duration_tests {
             elapsed >= 0.08,
             "OnUpdate must see the slept time, got {elapsed}"
         );
+    }
+
+    #[test]
+    fn apply_delay_with_tick_ends_when_the_session_quits() {
+        let env = WowLuaEnv::new().unwrap();
+        env.exec("C_Timer.After(0, function() ForceQuit() end)")
+            .unwrap();
+
+        let started = std::time::Instant::now();
+        apply_delay_with_tick(&env, Some(20_000));
+
+        assert!(env.state().borrow().simulator_exit_requested);
+        assert!(started.elapsed() < std::time::Duration::from_secs(1));
     }
 }
