@@ -276,6 +276,8 @@ fn register_frame_context_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
     super::real::interaction_dialogs::register_all(lua)?;
     #[cfg(feature = "quest-giver-requests")]
     super::real::quest_giver_requests::register_all(lua)?;
+    #[cfg(feature = "player-requests")]
+    super::real::player_requests::register_all(lua)?;
     super::real::merchant_buyback::register_all(lua)?;
     super::real::merchant_affordability::register_all(lua)?;
     super::real::merchant_filter::register_all(lua)?;

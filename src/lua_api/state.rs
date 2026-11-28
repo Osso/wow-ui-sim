@@ -906,6 +906,8 @@ macro_rules! build_empty_sim_state {
             stable_reads: crate::c_api::c_stable_info::forever::StableReadState::default(),
             #[cfg(feature = "interaction-dialogs")]
             interaction_dialogs: Default::default(),
+            #[cfg(feature = "player-requests")]
+            player_requests: Default::default(),
             merchant_items: Vec::new(),
             merchant_filter: 0,
             merchant_item_refundable: HashMap::new(),

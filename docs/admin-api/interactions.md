@@ -42,3 +42,23 @@ A_Admin.OpenWorldMapInteraction()
 ```
 
 This activates `Enum.PlayerInteractionType.WorldMap` (the map-table NPC interaction) and fires `PLAYER_INTERACTION_MANAGER_FRAME_SHOW`. The original registration (`WorldMapFrame.lua:1-7`) has a no-op show function, so the map itself still opens through `OpenWorldMap` or `ToggleWorldMap`. Closing the world map runs `C_Map.CloseWorldMapInteraction()`, which ends the interaction and fires `PLAYER_INTERACTION_MANAGER_FRAME_HIDE`.
+
+## Player requests (Retail and WoW Forever)
+
+Implementation: `src/lua_api/globals/real/player_requests.rs` (feature
+`player-requests`). `FollowUnit(name)` resolves a unit token or a target/party
+member name (empty or `"0"` means the target) and fires `AUTOFOLLOW_BEGIN(name)`.
+`Dismount()` clears the mounted flag and fires `PLAYER_MOUNT_DISPLAY_CHANGED`.
+`InitiateRolePoll()` returns true and fires `ROLE_POLL_BEGIN(playerName)` for a
+grouped leader or assistant; otherwise it returns false.
+
+### A_Admin.StopAutoFollow()
+
+Ends the current follow and fires `AUTOFOLLOW_END` (the client stops following
+when the player moves). Without a follow target it does nothing.
+
+### A_Admin.RequestTrade(requesterName)
+
+Stores an incoming trade request and fires `TRADE_REQUEST(requesterName)`, which
+opens the `TRADE` popup. `BeginTrade()` opens the trade with the requester and
+fires `TRADE_SHOW`; `CancelTrade()` declines the request.

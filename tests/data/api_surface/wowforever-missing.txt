@@ -4,7 +4,6 @@
 AddSourceLocationExclude # not-yet: temporary Lua workaround
 AreClassRolesSoftSuggestions # not-yet
 AutoEquipCursorItem # not-yet
-BeginTrade # not-yet
 C_AchievementInfo.AreGuildAchievementsEnabled # not-yet
 C_AchievementInfo.IsGuildAchievement # not-yet
 C_ActionBar.FindAssistedCombatActionButtons # not-yet
@@ -1775,11 +1774,9 @@ CreateFrameWithOptions # not-yet
 CursorHasMoney # not-yet
 CursorHasSpell # not-yet
 DeclineName # not-yet
-Dismount # not-yet
 DoesCurrentLocaleSellExpansionLevels # not-yet
 EjectPassengerFromSeat # not-yet
 EquipPendingItem # not-yet
-FollowUnit # not-yet
 GetAllowLowLevelRaid # not-yet
 GetAreaText # not-yet
 GetAvailableBandwidth # not-yet: temporary Lua workaround
@@ -1850,7 +1847,6 @@ GetVehicleUIIndicatorSeat # not-yet
 HasDualWieldPenalty # not-yet
 HasFullControl # not-yet
 HasIgnoreDualWieldWeapon # not-yet
-InitiateRolePoll # not-yet
 Is64BitClient # not-yet
 IsAccountSecured # not-yet: temporary Lua workaround
 IsCollisionEnabled # not-yet

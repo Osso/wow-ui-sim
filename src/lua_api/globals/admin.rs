@@ -892,6 +892,8 @@ fn register_inventory_misc(b: TableBuilder) -> LuaResult<TableBuilder> {
     let b = super::real::interaction_dialogs::register_admin(b)?;
     #[cfg(feature = "totem-dismissal")]
     let b = super::real::totems::dismissal::register_admin(b)?;
+    #[cfg(feature = "player-requests")]
+    let b = super::real::player_requests::register_admin(b)?;
     #[cfg(feature = "world-marker-state")]
     let b = super::real::publication_12_0_0::world_markers::register_admin(b)?;
     let b = super::admin_quests::register_quests(b)?

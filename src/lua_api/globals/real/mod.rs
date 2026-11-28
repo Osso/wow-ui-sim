@@ -163,6 +163,8 @@ pub mod player_facing;
 pub mod player_identity;
 pub(crate) mod player_languages;
 pub mod player_probes;
+#[cfg(feature = "player-requests")]
+pub(crate) mod player_requests;
 pub mod preferred_interact;
 pub(crate) mod protected_globals;
 pub mod publication_12_0_0;

@@ -1132,6 +1132,9 @@ pub struct SimState {
     /// Server dialogs opened by host inputs (item text, invites, petitions, healer).
     #[cfg(feature = "interaction-dialogs")]
     pub interaction_dialogs: crate::lua_api::globals::real::interaction_dialogs::DialogState,
+    /// Follow and trade requests the player has open (`real/player_requests.rs`).
+    #[cfg(feature = "player-requests")]
+    pub player_requests: crate::lua_api::globals::real::player_requests::PlayerRequests,
     pub merchant_items: Vec<u32>,
     /// INFERRED R88dx: selected legacy merchant filter; zero is the all-items default.
     pub merchant_filter: i32,

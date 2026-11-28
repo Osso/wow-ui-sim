@@ -37,7 +37,6 @@ BattlefieldMgrEntryInviteResponse # not-yet
 BattlefieldMgrExitRequest # not-yet
 BattlefieldMgrQueueInviteResponse # not-yet
 BattlefieldMgrQueueRequest # not-yet
-BeginTrade # not-yet
 BuyGuildBankTab # not-yet
 BuyGuildCharter # not-yet
 BuyMerchantItem # not-yet
@@ -2011,7 +2010,6 @@ DeleteRaidProfile # not-yet
 DescendStop # not-yet
 DetectWowMouse # not-yet
 DismissCompanion # not-yet
-Dismount # not-yet
 DisplayChannelOwner # not-yet
 DoMasterLootRoll # not-yet
 DoesCurrentLocaleSellExpansionLevels # not-yet
@@ -2023,7 +2021,6 @@ ExpandGuildTradeSkillHeader # not-yet
 ExpandWarGameHeader # not-yet
 FlipCameraYaw # intentionally-unsupported: 3D camera/model
 FlyoutHasSpell # not-yet
-FollowUnit # not-yet
 ForfeitDuel # not-yet
 GMEuropaBugsEnabled # not-yet
 GMEuropaComplaintsEnabled # not-yet
@@ -2301,7 +2298,6 @@ HasWandEquipped # not-yet
 HearthAndResurrectFromArea # not-yet
 HideRepairCursor # not-yet
 InGuildParty # not-yet
-InitiateRolePoll # not-yet
 Is64BitClient # not-yet
 IsAccountSecured # not-yet: temporary Lua workaround
 IsAllowedToUserTeleport # not-yet
