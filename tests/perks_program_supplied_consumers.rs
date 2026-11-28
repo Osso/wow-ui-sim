@@ -1,7 +1,7 @@
 #![cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 
 use wow_ui_sim::lua_api::WowLuaEnv;
-use wow_ui_sim::loader::find_toc_file;
+use wow_ui_sim::loader::{find_toc_file, load_addon};
 use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
@@ -60,12 +60,11 @@ fn load_monthly_activities_consumer() -> WowLuaEnv {
         file == std::path::Path::new("Mainline/Blizzard_MonthlyActivities.lua")
     }));
 
-    let (env, loaded) = crate::common::blizzard_addon_harness::build_blizzard_addon_closure_env(
-        &ui,
-        &["Blizzard_EncounterJournal"],
-        &[],
-    );
-    assert!(loaded.iter().any(|name| name == "Blizzard_EncounterJournal"));
+    let env = WowLuaEnv::new().expect("Lua environment should initialize");
+    env.set_screen_size(1024.0, 768.0);
+    crate::common::load_game_startup_inventory(&env);
+    env.sync_addon_names_to_lua();
+    load_addon(&env.loader_env(), &toc_path).expect("selected Encounter Journal should load");
     env.apply_post_load_workarounds();
     fire_startup_events_for_screen(&env, ScreenKind::Game);
     env
