@@ -4,6 +4,9 @@ fn env() -> WowLuaEnv {
     WowLuaEnv::new().expect("Failed to create Lua environment")
 }
 
+/// Covers the Lua scenario fallback. Retail 12.0.5+ and Forever publish the
+/// supplied-scenario model instead (4347778476, INFERRED, R88dh pending).
+#[cfg(not(any(feature = "retail-12-0-5", feature = "client-wowforever")))]
 #[test]
 fn scenario_defaults_match_not_in_scenario_state() {
     let env = env();

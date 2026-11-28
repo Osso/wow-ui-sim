@@ -106,7 +106,7 @@ macro_rules! build_empty_sim_state {
                 feature = "client-wowforever"
             ))]
             pending_spell_confirmation_prompts: HashMap::new(),
-            #[cfg(feature = "retail-12-0-5")]
+            #[cfg(feature = "nameplate-hit-test-insets")]
             nameplate_hit_test_insets:
                 crate::c_api::c_nameplate_manager::NamePlateHitTestInsets::default(),
             input_interface_style:
@@ -220,9 +220,9 @@ macro_rules! build_empty_sim_state {
             garrison_mission_lists: Default::default(),
             hyperlink_tooltip: Default::default(),
             trade_skill_crafting_ui_inputs: Default::default(),
-            #[cfg(feature = "client-retail")]
+            #[cfg(feature = "garrison-host-inputs")]
             garrison_trees: crate::c_api::c_garrison_trees::GarrisonTrees::default(),
-            #[cfg(feature = "client-retail")]
+            #[cfg(feature = "garrison-host-inputs")]
             garrison_landing_page:
                 crate::c_api::c_garrison_landing_page::GarrisonLandingPage::default(),
             clipboard: ClipboardState::default(),
@@ -272,7 +272,7 @@ macro_rules! build_empty_sim_state {
             #[cfg(feature = "client-wowforever")]
             auras_secret_in_context: false,
             unit_stats_restricted: false,
-            #[cfg(feature = "client-retail")]
+            #[cfg(feature = "explicit-stat-inputs")]
             weapon_attack_power: ::std::collections::HashMap::new(),
             quest_blobs: $collections.quest_blobs,
             minimap_quest_blob_inside: HashMap::new(),
@@ -536,7 +536,7 @@ macro_rules! build_empty_sim_state {
             curio_links: HashMap::new(),
             #[cfg(feature = "retail-12-0-5")]
             click_bindable_spells: HashSet::new(),
-            #[cfg(feature = "retail-12-0-5")]
+            #[cfg(feature = "unit-aura-queries")]
             cooldown_aura_associations: Default::default(),
             aura_spell_classifications: Default::default(),
             #[cfg(feature = "retail-12-0-5")]
@@ -569,7 +569,7 @@ macro_rules! build_empty_sim_state {
             active_drag_frame: $runtime.active_drag_frame,
             active_slider_thumb_drag_frame: $runtime.active_slider_thumb_drag_frame,
             mouse_buttons: $runtime.mouse_buttons,
-            #[cfg(feature = "retail-12-0-7")]
+            #[cfg(feature = "simulated-mouse-input")]
             simulated_mouse_inputs: ::std::collections::VecDeque::new(),
             next_report_token: $runtime.next_report_token,
             party_members: $collections.party_members,
@@ -627,9 +627,9 @@ macro_rules! build_empty_sim_state {
             cooldown_viewer_cooldowns: Default::default(),
             cooldown_viewer_group_buffs: Vec::new(),
             cooldown_viewer_availability: Default::default(),
-            #[cfg(feature = "retail-12-0-0")]
+            #[cfg(feature = "spell-classification-queries")]
             spell_classifications: Default::default(),
-            #[cfg(feature = "retail-12-0-0")]
+            #[cfg(feature = "nameplate-configuration")]
             nameplate_configuration: Default::default(),
             recipe_quality_inputs: Default::default(),
             recipe_source_text: Default::default(),
@@ -639,11 +639,11 @@ macro_rules! build_empty_sim_state {
             prey_inputs: Default::default(),
             button_header_inputs: Default::default(),
             ui_widget_inputs: crate::c_api::ui_widget_manager::seed_demo_world_quest_widgets(),
-            #[cfg(feature = "retail-12-0-0")]
+            #[cfg(feature = "rest-policy-flags")]
             combat_log_restricted: false,
-            #[cfg(feature = "retail-12-0-0")]
+            #[cfg(feature = "rest-policy-flags")]
             pet_bonus_slot_available: false,
-            #[cfg(feature = "retail-12-0-0")]
+            #[cfg(feature = "rest-policy-flags")]
             limited_input_allowed: [false; 4],
             #[cfg(feature = "action-spell-range")]
             action_spell_ranges: Default::default(),
@@ -652,7 +652,7 @@ macro_rules! build_empty_sim_state {
             #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
             auto_complete_realms: Vec::new(),
             weekly_rewards: Default::default(),
-            #[cfg(feature = "retail-12-0-0")]
+            #[cfg(feature = "encounter-warning-settings")]
             encounter_warning_settings: Default::default(),
             #[cfg(feature = "retail-12-1-0")]
             last_sound_request: None,
@@ -1003,7 +1003,7 @@ macro_rules! build_empty_sim_state {
             bnet_account_features: Default::default(),
             bnet_friend_invites: Vec::new(),
             bnet_appear_offline: false,
-            #[cfg(feature = "retail-12-0-0")]
+            #[cfg(feature = "bnet-chat")]
             bnet_custom_message: String::new(),
             social_friends: default_social_friends(),
             #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
@@ -1140,7 +1140,7 @@ macro_rules! build_empty_sim_state {
             legacy_unit_voice: HashMap::new(),
             #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
             voice_channels: Vec::new(),
-            #[cfg(feature = "retail-12-0-5")]
+            #[cfg(feature = "lfg-endgame-edit-policy")]
             lfg_endgame_policy: Default::default(),
             #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
             arena_opponents: HashMap::new(),
@@ -1150,7 +1150,7 @@ macro_rules! build_empty_sim_state {
             arena_crowd_control_spells: HashMap::new(),
             #[cfg(feature = "retail-12-0-5")]
             hidden_spell_item_enchantments: std::collections::HashSet::new(),
-            #[cfg(feature = "retail-12-0-5")]
+            #[cfg(feature = "bnet-presence")]
             bnet_presence: Default::default(),
             #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
             voice_chat_speak_requests: Vec::new(),
@@ -1271,7 +1271,7 @@ pub use super::state_types::{
     SEEDED_LOCAL_CHARACTER_NAME, ScenarioState, ScenarioStep, SecondaryPowerState, SocialFriend,
     SocialRestrictionsState, SummonRequestState, TokenAuctionInfo, WorldState, WowTokenState,
 };
-#[cfg(feature = "client-retail")]
+#[cfg(feature = "explicit-stat-inputs")]
 pub use super::state_types::{EffectiveAttackPower, PowerRegen, WeaponAttackPower};
 pub use super::tracked_recipes::TrackedRecipes;
 

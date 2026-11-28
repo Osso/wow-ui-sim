@@ -1,4 +1,4 @@
-#![cfg(feature = "retail-12-0-5")]
+#![cfg(feature = "bnet-presence")]
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 #[test]
@@ -17,6 +17,7 @@ fn patch_12_0_1_presence_setters_are_published() {
     assert!(!env.state().borrow().bnet_presence.is_dnd);
 }
 
+#[cfg(feature = "retail-12-0-5")]
 #[test]
 fn patch_12_0_1_voice_channel_unknown_lookup_returns_nothing() {
     let env = WowLuaEnv::new().unwrap();

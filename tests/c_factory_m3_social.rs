@@ -66,7 +66,8 @@ mod modern {
     );
     contract!(
         language_capability_uses_explicit_legacy_language_defaults,
-        "assert(C_ChatInfo.CanPlayerSpeakLanguage(1) == true); assert(C_ChatInfo.CanPlayerSpeakLanguage(999999) == false)"
+        // b3d6cfe9c6 (R88eg): the default Human speaks Common, ID 7, not Orcish 1.
+        "assert(C_ChatInfo.CanPlayerSpeakLanguage(7) == true); assert(C_ChatInfo.CanPlayerSpeakLanguage(1) == false); assert(C_ChatInfo.CanPlayerSpeakLanguage(999999) == false)"
     );
     contract!(
         recruit_service_is_explicitly_unavailable,

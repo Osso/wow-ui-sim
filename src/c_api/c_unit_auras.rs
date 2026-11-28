@@ -17,10 +17,7 @@ use std::cmp::Ordering;
 
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     let public = super::ensure_namespace(state, "C_UnitAuras")?;
-    if matches!(
-        crate::client_profile::ACTIVE,
-        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
-    ) {
+    if crate::client_profile::ACTIVE.shares_retail_12_api() {
         table_set_rust_fn_static(state, public, "ClearBlockedAuras", clear_blocked_auras)?;
     }
     // Forever 1.60.1.70707 declares this query and its selected aura source
@@ -45,7 +42,7 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
         "GetUnitAuraInstanceIDs",
         get_unit_aura_instance_ids,
     )?;
-    #[cfg(feature = "retail-12-1-0")]
+    #[cfg(feature = "aura-instance-cancel")]
     table_set_rust_fn_static(
         state,
         public,
@@ -518,7 +515,7 @@ fn read_caster_instance(state: &LuaState) -> LuaResult<(i32, bool)> {
 /// Removes one of the player's own helpful auras and reports it through an
 /// incremental `UNIT_AURA` payload. INFERRED: like `CancelUnitBuff`, debuffs
 /// and other units' auras cannot be cancelled.
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "aura-instance-cancel")]
 fn cancel_aura_by_instance_id(state: &mut LuaState) -> LuaResult<u32> {
     super::unit_aura_access::require_unit_aura_access(state, "C_UnitAuras.CancelAuraByInstanceID")?;
     let unit = String::from_stack(state, 1)?;

@@ -259,7 +259,7 @@ mod forever {
             let state = env.state();
             let mut sim = state.borrow_mut();
             sim.player.equipped_items.insert(16, item(221165)); // one-hand weapon, invtype 13
-            sim.player.equipped_items.insert(17, item(133503)); // shield, invtype 14
+            sim.player.equipped_items.insert(17, item(249275)); // shield, invtype 14
             sim.player.equipped_items.insert(18, item(237732)); // bow, invtype 15
         }
         let (dual, ranged): (bool, bool) = env
@@ -270,7 +270,7 @@ mod forever {
             .borrow_mut()
             .player
             .equipped_items
-            .insert(17, item(258525)); // one-hand weapon, invtype 13
+            .insert(17, item(268208)); // one-hand weapon, invtype 13
         let (dual, ranged): (bool, bool) = env
             .eval("return IsDualWielding(), IsRangedWeapon()")
             .unwrap();

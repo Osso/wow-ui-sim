@@ -187,6 +187,8 @@ fn event_util_register_once_can_capture_zero_or_more_required_args() {
     assert_eq!(unregister_type, "function");
 }
 
+/// Retail and Forever register the host-supplied model instead (0fb551d456, R88cx).
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn contribution_collector_namespace_exists_with_load_safe_defaults() {
     let env = env();
@@ -213,6 +215,38 @@ fn contribution_collector_namespace_exists_with_load_safe_defaults() {
     assert_eq!(percent, 0);
     assert_eq!(appearance_type, "table");
     assert_eq!(color_type, "table");
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+const CONTRIBUTION_APPEARANCE_PROBE: &str = r#"
+    local state, percent = C_ContributionCollector.GetState(42)
+    local before = C_ContributionCollector.GetContributionAppearance(42, state)
+    A_Admin.SetContributionCollectors({ { mapID = 2248, areaPoiID = 901,
+        collectorCreatureID = 301, name = "Collector", atlasName = "", x = 0.2, y = 0.3,
+        contributions = { { contributionID = 42, name = "Ready", state = 1, amount = 0.5,
+            startTime = 100, description = "", result = 0, orderIndex = 1, active = true,
+            rewardQuestID = 0, appearance = { stateName = "Active",
+                stateColor = { r = 0.25, g = 0.5, b = 0.75 }, tooltipLine = "",
+                tooltipUseTimeRemaining = false, statusBarAtlas = "", borderAtlas = "",
+                bannerAtlas = "" } } } } })
+    local after = C_ContributionCollector.GetContributionAppearance(42, 1)
+    local color = after.stateColor
+    return state, percent, type(before), after.stateName, color.r + color.g + color.b
+"#;
+
+/// Retail and Forever model C_ContributionCollector from A_Admin input
+/// (0fb551d456, R88cx): an unsupplied contribution has no appearance.
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn contribution_collector_appearance_follows_supplied_contribution() {
+    let env = env();
+    let (state, percent, before, name, color): (i32, i32, String, String, f64) = env
+        .eval(CONTRIBUTION_APPEARANCE_PROBE)
+        .expect("ContributionCollector appearance probe should run");
+
+    assert_eq!((state, percent, before.as_str()), (0, 0, "nil"));
+    assert_eq!(name, "Active");
+    assert!((color - 1.5).abs() < 1e-9);
 }
 
 #[test]

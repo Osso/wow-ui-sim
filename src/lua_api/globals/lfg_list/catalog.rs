@@ -43,6 +43,18 @@ fn set_activity_group_fields(state: &mut LuaState, info: Val, act: &LfgActivityI
         Val::Num(act.group_id as f64),
     );
     table_set(state, info, "maxPlayers", Val::Num(act.max_players as f64));
+    set_activity_level_fields(state, info, act);
+}
+
+/// LFGListInfoDocumentation.lua `GroupFinderActivityInfo` declares the three
+/// level fields non-nil. Best guess: the supplied minimum level is also the
+/// suggestion, and 0 means no upper suggestion (the `> 0` guard in
+/// `LFGUtil_GetFilteredActivities`).
+fn set_activity_level_fields(state: &mut LuaState, info: Val, act: &LfgActivityInfo) {
+    let min_level = Val::Num(act.min_level as f64);
+    table_set(state, info, "minLevel", min_level);
+    table_set(state, info, "minLevelSuggestion", min_level);
+    table_set(state, info, "maxLevelSuggestion", Val::Num(0.0));
 }
 
 fn set_activity_filter_fields(state: &mut LuaState, info: Val, act: &LfgActivityInfo) {

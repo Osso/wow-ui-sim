@@ -10,7 +10,7 @@ The `A_Admin` namespace provides administrative functions for controlling simula
 - [Battle.net Account State](battle-net.md) — SetPlayerBattleNetInfo, SetBattleNetAccountFeatures
 - [Behavioral messaging](behavioral-messaging.md) — QueueBehavioralNotification, GetBehavioralNotificationReceipts
 - [Beta script policy](beta-script-policy.md) — SetScriptsDisallowedForBeta
-- [Combat](combat.md) — SetInCombat, SetCasting, StopCasting, SetGCD, SetSpellCooldown
+- [Combat](combat.md) — SetInCombat, SetCasting, StopCasting, SetGCD, SetSpellCooldown, SetCombatLogEntries
 - [Camera and tutorials](camera-tutorials.md) — SetCameraFOV, SetTutorialFlag, SetTutorialsEnabled, SetPlayerNPERestricted
 - [Gamepad input](gamepad.md) — SetUsingGamepad, GetGamePadCursorControlEnabled
 - [Loot Journal](loot-journal.md) — SetLootJournalItemSets
@@ -18,6 +18,7 @@ The `A_Admin` namespace provides administrative functions for controlling simula
 - [Kiosk session](kiosk.md) — SetKioskSession
 - [Communities](communities.md) — SetAccountMutedClub, SetClubTypeAllowed, SetDiscordServers, SetDiscordUser
 - [Contribution Collector](contribution-collector.md) — SetContributionCollectors
+- [Reputation](reputation.md) — SetReputationFactions
 - [Garrison missions](garrison-missions.md) — SetGarrisonCombatAllyMission
 - [Configuration warnings](configuration-warnings.md) — SetConfigurationWarnings, SetSystemRequirementsChecked
 - Vignettes (Retail and WoW Forever): `A_Admin.SetVignettes(records)` supplies the session's modeled `C_VignetteInfo` records and fires `VIGNETTES_UPDATED`. Other profiles retain their existing legacy vignette surface. Each record requires `vignetteGUID`, `uiMapID`, `x`, and `y`; documented `VignetteInfo` fields can also be supplied, including `mapPin`. Optional host values are `facing`, `healthPercent`, `minGroupSize`, and `maxGroupSize`. Empty records are the default. Unknown-GUID return behavior is INFERRED (R88g6).
@@ -42,7 +43,7 @@ The `A_Admin` namespace provides administrative functions for controlling simula
 - [Economy](economy.md) — SetMoney, SetItemLevel, AddBagItem, RemoveBagItem, SetBagItemDurability, SetEquippedItemGUID
 - [Bank state](bank.md) — SetBankViewableTypes, SetShouldUsePlayerBagsInBank, SetPurchasedBankTabData
 - [Dye colors](dye-colors.md) — SetDyeColorsForItem
-- [Collections](collections.md) — AddTransmog, RemoveTransmog, CollectMount, UncollectMount, CollectPet, UncollectPet, CollectToy, UncollectToy, CollectCampsite, UncollectCampsite, SetAchievementEarned, EarnAchievement
+- [Collections](collections.md) — AddTransmog, RemoveTransmog, SetTransmogAvailability, CollectMount, UncollectMount, CollectPet, UncollectPet, CollectToy, UncollectToy, CollectCampsite, UncollectCampsite, SetAchievementEarned, EarnAchievement
 - [PvP](pvp.md) — SetPvPEnabled, SetHonorLevel, SetArenaCrowdControl
 - [Guild](guild.md) — SetGuildInfo, ClearGuild, JoinGuild, LeaveGuild
 - [Mail](mail.md) — AddMail, ClearInbox, SetInboxCount

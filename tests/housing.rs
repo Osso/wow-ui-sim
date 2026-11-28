@@ -260,7 +260,7 @@ fn neighborhood_initiative_reply_keeps_requested_neighborhood_identity() {
     .unwrap();
 }
 
-#[cfg(feature = "retail-12-0-0")]
+#[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
 #[test]
 fn housing_market_shop_policy_and_plot_selection_use_host_state() {
     let env = WowLuaEnv::new().unwrap();

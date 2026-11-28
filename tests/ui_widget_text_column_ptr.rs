@@ -26,7 +26,7 @@ fn ptr_owning_9_1_0_observation_after_original_startup_and_consumer() {
         );
         // Same Game discovery/bootstrap/events as the existing full-UI owner harness.
         // No prefork feature, preload fork or private callback invocation is needed.
-        let env = owning_startup::preload_full_game_ui()
+        let env = owning_startup::load_full_game_ui()
             .expect("ordinary PTR startup prerequisite; failure is not a TextColumn regression");
         lifecycle::observe_preloaded(&env);
         sweep::run_publication_sweep(

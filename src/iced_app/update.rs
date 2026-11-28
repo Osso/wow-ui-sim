@@ -446,7 +446,7 @@ impl App {
         timings.layout = t_layout.elapsed();
 
         timings.on_update = self.fire_on_update();
-        #[cfg(feature = "retail-12-0-7")]
+        #[cfg(feature = "simulated-mouse-input")]
         if !self.exit_requested() {
             self.dispatch_simulated_mouse_inputs();
         }

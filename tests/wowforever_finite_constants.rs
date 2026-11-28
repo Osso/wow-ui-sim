@@ -400,7 +400,20 @@ fn forever_finite_constants_construct_minimap_filters() {
 
 #[test]
 fn forever_finite_constants_load_ping_and_transmog_consumers() {
-    let env = WowLuaEnv::new().unwrap();
+    use crate::common::blizzard_addon_harness::{
+        blizzard_ui_dir, load_blizzard_addon_closure_into_env, new_blizzard_addon_env,
+    };
+    // Blizzard_TransmogShared.lua:1 writes StaticPopupDialogs, owned by its TOC
+    // dependency closure (Blizzard_StaticPopup_Game); c1b07efb79 retired the
+    // R/F placeholder table.
+    let ui = blizzard_ui_dir();
+    let env = new_blizzard_addon_env(&ui);
+    load_blizzard_addon_closure_into_env(
+        &env,
+        &ui,
+        &["Blizzard_StaticPopup_Game", "Blizzard_GameTooltip"],
+        &[],
+    );
     load(&env, "Blizzard_PingUI/Blizzard_PingManager.lua");
     load(&env, "Blizzard_TransmogShared/Blizzard_TransmogShared.lua");
     env.exec("assert(type(PingManager.SetupDefaultPingOptions) == 'function'); assert(type(TransmogUtil.GetInfoForEquippedSlot) == 'function')").unwrap();

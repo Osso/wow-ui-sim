@@ -1,6 +1,6 @@
 //! Bounded row407 contract; defaults, identity misses and strict input errors
 //! are INFERRED simulator policies, not native-client observations.
-#![cfg(feature = "retail-12-0-5")]
+#![cfg(feature = "unit-aura-queries")]
 
 use rilua::LuaApiMut;
 use rilua::table_security::wrap_host_secret_string;

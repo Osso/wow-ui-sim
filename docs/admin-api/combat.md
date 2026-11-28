@@ -150,3 +150,26 @@ local start, duration, enabled = C_Item.GetItemCooldown(19001)
 -- duration=31, enabled=true
 A_Admin.SetItemCooldown(19001, 0) -- clear
 ```
+
+### A_Admin.SetCombatLogEntries(entries)
+
+Replaces the host-supplied combat-log history of the Retail and WoW Forever
+model (`src/c_api/combat_log_history.rs`). The simulator invents no combat
+events; this is the only input of that history.
+
+- **entries** `table` -- Array of entries, oldest first. Each entry is an array
+  of the values that `GetCurrentEventInfo` returns. Values must be booleans,
+  finite numbers or strings; other values raise an error.
+- The current entry resets to the newest entry.
+- **Affects:** `C_CombatLog.GetEntryCount`, `C_CombatLogSecure.GetCurrentEventInfo`,
+  `SeekToNewestEntry`/`SeekToPreviousEntry`, `ShouldShowCurrentEntry` and,
+  on WoW Forever, `C_CombatLogInternal.GetCurrentEventInfo`.
+
+```lua
+A_Admin.SetCombatLogEntries({
+    { "SPELL_DAMAGE", 19750, 150 },
+    { "SPELL_HEAL", 19750, 275 },
+})
+local event, spell, amount = C_CombatLogSecure.GetCurrentEventInfo()
+-- "SPELL_HEAL", 19750, 275
+```

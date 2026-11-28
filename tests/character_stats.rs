@@ -6,8 +6,7 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 #[path = "character_stats/explicit_inputs.rs"]
 mod explicit_inputs;
 
-// The explicit stat inputs this module seeds exist only on client-retail.
-#[cfg(all(feature = "retail-12-0-5", feature = "client-retail"))]
+#[cfg(feature = "explicit-stat-inputs")]
 #[path = "character_stats/missing_apis.rs"]
 mod missing_apis;
 

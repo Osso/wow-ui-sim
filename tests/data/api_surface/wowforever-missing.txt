@@ -86,27 +86,14 @@ C_BarberShop.GetCurrentCost # not-yet
 C_BarberShopInternal.SetQAMode # not-yet
 C_BattleNet.AreRealIDFriendsEnabled # not-yet
 C_BattleNet.BNCheckBattleTagInviteToRecentAlly # not-yet
-C_BattleNet.BNCheckTitleFriendInviteToUnit # not-yet
-C_BattleNet.GetCustomTitleFriendName # not-yet
 C_BattleNet.GetFriendLevelFromInviteText # not-yet
 C_BattleNet.GetGameAccountInfoByID # not-yet
 C_BattleNet.IsFriendTagSupportedForCurrentGameType # not-yet: temporary Lua workaround
-C_BattleNet.SearchFriends # not-yet
-C_BattleNet.SendTitleFriendInviteByName # not-yet
-C_BattleNet.SendVerifiedBattleNetFriendInvite # not-yet
-C_BattleNet.SendWhisper # not-yet
-C_BattleNet.SetAFK # not-yet
-C_BattleNet.SetAppearOffline # not-yet
 C_BattleNet.SetBlocked # not-yet
-C_BattleNet.SetCustomMessage # not-yet
-C_BattleNet.SetCustomTitleFriendName # not-yet
-C_BattleNet.SetDND # not-yet
-C_BattleNet.SetFriendTags # not-yet
 C_BlizzCon2026.GetExperience # not-yet
 C_BlizzCon2026.IsActive # not-yet
 C_BlizzCon2026.IsColdSwapFeatureEnabled # not-yet
 C_BlizzCon2026.SetExperience # not-yet
-C_Browser.CloseFullscreenBrowser # not-yet
 C_Calendar.AreNamesReady # not-yet: temporary Lua workaround
 C_Calendar.CanAddEvent # not-yet: temporary Lua workaround
 C_Calendar.CanSendInvite # not-yet: temporary Lua workaround
@@ -154,7 +141,6 @@ C_CatalogShop.GetAvailableTransmogRaceInfos # not-yet
 C_CatalogShop.GetCategoryInfo # not-yet: temporary Lua workaround
 C_CatalogShop.GetFailureInfo # not-yet: temporary Lua workaround
 C_CatalogShop.GetFirstCategoryByProductID # not-yet: temporary Lua workaround
-C_CatalogShop.GetNewProducts # not-yet
 C_CatalogShop.GetProductAvailabilityTimeRemainingSecs # not-yet: temporary Lua workaround
 C_CatalogShop.GetProductIDsForCategory # not-yet: temporary Lua workaround
 C_CatalogShop.GetProductIDsForCategorySection # not-yet: temporary Lua workaround
@@ -206,10 +192,6 @@ C_ChatInfo.ReplaceIconAndGroupExpressions # not-yet: temporary Lua workaround
 C_ChatInfo.RequestCanLocalWhisperTarget # not-yet
 C_ChatInfo.ResetDefaultZoneChannels # not-yet
 C_ChatInfo.SwapChatChannelsByChannelIndex # not-yet
-C_ChromieTime.CloseUI # not-yet
-C_ChromieTime.GetChromieTimeExpansionOption # not-yet
-C_ChromieTime.GetChromieTimeExpansionOptions # not-yet
-C_ChromieTime.SelectChromieTimeOption # not-yet
 C_ClassTalents.CanCreateNewConfig # not-yet
 C_ClassTalents.CommitConfig # not-yet
 C_ClassTalents.DeleteConfig # not-yet
@@ -278,7 +260,6 @@ C_ColorUtil.WrapTextInColorCode # not-yet: temporary Lua workaround
 C_CombatLog.ApplyFilterSettings # not-yet: temporary Lua workaround
 C_CombatLog.ClearEntries # not-yet: temporary Lua workaround
 C_CombatLog.DoesObjectMatchFilter # not-yet: temporary Lua workaround
-C_CombatLog.IsCombatLogRestricted # not-yet
 C_CombatLog.RefilterEntries # not-yet: temporary Lua workaround
 C_CombatLog.SetEntryRetentionTime # not-yet: temporary Lua workaround
 C_CombatLog.SetFilteredEventsEnabled # not-yet: temporary Lua workaround
@@ -399,7 +380,6 @@ C_Commentator.SetHardlockWeight # not-yet
 C_Commentator.SetHorizontalAngleThresholdToSmooth # not-yet
 C_Commentator.SetLookAtLerpAmount # not-yet
 C_Commentator.SetMapAndInstanceIndex # not-yet
-C_Commentator.SetMouseDisabled # not-yet
 C_Commentator.SetMoveSpeed # not-yet
 C_Commentator.SetMsToHoldForHorizontalMovement # not-yet
 C_Commentator.SetMsToHoldForVerticalMovement # not-yet
@@ -464,7 +444,6 @@ C_ContributionCollector.Contribute # not-yet
 C_ContributionCollector.HasPendingContribution # not-yet
 C_ContributionCollector.IsAwaitingRewardQuestData # not-yet
 C_CooldownViewer.GetLayoutData # not-yet
-C_CooldownViewer.GetValidAlertTypes # not-yet
 C_CooldownViewer.SetLayoutData # not-yet
 C_CovenantPreview.CloseFromUI # not-yet
 C_CovenantPreview.GetCovenantInfoForPlayerChoiceResponseID # not-yet
@@ -531,8 +510,6 @@ C_CurrencyInfo.SetCurrencyBackpack # not-yet
 C_CurrencyInfo.SetCurrencyBackpackByID # not-yet
 C_CurrencyInfo.SetCurrencyFilter # not-yet
 C_CurrencyInfo.SetCurrencyUnused # not-yet
-C_CurveUtil.EvaluateColorFromBoolean # not-yet
-C_CurveUtil.EvaluateColorValueFromBoolean # not-yet
 C_CurveUtil.EvaluateGameCurve # not-yet
 C_DateAndTime.AdjustTimeByDays # not-yet: temporary Lua workaround
 C_DateAndTime.AdjustTimeByMinutes # not-yet: temporary Lua workaround
@@ -547,10 +524,7 @@ C_DelvesUI.GetDelvesFactionForSeason # not-yet
 C_DelvesUI.GetLockedTextForCompanion # not-yet
 C_DelvesUI.GetModelSceneForCompanion # not-yet
 C_DelvesUI.GetTieredEntranceType # not-yet
-C_DelvesUI.HasActiveLFGLair # not-yet
-C_DelvesUI.HasActiveLair # not-yet
 C_DelvesUI.IsEligibleForActiveDelveRewards # not-yet
-C_DelvesUI.IsInLair # not-yet
 C_DelvesUI.IsTraitTreeForCompanion # not-yet
 C_Discord.IsVoiceEnabled # not-yet: temporary Lua workaround
 C_EditMode.ConvertLayoutInfoToString # not-yet
@@ -563,14 +537,6 @@ C_EncounterJournal.GetEncounterJournalLink # not-yet
 C_EncounterJournal.IsEncounterComplete # not-yet
 C_EncounterJournal.SetPreviewMythicPlusLevel # not-yet
 C_EncounterJournal.SetPreviewPvpTier # not-yet
-C_EncounterWarnings.GetColorForSeverity # not-yet
-C_EncounterWarnings.GetPlayCustomSoundsWhenHidden # not-yet
-C_EncounterWarnings.GetSoundKitForSeverity # not-yet
-C_EncounterWarnings.GetWarningsShown # not-yet
-C_EncounterWarnings.IsFeatureAvailable # not-yet
-C_EncounterWarnings.IsFeatureEnabled # not-yet
-C_EncounterWarnings.SetPlayCustomSoundsWhenHidden # not-yet
-C_EncounterWarnings.SetWarningsShown # not-yet
 C_EndOfMatchUI.GetEndOfMatchDetails # not-yet
 C_EventToastManager.GetLevelUpDisplayToastsFromLevel # not-yet
 C_EventToastManager.GetNextToastToDisplay # not-yet
@@ -583,8 +549,6 @@ C_Flyout.GetFlyoutID # not-yet
 C_Flyout.GetFlyoutInfo # not-yet
 C_Flyout.GetFlyoutSlotInfo # not-yet
 C_Flyout.GetNumFlyouts # not-yet
-C_FrameManager.GetFrameVisibilityState # not-yet: temporary Lua workaround
-C_FriendList.GetWhoRaceFilters # not-yet
 C_FriendList.IsIgnoredByGuid # not-yet
 C_FriendList.SendWho # not-yet
 C_FriendList.SortWho # not-yet
@@ -630,8 +594,6 @@ C_Garrison.GetAutoMissionTargetingInfoForSpell # not-yet
 C_Garrison.GetAutoTroops # not-yet
 C_Garrison.GetCombatLogSpellInfo # not-yet
 C_Garrison.GetCurrentCypherEquipmentLevel # not-yet
-C_Garrison.GetCurrentGarrTalentTreeFriendshipFactionID # not-yet
-C_Garrison.GetCurrentGarrTalentTreeID # not-yet
 C_Garrison.GetCyphersToNextEquipmentLevel # not-yet
 C_Garrison.GetFollowerAutoCombatSpells # not-yet
 C_Garrison.GetFollowerAutoCombatStats # not-yet
@@ -642,14 +604,12 @@ C_Garrison.GetMaxCypherEquipmentLevel # not-yet
 C_Garrison.GetMissionCompleteEncounters # not-yet
 C_Garrison.GetMissionDeploymentInfo # not-yet
 C_Garrison.GetTalentPointsSpentInTalentTree # not-yet
-C_Garrison.GetTalentTreeIDsByClassID # not-yet
 C_Garrison.GetTalentTreeInfo # not-yet
 C_Garrison.GetTalentTreeResetInfo # not-yet
 C_Garrison.GetTalentTreeTalentPointResearchInfo # not-yet
 C_Garrison.HasAdventures # not-yet
 C_Garrison.IsEnvironmentCountered # not-yet
 C_Garrison.IsFollowerOnCompletedMission # not-yet
-C_Garrison.IsLandingPageMinimapButtonVisible # not-yet
 C_Garrison.IsTalentConditionMet # not-yet
 C_Garrison.RegenerateCombatLog # not-yet
 C_Garrison.RemoveFollowerFromMission # not-yet
@@ -667,8 +627,6 @@ C_GossipInfo.GetOptionUIWidgetSetsAndTypesByOptionID # not-yet
 C_GossipInfo.RefreshOptions # not-yet
 C_GossipInfo.SelectOption # not-yet
 C_GossipInfo.SelectOptionByIndex # not-yet
-C_GuildInfo.Demote # not-yet
-C_GuildInfo.Disband # not-yet
 C_GuildInfo.GetGuildRankOrder # not-yet
 C_GuildInfo.GetPreferredPlaySettings # not-yet
 C_GuildInfo.IsEncounterGuildNewsEnabled # not-yet
@@ -680,7 +638,6 @@ C_GuildInfo.RequestGuildRename # not-yet
 C_GuildInfo.RequestGuildRenameRefund # not-yet
 C_GuildInfo.RequestPreferredPlaySettings # not-yet
 C_GuildInfo.RequestRenameNameCheck # not-yet
-C_GuildInfo.SetLeader # not-yet
 C_GuildInfo.SetNote # not-yet
 C_GuildInfo.SetPreferredPlaySettings # not-yet
 C_HeirloomInfo.AreAllCollectionFiltersChecked # not-yet
@@ -688,42 +645,28 @@ C_HeirloomInfo.AreAllSourceFiltersChecked # not-yet
 C_HeirloomInfo.IsUsingDefaultFilters # not-yet: temporary Lua workaround
 C_HeirloomInfo.SetAllCollectionFilters # not-yet
 C_HouseExterior.GetCoreFixtureOptionsInfo # not-yet: temporary Lua workaround
-C_HouseExterior.GetCurrentHouseExteriorSize # not-yet: temporary Lua workaround
-C_HouseExterior.GetCurrentHouseExteriorType # not-yet: temporary Lua workaround
-C_HouseExterior.GetHouseExteriorSizeOptions # not-yet: temporary Lua workaround
-C_HouseExterior.GetHouseExteriorTypeOptions # not-yet: temporary Lua workaround
-C_HouseExterior.GetSelectedFixturePointInfo # not-yet: temporary Lua workaround
 C_HouseExterior.HasHoveredFixture # not-yet: temporary Lua workaround
-C_HouseExterior.HasSelectedFixturePoint # not-yet: temporary Lua workaround
 C_HouseExterior.IsAnyDecorAttachedToCoreFixture # not-yet: temporary Lua workaround
 C_HouseExterior.IsAnyDecorAttachedToDoor # not-yet: temporary Lua workaround
-C_HouseExterior.IsAnyDecorAttachedToHouseExterior # not-yet: temporary Lua workaround
-C_HouseExterior.IsAnyDecorAttachedToSelectedFixturePoint # not-yet: temporary Lua workaround
 C_HouseExterior.IsExteriorDecorHidden # not-yet: temporary Lua workaround
 C_HouseExterior.SetExteriorDecorHidden # not-yet: temporary Lua workaround
 C_Housing.AcceptNeighborhoodOwnership # not-yet
-C_Housing.CanEditCharter # not-yet
 C_Housing.CanTakeReportScreenshot # not-yet
 C_Housing.CreateGuildNeighborhood # not-yet
 C_Housing.CreateNeighborhoodCharter # not-yet
 C_Housing.DeclineNeighborhoodOwnership # not-yet
 C_Housing.EditNeighborhoodCharter # not-yet
-C_Housing.GetCurrentHouseInfo # not-yet
 C_Housing.GetCurrentHouseRefundAmount # not-yet
 C_Housing.GetHouseLevelRewardsForLevel # not-yet
 C_Housing.GetHousingAccessFlags # not-yet
 C_Housing.GetOthersOwnedHouses # not-yet
 C_Housing.HouseFinderDeclineNeighborhoodInvitation # not-yet
 C_Housing.HouseFinderRequestReservationAndPort # not-yet
-C_Housing.IsHousingMarketCartFullRemoveEnabled # not-yet
-C_Housing.IsHousingMarketEnabled # not-yet
-C_Housing.IsHousingMarketShopEnabled # not-yet
 C_Housing.LeaveHouse # not-yet
 C_Housing.OnCharterConfirmationAccepted # not-yet
 C_Housing.OnCharterConfirmationClosed # not-yet
 C_Housing.OnCreateCharterNeighborhoodClosed # not-yet
 C_Housing.OnCreateGuildNeighborhoodClosed # not-yet
-C_Housing.OnHouseFinderClickPlot # not-yet
 C_Housing.OnRequestSignatureClicked # not-yet
 C_Housing.OnSignCharterClicked # not-yet
 C_Housing.RelinquishHouse # not-yet
@@ -881,17 +824,13 @@ C_Item.BindEnchant # not-yet
 C_Item.CanBeRefunded # not-yet
 C_Item.CanScrapItem # not-yet
 C_Item.CanViewItemPowers # not-yet
-C_Item.ConfirmBindOnUse # not-yet
 C_Item.ConfirmDeleteItem # not-yet
-C_Item.ConfirmNoRefundOnUse # not-yet
-C_Item.ConfirmOnUse # not-yet
 C_Item.DeleteItem # not-yet
 C_Item.DoesItemContainSpec # not-yet
 C_Item.DoesItemMatchBonusTreeReplacement # not-yet
 C_Item.DoesItemMatchSpellItemCondition # not-yet
 C_Item.DoesItemMatchTargetEnchantingSpell # not-yet
 C_Item.DoesItemMatchTrackJump # not-yet
-C_Item.EndBoundTradeable # not-yet
 C_Item.EndRefund # not-yet
 C_Item.EquipItemByName # not-yet
 C_Item.GetAppliedItemTransmogInfo # not-yet
@@ -972,7 +911,6 @@ C_LFGInfo.GetDungeonInfo # not-yet: temporary Lua workaround
 C_LFGInfo.GetLFDLockStates # not-yet: temporary Lua workaround
 C_LFGInfo.GetLevelUpInstances # not-yet
 C_LFGInfo.GetRoleCheckDifficultyDetails # not-yet
-C_LFGInfo.IsInMatchmadeRaidWithoutRoleRequirements # not-yet
 C_LFGInfo.IsLFREnabled # not-yet
 C_LFGList.CanActiveEntryUseAutoAccept # not-yet
 C_LFGList.ClearApplicationTextFields # not-yet
@@ -991,8 +929,6 @@ C_LFGList.GetOwnedKeystoneActivityAndGroupAndLevel # not-yet
 C_LFGList.GetSearchResultLeaderInfo # not-yet
 C_LFGList.GetSearchResultPlayerInfo # not-yet
 C_LFGList.IsCensoredActiveEntryUnresolved # not-yet
-C_LFGList.IsPlayerValidForEndgameFieldEdits # not-yet
-C_LFGList.ListingUsesEndgameEditRestrictions # not-yet
 C_LFGList.ReportGroupAsAdvertisement # not-yet
 C_LFGList.RevealCensoredActiveEntry # not-yet
 C_LFGList.RevealCensoredSearchResult # not-yet
@@ -1023,7 +959,6 @@ C_LegendaryCrafting.MakeRuneforgeCraftDescription # not-yet
 C_LegendaryCrafting.UpgradeRuneforgeLegendary # not-yet
 C_LevelSquish.ConvertFollowerLevel # not-yet
 C_LevelSquish.ConvertPlayerLevel # not-yet
-C_LimitedInput.LimitedInputAllowed # not-yet
 C_LiveEvent.OnLiveEventBannerClicked # intentionally-unsupported: Glue-only in retail-12-1-5-70688.csv
 C_LiveEvent.OnLiveEventPopupClicked # intentionally-unsupported: Glue-only in retail-12-1-5-70688.csv
 C_LobbyMatchmakerInfo.AbandonQueue # not-yet
@@ -1097,14 +1032,8 @@ C_MythicPlus.GetRewardLevelForDifficultyLevel # not-yet
 C_MythicPlus.GetRewardLevelFromKeystoneLevel # not-yet
 C_MythicPlus.GetSeasonBestForMap # not-yet
 C_MythicPlus.GetSeasonBestMythicRatingFromThisExpansion # not-yet
-C_NamePlate.GetNamePlateSize # not-yet
-C_NamePlateManager.GetNamePlateHitTestInsets # not-yet
-C_NamePlateManager.IsNamePlateUnitBehindCamera # intentionally-unsupported: 3D camera/model
-C_NamePlateManager.SetNamePlateHitTestInsets # not-yet
-C_NamePlateManager.SetNamePlateSimplified # not-yet
 C_NameUtil.ReplaceSurnameSeparatorWithLinkSeparator # not-yet
 C_PaperDollInfo.CanAutoEquipCursorItem # not-yet
-C_PaperDollInfo.CancelTemporaryEnchantment # not-yet
 C_PaperDollInfo.CursorCanGoInSlot # not-yet
 C_PaperDollInfo.GetInspectAzeriteItemEmpoweredChoices # not-yet
 C_PaperDollInfo.GetInspectItemLevel # not-yet
@@ -1310,7 +1239,6 @@ C_PvP.StartSoloRBGWarGameByName # not-yet
 C_PvP.StartSpectatorSoloRBGWarGame # not-yet
 C_PvP.ToggleWarMode # not-yet
 C_QuestHub.IsAreaPOICurrentlyRelatedToHub # not-yet
-C_QuestHub.IsQuestCurrentlyRelatedToHub # not-yet
 C_QuestInfoSystem.GetQuestLogRewardFavor # not-yet
 C_QuestInfoSystem.GetQuestRewardSpellInfo # not-yet
 C_QuestInfoSystem.GetQuestShouldToastCompletion # not-yet
@@ -1518,14 +1446,10 @@ C_Spell.GetSpellSkillLineAbilityRank # not-yet
 C_Spell.IsActiveSpell # not-yet
 C_Spell.IsAutoRepeatSpell # not-yet
 C_Spell.IsClassTalentSpell # not-yet
-C_Spell.IsConsumableSpell # not-yet
-C_Spell.IsExternalDefensive # not-yet
 C_Spell.IsPressHoldReleaseSpell # not-yet: temporary Lua workaround
 C_Spell.IsPriorityAura # not-yet: temporary Lua workaround
 C_Spell.IsPvPTalentSpell # not-yet
-C_Spell.IsSpellCrowdControl # not-yet
 C_Spell.IsSpellDisabled # not-yet
-C_Spell.IsSpellImportant # not-yet
 C_Spell.PlaceTargetingSpellAtCursor # not-yet
 C_Spell.RequestLoadSpellData # not-yet: temporary Lua workaround
 C_Spell.SetSpellAutoCastEnabled # not-yet
@@ -1534,9 +1458,6 @@ C_Spell.TargetSpellChecksItemCondition # not-yet: temporary Lua workaround
 C_Spell.ToggleSpellAutoCast # not-yet
 C_SpellBook.AbortSpellIntro # not-yet
 C_SpellBook.ContainsAnyDisenchantSpell # not-yet
-C_SpellBook.FindBaseSpellByID # not-yet: temporary Lua workaround
-C_SpellBook.FindFlyoutSlotBySpellID # not-yet: temporary Lua workaround
-C_SpellBook.FindSpellOverrideByID # not-yet: temporary Lua workaround
 C_SpellBook.GetCurrentLevelSpells # not-yet
 C_SpellBook.GetSkillLineIndexByID # not-yet
 C_SpellBook.GetSpellBookItemCastCount # not-yet
@@ -1566,14 +1487,12 @@ C_SplashScreen.RequestLatestSplashScreen # not-yet
 C_SplashScreen.SendSplashScreenActionLaunchedTelem # not-yet
 C_SplashScreen.SendSplashScreenCloseTelem # not-yet
 C_StableInfo.BuyStableSlot # not-yet
-C_StableInfo.ClosePetStables # not-yet
 C_StableInfo.GetActivePetList # not-yet
 C_StableInfo.GetAvailablePetSpecInfos # not-yet
 C_StableInfo.GetNumActivePets # not-yet
 C_StableInfo.GetStablePetFoodTypes # not-yet
 C_StableInfo.GetStabledPetList # not-yet
 C_StableInfo.IsAtStableMaster # not-yet
-C_StableInfo.IsBonusPetSlotAvailable # not-yet
 C_StableInfo.IsPetFavorite # not-yet
 C_StableInfo.PickupStablePet # not-yet
 C_StableInfo.SetPetFavorite # not-yet
@@ -1745,19 +1664,7 @@ C_UI.GetWorldFrame # not-yet
 C_UIColor.GetColors # not-yet: temporary Lua workaround
 C_UIWidgetManager.GetPreyHuntProgressWidgetVisualizationInfo # not-yet
 C_UnitAuras.AddAuraSound # not-yet
-C_UnitAuras.AuraIsPrivate # not-yet
-C_UnitAuras.CancelAuraByInstanceID # not-yet
-C_UnitAuras.ClearBlockedAuras # not-yet
-C_UnitAuras.DoesAuraHaveExpirationTime # not-yet
-C_UnitAuras.GetAuraApplicationDisplayCount # not-yet
-C_UnitAuras.GetAuraBaseDuration # not-yet
-C_UnitAuras.GetAuraDuration # not-yet
-C_UnitAuras.GetCooldownAuraBySpellID # not-yet
-C_UnitAuras.GetRefreshExtendedDuration # not-yet
-C_UnitAuras.GetUnitAuraBySpellID # not-yet
-C_UnitAuras.IsAuraFilteredOutByInstanceID # not-yet
 C_UnitAuras.RemoveAuraSound # not-yet
-C_UnitAuras.WantsAlteredForm # not-yet
 C_UserFeedback.SubmitBug # not-yet
 C_UserFeedback.SubmitSuggestion # not-yet
 C_VoiceChat.ActivateChannel # not-yet
@@ -1912,7 +1819,6 @@ GetInstanceBootTimeRemaining # not-yet
 GetInstanceLockTimeRemaining # not-yet
 GetInstanceLockTimeRemainingEncounter # not-yet
 GetJailersTowerLevel # not-yet
-GetMastery # not-yet
 GetMaximumExpansionLevel # not-yet
 GetMouseButtonName # not-yet
 GetMovieDownloadProgress # not-yet: temporary Lua workaround
@@ -1926,10 +1832,7 @@ GetPVPYesterdayStats # not-yet
 GetPetCritChance # not-yet
 GetPetDodgeChance # not-yet
 GetPetHitChanceModifier # not-yet
-GetPetMeleeHaste # not-yet
 GetPetSpellHitChanceModifier # not-yet
-GetPowerRegen # not-yet
-GetPowerRegenForPowerType # not-yet
 GetProtocolTypes # not-yet: temporary Lua workaround
 GetRealmID # not-yet: temporary Lua workaround
 GetResSicknessDuration # not-yet
@@ -1941,7 +1844,6 @@ GetScriptCPUUsage # not-yet: temporary Lua workaround
 GetSecondsUntilParentalControlsKick # not-yet
 GetSheathState # not-yet
 GetSourceLocation # not-yet
-GetSturdiness # not-yet
 GetTaxiBenchmarkMode # not-yet
 GetThreatStatusColor # not-yet: temporary Lua workaround
 GetTotemCannotDismiss # not-yet
@@ -1996,7 +1898,6 @@ OutageDetected # not-yet
 PartialPlayTime # not-yet: temporary Lua workaround
 PlaceRaidMarker # not-yet
 PlatformIsHandheld # not-yet
-PlayerEffectiveAttackPower # not-yet
 PlayerIsInCombat # not-yet
 PlayerIsSpellTarget # not-yet
 PlayerVehicleHasComboPoints # not-yet
@@ -2041,10 +1942,6 @@ ShouldDisplayStoryModeTooltipInSocialFrame # not-yet
 ShouldShowExpansionUpgradeBanner # not-yet: temporary Lua workaround
 ShouldShowIslandsWeeklyPOI # not-yet
 ShouldShowSpecialSplashScreen # not-yet
-SimulateMouseClick # not-yet
-SimulateMouseDown # not-yet
-SimulateMouseUp # not-yet
-SimulateMouseWheel # not-yet
 SitStandOrDescendStart # not-yet
 SplashFrameCanBeShown # not-yet
 StartAttack # not-yet
@@ -2107,7 +2004,6 @@ UnitSwitchToVehicleSeat # not-yet
 UnitUsingVehicle # not-yet
 UnitVehicleSeatCount # not-yet
 UnitVehicleSeatInfo # not-yet
-UnitWeaponAttackPower # not-yet
 UnitWidgetSet # not-yet
 UpdateWindow # not-yet
 WorldLootObjectExists # not-yet: temporary Lua workaround

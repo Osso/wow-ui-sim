@@ -189,7 +189,7 @@ pub(crate) mod run_binding;
 pub(crate) mod secure_helpers;
 pub mod session_exit;
 pub mod shapeshift;
-#[cfg(feature = "retail-12-0-7")]
+#[cfg(feature = "simulated-mouse-input")]
 pub mod simulate_mouse;
 pub(crate) mod source_location;
 pub mod specialization_helpers;

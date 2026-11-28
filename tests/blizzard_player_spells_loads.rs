@@ -356,6 +356,11 @@ fn mainline_spellbook_keybind_opens_and_closes_without_runtime_errors(env: &WowL
 #[test]
 fn mainline_spellbook_keybind_opens_and_closes_without_runtime_errors() {
     let env = load_runtime_game_ui();
+    // Camelot's spellbook queries IsTransmogEnabled (Blizzard_SpellBookCategory.lua:507),
+    // which requires a supplied observation (docs/specs/transmog-availability.md).
+    #[cfg(feature = "client-wowforever")]
+    env.exec("A_Admin.SetTransmogAvailability(false)")
+        .expect("transmog availability input should be accepted");
     mainline_spellbook_keybind_opens_and_closes_without_runtime_errors::run(&env);
 }
 

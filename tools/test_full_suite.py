@@ -1295,5 +1295,34 @@ sys.exit(runner.run(sys.argv[2], 1, sys.argv[3], "ptr"))
         self.assertIn('MemorySwapMax=0', argv)
 
 
+class CvarIsolationTests(unittest.TestCase):
+    def setUp(self):
+        spec = importlib.util.spec_from_file_location('cvar_runner', RUNNER)
+        self.runner = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(self.runner)
+        self.tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.tmp.cleanup)
+        self.data = Path(self.tmp.name)
+        self.source = self.data / 'wow-sim/cvars.json'
+        self.source.parent.mkdir(parents=True)
+        self.source.write_text('{"a": 1}')
+        os.utime(self.source, ns=(1_000_000_000, 2_000_000_000))
+
+    def run_suite_body(self, body):
+        with open(os.devnull, 'w') as log:
+            with self.runner.isolated_cvars({'XDG_DATA_HOME': str(self.data)}, log):
+                body()
+
+    def test_concurrent_read_that_only_moves_atime_passes(self):
+        # atime older than mtime, so a plain read updates atime under relatime.
+        before = self.source.stat()
+        self.run_suite_body(lambda: self.source.read_bytes())
+        self.assertGreater(self.source.stat().st_atime_ns, before.st_atime_ns)
+
+    def test_content_change_still_fails(self):
+        with self.assertRaisesRegex(ValueError, 'persisted CVar file changed'):
+            self.run_suite_body(lambda: self.source.write_text('{"a": 2}'))
+
+
 if __name__ == "__main__":
     unittest.main()

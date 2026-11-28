@@ -24,11 +24,18 @@ fn load_professions_support_addons(env: &WowLuaEnv) {
 fn professions_support_addons() -> Vec<(&'static str, PathBuf)> {
     let ui = blizzard_ui_dir();
     vec![
+        ("Blizzard_SharedXMLBase", shared_xml_base_toc(&ui)),
         ("Blizzard_SharedXMLGame", shared_xml_game_toc(&ui)),
         ("Blizzard_Colors", colors_toc(&ui)),
         ("Blizzard_StaticPopup", static_popup_toc(&ui)),
         ("Blizzard_FrameXMLUtil", frame_xml_util_toc(&ui)),
     ]
+}
+
+/// ProfessionsUtil.lua:111 calls tAppendAll, owned by SharedXMLBase TableUtil.lua
+/// since d509ed6aec retired the bootstrap copy.
+fn shared_xml_base_toc(ui: &Path) -> PathBuf {
+    find_existing_toc(ui, "Blizzard_SharedXMLBase", &["Blizzard_SharedXMLBase.toc"])
 }
 
 fn shared_xml_game_toc(ui: &Path) -> PathBuf {

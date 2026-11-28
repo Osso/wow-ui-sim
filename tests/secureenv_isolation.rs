@@ -1394,14 +1394,15 @@ fn retail_r88n11b_private_aura_members_are_secure_only() {
         roots_are_separate,
         "private aura namespaces must remain separate"
     );
+    // 05e9561812 implemented AnchorPrivateAura (INFERRED R88bw), so all 13
+    // flag-2 members are now modeled.
     assert_eq!(
-        present, 12,
+        present, 13,
         "all modeled flag-2 members must be secure-only"
     );
-    assert_eq!(
-        missing,
-        vec!["C_UnitAurasPrivate.AnchorPrivateAura".to_string()],
-        "the unimplemented member must remain absent"
+    assert!(
+        missing.is_empty(),
+        "every flag-2 member is modeled: {missing:?}"
     );
     assert_eq!(present + missing.len() as i64, MEMBERS.len() as i64);
     assert!(

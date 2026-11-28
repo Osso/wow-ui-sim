@@ -22,6 +22,17 @@ Marks a transmog appearance as uncollected.
 A_Admin.RemoveTransmog(12345)
 ```
 
+### A_Admin.SetTransmogAvailability(enabled)
+
+Supplies the environment-local transmog availability observation. Published on Retail, PTR, Mists and Forever.
+
+- **enabled** `boolean` -- any other type raises `A_Admin.SetTransmogAvailability: enabled must be a boolean`
+- **Affects:** `C_TransmogOutfitInfo.IsTransmogEnabled()` returns this value instead of raising the unsupplied-availability error. See [transmog availability](../specs/transmog-availability.md).
+- **Example:**
+```lua
+A_Admin.SetTransmogAvailability(false)
+```
+
 ### A_Admin.SetMountCollected(mountId, collected)
 
 Toggles whether a mount is collected.

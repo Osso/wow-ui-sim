@@ -85,6 +85,9 @@ fn black_market_global_strings_exist() {
     );
 }
 
+/// Retail and Forever return no values outside a market interaction (f7b7549d57,
+/// INFERRED R88em); tests/black_market_model.rs covers that model.
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn black_market_defaults_match_view_only_empty_state() {
     let env = WowLuaEnv::new().expect("Failed to create Lua environment");

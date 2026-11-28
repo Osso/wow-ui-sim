@@ -260,6 +260,7 @@ fn weapon_attack_power_uses_existing_guid_and_never_creates_entities() {
         .unwrap();
 }
 
+#[cfg(feature = "retail-12-0-5")]
 const SECRET_FIXTURES: &str = r#"
     missingStatFixtures = {
         {'GetMastery', {}, {4}},
@@ -289,6 +290,9 @@ const SECRET_FIXTURES: &str = r#"
     end
 "#;
 
+// Unit-stat output restriction (push_stat_number) is modeled only from Retail
+// 12.0.5; it is part of the skipped C_Secrets surface on Forever.
+#[cfg(feature = "retail-12-0-5")]
 #[test]
 fn missing_stats_toggle_preserves_all_values_and_arities() {
     let env = configured_env();
@@ -300,6 +304,7 @@ fn missing_stats_toggle_preserves_all_values_and_arities() {
     }
 }
 
+#[cfg(feature = "retail-12-0-5")]
 #[test]
 fn missing_stats_tainted_callers_receive_opaque_host_outputs() {
     let env = configured_env();

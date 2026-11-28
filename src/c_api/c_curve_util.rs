@@ -174,7 +174,7 @@ C_CurveUtil.CreateCurve = make_factory('LuaCurveObject', false)
 C_CurveUtil.CreateColorCurve = make_factory('LuaColorCurveObject', true)
 "#;
 
-#[cfg(feature = "retail-12-0-0")]
+#[cfg(feature = "boolean-color-selection")]
 const BOOLEAN_SELECTION_LUA: &str = r#"
 local channels = {'r', 'g', 'b', 'a'}
 
@@ -217,7 +217,7 @@ pub(crate) fn register(lua: &mut rilua::Lua) -> crate::Result<()> {
         host_function(state, "CurveUtil.WrapOutput", wrap_curve_output),
     ];
     lua.call_function(&install, &arguments)?;
-    #[cfg(feature = "retail-12-0-0")]
+    #[cfg(feature = "boolean-color-selection")]
     lua.exec(BOOLEAN_SELECTION_LUA)?;
     Ok(())
 }

@@ -121,7 +121,7 @@ fn load_settled_game_ui() -> common::LockedEnv {
         env.set_screen_size(1024.0, 768.0);
         env.state().borrow_mut().addon_base_paths = vec![blizzard_ui_dir()];
 
-        if !common::load_classic_game_startup_inventory(&env) {
+        if !common::load_non_retail_game_startup_inventory(&env) {
             let ui = blizzard_ui_dir();
             for addon_name in action_bar_addons() {
                 common::load_required_blizzard_addon(&env, &ui, addon_name);
@@ -253,6 +253,28 @@ fn action_button1_hotkey_shows_slot_one() {
     }
 }
 
+/// Standard clients keep the XML end-cap anchors (MAIN_ACTION_BAR_MANAGE_END_CAPS = true,
+/// Standard/EditModePresetLayoutConstants.lua:10).
+#[cfg(not(feature = "client-wowforever"))]
+const ENDCAP_ANCHOR_ASSERTIONS: &str = r#"
+            assert(approx(leR, bL + 9), "LeftEndCap right anchor offset changed")
+            assert(approx(reL, bR - 8), "RightEndCap left anchor offset changed")
+            assert(approx(leB, bB - 22), "LeftEndCap bottom anchor offset changed")
+            assert(approx(reB, bB - 22), "RightEndCap bottom anchor offset changed")
+"#;
+
+/// Camelot end caps are Edit Mode systems (MAIN_ACTION_BAR_MANAGE_END_CAPS = false,
+/// Camelot/EditModePresetLayoutConstants.lua:11). Mainline/EditModePresetLayouts.lua:628-653
+/// anchors Left RIGHT->MainActionBar LEFT (30,5) and Right LEFT->BagsBar RIGHT (-30,5).
+#[cfg(feature = "client-wowforever")]
+const ENDCAP_ANCHOR_ASSERTIONS: &str = r#"
+            local bagsL, bagsR, bagsT, bagsB = rect("BagsBar", require_frame("BagsBar", BagsBar))
+            assert(approx(leR, bL + 30), "LeftEndCap right anchor offset changed")
+            assert(approx(leB + leH / 2, (bB + bT) / 2 + 5), "LeftEndCap vertical anchor offset changed")
+            assert(approx(reL, bagsR - 30), "RightEndCap left anchor offset changed")
+            assert(approx(reB + reH / 2, (bagsB + bagsT) / 2 + 5), "RightEndCap vertical anchor offset changed")
+"#;
+
 #[test]
 fn main_action_bar_layout_is_locked() {
     wrath_action_case!(main_layout);
@@ -260,7 +282,8 @@ fn main_action_bar_layout_is_locked() {
     test_timeout! {
         let env = load_settled_game_ui();
 
-        let endcap_texture_access = if cfg!(feature = "client-ptr") {
+        // PTR and Forever (Camelot/MainMenuBarEndCaps.xml:8-12) nest the atlas in a Texture child.
+        let endcap_texture_access = if cfg!(any(feature = "client-ptr", feature = "client-wowforever")) {
             ".Texture"
         } else {
             ""
@@ -343,10 +366,7 @@ fn main_action_bar_layout_is_locked() {
             assert(reW > 0 and reH > 0, "RightEndCap size must be non-zero")
             assert(approx(leW, reW, 0.1), "EndCap widths diverged")
             assert(approx(leH, reH, 0.1), "EndCap heights diverged")
-            assert(approx(leR, bL + 9), "LeftEndCap right anchor offset changed")
-            assert(approx(reL, bR - 8), "RightEndCap left anchor offset changed")
-            assert(approx(leB, bB - 22), "LeftEndCap bottom anchor offset changed")
-            assert(approx(reB, bB - 22), "RightEndCap bottom anchor offset changed")
+            __ENDCAP_ANCHOR_ASSERTIONS__
 
             local pL, pR, _, pB, pW, pH = rect("ActionBarPageNumber", page)
             assert(page:IsVisible(), "ActionBarPageNumber must be visible")
@@ -408,7 +428,9 @@ fn main_action_bar_layout_is_locked() {
             assert(approx(a2L - a1L, 47), "ActionButton1->2 spacing changed")
             assert(approx(a12R, bR), "ActionButton12 right edge no longer matches MainActionBar")
             "#;
-        let script = script.replace("__ENDCAP_TEXTURE_ACCESS__", endcap_texture_access);
+        let script = script
+            .replace("__ENDCAP_TEXTURE_ACCESS__", endcap_texture_access)
+            .replace("__ENDCAP_ANCHOR_ASSERTIONS__", ENDCAP_ANCHOR_ASSERTIONS);
         env.exec(&script)
             .expect("main action bar layout lock assertions");
     }

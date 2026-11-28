@@ -486,7 +486,10 @@ fn wardrobe_latest_appearance_tracks_collections() {
     assert!(ok);
 }
 
-#[cfg(feature = "client-retail")]
+/// Retail reads UiMap.HelpTextPosition since 553033c4ff (VERIFIED Retail
+/// 12.1.5.70688, R88fu); blizzard_flight_map_loads covers that consumer path.
+/// PTR keeps the temporary BottomRight default this test asserts.
+#[cfg(feature = "client-ptr")]
 #[test]
 fn map_click_to_zoom_uses_best_guess_help_text_position() {
     let _full_ui = lock_full_ui();

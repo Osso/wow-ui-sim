@@ -7,7 +7,7 @@ use crate::common::blizzard_addon_harness::{blizzard_ui_dir, build_blizzard_addo
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 fn load_full_game_ui() -> WowLuaEnv {
-    prefork_full_ui_preload::preload_full_game_ui()
+    prefork_full_ui_preload::load_full_game_ui()
         .expect("full Blizzard UI should load for the normal CommunitiesFrame path")
 }
 

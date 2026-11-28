@@ -84,6 +84,10 @@ fn get_item_info_returns_placeholder_for_missing_positive_item_id() {
     assert_eq!(item_info.2, 0);
 }
 
+/// Covers the Lua request fallback. Retail and Forever fire the documented
+/// ITEM_DATA_LOAD_RESULT from Rust instead (ad9e1bbcad); tests/item_data_request.rs
+/// covers that through the original Item:ContinueOnItemLoad consumer.
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn request_load_item_data_fires_for_synthetic_item_data() {
     let env = env();

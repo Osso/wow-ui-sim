@@ -1,7 +1,7 @@
 //! Synthetic Edit Mode previews only; no encounter warning producer or store.
 use wow_ui_sim::lua_api::WowLuaEnv;
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "encounter-warning-previews")]
 #[test]
 fn warning_preview_has_complete_independent_records() {
     let env = WowLuaEnv::new().unwrap();
@@ -47,11 +47,14 @@ fn warning_preview_has_complete_independent_records() {
                 assert(cr == r and cg == g and cb == b and ca == 1)
             end
         "#).unwrap();
+        // The second pass checks the Retail 12.1 post-load bootstrap keeps the
+        // preview intact; Forever has no such bootstrap.
+        #[cfg(feature = "retail-12-1-0")]
         wow_ui_sim::ptr::compat_bootstrap::apply_post_load(&env);
     }
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "encounter-warning-previews")]
 #[test]
 fn warning_preview_rejects_invalid_severity_without_state() {
     let env = WowLuaEnv::new().unwrap();
@@ -70,7 +73,7 @@ fn warning_preview_rejects_invalid_severity_without_state() {
     .unwrap();
 }
 
-#[cfg(all(feature = "profile-retail", not(feature = "retail-12-1-0")))]
+#[cfg(all(feature = "profile-retail", not(feature = "encounter-warning-previews")))]
 #[test]
 fn warning_preview_preserves_earlier_retail_record() {
     let env = WowLuaEnv::new().unwrap();
@@ -100,7 +103,7 @@ fn warning_preview_preserves_earlier_retail_record() {
     }
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "encounter-warning-previews")]
 #[test]
 fn severity_color_matches_preview_and_is_fresh_per_call() {
     let env = WowLuaEnv::new().unwrap();
@@ -129,7 +132,9 @@ fn severity_color_matches_preview_and_is_fresh_per_call() {
     "#).unwrap();
 }
 
-#[cfg(feature = "retail-12-1-0")]
+// Forever game types (camelot, mainline) do not select the AllowLoadGameType
+// standard Blizzard_EncounterWarnings consumer.
+#[cfg(all(feature = "encounter-warning-previews", not(feature = "client-wowforever")))]
 fn load_warning_view() -> WowLuaEnv {
     let ui = wow_ui_sim::paths::default_blizzard_ui_addons_path().unwrap();
     let (env, loaded) = crate::common::blizzard_addon_harness::build_blizzard_addon_closure_env(
@@ -146,7 +151,7 @@ fn load_warning_view() -> WowLuaEnv {
     env
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(all(feature = "encounter-warning-previews", not(feature = "client-wowforever")))]
 #[test]
 fn warning_preview_uses_loaded_blizzard_color_mixin() {
     let env = load_warning_view();
@@ -165,7 +170,7 @@ fn warning_preview_uses_loaded_blizzard_color_mixin() {
     .unwrap();
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(all(feature = "encounter-warning-previews", not(feature = "client-wowforever")))]
 fn expire_warning_timer(env: &WowLuaEnv, id: u64) {
     env.state()
         .borrow_mut()
@@ -178,7 +183,7 @@ fn expire_warning_timer(env: &WowLuaEnv, id: u64) {
     env.fire_on_update(0.5).unwrap();
 }
 
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(all(feature = "encounter-warning-previews", not(feature = "client-wowforever")))]
 #[test]
 fn warning_preview_real_blizzard_frame_expires_cancels_and_reuses() {
     let env = load_warning_view();

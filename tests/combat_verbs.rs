@@ -232,8 +232,9 @@ fn spell_stop_casting_clears_active_cast_and_reports_result() {
 #[test]
 fn successive_casts_advance_cast_id() {
     let env = env();
-    // Retail's cast GUID moved numeric identity to the castBarID slot.
-    let identity_slot = if cfg!(feature = "retail-12-1-0") { 10 } else { 7 };
+    // The cast GUID tuple (player-cast-durations, also on Forever since 180d08b696)
+    // moves numeric identity to the castBarID slot.
+    let identity_slot = if cfg!(feature = "player-cast-durations") { 10 } else { 7 };
     let (id1, id2): (f64, f64) = env
         .eval(&format!(
             r#"

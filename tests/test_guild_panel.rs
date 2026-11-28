@@ -191,6 +191,7 @@ fn guild_panel_opens_without_unavailable_error() {
             assert!(errors.is_empty(), "native guild tab errors: {errors:?}");
             return;
         }
+        common::supply_connected_battle_net(&env);
         let result: String = env.eval(r#"
             -- Capture error messages
             local errors = {}

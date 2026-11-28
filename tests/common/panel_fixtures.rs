@@ -104,7 +104,10 @@ pub fn load_retail_catalog_shop(env: &WowLuaEnv, ui: &std::path::Path) {
 pub fn load_panel_startup_publishers(env: &WowLuaEnv, ui: &std::path::Path) {
     load_retail_catalog_shop(env, ui);
     crate::common::load_blizzard_addon_bootstrap(
-        env, ui, "Blizzard_AchievementUI", "Blizzard_AchievementUI_Bootstrap.lua",
+        env,
+        ui,
+        "Blizzard_AchievementUI",
+        "Blizzard_AchievementUI_Bootstrap.lua",
     );
 }
 

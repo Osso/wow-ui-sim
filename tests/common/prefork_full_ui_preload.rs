@@ -53,8 +53,19 @@ pub(crate) fn drain_test_errors(env: &WowLuaEnv) -> Vec<String> {
     joined.split(SEP).map(|entry| entry.to_string()).collect()
 }
 
+/// Prefork parent preload: bypass the bytecode cache, load, then seal it.
+/// Call once per process; in-process tests use [`load_full_game_ui`].
 pub(crate) fn preload_full_game_ui() -> Result<WowLuaEnv, String> {
     wow_ui_sim::loader::enter_bytecode_cache_parent_bypass_mode();
+    let env = load_full_game_ui()?;
+    wow_ui_sim::loader::release_prefork_parent_bytecode_cache_memory()
+        .map_err(|error| format!("release prefork parent bytecode cache memory: {error}"))?;
+    Ok(env)
+}
+
+/// Full Game-screen UI load without touching the process-wide bytecode cache
+/// mode, so several tests in one test process can each build their own UI.
+pub(crate) fn load_full_game_ui() -> Result<WowLuaEnv, String> {
     let env = WowLuaEnv::new().map_err(|error| format!("create full-UI environment: {error}"))?;
     env.set_screen_size(1024.0, 768.0);
     env.set_screen_mode(ScreenKind::Game);
@@ -79,8 +90,6 @@ pub(crate) fn preload_full_game_ui() -> Result<WowLuaEnv, String> {
     env.gc_restart_after_bootstrap()
         .map_err(|error| format!("restart bootstrap GC: {error}"))?;
     fire_startup_events(&env)?;
-    wow_ui_sim::loader::release_prefork_parent_bytecode_cache_memory()
-        .map_err(|error| format!("release prefork parent bytecode cache memory: {error}"))?;
     Ok(env)
 }
 

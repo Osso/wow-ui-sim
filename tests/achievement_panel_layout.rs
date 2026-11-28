@@ -1,4 +1,9 @@
 //! Layout lock for the Achievements panel.
+//!
+//! Not on Forever: Camelot/Blizzard_AchievementUI.lua:13-17 routes the toggle
+//! to ToggleLegacyChallenges, so ToggleAchievementFrame never shows
+//! AchievementFrame there (VERIFIED in the 1.60.1.70707 UI cache).
+#![cfg(not(feature = "client-wowforever"))]
 
 use crate::common;
 

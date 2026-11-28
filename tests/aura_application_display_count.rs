@@ -1,6 +1,6 @@
 //! Retail 12.0.5 rows 367–369; fixture/spec slice, not native permission proof.
 //! Decimal formatting, missing-instance and strict representation policies are inferred.
-#![cfg(feature = "retail-12-0-5")]
+#![cfg(feature = "unit-aura-queries")]
 
 use rilua::LuaApiMut;
 use rilua::table_security::{wrap_host_secret_number, wrap_host_secret_string};

@@ -159,26 +159,28 @@ fn aura_instance_ids_public_and_secure_queries_follow_admin_aura_lifecycle() {
         .expect("private query follows the active profile's verified publication route");
     env.exec(
         r#"
-        assert(C_UnitAuras == __secureenv.C_UnitAuras)
+        -- R88g.2 VERIFIED (70688): native registrars create the secure namespace
+        -- table separately under its parent; each scope is checked below.
+        assert(type(__secureenv.C_UnitAuras) == 'table', 'aura lifecycle check 1')
         A_Admin.AddBuff(19750, 'EUI acceptance aura', '135907', 30, 3)
         for _, scope in ipairs({_G, __secureenv}) do
             local public = scope.C_UnitAuras
             local ids = public.GetUnitAuraInstanceIDs('player', 'HELPFUL')
-            assert(type(ids) == 'table' and #ids == 1 and ids[1] == 1)
-            assert(select('#', public.GetUnitAuraInstanceIDs('player', 'HELPFUL')) == 1)
+            assert(type(ids) == 'table' and #ids == 1 and ids[1] == 1, 'aura lifecycle check 2')
+            assert(select('#', public.GetUnitAuraInstanceIDs('player', 'HELPFUL')) == 1, 'aura lifecycle check 3')
             local aura = public.GetAuraDataByAuraInstanceID('player', ids[1])
-            assert(aura.spellId == 19750 and aura.name == 'EUI acceptance aura')
-            assert(aura.icon == 135907 and aura.applications == 3)
+            assert(aura.spellId == 19750 and aura.name == 'EUI acceptance aura', 'aura lifecycle check 4')
+            assert(aura.icon == 135907 and aura.applications == 3, 'aura lifecycle check 5')
             local harmful = public.GetUnitAuraInstanceIDs('player', 'HARMFUL')
-            assert(type(harmful) == 'table' and #harmful == 0)
+            assert(type(harmful) == 'table' and #harmful == 0, 'aura lifecycle check 6')
         end
         local privateIDs = SecurePrivateAuras.GetAllPrivateAuraInstanceIDs('player')
-        assert(type(privateIDs) == 'table' and #privateIDs == 0)
-        assert(select('#', SecurePrivateAuras.GetAllPrivateAuraInstanceIDs('player')) == 1)
+        assert(type(privateIDs) == 'table' and #privateIDs == 0, 'aura lifecycle check 7')
+        assert(select('#', SecurePrivateAuras.GetAllPrivateAuraInstanceIDs('player')) == 1, 'aura lifecycle check 8')
         A_Admin.RemoveBuff(19750)
         for _, scope in ipairs({_G, __secureenv}) do
             local ids = scope.C_UnitAuras.GetUnitAuraInstanceIDs('player', 'HELPFUL')
-            assert(type(ids) == 'table' and #ids == 0)
+            assert(type(ids) == 'table' and #ids == 0, 'aura lifecycle check 9')
         end
         "#,
     )

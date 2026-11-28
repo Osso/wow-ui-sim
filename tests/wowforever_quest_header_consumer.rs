@@ -5,12 +5,20 @@ use wow_ui_sim::c_api::QuestWatchType;
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 fn load_header_consumer_env() -> WowLuaEnv {
-    let env = WowLuaEnv::new().expect("create separate header consumer environment");
-    let cache = wow_ui_sim::blizzard_ui_sync::default_cache_addons_path()
-        .expect("locate synced Forever cache");
+    use crate::common::blizzard_addon_harness::{
+        blizzard_ui_dir, load_blizzard_addon_closure_into_env, new_blizzard_addon_env,
+    };
+    // QuestMapFrame.lua:1 reads EnumUtil (Blizzard_SharedXMLBase EnumUtil.lua;
+    // 096d8a1f8c retired the bootstrap copy).
+    let cache = blizzard_ui_dir();
+    let env = new_blizzard_addon_env(&cache);
+    load_blizzard_addon_closure_into_env(&env, &cache, &["Blizzard_SharedXMLBase"], &[]);
     // Same whole-cache loading style as wowforever_quest_difficulty.rs.
     // No source slicing, rewriting, target-body copying, or C API substitution.
+    // TimeUtil.lua owns SecondsFormatter, read by QuestUtils.lua at file scope;
+    // b20797e67a retired the bootstrap formatter copy.
     for file in [
+        "Blizzard_SharedXML/TimeUtil.lua",
         "Blizzard_FrameXMLUtil/Mainline/QuestUtils.lua",
         "Blizzard_UIPanels_Game/Mainline/QuestMapFrame.lua",
     ] {

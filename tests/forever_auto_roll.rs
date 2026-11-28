@@ -5,7 +5,7 @@
 use std::path::Path;
 
 use wow_ui_sim::loader::{
-    MissingRequirement, MissingRequirementKind,
+    BlizzardAddonOverride, MissingRequirement, MissingRequirementKind,
     discover_blizzard_addon_closure_for_screen_with_overrides, load_addon,
 };
 use wow_ui_sim::lua_api::WowLuaEnv;
@@ -15,6 +15,13 @@ use wow_ui_sim::screen::ScreenKind;
 // OptionPanel.lua consumes Settings registration and section-header initializers.
 // Their definitions live in this cached root and its actual TOC dependency closure.
 const BLIZZARD_ROOTS: &[&str] = &["Blizzard_Settings_Shared"];
+// Blizzard_Registration.lua:10 calls RegisterUIPanel, owned by
+// Blizzard_UIParentPanelManager (no synthetic default since 6dfb0ee167); Game
+// startup loads that owner first.
+const SETTINGS_PANEL_OWNER: [BlizzardAddonOverride<'static>; 1] = [BlizzardAddonOverride {
+    addon: "Blizzard_Settings_Shared",
+    extra_roots: &["Blizzard_UIParentPanelManager"],
+}];
 const ITEM_NAME: &str = "AutoRoll Integration Sword";
 const ITEM_TEXTURE: &str = "Interface\\Icons\\INV_Sword_04";
 
@@ -106,7 +113,7 @@ fn load_auto_roll_in_configured_world(
         &ui,
         ScreenKind::Game,
         BLIZZARD_ROOTS,
-        &[],
+        &SETTINGS_PANEL_OWNER,
     );
     assert!(
         !dependencies.is_empty(),
@@ -387,6 +394,14 @@ fn assert_greed_result(env: &WowLuaEnv, roll_id: i32) {
 
 #[test]
 fn forever_auto_roll_default_greed_consumes_enabled_vault_roll() {
+    if crate::common::local_addon_toc_or_skip(
+        "forever_auto_roll_default_greed_consumes_enabled_vault_roll",
+        "AutoRoll",
+    )
+    .is_none()
+    {
+        return;
+    }
     let (env, setup) = load_auto_roll_in_configured_world(2522, "Vault of the Incarnates");
     start_real_loot_roll(&env, 42);
     assert_greed_result(&env, 42);
@@ -395,6 +410,14 @@ fn forever_auto_roll_default_greed_consumes_enabled_vault_roll() {
 
 #[test]
 fn forever_auto_roll_unsupported_raid_leaves_produced_roll_untouched() {
+    if crate::common::local_addon_toc_or_skip(
+        "forever_auto_roll_unsupported_raid_leaves_produced_roll_untouched",
+        "AutoRoll",
+    )
+    .is_none()
+    {
+        return;
+    }
     let (env, setup) = load_auto_roll_in_configured_world(1, "Unsupported Raid Fixture");
     start_real_loot_roll(&env, 43);
     assert_untouched_roll(&env, 43);
@@ -403,6 +426,14 @@ fn forever_auto_roll_unsupported_raid_leaves_produced_roll_untouched() {
 
 #[test]
 fn forever_auto_roll_default_disabled_nerubar_leaves_produced_roll_untouched() {
+    if crate::common::local_addon_toc_or_skip(
+        "forever_auto_roll_default_disabled_nerubar_leaves_produced_roll_untouched",
+        "AutoRoll",
+    )
+    .is_none()
+    {
+        return;
+    }
     let (env, setup) = load_auto_roll_in_configured_world(2657, "Nerub-ar Palace");
     start_real_loot_roll(&env, 44);
     assert_untouched_roll(&env, 44);
@@ -438,6 +469,14 @@ fn assert_untouched_roll(env: &WowLuaEnv, roll_id: i32) {
 
 #[test]
 fn forever_auto_roll_environments_isolate_database_events_rolls_and_logs() {
+    if crate::common::local_addon_toc_or_skip(
+        "forever_auto_roll_environments_isolate_database_events_rolls_and_logs",
+        "AutoRoll",
+    )
+    .is_none()
+    {
+        return;
+    }
     let (first, first_setup) = load_auto_roll_in_configured_world(2522, "Vault of the Incarnates");
     start_real_loot_roll(&first, 45);
     assert_greed_result(&first, 45);

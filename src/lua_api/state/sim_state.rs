@@ -82,7 +82,7 @@ pub struct SimState {
         u64,
         crate::lua_api::globals::real::spell_confirmation_prompts::SpellConfirmationPrompt,
     >,
-    #[cfg(feature = "retail-12-0-5")]
+    #[cfg(feature = "nameplate-hit-test-insets")]
     pub(crate) nameplate_hit_test_insets: crate::c_api::c_nameplate_manager::NamePlateHitTestInsets,
     pub(crate) input_interface_style: crate::c_api::c_input_interface_style::InputInterfaceStyle,
     #[cfg(any(
@@ -179,9 +179,9 @@ pub struct SimState {
     pub garrison_talents: GarrisonTalentState,
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     pub garrison_mission_lists: crate::c_api::c_garrison_mission_lists::GarrisonMissionLists,
-    #[cfg(feature = "client-retail")]
+    #[cfg(feature = "garrison-host-inputs")]
     pub garrison_trees: crate::c_api::c_garrison_trees::GarrisonTrees,
-    #[cfg(feature = "client-retail")]
+    #[cfg(feature = "garrison-host-inputs")]
     pub garrison_landing_page: crate::c_api::c_garrison_landing_page::GarrisonLandingPage,
     pub clipboard: ClipboardState,
     pub chat_edit_open_state: Option<ChatEditOpenState>,
@@ -306,7 +306,7 @@ pub struct SimState {
     /// Explicit stat-output policy input; no combat or aura activation inference.
     pub unit_stats_restricted: bool,
     /// Explicit weapon contributions keyed by existing unit GUID; rows do not create units.
-    #[cfg(feature = "client-retail")]
+    #[cfg(feature = "explicit-stat-inputs")]
     pub weapon_attack_power: HashMap<String, crate::lua_api::state_types::WeaponAttackPower>,
     pub quest_blobs: HashMap<u64, QuestBlobState>,
     /// Supplied per-quest minimap containment observations.
@@ -368,9 +368,9 @@ pub struct SimState {
     pub last_account_store_storefront_info_request: Option<i64>,
     pub account_store_categories: HashMap<i64, AccountStoreCategoryInfo>,
     pub account_store_items: HashMap<i64, AccountStoreItemInfo>,
-    #[cfg(feature = "retail-12-0-0")]
+    #[cfg(feature = "spell-classification-queries")]
     pub spell_classifications: crate::c_api::c_spell_classification::SpellClassifications,
-    #[cfg(feature = "retail-12-0-0")]
+    #[cfg(feature = "nameplate-configuration")]
     pub nameplate_configuration: crate::c_api::c_nameplate_manager::NamePlateConfiguration,
     pub recipe_quality_inputs: crate::c_api::c_trade_skill_quality::RecipeQualityInputs,
     /// Host-supplied recipe source text, keyed by recipe ID.
@@ -385,11 +385,11 @@ pub struct SimState {
     pub button_header_inputs: crate::c_api::ui_widget_manager::ButtonHeaderInputs,
     pub ui_widget_inputs: crate::c_api::ui_widget_manager::UiWidgetInputs,
     /// INFERRED host policy snapshots, initially inactive; not combat-derived.
-    #[cfg(feature = "retail-12-0-0")]
+    #[cfg(feature = "rest-policy-flags")]
     pub combat_log_restricted: bool,
-    #[cfg(feature = "retail-12-0-0")]
+    #[cfg(feature = "rest-policy-flags")]
     pub pet_bonus_slot_available: bool,
-    #[cfg(feature = "retail-12-0-0")]
+    #[cfg(feature = "rest-policy-flags")]
     pub limited_input_allowed: [bool; 4],
     /// INFERRED empty host range inputs and tier-completion snapshots.
     #[cfg(feature = "action-spell-range")]
@@ -671,7 +671,7 @@ pub struct SimState {
     /// Selected interaction/spell bindings do not establish eligibility.
     #[cfg(feature = "retail-12-0-5")]
     pub click_bindable_spells: HashSet<u32>,
-    #[cfg(feature = "retail-12-0-5")]
+    #[cfg(feature = "unit-aura-queries")]
     pub cooldown_aura_associations:
         crate::c_api::c_unit_aura_cooldown_spells::CooldownAuraAssociations,
     /// INFERRED explicit spell flags only; no classification catalog or acquisition.
@@ -818,7 +818,7 @@ pub struct SimState {
     /// Last legacy string bytes, including unknown/ambiguous names; no playback implied.
     #[cfg(feature = "client-wrath")]
     pub last_sound_name_requested: Option<Vec<u8>>,
-    #[cfg(feature = "retail-12-0-0")]
+    #[cfg(feature = "encounter-warning-settings")]
     pub encounter_warning_settings: crate::c_api::c_encounter_warnings::WarningSettings,
     /// `C_CooldownViewer` entries keyed by cooldownID; empty until populated.
     pub cooldown_viewer_cooldowns:
@@ -978,7 +978,7 @@ pub struct SimState {
     pub pressed_keys: HashSet<String>,
     pub mouse_buttons: MouseButtons,
     /// Accepted `SimulateMouse*` input awaiting the GUI mouse dispatcher.
-    #[cfg(feature = "retail-12-0-7")]
+    #[cfg(feature = "simulated-mouse-input")]
     pub simulated_mouse_inputs:
         VecDeque<crate::lua_api::globals::real::simulate_mouse::SimulatedMouseInput>,
     pub game_rules: GameRulesState,
@@ -1265,7 +1265,7 @@ pub struct SimState {
     pub bnet_friend_invites: Vec<BnetFriendInvite>,
     pub bnet_appear_offline: bool,
     /// INFERRED local broadcast input; no network service or persistence.
-    #[cfg(feature = "retail-12-0-0")]
+    #[cfg(feature = "bnet-chat")]
     pub bnet_custom_message: String,
     pub social_friends: Vec<SocialFriend>,
     /// INFERRED host-supplied ignore rows for Retail/Forever FriendsFrame.
@@ -1439,7 +1439,7 @@ pub struct SimState {
     /// Supplied community voice channels; Forever uses the documented empty default.
     #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
     pub voice_channels: Vec<crate::c_api::c_voice_chat_channels::VoiceChannel>,
-    #[cfg(feature = "retail-12-0-5")]
+    #[cfg(feature = "lfg-endgame-edit-policy")]
     pub lfg_endgame_policy: crate::c_api::c_lfg_list_policy::EndgameEditPolicy,
     #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
     pub arena_opponents: HashMap<String, crate::c_api::c_pvp_crowd_control::ArenaOpponent>,
@@ -1450,7 +1450,7 @@ pub struct SimState {
     pub arena_crowd_control_spells: HashMap<String, i32>,
     #[cfg(feature = "retail-12-0-5")]
     pub hidden_spell_item_enchantments: std::collections::HashSet<u32>,
-    #[cfg(feature = "retail-12-0-5")]
+    #[cfg(feature = "bnet-presence")]
     pub bnet_presence: crate::c_api::c_battle_net::Presence,
     /// Accepted public SpeakText requests in call order; no audio playback.
     #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]

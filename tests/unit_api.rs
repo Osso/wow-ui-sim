@@ -877,12 +877,29 @@ fn test_unit_threat_situation() {
     assert!(is_nil);
 }
 
+/// Both pinned UnitDocumentation.lua entries declare `MayReturnNothing = true`
+/// (Retail :1058, Forever :1086); the threat model publishes only supplied
+/// entries. Other profiles keep the temporary inert default.
 #[test]
 fn test_unit_detailed_threat_situation() {
-    let env = env();
-    let (is_tanking, status): (bool, i32) = env
-        .eval("local a, b = UnitDetailedThreatSituation('player', 'target'); return a, b")
+    let modeled = cfg!(any(
+        feature = "client-retail",
+        feature = "client-wowforever"
+    ));
+    let supply = if modeled {
+        "A_Admin.SetUnitThreatSituation('player', 'target', 0, 0, 0, 0, false, 0)"
+    } else {
+        ""
+    };
+    let (unsupplied_count, is_tanking, status): (i32, bool, i32) = env()
+        .eval(&format!(
+            "local count = select('#', UnitDetailedThreatSituation('player', 'target'))\n\
+             {supply}\n\
+             local a, b = UnitDetailedThreatSituation('player', 'target')\n\
+             return count, a, b"
+        ))
         .unwrap();
+    assert_eq!(unsupplied_count, if modeled { 0 } else { 5 });
     assert!(!is_tanking);
     assert_eq!(status, 0);
 }

@@ -65,7 +65,10 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever) {
         register_retail_forever_methods(state, namespace)?;
     }
-    if ACTIVE == ClientProfile::Retail && cfg!(feature = "retail-12-1-5") {
+    // Forever GuildInfoDocumentation.lua declares Demote/SetLeader/Disband
+    // byte-identically to Retail 12.1.5.
+    let retail_1215 = ACTIVE == ClientProfile::Retail && cfg!(feature = "retail-12-1-5");
+    if retail_1215 || ACTIVE == ClientProfile::WowForever {
         register_retail_1215_methods(state, namespace)?;
     }
     Ok(())

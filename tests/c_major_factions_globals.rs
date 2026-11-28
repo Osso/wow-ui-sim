@@ -340,6 +340,9 @@ fn is_account_wide_reputation_is_false_by_default() {
     assert!(!result);
 }
 
+/// Retail and Forever read the host-fed reputation rows instead (8fd3fd2819);
+/// see `is_account_wide_reputation_reads_supplied_rows`.
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 #[test]
 fn is_account_wide_reputation_reads_state_set() {
     let env = WowLuaEnv::new().expect("env");
@@ -373,4 +376,33 @@ fn reputation_bar_helper_uses_renown_max_level() {
     .unwrap();
     let max_level: f64 = env.eval("return maxLevel").unwrap();
     assert!((max_level - 10.0).abs() < 1e-6);
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+const ACCOUNT_WIDE_ROWS_LUA: &str = r#"
+    A_Admin.SetReputationFactions({
+        { factionID = 2507, name = "Dragonscale Expedition", reaction = 5,
+          currentReactionThreshold = 0, nextReactionThreshold = 2500,
+          currentStanding = 100, isAccountWide = true },
+        { factionID = 2511, name = "Iskaara Tuskarr", reaction = 5,
+          currentReactionThreshold = 0, nextReactionThreshold = 2500,
+          currentStanding = 100 },
+    })
+    return C_Reputation.IsAccountWideReputation(2507),
+        C_Reputation.IsAccountWideReputation(2511),
+        C_Reputation.IsAccountWideReputation(9999)
+"#;
+
+/// Retail and Forever classify account-wide reputation from the supplied
+/// FactionData row (R88f.A.74: missing rows return false).
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn is_account_wide_reputation_reads_supplied_rows() {
+    let env = WowLuaEnv::new().expect("env");
+    let before: bool = env
+        .eval("return C_Reputation.IsAccountWideReputation(2507)")
+        .unwrap();
+    let flags: (bool, bool, bool) = env.eval(ACCOUNT_WIDE_ROWS_LUA).unwrap();
+    assert!(!before);
+    assert_eq!(flags, (true, false, false));
 }

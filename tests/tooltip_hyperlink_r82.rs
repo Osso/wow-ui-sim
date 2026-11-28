@@ -272,6 +272,8 @@ fn tooltip_hyperlink_r82_rank_inputs_and_marker_inventory() {
         let suffix = match marker {
             Marker::Item => "25:0:0:0:0:0:0:0:50:1:0:2:0:0:0:0:0::0",
             Marker::Trade => "Player-1-1:2:3",
+            // R82 Q1 VERIFIED (70688): `keystone` carries eight scalars.
+            Marker::Keystone => "1:2:3:4:5:6:7:8",
             _ => "1:2:3",
         };
         assert!(

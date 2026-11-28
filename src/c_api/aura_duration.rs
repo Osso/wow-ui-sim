@@ -48,30 +48,19 @@ impl SpellAuraDuration {
 }
 
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
-    if !cfg!(feature = "retail-12-0-5") && !cfg!(feature = "client-wowforever") {
+    if !cfg!(feature = "unit-aura-queries") {
         return Ok(());
     }
     let namespace = super::ensure_namespace(state, "C_UnitAuras")?;
-    if cfg!(feature = "retail-12-0-5") {
-        table_set_rust_fn_static(
-            state,
-            namespace,
-            "GetAuraBaseDuration",
-            get_aura_base_duration,
-        )?;
-        table_set_rust_fn_static(
-            state,
-            namespace,
-            "DoesAuraHaveExpirationTime",
-            does_aura_have_expiration_time,
-        )?;
-        table_set_rust_fn_static(state, namespace, "GetAuraDuration", get_aura_duration)?;
-        table_set_rust_fn_static(
-            state,
-            namespace,
-            "GetRefreshExtendedDuration",
-            get_refresh_extended_duration,
-        )?;
+    // Forever UnitAuraDocumentation.lua declares these blocks byte-identically.
+    let queries: [(&str, rilua::RustFn); 4] = [
+        ("GetAuraBaseDuration", get_aura_base_duration),
+        ("DoesAuraHaveExpirationTime", does_aura_have_expiration_time),
+        ("GetAuraDuration", get_aura_duration),
+        ("GetRefreshExtendedDuration", get_refresh_extended_duration),
+    ];
+    for (name, function) in queries {
+        table_set_rust_fn_static(state, namespace, name, function)?;
     }
     // Forever's selected AuraContainerUtil consumes this same nullable number.
     // Share explicit recast metadata without inventing production durations.
@@ -229,7 +218,8 @@ fn read_public_arguments(state: &LuaState) -> LuaResult<(Option<String>, f64)> {
 }
 
 fn duration_instance_is_numeric_secret(state: &LuaState) -> bool {
-    cfg!(any(feature = "profile-retail", feature = "client-ptr"))
+    // Retail and Forever document the same SecretArguments for these queries.
+    cfg!(feature = "unit-aura-queries")
         && rilua::table_security::secret_payload_kind(state, stack_val(state, 2))
             == Some(rilua::table_security::SecretPayloadKind::Number)
 }

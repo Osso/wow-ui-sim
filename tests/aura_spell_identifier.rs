@@ -1,6 +1,6 @@
 //! Bounded Retail 12.0.5 lookup contract. Seeded alias reuse, unit polarity
 //! ordering and conservative secret rejection are INFERRED, not native proof.
-#![cfg(feature = "retail-12-0-5")]
+#![cfg(feature = "unit-aura-queries")]
 
 use rilua::LuaApiMut;
 use rilua::table_security::wrap_host_secret_number;

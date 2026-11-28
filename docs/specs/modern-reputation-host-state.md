@@ -18,8 +18,9 @@ typed row-or-nil boundaries, selected/watched ID routing, and the zero-index
 expand case. R88f.A.80–A.81 supplies activity argument/index constraints. These
 answers do not establish native Forever internals or every Retail producer.
 
-**INFERRED simulator mapping:** the host can assign `SimState.reputation` rows
-and optional guild state; the vector starts empty with no selected or watched
+**INFERRED simulator mapping:** the host supplies `SimState.reputation` rows
+and optional guild state through `A_Admin.SetReputationFactions`
+([admin input](../admin-api/reputation.md)); the vector starts empty with no selected or watched
 ID. A row's header and child flags designate groups in supplied order. Collapse
 and expansion change only this local projection. A retained numeric sort
 preference and a legacy-visibility flag do not imply a native sorter/filter.

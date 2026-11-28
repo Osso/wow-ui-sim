@@ -172,6 +172,7 @@ post_wrath_ui_fixture! {
 fn manager_updates_bars_shown_to_priority_sorted_truncated_indices() {
     test_timeout! {
     with_blizzard_addon_startup_shape(&[ROOT], &[], |env, _loaded| {
+        crate::common::supply_watched_reputation(env);
         assert_cold_manager_globals_resolve(env);
         assert_cold_shown_bar_indices_match_priority(env);
         seed_tracked_house_guid(env);

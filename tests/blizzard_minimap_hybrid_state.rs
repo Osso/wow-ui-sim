@@ -6,7 +6,13 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 
 fn load_hybrid_minimap_addon(env: &WowLuaEnv) {
     let ui_dir = blizzard_ui_dir();
-    for addon in ["Blizzard_MapCanvas", "Blizzard_HybridMinimap"] {
+    // SharedMapPoiTemplates.lua owns ClearCachedActivitiesForPlayer, which
+    // MapCanvasMixin:OnMapChanged calls since e75454cb6a retired the wrapper copy.
+    for addon in [
+        "Blizzard_MapCanvas",
+        "Blizzard_SharedMapDataProviders",
+        "Blizzard_HybridMinimap",
+    ] {
         let toc = find_toc_file(&ui_dir.join(addon)).expect("Blizzard TOC should resolve");
         load_addon(&env.loader_env(), &toc).expect("required minimap addon should load");
     }

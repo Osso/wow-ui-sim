@@ -58,10 +58,16 @@
 //! AchievementsPanelDisabled-true short-circuit branch — that's a separate
 //! contract worth its own test if PLAN ever names it.
 
+#[cfg(not(feature = "client-wowforever"))]
 use crate::common::blizzard_addon_harness::with_blizzard_addon_smoke_shape;
 
+#[cfg(not(feature = "client-wowforever"))]
 const ROOT: &str = "Blizzard_AchievementUI";
 
+// Forever 1.60.1.70707 replaces this toggle: Camelot/Blizzard_AchievementUI.lua:13-17
+// routes AchievementFrame_ToggleAchievementFrame to ToggleLegacyChallenges, so
+// the Mainline AchievementFrame toggle contract does not apply there.
+#[cfg(not(feature = "client-wowforever"))]
 #[test]
 fn toggle_achievement_frame_cycles_show_hide_and_honors_guild_view_arg() {
     if crate::common::wrath_achievement_fixtures::assert_native(

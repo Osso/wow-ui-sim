@@ -166,7 +166,7 @@ pub mod c_azerite_essence;
 pub mod c_azerite_item;
 pub mod c_barber_shop;
 pub mod c_battle_net;
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "bnet-friend-social")]
 pub(crate) mod c_battle_net_friend_search;
 #[cfg(feature = "retail-12-0-7")]
 pub(crate) mod c_battle_net_invite;
@@ -238,7 +238,7 @@ pub(crate) mod c_edit_mode_cache;
 pub(crate) mod c_encounter_journal_map;
 #[cfg(any(feature = "retail-12-1-0", feature = "client-wowforever"))]
 pub(crate) mod c_encounter_timeline;
-#[cfg(feature = "retail-12-0-0")]
+#[cfg(feature = "encounter-warning-settings")]
 pub(crate) mod c_encounter_warnings;
 mod c_engraving;
 pub(crate) mod c_event_scheduler;
@@ -249,11 +249,11 @@ pub(crate) mod c_game_rules;
 mod c_garrison_currency;
 pub(crate) mod c_garrison_damage_classes;
 mod c_garrison_follower_xp;
-#[cfg(feature = "client-retail")]
+#[cfg(feature = "garrison-host-inputs")]
 pub(crate) mod c_garrison_landing_page;
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub(crate) mod c_garrison_mission_lists;
-#[cfg(feature = "client-retail")]
+#[cfg(feature = "garrison-host-inputs")]
 pub mod c_garrison_trees;
 pub mod c_glue;
 pub mod c_housing;
@@ -268,10 +268,10 @@ pub mod c_legendary_crafting;
 pub mod c_lfg_info;
 pub(crate) mod c_lfg_list_active_entry;
 pub(crate) mod c_lfg_list_filter;
-#[cfg(feature = "retail-12-0-5")]
+#[cfg(feature = "lfg-endgame-edit-policy")]
 pub mod c_lfg_list_policy;
 pub mod c_lfg_list_search;
-#[cfg(feature = "retail-12-0-0")]
+#[cfg(feature = "rest-policy-flags")]
 mod c_limited_input;
 pub(crate) mod c_log;
 pub mod c_login;
@@ -295,7 +295,10 @@ pub(crate) mod c_mount_spell_lookup;
 pub mod c_mythic_plus;
 #[cfg(feature = "retail-12-0-7")]
 pub mod c_mythic_plus_calendar;
-#[cfg(feature = "retail-12-0-0")]
+#[cfg(any(
+    feature = "nameplate-configuration",
+    feature = "nameplate-hit-test-insets"
+))]
 pub(crate) mod c_nameplate_manager;
 #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 pub(crate) mod c_navigation;
@@ -400,7 +403,7 @@ mod c_spectating_ui;
 pub mod c_spell;
 pub(crate) mod c_spell_activation_overlay;
 pub mod c_spell_book;
-#[cfg(feature = "retail-12-0-0")]
+#[cfg(feature = "spell-classification-queries")]
 pub mod c_spell_classification;
 #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
 pub(crate) mod c_spell_counts;
@@ -444,6 +447,7 @@ pub(crate) mod mists_r88ah;
 pub(crate) mod mists_r88ai;
 #[cfg(feature = "client-mists")]
 pub(crate) mod mists_reputation_list;
+pub(crate) mod reputation_admin;
 pub mod reputation_model;
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub(crate) mod secure_transfer;
@@ -534,16 +538,16 @@ pub mod c_transmog_sets;
 pub(crate) mod c_ui;
 pub(crate) mod c_ui_color;
 pub mod c_ui_file_asset;
-#[cfg(feature = "retail-12-0-5")]
+#[cfg(feature = "unit-aura-queries")]
 pub(crate) mod c_unit_aura_altered_form;
 pub mod c_unit_aura_classification;
-#[cfg(feature = "retail-12-0-5")]
+#[cfg(feature = "unit-aura-queries")]
 pub mod c_unit_aura_cooldown_spells;
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) mod c_unit_aura_dispel_color;
-#[cfg(feature = "retail-12-0-5")]
+#[cfg(feature = "unit-aura-queries")]
 pub(crate) mod c_unit_aura_display_count;
-#[cfg(feature = "retail-12-0-5")]
+#[cfg(feature = "unit-aura-queries")]
 pub(crate) mod c_unit_aura_filter_query;
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) mod c_unit_aura_index_queries;
@@ -551,7 +555,7 @@ pub(crate) mod c_unit_aura_index_queries;
 pub(crate) mod c_unit_aura_slot_enumeration;
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) mod c_unit_aura_slot_query;
-#[cfg(feature = "retail-12-0-5")]
+#[cfg(feature = "unit-aura-queries")]
 pub(crate) mod c_unit_aura_spell_queries;
 #[cfg(feature = "aura-instance-enumeration")]
 pub mod c_unit_auras;
@@ -756,7 +760,7 @@ pub(crate) fn register_utility_bootstrap_tables(state: &mut LuaState) -> LuaResu
         c_super_track::register(state)?;
     }
     c_garrison_damage_classes::register(state)?;
-    #[cfg(feature = "client-retail")]
+    #[cfg(feature = "garrison-host-inputs")]
     {
         c_garrison_landing_page::register(state)?;
         c_garrison_trees::register(state)?;

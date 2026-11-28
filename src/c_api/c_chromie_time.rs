@@ -1,4 +1,4 @@
-//! `C_ChromieTime` empty-state surface for retail clients.
+//! `C_ChromieTime` empty-state surface for Retail, PTR and Forever clients.
 
 use crate::c_api::helpers::ensure_namespace;
 use crate::client_profile::{ACTIVE, ClientProfile};
@@ -8,7 +8,11 @@ use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 
 pub(crate) fn register_c_chromie_time_surface(state: &mut LuaState) -> LuaResult<()> {
-    if !matches!(ACTIVE, ClientProfile::Retail | ClientProfile::Ptr) {
+    // Forever ChromieTimeUIDocumentation.lua declares the same four blocks.
+    if !matches!(
+        ACTIVE,
+        ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever
+    ) {
         return Ok(());
     }
 

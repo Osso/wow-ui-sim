@@ -213,6 +213,8 @@ fn register_admin_combat(mut builder: TableBuilder) -> LuaResult<TableBuilder> {
     #[cfg(feature = "player-cast-durations")]
     let builder = register_channel_inputs(builder)?;
     let builder = register_targeting_party(builder)?;
+    #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
+    let builder = crate::c_api::combat_log_history::register_admin(builder)?;
     Ok(builder)
 }
 
@@ -220,6 +222,7 @@ fn register_admin_world_collections(mut builder: TableBuilder) -> LuaResult<Tabl
     builder = register_world(builder)?;
     builder = register_collections_pvp(builder)?;
     builder = register_inventory_misc(builder)?;
+    builder = crate::c_api::transmog_availability::register_admin(builder)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     let builder = crate::c_api::c_raid_locks::register_admin(builder)?;
     #[cfg(feature = "client-retail")]
@@ -258,6 +261,7 @@ fn register_admin_inventory_items(builder: TableBuilder) -> LuaResult<TableBuild
     #[cfg(feature = "client-retail")]
     let builder = crate::c_api::c_major_factions::register_admin(builder)?;
     let builder = crate::c_api::item_upgrade_eligibility::register_admin(builder)?;
+    let builder = crate::c_api::reputation_admin::register_admin(builder)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     let builder = super::admin_inventory_candidates::register(builder)?;
     let builder = builder

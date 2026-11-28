@@ -117,12 +117,16 @@ fn register_bootstrap_unit_aura_apis(lua: &mut rilua::Lua) -> crate::Result<()> 
     crate::c_api::c_unit_aura_slot_enumeration::register(lua.state_mut())?;
     #[cfg(feature = "retail-12-0-5")]
     crate::c_api::c_unit_aura_dispel_color::register(lua.state_mut())?;
-    #[cfg(feature = "retail-12-0-5")]
+    Ok(())
+}
+
+#[cfg(feature = "unit-aura-queries")]
+fn register_bootstrap_unit_aura_queries(lua: &mut rilua::Lua) -> crate::Result<()> {
     crate::c_api::c_unit_aura_display_count::register(lua.state_mut())?;
-    #[cfg(feature = "retail-12-0-5")]
     crate::c_api::c_unit_aura_spell_queries::register(lua.state_mut())?;
-    #[cfg(feature = "retail-12-0-5")]
     crate::c_api::c_unit_aura_cooldown_spells::register(lua.state_mut())?;
+    crate::c_api::c_unit_aura_altered_form::register(lua.state_mut())?;
+    crate::c_api::c_unit_aura_filter_query::register(lua.state_mut())?;
     Ok(())
 }
 
@@ -137,10 +141,8 @@ fn register_bootstrap_shared_apis(lua: &mut rilua::Lua) -> crate::Result<()> {
     #[cfg(feature = "maw-power-model")]
     crate::c_api::c_spell_maw_powers::register(lua.state_mut())?;
     crate::c_api::c_unit_aura_classification::register(lua.state_mut())?;
-    #[cfg(feature = "retail-12-0-5")]
-    crate::c_api::c_unit_aura_altered_form::register(lua.state_mut())?;
-    #[cfg(feature = "retail-12-0-5")]
-    crate::c_api::c_unit_aura_filter_query::register(lua.state_mut())?;
+    #[cfg(feature = "unit-aura-queries")]
+    register_bootstrap_unit_aura_queries(lua)?;
     #[cfg(feature = "aura-instance-enumeration")]
     crate::c_api::aura_duration::register(lua.state_mut())?;
     crate::c_api::private_aura_anchors::register(lua.state_mut())?;
@@ -436,7 +438,7 @@ fn register_progression_state_probes(lua: &mut rilua::Lua) -> crate::Result<()> 
 fn register_world_state_probes(lua: &mut rilua::Lua) -> crate::Result<()> {
     super::real::mouse_probes::register_all(lua)?;
     register_plain_host_globals(lua)?;
-    #[cfg(feature = "retail-12-0-7")]
+    #[cfg(feature = "simulated-mouse-input")]
     super::real::simulate_mouse::register_all(lua)?;
     super::movement_probes::register_all(lua)?;
     super::faction_probes::register_all(lua)?;

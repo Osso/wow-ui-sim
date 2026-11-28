@@ -65,16 +65,22 @@ use crate::common::blizzard_addon_harness::with_blizzard_addon_smoke_shape;
 const ROOT: &str = "Blizzard_AchievementUI";
 const PLAN_DEPENDS_ON_NUM_COMPLETED: &str = "GetNumCompletedAchievements";
 const PLAN_DEPENDS_ON_TOTAL_POINTS: &str = "GetTotalAchievementPoints";
+#[cfg(not(feature = "client-wowforever"))]
 const EXPECTED_TAB_INDICES: &str = "tab_calls=2 guild_index=2 player_index=1";
 const EXPECTED_TOTAL_POINTS: &str =
     "total_calls=2 first_arg=true second_arg=false guild_view_after_first=true";
 const EXPECTED_NUM_COMPLETED: &str =
     "num_calls=2 first_arg=true second_arg=false guild_view_after_first=true";
 
+#[cfg(not(feature = "client-wowforever"))]
 type TabDispatchProbe = (String, String, String);
 type ForwardingProbe = (String, String, String, String);
 
 post_wrath_ui_fixture! {
+// Forever 1.60.1.70707 replaces this toggle: Camelot/Blizzard_AchievementUI.lua:13-17
+// routes AchievementFrame_ToggleAchievementFrame to ToggleLegacyChallenges, so
+// the Mainline AchievementFrame toggle contract does not apply there.
+#[cfg(not(feature = "client-wowforever"))]
 #[test]
 fn toggle_dispatches_base_tab_onclick_with_index_2_for_guild_and_index_1_for_player() {
     with_blizzard_addon_smoke_shape(&[ROOT], &[], |env, _loaded| {

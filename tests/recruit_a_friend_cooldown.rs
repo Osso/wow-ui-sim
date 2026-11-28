@@ -40,14 +40,24 @@ fn original_retail_social_card_receives_supplied_cooldown_and_enable_flag() {
 
 /// FriendsListTemplates.lua:361 reads EnumUtil, whose original owner is
 /// Blizzard_SharedXMLBase since 096d8a1f8c retired the bootstrap copy.
+///
+/// This file builds both as its own `[[test]]` target and inside the generated
+/// integration harness, so it loads the closure through the library API rather
+/// than `crate::common`, which only the harness provides.
 #[cfg(feature = "client-retail")]
 fn shared_xml_base_env() -> WowLuaEnv {
-    use crate::common::blizzard_addon_harness::{
-        blizzard_ui_dir, load_blizzard_addon_closure_into_env, new_blizzard_addon_env,
-    };
-    let ui = blizzard_ui_dir();
-    let env = new_blizzard_addon_env(&ui);
-    load_blizzard_addon_closure_into_env(&env, &ui, &["Blizzard_SharedXMLBase"], &[]);
+    use wow_ui_sim::loader::{discover_blizzard_addon_closure_for_screen, load_addon};
+    let ui = wow_ui_sim::client_profile::blizzard_ui_addons_dir();
+    let env = WowLuaEnv::new().unwrap();
+    env.state().borrow_mut().addon_base_paths = vec![ui.clone()];
+    let closure = discover_blizzard_addon_closure_for_screen(
+        &ui,
+        wow_ui_sim::screen::ScreenKind::Game,
+        &["Blizzard_SharedXMLBase"],
+    );
+    for (name, toc) in closure {
+        load_addon(&env.loader_env(), &toc).unwrap_or_else(|error| panic!("{name}: {error}"));
+    }
     env
 }
 
