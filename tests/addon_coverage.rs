@@ -333,19 +333,30 @@ fn load_panel_harness_blizzard_ui(env: &WowLuaEnv) -> HashSet<String> {
     closure.into_iter().map(|(name, _)| name).collect()
 }
 
-fn load_achievement_bootstrap(env: &WowLuaEnv, ui: &std::path::Path) {
-    if wow_ui_sim::client_profile::ACTIVE != wow_ui_sim::client_profile::ClientProfile::Retail {
-        return;
+/// Original startup bootstraps behind the achievement opener. Forever's Camelot
+/// toggle also calls `ToggleLegacyChallenges` from the Legacy System bootstrap
+/// (Blizzard_LegacySystem.toc:6).
+fn achievement_bootstrap_addons() -> &'static [&'static str] {
+    use wow_ui_sim::client_profile::{ACTIVE, ClientProfile};
+    match ACTIVE {
+        ClientProfile::Retail => &["Blizzard_AchievementUI"],
+        ClientProfile::WowForever => &["Blizzard_AchievementUI", "Blizzard_LegacySystem"],
+        _ => &[],
     }
+}
+
+fn load_achievement_bootstrap(env: &WowLuaEnv, ui: &std::path::Path) {
     let startup = discover_blizzard_startup_addons_for_screen(ui, ScreenKind::Game);
-    let addon = startup
-        .iter()
-        .find(|addon| addon.name == "Blizzard_AchievementUI")
-        .expect("original Retail startup includes the AchievementUI bootstrap");
-    let toc = TocFile::from_file(&addon.toc_path).expect("AchievementUI TOC parses");
-    assert!(toc.is_load_on_demand() && toc.has_bootstrap_files());
-    load_addon_bootstrap_from_toc(&env.loader_env(), &toc)
-        .expect("original AchievementUI bootstrap loads for panel tests");
+    for name in achievement_bootstrap_addons() {
+        let addon = startup
+            .iter()
+            .find(|addon| addon.name == *name)
+            .unwrap_or_else(|| panic!("original startup includes the {name} bootstrap"));
+        let toc = TocFile::from_file(&addon.toc_path).expect("bootstrap TOC parses");
+        assert!(toc.is_load_on_demand() && toc.has_bootstrap_files());
+        load_addon_bootstrap_from_toc(&env.loader_env(), &toc)
+            .unwrap_or_else(|error| panic!("original {name} bootstrap loads: {error}"));
+    }
 }
 
 fn force_load_game_addons() -> Vec<(String, PathBuf)> {

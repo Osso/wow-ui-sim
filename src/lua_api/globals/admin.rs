@@ -264,6 +264,7 @@ fn register_admin_inventory_items(builder: TableBuilder) -> LuaResult<TableBuild
     let builder = crate::c_api::c_transmog_outfit_info::register_admin(builder)?;
     #[cfg(feature = "client-retail")]
     let builder = crate::c_api::c_major_factions::register_admin(builder)?;
+    let builder = crate::c_api::c_major_factions::register_renown_admin(builder)?;
     let builder = crate::c_api::item_upgrade_eligibility::register_admin(builder)?;
     let builder = crate::c_api::reputation_admin::register_admin(builder)?;
     let builder = crate::c_api::c_lfg_list_roles::register_admin(builder)?;
