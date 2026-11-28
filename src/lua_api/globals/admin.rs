@@ -654,6 +654,10 @@ fn register_housing_and_pet_battles(b: TableBuilder) -> LuaResult<TableBuilder> 
             super::pet_battles::admin_set_pet_battle_availability,
         )?
         .set_function(
+            "SetPetBattleMatchmakingInfo",
+            super::pet_battles::admin_set_pet_battle_matchmaking_info,
+        )?
+        .set_function(
             "SetPetBattleTeamState",
             super::pet_battles::admin_set_pet_battle_team_state,
         )?
