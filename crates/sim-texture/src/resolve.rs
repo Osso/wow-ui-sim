@@ -50,7 +50,7 @@ pub fn store_persistent_sub_region_cache(root: &Path, key: &str, data: &TextureD
     else {
         return;
     };
-    if let Err(error) = write_cache_file_atomically(&path, |temporary| {
+    if let Err(error) = write_cache_file_atomically(&path, root, |temporary| {
         image.save(temporary).map_err(io::Error::other)
     }) {
         eprintln!("crop cache write {}: {error}", path.display());
@@ -58,9 +58,12 @@ pub fn store_persistent_sub_region_cache(root: &Path, key: &str, data: &TextureD
 }
 
 /// Publish only complete cache files. The private directory keeps the original extension
-/// and avoids collisions between concurrent writes by the same process.
+/// and avoids collisions between concurrent writes by the same process. `staging` must be
+/// on the destination filesystem; callers whose destination directories are observed for
+/// negative-cache validity stage outside them so failed writes leave those stamps unchanged.
 pub fn write_cache_file_atomically(
     path: &Path,
+    staging: &Path,
     write: impl FnOnce(&Path) -> io::Result<()>,
 ) -> io::Result<()> {
     let parent = path
@@ -70,7 +73,8 @@ pub fn write_cache_file_atomically(
         .file_name()
         .ok_or_else(|| io::Error::other("missing cache filename"))?;
     std::fs::create_dir_all(parent)?;
-    let directory = create_cache_write_directory(parent)?;
+    std::fs::create_dir_all(staging)?;
+    let directory = create_cache_write_directory(staging)?;
     let temporary = directory.join(name);
     let result = write(&temporary).and_then(|()| std::fs::rename(&temporary, path));
     if let Err(error) = std::fs::remove_dir_all(&directory) {

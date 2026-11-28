@@ -35,6 +35,7 @@
 //!   the simulator quest-log selection on Retail and Forever, defaulting
 //!   to the initial player map. Native equivalence is not established.
 //! - `C_Map.MapHasArt(uiMapID)` — true for positive map ids.
+//! - `C_Map.OpenWorldMap(uiMapID?)` — dispatches the original world map open event.
 //! - `C_Map.RequestPreloadMap(uiMapID)` — queues map art + overlay textures.
 
 use super::helpers::{ensure_namespace, set_table_array};
@@ -143,20 +144,7 @@ fn register_c_map_methods(state: &mut LuaState, table_ref: LuaTableRef) -> LuaRe
     for (name, rust_fn) in C_MAP_METHODS {
         table_set_rust_fn_static(state, table_ref, name, *rust_fn)?;
     }
-    if matches!(
-        crate::client_profile::ACTIVE,
-        crate::client_profile::ClientProfile::Retail
-            | crate::client_profile::ClientProfile::Ptr
-            | crate::client_profile::ClientProfile::WowForever
-    ) {
-        // MapDocumentation.lua:29-36 is byte-identical on Retail and Forever.
-        table_set_rust_fn_static(
-            state,
-            table_ref,
-            "CloseWorldMapInteraction",
-            close_world_map_interaction,
-        )?;
-    }
+    register_world_map_actions(state, table_ref)?;
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever {
         // Forever 70707 MapDocumentation.lua:548-561.
         table_set_rust_fn_static(
@@ -181,6 +169,24 @@ fn register_c_map_methods(state: &mut LuaState, table_ref: LuaTableRef) -> LuaRe
     }
     user_waypoint::register(state, table_ref)?;
     Ok(())
+}
+
+fn register_world_map_actions(state: &mut LuaState, table_ref: LuaTableRef) -> LuaResult<()> {
+    use crate::client_profile::{ACTIVE, ClientProfile};
+    if !matches!(
+        ACTIVE,
+        ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever
+    ) {
+        return Ok(());
+    }
+    // Pinned Retail, PTR and Forever MapDocumentation.lua:29-36, 578-585.
+    table_set_rust_fn_static(
+        state,
+        table_ref,
+        "CloseWorldMapInteraction",
+        close_world_map_interaction,
+    )?;
+    table_set_rust_fn_static(state, table_ref, "OpenWorldMap", c_map_open_world_map)
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
@@ -228,6 +234,23 @@ fn close_world_map_interaction(state: &mut LuaState) -> LuaResult<u32> {
             &[Val::Num(f64::from(WORLD_MAP_INTERACTION))],
         );
     }
+    Ok(0)
+}
+
+/// INFERRED: MapDocumentation.lua:641-648 declares a synchronous event with
+/// the same optional map ID; the original WorldMapMixin OnEvent opens the panel.
+fn c_map_open_world_map(state: &mut LuaState) -> LuaResult<u32> {
+    use crate::lua_api::globals::real::protected_globals::protected_call_refused;
+    if protected_call_refused(state, "C_Map.OpenWorldMap", true)? {
+        return Ok(0);
+    }
+    let map_id = Option::<i32>::from_stack(state, 1)?;
+    let payload = map_id.map_or(Val::Nil, |id| Val::Num(f64::from(id)));
+    crate::lua_api::globals::state_backed_queries::dispatch_event_now(
+        state,
+        "WORLD_MAP_OPEN",
+        &[payload],
+    )?;
     Ok(0)
 }
 
