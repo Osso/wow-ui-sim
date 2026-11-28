@@ -449,6 +449,11 @@ fn show_ui_panel_locks_reputation_frame_layout() {
                 .expect("native reputation panel and scroll/detail geometry");
             return;
         }
+        if cfg!(feature = "client-wowforever") {
+            env.exec(include_str!("fixtures/forever/reputation_layout.lua"))
+                .expect("Camelot reputation panel and scroll/detail geometry");
+            return;
+        }
         let result: String = env
             .eval(
                 r#"
@@ -663,8 +668,11 @@ fn show_ui_panel_locks_reputation_frame_layout() {
     }
 }
 
-// The filter dropdown is only in the Mainline/Camelot ReputationFrame consumer.
-retail_ptr_forever_toc_fixture! {
+// The filter dropdown is only shown by the Mainline ReputationFrame consumer;
+// Forever's Camelot ShouldShowFilters returns false and hides it
+// (Blizzard_UIPanels_Game/Camelot/ReputationFrame.lua:77-90), which the Forever
+// layout fixture asserts.
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
 #[test]
 fn reputation_filter_dropdown_mouse_down_materializes_menu_rows() {
     test_timeout! {
@@ -748,7 +756,6 @@ fn reputation_filter_dropdown_mouse_down_materializes_menu_rows() {
             .unwrap();
         assert_eq!(result, "ok");
     }
-}
 }
 
 #[cfg(feature = "client-retail")]
