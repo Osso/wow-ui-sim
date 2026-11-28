@@ -17,6 +17,40 @@ fn loaded_game() -> WowLuaEnv {
     env
 }
 
+fn pet_queue_entry(env: &WowLuaEnv) -> (bool, f64, bool, bool, String) {
+    env.eval(
+        r#"
+        for entry in QueueStatusFrame.statusEntriesPool:EnumerateActive() do
+            if entry.Title:GetText() == PET_BATTLE_PVP_QUEUE then
+                return true, entry.queuedTime or 0, entry.AverageWait:IsShown(),
+                    entry.TimeInQueue:IsShown(), entry.Status:GetText() or ""
+            end
+        end
+        return false, 0, false, false, ""
+        "#,
+    )
+    .expect("read original pet-battle queue entry")
+}
+
+#[test]
+fn original_queue_frame_uses_admin_supplied_matchmaking_records() {
+    let env = loaded_game();
+    env.exec(
+        "A_Admin.SetPetBattleMatchmakingInfo('queued', 90, 2500, false); A_Admin.FireEvent('PET_BATTLE_QUEUE_STATUS')",
+    )
+    .expect("supply queued matchmaking state");
+    assert_eq!(pet_queue_entry(&env), (true, 2.5, true, true, "".into()));
+
+    env.exec(
+        "A_Admin.SetPetBattleMatchmakingInfo('proposal', 70, 3000, true); A_Admin.FireEvent('PET_BATTLE_QUEUE_STATUS')",
+    )
+    .expect("supply proposal matchmaking state");
+    assert_eq!(
+        pet_queue_entry(&env),
+        (true, 0.0, false, false, "QUEUED_STATUS_PROPOSAL".into()),
+    );
+}
+
 fn supply_queue(env: &WowLuaEnv, status: u8) {
     let mut sim = env.state().borrow_mut();
     let queue = &mut sim.pet_battles.runtime.matchmaking;
