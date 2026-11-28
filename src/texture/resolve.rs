@@ -120,8 +120,11 @@ fn extract_casc_asset(
     if out_path.exists() {
         return Some(out_path);
     }
-    extract_into_cache(resolver, file_data_id, &out_path)
-        .or_else(|| crate::casc_asset_fallback::ensure_known_asset_cached(relative_path, &out_path))
+    // Stage outside the observed extract tree so a failed write leaves its stamps unchanged.
+    let staging = extract_dir.with_file_name("casc-extract-staging");
+    extract_into_cache(resolver, file_data_id, &out_path, &staging).or_else(|| {
+        crate::casc_asset_fallback::ensure_known_asset_cached(relative_path, &out_path, &staging)
+    })
 }
 
 #[cfg(feature = "casc")]
@@ -129,8 +132,9 @@ fn extract_into_cache(
     resolver: &asset_resolver::CascListfileResolver,
     fdid: u32,
     path: &Path,
+    staging: &Path,
 ) -> Option<PathBuf> {
-    write_cache_file_atomically(path, |temporary| {
+    write_cache_file_atomically(path, staging, |temporary| {
         resolver
             .ensure_cached(fdid, temporary)
             .map(|_| ())

@@ -64,7 +64,11 @@ struct CascAssetReader {
 static CASC_ASSET_READER: OnceLock<Option<CascAssetReader>> = OnceLock::new();
 
 #[cfg(feature = "casc")]
-pub(crate) fn ensure_known_asset_cached(path: &str, out_path: &Path) -> Option<PathBuf> {
+pub(crate) fn ensure_known_asset_cached(
+    path: &str,
+    out_path: &Path,
+    staging: &Path,
+) -> Option<PathBuf> {
     if out_path.exists() {
         return Some(out_path.to_path_buf());
     }
@@ -82,7 +86,7 @@ pub(crate) fn ensure_known_asset_cached(path: &str, out_path: &Path) -> Option<P
         })
         .ok()?;
 
-    write_asset(out_path, &bytes).ok()?;
+    write_asset(out_path, staging, &bytes).ok()?;
     eprintln!(
         "asset-cache encoding-key fallback: {path} ({encoding_key_hex}) -> {}",
         out_path.display()
@@ -132,8 +136,8 @@ fn parse_hex_16(hex: &str) -> Option<[u8; 16]> {
 }
 
 #[cfg(feature = "casc")]
-fn write_asset(out_path: &Path, bytes: &[u8]) -> Result<(), String> {
-    sim_texture::resolve::write_cache_file_atomically(out_path, |temporary| {
+fn write_asset(out_path: &Path, staging: &Path, bytes: &[u8]) -> Result<(), String> {
+    sim_texture::resolve::write_cache_file_atomically(out_path, staging, |temporary| {
         std::fs::write(temporary, bytes)
     })
     .map_err(|err| format!("write {}: {err}", out_path.display()))
@@ -148,10 +152,10 @@ mod tests {
     fn extracted_asset_readers_keep_their_complete_file() {
         let root = tempfile::tempdir().unwrap();
         let path = root.path().join("asset.blp");
-        write_asset(&path, b"first complete asset").unwrap();
+        write_asset(&path, root.path(), b"first complete asset").unwrap();
         let mut reader = std::fs::File::open(&path).unwrap();
         std::thread::scope(|scope| {
-            scope.spawn(|| write_asset(&path, b"second complete asset").unwrap());
+            scope.spawn(|| write_asset(&path, root.path(), b"second complete asset").unwrap());
         });
         let mut opened = Vec::new();
         reader.read_to_end(&mut opened).unwrap();
