@@ -362,12 +362,24 @@ pub(crate) fn is_group_assistant(st: &crate::lua_api::state::SimState, unit: &st
             || visible_party_member(st, unit).is_some())
 }
 
-/// `UnitGetAvailableRoles(unit)` — role eligibility is not modeled; every
-/// role is available.
+/// `UnitGetAvailableRoles(unit)` — the player reads supplied role eligibility.
+/// Other unsupplied queries preserve the existing all-eligible simulator model.
 pub(super) fn unit_get_available_roles(state: &mut LuaState) -> LuaResult<u32> {
     let unit = Option::<String>::from_stack(state, 1)?.unwrap_or_default();
-    for available in [true, true, true] {
-        state.push(Val::Bool(available));
+    #[cfg(feature = "player-requests")]
+    let available = if unit == "player" {
+        borrow_state(state)?
+            .player_requests
+            .roles
+            .as_ref()
+            .map_or([true; 3], |r| r.available)
+    } else {
+        [true; 3]
+    };
+    #[cfg(not(feature = "player-requests"))]
+    let available = [true; 3];
+    for role in available {
+        state.push(Val::Bool(role));
     }
     finish_identity_restricted(state, &[&unit], 3)
 }

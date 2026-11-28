@@ -42,3 +42,25 @@ A_Admin.OpenWorldMapInteraction()
 ```
 
 This activates `Enum.PlayerInteractionType.WorldMap` (the map-table NPC interaction) and fires `PLAYER_INTERACTION_MANAGER_FRAME_SHOW`. The original registration (`WorldMapFrame.lua:1-7`) has a no-op show function, so the map itself still opens through `OpenWorldMap` or `ToggleWorldMap`. Closing the world map runs `C_Map.CloseWorldMapInteraction()`, which ends the interaction and fires `PLAYER_INTERACTION_MANAGER_FRAME_HIDE`.
+
+## Player requests (Retail and WoW Forever)
+
+Implementation: `src/lua_api/globals/real/player_requests.rs` (feature
+`player-requests`). `InitiateRolePoll()` returns true and fires
+`ROLE_POLL_BEGIN(playerName)` for a grouped leader or assistant; otherwise it
+returns false.
+
+### A_Admin.RequestTrade(requesterName)
+
+Stores an incoming trade request and fires `TRADE_REQUEST(requesterName)`, which
+opens the `TRADE` popup. `BeginTrade()` opens the trade with the requester and
+fires `TRADE_SHOW`; `CancelTrade()` declines the request.
+
+### A_Admin.SetPlayerRoleOptions(tank, healer, damage, soft)
+
+Supplies four booleans for the player, in the order returned by
+`UnitGetAvailableRoles` and the policy returned by `AreClassRolesSoftSuggestions`
+(`UnitRoleDocumentation.lua:10,38` in Retail and Forever). Forever's role poll
+permits an unavailable role when `soft` is true, without marking it recommended.
+Retail's role poll enforces availability. The unsupplied scenario preserves the
+prior all-available model; the strict/soft native default is unknown (R-ag10-19).

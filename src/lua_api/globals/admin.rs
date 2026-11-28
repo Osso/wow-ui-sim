@@ -921,6 +921,12 @@ fn register_inventory_misc(b: TableBuilder) -> LuaResult<TableBuilder> {
         .set_function("FireEvent", fire_event_admin)?
         .set_function("ToggleDebugBorders", toggle_debug_borders)?
         .set_function("ToggleDebugAnchors", toggle_debug_anchors)?;
+    #[cfg(feature = "interaction-dialogs")]
+    let b = super::real::interaction_dialogs::register_admin(b)?;
+    #[cfg(feature = "player-requests")]
+    let b = super::real::player_requests::register_admin(b)?;
+    #[cfg(feature = "client-retail")]
+    let b = super::real::merchant_purchases::register_admin(b)?;
     let b = super::admin_quests::register_quests(b)?
         .set_function("SimulateBossKill", simulate_boss_kill)?
         .set_function("AddLootItem", add_loot_item)?

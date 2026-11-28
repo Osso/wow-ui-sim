@@ -62,6 +62,8 @@ fn register_quest_state_inputs(b: TableBuilder) -> LuaResult<TableBuilder> {
     let b = b.set_function("SetQuestLogEntry", set_quest_log_entry)?;
     #[cfg(any(feature = "profile-retail", feature = "client-wowforever"))]
     let b = b.set_function("SetQuestLogRewardItems", set_quest_log_reward_items)?;
+    #[cfg(feature = "quest-giver-requests")]
+    let b = b.set_function("SetQuestRewardChoices", set_quest_reward_choices)?;
     b.set_function("SetQuestGroupCreatable", set_quest_group_creatable)?
         .set_function("SetQuestLogSpecialItem", set_quest_log_special_item)
 }
@@ -166,6 +168,23 @@ fn set_quest_log_reward_items(state: &mut LuaState) -> LuaResult<u32> {
         return Err(runtime_error(SET_QUEST_LOG_REWARD_ITEMS_ERROR));
     };
     entry.reward_items = items;
+    Ok(0)
+}
+
+/// Same rows as `SetQuestLogRewardItems`, stored as the choices `GetQuestReward` claims.
+#[cfg(feature = "quest-giver-requests")]
+fn set_quest_reward_choices(state: &mut LuaState) -> LuaResult<u32> {
+    let quest_id = i32::from_stack(state, 1)?;
+    let items = decode_quest_reward_items(state)?;
+    if quest_id <= 0 || !items.iter().all(valid_quest_reward_item) {
+        return Err(runtime_error(SET_QUEST_LOG_REWARD_ITEMS_ERROR));
+    }
+    let mut sim = borrow_state_mut(state)?;
+    let entries = &mut sim.quest_log_entries.entries;
+    let Some(entry) = entries.iter_mut().find(|entry| entry.quest_id == quest_id) else {
+        return Err(runtime_error(SET_QUEST_LOG_REWARD_ITEMS_ERROR));
+    };
+    entry.reward_choices = items;
     Ok(0)
 }
 
@@ -344,7 +363,7 @@ fn turn_in_selected_quest(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 #[cfg(not(feature = "client-wrath"))]
-fn commit_selected_quest_turn_in(sim: &mut crate::lua_api::SimState) -> Option<i32> {
+pub(crate) fn commit_selected_quest_turn_in(sim: &mut crate::lua_api::SimState) -> Option<i32> {
     let selected = sim.selected_quest_log_id?;
     let quest_id = i32::try_from(selected).ok()?;
     if !sim.quest_log_entries.turn_in(quest_id) {

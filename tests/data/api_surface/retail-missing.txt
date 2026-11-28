@@ -1,14 +1,12 @@
 # Documented Retail API functions without a runtime function after full
 # Blizzard UI startup. Contract: docs/specs/api-surface-audit.md.
 # Format: <name> # <intentionally-unsupported|not-yet>[: reason]
-AcceptQuest # not-yet
 AcknowledgeAutoAcceptQuest # not-yet
 AcknowledgeSurvey # not-yet
 AntiAliasingSupported # not-yet
 ArchaeologyGetIconInfo # not-yet
 ArchaeologyMapUpdateAll # not-yet
 ArcheologyGetVisibleBlobID # not-yet
-AreClassRolesSoftSuggestions # not-yet
 AreTalentsLocked # not-yet: temporary Lua workaround
 AutoChooseCurrentGraphicsSetting # not-yet
 AutoEquipCursorItem # not-yet
@@ -38,11 +36,8 @@ BattlefieldMgrEntryInviteResponse # not-yet
 BattlefieldMgrExitRequest # not-yet
 BattlefieldMgrQueueInviteResponse # not-yet
 BattlefieldMgrQueueRequest # not-yet
-BeginTrade # not-yet
 BuyGuildBankTab # not-yet
 BuyGuildCharter # not-yet
-BuyMerchantItem # not-yet
-BuybackItem # not-yet
 C_AchievementInfo.IsGuildAchievement # not-yet
 C_ActionBar.GetProfessionQuality # not-yet
 C_ActionBar.HasPetActionButtons # not-yet
@@ -1942,10 +1937,8 @@ CanMapChangeDifficulty # not-yet
 CanResetTutorials # not-yet
 CanScanResearchSite # not-yet
 CanShowResetInstances # not-yet
-CanSignPetition # not-yet
 CanSwitchVehicleSeats # not-yet
 CanUpgradeToCurrentExpansion # not-yet
-CancelDuel # not-yet
 CancelMasterLootRoll # not-yet
 CancelPendingEquip # not-yet
 CancelPreloadingMovie # not-yet
@@ -1973,8 +1966,6 @@ ClearPendingBindConversionItem # not-yet
 ClearTutorials # not-yet
 ClickWorldMapActionButton # not-yet
 CloseGuildRoster # not-yet
-CloseItemText # not-yet
-ClosePetition # not-yet
 ClosestGameObjectPosition # not-yet
 ClosestUnitPosition # not-yet
 CollapseGuildTradeSkillHeader # not-yet
@@ -1997,7 +1988,6 @@ CreateForbiddenFrame # not-yet
 CreateNewRaidProfile # not-yet
 DeclineChannelInvite # not-yet
 DeclineName # not-yet
-DeclineQuest # not-yet
 DeleteGMTicket # not-yet
 DeleteRaidProfile # not-yet
 DescendStop # not-yet
@@ -2106,9 +2096,6 @@ GetHomePartyInfo # not-yet
 GetInspectArenaData # not-yet
 GetInspectHonorData # not-yet
 GetInspectTalent # not-yet
-GetInstanceBootTimeRemaining # not-yet
-GetInstanceLockTimeRemaining # not-yet
-GetInstanceLockTimeRemainingEncounter # not-yet
 GetJailersTowerLevel # not-yet
 GetJournalInfoForSpellConfirmation # not-yet
 GetLFDRoleRestrictions # not-yet: temporary Lua workaround
@@ -2139,7 +2126,6 @@ GetLatestUpdatedComparisonStats # not-yet
 GetLatestUpdatedStats # not-yet
 GetLootInfo # not-yet
 GetLootSourceInfo # not-yet
-GetLootThreshold # not-yet
 GetMacroItem # not-yet
 GetMacroSpell # not-yet
 GetMasterLootCandidate # not-yet
@@ -2147,9 +2133,6 @@ GetMaxNumCUFProfiles # not-yet
 GetMaxRewardCurrencies # not-yet
 GetMaxTalentTier # not-yet
 GetMaximumExpansionLevel # not-yet
-GetMerchantItemCostInfo # not-yet
-GetMerchantItemCostItem # not-yet
-GetMerchantItemMaxStack # not-yet
 GetModifiedClick # not-yet: temporary Lua workaround
 GetModifiedClickAction # not-yet
 GetMonitorAspectRatio # not-yet
@@ -2174,7 +2157,6 @@ GetNumGuildBankTransactions # not-yet
 GetNumGuildRewards # not-yet
 GetNumGuildTradeSkill # not-yet
 GetNumModifiedClickActions # not-yet
-GetNumPetitionNames # not-yet
 GetNumQuestItemDrops # not-yet
 GetNumQuestLogRewardFactions # not-yet
 GetNumQuestLogTasks # not-yet
@@ -2185,7 +2167,6 @@ GetNumUnspentPvpTalents # not-yet
 GetNumUnspentTalents # not-yet
 GetNumWarGameTypes # not-yet
 GetOSLocale # not-yet
-GetOptOutOfLoot # not-yet
 GetPVPGearStatRules # not-yet
 GetPVPSessionStats # not-yet
 GetPVPYesterdayStats # not-yet
@@ -2195,8 +2176,6 @@ GetPendingInviteConfirmations # not-yet
 GetPetActionsUsable # not-yet
 GetPetFoodTypes # not-yet
 GetPetTimeRemaining # not-yet
-GetPetitionInfo # not-yet
-GetPetitionNameInfo # not-yet
 GetPlayerTradeCurrency # not-yet
 GetPreviousArenaSeason # not-yet
 GetPrimarySpecialization # not-yet
@@ -2205,18 +2184,14 @@ GetPvpTalentInfoBySpecialization # not-yet
 GetPvpTalentLink # not-yet
 GetQuestCurrencyID # not-yet
 GetQuestExpansion # not-yet
-GetQuestItemLink # not-yet
-GetQuestLogChoiceInfo # not-yet
 GetQuestLogChoiceInfoLootType # not-yet
 GetQuestLogItemDrop # not-yet
-GetQuestLogItemLink # not-yet
 GetQuestLogPortraitTurnIn # not-yet
 GetQuestLogQuestType # not-yet
 GetQuestLogRewardFactionInfo # not-yet
 GetQuestPOILeaderBoard # not-yet
 GetQuestPortraitGiver # not-yet
 GetQuestResetTime # not-yet: temporary Lua workaround
-GetQuestReward # not-yet
 GetRaidProfileFlattenedOptions # not-yet
 GetRaidProfileName # not-yet
 GetRaidProfileOption # not-yet
@@ -2290,9 +2265,7 @@ HasLoadedCUFProfiles # not-yet
 HasLootSpecializations # not-yet
 HasWandEquipped # not-yet
 HearthAndResurrectFromArea # not-yet
-HideRepairCursor # not-yet
 InGuildParty # not-yet
-InitiateRolePoll # not-yet
 Is64BitClient # not-yet
 IsAccountSecured # not-yet: temporary Lua workaround
 IsAllowedToUserTeleport # not-yet
@@ -2310,7 +2283,6 @@ IsDebugBuild # not-yet
 IsDemonHunterAvailable # not-yet
 IsDisplayChannelModerator # not-yet
 IsDisplayChannelOwner # not-yet
-IsDualWielding # not-yet
 IsEuropeanNumbers # not-yet
 IsGamePadFreelookEnabled # not-yet
 IsGraphicsCVarValueSupported # not-yet
@@ -2338,7 +2310,6 @@ IsPetAttackActive # not-yet
 IsPlayerNeutral # not-yet
 IsQuestIDValidSpellTarget # not-yet
 IsQuestLogSpecialItemInRange # not-yet
-IsRangedWeapon # not-yet
 IsServerControlledBackfill # not-yet
 IsSpecializationActivateSpell # not-yet
 IsSpellClassOrSpec # not-yet
@@ -2350,15 +2321,6 @@ IsVehicleAimAngleAdjustable # not-yet
 IsVehicleAimPowerAdjustable # not-yet
 IsWargame # not-yet
 ItemCanTargetGarrisonFollowerAbility # not-yet
-ItemTextGetCreator # not-yet
-ItemTextGetItem # not-yet
-ItemTextGetMaterial # not-yet
-ItemTextGetPage # not-yet
-ItemTextGetText # not-yet
-ItemTextHasNextPage # not-yet
-ItemTextIsFullPage # not-yet
-ItemTextNextPage # not-yet
-ItemTextPrevPage # not-yet
 JoinArena # not-yet
 JoinPermanentChannel # not-yet
 JoinRatedBattlefield # not-yet
@@ -2384,8 +2346,6 @@ LeaveSingleLFG # not-yet
 ListChannelByName # not-yet
 ListChannels # not-yet
 LoadURLIndex # not-yet
-LoggingChat # not-yet
-LoggingCombat # not-yet
 LootMoneyNotify # not-yet
 MouseOverrideCinematicDisable # not-yet
 MouselookStart # intentionally-unsupported: 3D camera/model
@@ -2520,7 +2480,6 @@ SetModifiedClick # not-yet: temporary Lua workaround
 SetMouselookOverrideBinding # intentionally-unsupported: 3D camera/model
 SetMoveEnabled # not-yet
 SetMultiCastSpell # not-yet
-SetOptOutOfLoot # not-yet
 SetPOIIconOverlapDistance # not-yet
 SetPOIIconOverlapPushDistance # not-yet
 SetPartyAssignment # not-yet

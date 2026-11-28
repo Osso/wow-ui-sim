@@ -107,6 +107,11 @@ fn accept_trade(state: &mut LuaState) -> LuaResult<u32> {
 
 /// `CancelTrade()` — close the trade window. Fires `TRADE_CLOSED`.
 fn cancel_trade(state: &mut LuaState) -> LuaResult<u32> {
+    #[cfg(feature = "player-requests")]
+    {
+        // Declining the TRADE popup cancels the pending request too.
+        borrow_state_mut(state)?.player_requests.trade_request = None;
+    }
     let had_trade = borrow_state_mut(state)?.active_trade.take().is_some();
     if had_trade {
         push_event(state, "TRADE_CLOSED")?;

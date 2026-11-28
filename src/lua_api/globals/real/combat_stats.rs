@@ -206,7 +206,7 @@ fn get_override_spell_power_by_ap(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-#[cfg(feature = "client-wowforever")]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn equipped_item_inv_type(state: &LuaState, slot: i32) -> LuaResult<Option<u8>> {
     let sim = borrow_state(state)?;
     Ok(sim
@@ -217,7 +217,7 @@ fn equipped_item_inv_type(state: &LuaState, slot: i32) -> LuaResult<Option<u8>> 
         .map(|item| item.inventory_type))
 }
 
-#[cfg(feature = "client-wowforever")]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn is_dual_wielding(state: &mut LuaState) -> LuaResult<u32> {
     use crate::c_api::item_spell::helpers::inv_type_to_class_id;
 
@@ -230,11 +230,20 @@ fn is_dual_wielding(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-#[cfg(feature = "client-wowforever")]
+/// Forever reads the ranged slot (18). Retail has no ranged slot: bows, guns,
+/// crossbows and wands are main-hand weapons (slot 16). INFERRED (R-ag10-15).
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+const RANGED_WEAPON_SLOT: i32 = if cfg!(feature = "client-wowforever") {
+    18
+} else {
+    16
+};
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn is_ranged_weapon(state: &mut LuaState) -> LuaResult<u32> {
     use crate::c_api::item_spell::helpers::inv_type_to_class_id;
 
-    let inv_type = equipped_item_inv_type(state, 18)?;
+    let inv_type = equipped_item_inv_type(state, RANGED_WEAPON_SLOT)?;
     let ranged = inv_type.is_some_and(|inv_type| {
         matches!(inv_type, 15 | 25 | 26) && inv_type_to_class_id(inv_type) == 2
     });
@@ -422,9 +431,9 @@ const COMBAT_STAT_GLOBALS: &[(&str, RustFn)] = &[
     ("GetOverrideAPBySpellPower", get_override_ap_by_spell_power),
     #[cfg(feature = "client-wowforever")]
     ("GetOverrideSpellPowerByAP", get_override_spell_power_by_ap),
-    #[cfg(feature = "client-wowforever")]
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     ("IsDualWielding", is_dual_wielding),
-    #[cfg(feature = "client-wowforever")]
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     ("IsRangedWeapon", is_ranged_weapon),
     #[cfg(feature = "client-wowforever")]
     ("UnitHasRelicSlot", unit_has_relic_slot),

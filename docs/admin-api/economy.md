@@ -77,3 +77,36 @@ A_Admin.SetItemLevel(480)
 local equipped, bag, pvp = GetAverageItemLevel()
 -- equipped=480
 ```
+
+## Merchant offers and buyback (Retail)
+
+Implementation: `src/lua_api/globals/real/merchant_purchases.rs`. Offers are
+the rows of `A_Admin.SetMerchantItems`.
+
+### A_Admin.OpenMerchant(canRepair)
+
+Opens the merchant interaction (`canRepair` makes it a repair merchant): fires
+`PLAYER_INTERACTION_MANAGER_FRAME_SHOW(Enum.PlayerInteractionType.Merchant)`,
+which shows `MerchantFrame`. `CloseMerchant()` ends it.
+
+### A_Admin.SetMerchantOfferCost(index, price, itemCosts, currencyCosts)
+
+Sets offer `index` (1-based) to `price` copper plus up to five
+`{itemID, count}` item costs and five `{currencyID, amount}` currency costs
+(`nil` for none; ids and amounts `>= 1`). Fires `MERCHANT_UPDATE`.
+`GetMerchantItemCostInfo(index)` counts the extended costs;
+`GetMerchantItemCostItem(index, i)` returns `texture, value, link,
+currencyName` (item costs first, then currencies; an empty ordinal returns
+`nil, 0`). `GetMerchantItemMaxStack(index)` is the item's stack size.
+`BuyMerchantItem(index, quantity)` pays money, items and currencies, stores the
+item in the first free bag slot and fires `PLAYER_MONEY`,
+`CURRENCY_DISPLAY_UPDATE` (when a currency was spent), `BAG_UPDATE(bag)` and
+`MERCHANT_UPDATE`. An unaffordable offer or full bags change nothing.
+
+### A_Admin.AddBuybackItem(itemID, quantity, price, isUsable, isBound)
+
+Appends a sold stack to the buyback tab and fires `MERCHANT_UPDATE`.
+`BuybackItem(index)` pays `price`, returns the stack to the bags and removes the
+buyback row; it fires the same events as a purchase.
+`HideRepairCursor()` leaves repair mode (`ShowRepairCursor`) and restores the
+pointer.

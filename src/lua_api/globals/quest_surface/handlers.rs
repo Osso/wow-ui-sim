@@ -671,7 +671,7 @@ pub fn get_num_quest_log_rewards(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-pub(super) fn push_quest_reward_item(
+pub(crate) fn push_quest_reward_item(
     state: &mut LuaState,
     item: Option<crate::lua_api::state::QuestRewardItem>,
 ) -> LuaResult<u32> {

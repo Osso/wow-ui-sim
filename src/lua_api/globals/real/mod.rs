@@ -112,6 +112,8 @@ pub(crate) mod instance_legacy;
     any(feature = "profile-retail", feature = "client-ptr")
 ))]
 pub mod instanced_identity;
+#[cfg(feature = "interaction-dialogs")]
+pub mod interaction_dialogs;
 pub mod item_legacy;
 #[cfg(feature = "client-wrath")]
 pub(crate) mod legacy_gamma;
@@ -138,6 +140,8 @@ pub(crate) mod merchant_affordability;
 pub mod merchant_buyback;
 pub(crate) mod merchant_filter;
 pub mod merchant_item_link;
+#[cfg(feature = "client-retail")]
+pub(crate) mod merchant_purchases;
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub mod merchant_repair;
 mod merchant_requirements;
@@ -168,6 +172,8 @@ pub mod player_facing;
 pub mod player_identity;
 pub(crate) mod player_languages;
 pub mod player_probes;
+#[cfg(feature = "player-requests")]
+pub(crate) mod player_requests;
 pub mod preferred_interact;
 pub(crate) mod protected_globals;
 pub mod publication_12_0_0;
@@ -181,8 +187,12 @@ pub(crate) mod quest_dialog;
     feature = "client-wowforever"
 ))]
 pub(crate) mod quest_faction_group;
+#[cfg(feature = "quest-giver-requests")]
+pub(crate) mod quest_giver_requests;
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub(crate) mod quest_objective_info;
+#[cfg(feature = "client-retail")]
+pub(crate) mod quest_reward_reads;
 #[cfg(feature = "raid-target-removal")]
 pub(crate) mod raid_targets;
 #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
@@ -195,6 +205,8 @@ pub(crate) mod release_timer;
 pub(crate) mod run_binding;
 pub(crate) mod secure_helpers;
 pub mod session_exit;
+#[cfg(feature = "client-retail")]
+pub(crate) mod session_logging;
 pub mod shapeshift;
 #[cfg(feature = "simulated-mouse-input")]
 pub mod simulate_mouse;
