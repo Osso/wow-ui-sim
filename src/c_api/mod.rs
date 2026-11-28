@@ -727,12 +727,15 @@ fn supports_super_tracking() -> bool {
 }
 
 pub(crate) fn register_utility_bootstrap_tables(state: &mut LuaState) -> LuaResult<()> {
+    register_core_utility_tables(state)?;
+    register_world_utility_tables(state)?;
+    register_runtime_utility_tables(state)?;
+    register_remaining_utility_tables(state)
+}
+
+fn register_core_utility_tables(state: &mut LuaState) -> LuaResult<()> {
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
-    scenario_observations::register(state)?;
-    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
-    auction_result_reads::register(state)?;
-    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
-    c_transmog_collection::register_filter_aggregates(state)?;
+    register_observation_query_tables(state)?;
     c_cvar_info::register(state)?;
     c_engraving::register(state)?;
     c_social_restrictions::register(state)?;
@@ -756,6 +759,18 @@ pub(crate) fn register_utility_bootstrap_tables(state: &mut LuaState) -> LuaResu
     #[cfg(any(feature = "retail-12-1-0", feature = "client-wowforever"))]
     c_cvar_readiness::register(state)?;
     c_achievement_info_relations::register(state)?;
+    Ok(())
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn register_observation_query_tables(state: &mut LuaState) -> LuaResult<()> {
+    scenario_observations::register(state)?;
+    auction_result_reads::register(state)?;
+    c_transmog_collection::register_filter_aggregates(state)?;
+    Ok(())
+}
+
+fn register_world_utility_tables(state: &mut LuaState) -> LuaResult<()> {
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     guild_achievements::register(state)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
@@ -782,6 +797,10 @@ pub(crate) fn register_utility_bootstrap_tables(state: &mut LuaState) -> LuaResu
         c_quest_log::register(state)?;
         c_super_track::register(state)?;
     }
+    Ok(())
+}
+
+fn register_runtime_utility_tables(state: &mut LuaState) -> LuaResult<()> {
     c_garrison_damage_classes::register(state)?;
     #[cfg(feature = "garrison-host-inputs")]
     {
@@ -800,6 +819,10 @@ pub(crate) fn register_utility_bootstrap_tables(state: &mut LuaState) -> LuaResu
         feature = "client-wowforever"
     ))]
     c_secrets::register(state)?;
+    Ok(())
+}
+
+fn register_remaining_utility_tables(state: &mut LuaState) -> LuaResult<()> {
     register_specialization_and_model_tables(state)?;
     register_glue_and_display_tables(state)?;
     #[cfg(feature = "retail-12-0-0")]

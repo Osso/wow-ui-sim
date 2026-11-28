@@ -94,11 +94,18 @@ pub(crate) fn register_c_party_info_surface(state: &mut LuaState) -> LuaResult<(
     )?;
     register_group_membership_probes(state, table_ref)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
-    register_instance_abandon_vote_surface(state, table_ref)?;
-    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
-    table_set_rust_fn_static(state, table_ref, "ConvertToRaid", convert_to_raid)?;
-    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
-    table_set_rust_fn_static(state, table_ref, "InviteUnit", invite_unit)?;
+    register_modern_party_commands(state, table_ref)?;
+    register_min_level_query(state, table_ref)?;
+    register_loot_method_probes(state, table_ref)?;
+    #[cfg(feature = "retail-12-0-5")]
+    {
+        ping_restrictions::register(state, table_ref)?;
+        countdown::register(state, table_ref)?;
+    }
+    Ok(())
+}
+
+fn register_min_level_query(state: &mut LuaState, table_ref: GcRef<Table>) -> LuaResult<()> {
     if matches!(
         crate::client_profile::ACTIVE,
         crate::client_profile::ClientProfile::Retail
@@ -111,13 +118,14 @@ pub(crate) fn register_c_party_info_surface(state: &mut LuaState) -> LuaResult<(
         // Mists 5.5.4.70268 PartyInfoDocumentation.lua:125–135; omitted category at130.
         table_set_rust_fn_static(state, table_ref, "GetMinLevel", mists_supplied_min_level)?;
     }
-    register_loot_method_probes(state, table_ref)?;
-    #[cfg(feature = "retail-12-0-5")]
-    {
-        ping_restrictions::register(state, table_ref)?;
-        countdown::register(state, table_ref)?;
-    }
     Ok(())
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn register_modern_party_commands(state: &mut LuaState, table_ref: GcRef<Table>) -> LuaResult<()> {
+    register_instance_abandon_vote_surface(state, table_ref)?;
+    table_set_rust_fn_static(state, table_ref, "ConvertToRaid", convert_to_raid)?;
+    table_set_rust_fn_static(state, table_ref, "InviteUnit", invite_unit)
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]

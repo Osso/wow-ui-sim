@@ -139,6 +139,13 @@ fn register_relation_queries(
         "IsBaseSetCollected",
         catalog::is_base_set_collected,
     )?;
+    register_set_source_queries(state, namespace)
+}
+
+fn register_set_source_queries(
+    state: &mut LuaState,
+    namespace: rilua::vm::gc::arena::GcRef<rilua::vm::table::Table>,
+) -> LuaResult<()> {
     #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
     table_set_rust_fn_static(
         state,
