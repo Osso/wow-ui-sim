@@ -20,6 +20,9 @@ mod clipping;
 #[path = "quad_builders_textures.rs"]
 mod textures;
 
+#[path = "quad_builders_uv_repeat.rs"]
+mod uv_repeat;
+
 #[path = "quad_builders_cooldown.rs"]
 mod cooldown;
 
@@ -422,9 +425,26 @@ pub fn emit_frame_quads(
     frame: FrameQuadEmit<'_>,
 ) {
     let vert_before = batch.vertices.len();
+    let index_before = batch.indices.len();
     dispatch_widget_quads(batch, text_ctx, &frame);
 
+    // (a repeating face is drawn as pieces of its two triangles, not as
+    // axis-aligned quads, so it is clipped like a moved-corner one)
+    let warped = frame.widget.widget_type == WidgetType::Texture
+        && (frame
+            .widget
+            .vertex_offsets
+            .is_some_and(|o| o.iter().any(|&(x, y)| x != 0.0 || y != 0.0))
+            || textures::draws_repeating_face(frame.widget));
+    if warped {
+        clipping::split_quads_on_client_diagonal(batch, index_before);
+    }
+
     if let Some(clip_bounds) = frame.clip_bounds
+        && warped
+    {
+        clipping::clip_warped_quads(batch, vert_before, clip_bounds);
+    } else if let Some(clip_bounds) = frame.clip_bounds
         && frame.widget.rotation == 0.0
         // clip_recent_quads assumes axis-aligned quad vertex ordering.
         // Line widgets emit rotated quads and need a different clip path.

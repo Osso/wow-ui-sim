@@ -22,6 +22,91 @@ pub(crate) fn build_texture_quads(
     bar_fill: Option<&StatusBarFill>,
     alpha: f32,
 ) {
+    if bar_fill.is_none()
+        && draws_repeating_face(f)
+        && let (Some(tex_path), Some(raw)) = (resolve_texture_path(f), f.tex_coords_quad)
+    {
+        let vertex_start = batch.vertices.len();
+        let pixels_per_unit = f.effective_scale * crate::render::texture::UI_SCALE;
+        let corners =
+            super::uv_repeat::face_corners(bounds, raw, f.vertex_offsets, pixels_per_unit);
+        let tint = resolve_tint(f, None, alpha);
+        super::uv_repeat::emit_repeating_face(batch, corners, &tex_path, tint, f.blend_mode);
+        if let Some(gradient) = &f.gradient {
+            apply_image_gradient(batch, vertex_start, bounds, gradient);
+        }
+        if f.desaturated {
+            apply_desaturate_flag(batch, vertex_start);
+        }
+        return;
+    }
+    let vertex_start = batch.vertices.len();
+    build_texture_quads_unwarped(batch, bounds, f, bar_fill, alpha);
+    if let Some(offsets) = f.vertex_offsets {
+        apply_vertex_offsets(
+            &mut batch.vertices[vertex_start..],
+            bounds,
+            offsets,
+            f.effective_scale * crate::render::texture::UI_SCALE,
+        );
+    }
+}
+
+/// A file texture whose SetTexCoord values go past one texture, drawn face by
+/// face from its own corners with the texture repeating
+/// (`quad_builders_uv_repeat`). Atlas regions, nine-slices, colour textures
+/// and rotated textures keep their own paths.
+pub(super) fn draws_repeating_face(f: &crate::widget::Frame) -> bool {
+    has_uv_repeat(f)
+        && f.atlas_tex_coords.is_none()
+        && f.nine_slice_atlas.is_none()
+        && f.color_texture.is_none()
+        && f.rotation == 0.0
+}
+
+/// SetVertexOffset: each corner of the region moved by its own offset, in the
+/// region's units (scaled like its size), y up. Corners are 1 UpperLeft,
+/// 2 LowerLeft, 3 UpperRight, 4 LowerRight. Every emitted vertex moves by the
+/// offsets interpolated at its place in the region, so a single quad gets
+/// exactly its four corners moved.
+fn apply_vertex_offsets(
+    vertices: &mut [crate::render::QuadVertex],
+    bounds: Rectangle,
+    offsets: [(f32, f32); 4],
+    pixels_per_unit: f32,
+) {
+    if offsets.iter().all(|&(x, y)| x == 0.0 && y == 0.0) {
+        return;
+    }
+    let [ul, ll, ur, lr] = offsets;
+    let width = if bounds.width.abs() > f32::EPSILON {
+        bounds.width
+    } else {
+        1.0
+    };
+    let height = if bounds.height.abs() > f32::EPSILON {
+        bounds.height
+    } else {
+        1.0
+    };
+    for vertex in vertices {
+        let u = ((vertex.position[0] - bounds.x) / width).clamp(0.0, 1.0);
+        let v = ((vertex.position[1] - bounds.y) / height).clamp(0.0, 1.0);
+        let lerp = |a: f32, b: f32, t: f32| a + (b - a) * t;
+        let dx = lerp(lerp(ul.0, ur.0, u), lerp(ll.0, lr.0, u), v);
+        let dy = lerp(lerp(ul.1, ur.1, u), lerp(ll.1, lr.1, u), v);
+        vertex.position[0] += dx * pixels_per_unit;
+        vertex.position[1] -= dy * pixels_per_unit;
+    }
+}
+
+fn build_texture_quads_unwarped(
+    batch: &mut QuadBatch,
+    bounds: Rectangle,
+    f: &crate::widget::Frame,
+    bar_fill: Option<&StatusBarFill>,
+    alpha: f32,
+) {
     if let Some(ref ns) = f.nine_slice_atlas {
         super::super::nine_slice::emit_nine_slice_atlas(batch, bounds, ns, alpha);
         return;
@@ -821,6 +906,26 @@ mod tests {
     }
 
     #[test]
+    fn vertex_offsets_move_each_corner_by_its_own_offset() {
+        let mut batch = QuadBatch::new();
+        let mut frame = Frame::new(WidgetType::Texture, None, None);
+        frame.texture = Some(r"Interface\Buttons\WHITE8X8".into());
+        frame.effective_scale = 2.0;
+        // SetVertexOffset corners: 1 UpperLeft, 2 LowerLeft, 3 UpperRight, 4 LowerRight; y up.
+        frame.vertex_offsets = Some([(0.0, 0.0), (0.0, 0.0), (0.0, 0.0), (10.0, 5.0)]);
+        let bounds = Rectangle::new(Point::new(10.0, 20.0), Size::new(100.0, 50.0));
+
+        build_texture_quads(&mut batch, bounds, &frame, None, 1.0);
+
+        let positions: Vec<[f32; 2]> = batch.vertices.iter().map(|v| v.position).collect();
+        // Vertex order: upper left, upper right, lower right, lower left.
+        assert_eq!(
+            positions,
+            vec![[10.0, 20.0], [110.0, 20.0], [130.0, 60.0], [10.0, 70.0]]
+        );
+    }
+
+    #[test]
     fn rotated_statusbar_fill_maps_visible_half_to_vertical_texture_region() {
         let mut batch = QuadBatch::new();
         let mut frame = Frame::new(WidgetType::Texture, None, None);
@@ -1104,12 +1209,39 @@ mod tests {
             1.0,
         );
 
-        assert_eq!(batch.vertices.len(), 16);
-        assert_eq!(batch.texture_requests.len(), 4);
-        assert_eq!(batch.vertices[0].tex_coords, [0.0, 1.0]);
-        assert_eq!(batch.vertices[1].tex_coords, [0.0, 0.0]);
-        assert_eq!(batch.vertices[2].tex_coords, [1.0, 0.0]);
-        assert_eq!(batch.vertices[13].position[0], 64.0);
+        // v runs 4.0 at the left edge to 0.0625 at the right: the face is cut
+        // where v crosses 3, 2 and 1, and every piece samples one repeat
+        assert_eq!(batch.texture_requests.len(), 1);
+        assert_cut_at(
+            &batch,
+            0,
+            &[1.0, 2.0, 3.0].map(|v| 64.0 * (4.0 - v) / (4.0 - 0.0625)),
+        );
+        assert_one_repeat(&batch);
+    }
+
+    fn assert_cut_at(batch: &QuadBatch, axis: usize, cuts: &[f32]) {
+        for cut in cuts {
+            assert!(
+                batch
+                    .vertices
+                    .iter()
+                    .any(|v| (v.position[axis] - cut).abs() < 1e-3),
+                "no cut at {cut}: {:?}",
+                batch.vertices
+            );
+        }
+    }
+
+    fn assert_one_repeat(batch: &QuadBatch) {
+        assert!(
+            batch
+                .vertices
+                .iter()
+                .all(|v| v.local_uv.iter().all(|c| (0.0..=1.0).contains(c))),
+            "repeating faces must sample inside one texture: {:?}",
+            batch.vertices
+        );
     }
 
     #[test]
@@ -1290,19 +1422,10 @@ mod tests {
             1.0,
         );
 
-        assert_eq!(batch.vertices.len(), 12);
-        assert_eq!(batch.texture_requests.len(), 3);
-        assert!(
-            batch
-                .vertices
-                .iter()
-                .all(|vertex| vertex.local_uv[0] <= 1.0 && vertex.local_uv[1] <= 1.0),
-            "UV-repeat quads must not sample beyond their atlas slot: {:?}",
-            batch.vertices
-        );
-        assert_eq!(batch.vertices[1].position[0], 128.02277);
-        assert_eq!(batch.vertices[5].position[0], 256.04553);
-        assert_eq!(batch.vertices[9].position[0], 270.0);
+        // u runs 0 to 2.109 across 270 px: cut where u crosses 1 and 2
+        assert_eq!(batch.texture_requests.len(), 1);
+        assert_cut_at(&batch, 0, &[270.0 / 2.109, 2.0 * 270.0 / 2.109]);
+        assert_one_repeat(&batch);
     }
 
     #[test]
