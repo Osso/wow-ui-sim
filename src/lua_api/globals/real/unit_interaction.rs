@@ -11,6 +11,11 @@ pub fn register_all(lua: &mut rilua::Lua) -> crate::Result<()> {
     if cfg!(feature = "client-wowforever") {
         LuaApiMut::register_function(state, "UnitHasLootInteraction", has_loot)?;
         LuaApiMut::register_function(state, "UnitIsInInteractRange", in_range)?;
+    }
+    if cfg!(any(
+        feature = "client-retail",
+        feature = "client-wowforever"
+    )) {
         LuaApiMut::register_function(state, "UnitIsInteractable", interactable)?;
     }
     Ok(())

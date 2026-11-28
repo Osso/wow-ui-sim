@@ -74,7 +74,7 @@ use super::admin_party_target_helpers::{
     clear_focus, clear_target, kill_party_member, res_party_member, set_focus, set_focus_health,
     set_focus_power, set_focus_type, set_party_leader, set_party_member,
     set_party_member_connected, set_party_member_health, set_party_size, set_rot_damage,
-    set_target, set_target_power, set_target_type,
+    set_target, set_target_interactable, set_target_power, set_target_type,
 };
 #[cfg(feature = "client-retail")]
 use super::admin_party_target_helpers::{set_party_member_faction, set_party_member_pvp};
@@ -454,6 +454,11 @@ fn register_player_identity(b: TableBuilder) -> LuaResult<TableBuilder> {
         .set_function("SetPlayerSex", set_player_sex)?
         .set_function("SetPlayerHealth", set_player_health)?
         .set_function("SetPlayerPower", set_player_power)?;
+    #[cfg(feature = "charged-power-points")]
+    let builder = builder.set_function(
+        "SetUnitChargedPowerPoints",
+        super::real::unit_charged_power_points::admin_set_unit_charged_power_points,
+    )?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     let builder = super::admin_account_type::register_admin(builder)?;
     Ok(builder)
@@ -514,6 +519,7 @@ fn register_channel_inputs(b: TableBuilder) -> LuaResult<TableBuilder> {
 fn register_targeting_party(b: TableBuilder) -> LuaResult<TableBuilder> {
     let b = b
         .set_function("SetTarget", set_target)?
+        .set_function("SetTargetInteractable", set_target_interactable)?
         .set_function("ClearTarget", clear_target)?
         .set_function("SetFocus", set_focus)?
         .set_function("ClearFocus", clear_focus)?

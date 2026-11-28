@@ -2,7 +2,13 @@
 //! INFERRED: no native producer/default evidence; cost zero, marker system on,
 //! clothing shown, empty role/threat/class inputs. No persistence or 3D rendering.
 
+#[cfg(feature = "world-marker-placement")]
+use crate::event::Event;
+#[cfg(feature = "world-marker-placement")]
+use crate::lua_api::globals::state_backed_queries::dispatch_event_now;
 use crate::lua_api::methods::borrow_state;
+#[cfg(feature = "world-marker-placement")]
+use crate::lua_api::methods::borrow_state_mut;
 use crate::lua_bridge::FromStack;
 use rilua::vm::state::LuaState;
 use rilua::{LuaApiMut, LuaResult, Val};
@@ -87,11 +93,35 @@ pub(crate) fn register_classic_marker_state(lua: &mut rilua::Lua) -> LuaResult<(
 }
 
 /// Retail/Forever RaidMarkersDocumentation blocks are byte-identical. VERIFIED consumer
-/// contract: SlashCommands.lua `ClearRaidMarker(nil); --Clear all world markers.`
-/// Restricted-action authorization stays unmodeled; no event is invented (R9-3).
+/// contract: the CompactRaidFrameManager uses these functions to update world-marker state.
+/// Restricted-action authorization and optional token position are not modeled.
 pub(crate) fn register_world_marker_state(lua: &mut rilua::Lua) -> LuaResult<()> {
     register_classic_marker_state(lua)?;
-    LuaApiMut::register_function(lua, "ClearRaidMarker", clear_raid_marker)
+    LuaApiMut::register_function(lua, "ClearRaidMarker", clear_raid_marker)?;
+    #[cfg(feature = "world-marker-placement")]
+    LuaApiMut::register_function(lua, "PlaceRaidMarker", place_raid_marker)?;
+    Ok(())
+}
+
+#[cfg(feature = "world-marker-placement")]
+fn place_raid_marker(state: &mut LuaState) -> LuaResult<u32> {
+    let index = i32::from_stack(state, 1)?;
+    Option::<String>::from_stack(state, 2)?;
+    if !(1..=8).contains(&index) {
+        return Err(rilua::runtime_error(
+            "PlaceRaidMarker: index must be in 1..8",
+        ));
+    }
+    {
+        let mut sim = borrow_state_mut(state)?;
+        sim.plain_global_inputs.active_raid_markers.insert(index);
+        sim.events.push(Event {
+            name: "RAID_TARGET_UPDATE".to_string(),
+            args: Vec::new(),
+        });
+    }
+    dispatch_event_now(state, "RAID_TARGET_UPDATE", &[])?;
+    Ok(0)
 }
 
 fn clear_raid_marker(state: &mut LuaState) -> LuaResult<u32> {
