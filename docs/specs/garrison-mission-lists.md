@@ -27,18 +27,19 @@ WoW Forever publishes `C_Garrison.IsAtGarrisonMissionNPC` (its `GarrisonInfoDocu
 - `src/c_api/c_garrison_mission_lists.rs` — mission records, query functions, and `A_Admin.SetGarrisonMissions`.
 - `src/lua_api/state/sim_state.rs` and `src/lua_api/state.rs` — per-environment mission state.
 - `src/lua_api/globals/admin.rs` — profile-scoped setter registration.
-- `src/lua_api/workarounds/mod.rs` — install the Rust queries after the unchanged legacy bootstrap.
+- `src/lua_api/workarounds/mod.rs` — retain the legacy shim outside Retail and Forever, then register the Rust queries on those profiles.
 - `tests/blizzard_garrison_ui_loads.rs` — selected original Covenant consumer test.
 - `tests/fixtures/garrison_mission_lists.lua` — host-supplied mission and follower-quality fixture.
 
 ## Tests asserting this spec
 
-- `tests/blizzard_garrison_ui_loads.rs::supplied_missions_update_the_real_covenant_mission_list`
+- `tests/blizzard_garrison_ui_loads.rs::supplied_missions_update_the_real_covenant_mission_list` (Retail and Forever original consumer)
+- `tests/garrison_combat_ally.rs::combat_ally_mission_tracks_two_supplied_missions_and_clears` (direct model behavior)
 
 ## Known gaps (current cycle)
 
 - [ ] Native query signatures, table-clearing behavior, reward record shape, and default results are pending evidence from R88dg.
-- [ ] The combat-ally mission result shape and producer remain unmodeled.
+- [ ] The Rust combat-ally mission model and direct input test exist, but native query signatures, result shape, and defaults remain pending evidence.
 
 ## Out of scope
 

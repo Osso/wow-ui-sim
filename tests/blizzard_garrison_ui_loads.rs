@@ -1,4 +1,8 @@
-#![cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#![cfg(any(
+    feature = "client-retail",
+    feature = "client-ptr",
+    feature = "client-wowforever"
+))]
 use std::path::PathBuf;
 
 use wow_ui_sim::loader::{discover_blizzard_addons_for_screen, find_toc_file, load_addon};
@@ -77,7 +81,7 @@ fn load_full_game_ui_with_lod_deps() -> WowLuaEnv {
     env
 }
 
-#[cfg(feature = "client-retail")]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 #[test]
 fn supplied_missions_update_the_real_covenant_mission_list() {
     let env = load_full_game_ui_with_lod_deps();
