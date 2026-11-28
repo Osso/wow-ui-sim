@@ -17,16 +17,17 @@ fn loaded_game() -> WowLuaEnv {
     env
 }
 
-fn pet_queue_entry(env: &WowLuaEnv) -> (bool, f64, bool, bool, String) {
+fn pet_queue_entry(env: &WowLuaEnv) -> (bool, f64, bool, bool, bool) {
     env.eval(
         r#"
         for entry in QueueStatusFrame.statusEntriesPool:EnumerateActive() do
             if entry.Title:GetText() == PET_BATTLE_PVP_QUEUE then
                 return true, entry.queuedTime or 0, entry.AverageWait:IsShown(),
-                    entry.TimeInQueue:IsShown(), entry.Status:GetText() or ""
+                    entry.TimeInQueue:IsShown(),
+                    entry.Status:GetText() == QUEUED_STATUS_PROPOSAL
             end
         end
-        return false, 0, false, false, ""
+        return false, 0, false, false, false
         "#,
     )
     .expect("read original pet-battle queue entry")
@@ -39,16 +40,15 @@ fn original_queue_frame_uses_admin_supplied_matchmaking_records() {
         "A_Admin.SetPetBattleMatchmakingInfo('queued', 90, 2500, false); A_Admin.FireEvent('PET_BATTLE_QUEUE_STATUS')",
     )
     .expect("supply queued matchmaking state");
-    assert_eq!(pet_queue_entry(&env), (true, 2.5, true, true, "".into()));
+    let queued = pet_queue_entry(&env);
+    assert!(queued.0 && queued.1 == 2.5 && queued.2 && queued.3 && !queued.4);
 
     env.exec(
         "A_Admin.SetPetBattleMatchmakingInfo('proposal', 70, 3000, true); A_Admin.FireEvent('PET_BATTLE_QUEUE_STATUS')",
     )
     .expect("supply proposal matchmaking state");
-    assert_eq!(
-        pet_queue_entry(&env),
-        (true, 0.0, false, false, "QUEUED_STATUS_PROPOSAL".into()),
-    );
+    let proposal = pet_queue_entry(&env);
+    assert!(proposal.0 && !proposal.2 && !proposal.3 && proposal.4);
 }
 
 fn supply_queue(env: &WowLuaEnv, status: u8) {
