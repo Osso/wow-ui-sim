@@ -422,9 +422,23 @@ pub fn emit_frame_quads(
     frame: FrameQuadEmit<'_>,
 ) {
     let vert_before = batch.vertices.len();
+    let index_before = batch.indices.len();
     dispatch_widget_quads(batch, text_ctx, &frame);
 
+    let warped = frame.widget.widget_type == WidgetType::Texture
+        && frame
+            .widget
+            .vertex_offsets
+            .is_some_and(|o| o.iter().any(|&(x, y)| x != 0.0 || y != 0.0));
+    if warped {
+        clipping::split_quads_on_client_diagonal(batch, index_before);
+    }
+
     if let Some(clip_bounds) = frame.clip_bounds
+        && warped
+    {
+        clipping::clip_warped_quads(batch, vert_before, clip_bounds);
+    } else if let Some(clip_bounds) = frame.clip_bounds
         && frame.widget.rotation == 0.0
         // clip_recent_quads assumes axis-aligned quad vertex ordering.
         // Line widgets emit rotated quads and need a different clip path.
