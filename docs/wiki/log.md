@@ -1,6 +1,6 @@
-## [2026-11-27] investigation | Retail secure dependency XML replay
+## [2026-11-28] investigation | Retail secure dependency XML replay
 
-Added [the investigation](investigations/retail-secure-dependency-xml-replay.md) and linked it from [add-on loading](systems/addon-loading.md#secure-dependency-replay-and-library-allowlist). **VERIFIED (merged simulator):** six Retail Glue tests and five Forever equivalents pass after the secure dependency pass skips XML from already ordinary-loaded dependencies. The empty-roster test still logs its explicitly non-asserted post-transition CharacterCreate setup diagnostics. **INFERRED (R88g.1, R88t.t1/t2):** the cited native dependency evidence does not prove XML replay for an ordinary-loaded dependency.
+Updated [the investigation](investigations/retail-secure-dependency-xml-replay.md) with the final-code result and pending R88h4 question. **VERIFIED (exact final Retail run at 373c970dd):** the AutoComplete secure-dependency test still fails after the CreateFrame change, while six selected Glue tests pass. **INFERRED (R88g.1, R88t.t1/t2):** the cited evidence does not establish XML replay for an already ordinary-loaded dependency, so the loader rule remains unchanged.
 
 ## [2026-11-27] investigation | Forever hero icon and Camelot spellbook regressions
 
