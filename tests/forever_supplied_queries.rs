@@ -1,4 +1,4 @@
-//! API tests for documented Forever queries without a pinned Lua consumer.
+//! Supplied Forever queries and the selected TimerunningUtil consumer.
 #![cfg(feature = "client-wowforever")]
 
 use wow_ui_sim::lua_api::WowLuaEnv;
@@ -25,6 +25,32 @@ fn active_timerunning_season_is_separate_from_player_season() {
         assert(C_TimerunningUI.GetActiveTimerunningSeasonID() == 3)
         A_Admin.SetActiveTimerunningSeasonID(8)
         assert(C_TimerunningUI.GetActiveTimerunningSeasonID() == 8)
+    "#).unwrap();
+}
+
+#[test]
+fn original_timerunning_util_selects_active_season_expansion() {
+    let root = wow_ui_sim::client_profile::blizzard_ui_addons_dir();
+    let toc = wow_ui_sim::toc::TocFile::from_file(
+        &root.join("Blizzard_TimerunningUtil/Blizzard_TimerunningUtil.toc"),
+    ).unwrap();
+    assert!(toc.files.iter().any(|path| path.to_string_lossy() == "Blizzard_TimerunningUtil.lua"));
+    let env = WowLuaEnv::new().unwrap();
+    crate::common::load_game_startup_inventory(&env);
+    env.sync_addon_names_to_lua();
+    env.apply_post_load_workarounds();
+    wow_ui_sim::startup::fire_startup_events_for_screen(&env, wow_ui_sim::screen::ScreenKind::Game);
+    env.exec(r#"
+        assert(C_AddOns.IsAddOnLoaded('Blizzard_TimerunningUtil'))
+        assert(not C_Glue.IsOnGlueScreen())
+        local seasons = Constants.TimerunningConsts
+        A_Admin.SetTimerunningSeasonID(seasons.TIMERUNNING_SEASON_LEGION)
+        A_Admin.SetActiveTimerunningSeasonID(seasons.TIMERUNNING_SEASON_NONE)
+        assert(TimerunningUtil.GetTimerunningExpansion() == LE_EXPANSION_CLASSIC)
+        A_Admin.SetActiveTimerunningSeasonID(seasons.TIMERUNNING_SEASON_PANDARIA)
+        assert(TimerunningUtil.GetTimerunningExpansion() == LE_EXPANSION_MISTS_OF_PANDARIA)
+        A_Admin.SetActiveTimerunningSeasonID(seasons.TIMERUNNING_SEASON_LEGION)
+        assert(TimerunningUtil.GetTimerunningExpansion() == LE_EXPANSION_LEGION)
     "#).unwrap();
 }
 
