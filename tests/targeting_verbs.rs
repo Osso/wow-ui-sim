@@ -414,6 +414,7 @@ const PARTY_ASSIGNMENT_MENU_CONSUMER: &str = r#"
     A_Admin.SetPartySize(2)
     A_Admin.SetPartyMember(1, "Alpha", 1, 60)
     A_Admin.SetPartyMember(2, "Beta", 2, 60)
+    A_Admin.SetCanPlayerUseVoiceChat(false)
     local updates = 0
     PlayerFrame:HookScript("OnEvent", function(_, event)
         if event == "GROUP_ROSTER_UPDATE" then updates = updates + 1 end
