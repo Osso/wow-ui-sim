@@ -10,7 +10,7 @@ Supply one call-pet spell and the current player pet name for its slot (0–4, f
 
 ### A_Admin.SetSpellOverrideObservation(spellID, specID, onlyKnown, ignoreOverrideSpellID, overrideSpellID)
 
-Retail and WoW Forever: provide the exact result for a `C_Spell.GetOverrideSpell` query. `specID=0` resolves the active player's specialization when read or supplied. Spell IDs must be positive; spec and ignored spell ID must be nonnegative integers, and onlyKnown must be boolean (query default true). The empty model returns the resolved input spell ID when no observation matches, as documented. No event is emitted; this is a supplied observation, not native eligible-override discovery.
+Retail and WoW Forever: provide the exact result for a `C_Spell.GetOverrideSpell` query. `specID=0` resolves the active player's specialization when read or supplied. The input identifier must resolve to a positive spell ID; the result must be a positive integer. Spec and ignored spell ID must be nonnegative integers (nil uses zero), and onlyKnown must be boolean or nil (nil uses true). The empty model returns the resolved input spell ID when no observation matches, as documented. No event is emitted; this is a supplied observation, not native eligible-override discovery.
 
 VERIFIED shapes: Retail `SpellDocumentation.lua:165–181`; Forever `:206–222`. Both `Blizzard_SharedTalentUI.toc:5` select `Blizzard_SharedTalentUtil.lua:110–120`; its replacement-name utility reads the result via `GetSpellName`.
 

@@ -63,7 +63,7 @@ pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
-fn set_call_pet_spell_info(state: &mut LuaState) -> LuaResult<u32> {
+fn read_call_pet_input(state: &LuaState) -> LuaResult<(u32, usize, Option<String>)> {
     let (Val::Num(spell), Val::Num(slot)) = (stack_val(state, 1), stack_val(state, 2)) else {
         return Err(rilua::runtime_error(
             "A_Admin.SetCallPetSpellInfo: expected spell ID and slot",
@@ -88,14 +88,18 @@ fn set_call_pet_spell_info(state: &mut LuaState) -> LuaResult<u32> {
             ));
         }
     };
+    Ok((spell as u32, slot as usize, name))
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn set_call_pet_spell_info(state: &mut LuaState) -> LuaResult<u32> {
+    let (spell, slot, name) = read_call_pet_input(state)?;
     let mut model = borrow_state_mut(state)?;
-    model
-        .call_pet_spell_indices
-        .insert(spell as u32, slot as i32);
-    if model.player_call_pet_names.len() <= slot as usize {
-        model.player_call_pet_names.resize(slot as usize + 1, None);
+    model.call_pet_spell_indices.insert(spell, slot as i32);
+    if model.player_call_pet_names.len() <= slot {
+        model.player_call_pet_names.resize(slot + 1, None);
     }
-    model.player_call_pet_names[slot as usize] = name;
+    model.player_call_pet_names[slot] = name;
     Ok(0)
 }
 

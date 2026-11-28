@@ -11,26 +11,14 @@ fn env() -> WowLuaEnv {
 mod traits;
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[path = "common/selected_game_ui.rs"]
+mod selected_game_ui;
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 fn load_selected_spell_ui(inputs: &str) -> WowLuaEnv {
-    let env = env();
-    let screen = wow_ui_sim::screen::ScreenKind::Game;
-    env.set_screen_mode(screen);
-    env.set_screen_size(1024.0, 768.0);
-    wow_ui_sim::xml::register_intrinsic_templates();
-    let ui = wow_ui_sim::paths::default_blizzard_ui_addons_path().unwrap();
-    let addons = wow_ui_sim::loader::discover_blizzard_addons_for_screen(&ui, screen);
-    env.exec(inputs).unwrap();
-    for (name, toc) in &addons {
-        wow_ui_sim::loader::load_addon(&env.loader_env(), toc)
-            .unwrap_or_else(|error| panic!("{name}: {error}"));
-    }
-    assert!(addons.iter().any(|(name, _)| name == "Blizzard_ActionBar"));
-    assert!(addons.iter().any(|(name, _)| name == "Blizzard_FrameXMLUtil"));
-    assert!(addons.iter().any(|(name, _)| name == "Blizzard_SharedTalentUI"));
-    assert!(addons.iter().any(|(name, _)| name == "Blizzard_TutorialManager"));
-    env.apply_post_load_workarounds();
-    wow_ui_sim::startup::fire_startup_events_for_screen(&env, screen);
-    env
+    selected_game_ui::load_selected_game_ui(inputs, &[
+        "Blizzard_ActionBar", "Blizzard_FrameXMLUtil", "Blizzard_SharedTalentUI", "Blizzard_TutorialManager",
+    ])
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
@@ -51,11 +39,11 @@ fn original_talent_utility_uses_supplied_spell_override_observations() {
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 #[test]
 fn original_tutorial_helper_finds_each_supplied_spellbook_override() {
-    let env = load_selected_spell_ui("A_Admin.SetActionSlot(1, 133); A_Admin.SetActionSlot(2, 686)");
+    let env = load_selected_spell_ui("A_Admin.SetActionSlot(1, 133); A_Admin.SetActionSlot(2, 172)");
     env.exec(r#"
         A_Admin.SetSpellBookOverrideObservation(116, 133)
         assert(TutorialHelper:GetActionButtonBySpellID(116) == ActionButton1)
-        A_Admin.SetSpellBookOverrideObservation(116, 686)
+        A_Admin.SetSpellBookOverrideObservation(116, 172)
         assert(TutorialHelper:GetActionButtonBySpellID(116) == ActionButton2)
         assert(C_Spell.GetOverrideSpell(116) == 116, 'distinct override query remains separate')
         A_Admin.SetCallPetSpellInfo(883, 0, 'Kado')

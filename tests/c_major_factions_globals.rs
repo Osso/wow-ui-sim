@@ -6,28 +6,13 @@
 use wow_ui_sim::lua_api::{MajorFactionData, RenownLevelInfo, WowLuaEnv};
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
-fn load_selected_faction_list_ui() -> WowLuaEnv {
-    let env = WowLuaEnv::new().unwrap();
-    let screen = wow_ui_sim::screen::ScreenKind::Game;
-    env.set_screen_mode(screen);
-    env.set_screen_size(1024.0, 768.0);
-    wow_ui_sim::xml::register_intrinsic_templates();
-    let ui = wow_ui_sim::paths::default_blizzard_ui_addons_path().unwrap();
-    let addons = wow_ui_sim::loader::discover_blizzard_addons_for_screen(&ui, screen);
-    for (name, toc) in &addons {
-        wow_ui_sim::loader::load_addon(&env.loader_env(), toc)
-            .unwrap_or_else(|error| panic!("{name}: {error}"));
-    }
-    assert!(addons.iter().any(|(name, _)| name == "Blizzard_MajorFactions"));
-    env.apply_post_load_workarounds();
-    wow_ui_sim::startup::fire_startup_events_for_screen(&env, screen);
-    env
-}
+#[path = "common/selected_game_ui.rs"]
+mod selected_game_ui;
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 #[test]
 fn original_major_faction_list_excludes_each_supplied_hidden_faction() {
-    let env = load_selected_faction_list_ui();
+    let env = selected_game_ui::load_selected_game_ui("", &["Blizzard_MajorFactions"]);
     env.exec(r#"
         A_Admin.SetMajorFactionRenown(2507, 2, 10)
         A_Admin.SetMajorFactionRenown(2510, 3, 10)

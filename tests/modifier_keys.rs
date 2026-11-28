@@ -122,22 +122,13 @@ fn multiple_modifiers_set_simultaneously() {
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[path = "common/selected_game_ui.rs"]
+mod selected_game_ui;
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 #[test]
 fn selected_controls_setting_reads_two_modified_click_bindings() {
-    let env = WowLuaEnv::new().unwrap();
-    let screen = wow_ui_sim::screen::ScreenKind::Game;
-    env.set_screen_mode(screen);
-    env.set_screen_size(1024.0, 768.0);
-    wow_ui_sim::xml::register_intrinsic_templates();
-    let ui = wow_ui_sim::paths::default_blizzard_ui_addons_path().unwrap();
-    let addons = wow_ui_sim::loader::discover_blizzard_addons_for_screen(&ui, screen);
-    for (name, toc) in &addons {
-        wow_ui_sim::loader::load_addon(&env.loader_env(), toc)
-            .unwrap_or_else(|error| panic!("{name}: {error}"));
-    }
-    assert!(addons.iter().any(|(name, _)| name == "Blizzard_SettingsDefinitions_Frame"));
-    env.apply_post_load_workarounds();
-    wow_ui_sim::startup::fire_startup_events_for_screen(&env, screen);
+    let env = selected_game_ui::load_selected_game_ui("", &["Blizzard_SettingsDefinitions_Frame", "Blizzard_Settings_Shared"]);
     env.exec(r#"
         local setting = Settings.GetSetting('AUTOLOOTTOGGLE')
         assert(setting and setting:GetValue() == 'SHIFT')
