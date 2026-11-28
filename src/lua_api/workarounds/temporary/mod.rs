@@ -231,6 +231,7 @@ pub(crate) mod scripted_animation_effect_defaults;
 pub(crate) mod secure_env_global_snapshot;
 pub(crate) mod secure_legacy_unit_globals;
 pub(crate) mod secure_reference_defaults;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod secure_transfer_state;
 pub(crate) mod secure_types_defaults;
 pub(crate) mod settings_canvas_visibility;

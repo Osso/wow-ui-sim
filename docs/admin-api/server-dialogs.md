@@ -28,6 +28,16 @@ Stores the incoming request (shared with `AcceptDuel`) and fires
 `DUEL_REQUESTED(challengerName)`. `CancelDuel` declines it and fires
 `DUEL_FINISHED`. Without a request, `CancelDuel` does nothing.
 
+### `A_Admin.SetSecureTransferTradeOfferWarning(showWarning)` (Retail and WoW Forever)
+
+Set the Boolean host input read by
+`C_SecureTransfer.ShouldShowTradeOfferWarning` in the selected secure trade
+ dialog. It reads `false` until supplied. This setter changes simulator state
+only; it does not start a trade or fire an event.
+
+The original `Blizzard_SecureTransferUI` test supplies distinct partners and
+warning values. This does not establish native defaults.
+
 ## Instance countdowns (Retail and WoW Forever)
 
 Countdowns run on the simulator clock (`A_Admin.SetManualClock` /
