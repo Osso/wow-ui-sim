@@ -133,6 +133,7 @@ pub(crate) mod global_frame_defaults;
 pub(crate) mod global_placeholder_tables;
 pub(crate) mod glue_character_select_defaults;
 pub(crate) mod glueparent_uiparent_attributes;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod gossip_poi_defaults;
 pub(crate) mod guild_info_namespace_fallback;
 pub(crate) mod house_exterior_debug;
@@ -146,6 +147,7 @@ pub(crate) mod item_button_helper_defaults;
 pub(crate) mod item_quality_color_data_methods;
 #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod item_targeting_defaults;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod item_upgrade_availability_defaults;
 #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod kiosk_namespace_defaults;
@@ -207,6 +209,7 @@ pub(crate) mod player_location_defaults;
 pub(crate) mod player_spells_onload_backfill;
 #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod pool_constructor_defaults;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod possess_info_defaults;
 pub(crate) mod post_event_action_button_refresh;
 pub(crate) mod post_event_frame_layout;
@@ -226,6 +229,7 @@ pub(crate) mod reincarnation_defaults;
 #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod reputation_state;
 pub(crate) mod restricted_actions_protected;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod scenario_defaults;
 pub(crate) mod script_bucket_throttle_limits;
 #[cfg(not(feature = "client-retail"))]
@@ -272,6 +276,7 @@ pub(crate) mod texture_file_data_defaults;
 #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod tooltip_nineslice_surface;
 pub(crate) mod tracking_namespace_defaults;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod trade_info_defaults;
 pub(crate) mod trade_skill_ui_fallbacks;
 pub(crate) mod transmog_outfit_slot_defaults;
@@ -294,6 +299,7 @@ pub(crate) mod world_service_defaults;
 pub(crate) mod wrath_arena_roster;
 #[cfg(feature = "client-wrath")]
 pub(crate) mod wrath_trade_skill_filters;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod zone_story_default;
 
 pub(crate) mod retail_spellbook_legacy;
