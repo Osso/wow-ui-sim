@@ -923,7 +923,7 @@ mod forever_percent {
     }
 }
 
-#[cfg(feature = "charged-power-points")]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 #[test]
 fn rogue_combo_point_bar_uses_supplied_charged_power_points() {
     let ui_dir = crate::common::blizzard_addon_harness::blizzard_ui_dir();
