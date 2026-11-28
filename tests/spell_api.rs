@@ -27,6 +27,7 @@ fn load_selected_spell_ui(inputs: &str) -> WowLuaEnv {
     assert!(addons.iter().any(|(name, _)| name == "Blizzard_ActionBar"));
     assert!(addons.iter().any(|(name, _)| name == "Blizzard_FrameXMLUtil"));
     assert!(addons.iter().any(|(name, _)| name == "Blizzard_SharedTalentUI"));
+    assert!(addons.iter().any(|(name, _)| name == "Blizzard_TutorialManager"));
     env.apply_post_load_workarounds();
     wow_ui_sim::startup::fire_startup_events_for_screen(&env, screen);
     env
@@ -45,6 +46,25 @@ fn original_talent_utility_uses_supplied_spell_override_observations() {
         assert(TalentUtil.GetReplacesSpellNameFromInfo(definition) == 'Corruption')
         assert(C_Spell.GetOverrideSpell(116, 0, false, 0) == 116)
     "#).expect("selected talent utility must display the exact observed replacement spell name");
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn original_tutorial_helper_finds_each_supplied_spellbook_override() {
+    let env = load_selected_spell_ui("A_Admin.SetActionSlot(1, 133); A_Admin.SetActionSlot(2, 686)");
+    env.exec(r#"
+        A_Admin.SetSpellBookOverrideObservation(116, 133)
+        assert(TutorialHelper:GetActionButtonBySpellID(116) == ActionButton1)
+        A_Admin.SetSpellBookOverrideObservation(116, 686)
+        assert(TutorialHelper:GetActionButtonBySpellID(116) == ActionButton2)
+        assert(C_Spell.GetOverrideSpell(116) == 116, 'distinct override query remains separate')
+        A_Admin.SetCallPetSpellInfo(883, 0, 'Kado')
+        local index, name = GetCallPetSpellInfo(883)
+        assert(index == 0 and name == 'Kado')
+        A_Admin.SetCallPetSpellInfo(883, 1, 'Misha')
+        index, name = GetCallPetSpellInfo(883)
+        assert(index == 1 and name == 'Misha')
+    "#).expect("selected tutorial helper must find the corresponding original button");
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]

@@ -821,10 +821,42 @@ pub(crate) fn register_admin(
         crate::client_profile::ClientProfile::Retail
             | crate::client_profile::ClientProfile::WowForever
     ) {
-        builder.set_function("SetSpellBookItemAutoCast", set_spell_book_item_auto_cast)
+        builder
+            .set_function("SetSpellBookItemAutoCast", set_spell_book_item_auto_cast)?
+            .set_function(
+                "SetSpellBookOverrideObservation",
+                set_spell_book_override_observation,
+            )
     } else {
         Ok(builder)
     }
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn set_spell_book_override_observation(state: &mut LuaState) -> LuaResult<u32> {
+    let read_id = |index| match stack_val(state, index) {
+        Val::Num(value)
+            if value.is_finite()
+                && value.fract() == 0.0
+                && (1.0..=f64::from(i32::MAX)).contains(&value) =>
+        {
+            Ok(value as i32)
+        }
+        _ => Err(rilua::runtime_error(
+            "A_Admin.SetSpellBookOverrideObservation: expected positive integer spell IDs",
+        )),
+    };
+    let base = read_id(1)?;
+    let result = read_id(2)?;
+    if spells::get_spell(result as u32).is_none() {
+        return Err(rilua::runtime_error(
+            "A_Admin.SetSpellBookOverrideObservation: result is not in the spell catalog",
+        ));
+    }
+    crate::lua_api::methods::borrow_state_mut(state)?
+        .spellbook_override_observations
+        .insert(base, result);
+    Ok(0)
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
@@ -1036,8 +1068,14 @@ fn c_spell_book_find_spell_override_by_id(state: &mut LuaState) -> LuaResult<u32
         FIND_SPELL_OVERRIDE_USAGE,
     )?;
     // R88m.4: no override link preserves the parsed ID, then Spell membership
-    // determines one signed number or one nil. The simulator has no native
-    // eligible-override map; do not infer links from identifier aliases.
+    // determines one signed number or one nil. Supplied observations are not
+    // inferred from identifier aliases or the distinct C_Spell override query.
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let spell_id = borrow_state(state)?
+        .spellbook_override_observations
+        .get(&spell_id)
+        .copied()
+        .unwrap_or(spell_id);
     state.push(if spells::get_spell(spell_id as u32).is_some() {
         Val::Num(f64::from(spell_id))
     } else {

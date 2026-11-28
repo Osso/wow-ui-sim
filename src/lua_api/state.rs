@@ -507,6 +507,8 @@ macro_rules! build_empty_sim_state {
             spell_ui_flags: HashMap::new(),
             #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
             spell_override_observations: HashMap::new(),
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            spellbook_override_observations: HashMap::new(),
             spell_tooltip_inputs: HashMap::new(),
             recipe_rank_tooltip_cache: Default::default(),
             aura_tooltip_inputs: HashMap::new(),
@@ -558,9 +560,9 @@ macro_rules! build_empty_sim_state {
             spell_loss_of_control: HashMap::new(),
             active_loss_of_control: HashMap::new(),
             spell_flyouts: HashMap::new(),
-            #[cfg(feature = "client-retail")]
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
             call_pet_spell_indices: HashMap::new(),
-            #[cfg(feature = "client-retail")]
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
             player_call_pet_names: Vec::new(),
             action_profession_quality: HashMap::new(),
             addon_base_paths: $collections.addon_base_paths,

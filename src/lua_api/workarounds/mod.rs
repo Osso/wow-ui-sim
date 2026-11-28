@@ -553,7 +553,9 @@ fn apply_feature_progression_defaults(lua: &mut rilua::Lua) -> crate::Result<()>
     temporary::scripted_animation_effect_defaults::apply_bootstrap(lua)?;
     #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::shared_xml_utility_defaults::apply_bootstrap(lua)?;
-    temporary::spell_book_static_defaults::apply_bootstrap(lua)
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+    temporary::spell_book_static_defaults::apply_bootstrap(lua)?;
+    Ok(())
 }
 
 fn apply_feature_model_defaults(lua: &mut rilua::Lua) -> crate::Result<()> {

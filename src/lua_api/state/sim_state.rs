@@ -616,6 +616,8 @@ pub struct SimState {
     pub spell_ui_flags: HashMap<u32, crate::c_api::c_spell::SpellUiFlags>,
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     pub spell_override_observations: HashMap<crate::c_api::c_spell::SpellOverrideRequest, u32>,
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub spellbook_override_observations: HashMap<i32, i32>,
     pub spell_tooltip_inputs: HashMap<u32, crate::c_api::spell_tooltip::SpellTooltipInput>,
     pub recipe_rank_tooltip_cache: crate::c_api::recipe_rank_tooltip::RecipeRankTooltipCache,
     pub aura_tooltip_inputs: HashMap<i32, crate::c_api::spell_tooltip::AuraTooltipInput>,
@@ -708,10 +710,10 @@ pub struct SimState {
         HashMap<String, Vec<crate::c_api::c_loss_of_control::ActiveLossOfControlData>>,
     pub spell_flyouts: HashMap<u32, SpellFlyoutInfo>,
     /// Host-supplied call-pet spell membership and slot-index candidates.
-    #[cfg(feature = "client-retail")]
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     pub call_pet_spell_indices: HashMap<u32, i32>,
     /// Host-supplied current-player call-pet names indexed by slot; absent names stay absent.
-    #[cfg(feature = "client-retail")]
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     pub player_call_pet_names: Vec<Option<String>>,
     pub action_profession_quality: HashMap<i32, ProfessionQualityInfo>,
     pub addon_base_paths: Vec<PathBuf>,

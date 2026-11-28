@@ -254,6 +254,7 @@ pub(crate) mod social_queue_defaults;
 pub(crate) mod social_service_defaults;
 pub(crate) mod sound_driver_defaults;
 pub(crate) mod source_patches;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod spell_book_static_defaults;
 #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod spell_metadata_defaults;

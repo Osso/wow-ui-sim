@@ -214,6 +214,8 @@ fn register_admin_calendar_services(builder: TableBuilder) -> LuaResult<TableBui
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     let builder = crate::c_api::c_spell_book::register_admin(builder)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let builder = super::real::spell_flyout_legacy::register_admin(builder)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     let builder = crate::c_api::c_spell::register_ui_flags_admin(builder)?;
     Ok(builder)
 }

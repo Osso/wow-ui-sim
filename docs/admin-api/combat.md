@@ -1,5 +1,13 @@
 # Combat State
 
+### A_Admin.SetSpellBookOverrideObservation(spellID, overrideSpellID)
+
+Retail and Forever: supply a known catalog result for `C_SpellBook.FindSpellOverrideByID`. Both IDs must be positive signed-32-bit integers; the result must exist in the selected spell catalog. The empty model keeps the prior no-link record check. This observation is independent of `C_Spell.GetOverrideSpell`; no event is emitted. VERIFIED declarations: Retail `SpellBookDocumentation.lua:85–98`, Forever `:95–108`; both `Blizzard_TutorialManager.toc:16` select `Blizzard_TutorialHelper.lua:190–211`, which resolves action buttons by base and override spell IDs.
+
+### A_Admin.SetCallPetSpellInfo(spellID, slot, petName)
+
+Supply one call-pet spell and the current player pet name for its slot (0–4, from Retail R88m.4). The spell ID must be a positive signed-32-bit integer; the pet name must be string or nil (an empty string is valid). The selected `Blizzard_ActionBar/Shared/SpellFlyout.lua:270` (Retail), `:329` (Forever) reads two values; the Forever shape is inferred from this consumer, not a native probe. No event is emitted. Retail's absent observation returns zero values; Forever preserves the prior two nils until native return-count evidence is available.
+
 ### A_Admin.SetSpellOverrideObservation(spellID, specID, onlyKnown, ignoreOverrideSpellID, overrideSpellID)
 
 Retail and WoW Forever: provide the exact result for a `C_Spell.GetOverrideSpell` query. `specID=0` resolves the active player's specialization when read or supplied. Spell IDs must be positive; spec and ignored spell ID must be nonnegative integers, and onlyKnown must be boolean (query default true). The empty model returns the resolved input spell ID when no observation matches, as documented. No event is emitted; this is a supplied observation, not native eligible-override discovery.
