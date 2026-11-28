@@ -98,6 +98,9 @@ pub mod traits;
 #[path = "../data/ui_maps.rs"]
 pub mod ui_maps;
 #[rustfmt::skip]
+#[path = "../data/ui_maps_forever.rs"]
+pub mod ui_maps_forever;
+#[rustfmt::skip]
 #[path = "../data/ui_map_help_text_positions.rs"]
 pub mod ui_map_help_text_positions;
 #[rustfmt::skip]

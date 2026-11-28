@@ -23,6 +23,8 @@ const RETAIL_HELP_TEXT_POSITION_OUTPUT: &str = "crates/sim-data/data/ui_map_help
 const FOREVER_HELP_TEXT_POSITION_CSV: &str = "data/db2/wowforever-1.60.1.70707/UiMap.csv";
 const FOREVER_HELP_TEXT_POSITION_OUTPUT: &str =
     "crates/sim-data/data/ui_map_help_text_positions_forever.rs";
+const FOREVER_ASSIGNMENT_CSV: &str = "data/db2/wowforever-1.60.1.70707/UiMapAssignment.csv";
+const FOREVER_UI_MAP_OUTPUT: &str = "crates/sim-data/data/ui_maps_forever.rs";
 
 pub fn run() -> Result<(), Box<dyn std::error::Error>> {
     let wow_data = wow_data_dir();
@@ -58,6 +60,56 @@ pub fn run_assignments() -> Result<(), Box<dyn std::error::Error>> {
     write_assignment_file(&mut out, &assignments)?;
     println!("Generated {} UiMapAssignment rows", row_count);
     println!("Output: {}", output_path.display());
+    run_forever()
+}
+
+/// WoW Forever's own UiMap rows and UiMapAssignment geometry (its uiMap IDs,
+/// 1411 on, are not in the retail tables): one file in sim-data, so the
+/// Forever client can answer `C_Map.GetMapInfo` and `GetMapInfoAtPosition`.
+fn run_forever() -> Result<(), Box<dyn std::error::Error>> {
+    let reader = BufReader::new(File::open(FOREVER_HELP_TEXT_POSITION_CSV)?);
+    let (assignments, row_count) = load_assignment_rows(Path::new(FOREVER_ASSIGNMENT_CSV))?;
+    let mut out = File::create(FOREVER_UI_MAP_OUTPUT)?;
+    writeln!(
+        out,
+        "//! Auto-generated WoW Forever UiMap and UiMapAssignment data (Wago exports of 1.60.1.70707)."
+    )?;
+    writeln!(
+        out,
+        "//! Do not edit manually - regenerate with: wow-cli generate ui-map-assignments"
+    )?;
+    writeln!(out)?;
+    writeln!(out, "pub use super::ui_maps::UiMapInfo;")?;
+    writeln!(out)?;
+    writeln!(out, "#[derive(Debug, Clone, Copy, PartialEq)]")?;
+    writeln!(out, "pub struct UiMapAssignment {{")?;
+    writeln!(out, "    pub map_id: i32,")?;
+    writeln!(out, "    pub area_id: u32,")?;
+    writeln!(out, "    pub ui_min: [f32; 2],")?;
+    writeln!(out, "    pub ui_max: [f32; 2],")?;
+    writeln!(out, "    pub region_min: [f32; 2],")?;
+    writeln!(out, "    pub region_max: [f32; 2],")?;
+    writeln!(
+        out,
+        "}}
+"
+    )?;
+    let (count, _) = build_ui_map_table(&mut out, reader)?;
+    write_lookup_fn(&mut out)?;
+    writeln!(out)?;
+    writeln!(
+        out,
+        "pub static UI_MAP_ASSIGNMENTS: &[(u32, &[UiMapAssignment])] = &["
+    )?;
+    write_assignment_groups(&mut out, &assignments)?;
+    writeln!(
+        out,
+        "];
+"
+    )?;
+    write_assignment_lookup(&mut out)?;
+    println!("Generated {count} Forever ui maps and {row_count} UiMapAssignment rows");
+    println!("Output: {FOREVER_UI_MAP_OUTPUT}");
     Ok(())
 }
 
