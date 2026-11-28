@@ -2,6 +2,7 @@
 
 use wow_ui_sim::lua_api::WowLuaEnv;
 
+#[cfg(feature = "client-retail")]
 const ROGUE_CHARGED_POWER_CONSUMER: &str = r#"
     local bar = PlayerFrame.classPowerBar
     assert(bar and #bar.classResourceButtonTable >= 5, "Rogue combo point bar loaded")
@@ -924,7 +925,7 @@ mod forever_percent {
     }
 }
 
-#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[cfg(feature = "client-retail")]
 #[test]
 fn rogue_combo_point_bar_uses_supplied_charged_power_points() {
     let ui_dir = crate::common::blizzard_addon_harness::blizzard_ui_dir();
@@ -944,4 +945,22 @@ fn rogue_combo_point_bar_uses_supplied_charged_power_points() {
     assert!(loaded.iter().any(|name| name == "Blizzard_UnitFrame"));
     env.exec(ROGUE_CHARGED_POWER_CONSUMER)
         .expect("original Rogue combo point bar reads charged power indices");
+}
+
+#[cfg(feature = "client-wowforever")]
+#[test]
+fn forever_charged_power_points_follow_supplied_state() {
+    env()
+        .eval::<()>(
+            r#"
+            A_Admin.SetUnitChargedPowerPoints("player", {2})
+            local charged = GetUnitChargedPowerPoints("player")
+            assert(#charged == 1 and charged[1] == 2)
+            A_Admin.SetUnitChargedPowerPoints("player", {3, 5})
+            charged = GetUnitChargedPowerPoints("player")
+            assert(#charged == 2 and charged[1] == 3 and charged[2] == 5)
+            assert(not pcall(A_Admin.SetUnitChargedPowerPoints, "player", {[1] = 2, [3] = 5}))
+            "#,
+        )
+        .unwrap();
 }
