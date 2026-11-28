@@ -2578,7 +2578,6 @@ UnitChromieTimeID # not-yet
 UnitHasRelicSlot # not-yet
 UnitInAnyGroup # not-yet
 UnitInPartyShard # not-yet
-UnitIsInteractable # not-yet
 UnitIsMercenary # not-yet
 UnitIsPVPSanctuary # not-yet
 UnitIsSameServer # not-yet
