@@ -58,7 +58,7 @@ fn get_pet_spell_bonus_damage(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-#[cfg(feature = "client-retail")]
+#[cfg(feature = "explicit-stat-inputs")]
 fn get_pet_melee_haste(state: &mut LuaState) -> LuaResult<u32> {
     let haste = borrow_state(state)?.pet.melee_haste_pct.unwrap_or(0.0);
     push_stat_number(state, haste)?;
@@ -66,7 +66,7 @@ fn get_pet_melee_haste(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 pub fn register_all(lua: &mut rilua::Lua) -> crate::Result<()> {
-    #[cfg(feature = "client-retail")]
+    #[cfg(feature = "explicit-stat-inputs")]
     LuaApiMut::register_function(lua, "GetPetMeleeHaste", get_pet_melee_haste)?;
     LuaApiMut::register_function(lua, "GetPetExperience", get_pet_experience)?;
     #[cfg(not(feature = "client-retail"))]

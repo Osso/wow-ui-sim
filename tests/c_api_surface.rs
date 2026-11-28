@@ -385,7 +385,13 @@ fn c_string_util_truncate_when_zero_rejects_invalid_numbers() {
         .expect("simulator policy rejects missing, nonnumeric and nonfinite numbers");
 }
 
-#[cfg(not(any(feature = "profile-retail", feature = "client-ptr")))]
+// Forever 70707 declares these helpers (StringUtilDocumentation.lua:58/:74/:204);
+// 50db197814 publishes them there and string_util_forever_gates.rs covers them.
+#[cfg(not(any(
+    feature = "profile-retail",
+    feature = "client-ptr",
+    feature = "client-wowforever"
+)))]
 #[test]
 fn non_retail_profiles_do_not_publish_retail_string_helpers() {
     env()

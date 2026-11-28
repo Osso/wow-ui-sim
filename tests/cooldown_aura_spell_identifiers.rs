@@ -1,6 +1,6 @@
 //! Row387 fixtures for an INFERRED explicit association model, not native parity.
 //! The API producer is intentionally absent at the inputs/fixtures stage.
-#![cfg(feature = "retail-12-0-5")]
+#![cfg(feature = "unit-aura-queries")]
 
 use rilua::LuaApiMut;
 use rilua::table_security::{wrap_host_secret_number, wrap_host_secret_string, wrap_secret};

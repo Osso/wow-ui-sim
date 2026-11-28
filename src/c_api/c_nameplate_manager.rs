@@ -15,7 +15,7 @@ pub struct NamePlateConfiguration {
     pub simplified: std::collections::HashSet<String>,
 }
 
-#[cfg(feature = "retail-12-0-0")]
+#[cfg(feature = "nameplate-configuration")]
 pub(super) fn register_configuration(state: &mut LuaState) -> LuaResult<()> {
     let plates = ensure_namespace(state, "C_NamePlate")?;
     table_set_rust_fn_static(state, plates, "SetNamePlateSize", set_size)?;
@@ -52,7 +52,7 @@ pub(super) fn register_configuration(state: &mut LuaState) -> LuaResult<()> {
     })
 }
 
-#[cfg(feature = "retail-12-0-0")]
+#[cfg(feature = "nameplate-configuration")]
 fn read_token(state: &LuaState) -> LuaResult<String> {
     let value = unwrap_secret(state, stack_val(state, 1))?;
     if !matches!(value, Val::Str(_)) {
@@ -62,7 +62,7 @@ fn read_token(state: &LuaState) -> LuaResult<String> {
         .ok_or_else(|| rilua::runtime_error("unitToken must be UTF-8"))
 }
 
-#[cfg(feature = "retail-12-0-0")]
+#[cfg(feature = "nameplate-configuration")]
 fn set_size(state: &mut LuaState) -> LuaResult<u32> {
     let mut size = [0.0; 2];
     for (offset, dimension) in size.iter_mut().enumerate() {
@@ -80,12 +80,12 @@ fn set_size(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
-#[cfg(feature = "retail-12-0-5")]
+#[cfg(feature = "nameplate-hit-test-insets")]
 pub(crate) use hit_test::NamePlateHitTestInsets;
-#[cfg(feature = "retail-12-0-5")]
+#[cfg(feature = "nameplate-hit-test-insets")]
 pub(super) use hit_test::register;
 
-#[cfg(feature = "retail-12-0-5")]
+#[cfg(feature = "nameplate-hit-test-insets")]
 mod hit_test {
     use super::*;
     /// Official NamePlateType keys index independent configuration tuples.

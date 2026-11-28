@@ -160,10 +160,77 @@ housing-host-state = []
 # Forever (ProfessionSpecUIDocumentation.lua is byte-identical).
 profession-spec-paths = []
 housing-inspect-mode = []
-retail-12-0-0 = ["aura-instance-enumeration", "action-spell-range", "housing-host-state"]
-retail-12-0-5 = ["retail-12-0-0", "housing-inspect-mode", "native-duration-formatting", "base-spell-relationships", "aura-spell-classifications", "maw-power-model"]
-retail-12-0-7 = ["retail-12-0-5", "maw-power-rarity-info", "housing-room-queries"]
-retail-12-1-0 = ["retail-12-0-7", "housing-blueprints", "aura-xml-widgets", "on-update-modes", "player-cast-durations", "forbidden-aspects", "numeric-rule-formatters", "aura-containers"]
+# C_HouseExterior selection/fixture-point model: Retail 12.0.5 and Forever
+# (HouseExteriorUIDocumentation.lua and HouseExteriorConstantsDocumentation.lua
+# are byte-identical).
+house-exterior-model = []
+# C_UnitAuras 12.0.5 instance/spell queries, durations and altered form:
+# Retail 12.0.5 and Forever (each function block in UnitAuraDocumentation.lua
+# is byte-identical).
+unit-aura-queries = []
+# C_UnitAuras.CancelAuraByInstanceID and its incremental UNIT_AURA removal
+# payload: Retail 12.1.0 and Forever (byte-identical UnitAuraDocumentation block).
+aura-instance-cancel = []
+# C_BattleNet.SendWhisper/SetCustomMessage: Retail 12.0.0 and Forever
+# (byte-identical BattleNetDocumentation blocks).
+bnet-chat = []
+# C_BattleNet.SetAFK/SetDND local presence: Retail 12.0.5 and Forever.
+bnet-presence = []
+# C_BattleNet title-friend, tag and search model with the friendLevel/friendTags/
+# classFilename struct fields: Retail 12.1.0 and Forever (byte-identical blocks).
+bnet-friend-social = []
+# SimulateMouseClick/Down/Up/Wheel queue: Retail 12.0.7 and Forever
+# (byte-identical InputDocumentation blocks).
+simulated-mouse-input = []
+# C_EncounterWarnings availability/sound kits (12.0.0), shown/custom-sound
+# toggles (12.0.5) and severity color/Edit Mode preview (12.1.0): Retail and
+# Forever (byte-identical EncounterWarningsDocumentation blocks).
+encounter-warning-settings = []
+encounter-warning-visibility = []
+encounter-warning-previews = []
+# C_LFGList endgame-edit host policy: Retail 12.0.5 and Forever
+# (byte-identical LFGListInfoDocumentation blocks).
+lfg-endgame-edit-policy = []
+# C_NamePlate size and C_NamePlateManager behind-camera/simplified
+# configuration (12.0.0) and hit-test insets (12.0.5): Retail and Forever
+# (byte-identical NamePlate/NamePlateManagerDocumentation blocks).
+nameplate-configuration = []
+# Host-supplied GetMastery/GetSturdiness/GetPowerRegen(ForPowerType)/
+# PlayerEffectiveAttackPower/GetPetMeleeHaste/UnitWeaponAttackPower inputs:
+# Retail and Forever (byte-identical PlayerScript/UnitDocumentation blocks).
+explicit-stat-inputs = []
+# C_Garrison talent-tree context and landing-page minimap visibility host inputs:
+# Retail and Forever (byte-identical GarrisonInfoDocumentation blocks).
+garrison-host-inputs = []
+# Byte-identical Retail 12.1.0 / Forever doc blocks over neutral host state:
+# C_DelvesUI lair queries and C_LFGInfo.IsInMatchmadeRaidWithoutRoleRequirements.
+lair-state-queries = []
+# C_PaperDollInfo.CancelTemporaryEnchantment over the weapon-enchant model.
+temporary-enchant-cancel = []
+# C_QuestHub.IsQuestCurrentlyRelatedToHub over host hub relations.
+quest-hub-relations = []
+# Permanent no-op C_Browser.CloseFullscreenBrowser (no embedded browser).
+fullscreen-browser-close = []
+# Retail 12.0.0 / Forever host flags: C_CombatLog.IsCombatLogRestricted,
+# C_StableInfo.IsBonusPetSlotAvailable, C_LimitedInput.LimitedInputAllowed and
+# C_CatalogShop.GetNewProducts.
+rest-policy-flags = []
+# C_CurveUtil.EvaluateColor{,Value}FromBoolean selectors (Retail 12.0.0 / Forever).
+boolean-color-selection = []
+nameplate-hit-test-insets = []
+# C_CooldownViewer.GetValidAlertTypes host alert capabilities: Retail 12.0.0
+# and Forever (byte-identical CooldownViewerDocumentation block).
+cooldown-alert-types = []
+# C_Spell host classification queries: Retail 12.0.0 and Forever.
+# IsSpellImportant/IsConsumableSpell/IsExternalDefensive blocks are
+# byte-identical; Forever IsSpellCrowdControl differs only by SecretArguments
+# AllowedWhenUntainted, which the shared reader applies outside
+# profile-retail/PTR.
+spell-classification-queries = []
+retail-12-0-0 = ["rest-policy-flags", "boolean-color-selection", "bnet-chat", "nameplate-configuration", "cooldown-alert-types", "spell-classification-queries", "encounter-warning-settings", "aura-instance-enumeration", "action-spell-range", "housing-host-state"]
+retail-12-0-5 = ["retail-12-0-0", "bnet-presence", "nameplate-hit-test-insets", "lfg-endgame-edit-policy", "encounter-warning-visibility", "housing-inspect-mode", "house-exterior-model", "unit-aura-queries", "native-duration-formatting", "base-spell-relationships", "aura-spell-classifications", "maw-power-model"]
+retail-12-0-7 = ["retail-12-0-5", "simulated-mouse-input", "maw-power-rarity-info", "housing-room-queries"]
+retail-12-1-0 = ["retail-12-0-7", "bnet-friend-social", "encounter-warning-previews", "housing-blueprints", "aura-instance-cancel", "aura-xml-widgets", "on-update-modes", "player-cast-durations", "forbidden-aspects", "numeric-rule-formatters", "aura-containers", "lair-state-queries", "temporary-enchant-cancel", "quest-hub-relations", "fullscreen-browser-close"]
 retail-12-1-5 = ["retail-12-1-0", "timed-signal-maps", "forbidden-animation-aspects", "sim-data-profile/retail-12-1-5"]
 # Private ICU duration rendering; this capability does not publish C_Intl.
 native-duration-formatting = ["dep:cc", "dep:pkg-config", "dep:vcpkg"]
@@ -200,13 +267,13 @@ prefork-full-ui = []
 # public client-retail bundle preserves the current retail epoch; profile-retail
 # allows historical retail epoch tests against the same retail source cache.
 profile-retail = ["sim-data-profile/profile-retail"]
-client-retail = ["profile-retail", "retail-12-1-5", "prefork-full-ui", "profession-spec-paths"]
+client-retail = ["profile-retail", "garrison-host-inputs", "explicit-stat-inputs", "retail-12-1-5", "prefork-full-ui", "profession-spec-paths"]
 client-ptr = ["retail-12-1-5", "sim-data-profile/client-ptr"]
 client-wrath = ["action-spell-range", "sim-data-profile/client-wrath"]
 client-mists = ["prefork-full-ui", "sim-data-profile/client-mists"]
 client-era = ["aura-spell-classifications", "sim-data-profile/client-era"]
 client-anniversary = ["aura-spell-classifications", "sim-data-profile/client-anniversary"]
-client-wowforever = ["timed-signal-maps", "profession-spec-paths", "housing-blueprints", "housing-host-state", "housing-inspect-mode", "aura-xml-widgets", "on-update-modes", "player-cast-durations", "forbidden-animation-aspects", "numeric-rule-formatters", "aura-containers", "native-duration-formatting", "base-spell-relationships", "action-spell-range", "aura-spell-classifications", "maw-power-rarity-info", "sim-data-profile/client-wowforever"]
+client-wowforever = ["rest-policy-flags", "boolean-color-selection", "lair-state-queries", "temporary-enchant-cancel", "quest-hub-relations", "fullscreen-browser-close", "garrison-host-inputs", "explicit-stat-inputs", "nameplate-configuration", "nameplate-hit-test-insets", "cooldown-alert-types", "spell-classification-queries", "lfg-endgame-edit-policy", "encounter-warning-settings", "encounter-warning-visibility", "encounter-warning-previews", "simulated-mouse-input", "bnet-chat", "bnet-presence", "bnet-friend-social", "timed-signal-maps", "profession-spec-paths", "housing-blueprints", "housing-host-state", "housing-inspect-mode", "house-exterior-model", "unit-aura-queries", "aura-instance-cancel", "aura-xml-widgets", "on-update-modes", "player-cast-durations", "forbidden-animation-aspects", "numeric-rule-formatters", "aura-containers", "native-duration-formatting", "base-spell-relationships", "action-spell-range", "aura-spell-classifications", "maw-power-rarity-info", "sim-data-profile/client-wowforever"]
 
 [profile.release]
 lto = false

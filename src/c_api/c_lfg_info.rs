@@ -369,7 +369,7 @@ fn register_dungeon_methods(state: &mut LuaState, table_ref: GcRef<Table>) -> Lu
         "IsLFGFollowerDungeon",
         is_lfg_follower_dungeon,
     )?;
-    #[cfg(feature = "retail-12-1-0")]
+    #[cfg(feature = "lair-state-queries")]
     table_set_rust_fn_static(
         state,
         table_ref,
@@ -382,7 +382,7 @@ fn register_dungeon_methods(state: &mut LuaState, table_ref: GcRef<Table>) -> Lu
 /// INFERRED: LFGUtil's `OverrideLFGSetRoleRestriction` lifts role restrictions
 /// exactly for LFG-matched lairs, so a raid-sized group in one is the matchmade
 /// raid without role requirements.
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "lair-state-queries")]
 fn is_in_matchmade_raid_without_role_requirements(state: &mut LuaState) -> LuaResult<u32> {
     let in_raid = crate::lua_api::globals::group_queries::active_party_count(state)? >= 6;
     let lfg_lair = {

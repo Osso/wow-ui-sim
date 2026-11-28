@@ -26,9 +26,13 @@ pub(crate) fn register_c_stable_info_surface(state: &mut LuaState) -> LuaResult<
         "IsAtPetStable",
         c_stable_info_is_at_pet_stable,
     )?;
-    #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+    #[cfg(any(
+        feature = "client-retail",
+        feature = "client-ptr",
+        feature = "client-wowforever"
+    ))]
     table_set_rust_fn_static(state, stable_info, "ClosePetStables", close_pet_stables)?;
-    #[cfg(feature = "retail-12-0-0")]
+    #[cfg(feature = "rest-policy-flags")]
     table_set_rust_fn_static(state, stable_info, "IsBonusPetSlotAvailable", |s| {
         let available = borrow_state(s)?.pet_bonus_slot_available;
         s.push(Val::Bool(available));

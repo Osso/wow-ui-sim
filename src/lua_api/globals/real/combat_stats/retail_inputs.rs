@@ -1,5 +1,6 @@
 //! Explicit retail inputs. Defaults and numeric interpretations are simulator guesses.
-//! See docs/specs/retail-missing-stat-inputs.md; Forever handlers remain unchanged.
+//! See docs/specs/retail-missing-stat-inputs.md. Forever shares these inputs (byte-identical
+//! PlayerScriptDocumentation blocks) but keeps its own conversion/penetration handlers.
 
 use crate::c_api::c_secrets::push_stat_number;
 use crate::lua_api::methods::borrow_state;
@@ -13,6 +14,7 @@ fn get_mastery(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+#[cfg(feature = "client-retail")]
 fn get_override_ap_by_spell_power(state: &mut LuaState) -> LuaResult<u32> {
     let value = borrow_state(state)?
         .player
@@ -22,6 +24,7 @@ fn get_override_ap_by_spell_power(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+#[cfg(feature = "client-retail")]
 fn get_override_spell_power_by_ap(state: &mut LuaState) -> LuaResult<u32> {
     let value = borrow_state(state)?
         .player
@@ -31,6 +34,7 @@ fn get_override_spell_power_by_ap(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+#[cfg(feature = "client-retail")]
 fn get_spell_penetration(state: &mut LuaState) -> LuaResult<u32> {
     let value = borrow_state(state)?.player.stats.spell_penetration;
     push_stat_number(state, value)?;
@@ -95,17 +99,9 @@ fn player_effective_attack_power(state: &mut LuaState) -> LuaResult<u32> {
 
 pub(super) fn register_all(lua: &mut rilua::Lua) -> crate::Result<()> {
     LuaApiMut::register_function(lua, "GetMastery", get_mastery)?;
-    LuaApiMut::register_function(
-        lua,
-        "GetOverrideAPBySpellPower",
-        get_override_ap_by_spell_power,
-    )?;
-    LuaApiMut::register_function(
-        lua,
-        "GetOverrideSpellPowerByAP",
-        get_override_spell_power_by_ap,
-    )?;
-    LuaApiMut::register_function(lua, "GetSpellPenetration", get_spell_penetration)?;
+    // Forever registers its own conversion/penetration handlers (combat_stats.rs).
+    #[cfg(feature = "client-retail")]
+    register_retail_conversions(lua)?;
     LuaApiMut::register_function(lua, "GetSturdiness", get_sturdiness)?;
     LuaApiMut::register_function(lua, "GetPowerRegen", get_power_regen)?;
     LuaApiMut::register_function(
@@ -118,5 +114,21 @@ pub(super) fn register_all(lua: &mut rilua::Lua) -> crate::Result<()> {
         "PlayerEffectiveAttackPower",
         player_effective_attack_power,
     )?;
+    Ok(())
+}
+
+#[cfg(feature = "client-retail")]
+fn register_retail_conversions(lua: &mut rilua::Lua) -> crate::Result<()> {
+    LuaApiMut::register_function(
+        lua,
+        "GetOverrideAPBySpellPower",
+        get_override_ap_by_spell_power,
+    )?;
+    LuaApiMut::register_function(
+        lua,
+        "GetOverrideSpellPowerByAP",
+        get_override_spell_power_by_ap,
+    )?;
+    LuaApiMut::register_function(lua, "GetSpellPenetration", get_spell_penetration)?;
     Ok(())
 }

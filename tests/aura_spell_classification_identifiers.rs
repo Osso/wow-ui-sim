@@ -1,6 +1,6 @@
 //! Batch48 rows361/363: INFERRED explicit classifications, not native parity.
 //! Inputs/fixtures only; parent owns compiled RED before any producer.
-#![cfg(feature = "retail-12-0-5")]
+#![cfg(feature = "unit-aura-queries")]
 
 use rilua::LuaApiMut;
 use rilua::table_security::{wrap_host_secret_number, wrap_host_secret_string, wrap_secret};

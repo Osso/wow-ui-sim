@@ -1,4 +1,4 @@
-//! Retail 12.0.5 spell-identifier queries over existing public aura records.
+//! Retail 12.0.5 and Forever spell-identifier queries over existing public aura records.
 
 use crate::lua_api::globals::auras::push_aura_by_spell_id;
 use crate::lua_bridge::{FromStack, stack_val, table_set_rust_fn_static};

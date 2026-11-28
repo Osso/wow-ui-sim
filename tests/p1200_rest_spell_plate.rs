@@ -1,6 +1,11 @@
-#![cfg(feature = "retail-12-0-0")]
+#![cfg(any(
+    feature = "spell-classification-queries",
+    feature = "nameplate-configuration",
+    feature = "cooldown-alert-types"
+))]
 use wow_ui_sim::lua_api::WowLuaEnv;
 
+#[cfg(feature = "spell-classification-queries")]
 #[test]
 fn p1200_rest_spell_classification() {
     let env = WowLuaEnv::new().unwrap();
@@ -38,6 +43,7 @@ fn p1200_rest_spell_classification() {
         .unwrap();
 }
 
+#[cfg(feature = "nameplate-configuration")]
 #[test]
 fn p1200_rest_nameplate_size_roundtrip() {
     let env = WowLuaEnv::new().unwrap();
@@ -76,6 +82,7 @@ fn p1200_rest_nameplate_size_roundtrip() {
     );
 }
 
+#[cfg(feature = "cooldown-alert-types")]
 #[test]
 fn p1200_rest_cooldown_alert_types_empty() {
     let env = WowLuaEnv::new().unwrap();

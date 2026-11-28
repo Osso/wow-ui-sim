@@ -7,7 +7,11 @@ use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val, runtime_error};
 
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
-    let mouse_disabled_profile = matches!(ACTIVE, ClientProfile::Retail | ClientProfile::Ptr);
+    // Forever 70707 CommentatorFrameDocumentation.lua:1426 declares SetMouseDisabled.
+    let mouse_disabled_profile = matches!(
+        ACTIVE,
+        ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever
+    );
     let spectating_profile = matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever);
     if !mouse_disabled_profile && !spectating_profile {
         return Ok(());

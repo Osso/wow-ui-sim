@@ -215,7 +215,7 @@ pub(crate) fn full_update_payload(state: &mut LuaState, unit: &str) -> LuaResult
 }
 
 /// Build the native incremental-removal `UnitAuraUpdateInfo`.
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "aura-instance-cancel")]
 pub(crate) fn removal_payload(state: &mut LuaState, instance_ids: &[i32]) -> LuaResult<Val> {
     let update_info = crate::lua_api::globals::auras::removal_info(state, instance_ids);
     unit_aura_event_payload(state, update_info)

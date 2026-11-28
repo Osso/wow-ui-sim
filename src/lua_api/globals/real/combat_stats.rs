@@ -1,6 +1,6 @@
 //! State-backed character combat-rating globals backed by `PlayerState.stats`.
 
-#[cfg(feature = "client-retail")]
+#[cfg(feature = "explicit-stat-inputs")]
 mod retail_inputs;
 
 use crate::c_api::c_secrets::push_stat_number;
@@ -462,7 +462,7 @@ pub fn register_all(lua: &mut rilua::Lua) -> crate::Result<()> {
         // WM101; Forever UnitDocumentation.lua:3359 declares the unit predicate.
         LuaApiMut::register_function(lua, "UnitUsesAmmo", unit_uses_ammo)?;
     }
-    #[cfg(feature = "client-retail")]
+    #[cfg(feature = "explicit-stat-inputs")]
     retail_inputs::register_all(lua)?;
     for &(name, function) in COMBAT_STAT_GLOBALS {
         LuaApiMut::register_function(lua, name, function)?;

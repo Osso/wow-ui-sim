@@ -897,7 +897,7 @@ fn heal_prediction_tostring() {
 
 // Ordinary-value selection only; fresh color copies are simulator policy, not native identity proof.
 #[test]
-#[cfg(feature = "retail-12-0-0")]
+#[cfg(feature = "boolean-color-selection")]
 fn curve_boolean_colors_select_fresh_copies_without_mutating_inputs() {
     let env = WowLuaEnv::new().unwrap();
     env.exec(
@@ -931,7 +931,7 @@ fn curve_boolean_colors_select_fresh_copies_without_mutating_inputs() {
 }
 
 #[test]
-#[cfg(feature = "retail-12-0-0")]
+#[cfg(feature = "boolean-color-selection")]
 fn curve_boolean_components_select_zero_and_fractional_values() {
     let env = WowLuaEnv::new().unwrap();
     env.exec(
@@ -949,7 +949,7 @@ fn curve_boolean_components_select_zero_and_fractional_values() {
 }
 
 #[test]
-#[cfg(feature = "retail-12-0-0")]
+#[cfg(feature = "boolean-color-selection")]
 fn curve_boolean_selectors_reject_non_boolean_conditions_atomically() {
     let env = WowLuaEnv::new().unwrap();
     env.exec(
@@ -973,7 +973,7 @@ fn curve_boolean_selectors_reject_non_boolean_conditions_atomically() {
 }
 
 #[test]
-#[cfg(feature = "retail-12-0-0")]
+#[cfg(feature = "boolean-color-selection")]
 fn curve_boolean_colors_validate_both_inputs_atomically() {
     let env = WowLuaEnv::new().unwrap();
     env.exec(
@@ -1014,7 +1014,7 @@ fn curve_boolean_colors_validate_both_inputs_atomically() {
 }
 
 #[test]
-#[cfg(feature = "retail-12-0-0")]
+#[cfg(feature = "boolean-color-selection")]
 fn curve_boolean_components_validate_both_inputs_atomically() {
     let env = WowLuaEnv::new().unwrap();
     env.exec(
@@ -1038,7 +1038,8 @@ fn curve_boolean_components_validate_both_inputs_atomically() {
 }
 
 #[test]
-#[cfg(not(feature = "retail-12-0-0"))]
+// Forever publishes the helpers too (byte-identical CurveUtilDocumentation.lua).
+#[cfg(not(feature = "boolean-color-selection"))]
 fn curve_boolean_helpers_are_absent_before_retail_12_0_0() {
     let env = WowLuaEnv::new().unwrap();
     env.exec(

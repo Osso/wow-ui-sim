@@ -1,8 +1,10 @@
 //! Retail 12.0.7 publication-sweep gap closures backed by simulator state.
-#![cfg(feature = "retail-12-0-7")]
+//! The SimulateMouse* case also runs on Forever (byte-identical InputDocumentation).
+#![cfg(feature = "simulated-mouse-input")]
 
 use wow_ui_sim::lua_api::WowLuaEnv;
 
+#[cfg(feature = "retail-12-0-7")]
 #[test]
 fn quest_short_expiration_warning_reads_host_flags() {
     let env = WowLuaEnv::new().unwrap();
@@ -34,6 +36,7 @@ fn quest_short_expiration_warning_reads_host_flags() {
     assert!(!live, "removing the host flag is visible immediately");
 }
 
+#[cfg(feature = "retail-12-0-7")]
 #[test]
 fn maw_power_rarity_info_requires_both_rarity_and_atlas() {
     let env = WowLuaEnv::new().unwrap();
@@ -61,6 +64,7 @@ fn maw_power_rarity_info_requires_both_rarity_and_atlas() {
     .unwrap();
 }
 
+#[cfg(feature = "retail-12-0-7")]
 #[test]
 fn base_difficulty_queries_map_known_variants() {
     let env = WowLuaEnv::new().unwrap();
@@ -78,6 +82,7 @@ fn base_difficulty_queries_map_known_variants() {
     .unwrap();
 }
 
+#[cfg(feature = "retail-12-0-7")]
 #[test]
 fn patch_12_0_7_cvars_publish_page_defaults() {
     let env = WowLuaEnv::new().unwrap();
@@ -113,6 +118,7 @@ fn simulated_mouse_input_queues_only_for_secure_callers() {
     assert_eq!(queued, 3, "secure click (down+up) and wheel queue; addon call refused");
 }
 
+#[cfg(feature = "retail-12-0-7")]
 #[test]
 fn club_battle_tag_friend_request_records_guild_members_once() {
     let env = WowLuaEnv::new().unwrap();

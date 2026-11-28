@@ -11,7 +11,7 @@ mod forbidden_aspects;
 #[path = "mouse_tests/aura_tooltip_motion.rs"]
 mod aura_tooltip_motion;
 
-#[cfg(feature = "retail-12-0-7")]
+#[cfg(feature = "simulated-mouse-input")]
 #[path = "mouse_tests/simulate_mouse.rs"]
 mod simulate_mouse;
 

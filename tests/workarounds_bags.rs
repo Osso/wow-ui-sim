@@ -228,7 +228,7 @@ fn assert_rect_queries_match_layout_rect(env: &WowLuaEnv, name: &str) {
 // Wrath FrameXML/MainMenuBarBagButtons.xml:79-90 anchors the backpack directly
 // to MainMenuBarArtFrame. BagsBar is a Mainline edit-mode frame
 // (Blizzard_MainMenuBarBagButtons/Mainline/MainMenuBarBagButtons.xml:44).
-#[cfg(not(feature = "client-wrath"))]
+#[cfg(not(any(feature = "client-wrath", feature = "client-wowforever")))]
 #[test]
 fn bags_bar_reanchor_replay_moves_the_bar_off_its_correct_rect() {
     let env = full_game_env_after_edit_mode_init();
@@ -250,6 +250,45 @@ fn bags_bar_reanchor_replay_moves_the_bar_off_its_correct_rect() {
     let before_rect = frame_rect(&env, "BagsBar");
     assert_eq!(before_rect, (1386.0, 1104.0, 208.0, 47.0));
 
+    replay_bags_bar_xml_anchor(&env);
+    let after_rect = frame_rect(&env, "BagsBar");
+    assert_eq!(after_rect, (1386.0, 1114.0, 208.0, 47.0));
+    assert_ne!(after_rect, before_rect);
+}
+
+/// Forever's steady state is the Camelot preset anchor
+/// (Blizzard_EditMode/Camelot/EditModePresetLayoutConstants.lua:45-49), not the
+/// Camelot/MainMenuBarBagButtons.xml:54 TOPRIGHT anchor; replaying the XML anchor moves it.
+#[cfg(feature = "client-wowforever")]
+#[test]
+fn bags_bar_reanchor_replay_moves_the_bar_off_its_correct_rect() {
+    let env = full_game_env_after_edit_mode_init();
+
+    let before_anchor = bag_bar_anchor(&env);
+    let expected = ("BOTTOMLEFT", "MicroMenuContainer", "BOTTOMRIGHT", 7.0, -4.0);
+    assert_eq!(
+        (
+            before_anchor.0.as_str(),
+            before_anchor.1.as_str(),
+            before_anchor.2.as_str(),
+            before_anchor.3,
+            before_anchor.4,
+        ),
+        expected
+    );
+    let (bx, by, bw, bh) = frame_rect(&env, "BagsBar");
+    let (cx, cy, cw, ch) = frame_rect(&env, "MicroMenuContainer");
+    assert_eq!((bx, by + bh), (cx + cw + 7.0, cy + ch + 4.0));
+
+    replay_bags_bar_xml_anchor(&env);
+    let (ax, ay, aw, ah) = frame_rect(&env, "BagsBar");
+    let (mx, my, mw, _) = frame_rect(&env, "MicroButtonAndBagsBar");
+    assert_eq!((ax + aw, ay, aw, ah), (mx + mw, my, bw, bh));
+    assert_ne!((ax, ay), (bx, by));
+}
+
+#[cfg(not(feature = "client-wrath"))]
+fn replay_bags_bar_xml_anchor(env: &WowLuaEnv) {
     env.exec(
         r#"
         BagsBar:ClearAllPoints()
@@ -260,7 +299,7 @@ fn bags_bar_reanchor_replay_moves_the_bar_off_its_correct_rect() {
     env.state().borrow_mut().widgets.rebuild_anchor_index();
     env.state().borrow_mut().ensure_layout_rects();
 
-    let after_anchor = bag_bar_anchor(&env);
+    let after_anchor = bag_bar_anchor(env);
     assert_eq!(
         after_anchor,
         (
@@ -271,9 +310,6 @@ fn bags_bar_reanchor_replay_moves_the_bar_off_its_correct_rect() {
             0.0,
         )
     );
-    let after_rect = frame_rect(&env, "BagsBar");
-    assert_eq!(after_rect, (1386.0, 1114.0, 208.0, 47.0));
-    assert_ne!(after_rect, before_rect);
 }
 
 // Wrath FrameXML/MainMenuBarBagButtons.xml:17-76 uses legacy ItemButtonTemplate
