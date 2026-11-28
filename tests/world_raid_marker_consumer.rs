@@ -46,7 +46,7 @@ const WORLD_MARKER_TAB: &str = r#"
 #[test]
 fn raid_manager_world_marker_buttons_follow_active_markers() {
     harness::with_blizzard_addon_startup_shape(
-        &["Blizzard_CompactRaidFrames"],
+        &["Blizzard_CompactRaidFrames", "Blizzard_QuickJoin"],
         &[],
         |env, loaded| {
             assert!(

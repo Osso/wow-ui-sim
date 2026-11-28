@@ -933,7 +933,7 @@ fn rogue_combo_point_bar_uses_supplied_charged_power_points() {
     let loaded = crate::common::blizzard_addon_harness::load_blizzard_addon_closure_into_env(
         &env,
         &ui_dir,
-        &["Blizzard_UnitFrame"],
+        &["Blizzard_UnitFrame", "Blizzard_QuickJoin"],
         &[],
     );
     assert!(loaded.iter().any(|name| name == "Blizzard_UnitFrame"));
