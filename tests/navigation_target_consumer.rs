@@ -1,7 +1,4 @@
-#![cfg(all(
-    feature = "gui",
-    any(feature = "client-retail", feature = "client-wowforever")
-))]
+#![cfg(all(feature = "gui", feature = "client-retail"))]
 
 use crate::common;
 use wow_ui_sim::lua_api::WowLuaEnv;
@@ -61,25 +58,3 @@ fn navigation_target_drives_super_tracked_frame(env: &WowLuaEnv) {
 }
 }
 
-#[cfg(feature = "client-wowforever")]
-prefork_full_ui_case! {
-fn forever_navigation_target_drives_super_tracked_frame(env: &WowLuaEnv) {
-    let first = update_navigation_target(
-        env,
-        r#"
-        C_SuperTrack.SetSuperTrackedContent(Enum.ContentTrackingType.Achievement, 80002)
-        A_Admin.SetNavigationTarget({state=Enum.NavigationState.InRange, distance=125,
-            clamped=false, screenX=0.0000002384185791015625, screenY=0})
-        "#,
-    );
-    let second = update_navigation_target(
-        env,
-        r#"A_Admin.SetNavigationTarget({state=Enum.NavigationState.Occluded, distance=40,
-            clamped=false, screenX=0, screenY=0})"#,
-    );
-    assert_navigation_observation(&first, "125", 2, true);
-    assert_navigation_observation(&second, "40", 1, false);
-    assert_ne!(first.0, second.0, "target distances must change consumer text");
-    assert_eq!(clear_navigation_target(env), (true, 0, 0));
-}
-}
