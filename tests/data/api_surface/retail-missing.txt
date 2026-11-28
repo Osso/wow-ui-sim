@@ -129,7 +129,6 @@ C_Calendar.EventAvailable # not-yet
 C_Calendar.EventCanEdit # not-yet
 C_Calendar.EventClearModerator # not-yet
 C_Calendar.EventDecline # not-yet
-C_Calendar.EventGetTypes # not-yet
 C_Calendar.EventInvite # not-yet
 C_Calendar.EventRemoveInvite # not-yet
 C_Calendar.EventRemoveInviteByGuid # not-yet
@@ -1196,7 +1195,6 @@ C_PartyInfo.ConvertToParty # not-yet
 C_PartyInfo.DelveTeleportOut # not-yet
 C_PartyInfo.GetInstanceAbandonVoteCooldownTime # not-yet
 C_PartyInfo.GetMinItemLevel # not-yet
-C_PartyInfo.IsChallengeModeActive # not-yet
 C_PartyInfo.IsDelveComplete # not-yet
 C_PartyInfo.IsDelveInProgress # not-yet
 C_PartyInfo.IsPartyInJailersTower # not-yet: temporary Lua workaround
@@ -1786,16 +1784,13 @@ C_TransmogSets.GetAllSourceIDs # not-yet
 C_TransmogSets.GetBaseSetsFilter # not-yet
 C_TransmogSets.GetCameraIDs # intentionally-unsupported: 3D camera/model
 C_TransmogSets.GetFilteredBaseSetsCounts # not-yet
-C_TransmogSets.GetFullBaseSetsCounts # not-yet
 C_TransmogSets.GetIsFavorite # not-yet
 C_TransmogSets.GetLatestSource # not-yet
 C_TransmogSets.GetSetNewSources # not-yet
 C_TransmogSets.GetSetsContainingSourceID # not-yet
 C_TransmogSets.GetSourceIDsForSlot # not-yet
 C_TransmogSets.GetTransmogSetsClassFilter # not-yet
-C_TransmogSets.GetValidBaseSetsCountsForCharacter # not-yet
 C_TransmogSets.GetValidClassForSet # not-yet
-C_TransmogSets.HasUsableSets # not-yet
 C_TransmogSets.IsNewSource # not-yet
 C_TransmogSets.IsSetVisible # not-yet
 C_TransmogSets.IsUsingDefaultBaseSetsFilters # not-yet

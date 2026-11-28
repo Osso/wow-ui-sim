@@ -84,6 +84,13 @@ pub(crate) fn register_c_party_info_surface(state: &mut LuaState) -> LuaResult<(
     let table_ref = ensure_namespace(state, "C_PartyInfo")?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     pending_invites::register(state)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    table_set_rust_fn_static(
+        state,
+        table_ref,
+        "IsChallengeModeActive",
+        super::challenge_run::is_active,
+    )?;
     register_group_membership_probes(state, table_ref)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     register_instance_abandon_vote_surface(state, table_ref)?;

@@ -147,7 +147,7 @@ fn active_map(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-fn is_active(state: &mut LuaState) -> LuaResult<u32> {
+pub(crate) fn is_active(state: &mut LuaState) -> LuaResult<u32> {
     let active = borrow_state(state)?.challenge_run.active.is_some();
     state.push(Val::Bool(active));
     Ok(1)

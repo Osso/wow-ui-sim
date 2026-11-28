@@ -236,11 +236,7 @@ pub(super) fn get_base_sets(state: &mut LuaState) -> LuaResult<u32> {
         .transmog_sets
         .entries
         .iter()
-        .filter(|entry| {
-            entry
-                .base_set_id
-                .is_none_or(|base_id| base_id == entry.set_id)
-        })
+        .filter(|entry| is_base_set(entry))
         .cloned()
         .collect::<Vec<_>>();
     let array = set_array(state, &entries);
@@ -254,7 +250,7 @@ pub(super) fn get_usable_sets(state: &mut LuaState) -> LuaResult<u32> {
         .transmog_sets
         .entries
         .iter()
-        .filter(|entry| entry.valid_for_character && entry.collected)
+        .filter(|entry| is_usable_set(entry))
         .cloned()
         .collect::<Vec<_>>();
     let array = set_array(state, &entries);
@@ -508,4 +504,79 @@ pub(super) fn get_variants(state: &mut LuaState) -> LuaResult<u32> {
         crate::c_api::helpers::set_table_array(state, array, index as i64 + 1, row);
     }
     Ok(1)
+}
+
+fn is_base_set(entry: &TransmogSetInfo) -> bool {
+    entry
+        .base_set_id
+        .is_none_or(|base_id| base_id == entry.set_id)
+}
+
+fn is_usable_set(entry: &TransmogSetInfo) -> bool {
+    entry.valid_for_character && entry.collected
+}
+
+pub(super) fn has_usable_sets(state: &mut LuaState) -> LuaResult<u32> {
+    let usable = borrow_state(state)?
+        .transmog_sets
+        .entries
+        .iter()
+        .any(is_usable_set);
+    state.push(Val::Bool(usable));
+    Ok(1)
+}
+
+pub(super) fn full_base_set_counts(state: &mut LuaState) -> LuaResult<u32> {
+    base_set_counts(state, false)
+}
+
+pub(super) fn valid_base_set_counts(state: &mut LuaState) -> LuaResult<u32> {
+    base_set_counts(state, true)
+}
+
+fn base_set_counts(state: &mut LuaState, valid_only: bool) -> LuaResult<u32> {
+    let (collected, total) = {
+        let sim = borrow_state(state)?;
+        sim.transmog_sets
+            .entries
+            .iter()
+            .filter(|entry| is_base_set(entry) && (!valid_only || entry.valid_for_character))
+            .fold((0, 0), |(collected, total), entry| {
+                (collected + usize::from(entry.collected), total + 1)
+            })
+    };
+    state.push(Val::Num(collected as f64));
+    state.push(Val::Num(total as f64));
+    Ok(2)
+}
+
+#[cfg(all(test, any(feature = "client-retail", feature = "client-wowforever")))]
+#[test]
+fn catalog_counts_distinguish_base_sets_variants_and_character_validity() {
+    let env = crate::lua_api::WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        A_Admin.SetTransmogSetCatalog({
+            {setID=101,name="A",collected=false,validForCharacter=true},
+            {setID=102,name="B",baseSetID=101,collected=true,validForCharacter=false},
+            {setID=201,name="C",collected=true,validForCharacter=false},
+        })
+        local collected, total = C_TransmogSets.GetFullBaseSetsCounts()
+        assert(collected == 1 and total == 2)
+        collected, total = C_TransmogSets.GetValidBaseSetsCountsForCharacter()
+        assert(collected == 0 and total == 1)
+        assert(C_TransmogSets.HasUsableSets() == false)
+        A_Admin.SetTransmogSetCatalog({
+            {setID=101,name="A",collected=true,validForCharacter=true},
+            {setID=201,name="C",collected=true,validForCharacter=true},
+            {setID=202,name="D",baseSetID=201,collected=false,validForCharacter=true},
+        })
+        collected, total = C_TransmogSets.GetFullBaseSetsCounts()
+        assert(collected == 2 and total == 2)
+        collected, total = C_TransmogSets.GetValidBaseSetsCountsForCharacter()
+        assert(collected == 2 and total == 2)
+        assert(C_TransmogSets.HasUsableSets() == true)
+    "#,
+    )
+    .unwrap();
 }

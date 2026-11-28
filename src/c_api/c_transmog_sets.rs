@@ -129,6 +129,7 @@ fn register_relation_queries(
     table_set_rust_fn_static(state, namespace, "GetBaseSets", catalog::get_base_sets)?;
     table_set_rust_fn_static(state, namespace, "GetAllSets", catalog::get_all_sets)?;
     table_set_rust_fn_static(state, namespace, "GetUsableSets", catalog::get_usable_sets)?;
+    register_set_counts(state, namespace)?;
     table_set_rust_fn_static(
         state,
         namespace,
@@ -150,4 +151,23 @@ fn register_relation_queries(
         catalog::get_all_set_appearances,
     )?;
     Ok(())
+}
+
+fn register_set_counts(
+    state: &mut LuaState,
+    namespace: rilua::vm::gc::arena::GcRef<rilua::vm::table::Table>,
+) -> LuaResult<()> {
+    table_set_rust_fn_static(state, namespace, "HasUsableSets", catalog::has_usable_sets)?;
+    table_set_rust_fn_static(
+        state,
+        namespace,
+        "GetFullBaseSetsCounts",
+        catalog::full_base_set_counts,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        namespace,
+        "GetValidBaseSetsCountsForCharacter",
+        catalog::valid_base_set_counts,
+    )
 }

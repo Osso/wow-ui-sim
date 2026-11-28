@@ -84,3 +84,19 @@ fn calendar_create_event_dropdown_renders_supplied_types() {
     )
     .expect("the real create-event dropdown should render supplied type labels");
 }
+
+#[test]
+fn calendar_event_type_names_follow_supplied_catalog() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(r#"
+        assert(#C_Calendar.EventGetTypes() == 0)
+        A_Admin.SetCalendarEventTypes('[{"displayString":"Meeting","eventType":3},{"displayString":"Raid","eventType":1}]')
+        local types = C_Calendar.EventGetTypes()
+        assert(#types == 2 and types[1] == "Meeting" and types[2] == "Raid")
+        types[1] = "Modified"
+        assert(C_Calendar.EventGetTypes()[1] == "Meeting")
+        A_Admin.SetCalendarEventTypes('[{"displayString":"Dungeon","eventType":2}]')
+        local types = C_Calendar.EventGetTypes()
+        assert(#types == 1 and types[1] == "Dungeon")
+    "#).unwrap();
+}
