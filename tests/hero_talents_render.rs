@@ -249,12 +249,15 @@ fn require_icon_crop<'a>(
         .iter()
         .filter(|request| request.path.starts_with(&prefix))
         .collect();
-    if let Some(request) = candidates.iter().copied()
+    if let Some(request) = candidates
+        .iter()
+        .copied()
         .find(|request| request_matches_rect(batch, request, rect))
     {
         return request;
     }
-    let bounds: Vec<_> = candidates.iter()
+    let bounds: Vec<_> = candidates
+        .iter()
         .map(|request| (&request.path, quad_bounds(batch, request)))
         .collect();
     panic!(
@@ -299,10 +302,16 @@ fn hero_spec_icon_crop_request_matches_atlas_entry() {
     let icon = state.widgets.get(icon_id).unwrap();
     let atlas_name = icon.atlas.as_deref().expect("Icon1 should have an atlas");
     let atlas = get_atlas_info(atlas_name).expect("atlas entry should exist");
-    assert_eq!(icon.texture.as_deref(), Some(atlas.info.file), "Icon1 source must be the atlas backing file");
+    assert_eq!(
+        icon.texture.as_deref(),
+        Some(atlas.info.file),
+        "Icon1 source must be the atlas backing file"
+    );
     let rect = wow_ui_sim::iced_app::compute_frame_rect(&state.widgets, icon_id, 1024.0, 768.0);
     let batch = build_quad_batch_for_registry(RegistryQuadBatchParams::new(
-        &state.widgets, (1024.0, 768.0), &buckets,
+        &state.widgets,
+        (1024.0, 768.0),
+        &buckets,
     ));
     let request = require_icon_crop(&batch, icon, rect, atlas.info.file);
     assert_atlas_crop_coords(request, atlas.info);
@@ -312,7 +321,8 @@ fn hero_spec_icon_crop_request_matches_atlas_entry() {
 fn hero_spec_icon_replaces_xml_placeholder_file_identity() {
     let env = setup_full_ui();
     open_class_talent_frame(&env);
-    env.exec(r#"
+    env.exec(
+        r#"
         local button = PlayerSpellsFrame.TalentsFrame.HeroTalentsContainer.HeroSpecButton
         local icon = button.Icon1
         local placeholder = button.Icon2:GetTexture()
@@ -323,6 +333,8 @@ fn hero_spec_icon_replaces_xml_placeholder_file_identity() {
         assert(icon:GetTextureFilePath() == atlas.filename, "atlas backing path")
         assert(icon:GetTexture() ~= placeholder, "GetTexture retained the XML file ID")
         assert(icon:GetTextureFileID() ~= placeholder, "GetTextureFileID retained the XML file ID")
-    "#).unwrap();
+    "#,
+    )
+    .unwrap();
 }
 }
