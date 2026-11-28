@@ -14,6 +14,7 @@ pub(super) fn register_targeting_api(
     add_target_unit_clearer(lua, t, "ClearTarget", Rc::clone(&state), TargetSlot::Target)?;
     add_target_unit_setter(lua, t, "SetFocus", Rc::clone(&state), TargetSlot::Focus)?;
     add_target_unit_clearer(lua, t, "ClearFocus", Rc::clone(&state), TargetSlot::Focus)?;
+    add_target_interactable_setter(lua, t, Rc::clone(&state))?;
     add_target_power_setter(
         lua,
         t,
@@ -232,6 +233,23 @@ fn add_target_type_setter(
             Ok(())
         },
     )
+}
+
+fn add_target_interactable_setter(
+    lua: &Lua,
+    t: &mlua::Table,
+    state: Rc<RefCell<SimState>>,
+) -> Result<()> {
+    super::set_fn(lua, t, "SetTargetInteractable", move |_, interactable: bool| {
+        let mut state = state.borrow_mut();
+        let Some(target) = state.current_target.as_mut() else {
+            return Err(mlua::Error::RuntimeError(
+                "A_Admin.SetTargetInteractable requires a current target".into(),
+            ));
+        };
+        target.interaction.interactable = interactable;
+        Ok(())
+    })
 }
 
 fn add_target_health_setter(

@@ -410,6 +410,24 @@ fn target_nearest_enemy_enemy_pool_is_replaceable() {
 }
 
 #[cfg(feature = "client-retail")]
+#[test]
+fn unit_is_interactable_reads_supplied_target_state() {
+    let env = env();
+    env.exec(
+        r#"
+        A_Admin.SetTarget("Talker", 60, 1, false)
+        A_Admin.SetTargetInteractable(true)
+        assert(UnitIsInteractable("target"))
+        A_Admin.SetTargetInteractable(false)
+        assert(not UnitIsInteractable("target"))
+        A_Admin.ClearTarget()
+        assert(not UnitIsInteractable("target"))
+        "#,
+    )
+    .expect("Retail UnitIsInteractable should query supplied target state");
+}
+
+#[cfg(feature = "client-retail")]
 const PARTY_ASSIGNMENT_MENU_CONSUMER: &str = r#"
     A_Admin.SetPartySize(2)
     A_Admin.SetPartyMember(1, "Alpha", 1, 60)
