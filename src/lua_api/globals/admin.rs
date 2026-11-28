@@ -49,10 +49,11 @@ use super::admin_collections::{
     set_transmog_for_slot, uncollect_campsite, uncollect_heirloom, uncollect_mount, uncollect_pet,
     uncollect_toy,
 };
+#[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
+use super::admin_crafting::set_spell_reagent;
 use super::admin_crafting::{
     clear_known_recipes, learn_recipe, relearn_profession, seed_reagents_for_recipe,
-    set_reagent_count, set_selected_profession, set_spell_reagent, unlearn_profession,
-    unlearn_recipe,
+    set_reagent_count, set_selected_profession, unlearn_profession, unlearn_recipe,
 };
 use super::admin_encounter::{
     add_loot_item, clear_loot, end_loot_roll, get_last_loot_roll_choice, simulate_boss_kill,
@@ -897,16 +898,19 @@ fn register_inventory_misc(b: TableBuilder) -> LuaResult<TableBuilder> {
 }
 
 fn register_crafting(b: TableBuilder) -> LuaResult<TableBuilder> {
-    b.set_function("LearnRecipe", learn_recipe)?
+    let b = b
+        .set_function("LearnRecipe", learn_recipe)?
         .set_function("UnlearnRecipe", unlearn_recipe)?
         .set_function("ClearKnownRecipes", clear_known_recipes)?
         .set_function("SetSelectedProfession", set_selected_profession)?
         .set_function("UnlearnProfession", unlearn_profession)?
         .set_function("RelearnProfession", relearn_profession)?
         .set_function("SetReagentCount", set_reagent_count)?
-        .set_function("SetSpellReagent", set_spell_reagent)?
-        .set_function("SeedReagentsForRecipe", seed_reagents_for_recipe)?
-        .set_function("RegisterTestAddon", register_test_addon)
+        .set_function("SeedReagentsForRecipe", seed_reagents_for_recipe)?;
+    // The spell reagent pair model exists only where the cast count reads it.
+    #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
+    let b = b.set_function("SetSpellReagent", set_spell_reagent)?;
+    b.set_function("RegisterTestAddon", register_test_addon)
 }
 
 // ── Player identity ──────────────────────────────────────────────────────────

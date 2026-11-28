@@ -71,6 +71,7 @@ pub(super) fn relearn_profession(state: &mut LuaState) -> LuaResult<u32> {
 
 /// `A_Admin.SetSpellReagent(spell_id, item_id, quantity)` — supply the one
 /// reagent pair the native spell cast count reads (VERIFIED R88p.p3).
+#[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 pub(super) fn set_spell_reagent(state: &mut LuaState) -> LuaResult<u32> {
     let spell_id = u32::from_stack(state, 1)?;
     let item_id = i32::from_stack(state, 2)?;
