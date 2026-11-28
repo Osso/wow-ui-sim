@@ -2066,7 +2066,6 @@ GetButtonMetatable # not-yet: temporary Lua workaround
 GetCemeteryPreference # not-yet
 GetClickFrame # not-yet
 GetCompanionInfo # not-yet
-GetCorpseRecoveryDelay # not-yet
 GetCurrentEventID # not-yet
 GetCurrentGraphicsAPI # not-yet
 GetCurrentGraphicsSetting # not-yet
@@ -2120,9 +2119,6 @@ GetHomePartyInfo # not-yet
 GetInspectArenaData # not-yet
 GetInspectHonorData # not-yet
 GetInspectTalent # not-yet
-GetInstanceBootTimeRemaining # not-yet
-GetInstanceLockTimeRemaining # not-yet
-GetInstanceLockTimeRemainingEncounter # not-yet
 GetJailersTowerLevel # not-yet
 GetJournalInfoForSpellConfirmation # not-yet
 GetLFDRoleRestrictions # not-yet: temporary Lua workaround
@@ -2233,7 +2229,6 @@ GetRaidProfileOption # not-yet
 GetRaidProfileSavedPosition # not-yet
 GetRatedBattleGroundInfo # not-yet
 GetRealmID # not-yet: temporary Lua workaround
-GetResSicknessDuration # not-yet
 GetRewardNumSkillUps # not-yet
 GetRewardPackArtifactPower # not-yet
 GetRewardPackCurrencies # not-yet

@@ -114,6 +114,7 @@ assert(#seen == 5, "a claimed quest cannot be claimed again")
 "#;
 
 #[test]
+#[cfg(feature = "client-retail")]
 fn quest_giver_requests_accept_decline_and_claim_rewards() {
     run_cases(&["Blizzard_SharedXMLBase"], QUEST_CASES, "quest requests");
 }

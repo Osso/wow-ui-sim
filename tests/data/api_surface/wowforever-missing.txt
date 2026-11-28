@@ -1787,7 +1787,6 @@ GetAvailableLocales # not-yet
 GetBackgroundLoadingStatus # not-yet: temporary Lua workaround
 GetBillingTimeRested # not-yet: temporary Lua workaround
 GetCemeteryPreference # not-yet
-GetCorpseRecoveryDelay # not-yet
 GetCurrentCinematicSummary # not-yet
 GetCurrentEventID # not-yet
 GetCursorCenterPosition # not-yet
@@ -1808,9 +1807,6 @@ GetFunctionCPUUsage # not-yet: temporary Lua workaround
 GetGameMessageInfo # not-yet
 GetGlancingBlowChance # not-yet
 GetGlancingBlowPenalty # not-yet
-GetInstanceBootTimeRemaining # not-yet
-GetInstanceLockTimeRemaining # not-yet
-GetInstanceLockTimeRemainingEncounter # not-yet
 GetJailersTowerLevel # not-yet
 GetMaximumExpansionLevel # not-yet
 GetMouseButtonName # not-yet
@@ -1828,7 +1824,6 @@ GetPetHitChanceModifier # not-yet
 GetPetSpellHitChanceModifier # not-yet
 GetProtocolTypes # not-yet: temporary Lua workaround
 GetRealmID # not-yet: temporary Lua workaround
-GetResSicknessDuration # not-yet
 GetRuneCooldown # not-yet
 GetRuneCount # not-yet
 GetScreenDPIScale # not-yet: temporary Lua workaround

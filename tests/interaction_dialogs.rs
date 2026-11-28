@@ -14,8 +14,12 @@ const DIALOG_ROOTS: &[&str] = &[
 
 fn run_cases(roots: &[&str], cases: &str, what: &str) {
     with_blizzard_addon_closure(roots, &[], |env, loaded| {
-        assert!(loaded.iter().any(|addon| addon == roots[0]), "{what}: {loaded:?}");
-        env.exec(cases).unwrap_or_else(|err| panic!("{what}: {err}"));
+        assert!(
+            loaded.iter().any(|addon| addon == roots[0]),
+            "{what}: {loaded:?}"
+        );
+        env.exec(cases)
+            .unwrap_or_else(|err| panic!("{what}: {err}"));
     });
 }
 
@@ -47,6 +51,7 @@ assert(closed == 1 and ItemTextGetItem() == nil and not ItemTextFrame:IsShown())
 "#;
 
 #[test]
+#[cfg(feature = "client-retail")]
 fn item_text_frame_pages_through_supplied_text() {
     run_cases(DIALOG_ROOTS, ITEM_TEXT_CASES, "ItemTextFrame");
 }
@@ -75,11 +80,12 @@ assert(closed == 1 and GetPetitionInfo() == nil and GetNumPetitionNames() == 0)
 "#;
 
 #[test]
+#[cfg(feature = "client-retail")]
 fn petition_frame_shows_supplied_charter_and_closes_session() {
     run_cases(DIALOG_ROOTS, PETITION_CASES, "PetitionFrame");
 }
 
-const DUEL_AND_HEALER_CASES: &str = r#"
+const DUEL_CASES: &str = r#"
 local finished = 0
 EventRegistry:RegisterFrameEventAndCallback("DUEL_FINISHED", function() finished = finished + 1 end)
 for _, challenger in ipairs({"Varian", "Garrosh"}) do
@@ -91,6 +97,15 @@ end
 assert(finished == 2 and not StaticPopup_FindVisible("DUEL_REQUESTED"), "declines " .. finished)
 CancelDuel()
 assert(finished == 2, "no request left to decline")
+"#;
+
+#[test]
+#[cfg(feature = "client-retail")]
+fn duel_popup_declines_supplied_requests() {
+    run_cases(DIALOG_ROOTS, DUEL_CASES, "duel popup");
+}
+
+const HEALER_CASES: &str = r#"
 local function healer(seconds, cemetery)
     A_Admin.SetAreaSpiritHealer(seconds, cemetery)
     local dialog = StaticPopup_FindVisible("AREA_SPIRIT_HEAL")
@@ -112,8 +127,66 @@ assert(not StaticPopup_FindVisible("AREA_SPIRIT_HEAL"), "out of range hides the 
 "#;
 
 #[test]
-fn duel_and_spirit_healer_popups_answer_supplied_requests() {
-    run_cases(DIALOG_ROOTS, DUEL_AND_HEALER_CASES, "duel/spirit healer popups");
+fn spirit_healer_popup_answers_supplied_wave() {
+    run_cases(DIALOG_ROOTS, HEALER_CASES, "spirit healer popup");
+}
+
+const TIMER_CASES: &str = r##"
+A_Admin.SetManualClock(50)
+assert(GetInstanceBootTimeRemaining() == 0 and GetCorpseRecoveryDelay() == 0, "no countdowns")
+assert(select("#", GetInstanceLockTimeRemainingEncounter(1)) == 0, "no lock encounters")
+assert(not pcall(A_Admin.SetInstanceBoot, -1), "negative boot time")
+A_Admin.SetInstanceBoot(90)
+local boot = StaticPopup_FindVisible("INSTANCE_BOOT")
+assert(boot and boot.timeleft == 90, "INSTANCE_BOOT_START opens the boot popup")
+A_Admin.AdvanceTime(30)
+assert(GetInstanceBootTimeRemaining() == 60)
+A_Admin.SetInstanceBoot(nil)
+assert(not StaticPopup_FindVisible("INSTANCE_BOOT"), "INSTANCE_BOOT_STOP hides it")
+assert(not pcall(A_Admin.SetInstanceLock, 60, false, false, {{texture = "x"}}), "boss name")
+A_Admin.SetInstanceLock(600, true, false, {
+    {name = "Ragnaros", texture = "boss-rag", killed = true},
+    {name = "Majordomo", killed = false, ineligible = true},
+    {name = "Golemagg", killed = true},
+})
+local lock = StaticPopup_FindVisible("INSTANCE_LOCK")
+assert(lock and not lock.data.enforceTime, "INSTANCE_LOCK_WARNING opens the warning")
+assert(lock.data.encountersTotal == 3 and lock.data.encountersComplete == 2)
+assert(lock.lockTimeleft == 600 and lock.isPreviousInstance == true)
+InstanceLock_OnEnter(lock:GetTextFontString())
+assert(GameTooltipTextLeft2:GetText() == "Ragnaros" and GameTooltipTextRight2:GetText() == BOSS_DEAD)
+assert(GameTooltipTextLeft3:GetText() == "Majordomo" and GameTooltipTextRight3:GetText() == BOSS_ALIVE)
+GameTooltip:Hide()
+local name, texture, killed, ineligible = GetInstanceLockTimeRemainingEncounter(2)
+assert(name == "Majordomo" and texture == "" and killed == false and ineligible == true)
+assert(GetInstanceLockTimeRemainingEncounter(1) == "Ragnaros" and select(2, GetInstanceLockTimeRemainingEncounter(1)) == "boss-rag")
+A_Admin.SetInstanceLock(nil)
+assert(not StaticPopup_FindVisible("INSTANCE_LOCK"), "INSTANCE_LOCK_STOP hides it")
+A_Admin.SetInstanceLock(45, false, true, {})
+lock = StaticPopup_FindVisible("INSTANCE_LOCK")
+assert(lock and lock.data.enforceTime and lock.lockTimeleft == 45, "INSTANCE_LOCK_START enforces")
+assert(select(3, GetInstanceLockTimeRemaining()) == 0)
+A_Admin.SetInstanceLock(nil)
+for _, delay in ipairs({0, 20}) do
+    A_Admin.SetCorpseRecoveryDelay(delay)
+    local dialog = StaticPopup_Show("RESURRECT", "Anduin")
+    assert(dialog.timeleft == delay + 60, "RESURRECT timer " .. tostring(dialog.timeleft))
+    StaticPopup_Hide("RESURRECT")
+end
+A_Admin.AdvanceTime(25)
+assert(GetCorpseRecoveryDelay() == 0, "the recovery delay runs out")
+A_Admin.SetResSicknessDuration(nil)
+A_Admin.FireEvent("CONFIRM_XP_LOSS")
+assert(not StaticPopup_FindVisible("XP_LOSS"), "no sickness, no prompt")
+A_Admin.SetResSicknessDuration("10 Min")
+A_Admin.FireEvent("CONFIRM_XP_LOSS")
+local loss = StaticPopup_FindVisible("XP_LOSS") or StaticPopup_FindVisible("XP_LOSS_NO_SICKNESS_NO_DURABILITY")
+assert(loss and loss.data == "10 Min", "CONFIRM_XP_LOSS shows the supplied duration")
+"##;
+
+#[test]
+fn instance_and_death_popups_read_supplied_countdowns() {
+    run_cases(DIALOG_ROOTS, TIMER_CASES, "instance/death countdown popups");
 }
 
 const GUILD_INVITE_CASES: &str = r#"

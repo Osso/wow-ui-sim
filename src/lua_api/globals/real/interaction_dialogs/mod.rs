@@ -1,5 +1,5 @@
 //! Server-driven interaction dialogs: item text, guild invites, petitions,
-//! duels and area spirit healers.
+//! duels, area spirit healers, and the instance boot/lock and death countdowns.
 //!
 //! Each dialog is opened by a validated `A_Admin` host input that stands in for
 //! the server packet, and the documented client requests (`AcceptGuild`,
@@ -10,8 +10,10 @@ mod duel;
 mod guild_invite;
 mod item_text;
 mod petition;
+mod session_timers;
 mod spirit_healer;
 
+use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::globals::state_backed_queries::dispatch_event_now;
 use crate::lua_api::methods::create_string;
 use crate::lua_bridge::TableBuilder;
@@ -21,6 +23,7 @@ use rilua::{LuaResult, Val};
 pub use guild_invite::GuildInvite;
 pub use item_text::ItemText;
 pub use petition::Petition;
+pub use session_timers::{InstanceLock, LockEncounter, SessionTimers};
 pub use spirit_healer::SpiritHealer;
 
 /// Open server dialogs. `None` means the server has no dialog open.
@@ -30,6 +33,7 @@ pub struct DialogState {
     pub guild_invite: Option<GuildInvite>,
     pub petition: Option<Petition>,
     pub spirit_healer: Option<SpiritHealer>,
+    pub timers: SessionTimers,
 }
 
 /// One event payload value; strings are interned and rooted at dispatch.
@@ -64,18 +68,30 @@ pub(crate) fn push_optional_string(state: &mut LuaState, text: Option<&str>) {
     state.push(value);
 }
 
+/// Item text, petitions and `CancelDuel` are declared only by Retail secure
+/// publication rows; Forever declares none of them (R-ag10-9).
+const RETAIL_ONLY: bool = matches!(ACTIVE, ClientProfile::Retail);
+
 pub(crate) fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
-    item_text::register_all(lua)?;
+    if RETAIL_ONLY {
+        item_text::register_all(lua)?;
+        petition::register_all(lua)?;
+        duel::register_all(lua)?;
+    }
     guild_invite::register_all(lua)?;
-    petition::register_all(lua)?;
-    duel::register_all(lua)?;
+    session_timers::register_all(lua)?;
     spirit_healer::register_all(lua)
 }
 
 pub(crate) fn register_admin(b: TableBuilder) -> LuaResult<TableBuilder> {
-    let b = item_text::register_admin(b)?;
+    let b = if RETAIL_ONLY {
+        let b = item_text::register_admin(b)?;
+        let b = petition::register_admin(b)?;
+        duel::register_admin(b)?
+    } else {
+        b
+    };
     let b = guild_invite::register_admin(b)?;
-    let b = petition::register_admin(b)?;
-    let b = duel::register_admin(b)?;
+    let b = session_timers::register_admin(b)?;
     spirit_healer::register_admin(b)
 }

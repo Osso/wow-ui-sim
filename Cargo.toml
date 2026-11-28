@@ -262,8 +262,8 @@ forbidden-animation-aspects = ["forbidden-aspects"]
 numeric-rule-formatters = []
 # Server interaction dialogs over host inputs: AcceptGuild/DeclineGuild and the
 # area spirit healer queue (byte-identical Retail/Forever PlayerScriptDocumentation
-# blocks), plus item text, petition and duel-decline requests whose Retail
-# declarations are publication rows and whose consumers both profiles load.
+# blocks), plus Retail-only item text, petition and duel-decline requests whose
+# declarations are Retail publication rows.
 interaction-dialogs = []
 # Totem time left, dismissal flag and DestroyTotem (byte-identical Retail/Forever
 # TotemDocumentation blocks) over the host-supplied totem slots.
@@ -272,7 +272,7 @@ totem-dismissal = []
 # Retail/Forever RaidMarkersDocumentation blocks).
 world-marker-state = []
 # AcceptQuest/DeclineQuest/GetQuestReward over the modeled quest offer and reward
-# dialog (Retail publication rows; both profiles load the consumers).
+# dialog (Retail publication rows only; Forever declares none of them).
 quest-giver-requests = []
 # Dedicated prefork target admission for its supported Retail/Mists fixtures.
 prefork-full-ui = []
@@ -287,7 +287,7 @@ client-wrath = ["action-spell-range", "sim-data-profile/client-wrath"]
 client-mists = ["prefork-full-ui", "sim-data-profile/client-mists"]
 client-era = ["aura-spell-classifications", "sim-data-profile/client-era"]
 client-anniversary = ["aura-spell-classifications", "sim-data-profile/client-anniversary"]
-client-wowforever = ["interaction-dialogs", "totem-dismissal", "world-marker-state", "quest-giver-requests", "rest-policy-flags", "boolean-color-selection", "lair-state-queries", "temporary-enchant-cancel", "quest-hub-relations", "fullscreen-browser-close", "garrison-host-inputs", "explicit-stat-inputs", "nameplate-configuration", "nameplate-hit-test-insets", "cooldown-alert-types", "spell-classification-queries", "lfg-endgame-edit-policy", "encounter-warning-settings", "encounter-warning-visibility", "encounter-warning-previews", "simulated-mouse-input", "bnet-chat", "bnet-presence", "bnet-friend-social", "timed-signal-maps", "profession-spec-paths", "housing-blueprints", "housing-host-state", "housing-inspect-mode", "house-exterior-model", "unit-aura-queries", "aura-instance-cancel", "aura-xml-widgets", "on-update-modes", "player-cast-durations", "forbidden-animation-aspects", "numeric-rule-formatters", "aura-containers", "native-duration-formatting", "base-spell-relationships", "action-spell-range", "aura-spell-classifications", "maw-power-rarity-info", "sim-data-profile/client-wowforever"]
+client-wowforever = ["interaction-dialogs", "totem-dismissal", "world-marker-state", "rest-policy-flags", "boolean-color-selection", "lair-state-queries", "temporary-enchant-cancel", "quest-hub-relations", "fullscreen-browser-close", "garrison-host-inputs", "explicit-stat-inputs", "nameplate-configuration", "nameplate-hit-test-insets", "cooldown-alert-types", "spell-classification-queries", "lfg-endgame-edit-policy", "encounter-warning-settings", "encounter-warning-visibility", "encounter-warning-previews", "simulated-mouse-input", "bnet-chat", "bnet-presence", "bnet-friend-social", "timed-signal-maps", "profession-spec-paths", "housing-blueprints", "housing-host-state", "housing-inspect-mode", "house-exterior-model", "unit-aura-queries", "aura-instance-cancel", "aura-xml-widgets", "on-update-modes", "player-cast-durations", "forbidden-animation-aspects", "numeric-rule-formatters", "aura-containers", "native-duration-formatting", "base-spell-relationships", "action-spell-range", "aura-spell-classifications", "maw-power-rarity-info", "sim-data-profile/client-wowforever"]
 
 [profile.release]
 lto = false
