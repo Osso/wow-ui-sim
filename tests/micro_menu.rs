@@ -87,7 +87,7 @@ fn setup_env() -> WowLuaEnv {
         return env;
     }
 
-    if !common::load_classic_game_startup_inventory(&env) {
+    if !common::load_non_retail_game_startup_inventory(&env) {
         load_micro_menu_fixture_addons(&env);
     }
     env.apply_post_load_workarounds();
@@ -212,9 +212,24 @@ fn texture_path(env: &WowLuaEnv, texture_expr: &str) -> String {
 }
 
 post_wrath_ui_fixture! {
+/// Camelot/MainMenuBarMicroButtonsOverrides.lua:23-26: "Camelot has no
+/// ProfessionsBookFrame; the button toggles ProfessionsFrame instead", and
+/// Blizzard_ProfessionsBook_Bootstrap.lua:11-18 shows its book page.
+fn professions_book_frame_expr() -> &'static str {
+    if cfg!(feature = "client-wowforever") {
+        "ProfessionsFrame"
+    } else {
+        "ProfessionsBookFrame"
+    }
+}
+
 fn professions_primary_frame_expr() -> &'static str {
-    // PTR 70493: Mainline/Blizzard_ProfessionsBookTemplates.xml:166,172.
-    if cfg!(feature = "client-ptr") {
+    if cfg!(feature = "client-wowforever") {
+        // Forever 70707: Blizzard_Professions/Camelot/Blizzard_ProfessionsFrame.xml:79
+        // BookPage; Blizzard_ProfessionsBook/Camelot/Blizzard_ProfessionsBookTemplates.xml:223,229.
+        "ProfessionsFrame.BookPage.ProfessionsContentFrame.PrimaryProfession1"
+    } else if cfg!(feature = "client-ptr") {
+        // PTR 70493: Mainline/Blizzard_ProfessionsBookTemplates.xml:166,172.
         "ProfessionsBookFrame.ProfessionsContentFrame.PrimaryProfession1"
     } else {
         // Retail 70575: Blizzard_ProfessionsBook.xml:353,359.
@@ -447,6 +462,46 @@ fn micro_menu_buttons_restore_normal_texture_after_hover(env: &WowLuaEnv) {
 }
 }
 
+/// Retail docks the container inside MicroButtonAndBagsBar (232x80).
+#[cfg(not(feature = "client-wowforever"))]
+const MICRO_MENU_PLACEMENT_LUA: &str = r#"
+local LOCKED_BUTTON_NAMES = {
+    "CharacterMicroButton", "ProfessionMicroButton", "PlayerSpellsMicroButton",
+    "AchievementMicroButton", "QuestLogMicroButton",
+}
+local function container_placement_error(containerRect)
+    local bar = MicroButtonAndBagsBar
+    if not bar then return "bar_missing" end
+    local l, b, w, h = bar:GetRect()
+    if not (l and b and w and h) then return "bar_missing_rect" end
+    if math.abs(w - 232) > 0.1 then return "bar_width=" .. tostring(w) end
+    if math.abs(h - 80) > 0.1 then return "bar_height=" .. tostring(h) end
+    if l < 0 or b < 0 then return "bar_out_of_bounds=" .. tostring(l) .. "," .. tostring(b) end
+    if math.abs(containerRect.r - (l + w)) > 0.75 then return "container_right=" .. tostring(containerRect.r) end
+    if math.abs(containerRect.b - b) > 0.75 then return "container_bottom=" .. tostring(containerRect.b) end
+    return nil
+end
+"#;
+
+/// Forever anchors the container BOTTOM to UIParent BOTTOM at (116.5, 6)
+/// (Blizzard_EditMode/Camelot/EditModePresetLayoutConstants.lua:37-41) and
+/// lists Character, Profession, Spellbook, Talent, Legacy, QuestLog first
+/// (Blizzard_MicroMenu/Camelot/MicroMenuContainerOverrides.lua:4-9).
+#[cfg(feature = "client-wowforever")]
+const MICRO_MENU_PLACEMENT_LUA: &str = r#"
+local LOCKED_BUTTON_NAMES = {
+    "CharacterMicroButton", "ProfessionMicroButton", "SpellbookMicroButton",
+    "TalentMicroButton", "LegacyMicroButton", "QuestLogMicroButton",
+}
+local function container_placement_error(containerRect)
+    local centerX = (containerRect.l + containerRect.r) / 2
+    local expectedX = UIParent:GetWidth() / 2 + 116.5
+    if math.abs(centerX - expectedX) > 0.75 then return "container_center_x=" .. tostring(centerX) end
+    if math.abs(containerRect.b - 6) > 0.75 then return "container_bottom=" .. tostring(containerRect.b) end
+    return nil
+end
+"#;
+
 #[test]
 fn micro_menu_layout_stays_locked() {
     let env = setup_env();
@@ -456,7 +511,8 @@ fn micro_menu_layout_stays_locked() {
         return;
     }
     let result: String = env
-        .eval(
+        .eval(&format!(
+            "{MICRO_MENU_PLACEMENT_LUA}{}",
             r#"
             local EPS = 0.75
 
@@ -488,20 +544,10 @@ fn micro_menu_layout_stays_locked() {
                 MicroMenuContainer:Layout()
             end
 
-            local bar = MicroButtonAndBagsBar
             local container = MicroMenuContainer
             local menu = MicroMenu
-            if not bar then return "bar_missing" end
             if not container then return "container_missing" end
             if not menu then return "menu_missing" end
-
-            local barRect, barErr = rect("bar", bar)
-            if not barRect then return barErr end
-            if not approx(barRect.w, 232, 0.1) then return "bar_width=" .. tostring(barRect.w) end
-            if not approx(barRect.h, 80, 0.1) then return "bar_height=" .. tostring(barRect.h) end
-            if barRect.l < 0 or barRect.b < 0 then
-                return "bar_out_of_bounds=" .. tostring(barRect.l) .. "," .. tostring(barRect.b)
-            end
 
             local containerRect, containerErr = rect("container", container)
             if not containerRect then return containerErr end
@@ -509,12 +555,8 @@ fn micro_menu_layout_stays_locked() {
             local menuRect, menuErr = rect("menu", menu)
             if not menuRect then return menuErr end
 
-            if not approx(containerRect.r, barRect.r) then
-                return "container_right=" .. tostring(containerRect.r)
-            end
-            if not approx(containerRect.b, barRect.b) then
-                return "container_bottom=" .. tostring(containerRect.b)
-            end
+            local placementErr = container_placement_error(containerRect)
+            if placementErr then return placementErr end
             if not approx(menuRect.r, containerRect.r) then
                 return "menu_right=" .. tostring(menuRect.r)
             end
@@ -528,13 +570,7 @@ fn micro_menu_layout_stays_locked() {
                 return "container_height_lt_menu_height"
             end
 
-            local buttonNames = {
-                "CharacterMicroButton",
-                "ProfessionMicroButton",
-                "PlayerSpellsMicroButton",
-                "AchievementMicroButton",
-                "QuestLogMicroButton",
-            }
+            local buttonNames = LOCKED_BUTTON_NAMES
 
             local buttonRects = {}
             for index, name in ipairs(buttonNames) do
@@ -582,7 +618,7 @@ fn micro_menu_layout_stays_locked() {
 
             return "ok"
             "#,
-        )
+        ))
         .unwrap();
     assert_eq!(
         result, "ok",
@@ -594,15 +630,23 @@ post_wrath_ui_fixture! {
 #[test]
 fn micro_menu_professions_button_loads_and_opens_panel() {
     let env = setup_env();
+    let book = professions_book_frame_expr();
     assert!(
-        !frame_exists(&env, "ProfessionsBookFrame"),
-        "ProfessionsBookFrame should not exist before click"
+        !frame_exists(&env, book),
+        "{book} should not exist before click"
     );
     click_button(&env, "ProfessionMicroButton").expect("ProfessionMicroButton click failed");
     assert!(
-        frame_is_shown(&env, "ProfessionsBookFrame"),
-        "ProfessionsBookFrame should be shown after clicking ProfessionMicroButton"
+        frame_is_shown(&env, book),
+        "{book} should be shown after clicking ProfessionMicroButton"
     );
+    if cfg!(feature = "client-wowforever") {
+        assert!(
+            frame_is_shown(&env, "ProfessionsFrame.BookPage")
+                && !frame_is_shown(&env, "ProfessionsFrame.CraftingPage"),
+            "Forever ProfessionMicroButton should select the ProfessionsFrame book page"
+        );
+    }
 
     let spell_button_1_shown = professions_primary_spell_button_is_shown(&env, "SpellButton1");
     let spell_button_2_shown = professions_primary_spell_button_is_shown(&env, "SpellButton2");
@@ -631,8 +675,9 @@ fn micro_menu_professions_button_loads_and_opens_panel() {
 
     let first_nameframe = professions_primary_spell_button_nameframe_texture(&env, "SpellButton1");
     let second_nameframe = professions_primary_spell_button_nameframe_texture(&env, "SpellButton2");
-    if cfg!(feature = "client-ptr") {
-        // PTR 70493 Blizzard_ProfessionsBookTemplates.xml:4-75 has no NameFrame.
+    if cfg!(any(feature = "client-ptr", feature = "client-wowforever")) {
+        // PTR 70493 Blizzard_ProfessionsBookTemplates.xml:4-75 has no NameFrame;
+        // Forever 70707 ProfessionButtonTemplate (same file, :13-44) has none either.
         // Retail 70575 Blizzard_ProfessionsBook.xml:29-37 supplies the old parchment.
         assert_eq!(first_nameframe, "", "PTR SpellButton1 has no NameFrame region");
         assert_eq!(second_nameframe, "", "PTR SpellButton2 has no NameFrame region");
@@ -688,6 +733,10 @@ fn micro_menu_collections_button_loads_and_opens_panel() {
 }
 
 post_wrath_ui_fixture! {
+// Forever cannot load the housing dashboard: Blizzard_HousingDashboard.toc:5
+// and Blizzard_HousingEventHandler.toc:3 declare `AllowLoadGameType: standard`,
+// which Camelot (camelot/mainline game types) does not select.
+#[cfg(not(feature = "client-wowforever"))]
 #[test]
 fn micro_menu_housing_button_loads_and_opens_panel() {
     let env = setup_env();
@@ -703,6 +752,11 @@ fn micro_menu_housing_button_loads_and_opens_panel() {
 }
 }
 
+// Forever's Camelot micro menu has no AchievementMicroButton
+// (Blizzard_MicroMenu/Camelot/MicroMenuContainerOverrides.lua:2-19); its
+// achievement toggle opens Legacy Challenges, covered by
+// `micro_menu_legacy_button_opens_legacy_system_with_supplied_renown`.
+#[cfg(not(feature = "client-wowforever"))]
 #[test]
 fn micro_menu_achievement_button_loads_and_opens_panel() {
     let env = setup_env();
@@ -1099,4 +1153,33 @@ fn load_micro_menu_fixture_addons(env: &WowLuaEnv) {
     common::panel_fixtures::load_panel_startup_publishers(env, &ui);
     install_professions_book_bootstrap(env, &ui);
     install_encounter_journal_bootstrap(env, &ui);
+}
+
+/// Camelot LegacyMicroButton (MainMenuBarMicroButtons.lua:1064-1073,1094-1102)
+/// is disabled until Legacy renown is positive and then calls
+/// `ToggleLegacySystemUI` (Blizzard_LegacySystem_Bootstrap.lua:7-21).
+#[cfg(feature = "client-wowforever")]
+#[test]
+fn micro_menu_legacy_button_opens_legacy_system_with_supplied_renown() {
+    let env = setup_env();
+    let locked: (bool, bool) = env
+        .eval("return LegacyMicroButton:IsEnabled(), LegacySystemFrame ~= nil")
+        .unwrap();
+    assert_eq!(
+        locked,
+        (false, false),
+        "no Legacy renown: button disabled, UI not loaded"
+    );
+    env.exec("A_Admin.SetMajorFactionRenown(Constants.LegacyConsts.LEGACY_REWARD_TRACK_FACTION_ID, 2, 10)")
+        .expect("supply Legacy renown");
+    assert!(
+        env.eval::<bool>("return LegacyMicroButton:IsEnabled()")
+            .unwrap(),
+        "renown change event should enable LegacyMicroButton"
+    );
+    click_button(&env, "LegacyMicroButton").expect("LegacyMicroButton click failed");
+    assert!(
+        frame_is_shown(&env, "LegacySystemFrame"),
+        "LegacySystemFrame should be shown after clicking LegacyMicroButton"
+    );
 }
