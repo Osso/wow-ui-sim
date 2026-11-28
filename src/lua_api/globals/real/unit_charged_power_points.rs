@@ -41,24 +41,30 @@ pub(crate) fn admin_set_unit_charged_power_points(state: &mut LuaState) -> LuaRe
 }
 
 fn read_point_indices(state: &LuaState, value: Val) -> LuaResult<Vec<i32>> {
-    let Val::Table(table) = value else {
+    let Val::Table(reference) = value else {
         return Err(runtime_error("SetUnitChargedPowerPoints expects an array"));
     };
-    let mut points = Vec::new();
-    for index in 1.. {
-        match state.gc.tables.get(table).map(|array| array.get_int(index)) {
-            Some(Val::Num(point))
-                if point.fract() == 0.0 && point > 0.0 && point <= i32::MAX as f64 =>
-            {
-                points.push(point as i32);
-            }
-            Some(Val::Nil) | None => break,
-            Some(_) => {
-                return Err(runtime_error(
-                    "charged point indices must be positive integers",
-                ));
-            }
+    let array = state
+        .gc
+        .tables
+        .get(reference)
+        .ok_or_else(|| runtime_error("SetUnitChargedPowerPoints expects an array"))?;
+    if !array.hash_entries().is_empty() {
+        return Err(runtime_error("charged point indices must be a dense array"));
+    }
+    let mut points = Vec::with_capacity(array.array_len());
+    for value in array.array_slice() {
+        let Val::Num(point) = *value else {
+            return Err(runtime_error(
+                "charged point indices must be positive integers",
+            ));
+        };
+        if point.fract() != 0.0 || !(1.0..=i32::MAX as f64).contains(&point) {
+            return Err(runtime_error(
+                "charged point indices must be positive integers",
+            ));
         }
+        points.push(point as i32);
     }
     Ok(points)
 }

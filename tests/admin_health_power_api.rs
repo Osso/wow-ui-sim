@@ -14,6 +14,7 @@ const ROGUE_CHARGED_POWER_CONSUMER: &str = r#"
     charged = GetUnitChargedPowerPoints("player")
     assert(#charged == 2 and charged[1] == 3 and charged[2] == 5)
     assert(not points[2].isCharged and points[3].isCharged and points[5].isCharged)
+    assert(not pcall(A_Admin.SetUnitChargedPowerPoints, "player", {[1]=2, [3]=5}))
 "#;
 
 fn env() -> WowLuaEnv {
