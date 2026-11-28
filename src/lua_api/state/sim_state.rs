@@ -812,6 +812,9 @@ pub struct SimState {
     /// `C_AchievementInfo.AreGuildAchievementsEnabled` input (INFERRED default true).
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     pub guild_achievements_enabled: bool,
+    /// Brawl / solo-shuffle / factional flags of the current PvP match.
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub pvp_match: crate::c_api::pvp_match_type::PvpMatchFlags,
     /// Host vehicle seats and seat-indicator layouts (`A_Admin.EnterVehicle`).
     #[cfg(feature = "vehicle-seats")]
     pub vehicle_seats: crate::lua_api::globals::real::vehicle_seats::VehicleSeatState,

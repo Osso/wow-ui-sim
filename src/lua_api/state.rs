@@ -1088,6 +1088,8 @@ macro_rules! build_empty_sim_state {
             pending_guild_invite: None,
             #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
             guild_achievements_enabled: true,
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            pvp_match: Default::default(),
             #[cfg(feature = "vehicle-seats")]
             vehicle_seats: Default::default(),
             chat_bubbles: Vec::new(),

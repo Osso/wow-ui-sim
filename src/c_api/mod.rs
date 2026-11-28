@@ -365,6 +365,8 @@ mod lfr_availability;
 pub mod perks_activities;
 pub(crate) mod pet_orders;
 pub mod profession_spec_inputs;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) mod pvp_match_type;
 pub mod ranged_slot;
 pub(crate) use lfr_availability::stock_lfr_availability;
 #[cfg(all(test, feature = "client-wowforever"))]
@@ -741,6 +743,8 @@ pub(crate) fn register_utility_bootstrap_tables(state: &mut LuaState) -> LuaResu
     c_achievement_info_relations::register(state)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     guild_achievements::register(state)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pvp_match_type::register(state)?;
     c_minimap_tracking::register(state)?;
     c_calendar::register(state)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]

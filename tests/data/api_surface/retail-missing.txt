@@ -206,7 +206,6 @@ C_CharacterServices.HasRequiredBoostForUnrevoke # not-yet
 C_ChatInfo.GetChannelRosterInfo # not-yet
 C_ChatInfo.GetChatLineSenderGUID # not-yet
 C_ChatInfo.GetChatLineSenderName # not-yet
-C_ChatInfo.GetChatTypeName # not-yet
 C_ChatInfo.GetClubStreamIDs # not-yet
 C_ChatInfo.GetColorForChatType # not-yet
 C_ChatInfo.GetMentorChannelID # not-yet
@@ -214,7 +213,6 @@ C_ChatInfo.GetNumReservedChatWindows # not-yet: temporary Lua workaround
 C_ChatInfo.IsChatLineCensored # not-yet
 C_ChatInfo.IsLoggingChat # not-yet
 C_ChatInfo.IsLoggingCombat # not-yet
-C_ChatInfo.IsPartyChannelType # not-yet
 C_ChatInfo.IsValidCombatFilterName # not-yet
 C_ChatInfo.PerformEmote # not-yet: temporary Lua workaround
 C_ChatInfo.RequestCanLocalWhisperTarget # not-yet
@@ -1375,15 +1373,9 @@ C_PvP.HasArenaSkirmishWinToday # not-yet
 C_PvP.HasRandomTrainingGroundArenaWinToday # not-yet
 C_PvP.HasRandomTrainingGroundBGWinToday # not-yet
 C_PvP.IsActiveMatchRegistered # not-yet
-C_PvP.IsArena # not-yet
-C_PvP.IsBattleground # not-yet
 C_PvP.IsBrawlSoloRBG # not-yet
 C_PvP.IsBrawlSoloShuffle # not-yet
-C_PvP.IsInBrawl # not-yet: temporary Lua workaround
 C_PvP.IsInRatedMatchWithDeserterPenalty # not-yet
-C_PvP.IsMatchFactional # not-yet
-C_PvP.IsPVPMap # not-yet
-C_PvP.IsSoloShuffle # not-yet: temporary Lua workaround
 C_PvP.IsWarModeActive # not-yet
 C_PvP.IsWarModeFeatureEnabled # not-yet
 C_PvP.JoinBrawl # not-yet
@@ -1829,8 +1821,6 @@ C_Trophy.MonumentLoadSelectedTrophyID # not-yet
 C_Trophy.MonumentRevertAppearanceToSaved # not-yet
 C_Trophy.MonumentSaveSelection # not-yet
 C_UI.GetTopRightNotchSafeRegion # not-yet
-C_UI.GetUIParent # not-yet
-C_UI.GetWorldFrame # not-yet
 C_UnitAurasPrivate.AddPrivateAuraUpdateCallback # not-yet
 C_UnitAurasPrivate.AnchorPrivateAura # not-yet
 C_UnitAurasPrivate.GetAllPrivateAuraInstanceIDs # not-yet
