@@ -47,7 +47,7 @@ A_Admin.SetPlayerPower(0, 100, 1)           -- 0 rage
 
 ### A_Admin.SetUnitChargedPowerPoints(unit, indices) (Retail and WoW Forever)
 
-Supplies the charged combo-point indices for `unit`. `indices` must be a dense array of positive whole numbers. The setter replaces the prior list and fires `UNIT_POWER_FREQUENT(unit, "COMBO_POINTS")` so the original class-power bar refreshes. An empty array supplies no charged points. The API returns no values until this input is supplied for the unit.
+Supplies the charged combo-point indices for `unit`. `indices` must be a dense array of positive whole numbers. The setter replaces the prior list and fires `UNIT_POWER_POINT_CHARGE(unit)` so the original class-power bar refreshes. An empty array supplies no charged points. The API returns no values until this input is supplied for the unit.
 
 ### A_Admin.SetTargetHealth(current, max)
 

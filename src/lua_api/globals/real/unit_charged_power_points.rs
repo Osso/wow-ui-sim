@@ -36,8 +36,7 @@ pub(crate) fn admin_set_unit_charged_power_points(state: &mut LuaState) -> LuaRe
         .unit_charged_power_points
         .insert(unit.clone(), points);
     let unit = crate::lua_api::methods::create_string(state, &unit);
-    let power = crate::lua_api::methods::create_string_static(state, "COMBO_POINTS");
-    dispatch_event_now(state, "UNIT_POWER_FREQUENT", &[unit, power])?;
+    dispatch_event_now(state, "UNIT_POWER_POINT_CHARGE", &[unit])?;
     Ok(0)
 }
 
