@@ -1,5 +1,11 @@
 # Combat State
 
+### A_Admin.SetSpellUiFlags(spellID, pressHoldRelease, priorityAura)
+
+Retail and WoW Forever: supply the two observed boolean flags for a positive integer spell ID (maximum `i32::MAX`). Both arguments must be booleans; invalid input raises an error before mutation. The empty model reports false. A call replaces that spell's row and emits no event. Supply rows before the original UI caches them, or send the normal action-slot update event after changing action assignments.
+
+VERIFIED declaration shapes: Retail `SpellDocumentation.lua:704-734` and Forever `SpellDocumentation.lua:773-803`. The selected `Blizzard_ActionBar/Shared/ActionButton.lua` stores the press-and-hold flag in its action-button attribute; the selected `Blizzard_FrameXMLUtil/AuraUtil.lua:449-455` caches aura-priority observations by spell ID. This is host-supplied classification, not native discovery of spell attribute masks.
+
 ### Pet-battle runtime inputs (Retail and WoW Forever)
 
 These inputs supply simulator state; they do not model a server reply. The predicate rules below are **INFERRED R88g9 (native evidence pending)** where the cited R88f checks stop short of the complete handler.

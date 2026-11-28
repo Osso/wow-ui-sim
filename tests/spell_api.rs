@@ -10,6 +10,35 @@ fn env() -> WowLuaEnv {
 #[path = "spell_api/traits.rs"]
 mod traits;
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn original_aura_and_action_bar_consumers_use_supplied_spell_ui_flags() {
+    let env = env();
+    let screen = wow_ui_sim::screen::ScreenKind::Game;
+    env.set_screen_mode(screen);
+    env.set_screen_size(1024.0, 768.0);
+    wow_ui_sim::xml::register_intrinsic_templates();
+    let ui = wow_ui_sim::paths::default_blizzard_ui_addons_path().unwrap();
+    let addons = wow_ui_sim::loader::discover_blizzard_addons_for_screen(&ui, screen);
+    env.exec("A_Admin.SetSpellUiFlags(116, true, true); A_Admin.SetSpellUiFlags(133, false, false); A_Admin.SetActionSlot(1, 116); A_Admin.SetActionSlot(2, 133)").unwrap();
+    for (name, toc) in &addons {
+        wow_ui_sim::loader::load_addon(&env.loader_env(), toc)
+            .unwrap_or_else(|error| panic!("{name}: {error}"));
+    }
+    assert!(addons.iter().any(|(name, _)| name == "Blizzard_ActionBar"));
+    assert!(addons.iter().any(|(name, _)| name == "Blizzard_FrameXMLUtil"));
+    env.apply_post_load_workarounds();
+    wow_ui_sim::startup::fire_startup_events_for_screen(&env, screen);
+    env.exec(r#"
+        A_Admin.FireEvent('ACTIONBAR_SLOT_CHANGED', 1)
+        A_Admin.FireEvent('ACTIONBAR_SLOT_CHANGED', 2)
+        assert(AuraUtil.CheckIsPriorityAura(116) == true)
+        assert(AuraUtil.CheckIsPriorityAura(133) == false)
+        assert(ActionButton1:GetAttribute('pressAndHoldAction') == true)
+        assert(ActionButton2:GetAttribute('pressAndHoldAction') == false)
+    "#).expect("selected aura and button consumers must distinguish supplied spell flags");
+}
+
 // ============================================================================
 // C_SpellBook
 // ============================================================================

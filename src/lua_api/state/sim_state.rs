@@ -608,6 +608,8 @@ pub struct SimState {
         feature = "client-wowforever"
     ))]
     pub spell_passive_attribute_masks: HashMap<u32, u32>,
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub spell_ui_flags: HashMap<u32, crate::c_api::c_spell::SpellUiFlags>,
     pub spell_tooltip_inputs: HashMap<u32, crate::c_api::spell_tooltip::SpellTooltipInput>,
     pub recipe_rank_tooltip_cache: crate::c_api::recipe_rank_tooltip::RecipeRankTooltipCache,
     pub aura_tooltip_inputs: HashMap<i32, crate::c_api::spell_tooltip::AuraTooltipInput>,

@@ -499,6 +499,8 @@ macro_rules! build_empty_sim_state {
                 feature = "client-wowforever"
             ))]
             spell_passive_attribute_masks: HashMap::new(),
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            spell_ui_flags: HashMap::new(),
             spell_tooltip_inputs: HashMap::new(),
             recipe_rank_tooltip_cache: Default::default(),
             aura_tooltip_inputs: HashMap::new(),

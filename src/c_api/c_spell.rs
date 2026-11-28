@@ -236,6 +236,10 @@ const SPELL_BOOLEAN_METHODS: &[(&str, SpellScriptFn)] = &[
     ("IsSpellPassive", is_spell_passive),
     ("IsSelfBuff", is_self_buff),
     ("IsAutoAttackSpell", is_auto_attack_spell),
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    ("IsPressHoldReleaseSpell", is_press_hold_release_spell),
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    ("IsPriorityAura", is_priority_aura),
     ("IsSpellHelpful", is_spell_helpful),
     ("IsSpellHarmful", is_spell_harmful),
     ("IsSpellUsable", is_spell_usable),
@@ -245,6 +249,71 @@ const SPELL_BOOLEAN_METHODS: &[(&str, SpellScriptFn)] = &[
         target_spell_checks_item_condition,
     ),
 ];
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[derive(Clone, Copy, Debug)]
+pub struct SpellUiFlags {
+    press_hold_release: bool,
+    priority_aura: bool,
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) fn register_ui_flags_admin(
+    builder: crate::lua_bridge::TableBuilder,
+) -> LuaResult<crate::lua_bridge::TableBuilder> {
+    builder.set_function("SetSpellUiFlags", set_spell_ui_flags)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn set_spell_ui_flags(state: &mut LuaState) -> LuaResult<u32> {
+    let (Val::Num(id), Val::Bool(press_hold_release), Val::Bool(priority_aura)) = (
+        stack_val(state, 1),
+        stack_val(state, 2),
+        stack_val(state, 3),
+    ) else {
+        return Err(rilua::runtime_error(
+            "A_Admin.SetSpellUiFlags: expected spell ID and two booleans",
+        ));
+    };
+    if !id.is_finite() || id.fract() != 0.0 || !(1.0..=f64::from(i32::MAX)).contains(&id) {
+        return Err(rilua::runtime_error(
+            "A_Admin.SetSpellUiFlags: spell ID must be a positive integer",
+        ));
+    }
+    crate::lua_api::methods::borrow_state_mut(state)?
+        .spell_ui_flags
+        .insert(
+            id as u32,
+            SpellUiFlags {
+                press_hold_release,
+                priority_aura,
+            },
+        );
+    Ok(0)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn is_press_hold_release_spell(state: &mut LuaState) -> LuaResult<u32> {
+    let id = read_spell_identifier_value(state, stack_val(state, 1))?;
+    let flag = {
+        let sim = borrow_state(state)?;
+        id.and_then(|id| sim.spell_ui_flags.get(&id))
+            .is_some_and(|flags| flags.press_hold_release)
+    };
+    state.push(Val::Bool(flag));
+    Ok(1)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn is_priority_aura(state: &mut LuaState) -> LuaResult<u32> {
+    let id = u32::from_stack(state, 1)?;
+    let flag = borrow_state(state)?
+        .spell_ui_flags
+        .get(&id)
+        .is_some_and(|flags| flags.priority_aura);
+    state.push(Val::Bool(flag));
+    Ok(1)
+}
 
 #[cfg(feature = "retail-12-1-0")]
 fn target_spell_checks_item_condition(state: &mut LuaState) -> LuaResult<u32> {

@@ -1421,8 +1421,6 @@ C_Spell.GetSpellSkillLineAbilityRank # not-yet
 C_Spell.IsActiveSpell # not-yet
 C_Spell.IsAutoRepeatSpell # not-yet
 C_Spell.IsClassTalentSpell # not-yet
-C_Spell.IsPressHoldReleaseSpell # not-yet: temporary Lua workaround
-C_Spell.IsPriorityAura # not-yet: temporary Lua workaround
 C_Spell.IsPvPTalentSpell # not-yet
 C_Spell.IsSpellDisabled # not-yet
 C_Spell.PlaceTargetingSpellAtCursor # not-yet
