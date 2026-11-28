@@ -515,6 +515,7 @@ fn apply_feature_tool_defaults(lua: &mut rilua::Lua) -> crate::Result<()> {
     }
     #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::macro_defaults::apply_bootstrap(lua)?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::navigation_defaults::apply_bootstrap(lua)?;
     temporary::object_api_request_load_callbacks::apply_bootstrap(lua)?;
     temporary::party_info_instance_abandon_defaults::apply_bootstrap(lua)?;
