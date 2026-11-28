@@ -19,7 +19,7 @@ A_Admin.SetTarget("Jaina", 70, 8, false)    -- friendly Mage
 ### A_Admin.SetTargetInteractable(interactable)
 
 Sets the current target's interaction state for `UnitIsInteractable("target")`.
-Requires a current target and does not fire an event.
+It does nothing when there is no current target and does not fire an event.
 
 - **interactable** `boolean`
 - **Affects:** `UnitIsInteractable("target")`
