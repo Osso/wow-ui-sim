@@ -61,6 +61,75 @@ pub(crate) struct InstanceAbandonVoteState {
     group_responses: Vec<bool>,
 }
 
+/// Supplied party service policy observations, false until the host supplies them.
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[derive(Default)]
+pub(crate) struct PartyPolicyFlags {
+    to_raid: bool,
+    to_party: bool,
+    in_jailers_tower: bool,
+    walk_in: bool,
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn register_party_policy(state: &mut LuaState, ns: GcRef<Table>) -> LuaResult<()> {
+    table_set_rust_fn_static(state, ns, "AllowedToDoPartyConversion", allowed_to_convert)?;
+    table_set_rust_fn_static(state, ns, "IsPartyInJailersTower", in_jailers_tower)?;
+    table_set_rust_fn_static(state, ns, "IsPartyWalkIn", is_party_walk_in)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn allowed_to_convert(state: &mut LuaState) -> LuaResult<u32> {
+    let to_raid = bool::from_stack(state, 1)?;
+    let allowed = {
+        let sim = borrow_state(state)?;
+        if to_raid {
+            sim.party_policy_flags.to_raid
+        } else {
+            sim.party_policy_flags.to_party
+        }
+    };
+    state.push(Val::Bool(allowed));
+    Ok(1)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn in_jailers_tower(state: &mut LuaState) -> LuaResult<u32> {
+    let flag = borrow_state(state)?.party_policy_flags.in_jailers_tower;
+    state.push(Val::Bool(flag));
+    Ok(1)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn is_party_walk_in(state: &mut LuaState) -> LuaResult<u32> {
+    let flag = borrow_state(state)?.party_policy_flags.walk_in;
+    state.push(Val::Bool(flag));
+    Ok(1)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn set_party_policy_flags(state: &mut LuaState) -> LuaResult<u32> {
+    use crate::lua_bridge::stack_val;
+    let [
+        Val::Bool(to_raid),
+        Val::Bool(to_party),
+        Val::Bool(in_jailers_tower),
+        Val::Bool(walk_in),
+    ] = [1, 2, 3, 4].map(|index| stack_val(state, index))
+    else {
+        return Err(rilua::runtime_error(
+            "A_Admin.SetPartyPolicyFlags: expected four booleans",
+        ));
+    };
+    crate::lua_api::methods::borrow_state_mut(state)?.party_policy_flags = PartyPolicyFlags {
+        to_raid,
+        to_party,
+        in_jailers_tower,
+        walk_in,
+    };
+    Ok(0)
+}
+
 /// INFERRED (simulator mapping, R88bk pending): mark the supplied active group as a raid.
 /// PartySync confirmation and event emission are UNKNOWN and remain unmodeled.
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
@@ -87,6 +156,8 @@ pub(crate) fn register_c_party_info_surface(state: &mut LuaState) -> LuaResult<(
     register_group_membership_probes(state, table_ref)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     register_instance_abandon_vote_surface(state, table_ref)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    register_party_policy(state, table_ref)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     table_set_rust_fn_static(state, table_ref, "ConvertToRaid", convert_to_raid)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
@@ -172,10 +243,12 @@ fn register_vote_responses(state: &mut LuaState, table_ref: GcRef<Table>) -> Lua
 /// isOwner, response, groupResponses).
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
-    builder.set_function(
-        "SetInstanceAbandonVoteState",
-        set_instance_abandon_vote_state,
-    )
+    builder
+        .set_function(
+            "SetInstanceAbandonVoteState",
+            set_instance_abandon_vote_state,
+        )?
+        .set_function("SetPartyPolicyFlags", set_party_policy_flags)
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]

@@ -1182,7 +1182,6 @@ C_PaperDollInfo.GetInspectRatedBGBlitzData # not-yet
 C_PaperDollInfo.GetInspectRatedBGData # not-yet
 C_PaperDollInfo.GetInspectRatedSoloShuffleData # not-yet
 C_PaperDollInfo.OffhandHasShield # not-yet
-C_PartyInfo.AllowedToDoPartyConversion # not-yet: temporary Lua workaround
 C_PartyInfo.CanFormCrossFactionParties # not-yet
 C_PartyInfo.CanInvite # not-yet
 C_PartyInfo.CanStartInstanceAbandonVote # not-yet: temporary Lua workaround
@@ -1199,8 +1198,6 @@ C_PartyInfo.GetMinItemLevel # not-yet
 C_PartyInfo.IsChallengeModeActive # not-yet
 C_PartyInfo.IsDelveComplete # not-yet
 C_PartyInfo.IsDelveInProgress # not-yet
-C_PartyInfo.IsPartyInJailersTower # not-yet: temporary Lua workaround
-C_PartyInfo.IsPartyWalkIn # not-yet: temporary Lua workaround
 C_PartyInfo.RequestInviteFromUnit # not-yet
 C_PartyInfo.StartInstanceAbandonVote # not-yet: temporary Lua workaround
 C_PartyPose.ExtraAction # not-yet

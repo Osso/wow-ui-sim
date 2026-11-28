@@ -731,6 +731,8 @@ pub struct SimState {
     pub party_members: Vec<PartyMember>,
     pub party_group_active: bool,
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub(crate) party_policy_flags: crate::c_api::c_party_info::PartyPolicyFlags,
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     pub(crate) instance_abandon_vote: crate::c_api::c_party_info::InstanceAbandonVoteState,
     /// INFERRED Retail/Forever group-kind input; None keeps the roster-size heuristic.
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]

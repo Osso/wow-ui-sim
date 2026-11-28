@@ -195,6 +195,7 @@ pub(crate) mod paging_controls_page_text;
 #[cfg(not(feature = "retail-12-0-0"))]
 pub(crate) mod party_ai_legacy;
 pub(crate) mod party_info_instance_abandon_defaults;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod party_info_static_defaults;
 pub(crate) mod patch_12_1_inert_defaults;
 pub(crate) mod performance_metric_defaults;
