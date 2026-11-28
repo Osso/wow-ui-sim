@@ -53,6 +53,36 @@ fn supply_merchant_offers(env: &WowLuaEnv) {
 }
 
 #[test]
+fn original_merchant_dropdown_filters_admin_supplied_offers() {
+    let env = merchant_game_env();
+    env.exec("A_Admin.SetMerchantItems({ 6948, 1728 })")
+        .expect("host supplies distinct merchant offers");
+    env.exec(
+        r##"
+        MerchantFrame.selectedTab = 1
+        MerchantFrame.lastTab = 1
+        MerchantFrame.page = 1
+        SetMerchantFilter(LE_LOOT_FILTER_ALL)
+        MerchantFrame:Show()
+        MerchantFrame.FilterDropdown:Show()
+        MerchantFrame.FilterDropdown:GenerateMenu()
+        MerchantFrame.FilterDropdown:OpenMenu()
+        local selected
+        for _, child in ipairs({Menu.GetManager():GetOpenMenu():GetChildren()}) do
+            if child.fontString and child.fontString:GetText() == ITEM_BIND_ON_EQUIP then
+                selected = child
+            end
+        end
+        assert(selected, "selected Blizzard merchant menu includes the BoE filter")
+        selected:Click()
+        assert(GetMerchantNumItems() == 1)
+        assert(GetMerchantItemID(1) == 1728 and GetMerchantItemID(2) == nil)
+        "##,
+    )
+    .expect("selected Blizzard merchant consumer should filter supplied offers");
+}
+
+#[test]
 fn merchant_dropdown_filters_rendered_rows_by_boe() {
     let env = merchant_game_env();
     supply_merchant_offers(&env);
