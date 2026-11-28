@@ -71,8 +71,8 @@ fn read_input<T: DeserializeOwned>(state: &mut LuaState) -> LuaResult<T> {
 
 fn register_methods(
     state: &mut LuaState,
-    namespace: &str,
-    methods: &[(&str, RustFn)],
+    namespace: &'static str,
+    methods: &[(&'static str, RustFn)],
 ) -> LuaResult<()> {
     let ns = ensure_namespace(state, namespace)?;
     for &(name, handler) in methods {
