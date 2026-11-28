@@ -218,6 +218,7 @@ fn apply_temporary_state_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
 
     temporary::garrison_mission_lists::apply_bootstrap(lua)?;
     apply_runtime_state_bootstrap(lua)?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     apply_account_and_social_state_bootstrap(lua)?;
     apply_player_state_bootstrap(lua)?;
     apply_secure_and_store_state_bootstrap(lua)?;
@@ -255,14 +256,11 @@ fn apply_runtime_state_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     temporary::zone_story_default::apply_bootstrap(lua)
 }
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 fn apply_account_and_social_state_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
-    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::battle_net_account_defaults::apply_bootstrap(lua)?;
-    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::social_queue_defaults::apply_bootstrap(lua)?;
-    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
-    temporary::merchant_filter_state::apply_bootstrap(lua)?;
-    Ok(())
+    temporary::merchant_filter_state::apply_bootstrap(lua)
 }
 
 fn apply_player_state_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
