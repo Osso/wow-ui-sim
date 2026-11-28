@@ -7,6 +7,7 @@ mod bounded_process;
 
 const ADDON: &str = "RunTestsOutputFixture";
 const FILE: &str = "failure_output.lua";
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 const PARTY_TAINT_FIXTURE: &str = r#"
 test('party changes', function()
     assertTrue(C_AddOns.IsAddOnLoaded('Blizzard_UnitFrame'))
