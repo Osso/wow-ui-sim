@@ -279,6 +279,7 @@ fn apply_secure_and_store_state_bootstrap(lua: &mut rilua::Lua) -> crate::Result
 }
 
 fn apply_unit_state_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::unit_auras_state::apply_bootstrap(lua)?;
     #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::unit_stagger_defaults::apply_bootstrap(lua)?;
