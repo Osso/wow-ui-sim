@@ -191,7 +191,7 @@ mod c_character_creation_trial_boost_data;
 mod c_character_creation_trial_boost_tests;
 pub mod c_character_services;
 pub mod c_chat_bubbles;
-#[cfg(feature = "retail-12-0-5")]
+#[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 pub(crate) mod c_chat_info;
 pub mod c_chromie_time;
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]

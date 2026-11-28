@@ -1,4 +1,4 @@
-//! Explicit Retail chat messaging restriction query and producer guard.
+//! Explicit chat messaging restriction query and Retail producer guard.
 
 use crate::c_api::ensure_namespace;
 use crate::lua_api::methods::borrow_state;
@@ -37,6 +37,7 @@ fn set_chat_messaging_lockdown(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 /// Explicit rejection is simulator policy; native error wording is unknown.
+#[cfg(feature = "retail-12-0-5")]
 pub(crate) fn reject_chat_messaging_lockdown(
     state: &mut LuaState,
     operation: &str,

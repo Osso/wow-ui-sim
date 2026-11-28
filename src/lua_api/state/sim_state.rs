@@ -199,7 +199,7 @@ pub struct SimState {
     #[cfg(feature = "retail-12-0-7")]
     pub unsupported_unit_tokens: HashSet<String>,
     /// Explicit chat restriction input; false default is simulator policy, not a native producer.
-    #[cfg(feature = "retail-12-0-5")]
+    #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
     pub chat_messaging_lockdown: bool,
     #[cfg(feature = "retail-12-0-5")]
     pub chat_expression_inputs: crate::c_api::chat_expressions::ChatExpressionInputs,

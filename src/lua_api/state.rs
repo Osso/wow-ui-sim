@@ -237,7 +237,7 @@ macro_rules! build_empty_sim_state {
             url_texture_inputs: crate::c_api::url_texture_inputs::UrlTextureInputs::default(),
             #[cfg(feature = "retail-12-0-7")]
             unsupported_unit_tokens: HashSet::new(),
-            #[cfg(feature = "retail-12-0-5")]
+            #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
             chat_messaging_lockdown: false,
             #[cfg(feature = "retail-12-0-5")]
             chat_expression_inputs: crate::c_api::chat_expressions::ChatExpressionInputs::default(),
