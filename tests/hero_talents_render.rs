@@ -222,74 +222,58 @@ fn hero_spec_icon_and_mask_quads_match_layout_rect() {
 }
 
 post_wrath_ui_fixture! {
-#[test]
-fn hero_spec_icon_crop_request_matches_atlas_entry() {
-    let env = setup_full_ui();
-    open_class_talent_frame(&env);
+fn hero_icon_id(registry: &wow_ui_sim::widget::WidgetRegistry) -> u64 {
+    let mut id = registry
+        .get_id_by_name("PlayerSpellsFrame")
+        .expect("PlayerSpellsFrame");
+    for key in [
+        "TalentsFrame",
+        "HeroTalentsContainer",
+        "HeroSpecButton",
+        "Icon1",
+    ] {
+        id = registry.get(id).unwrap().children_keys[key];
+    }
+    id
+}
 
-    let (icon_rect, icon_path, atlas_name) = {
-        let state = env.state().borrow();
-        let player_spells_id = state
-            .widgets
-            .get_id_by_name("PlayerSpellsFrame")
-            .expect("PlayerSpellsFrame should exist");
-        let talents_frame_id = *state
-            .widgets
-            .get(player_spells_id)
-            .and_then(|frame| frame.children_keys.get("TalentsFrame"))
-            .expect("TalentsFrame child should exist");
-        let hero_container_id = *state
-            .widgets
-            .get(talents_frame_id)
-            .and_then(|frame| frame.children_keys.get("HeroTalentsContainer"))
-            .expect("HeroTalentsContainer child should exist");
-        let button_id = *state
-            .widgets
-            .get(hero_container_id)
-            .and_then(|frame| frame.children_keys.get("HeroSpecButton"))
-            .expect("HeroSpecButton child should exist");
-        let button = state.widgets.get(button_id).unwrap();
-        let icon_id = *button.children_keys.get("Icon1").expect("Icon1 child");
-        let icon = state.widgets.get(icon_id).unwrap();
-        (
-            wow_ui_sim::iced_app::compute_frame_rect(&state.widgets, icon_id, 1024.0, 768.0),
-            icon.texture
-                .clone()
-                .expect("Icon1 should have a texture path"),
-            icon.atlas.clone().expect("Icon1 should have an atlas"),
-        )
-    };
-
-    let buckets = {
-        let mut state = env.state().borrow_mut();
-        let _ = state.get_strata_buckets();
-        state.strata_buckets.as_ref().unwrap().clone()
-    };
-    let state = env.state().borrow();
-    let batch = build_quad_batch_for_registry(RegistryQuadBatchParams::new(
-        &state.widgets,
-        (1024.0, 768.0),
-        &buckets,
-    ));
-
-    let icon_crop_prefix = format!("{icon_path}@crop:");
-    let request = batch
+fn require_icon_crop<'a>(
+    batch: &'a wow_ui_sim::render::QuadBatch,
+    icon: &wow_ui_sim::widget::Frame,
+    rect: wow_ui_sim::LayoutRect,
+    atlas_file: &str,
+) -> &'a wow_ui_sim::render::TextureRequest {
+    let prefix = format!("{atlas_file}@crop:");
+    let candidates: Vec<_> = batch
         .texture_requests
         .iter()
-        .find(|request| {
-            request.path.starts_with(&icon_crop_prefix)
-                && request_matches_rect(&batch, request, icon_rect)
-        })
-        .expect("HeroSpecButton.Icon1 should emit a cropped atlas request");
+        .filter(|request| request.path.starts_with(&prefix))
+        .collect();
+    if let Some(request) = candidates.iter().copied()
+        .find(|request| request_matches_rect(batch, request, rect))
+    {
+        return request;
+    }
+    let bounds: Vec<_> = candidates.iter()
+        .map(|request| (&request.path, quad_bounds(batch, request)))
+        .collect();
+    panic!(
+        "HeroSpecButton.Icon1 should emit a cropped atlas request: rect={rect:?}, cached={:?}, candidates={bounds:?}",
+        icon.layout_rect
+    )
+}
+
+fn assert_atlas_crop_coords(
+    request: &wow_ui_sim::render::TextureRequest,
+    atlas: &wow_ui_sim::atlas::AtlasInfo,
+) {
     let crop_coords =
         parse_crop_coords(&request.path).expect("HeroSpecButton.Icon1 crop request should parse");
-
-    let atlas = get_atlas_info(&atlas_name).expect("atlas entry should exist");
     let expected = (
-        atlas.info.left_tex_coord,
-        atlas.info.right_tex_coord,
-        atlas.info.top_tex_coord,
-        atlas.info.bottom_tex_coord,
+        atlas.left_tex_coord,
+        atlas.right_tex_coord,
+        atlas.top_tex_coord,
+        atlas.bottom_tex_coord,
     );
     let tolerance = 0.000001;
     assert!(
@@ -299,5 +283,28 @@ fn hero_spec_icon_crop_request_matches_atlas_entry() {
             && (crop_coords.3 - expected.3).abs() <= tolerance,
         "HeroSpecButton.Icon1 crop coords should match atlas entry: crop={crop_coords:?} expected={expected:?}"
     );
+}
+
+#[test]
+fn hero_spec_icon_crop_request_matches_atlas_entry() {
+    let env = setup_full_ui();
+    open_class_talent_frame(&env);
+    let icon_id = hero_icon_id(&env.state().borrow().widgets);
+    let buckets = {
+        let mut state = env.state().borrow_mut();
+        let _ = state.get_strata_buckets();
+        state.strata_buckets.as_ref().unwrap().clone()
+    };
+    let state = env.state().borrow();
+    let icon = state.widgets.get(icon_id).unwrap();
+    let atlas_name = icon.atlas.as_deref().expect("Icon1 should have an atlas");
+    let atlas = get_atlas_info(atlas_name).expect("atlas entry should exist");
+    assert_eq!(icon.texture.as_deref(), Some(atlas.info.file), "Icon1 source must be the atlas backing file");
+    let rect = wow_ui_sim::iced_app::compute_frame_rect(&state.widgets, icon_id, 1024.0, 768.0);
+    let batch = build_quad_batch_for_registry(RegistryQuadBatchParams::new(
+        &state.widgets, (1024.0, 768.0), &buckets,
+    ));
+    let request = require_icon_crop(&batch, icon, rect, atlas.info.file);
+    assert_atlas_crop_coords(request, atlas.info);
 }
 }
