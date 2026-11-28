@@ -145,7 +145,7 @@ Supplies the host-owned value returned by `C_PlayerInfo.IsTravelersLogAvailable(
 - **available** `boolean` -- Whether the Traveler's Log is available to the player
 - **Default:** `false`; the native default is unverified (R-question)
 - **Validation:** non-boolean values raise an error
-- **Affects:** `C_PlayerInfo.IsTravelersLogAvailable()` and the Encounter Journal Monthly Activities tab
+- **Affects:** `C_PlayerInfo.IsTravelersLogAvailable()` and the Retail Encounter Journal Monthly Activities tab
 - **Events:** none
 
 Set the value before opening Encounter Journal:

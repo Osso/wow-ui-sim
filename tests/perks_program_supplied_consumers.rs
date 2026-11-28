@@ -1,11 +1,13 @@
 #![cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 
+#[cfg(feature = "client-retail")]
+use wow_ui_sim::loader::{discover_blizzard_addons_for_screen, find_toc_file, load_addon};
 use wow_ui_sim::lua_api::WowLuaEnv;
-use wow_ui_sim::loader::{
-    discover_blizzard_addons_for_screen, find_toc_file, load_addon,
-};
+#[cfg(feature = "client-retail")]
 use wow_ui_sim::screen::ScreenKind;
+#[cfg(feature = "client-retail")]
 use wow_ui_sim::startup::fire_startup_events_for_screen;
+#[cfg(feature = "client-retail")]
 use wow_ui_sim::toc::TocFile;
 
 const SUPPLIED_VENDOR_ITEMS: &str = r#"[
@@ -18,10 +20,12 @@ const SUPPLIED_CHEST_REWARDS: &str = r#"[
     {"rewardTypeID":1,"perksVendorItemID":202,"rewardAmount":1,"monthRewarded":"2026-11","activityMonthID":11,"thresholdOrderIndex":2}
 ]"#;
 
+#[cfg(feature = "client-retail")]
 const SECOND_CHEST_REWARD: &str = r#"[
     {"rewardTypeID":1,"perksVendorItemID":202,"rewardAmount":1,"monthRewarded":"2026-11","activityMonthID":11,"thresholdOrderIndex":2}
 ]"#;
 
+#[cfg(feature = "client-retail")]
 const MONTHLY_ACTIVITIES: &str = r#"{
     "activePerksMonth":11,"displayMonthName":"November","secondsRemaining":3600,
     "activities":[{"ID":901,"activityName":"Completed activity","description":"",
@@ -52,6 +56,7 @@ fn supply_pending_chest_reward_snapshot(env: &WowLuaEnv, rewards: &str) {
     .expect("A_Admin should accept supplied pending chest rewards");
 }
 
+#[cfg(feature = "client-retail")]
 fn load_monthly_activities_consumer() -> WowLuaEnv {
     let ui = crate::common::blizzard_addon_harness::blizzard_ui_dir();
     let toc_path = find_toc_file(&ui.join("Blizzard_EncounterJournal"))
@@ -87,6 +92,7 @@ fn load_monthly_activities_consumer() -> WowLuaEnv {
     env
 }
 
+#[cfg(feature = "client-retail")]
 fn pending_reward_glow_count(env: &WowLuaEnv) -> i64 {
     env.eval(
         r#"
@@ -158,9 +164,7 @@ fn supplied_catalog_and_chest_state_are_visible() {
     assert_eq!(observed, (0, 101, 202, 100, 200, 0, 2, 2));
 }
 
-#[test]
-fn pending_chest_rewards_drive_original_monthly_activity_glows() {
-    let env = load_monthly_activities_consumer();
+fn assert_travelers_log_availability_inputs(env: &WowLuaEnv) {
     let availability: (bool, bool, bool, bool) = env
         .eval(
             r#"
@@ -175,6 +179,13 @@ fn pending_chest_rewards_drive_original_monthly_activity_glows() {
         )
         .expect("Traveler's Log availability input should be readable");
     assert_eq!(availability, (false, false, true, true));
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn pending_chest_rewards_drive_original_monthly_activity_glows() {
+    let env = load_monthly_activities_consumer();
+    assert_travelers_log_availability_inputs(&env);
 
     env.exec(&format!("A_Admin.SetPerksActivities([==[{MONTHLY_ACTIVITIES}]==])"))
         .expect("A_Admin should accept the supplied activities and thresholds");
@@ -191,4 +202,11 @@ fn pending_chest_rewards_drive_original_monthly_activity_glows() {
         .eval("return EncounterJournal.MonthlyActivitiesFrame:IsShown()")
         .expect("original Monthly Activities frame state should be readable");
     assert!(frame_shown, "the selected original tab should remain shown");
+}
+
+#[cfg(feature = "client-wowforever")]
+#[test]
+fn travelers_log_availability_uses_supplied_boolean_on_forever() {
+    let env = crate::common::panel_fixtures::setup_env();
+    assert_travelers_log_availability_inputs(&env);
 }
