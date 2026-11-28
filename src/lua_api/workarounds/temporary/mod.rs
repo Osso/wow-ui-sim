@@ -262,6 +262,7 @@ pub(crate) mod static_popup_defaults;
 #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod store_glue_state;
 pub(crate) mod store_public_defaults;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod super_track_defaults;
 #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod talent_edge_frame_level_sync;

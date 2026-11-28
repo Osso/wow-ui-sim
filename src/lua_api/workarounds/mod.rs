@@ -388,7 +388,9 @@ fn apply_core_foundation_tracking_defaults(lua: &mut rilua::Lua) -> crate::Resul
     temporary::minimap_tracking_defaults::apply_bootstrap(lua)?;
     #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::map_art_help_text_defaults::apply_bootstrap(lua)?;
-    temporary::super_track_defaults::apply_bootstrap(lua)
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+    temporary::super_track_defaults::apply_bootstrap(lua)?;
+    Ok(())
 }
 
 fn apply_core_foundation_addon_defaults(lua: &mut rilua::Lua) -> crate::Result<()> {
