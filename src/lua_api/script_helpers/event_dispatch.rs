@@ -57,7 +57,9 @@ pub fn fire_named_event_state(state: &mut LuaState, event_name: &str, args: &[Va
         state.push(*value);
     }
     for widget_id in get_event_listeners(state, event_name) {
-        match is_retail_secure_name_shadow(state, widget_id) {
+        let is_shadow =
+            borrow_state(state).map(|sim| is_retail_secure_name_shadow(&sim, widget_id));
+        match is_shadow {
             Ok(true) => continue,
             Ok(false) => {}
             Err(error) => {
@@ -74,30 +76,32 @@ pub fn fire_named_event_state(state: &mut LuaState, event_name: &str, args: &[Va
     crate::lua_api::taint::restore_active_stack_taint(state, taints);
 }
 
-/// INFERRED (R88g.1, R88t.t1/t2, loader state): secure-replayed duplicate names do not receive public events when the ordinary frame retains the name.
-fn is_retail_secure_name_shadow(state: &LuaState, widget_id: u64) -> rilua::LuaResult<bool> {
+/// INFERRED (R88g.1, R88t.t1/t2, frame registry): a secure duplicate is not the public event target when its name points to the ordinary frame.
+pub(crate) fn is_retail_secure_name_shadow(
+    sim: &crate::lua_api::state::SimState,
+    widget_id: u64,
+) -> bool {
     if !crate::client_profile::is_active_retail_12_1_5() {
-        return Ok(false);
+        return false;
     }
-    let sim = borrow_state(state)?;
     let Some(frame) = sim.widgets.get(widget_id) else {
-        return Ok(false);
+        return false;
     };
     let Some(name) = frame.name.as_deref() else {
-        return Ok(false);
+        return false;
     };
     let Some(owner) = frame
         .owner_addon
         .and_then(|owner| sim.addons.get(owner as usize))
     else {
-        return Ok(false);
+        return false;
     };
     let loaded_in_both_environments = owner.loaded && owner.secure_loaded;
     let name_points_to_another_frame = sim
         .widgets
         .get_id_by_name(name)
         .is_some_and(|bound_id| bound_id != widget_id);
-    Ok(loaded_in_both_environments && name_points_to_another_frame)
+    loaded_in_both_environments && name_points_to_another_frame
 }
 
 /// Dispatch one frame's filtered precall, normal and postcall event scripts.

@@ -8,7 +8,7 @@ use crate::lua_api::methods::{
 };
 use crate::lua_api::script_helpers::{
     call_error_handler_state, event_matches_unit_filter, get_event_listeners, get_script,
-    get_scripts_for_dispatch,
+    get_scripts_for_dispatch, is_retail_secure_name_shadow,
 };
 use rilua::{LuaApi, LuaApiMut, Val};
 use std::cell::RefCell;
@@ -509,6 +509,7 @@ impl WowLuaEnv {
             let state = self.state.borrow();
             if should_skip_startup_actionbar_dispatch(&state, widget_id, event)
                 || should_skip_mists_raid_frame_group_roster(&state, widget_id, event)
+                || is_retail_secure_name_shadow(&state, widget_id)
             {
                 return Ok(());
             }
