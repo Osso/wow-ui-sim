@@ -14,7 +14,9 @@
 //!   zone whose `child_rects` entry contains the point. Returns
 //!   nothing when the parent is unknown, the point falls outside
 //!   every rect, or the matched child id is missing from
-//!   `SimState.maps`.
+//!   `SimState.maps`. The WoW Forever client, whose maps are not seeded,
+//!   answers from its own UiMap and UiMapAssignment exports
+//!   (`c_map_forever_layout`).
 //! - `C_Map.GetMapRectOnMap(uiMapID, topMapID)` — projects the rect
 //!   of `uiMapID` onto `topMapID`'s coordinate space by composing
 //!   each `rect_on_parent` along the parent chain. Returns nothing
@@ -502,6 +504,14 @@ fn c_map_get_map_info_at_position(state: &mut LuaState) -> LuaResult<u32> {
         child_id.and_then(|id| sim.maps.get(&id).cloned())
     };
     let Some(child) = resolved else {
+        if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever
+            && let Some((child_id, info)) =
+                super::c_map_forever_layout::child_at(ui_map_id, normalized_x, normalized_y)
+        {
+            let details = push_ui_map_table_details(state, child_id, info);
+            state.push(details);
+            return Ok(1);
+        }
         return Ok(0);
     };
     let details = push_map_details_table(state, &child);
@@ -601,6 +611,9 @@ fn push_map_details_table(state: &mut LuaState, map: &MapData) -> Val {
 /// win because they also carry rects and children; this table only knows
 /// name, type, parent and flags, which is what `GetMapInfo` reports.
 fn ui_map_table_entry(ui_map_id: i32) -> Option<&'static crate::ui_maps::UiMapInfo> {
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever {
+        return super::c_map_forever_layout::ui_map(ui_map_id);
+    }
     if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail {
         return None;
     }

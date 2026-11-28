@@ -285,6 +285,7 @@ pub mod c_major_factions;
 pub mod c_map;
 pub(crate) mod c_map_bounties;
 pub mod c_map_exploration_info;
+mod c_map_forever_layout;
 pub mod c_merchant_frame;
 pub(crate) mod c_minimap_quest_blob;
 pub(crate) mod c_minimap_tracking;

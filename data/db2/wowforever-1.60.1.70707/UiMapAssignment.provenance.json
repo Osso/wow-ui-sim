@@ -1,0 +1,12 @@
+{
+  "profile": "wowforever",
+  "product": "wowf",
+  "build": "1.60.1.70707",
+  "interface": 16001,
+  "source": "https://wago.tools/db2/UiMapAssignment/csv?build=1.60.1.70707",
+  "sha256": "79267e8be8034e47daab14350411b3acc0b1f64e86efc9d821a217497254ca0a",
+  "rows": 61,
+  "retrieved": "2026-11-27",
+  "regenerate": "wow-cli generate ui-map-assignments",
+  "provenance_scope": "Build-specific Wago export; independent local-CASC equality is not established."
+}
