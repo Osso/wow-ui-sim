@@ -420,7 +420,7 @@ const PARTY_ASSIGNMENT_MENU_CONSUMER: &str = r#"
         if event == "GROUP_ROSTER_UPDATE" then updates = updates + 1 end
     end)
     local function open_menu(unit)
-        UnitPopup_OpenMenu("RAID", {unit = unit})
+        UnitPopup_OpenMenu("RAID", {unit = unit, name = UnitName(unit)})
         local menu = Menu.GetManager():GetOpenMenu()
         assert(menu, "original RAID unit popup opened")
         return menu
