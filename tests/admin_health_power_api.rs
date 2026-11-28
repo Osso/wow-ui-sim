@@ -2,6 +2,22 @@
 
 use wow_ui_sim::lua_api::WowLuaEnv;
 
+#[cfg(feature = "client-retail")]
+const ROGUE_CHARGED_POWER_CONSUMER: &str = r#"
+    local bar = PlayerFrame.classPowerBar
+    assert(bar and #bar.classResourceButtonTable >= 5, "Rogue combo point bar loaded")
+    local points = bar.classResourceButtonTable
+    A_Admin.SetUnitChargedPowerPoints("player", {2})
+    local charged = GetUnitChargedPowerPoints("player")
+    assert(#charged == 1 and charged[1] == 2)
+    assert(points[2].isCharged and not points[3].isCharged)
+    A_Admin.SetUnitChargedPowerPoints("player", {3, 5})
+    charged = GetUnitChargedPowerPoints("player")
+    assert(#charged == 2 and charged[1] == 3 and charged[2] == 5)
+    assert(not points[2].isCharged and points[3].isCharged and points[5].isCharged)
+    assert(not pcall(A_Admin.SetUnitChargedPowerPoints, "player", {[1]=2, [3]=5}))
+"#;
+
 fn env() -> WowLuaEnv {
     WowLuaEnv::new().expect("Failed to create Lua environment")
 }
@@ -907,4 +923,44 @@ mod forever_percent {
             )
             .unwrap();
     }
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn rogue_combo_point_bar_uses_supplied_charged_power_points() {
+    let ui_dir = crate::common::blizzard_addon_harness::blizzard_ui_dir();
+    let env = crate::common::blizzard_addon_harness::new_blizzard_addon_env(&ui_dir);
+    env.exec("A_Admin.SetPlayerClass(4); A_Admin.SetPlayerPower(3, 6, 4)")
+        .expect("seed Rogue combo points before Blizzard UI loads");
+    let overrides = [wow_ui_sim::loader::BlizzardAddonOverride {
+        addon: "Blizzard_UnitFrame",
+        extra_roots: &["Blizzard_AuraContainer"],
+    }];
+    let loaded = crate::common::blizzard_addon_harness::load_blizzard_addon_closure_into_env(
+        &env,
+        &ui_dir,
+        &["Blizzard_UnitFrame", "Blizzard_QuickJoin"],
+        &overrides,
+    );
+    assert!(loaded.iter().any(|name| name == "Blizzard_UnitFrame"));
+    env.exec(ROGUE_CHARGED_POWER_CONSUMER)
+        .expect("original Rogue combo point bar reads charged power indices");
+}
+
+#[cfg(feature = "client-wowforever")]
+#[test]
+fn forever_charged_power_points_follow_supplied_state() {
+    env()
+        .eval::<()>(
+            r#"
+            A_Admin.SetUnitChargedPowerPoints("player", {2})
+            local charged = GetUnitChargedPowerPoints("player")
+            assert(#charged == 1 and charged[1] == 2)
+            A_Admin.SetUnitChargedPowerPoints("player", {3, 5})
+            charged = GetUnitChargedPowerPoints("player")
+            assert(#charged == 2 and charged[1] == 3 and charged[2] == 5)
+            assert(not pcall(A_Admin.SetUnitChargedPowerPoints, "player", {[1] = 2, [3] = 5}))
+            "#,
+        )
+        .unwrap();
 }

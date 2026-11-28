@@ -409,6 +409,24 @@ fn target_nearest_enemy_enemy_pool_is_replaceable() {
     assert_eq!(second, "Beta");
 }
 
+#[cfg(feature = "client-retail")]
+#[test]
+fn unit_is_interactable_reads_supplied_target_state() {
+    let env = env();
+    env.exec(
+        r#"
+        A_Admin.SetTarget("Talker", 60, 1, false)
+        A_Admin.SetTargetInteractable(true)
+        assert(UnitIsInteractable("target"))
+        A_Admin.SetTargetInteractable(false)
+        assert(not UnitIsInteractable("target"))
+        A_Admin.ClearTarget()
+        assert(not UnitIsInteractable("target"))
+        "#,
+    )
+    .expect("Retail UnitIsInteractable should query supplied target state");
+}
+
 #[cfg(feature = "retail-12-0-0")]
 #[test]
 fn raid_target_icons_update_real_blizzard_target_frame_consumer() {

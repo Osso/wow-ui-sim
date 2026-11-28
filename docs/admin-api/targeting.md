@@ -16,6 +16,20 @@ A_Admin.SetTarget("Hogger", 11, 1, true)    -- hostile Warrior-class mob
 A_Admin.SetTarget("Jaina", 70, 8, false)    -- friendly Mage
 ```
 
+### A_Admin.SetTargetInteractable(interactable)
+
+Sets the current target's interaction state for `UnitIsInteractable("target")`.
+It does nothing when there is no current target and does not fire an event.
+
+- **interactable** `boolean`
+- **Affects:** `UnitIsInteractable("target")`
+- **Example:**
+```lua
+A_Admin.SetTarget("Talker", 60, 1, false)
+A_Admin.SetTargetInteractable(true)
+assert(UnitIsInteractable("target"))
+```
+
 ### A_Admin.ClearTarget()
 
 Removes the current target.

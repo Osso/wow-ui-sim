@@ -25,6 +25,10 @@ Supplies whether a spell is classified as helpful or harmful. Pass `"helpful"`, 
 
 Sets or clears a scenario low-rank flag for a spell ID. The scenario starts with no flagged spells; this is not native rank data. On PTR and WoWForever, `C_SpellBook.IsSpellBookItemLowRank` reads this input.
 
+### A_Admin.SetActiveRaidMarkers(indexes)
+
+Replaces the supplied active world-marker IDs. `indexes` must be a dense array of whole numbers from `1` through `8`; invalid entries reject the call before state changes. `IsRaidMarkerActive(index)` reads this state. This setup input does not fire events. The simulator models active marker IDs, not their 3D positions.
+
 ### A_Admin.SetActionRepeatActive(slot, active)
 
 Supplies positive action-slot repeat membership independently of casting/current

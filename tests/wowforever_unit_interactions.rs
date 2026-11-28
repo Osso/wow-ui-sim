@@ -189,9 +189,9 @@ fn resolved_interaction_state_drives_vendor_icon_branches() {
         let mut state = state.borrow_mut();
         let target = state.current_target.as_mut().unwrap();
         target.interaction.has_loot = false;
-        target.interaction.interactable = true;
         target.interaction.in_range = true;
     }
+    env.exec("A_Admin.SetTargetInteractable(true)").unwrap();
     env.exec(
         r#"
         bar:UpdateInteractIcons()

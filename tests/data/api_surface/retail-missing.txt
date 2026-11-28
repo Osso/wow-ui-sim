@@ -2236,7 +2236,6 @@ GetThreatStatusColor # not-yet: temporary Lua workaround
 GetTrainerGreetingText # not-yet
 GetTrainerServiceItemLink # not-yet
 GetTreasurePickerItemInfo # not-yet
-GetUnitChargedPowerPoints # not-yet
 GetUnitEmpowerMinHoldTime # not-yet
 GetUnitHealthModifier # not-yet
 GetUnitPowerBarInfoByID # not-yet
@@ -2383,7 +2382,6 @@ PitchDownStart # intentionally-unsupported: 3D camera/model
 PitchDownStop # intentionally-unsupported: 3D camera/model
 PitchUpStart # intentionally-unsupported: 3D camera/model
 PitchUpStop # intentionally-unsupported: 3D camera/model
-PlaceRaidMarker # not-yet
 PlayAutoAcceptQuestSound # not-yet
 PortGraveyard # not-yet
 PreloadMovie # not-yet
@@ -2580,7 +2578,6 @@ UnitChromieTimeID # not-yet
 UnitHasRelicSlot # not-yet
 UnitInAnyGroup # not-yet
 UnitInPartyShard # not-yet
-UnitIsInteractable # not-yet
 UnitIsMercenary # not-yet
 UnitIsPVPSanctuary # not-yet
 UnitIsSameServer # not-yet

@@ -239,6 +239,8 @@ pub mod totems;
 pub(crate) mod trainer_services;
 pub(crate) mod tutorial_requests;
 pub mod ui_widget_container;
+#[cfg(feature = "charged-power-points")]
+pub(crate) mod unit_charged_power_points;
 #[cfg(any(feature = "client-era", feature = "client-anniversary"))]
 pub(crate) mod unit_health_knowledge;
 pub mod unit_interaction;

@@ -123,6 +123,14 @@ pub(super) fn clear_focus(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
+pub(super) fn set_target_interactable(state: &mut LuaState) -> LuaResult<u32> {
+    let interactable = bool::from_stack(state, 1)?;
+    if let Some(target) = borrow_state_mut(state)?.current_target.as_mut() {
+        target.interaction.interactable = interactable;
+    }
+    Ok(0)
+}
+
 pub(super) fn set_target_power(state: &mut LuaState) -> LuaResult<u32> {
     set_selected_unit_power(state, |st| st.current_target.as_mut())
 }

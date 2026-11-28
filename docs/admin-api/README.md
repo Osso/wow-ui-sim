@@ -26,7 +26,7 @@ The `A_Admin` namespace provides administrative functions for controlling simula
 - [Chat windows](chat-windows.md) — SetChatWindowState
 - [Voice chat](voice-chat.md) — SetCanPlayerUseVoiceChat, SetVoiceChatConnected, SetRemoteTtsVoices
 - [Health & Power](health-power.md) — SetPlayerHealth, SetPlayerPower, SetTargetHealth, SetReleaseTimeRemaining, SetNoReleaseAura, AddSelfResurrectOption, ClearSelfResurrectOptions, AddDeathRecap, ClearDeathRecaps, SetCorpseMapPosition, ClearCorpse
-- [Targeting](targeting.md) — SetTarget, ClearTarget, SetFocus, ClearFocus
+- [Targeting](targeting.md) — SetTarget, SetTargetInteractable, ClearTarget, SetFocus, ClearFocus
 - [Challenge mode](challenge-mode.md) — SetChallengePowerLevelMods
 - [Party](party.md) — SetPartySize, SetPartyMember, SetPartyMemberHealth, KillPartyMember, ResPartyMember, SetRotDamage, SetLFGRoleCheck, ClearLFGRoleCheck, ShowLfgExpandSearchPrompt
 - [Movement](movement.md) — SetMoving, SetMounted, SetFlying, SetFalling, SetSwimming

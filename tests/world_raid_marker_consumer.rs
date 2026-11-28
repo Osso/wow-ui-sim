@@ -20,6 +20,16 @@ const WORLD_MARKER_TAB: &str = r#"
     CompactRaidFrameManager_UpdateRaidIcons()
     assert(applied(8) and applied(4) and not applied(1), "supplied markers render applied")
     assert(IsRaidMarkerActive(8) and IsRaidMarkerActive(4) and not IsRaidMarkerActive(1))
+    local markerUpdates = 0
+    CompactRaidFrameManager:HookScript("OnEvent", function(_, event)
+        if event == "RAID_TARGET_UPDATE" then markerUpdates = markerUpdates + 1 end
+    end)
+    byWorldMarker[1]:Click("LeftButton")
+    assert(IsRaidMarkerActive(1) and applied(1), "left click places the first marker")
+    assert(markerUpdates == 1, "placing a marker notifies the original consumer")
+    byWorldMarker[2]:Click("LeftButton")
+    assert(IsRaidMarkerActive(2) and applied(2), "left click places a different marker")
+    assert(markerUpdates == 2, "each placement notifies the original consumer")
     byWorldMarker[1]:Click("RightButton")
     assert(IsRaidMarkerActive(8) and IsRaidMarkerActive(4), "inactive marker right-click is a no-op")
     byWorldMarker[8]:Click("RightButton")
@@ -36,7 +46,7 @@ const WORLD_MARKER_TAB: &str = r#"
 #[test]
 fn raid_manager_world_marker_buttons_follow_active_markers() {
     harness::with_blizzard_addon_startup_shape(
-        &["Blizzard_CompactRaidFrames"],
+        &["Blizzard_CompactRaidFrames", "Blizzard_QuickJoin"],
         &[],
         |env, loaded| {
             assert!(

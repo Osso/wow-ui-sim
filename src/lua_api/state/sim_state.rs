@@ -762,6 +762,8 @@ pub struct SimState {
     /// INFERRED (R88dz (native evidence pending)): host-supplied effective tank aura state.
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     pub unit_effectively_tank_auras: HashMap<String, bool>,
+    #[cfg(feature = "charged-power-points")]
+    pub unit_charged_power_points: HashMap<String, Vec<i32>>,
     /// Host-supplied GUIDs for unit tokens not resolved by the built-in inputs.
     pub unit_guid_overrides: HashMap<String, String>,
     /// Host-supplied GUIDs owned or controlled by the player.

@@ -1795,7 +1795,6 @@ GetSecondsUntilParentalControlsKick # not-yet
 GetSourceLocation # not-yet
 GetTaxiBenchmarkMode # not-yet
 GetThreatStatusColor # not-yet: temporary Lua workaround
-GetUnitChargedPowerPoints # not-yet
 GetUnitEmpowerMinHoldTime # not-yet
 GetUnitHealthModifier # not-yet
 GetUnitPowerBarInfoByID # not-yet
@@ -1833,7 +1832,6 @@ NotWhileDeadError # not-yet
 OpeningCinematic # not-yet
 OutageDetected # not-yet
 PartialPlayTime # not-yet: temporary Lua workaround
-PlaceRaidMarker # not-yet
 PlatformIsHandheld # not-yet
 PlayerIsSpellTarget # not-yet
 PortGraveyard # not-yet
