@@ -1,7 +1,6 @@
 # Documented WoW Forever API functions without a runtime function after full
 # Blizzard UI startup. Contract: docs/specs/api-surface-audit.md.
 # Format: <name> # <intentionally-unsupported|not-yet>[: reason]
-AcceptAreaSpiritHeal # not-yet
 AcceptGuild # not-yet
 AddSourceLocationExclude # not-yet: temporary Lua workaround
 AreClassRolesSoftSuggestions # not-yet
@@ -1722,7 +1721,6 @@ C_VoiceChat.SpeakRemoteTextSample # not-yet
 C_VoiceChat.ToggleDeafened # not-yet
 C_VoiceChat.ToggleMemberMuted # not-yet
 C_VoiceChat.ToggleMuted # not-yet
-C_Weather.GetCurrentWeather # not-yet
 C_WeeklyRewards.AreRewardsForCurrentRewardPeriod # not-yet
 C_WeeklyRewards.ClaimReward # not-yet
 C_WeeklyRewards.CloseInteraction # not-yet
@@ -1747,22 +1745,16 @@ C_WowTokenUI.StartTokenSell # not-yet
 C_XMLUtil.GetTemplates # not-yet
 CanChangePlayerDifficulty # not-yet
 CanDualWield # not-yet
-CanEjectPassengerFromSeat # not-yet
 CanMapChangeDifficulty # not-yet
 CanShowResetInstances # not-yet
-CanSwitchVehicleSeat # not-yet
 CanUpgradeToCurrentExpansion # not-yet
-CancelAreaSpiritHeal # not-yet
 CancelPendingEquip # not-yet
 CancelPreloadingMovie # not-yet
 CaseAccentInsensitiveParse # not-yet
 CheckTalentMasterDist # not-yet
-CinematicFinished # not-yet
-CinematicStarted # not-yet
 ClearCursorHoveredItem # not-yet: temporary Lua workaround
 ClearOutage # not-yet
 ClearPendingBindConversionItem # not-yet
-ClearRaidMarker # not-yet
 ClosestGameObjectPosition # not-yet
 ClosestUnitPosition # not-yet
 ConfirmTalentWipe # not-yet
@@ -1780,22 +1772,16 @@ CursorHasMoney # not-yet
 CursorHasSpell # not-yet
 DeclineGuild # not-yet
 DeclineName # not-yet
-DestroyTotem # not-yet
 Dismount # not-yet
 DoesCurrentLocaleSellExpansionLevels # not-yet
-EjectPassengerFromSeat # not-yet
 EquipPendingItem # not-yet
 FollowUnit # not-yet
 GetAllowLowLevelRaid # not-yet
-GetAreaSpiritHealerTime # not-yet
 GetAreaText # not-yet
 GetAvailableBandwidth # not-yet: temporary Lua workaround
 GetAvailableLocales # not-yet
 GetBackgroundLoadingStatus # not-yet: temporary Lua workaround
 GetBillingTimeRested # not-yet: temporary Lua workaround
-GetCemeteryPreference # not-yet
-GetCorpseRecoveryDelay # not-yet
-GetCurrentCinematicSummary # not-yet
 GetCurrentEventID # not-yet
 GetCursorCenterPosition # not-yet
 GetCursorDelta # not-yet
@@ -1835,7 +1821,6 @@ GetPetHitChanceModifier # not-yet
 GetPetSpellHitChanceModifier # not-yet
 GetProtocolTypes # not-yet: temporary Lua workaround
 GetRealmID # not-yet: temporary Lua workaround
-GetResSicknessDuration # not-yet
 GetRuneCooldown # not-yet
 GetRuneCount # not-yet
 GetScreenDPIScale # not-yet: temporary Lua workaround
@@ -1846,9 +1831,6 @@ GetSheathState # not-yet
 GetSourceLocation # not-yet
 GetTaxiBenchmarkMode # not-yet
 GetThreatStatusColor # not-yet: temporary Lua workaround
-GetTotemCannotDismiss # not-yet
-GetTotemDuration # not-yet
-GetTotemTimeLeft # not-yet
 GetUnitChargedPowerPoints # not-yet
 GetUnitEmpowerMinHoldTime # not-yet
 GetUnitHealthModifier # not-yet
@@ -1859,15 +1841,12 @@ GetUnitPowerBarTextureInfo # not-yet
 GetUnitPowerBarTextureInfoByID # not-yet
 GetUnitPowerModifier # not-yet
 GetUpgradeExpansionLevel # not-yet: temporary Lua workaround
-GetVehicleUIIndicator # not-yet
-GetVehicleUIIndicatorSeat # not-yet
 HasDualWieldPenalty # not-yet
 HasFullControl # not-yet
 HasIgnoreDualWieldWeapon # not-yet
 InitiateRolePoll # not-yet
 Is64BitClient # not-yet
 IsAccountSecured # not-yet: temporary Lua workaround
-IsCemeterySelectionAvailable # not-yet
 IsCollisionEnabled # not-yet
 IsCpuBound # not-yet
 IsDebugBuild # not-yet
@@ -1876,7 +1855,6 @@ IsEuropeanNumbers # not-yet
 IsInsane # not-yet
 IsItemPreferredArmorType # not-yet
 IsJailersTowerLayerTimeLocked # not-yet
-IsLeftMetaKeyDown # not-yet
 IsLegacyDifficulty # not-yet
 IsLinuxClient # not-yet
 IsMovieLocal # not-yet
@@ -1884,9 +1862,6 @@ IsMoviePlayable # not-yet
 IsMovieReadable # not-yet
 IsOnTournamentRealm # not-yet: temporary Lua workaround
 IsOutOfBounds # not-yet
-IsPlayerInGuildFromGUID # not-yet
-IsRaidMarkerActive # not-yet
-IsRightMetaKeyDown # not-yet
 IsUsingFixedTimeStep # not-yet
 IsUsingMouse # not-yet
 LoadURLIndex # not-yet
@@ -1898,14 +1873,10 @@ OutageDetected # not-yet
 PartialPlayTime # not-yet: temporary Lua workaround
 PlaceRaidMarker # not-yet
 PlatformIsHandheld # not-yet
-PlayerIsInCombat # not-yet
 PlayerIsSpellTarget # not-yet
-PlayerVehicleHasComboPoints # not-yet
 PortGraveyard # not-yet
 PreloadMovie # not-yet
 RandomRoll # not-yet
-RemoveRaidTargets # not-yet
-RepopMe # not-yet
 ReportBug # not-yet
 ReportPlayerIsPVPAFK # not-yet
 ReportSuggestion # not-yet
@@ -1914,15 +1885,12 @@ ResetInstances # not-yet
 ResistancePercent # not-yet
 RespondInstanceLock # not-yet
 RestartGx # not-yet
-ResurrectHasSickness # not-yet
-ResurrectHasTimer # not-yet
 RunScript # not-yet: temporary Lua workaround
 Screenshot # not-yet
 SelectedRealmName # not-yet
 SellCursorItem # not-yet
 SendSubscriptionInterstitialResponse # not-yet
 SetAllowLowLevelRaid # not-yet
-SetCemeteryPreference # not-yet
 SetConsoleKey # not-yet
 SetCursorByMode # not-yet
 SetCursorHoveredItem # not-yet: temporary Lua workaround
@@ -1960,7 +1928,6 @@ TargetPriorityHighlightEnd # not-yet
 TargetPriorityHighlightStart # not-yet
 TargetToggle # not-yet
 TargetTotem # not-yet
-TimeoutResurrect # not-yet
 ToggleAnimKitDisplay # not-yet
 ToggleCollision # not-yet
 ToggleCollisionDisplay # not-yet
@@ -1980,10 +1947,7 @@ UnitChromieTimeID # not-yet
 UnitHasMouseoverHighlight # not-yet
 UnitInAnyGroup # not-yet
 UnitInPartyShard # not-yet
-UnitInVehicleControlSeat # not-yet
-UnitInVehicleHidesPetFrame # not-yet
 UnitIsControlling # not-yet
-UnitIsInMyGuild # not-yet
 UnitIsMercenary # not-yet
 UnitIsPVPSanctuary # not-yet
 UnitIsSameServer # not-yet
@@ -2000,12 +1964,7 @@ UnitSetRole # not-yet
 UnitSetRoleEnum # not-yet
 UnitShouldDisplayName # not-yet
 UnitSpellTargetName # not-yet
-UnitSwitchToVehicleSeat # not-yet
-UnitUsingVehicle # not-yet
-UnitVehicleSeatCount # not-yet
-UnitVehicleSeatInfo # not-yet
 UnitWidgetSet # not-yet
 UpdateWindow # not-yet
 WorldLootObjectExists # not-yet: temporary Lua workaround
 secretunwrap # not-yet
-table.getcountinfo # not-yet
