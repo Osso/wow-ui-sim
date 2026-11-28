@@ -228,3 +228,87 @@ const HOUSING_OBSERVATION_CASE: &str = r##"
 fn housing_observation_reflects_replaced_observation() {
     run_scenario(HOUSING_OBSERVATION_CASE);
 }
+
+#[test]
+fn bank_and_mentor_observation_replacement() {
+    run_scenario(
+        r#"
+        assert(#C_Bank.FetchViewableBankTypes() == 0 and C_ChatInfo.GetMentorChannelID() == 0)
+        A_Admin.SetPlayerFeatureState('{"viewableBankTypes":[0,2],"mentorChannelId":19}')
+        local banks = C_Bank.FetchViewableBankTypes()
+        assert(#banks == 2 and banks[1] == 0 and banks[2] == 2 and C_ChatInfo.GetMentorChannelID() == 19)
+        A_Admin.SetPlayerFeatureState('{"viewableBankTypes":[1],"mentorChannelId":42}')
+        banks = C_Bank.FetchViewableBankTypes()
+        assert(#banks == 1 and banks[1] == 1 and C_ChatInfo.GetMentorChannelID() == 42)
+        assert(not pcall(A_Admin.SetPlayerFeatureState,'{"viewableBankTypes":[9]}'))
+        assert(C_Bank.FetchViewableBankTypes()[1] == 1)
+    "#,
+    );
+}
+
+#[test]
+fn availability_catalog_and_pvp_policy_replacement() {
+    run_scenario(
+        r#"
+        A_Admin.SetWorldContentAvailability('{"clubFinderFocusFlags":[1,2,2,4],"delveSeasonFactionId":2712,"pvpAllowed":false,"pvpFailureReason":"Scenario restriction"}')
+        assert(C_ClubFinder.GetPlayerSettingsFocusFlagsSelectedCount() == 3)
+        assert(C_DelvesUI.GetDelvesFactionForSeason() == 2712)
+        local allowed, reason = C_LFGInfo.CanPlayerUsePVP()
+        assert(allowed == false and reason == "Scenario restriction")
+        A_Admin.SetWorldContentAvailability('{"clubFinderFocusFlags":[2],"delveSeasonFactionId":2562,"pvpAllowed":true,"pvpFailureReason":""}')
+        assert(C_ClubFinder.GetPlayerSettingsFocusFlagsSelectedCount() == 1)
+        assert(C_DelvesUI.GetDelvesFactionForSeason() == 2562)
+        allowed, reason = C_LFGInfo.CanPlayerUsePVP()
+        assert(allowed == true and reason == "")
+        A_Admin.SetWorldContentAvailability('{}')
+        assert(C_ClubFinder.GetPlayerSettingsFocusFlagsSelectedCount() == 0 and C_DelvesUI.GetDelvesFactionForSeason() == 0)
+    "#,
+    );
+}
+
+#[test]
+fn pvp_reward_observation_replacement() {
+    run_scenario(
+        r#"
+        A_Admin.SetPvpProgressState('{"weeklyRewardAchieved":true,"lastWeekRewardAchieved":false,"lastWeekRewardClaimed":true,"tierMaxFromWins":3,"soloRbgBrawlMinItemLevel":660}')
+        local earned, last, claimed, tier = C_PvP.GetWeeklyChestInfo()
+        assert(earned == true and last == false and claimed == true and tier == 3)
+        assert(C_PvP.GetBrawlSoloRBGMinItemLevel() == 660)
+        A_Admin.SetPvpProgressState('{"weeklyRewardAchieved":false,"lastWeekRewardAchieved":true,"lastWeekRewardClaimed":false,"tierMaxFromWins":7,"soloRbgBrawlMinItemLevel":710}')
+        earned, last, claimed, tier = C_PvP.GetWeeklyChestInfo()
+        assert(earned == false and last == true and claimed == false and tier == 7)
+        assert(C_PvP.GetBrawlSoloRBGMinItemLevel() == 710)
+    "#,
+    );
+}
+
+#[test]
+fn collection_observation_is_independent_for_relics_and_favorites() {
+    run_scenario(
+        r#"
+        assert(not C_ArtifactUI.DoesEquippedArtifactHaveAnyRelicsSlotted() and not C_TransmogCollection.HasFavorites())
+        A_Admin.SetCollectionObservation('{"equippedArtifactRelicItemIds":[12345],"favoriteAppearanceIds":[]}')
+        assert(C_ArtifactUI.DoesEquippedArtifactHaveAnyRelicsSlotted() and not C_TransmogCollection.HasFavorites())
+        A_Admin.SetCollectionObservation('{"equippedArtifactRelicItemIds":[],"favoriteAppearanceIds":[321,654]}')
+        assert(not C_ArtifactUI.DoesEquippedArtifactHaveAnyRelicsSlotted() and C_TransmogCollection.HasFavorites())
+    "#,
+    );
+}
+
+#[test]
+fn gamepad_config_ids_preserve_optional_components_and_order() {
+    run_scenario(
+        r#"
+        assert(#C_GamePad.GetAllConfigIDs() == 0)
+        A_Admin.SetGamePadConfigurationIDs('[{"vendorID":1356,"productID":1476},{"vendorID":1118}]')
+        local ids = C_GamePad.GetAllConfigIDs()
+        assert(#ids == 2 and ids[1].vendorID == 1356 and ids[1].productID == 1476)
+        assert(ids[2].vendorID == 1118 and ids[2].productID == nil)
+        ids[1].vendorID = 0
+        assert(C_GamePad.GetAllConfigIDs()[1].vendorID == 1356)
+        A_Admin.SetGamePadConfigurationIDs('[{"productID":654}]')
+        ids = C_GamePad.GetAllConfigIDs()
+        assert(#ids == 1 and ids[1].vendorID == nil and ids[1].productID == 654)
+    "#,
+    );
+}

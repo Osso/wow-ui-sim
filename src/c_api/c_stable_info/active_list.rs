@@ -1,5 +1,6 @@
 //! Supplied modern PetInfo observations, not native acquisition/default/sort policy.
 //! Retail StableInfoDocumentation.lua:15–22,193–214; PTR 70493:19–26,215–241.
+// C_StableInfo.GetNumActivePets: Retail StableInfoDocumentation.lua:33; Forever StableInfoDocumentation.lua:46.
 
 use crate::c_api::helpers::set_table_array;
 use crate::client_profile::{ACTIVE, ClientProfile};

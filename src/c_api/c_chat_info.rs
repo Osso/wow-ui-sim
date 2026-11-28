@@ -1,4 +1,5 @@
 //! Explicit Retail chat messaging restriction query and producer guard.
+// C_ChatInfo.IsLoggingChat: ChatInfoDocumentation.lua:363.
 
 use crate::c_api::ensure_namespace;
 use crate::lua_api::methods::borrow_state;

@@ -53,7 +53,6 @@ C_AreaPoiInfo.GetDragonridingRacesForMap # not-yet
 C_ArtifactUI.CanApplyArtifactRelic # not-yet
 C_ArtifactUI.CanApplyRelicItemIDToEquippedArtifactSlot # not-yet
 C_ArtifactUI.ClearForgeCamera # intentionally-unsupported: 3D camera/model
-C_ArtifactUI.DoesEquippedArtifactHaveAnyRelicsSlotted # not-yet
 C_ArtifactUI.GetEquippedArtifactArtInfo # not-yet
 C_ArtifactUI.GetEquippedArtifactNumRelicSlots # not-yet
 C_ArtifactUI.GetEquippedArtifactRelicInfo # not-yet
@@ -104,7 +103,6 @@ C_Bank.FetchBankLockedReason # not-yet
 C_Bank.FetchNextPurchasableBankTabData # not-yet
 C_Bank.FetchPurchasedBankTabData # not-yet
 C_Bank.FetchPurchasedBankTabIDs # not-yet
-C_Bank.FetchViewableBankTypes # not-yet
 C_Bank.HasMaxBankTabs # not-yet
 C_Bank.IsItemAllowedInBankType # not-yet
 C_Bank.PurchaseBankTab # not-yet
@@ -198,7 +196,6 @@ C_ChatInfo.GetChatLineSenderGUID # not-yet
 C_ChatInfo.GetChatLineSenderName # not-yet
 C_ChatInfo.GetClubStreamIDs # not-yet
 C_ChatInfo.GetColorForChatType # not-yet
-C_ChatInfo.GetMentorChannelID # not-yet
 C_ChatInfo.GetNumReservedChatWindows # not-yet: temporary Lua workaround
 C_ChatInfo.IsChatLineCensored # not-yet
 C_ChatInfo.IsLoggingCombat # not-yet
@@ -263,7 +260,6 @@ C_ClubFinder.CheckAllPlayerApplicantSettings # not-yet
 C_ClubFinder.ClearAllFinderCache # not-yet
 C_ClubFinder.ClearClubApplicantsCache # not-yet
 C_ClubFinder.ClearClubFinderPostingsCache # not-yet
-C_ClubFinder.GetPlayerSettingsFocusFlagsSelectedCount # not-yet
 C_ClubFinder.GetPostingIDFromClubFinderGUID # not-yet
 C_ClubFinder.GetRecruitingClubInfoFromFinderGUID # not-yet
 C_ColorUtil.ConvertHSLToHSV # not-yet: temporary Lua workaround
@@ -528,7 +524,6 @@ C_Debug.TeleportToMapDebugObject # not-yet
 C_Debug.TeleportToMapLocation # not-yet
 C_Debug.ToggleDebugCharInfo # not-yet
 C_Debug.ToggleWindDebugMenu # not-yet
-C_DelvesUI.GetDelvesFactionForSeason # not-yet
 C_DelvesUI.GetLockedTextForCompanion # not-yet
 C_DelvesUI.GetModelSceneForCompanion # not-yet
 C_DelvesUI.IsEligibleForActiveDelveRewards # not-yet
@@ -561,7 +556,6 @@ C_GamePad.ButtonIndexToConfigName # not-yet
 C_GamePad.ClearLedColor # not-yet
 C_GamePad.DeleteConfig # not-yet
 C_GamePad.GetActiveDeviceID # not-yet
-C_GamePad.GetAllConfigIDs # not-yet
 C_GamePad.GetCombinedDeviceID # not-yet
 C_GamePad.GetConfig # not-yet
 C_GamePad.GetDeviceMappedState # not-yet
@@ -1027,7 +1021,6 @@ C_KeyBindings.SetTurnStrafeStyle # not-yet
 C_KeyBindings.UpdateTurnStrafeBindingsForCharacter # not-yet
 C_LFGInfo.AreCrossFactionGroupQueuesAllowed # not-yet
 C_LFGInfo.CanPlayerUseLFR # not-yet: temporary Lua workaround
-C_LFGInfo.CanPlayerUsePVP # not-yet
 C_LFGInfo.CanPlayerUseScenarioFinder # not-yet
 C_LFGInfo.DoesActivePartyMeetPremadeLaunchCount # not-yet
 C_LFGInfo.DoesCrossFactionQueueRequireFullPremade # not-yet
@@ -1297,7 +1290,6 @@ C_PvP.GetBattlefieldFlagPosition # not-yet
 C_PvP.GetBattlefieldVehicleInfo # not-yet
 C_PvP.GetBattlefieldVehicles # not-yet
 C_PvP.GetBrawlRewards # not-yet
-C_PvP.GetBrawlSoloRBGMinItemLevel # not-yet
 C_PvP.GetGlobalPvpScalingInfoForSpecID # not-yet
 C_PvP.GetLevelUpBattlegrounds # not-yet
 C_PvP.GetMatchPVPStatColumn # not-yet
@@ -1326,7 +1318,6 @@ C_PvP.GetSeasonBestInfo # not-yet
 C_PvP.GetSkirmishInfo # not-yet
 C_PvP.GetTeamInfo # not-yet
 C_PvP.GetUIDisplaySeason # not-yet
-C_PvP.GetWeeklyChestInfo # not-yet
 C_PvP.IsBrawlSoloRBG # not-yet
 C_PvP.IsBrawlSoloShuffle # not-yet
 C_PvP.IsInRatedMatchWithDeserterPenalty # not-yet
@@ -1726,7 +1717,6 @@ C_TransmogCollection.GetPairedArtifactAppearance # not-yet
 C_TransmogCollection.GetSourceIcon # not-yet
 C_TransmogCollection.GetSourceItemID # not-yet
 C_TransmogCollection.GetSourceRequiredHoliday # not-yet
-C_TransmogCollection.HasFavorites # not-yet
 C_TransmogCollection.IsCategoryValidForItem # not-yet
 C_TransmogCollection.PlayerCanCollectSource # not-yet
 C_TransmogCollection.SetAllCollectionTypeFilters # not-yet

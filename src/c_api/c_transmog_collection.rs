@@ -1,4 +1,6 @@
 //! Owned custom-set storage; native validation and persistence are not modeled.
+// C_TransmogCollection.AreAllCollectionTypeFiltersChecked: TransmogItemsDocumentation.lua:27.
+// C_TransmogCollection.AreAllSourceTypeFiltersChecked: TransmogItemsDocumentation.lua:36.
 
 mod illusion_info;
 #[cfg(feature = "retail-12-0-5")]

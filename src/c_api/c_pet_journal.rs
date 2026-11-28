@@ -1,4 +1,5 @@
 //! State-backed C_PetJournal queries used by legacy pet-journal consumers.
+// C_PetJournal.GetOwnedPetIDs: PetJournalInfoDocumentation.lua:107.
 
 use crate::lua_api::methods::{borrow_state, val_to_string};
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};

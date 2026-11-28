@@ -7,7 +7,9 @@ use crate::lua_bridge::{FromStack, TableBuilder, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, RustFn, Val, runtime_error};
 use serde::de::DeserializeOwned;
+mod collection_observation;
 mod content_availability;
+mod gamepad_configuration;
 mod group_activity;
 mod housing_observation;
 mod minimap_presentation;
@@ -24,6 +26,8 @@ pub(crate) struct Observations {
     content_availability: content_availability::ContentAvailability,
     minimap_presentation: minimap_presentation::MinimapPresentation,
     housing_observation: housing_observation::HousingObservation,
+    collection_observation: collection_observation::CollectionObservation,
+    gamepad_configuration_ids: Vec<gamepad_configuration::ConfigId>,
 }
 
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
@@ -34,6 +38,8 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     content_availability::register(state)?;
     minimap_presentation::register(state)?;
     housing_observation::register(state)?;
+    collection_observation::register(state)?;
+    gamepad_configuration::register(state)?;
     Ok(())
 }
 
@@ -48,7 +54,13 @@ pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
         builder.set_function("SetMinimapPresentationState", minimap_presentation::supply)?;
     let builder =
         builder.set_function("SetHousingEditorObservation", housing_observation::supply)?;
-    Ok(builder)
+    register_catalog_admin(builder)
+}
+
+fn register_catalog_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
+    builder
+        .set_function("SetCollectionObservation", collection_observation::supply)?
+        .set_function("SetGamePadConfigurationIDs", gamepad_configuration::supply)
 }
 
 fn read_input<T: DeserializeOwned>(state: &mut LuaState) -> LuaResult<T> {

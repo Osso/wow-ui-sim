@@ -1,4 +1,7 @@
 //! Explicit set-filter state; native defaults and filtering effects are unmodeled.
+// C_TransmogSets.GetFullBaseSetsCounts: TransmogSetsDocumentation.lua:131.
+// C_TransmogSets.GetValidBaseSetsCountsForCharacter: TransmogSetsDocumentation.lua:299.
+// C_TransmogSets.HasUsableSets: Retail TransmogSetsDocumentation.lua:349; Forever TransmogSetsDocumentation.lua:358.
 
 mod catalog;
 pub use catalog::{TransmogSetInfo, TransmogSetPrimaryAppearanceInfo, TransmogSets};

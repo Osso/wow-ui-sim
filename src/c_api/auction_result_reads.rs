@@ -1,4 +1,7 @@
 //! Bulk reads of the existing auction result cache.
+// C_AuctionHouse.GetBids: AuctionHouseDocumentation.lua:207.
+// C_AuctionHouse.GetNumReplicateItems: Retail AuctionHouseDocumentation.lua:536; Forever AuctionHouseDocumentation.lua:552.
+// C_AuctionHouse.GetOwnedAuctions: Retail AuctionHouseDocumentation.lua:575; Forever AuctionHouseDocumentation.lua:591.
 use super::{ensure_namespace, helpers::set_table_array};
 use crate::lua_api::methods::{
     borrow_state, create_string, create_table, create_table_with_fields,

@@ -6,6 +6,7 @@
 //! loot availability remains seeded, while Retail 12.0.5 loot getter/setter
 //! share the legacy model. Unrelated instance abandon defaults stay in
 //! temporary workarounds.
+// C_PartyInfo.IsChallengeModeActive: PartyInfoDocumentation.lua:369.
 
 use crate::c_api::helpers::{ensure_namespace, set_table_array};
 use crate::lua_api::globals::group_queries::active_party_count;

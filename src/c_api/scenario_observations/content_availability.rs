@@ -1,6 +1,9 @@
-use super::borrow_state;
+// C_ClubFinder.GetPlayerSettingsFocusFlagsSelectedCount: ClubFinderDocumentation.lua:157.
+// C_DelvesUI.GetDelvesFactionForSeason: DelvesUIDocumentation.lua:165.
+// C_LFGInfo.CanPlayerUsePVP: LFGInfoDocumentation.lua:56.
 use super::numbers;
 use super::project;
+use super::{borrow_state, create_string};
 use super::{borrow_state_mut, read_input, register_methods};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
@@ -17,6 +20,10 @@ pub(super) struct ContentAvailability {
     available_campaign_ids: Vec<u32>,
     default_order_skill_line_id: Option<u32>,
     delve_season_affix_spell_ids: Vec<u32>,
+    delve_season_faction_id: u32,
+    club_finder_focus_flags: std::collections::BTreeSet<u32>,
+    pvp_allowed: bool,
+    pvp_failure_reason: String,
 }
 
 pub(super) fn supply(state: &mut LuaState) -> LuaResult<u32> {
@@ -36,6 +43,7 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
     register_campaigninfo(state)?;
     register_craftingorders(state)?;
     register_delvesui(state)?;
+    register_methods(state, "C_LFGInfo", &[("CanPlayerUsePVP", can_use_pvp)])?;
     Ok(())
 }
 
@@ -46,6 +54,7 @@ fn register_clubfinder(state: &mut LuaState) -> LuaResult<()> {
         &[
             // ClubFinderDocumentation.lua:620
             ("ShouldShowClubFinder", club_finder_shown),
+            ("GetPlayerSettingsFocusFlagsSelectedCount", focus_count),
         ],
     )
 }
@@ -131,6 +140,7 @@ fn register_delvesui(state: &mut LuaState) -> LuaResult<()> {
                 "GetDelvesAffixSpellsForSeason",
                 delve_season_affix_spell_ids,
             ),
+            ("GetDelvesFactionForSeason", delve_season_faction_id),
         ],
     )
 }
@@ -197,4 +207,31 @@ fn delve_season_affix_spell_ids(state: &mut LuaState) -> LuaResult<u32> {
         .delve_season_affix_spell_ids
         .clone();
     numbers(state, values)
+}
+
+fn focus_count(state: &mut LuaState) -> LuaResult<u32> {
+    project(state, |o| {
+        Val::Num(o.content_availability.club_finder_focus_flags.len() as f64)
+    })
+}
+
+fn delve_season_faction_id(state: &mut LuaState) -> LuaResult<u32> {
+    project(state, |o| {
+        Val::Num(f64::from(o.content_availability.delve_season_faction_id))
+    })
+}
+
+fn can_use_pvp(state: &mut LuaState) -> LuaResult<u32> {
+    let (allowed, reason) = {
+        let sim = borrow_state(state)?;
+        let availability = &sim.scenario_observations.content_availability;
+        (
+            availability.pvp_allowed,
+            availability.pvp_failure_reason.clone(),
+        )
+    };
+    state.push(Val::Bool(allowed));
+    let reason = create_string(state, &reason);
+    state.push(reason);
+    Ok(2)
 }
