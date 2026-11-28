@@ -512,6 +512,8 @@ pub struct LfgActiveEntry {
     /// Server moderation flag; listings start uncensored.
     pub censored: bool,
     pub created_at: std::time::Instant,
+    /// Title, comment and voice text captured from the creation fields.
+    pub text: crate::c_api::c_lfg_list_creation::CreationText,
 }
 
 /// A premade group listing in the Group Finder.
@@ -556,6 +558,8 @@ pub struct PremadeListing {
     pub num_bnet_friends: i32,
     pub num_char_friends: i32,
     pub num_guild_mates: i32,
+    /// Supplied `LfgSearchResultPlayerInfo` rows in member-index order.
+    pub members: Vec<crate::c_api::c_lfg_list_members::LfgSearchMember>,
 }
 
 /// Player-side filter state for the Group Finder search panel,

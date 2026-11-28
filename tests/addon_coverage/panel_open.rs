@@ -12,14 +12,31 @@ struct PanelOpenCoverageCase {
     expected_error_overrides: &'static [(&'static str, usize)],
 }
 
+#[cfg(not(feature = "client-wowforever"))]
+const ACHIEVEMENT_CASE: PanelOpenCoverageCase = PanelOpenCoverageCase {
+    name: "achievement",
+    open_lua: "ToggleAchievementFrame()",
+    expected_addon: "Blizzard_AchievementUI",
+    expected_frame: "AchievementFrame",
+    expected_error_overrides: &[("<unknown>", 1)],
+};
+
+/// Forever's Camelot override routes the achievement toggle to Legacy Challenges
+/// when Legacy renown is positive (Blizzard_AchievementUI/Camelot/
+/// Blizzard_AchievementUI.lua:3-17 -> Blizzard_LegacySystem_Bootstrap.lua:23-27
+/// -> Blizzard_LegacySystem.lua:81-92 `ShowUIPanel(LegacySystemFrame)`).
+/// The account renown is supplied host state (docs/admin-api/reputation.md).
+#[cfg(feature = "client-wowforever")]
+const ACHIEVEMENT_CASE: PanelOpenCoverageCase = PanelOpenCoverageCase {
+    name: "achievement",
+    open_lua: "A_Admin.SetMajorFactionRenown(Constants.LegacyConsts.LEGACY_REWARD_TRACK_FACTION_ID, 3, 10) ToggleAchievementFrame()",
+    expected_addon: "Blizzard_LegacySystem",
+    expected_frame: "LegacySystemFrame",
+    expected_error_overrides: &[("<unknown>", 1)],
+};
+
 const PANEL_OPEN_COVERAGE_CASES: &[PanelOpenCoverageCase] = &[
-    PanelOpenCoverageCase {
-        name: "achievement",
-        open_lua: "ToggleAchievementFrame()",
-        expected_addon: "Blizzard_AchievementUI",
-        expected_frame: "AchievementFrame",
-        expected_error_overrides: &[("<unknown>", 1)],
-    },
+    ACHIEVEMENT_CASE,
     PanelOpenCoverageCase {
         name: "collections",
         open_lua: "ToggleCollectionsJournal(COLLECTIONS_JOURNAL_TAB_INDEX_MOUNTS)",
@@ -108,6 +125,11 @@ fn panel_open_runtime_paths_stay_within_known_error_baseline() {
                 PANEL_OPEN_COVERAGE_CASES
             };
             for case in cases {
+                // Forever cannot load the journal: Blizzard_EncounterJournal.toc:7
+                // declares `AllowLoadGameType: standard, classic`.
+                if cfg!(feature = "client-wowforever") && case.name == "encounter_journal" {
+                    continue;
+                }
                 clear_lua_error_tracking(&env);
                 env.exec(case.open_lua)
                     .unwrap_or_else(|error| panic!("{} opener should run: {error}", case.name));

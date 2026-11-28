@@ -23,3 +23,7 @@ Handoff `native-evidence-70688/WM88-recipe-first-craft.md` (Retail build 70688).
 ## PTR registration
 
 VERIFIED: PTR 70493 `Blizzard_ProfessionsTemplates/Blizzard_ProfessionsRecipeSchematicForm.lua:661` consumes this API. The registered contract is the same as Retail WM88, **INFERRED for PTR** pending native R85 evidence. Retail native evidence does not establish PTR parity.
+
+## Forever registration
+
+VERIFIED: Forever 70707 documents the function (`TradeSkillUIDocumentation.lua:971-983`) and the selected `Blizzard_ProfessionsRecipeSchematicForm.lua:661` calls it when a learned recipe opens. The simulator publishes the same contract, **INFERRED for Forever**; native Forever behaviour is not verified.

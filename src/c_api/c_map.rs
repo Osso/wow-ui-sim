@@ -157,6 +157,15 @@ fn register_c_map_methods(state: &mut LuaState, table_ref: LuaTableRef) -> LuaRe
             close_world_map_interaction,
         )?;
     }
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever {
+        // Forever 70707 MapDocumentation.lua:548-561.
+        table_set_rust_fn_static(
+            state,
+            table_ref,
+            "IsMapValidForNavBarDropdown",
+            c_map_is_map_valid_for_nav_bar_dropdown,
+        )?;
+    }
     if matches!(
         crate::client_profile::ACTIVE,
         crate::client_profile::ClientProfile::Mists
@@ -483,6 +492,33 @@ fn c_map_get_map_info(state: &mut LuaState) -> LuaResult<u32> {
     };
     state.push(details);
     Ok(1)
+}
+
+const UI_MAP_TYPE_CONTINENT: i32 = 2;
+const UI_MAP_TYPE_ZONE: i32 = 3;
+const UI_MAP_FLAG_FORCE_ON_NAVBAR: i32 = 0x8000;
+const UI_MAP_FLAG_DO_NOT_SHOW_ON_NAVBAR: i32 = 0x80000;
+
+/// INFERRED (R-request pending): a known map is valid when its UiMap flags
+/// do not carry `DoNotShowOnNavbar` and it is a continent or zone or carries
+/// `ForceOnNavbar` (Forever `MapConstantsDocumentation.lua:55,59`).
+/// Placeholder generic map info is not map data, so unknown maps are invalid.
+fn c_map_is_map_valid_for_nav_bar_dropdown(state: &mut LuaState) -> LuaResult<u32> {
+    let ui_map_id = i32::from_stack(state, 1)?;
+    let valid = borrow_state(state)?
+        .maps
+        .get(&ui_map_id)
+        .is_some_and(|map| is_nav_bar_dropdown_map(map.map_type, map.flags));
+    state.push(Val::Bool(valid));
+    Ok(1)
+}
+
+fn is_nav_bar_dropdown_map(map_type: i32, flags: i32) -> bool {
+    if flags & UI_MAP_FLAG_DO_NOT_SHOW_ON_NAVBAR != 0 {
+        return false;
+    }
+    flags & UI_MAP_FLAG_FORCE_ON_NAVBAR != 0
+        || matches!(map_type, UI_MAP_TYPE_CONTINENT | UI_MAP_TYPE_ZONE)
 }
 
 fn should_return_generic_map_info(ui_map_id: i32) -> bool {

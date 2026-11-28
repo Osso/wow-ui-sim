@@ -544,8 +544,6 @@ C_Flyout.GetFlyoutInfo # not-yet
 C_Flyout.GetFlyoutSlotInfo # not-yet
 C_Flyout.GetNumFlyouts # not-yet
 C_FriendList.IsIgnoredByGuid # not-yet
-C_FriendList.SendWho # not-yet
-C_FriendList.SortWho # not-yet
 C_GamePad.AddSDLMapping # not-yet
 C_GamePad.ApplyConfigs # not-yet
 C_GamePad.AxisIndexToConfigName # not-yet
@@ -908,9 +906,7 @@ C_LFGInfo.GetRoleCheckDifficultyDetails # not-yet
 C_LFGInfo.IsLFREnabled # not-yet
 C_LFGList.CanActiveEntryUseAutoAccept # not-yet
 C_LFGList.ClearApplicationTextFields # not-yet
-C_LFGList.ClearCreationTextFields # not-yet
 C_LFGList.ConfirmCensoredActiveEntry # not-yet
-C_LFGList.CopyActiveEntryInfoToCreationFields # not-yet
 C_LFGList.CreateScenarioListing # not-yet
 C_LFGList.DoesCensoredTextMatch # not-yet
 C_LFGList.DoesEntryTitleMatchPrebuiltTitle # not-yet
@@ -920,8 +916,6 @@ C_LFGList.GetApplicantInfo # not-yet
 C_LFGList.GetApplicantPvpRatingInfoForListing # not-yet
 C_LFGList.GetKeystoneForActivity # not-yet
 C_LFGList.GetOwnedKeystoneActivityAndGroupAndLevel # not-yet
-C_LFGList.GetSearchResultLeaderInfo # not-yet
-C_LFGList.GetSearchResultPlayerInfo # not-yet
 C_LFGList.IsCensoredActiveEntryUnresolved # not-yet
 C_LFGList.ReportGroupAsAdvertisement # not-yet
 C_LFGList.RevealCensoredActiveEntry # not-yet
@@ -930,9 +924,6 @@ C_LFGList.SetEntryTitle # not-yet
 C_LFGList.SetSearchToScenarioID # not-yet
 C_LFGList.ValidateRequiredDungeonScore # not-yet
 C_LFGList.ValidateRequiredPvpRatingForActivity # not-yet
-C_LFGListRoles.GetRoles # not-yet
-C_LFGListRoles.GetSavedRoles # not-yet
-C_LFGListRoles.SetRoles # not-yet
 C_LegendaryCrafting.CraftRuneforgeLegendary # not-yet
 C_LegendaryCrafting.GetRuneforgeItemPreviewInfo # not-yet
 C_LegendaryCrafting.GetRuneforgeLegendaryComponentInfo # not-yet
@@ -989,7 +980,6 @@ C_Map.GetMapWorldSize # not-yet: temporary Lua workaround
 C_Map.GetUserWaypointFromHyperlink # not-yet
 C_Map.GetUserWaypointHyperlink # not-yet
 C_Map.IsCityMap # not-yet
-C_Map.IsMapValidForNavBarDropdown # not-yet
 C_Map.MapHasArt # not-yet: temporary Lua workaround
 C_Map.OpenWorldMap # not-yet
 C_MerchantFrame.GetBuybackItemID # not-yet
@@ -1268,7 +1258,6 @@ C_QuestSession.RequestSessionStart # not-yet
 C_QuestSession.RequestSessionStop # not-yet
 C_QuestSession.SendSessionBeginResponse # not-yet
 C_QuestSession.SetQuestIsSuperTracked # not-yet
-C_RaidLocks.GetRedirectedDifficultyID # not-yet
 C_RaidLocks.IsRaidLockExtendFeatureEnabled # not-yet
 C_RaidLocks.IsRaidLockExtendFeatureSupported # not-yet
 C_RecentAllies.CanSetRecentAllyNote # not-yet
@@ -1529,7 +1518,6 @@ C_TradeSkillUI.GetItemReagentQualityByItemInfo # not-yet
 C_TradeSkillUI.GetOriginalCraftRecipeID # not-yet
 C_TradeSkillUI.GetProfessionChildSkillLineID # not-yet
 C_TradeSkillUI.GetProfessionForCursorItem # not-yet
-C_TradeSkillUI.GetProfessionInfoBySkillLineID # not-yet
 C_TradeSkillUI.GetProfessionNameForSkillLineAbility # not-yet
 C_TradeSkillUI.GetProfessionSpells # not-yet
 C_TradeSkillUI.GetQualitiesForRecipe # not-yet
@@ -1544,7 +1532,6 @@ C_TradeSkillUI.IsEnchantTargetValid # not-yet
 C_TradeSkillUI.IsGuildTradeSkillsEnabled # not-yet: temporary Lua workaround
 C_TradeSkillUI.IsNearProfessionSpellFocus # not-yet
 C_TradeSkillUI.IsOriginalCraftRecipeLearned # not-yet
-C_TradeSkillUI.IsRecipeFirstCraft # not-yet
 C_TradeSkillUI.IsRecipeInBaseSkillLine # not-yet
 C_TradeSkillUI.IsRecipeProfessionLearned # not-yet
 C_TradeSkillUI.IsRecraftReagentValid # not-yet

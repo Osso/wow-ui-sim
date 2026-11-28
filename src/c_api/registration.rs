@@ -117,6 +117,7 @@ pub(crate) fn register_character_progression_tables(state: &mut LuaState) -> Lua
     c_barber_shop::register_c_barber_shop_surface(state)?;
     c_cursor::register_c_cursor_surface(state)?;
     c_major_factions::register_c_major_factions_surface(state)?;
+    super::c_lfg_list_roles::register(state)?;
     c_allied_races::register_c_allied_races_surface(state)
 }
 
@@ -183,6 +184,7 @@ fn register_interaction_crafting(state: &mut LuaState) -> LuaResult<()> {
     super::c_trade_skill_cooldown::register(state)?;
     super::c_trade_skill_crafting_ui::register(state)?;
     super::c_trade_skill_favorites::register(state)?;
+    super::c_trade_skill_profession_info::register(state)?;
     super::c_trade_skill_favorites::register_has_favorite_order_recipes(state)?;
     super::c_trade_skill_first_craft::register(state)?;
     super::c_trade_skill_quality::register(state)?;

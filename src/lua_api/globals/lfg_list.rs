@@ -799,5 +799,55 @@ pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
     register_capability_methods(state, table_ref)?;
     register_activity_methods(state, table_ref)?;
     register_filter_methods(state, table_ref)?;
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever {
+        register_forever_methods(state, table_ref)?;
+    }
     Ok(())
+}
+
+/// Forever 70707 `LFGListInfoDocumentation.lua:54-68,411-443`; the
+/// undeclared `RequestAvailableActivities` is called by the shipped
+/// `Blizzard_LFGVanilla_ParentFrame.lua:55`.
+fn register_forever_methods(state: &mut LuaState, table_ref: GcRef<Table>) -> LuaResult<()> {
+    use crate::c_api::{c_lfg_list_creation as creation, c_lfg_list_members as members};
+    register_lfg_list_methods(
+        state,
+        table_ref,
+        &[
+            (
+                "ClearCreationTextFields",
+                creation::clear_creation_text_fields,
+            ),
+            (
+                "CopyActiveEntryInfoToCreationFields",
+                creation::copy_active_entry_info_to_creation_fields,
+            ),
+            (
+                "GetSearchResultLeaderInfo",
+                members::get_search_result_leader_info,
+            ),
+            (
+                "GetSearchResultPlayerInfo",
+                members::get_search_result_player_info,
+            ),
+            ("RequestAvailableActivities", request_available_activities),
+        ],
+    )
+}
+
+/// INFERRED (R-request pending): the server answers the activity request
+/// with `LFG_LIST_AVAILABILITY_UPDATE`, which the Vanilla-style listing and
+/// browse frames register (`Blizzard_LFGVanilla_Listing.lua:34,120`).
+fn request_available_activities(state: &mut LuaState) -> LuaResult<u32> {
+    defer_lfg_event(
+        state,
+        dispatch_availability_update,
+        "C_LFGList.AvailableActivities",
+    )?;
+    Ok(0)
+}
+
+fn dispatch_availability_update(state: &mut LuaState) -> LuaResult<u32> {
+    fire_event_with_args(state, "LFG_LIST_AVAILABILITY_UPDATE", Vec::new())?;
+    Ok(0)
 }

@@ -67,6 +67,8 @@ fn read_create_data(state: &mut LuaState) -> LuaResult<LfgActiveEntry> {
             "listing requires an LfgListingCreateData table",
         ));
     }
+    let text = crate::c_api::c_lfg_list_creation::read_creation_text(state)?;
+    let created_at = borrow_state(state)?.clock_now();
     Ok(LfgActiveEntry {
         activity_ids: activity_ids(state, data)?,
         quest_id: number_field(state, data, "questID")?.map(|id| id as i32),
@@ -80,7 +82,8 @@ fn read_create_data(state: &mut LuaState) -> LuaResult<LfgActiveEntry> {
         required_item_level: number_field(state, data, "requiredItemLevel")?.unwrap_or(0.0),
         required_pvp_rating: number_field(state, data, "requiredPvpRating")?.unwrap_or(0.0),
         censored: false,
-        created_at: borrow_state(state)?.clock_now(),
+        created_at,
+        text,
     })
 }
 
@@ -179,11 +182,13 @@ pub(crate) fn get_active_entry_info(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn set_entry_fields(state: &mut LuaState, info: Val, entry: &LfgActiveEntry, elapsed: f64) {
-    // INFERRED: title/comment/voice come from the protected entry-creation
-    // edit boxes, which are not modeled, so they publish as empty strings.
-    for name in ["name", "comment", "voiceChat"] {
-        let empty = create_string(state, "");
-        table_set(state, info, name, empty);
+    for (name, text) in [
+        ("name", &entry.text.name),
+        ("comment", &entry.text.comment),
+        ("voiceChat", &entry.text.voice_chat),
+    ] {
+        let value = create_string(state, text);
+        table_set(state, info, name, value);
     }
     for (name, value) in [
         ("requiredItemLevel", entry.required_item_level),

@@ -426,6 +426,17 @@ fn objective_tracker_frame_layout_is_locked(env: &WowLuaEnv) {
         env.exec("assert(C_QuestLog.AddQuestWatch(80002)); assert(C_QuestLog.CanAbandonQuest(81234)); assert(not C_QuestLog.CanAbandonQuest(81235))").unwrap();
         settle_prefork_game_ui(env);
     }
+    #[cfg(feature = "client-wowforever")]
+    {
+        // Same third watched quest as Retail/PTR, supplied through the host input
+        // (docs/admin-api/quests.md SetQuestLogEntry) instead of state writes.
+        env.exec(
+            "A_Admin.SetQuestLogEntry(80002, 'Tracker layout fixture', false) \
+             assert(C_QuestLog.AddQuestWatch(80002))",
+        )
+        .unwrap();
+        wow_ui_sim::startup::run_extra_update_ticks(env, 5);
+    }
 
         env.exec(
             r#"

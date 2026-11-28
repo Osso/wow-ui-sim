@@ -163,6 +163,9 @@ pub struct SimState {
     /// VERIFIED (Forever 1.60.1.70707) / INFERRED (Retail 12.1.5.70688) R88fb: host-supplied raid-lock rows.
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     pub(crate) completed_encounters: Vec<crate::c_api::c_raid_locks::RaidLockRow>,
+    /// Supplied A_Admin.SetRaidDifficultyRedirects rows (R88fb lockout sharing).
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub(crate) raid_difficulty_redirects: Vec<crate::c_api::c_raid_locks::DifficultyRedirect>,
     /// Preserve each asynchronous RequestRaidInfo reply until a later timer tick.
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     pub(crate) pending_raid_info_replies: VecDeque<()>,
@@ -252,8 +255,9 @@ pub struct SimState {
         feature = "client-anniversary"
     ))]
     pub wrath_legacy: crate::lua_api::globals::real::wrath_legacy_state::WrathLegacyState,
-    #[cfg(feature = "client-wrath")]
     pub who_routing: crate::c_api::who_routing::WhoRouting,
+    /// `C_LFGListRoles` live and persisted solo roles.
+    pub lfg_list_roles: crate::c_api::c_lfg_list_roles::LfgListRoles,
     pub tooltips: HashMap<u64, TooltipData>,
     /// Host-only call inputs for the simulator's q4 inset access test seam.
     pub clamp_inset_access_input: crate::widget::ClampInsetAccessInput,

@@ -174,8 +174,8 @@ macro_rules! build_empty_sim_state {
                 feature = "client-anniversary"
             ))]
             wrath_legacy: Default::default(),
-            #[cfg(feature = "client-wrath")]
             who_routing: Default::default(),
+            lfg_list_roles: Default::default(),
             console_output: $collections.console_output,
             tutorial_requests: ::std::vec::Vec::new(),
             passed_time_events: [121, 248].into_iter().collect(),
@@ -207,6 +207,8 @@ macro_rules! build_empty_sim_state {
             encounter_journal: EncounterJournalState::default(),
             #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
             completed_encounters: Vec::new(),
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            raid_difficulty_redirects: Vec::new(),
             #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
             pending_raid_info_replies: VecDeque::new(),
             #[cfg(feature = "client-retail")]

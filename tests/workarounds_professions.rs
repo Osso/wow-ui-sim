@@ -548,13 +548,23 @@ fn profession_day_cooldown_displays_midnight_for_truesteel() {
     .unwrap();
 }
 
+/// Mainline crafting page width is 942 (786 compact) per
+/// Blizzard_ProfessionsCrafting.lua:418-425, applied by SetTab. Forever's Camelot
+/// ProfessionsFrame has no TabSystem or MaximizeMinimize, so SetTab returns early
+/// (Blizzard_ProfessionsFrame.lua:398-401) and the frame keeps its XML size 673
+/// (Blizzard_Professions/Camelot/Blizzard_ProfessionsFrame.xml:11).
+#[cfg(not(feature = "client-wowforever"))]
+const EXPANDED_CRAFTING_MIN_WIDTH: u32 = 900;
+#[cfg(feature = "client-wowforever")]
+const EXPANDED_CRAFTING_MIN_WIDTH: u32 = 673;
+
 #[test]
 fn casting_blacksmithing_opens_professions_frame() {
     let env = full_game_env();
     env.state().borrow_mut().lua_errors.clear();
 
     let result: String = env
-        .eval(
+        .eval(&format!(
             r#"
             CastSpellByID(2018)
             if not ProfessionsFrame or not ProfessionsFrame:IsShown() then
@@ -563,12 +573,12 @@ fn casting_blacksmithing_opens_professions_frame() {
             if not ProfessionsFrame.CraftingPage or not ProfessionsFrame.CraftingPage.LinkButton then
                 return "crafting_page_link_button_missing"
             end
-            if ProfessionsFrame:GetWidth() < 900 then
+            if ProfessionsFrame:GetWidth() < {EXPANDED_CRAFTING_MIN_WIDTH} then
                 return "width=" .. tostring(ProfessionsFrame:GetWidth())
             end
             return "ok"
             "#,
-        )
+        ))
         .unwrap();
 
     assert_eq!(
@@ -660,9 +670,14 @@ fn clicking_blacksmithing_button_in_professions_book_opens_panel() {
             ToggleProfessionsBook()
 
             local candidates
-            if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE and ProfessionsBookFrame.ProfessionsContentFrame then
-                -- PTR 70493 Mainline/Blizzard_ProfessionsBookTemplates.xml:58,63,166.
-                local content = ProfessionsBookFrame.ProfessionsContentFrame
+            local book = ProfessionsBookFrame or (ProfessionsFrame and ProfessionsFrame.BookPage)
+            local modern = WOW_PROJECT_ID == WOW_PROJECT_MAINLINE or WOW_PROJECT_ID == WOW_PROJECT_CAMELOT
+            if modern and book and book.ProfessionsContentFrame then
+                -- PTR 70493 Mainline/Blizzard_ProfessionsBookTemplates.xml:58,63,166;
+                -- Forever 70707 has no ProfessionsBookFrame and hosts the same content
+                -- in ProfessionsFrame.BookPage (Blizzard_Professions/Camelot/
+                -- Blizzard_ProfessionsFrame.xml:79, Camelot/Blizzard_ProfessionsBookTemplates.xml:223).
+                local content = book.ProfessionsContentFrame
                 candidates = {
                     content.PrimaryProfession1.SpellButton1,
                     content.PrimaryProfession1.SpellButton2,

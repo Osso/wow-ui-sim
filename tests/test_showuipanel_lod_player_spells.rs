@@ -18,6 +18,7 @@ use wow_ui_sim::startup::run_extra_update_ticks;
 post_wrath_ui_fixture! {
 use wow_ui_sim::startup::prewarm_player_spells_spellbook;
 }
+#[cfg(not(feature = "client-wowforever"))]
 use wow_ui_sim::traits::{TRAIT_CURRENCY_DB, TRAIT_TREE_DB};
 
 fn open_talents(env: &wow_ui_sim::lua_api::WowLuaEnv) {
@@ -32,6 +33,7 @@ fn open_talents(env: &wow_ui_sim::lua_api::WowLuaEnv) {
     .expect("Failed to open talents");
 }
 
+#[cfg(not(feature = "client-wowforever"))]
 fn max_points_for_currency(currency_id: u32) -> u32 {
     let flags = TRAIT_CURRENCY_DB
         .get(&currency_id)
@@ -425,9 +427,12 @@ fn starter_build_highlight_uses_player_spells_talent_ui_call_path() {
                 end
             end
 
-            local clipboard = assert(findExportClipboardSentinel(talents.LoadSystem), "export clipboard sentinel should exist")
-            local disabled, _, _, _ = clipboard.disabledCallback()
-            assert(type(disabled) == "boolean", "disabled callback should return a boolean")
+            local disabled = "no-load-system"
+            if talents.LoadSystem:IsShown() then
+                local clipboard = assert(findExportClipboardSentinel(talents.LoadSystem), "export clipboard sentinel should exist")
+                disabled = clipboard.disabledCallback()
+                assert(type(disabled) == "boolean", "disabled callback should return a boolean")
+            end
 
             return table.concat({
                 tostring(nodeID),
@@ -435,6 +440,14 @@ fn starter_build_highlight_uses_player_spells_talent_ui_call_path() {
                 tostring(disabled),
             }, ",")
         "#).unwrap();
+        // Forever's Camelot InitializeLoadSystem hides the loadout system and adds
+        // no sentinels (Blizzard_PlayerSpells/Camelot/ClassTalents/
+        // Blizzard_ClassTalentsFrame.lua:243-247); other profiles must show it.
+        assert_eq!(
+            result.ends_with(",no-load-system"),
+            cfg!(feature = "client-wowforever"),
+            "loadout system visibility: {result}"
+        );
 
         let recorded_errors = recorded_lua_errors(&env);
         let handler_errors = common::drain_string_table(&env, "__starter_build_highlight_errors");
@@ -461,6 +474,10 @@ fn starter_build_highlight_uses_player_spells_talent_ui_call_path() {
 }
 
 post_wrath_ui_fixture! {
+// Forever has no loadout export menu: Camelot InitializeLoadSystem hides
+// LoadSystem without sentinels (Blizzard_PlayerSpells/Camelot/ClassTalents/
+// Blizzard_ClassTalentsFrame.lua:243-247).
+#[cfg(not(feature = "client-wowforever"))]
 #[test]
 fn player_spells_export_disabled_callback_tracks_unspent_hero_points() {
     test_timeout! {
