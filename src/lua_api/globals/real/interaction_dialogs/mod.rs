@@ -32,6 +32,7 @@ pub struct DialogState {
 /// One event payload value; strings are interned and rooted at dispatch.
 pub(crate) enum Arg {
     Str(String),
+    #[cfg(feature = "client-retail")]
     Num(f64),
 }
 
@@ -46,6 +47,7 @@ pub(crate) fn fire(state: &mut LuaState, event: &str, args: Vec<Arg>) -> LuaResu
                 state.push(value);
                 value
             }
+            #[cfg(feature = "client-retail")]
             Arg::Num(number) => Val::Num(number),
         })
         .collect();
