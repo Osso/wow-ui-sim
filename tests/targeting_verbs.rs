@@ -409,6 +409,44 @@ fn target_nearest_enemy_enemy_pool_is_replaceable() {
     assert_eq!(second, "Beta");
 }
 
+#[cfg(feature = "client-retail")]
+const PARTY_ASSIGNMENT_SLASH_CONSUMER: &str = r#"
+    local updates = 0
+    PlayerFrame:HookScript("OnEvent", function(_, event)
+        if event == "GROUP_ROSTER_UPDATE" then updates = updates + 1 end
+    end)
+    A_Admin.SetPartySize(2)
+    A_Admin.SetPartyMember(1, "Alpha", 1, 60)
+    A_Admin.SetPartyMember(2, "Beta", 2, 60)
+    local before = updates
+    SlashCmdList.MAINTANKON("party1")
+    assert(GetPartyAssignment("MAINTANK", "party1"))
+    assert(updates == before + 1)
+    SlashCmdList.MAINASSISTON("party2")
+    assert(GetPartyAssignment("MAINASSIST", "party2", true))
+    assert(updates == before + 2)
+    SlashCmdList.MAINTANKOFF("party1")
+    assert(not GetPartyAssignment("MAINTANK", "party1"))
+    assert(updates == before + 3)
+    SlashCmdList.MAINASSISTOFF("party2")
+    assert(not GetPartyAssignment("MAINASSIST", "party2"))
+    assert(updates == before + 4)
+"#;
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn raid_assignment_slash_commands_update_original_party_frame() {
+    crate::common::blizzard_addon_harness::with_blizzard_addon_closure(
+        &["Blizzard_UnitFrame", "Blizzard_ChatFrameBase", "Blizzard_QuickJoin"],
+        &[],
+        |env, loaded| {
+            assert!(loaded.iter().any(|name| name == "Blizzard_ChatFrameBase"));
+            env.exec(PARTY_ASSIGNMENT_SLASH_CONSUMER)
+                .expect("original role slash commands update party assignments");
+        },
+    );
+}
+
 #[cfg(feature = "retail-12-0-0")]
 #[test]
 fn raid_target_icons_update_real_blizzard_target_frame_consumer() {
