@@ -26,6 +26,8 @@ fn seeded_env() -> WowLuaEnv {
     env.apply_post_load_workarounds();
     supply_activities(&env);
     wow_ui_sim::startup::fire_startup_events_for_screen(&env, ScreenKind::Game);
+    env.exec("A_Admin.SetManualClock(0)")
+        .expect("manual clock should schedule the original dirty-update callback");
     env
 }
 
@@ -79,11 +81,13 @@ fn original_tracker_displays_and_selectively_untracks_two_activities() {
     assert!(env.exec("A_Admin.SetPerksActivities('{}')").is_err());
     env.exec("C_PerksActivities.AddTrackedPerksActivity(901); C_PerksActivities.AddTrackedPerksActivity(902)")
         .expect("the original tracker should receive two public tracking changes");
-    env.fire_on_update(0.016).expect("dirty tracker should lay out supplied rows");
+    env.exec("A_Admin.AdvanceTime(0)")
+        .expect("next-frame tracker callback should lay out supplied rows");
     assert_visible_activity_names(&env, true, true);
 
     env.exec("C_PerksActivities.RemoveTrackedPerksActivity(901)")
         .expect("the original tracker should receive the public untracking change");
-    env.fire_on_update(0.016).expect("dirty tracker should remove the untracked row");
+    env.exec("A_Admin.AdvanceTime(0)")
+        .expect("next-frame tracker callback should remove the untracked row");
     assert_visible_activity_names(&env, false, true);
 }
