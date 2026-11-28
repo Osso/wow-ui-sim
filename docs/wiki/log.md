@@ -1,3 +1,7 @@
+## [2026-11-27] investigation | Retail secure dependency XML replay
+
+Added [the investigation](investigations/retail-secure-dependency-xml-replay.md) and linked it from [add-on loading](systems/addon-loading.md#secure-dependency-replay-and-library-allowlist). **VERIFIED (merged simulator):** six Retail Glue tests and five Forever equivalents pass after the secure dependency pass skips XML from already ordinary-loaded dependencies. The empty-roster test still logs its explicitly non-asserted post-transition CharacterCreate setup diagnostics. **INFERRED (R88g.1, R88t.t1/t2):** the cited native dependency evidence does not prove XML replay for an ordinary-loaded dependency.
+
 ## [2026-11-27] investigation | Forever hero icon and Camelot spellbook regressions
 
 Updated [the hero icon investigation](investigations/hero-spec-icon-bug.md) and [Camelot geometry](systems/forever-camelot-spellbook.md#first-open-geometry-forever-70707). **VERIFIED (simulator and selected XML/Lua):** render buckets consumed stale layout, atlas replacement retained the old numeric texture ID, and the old GPU reference excluded real overlapping solid and multi-quad draws. Forever first opens the Camelot spellbook minimized and uses one view; the new geometry lock follows the selected XML/Lua and the passive test clicks to Protection page two. No vendor UI changes.

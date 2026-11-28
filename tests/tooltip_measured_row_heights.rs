@@ -47,13 +47,17 @@ const HELPERS: &str = r#"
     function MTNearMeasuredHeight(tip, label)
         local heights = MTRowHeights(tip)
         local expected = OUTER
+        local rowDetails = {}
         for index, height in ipairs(heights) do
             if index > 1 then
                 expected = expected + SPACING
             end
             expected = expected + height
+            rowDetails[index] = tostring(index) .. ":" .. tostring(height) .. "@" ..
+                tostring(tip:GetLeftLine(index):GetWidth())
         end
-        MTNear(tip:GetHeight(), expected, label .. " rows sum to the measured height")
+        MTNear(tip:GetHeight(), expected,
+            label .. " rows sum to the measured height (" .. table.concat(rowDetails, ", ") .. ")")
         return heights
     end
 "#;
@@ -91,6 +95,8 @@ fn blizzard_item_tooltip_body_rows_measure_the_declared_body_font() {
 #[test]
 fn blizzard_tooltip_wrapped_row_height_follows_the_font_string_measurement() {
     let env = setup_full_env();
+    let font_system = wow_ui_sim::render::font::WowFontSystem::new();
+    env.set_font_system(std::rc::Rc::new(std::cell::RefCell::new(font_system)));
     env.exec(HELPERS).unwrap();
     env.exec(
         r#"
@@ -100,6 +106,10 @@ fn blizzard_tooltip_wrapped_row_height_follows_the_font_string_measurement() {
             { type = 0, leftText = "Short body" },
             { type = 0, leftText = string.rep("wrapped description ", 12), wrapText = true },
         } } }))
+        -- Create the synthesized FontStrings before Show measures the rows.
+        MTRowHeights(GameTooltip)
+        -- WM63-L4: ProcessInfo fills content; Show performs the size calculation.
+        GameTooltip:Show()
 
         local heights = MTNearMeasuredHeight(GameTooltip, "GameTooltip")
         -- A fixed single-line constant cannot produce a multi-line row.
