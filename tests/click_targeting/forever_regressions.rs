@@ -3,6 +3,27 @@ use super::click_targeting_full_ui::{
 };
 use crate::common;
 
+// Classic-family ComboFrame.lua publishes the displayed count in
+// `COMBO_FRAME_LAST_NUM_POINTS`.
+#[cfg(not(feature = "client-wowforever"))]
+const DISPLAYED_COMBO_POINTS_LUA: &str =
+    "function DisplayedComboPoints() return COMBO_FRAME_LAST_NUM_POINTS end";
+
+// Forever loads `[Game]\ComboFrame.lua [AllowLoadGameType camelot]`
+// (Blizzard_UnitFrame TOC:67). Camelot/ComboFrame.lua:98-118 has no count global;
+// it marks the last `comboPoints` RogueComboPointTemplate children active, and
+// RogueComboPoint.lua:43-49 stores that state in `isFull`.
+#[cfg(feature = "client-wowforever")]
+const DISPLAYED_COMBO_POINTS_LUA: &str = r#"
+function DisplayedComboPoints()
+    local count = 0
+    for _, point in ipairs(ComboFrame.ComboPoints) do
+        if point:IsShown() and point.isFull then count = count + 1 end
+    end
+    return count
+end
+"#;
+
 // PTR's selected UnitFrame TOC does not load ComboFrame.lua; Retail and classic profiles do.
 #[cfg(not(feature = "client-ptr"))]
 #[test]
@@ -13,6 +34,7 @@ fn blizzard_player_world_entry_updates_combo_frame_from_target_power() {
                 env.exec("SetCVar('comboPointLocation', '1')").expect("enable player-frame combo points");
             });
             install_test_error_handler(&env);
+            env.exec(DISPLAYED_COMBO_POINTS_LUA).expect("define combo display reader");
             env.exec(r#"
                 TargetUnit('enemy1')
                 A_Admin.SetPlayerPower(3, 5, Enum.PowerType.ComboPoints)
@@ -20,13 +42,13 @@ fn blizzard_player_world_entry_updates_combo_frame_from_target_power() {
             env.fire_event("PLAYER_ENTERING_WORLD").expect("update PlayerFrame through event");
             env.exec(r#"
                 assert(ComboFrame:IsShown(), 'combo frame hidden after world-entry event')
-                assert(COMBO_FRAME_LAST_NUM_POINTS == 3, 'combo count not updated by world-entry event')
+                assert(DisplayedComboPoints() == 3, 'combo count not updated by world-entry event')
                 A_Admin.SetPlayerPower(0, 5, Enum.PowerType.ComboPoints)
             "#).expect("read and clear combo power");
             env.fire_event("PLAYER_ENTERING_WORLD").expect("update zero combo through event");
             env.exec(r#"
                 assert(not ComboFrame:IsShown(), 'combo frame shown with zero points')
-                assert(COMBO_FRAME_LAST_NUM_POINTS == 0, 'zero combo count not updated by event')
+                assert(DisplayedComboPoints() == 0, 'zero combo count not updated by event')
             "#).expect("read zero combo state");
             let errors = drain_test_errors(&env);
             assert!(errors.is_empty(), "player world-entry event errors: {errors:?}");
