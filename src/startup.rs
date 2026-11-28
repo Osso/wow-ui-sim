@@ -126,6 +126,25 @@ pub fn apply_delay(delay: Option<u64>) {
     }
 }
 
+/// Lua expression that ends `--delay` early once it is true
+/// (`--delay-until`); the delay is then a timeout.
+static DELAY_UNTIL: std::sync::Mutex<Option<String>> = std::sync::Mutex::new(None);
+
+/// Set the `--delay-until` expression (`None` waits for the whole delay).
+pub fn set_delay_until(expression: Option<String>) {
+    if let Ok(mut slot) = DELAY_UNTIL.lock() {
+        *slot = expression;
+    }
+}
+
+fn delay_until_met(env: &WowLuaEnv) -> bool {
+    let Some(expression) = DELAY_UNTIL.lock().ok().and_then(|slot| slot.clone()) else {
+        return false;
+    };
+    env.eval::<bool>(&format!("return not not ({expression})"))
+        .unwrap_or(false)
+}
+
 /// Dispatch headless timers and updates for the requested real-time delay.
 pub fn apply_delay_with_tick(env: &WowLuaEnv, delay: Option<u64>) {
     let Some(ms) = delay else { return };
@@ -144,6 +163,16 @@ pub fn apply_delay_with_tick(env: &WowLuaEnv, delay: Option<u64>) {
         }
         normalize_headless_frame_positions(env);
         previous = now;
+        if delay_until_met(env) {
+            log_with_timestamp(
+                env,
+                &format!(
+                    "[delay] --delay-until met; ending delay after {:.1?}",
+                    start.elapsed()
+                ),
+            );
+            break;
+        }
     }
 }
 
@@ -799,6 +828,24 @@ mod seed_buff_duration_tests {
             stale_negative, "none",
             "a frame carrying a stale negative timeLeft must not render it; \
              this is the case only the timeLeft>0 guard catches"
+        );
+    }
+
+    #[test]
+    fn delay_until_ends_the_delay_once_its_expression_is_true() {
+        let env = WowLuaEnv::new().unwrap();
+        env.exec(r#"C_Timer.After(0.05, function() DELAY_UNTIL_PROBE = true end)"#)
+            .unwrap();
+        set_delay_until(Some("DELAY_UNTIL_PROBE".to_string()));
+
+        let started = std::time::Instant::now();
+        apply_delay_with_tick(&env, Some(20_000));
+        set_delay_until(None);
+
+        assert!(
+            started.elapsed() < std::time::Duration::from_secs(10),
+            "the delay must end once the expression is true, took {:?}",
+            started.elapsed()
         );
     }
 
