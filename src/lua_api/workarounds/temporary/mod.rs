@@ -172,6 +172,7 @@ pub(crate) mod map_exploration_pin;
 #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod map_group_defaults;
 pub(crate) mod map_runtime_state;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod merchant_filter_state;
 #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod merchant_raid_defaults;
