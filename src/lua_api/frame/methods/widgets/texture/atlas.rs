@@ -430,7 +430,10 @@ fn texture_source_resolves(
     {
         return true;
     }
-    let Some(path) = path else {
+    let fdid_path = file_data_id
+        .and_then(|id| u32::try_from(id).ok())
+        .and_then(crate::texture::file_data_id_texture_path);
+    let Some(path) = path.or(fdid_path.as_deref()) else {
         return false;
     };
     if crate::limited_listfile::lookup_texture_path(path).is_some() {

@@ -11,6 +11,13 @@ use std::time::Duration;
 
 mod preload;
 mod resolve;
+
+const FILE_DATA_ID_PREFIX: &str = "FileDataID\\";
+
+pub(crate) fn file_data_id_texture_path(file_data_id: u32) -> Option<String> {
+    cfg!(feature = "casc").then(|| format!("{FILE_DATA_ID_PREFIX}{file_data_id}"))
+}
+
 pub(crate) use sim_texture::source_index;
 
 use std::collections::{HashMap, HashSet};
