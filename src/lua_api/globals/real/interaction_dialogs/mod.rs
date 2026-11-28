@@ -33,7 +33,6 @@ pub struct DialogState {
 pub(crate) enum Arg {
     Str(String),
     Num(f64),
-    Bool(bool),
 }
 
 /// Dispatch synchronously, keeping interned string payloads rooted on the stack.
@@ -48,7 +47,6 @@ pub(crate) fn fire(state: &mut LuaState, event: &str, args: Vec<Arg>) -> LuaResu
                 value
             }
             Arg::Num(number) => Val::Num(number),
-            Arg::Bool(flag) => Val::Bool(flag),
         })
         .collect();
     let result = dispatch_event_now(state, event, &values);
