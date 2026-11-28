@@ -6,7 +6,9 @@
 //!   - UiMapArtStyleLayer.csv (styleID → layer dimensions)
 //!   - UiMapArtTile.csv    (artID + layerIndex → fileDataIDs)
 //!
-//! Generates: crates/sim-data/data/map_art.rs
+//! Generates: crates/sim-data/data/map_art.rs, and from the WoW Forever build's
+//! exports in data/db2/wowforever-1.60.1.70707/ crates/sim-data/data/map_art_forever.rs
+//! (that client's own uiMap IDs, which the retail tables do not carry).
 
 use super::csv_util::parse_csv_line;
 use super::csv_util::read_csv_records;
@@ -30,9 +32,27 @@ struct StyleLayer {
     additional_zoom_steps: u32,
 }
 
-pub fn run() -> Result<(), Box<dyn std::error::Error>> {
-    let db2_dir = Path::new("data/db2");
+const FOREVER_DB2_DIR: &str = "data/db2/wowforever-1.60.1.70707";
 
+pub fn run() -> Result<(), Box<dyn std::error::Error>> {
+    generate(
+        Path::new("data/db2"),
+        Path::new("crates/sim-data/data/map_art.rs"),
+        true,
+    )?;
+    generate(
+        Path::new(FOREVER_DB2_DIR),
+        Path::new("crates/sim-data/data/map_art_forever.rs"),
+        false,
+    )
+}
+
+/// `own_structs` false: the output reuses `map_art`'s structs so callers see one type.
+fn generate(
+    db2_dir: &Path,
+    output_path: &Path,
+    own_structs: bool,
+) -> Result<(), Box<dyn std::error::Error>> {
     println!("Loading UiMapArtStyleLayer...");
     // styleID → Vec<StyleLayer> (sorted by layer_index)
     let style_layers = load_style_layers(&db2_dir.join("UiMapArtStyleLayer.csv"))?;
@@ -49,11 +69,16 @@ pub fn run() -> Result<(), Box<dyn std::error::Error>> {
     // mapID → artID (PhaseID=0 only)
     let map_art = load_map_art(&db2_dir.join("UiMapXMapArt.csv"))?;
 
-    let output_path = Path::new("crates/sim-data/data/map_art.rs");
-    std::fs::create_dir_all("data")?;
     let mut out = File::create(output_path)?;
 
-    let map_count = write_map_art(&mut out, &map_art, &art_style, &style_layers, &tiles)?;
+    let map_count = write_map_art(
+        &mut out,
+        &map_art,
+        &art_style,
+        &style_layers,
+        &tiles,
+        own_structs,
+    )?;
 
     println!("Generated {} map entries", map_count);
     println!("Output: {}", output_path.display());
@@ -184,9 +209,15 @@ fn write_map_art(
     art_style: &HashMap<u32, u32>,
     style_layers: &HashMap<u32, Vec<StyleLayer>>,
     tiles: &TileMaps,
+    own_structs: bool,
 ) -> Result<u32, Box<dyn std::error::Error>> {
     write_file_header(out)?;
-    write_structs(out)?;
+    if own_structs {
+        write_structs(out)?;
+    } else {
+        writeln!(out, "pub use super::map_art::{{MapArtInfo, MapArtLayer}};")?;
+        writeln!(out)?;
+    }
 
     let mut art_ids: Vec<u32> = map_art.values().copied().collect();
     art_ids.sort_unstable();
