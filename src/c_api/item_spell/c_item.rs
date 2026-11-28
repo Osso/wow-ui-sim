@@ -365,6 +365,7 @@ fn register_c_item_inventory_queries(
     register_c_item_supplied_queries(state, table_ref)?;
     if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever) {
         register_c_item_use_confirmations(state, table_ref)?;
+        register_c_item_shared_inventory_queries(state, table_ref)?;
     }
     if ACTIVE == ClientProfile::Retail {
         register_c_item_retail_inventory_queries(state, table_ref)?;
@@ -425,6 +426,32 @@ fn register_c_item_retail_inventory_queries(
     register_c_item_retail_inventory_query_group_four(state, table_ref)
 }
 
+/// Forever 70707 ItemDocumentation.lua:113, :387, :469, :515, :1353, :1642.
+/// These declarations match the Retail blocks, over shared catalog/equipment state.
+fn register_c_item_shared_inventory_queries(
+    state: &mut LuaState,
+    table_ref: GcRef<Table>,
+) -> LuaResult<()> {
+    register_c_item_methods(
+        state,
+        table_ref,
+        &[
+            ("GetItemGem", super::item_gem::get_item_gem),
+            (
+                "IsEquippedItemType",
+                super::item_type::is_equipped_item_type,
+            ),
+            ("GetItemChildInfo", super::item_child::get_item_child_info),
+            ("GetItemCreationContext", c_item_creation_context),
+            ("ItemHasRange", super::item_range::item_has_range),
+            (
+                "DoesItemContainSpec",
+                super::item_spec::does_item_contain_spec,
+            ),
+        ],
+    )
+}
+
 fn register_c_item_retail_inventory_query_group_one(
     state: &mut LuaState,
     table_ref: GcRef<Table>,
@@ -434,13 +461,6 @@ fn register_c_item_retail_inventory_query_group_one(
         table_ref,
         &[
             ("IsItemKeystoneByID", is_item_keystone_by_id),
-            ("GetItemGem", super::item_gem::get_item_gem),
-            (
-                "IsEquippedItemType",
-                super::item_type::is_equipped_item_type,
-            ),
-            ("GetItemChildInfo", super::item_child::get_item_child_info),
-            ("GetItemCreationContext", c_item_creation_context),
             (
                 "IsAnimaItemByID",
                 super::item_classifiers::is_anima_item_by_id,
@@ -461,11 +481,6 @@ fn register_c_item_retail_inventory_query_group_two(
         state,
         table_ref,
         &[
-            ("ItemHasRange", super::item_range::item_has_range),
-            (
-                "DoesItemContainSpec",
-                super::item_spec::does_item_contain_spec,
-            ),
             ("GetItemSpecInfo", super::item_spec::get_item_spec_info),
             ("IsLocked", super::item_equip::is_locked),
             ("EquipItemByName", super::item_equip::equip_item_by_name),

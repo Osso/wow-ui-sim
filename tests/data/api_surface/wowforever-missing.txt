@@ -816,7 +816,6 @@ C_Item.CanScrapItem # not-yet
 C_Item.CanViewItemPowers # not-yet
 C_Item.ConfirmDeleteItem # not-yet
 C_Item.DeleteItem # not-yet
-C_Item.DoesItemContainSpec # not-yet
 C_Item.DoesItemMatchBonusTreeReplacement # not-yet
 C_Item.DoesItemMatchSpellItemCondition # not-yet
 C_Item.DoesItemMatchTargetEnchantingSpell # not-yet
@@ -829,10 +828,7 @@ C_Item.GetCurrentItemTransmogInfo # not-yet
 C_Item.GetDelvePreviewItemLink # not-yet
 C_Item.GetDelvePreviewItemQuality # not-yet
 C_Item.GetFirstTriggeredSpellForItem # not-yet
-C_Item.GetItemChildInfo # not-yet
 C_Item.GetItemConversionOutputIcon # not-yet
-C_Item.GetItemCreationContext # not-yet
-C_Item.GetItemGem # not-yet
 C_Item.GetItemGemID # not-yet
 C_Item.GetItemLearnTransmogSet # not-yet
 C_Item.GetItemNumAddedSockets # not-yet
@@ -848,7 +844,6 @@ C_Item.GetSetBonusesForSpecializationByItemID # not-yet
 C_Item.IsAnimaItemByID # not-yet
 C_Item.IsArtifactPowerItem # not-yet
 C_Item.IsDressableItemByID # not-yet
-C_Item.IsEquippedItemType # not-yet
 C_Item.IsItemBindToAccount # not-yet
 C_Item.IsItemBindToAccountUntilEquip # not-yet
 C_Item.IsItemConvertibleAndValidForPlayer # not-yet
@@ -859,7 +854,6 @@ C_Item.IsItemKeystoneByID # not-yet
 C_Item.IsItemSpecificToPlayerClass # not-yet
 C_Item.IsLocked # not-yet
 C_Item.IsUsableItem # not-yet
-C_Item.ItemHasRange # not-yet
 C_Item.LockItem # not-yet
 C_Item.LockItemByGUID # not-yet
 C_Item.PickupItem # not-yet
