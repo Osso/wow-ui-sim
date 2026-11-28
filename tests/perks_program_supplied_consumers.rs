@@ -163,8 +163,10 @@ fn pending_chest_rewards_drive_original_monthly_activity_glows() {
     let env = load_monthly_activities_consumer();
     env.exec(&format!("A_Admin.SetPerksActivities([==[{MONTHLY_ACTIVITIES}]==])"))
         .expect("A_Admin should accept the supplied activities and thresholds");
-    env.exec("SetCVar('perksActivitiesLastPoints', '200'); EncounterJournal.MonthlyActivitiesFrame:Show()")
-        .expect("original Monthly Activities frame should open");
+    env.exec(
+        "SetCVar('perksActivitiesLastPoints', '200'); ShowUIPanel(EncounterJournal); EncounterJournal.MonthlyActivitiesTab:Click()",
+    )
+    .expect("original Encounter Journal tab should open Monthly Activities");
     supply_pending_chest_rewards(&env);
     assert_eq!(pending_reward_glow_count(&env), 2);
 
