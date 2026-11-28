@@ -1,8 +1,6 @@
 # Documented WoW Forever API functions without a runtime function after full
 # Blizzard UI startup. Contract: docs/specs/api-surface-audit.md.
 # Format: <name> # <intentionally-unsupported|not-yet>[: reason]
-AcceptAreaSpiritHeal # not-yet
-AcceptGuild # not-yet
 AddSourceLocationExclude # not-yet: temporary Lua workaround
 AreClassRolesSoftSuggestions # not-yet
 AutoEquipCursorItem # not-yet
@@ -1752,7 +1750,6 @@ CanMapChangeDifficulty # not-yet
 CanShowResetInstances # not-yet
 CanSwitchVehicleSeat # not-yet
 CanUpgradeToCurrentExpansion # not-yet
-CancelAreaSpiritHeal # not-yet
 CancelPendingEquip # not-yet
 CancelPreloadingMovie # not-yet
 CaseAccentInsensitiveParse # not-yet
@@ -1778,7 +1775,6 @@ CreateAbbreviateConfig # not-yet: temporary Lua workaround
 CreateFrameWithOptions # not-yet
 CursorHasMoney # not-yet
 CursorHasSpell # not-yet
-DeclineGuild # not-yet
 DeclineName # not-yet
 DestroyTotem # not-yet
 Dismount # not-yet
@@ -1787,7 +1783,6 @@ EjectPassengerFromSeat # not-yet
 EquipPendingItem # not-yet
 FollowUnit # not-yet
 GetAllowLowLevelRaid # not-yet
-GetAreaSpiritHealerTime # not-yet
 GetAreaText # not-yet
 GetAvailableBandwidth # not-yet: temporary Lua workaround
 GetAvailableLocales # not-yet
@@ -1867,7 +1862,6 @@ HasIgnoreDualWieldWeapon # not-yet
 InitiateRolePoll # not-yet
 Is64BitClient # not-yet
 IsAccountSecured # not-yet: temporary Lua workaround
-IsCemeterySelectionAvailable # not-yet
 IsCollisionEnabled # not-yet
 IsCpuBound # not-yet
 IsDebugBuild # not-yet

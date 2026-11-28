@@ -107,6 +107,8 @@ pub(crate) mod instance_legacy;
     any(feature = "profile-retail", feature = "client-ptr")
 ))]
 pub mod instanced_identity;
+#[cfg(feature = "interaction-dialogs")]
+pub mod interaction_dialogs;
 pub mod item_legacy;
 #[cfg(feature = "client-wrath")]
 pub(crate) mod legacy_gamma;

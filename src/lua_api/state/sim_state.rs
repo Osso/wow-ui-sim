@@ -1129,6 +1129,9 @@ pub struct SimState {
     pub allow_recent_allies_see_location: bool,
     #[cfg(feature = "client-wowforever")]
     pub stable_reads: crate::c_api::c_stable_info::forever::StableReadState,
+    /// Server dialogs opened by host inputs (item text, invites, petitions, healer).
+    #[cfg(feature = "interaction-dialogs")]
+    pub interaction_dialogs: crate::lua_api::globals::real::interaction_dialogs::DialogState,
     pub merchant_items: Vec<u32>,
     /// INFERRED R88dx: selected legacy merchant filter; zero is the all-items default.
     pub merchant_filter: i32,
