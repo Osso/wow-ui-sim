@@ -18,8 +18,29 @@ pub(crate) struct RaidLockRow {
     pub(crate) completed_encounter_ids: Vec<u32>,
 }
 
+const REDIRECT_INPUT_ERROR: &str =
+    "A_Admin.SetRaidDifficultyRedirects: expected an array of redirect row tables";
+
+/// Supplied difficulty redirect: lockouts for `difficulty_id` on `map_id`
+/// are shared with `redirected_difficulty_id`.
+#[derive(Clone, Debug, Eq, PartialEq)]
+pub(crate) struct DifficultyRedirect {
+    pub(crate) map_id: u32,
+    pub(crate) difficulty_id: u32,
+    pub(crate) redirected_difficulty_id: u32,
+}
+
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     let namespace = ensure_namespace(state, "C_RaidLocks")?;
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever {
+        // Forever 70707 RaidLocksDocumentation.lua:11-24.
+        table_set_rust_fn_static(
+            state,
+            namespace,
+            "GetRedirectedDifficultyID",
+            get_redirected_difficulty_id,
+        )?;
+    }
     table_set_rust_fn_static(
         state,
         namespace,
@@ -29,7 +50,50 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
 }
 
 pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
-    builder.set_function("SetCompletedEncounters", set_completed_encounters)
+    let builder = builder.set_function("SetCompletedEncounters", set_completed_encounters)?;
+    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::WowForever {
+        return Ok(builder);
+    }
+    builder.set_function("SetRaidDifficultyRedirects", set_difficulty_redirects)
+}
+
+/// INFERRED (R-request pending): a map/difficulty pair without a supplied
+/// redirect keeps its own lockout and returns `difficultyID` unchanged.
+fn get_redirected_difficulty_id(state: &mut LuaState) -> LuaResult<u32> {
+    let map_id = u32::from_stack(state, 1)?;
+    let difficulty_id = u32::from_stack(state, 2)?;
+    let redirected = borrow_state(state)?
+        .raid_difficulty_redirects
+        .iter()
+        .find(|row| row.map_id == map_id && row.difficulty_id == difficulty_id)
+        .map_or(difficulty_id, |row| row.redirected_difficulty_id);
+    state.push(Val::Num(f64::from(redirected)));
+    Ok(1)
+}
+
+fn set_difficulty_redirects(state: &mut LuaState) -> LuaResult<u32> {
+    let rows = read_rows(state, stack_val(state, 1), REDIRECT_INPUT_ERROR)?
+        .into_iter()
+        .map(|row| read_redirect_row(state, row))
+        .collect::<LuaResult<Vec<_>>>()?;
+    borrow_state_mut(state)?.raid_difficulty_redirects = rows;
+    Ok(0)
+}
+
+fn read_redirect_row(state: &mut LuaState, value: Val) -> LuaResult<DifficultyRedirect> {
+    let Val::Table(table) = value else {
+        return Err(runtime_error(REDIRECT_INPUT_ERROR));
+    };
+    let mut field = |key: &str| {
+        read_numeric_id(table_get(state, Val::Table(table), key), key).map_err(|_| {
+            runtime_error(format!("A_Admin.SetRaidDifficultyRedirects: invalid {key}"))
+        })
+    };
+    Ok(DifficultyRedirect {
+        map_id: field("mapID")?,
+        difficulty_id: field("difficultyID")?,
+        redirected_difficulty_id: field("redirectedDifficultyID")?,
+    })
 }
 
 fn is_encounter_complete(state: &mut LuaState) -> LuaResult<u32> {
@@ -58,26 +122,25 @@ fn set_completed_encounters(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn read_raid_lock_rows(state: &mut LuaState, value: Val) -> LuaResult<Vec<RaidLockRow>> {
+    read_rows(state, value, INPUT_ERROR)?
+        .into_iter()
+        .map(|row| read_raid_lock_row(state, row))
+        .collect()
+}
+
+fn read_rows(state: &LuaState, value: Val, error: &str) -> LuaResult<Vec<Val>> {
     let Val::Table(array) = value else {
-        return Err(runtime_error(INPUT_ERROR));
+        return Err(runtime_error(error));
     };
-    let length = state
+    let table = state
         .gc
         .tables
         .get(array)
-        .ok_or_else(|| runtime_error(INPUT_ERROR))?
-        .len(&state.gc.string_arena);
-    (1..=length)
-        .map(|index| {
-            let row = state
-                .gc
-                .tables
-                .get(array)
-                .map(|table| table.get_int(index as i64))
-                .unwrap_or(Val::Nil);
-            read_raid_lock_row(state, row)
-        })
-        .collect()
+        .ok_or_else(|| runtime_error(error))?;
+    let length = table.len(&state.gc.string_arena);
+    Ok((1..=length)
+        .map(|index| table.get_int(index as i64))
+        .collect())
 }
 
 fn read_raid_lock_row(state: &mut LuaState, value: Val) -> LuaResult<RaidLockRow> {

@@ -107,7 +107,6 @@ pub mod video_capabilities;
 pub(crate) mod video_texture_capability;
 pub(crate) mod video_window;
 pub(crate) mod vignette_info;
-#[cfg(feature = "client-wrath")]
 pub mod who_routing;
 
 #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
@@ -267,9 +266,12 @@ pub(crate) mod c_key_bindings;
 pub mod c_legendary_crafting;
 pub mod c_lfg_info;
 pub(crate) mod c_lfg_list_active_entry;
+pub mod c_lfg_list_creation;
 pub(crate) mod c_lfg_list_filter;
+pub mod c_lfg_list_members;
 #[cfg(feature = "lfg-endgame-edit-policy")]
 pub mod c_lfg_list_policy;
+pub mod c_lfg_list_roles;
 pub mod c_lfg_list_search;
 #[cfg(feature = "rest-policy-flags")]
 mod c_limited_input;

@@ -78,7 +78,7 @@ pub(super) fn register_friend_list_surface(state: &mut LuaState) -> LuaResult<()
     #[cfg(feature = "client-wowforever")]
     table_set_rust_fn_static(state, table_ref, "GetWhoRaceFilters", get_who_race_filters)?;
     table_set_rust_fn_static(state, table_ref, "ShowFriends", show_friends)?;
-    Ok(())
+    crate::c_api::who_routing::register_c_friend_list(state, table_ref)
 }
 
 fn get_num_friends(state: &mut LuaState) -> LuaResult<u32> {
@@ -167,7 +167,7 @@ fn is_friend(state: &mut LuaState) -> LuaResult<u32> {
 
 fn get_who_info(state: &mut LuaState) -> LuaResult<u32> {
     let index = i32::from_stack(state, 1)?;
-    let Some(row) = friend_row_by_index(index) else {
+    let Some(row) = who_row_by_index(state, index)? else {
         state.push(Val::Nil);
         return Ok(1);
     };
@@ -227,20 +227,39 @@ fn get_num_who_results(state: &mut LuaState) -> LuaResult<u32> {
 
 fn set_who_to_ui(state: &mut LuaState) -> LuaResult<u32> {
     let enabled = bool::from_stack(state, 1)?;
-    #[cfg(feature = "client-wrath")]
-    {
-        crate::lua_api::methods::borrow_state_mut(state)?
-            .who_routing
-            .to_ui = enabled;
-    }
-    #[cfg(not(feature = "client-wrath"))]
-    let _ = enabled;
+    crate::lua_api::methods::borrow_state_mut(state)?
+        .who_routing
+        .to_ui = enabled;
     Ok(0)
 }
 
-fn friend_row_by_index(index: i32) -> Option<&'static FriendListRow> {
-    let zero_based = usize::try_from(index - 1).ok()?;
-    FRIEND_LIST_ROWS.get(zero_based)
+/// Who rows in the order set by the last `C_FriendList.SortWho`.
+fn who_row_by_index(state: &LuaState, index: i32) -> LuaResult<Option<&'static FriendListRow>> {
+    let Some(zero_based) = usize::try_from(index - 1).ok() else {
+        return Ok(None);
+    };
+    let mut rows: Vec<&'static FriendListRow> = FRIEND_LIST_ROWS.iter().collect();
+    if let Some(sort) = borrow_state(state)?.who_routing.sort.as_ref() {
+        rows.sort_by(|a, b| who_sort_key(a, &sort.key).cmp(&who_sort_key(b, &sort.key)));
+        if !sort.ascending {
+            rows.reverse();
+        }
+    }
+    Ok(rows.get(zero_based).copied())
+}
+
+/// Sort keys of the Who list consumers (`WhoList.lua:9-11`, `FriendsFrame`
+/// column `sortType`s). INFERRED: an unknown key keeps the response order.
+fn who_sort_key(row: &FriendListRow, key: &str) -> (i32, &'static str) {
+    match key {
+        "name" => (0, row.name),
+        "level" => (row.level, ""),
+        "class" => (0, row.class_name),
+        "zone" => (0, row.area),
+        "guild" => (0, row.full_guild_name),
+        "race" => (0, row.race_str),
+        _ => (0, ""),
+    }
 }
 
 fn social_friend_by_display_index(

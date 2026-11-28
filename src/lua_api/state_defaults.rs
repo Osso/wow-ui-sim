@@ -642,5 +642,6 @@ fn premade_listing_from_seed((index, seed): (usize, &PremadeListingSeed)) -> Pre
         num_bnet_friends: 0,
         num_char_friends: 0,
         num_guild_mates: 0,
+        members: Vec::new(),
     }
 }
