@@ -1145,7 +1145,6 @@ C_Map.GetUserWaypointHyperlink # not-yet
 C_Map.IsCityMap # not-yet
 C_Map.IsMapValidForNavBarDropdown # not-yet
 C_Map.MapHasArt # not-yet: temporary Lua workaround
-C_Map.OpenWorldMap # not-yet
 C_MerchantFrame.GetBuybackItemID # not-yet
 C_MerchantFrame.SellAllJunkItems # not-yet
 C_Minimap.CanTrackBattlePets # not-yet

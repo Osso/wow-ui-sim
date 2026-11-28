@@ -149,7 +149,7 @@ const PROTECTED: &[&str] = &[
 const NO_COMBAT: &[&str] = &[
     "C_EquipmentSet.UseEquipmentSet",
     "C_Item.IsItemInRange",
-    "C_Map.OpenWorldMap",
+    // C_Map.OpenWorldMap applies this combat-only policy in its Rust handler.
     "C_PetJournal.SummonPetByGUID",
     "C_PetJournal.SummonRandomPet",
     "CancelSpellByName",
