@@ -76,3 +76,35 @@ fn original_tracker_displays_and_selectively_untracks_two_activities() {
         .expect("next-frame tracker callback should remove the untracked row");
     assert_visible_activity_names(&env, false, true);
 }
+
+#[test]
+fn original_tracker_fanfare_uses_the_new_activity_id() {
+    let env = seeded_env();
+    env.exec(
+        r#"
+        local tracker = assert(MonthlyActivitiesObjectiveTracker)
+        tracker:ClearFanfares()
+        C_PerksActivities.AddTrackedPerksActivity(901)
+        assert(tracker:NeedsFanfare(901) and not tracker:NeedsFanfare(902))
+        tracker:ClearFanfares()
+        C_PerksActivities.AddTrackedPerksActivity(902)
+        assert(tracker:NeedsFanfare(902) and not tracker:NeedsFanfare(901))
+        "#,
+    )
+    .expect("the original tracker attributes fanfare to each added activity");
+    env.exec("A_Admin.AdvanceTime(0)").unwrap();
+    assert_visible_activity_names(&env, true, true);
+    env.exec(
+        r#"
+        local tracker = assert(MonthlyActivitiesObjectiveTracker)
+        tracker:ClearFanfares()
+        assert(not tracker:IsDirty(), 'initial layout should settle')
+        tracker:UntrackPerksActivity(901)
+        assert(tracker:IsDirty(), 'removal event should invalidate original layout')
+        assert(not tracker:NeedsFanfare(901) and not tracker:NeedsFanfare(902))
+        "#,
+    )
+    .expect("untracking invalidates layout without adding a fanfare");
+    env.exec("A_Admin.AdvanceTime(0)").unwrap();
+    assert_visible_activity_names(&env, false, true);
+}
