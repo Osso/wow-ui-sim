@@ -549,12 +549,14 @@ fn profession_day_cooldown_displays_midnight_for_truesteel() {
 }
 
 /// Mainline crafting page width is 942 (786 compact) per
-/// Blizzard_ProfessionsCrafting.lua:418-425; Forever's Camelot override returns
-/// 782 (Blizzard_Professions/Camelot/Blizzard_ProfessionsCrafting.lua:1-3).
+/// Blizzard_ProfessionsCrafting.lua:418-425, applied by SetTab. Forever's Camelot
+/// ProfessionsFrame has no TabSystem or MaximizeMinimize, so SetTab returns early
+/// (Blizzard_ProfessionsFrame.lua:398-401) and the frame keeps its XML size 673
+/// (Blizzard_Professions/Camelot/Blizzard_ProfessionsFrame.xml:11).
 #[cfg(not(feature = "client-wowforever"))]
 const EXPANDED_CRAFTING_MIN_WIDTH: u32 = 900;
 #[cfg(feature = "client-wowforever")]
-const EXPANDED_CRAFTING_MIN_WIDTH: u32 = 782;
+const EXPANDED_CRAFTING_MIN_WIDTH: u32 = 673;
 
 #[test]
 fn casting_blacksmithing_opens_professions_frame() {
