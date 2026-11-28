@@ -46,6 +46,9 @@ fn try_casc_resolve(manager: &TextureManager, normalized_path: &str) -> Option<P
     }
 
     let resolver = crate::asset_resolver_config::resolver();
+    if let Some(file_data_id) = file_data_id_from_path(normalized_path) {
+        return resolve_file_data_id(manager, resolver, file_data_id);
+    }
 
     // Listfile entries always include the file extension; our normalized paths usually don't.
     // Try common UI asset extensions.
@@ -84,6 +87,42 @@ fn try_casc_resolve(manager: &TextureManager, normalized_path: &str) -> Option<P
     resolver.ensure_cached(fdid, &out_path).or_else(|| {
         crate::casc_asset_fallback::ensure_known_asset_cached(&listfile_path, &out_path)
     })
+}
+
+#[cfg(feature = "casc")]
+fn file_data_id_from_path(normalized_path: &str) -> Option<u32> {
+    let prefix = "filedataid/";
+    let id = normalized_path
+        .get(..prefix.len())
+        .filter(|head| head.eq_ignore_ascii_case(prefix))
+        .map_or(normalized_path, |_| &normalized_path[prefix.len()..]);
+    id.parse::<u32>().ok().filter(|&id| id != 0)
+}
+
+#[cfg(feature = "casc")]
+fn resolve_file_data_id(
+    manager: &TextureManager,
+    resolver: &asset_resolver::CascListfileResolver,
+    file_data_id: u32,
+) -> Option<PathBuf> {
+    let extract_dir = casc_extract_dir()?;
+    let relative = resolver
+        .resolve_path(file_data_id)
+        .unwrap_or_else(|| format!("filedataid/{file_data_id}.blp"));
+    let safe_relative = relative.replace('\\', "/");
+    let out_path = extract_dir.join(&safe_relative);
+    std::fs::create_dir_all(out_path.parent()?).ok()?;
+    {
+        let mut index = manager.source_index.borrow_mut();
+        index.observe_source(&extract_dir, &safe_relative);
+        index.observe_entry(&out_path);
+    }
+    if out_path.exists() {
+        return Some(out_path);
+    }
+    resolver
+        .ensure_cached(file_data_id, &out_path)
+        .or_else(|| crate::casc_asset_fallback::ensure_known_asset_cached(&relative, &out_path))
 }
 
 #[cfg(feature = "casc")]
