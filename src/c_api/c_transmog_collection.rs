@@ -1,4 +1,6 @@
 //! Owned custom-set storage; native validation and persistence are not modeled.
+// C_TransmogCollection.AreAllCollectionTypeFiltersChecked: TransmogItemsDocumentation.lua:27.
+// C_TransmogCollection.AreAllSourceTypeFiltersChecked: TransmogItemsDocumentation.lua:36.
 
 mod illusion_info;
 #[cfg(feature = "retail-12-0-5")]
@@ -297,4 +299,68 @@ fn delete_custom_set(state: &mut LuaState) -> LuaResult<u32> {
         .remove(&id)
         .ok_or_else(|| missing_set(id))?;
     Ok(0)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) fn register_filter_aggregates(state: &mut LuaState) -> LuaResult<()> {
+    let ns = super::ensure_namespace(state, "C_TransmogCollection")?;
+    table_set_rust_fn_static(
+        state,
+        ns,
+        "AreAllCollectionTypeFiltersChecked",
+        collection_filters_checked,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        ns,
+        "AreAllSourceTypeFiltersChecked",
+        source_filters_checked,
+    )
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn collection_filters_checked(state: &mut LuaState) -> LuaResult<u32> {
+    let checked = {
+        let sim = borrow_state(state)?;
+        sim.world.transmog_collected_shown && sim.world.transmog_uncollected_shown
+    };
+    state.push(Val::Bool(checked));
+    Ok(1)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn source_filters_checked(state: &mut LuaState) -> LuaResult<u32> {
+    // Same supported source range as the existing SetAllSourceTypeFilters.
+    let checked = {
+        let sim = borrow_state(state)?;
+        (1..=7).all(|source| sim.world.transmog_source_type_filters.contains(&source))
+    };
+    state.push(Val::Bool(checked));
+    Ok(1)
+}
+
+#[cfg(all(test, any(feature = "client-retail", feature = "client-wowforever")))]
+#[test]
+fn aggregate_filters_follow_existing_individual_controls() {
+    crate::lua_api::WowLuaEnv::new()
+        .unwrap()
+        .exec(
+            r#"
+        C_TransmogCollection.SetCollectedShown(true)
+        C_TransmogCollection.SetUncollectedShown(true)
+        assert(C_TransmogCollection.AreAllCollectionTypeFiltersChecked())
+        C_TransmogCollection.SetCollectedShown(false)
+        assert(not C_TransmogCollection.AreAllCollectionTypeFiltersChecked())
+        C_TransmogCollection.SetCollectedShown(true)
+        C_TransmogCollection.SetUncollectedShown(false)
+        assert(not C_TransmogCollection.AreAllCollectionTypeFiltersChecked())
+        C_TransmogCollection.SetAllSourceTypeFilters(true)
+        assert(C_TransmogCollection.AreAllSourceTypeFiltersChecked())
+        C_TransmogCollection.SetSourceTypeFilter(3,false)
+        assert(not C_TransmogCollection.AreAllSourceTypeFiltersChecked())
+        C_TransmogCollection.SetSourceTypeFilter(3,true)
+        assert(C_TransmogCollection.AreAllSourceTypeFiltersChecked())
+    "#,
+        )
+        .unwrap();
 }

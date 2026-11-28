@@ -1,4 +1,7 @@
 //! Explicit set-filter state; native defaults and filtering effects are unmodeled.
+// C_TransmogSets.GetFullBaseSetsCounts: TransmogSetsDocumentation.lua:131.
+// C_TransmogSets.GetValidBaseSetsCountsForCharacter: TransmogSetsDocumentation.lua:299.
+// C_TransmogSets.HasUsableSets: Retail TransmogSetsDocumentation.lua:349; Forever TransmogSetsDocumentation.lua:358.
 
 mod catalog;
 pub use catalog::{TransmogSetInfo, TransmogSetPrimaryAppearanceInfo, TransmogSets};
@@ -129,6 +132,7 @@ fn register_relation_queries(
     table_set_rust_fn_static(state, namespace, "GetBaseSets", catalog::get_base_sets)?;
     table_set_rust_fn_static(state, namespace, "GetAllSets", catalog::get_all_sets)?;
     table_set_rust_fn_static(state, namespace, "GetUsableSets", catalog::get_usable_sets)?;
+    register_set_counts(state, namespace)?;
     table_set_rust_fn_static(
         state,
         namespace,
@@ -142,6 +146,10 @@ fn register_relation_queries(
         "GetSourcesForSlot",
         catalog::get_sources_for_slot,
     )?;
+    register_all_set_appearances(state)
+}
+
+fn register_all_set_appearances(state: &mut LuaState) -> LuaResult<()> {
     let transmog = ensure_namespace(state, "C_Transmog")?;
     table_set_rust_fn_static(
         state,
@@ -150,4 +158,23 @@ fn register_relation_queries(
         catalog::get_all_set_appearances,
     )?;
     Ok(())
+}
+
+fn register_set_counts(
+    state: &mut LuaState,
+    namespace: rilua::vm::gc::arena::GcRef<rilua::vm::table::Table>,
+) -> LuaResult<()> {
+    table_set_rust_fn_static(state, namespace, "HasUsableSets", catalog::has_usable_sets)?;
+    table_set_rust_fn_static(
+        state,
+        namespace,
+        "GetFullBaseSetsCounts",
+        catalog::full_base_set_counts,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        namespace,
+        "GetValidBaseSetsCountsForCharacter",
+        catalog::valid_base_set_counts,
+    )
 }

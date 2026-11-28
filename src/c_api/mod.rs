@@ -3,6 +3,8 @@
 //! Real/state-backed surfaces live at the root of this module. Intentionally
 //! unsupported compatibility gaps stay isolated under `permanent_shims`.
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+mod auction_result_reads;
 pub(crate) mod azerite_essence_spell_selector;
 mod c_account_info;
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
@@ -43,6 +45,8 @@ pub(crate) mod experience_preset;
 pub(crate) mod kiosk;
 #[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
 pub mod performance_bar;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) mod scenario_observations;
 pub(crate) mod tooltip_azerite_catalog_data;
 #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 pub(crate) mod tooltip_info_retail_epoch_and_forever;
@@ -723,6 +727,15 @@ fn supports_super_tracking() -> bool {
 }
 
 pub(crate) fn register_utility_bootstrap_tables(state: &mut LuaState) -> LuaResult<()> {
+    register_core_utility_tables(state)?;
+    register_world_utility_tables(state)?;
+    register_runtime_utility_tables(state)?;
+    register_remaining_utility_tables(state)
+}
+
+fn register_core_utility_tables(state: &mut LuaState) -> LuaResult<()> {
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    register_observation_query_tables(state)?;
     c_cvar_info::register(state)?;
     c_engraving::register(state)?;
     c_social_restrictions::register(state)?;
@@ -746,6 +759,18 @@ pub(crate) fn register_utility_bootstrap_tables(state: &mut LuaState) -> LuaResu
     #[cfg(any(feature = "retail-12-1-0", feature = "client-wowforever"))]
     c_cvar_readiness::register(state)?;
     c_achievement_info_relations::register(state)?;
+    Ok(())
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn register_observation_query_tables(state: &mut LuaState) -> LuaResult<()> {
+    scenario_observations::register(state)?;
+    auction_result_reads::register(state)?;
+    c_transmog_collection::register_filter_aggregates(state)?;
+    Ok(())
+}
+
+fn register_world_utility_tables(state: &mut LuaState) -> LuaResult<()> {
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     guild_achievements::register(state)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
@@ -772,6 +797,10 @@ pub(crate) fn register_utility_bootstrap_tables(state: &mut LuaState) -> LuaResu
         c_quest_log::register(state)?;
         c_super_track::register(state)?;
     }
+    Ok(())
+}
+
+fn register_runtime_utility_tables(state: &mut LuaState) -> LuaResult<()> {
     c_garrison_damage_classes::register(state)?;
     #[cfg(feature = "garrison-host-inputs")]
     {
@@ -790,6 +819,10 @@ pub(crate) fn register_utility_bootstrap_tables(state: &mut LuaState) -> LuaResu
         feature = "client-wowforever"
     ))]
     c_secrets::register(state)?;
+    Ok(())
+}
+
+fn register_remaining_utility_tables(state: &mut LuaState) -> LuaResult<()> {
     register_specialization_and_model_tables(state)?;
     register_glue_and_display_tables(state)?;
     #[cfg(feature = "retail-12-0-0")]

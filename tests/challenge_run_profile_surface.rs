@@ -150,3 +150,17 @@ fn challenge_run_members_follow_pinned_profile_declarations() {
         .unwrap();
     }
 }
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn party_challenge_query_tracks_run_lifecycle() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(r#"
+        assert(C_PartyInfo.IsChallengeModeActive() == false)
+        A_Admin.StartChallengeRun({mapChallengeModeID=9011, eventMapID=7011, level=9,
+            affixIDs={21}, wasActiveKeystoneCharged=true, numDeaths=0, timeLost=0})
+        assert(C_PartyInfo.IsChallengeModeActive() == true)
+        A_Admin.ClearChallengeRun()
+        assert(C_PartyInfo.IsChallengeModeActive() == false)
+    "#).unwrap();
+}

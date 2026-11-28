@@ -21,6 +21,8 @@ pub(crate) fn register(
     state: &mut LuaState,
     namespace: rilua::vm::gc::arena::GcRef<rilua::vm::table::Table>,
 ) -> LuaResult<()> {
+    // Retail and Forever CalendarDocumentation.lua:329.
+    table_set_rust_fn_static(state, namespace, "EventGetTypes", event_types)?;
     table_set_rust_fn_static(
         state,
         namespace,
@@ -61,4 +63,15 @@ fn set_event_types(state: &mut LuaState) -> LuaResult<u32> {
         .map_err(|error| runtime_error(format!("{INPUT_ERROR}: {error}")))?;
     borrow_state_mut(state)?.calendar_event_types = records;
     Ok(0)
+}
+
+fn event_types(state: &mut LuaState) -> LuaResult<u32> {
+    let records = borrow_state(state)?.calendar_event_types.clone();
+    let result = create_table(state);
+    for (index, record) in records.iter().enumerate() {
+        let name = create_string(state, &record.display_string);
+        set_table_array(state, result, index as i64 + 1, name);
+    }
+    state.push(result);
+    Ok(1)
 }

@@ -1,5 +1,6 @@
 //! Supplied modern PetInfo observations, not native acquisition/default/sort policy.
 //! Retail StableInfoDocumentation.lua:15–22,193–214; PTR 70493:19–26,215–241.
+// C_StableInfo.GetNumActivePets: Retail StableInfoDocumentation.lua:33; Forever StableInfoDocumentation.lua:46.
 
 use crate::c_api::helpers::set_table_array;
 use crate::client_profile::{ACTIVE, ClientProfile};
@@ -46,6 +47,10 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
     if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::Ptr) {
         let namespace = super::ensure_namespace(state, "C_StableInfo")?;
         table_set_rust_fn_static(state, namespace, "GetActivePetList", get_active_pet_list)?;
+    }
+    if ACTIVE == ClientProfile::Retail {
+        let namespace = super::ensure_namespace(state, "C_StableInfo")?;
+        table_set_rust_fn_static(state, namespace, "GetNumActivePets", get_num_active_pets)?;
     }
     Ok(())
 }
@@ -242,4 +247,31 @@ pub(super) fn project_record(state: &mut LuaState, pet: &PetInfo) -> Val {
         table_set(state, row, key, array);
     }
     row
+}
+
+fn get_num_active_pets(state: &mut LuaState) -> LuaResult<u32> {
+    let count = borrow_state(state)?
+        .stable_active_pets
+        .as_ref()
+        .map_or(0, Vec::len);
+    state.push(Val::Num(count as f64));
+    Ok(1)
+}
+
+#[cfg(all(test, feature = "client-retail"))]
+#[test]
+fn active_pet_count_follows_supplied_list() {
+    crate::lua_api::WowLuaEnv::new().unwrap().exec(r#"
+        local function pet(slot)
+            return {slotID=slot,icon=10,level=80,displayID=20,uiModelSceneID=30,petNumber=40+slot,
+                creatureID=50,specID=60,name="Pet "..slot,familyName="Cat",specialization="Ferocity",
+                type="Cat",isFavorite=false,isExotic=false,petAbilities={},specAbilities={}}
+        end
+        A_Admin.SetActivePetList({pet(1),pet(3)})
+        assert(C_StableInfo.GetNumActivePets() == 2)
+        A_Admin.RemoveActivePet(1)
+        assert(C_StableInfo.GetNumActivePets() == 1)
+        A_Admin.SetActivePetList({})
+        assert(C_StableInfo.GetNumActivePets() == 0)
+    "#).unwrap();
 }
