@@ -34,24 +34,43 @@ fn supply_activities(env: &WowLuaEnv) {
         .expect("A_Admin should accept the complete activity snapshot");
 }
 
-fn assert_visible_activity_names(env: &WowLuaEnv, copper: bool, silver: bool) {
-    let observed: (bool, bool) = env
-        .eval(
-            r#"
-            local module = MonthlyActivitiesObjectiveTracker
-            local function visible(name)
-                for _, block in ipairs({module.ContentsFrame:GetChildren()}) do
-                    if block:IsShown() and block.HeaderText:GetText() == name then
-                        return true
-                    end
+fn activity_visibility_snapshot(
+    env: &WowLuaEnv,
+) -> (String, String, bool, bool, i64, i64, String, String, bool, bool) {
+    env.eval(
+        r#"
+        local module = MonthlyActivitiesObjectiveTracker
+        local contents = module and module.ContentsFrame
+        local blocks = contents and {contents:GetChildren()} or {}
+        local parent = module and module:GetParent()
+        local tracked = C_PerksActivities.GetTrackedPerksActivities().trackedIDs
+        local first = C_PerksActivities.GetPerksActivityInfo(901)
+        local second = C_PerksActivities.GetPerksActivityInfo(902)
+        local function visible(name)
+            for _, block in ipairs(blocks) do
+                if block:IsShown() and block.HeaderText:GetText() == name then
+                    return true
                 end
-                return false
             end
-            return visible("Copper tasks"), visible("Silver tasks")
-            "#,
-        )
-        .expect("original ObjectiveTracker frames should expose visible activity rows");
-    assert_eq!(observed, (copper, silver));
+            return false
+        end
+        return type(module), parent and parent:GetName() or "",
+            module and module:IsShown() or false,
+            ObjectiveTrackerFrame and ObjectiveTrackerFrame:IsShown() or false,
+            #blocks, #tracked, first and first.activityName or "",
+            second and second.activityName or "",
+            visible("Copper tasks"), visible("Silver tasks")
+        "#,
+    )
+    .expect("original ObjectiveTracker state should be readable")
+}
+
+fn assert_visible_activity_names(env: &WowLuaEnv, copper: bool, silver: bool) {
+    let observed = activity_visibility_snapshot(env);
+    assert!(
+        observed.8 == copper && observed.9 == silver,
+        "activity visibility mismatch: expected ({copper}, {silver}), observed {observed:?}"
+    );
 }
 
 #[test]
