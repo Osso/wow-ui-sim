@@ -57,16 +57,6 @@ pub fn fire_named_event_state(state: &mut LuaState, event_name: &str, args: &[Va
         state.push(*value);
     }
     for widget_id in get_event_listeners(state, event_name) {
-        let is_shadow =
-            borrow_state(state).map(|sim| is_retail_secure_name_shadow(&sim, widget_id));
-        match is_shadow {
-            Ok(true) => continue,
-            Ok(false) => {}
-            Err(error) => {
-                call_error_handler_state(state, &error.to_string());
-                break;
-            }
-        }
         if let Err(error) = dispatch_named_event_handlers(state, widget_id, event_name, args) {
             call_error_handler_state(state, &error.to_string());
             break;
@@ -74,34 +64,6 @@ pub fn fire_named_event_state(state: &mut LuaState, event_name: &str, args: &[Va
     }
     state.top = saved_top;
     crate::lua_api::taint::restore_active_stack_taint(state, taints);
-}
-
-/// INFERRED (R88g.1, R88t.t1/t2, frame registry): a secure duplicate is not the public event target when its name points to the ordinary frame.
-pub(crate) fn is_retail_secure_name_shadow(
-    sim: &crate::lua_api::state::SimState,
-    widget_id: u64,
-) -> bool {
-    if !crate::client_profile::is_active_retail_12_1_5() {
-        return false;
-    }
-    let Some(frame) = sim.widgets.get(widget_id) else {
-        return false;
-    };
-    let Some(name) = frame.name.as_deref() else {
-        return false;
-    };
-    let Some(owner) = frame
-        .owner_addon
-        .and_then(|owner| sim.addons.get(owner as usize))
-    else {
-        return false;
-    };
-    let loaded_in_both_environments = owner.loaded && owner.secure_loaded;
-    let name_points_to_another_frame = sim
-        .widgets
-        .get_id_by_name(name)
-        .is_some_and(|bound_id| bound_id != widget_id);
-    loaded_in_both_environments && name_points_to_another_frame
 }
 
 /// Dispatch one frame's filtered precall, normal and postcall event scripts.
