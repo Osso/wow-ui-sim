@@ -129,7 +129,7 @@ macro_rules! build_empty_sim_state {
             gamepad_mapped_sticks: None,
             #[cfg(any(feature = "client-wowforever", feature = "client-ptr"))]
             gamepad_allow_hover_events_with_free_look: false,
-            #[cfg(feature = "retail-12-1-5")]
+            #[cfg(feature = "weather-state")]
             weather: crate::c_api::c_weather::WeatherState::default(),
             #[cfg(any(feature = "retail-12-1-0", feature = "client-wowforever"))]
             encounter_timeline: crate::c_api::c_encounter_timeline::Timeline::default(),
@@ -1017,9 +1017,9 @@ macro_rules! build_empty_sim_state {
             #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
             selected_bnet_block: None,
             social_restrictions: SocialRestrictionsState::default(),
-            #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+            #[cfg(feature = "cinematic-summary")]
             cinematic_summaries: HashMap::new(),
-            #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+            #[cfg(feature = "cinematic-summary")]
             current_cinematic_id: 0,
             restricted_actions,
             restricted_actions_natural: [false; 6],
@@ -1079,6 +1079,9 @@ macro_rules! build_empty_sim_state {
             self_resurrect_options: Vec::new(),
             // Cached FrameXMLBase/Constants.lua: MAX_TOTEMS = 4.
             totem_slots: vec![None; 4],
+            totem_cannot_dismiss: BTreeSet::new(),
+            #[cfg(feature = "vehicle-seats")]
+            vehicle_seats: Default::default(),
             chat_bubbles: Vec::new(),
             summon_request: SummonRequestState::default(),
             player_map_position: (0.5, 0.5),

@@ -4,6 +4,7 @@
 use crate::lua_api::methods::{borrow_state, borrow_state_mut};
 use crate::lua_bridge::table_set_rust_fn_static;
 mod inputs;
+pub(crate) use inputs::admin_set_cinematic_summary;
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 

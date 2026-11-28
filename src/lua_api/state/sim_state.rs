@@ -9,11 +9,11 @@ pub(crate) struct RegisteredLoadWith {
 
 pub struct SimState {
     /// VERIFIED R88ap.1: zero initially and after CinematicFinished.
-    #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+    #[cfg(feature = "cinematic-summary")]
     pub current_cinematic_id: u32,
     /// INFERRED simulator source for Movie DB2 rows/summary refs (R88ap.1).
     /// Missing key = no row; None = no summary ref. No native data is fabricated.
-    #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+    #[cfg(feature = "cinematic-summary")]
     pub cinematic_summaries: HashMap<u32, Option<String>>,
     /// INFERRED host input for Retail talking-head consumers; native fields remain UNKNOWN.
     #[cfg(feature = "client-retail")]
@@ -119,7 +119,7 @@ pub struct SimState {
     pub widgets: WidgetRegistry,
     /// Shared suffix exclusions used by AddSourceLocationExclude and CreateTexture.
     pub(crate) source_location_exclusions: Vec<Vec<u8>>,
-    #[cfg(feature = "retail-12-1-5")]
+    #[cfg(feature = "weather-state")]
     pub(crate) weather: crate::c_api::c_weather::WeatherState,
     #[cfg(any(feature = "retail-12-1-0", feature = "client-wowforever"))]
     pub(crate) encounter_timeline: crate::c_api::c_encounter_timeline::Timeline,
@@ -797,6 +797,11 @@ pub struct SimState {
     /// Simulator tracking membership; empty initially, independent of task records.
     pub neighborhood_tracked_tasks: BTreeSet<i32>,
     pub totem_slots: Vec<Option<crate::lua_api::globals::real::totems::Totem>>,
+    /// Live 1-based totem slots the host marked as not dismissible.
+    pub totem_cannot_dismiss: BTreeSet<usize>,
+    /// Host vehicle seats and seat-indicator layouts (`A_Admin.EnterVehicle`).
+    #[cfg(feature = "vehicle-seats")]
+    pub vehicle_seats: crate::lua_api::globals::real::vehicle_seats::VehicleSeatState,
     pub weapon_enchants: [Vec<crate::c_api::weapon_enchants::WeaponEnchant>; 3],
     pub sound_manager: Option<SoundManager>,
     /// Mists alert-settings loaded state (R88ai); off makes `IsEnabled` false

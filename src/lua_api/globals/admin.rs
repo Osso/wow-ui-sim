@@ -536,8 +536,23 @@ fn register_world(b: TableBuilder) -> LuaResult<TableBuilder> {
 }
 
 fn register_zone_and_economy(b: TableBuilder) -> LuaResult<TableBuilder> {
-    #[cfg(feature = "retail-12-1-5")]
+    #[cfg(feature = "weather-state")]
     let b = b.set_function("SetWeather", crate::c_api::c_weather::set_weather)?;
+    #[cfg(feature = "cinematic-summary")]
+    let b = b.set_function(
+        "SetCinematicSummary",
+        super::real::cinematic_summary::admin_set_cinematic_summary,
+    )?;
+    #[cfg(feature = "vehicle-seats")]
+    let b = b
+        .set_function(
+            "SetVehicleUIIndicator",
+            super::real::vehicle_seats::admin_set_vehicle_ui_indicator,
+        )?
+        .set_function(
+            "EnterVehicle",
+            super::real::vehicle_seats::admin_enter_vehicle,
+        )?;
     b.set_function("SetZone", set_zone)?
         .set_function("SetSubZone", set_sub_zone)?
         .set_function("SetBindLocation", set_bind_location)?
@@ -559,6 +574,11 @@ fn register_modifier_keys(b: TableBuilder) -> LuaResult<TableBuilder> {
         .set_function("SetControlKeyDown", set_control_key_down)?
         .set_function("SetAltKeyDown", set_alt_key_down)?
         .set_function("SetMetaKeyDown", set_meta_key_down)?
+        .set_function("SetTotem", super::real::totems::admin_set_totem)?
+        .set_function(
+            "SetActiveRaidMarkers",
+            super::real::publication_12_0_0::admin_set_active_raid_markers,
+        )?
         .set_function(
             "IsSimulatorExitRequested",
             super::real::session_exit::is_simulator_exit_requested,

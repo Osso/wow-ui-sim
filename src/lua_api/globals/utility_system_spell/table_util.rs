@@ -145,7 +145,7 @@ pub fn table_count(state: &mut LuaState) -> LuaResult<u32> {
     Ok(3)
 }
 
-#[cfg(feature = "retail-12-1-5")]
+#[cfg(feature = "table-count-info")]
 fn table_getcountinfo(state: &mut LuaState) -> LuaResult<u32> {
     let input = stack_val(state, 1);
     if !matches!(input, Val::Table(_)) {
@@ -297,7 +297,7 @@ fn register_table_library_extensions(state: &mut LuaState) -> LuaResult<()> {
         return Ok(());
     };
     table_set_rust_fn_static(state, table_ref, "count", table_count)?;
-    #[cfg(feature = "retail-12-1-5")]
+    #[cfg(feature = "table-count-info")]
     table_set_rust_fn_static(state, table_ref, "getcountinfo", table_getcountinfo)?;
     table_set_rust_fn_static(state, table_ref, "create", table_create)
 }
