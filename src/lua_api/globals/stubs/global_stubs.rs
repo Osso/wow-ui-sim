@@ -176,7 +176,6 @@ static GLOBAL_ZERO_STUBS: &[&str] = &[
     // SimState-backed in guild_probes.rs, not stubs.
     "GetGuildTabardInfo",
     // GetInstanceInfo is SimState-backed in instance_info.rs, not a stub.
-    "GetInventoryAlertStatus",
     // GetInventoryItemCooldown is SimState-backed in cooldown_probes.rs,
     // not a stub.
     // GetLFGDungeonInfo / GetLFGDungeonNumEncounters / GetLFGMode are

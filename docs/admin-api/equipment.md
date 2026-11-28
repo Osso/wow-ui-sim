@@ -1,3 +1,13 @@
+# Equipment
+
+## Equipped item durability
+
+`A_Admin.SetEquippedItemDurability(slot, current, maximum)` supplies durability for an equipped item. `slot` must be an equipment slot from 1 through 28 that has an equipped item. `current` and `maximum` are unsigned integers; `maximum` must be greater than zero, and `current` must not exceed `maximum`. Invalid values raise an error. Replacing or removing the equipped item clears its supplied durability.
+
+`GetInventoryItemDurability(slot)` returns the supplied pair. An equipped item without a durability input retains the existing `100, 100` scenario default; an empty slot returns nil. The setter fires `UPDATE_INVENTORY_ALERTS`, which updates Blizzard's DurabilityFrame.
+
+INFERRED R88g9 (native evidence pending): `GetInventoryAlertStatus` uses status 1 for supplied durability below maximum and status 2 at zero. These match DurabilityFrame.lua's yellow and red alert entries. The native warning threshold is unknown.
+
 # Equipment item lock observations
 
 These simulator-only inputs are available on Retail, PTR, Forever and Mists. They feed the [equipment-set lock contract](../specs/equipment-set-locks.md); they do not change `C_ItemUpgrade` or infer native item-lock rules.

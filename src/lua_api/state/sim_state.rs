@@ -294,6 +294,8 @@ pub struct SimState {
     pub item_tooltip_sell_price_quantities: HashMap<u32, (u32, u32)>,
     /// Explicit opaque GUIDs for equipped-copy tooltip requests; empty by default.
     pub equipped_item_tooltip_guids: HashMap<i32, String>,
+    /// Host-supplied current and maximum durability by equipped inventory slot.
+    pub equipped_item_durability: HashMap<i32, (u32, u32)>,
     /// Host-supplied socket metadata copied from a selected bag instance.
     pub item_tooltip_socket_projections:
         HashMap<(i32, i32), Vec<crate::c_api::item_tooltip::ItemSocketProjectionRow>>,
@@ -1439,6 +1441,8 @@ pub struct SimState {
     pub voice_channels: Vec<crate::c_api::c_voice_chat_channels::VoiceChannel>,
     #[cfg(feature = "lfg-endgame-edit-policy")]
     pub lfg_endgame_policy: crate::c_api::c_lfg_list_policy::EndgameEditPolicy,
+    #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
+    pub arena_opponents: HashMap<String, crate::c_api::c_pvp_crowd_control::ArenaOpponent>,
     #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
     pub arena_crowd_control: HashMap<String, crate::c_api::c_pvp_crowd_control::CrowdControlWindow>,
     /// Arena crowd-control removal spell by unit GUID (`A_Admin.SetArenaCrowdControl`).

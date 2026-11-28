@@ -274,6 +274,10 @@ pub(crate) fn existing_guid_for_unit(
 }
 
 pub(crate) fn guid_for_unit(sim: &crate::lua_api::state::SimState, unit: &str) -> String {
+    #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
+    if let Some(opponent) = sim.arena_opponents.get(unit) {
+        return opponent.guid.clone();
+    }
     match unit {
         "player" => SEEDED_LOCAL_CHARACTER_GUID.to_string(),
         "target" => target_guid(sim),
@@ -507,7 +511,46 @@ fn get_negative_corruption_effect_info(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+#[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
+fn get_num_arena_opponents(state: &mut LuaState) -> LuaResult<u32> {
+    let count = borrow_state(state)?.arena_opponents.len();
+    state.push(Val::Num(count as f64));
+    Ok(1)
+}
+
+#[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
+fn get_num_arena_opponent_specs(state: &mut LuaState) -> LuaResult<u32> {
+    let count = borrow_state(state)?
+        .arena_opponents
+        .values()
+        .filter(|opponent| opponent.spec_id != 0)
+        .count();
+    state.push(Val::Num(count as f64));
+    Ok(1)
+}
+
+#[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
+fn get_arena_opponent_spec(state: &mut LuaState) -> LuaResult<u32> {
+    let index = i32::from_stack(state, 1)?;
+    let spec_id = borrow_state(state)?
+        .arena_opponents
+        .get(&format!("arena{index}"))
+        .map_or(0, |opponent| opponent.spec_id);
+    state.push(Val::Num(f64::from(spec_id)));
+    Ok(1)
+}
+
 pub fn register_all(lua: &mut rilua::Lua) -> crate::Result<()> {
+    #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
+    {
+        LuaApiMut::register_function(lua, "GetNumArenaOpponents", get_num_arena_opponents)?;
+        LuaApiMut::register_function(
+            lua,
+            "GetNumArenaOpponentSpecs",
+            get_num_arena_opponent_specs,
+        )?;
+        LuaApiMut::register_function(lua, "GetArenaOpponentSpec", get_arena_opponent_spec)?;
+    }
     LuaApiMut::register_function(lua, "GetUnitName", get_unit_name)?;
     LuaApiMut::register_function(lua, "UnitPVPName", unit_pvp_name)?;
     LuaApiMut::register_function(lua, "UnitFullName", unit_full_name)?;
