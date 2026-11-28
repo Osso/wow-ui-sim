@@ -271,19 +271,20 @@ pub(super) fn run_screenshot(
     command: ScreenshotCommand<'_>,
 ) {
     prepare_screenshot_env(env, saved_vars, &command);
+    let canvas = screenshot_canvas(env);
     let (batch, glyph_atlas) = build_screenshot_batch(
         env,
         font_system,
-        command.width,
-        command.height,
+        canvas,
+        command.height as f32 / canvas.1,
         command.filter.as_deref(),
     );
     if let Some(dump_filter) = &command.dump_tree {
-        dump_screenshot_tree(env, dump_filter.as_deref(), command.width, command.height);
+        dump_screenshot_tree(env, dump_filter.as_deref(), canvas);
     }
     log_screenshot_batch(&batch);
 
-    let img = render_screenshot_image(env, &batch, &glyph_atlas, command.width, command.height);
+    let img = render_screenshot_image(env, &batch, &glyph_atlas, &command, canvas);
     let img = apply_optional_crop(img, command.crop.as_deref());
     let output = save_screenshot(&img, &command.output, command.png, command.quality);
     eprintln!(
@@ -303,7 +304,8 @@ fn prepare_screenshot_env(
     env.service_headless_ui_transition(saved_vars)
         .expect("screenshot startup UI transition failed");
     apply_ui_scale(env, command.ui_scale);
-    env.set_screen_size(command.width as f32, command.height as f32);
+    env.set_display_size(command.width as f32, command.height as f32)
+        .expect("screenshot dimensions must be positive");
     wow_ui_sim::debug_helpers::debug_show_game_menu(env);
     apply_delay_with_tick(env, command.delay);
     env.service_headless_ui_transition(saved_vars)
@@ -333,12 +335,19 @@ fn log_screenshot_batch(batch: &wow_ui_sim::render::QuadBatch) {
     );
 }
 
+/// The UI canvas the screenshot is laid out on: the client's 768-unit-high
+/// canvas for the screenshot's physical size (see `set_display_size`).
+fn screenshot_canvas(env: &WowLuaEnv) -> (f32, f32) {
+    let state = env.state().borrow();
+    (state.screen_width, state.screen_height)
+}
+
 fn render_screenshot_image(
     env: &WowLuaEnv,
     batch: &wow_ui_sim::render::QuadBatch,
     glyph_atlas: &wow_ui_sim::render::GlyphAtlas,
-    width: u32,
-    height: u32,
+    command: &ScreenshotCommand<'_>,
+    canvas: (f32, f32),
 ) -> image::RgbaImage {
     let texture_manager = create_texture_manager(env);
     let mut tex_mgr = texture_manager.borrow_mut();
@@ -346,7 +355,14 @@ fn render_screenshot_image(
         let (data, size, _) = glyph_atlas.texture_data();
         (data, size)
     });
-    wow_ui_sim::render::headless::render_to_image(batch, &mut tex_mgr, width, height, glyph_data)
+    wow_ui_sim::render::headless::render_scene_to_image(
+        batch,
+        &mut tex_mgr,
+        command.width,
+        command.height,
+        glyph_data,
+        Some(iced::Size::new(canvas.0, canvas.1)),
+    )
 }
 
 fn apply_optional_crop(img: image::RgbaImage, crop: Option<&str>) -> image::RgbaImage {
@@ -365,7 +381,13 @@ pub(super) fn run_dump_texture(
 ) {
     env.set_screen_size(1600.0, 1200.0);
     settle_headless_startup(env);
-    let (batch, _) = build_screenshot_batch(env, font_system, 1600, 1200, frame_filter.as_deref());
+    let (batch, _) = build_screenshot_batch(
+        env,
+        font_system,
+        (1600.0, 1200.0),
+        1.0,
+        frame_filter.as_deref(),
+    );
     eprintln!(
         "QuadBatch: {} quads, {} tex requests",
         batch.quad_count(),
@@ -379,8 +401,8 @@ pub(super) fn run_dump_texture(
 fn build_screenshot_batch(
     env: &WowLuaEnv,
     font_system: &Rc<RefCell<WowFontSystem>>,
-    width: u32,
-    height: u32,
+    canvas: (f32, f32),
+    raster_scale: f32,
     filter: Option<&str>,
 ) -> (
     wow_ui_sim::render::QuadBatch,
@@ -391,7 +413,7 @@ fn build_screenshot_batch(
     };
     use wow_ui_sim::render::GlyphAtlas;
 
-    let mut glyph_atlas = GlyphAtlas::new();
+    let mut glyph_atlas = GlyphAtlas::with_raster_scale(raster_scale);
     let batch = {
         let mut fs = font_system.borrow_mut();
         let buckets = {
@@ -403,7 +425,7 @@ fn build_screenshot_batch(
         let state = env.state().borrow();
         let tooltip_data = wow_ui_sim::iced_app::tooltip::collect_tooltip_data(&state);
         build_quad_batch_for_registry_with_quest_blobs(
-            RegistryQuadBatchParams::new(&state.widgets, (width as f32, height as f32), &buckets)
+            RegistryQuadBatchParams::new(&state.widgets, canvas, &buckets)
                 .root_name(filter)
                 .text_ctx(Some((&mut fs, &mut glyph_atlas)))
                 .message_frames(Some(&state.message_frames))
@@ -414,7 +436,7 @@ fn build_screenshot_batch(
     (batch, glyph_atlas)
 }
 
-fn dump_screenshot_tree(env: &WowLuaEnv, filter_key: Option<&str>, width: u32, height: u32) {
+fn dump_screenshot_tree(env: &WowLuaEnv, filter_key: Option<&str>, canvas: (f32, f32)) {
     let state = env.state().borrow();
     let addon_names: Vec<String> = state.addons.iter().map(|a| a.folder_name.clone()).collect();
     wow_ui_sim::dump::print_frame_tree(
@@ -424,8 +446,8 @@ fn dump_screenshot_tree(env: &WowLuaEnv, filter_key: Option<&str>, width: u32, h
         filter_key,
         false,
         false,
-        width as f32,
-        height as f32,
+        canvas.0,
+        canvas.1,
     );
 }
 

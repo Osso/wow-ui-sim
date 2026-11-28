@@ -147,6 +147,32 @@ mod tests {
 
     #[cfg(feature = "gui")]
     #[test]
+    fn screenshot_size_is_physical_on_the_client_ui_canvas() {
+        let args = Args::try_parse_from([
+            "wow-sim",
+            "screenshot",
+            "--width",
+            "2000",
+            "--height",
+            "1125",
+        ])
+        .expect("screenshot dimensions should parse");
+        let env = WowLuaEnv::new().expect("Lua environment should initialize");
+        configure_screen_size(&env, &args).unwrap();
+        let (physical_height, ui_height, pixels_per_unit): (f32, f32, f32) = env
+            .eval(
+                "local _, h = GetPhysicalScreenSize();                  return h, GetScreenHeight(), h / GetScreenHeight()",
+            )
+            .expect("screen globals should return the display and UI sizes");
+        assert_eq!(physical_height, 1125.0);
+        // The client's canvas is 768 units high at scale 1, so a unit is
+        // physical height / 768 pixels, as PixelUtil assumes.
+        assert_eq!(ui_height, 768.0);
+        assert!((pixels_per_unit - 1125.0 / 768.0).abs() < 1e-4);
+    }
+
+    #[cfg(feature = "gui")]
+    #[test]
     fn reload_ui_rebuilds_the_real_no_addons_startup() {
         let session = tempfile::tempdir().unwrap();
         let args =
@@ -251,7 +277,7 @@ fn configure_screen_size(env: &WowLuaEnv, args: &Args) -> wow_ui_sim::Result<()>
     #[cfg(not(feature = "gui"))]
     let window_size: Option<(u32, u32)> = None;
     let phase_start = Instant::now();
-    let (w, h) = if let Some((width, height)) = window_size {
+    let (w, h) = if let Some((width, height)) = window_size.or_else(|| screenshot_size(args)) {
         let (w, h) = (width as f32, height as f32);
         env.set_display_size(w, h)?;
         (w, h)
@@ -265,6 +291,16 @@ fn configure_screen_size(env: &WowLuaEnv, args: &Args) -> wow_ui_sim::Result<()>
         phase_start.elapsed()
     ));
     Ok(())
+}
+
+/// A screenshot is a physical image size, laid out on the client's 768-unit
+/// canvas like the GUI's fixed window size.
+fn screenshot_size(args: &Args) -> Option<(u32, u32)> {
+    match &args.command {
+        #[cfg(feature = "gui")]
+        Some(Commands::Screenshot { width, height, .. }) => Some((*width, *height)),
+        _ => None,
+    }
 }
 
 fn command_screen_size(command: &Option<Commands>) -> (f32, f32) {

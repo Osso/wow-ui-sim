@@ -142,11 +142,13 @@ enum Commands {
         /// losslessly.
         #[arg(long, default_value_t = 15.0, value_name = "1-100")]
         quality: f32,
-        /// UIParent scale, applied before the canvas size so the UI lays out
-        /// for it the way the client does on a uiScale change. The client
-        /// renders 1 UI unit as height/768 * uiScale pixels; 1440p at
-        /// uiScale 0.9 is 1.6875. Above 1.0 the 2x atlas art is used, as the
-        /// client does; WOW_SIM_HIRES_ATLASES=0/1 overrides that choice.
+        /// UIParent scale (the client's uiScale), applied before the canvas
+        /// size so the UI lays out for it the way the client does on a
+        /// uiScale change. As in the client, the screenshot's UI canvas is
+        /// 768 units high and 1 UI unit renders as height/768 * uiScale
+        /// pixels (1440p at 0.9 is 1.6875). Above 1.0 the 2x atlas art is
+        /// used, as the client does; WOW_SIM_HIRES_ATLASES=0/1 overrides
+        /// that choice.
         #[arg(long, default_value_t = 1.0)]
         ui_scale: f32,
     },
