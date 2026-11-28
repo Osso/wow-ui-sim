@@ -216,7 +216,6 @@ fn apply_temporary_state_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     use rilua::LuaApiMut;
 
-    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::garrison_mission_lists::apply_bootstrap(lua)?;
     apply_runtime_state_bootstrap(lua)?;
     #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
