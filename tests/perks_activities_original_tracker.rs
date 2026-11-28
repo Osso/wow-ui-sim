@@ -36,18 +36,12 @@ fn supply_activities(env: &WowLuaEnv) {
         .expect("A_Admin should accept the complete activity snapshot");
 }
 
-fn activity_visibility_snapshot(
-    env: &WowLuaEnv,
-) -> (String, String, bool, bool, i64, i64, String, String, bool, bool) {
+fn activity_visibility_snapshot(env: &WowLuaEnv) -> (bool, bool) {
     env.eval(
         r#"
-        local module = MonthlyActivitiesObjectiveTracker
-        local contents = module and module.ContentsFrame
+        local tracker = MonthlyActivitiesObjectiveTracker
+        local contents = tracker and tracker.ContentsFrame
         local blocks = contents and {contents:GetChildren()} or {}
-        local parent = module and module:GetParent()
-        local tracked = C_PerksActivities.GetTrackedPerksActivities().trackedIDs
-        local first = C_PerksActivities.GetPerksActivityInfo(901)
-        local second = C_PerksActivities.GetPerksActivityInfo(902)
         local function visible(name)
             for _, block in ipairs(blocks) do
                 if block:IsShown() and block.HeaderText:GetText() == name then
@@ -56,23 +50,14 @@ fn activity_visibility_snapshot(
             end
             return false
         end
-        return type(module), parent and parent:GetName() or "",
-            module and module:IsShown() or false,
-            ObjectiveTrackerFrame and ObjectiveTrackerFrame:IsShown() or false,
-            #blocks, #tracked, first and first.activityName or "",
-            second and second.activityName or "",
-            visible("Copper tasks"), visible("Silver tasks")
+        return visible("Copper tasks"), visible("Silver tasks")
         "#,
     )
-    .expect("original ObjectiveTracker state should be readable")
+    .expect("original ObjectiveTracker rows should be readable")
 }
 
 fn assert_visible_activity_names(env: &WowLuaEnv, copper: bool, silver: bool) {
-    let observed = activity_visibility_snapshot(env);
-    assert!(
-        observed.8 == copper && observed.9 == silver,
-        "activity visibility mismatch: expected ({copper}, {silver}), observed {observed:?}"
-    );
+    assert_eq!(activity_visibility_snapshot(env), (copper, silver));
 }
 
 #[test]
