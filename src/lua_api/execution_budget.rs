@@ -10,6 +10,36 @@ use rilua::{LuaResult, Val};
 const STARTUP_WATCHDOG_TIMEOUT_MS: u64 = 19_000;
 const RUNTIME_WATCHDOG_TIMEOUT_MS: u64 = 200;
 
+/// How many times slower the simulator runs add-on Lua than the client does
+/// (f64 bits; 1.0 by default). The watchdog and the script bucket throttle are
+/// limits on the client's elapsed time, so they are measured here against
+/// elapsed time divided by this factor: a heavy add-on that stays inside the
+/// client's limits is not stopped only because the simulator is slower.
+static SCRIPT_TIME_SCALE_BITS: std::sync::atomic::AtomicU64 =
+    std::sync::atomic::AtomicU64::new(0x3FF0_0000_0000_0000);
+
+/// Set the simulator-to-client Lua time factor (`--script-time-scale`).
+pub fn set_script_time_scale(scale: f64) {
+    let scale = if scale.is_finite() && scale > 0.0 {
+        scale
+    } else {
+        1.0
+    };
+    SCRIPT_TIME_SCALE_BITS.store(scale.to_bits(), std::sync::atomic::Ordering::Relaxed);
+}
+
+fn script_time_scale() -> f64 {
+    f64::from_bits(SCRIPT_TIME_SCALE_BITS.load(std::sync::atomic::Ordering::Relaxed))
+}
+
+fn scaled_ms(ms: u64) -> u64 {
+    scale_ms(ms, script_time_scale())
+}
+
+fn scale_ms(ms: u64, scale: f64) -> u64 {
+    (ms as f64 * scale).round() as u64
+}
+
 pub(crate) fn watchdog_timeout(state: &LuaState) -> LuaResult<Duration> {
     let sim = borrow_state(state)?;
     let timeout_ms = if sim.startup_script_watchdog_phase {
@@ -19,7 +49,7 @@ pub(crate) fn watchdog_timeout(state: &LuaState) -> LuaResult<Duration> {
     };
     Ok(sim
         .script_watchdog_timeout_override
-        .unwrap_or(Duration::from_millis(timeout_ms)))
+        .unwrap_or(Duration::from_millis(scaled_ms(timeout_ms))))
 }
 
 pub(crate) fn with_addon_watchdog<T>(
@@ -73,7 +103,7 @@ fn restricted_bucket_limits(state: &LuaState, restricted: bool) -> LuaResult<Opt
         "luaScriptBucketThrottleMaxMsPerSecondRestricted",
     )?;
     let burst = parse_bucket_limit(&sim.cvars, "luaScriptBucketThrottleMaxMsBurstRestricted")?;
-    Ok(Some((rate, burst)))
+    Ok(Some((scaled_ms(rate), scaled_ms(burst))))
 }
 
 fn parse_bucket_limit(cvars: &crate::cvars::CVarStorage, name: &str) -> LuaResult<u64> {
@@ -178,6 +208,13 @@ fn frame_addon_owner(state: &LuaState, frame_id: u64) -> LuaResult<Option<String
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn script_time_scale_multiplies_client_limits() {
+        assert_eq!(scale_ms(200, 1.0), 200);
+        assert_eq!(scale_ms(200, 100.0), 20_000);
+        assert_eq!(scale_ms(1000, 2.5), 2500);
+    }
 
     #[test]
     fn handler_watchdog_error_reports_owner_event_and_elapsed_time() {

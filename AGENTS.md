@@ -329,6 +329,7 @@ These aliases build both `wow-sim` and `wow-cli` with `--release --no-default-fe
 - `--class <NAME|N>` / `--race <NAME|N>` / `--spec <NAME|N>` - Seed class, race and specialization before addon loading, then reapply them after startup, before `--exec-lua`. Names are case-insensitive; numeric indices are one-based. Without `--class`, `--spec` resolves against the class at that point. Saved GUI class/race preferences apply only to GUI launches. See [spec](docs/specs/cli-class-spec.md). Wrath, Era, and Anniversary reject `--spec`. These flags fire `PLAYER_SPECIALIZATION_CHANGED` with `player`; they do not repeat the world-entry lifecycle event.
 - `--no-addons` / `--no-saved-vars` - Same as environment variables below
 - `--delay <ms>` - Delay in milliseconds after firing startup events (for dump-tree/screenshot). The sleep is followed by one OnUpdate tick that reports the slept time as `elapsed` and by the timers that came due, and it runs before `--exec-lua`, so an addon that defers its setup with `C_Timer.After(n)` is initialised by the time the script runs
+- `--script-time-scale <factor>` - How many times slower the simulator runs add-on Lua than the client (default 1). The script watchdog ("script ran too long") and the script bucket throttle limits are multiplied by it, so a heavy add-on that stays inside the client's limits is not stopped only because the simulator is slower
 
 ### Environment Variables
 

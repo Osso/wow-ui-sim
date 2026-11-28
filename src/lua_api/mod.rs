@@ -20,6 +20,7 @@ mod env_rilua;
 mod env_runtime;
 pub(crate) use env_runtime::set_display_size_from_lua;
 pub(crate) mod execution_budget;
+pub use execution_budget::set_script_time_scale;
 pub(crate) mod frame;
 pub(crate) mod frame_substates;
 pub(crate) mod game_data;
