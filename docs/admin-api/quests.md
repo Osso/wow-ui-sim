@@ -73,3 +73,12 @@ Proof status: producer committed as `b5dd5947a`; GREEN has not been run. Tests w
 ### A_Admin.SetQuestRewardChoices(questID, items)
 
 Same rows and validation as `SetQuestLogRewardItems`, stored as the reward choices of an existing quest. When a quest has choices, `GetQuestReward` needs a choice from 1 to the number of choices; any other value changes nothing (INFERRED, R-ag10-8).
+
+### Legacy reward reads (Retail)
+
+`A_Admin.SetQuestRewardChoices(questID, rows)` also supplies the legacy
+`GetQuestLogChoiceInfo(index, questID)` row and `GetNumQuestLogChoices` count.
+`GetQuestLogItemLink(type, index, questID)` reads the selected log item;
+`GetQuestItemLink(type, index)` uses the active dialog. Both use the existing
+reward/choice item identity lookup and item-link builder. No link is supplied
+when the row has no item ID. INFERRED (R-ag10-18).

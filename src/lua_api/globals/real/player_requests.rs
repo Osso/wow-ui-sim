@@ -20,6 +20,38 @@ use rilua::{LuaApiMut, LuaResult, Val, runtime_error};
 #[derive(Clone, Debug, Default)]
 pub struct PlayerRequests {
     pub trade_request: Option<String>,
+    /// Explicit host role policy; unsupplied keeps the previous all-eligible model.
+    pub roles: Option<RoleOptions>,
+}
+
+/// Role availability and whether unavailable roles are suggestions instead of limits.
+#[derive(Clone, Debug)]
+pub struct RoleOptions {
+    pub available: [bool; 3],
+    pub soft: bool,
+}
+
+fn role_options(state: &mut LuaState) -> LuaResult<u32> {
+    let soft = borrow_state(state)?
+        .player_requests
+        .roles
+        .as_ref()
+        .is_some_and(|r| r.soft);
+    state.push(Val::Bool(soft));
+    Ok(1)
+}
+
+fn set_role_options(state: &mut LuaState) -> LuaResult<u32> {
+    use crate::lua_api::globals::real::admin_fields::boolean_arg;
+    const API: &str = "A_Admin.SetPlayerRoleOptions";
+    let available = [
+        boolean_arg(state, 1, API)?,
+        boolean_arg(state, 2, API)?,
+        boolean_arg(state, 3, API)?,
+    ];
+    let soft = boolean_arg(state, 4, API)?;
+    borrow_state_mut(state)?.player_requests.roles = Some(RoleOptions { available, soft });
+    Ok(0)
 }
 
 fn may_poll_roles(sim: &SimState) -> bool {
@@ -73,10 +105,12 @@ fn begin_trade(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 pub(crate) fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
+    LuaApiMut::register_function(lua, "AreClassRolesSoftSuggestions", role_options)?;
     LuaApiMut::register_function(lua, "InitiateRolePoll", initiate_role_poll)?;
     LuaApiMut::register_function(lua, "BeginTrade", begin_trade)
 }
 
 pub(crate) fn register_admin(b: TableBuilder) -> LuaResult<TableBuilder> {
-    b.set_function("RequestTrade", request_trade)
+    b.set_function("RequestTrade", request_trade)?
+        .set_function("SetPlayerRoleOptions", set_role_options)
 }

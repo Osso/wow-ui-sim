@@ -2,7 +2,6 @@
 # Blizzard UI startup. Contract: docs/specs/api-surface-audit.md.
 # Format: <name> # <intentionally-unsupported|not-yet>[: reason]
 AddSourceLocationExclude # not-yet: temporary Lua workaround
-AreClassRolesSoftSuggestions # not-yet
 AutoEquipCursorItem # not-yet
 C_AchievementInfo.IsGuildAchievement # not-yet
 C_ActionBar.FindAssistedCombatActionButtons # not-yet

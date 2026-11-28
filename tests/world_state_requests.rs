@@ -54,3 +54,37 @@ assert(#seen == 5, "a claimed quest cannot be claimed again")
 fn quest_giver_requests_accept_decline_and_claim_rewards() {
     run_cases(&["Blizzard_SharedXMLBase"], QUEST_CASES, "quest requests");
 }
+
+const QUEST_REWARD_READ_CASES: &str = r#"
+A_Admin.SetQuestLogEntry(80001, "Choice Quest", true)
+A_Admin.SetQuestLogEntry(80002, "Other Quest", true)
+A_Admin.SetQuestRewardChoices(80001, {
+    {name = "Sword", texture = "Interface\Icons\INV_Sword_04", count = 2, quality = 3, isUsable = true, itemID = 212405},
+    {name = "Bow", texture = "Interface\Icons\INV_Weapon_Bow_01", count = 1, quality = 4, isUsable = false, itemID = 273784},
+})
+A_Admin.SetQuestRewardChoices(80002, {
+    {name = "Sword", texture = "Interface\Icons\INV_Sword_04", count = 1, quality = 1, isUsable = false, itemID = 212405},
+})
+local i, kind = QuestUtils_GetBestQualityItemRewardIndex(80001)
+assert(i == 2 and kind == "choice")
+local name, _, count, quality, usable, id = QuestUtils_GetQuestLogRewardInfo(i, 80001, kind)
+assert(name == "Bow" and count == 1 and quality == 4 and not usable and id == 273784)
+i, kind = QuestUtils_GetBestQualityItemRewardIndex(80002)
+assert(i == 1 and kind == "choice")
+assert(QuestUtils_GetQuestLogRewardInfo(i, 80002, kind) == "Sword")
+assert(GetQuestLogItemLink("choice", 1, 80001):find("item:212405", 1, true))
+assert(GetQuestLogItemLink("choice", 2, 80001):find("item:273784", 1, true))
+assert(GetQuestLogItemLink("choice", 2, 80002) == nil)
+A_Admin.OpenMultiQuestNpc()
+C_GossipInfo.SelectActiveQuest(80001)
+assert(GetNumQuestChoices() == 2)
+assert(GetQuestItemLink("choice", 1):find("item:212405", 1, true))
+assert(GetQuestItemLink("choice", 2):find("item:273784", 1, true))
+DeclineQuest()
+assert(GetNumQuestChoices() == 0 and GetQuestItemLink("choice", 1) == nil)
+"#;
+
+#[test]
+fn quest_reward_reads_drive_original_choice_selection_and_item_links() {
+    run_cases(&["Blizzard_FrameXMLUtil"], QUEST_REWARD_READ_CASES, "quest reward reads");
+}

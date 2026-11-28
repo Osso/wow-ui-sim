@@ -335,6 +335,8 @@ fn register_core_surfaces(lua: &mut rilua::Lua) -> crate::Result<()> {
     super::real::achievement_ui_access::register(lua)?;
     crate::c_api::encoding_util::register(lua.state_mut())?;
     super::quest_surface::register_all(lua)?;
+    #[cfg(feature = "client-retail")]
+    super::real::quest_reward_reads::register_all(lua)?;
     #[cfg(any(
         feature = "client-retail",
         feature = "client-ptr",

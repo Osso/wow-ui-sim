@@ -18,10 +18,25 @@ const ROLE_POLL_CASES: &str = r#"
 A_Admin.SetPartySize(2)
 A_Admin.SetPartyMember(1, "Thrynn", 2, 80)
 A_Admin.SetPartyMember(2, "Kazzara", 1, 80)
+assert(not pcall(A_Admin.SetPlayerRoleOptions, true, false, true, 1), "booleans required")
+A_Admin.SetPlayerRoleOptions(false, false, true, false)
+assert(not AreClassRolesSoftSuggestions())
 A_Admin.SetPartyLeader(1)
 assert(InitiateRolePoll() == false and not RolePollPopup:IsShown(), "not the leader")
 A_Admin.SetPartyLeader(0)
 assert(InitiateRolePoll() == true and RolePollPopup:IsShown(), "ROLE_POLL_BEGIN opens the poll")
+assert(not RolePollPopupRoleButtonTank:IsEnabled() and RolePollPopupRoleButtonDPS:IsEnabled(), "strict availability")
+StaticPopupSpecial_Hide(RolePollPopup)
+A_Admin.SetPlayerRoleOptions(false, true, true, true)
+assert(AreClassRolesSoftSuggestions())
+assert(InitiateRolePoll() and RolePollPopup:IsShown())
+assert(RolePollPopupRoleButtonHealer:IsEnabled())
+-- Forever consumes this flag in RolePoll.lua; Retail does not consult it.
+if expectRetail then
+    assert(not RolePollPopupRoleButtonTank:IsEnabled())
+else
+    assert(RolePollPopupRoleButtonTank:IsEnabled() and not RolePollPopupRoleButtonTank.isRecommended)
+end
 StaticPopupSpecial_Hide(RolePollPopup)
 A_Admin.SetPartySize(0)
 assert(InitiateRolePoll() == false, "solo players cannot poll")
@@ -32,7 +47,8 @@ assert(InitiateRolePoll() == false, "solo players cannot poll")
 fn role_poll_opens_original_popup_for_group_leader() {
     test_timeout! {
         let env = load_game_ui();
-        env.exec(ROLE_POLL_CASES).expect("role poll consumer");
+        let lua = format!("local expectRetail = {}\n{}", cfg!(feature = "client-retail"), ROLE_POLL_CASES);
+        env.exec(&lua).expect("role poll consumer");
     }
 }
 

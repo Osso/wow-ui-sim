@@ -55,3 +55,12 @@ returns false.
 Stores an incoming trade request and fires `TRADE_REQUEST(requesterName)`, which
 opens the `TRADE` popup. `BeginTrade()` opens the trade with the requester and
 fires `TRADE_SHOW`; `CancelTrade()` declines the request.
+
+### A_Admin.SetPlayerRoleOptions(tank, healer, damage, soft)
+
+Supplies four booleans for the player, in the order returned by
+`UnitGetAvailableRoles` and the policy returned by `AreClassRolesSoftSuggestions`
+(`UnitRoleDocumentation.lua:10,38` in Retail and Forever). Forever's role poll
+permits an unavailable role when `soft` is true, without marking it recommended.
+Retail's role poll enforces availability. The unsupplied scenario preserves the
+prior all-available model; the strict/soft native default is unknown (R-ag10-19).

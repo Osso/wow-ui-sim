@@ -7,7 +7,6 @@ AntiAliasingSupported # not-yet
 ArchaeologyGetIconInfo # not-yet
 ArchaeologyMapUpdateAll # not-yet
 ArcheologyGetVisibleBlobID # not-yet
-AreClassRolesSoftSuggestions # not-yet
 AreTalentsLocked # not-yet: temporary Lua workaround
 AutoChooseCurrentGraphicsSetting # not-yet
 AutoEquipCursorItem # not-yet
@@ -2185,11 +2184,8 @@ GetPvpTalentInfoBySpecialization # not-yet
 GetPvpTalentLink # not-yet
 GetQuestCurrencyID # not-yet
 GetQuestExpansion # not-yet
-GetQuestItemLink # not-yet
-GetQuestLogChoiceInfo # not-yet
 GetQuestLogChoiceInfoLootType # not-yet
 GetQuestLogItemDrop # not-yet
-GetQuestLogItemLink # not-yet
 GetQuestLogPortraitTurnIn # not-yet
 GetQuestLogQuestType # not-yet
 GetQuestLogRewardFactionInfo # not-yet
