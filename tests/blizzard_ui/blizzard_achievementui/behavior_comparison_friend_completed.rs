@@ -111,7 +111,7 @@ const EXPECTED_INCOMPLETE: &str = "comparison_calls=1 status_calls=1 \
 type CompletedProbe = (String, String, String, String, String);
 type IncompleteProbe = (String, String);
 
-#[cfg(not(feature = "client-ptr"))]
+#[cfg(not(any(feature = "client-ptr", feature = "client-wowforever")))]
 const FAKE_FRAME_BUILDER: &str = r#"
     local function noop_text() end
     local function noop_show() end
@@ -142,7 +142,10 @@ const FAKE_FRAME_BUILDER: &str = r#"
     end
 "#;
 
-#[cfg(feature = "client-ptr")]
+/// PTR and Forever call `parent.DateCompleted:SetShown(show)` from
+/// AchievementFrame_ShowDateCompleted (Forever 70707
+/// Blizzard_AchievementUI/Mainline/Blizzard_AchievementUI.lua:417-418).
+#[cfg(any(feature = "client-ptr", feature = "client-wowforever"))]
 const FAKE_FRAME_BUILDER: &str = r#"
     local function noop_text() end
     local function noop_show() end
