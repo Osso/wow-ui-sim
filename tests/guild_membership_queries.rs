@@ -5,6 +5,7 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 
 const MEMBERSHIP: &str = r#"
     A_Admin.SetPartySize(3)
+    A_Admin.ClearGuild()
     local player, first, second = UnitGUID("player"), UnitGUID("party1"), UnitGUID("party2")
     assert(first and second and first ~= second)
     assert(not UnitIsInMyGuild("player") and not IsPlayerInGuildFromGUID(player), "no guild yet")

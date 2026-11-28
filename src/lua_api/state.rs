@@ -1080,6 +1080,8 @@ macro_rules! build_empty_sim_state {
             // Cached FrameXMLBase/Constants.lua: MAX_TOTEMS = 4.
             totem_slots: vec![None; 4],
             totem_cannot_dismiss: BTreeSet::new(),
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            death_release: Default::default(),
             #[cfg(feature = "vehicle-seats")]
             vehicle_seats: Default::default(),
             chat_bubbles: Vec::new(),

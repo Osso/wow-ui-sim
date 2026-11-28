@@ -799,6 +799,9 @@ pub struct SimState {
     pub totem_slots: Vec<Option<crate::lua_api::globals::real::totems::Totem>>,
     /// Live 1-based totem slots the host marked as not dismissible.
     pub totem_cannot_dismiss: BTreeSet<usize>,
+    /// Ghost form, resurrect-offer attributes, area spirit healer and cemetery inputs.
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub death_release: crate::lua_api::globals::real::death_release::DeathReleaseState,
     /// Host vehicle seats and seat-indicator layouts (`A_Admin.EnterVehicle`).
     #[cfg(feature = "vehicle-seats")]
     pub vehicle_seats: crate::lua_api::globals::real::vehicle_seats::VehicleSeatState,

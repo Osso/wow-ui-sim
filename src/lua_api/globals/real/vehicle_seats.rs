@@ -42,6 +42,7 @@ pub struct VehicleSeatState {
     /// 1-based virtual seat the player occupies while in a vehicle.
     pub player_seat: Option<usize>,
     pub hides_pet_frame: bool,
+    pub has_combo_points: bool,
 }
 
 impl VehicleSeatState {
@@ -50,11 +51,12 @@ impl VehicleSeatState {
         self.seats.clear();
         self.player_seat = None;
         self.hides_pet_frame = false;
+        self.has_combo_points = false;
     }
 }
 
 pub(crate) fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
-    let functions: [(&str, rilua::vm::closure::RustFn); 11] = [
+    let functions: [(&str, rilua::vm::closure::RustFn); 12] = [
         ("UnitVehicleSeatCount", unit_vehicle_seat_count),
         ("UnitVehicleSeatInfo", unit_vehicle_seat_info),
         ("GetVehicleUIIndicator", get_vehicle_ui_indicator),
@@ -68,6 +70,10 @@ pub(crate) fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
         (
             "UnitInVehicleHidesPetFrame",
             unit_in_vehicle_hides_pet_frame,
+        ),
+        (
+            "PlayerVehicleHasComboPoints",
+            player_vehicle_has_combo_points,
         ),
     ];
     for (name, function) in functions {
@@ -269,4 +275,9 @@ fn unit_in_vehicle_control_seat(state: &mut LuaState) -> LuaResult<u32> {
 fn unit_in_vehicle_hides_pet_frame(state: &mut LuaState) -> LuaResult<u32> {
     let is_player = optional_unit_is_player(state);
     push_player_vehicle_flag(state, is_player, |sim| sim.vehicle_seats.hides_pet_frame)
+}
+
+/// Consumer: ClassResourceBarMixin:Setup shows the combo bar from this while in a vehicle.
+fn player_vehicle_has_combo_points(state: &mut LuaState) -> LuaResult<u32> {
+    push_player_vehicle_flag(state, true, |sim| sim.vehicle_seats.has_combo_points)
 }

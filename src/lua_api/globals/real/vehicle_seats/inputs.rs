@@ -68,6 +68,7 @@ struct Entry {
     may_choose_exit: bool,
     has_pitch: bool,
     hides_pet_frame: bool,
+    has_combo_points: bool,
 }
 
 fn read_entry(state: &mut LuaState, table: Val) -> LuaResult<Entry> {
@@ -90,6 +91,7 @@ fn read_entry(state: &mut LuaState, table: Val) -> LuaResult<Entry> {
         may_choose_exit: fields::boolean(state, table, ENTER_API, "mayChooseExit")?,
         has_pitch: fields::boolean(state, table, ENTER_API, "hasPitch")?,
         hides_pet_frame: fields::boolean(state, table, ENTER_API, "hidesPetFrame")?,
+        has_combo_points: fields::boolean(state, table, ENTER_API, "hasComboPoints")?,
     })
 }
 
@@ -109,6 +111,7 @@ pub(crate) fn admin_enter_vehicle(state: &mut LuaState) -> LuaResult<u32> {
         sim.vehicle_seats.seats = entry.seats;
         sim.vehicle_seats.player_seat = Some(entry.player_seat);
         sim.vehicle_seats.hides_pet_frame = entry.hides_pet_frame;
+        sim.vehicle_seats.has_combo_points = entry.has_combo_points;
     }
     let unit = create_string(state, "player");
     let guid = create_string(state, &entry.guid);

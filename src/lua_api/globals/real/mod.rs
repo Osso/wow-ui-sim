@@ -39,6 +39,8 @@ pub(crate) mod cursor_presentation;
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub(crate) mod dangerous_scripts;
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) mod death_release;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub(crate) mod debug_environment;
 #[cfg(feature = "client-retail")]
 pub(crate) mod difficulty_info;

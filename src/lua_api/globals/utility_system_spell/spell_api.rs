@@ -99,7 +99,8 @@ fn requested_power_type(state: &LuaState) -> Option<i64> {
 fn is_secondary_power_type(power_type: Option<i64>) -> bool {
     matches!(
         power_type,
-        Some(4 | 5 | 6 | 7 | 8 | 9 | 11 | 12 | 13 | 16 | 17 | 18)
+        // 19 = Essence (Evoker; Enum.PowerType.Essence, base maximum 5).
+        Some(4 | 5 | 6 | 7 | 8 | 9 | 11 | 12 | 13 | 16 | 17 | 18 | 19)
     )
 }
 
