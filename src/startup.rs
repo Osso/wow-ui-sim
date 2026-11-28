@@ -137,7 +137,7 @@ pub fn apply_delay_with_tick(env: &WowLuaEnv, delay: Option<u64>) {
         && !env.state().borrow().simulator_exit_requested
     {
         let remaining = duration.saturating_sub(previous.duration_since(start));
-        std::thread::sleep(remaining.min(tick_interval));
+        std::thread::sleep(frame_sleep(remaining, tick_interval, previous.elapsed()));
         let now = std::time::Instant::now();
         process_pending_timers(env);
         if env.state().borrow().simulator_exit_requested {
@@ -150,6 +150,14 @@ pub fn apply_delay_with_tick(env: &WowLuaEnv, delay: Option<u64>) {
         normalize_headless_frame_positions(env);
         previous = now;
     }
+}
+
+fn frame_sleep(
+    remaining: std::time::Duration,
+    tick: std::time::Duration,
+    spent: std::time::Duration,
+) -> std::time::Duration {
+    remaining.min(tick.saturating_sub(spent))
 }
 
 /// Demand-load Blizzard_PlayerSpells during game-screen startup and keep it hidden.
@@ -846,5 +854,25 @@ mod seed_buff_duration_tests {
 
         assert!(env.state().borrow().simulator_exit_requested);
         assert!(started.elapsed() < std::time::Duration::from_secs(1));
+    }
+
+    #[test]
+    fn apply_delay_with_tick_runs_updates_without_full_idle_ticks() {
+        let env = WowLuaEnv::new().unwrap();
+        env.exec(
+            r#"DELAY_COUNT = 0; local f = CreateFrame('Frame'); f:SetScript('OnUpdate', function()
+                local deadline = os.clock() + 0.02
+                while os.clock() < deadline do end
+                DELAY_COUNT = DELAY_COUNT + 1
+            end)"#,
+        )
+        .unwrap();
+
+        apply_delay_with_tick(&env, Some(240));
+        let count: i64 = env.eval("return DELAY_COUNT").unwrap();
+        assert!(
+            count >= 10,
+            "expected paced updates during delay, got {count}"
+        );
     }
 }
