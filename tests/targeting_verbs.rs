@@ -410,39 +410,60 @@ fn target_nearest_enemy_enemy_pool_is_replaceable() {
 }
 
 #[cfg(feature = "client-retail")]
-const PARTY_ASSIGNMENT_SLASH_CONSUMER: &str = r#"
+const PARTY_ASSIGNMENT_MENU_CONSUMER: &str = r#"
+    A_Admin.SetPartySize(2)
+    A_Admin.SetPartyMember(1, "Alpha", 1, 60)
+    A_Admin.SetPartyMember(2, "Beta", 2, 60)
     local updates = 0
     PlayerFrame:HookScript("OnEvent", function(_, event)
         if event == "GROUP_ROSTER_UPDATE" then updates = updates + 1 end
     end)
-    A_Admin.SetPartySize(2)
-    A_Admin.SetPartyMember(1, "Alpha", 1, 60)
-    A_Admin.SetPartyMember(2, "Beta", 2, 60)
-    local before = updates
-    SlashCmdList.MAINTANKON("party1")
+    local function open_menu(unit)
+        UnitPopup_OpenMenu("RAID", {unit = unit})
+        local menu = Menu.GetManager():GetOpenMenu()
+        assert(menu, "original RAID unit popup opened")
+        return menu
+    end
+    local function click_entry(menu, text)
+        for _, button in ipairs({menu:GetChildren()}) do
+            local description = button:GetElementDescription()
+            if description and MenuUtil.GetElementText(description) == text then
+                button:Click("LeftButton")
+                return
+            end
+        end
+        error("original unit popup entry not shown: " .. text)
+    end
+    click_entry(open_menu("party1"), SET_MAIN_TANK)
     assert(GetPartyAssignment("MAINTANK", "party1"))
-    assert(updates == before + 1)
-    SlashCmdList.MAINASSISTON("party2")
-    assert(GetPartyAssignment("MAINASSIST", "party2", true))
-    assert(updates == before + 2)
-    SlashCmdList.MAINTANKOFF("party1")
+    assert(updates == 1)
+    click_entry(open_menu("party2"), SET_MAIN_ASSIST)
+    assert(GetPartyAssignment("MAINASSIST", "party2"))
+    assert(updates == 2)
+    click_entry(open_menu("party1"), DEMOTE)
     assert(not GetPartyAssignment("MAINTANK", "party1"))
-    assert(updates == before + 3)
-    SlashCmdList.MAINASSISTOFF("party2")
+    assert(updates == 3)
+    click_entry(open_menu("party2"), DEMOTE)
     assert(not GetPartyAssignment("MAINASSIST", "party2"))
-    assert(updates == before + 4)
+    assert(updates == 4)
 "#;
 
 #[cfg(feature = "client-retail")]
 #[test]
-fn raid_assignment_slash_commands_update_original_party_frame() {
-    crate::common::blizzard_addon_harness::with_blizzard_addon_closure(
-        &["Blizzard_UnitFrame", "Blizzard_ChatFrameBase", "Blizzard_QuickJoin"],
-        &[],
+fn raid_assignment_menu_actions_update_original_party_frame() {
+    let ui_dir = crate::common::blizzard_addon_harness::blizzard_ui_dir();
+    let overrides = [wow_ui_sim::loader::BlizzardAddonOverride {
+        addon: "Blizzard_UnitFrame",
+        extra_roots: &["Blizzard_AuraContainer"],
+    }];
+    crate::common::blizzard_addon_harness::with_blizzard_addon_closure_in_dir(
+        &ui_dir,
+        &["Blizzard_UnitFrame", "Blizzard_UnitPopup", "Blizzard_QuickJoin"],
+        &overrides,
         |env, loaded| {
-            assert!(loaded.iter().any(|name| name == "Blizzard_ChatFrameBase"));
-            env.exec(PARTY_ASSIGNMENT_SLASH_CONSUMER)
-                .expect("original role slash commands update party assignments");
+            assert!(loaded.iter().any(|name| name == "Blizzard_UnitPopup"));
+            env.exec(PARTY_ASSIGNMENT_MENU_CONSUMER)
+                .expect("original RAID menu updates party assignments");
         },
     );
 }
