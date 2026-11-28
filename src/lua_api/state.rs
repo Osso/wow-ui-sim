@@ -207,6 +207,7 @@ macro_rules! build_empty_sim_state {
             encounter_journal: EncounterJournalState::default(),
             #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
             completed_encounters: Vec::new(),
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
             raid_difficulty_redirects: Vec::new(),
             #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
             pending_raid_info_replies: VecDeque::new(),

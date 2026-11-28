@@ -163,6 +163,8 @@ pub struct SimState {
     /// VERIFIED (Forever 1.60.1.70707) / INFERRED (Retail 12.1.5.70688) R88fb: host-supplied raid-lock rows.
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     pub(crate) completed_encounters: Vec<crate::c_api::c_raid_locks::RaidLockRow>,
+    /// Supplied A_Admin.SetRaidDifficultyRedirects rows (R88fb lockout sharing).
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     pub(crate) raid_difficulty_redirects: Vec<crate::c_api::c_raid_locks::DifficultyRedirect>,
     /// Preserve each asynchronous RequestRaidInfo reply until a later timer tick.
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
