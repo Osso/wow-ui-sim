@@ -166,7 +166,7 @@ fn original_xml_slot_supplied_transitions_isolation_and_unset() {
     );
     if ACTIVE == ClientProfile::WowForever {
         assert!(
-            traceback.contains("PaperDollFrame.lua:3654"),
+            traceback.contains("PaperDollFrame.lua:3671"),
             "original XML delegate: {traceback}"
         );
     }
