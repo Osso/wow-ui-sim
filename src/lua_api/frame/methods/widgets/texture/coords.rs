@@ -11,10 +11,7 @@ pub(super) fn set_blend_mode(state: &mut LuaState) -> LuaResult<u32> {
     let Some(normalized) = read_blend_mode(state)? else {
         return Ok(0);
     };
-    let blend_mode = match normalized.as_str() {
-        "ADD" => crate::BlendMode::Additive,
-        _ => crate::BlendMode::Alpha,
-    };
+    let blend_mode = crate::BlendMode::from_token(normalized.as_str());
     let mut sim = borrow_state_mut(state)?;
     if let Some(frame) = sim.widgets.get_mut_visual(id) {
         frame.alpha_mode = Some(normalized);

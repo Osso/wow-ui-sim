@@ -43,8 +43,33 @@ struct StrataGpuBuffer {
     vertex_capacity: usize,
     index_capacity: usize,
     index_count: usize,
+    /// Index ranges in draw order, each with whether it is drawn by the
+    /// modulate (`MOD`) pipeline; together they cover `0..index_count`.
+    runs: Vec<(u32, u32, bool)>,
     #[cfg(test)]
     last_uploaded_vertices: Vec<QuadVertex>,
+}
+
+/// Blend-mode flag value the modulate pipeline draws (`BlendMode::Modulate`).
+const BLEND_MODULATE: u32 = crate::BlendMode::Modulate as u32;
+
+/// Split a batch's triangles into consecutive runs by pipeline, keeping the
+/// draw order: `MOD` triangles need their own blend state (dst * src).
+fn pipeline_runs(quads: &QuadBatch) -> Vec<(u32, u32, bool)> {
+    let mut runs: Vec<(u32, u32, bool)> = Vec::new();
+    for (tri, chunk) in quads.indices.chunks(3).enumerate() {
+        let modulate = quads
+            .vertices
+            .get(chunk[0] as usize)
+            .is_some_and(|v| v.flags & 0xFF == BLEND_MODULATE);
+        let start = (tri * 3) as u32;
+        let end = start + chunk.len() as u32;
+        match runs.last_mut() {
+            Some(last) if last.2 == modulate => last.1 = end,
+            _ => runs.push((start, end, modulate)),
+        }
+    }
+    runs
 }
 
 /// Total number of GPU buffer slots: 9 strata + 1 overlay.
@@ -54,6 +79,8 @@ const BUFFER_SLOTS: usize = FrameStrata::COUNT + 1;
 pub struct WowUiPipeline {
     /// Render pipeline for quad drawing.
     pipeline: wgpu::RenderPipeline,
+    /// Render pipeline for `MOD` quads: dst * src.
+    modulate_pipeline: wgpu::RenderPipeline,
     /// Uniform buffer for projection matrix.
     uniform_buffer: wgpu::Buffer,
     /// Bind group for uniforms.
@@ -97,6 +124,7 @@ fn create_strata_buffer(device: &wgpu::Device, label_idx: usize) -> StrataGpuBuf
         vertex_capacity: 4096,
         index_capacity: 4096,
         index_count: 0,
+        runs: Vec::new(),
         #[cfg(test)]
         last_uploaded_vertices: Vec::new(),
     }
@@ -109,6 +137,7 @@ impl WowUiPipeline {
         format: wgpu::TextureFormat,
         uniform_bind_group_layout: &wgpu::BindGroupLayout,
         texture_bind_group_layout: &wgpu::BindGroupLayout,
+        blend: wgpu::BlendState,
     ) -> wgpu::RenderPipeline {
         let shader = Self::create_shader_module(device);
         let pipeline_layout = Self::create_pipeline_layout(
@@ -117,7 +146,7 @@ impl WowUiPipeline {
             texture_bind_group_layout,
         );
         let vertex_buffers = [QuadVertex::desc()];
-        let color_targets = [Some(Self::color_target_state(format))];
+        let color_targets = [Some(Self::color_target_state(format, blend))];
 
         let descriptor = Self::render_pipeline_descriptor(
             &pipeline_layout,
@@ -190,10 +219,13 @@ impl WowUiPipeline {
         }
     }
 
-    fn color_target_state(format: wgpu::TextureFormat) -> wgpu::ColorTargetState {
+    fn color_target_state(
+        format: wgpu::TextureFormat,
+        blend: wgpu::BlendState,
+    ) -> wgpu::ColorTargetState {
         wgpu::ColorTargetState {
             format,
-            blend: Some(wgpu::BlendState::PREMULTIPLIED_ALPHA_BLENDING),
+            blend: Some(blend),
             write_mask: wgpu::ColorWrites::ALL,
         }
     }
@@ -299,6 +331,7 @@ impl WowUiPipeline {
             queue.write_buffer(&buf.index_buffer, 0, bytemuck::cast_slice(&quads.indices));
         }
         buf.index_count = quads.indices.len();
+        buf.runs = pipeline_runs(quads);
         #[cfg(test)]
         {
             buf.last_uploaded_vertices = quads.vertices.clone();
@@ -308,6 +341,7 @@ impl WowUiPipeline {
     /// Clear the index count for a strata slot (keeps buffer allocated).
     pub fn clear_strata(&mut self, slot: usize) {
         self.strata_buffers[slot].index_count = 0;
+        self.strata_buffers[slot].runs.clear();
         #[cfg(test)]
         self.strata_buffers[slot].last_uploaded_vertices.clear();
     }
@@ -425,7 +459,14 @@ impl WowUiPipeline {
             if buf.index_count > 0 {
                 render_pass.set_vertex_buffer(0, buf.vertex_buffer.slice(..));
                 render_pass.set_index_buffer(buf.index_buffer.slice(..), wgpu::IndexFormat::Uint32);
-                render_pass.draw_indexed(0..buf.index_count as u32, 0, 0..1);
+                for &(start, end, modulate) in &buf.runs {
+                    render_pass.set_pipeline(if modulate {
+                        &self.modulate_pipeline
+                    } else {
+                        &self.pipeline
+                    });
+                    render_pass.draw_indexed(start..end, 0, 0..1);
+                }
             }
         }
     }
@@ -454,6 +495,25 @@ impl shader::Pipeline for WowUiPipeline {
             format,
             &uniform_bind_group_layout,
             texture_atlas.bind_group_layout(),
+            wgpu::BlendState::PREMULTIPLIED_ALPHA_BLENDING,
+        );
+        let modulate_pipeline = Self::create_pipeline(
+            device,
+            format,
+            &uniform_bind_group_layout,
+            texture_atlas.bind_group_layout(),
+            wgpu::BlendState {
+                color: wgpu::BlendComponent {
+                    src_factor: wgpu::BlendFactor::Dst,
+                    dst_factor: wgpu::BlendFactor::Zero,
+                    operation: wgpu::BlendOperation::Add,
+                },
+                alpha: wgpu::BlendComponent {
+                    src_factor: wgpu::BlendFactor::Zero,
+                    dst_factor: wgpu::BlendFactor::One,
+                    operation: wgpu::BlendOperation::Add,
+                },
+            },
         );
 
         let strata_buffers: Vec<StrataGpuBuffer> = (0..BUFFER_SLOTS)
@@ -462,6 +522,7 @@ impl shader::Pipeline for WowUiPipeline {
 
         Self {
             pipeline,
+            modulate_pipeline,
             uniform_buffer,
             uniform_bind_group,
             strata_buffers,
@@ -508,4 +569,29 @@ fn create_uniform_resources(
     });
 
     (uniform_buffer, layout, bind_group)
+}
+
+#[cfg(test)]
+mod pipeline_run_tests {
+    use super::{BLEND_MODULATE, pipeline_runs};
+    use crate::render::QuadBatch;
+    use iced::{Point, Rectangle, Size};
+
+    #[test]
+    fn modulate_quads_get_their_own_run_in_draw_order() {
+        let mut batch = QuadBatch::new();
+        for x in 0..3 {
+            batch.push_solid(
+                Rectangle::new(Point::new(x as f32 * 10.0, 0.0), Size::new(10.0, 10.0)),
+                [1.0; 4],
+            );
+        }
+        for vertex in &mut batch.vertices[4..8] {
+            vertex.flags = (vertex.flags & !0xFF) | BLEND_MODULATE;
+        }
+        assert_eq!(
+            pipeline_runs(&batch),
+            vec![(0, 6, false), (6, 12, true), (12, 18, false)]
+        );
+    }
 }

@@ -20,9 +20,7 @@ pub(in crate::iced_app) fn clip_recent_quads(
         let clipped_bottom = bottom.min(clip.y + clip.height);
 
         if clipped_left >= clipped_right || clipped_top >= clipped_bottom {
-            for vertex in chunk.iter_mut() {
-                vertex.color[3] = 0.0;
-            }
+            hide_quad(chunk);
             continue;
         }
 
@@ -35,6 +33,16 @@ pub(in crate::iced_app) fn clip_recent_quads(
         clip_vertex(chunk, &original, 1, clipped_right, clipped_top, x1, y0);
         clip_vertex(chunk, &original, 2, clipped_right, clipped_bottom, x1, y1);
         clip_vertex(chunk, &original, 3, clipped_left, clipped_bottom, x0, y1);
+    }
+}
+
+/// Hide a quad: transparent, and collapsed to a point so that blend modes
+/// which ignore alpha (DISABLE, ALPHAKEY, MOD) draw nothing either.
+fn hide_quad(chunk: &mut [QuadVertex]) {
+    let point = chunk[0].position;
+    for vertex in chunk.iter_mut() {
+        vertex.color[3] = 0.0;
+        vertex.position = point;
     }
 }
 

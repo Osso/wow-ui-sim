@@ -314,11 +314,7 @@ pub(crate) fn apply_texture_visuals_direct(
             }
             if let Some(mode) = texture.effective_blend_mode() {
                 frame.alpha_mode = Some(mode.to_string());
-                frame.blend_mode = if mode.eq_ignore_ascii_case("ADD") {
-                    BlendMode::Additive
-                } else {
-                    BlendMode::Alpha
-                };
+                frame.blend_mode = BlendMode::from_token(&mode.to_ascii_uppercase());
             }
         }
     }

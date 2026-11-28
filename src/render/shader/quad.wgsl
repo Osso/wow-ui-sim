@@ -95,6 +95,11 @@ fn vs_main(in: VertexInput) -> VertexOutput {
 // Blend mode constants
 const BLEND_ALPHA: u32 = 0u;
 const BLEND_ADDITIVE: u32 = 1u;
+const BLEND_MODULATE: u32 = 2u;
+const BLEND_OPAQUE: u32 = 3u;
+const BLEND_ALPHAKEY: u32 = 4u;
+// Alpha-test reference for ALPHAKEY (texels below it are not drawn).
+const ALPHAKEY_REF: f32 = 0.5;
 const TEX_INDEX_GLYPH: i32 = 5;
 const ATLAS_SIZE: f32 = 4096.0;
 const MAX_ATLAS_UV: f32 = 4095.5 / 4096.0;
@@ -324,6 +329,21 @@ fn fs_main(in: VertexOutput) -> @location(0) vec4<f32> {
     // Premultiplied alpha output: pipeline uses src + dst * (1 - src.a).
     // Standard alpha: premultiply color by alpha for correct blending.
     // Additive: premultiply then zero alpha so dst is fully preserved (src + dst).
+    // MOD is drawn by the modulate pipeline (dst * src): the colour as is.
+    if blend_mode == BLEND_MODULATE {
+        return vec4f(color.rgb, 1.0);
+    }
+    // DISABLE: no blending, the colour replaces what is there, opaque.
+    if blend_mode == BLEND_OPAQUE {
+        return vec4f(color.rgb, 1.0);
+    }
+    // ALPHAKEY: alpha test, then opaque.
+    if blend_mode == BLEND_ALPHAKEY {
+        if color.a < ALPHAKEY_REF {
+            discard;
+        }
+        return vec4f(color.rgb, 1.0);
+    }
     color = vec4f(color.rgb * color.a, color.a);
     if blend_mode == BLEND_ADDITIVE {
         color.a = 0.0;
