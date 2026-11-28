@@ -1,3 +1,7 @@
+## [2026-11-27] investigation | Retail secure dependency XML replay
+
+[Retail secure dependency XML replay](investigations/retail-secure-dependency-xml-replay.md) records the duplicate-frame root cause and fix. **VERIFIED (merged simulator):** six exact Retail Glue tests and five Forever equivalents pass. **INFERRED (R88g.1, R88t.t1/t2):** secure dependency evidence does not establish replay of XML for an ordinary-loaded dependency.
+
 ## [2026-11-26] investigation | Restricted environment item helper bindings
 
 [Restricted environment item helper bindings](investigations/restricted-env-item-helpers.md) records **VERIFIED** Retail full-UI and Forever selected-addon tests: the original secure snippet reads item targeting and `HasAction` results. **UNVERIFIED:** why the earlier item-targeting report saw a nil call; no producer change was made.

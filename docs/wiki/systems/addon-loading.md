@@ -231,6 +231,7 @@ Nested runtime-addon loads finalize failures, nil observations, and missing requ
 
 ## See Also
 
+- [[retail-secure-dependency-xml-replay]] — duplicate XML frame regression and proof
 - [[client-profiles]] — cargo-feature selection, vendor pinning, profile-aware loader paths and gametypes
 - [[xml-template-system]] — XML parsing and template registry populated during loading
 - [[event-system]] — startup events fired after all addons load
