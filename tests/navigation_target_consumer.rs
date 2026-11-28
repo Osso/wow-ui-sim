@@ -33,7 +33,6 @@ fn clear_navigation_target(env: &WowLuaEnv) -> (bool, i32, i32) {
         .expect("read destroyed navigation state")
 }
 
-#[cfg(feature = "client-retail")]
 prefork_full_ui_case! {
 fn navigation_target_drives_super_tracked_frame(env: &WowLuaEnv) {
     let first = update_navigation_target(
