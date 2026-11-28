@@ -280,6 +280,8 @@ fn register_frame_context_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
     super::real::player_requests::register_all(lua)?;
     #[cfg(feature = "client-retail")]
     super::real::merchant_purchases::register_all(lua)?;
+    #[cfg(feature = "client-retail")]
+    super::real::session_logging::register_all(lua)?;
     super::real::merchant_buyback::register_all(lua)?;
     super::real::merchant_affordability::register_all(lua)?;
     super::real::merchant_filter::register_all(lua)?;

@@ -133,3 +133,19 @@ Supplies the server's expand-search prompt (Retail and WoW Forever). `key` is a 
 ### A_Admin.SetWorldMarker(index, placed) (Retail and WoW Forever)
 
 Places (`true`) or removes (`false`) world marker `index` (1 to 8). Native placement needs a ground target, so the host supplies it. `IsRaidMarkerActive(index)` reads the result. `ClearRaidMarker(index)` removes one marker and `ClearRaidMarker()` removes all of them. The documentation declares no event for either change (INFERRED, R-ag10-7). Feature `world-marker-state`.
+
+## Loot threshold and opt-out (Retail)
+
+`GetLootThreshold()` reads the group-loot quality threshold (initially 2,
+Uncommon). `SetLootThreshold(quality)` changes it only for the leader of a group
+supplied with `A_Admin.SetPartySize`/`A_Admin.SetPartyLeader`, only to 2–4, and
+fires `PARTY_LOOT_METHOD_CHANGED` when the value changes.
+`SetOptOutOfLoot(1|nil)` stores the opt-out flag read by `GetOptOutOfLoot()`.
+INFERRED (R-ag10-16). Implementation: `src/lua_api/globals/real/loot_method.rs`.
+
+## Chat and combat logging (Retail)
+
+`LoggingChat([on])` and `LoggingCombat([on])` back the `/chatlog` and
+`/combatlog` slash commands: with an argument they set the toggle, and they
+return the resulting state. Both start off and no log file is written.
+INFERRED (R-ag10-17). Implementation: `src/lua_api/globals/real/session_logging.rs`.

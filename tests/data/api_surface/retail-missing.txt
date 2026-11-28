@@ -2144,7 +2144,6 @@ GetLatestUpdatedComparisonStats # not-yet
 GetLatestUpdatedStats # not-yet
 GetLootInfo # not-yet
 GetLootSourceInfo # not-yet
-GetLootThreshold # not-yet
 GetMacroItem # not-yet
 GetMacroSpell # not-yet
 GetMasterLootCandidate # not-yet
@@ -2186,7 +2185,6 @@ GetNumUnspentPvpTalents # not-yet
 GetNumUnspentTalents # not-yet
 GetNumWarGameTypes # not-yet
 GetOSLocale # not-yet
-GetOptOutOfLoot # not-yet
 GetPVPGearStatRules # not-yet
 GetPVPSessionStats # not-yet
 GetPVPYesterdayStats # not-yet
@@ -2376,8 +2374,6 @@ LeaveSingleLFG # not-yet
 ListChannelByName # not-yet
 ListChannels # not-yet
 LoadURLIndex # not-yet
-LoggingChat # not-yet
-LoggingCombat # not-yet
 LootMoneyNotify # not-yet
 MouseOverrideCinematicDisable # not-yet
 MouselookStart # intentionally-unsupported: 3D camera/model
@@ -2519,7 +2515,6 @@ SetModifiedClick # not-yet: temporary Lua workaround
 SetMouselookOverrideBinding # intentionally-unsupported: 3D camera/model
 SetMoveEnabled # not-yet
 SetMultiCastSpell # not-yet
-SetOptOutOfLoot # not-yet
 SetPOIIconOverlapDistance # not-yet
 SetPOIIconOverlapPushDistance # not-yet
 SetPartyAssignment # not-yet

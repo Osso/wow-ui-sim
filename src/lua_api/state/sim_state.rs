@@ -1135,6 +1135,9 @@ pub struct SimState {
     /// Follow and trade requests the player has open (`real/player_requests.rs`).
     #[cfg(feature = "player-requests")]
     pub player_requests: crate::lua_api::globals::real::player_requests::PlayerRequests,
+    /// `/chatlog` and `/combatlog` toggles (`real/session_logging.rs`).
+    #[cfg(feature = "client-retail")]
+    pub session_logging: crate::lua_api::globals::real::session_logging::SessionLogging,
     pub merchant_items: Vec<u32>,
     /// INFERRED R88dx: selected legacy merchant filter; zero is the all-items default.
     pub merchant_filter: i32,

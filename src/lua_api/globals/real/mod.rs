@@ -196,6 +196,8 @@ pub(crate) mod release_timer;
 pub(crate) mod run_binding;
 pub(crate) mod secure_helpers;
 pub mod session_exit;
+#[cfg(feature = "client-retail")]
+pub(crate) mod session_logging;
 pub mod shapeshift;
 #[cfg(feature = "simulated-mouse-input")]
 pub mod simulate_mouse;

@@ -908,6 +908,8 @@ macro_rules! build_empty_sim_state {
             interaction_dialogs: Default::default(),
             #[cfg(feature = "player-requests")]
             player_requests: Default::default(),
+            #[cfg(feature = "client-retail")]
+            session_logging: Default::default(),
             merchant_items: Vec::new(),
             merchant_filter: 0,
             merchant_item_refundable: HashMap::new(),
