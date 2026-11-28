@@ -10,7 +10,7 @@
 - [ ] **INFERRED (R88dg pending):** `C_Garrison.GetInProgressMissions` returns records for the requested follower type whose `inProgress` value is true.
 - [ ] **INFERRED (R88dg pending):** `C_Garrison.GetCompleteMissions` returns records for the requested follower type whose `completed` value is true.
 - [ ] **INFERRED (R88dg pending):** The available and in-progress queries fill and return a supplied output table, or return a new table when called with a follower type or `nil` plus a follower type.
-- [ ] **INFERRED (R88dg pending):** The original Retail and Forever Covenant mission-list consumer displays all supplied available, completed, and in-progress mission records; it must not pass with an empty producer.
+- [ ] **INFERRED (R88dg pending):** The original Retail and Forever Covenant mission-list consumer displays all supplied available, completed, and in-progress mission records and stores the supplied combat-ally mission record; it must not pass with an empty producer.
 - [ ] `C_Garrison.GetMissionEncounterIconInfo(missionID)` returns the documented `MissionEncounterIconInfo` shape, populated from an optional supplied mission field. An unsupplied mission returns that shape with zero numeric fields and false boolean fields. **INFERRED (R88dg pending).**
 - [ ] `A_Admin.SetGarrisonFollowerQualityTable(followerTypeID, table)` supplies the quality-to-XP entries returned by `C_Garrison.GetFollowerQualityTable(followerTypeID)`. No generated DB2 quality table exists; an unset follower type returns an empty table. **INFERRED (R88dg pending).**
 - [ ] The Rust model and setters are registered on Retail and WoW Forever only. **VERIFIED:** PTR keeps the existing Lua shim unchanged.
@@ -27,18 +27,18 @@ WoW Forever publishes `C_Garrison.IsAtGarrisonMissionNPC` (its `GarrisonInfoDocu
 - `src/c_api/c_garrison_mission_lists.rs` — mission records, query functions, and `A_Admin.SetGarrisonMissions`.
 - `src/lua_api/state/sim_state.rs` and `src/lua_api/state.rs` — per-environment mission state.
 - `src/lua_api/globals/admin.rs` — profile-scoped setter registration.
-- `src/lua_api/workarounds/mod.rs` — install the Rust queries after the unchanged legacy bootstrap.
+- `src/lua_api/workarounds/mod.rs` — retain the legacy shim for PTR and install Rust queries on Retail and Forever.
 - `tests/blizzard_garrison_ui_loads.rs` — selected original Covenant consumer test.
 - `tests/fixtures/garrison_mission_lists.lua` — host-supplied mission and follower-quality fixture.
 
 ## Tests asserting this spec
 
-- `tests/blizzard_garrison_ui_loads.rs::supplied_missions_update_the_real_covenant_mission_list`
+- `tests/blizzard_garrison_ui_loads.rs::supplied_missions_update_the_real_covenant_mission_list` (Retail and Forever mission records and combat-ally consumer)
 
 ## Known gaps (current cycle)
 
 - [ ] Native query signatures, table-clearing behavior, reward record shape, and default results are pending evidence from R88dg.
-- [ ] The combat-ally mission result shape and producer remain unmodeled.
+- [ ] Native combat-ally query signature, result shape, and default behavior remain pending evidence.
 
 ## Out of scope
 
