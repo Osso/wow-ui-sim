@@ -72,6 +72,40 @@ impl QuadBatch {
         self.push_texture_request(path, vertex_start, 4);
     }
 
+    /// Push textured quads by path, each given as its four (position, uv)
+    /// corners in the order the quad's two triangles use (0-1-2, 0-2-3).
+    /// Positions are final screen pixels; uvs stay within one texture repeat.
+    pub fn push_textured_path_corner_quads(
+        &mut self,
+        quads: &[[([f32; 2], [f32; 2]); 4]],
+        path: &str,
+        color: [f32; 4],
+        blend_mode: BlendMode,
+    ) {
+        if quads.is_empty() {
+            return;
+        }
+        let vertex_start = self.vertices.len() as u32;
+        let flags = blend_mode as u32;
+        for quad in quads {
+            let base_index = self.vertices.len() as u32;
+            for &(position, uv) in quad {
+                self.vertices.push(QuadVertex {
+                    position,
+                    tex_coords: uv,
+                    color,
+                    tex_index: -2,
+                    flags,
+                    local_uv: uv,
+                    mask_tex_index: -1,
+                    mask_tex_coords: [0.0, 0.0],
+                });
+            }
+            self.push_quad_indices(base_index);
+        }
+        self.push_texture_request(path, vertex_start, 4 * quads.len() as u32);
+    }
+
     /// Push a horizontal 3-slice texture with custom blend mode.
     pub fn push_three_slice_h_path_blend(&mut self, params: ThreeSlicePathParams<'_>) {
         if params.bounds.width <= params.left_cap_width + params.right_cap_width {

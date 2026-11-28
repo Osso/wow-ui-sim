@@ -20,6 +20,9 @@ mod clipping;
 #[path = "quad_builders_textures.rs"]
 mod textures;
 
+#[path = "quad_builders_uv_repeat.rs"]
+mod uv_repeat;
+
 #[path = "quad_builders_cooldown.rs"]
 mod cooldown;
 
@@ -425,11 +428,14 @@ pub fn emit_frame_quads(
     let index_before = batch.indices.len();
     dispatch_widget_quads(batch, text_ctx, &frame);
 
+    // (a repeating face is drawn as pieces of its two triangles, not as
+    // axis-aligned quads, so it is clipped like a moved-corner one)
     let warped = frame.widget.widget_type == WidgetType::Texture
-        && frame
+        && (frame
             .widget
             .vertex_offsets
-            .is_some_and(|o| o.iter().any(|&(x, y)| x != 0.0 || y != 0.0));
+            .is_some_and(|o| o.iter().any(|&(x, y)| x != 0.0 || y != 0.0))
+            || textures::draws_repeating_face(frame.widget));
     if warped {
         clipping::split_quads_on_client_diagonal(batch, index_before);
     }

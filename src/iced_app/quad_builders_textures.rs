@@ -22,6 +22,24 @@ pub(crate) fn build_texture_quads(
     bar_fill: Option<&StatusBarFill>,
     alpha: f32,
 ) {
+    if bar_fill.is_none()
+        && draws_repeating_face(f)
+        && let (Some(tex_path), Some(raw)) = (resolve_texture_path(f), f.tex_coords_quad)
+    {
+        let vertex_start = batch.vertices.len();
+        let pixels_per_unit = f.effective_scale * crate::render::texture::UI_SCALE;
+        let corners =
+            super::uv_repeat::face_corners(bounds, raw, f.vertex_offsets, pixels_per_unit);
+        let tint = resolve_tint(f, None, alpha);
+        super::uv_repeat::emit_repeating_face(batch, corners, &tex_path, tint, f.blend_mode);
+        if let Some(gradient) = &f.gradient {
+            apply_image_gradient(batch, vertex_start, bounds, gradient);
+        }
+        if f.desaturated {
+            apply_desaturate_flag(batch, vertex_start);
+        }
+        return;
+    }
     let vertex_start = batch.vertices.len();
     build_texture_quads_unwarped(batch, bounds, f, bar_fill, alpha);
     if let Some(offsets) = f.vertex_offsets {
@@ -32,6 +50,18 @@ pub(crate) fn build_texture_quads(
             f.effective_scale * crate::render::texture::UI_SCALE,
         );
     }
+}
+
+/// A file texture whose SetTexCoord values go past one texture, drawn face by
+/// face from its own corners with the texture repeating
+/// (`quad_builders_uv_repeat`). Atlas regions, nine-slices, colour textures
+/// and rotated textures keep their own paths.
+pub(super) fn draws_repeating_face(f: &crate::widget::Frame) -> bool {
+    has_uv_repeat(f)
+        && f.atlas_tex_coords.is_none()
+        && f.nine_slice_atlas.is_none()
+        && f.color_texture.is_none()
+        && f.rotation == 0.0
 }
 
 /// SetVertexOffset: each corner of the region moved by its own offset, in the
@@ -1179,12 +1209,39 @@ mod tests {
             1.0,
         );
 
-        assert_eq!(batch.vertices.len(), 16);
-        assert_eq!(batch.texture_requests.len(), 4);
-        assert_eq!(batch.vertices[0].tex_coords, [0.0, 1.0]);
-        assert_eq!(batch.vertices[1].tex_coords, [0.0, 0.0]);
-        assert_eq!(batch.vertices[2].tex_coords, [1.0, 0.0]);
-        assert_eq!(batch.vertices[13].position[0], 64.0);
+        // v runs 4.0 at the left edge to 0.0625 at the right: the face is cut
+        // where v crosses 3, 2 and 1, and every piece samples one repeat
+        assert_eq!(batch.texture_requests.len(), 1);
+        assert_cut_at(
+            &batch,
+            0,
+            &[1.0, 2.0, 3.0].map(|v| 64.0 * (4.0 - v) / (4.0 - 0.0625)),
+        );
+        assert_one_repeat(&batch);
+    }
+
+    fn assert_cut_at(batch: &QuadBatch, axis: usize, cuts: &[f32]) {
+        for cut in cuts {
+            assert!(
+                batch
+                    .vertices
+                    .iter()
+                    .any(|v| (v.position[axis] - cut).abs() < 1e-3),
+                "no cut at {cut}: {:?}",
+                batch.vertices
+            );
+        }
+    }
+
+    fn assert_one_repeat(batch: &QuadBatch) {
+        assert!(
+            batch
+                .vertices
+                .iter()
+                .all(|v| v.local_uv.iter().all(|c| (0.0..=1.0).contains(c))),
+            "repeating faces must sample inside one texture: {:?}",
+            batch.vertices
+        );
     }
 
     #[test]
@@ -1365,19 +1422,10 @@ mod tests {
             1.0,
         );
 
-        assert_eq!(batch.vertices.len(), 12);
-        assert_eq!(batch.texture_requests.len(), 3);
-        assert!(
-            batch
-                .vertices
-                .iter()
-                .all(|vertex| vertex.local_uv[0] <= 1.0 && vertex.local_uv[1] <= 1.0),
-            "UV-repeat quads must not sample beyond their atlas slot: {:?}",
-            batch.vertices
-        );
-        assert_eq!(batch.vertices[1].position[0], 128.02277);
-        assert_eq!(batch.vertices[5].position[0], 256.04553);
-        assert_eq!(batch.vertices[9].position[0], 270.0);
+        // u runs 0 to 2.109 across 270 px: cut where u crosses 1 and 2
+        assert_eq!(batch.texture_requests.len(), 1);
+        assert_cut_at(&batch, 0, &[270.0 / 2.109, 2.0 * 270.0 / 2.109]);
+        assert_one_repeat(&batch);
     }
 
     #[test]
