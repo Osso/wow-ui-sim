@@ -225,6 +225,7 @@ fn apply_temporary_state_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     apply_unit_state_bootstrap(lua)?;
     temporary::uiparent_onupdate_worklists::apply_bootstrap(lua)?;
     temporary::forever_glue_display_defaults::apply_bootstrap(lua)?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::video_options_state::apply_bootstrap(lua)?;
     // Replace the legacy shim's mission-list functions, not its combat-ally stub.
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]

@@ -279,6 +279,7 @@ pub(crate) mod unit_position_frame_mixin;
 pub(crate) mod unit_power_display_mod;
 pub(crate) mod unit_stagger_defaults;
 pub(crate) mod unit_threat_defaults;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod video_options_state;
 pub(crate) mod vignette_pin_template;
 pub(crate) mod world_service_defaults;
