@@ -95,6 +95,8 @@ fn blizzard_item_tooltip_body_rows_measure_the_declared_body_font() {
 #[test]
 fn blizzard_tooltip_wrapped_row_height_follows_the_font_string_measurement() {
     let env = setup_full_env();
+    let font_system = wow_ui_sim::render::font::WowFontSystem::new();
+    env.set_font_system(std::rc::Rc::new(std::cell::RefCell::new(font_system)));
     env.exec(HELPERS).unwrap();
     env.exec(
         r#"
