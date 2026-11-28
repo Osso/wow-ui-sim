@@ -53,7 +53,8 @@ const HELPERS: &str = r#"
                 expected = expected + SPACING
             end
             expected = expected + height
-            rowDetails[index] = tostring(index) .. ":" .. tostring(height)
+            rowDetails[index] = tostring(index) .. ":" .. tostring(height) .. "@" ..
+                tostring(tip:GetLeftLine(index):GetWidth())
         end
         MTNear(tip:GetHeight(), expected,
             label .. " rows sum to the measured height (" .. table.concat(rowDetails, ", ") .. ")")
