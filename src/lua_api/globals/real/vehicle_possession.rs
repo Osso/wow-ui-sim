@@ -183,6 +183,8 @@ fn vehicle_exit(state: &mut LuaState) -> LuaResult<u32> {
         sim.player.in_vehicle = false;
         sim.player.controlling_vehicle = false;
         sim.player.has_vehicle_ui = false;
+        #[cfg(feature = "vehicle-seats")]
+        sim.vehicle_seats.leave_vehicle();
         was
     };
     if was_in_vehicle {

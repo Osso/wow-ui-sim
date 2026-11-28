@@ -105,6 +105,15 @@ pub fn is_right_alt_key_down(state: &mut LuaState) -> LuaResult<u32> {
     push_modifier_side(state, |sim| sim.modifier_keys.alt)
 }
 
+/// Like the other sided probes, both meta sides read the single modeled meta key.
+fn is_left_meta_key_down(state: &mut LuaState) -> LuaResult<u32> {
+    push_modifier_side(state, |sim| sim.modifier_keys.meta)
+}
+
+fn is_right_meta_key_down(state: &mut LuaState) -> LuaResult<u32> {
+    push_modifier_side(state, |sim| sim.modifier_keys.meta)
+}
+
 pub fn is_meta_key_down(state: &mut LuaState) -> LuaResult<u32> {
     let down = borrow_state(state)?.modifier_keys.meta;
     state.push(Val::Bool(down));
@@ -167,6 +176,9 @@ pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
             | crate::client_profile::ClientProfile::WowForever
     ) {
         LuaApiMut::register_function(lua, "MakeModifiers", make_modifiers)?;
+        // Retail/Forever InputDocumentation declare byte-identical meta-side blocks.
+        LuaApiMut::register_function(lua, "IsLeftMetaKeyDown", is_left_meta_key_down)?;
+        LuaApiMut::register_function(lua, "IsRightMetaKeyDown", is_right_meta_key_down)?;
     }
     let state = lua.state_mut();
     let g = state.global;

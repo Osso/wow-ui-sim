@@ -1,6 +1,6 @@
 //! Role assignment over represented identities. Unsupported-value, authority,
 //! clearing, no-op and event-name policies are modeled assumptions, not native proof.
-#![cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#![cfg(feature = "unit-role-assignment")]
 
 use wow_ui_sim::loader::{discover_blizzard_addon_closure_for_screen, load_addon};
 use wow_ui_sim::lua_api::WowLuaEnv;

@@ -8,6 +8,7 @@ pub(crate) mod achievement_eligibility;
 pub(crate) mod achievement_ui_access;
 pub mod action_bar_state;
 pub mod action_highlights;
+pub(crate) mod admin_fields;
 pub(crate) mod ambiguate;
 pub(crate) mod bank_reagents;
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
@@ -37,6 +38,8 @@ pub mod cursor_model;
 pub(crate) mod cursor_presentation;
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub(crate) mod dangerous_scripts;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) mod death_release;
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub(crate) mod debug_environment;
 #[cfg(feature = "client-retail")]
@@ -90,9 +93,11 @@ pub mod glue_state;
 pub mod glyph_state;
 pub mod gossip_probes;
 pub(crate) mod group_role_counts;
-#[cfg(feature = "client-wowforever")]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub mod guild_invites;
 pub mod guild_logo;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub mod guild_membership;
 pub(crate) mod heal_prediction;
 #[cfg(any(
     feature = "client-retail",
@@ -157,6 +162,8 @@ pub(crate) mod performance_metrics;
 pub mod pet_bar;
 pub mod pet_stats;
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) mod player_actions;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub mod player_facing;
 pub mod player_identity;
 pub(crate) mod player_languages;
@@ -176,7 +183,7 @@ pub(crate) mod quest_dialog;
 pub(crate) mod quest_faction_group;
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub(crate) mod quest_objective_info;
-#[cfg(feature = "retail-12-0-0")]
+#[cfg(feature = "raid-target-removal")]
 pub(crate) mod raid_targets;
 #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
 pub mod recent_allies_location;
@@ -228,7 +235,7 @@ pub(crate) mod unit_power_display_mod;
 #[cfg(feature = "aura-containers")]
 pub mod unit_relationships;
 pub(crate) mod unit_roles;
-#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[cfg(feature = "unit-role-assignment")]
 pub(crate) mod unit_roles_assignment;
 pub(crate) mod unit_secret_predicates;
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
@@ -244,6 +251,8 @@ pub(crate) mod unit_stagger;
 pub(crate) mod unit_threat;
 pub(crate) mod utf8_case;
 pub mod vehicle_possession;
+#[cfg(feature = "vehicle-seats")]
+pub mod vehicle_seats;
 pub mod voice_chat_probes;
 #[cfg(feature = "client-wrath")]
 pub mod wrath_auction_catalog;
@@ -286,7 +295,7 @@ pub mod wrath_currency;
 
 pub mod inventory_candidates;
 
-#[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+#[cfg(feature = "cinematic-summary")]
 pub(crate) mod cinematic_summary;
 
 #[cfg(any(

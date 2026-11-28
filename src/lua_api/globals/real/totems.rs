@@ -6,6 +6,9 @@ use crate::lua_bridge::FromStack;
 use rilua::vm::state::LuaState;
 use rilua::{LuaApiMut, LuaResult, Val};
 
+mod lifecycle;
+pub(crate) use lifecycle::admin_set_totem;
+
 #[derive(Debug, Clone)]
 pub struct Totem {
     pub name: String,
@@ -21,13 +24,21 @@ pub(crate) fn register(lua: &mut rilua::Lua) -> LuaResult<()> {
     if cfg!(feature = "retail-12-0-5") || ACTIVE == ClientProfile::WowForever {
         LuaApiMut::register_function(lua, "GetNumTotemSlots", get_num_totem_slots)?;
     }
-    #[cfg(feature = "retail-12-0-5")]
+    #[cfg(feature = "totem-duration")]
     LuaApiMut::register_function(lua, "GetTotemDuration", get_totem_duration)?;
+    if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever) {
+        lifecycle::register(lua)?;
+    }
     Ok(())
 }
 
 fn read_totem(state: &LuaState) -> LuaResult<Option<Totem>> {
     let slot = u32::from_stack(state, 1)? as usize;
+    active_totem(state, slot)
+}
+
+/// The live totem in a 1-based slot; expired and empty slots read as `None`.
+fn active_totem(state: &LuaState, slot: usize) -> LuaResult<Option<Totem>> {
     let sim = borrow_state(state)?;
     let totem = slot
         .checked_sub(1)
@@ -69,7 +80,7 @@ fn get_num_totem_slots(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-#[cfg(feature = "retail-12-0-5")]
+#[cfg(feature = "totem-duration")]
 fn get_totem_duration(state: &mut LuaState) -> LuaResult<u32> {
     // INFERRED: inactive/out-of-range slots have an empty duration object.
     let (start, seconds) =

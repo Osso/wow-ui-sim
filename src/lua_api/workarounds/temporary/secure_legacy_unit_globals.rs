@@ -980,13 +980,13 @@ const MASTER_SNAPSHOT_UNIT_GLOBALS: &[MasterUnitGlobal] = &[
     ),
     unit_global(
         "UnitSetRole",
-        RETAIL_PTR_PROFILES,
+        RETAIL_PTR_FOREVER_PROFILES,
         PTR_ONLY_PROFILE,
         "src/lua_api/globals/real/unit_roles_assignment.rs:158",
     ),
     unit_global(
         "UnitSetRoleEnum",
-        RETAIL_PTR_PROFILES,
+        RETAIL_PTR_FOREVER_PROFILES,
         PTR_ONLY_PROFILE,
         "src/lua_api/globals/real/unit_roles_assignment.rs:157",
     ),

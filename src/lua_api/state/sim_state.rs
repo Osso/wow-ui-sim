@@ -9,11 +9,11 @@ pub(crate) struct RegisteredLoadWith {
 
 pub struct SimState {
     /// VERIFIED R88ap.1: zero initially and after CinematicFinished.
-    #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+    #[cfg(feature = "cinematic-summary")]
     pub current_cinematic_id: u32,
     /// INFERRED simulator source for Movie DB2 rows/summary refs (R88ap.1).
     /// Missing key = no row; None = no summary ref. No native data is fabricated.
-    #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+    #[cfg(feature = "cinematic-summary")]
     pub cinematic_summaries: HashMap<u32, Option<String>>,
     /// INFERRED host input for Retail talking-head consumers; native fields remain UNKNOWN.
     #[cfg(feature = "client-retail")]
@@ -119,7 +119,7 @@ pub struct SimState {
     pub widgets: WidgetRegistry,
     /// Shared suffix exclusions used by AddSourceLocationExclude and CreateTexture.
     pub(crate) source_location_exclusions: Vec<Vec<u8>>,
-    #[cfg(feature = "retail-12-1-5")]
+    #[cfg(feature = "weather-state")]
     pub(crate) weather: crate::c_api::c_weather::WeatherState,
     #[cfg(any(feature = "retail-12-1-0", feature = "client-wowforever"))]
     pub(crate) encounter_timeline: crate::c_api::c_encounter_timeline::Timeline,
@@ -797,6 +797,27 @@ pub struct SimState {
     /// Simulator tracking membership; empty initially, independent of task records.
     pub neighborhood_tracked_tasks: BTreeSet<i32>,
     pub totem_slots: Vec<Option<crate::lua_api::globals::real::totems::Totem>>,
+    /// Live 1-based totem slots the host marked as not dismissible.
+    pub totem_cannot_dismiss: BTreeSet<usize>,
+    /// Ghost form, resurrect-offer attributes, area spirit healer and cemetery inputs.
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub death_release: crate::lua_api::globals::real::death_release::DeathReleaseState,
+    /// Sheath, follow, low-level raid, out-of-bounds and unit-control inputs.
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub player_actions: crate::lua_api::globals::real::player_actions::PlayerActionState,
+    /// Guild invite awaiting AcceptGuild/DeclineGuild (`A_Admin.OfferGuildInvite`).
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub pending_guild_invite:
+        Option<crate::lua_api::globals::real::guild_membership::PendingGuildInvite>,
+    /// `C_AchievementInfo.AreGuildAchievementsEnabled` input (INFERRED default true).
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub guild_achievements_enabled: bool,
+    /// Brawl / solo-shuffle / factional flags of the current PvP match.
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub pvp_match: crate::c_api::pvp_match_type::PvpMatchFlags,
+    /// Host vehicle seats and seat-indicator layouts (`A_Admin.EnterVehicle`).
+    #[cfg(feature = "vehicle-seats")]
+    pub vehicle_seats: crate::lua_api::globals::real::vehicle_seats::VehicleSeatState,
     pub weapon_enchants: [Vec<crate::c_api::weapon_enchants::WeaponEnchant>; 3],
     pub sound_manager: Option<SoundManager>,
     /// Mists alert-settings loaded state (R88ai); off makes `IsEnabled` false
@@ -1426,7 +1447,7 @@ pub struct SimState {
     #[cfg(feature = "retail-12-0-7")]
     pub(crate) solo_group_last: Option<(i32, String)>,
     /// Explicit optional display role by existing player/party GUID; unset by default.
-    #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+    #[cfg(feature = "unit-role-assignment")]
     pub(crate) unit_roles:
         HashMap<String, Option<crate::lua_api::globals::real::unit_roles_assignment::UnitRole>>,
     pub party_leader_index: Option<usize>,

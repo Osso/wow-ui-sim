@@ -229,7 +229,7 @@ fn register_frame_context_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
     super::unit_probes::register_all(lua)?;
     super::real::combo_points::register_all(lua)?;
     super::real::unit_interaction::register_all(lua)?;
-    #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+    #[cfg(feature = "unit-role-assignment")]
     super::real::unit_roles_assignment::register_all(lua)?;
     #[cfg(all(
         feature = "retail-12-0-5",
@@ -266,10 +266,17 @@ fn register_frame_context_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
     super::real::recent_allies_location::register_all(lua)?;
     #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
     super::real::neighborhood_invites::register_all(lua)?;
-    #[cfg(feature = "client-wowforever")]
-    super::real::guild_invites::register_all(lua)?;
+    // Retail/Forever byte-identical documentation blocks over shared host state.
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
-    super::real::merchant_repair::register_all(lua)?;
+    {
+        super::real::guild_invites::register_all(lua)?;
+        super::real::guild_membership::register_all(lua)?;
+        super::real::merchant_repair::register_all(lua)?;
+        super::real::death_release::register_all(lua)?;
+        super::real::player_actions::register_all(lua)?;
+    }
+    #[cfg(feature = "vehicle-seats")]
+    super::real::vehicle_seats::register_all(lua)?;
     #[cfg(feature = "client-retail")]
     super::real::lfd_lock_requests::register_all(lua)?;
     super::real::merchant_buyback::register_all(lua)?;
@@ -280,7 +287,7 @@ fn register_frame_context_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
     super::real::guild_logo::register_all(lua)?;
     super::guild_control::register_all(lua)?;
     super::targeting_verbs::register_all(lua)?;
-    #[cfg(feature = "retail-12-0-0")]
+    #[cfg(feature = "raid-target-removal")]
     super::real::raid_targets::register_all(lua)?;
     super::game_rules::register_all(lua)?;
     super::guild_info::register_all(lua)?;
@@ -459,6 +466,9 @@ fn register_plain_host_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
     }
     if classic_markers {
         super::real::publication_12_0_0::register_classic_marker_state(lua)?;
+    }
+    if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever) {
+        super::real::publication_12_0_0::register_world_marker_state(lua)?;
     }
     if modern_plain_globals {
         super::real::publication_12_0_0::register_all(lua)?;

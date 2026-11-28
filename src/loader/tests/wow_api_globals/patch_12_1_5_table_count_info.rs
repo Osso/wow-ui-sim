@@ -24,7 +24,7 @@ fn table_create_valid_hints_return_empty_tables() {
     .unwrap();
 }
 
-#[cfg(feature = "retail-12-1-5")]
+#[cfg(feature = "table-count-info")]
 #[test]
 fn table_getcountinfo_counts_mixed_and_empty_tables() {
     let env = WowLuaEnv::new().unwrap();
@@ -43,7 +43,7 @@ fn table_getcountinfo_counts_mixed_and_empty_tables() {
     .unwrap();
 }
 
-#[cfg(feature = "retail-12-1-5")]
+#[cfg(feature = "table-count-info")]
 #[test]
 fn table_count_retains_single_return() {
     let env = WowLuaEnv::new().unwrap();
@@ -58,7 +58,7 @@ fn table_count_retains_single_return() {
     .unwrap();
 }
 
-#[cfg(not(feature = "retail-12-1-5"))]
+#[cfg(not(feature = "table-count-info"))]
 #[test]
 fn table_getcountinfo_is_absent_before_ptr() {
     let env = WowLuaEnv::new().unwrap();
