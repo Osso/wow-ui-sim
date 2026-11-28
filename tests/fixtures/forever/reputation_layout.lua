@@ -7,8 +7,10 @@ assert(CharacterFrame:IsShown() and ReputationFrame:IsShown())
 assert(not PaperDollFrame:IsShown(), "paper doll hidden")
 assert(CharacterFrame.activeSubframe == "ReputationFrame")
 assert(CharacterFrame.selectedTab == CHARACTER_FRAME_TAB.Reputation, "selected mode tab")
-assert(CharacterFrame:GetTab(CHARACTER_FRAME_TAB.Reputation):GetChecked(), "reputation tab checked")
-assert(not CharacterFrame:GetTab(CHARACTER_FRAME_TAB.Character):GetChecked(), "character tab unchecked")
+-- The side tabs are Frames; SidePanelTabButtonMixin:SetChecked shows SelectedTexture
+-- (Blizzard_SharedXML/Mainline/SharedUIPanelTemplates.lua:391-399).
+assert(CharacterFrame:GetTab(CHARACTER_FRAME_TAB.Reputation).SelectedTexture:IsShown(), "reputation tab selected")
+assert(not CharacterFrame:GetTab(CHARACTER_FRAME_TAB.Character).SelectedTexture:IsShown(), "character tab unselected")
 
 local function near(actual, expected, name)
     assert(actual and math.abs(actual - expected) < 0.75,
