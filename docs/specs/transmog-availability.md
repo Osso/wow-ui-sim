@@ -18,7 +18,7 @@ Retail/PTR, Mists and Forever use one explicitly supplied environment-local avai
 
 ## Implementation inventory
 
-- `src/c_api/transmog_availability.rs`: supplied input, named error and profile-gated query.
+- `src/c_api/transmog_availability.rs`: supplied input, named error, profile-gated query and the boolean-validated `A_Admin.SetTransmogAvailability(enabled)` host input ([admin API](../admin-api/collections.md)).
 - `src/c_api/c_transmog_outfit_info/pending.rs`: pending-record and current apply guards.
 - `src/c_api/registration.rs`: shared registration, without ungating the outfit module.
 - `src/lua_api/state/sim_state.rs` and `state.rs`: per-environment input without guessed true.

@@ -21,13 +21,15 @@ contract!(
 fn combat_audio_throttles_reuse_the_setting_store() {
     let env = WowLuaEnv::new().unwrap();
     env.exec("assert(C_CombatAudioAlert.GetThrottle(0) == 0); assert(C_CombatAudioAlert.GetThrottle(1) == 0)").unwrap();
-    #[cfg(feature = "retail-12-0-0")]
+    // Forever 70707 declares SetThrottle (CombatAudioAlertDocumentation.lua:217);
+    // 5016e06e87 publishes it there.
+    #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
     {
         env.exec("assert(C_CombatAudioAlert.SetThrottle(0, 1.25)); assert(C_CombatAudioAlert.GetThrottle(0) == 1.25); assert(C_CombatAudioAlert.GetThrottle(1) == 0)").unwrap();
     }
 }
 
-#[cfg(not(feature = "retail-12-0-0"))]
+#[cfg(not(any(feature = "retail-12-0-0", feature = "client-wowforever")))]
 contract!(
     throttle_read_does_not_publish_an_unrouted_setter,
     "assert(C_CombatAudioAlert.SetThrottle == nil)"

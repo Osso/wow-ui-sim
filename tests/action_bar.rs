@@ -328,15 +328,139 @@ fn test_enter_exit_edit_mode_core_steps() {
 }
 }
 
+/// Standard status-bar geometry (Mainline/StatusTrackingBarConstants.lua, SIZE_ADJUSTMENT 6).
+/// BarPriorities Experience 4 > Reputation 1, and Shared/StatusTrackingManager.lua:61-71 gives
+/// the highest priority to the first (main) container.
+#[cfg(not(feature = "client-wowforever"))]
+const STATUS_BAR_GEOMETRY: &str = "local BAR_OFFSET_Y, BAR_W, BAR_H = 5, 565, 11\n\
+    local MAIN_BAR_KEY, SECONDARY_BAR_KEY = 'Experience', 'Reputation'";
+
+/// Camelot/StatusTrackingBarConstants.lua:1-7: containers 1192x17, SIZE_ADJUSTMENT 3, so
+/// bars are 1189x14 at BOTTOMLEFT (1, 3 - 1) (Mainline/StatusTrackingManagerOverrides.lua:46-55).
+/// Camelot BarPriorities (:21-28) rank Reputation 2 over Experience 0, so the main container
+/// shows Reputation and the secondary shows Experience.
+#[cfg(feature = "client-wowforever")]
+const STATUS_BAR_GEOMETRY: &str = "local BAR_OFFSET_Y, BAR_W, BAR_H = 2, 1189, 14\n\
+    local MAIN_BAR_KEY, SECONDARY_BAR_KEY = 'Reputation', 'Experience'";
+
+#[cfg(not(feature = "client-wowforever"))]
+const STATUS_CONTAINER_LAYOUT_CHECKS: &str = r#"
+            if not has_point(manager, "BOTTOM", UIParent, "BOTTOM", 0, 0, 0.1) then
+                return "manager_anchor_mismatch"
+            end
+            if not approx(managerRect.w, 571, 0.1) or not approx(managerRect.h, 34, 0.1) then
+                return "manager_size=" .. tostring(managerRect.w) .. "x" .. tostring(managerRect.h)
+            end
+
+            if main:GetNumPoints() ~= 1 or secondary:GetNumPoints() ~= 1 then
+                return "container_points=" .. tostring(main:GetNumPoints()) .. "," .. tostring(secondary:GetNumPoints())
+            end
+            if not has_point(main, "BOTTOM", manager, "BOTTOM", 0, 0, 0.1) then
+                return "main_anchor_mismatch:" .. points_debug(main)
+            end
+            if not has_point(secondary, "BOTTOM", manager, "BOTTOM", 0, 17, 0.1) then
+                return "secondary_anchor_mismatch:" .. points_debug(secondary)
+            end
+            if not approx(mainRect.w, 571, 0.1) or not approx(mainRect.h, 17, 0.1) then
+                return "main_size=" .. tostring(mainRect.w) .. "x" .. tostring(mainRect.h)
+            end
+            if not approx(secondaryRect.w, 571, 0.1) or not approx(secondaryRect.h, 17, 0.1) then
+                return "secondary_size=" .. tostring(secondaryRect.w) .. "x" .. tostring(secondaryRect.h)
+            end
+            if not approx(mainRect.r, managerRect.r, 0.1) or not approx(mainRect.l, managerRect.l, 0.1) then
+                return "main_x_mismatch"
+            end
+            if not approx(secondaryRect.r, managerRect.r, 0.1) or not approx(secondaryRect.l, managerRect.l, 0.1) then
+                return "secondary_x_mismatch"
+            end
+            local stacked = approx(mainRect.b, secondaryRect.t, 0.1) or approx(secondaryRect.b, mainRect.t, 0.1)
+            if not stacked then
+                return "container_stack_gap=" .. tostring(mainRect.b - secondaryRect.t) .. "," .. tostring(secondaryRect.b - mainRect.t)
+            end
+            local minBottom = math.min(mainRect.b, secondaryRect.b)
+            local maxTop = math.max(mainRect.t, secondaryRect.t)
+            if not approx(minBottom, managerRect.b, 0.1) or not approx(maxTop, managerRect.t, 0.1) then
+                return "container_vertical_span_mismatch"
+            end
+
+"#;
+
+/// Camelot stacks status containers on MainActionBar (ACTION_BARS_RELATIVE_TO_BASE_POSITIONING,
+/// Camelot/EditModePresetLayoutConstants.lua:3; EditModeUtil.lua:9-21 order
+/// MainActionBar, Secondary, Main). Shared/EditModeManager.lua:692-715 places Secondary at
+/// 45 + BOTTOM_ACTION_BARS_SPACER_Y 4 = 49 and Main at 49 + 17 +
+/// PRIMARY_AND_SECONDARY_STATUS_TRACKING_BAR_SPACER_Y -1 = 65 (constants :31-32).
+#[cfg(feature = "client-wowforever")]
+const STATUS_CONTAINER_LAYOUT_CHECKS: &str = r#"
+            if not has_point(manager, "BOTTOM", UIParent, "BOTTOM", 0, 0, 0.1) then
+                return "manager_anchor_mismatch"
+            end
+            if not approx(managerRect.w, 1192, 0.1) or not approx(managerRect.h, 17, 0.1) then
+                return "manager_size=" .. tostring(managerRect.w) .. "x" .. tostring(managerRect.h)
+            end
+
+            if main:GetNumPoints() ~= 1 or secondary:GetNumPoints() ~= 1 then
+                return "container_points=" .. tostring(main:GetNumPoints()) .. "," .. tostring(secondary:GetNumPoints())
+            end
+            if not has_point(secondary, "BOTTOMLEFT", MainActionBar, "BOTTOMLEFT", 0, 49, 0.1) then
+                return "secondary_anchor_mismatch:" .. points_debug(secondary)
+            end
+            if not has_point(main, "BOTTOMLEFT", MainActionBar, "BOTTOMLEFT", 0, 65, 0.1) then
+                return "main_anchor_mismatch:" .. points_debug(main)
+            end
+            if not approx(mainRect.w, 1192, 0.1) or not approx(mainRect.h, 17, 0.1) then
+                return "main_size=" .. tostring(mainRect.w) .. "x" .. tostring(mainRect.h)
+            end
+            if not approx(secondaryRect.w, 1192, 0.1) or not approx(secondaryRect.h, 17, 0.1) then
+                return "secondary_size=" .. tostring(secondaryRect.w) .. "x" .. tostring(secondaryRect.h)
+            end
+            local barL = MainActionBar:GetLeft()
+            if not approx(mainRect.l, barL, 0.1) or not approx(secondaryRect.l, barL, 0.1) then
+                return "container_x_mismatch"
+            end
+            if not approx(mainRect.b, secondaryRect.t - 1, 0.1) then
+                return "container_stack_gap=" .. tostring(mainRect.b - secondaryRect.t)
+            end
+"#;
+
+/// Retail and Forever start with no reputation rows; the host supplies them
+/// (docs/specs/modern-reputation-host-state.md, docs/admin-api/reputation.md).
+/// Other profiles keep their seeded legacy fixture.
+fn supply_watched_reputation_row(env: &WowLuaEnv) {
+    if cfg!(any(feature = "client-retail", feature = "client-wowforever")) {
+        env.exec(
+            r#"A_Admin.SetReputationFactions({
+                { factionID = 72, name = "Stormwind", reaction = 5,
+                  currentReactionThreshold = 3000, nextReactionThreshold = 9000,
+                  currentStanding = 4500 },
+            })"#,
+        )
+        .expect("reputation row input should be accepted");
+    }
+    env.exec("C_Reputation.SetWatchedFactionByID(72); StatusTrackingBarManager:UpdateBarsShown()")
+        .expect("original status tracking update should run");
+    settle_status_bar_fades(env);
+}
+
+/// Moving XP from the main to the secondary container fades both out first, then
+/// `onFinishedAnimating` re-runs UpdateBarsShown (Shared/StatusTrackingManager.lua:41-44, 74-85).
+fn settle_status_bar_fades(env: &WowLuaEnv) {
+    for _ in 0..12 {
+        env.fire_on_update(0.25).expect("OnUpdate tick should run");
+    }
+}
+
 #[test]
 fn test_status_tracking_xp_and_reputation_bars_layout_locked() {
     wrath_action_case!(status_layout);
 
     let env = env_with_action_bar();
+    supply_watched_reputation_row(&env);
     let result: String = env
         .eval(
-            r#"
+            &r#"
             local EPS = 0.75
+            __BAR_GEOMETRY__
 
             local function approx(actual, expected, eps)
                 if type(actual) ~= "number" or type(expected) ~= "number" then
@@ -417,125 +541,91 @@ fn test_status_tracking_xp_and_reputation_bars_layout_locked() {
             if manager:GetNumPoints() ~= 1 then
                 return "manager_points=" .. tostring(manager:GetNumPoints())
             end
-            if not has_point(manager, "BOTTOM", UIParent, "BOTTOM", 0, 0, 0.1) then
-                return "manager_anchor_mismatch"
-            end
-            if not approx(managerRect.w, 571, 0.1) or not approx(managerRect.h, 34, 0.1) then
-                return "manager_size=" .. tostring(managerRect.w) .. "x" .. tostring(managerRect.h)
-            end
-
-            if main:GetNumPoints() ~= 1 or secondary:GetNumPoints() ~= 1 then
-                return "container_points=" .. tostring(main:GetNumPoints()) .. "," .. tostring(secondary:GetNumPoints())
-            end
-            if not has_point(main, "BOTTOM", manager, "BOTTOM", 0, 0, 0.1) then
-                return "main_anchor_mismatch:" .. points_debug(main)
-            end
-            if not has_point(secondary, "BOTTOM", manager, "BOTTOM", 0, 17, 0.1) then
-                return "secondary_anchor_mismatch:" .. points_debug(secondary)
-            end
-            if not approx(mainRect.w, 571, 0.1) or not approx(mainRect.h, 17, 0.1) then
-                return "main_size=" .. tostring(mainRect.w) .. "x" .. tostring(mainRect.h)
-            end
-            if not approx(secondaryRect.w, 571, 0.1) or not approx(secondaryRect.h, 17, 0.1) then
-                return "secondary_size=" .. tostring(secondaryRect.w) .. "x" .. tostring(secondaryRect.h)
-            end
-            if not approx(mainRect.r, managerRect.r, 0.1) or not approx(mainRect.l, managerRect.l, 0.1) then
-                return "main_x_mismatch"
-            end
-            if not approx(secondaryRect.r, managerRect.r, 0.1) or not approx(secondaryRect.l, managerRect.l, 0.1) then
-                return "secondary_x_mismatch"
-            end
-            local stacked = approx(mainRect.b, secondaryRect.t, 0.1) or approx(secondaryRect.b, mainRect.t, 0.1)
-            if not stacked then
-                return "container_stack_gap=" .. tostring(mainRect.b - secondaryRect.t) .. "," .. tostring(secondaryRect.b - mainRect.t)
-            end
-            local minBottom = math.min(mainRect.b, secondaryRect.b)
-            local maxTop = math.max(mainRect.t, secondaryRect.t)
-            if not approx(minBottom, managerRect.b, 0.1) or not approx(maxTop, managerRect.t, 0.1) then
-                return "container_vertical_span_mismatch"
-            end
+            __CONTAINER_LAYOUT_CHECKS__
 
             local barsEnum = StatusTrackingBarInfo and StatusTrackingBarInfo.BarsEnum
             if not barsEnum then
                 return "bars_enum_missing"
             end
-            local expIndex = barsEnum.Experience
-            local repIndex = barsEnum.Reputation
-            if not expIndex or not repIndex then
+            local mainIndex = barsEnum[MAIN_BAR_KEY]
+            local secondaryIndex = barsEnum[SECONDARY_BAR_KEY]
+            if not mainIndex or not secondaryIndex then
                 return "xp_or_rep_index_missing"
             end
 
-            if main.shownBarIndex ~= expIndex then
+            if main.shownBarIndex ~= mainIndex then
                 return "main_shown_bar=" .. tostring(main.shownBarIndex)
             end
-            if secondary.shownBarIndex ~= repIndex then
+            if secondary.shownBarIndex ~= secondaryIndex then
                 return "secondary_shown_bar=" .. tostring(secondary.shownBarIndex)
             end
 
-            local mainExpBar = main.bars and main.bars[expIndex]
-            local secondaryRepBar = secondary.bars and secondary.bars[repIndex]
-            if not mainExpBar then
+            local mainBar = main.bars and main.bars[mainIndex]
+            local secondaryBar = secondary.bars and secondary.bars[secondaryIndex]
+            if not mainBar then
                 return "main_exp_bar_missing"
             end
-            if not secondaryRepBar then
+            if not secondaryBar then
                 return "secondary_rep_bar_missing"
             end
-            if not mainExpBar:IsShown() then
+            if not mainBar:IsShown() then
                 return "main_exp_bar_hidden"
             end
-            if not secondaryRepBar:IsShown() then
+            if not secondaryBar:IsShown() then
                 return "secondary_rep_bar_hidden"
             end
 
-            local mainExpRect, mainExpErr = rect(mainExpBar, "main_exp_bar")
-            if not mainExpRect then return mainExpErr end
-            local secondaryRepRect, secondaryRepErr = rect(secondaryRepBar, "secondary_rep_bar")
-            if not secondaryRepRect then return secondaryRepErr end
+            local mainBarRect, mainBarErr = rect(mainBar, "main_exp_bar")
+            if not mainBarRect then return mainBarErr end
+            local secondaryBarRect, secondaryBarErr = rect(secondaryBar, "secondary_rep_bar")
+            if not secondaryBarRect then return secondaryBarErr end
 
-            if mainExpBar:GetNumPoints() ~= 1 then
-                return "main_exp_points=" .. tostring(mainExpBar:GetNumPoints())
+            if mainBar:GetNumPoints() ~= 1 then
+                return "main_exp_points=" .. tostring(mainBar:GetNumPoints())
             end
-            if secondaryRepBar:GetNumPoints() ~= 1 then
-                return "secondary_rep_points=" .. tostring(secondaryRepBar:GetNumPoints())
+            if secondaryBar:GetNumPoints() ~= 1 then
+                return "secondary_rep_points=" .. tostring(secondaryBar:GetNumPoints())
             end
-            if not has_point(mainExpBar, "BOTTOMLEFT", main, "BOTTOMLEFT", 1, 5, 0.1) then
+            if not has_point(mainBar, "BOTTOMLEFT", main, "BOTTOMLEFT", 1, BAR_OFFSET_Y, 0.1) then
                 return "main_exp_anchor_mismatch"
             end
-            if not has_point(secondaryRepBar, "BOTTOMLEFT", secondary, "BOTTOMLEFT", 1, 5, 0.1) then
+            if not has_point(secondaryBar, "BOTTOMLEFT", secondary, "BOTTOMLEFT", 1, BAR_OFFSET_Y, 0.1) then
                 return "secondary_rep_anchor_mismatch"
             end
-            if not approx(mainExpRect.w, 565, 0.1) or not approx(mainExpRect.h, 11, 0.1) then
-                return "main_exp_size=" .. tostring(mainExpRect.w) .. "x" .. tostring(mainExpRect.h)
+            if not approx(mainBarRect.w, BAR_W, 0.1) or not approx(mainBarRect.h, BAR_H, 0.1) then
+                return "main_exp_size=" .. tostring(mainBarRect.w) .. "x" .. tostring(mainBarRect.h)
             end
-            if not approx(secondaryRepRect.w, 565, 0.1) or not approx(secondaryRepRect.h, 11, 0.1) then
-                return "secondary_rep_size=" .. tostring(secondaryRepRect.w) .. "x" .. tostring(secondaryRepRect.h)
+            if not approx(secondaryBarRect.w, BAR_W, 0.1) or not approx(secondaryBarRect.h, BAR_H, 0.1) then
+                return "secondary_rep_size=" .. tostring(secondaryBarRect.w) .. "x" .. tostring(secondaryBarRect.h)
             end
 
-            if not mainExpBar.StatusBar or not secondaryRepBar.StatusBar then
+            if not mainBar.StatusBar or not secondaryBar.StatusBar then
                 return "xp_or_rep_statusbar_missing"
             end
-            local mainStatusRect, mainStatusErr = rect(mainExpBar.StatusBar, "main_exp_status")
+            local mainStatusRect, mainStatusErr = rect(mainBar.StatusBar, "main_exp_status")
             if not mainStatusRect then return mainStatusErr end
-            local repStatusRect, repStatusErr = rect(secondaryRepBar.StatusBar, "secondary_rep_status")
+            local repStatusRect, repStatusErr = rect(secondaryBar.StatusBar, "secondary_rep_status")
             if not repStatusRect then return repStatusErr end
-            if mainExpBar.StatusBar:GetNumPoints() ~= 1 or secondaryRepBar.StatusBar:GetNumPoints() ~= 1 then
-                return "status_points=" .. tostring(mainExpBar.StatusBar:GetNumPoints()) .. "," .. tostring(secondaryRepBar.StatusBar:GetNumPoints())
+            if mainBar.StatusBar:GetNumPoints() ~= 1 or secondaryBar.StatusBar:GetNumPoints() ~= 1 then
+                return "status_points=" .. tostring(mainBar.StatusBar:GetNumPoints()) .. "," .. tostring(secondaryBar.StatusBar:GetNumPoints())
             end
-            if not has_point(mainExpBar.StatusBar, "RIGHT", mainExpBar, "RIGHT", 0, 0, 0.1) then
+            if not has_point(mainBar.StatusBar, "RIGHT", mainBar, "RIGHT", 0, 0, 0.1) then
                 return "main_exp_status_anchor_mismatch"
             end
-            if not has_point(secondaryRepBar.StatusBar, "RIGHT", secondaryRepBar, "RIGHT", 0, 0, 0.1) then
+            if not has_point(secondaryBar.StatusBar, "RIGHT", secondaryBar, "RIGHT", 0, 0, 0.1) then
                 return "secondary_rep_status_anchor_mismatch"
             end
-            if not approx(mainStatusRect.w, mainExpRect.w, 0.1) or not approx(mainStatusRect.h, mainExpRect.h, 0.1) then
+            if not approx(mainStatusRect.w, mainBarRect.w, 0.1) or not approx(mainStatusRect.h, mainBarRect.h, 0.1) then
                 return "main_status_size_mismatch"
             end
-            if not approx(repStatusRect.w, secondaryRepRect.w, 0.1) or not approx(repStatusRect.h, secondaryRepRect.h, 0.1) then
+            if not approx(repStatusRect.w, secondaryBarRect.w, 0.1) or not approx(repStatusRect.h, secondaryBarRect.h, 0.1) then
                 return "rep_status_size_mismatch"
             end
 
             return "ok"
-        "#,
+        "#
+            .replace("__BAR_GEOMETRY__", STATUS_BAR_GEOMETRY)
+            .replace("__CONTAINER_LAYOUT_CHECKS__", STATUS_CONTAINER_LAYOUT_CHECKS),
         )
         .unwrap();
 
@@ -570,16 +660,11 @@ fn test_bag_bar_layout_locked() {
     // (Retail Shared/EditModeManager.lua:210-212; PTR:220-222). Retail therefore checks
     // the XML anchor BEFORE the next layout update, not the startup steady state.
     // PTR loads it before startup and applies Standard's preset offset (10).
-    let expected_bar_y = if cfg!(feature = "client-ptr") {
-        "10"
-    } else {
-        "0"
-    };
     let result: String = env
         .eval(
             &r#"
             local EPS = 0.75
-            local expectedBarY = $BAG_ANCHOR_Y
+            local expectedAnchor = $BAG_ANCHOR
 
             local function approx(actual, expected, eps)
                 if type(actual) ~= "number" or type(expected) ~= "number" then
@@ -682,19 +767,55 @@ fn test_bag_bar_layout_locked() {
             local reagentRect, reagentErr = rect(reagent, "reagent")
             if not reagentRect then return reagentErr end
 
-            if not has_point(bar, "TOPRIGHT", microBar, "TOPRIGHT", 0, expectedBarY, 0.1) then
+            local point, relName, relPoint, offsetX, offsetY = unpack(expectedAnchor)
+            local relFrame = _G[relName]
+            if not has_point(bar, point, relFrame, relPoint, offsetX, offsetY, 0.1) then
                 return "bags_bar_anchor_mismatch:" .. points_debug(bar)
             end
+            local relRect, relErr = rect(relFrame, "bags_bar_anchor_target")
+            if not relRect then return relErr end
+            local function point_xy(r, name)
+                local x = name:find("LEFT") and r.l or name:find("RIGHT") and r.r or (r.l + r.r) / 2
+                local y = name:find("TOP") and r.t or name:find("BOTTOM") and r.b or (r.b + r.t) / 2
+                return x, y
+            end
+            local barX, barY = point_xy(barRect, point)
+            local relX, relY = point_xy(relRect, relPoint)
+            local wantX, wantY = relX + offsetX, relY + offsetY
+            -- EditModeSystemTemplate is clampedToScreen (Shared/EditModeSystemTemplates.xml:4).
+            if bar:IsClampedToScreen() then
+                local dx, dy = barX - barRect.l, barY - barRect.b
+                local maxL, maxB = UIParent:GetRight() - barRect.w, UIParent:GetTop() - barRect.h
+                wantX = math.max(0, math.min(wantX - dx, maxL)) + dx
+                wantY = math.max(0, math.min(wantY - dy, maxB)) + dy
+            end
+            if not approx(barX, wantX, 0.1) or not approx(barY, wantY, 0.1) then
+                return "bags_bar_point=" .. tostring(barX) .. "," .. tostring(barY)
+                    .. ",anchor_point=" .. tostring(wantX) .. "," .. tostring(wantY)
+            end
+
+            __BAG_CHAIN_CHECKS__
+
+            return "ok"
+        "#
+            .replace("$BAG_ANCHOR", bag_bar_expected_anchor())
+            .replace("__BAG_CHAIN_CHECKS__", BAG_CHAIN_CHECKS),
+        )
+        .unwrap();
+
+    assert_eq!(
+        result, "ok",
+        "Bags bar and bag-slot chain should remain layout-locked: {result}"
+    );
+}
+
+/// Standard bag chain: 208x47 bar, expand toggle and 30px bag slots
+/// (Mainline/MainMenuBarBagButtons.xml).
+#[cfg(not(feature = "client-wowforever"))]
+const BAG_CHAIN_CHECKS: &str = r#"
             if not approx(barRect.w, 208, 0.1) or not approx(barRect.h, 47, 0.1) then
                 return "bags_bar_size=" .. tostring(barRect.w) .. "x" .. tostring(barRect.h)
             end
-            if not approx(barRect.r, microRect.r, 0.1) then
-                return "bags_bar_right=" .. tostring(barRect.r) .. ",micro_right=" .. tostring(microRect.r)
-            end
-            if not approx(barRect.t, microRect.t + expectedBarY, 0.1) then
-                return "bags_bar_top=" .. tostring(barRect.t) .. ",micro_top=" .. tostring(microRect.t)
-            end
-
             if not backpack:IsShown() then return "backpack_hidden" end
             if not toggle:IsShown() then return "toggle_hidden" end
             if not bag0:IsShown() or not bag1:IsShown() or not bag2:IsShown() or not bag3:IsShown() then
@@ -776,15 +897,64 @@ fn test_bag_bar_layout_locked() {
                 return "bags_bar_width_mismatch=" .. tostring(barRect.w) .. ",expected=" .. tostring(expectedBarWidth)
             end
 
-            return "ok"
-        "#.replace("$BAG_ANCHOR_Y", expected_bar_y),
-        )
-        .unwrap();
+"#;
 
-    assert_eq!(
-        result, "ok",
-        "Bags bar and bag-slot chain should remain layout-locked: {result}"
-    );
+/// Camelot/MainMenuBarBagButtons.xml:51-92: 45px slots, bagPadding 2, hidden expand toggle,
+/// 33x45 KeyRing at the left end. Shared/BagsBar.lua:43-59 sums all seven buttons plus six
+/// paddings: 6*45 + 33 + 6*2 = 315.
+#[cfg(feature = "client-wowforever")]
+const BAG_CHAIN_CHECKS: &str = r#"
+            if not approx(barRect.w, 315, 0.1) or not approx(barRect.h, 45, 0.1) then
+                return "bags_bar_size=" .. tostring(barRect.w) .. "x" .. tostring(barRect.h)
+            end
+            local keyRing = KeyRingButton
+            if not keyRing then return "keyring_missing" end
+            if not backpack:IsShown() then return "backpack_hidden" end
+            if toggle:IsShown() then return "toggle_shown" end
+            if not bag0:IsShown() or not bag1:IsShown() or not bag2:IsShown() or not bag3:IsShown() then
+                return "one_or_more_bag_slots_hidden"
+            end
+            if not reagent:IsShown() then return "reagent_slot_hidden" end
+            local chain = {
+                { backpack, "backpack", bar, "RIGHT", 0, 45 },
+                { bag0, "bag0", backpack, "LEFT", -2, 45 },
+                { bag1, "bag1", bag0, "LEFT", -2, 45 },
+                { bag2, "bag2", bag1, "LEFT", -2, 45 },
+                { bag3, "bag3", bag2, "LEFT", -2, 45 },
+                { reagent, "reagent", bag3, "LEFT", -2, 45 },
+                { keyRing, "keyring", reagent, "LEFT", 0, 33 },
+            }
+            for _, link in ipairs(chain) do
+                local frame, tag, rel, relPoint, x, width = unpack(link)
+                if not has_point(frame, "RIGHT", rel, relPoint, x, 0, 0.1) then
+                    return tag .. "_anchor_mismatch:" .. points_debug(frame)
+                end
+                local r, err = rect(frame, tag)
+                if not r then return err end
+                if not approx(r.w, width, 0.1) or not approx(r.h, 45, 0.1) then
+                    return tag .. "_size=" .. tostring(r.w) .. "x" .. tostring(r.h)
+                end
+            end
+            -- GetBagBarLength counts a padding before KeyRing, but its XML anchor x is 0.
+            local keyRect = rect(keyRing, "keyring")
+            if not approx(keyRect.l - barRect.l, 2, 0.1) then
+                return "keyring_left_gap=" .. tostring(keyRect.l - barRect.l)
+            end
+"#;
+
+/// BagsBar anchor at this test's stage, as a Lua `{point, relativeTo, relativePoint, x, y}`.
+/// Retail checks the XML anchor (Mainline/MainMenuBarBagButtons.xml:15) before the next
+/// layout update; PTR applies Standard's preset offset 10
+/// (Standard/EditModePresetLayoutConstants.lua:38-42). Forever loads it at startup and applies
+/// the Camelot preset (Camelot/EditModePresetLayoutConstants.lua:45-49).
+fn bag_bar_expected_anchor() -> &'static str {
+    if cfg!(feature = "client-ptr") {
+        r#"{ "TOPRIGHT", "MicroButtonAndBagsBar", "TOPRIGHT", 0, 10 }"#
+    } else if cfg!(feature = "client-wowforever") {
+        r#"{ "BOTTOMLEFT", "MicroMenuContainer", "BOTTOMRIGHT", 7, -4 }"#
+    } else {
+        r#"{ "TOPRIGHT", "MicroButtonAndBagsBar", "TOPRIGHT", 0, 0 }"#
+    }
 }
 
 /// Both pinned Standard presets use offsetY=10 (Retail constants:26; PTR:42).

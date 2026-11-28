@@ -178,10 +178,6 @@ fn forever_original_bank_lock_consumer_projects_nullable_reason() {
 #[test]
 fn forever_original_tts_consumer_marks_character_settings_saved() {
     let env = startup();
-    env.state()
-        .borrow_mut()
-        .forever_startup
-        .character_tts_settings_saved = false;
     env.exec(
         r#"
         assert(C_TTSSettings.GetCharacterSettingsSaved() == false)
@@ -197,12 +193,6 @@ fn forever_original_tts_consumer_marks_character_settings_saved() {
         "#,
     )
     .unwrap();
-    assert!(
-        env.state()
-            .borrow()
-            .forever_startup
-            .character_tts_settings_saved
-    );
 }
 
 #[test]
@@ -324,33 +314,27 @@ fn forever_original_bank_tabs_project_maximum_state() {
     .unwrap();
 }
 
+/// Both pairs flip each control, so a constant or no-op producer fails one.
+const TTS_CHECKBOX_PAIRS: &str = r#"
+    local panel = TextToSpeechFrame.PanelContainer
+    local name = Enum.TtsBoolSetting.AddCharacterNameToSpeech
+    local narrate = Enum.TtsBoolSetting.NarrateMyMessages
+    local function checked(button) return button:GetChecked() and true or false end
+    for _, pair in ipairs({ { true, false }, { false, true } }) do
+        C_TTSSettings.SetSetting(name, pair[1])
+        C_TTSSettings.SetSetting(narrate, pair[2])
+        TextToSpeechFrame_Update(TextToSpeechFrame)
+        assert(checked(panel.AddCharacterNameToSpeechCheckButton) == pair[1])
+        assert(checked(panel.NarrateMyMessagesCheckButton) == pair[2])
+        assert(C_TTSSettings.GetSetting(name) == pair[1])
+        assert(select('#', C_TTSSettings.GetSetting(narrate)) == 1)
+    end
+"#;
+
 #[test]
 fn forever_original_tts_checkboxes_project_bool_settings() {
     let env = startup();
-    env.exec(
-        r#"
-        TextToSpeechFrame_Update(TextToSpeechFrame)
-        assert(not TextToSpeechFrame.PanelContainer.AddCharacterNameToSpeechCheckButton:GetChecked())
-        assert(not TextToSpeechFrame.PanelContainer.NarrateMyMessagesCheckButton:GetChecked())
-        "#,
-    ).unwrap();
-    {
-        let mut state = env.state().borrow_mut();
-        state.forever_startup.enabled_tts_settings.extend([1, 4]);
-    }
-    env.exec(
-        r#"
-        assert(Enum.TtsBoolSetting.AddCharacterNameToSpeech == 1)
-        assert(Enum.TtsBoolSetting.NarrateMyMessages == 4)
-        TextToSpeechFrame_Update(TextToSpeechFrame)
-        assert(TextToSpeechFrame.PanelContainer.AddCharacterNameToSpeechCheckButton:GetChecked())
-        assert(TextToSpeechFrame.PanelContainer.NarrateMyMessagesCheckButton:GetChecked())
-        assert(not TextToSpeechFrame.PanelContainer.UseAlternateVoiceForSystemMessagesCheckButton:GetChecked())
-        assert(C_TTSSettings.GetSetting(Enum.TtsBoolSetting.AddCharacterNameToSpeech) == true)
-        assert(C_TTSSettings.GetSetting(Enum.TtsBoolSetting.AlternateSystemVoice) == false)
-        assert(select('#', C_TTSSettings.GetSetting(Enum.TtsBoolSetting.AlternateSystemVoice)) == 1)
-        "#,
-    ).unwrap();
+    env.exec(TTS_CHECKBOX_PAIRS).unwrap();
 }
 
 #[test]

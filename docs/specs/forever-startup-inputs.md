@@ -13,7 +13,7 @@ the copied 1.60.1.70532 `Blizzard_APIDocumentationGenerated` cache. Retail/PTR
 
 `SimState.forever_startup` contains host inputs for ammo requirement, cursor
 visibility, ping enablement, bank-type purchase permission, match completion,
-target spell, TTS settings-save state, temporary CVars, external-event URL state,
+target spell, temporary CVars, external-event URL state,
 and group-buff visual alerts. Empty-world flags and collections are simulator
 fixtures, not claims about native defaults. Tests must vary inputs through the
 original Blizzard consumers. Native derivation and validation policies remain
@@ -53,9 +53,9 @@ unknown.
   through the original raid manager. The original OnLoad initializes its ping
   menu when true and does not remove that menu on a later false input.
   `RestrictPingsTo` remains a Forever host input; Retail's feature-gated
-  restriction model is unchanged. TTS bool settings are supplied as
-  enabled `TtsBoolSetting` values. Save marking sets a local saved flag, and its
-  getter reads that same flag; no persistence policy is inferred.
+  restriction model is unchanged. `C_TTSSettings` bool settings and the
+  character-save marker belong to the persisted preference model in
+  [CF-2 TTS](c-factory-cf2-tts.md); this host input set has no TTS fields.
 - `C_CVar.RemoveTempCVar(name)` removes the host's lower-case temporary scalar
   entry without writing saved CVars. `GetCVar`/`GetCVarBool` and their namespace
   counterparts see the temporary scalar before the saved/base value. This does

@@ -210,53 +210,52 @@ fn test_class_talents_switch_methods_update_seeded_spec_and_loadout_state() {
     crate::secure_aura_header_helpers::assert_seeded_helper_switch_lifecycle();
 }
 
+/// Forever has no global GetSpecialization: Blizzard_DeprecatedSpecialization.toc
+/// declares `AllowLoadGameType: classic, standard` (9cae54e47d retired the copy).
+#[cfg(not(feature = "retail-12-0-5"))]
+const SEEDED_SWITCH_LIFECYCLE: &str = r#"
+    local protectionConfigs = C_ClassTalents.GetConfigIDsBySpecID(66)
+    assert(#protectionConfigs == 2, "Protection should expose two seeded loadouts")
+    assert(C_ClassTalents.GetActiveConfigID() == protectionConfigs[1], "Protection default loadout should start active")
+
+    C_ClassTalents.SwitchToLoadoutByName("Protection Mythic+")
+    local protectionMythic = C_ClassTalents.GetActiveConfigID()
+    assert(protectionMythic == protectionConfigs[2], "SwitchToLoadoutByName should pick the named Protection loadout")
+    assert(C_ClassTalents.GetLastSelectedSavedConfigID(66) == protectionMythic, "last selected Protection config should update")
+    assert(C_Traits.GetConfigInfo(protectionMythic).name == "Protection Mythic+", "config info should expose the active loadout name")
+
+    C_ClassTalents.SwitchToSpecializationByName("Holy")
+    assert(C_SpecializationInfo.GetSpecialization() == 1, "Holy should become the active specialization")
+    local holyConfigs = C_ClassTalents.GetConfigIDsBySpecID(65)
+    assert(#holyConfigs == 2, "Holy should expose two seeded loadouts")
+    assert(C_ClassTalents.GetActiveConfigID() == holyConfigs[1], "SwitchToSpecializationByName should activate Holy's default loadout")
+    assert(C_ClassTalents.GetLastSelectedSavedConfigID(65) == holyConfigs[1], "Holy's last selected config should track the active default")
+    local holyHeroSpecs = C_ClassTalents.GetHeroTalentSpecsForClassSpec(1, 65)
+    assert(tContains(holyHeroSpecs, C_ClassTalents.GetActiveHeroTalentSpec()), "Holy reset should auto-select one of Holy's hero subtrees")
+
+    C_ClassTalents.SwitchToLoadoutByIndex(2)
+    assert(C_ClassTalents.GetActiveConfigID() == holyConfigs[2], "SwitchToLoadoutByIndex should use the current specialization's loadout order")
+    assert(C_Traits.GetConfigInfo(holyConfigs[2]).name == "Holy Raid", "Holy loadout names should be queryable")
+
+    C_ClassTalents.SwitchToSpecializationByIndex(3)
+    assert(C_SpecializationInfo.GetSpecialization() == 3, "Retribution should become the active specialization")
+    local retributionConfigs = C_ClassTalents.GetConfigIDsBySpecID(70)
+    assert(C_ClassTalents.GetActiveConfigID() == retributionConfigs[1], "Retribution default loadout should become active")
+    assert(C_ClassTalents.GetLastSelectedSavedConfigID(70) == retributionConfigs[1], "Retribution's last selected config should update")
+    local retributionHeroSpecs = C_ClassTalents.GetHeroTalentSpecsForClassSpec(1, 70)
+    assert(tContains(retributionHeroSpecs, C_ClassTalents.GetActiveHeroTalentSpec()), "Retribution reset should auto-select one of Retribution's hero subtrees")
+
+    return table.concat({
+        tostring(protectionMythic),
+        tostring(holyConfigs[2]),
+        tostring(retributionConfigs[1]),
+    }, ",")
+"#;
+
 #[cfg(not(feature = "retail-12-0-5"))]
 #[test]
 fn test_class_talents_switch_methods_update_seeded_spec_and_loadout_state() {
-    let env = env();
-    let result: String = env
-        .eval(
-            r#"
-            local protectionConfigs = C_ClassTalents.GetConfigIDsBySpecID(66)
-            assert(#protectionConfigs == 2, "Protection should expose two seeded loadouts")
-            assert(C_ClassTalents.GetActiveConfigID() == protectionConfigs[1], "Protection default loadout should start active")
-
-            C_ClassTalents.SwitchToLoadoutByName("Protection Mythic+")
-            local protectionMythic = C_ClassTalents.GetActiveConfigID()
-            assert(protectionMythic == protectionConfigs[2], "SwitchToLoadoutByName should pick the named Protection loadout")
-            assert(C_ClassTalents.GetLastSelectedSavedConfigID(66) == protectionMythic, "last selected Protection config should update")
-            assert(C_Traits.GetConfigInfo(protectionMythic).name == "Protection Mythic+", "config info should expose the active loadout name")
-
-            C_ClassTalents.SwitchToSpecializationByName("Holy")
-            assert(GetSpecialization() == 1, "Holy should become the active specialization")
-            local holyConfigs = C_ClassTalents.GetConfigIDsBySpecID(65)
-            assert(#holyConfigs == 2, "Holy should expose two seeded loadouts")
-            assert(C_ClassTalents.GetActiveConfigID() == holyConfigs[1], "SwitchToSpecializationByName should activate Holy's default loadout")
-            assert(C_ClassTalents.GetLastSelectedSavedConfigID(65) == holyConfigs[1], "Holy's last selected config should track the active default")
-            local holyHeroSpecs = C_ClassTalents.GetHeroTalentSpecsForClassSpec(1, 65)
-            assert(tContains(holyHeroSpecs, C_ClassTalents.GetActiveHeroTalentSpec()), "Holy reset should auto-select one of Holy's hero subtrees")
-
-            C_ClassTalents.SwitchToLoadoutByIndex(2)
-            assert(C_ClassTalents.GetActiveConfigID() == holyConfigs[2], "SwitchToLoadoutByIndex should use the current specialization's loadout order")
-            assert(C_Traits.GetConfigInfo(holyConfigs[2]).name == "Holy Raid", "Holy loadout names should be queryable")
-
-            C_ClassTalents.SwitchToSpecializationByIndex(3)
-            assert(GetSpecialization() == 3, "Retribution should become the active specialization")
-            local retributionConfigs = C_ClassTalents.GetConfigIDsBySpecID(70)
-            assert(C_ClassTalents.GetActiveConfigID() == retributionConfigs[1], "Retribution default loadout should become active")
-            assert(C_ClassTalents.GetLastSelectedSavedConfigID(70) == retributionConfigs[1], "Retribution's last selected config should update")
-            local retributionHeroSpecs = C_ClassTalents.GetHeroTalentSpecsForClassSpec(1, 70)
-            assert(tContains(retributionHeroSpecs, C_ClassTalents.GetActiveHeroTalentSpec()), "Retribution reset should auto-select one of Retribution's hero subtrees")
-
-            return table.concat({
-                tostring(protectionMythic),
-                tostring(holyConfigs[2]),
-                tostring(retributionConfigs[1]),
-            }, ",")
-            "#,
-        )
-        .unwrap();
-
+    let result: String = env().eval(SEEDED_SWITCH_LIFECYCLE).unwrap();
     assert_eq!(result, "202,102,301");
 }
 
