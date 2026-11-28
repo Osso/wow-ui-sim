@@ -961,12 +961,8 @@ C_Mail.GetCraftingOrderMailInfo # not-yet
 C_Mail.IsCommandPending # not-yet
 C_MajorFactions.GetMajorFactionProgressionInfo # not-yet
 C_MajorFactions.GetMajorFactionRenownInfo # not-yet
-C_MajorFactions.GetRenownNPCFactionID # not-yet: temporary Lua workaround
 C_MajorFactions.GetTotalReputationForRenownLevel # not-yet
-C_MajorFactions.IsMajorFactionHiddenFromExpansionPage # not-yet: temporary Lua workaround
 C_MajorFactions.IsWeeklyRenownCapped # not-yet
-C_MajorFactions.ShouldDisplayMajorFactionAsJourney # not-yet: temporary Lua workaround
-C_MajorFactions.ShouldUseJourneyRewardTrack # not-yet: temporary Lua workaround
 C_Map.GetAreaInfo # not-yet: temporary Lua workaround
 C_Map.GetBountySetMaps # not-yet
 C_Map.GetMapArtZoneTextPosition # not-yet
@@ -1022,7 +1018,6 @@ C_PaperDollInfo.GetInspectRatedBGBlitzData # not-yet
 C_PaperDollInfo.GetInspectRatedBGData # not-yet
 C_PaperDollInfo.GetInspectRatedSoloShuffleData # not-yet
 C_PaperDollInfo.OffhandHasShield # not-yet
-C_PartyInfo.AllowedToDoPartyConversion # not-yet: temporary Lua workaround
 C_PartyInfo.CanFormCrossFactionParties # not-yet
 C_PartyInfo.CanInvite # not-yet
 C_PartyInfo.CanStartInstanceAbandonVote # not-yet: temporary Lua workaround
@@ -1041,8 +1036,6 @@ C_PartyInfo.GetMinItemLevel # not-yet
 C_PartyInfo.IsChallengeModeActive # not-yet
 C_PartyInfo.IsDelveComplete # not-yet
 C_PartyInfo.IsDelveInProgress # not-yet
-C_PartyInfo.IsPartyInJailersTower # not-yet: temporary Lua workaround
-C_PartyInfo.IsPartyWalkIn # not-yet: temporary Lua workaround
 C_PartyInfo.IsRaidListEnabled # not-yet
 C_PartyInfo.IsRaidListSupported # not-yet
 C_PartyInfo.RequestInviteFromUnit # not-yet
@@ -1420,8 +1413,6 @@ C_Spell.GetSpellSkillLineAbilityRank # not-yet
 C_Spell.IsActiveSpell # not-yet
 C_Spell.IsAutoRepeatSpell # not-yet
 C_Spell.IsClassTalentSpell # not-yet
-C_Spell.IsPressHoldReleaseSpell # not-yet: temporary Lua workaround
-C_Spell.IsPriorityAura # not-yet: temporary Lua workaround
 C_Spell.IsPvPTalentSpell # not-yet
 C_Spell.IsSpellDisabled # not-yet
 C_Spell.PlaceTargetingSpellAtCursor # not-yet

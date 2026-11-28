@@ -14,7 +14,7 @@
 use crate::lua_api::methods::borrow_state;
 use crate::lua_bridge::{FromStack, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
-use rilua::{LuaResult, Val};
+use rilua::{LuaApiMut, LuaResult, Val};
 
 fn make_modifiers(state: &mut LuaState) -> LuaResult<u32> {
     let modifiers = {
@@ -126,60 +126,108 @@ pub fn is_modifier_key_down(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-pub fn is_modified_click(state: &mut LuaState) -> LuaResult<u32> {
-    use crate::lua_api::methods::{table_get, table_get_static, val_to_string};
-    let action = val_to_string(state, crate::lua_bridge::stack_val(state, 1));
-    let (shift, control, alt) = {
-        let sim = borrow_state(state)?;
-        (
-            sim.modifier_keys.shift,
-            sim.modifier_keys.control,
-            sim.modifier_keys.alt,
-        )
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn get_modified_click(state: &mut LuaState) -> LuaResult<u32> {
+    use crate::lua_api::methods::create_string;
+    let action = match crate::lua_bridge::stack_val(state, 1) {
+        Val::Num(value) => value.to_string(),
+        Val::Str(_) => String::from_stack(state, 1)?,
+        _ => return Err(rilua::runtime_error("Usage: GetModifiedClick(\"action\")")),
     };
+    let binding = modified_click_binding(state, &action)?;
+    let value = match binding {
+        Some(binding) => create_string(state, &binding),
+        None if cfg!(feature = "client-wowforever") => create_string(state, "NONE"),
+        None => Val::Nil,
+    };
+    state.push(value);
+    Ok(1)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn set_modified_click(state: &mut LuaState) -> LuaResult<u32> {
+    let action = String::from_stack(state, 1)?;
+    let binding = Option::<String>::from_stack(state, 2)?.unwrap_or_else(|| "NONE".to_owned());
+    crate::lua_api::methods::borrow_state_mut(state)?
+        .modified_clicks
+        .insert(action, binding);
+    Ok(0)
+}
+
+fn modified_click_binding(state: &mut LuaState, action: &str) -> LuaResult<Option<String>> {
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    return Ok(borrow_state(state)?.modified_clicks.get(action).cloned());
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+    {
+        use crate::lua_api::methods::{table_get, table_get_static, val_to_string};
+        let table = table_get_static(state, Val::Table(state.global), "__wow_modified_clicks");
+        let binding = table_get(state, table, action);
+        Ok(val_to_string(state, binding))
+    }
+}
+
+pub fn is_modified_click(state: &mut LuaState) -> LuaResult<u32> {
+    use crate::lua_api::methods::val_to_string;
+    let action = val_to_string(state, crate::lua_bridge::stack_val(state, 1));
+    let keys = borrow_state(state)?.modifier_keys;
     let active = if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Wrath {
-        shift || control || alt
+        keys.any_modifier()
     } else if let Some(action) = action {
-        let modifiers: Vec<_> = action.split('-').collect();
-        let modifier_down = |part: &str| match part {
-            "SHIFT" => Some(shift),
-            "CTRL" => Some(control),
-            "ALT" => Some(alt),
-            _ => None,
-        };
-        if modifiers.iter().all(|part| modifier_down(part).is_some()) {
-            modifiers
-                .iter()
-                .all(|part| modifier_down(part) == Some(true))
-        } else {
-            let table = table_get_static(state, Val::Table(state.global), "__wow_modified_clicks");
-            let binding = table_get(state, table, &action);
-            val_to_string(state, binding).is_some_and(|binding| {
-                // The current mouse-script button is not tracked; an unset button passes.
-                binding
-                    .split('-')
-                    .any(|part| modifier_down(part) == Some(true))
-            })
-        }
+        matches_modified_click(state, &action, keys)?
     } else {
-        shift || control || alt
+        keys.any_modifier()
     };
     state.push(Val::Bool(active));
     Ok(1)
 }
 
-pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
-    use rilua::LuaApiMut;
+fn matches_modified_click(
+    state: &mut LuaState,
+    action: &str,
+    keys: crate::lua_api::sim_substates::ModifierKeys,
+) -> LuaResult<bool> {
+    let modifier_down = |part: &str| match part {
+        "SHIFT" => Some(keys.shift),
+        "CTRL" => Some(keys.control),
+        "ALT" => Some(keys.alt),
+        _ => None,
+    };
+    if action.split('-').all(|part| modifier_down(part).is_some()) {
+        return Ok(action
+            .split('-')
+            .all(|part| modifier_down(part) == Some(true)));
+    }
+    // The current mouse-script button is not tracked; an unset button passes.
+    Ok(
+        modified_click_binding(state, action)?.is_some_and(|binding| {
+            binding
+                .split('-')
+                .any(|part| modifier_down(part) == Some(true))
+        }),
+    )
+}
+
+fn register_modern_modifiers(lua: &mut rilua::Lua) -> LuaResult<()> {
     if matches!(
         crate::client_profile::ACTIVE,
         crate::client_profile::ClientProfile::Retail
             | crate::client_profile::ClientProfile::WowForever
     ) {
         LuaApiMut::register_function(lua, "MakeModifiers", make_modifiers)?;
+        #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+        {
+            LuaApiMut::register_function(lua, "GetModifiedClick", get_modified_click)?;
+            LuaApiMut::register_function(lua, "SetModifiedClick", set_modified_click)?;
+        }
         // Retail/Forever InputDocumentation declare byte-identical meta-side blocks.
         LuaApiMut::register_function(lua, "IsLeftMetaKeyDown", is_left_meta_key_down)?;
         LuaApiMut::register_function(lua, "IsRightMetaKeyDown", is_right_meta_key_down)?;
     }
+    Ok(())
+}
+
+pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
+    register_modern_modifiers(lua)?;
     let state = lua.state_mut();
     let g = state.global;
     table_set_rust_fn_static(state, g, "IsKeyDown", is_key_down)?;

@@ -213,6 +213,10 @@ fn register_admin_calendar_services(builder: TableBuilder) -> LuaResult<TableBui
     let builder = crate::c_api::c_pet_battles::register_admin(builder)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     let builder = crate::c_api::c_spell_book::register_admin(builder)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let builder = super::real::spell_flyout_legacy::register_admin(builder)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let builder = crate::c_api::c_spell::register_ui_flags_admin(builder)?;
     Ok(builder)
 }
 
@@ -275,7 +279,7 @@ fn register_admin_inventory_items(builder: TableBuilder) -> LuaResult<TableBuild
     let builder = crate::c_api::c_transmog_sets::register_admin(builder)?;
     #[cfg(feature = "client-wowforever")]
     let builder = crate::c_api::c_transmog_outfit_info::register_admin(builder)?;
-    #[cfg(feature = "client-retail")]
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     let builder = crate::c_api::c_major_factions::register_admin(builder)?;
     let builder = crate::c_api::c_major_factions::register_renown_admin(builder)?;
     let builder = crate::c_api::item_upgrade_eligibility::register_admin(builder)?;

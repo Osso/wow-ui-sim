@@ -1,5 +1,25 @@
 # Combat State
 
+### A_Admin.SetSpellBookOverrideObservation(spellID, overrideSpellID)
+
+Retail and Forever: supply a known catalog result for `C_SpellBook.FindSpellOverrideByID`. Both IDs must be positive signed-32-bit integers; the result must exist in the selected spell catalog. The empty model keeps the prior no-link record check. This observation is independent of `C_Spell.GetOverrideSpell`; no event is emitted. VERIFIED declarations: Retail `SpellBookDocumentation.lua:85–98`, Forever `:95–108`; both `Blizzard_TutorialManager.toc:16` select `Blizzard_TutorialHelper.lua:190–211`, which resolves action buttons by base and override spell IDs.
+
+### A_Admin.SetCallPetSpellInfo(spellID, slot, petName)
+
+Supply one call-pet spell and the current player pet name for its slot (0–4, from Retail R88m.4). The spell ID must be a positive signed-32-bit integer; the pet name must be string or nil (an empty string is valid). The selected `Blizzard_ActionBar/Shared/SpellFlyout.lua:270` (Retail), `:329` (Forever) reads two values; the Forever shape is inferred from this consumer, not a native probe. No event is emitted. Retail's absent observation returns zero values; Forever preserves the prior two nils until native return-count evidence is available.
+
+### A_Admin.SetSpellOverrideObservation(spellID, specID, onlyKnown, ignoreOverrideSpellID, overrideSpellID)
+
+Retail and WoW Forever: provide the exact result for a `C_Spell.GetOverrideSpell` query. `specID=0` resolves the active player's specialization when read or supplied. The input identifier must resolve to a positive spell ID; the result must be a positive integer. Spec and ignored spell ID must be nonnegative integers (nil uses zero), and onlyKnown must be boolean or nil (nil uses true). The empty model returns the resolved input spell ID when no observation matches, as documented. No event is emitted; this is a supplied observation, not native eligible-override discovery.
+
+VERIFIED shapes: Retail `SpellDocumentation.lua:165–181`; Forever `:206–222`. Both `Blizzard_SharedTalentUI.toc:5` select `Blizzard_SharedTalentUtil.lua:110–120`; its replacement-name utility reads the result via `GetSpellName`.
+
+### A_Admin.SetSpellUiFlags(spellID, pressHoldRelease, priorityAura)
+
+Retail and WoW Forever: supply the two observed boolean flags for a positive integer spell ID (maximum `i32::MAX`). Both arguments must be booleans; invalid input raises an error before mutation. The empty model reports false. A call replaces that spell's row and emits no event. Supply rows before the original UI caches them, or send the normal action-slot update event after changing action assignments.
+
+VERIFIED declaration shapes: Retail `SpellDocumentation.lua:704-734` and Forever `SpellDocumentation.lua:773-803`. The selected `Blizzard_ActionBar/Shared/ActionButton.lua` stores the press-and-hold flag in its action-button attribute; the selected `Blizzard_FrameXMLUtil/AuraUtil.lua:449-455` caches aura-priority observations by spell ID. This is host-supplied classification, not native discovery of spell attribute masks.
+
 ### Pet-battle runtime inputs (Retail and WoW Forever)
 
 These inputs supply simulator state; they do not model a server reply. The predicate rules below are **INFERRED R88g9 (native evidence pending)** where the cited R88f checks stop short of the complete handler.

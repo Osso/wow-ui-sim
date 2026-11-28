@@ -121,21 +121,41 @@ fn multiple_modifiers_set_simultaneously() {
     assert!(any);
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[path = "common/selected_game_ui.rs"]
+mod selected_game_ui;
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn selected_controls_setting_reads_two_modified_click_bindings() {
+    let env = selected_game_ui::load_selected_game_ui("", &["Blizzard_SettingsDefinitions_Frame", "Blizzard_Settings_Shared"]);
+    env.exec(r#"
+        local setting = Settings.GetSetting('AUTOLOOTTOGGLE')
+        assert(setting and setting:GetValue() == 'SHIFT')
+        SetModifiedClick('AUTOLOOTTOGGLE', 'CTRL')
+        assert(setting:GetValue() == 'CTRL')
+        SetModifiedClick('AUTOLOOTTOGGLE', 'ALT')
+        assert(setting:GetValue() == 'ALT')
+        A_Admin.SetAltKeyDown(true)
+        assert(IsModifiedClick('AUTOLOOTTOGGLE'))
+    "#).expect("selected Controls setting must read the supplied bindings");
+}
+
 #[test]
 fn modified_click_queries_use_replacement_state() {
     let env = WowLuaEnv::new().unwrap();
-    env.exec("__wow_modified_clicks = { CHATLINK = 'CTRL' }").unwrap();
+    env.exec("SetModifiedClick('CHATLINK', 'CTRL')").unwrap();
     let before: String = env.eval("return GetModifiedClick('CHATLINK')").unwrap();
     assert_eq!(before, "CTRL");
     env.exec("SetModifiedClick('CHATLINK', 'ALT')").unwrap();
-    let after: String = env.eval("return __wow_modified_clicks.CHATLINK").unwrap();
+    let after: String = env.eval("return GetModifiedClick('CHATLINK')").unwrap();
     assert_eq!(after, "ALT");
 }
 
 #[test]
 fn is_modified_click_follows_any_non_meta_modifier() {
     let env = WowLuaEnv::new().unwrap();
-    env.exec("__wow_modified_clicks.CHATLINK = 'SHIFT'").unwrap();
+    env.exec("SetModifiedClick('CHATLINK', 'SHIFT')").unwrap();
 
     let before: bool = env.eval("return IsModifiedClick('CHATLINK')").unwrap();
     assert!(

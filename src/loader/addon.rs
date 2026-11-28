@@ -1052,24 +1052,47 @@ fn install_modified_click_defaults(
     elements: Vec<crate::xml::XmlElement>,
 ) -> crate::Result<()> {
     env.with_state(|state| {
-        use crate::lua_api::methods::{create_string, create_table, table_set};
-        let table = create_table(state);
-        for element in elements {
-            if let crate::xml::XmlElement::ModifiedClick(click) = element
-                && let Some(action) = click.action
-            {
-                let value = create_string(state, click.default.as_deref().unwrap_or("NONE"));
-                table_set(state, table, &action, value);
-            }
+        #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+        {
+            let bindings = elements.into_iter().filter_map(|element| {
+                let crate::xml::XmlElement::ModifiedClick(click) = element else {
+                    return None;
+                };
+                Some((
+                    click.action?,
+                    click.default.unwrap_or_else(|| "NONE".to_owned()),
+                ))
+            });
+            crate::lua_api::methods::borrow_state_mut(state)?.modified_clicks = bindings.collect();
+            Ok(())
         }
-        table_set(
-            state,
-            Val::Table(state.global),
-            "__wow_modified_clicks",
-            table,
-        );
-        Ok(())
+        #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+        install_legacy_modified_click_defaults(state, elements)
     })
+}
+
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+fn install_legacy_modified_click_defaults(
+    state: &mut rilua::vm::state::LuaState,
+    elements: Vec<crate::xml::XmlElement>,
+) -> crate::Result<()> {
+    use crate::lua_api::methods::{create_string, create_table, table_set};
+    let table = create_table(state);
+    for element in elements {
+        if let crate::xml::XmlElement::ModifiedClick(click) = element
+            && let Some(action) = click.action
+        {
+            let value = create_string(state, click.default.as_deref().unwrap_or("NONE"));
+            table_set(state, table, &action, value);
+        }
+    }
+    table_set(
+        state,
+        Val::Table(state.global),
+        "__wow_modified_clicks",
+        table,
+    );
+    Ok(())
 }
 
 fn load_conventional_bindings(

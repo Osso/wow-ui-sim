@@ -7,6 +7,38 @@ fn env() -> WowLuaEnv {
     WowLuaEnv::new().expect("Failed to create Lua environment")
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[path = "common/selected_game_ui.rs"]
+mod selected_game_ui;
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn original_leave_instance_button_observes_supplied_party_policy() {
+    let env = selected_game_ui::load_selected_game_ui("", &["Blizzard_CompactRaidFrames"]);
+    env.exec(r#"
+        A_Admin.SetPartySize(2)
+        CompactRaidFrameManager:Show()
+        local button = CompactRaidFrameManagerLeaveInstanceGroupButton
+        button:GetParent():Show()
+        button:Show()
+        assert(button:IsVisible())
+        A_Admin.SetPartyPolicyFlags(true, false, true, true)
+        assert(C_PartyInfo.AllowedToDoPartyConversion(true))
+        assert(not C_PartyInfo.AllowedToDoPartyConversion(false))
+        assert(C_PartyInfo.IsPartyInJailersTower())
+    "#).unwrap();
+    env.fire_on_update(0.016).unwrap();
+    env.exec("assert(CompactRaidFrameManagerLeaveInstanceGroupButton:GetText() == INSTANCE_WALK_IN_LEAVE)").unwrap();
+    env.exec(r#"
+        A_Admin.SetPartyPolicyFlags(false, true, false, false)
+        assert(not C_PartyInfo.AllowedToDoPartyConversion(true))
+        assert(C_PartyInfo.AllowedToDoPartyConversion(false))
+        assert(not C_PartyInfo.IsPartyInJailersTower())
+    "#).unwrap();
+    env.fire_on_update(0.016).unwrap();
+    env.exec("assert(CompactRaidFrameManagerLeaveInstanceGroupButton:GetText() == INSTANCE_PARTY_LEAVE)").unwrap();
+}
+
 fn fired(env: &WowLuaEnv, name: &str) -> bool {
     env.state()
         .borrow()

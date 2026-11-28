@@ -4,6 +4,12 @@ GUI, screenshot, dump-tree, and run-tests start with four demo party members and
 
 Health setters dispatch `UNIT_HEALTH` after updating state, then `UNIT_MAXHEALTH` if the maximum changed. Native order was observed in the 4.x build 15595 party stats path (aso); other update paths are unverified.
 
+### A_Admin.SetPartyPolicyFlags(toRaid, toParty, inJailersTower, walkIn)
+
+Retail and WoW Forever: replace four supplied boolean observations, initially false. `AllowedToDoPartyConversion(toRaid)` selects the corresponding direction; `IsPartyInJailersTower()` and `IsPartyWalkIn()` read the other flags. Non-boolean input is rejected before mutation. This is service input, not a conversion, group transfer or walk-in operation. It emits no event.
+
+VERIFIED declarations: both profiles `PartyInfoDocumentation.lua:11–24,466–483`. Both select `Blizzard_CompactRaidFrames/[Family]/Blizzard_CompactRaidFrameManager.lua` and XML; the leave-instance button's normal OnUpdate takes its text from `IsPartyWalkIn()`. Native policy derivation and event timing are unknown.
+
 ### A_Admin.SetPartySize(n)
 
 Sets the number of active party members, resizing the party array.

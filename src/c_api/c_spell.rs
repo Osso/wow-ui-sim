@@ -172,6 +172,8 @@ const SPELL_QUERY_METHODS: &[(&str, SpellScriptFn)] = &[
     #[cfg(feature = "base-spell-relationships")]
     ("GetBaseSpell", super::spell_base::get_base_spell),
     ("GetSpellDescription", get_spell_description),
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    ("GetOverrideSpell", get_override_spell),
     #[cfg(feature = "retail-12-1-0")]
     (
         "GetSpellDescriptionForItemLocation",
@@ -236,6 +238,10 @@ const SPELL_BOOLEAN_METHODS: &[(&str, SpellScriptFn)] = &[
     ("IsSpellPassive", is_spell_passive),
     ("IsSelfBuff", is_self_buff),
     ("IsAutoAttackSpell", is_auto_attack_spell),
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    ("IsPressHoldReleaseSpell", is_press_hold_release_spell),
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    ("IsPriorityAura", is_priority_aura),
     ("IsSpellHelpful", is_spell_helpful),
     ("IsSpellHarmful", is_spell_harmful),
     ("IsSpellUsable", is_spell_usable),
@@ -245,6 +251,167 @@ const SPELL_BOOLEAN_METHODS: &[(&str, SpellScriptFn)] = &[
         target_spell_checks_item_condition,
     ),
 ];
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[derive(Clone, Copy, Debug)]
+pub struct SpellUiFlags {
+    press_hold_release: bool,
+    priority_aura: bool,
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) fn register_ui_flags_admin(
+    builder: crate::lua_bridge::TableBuilder,
+) -> LuaResult<crate::lua_bridge::TableBuilder> {
+    builder
+        .set_function("SetSpellUiFlags", set_spell_ui_flags)?
+        .set_function(
+            "SetSpellOverrideObservation",
+            set_spell_override_observation,
+        )
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn set_spell_ui_flags(state: &mut LuaState) -> LuaResult<u32> {
+    let (Val::Num(id), Val::Bool(press_hold_release), Val::Bool(priority_aura)) = (
+        stack_val(state, 1),
+        stack_val(state, 2),
+        stack_val(state, 3),
+    ) else {
+        return Err(rilua::runtime_error(
+            "A_Admin.SetSpellUiFlags: expected spell ID and two booleans",
+        ));
+    };
+    if !id.is_finite() || id.fract() != 0.0 || !(1.0..=f64::from(i32::MAX)).contains(&id) {
+        return Err(rilua::runtime_error(
+            "A_Admin.SetSpellUiFlags: spell ID must be a positive integer",
+        ));
+    }
+    crate::lua_api::methods::borrow_state_mut(state)?
+        .spell_ui_flags
+        .insert(
+            id as u32,
+            SpellUiFlags {
+                press_hold_release,
+                priority_aura,
+            },
+        );
+    Ok(0)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn is_press_hold_release_spell(state: &mut LuaState) -> LuaResult<u32> {
+    let id = read_spell_identifier_value(state, stack_val(state, 1))?;
+    let flag = {
+        let sim = borrow_state(state)?;
+        id.and_then(|id| sim.spell_ui_flags.get(&id))
+            .is_some_and(|flags| flags.press_hold_release)
+    };
+    state.push(Val::Bool(flag));
+    Ok(1)
+}
+
+/// Exact supplied result for one documented spell override query.
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[derive(Hash, PartialEq, Eq)]
+pub struct SpellOverrideRequest {
+    spell_id: u32,
+    spec_id: u32,
+    only_known: bool,
+    ignore_spell_id: u32,
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn read_override_request(state: &LuaState) -> LuaResult<SpellOverrideRequest> {
+    let spell_id = read_public_spell_identifier_at(state, 1, "C_Spell.GetOverrideSpell")?
+        .ok_or_else(|| rilua::runtime_error("GetOverrideSpell: unresolved spell identifier"))?;
+    let spec_id = read_override_number(state, 2, 0)?;
+    let spec_id = if spec_id == 0 {
+        player_override_spec(state)?
+    } else {
+        spec_id
+    };
+    let only_known = match stack_val(state, 3) {
+        Val::Nil => true,
+        Val::Bool(value) => value,
+        _ => {
+            return Err(rilua::runtime_error(
+                "GetOverrideSpell: onlyKnown must be boolean",
+            ));
+        }
+    };
+    Ok(SpellOverrideRequest {
+        spell_id,
+        spec_id,
+        only_known,
+        ignore_spell_id: read_override_number(state, 4, 0)?,
+    })
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn read_override_number(state: &LuaState, index: i32, default: u32) -> LuaResult<u32> {
+    match stack_val(state, index) {
+        Val::Nil => Ok(default),
+        Val::Num(number)
+            if number.is_finite()
+                && number.fract() == 0.0
+                && (0.0..=f64::from(u32::MAX)).contains(&number) =>
+        {
+            Ok(number as u32)
+        }
+        _ => Err(rilua::runtime_error(format!(
+            "GetOverrideSpell: argument {index} must be a nonnegative integer"
+        ))),
+    }
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn player_override_spec(state: &LuaState) -> LuaResult<u32> {
+    let sim = borrow_state(state)?;
+    Ok(
+        crate::specializations::specs_for_class(sim.player.class_index as u32)
+            .nth(sim.player.active_spec_index.max(1) as usize - 1)
+            .map_or(0, |spec| spec.id),
+    )
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn get_override_spell(state: &mut LuaState) -> LuaResult<u32> {
+    let request = read_override_request(state)?;
+    let result = borrow_state(state)?
+        .spell_override_observations
+        .get(&request)
+        .copied()
+        .unwrap_or(request.spell_id);
+    state.push(Val::Num(f64::from(result)));
+    Ok(1)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn set_spell_override_observation(state: &mut LuaState) -> LuaResult<u32> {
+    let request = read_override_request(state)?;
+    let result = read_override_number(state, 5, 0)?;
+    if request.spell_id == 0 || result == 0 {
+        return Err(rilua::runtime_error(
+            "A_Admin.SetSpellOverrideObservation: positive spell IDs required",
+        ));
+    }
+    crate::lua_api::methods::borrow_state_mut(state)?
+        .spell_override_observations
+        .insert(request, result);
+    Ok(0)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn is_priority_aura(state: &mut LuaState) -> LuaResult<u32> {
+    let id = u32::from_stack(state, 1)?;
+    let flag = borrow_state(state)?
+        .spell_ui_flags
+        .get(&id)
+        .is_some_and(|flags| flags.priority_aura);
+    state.push(Val::Bool(flag));
+    Ok(1)
+}
 
 #[cfg(feature = "retail-12-1-0")]
 fn target_spell_checks_item_condition(state: &mut LuaState) -> LuaResult<u32> {

@@ -10,6 +10,65 @@ fn env() -> WowLuaEnv {
 #[path = "spell_api/traits.rs"]
 mod traits;
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[path = "common/selected_game_ui.rs"]
+mod selected_game_ui;
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn load_selected_spell_ui(inputs: &str) -> WowLuaEnv {
+    selected_game_ui::load_selected_game_ui(inputs, &[
+        "Blizzard_ActionBar", "Blizzard_FrameXMLUtil", "Blizzard_SharedTalentUI", "Blizzard_TutorialManager",
+    ])
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn original_talent_utility_uses_supplied_spell_override_observations() {
+    let env = load_selected_spell_ui("");
+    env.exec(r#"
+        local definition = {overriddenSpellID = 116}
+        assert(TalentUtil.GetReplacesSpellNameFromInfo(definition) == 'Frostbolt')
+        A_Admin.SetSpellOverrideObservation(116, 0, true, 0, 133)
+        assert(TalentUtil.GetReplacesSpellNameFromInfo(definition) == 'Fireball')
+        A_Admin.SetSpellOverrideObservation(116, 0, true, 0, 172)
+        assert(TalentUtil.GetReplacesSpellNameFromInfo(definition) == 'Corruption')
+        assert(C_Spell.GetOverrideSpell(116, 0, false, 0) == 116)
+    "#).expect("selected talent utility must display the exact observed replacement spell name");
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn original_tutorial_helper_finds_each_supplied_spellbook_override() {
+    let env = load_selected_spell_ui("A_Admin.SetActionSlot(1, 133); A_Admin.SetActionSlot(2, 172)");
+    env.exec(r#"
+        A_Admin.SetSpellBookOverrideObservation(116, 133)
+        assert(TutorialHelper:GetActionButtonBySpellID(116) == ActionButton1)
+        A_Admin.SetSpellBookOverrideObservation(116, 172)
+        assert(TutorialHelper:GetActionButtonBySpellID(116) == ActionButton2)
+        assert(C_Spell.GetOverrideSpell(116) == 116, 'distinct override query remains separate')
+        A_Admin.SetCallPetSpellInfo(883, 0, 'Kado')
+        local index, name = GetCallPetSpellInfo(883)
+        assert(index == 0 and name == 'Kado')
+        A_Admin.SetCallPetSpellInfo(883, 1, 'Misha')
+        index, name = GetCallPetSpellInfo(883)
+        assert(index == 1 and name == 'Misha')
+    "#).expect("selected tutorial helper must find the corresponding original button");
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn original_aura_and_action_bar_consumers_use_supplied_spell_ui_flags() {
+    let env = load_selected_spell_ui("A_Admin.SetSpellUiFlags(116, true, true); A_Admin.SetSpellUiFlags(133, false, false); A_Admin.SetActionSlot(1, 116); A_Admin.SetActionSlot(2, 133)");
+    env.exec(r#"
+        A_Admin.FireEvent('ACTIONBAR_SLOT_CHANGED', 1)
+        A_Admin.FireEvent('ACTIONBAR_SLOT_CHANGED', 2)
+        assert(AuraUtil.CheckIsPriorityAura(116) == true)
+        assert(AuraUtil.CheckIsPriorityAura(133) == false)
+        assert(ActionButton1:GetAttribute('pressAndHoldAction') == true)
+        assert(ActionButton2:GetAttribute('pressAndHoldAction') == false)
+    "#).expect("selected aura and button consumers must distinguish supplied spell flags");
+}
+
 // ============================================================================
 // C_SpellBook
 // ============================================================================

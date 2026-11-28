@@ -477,6 +477,10 @@ pub struct SimState {
     /// INFERRED current-player object snapshot with host-supplied candidates.
     pub possession_object: Option<crate::c_api::c_tooltip_info_possession::PossessionObjectInput>,
     pub major_factions: HashMap<i64, MajorFactionData>,
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub major_factions_hidden: HashSet<i64>,
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub renown_npc_faction_id: i64,
     pub major_faction_renown_levels: HashMap<i64, Vec<RenownLevelInfo>>,
     /// Explicit pair-keyed reward inputs only; no fabricated default rows.
     pub major_faction_renown_rewards:
@@ -608,6 +612,12 @@ pub struct SimState {
         feature = "client-wowforever"
     ))]
     pub spell_passive_attribute_masks: HashMap<u32, u32>,
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub spell_ui_flags: HashMap<u32, crate::c_api::c_spell::SpellUiFlags>,
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub spell_override_observations: HashMap<crate::c_api::c_spell::SpellOverrideRequest, u32>,
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub spellbook_override_observations: HashMap<i32, i32>,
     pub spell_tooltip_inputs: HashMap<u32, crate::c_api::spell_tooltip::SpellTooltipInput>,
     pub recipe_rank_tooltip_cache: crate::c_api::recipe_rank_tooltip::RecipeRankTooltipCache,
     pub aura_tooltip_inputs: HashMap<i32, crate::c_api::spell_tooltip::AuraTooltipInput>,
@@ -700,10 +710,10 @@ pub struct SimState {
         HashMap<String, Vec<crate::c_api::c_loss_of_control::ActiveLossOfControlData>>,
     pub spell_flyouts: HashMap<u32, SpellFlyoutInfo>,
     /// Host-supplied call-pet spell membership and slot-index candidates.
-    #[cfg(feature = "client-retail")]
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     pub call_pet_spell_indices: HashMap<u32, i32>,
     /// Host-supplied current-player call-pet names indexed by slot; absent names stay absent.
-    #[cfg(feature = "client-retail")]
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     pub player_call_pet_names: Vec<Option<String>>,
     pub action_profession_quality: HashMap<i32, ProfessionQualityInfo>,
     pub addon_base_paths: Vec<PathBuf>,
@@ -728,6 +738,8 @@ pub struct SimState {
     pub next_report_token: i64,
     pub party_members: Vec<PartyMember>,
     pub party_group_active: bool,
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub(crate) party_policy_flags: crate::c_api::c_party_info::PartyPolicyFlags,
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     pub(crate) instance_abandon_vote: crate::c_api::c_party_info::InstanceAbandonVoteState,
     /// INFERRED Retail/Forever group-kind input; None keeps the roster-size heuristic.
@@ -1002,6 +1014,8 @@ pub struct SimState {
     pub active_timerunning_season_id: i32,
     pub timerunning_season_seconds_remaining: u64,
     pub modifier_keys: ModifierKeys,
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub modified_clicks: HashMap<String, String>,
     pub pressed_keys: HashSet<String>,
     pub mouse_buttons: MouseButtons,
     /// Accepted `SimulateMouse*` input awaiting the GUI mouse dispatcher.

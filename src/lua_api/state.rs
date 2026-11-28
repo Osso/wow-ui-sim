@@ -388,6 +388,10 @@ macro_rules! build_empty_sim_state {
             possession_spell_id: None,
             possession_object: None,
             major_factions: HashMap::new(),
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            major_factions_hidden: HashSet::new(),
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            renown_npc_faction_id: 0,
             #[cfg(feature = "client-wowforever")]
             reincarnation: Default::default(),
             major_faction_renown_levels: HashMap::new(),
@@ -499,6 +503,12 @@ macro_rules! build_empty_sim_state {
                 feature = "client-wowforever"
             ))]
             spell_passive_attribute_masks: HashMap::new(),
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            spell_ui_flags: HashMap::new(),
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            spell_override_observations: HashMap::new(),
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            spellbook_override_observations: HashMap::new(),
             spell_tooltip_inputs: HashMap::new(),
             recipe_rank_tooltip_cache: Default::default(),
             aura_tooltip_inputs: HashMap::new(),
@@ -550,9 +560,9 @@ macro_rules! build_empty_sim_state {
             spell_loss_of_control: HashMap::new(),
             active_loss_of_control: HashMap::new(),
             spell_flyouts: HashMap::new(),
-            #[cfg(feature = "client-retail")]
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
             call_pet_spell_indices: HashMap::new(),
-            #[cfg(feature = "client-retail")]
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
             player_call_pet_names: Vec::new(),
             action_profession_quality: HashMap::new(),
             addon_base_paths: $collections.addon_base_paths,
@@ -576,6 +586,8 @@ macro_rules! build_empty_sim_state {
             next_report_token: $runtime.next_report_token,
             party_members: $collections.party_members,
             party_group_active: $runtime.party_group_active,
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            party_policy_flags: Default::default(),
             #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
             instance_abandon_vote: Default::default(),
             #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
@@ -785,6 +797,8 @@ macro_rules! build_empty_sim_state {
             active_timerunning_season_id: 0,
             timerunning_season_seconds_remaining: 0,
             modifier_keys: ModifierKeys::default(),
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            modified_clicks: HashMap::new(),
             pressed_keys: HashSet::new(),
             game_rules: GameRulesState::default(),
             credits: Default::default(),

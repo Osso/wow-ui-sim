@@ -22,6 +22,14 @@ A_Admin.SetReputationFactions({
 })
 ```
 
+## Major faction display observations (Retail and Forever)
+
+- `A_Admin.SetMajorFactionHidden(factionID, hidden)` supplies a boolean for an existing faction. The empty hidden set makes `C_MajorFactions.IsMajorFactionHiddenFromExpansionPage` false; setting false removes the row from the hidden set.
+- `A_Admin.SetRenownNPCFactionID(factionID)` supplies the currently relevant faction or `0` for no faction; other IDs must match an existing faction. The initial value is `0`.
+- `A_Admin.SetMajorFactionJourneyFlags(factionID, displayAsJourney, useJourneyRewardTrack)` supplies both existing journey flags for the selected faction on both profiles.
+
+These are host observations; invalid inputs are rejected before mutation. No event is emitted. VERIFIED declaration shapes: Retail `MajorFactionsDocumentation.lua:86–92,126–139,156–184`, Forever `:101–107,157–170,187–215`. Both `Blizzard_MajorFactions.toc:6` select `Blizzard_MajorFactionsLandingTemplates.xml` and its Lua consumer at `:79–103`, which filters the displayed rows. Native policy derivation and update timing are unknown.
+
 ## SetMajorFactionRenown
 
 `A_Admin.SetMajorFactionRenown(factionID, renownLevel, maxLevel)` supplies Renown progress for one major faction on every profile that registers `C_MajorFactions`. It updates an existing row or adds an unlocked row with no imported name or metadata. `GetRenownLevels` then lists levels `1..maxLevel`; levels above `renownLevel` are locked and the last level is the capstone (INFERRED). Validation: `factionID` positive, `maxLevel` a positive integer, `renownLevel` within `0..maxLevel`; invalid input raises `A_Admin.SetMajorFactionRenown: ...` before any change.
