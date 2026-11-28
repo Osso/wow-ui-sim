@@ -426,14 +426,12 @@ const PARTY_ASSIGNMENT_MENU_CONSUMER: &str = r#"
         return menu
     end
     local function click_entry(menu, text)
-        for _, button in ipairs({menu:GetChildren()}) do
-            local description = button:GetElementDescription()
-            if description and MenuUtil.GetElementText(description) == text then
-                button:Click("LeftButton")
-                return
-            end
-        end
-        error("original unit popup entry not shown: " .. text)
+        local selected
+        menu:EnumerateElementDescriptions(function(_, description)
+            if MenuUtil.GetElementText(description) == text then selected = description end
+        end)
+        assert(selected, "original unit popup entry not shown: " .. text)
+        assert(selected:Pick(MenuInputContext.MouseButton, "LeftButton"))
     end
     click_entry(open_menu("party1"), SET_MAIN_TANK)
     assert(GetPartyAssignment("MAINTANK", "party1"))
