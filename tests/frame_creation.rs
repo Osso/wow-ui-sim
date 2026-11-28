@@ -397,18 +397,31 @@ fn test_effective_alpha_recovers_after_parent_alpha_restored() {
 fn test_create_frame_default_parent() {
     let env = WowLuaEnv::new().unwrap();
 
-    env.exec(
-        r#"
-        local frame = CreateFrame("Frame", "TestDefaultParent", nil)
-        frame:SetSize(50, 50)
-    "#,
-    )
-    .unwrap();
+    let results: (bool, bool, bool) = env
+        .eval(
+            r#"
+            local explicitNilParent = CreateFrame("Frame", "TestDefaultParent", nil)
+            local twoArgParent = CreateFrame("Frame", "TestTwoArgParent")
+            explicitNilParent:SetSize(50, 50)
+            explicitNilParent:Show()
 
-    let parent_name: String = env
-        .eval("return TestDefaultParent:GetParent():GetName()")
+            UIParent:Hide()
+            local visibleWithoutParent = explicitNilParent:IsVisible()
+            UIParent:Show()
+
+            return explicitNilParent:GetParent() == nil,
+                   visibleWithoutParent,
+                   twoArgParent:GetParent() == UIParent
+        "#,
+        )
         .unwrap();
-    assert_eq!(parent_name, "UIParent");
+
+    assert!(results.0, "an explicit nil parent must leave the frame parentless");
+    assert!(
+        results.1,
+        "a parentless frame must remain visible when UIParent is hidden"
+    );
+    assert!(results.2, "the two-argument form must still default to UIParent");
 }
 
 // ============================================================================
