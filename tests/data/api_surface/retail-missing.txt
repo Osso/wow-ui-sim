@@ -1,7 +1,6 @@
 # Documented Retail API functions without a runtime function after full
 # Blizzard UI startup. Contract: docs/specs/api-surface-audit.md.
 # Format: <name> # <intentionally-unsupported|not-yet>[: reason]
-AcceptQuest # not-yet
 AcknowledgeAutoAcceptQuest # not-yet
 AcknowledgeSurvey # not-yet
 AntiAliasingSupported # not-yet
@@ -1982,7 +1981,6 @@ ClearFailedTalentIDs # not-yet
 ClearOutage # not-yet
 ClearPartyAssignment # not-yet
 ClearPendingBindConversionItem # not-yet
-ClearRaidMarker # not-yet
 ClearTutorials # not-yet
 ClickWorldMapActionButton # not-yet
 CloseGuildRoster # not-yet
@@ -2008,11 +2006,9 @@ CreateForbiddenFrame # not-yet
 CreateNewRaidProfile # not-yet
 DeclineChannelInvite # not-yet
 DeclineName # not-yet
-DeclineQuest # not-yet
 DeleteGMTicket # not-yet
 DeleteRaidProfile # not-yet
 DescendStop # not-yet
-DestroyTotem # not-yet
 DetectWowMouse # not-yet
 DismissCompanion # not-yet
 Dismount # not-yet
@@ -2231,7 +2227,6 @@ GetQuestLogRewardFactionInfo # not-yet
 GetQuestPOILeaderBoard # not-yet
 GetQuestPortraitGiver # not-yet
 GetQuestResetTime # not-yet: temporary Lua workaround
-GetQuestReward # not-yet
 GetRaidProfileFlattenedOptions # not-yet
 GetRaidProfileName # not-yet
 GetRaidProfileOption # not-yet
@@ -2275,8 +2270,6 @@ GetTargetTradeCurrency # not-yet
 GetTaskPOIs # not-yet
 GetTaxiBenchmarkMode # not-yet
 GetThreatStatusColor # not-yet: temporary Lua workaround
-GetTotemCannotDismiss # not-yet
-GetTotemTimeLeft # not-yet
 GetTrainerGreetingText # not-yet
 GetTrainerServiceItemLink # not-yet
 GetTreasurePickerItemInfo # not-yet
@@ -2362,7 +2355,6 @@ IsPlayerInGuildFromGUID # not-yet
 IsPlayerNeutral # not-yet
 IsQuestIDValidSpellTarget # not-yet
 IsQuestLogSpecialItemInRange # not-yet
-IsRaidMarkerActive # not-yet
 IsRangedWeapon # not-yet
 IsRightMetaKeyDown # not-yet
 IsServerControlledBackfill # not-yet

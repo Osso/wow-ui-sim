@@ -176,6 +176,8 @@ pub(crate) mod quest_dialog;
     feature = "client-wowforever"
 ))]
 pub(crate) mod quest_faction_group;
+#[cfg(feature = "quest-giver-requests")]
+pub(crate) mod quest_giver_requests;
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub(crate) mod quest_objective_info;
 #[cfg(feature = "retail-12-0-0")]

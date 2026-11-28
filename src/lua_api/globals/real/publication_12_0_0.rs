@@ -88,6 +88,70 @@ pub(crate) fn register_classic_marker_state(lua: &mut rilua::Lua) -> LuaResult<(
 
 pub(crate) use retail::register_all;
 
+/// World markers placed in the world, cleared by `ClearRaidMarker`.
+///
+/// Declarations: Retail and Forever `RaidMarkersDocumentation.lua`
+/// (byte-identical; `ClearRaidMarker(raidMarkerIndex = MAX_RAID_MARKERS)`,
+/// `IsRaidMarkerActive(index) -> bool`). Consumers: `/clearworldmarker`
+/// (`SlashCommands.lua`: a number clears one marker, `ALL` passes nil to clear
+/// every marker) and `Blizzard_CompactRaidFrameManager.lua` marker buttons.
+/// Placement needs a ground target, so the host supplies placed markers.
+/// INFERRED (R-ag10-7): nil clears all markers; an index outside 1..8 changes
+/// nothing; the documentation declares no event for either.
+#[cfg(feature = "world-marker-state")]
+pub(crate) mod world_markers {
+    use super::is_raid_marker_active;
+    use crate::lua_api::methods::borrow_state_mut;
+    use crate::lua_bridge::{FromStack, TableBuilder};
+    use rilua::vm::state::LuaState;
+    use rilua::{LuaApiMut, LuaResult, runtime_error};
+
+    /// `Constants.RaidMarkerConsts` world marker count (`MAX_RAID_MARKERS`).
+    const WORLD_MARKERS: i32 = 8;
+
+    fn clear_raid_marker(state: &mut LuaState) -> LuaResult<u32> {
+        let index = Option::<i32>::from_stack(state, 1)?;
+        let markers = &mut borrow_state_mut(state)?
+            .plain_global_inputs
+            .active_raid_markers;
+        match index {
+            None => markers.clear(),
+            Some(index) => {
+                markers.remove(&index);
+            }
+        }
+        Ok(0)
+    }
+
+    fn set_world_marker(state: &mut LuaState) -> LuaResult<u32> {
+        let index = i32::from_stack(state, 1)?;
+        let placed = bool::from_stack(state, 2)?;
+        if !(1..=WORLD_MARKERS).contains(&index) {
+            return Err(runtime_error(
+                "Usage: A_Admin.SetWorldMarker(index 1..8, placed)",
+            ));
+        }
+        let markers = &mut borrow_state_mut(state)?
+            .plain_global_inputs
+            .active_raid_markers;
+        if placed {
+            markers.insert(index);
+        } else {
+            markers.remove(&index);
+        }
+        Ok(0)
+    }
+
+    pub(crate) fn register(lua: &mut rilua::Lua) -> LuaResult<()> {
+        LuaApiMut::register_function(lua, "ClearRaidMarker", clear_raid_marker)?;
+        LuaApiMut::register_function(lua, "IsRaidMarkerActive", is_raid_marker_active)
+    }
+
+    pub(crate) fn register_admin(b: TableBuilder) -> LuaResult<TableBuilder> {
+        b.set_function("SetWorldMarker", set_world_marker)
+    }
+}
+
 mod retail {
     use super::*;
     use crate::lua_api::methods::borrow_state_mut;

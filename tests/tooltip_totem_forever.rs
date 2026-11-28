@@ -19,6 +19,7 @@ fn tooltip_totem_forever_getter_publishes_two_lines_for_an_occupied_slot() {
             icon: 0,
             mod_rate: 1.0,
             spell_id: 19750,
+            cannot_dismiss: false,
         }),
         Some(Totem {
             name: "Healing Stream Totem".into(),
@@ -27,6 +28,7 @@ fn tooltip_totem_forever_getter_publishes_two_lines_for_an_occupied_slot() {
             icon: 0,
             mod_rate: 1.0,
             spell_id: 19750,
+            cannot_dismiss: false,
         }),
     ];
     env.exec(

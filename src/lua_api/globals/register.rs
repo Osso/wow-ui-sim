@@ -274,6 +274,8 @@ fn register_frame_context_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
     super::real::lfd_lock_requests::register_all(lua)?;
     #[cfg(feature = "interaction-dialogs")]
     super::real::interaction_dialogs::register_all(lua)?;
+    #[cfg(feature = "quest-giver-requests")]
+    super::real::quest_giver_requests::register_all(lua)?;
     super::real::merchant_buyback::register_all(lua)?;
     super::real::merchant_affordability::register_all(lua)?;
     super::real::merchant_filter::register_all(lua)?;
@@ -462,6 +464,8 @@ fn register_plain_host_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
     if classic_markers {
         super::real::publication_12_0_0::register_classic_marker_state(lua)?;
     }
+    #[cfg(feature = "world-marker-state")]
+    super::real::publication_12_0_0::world_markers::register(lua)?;
     if modern_plain_globals {
         super::real::publication_12_0_0::register_all(lua)?;
         super::real::publication_unit_12_0_0::register_all(lua)?;

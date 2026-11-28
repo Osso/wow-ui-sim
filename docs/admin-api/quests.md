@@ -65,3 +65,11 @@ Commit removes active rich/light membership and modeled Forever ordinary-watch m
 Task active/map/time projections suppress completion-history IDs; catalog metadata is not erased. [Owning contract and proof status](../specs/quest-turn-in-model.md) distinguish supplied-model fixtures from native behavior and current integration evidence.
 
 Proof status: producer committed as `b5dd5947a`; GREEN has not been run. Tests were authored in `96ba1ba4d`; receipt snapshot `b7e380f2` is not the test-authoring commit or executed runtime source. Accepted shared Retail RED is 0 PASS/3 FAIL, exit 101, against retained pre-producer source `bbeac6213`; later assertions remain unreached. The fourth, Forever-only watch/event-order/reentry/repeat case was not executed. See the owning contract for receipt and accepted audit paths.
+
+## Quest-giver requests (Retail and WoW Forever)
+
+`AcceptQuest()` accepts the offer selected with `C_GossipInfo.SelectAvailableQuest`: it adds the quest to the log, then fires `QUEST_ACCEPTED(questID)` and `QUEST_FINISHED`. `DeclineQuest()` drops the offer or the open reward dialog and fires `QUEST_FINISHED`. `GetQuestReward(choice)` claims the open reward dialog (`C_GossipInfo.SelectActiveQuest` on a ready quest): it turns the quest in like `TurnInSelectedQuest`, then fires `QUEST_TURNED_IN(questID, 0, 0)` and `QUEST_FINISHED`. Without a request to answer, the three functions do nothing. Event order and the closed dialog are INFERRED (R-ag10-8). Feature `quest-giver-requests`.
+
+### A_Admin.SetQuestRewardChoices(questID, items)
+
+Same rows and validation as `SetQuestLogRewardItems`, stored as the reward choices of an existing quest. When a quest has choices, `GetQuestReward` needs a choice from 1 to the number of choices; any other value changes nothing (INFERRED, R-ag10-8).

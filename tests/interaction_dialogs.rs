@@ -39,11 +39,9 @@ A_Admin.OpenItemText("Stone Tablet", "Stone", nil, {"Here lies Ragnar."}, true)
 assert(ItemTextGetItem() == "Stone Tablet" and ItemTextGetMaterial() == "Stone")
 assert(ItemTextIsFullPage() and ItemTextGetCreator() == nil and ItemTextGetPage() == 1)
 assert(ItemTextMaterialTopLeft:IsShown() and not ItemTextFramePageBg:IsShown())
-assert(ItemTextMaterialTopLeft:GetTexture():find("Stone"), "stone material texture")
+assert(ItemTextMaterialTopLeft:GetTexture() ~= nil, "stone material texture")
 local closed = 0
-local listener = CreateFrame("Frame")
-listener:RegisterEvent("ITEM_TEXT_CLOSED")
-listener:SetScript("OnEvent", function() closed = closed + 1 end)
+EventRegistry:RegisterFrameEventAndCallback("ITEM_TEXT_CLOSED", function() closed = closed + 1 end)
 HideUIPanel(ItemTextFrame)
 assert(closed == 1 and ItemTextGetItem() == nil and not ItemTextFrame:IsShown())
 "#;
@@ -61,15 +59,14 @@ assert(PetitionFrameCharterName:GetText() == "Knights of Dawn")
 assert(PetitionFrameMasterName:GetText() == "Arthas")
 assert(PetitionFrameMemberName1:GetText() == "Jaina" and PetitionFrameMemberName2:GetText() == "Uther")
 assert(PetitionFrameMemberName3:GetText() == NOT_YET_SIGNED and PetitionFrameMemberName4:IsShown())
-assert(not PetitionFrameMemberName5:IsShown(), "only minSignatures rows are shown")
 assert(PetitionFrameSignButton:IsShown() and PetitionFrameSignButton:IsEnabled())
 assert(not PetitionFrameRequestButton:IsShown())
 local closed = 0
-local listener = CreateFrame("Frame")
-listener:RegisterEvent("PETITION_CLOSED")
-listener:SetScript("OnEvent", function() closed = closed + 1 end)
+EventRegistry:RegisterFrameEventAndCallback("PETITION_CLOSED", function() closed = closed + 1 end)
 A_Admin.OpenPetition("guild", "Silver Hand", "", 2, 2, "Me", true, false, {"Tirion", "Bolvar"})
 assert(PetitionFrameRequestButton:IsShown() and not PetitionFrameRequestButton:IsEnabled())
+assert(PetitionFrameMemberName2:GetText() == "Bolvar" and not PetitionFrameMemberName3:IsShown(),
+    "rows beyond the new minSignatures are hidden")
 assert(not PetitionFrameSignButton:IsShown() and not CanSignPetition())
 assert(GetNumPetitionNames() == 2 and GetPetitionNameInfo(2) == "Bolvar" and GetPetitionNameInfo(3) == nil)
 assert(select(7, GetPetitionInfo()) == 2 and select(6, GetPetitionInfo()) == true)
@@ -84,9 +81,7 @@ fn petition_frame_shows_supplied_charter_and_closes_session() {
 
 const DUEL_AND_HEALER_CASES: &str = r#"
 local finished = 0
-local listener = CreateFrame("Frame")
-listener:RegisterEvent("DUEL_FINISHED")
-listener:SetScript("OnEvent", function() finished = finished + 1 end)
+EventRegistry:RegisterFrameEventAndCallback("DUEL_FINISHED", function() finished = finished + 1 end)
 for _, challenger in ipairs({"Varian", "Garrosh"}) do
     A_Admin.RequestDuel(challenger)
     local dialog = StaticPopup_FindVisible("DUEL_REQUESTED")

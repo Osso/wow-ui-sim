@@ -163,6 +163,7 @@ pub fn assert_selective_timers() {
                 icon: 135817,
                 mod_rate: 1.0,
                 spell_id: 0,
+                cannot_dismiss: false,
             }),
             None,
             None,

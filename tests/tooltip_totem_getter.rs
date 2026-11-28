@@ -18,6 +18,7 @@ fn tooltip_totem_original_accessor_uses_stored_name_and_two_lines() {
             icon: 0,
             mod_rate: 1.0,
             spell_id: 19750,
+            cannot_dismiss: false,
         }),
         Some(Totem {
             name: "Healing Stream Totem".into(),
@@ -26,6 +27,7 @@ fn tooltip_totem_original_accessor_uses_stored_name_and_two_lines() {
             icon: 0,
             mod_rate: 2.0,
             spell_id: 19750,
+            cannot_dismiss: false,
         }),
     ];
     {
@@ -77,6 +79,7 @@ fn assert_remaining(
         icon: 0,
         mod_rate: rate,
         spell_id: 19750,
+        cannot_dismiss: false,
     });
     env.exec(&format!(
         r#"
@@ -138,6 +141,7 @@ fn tooltip_totem_slot_reader_truncates_after_subtracting_one() {
             icon: 0,
             mod_rate: 1.0,
             spell_id: 19750,
+            cannot_dismiss: false,
         }),
         Some(Totem {
             name: "Healing Stream Totem".into(),
@@ -146,6 +150,7 @@ fn tooltip_totem_slot_reader_truncates_after_subtracting_one() {
             icon: 0,
             mod_rate: 2.0,
             spell_id: 19750,
+            cannot_dismiss: false,
         }),
     ];
     {

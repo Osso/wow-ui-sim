@@ -1759,7 +1759,6 @@ CinematicStarted # not-yet
 ClearCursorHoveredItem # not-yet: temporary Lua workaround
 ClearOutage # not-yet
 ClearPendingBindConversionItem # not-yet
-ClearRaidMarker # not-yet
 ClosestGameObjectPosition # not-yet
 ClosestUnitPosition # not-yet
 ConfirmTalentWipe # not-yet
@@ -1776,7 +1775,6 @@ CreateFrameWithOptions # not-yet
 CursorHasMoney # not-yet
 CursorHasSpell # not-yet
 DeclineName # not-yet
-DestroyTotem # not-yet
 Dismount # not-yet
 DoesCurrentLocaleSellExpansionLevels # not-yet
 EjectPassengerFromSeat # not-yet
@@ -1841,9 +1839,7 @@ GetSheathState # not-yet
 GetSourceLocation # not-yet
 GetTaxiBenchmarkMode # not-yet
 GetThreatStatusColor # not-yet: temporary Lua workaround
-GetTotemCannotDismiss # not-yet
 GetTotemDuration # not-yet
-GetTotemTimeLeft # not-yet
 GetUnitChargedPowerPoints # not-yet
 GetUnitEmpowerMinHoldTime # not-yet
 GetUnitHealthModifier # not-yet
@@ -1879,7 +1875,6 @@ IsMovieReadable # not-yet
 IsOnTournamentRealm # not-yet: temporary Lua workaround
 IsOutOfBounds # not-yet
 IsPlayerInGuildFromGUID # not-yet
-IsRaidMarkerActive # not-yet
 IsRightMetaKeyDown # not-yet
 IsUsingFixedTimeStep # not-yet
 IsUsingMouse # not-yet

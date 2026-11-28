@@ -129,3 +129,7 @@ Ends the role check. `GetLFGRoleUpdate()` then returns `false, 0, 0, 0, 0, false
 Supplies the server's expand-search prompt (Retail and WoW Forever). `key` is a non-negative integer; `data` is an opaque string. It stores the prompt and fires `SHOW_LFG_EXPAND_SEARCH_PROMPT`, so the original `LFGEventFrame` shows the `LFG_QUEUE_EXPAND` popup.
 
 - **Affects:** `C_LFGInfo.ConfirmLfgExpandSearch()` (the popup's accept action) clears a prompt with a nonzero key ([LFG expand confirmation](../specs/lfg-expand-confirmation.md)).
+
+### A_Admin.SetWorldMarker(index, placed) (Retail and WoW Forever)
+
+Places (`true`) or removes (`false`) world marker `index` (1 to 8). Native placement needs a ground target, so the host supplies it. `IsRaidMarkerActive(index)` reads the result. `ClearRaidMarker(index)` removes one marker and `ClearRaidMarker()` removes all of them. The documentation declares no event for either change (INFERRED, R-ag10-7). Feature `world-marker-state`.
