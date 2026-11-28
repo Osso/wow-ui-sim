@@ -110,25 +110,21 @@ fn currency_hyperlink_tooltip(
     id: u32,
     quantity: i32,
 ) -> LuaResult<Option<Val>> {
-    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
-        return retail_currency_hyperlink_tooltip(state, id, quantity);
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
+        let Ok(currency_id) = i32::try_from(id) else {
+            return Ok(None);
+        };
+        return crate::c_api::c_tooltip_info_currency::build_currency_tooltip(
+            state,
+            currency_id,
+            Some(quantity),
+        );
     }
     non_retail_currency_hyperlink_tooltip(state, id, quantity)
-}
-
-fn retail_currency_hyperlink_tooltip(
-    state: &mut LuaState,
-    id: u32,
-    quantity: i32,
-) -> LuaResult<Option<Val>> {
-    let Ok(currency_id) = i32::try_from(id) else {
-        return Ok(None);
-    };
-    crate::c_api::c_tooltip_info_currency::build_currency_tooltip(
-        state,
-        currency_id,
-        Some(quantity),
-    )
 }
 
 fn non_retail_currency_hyperlink_tooltip(
