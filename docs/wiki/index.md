@@ -1,6 +1,6 @@
-## [2026-11-27] investigation | Retail secure dependency XML replay
+## [2026-11-28] investigation | Retail secure dependency XML replay
 
-[Retail secure dependency XML replay](investigations/retail-secure-dependency-xml-replay.md) records the duplicate-frame root cause and fix. **VERIFIED (merged simulator):** six exact Retail Glue tests and five Forever equivalents pass. **INFERRED (R88g.1, R88t.t1/t2):** secure dependency evidence does not establish replay of XML for an ordinary-loaded dependency.
+[Retail secure dependency XML replay](investigations/retail-secure-dependency-xml-replay.md) records the unresolved simulator conflict. **VERIFIED (Retail exact runs at e260b5c21):** the AutoComplete secure-dependency test fails while six selected Glue tests pass. **INFERRED (R88g.1, R88t.t1/t2):** the native evidence does not establish XML replay for an already ordinary-loaded dependency; R88h4 is pending.
 
 ## [2026-11-26] investigation | Restricted environment item helper bindings
 
