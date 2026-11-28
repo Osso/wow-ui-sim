@@ -1,6 +1,6 @@
 # Map art help-text position
 
-Retail and Forever `C_Map.GetMapArtHelpTextPosition(uiMapID)` read `HelpTextPosition` from the matching `UiMap` record (**VERIFIED — Retail 12.1.5.70688 and Forever 1.60.1.70707**). An unknown numeric map ID returns `0` (**INFERRED — Retail 12.1.5.70688 and Forever 1.60.1.70707, R88g9**; the full entry-to-publisher path is unresolved). Retail data comes from the pinned local-CASC export in `data/db2/retail-12.1.5.70961/UiMap.csv`; Forever data comes from the exact-build Wago export in `data/db2/wowforever-1.60.1.70707/UiMap.csv`.
+Retail and Forever `C_Map.GetMapArtHelpTextPosition(uiMapID)` read `HelpTextPosition` from the matching `UiMap` record (**VERIFIED — Retail 12.1.5.70688 and Forever 1.60.1.70707**). An unknown numeric map ID returns `0` (**INFERRED — Retail 12.1.5.70688 and Forever 1.60.1.70707, R88g9**; the full entry-to-publisher path is unresolved). Retail data comes from the pinned local-CASC export in `data/db2/retail-12.1.5.70961/UiMap.csv`; Forever data comes from the exact-build Wago export in `data/db2/wowforever-1.60.1.70707/UiMap.csv`. VERIFIED (CSV byte comparison): the 70959 export in `data/db2/wowforever-1.60.1.70959/UiMap.csv` is byte-identical, so the existing generated table remains valid for these exported rows. Native semantics remain 70707-evidenced.
 
 ## What it must do
 

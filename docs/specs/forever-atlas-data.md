@@ -2,7 +2,7 @@
 
 ## Contract
 
-- `client-wowforever` uses atlas and element data from build `1.60.1.69913`, never the retail atlas database.
+- `client-wowforever` uses atlas and element data from build `1.60.1.70959`, never the retail atlas database.
 - Explicit `wow-cli generate atlas --csv-dir DIR --listfile FILE --output FILE --elements-output FILE` reads slice data only from DIR. Without options, existing input/output paths and retail slice override remain unchanged.
 - Atlas CSV requires named `ID`, `FileDataID`, `UiTextureAtlasSetID`, `AtlasWidth`, `AtlasHeight`, and `UiCanvasID` columns in any order. Missing columns and rows whose field count differs from the header fail explicitly; numeric errors identify the row and column. No positional or set/canvas defaults are accepted.
 - Named CSV atlas dimensions account for set/canvas columns. Public element names resolve from default-set (`1`), atlas-canvas (`1`) members. A member with canvas `2` yields no alias when a matching 1× member exists, regardless of row order; otherwise its logical alias dimensions are half its physical dimensions, except where `OverrideWidth` or `OverrideHeight` explicitly supplies that axis. Committed member names retain their own dimensions and UVs remain physical atlas coordinates. Existing 1× aliases remain unchanged. This is an inference from build `1.60.1.69913` DB2 member metadata and paired 1×/2× rows, not native canvas-selection conformance.
@@ -10,13 +10,13 @@
 
 ## Reproduction
 
-Source exports and a relevant community-listfile subset live in `data/db2/wowforever-1.60.1.69913/`; `provenance.json` records hashes and unresolved IDs.
+Source exports and a relevant community-listfile subset live in `data/db2/wowforever-1.60.1.70959/`; `atlas-provenance.json` records hashes and unresolved IDs.
 
 ```text
-wow-cli generate atlas --csv-dir data/db2/wowforever-1.60.1.69913 --listfile data/db2/wowforever-1.60.1.69913/listfile.csv --output data/atlas_wowforever.rs --elements-output data/atlas_elements_wowforever.rs
+wow-cli generate atlas --csv-dir data/db2/wowforever-1.60.1.70959 --listfile data/db2/wowforever-1.60.1.70959/listfile.csv --output crates/sim-data-profile/data/atlas_wowforever.rs --elements-output crates/sim-data-profile/data/atlas_elements_wowforever.rs
 ```
 
-Generation emits 19,203 atlas entries and 20,684 element mappings; this canvas correction changes only 11 logical metal aliases. The 2,304 skipped rows comprise 1,560 missing-file-mapping rows (55 distinct FDIDs) and 744 duplicate names. No geometry is fabricated for unresolved files; this is not complete asset coverage.
+VERIFIED (70959 exact-build CSV generation): 19,743 atlas entries, 2,076 skipped, 20,817 element mappings. The subset of the refreshed community listfile resolves 2,802 of 2,826 referenced atlas FDIDs. No geometry is fabricated for unresolved files; this is not complete asset coverage. The previous 69913 exports and provenance remain historical.
 
 ## Proof
 

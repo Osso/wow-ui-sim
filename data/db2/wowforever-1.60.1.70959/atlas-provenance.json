@@ -1,0 +1,44 @@
+{
+  "build": "1.60.1.70959",
+  "csv_source": "https://wago.tools/db2/{table}/csv?build=1.60.1.70959",
+  "provenance_scope": "Exact-build Wago CSV response; independent local CASC equality not established.",
+  "community_listfile_sha256": "6a4e0e3f58fa71b6756eafe33da589d04919dfb4109344def70a485a3069f7ad",
+  "sha256": {
+    "UiTextureAtlasMember.csv": "000fe3517bb7600aeee97b4465e9c721accd6914dde6ba079ebe00a6e2562d6b",
+    "UiTextureAtlas.csv": "a53e784e29c3a42d4a991e843fa1908d15f1fc381c66ac4ecfc508c3b7d19041",
+    "UiTextureAtlasElementSliceData.csv": "bb1965fb2446d7b7fe9a705d103496f0d107d9c5afb174521232c28bf189b49c",
+    "UiTextureAtlasElement.csv": "d5b5244ceefcde365bbdcf925104ddf848ce35554bc182b7d9e06071abc7d262",
+    "listfile.csv": "bc61ff261282ef09b00f9b61843c2859e8541300493292bf648250ce1f7e8f4a"
+  },
+  "generation_counts": {
+    "emitted": 19743,
+    "skipped": 2076,
+    "element_mappings": 20817,
+    "missing_atlas_source_fdids": [
+      "5193786",
+      "7929539",
+      "8182961",
+      "8183023",
+      "8203427",
+      "8203429",
+      "8203431",
+      "8203433",
+      "8216674",
+      "8216846",
+      "8268365",
+      "8268367",
+      "8268369",
+      "8281847",
+      "8282018",
+      "8352924",
+      "8355492",
+      "8396513",
+      "8396515",
+      "8396517",
+      "8396519",
+      "8449703",
+      "8472668",
+      "8532526"
+    ]
+  }
+}
