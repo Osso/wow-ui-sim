@@ -28,8 +28,11 @@ impl SimState {
         self.widgets.propagate_all_effective_scale();
     }
 
-    /// Return the per-strata buckets, building lazily if needed.
+    /// Return render buckets with current layout, building order lazily if needed.
     pub fn get_strata_buckets(&mut self) -> Option<&Vec<Vec<u64>>> {
+        if self.widgets.has_pending_layout_work() {
+            self.ensure_layout_rects();
+        }
         if self.strata_buckets.is_none() {
             self.strata_buckets = Some(self.build_strata_buckets());
         }
