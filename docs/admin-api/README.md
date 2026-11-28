@@ -24,6 +24,7 @@ The `A_Admin` namespace provides administrative functions for controlling simula
 - [Configuration warnings](configuration-warnings.md) — SetConfigurationWarnings, SetSystemRequirementsChecked
 - Vignettes (Retail and WoW Forever): `A_Admin.SetVignettes(records)` supplies the session's modeled `C_VignetteInfo` records and fires `VIGNETTES_UPDATED`. Other profiles retain their existing legacy vignette surface. Each record requires `vignetteGUID`, `uiMapID`, `x`, and `y`; documented `VignetteInfo` fields can also be supplied, including `mapPin`. Optional host values are `facing`, `healthPercent`, `minGroupSize`, and `maxGroupSize`. Empty records are the default. Unknown-GUID return behavior is INFERRED (R88g6).
 - [Server dialogs](server-dialogs.md) — OpenItemText, ReceiveGuildInvite, OpenPetition, RequestDuel, SetAreaSpiritHealer
+- [Store Glue](store-glue.md) — SetStoreGluePurchaseState
 - [Chat windows](chat-windows.md) — SetChatWindowState
 - [Voice chat](voice-chat.md) — SetCanPlayerUseVoiceChat, SetVoiceChatConnected, SetRemoteTtsVoices
 - [Health & Power](health-power.md) — SetPlayerHealth, SetPlayerPower, SetTargetHealth, SetReleaseTimeRemaining, SetNoReleaseAura, AddSelfResurrectOption, ClearSelfResurrectOptions, AddDeathRecap, ClearDeathRecaps, SetCorpseMapPosition, ClearCorpse

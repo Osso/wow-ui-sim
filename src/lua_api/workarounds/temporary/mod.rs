@@ -256,6 +256,7 @@ pub(crate) mod startup_namespace_defaults;
 pub(crate) mod startup_service_capability_defaults;
 pub(crate) mod startup_windows;
 pub(crate) mod static_popup_defaults;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod store_glue_state;
 pub(crate) mod store_public_defaults;
 pub(crate) mod super_track_defaults;

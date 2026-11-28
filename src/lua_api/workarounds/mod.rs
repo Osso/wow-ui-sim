@@ -276,6 +276,7 @@ fn apply_secure_and_store_state_bootstrap(lua: &mut rilua::Lua) -> crate::Result
     temporary::secure_reference_defaults::apply_bootstrap(lua)?;
     temporary::secure_types_defaults::apply_bootstrap(lua)?;
     temporary::secure_transfer_state::apply_bootstrap(lua)?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::store_glue_state::apply_bootstrap(lua)?;
     temporary::store_public_defaults::apply_bootstrap(lua)
 }

@@ -12,7 +12,9 @@
 
 ## Neutral host seams and later questions
 
-The original dispositions1283/1285 established these seams; the R88w sections below resolve individual contracts in separately verified changes:
+The original dispositions1283/1285 established these seams; the R88w sections below resolve individual contracts in separately verified changes.
+
+The simulator host input is documented in [Admin API: Store Glue](../admin-api/store-glue.md).
 
 - R88w.w2 resolves the bounded ASCII GUID grammar and exact Opaque alias branch as documented below. Unresolved forms remain neutral, not classified malformed. Purchase states and queue-character records remain separate host inputs.
 - Queue correlation is opaque host data. Simulator request counters do not establish native width, overflow or wire layout. No public packet name/opcode is invented.
