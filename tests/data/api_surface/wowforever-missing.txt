@@ -1544,7 +1544,6 @@ C_TradeSkillUI.IsEnchantTargetValid # not-yet
 C_TradeSkillUI.IsGuildTradeSkillsEnabled # not-yet: temporary Lua workaround
 C_TradeSkillUI.IsNearProfessionSpellFocus # not-yet
 C_TradeSkillUI.IsOriginalCraftRecipeLearned # not-yet
-C_TradeSkillUI.IsRecipeFirstCraft # not-yet
 C_TradeSkillUI.IsRecipeInBaseSkillLine # not-yet
 C_TradeSkillUI.IsRecipeProfessionLearned # not-yet
 C_TradeSkillUI.IsRecraftReagentValid # not-yet
