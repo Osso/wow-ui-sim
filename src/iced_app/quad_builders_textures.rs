@@ -64,7 +64,9 @@ fn resolve_texture_path(f: &crate::widget::Frame) -> Option<Cow<'_, str>> {
     }
 
     let file_data_id = u32::try_from(f.texture_file_data_id?).ok()?;
-    let path = crate::manifest_interface_data::get_texture_path(file_data_id)?;
+    let Some(path) = crate::manifest_interface_data::get_texture_path(file_data_id) else {
+        return crate::texture::file_data_id_texture_path(file_data_id).map(Cow::Owned);
+    };
     Some(Cow::Owned(format!(
         "Interface\\{}",
         path.replace('/', "\\")
@@ -818,6 +820,17 @@ mod tests {
             tint: [1.0, 1.0, 1.0, 1.0],
             blend: BlendMode::Alpha,
         }
+    }
+
+    #[test]
+    fn unlisted_file_id_resolves_from_the_game_data() {
+        // A file ID the interface manifest does not list (world art) is still a
+        // texture: it is loaded by its ID from the game data.
+        let mut frame = Frame::new(WidgetType::Texture, None, None);
+        frame.texture_file_data_id = Some(999_999_999);
+        let path = super::resolve_texture_path(&frame).map(|path| path.into_owned());
+        let expected = cfg!(feature = "casc").then(|| r"FileDataID\999999999".to_string());
+        assert_eq!(path, expected);
     }
 
     #[test]
