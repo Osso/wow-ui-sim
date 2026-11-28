@@ -1016,27 +1016,25 @@ fn blizzard_private_auras_ui_reads_raid_warning_util_and_publishes_mixins_into_s
          declares Blizzard_RaidWarning as a hard dependency"
     );
 
-    let message_types_are_configured: (bool, bool) = env
+    // 2686d181a7 skips the secure pass of RaidWarning.xml: RaidWarningFrame's OnLoad calls
+    // EditModeSystemMixin, which Blizzard_EditMode.toc loads only in the Global environment.
+    // The secure RaidWarningFrame KeyValues are therefore not checked until native evidence
+    // for that OnLoad exists; the private boss-emote frame still resolves MessageTypes.
+    let boss_emote_types_are_configured: bool = env
         .eval(
             r#"
             local secure = __secureenv
             local util = rawget(secure, "RaidWarningUtil")
-            local warning = rawget(secure, "RaidWarningFrame")
-            local standard = type(warning) == "table" and warning.messageTypes or nil
             local private = rawget(secure, "RaidBossEmoteFramePrivate")
             local bossEmote = type(private) == "table" and private.messageTypes or nil
-            return type(standard) == "table"
-                    and standard[1] == util.MessageType.RaidWarning
-                    and standard[2] == util.MessageType.BossEmote,
-                type(bossEmote) == "table"
-                    and bossEmote[1] == util.MessageType.BossEmote
+            return type(bossEmote) == "table"
+                and bossEmote[1] == util.MessageType.BossEmote
             "#,
         )
         .expect("secure RaidWarning XML key-values should be observable");
-    assert_eq!(
-        message_types_are_configured,
-        (true, true),
-        "generated RaidWarning XML must resolve MessageTypes from its secure dependency"
+    assert!(
+        boss_emote_types_are_configured,
+        "generated private boss-emote XML must resolve MessageTypes from its secure dependency"
     );
 
     for name in PUBLIC_MIXIN_GLOBALS {
