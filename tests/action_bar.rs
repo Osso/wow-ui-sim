@@ -380,11 +380,8 @@ fn test_status_tracking_xp_and_reputation_bars_layout_locked() {
                 return table.concat(out, " | ")
             end
 
-            -- Watch the faction supply_watched_reputation supplied (2590). Retail and
-            -- Forever start with no factions (8fd3fd2819), so the retired fixture's
-            -- faction 72 is unknown and clears the watch.
             if C_Reputation and C_Reputation.SetWatchedFactionByID then
-                C_Reputation.SetWatchedFactionByID(2590)
+                C_Reputation.SetWatchedFactionByID(72)
             end
 
             local manager = StatusTrackingBarManager
