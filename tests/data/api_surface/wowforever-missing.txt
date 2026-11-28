@@ -5,7 +5,6 @@ AddSourceLocationExclude # not-yet: temporary Lua workaround
 AreClassRolesSoftSuggestions # not-yet
 AutoEquipCursorItem # not-yet
 BeginTrade # not-yet
-C_AchievementInfo.AreGuildAchievementsEnabled # not-yet
 C_AchievementInfo.IsGuildAchievement # not-yet
 C_ActionBar.FindAssistedCombatActionButtons # not-yet
 C_ActionBar.GetProfessionQuality # not-yet
@@ -1949,8 +1948,6 @@ UnitPartialPower # not-yet
 UnitPowerDisplayMod # not-yet: temporary Lua workaround
 UnitPvpClassification # not-yet
 UnitSelectionType # not-yet
-UnitSetRole # not-yet
-UnitSetRoleEnum # not-yet
 UnitShouldDisplayName # not-yet
 UnitSpellTargetName # not-yet
 UnitWidgetSet # not-yet

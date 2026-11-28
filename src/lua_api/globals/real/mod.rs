@@ -235,7 +235,7 @@ pub(crate) mod unit_power_display_mod;
 #[cfg(feature = "aura-containers")]
 pub mod unit_relationships;
 pub(crate) mod unit_roles;
-#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[cfg(feature = "unit-role-assignment")]
 pub(crate) mod unit_roles_assignment;
 pub(crate) mod unit_secret_predicates;
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]

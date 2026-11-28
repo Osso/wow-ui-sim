@@ -229,7 +229,7 @@ fn register_frame_context_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
     super::unit_probes::register_all(lua)?;
     super::real::combo_points::register_all(lua)?;
     super::real::unit_interaction::register_all(lua)?;
-    #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+    #[cfg(feature = "unit-role-assignment")]
     super::real::unit_roles_assignment::register_all(lua)?;
     #[cfg(all(
         feature = "retail-12-0-5",

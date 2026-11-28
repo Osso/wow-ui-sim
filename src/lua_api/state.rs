@@ -1086,6 +1086,8 @@ macro_rules! build_empty_sim_state {
             player_actions: Default::default(),
             #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
             pending_guild_invite: None,
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            guild_achievements_enabled: true,
             #[cfg(feature = "vehicle-seats")]
             vehicle_seats: Default::default(),
             chat_bubbles: Vec::new(),
@@ -1140,7 +1142,7 @@ macro_rules! build_empty_sim_state {
             solo_group_guid: None,
             #[cfg(feature = "retail-12-0-7")]
             solo_group_last: None,
-            #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+            #[cfg(feature = "unit-role-assignment")]
             unit_roles: HashMap::new(),
             party_leader_index: None,
             ready_check: ReadyCheckState::default(),

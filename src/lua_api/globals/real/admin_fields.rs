@@ -5,6 +5,14 @@ use crate::lua_api::methods::{table_get, val_to_string};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val, runtime_error};
 
+/// Strict boolean positional argument for A_Admin setters (no truthiness coercion).
+pub(crate) fn boolean_arg(state: &LuaState, position: i32, api: &str) -> LuaResult<bool> {
+    match crate::lua_bridge::stack_val(state, position) {
+        Val::Bool(value) => Ok(value),
+        _ => Err(runtime_error(format!("{api} expects a boolean"))),
+    }
+}
+
 fn invalid(api: &str, key: &str, expected: &str) -> rilua::LuaError {
     runtime_error(format!("{api} {key} must be {expected}"))
 }

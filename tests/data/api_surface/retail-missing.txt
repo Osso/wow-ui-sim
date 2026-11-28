@@ -43,7 +43,6 @@ BuyGuildBankTab # not-yet
 BuyGuildCharter # not-yet
 BuyMerchantItem # not-yet
 BuybackItem # not-yet
-C_AchievementInfo.AreGuildAchievementsEnabled # not-yet
 C_AchievementInfo.IsGuildAchievement # not-yet
 C_ActionBar.GetProfessionQuality # not-yet
 C_ActionBar.HasPetActionButtons # not-yet

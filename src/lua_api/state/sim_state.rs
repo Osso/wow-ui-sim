@@ -809,6 +809,9 @@ pub struct SimState {
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     pub pending_guild_invite:
         Option<crate::lua_api::globals::real::guild_membership::PendingGuildInvite>,
+    /// `C_AchievementInfo.AreGuildAchievementsEnabled` input (INFERRED default true).
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub guild_achievements_enabled: bool,
     /// Host vehicle seats and seat-indicator layouts (`A_Admin.EnterVehicle`).
     #[cfg(feature = "vehicle-seats")]
     pub vehicle_seats: crate::lua_api::globals::real::vehicle_seats::VehicleSeatState,
@@ -1441,7 +1444,7 @@ pub struct SimState {
     #[cfg(feature = "retail-12-0-7")]
     pub(crate) solo_group_last: Option<(i32, String)>,
     /// Explicit optional display role by existing player/party GUID; unset by default.
-    #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+    #[cfg(feature = "unit-role-assignment")]
     pub(crate) unit_roles:
         HashMap<String, Option<crate::lua_api::globals::real::unit_roles_assignment::UnitRole>>,
     pub party_leader_index: Option<usize>,

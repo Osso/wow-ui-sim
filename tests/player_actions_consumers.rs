@@ -103,6 +103,7 @@ const DEATH_DIALOG_CONTROL: &str = r#"
     A_Admin.AdvanceTime(0.1)
     assert(release:IsEnabled() and IsOutOfBounds(), "falling out of bounds allows release")
 
+    assert(not pcall(A_Admin.SetOutOfBounds, 1) and not pcall(A_Admin.SetControllingUnit, "yes"))
     A_Admin.SetControllingUnit(true)
     assert(UnitIsControlling("player") and not UnitIsControlling("party1"))
     A_Admin.OfferResurrect({ offerer = "Healer", hasSickness = true, hasTimer = true })
@@ -137,6 +138,53 @@ fn sheath_toggle_and_low_level_raid_option_follow_calls() {
 #[test]
 fn guild_invite_frame_accepts_declines_and_times_out() {
     run(&["Blizzard_FrameXML"], GUILD_INVITE);
+}
+
+/// Forever's GuildInviteFrame shows the invite's guild points only while guild
+/// achievements are enabled.
+#[cfg(feature = "client-wowforever")]
+#[test]
+fn forever_guild_invite_points_follow_guild_achievements_enabled() {
+    run(
+        &["Blizzard_FrameXML"],
+        r#"
+        local function offer(points)
+            A_Admin.OfferGuildInvite({ inviter = "Arthas", guildName = "Knights",
+                guildAchievementPoints = points, oldGuildName = "", isNewGuild = false,
+                rankName = "Squire", numMembers = 9 })
+        end
+        assert(C_AchievementInfo.AreGuildAchievementsEnabled() == true, "enabled by default")
+        offer(1250)
+        local points = GuildInviteFrame.Points
+        assert(GuildInviteFrame:IsShown(), "invite shown")
+        assert(points:IsShown(), "points shown")
+        assert(points.Text:GetText() == "1250", tostring(points.Text:GetText()))
+        GuildInviteFrameDeclineButton:Click()
+        A_Admin.SetGuildAchievementsEnabled(false)
+        assert(C_AchievementInfo.AreGuildAchievementsEnabled() == false)
+        offer(800)
+        assert(GuildInviteFrame:IsShown(), "second invite shown")
+        assert(not points:IsShown(), "points hidden")
+        assert(not pcall(A_Admin.SetGuildAchievementsEnabled, "yes"))
+        return true
+    "#,
+    );
+}
+
+#[test]
+fn guild_achievements_enabled_follows_host_input() {
+    WowLuaEnv::new()
+        .unwrap()
+        .exec(
+            r#"
+        assert(C_AchievementInfo.AreGuildAchievementsEnabled() == true)
+        A_Admin.SetGuildAchievementsEnabled(false)
+        assert(C_AchievementInfo.AreGuildAchievementsEnabled() == false)
+        A_Admin.SetGuildAchievementsEnabled(true)
+        assert(C_AchievementInfo.AreGuildAchievementsEnabled() == true)
+    "#,
+        )
+        .unwrap();
 }
 
 #[test]

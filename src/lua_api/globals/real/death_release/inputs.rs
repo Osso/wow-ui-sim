@@ -4,7 +4,7 @@
 use crate::lua_api::globals::real::admin_fields as fields;
 use crate::lua_api::globals::state_backed_queries::dispatch_event_now;
 use crate::lua_api::methods::{borrow_state_mut, create_string, val_to_string};
-use crate::lua_bridge::{FromStack, TableBuilder, stack_val};
+use crate::lua_bridge::{TableBuilder, stack_val};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val, runtime_error};
 use std::time::Duration;
@@ -16,7 +16,7 @@ pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
         .set_function("SetResSicknessDuration", set_res_sickness_duration)?
         .set_function("SetAreaSpiritHealer", set_area_spirit_healer)?
         .set_function("SetCemeterySelectionAvailable", |state| {
-            let available = bool::from_stack(state, 1)?;
+            let available = fields::boolean_arg(state, 1, "A_Admin.SetCemeterySelectionAvailable")?;
             borrow_state_mut(state)?
                 .death_release
                 .cemetery_selection_available = available;

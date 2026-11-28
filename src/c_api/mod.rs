@@ -358,6 +358,8 @@ pub mod external_event_url;
 #[cfg(feature = "client-wowforever")]
 mod forever_outfits;
 pub mod forever_startup;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) mod guild_achievements;
 pub(crate) mod level_link;
 mod lfr_availability;
 pub mod perks_activities;
@@ -737,6 +739,8 @@ pub(crate) fn register_utility_bootstrap_tables(state: &mut LuaState) -> LuaResu
     #[cfg(any(feature = "retail-12-1-0", feature = "client-wowforever"))]
     c_cvar_readiness::register(state)?;
     c_achievement_info_relations::register(state)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    guild_achievements::register(state)?;
     c_minimap_tracking::register(state)?;
     c_calendar::register(state)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]

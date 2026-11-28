@@ -8,6 +8,7 @@
 
 use crate::lua_api::SimState;
 use crate::lua_api::globals::group_queries::{unit_exists_in_state, unit_name_for};
+use crate::lua_api::globals::real::admin_fields as fields;
 use crate::lua_api::globals::state_backed_queries::dispatch_event_now;
 use crate::lua_api::methods::{borrow_state, borrow_state_mut, create_string};
 use crate::lua_bridge::{FromStack, TableBuilder, stack_val};
@@ -61,12 +62,12 @@ pub(crate) fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
 pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
     builder
         .set_function("SetOutOfBounds", |state| {
-            let value = bool::from_stack(state, 1)?;
+            let value = fields::boolean_arg(state, 1, "A_Admin.SetOutOfBounds")?;
             borrow_state_mut(state)?.player_actions.out_of_bounds = value;
             Ok(0)
         })?
         .set_function("SetControllingUnit", |state| {
-            let value = bool::from_stack(state, 1)?;
+            let value = fields::boolean_arg(state, 1, "A_Admin.SetControllingUnit")?;
             borrow_state_mut(state)?.player_actions.controlling_unit = value;
             Ok(0)
         })?
