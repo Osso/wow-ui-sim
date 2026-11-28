@@ -2133,7 +2133,6 @@ GetMaxNumCUFProfiles # not-yet
 GetMaxRewardCurrencies # not-yet
 GetMaxTalentTier # not-yet
 GetMaximumExpansionLevel # not-yet
-GetModifiedClick # not-yet: temporary Lua workaround
 GetModifiedClickAction # not-yet
 GetMonitorAspectRatio # not-yet
 GetMonitorCount # not-yet
@@ -2474,7 +2473,6 @@ SetLegacyRaidDifficultyID # not-yet
 SetLootPortrait # not-yet
 SetMacroItem # not-yet
 SetMacroSpell # not-yet
-SetModifiedClick # not-yet: temporary Lua workaround
 SetMouselookOverrideBinding # intentionally-unsupported: 3D camera/model
 SetMoveEnabled # not-yet
 SetMultiCastSpell # not-yet

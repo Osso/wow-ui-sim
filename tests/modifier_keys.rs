@@ -121,21 +121,50 @@ fn multiple_modifiers_set_simultaneously() {
     assert!(any);
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn selected_controls_setting_reads_two_modified_click_bindings() {
+    let env = WowLuaEnv::new().unwrap();
+    let screen = wow_ui_sim::screen::ScreenKind::Game;
+    env.set_screen_mode(screen);
+    env.set_screen_size(1024.0, 768.0);
+    wow_ui_sim::xml::register_intrinsic_templates();
+    let ui = wow_ui_sim::paths::default_blizzard_ui_addons_path().unwrap();
+    let addons = wow_ui_sim::loader::discover_blizzard_addons_for_screen(&ui, screen);
+    for (name, toc) in &addons {
+        wow_ui_sim::loader::load_addon(&env.loader_env(), toc)
+            .unwrap_or_else(|error| panic!("{name}: {error}"));
+    }
+    assert!(addons.iter().any(|(name, _)| name == "Blizzard_SettingsDefinitions_Frame"));
+    env.apply_post_load_workarounds();
+    wow_ui_sim::startup::fire_startup_events_for_screen(&env, screen);
+    env.exec(r#"
+        local setting = Settings.GetSetting('AUTOLOOTTOGGLE')
+        assert(setting and setting:GetValue() == 'SHIFT')
+        SetModifiedClick('AUTOLOOTTOGGLE', 'CTRL')
+        assert(setting:GetValue() == 'CTRL')
+        SetModifiedClick('AUTOLOOTTOGGLE', 'ALT')
+        assert(setting:GetValue() == 'ALT')
+        A_Admin.SetAltKeyDown(true)
+        assert(IsModifiedClick('AUTOLOOTTOGGLE'))
+    "#).expect("selected Controls setting must read the supplied bindings");
+}
+
 #[test]
 fn modified_click_queries_use_replacement_state() {
     let env = WowLuaEnv::new().unwrap();
-    env.exec("__wow_modified_clicks = { CHATLINK = 'CTRL' }").unwrap();
+    env.exec("SetModifiedClick('CHATLINK', 'CTRL')").unwrap();
     let before: String = env.eval("return GetModifiedClick('CHATLINK')").unwrap();
     assert_eq!(before, "CTRL");
     env.exec("SetModifiedClick('CHATLINK', 'ALT')").unwrap();
-    let after: String = env.eval("return __wow_modified_clicks.CHATLINK").unwrap();
+    let after: String = env.eval("return GetModifiedClick('CHATLINK')").unwrap();
     assert_eq!(after, "ALT");
 }
 
 #[test]
 fn is_modified_click_follows_any_non_meta_modifier() {
     let env = WowLuaEnv::new().unwrap();
-    env.exec("__wow_modified_clicks.CHATLINK = 'SHIFT'").unwrap();
+    env.exec("SetModifiedClick('CHATLINK', 'SHIFT')").unwrap();
 
     let before: bool = env.eval("return IsModifiedClick('CHATLINK')").unwrap();
     assert!(

@@ -785,6 +785,8 @@ macro_rules! build_empty_sim_state {
             active_timerunning_season_id: 0,
             timerunning_season_seconds_remaining: 0,
             modifier_keys: ModifierKeys::default(),
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            modified_clicks: HashMap::new(),
             pressed_keys: HashSet::new(),
             game_rules: GameRulesState::default(),
             credits: Default::default(),

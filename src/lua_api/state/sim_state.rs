@@ -1002,6 +1002,8 @@ pub struct SimState {
     pub active_timerunning_season_id: i32,
     pub timerunning_season_seconds_remaining: u64,
     pub modifier_keys: ModifierKeys,
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub modified_clicks: HashMap<String, String>,
     pub pressed_keys: HashSet<String>,
     pub mouse_buttons: MouseButtons,
     /// Accepted `SimulateMouse*` input awaiting the GUI mouse dispatcher.
