@@ -1,9 +1,11 @@
 //! Owner-serviced UI lifecycle requests, shared with the legacy ReloadUI global.
 
-use crate::lua_api::methods::{borrow_state, borrow_state_mut, frame_ref};
+use crate::lua_api::methods::borrow_state_mut;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+use crate::lua_api::methods::{borrow_state, frame_ref};
 use crate::lua_bridge::table_set_rust_fn_static;
+use rilua::LuaResult;
 use rilua::vm::state::LuaState;
-use rilua::{LuaResult, runtime_error};
 
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     let namespace = super::ensure_namespace(state, "C_UI")?;
@@ -27,7 +29,7 @@ fn push_named_frame(state: &mut LuaState, name: &str) -> LuaResult<u32> {
     let id = borrow_state(state)?
         .widgets
         .get_id_by_name(name)
-        .ok_or_else(|| runtime_error(format!("C_UI: {name} does not exist")))?;
+        .ok_or_else(|| rilua::runtime_error(format!("C_UI: {name} does not exist")))?;
     let frame = frame_ref(state, id)?;
     state.push(frame);
     Ok(1)

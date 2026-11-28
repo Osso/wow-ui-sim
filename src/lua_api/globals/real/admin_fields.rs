@@ -6,6 +6,7 @@ use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val, runtime_error};
 
 /// Strict boolean positional argument for A_Admin setters (no truthiness coercion).
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub(crate) fn boolean_arg(state: &LuaState, position: i32, api: &str) -> LuaResult<bool> {
     match crate::lua_bridge::stack_val(state, position) {
         Val::Bool(value) => Ok(value),
@@ -65,6 +66,7 @@ pub(crate) fn string(state: &mut LuaState, table: Val, api: &str, key: &str) -> 
 }
 
 /// The table values of an array field, in order; non-table entries are rejected.
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub(crate) fn table_array(
     state: &mut LuaState,
     table: Val,
