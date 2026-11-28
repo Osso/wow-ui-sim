@@ -47,13 +47,16 @@ const HELPERS: &str = r#"
     function MTNearMeasuredHeight(tip, label)
         local heights = MTRowHeights(tip)
         local expected = OUTER
+        local rowDetails = {}
         for index, height in ipairs(heights) do
             if index > 1 then
                 expected = expected + SPACING
             end
             expected = expected + height
+            rowDetails[index] = tostring(index) .. ":" .. tostring(height)
         end
-        MTNear(tip:GetHeight(), expected, label .. " rows sum to the measured height")
+        MTNear(tip:GetHeight(), expected,
+            label .. " rows sum to the measured height (" .. table.concat(rowDetails, ", ") .. ")")
         return heights
     end
 "#;
