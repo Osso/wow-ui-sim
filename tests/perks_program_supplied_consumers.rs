@@ -161,6 +161,21 @@ fn supplied_catalog_and_chest_state_are_visible() {
 #[test]
 fn pending_chest_rewards_drive_original_monthly_activity_glows() {
     let env = load_monthly_activities_consumer();
+    let availability: (bool, bool, bool, bool) = env
+        .eval(
+            r#"
+            local default = C_PlayerInfo.IsTravelersLogAvailable()
+            A_Admin.SetTravelersLogAvailable(false)
+            local unavailable = C_PlayerInfo.IsTravelersLogAvailable()
+            local acceptedNonBoolean = pcall(A_Admin.SetTravelersLogAvailable, 1)
+            A_Admin.SetTravelersLogAvailable(true)
+            return default, unavailable, not acceptedNonBoolean,
+                   C_PlayerInfo.IsTravelersLogAvailable()
+            "#,
+        )
+        .expect("Traveler's Log availability input should be readable");
+    assert_eq!(availability, (false, false, true, true));
+
     env.exec(&format!("A_Admin.SetPerksActivities([==[{MONTHLY_ACTIVITIES}]==])"))
         .expect("A_Admin should accept the supplied activities and thresholds");
     env.exec(

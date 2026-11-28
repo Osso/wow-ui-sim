@@ -324,6 +324,9 @@ pub struct PlayerState {
     pub is_npe_restricted: bool,
     /// True when the player is currently in the Returning Player Experience.
     pub is_in_rpe: bool,
+    /// Supplied Traveler's Log availability; false by the simulator default.
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub travelers_log_available: bool,
     /// Mythic+ rating summary for the player. None = no rating data.
     pub mythic_plus_rating_summary: Option<MythicPlusRatingSummary>,
     /// True when the player is occupying a vehicle/possess slot. Drives

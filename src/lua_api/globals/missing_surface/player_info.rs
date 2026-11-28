@@ -54,6 +54,7 @@ pub(super) fn register_player_info_surface(state: &mut LuaState) -> LuaResult<()
         "IsTradingPostAvailable",
         is_trading_post_available,
     )?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     table_set_rust_fn_static(
         state,
         ns,
@@ -220,6 +221,7 @@ fn is_tutorials_tab_available(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 fn is_travelers_log_available(state: &mut LuaState) -> LuaResult<u32> {
     let _ = state;
     state.push(Val::Bool(false));
