@@ -168,6 +168,9 @@ pub struct App {
     pub(crate) strata_dirty: std::cell::Cell<u16>,
     /// True when texture loading was capped and more textures are pending.
     pub(crate) textures_pending: std::cell::Cell<bool>,
+    /// True while more textures are shown than the client draws (its limit):
+    /// the interface is then not drawn.
+    pub(crate) shown_texture_limit_hit: std::cell::Cell<bool>,
     /// Persistent queue of normalized pending texture paths (draw/tick shared).
     pub(crate) pending_texture_path_queue: RefCell<VecDeque<String>>,
     /// Membership set for `pending_texture_path_queue`.
@@ -327,6 +330,7 @@ macro_rules! app_from_initial_state {
             cached_hittable: RefCell::new(None),
             strata_dirty: std::cell::Cell::new((1u16 << crate::widget::FrameStrata::COUNT) - 1),
             textures_pending: std::cell::Cell::new(false),
+            shown_texture_limit_hit: std::cell::Cell::new(false),
             pending_texture_path_queue: RefCell::new(VecDeque::new()),
             pending_texture_path_set: RefCell::new(FxHashSet::default()),
             strata_pending_texture_requests: RefCell::new(std::array::from_fn(|_| {

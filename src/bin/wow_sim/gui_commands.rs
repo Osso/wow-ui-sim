@@ -401,6 +401,16 @@ fn build_screenshot_batch(
             state.strata_buckets.as_ref().unwrap().clone()
         };
         let state = env.state().borrow();
+        let shown = wow_ui_sim::iced_app::shown_texture_count(&state.widgets);
+        let limit = wow_ui_sim::iced_app::CLIENT_SHOWN_TEXTURE_LIMIT;
+        eprintln!(
+            "Shown textures: {shown} (client limit {limit}){}",
+            if shown >= limit {
+                "; at the limit: the interface is not drawn"
+            } else {
+                ""
+            }
+        );
         let tooltip_data = wow_ui_sim::iced_app::tooltip::collect_tooltip_data(&state);
         build_quad_batch_for_registry_with_quest_blobs(
             RegistryQuadBatchParams::new(&state.widgets, (width as f32, height as f32), &buckets)

@@ -255,11 +255,25 @@ impl App {
         let (strata_buckets, layout_roots) = self.resolve_layout_and_buckets(&env, &mut font_sys);
         let state = env.state().borrow();
 
+        // Past the client's shown-texture limit none of the interface is
+        // drawn; every strata is emitted again whenever that flips.
+        let over_limit = super::strata_emit::shown_textures_over_client_limit(&state.widgets);
+        let flipped = self.shown_texture_limit_hit.replace(over_limit) != over_limit;
+        let (effective_dirty, emit_dirty_ids) = if flipped {
+            (super::app::ALL_STRATA_MASK, None)
+        } else {
+            (effective_dirty, dirty_ids.as_ref())
+        };
+        let no_buckets = vec![Vec::new(); FrameStrata::COUNT];
         self.emit_dirty_strata_batches(
             effective_dirty,
-            dirty_ids.as_ref(),
+            emit_dirty_ids,
             size,
-            &strata_buckets,
+            if over_limit {
+                &no_buckets
+            } else {
+                &strata_buckets
+            },
             &state,
             &mut font_sys,
         );
