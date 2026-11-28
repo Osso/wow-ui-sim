@@ -293,6 +293,24 @@ fn original_graphics_adapter_setting_uses_host_model() {
 
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 #[test]
+fn original_graphics_setting_applies_two_window_sizes() {
+    let env = load_graphics_consumer(1024.0, 768.0);
+    env.exec(
+        r#"
+        assert(Settings.GetValue("PROXY_RESOLUTION") == "1024x768")
+        Settings.SetValue("PROXY_RESOLUTION", "1280x720", true)
+        assert(C_VideoOptions.GetCurrentGameWindowSize().x == 1280)
+        assert(Settings.GetValue("PROXY_RESOLUTION") == "1280x720")
+        Settings.SetValue("PROXY_RESOLUTION", "1600x900", true)
+        assert(C_VideoOptions.GetCurrentGameWindowSize().x == 1600)
+        assert(Settings.GetValue("PROXY_RESOLUTION") == "1600x900")
+        "#,
+    )
+    .expect("original Graphics settings should apply both selected resolutions");
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
 fn original_graphics_resolution_setting_tracks_display_model() {
     load_graphics_consumer(1280.0, 720.0)
         .exec(FIRST_DISPLAY_SCRIPT)

@@ -210,6 +210,32 @@ fn assert_counter_snapshot(env: &WowLuaEnv, expected: (u32, u32)) {
     );
 }
 
+fn seed_account_and_character_macros(env: &WowLuaEnv) {
+    let mut rows = vec![macro_record("Account Beacon", 134400, "/say account")];
+    rows.resize(120, MacroInfo::default());
+    rows.push(macro_record("Character Beacon", 134331, "/say character"));
+    let json = serde_json::to_string(&rows).expect("macro rows serialize");
+    env.exec(&format!("A_Admin.SetMacroRows([=[{json}]=])"))
+        .expect("supplied account and character macros");
+}
+
+#[test]
+fn selected_macro_frame_displays_distinct_host_supplied_macro_rows() {
+    let env = setup_env();
+    seed_account_and_character_macros(&env);
+    env.exec(
+        r#"
+        ShowMacroFrame()
+        assert(MacroFrameSelectedMacroName:GetText() == "Account Beacon")
+        assert(MacroFrameText:GetText() == "/say account")
+        MacroFrameTab2:Click()
+        assert(MacroFrameSelectedMacroName:GetText() == "Character Beacon")
+        assert(MacroFrameText:GetText() == "/say character")
+        "#,
+    )
+    .expect("selected MacroFrame should render both supplied records");
+}
+
 #[test]
 fn macro_getter_inferred_host_policies_and_c_macro_adapter() {
     let env = WowLuaEnv::new().expect("Lua environment");

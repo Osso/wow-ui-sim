@@ -159,6 +159,7 @@ pub(crate) mod lfg_legacy_defaults;
 pub(crate) mod lfg_lock_list;
 #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod loot_journal_defaults;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod macro_defaults;
 #[cfg(all(not(feature = "client-retail"), not(feature = "client-wowforever")))]
 pub(crate) mod main_menu_microbutton_click;
@@ -171,6 +172,7 @@ pub(crate) mod map_exploration_pin;
 #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod map_group_defaults;
 pub(crate) mod map_runtime_state;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod merchant_filter_state;
 #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod merchant_raid_defaults;
@@ -195,6 +197,7 @@ pub(crate) mod perks_activities_state;
 #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod perks_program_defaults;
 pub(crate) mod pet_battle_action_legality_defaults;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod pet_battle_runtime_state;
 pub(crate) mod ping_defaults;
 pub(crate) mod player_location_defaults;
@@ -217,6 +220,7 @@ pub(crate) mod quest_objective_defaults;
 pub(crate) mod quest_progress_requirements;
 #[cfg(not(feature = "client-wowforever"))]
 pub(crate) mod reincarnation_defaults;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod reputation_state;
 pub(crate) mod restricted_actions_protected;
 pub(crate) mod scenario_defaults;
@@ -270,11 +274,13 @@ pub(crate) mod transmog_util_defaults;
 pub(crate) mod ui_frame_manager_defaults;
 pub(crate) mod uiparent_managed_frame_mixin;
 pub(crate) mod uiparent_onupdate_worklists;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod unit_auras_state;
 pub(crate) mod unit_position_frame_mixin;
 pub(crate) mod unit_power_display_mod;
 pub(crate) mod unit_stagger_defaults;
 pub(crate) mod unit_threat_defaults;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod video_options_state;
 pub(crate) mod vignette_pin_template;
 pub(crate) mod world_service_defaults;
