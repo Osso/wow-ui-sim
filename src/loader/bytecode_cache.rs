@@ -242,6 +242,23 @@ fn load_pack_from_path_with_max(
     max_pack_size: u64,
     mode: CacheMode,
 ) -> bool {
+    let _writer_lock = if mode.allows_writes() {
+        let Ok(lock) = lock_pack(pack) else {
+            return false;
+        };
+        Some(lock)
+    } else {
+        None
+    };
+    load_pack_unlocked(state, pack, max_pack_size, mode)
+}
+
+fn load_pack_unlocked(
+    state: &mut CacheState,
+    pack: &Path,
+    max_pack_size: u64,
+    mode: CacheMode,
+) -> bool {
     let Some((file, bytes)) = read_pack_within_limit(pack, max_pack_size, mode) else {
         return false;
     };
@@ -357,6 +374,22 @@ fn store_entry_at_path_with_max(
         return PutResult::Unchanged;
     }
 
+    let Ok(_writer_lock) = lock_pack(path) else {
+        return PutResult::Failed;
+    };
+    if !state.pack_exists && path.is_file() {
+        state.pack_exists = load_pack_unlocked(state, path, max_pack_size, mode);
+    }
+    store_entry_unlocked(state, path, max_pack_size, hash, bytecode)
+}
+
+fn store_entry_unlocked(
+    state: &mut CacheState,
+    path: &Path,
+    max_pack_size: u64,
+    hash: u64,
+    bytecode: &[u8],
+) -> PutResult {
     let Some(new_pack_len) = single_entry_pack_len(bytecode.len()) else {
         return PutResult::Failed;
     };
@@ -565,11 +598,26 @@ fn truncate_pack(path: &Path, len: usize) -> std::io::Result<()> {
         .set_len(len as u64)
 }
 
+// Lock a stable sibling, not the pack inode (compaction replaces that inode).
+fn lock_pack(path: &Path) -> std::io::Result<std::fs::File> {
+    if path.is_dir() {
+        return Err(std::io::Error::other("cache pack path is a directory"));
+    }
+    let parent = path.parent().unwrap_or_else(|| Path::new("."));
+    std::fs::create_dir_all(parent)?;
+    let lock = std::fs::OpenOptions::new()
+        .write(true)
+        .create(true)
+        .truncate(false)
+        .open(parent.join("pack.lock"))?;
+    lock.lock()?;
+    Ok(lock)
+}
+
 fn write_pack_entry(file: &mut std::fs::File, hash: u64, bytecode: &[u8]) -> std::io::Result<()> {
-    file.write_all(&hash.to_le_bytes())?;
-    file.write_all(&(bytecode.len() as u32).to_le_bytes())?;
-    file.write_all(bytecode)?;
-    Ok(())
+    let mut entry = Vec::with_capacity(PACK_ENTRY_HEADER_LEN + bytecode.len());
+    append_entry_bytes(&mut entry, hash, bytecode);
+    file.write_all(&entry)
 }
 
 #[cfg(test)]
@@ -969,6 +1017,48 @@ mod tests {
         assert_eq!(state.values, original_values);
         assert_eq!(state.index, original_index);
         assert_eq!(state.pack_exists, original_pack_exists);
+    }
+
+    #[test]
+    fn independent_writers_preserve_complete_cache_entries() {
+        let (_dir, path) = temp_pack_path("parallel-writers");
+        std::fs::write(&path, empty_pack()).unwrap();
+        let barrier = std::sync::Barrier::new(4);
+        std::thread::scope(|scope| {
+            for writer in 0..4 {
+                let path = &path;
+                let barrier = &barrier;
+                scope.spawn(move || append_cache_fixture(path, barrier, writer));
+            }
+        });
+        let mut reopened = CacheState::default();
+        assert!(load_pack_from_path(
+            &mut reopened,
+            &path,
+            CacheMode::ReadOnly
+        ));
+        for writer in 0..4 {
+            for entry in 0..100 {
+                assert_cached_bytes(&reopened, writer * 100 + entry, &[writer as u8; 512]);
+            }
+        }
+    }
+
+    fn append_cache_fixture(path: &Path, barrier: &std::sync::Barrier, writer: u64) {
+        let mut state = CacheState::default();
+        state.pack_exists = load_pack_from_path(&mut state, path, CacheMode::Writable);
+        barrier.wait();
+        for entry in 0..100 {
+            let result = store_entry_at_path_with_max(
+                &mut state,
+                path,
+                MAX_PACK_SIZE,
+                CacheMode::Writable,
+                writer * 100 + entry,
+                &[writer as u8; 512],
+            );
+            assert_eq!(result, PutResult::Stored);
+        }
     }
 
     fn temp_pack_path(test_name: &str) -> (tempfile::TempDir, PathBuf) {

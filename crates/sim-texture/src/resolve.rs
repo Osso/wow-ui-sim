@@ -3,9 +3,15 @@ use crate::{TextureData, normalize_wow_path};
 use std::{
     collections::hash_map::DefaultHasher,
     hash::{Hash, Hasher},
+    io,
     path::{Path, PathBuf},
-    sync::Arc,
+    sync::{
+        Arc,
+        atomic::{AtomicU64, Ordering},
+    },
 };
+
+static CACHE_WRITE_SEQUENCE: AtomicU64 = AtomicU64::new(0);
 pub fn strip_addons_prefix(path: &str) -> Option<&str> {
     let prefix_len = "Interface/AddOns/".len();
     let (prefix, rest) = path.split_at_checked(prefix_len)?;
@@ -40,17 +46,49 @@ pub fn load_persistent_sub_region_cache(root: &Path, key: &str) -> Option<Textur
 
 pub fn store_persistent_sub_region_cache(root: &Path, key: &str, data: &TextureData) {
     let path = persistent_sub_region_cache_path(root, key);
-    let Some(parent) = path.parent() else {
-        return;
-    };
-    if std::fs::create_dir_all(parent).is_err() {
-        return;
-    }
     let Some(image) = image::RgbaImage::from_raw(data.width, data.height, data.pixels.to_vec())
     else {
         return;
     };
-    let _ = image.save(path);
+    if let Err(error) = write_cache_file_atomically(&path, |temporary| {
+        image.save(temporary).map_err(io::Error::other)
+    }) {
+        eprintln!("crop cache write {}: {error}", path.display());
+    }
+}
+
+/// Publish only complete cache files. The private directory keeps the original extension
+/// and avoids collisions between concurrent writes by the same process.
+pub fn write_cache_file_atomically(
+    path: &Path,
+    write: impl FnOnce(&Path) -> io::Result<()>,
+) -> io::Result<()> {
+    let parent = path
+        .parent()
+        .ok_or_else(|| io::Error::other("missing cache parent"))?;
+    let name = path
+        .file_name()
+        .ok_or_else(|| io::Error::other("missing cache filename"))?;
+    std::fs::create_dir_all(parent)?;
+    let directory = create_cache_write_directory(parent)?;
+    let temporary = directory.join(name);
+    let result = write(&temporary).and_then(|()| std::fs::rename(&temporary, path));
+    if let Err(error) = std::fs::remove_dir_all(&directory) {
+        eprintln!("cache temporary directory {}: {error}", directory.display());
+    }
+    result
+}
+
+fn create_cache_write_directory(parent: &Path) -> io::Result<PathBuf> {
+    loop {
+        let sequence = CACHE_WRITE_SEQUENCE.fetch_add(1, Ordering::Relaxed);
+        let directory = parent.join(format!(".cache-write-{}-{sequence}", std::process::id()));
+        match std::fs::create_dir(&directory) {
+            Ok(()) => return Ok(directory),
+            Err(error) if error.kind() == io::ErrorKind::AlreadyExists => continue,
+            Err(error) => return Err(error),
+        }
+    }
 }
 
 pub fn persistent_sub_region_cache_path(root: &Path, key: &str) -> PathBuf {

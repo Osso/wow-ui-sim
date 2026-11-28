@@ -120,9 +120,24 @@ fn extract_casc_asset(
     if out_path.exists() {
         return Some(out_path);
     }
-    resolver
-        .ensure_cached(file_data_id, &out_path)
+    extract_into_cache(resolver, file_data_id, &out_path)
         .or_else(|| crate::casc_asset_fallback::ensure_known_asset_cached(relative_path, &out_path))
+}
+
+#[cfg(feature = "casc")]
+fn extract_into_cache(
+    resolver: &asset_resolver::CascListfileResolver,
+    fdid: u32,
+    path: &Path,
+) -> Option<PathBuf> {
+    write_cache_file_atomically(path, |temporary| {
+        resolver
+            .ensure_cached(fdid, temporary)
+            .map(|_| ())
+            .ok_or_else(|| std::io::Error::other("CASC extraction failed"))
+    })
+    .ok()?;
+    Some(path.to_path_buf())
 }
 
 #[cfg(feature = "casc")]
@@ -439,6 +454,48 @@ mod tests {
         assert_eq!(cached.width, 1);
         assert_eq!(cached.height, 2);
         assert_eq!(cached.pixels, stored.pixels);
+    }
+
+    #[test]
+    fn persistent_crop_cache_readers_keep_their_complete_image() {
+        use sim_texture::resolve::{
+            load_persistent_sub_region_cache, store_persistent_sub_region_cache,
+        };
+        let root = tempfile::tempdir().unwrap();
+        let key = "Interface/Foo/Atlas#crop";
+        let original = pixel_fixture(12);
+        let replacement = pixel_fixture(93);
+        store_persistent_sub_region_cache(root.path(), key, &original);
+        let reader =
+            std::fs::File::open(persistent_sub_region_cache_path(root.path(), key)).unwrap();
+        std::thread::scope(|scope| {
+            scope.spawn(|| store_persistent_sub_region_cache(root.path(), key, &replacement));
+        });
+        let opened = decode_opened_image(reader);
+        assert_eq!(opened.as_raw().as_slice(), original.pixels.as_ref());
+        assert_eq!(
+            load_persistent_sub_region_cache(root.path(), key)
+                .unwrap()
+                .pixels,
+            replacement.pixels
+        );
+    }
+
+    fn pixel_fixture(color: u8) -> TextureData {
+        TextureData {
+            width: 1,
+            height: 1,
+            pixels: Arc::from([color, 0, 0, 255]),
+        }
+    }
+
+    fn decode_opened_image(reader: std::fs::File) -> image::RgbaImage {
+        image::ImageReader::new(std::io::BufReader::new(reader))
+            .with_guessed_format()
+            .unwrap()
+            .decode()
+            .unwrap()
+            .to_rgba8()
     }
 
     #[test]
