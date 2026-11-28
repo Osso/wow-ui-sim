@@ -1833,7 +1833,6 @@ NotWhileDeadError # not-yet
 OpeningCinematic # not-yet
 OutageDetected # not-yet
 PartialPlayTime # not-yet: temporary Lua workaround
-PlaceRaidMarker # not-yet
 PlatformIsHandheld # not-yet
 PlayerIsSpellTarget # not-yet
 PortGraveyard # not-yet

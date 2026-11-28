@@ -2383,7 +2383,6 @@ PitchDownStart # intentionally-unsupported: 3D camera/model
 PitchDownStop # intentionally-unsupported: 3D camera/model
 PitchUpStart # intentionally-unsupported: 3D camera/model
 PitchUpStop # intentionally-unsupported: 3D camera/model
-PlaceRaidMarker # not-yet
 PlayAutoAcceptQuestSound # not-yet
 PortGraveyard # not-yet
 PreloadMovie # not-yet
