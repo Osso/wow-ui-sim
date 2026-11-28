@@ -7,7 +7,7 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-SOURCE = ROOT / "data/db2/wowforever-1.60.1.70707/GlobalStrings.csv"
+SOURCE = ROOT / "data/db2/wowforever-1.60.1.70959/GlobalStrings.csv"
 OUTPUT = ROOT / "crates/sim-data-profile/data/global_strings_wowforever.rs"
 
 
@@ -30,7 +30,7 @@ def rust_string(value):
     return json.dumps(value, ensure_ascii=False).replace("\\u00", "\\x")
 
 
-def generate(source, output, profile="Forever 1.60.1.70707"):
+def generate(source, output, profile="Forever 1.60.1.70959"):
     strings = read_strings(source)
     lines = [
         f"//! Generated from {profile} GlobalStrings.csv.",

@@ -2,7 +2,7 @@
 
 ## Contract
 
-- `client-wowforever` publishes the 27,399 unique tags from the committed build `1.60.1.70707` GlobalStrings CSV, the build of the pinned Forever Blizzard UI; other profiles retain their existing generated table.
+- `client-wowforever` publishes the 27,402 unique tags from the committed build `1.60.1.70959` GlobalStrings CSV, the build of the pinned Forever Blizzard UI; other profiles retain their existing generated table.
 - Preserve source text, format tokens, quoted and multiline CSV fields. Runtime uses the existing WoW escape resolver.
 - Initial publication replaces string values but preserves existing Lua functions. Missing-string restoration leaves all existing values unchanged.
 - Duplicate or empty tags fail generation before output replacement; no arbitrary winner or retail string fallback.
@@ -10,7 +10,7 @@
 
 ## Source and reproduction
 
-Snapshot: `data/db2/wowforever-1.60.1.70707/GlobalStrings.csv`.
+Snapshot: `data/db2/wowforever-1.60.1.70959/GlobalStrings.csv`. The historical 70707 export remains separately identified.
 Build-specific source URL and SHA-256: adjacent `global-strings-provenance.json`.
 
 ```text
