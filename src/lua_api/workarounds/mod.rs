@@ -248,6 +248,7 @@ fn apply_runtime_state_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     temporary::forever_bank_capability_defaults::apply_bootstrap(lua)?;
     temporary::house_exterior_debug::apply_bootstrap(lua)?;
     temporary::map_runtime_state::apply_bootstrap(lua)?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::perks_activities_state::apply_bootstrap(lua)?;
     temporary::ptr_bank_default::apply_bootstrap(lua)?;
     crate::c_api::private_aura_callbacks::apply_bootstrap(lua)?;
@@ -274,7 +275,9 @@ fn apply_secure_and_store_state_bootstrap(lua: &mut rilua::Lua) -> crate::Result
     temporary::restricted_actions_protected::apply_bootstrap(lua)?;
     temporary::secure_reference_defaults::apply_bootstrap(lua)?;
     temporary::secure_types_defaults::apply_bootstrap(lua)?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::secure_transfer_state::apply_bootstrap(lua)?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::store_glue_state::apply_bootstrap(lua)?;
     temporary::store_public_defaults::apply_bootstrap(lua)
 }
@@ -357,6 +360,7 @@ fn apply_core_foundation_environment_defaults(lua: &mut rilua::Lua) -> crate::Re
     temporary::map_group_defaults::apply_bootstrap(lua)?;
     #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::merchant_raid_defaults::apply_bootstrap(lua)?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::mythic_plus_cache_defaults::apply_bootstrap(lua)?;
     temporary::shared_character_services_defaults::apply_bootstrap(lua)?;
     Ok(())
@@ -384,7 +388,9 @@ fn apply_core_foundation_tracking_defaults(lua: &mut rilua::Lua) -> crate::Resul
     temporary::minimap_tracking_defaults::apply_bootstrap(lua)?;
     #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::map_art_help_text_defaults::apply_bootstrap(lua)?;
-    temporary::super_track_defaults::apply_bootstrap(lua)
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+    temporary::super_track_defaults::apply_bootstrap(lua)?;
+    Ok(())
 }
 
 fn apply_core_foundation_addon_defaults(lua: &mut rilua::Lua) -> crate::Result<()> {
@@ -511,6 +517,7 @@ fn apply_feature_tool_defaults(lua: &mut rilua::Lua) -> crate::Result<()> {
     }
     #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::macro_defaults::apply_bootstrap(lua)?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
     temporary::navigation_defaults::apply_bootstrap(lua)?;
     temporary::object_api_request_load_callbacks::apply_bootstrap(lua)?;
     temporary::party_info_instance_abandon_defaults::apply_bootstrap(lua)?;

@@ -137,3 +137,20 @@ Supplies the account region.
 - **regionName** `string` -- a non-empty region name, for example `"US"` or `"EU"`
 - **Affects:** `GetCurrentRegion()`, `GetCurrentRegionName()` (Retail, PTR and WoW Forever)
 - **Default:** region 1 named `"US"`. INFERRED R88g9 (native evidence pending): this is the pair the simulator reported before the region model.
+
+## A_Admin.SetTravelersLogAvailable(available)
+
+Supplies the host-owned value returned by `C_PlayerInfo.IsTravelersLogAvailable()`.
+
+- **available** `boolean` -- Whether the Traveler's Log is available to the player
+- **Default:** `false`; the native default is unverified (R-question)
+- **Validation:** non-boolean values raise an error
+- **Affects:** `C_PlayerInfo.IsTravelersLogAvailable()` and the Retail Encounter Journal Monthly Activities tab
+- **Events:** none
+
+Set the value before opening Encounter Journal:
+```lua
+A_Admin.SetTravelersLogAvailable(true)
+ShowUIPanel(EncounterJournal)
+EncounterJournal.MonthlyActivitiesTab:Click()
+```
