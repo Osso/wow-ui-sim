@@ -9,13 +9,20 @@ use rilua::{LuaResult, Val};
 // INFERRED (R88bn): timer units are milliseconds and the phase mapping is simulator policy.
 const STARTUP_WATCHDOG_TIMEOUT_MS: u64 = 19_000;
 const RUNTIME_WATCHDOG_TIMEOUT_MS: u64 = 200;
+// Out of combat the client lets a single add-on handler run far longer than
+// the combat limit: measured in client 1.60.1, an add-on frame handler ran
+// 5577 ms to completion with no "script ran too long" error. The exact
+// out-of-combat ceiling is not measured; the startup limit is used.
+const OUT_OF_COMBAT_WATCHDOG_TIMEOUT_MS: u64 = STARTUP_WATCHDOG_TIMEOUT_MS;
 
 pub(crate) fn watchdog_timeout(state: &LuaState) -> LuaResult<Duration> {
     let sim = borrow_state(state)?;
     let timeout_ms = if sim.startup_script_watchdog_phase {
         STARTUP_WATCHDOG_TIMEOUT_MS
-    } else {
+    } else if sim.in_combat_lockdown() {
         RUNTIME_WATCHDOG_TIMEOUT_MS
+    } else {
+        OUT_OF_COMBAT_WATCHDOG_TIMEOUT_MS
     };
     Ok(sim
         .script_watchdog_timeout_override
@@ -68,11 +75,22 @@ fn restricted_bucket_limits(state: &LuaState, restricted: bool) -> LuaResult<Opt
     if !sim.cvars.get_bool("luaScriptBucketThrottleEnabled") {
         return Ok(None);
     }
-    let rate = parse_bucket_limit(
-        &sim.cvars,
-        "luaScriptBucketThrottleMaxMsPerSecondRestricted",
-    )?;
-    let burst = parse_bucket_limit(&sim.cvars, "luaScriptBucketThrottleMaxMsBurstRestricted")?;
+    // INFERRED: the Restricted limits apply in combat, the Normal ones
+    // otherwise. The same 5577 ms out-of-combat handler above is over the
+    // Restricted burst (1000 ms) and inside the Normal one (20000 ms).
+    let (rate_cvar, burst_cvar) = if sim.in_combat_lockdown() {
+        (
+            "luaScriptBucketThrottleMaxMsPerSecondRestricted",
+            "luaScriptBucketThrottleMaxMsBurstRestricted",
+        )
+    } else {
+        (
+            "luaScriptBucketThrottleMaxMsPerSecondNormal",
+            "luaScriptBucketThrottleMaxMsBurstNormal",
+        )
+    };
+    let rate = parse_bucket_limit(&sim.cvars, rate_cvar)?;
+    let burst = parse_bucket_limit(&sim.cvars, burst_cvar)?;
     Ok(Some((rate, burst)))
 }
 
