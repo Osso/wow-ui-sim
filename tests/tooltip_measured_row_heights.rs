@@ -100,6 +100,8 @@ fn blizzard_tooltip_wrapped_row_height_follows_the_font_string_measurement() {
             { type = 0, leftText = "Short body" },
             { type = 0, leftText = string.rep("wrapped description ", 12), wrapText = true },
         } } }))
+        -- WM63-L4: ProcessInfo fills content; Show performs the size calculation.
+        GameTooltip:Show()
 
         local heights = MTNearMeasuredHeight(GameTooltip, "GameTooltip")
         -- A fixed single-line constant cannot produce a multi-line row.
