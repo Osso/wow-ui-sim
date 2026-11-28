@@ -22,6 +22,7 @@ const CUSTOM: u8 = 91;
 pub(crate) fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
     LuaApiMut::register_function(lua, "ShowBuybackSellCursor", show_buyback_sell_cursor)?;
     LuaApiMut::register_function(lua, "ShowRepairCursor", show_repair_cursor)?;
+    LuaApiMut::register_function(lua, "HideRepairCursor", hide_repair_cursor)?;
     LuaApiMut::register_function(lua, "InRepairMode", in_repair_mode)?;
     LuaApiMut::register_function(lua, "SetCursor", set_cursor)?;
     LuaApiMut::register_function(lua, "ResetCursor", reset_cursor)
@@ -106,6 +107,18 @@ fn show_repair_cursor(state: &mut LuaState) -> LuaResult<u32> {
         cursor_model::clear(state)?;
         borrow_state_mut(state)?.cursor_storage.presentation_base = REPAIR;
         display(state, REPAIR)?;
+    }
+    Ok(0)
+}
+
+/// `HideRepairCursor()` (the repair button's second click): leaves repair mode
+/// and returns the cursor to the pointer. INFERRED (R-ag10-14): outside repair
+/// mode it changes nothing.
+fn hide_repair_cursor(state: &mut LuaState) -> LuaResult<u32> {
+    let repairing = borrow_state(state)?.cursor_storage.presentation_base == REPAIR;
+    if repairing {
+        borrow_state_mut(state)?.cursor_storage.presentation_base = POINT;
+        display(state, POINT)?;
     }
     Ok(0)
 }

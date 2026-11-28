@@ -747,7 +747,11 @@ fn c_currency_get_currency_link(state: &mut LuaState) -> LuaResult<u32> {
 /// and never cleared, and it formats only when the id resolves. An unresolved id
 /// (zero, or absent from currency data) therefore republishes the buffer itself:
 /// empty until the first link is built, then the last built link.
-fn build_currency_link(state: &mut LuaState, currency_id: i32, amount: i32) -> LuaResult<String> {
+pub(crate) fn build_currency_link(
+    state: &mut LuaState,
+    currency_id: i32,
+    amount: i32,
+) -> LuaResult<String> {
     let record = borrow_state(state)?
         .currency_info
         .get(&currency_id)

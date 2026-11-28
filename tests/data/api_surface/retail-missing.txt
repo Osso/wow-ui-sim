@@ -39,8 +39,6 @@ BattlefieldMgrQueueInviteResponse # not-yet
 BattlefieldMgrQueueRequest # not-yet
 BuyGuildBankTab # not-yet
 BuyGuildCharter # not-yet
-BuyMerchantItem # not-yet
-BuybackItem # not-yet
 C_AchievementInfo.AreGuildAchievementsEnabled # not-yet
 C_AchievementInfo.IsGuildAchievement # not-yet
 C_ActionBar.GetProfessionQuality # not-yet
@@ -2154,9 +2152,6 @@ GetMaxNumCUFProfiles # not-yet
 GetMaxRewardCurrencies # not-yet
 GetMaxTalentTier # not-yet
 GetMaximumExpansionLevel # not-yet
-GetMerchantItemCostInfo # not-yet
-GetMerchantItemCostItem # not-yet
-GetMerchantItemMaxStack # not-yet
 GetModifiedClick # not-yet: temporary Lua workaround
 GetModifiedClickAction # not-yet
 GetMonitorAspectRatio # not-yet
@@ -2296,7 +2291,6 @@ HasLoadedCUFProfiles # not-yet
 HasLootSpecializations # not-yet
 HasWandEquipped # not-yet
 HearthAndResurrectFromArea # not-yet
-HideRepairCursor # not-yet
 InGuildParty # not-yet
 Is64BitClient # not-yet
 IsAccountSecured # not-yet: temporary Lua workaround
