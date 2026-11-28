@@ -70,11 +70,15 @@ pub(crate) fn register_has_favorite_order_recipes(state: &mut LuaState) -> LuaRe
     )
 }
 
+/// INFERRED (Forever 70707): the selected Blizzard_ProfessionsTemplates consumer
+/// calls `IsRecipeFavorite` during crafting-form initialization
+/// (Blizzard_ProfessionsRecipeSchematicForm.lua:469) and `SetRecipeFavorite` from
+/// its favorite checkbox (:160); Forever publication is not natively verified.
 fn supports_recipe_favorite_apis() -> bool {
-    matches!(
-        crate::client_profile::ACTIVE,
-        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
-    ) && cfg!(feature = "retail-12-1-5")
+    use crate::client_profile::{ACTIVE, ClientProfile};
+    let modern_retail = matches!(ACTIVE, ClientProfile::Retail | ClientProfile::Ptr)
+        && cfg!(feature = "retail-12-1-5");
+    modern_retail || ACTIVE == ClientProfile::WowForever
 }
 
 fn recipe_id(state: &LuaState, usage: &str) -> LuaResult<i32> {

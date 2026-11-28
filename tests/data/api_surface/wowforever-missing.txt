@@ -1530,7 +1530,6 @@ C_TradeSkillUI.GetItemReagentQualityByItemInfo # not-yet
 C_TradeSkillUI.GetOriginalCraftRecipeID # not-yet
 C_TradeSkillUI.GetProfessionChildSkillLineID # not-yet
 C_TradeSkillUI.GetProfessionForCursorItem # not-yet
-C_TradeSkillUI.GetProfessionInfoBySkillLineID # not-yet
 C_TradeSkillUI.GetProfessionNameForSkillLineAbility # not-yet
 C_TradeSkillUI.GetProfessionSpells # not-yet
 C_TradeSkillUI.GetQualitiesForRecipe # not-yet

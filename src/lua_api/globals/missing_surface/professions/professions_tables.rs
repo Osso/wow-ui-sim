@@ -63,7 +63,7 @@ pub(super) fn all_profession_tables(state: &mut LuaState) -> Val {
     table
 }
 
-pub(super) fn profession_table(
+pub(crate) fn profession_table(
     state: &mut LuaState,
     profession: Option<&profession_data::ProfessionInfo>,
 ) -> Val {
