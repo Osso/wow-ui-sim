@@ -91,7 +91,7 @@ fn pending_reward_glow_count(env: &WowLuaEnv) -> i64 {
     env.eval(
         r#"
         local count = 0
-        for _, threshold in ipairs(MonthlyActivitiesFrame.thresholdFrames) do
+        for _, threshold in ipairs(EncounterJournal.MonthlyActivitiesFrame.thresholdFrames) do
             if threshold.RewardCurrency.PendingGlow:IsShown() then
                 count = count + 1
             end
@@ -163,7 +163,7 @@ fn pending_chest_rewards_drive_original_monthly_activity_glows() {
     let env = load_monthly_activities_consumer();
     env.exec(&format!("A_Admin.SetPerksActivities([==[{MONTHLY_ACTIVITIES}]==])"))
         .expect("A_Admin should accept the supplied activities and thresholds");
-    env.exec("SetCVar('perksActivitiesLastPoints', '200'); MonthlyActivitiesFrame:Show()")
+    env.exec("SetCVar('perksActivitiesLastPoints', '200'); EncounterJournal.MonthlyActivitiesFrame:Show()")
         .expect("original Monthly Activities frame should open");
     supply_pending_chest_rewards(&env);
     assert_eq!(pending_reward_glow_count(&env), 2);
@@ -171,7 +171,7 @@ fn pending_chest_rewards_drive_original_monthly_activity_glows() {
     supply_pending_chest_reward_snapshot(&env, SECOND_CHEST_REWARD);
     assert_eq!(pending_reward_glow_count(&env), 1);
     let source: String = env
-        .eval("return debug.getinfo(MonthlyActivitiesFrame:GetScript('OnEvent'), 'S').source")
+        .eval("return debug.getinfo(EncounterJournal.MonthlyActivitiesFrame:GetScript('OnEvent'), 'S').source")
         .expect("original event handler source should be readable");
     assert!(source.contains("Blizzard_MonthlyActivities.lua"));
 }
