@@ -193,6 +193,8 @@ macro_rules! build_empty_sim_state {
             toc_cache: Default::default(),
             addon_saved_enable_state: None,
             addon_saved_version_check_enabled: None,
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            scenario_observations: Default::default(),
             system_chat_log: Vec::new(),
             addon_message_prefixes: Default::default(),
             #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]

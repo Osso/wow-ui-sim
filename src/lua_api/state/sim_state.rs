@@ -8,6 +8,8 @@ pub(crate) struct RegisteredLoadWith {
 }
 
 pub struct SimState {
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub(crate) scenario_observations: crate::c_api::scenario_observations::Observations,
     /// VERIFIED R88ap.1: zero initially and after CinematicFinished.
     #[cfg(feature = "cinematic-summary")]
     pub current_cinematic_id: u32,

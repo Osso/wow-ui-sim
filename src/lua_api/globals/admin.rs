@@ -331,6 +331,10 @@ fn register_admin_social_names(builder: TableBuilder) -> LuaResult<TableBuilder>
 }
 
 fn register_admin_maps_tooltips(mut builder: TableBuilder) -> LuaResult<TableBuilder> {
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    {
+        builder = crate::c_api::scenario_observations::register_admin(builder)?;
+    }
     builder = crate::c_api::c_minimap_tracking::register_admin(builder)?;
     let builder = crate::c_api::c_minimap_quest_blob::register_admin(builder)?;
     let builder = crate::c_api::c_tooltip_info_weekly::register_admin(builder)?;

@@ -43,6 +43,8 @@ pub(crate) mod experience_preset;
 pub(crate) mod kiosk;
 #[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
 pub mod performance_bar;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) mod scenario_observations;
 pub(crate) mod tooltip_azerite_catalog_data;
 #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 pub(crate) mod tooltip_info_retail_epoch_and_forever;
@@ -723,6 +725,8 @@ fn supports_super_tracking() -> bool {
 }
 
 pub(crate) fn register_utility_bootstrap_tables(state: &mut LuaState) -> LuaResult<()> {
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    scenario_observations::register(state)?;
     c_cvar_info::register(state)?;
     c_engraving::register(state)?;
     c_social_restrictions::register(state)?;

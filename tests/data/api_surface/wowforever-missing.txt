@@ -121,7 +121,6 @@ C_Calendar.IsEventOpen # not-yet
 C_Calendar.MassInviteCommunity # not-yet
 C_Calendar.MassInviteGuild # not-yet
 C_Calendar.OpenCalendar # not-yet: temporary Lua workaround
-C_CampaignInfo.GetAvailableCampaigns # not-yet
 C_CampaignInfo.GetCampaignChapterInfo # not-yet
 C_CampaignInfo.GetCurrentChapterID # not-yet
 C_CampaignInfo.GetFailureReason # not-yet
@@ -241,7 +240,6 @@ C_ClubFinder.ClearClubFinderPostingsCache # not-yet
 C_ClubFinder.GetPlayerSettingsFocusFlagsSelectedCount # not-yet
 C_ClubFinder.GetPostingIDFromClubFinderGUID # not-yet
 C_ClubFinder.GetRecruitingClubInfoFromFinderGUID # not-yet
-C_ClubFinder.ShouldShowClubFinder # not-yet
 C_ColorUtil.ConvertHSLToHSV # not-yet: temporary Lua workaround
 C_ColorUtil.ConvertHSVToHSL # not-yet: temporary Lua workaround
 C_ColorUtil.ConvertHSVToRGB # not-yet: temporary Lua workaround
@@ -438,7 +436,6 @@ C_CooldownViewer.GetLayoutData # not-yet
 C_CooldownViewer.SetLayoutData # not-yet
 C_CovenantPreview.CloseFromUI # not-yet
 C_CovenantPreview.GetCovenantInfoForPlayerChoiceResponseID # not-yet
-C_CovenantSanctumUI.CanAccessReservoir # not-yet
 C_CovenantSanctumUI.CanDepositAnima # not-yet: temporary Lua workaround
 C_CovenantSanctumUI.DepositAnima # not-yet: temporary Lua workaround
 C_CovenantSanctumUI.EndInteraction # not-yet: temporary Lua workaround
@@ -448,7 +445,6 @@ C_CovenantSanctumUI.GetFeatures # not-yet: temporary Lua workaround
 C_CovenantSanctumUI.GetRenownLevel # not-yet
 C_CovenantSanctumUI.GetRenownLevels # not-yet
 C_CovenantSanctumUI.GetRenownRewardsForLevel # not-yet: temporary Lua workaround
-C_CovenantSanctumUI.GetSanctumType # not-yet
 C_CovenantSanctumUI.GetSoulCurrencies # not-yet: temporary Lua workaround
 C_CovenantSanctumUI.HasMaximumRenown # not-yet
 C_CovenantSanctumUI.IsPlayerInRenownCatchUpMode # not-yet
@@ -462,7 +458,6 @@ C_CraftingOrders.FulfillOrder # not-yet
 C_CraftingOrders.GetCustomerCategories # not-yet
 C_CraftingOrders.GetCustomerOptions # not-yet
 C_CraftingOrders.GetCustomerOrders # not-yet
-C_CraftingOrders.GetDefaultOrdersSkillLine # not-yet
 C_CraftingOrders.GetMyOrders # not-yet
 C_CraftingOrders.GetNumFavoriteCustomerOptions # not-yet
 C_CraftingOrders.IsCustomerOptionFavorited # not-yet
@@ -510,7 +505,6 @@ C_DateAndTime.GetServerTimeLocal # not-yet: temporary Lua workaround
 C_DateAndTime.IsDayTime # not-yet: temporary Lua workaround
 C_DeathInfo.GetDeathReleasePosition # not-yet
 C_DeathInfo.UseSelfResurrectOption # not-yet
-C_DelvesUI.GetDelvesAffixSpellsForSeason # not-yet
 C_DelvesUI.GetDelvesFactionForSeason # not-yet
 C_DelvesUI.GetLockedTextForCompanion # not-yet
 C_DelvesUI.GetModelSceneForCompanion # not-yet
@@ -675,9 +669,7 @@ C_HousingBasicMode.GetSelectedDecorInfo # not-yet: temporary Lua workaround
 C_HousingBasicMode.IsDecorSelected # not-yet: temporary Lua workaround
 C_HousingBasicMode.IsGridSnapEnabled # not-yet: temporary Lua workaround
 C_HousingBasicMode.IsGridVisible # not-yet: temporary Lua workaround
-C_HousingBasicMode.IsHouseExteriorHovered # not-yet
 C_HousingBasicMode.IsHouseExteriorSelected # not-yet: temporary Lua workaround
-C_HousingBasicMode.IsHoveringDecor # not-yet
 C_HousingBasicMode.RemoveSelectedDecor # not-yet
 C_HousingBasicMode.RotateDecor # not-yet
 C_HousingBasicMode.RotateHouseExterior # not-yet
@@ -698,7 +690,6 @@ C_HousingCatalog.IsPreviewCartItemShown # not-yet: temporary Lua workaround
 C_HousingCatalog.PromotePreviewDecor # not-yet: temporary Lua workaround
 C_HousingCatalog.SetPreviewCartItemShown # not-yet: temporary Lua workaround
 C_HousingCleanupMode.GetHoveredDecorInfo # not-yet
-C_HousingCleanupMode.IsHoveringDecor # not-yet
 C_HousingCleanupMode.RemoveSelectedDecor # not-yet
 C_HousingCustomizeMode.ApplyDyeToSelectedDecor # not-yet
 C_HousingCustomizeMode.ClearDyesForSelectedDecor # not-yet
@@ -706,7 +697,6 @@ C_HousingCustomizeMode.CommitDyesForSelectedDecor # not-yet: temporary Lua worka
 C_HousingCustomizeMode.GetHoveredDecorInfo # not-yet
 C_HousingCustomizeMode.GetHoveredRoomComponentInfo # not-yet: temporary Lua workaround
 C_HousingCustomizeMode.GetNumDyesToRemoveOnSelectedDecor # not-yet: temporary Lua workaround
-C_HousingCustomizeMode.GetNumDyesToSpendOnSelectedDecor # not-yet: temporary Lua workaround
 C_HousingCustomizeMode.GetPreviewDyesOnSelectedDecor # not-yet: temporary Lua workaround
 C_HousingCustomizeMode.GetRecentlyUsedDyes # not-yet: temporary Lua workaround
 C_HousingCustomizeMode.GetRecentlyUsedThemeSets # not-yet: temporary Lua workaround
@@ -716,7 +706,6 @@ C_HousingCustomizeMode.GetSelectedRoomComponentInfo # not-yet: temporary Lua wor
 C_HousingCustomizeMode.GetThemeSetInfo # not-yet: temporary Lua workaround
 C_HousingCustomizeMode.GetWallpapersForRoomComponentType # not-yet: temporary Lua workaround
 C_HousingCustomizeMode.IsDecorSelected # not-yet: temporary Lua workaround
-C_HousingCustomizeMode.IsHoveringDecor # not-yet
 C_HousingCustomizeMode.IsHoveringRoomComponent # not-yet: temporary Lua workaround
 C_HousingCustomizeMode.IsRoomComponentSelected # not-yet: temporary Lua workaround
 C_HousingCustomizeMode.RoomComponentSupportsVariant # not-yet: temporary Lua workaround
@@ -749,9 +738,7 @@ C_HousingExpertMode.GetPrecisionSubmodeRestriction # not-yet: temporary Lua work
 C_HousingExpertMode.GetSelectedDecorInfo # not-yet: temporary Lua workaround
 C_HousingExpertMode.IsDecorSelected # not-yet: temporary Lua workaround
 C_HousingExpertMode.IsGridVisible # not-yet
-C_HousingExpertMode.IsHouseExteriorHovered # not-yet
 C_HousingExpertMode.IsHouseExteriorSelected # not-yet: temporary Lua workaround
-C_HousingExpertMode.IsHoveringDecor # not-yet
 C_HousingExpertMode.RemoveSelectedDecor # not-yet
 C_HousingExpertMode.SelectNextRotationAxis # not-yet
 C_HousingExpertMode.SetGridVisible # not-yet
@@ -761,8 +748,6 @@ C_HousingLayout.ConfirmStairChoice # not-yet
 C_HousingLayout.DeselectRoomOrDoor # not-yet
 C_HousingLayout.GetSelectedDoor # not-yet: temporary Lua workaround
 C_HousingLayout.GetSelectedFloorplan # not-yet: temporary Lua workaround
-C_HousingLayout.GetSelectedRoom # not-yet
-C_HousingLayout.GetSelectedStairwellRoomCount # not-yet
 C_HousingLayout.GetViewedFloor # not-yet: temporary Lua workaround
 C_HousingLayout.HasAnySelections # not-yet: temporary Lua workaround
 C_HousingLayout.HasRoomPlacementBudget # not-yet: temporary Lua workaround
@@ -791,14 +776,11 @@ C_HousingNeighborhood.GetPreviousHouseIdentifier # not-yet: temporary Lua workar
 C_HousingNeighborhood.HasPermissionToPurchase # not-yet: temporary Lua workaround
 C_HousingNeighborhood.IsNeighborhoodManager # not-yet: temporary Lua workaround
 C_HousingNeighborhood.IsNeighborhoodOwner # not-yet: temporary Lua workaround
-C_HousingNeighborhood.IsPlayerInOtherPlayersPlot # not-yet: temporary Lua workaround
 C_HousingNeighborhood.IsPlotAvailableForPurchase # not-yet: temporary Lua workaround
 C_HousingNeighborhood.IsPlotOwnedByPlayer # not-yet: temporary Lua workaround
 C_HousingNeighborhood.OnCornerstoneClosed # not-yet: temporary Lua workaround
-C_ImmersiveInteraction.HasImmersiveInteraction # not-yet
 C_InstanceLeaver.IsPlayerLeaver # not-yet
 C_InterfaceFileManifest.GetInterfaceArtFiles # not-yet
-C_InvasionInfo.AreInvasionsAvailable # not-yet
 C_InvasionInfo.GetInvasionForUiMapID # not-yet
 C_InvasionInfo.GetInvasionInfo # not-yet
 C_InvasionInfo.GetInvasionTimeLeft # not-yet
@@ -985,13 +967,10 @@ C_MerchantFrame.SellAllJunkItems # not-yet
 C_Minimap.CanTrackBattlePets # not-yet
 C_Minimap.ClearMinimapInsetInfo # not-yet
 C_Minimap.GetDrawGroundTextures # not-yet
-C_Minimap.GetNumQuestPOIWorldEffects # not-yet
 C_Minimap.GetPOITextureCoords # not-yet
 C_Minimap.GetUiMapID # not-yet
 C_Minimap.GetViewRadius # not-yet: temporary Lua workaround
-C_Minimap.IsRotateMinimapIgnored # not-yet
 C_Minimap.IsTrackingAccountCompletedQuests # not-yet
-C_Minimap.IsTrackingBattlePets # not-yet
 C_Minimap.IsTrackingHiddenQuests # not-yet
 C_Minimap.SetDrawGroundTextures # not-yet
 C_Minimap.SetIgnoreRotateMinimap # not-yet
@@ -1024,7 +1003,6 @@ C_PaperDollInfo.GetInspectRatedSoloShuffleData # not-yet
 C_PaperDollInfo.OffhandHasShield # not-yet
 C_PartyInfo.AllowedToDoPartyConversion # not-yet: temporary Lua workaround
 C_PartyInfo.CanFormCrossFactionParties # not-yet
-C_PartyInfo.CanInvite # not-yet
 C_PartyInfo.CanStartInstanceAbandonVote # not-yet: temporary Lua workaround
 C_PartyInfo.ChallengeModeRestrictionsActive # not-yet
 C_PartyInfo.ConfirmConvertToRaid # not-yet
@@ -1038,7 +1016,6 @@ C_PartyInfo.DoCountdown # not-yet
 C_PartyInfo.GetInstanceAbandonVoteCooldownTime # not-yet
 C_PartyInfo.GetLootMethodStyle # not-yet
 C_PartyInfo.GetMinItemLevel # not-yet
-C_PartyInfo.IsDelveComplete # not-yet
 C_PartyInfo.IsDelveInProgress # not-yet
 C_PartyInfo.IsPartyInJailersTower # not-yet: temporary Lua workaround
 C_PartyInfo.IsPartyWalkIn # not-yet: temporary Lua workaround
@@ -1115,7 +1092,6 @@ C_PingSecure.SendUnitPing # intentionally-unsupported: SecureOnly, native secure
 C_PingSecure.SetHitTestPingTarget # intentionally-unsupported: SecureOnly, native secure environment only
 C_PingSecure.SetHitTestTargetAndSendPing # intentionally-unsupported: SecureOnly, native secure environment only
 C_PlayerInfo.CanPlayerEnterChromieTime # not-yet
-C_PlayerInfo.CanPlayerUseAreaLoot # not-yet
 C_PlayerInfo.CanUseItem # not-yet
 C_PlayerInfo.GetClass # not-yet
 C_PlayerInfo.GetInstancesUnlockedAtLevel # not-yet
@@ -1124,18 +1100,13 @@ C_PlayerInfo.GetPetStableCreatureDisplayInfoID # not-yet
 C_PlayerInfo.GetPlayerCharacterData # not-yet
 C_PlayerInfo.GetRace # not-yet
 C_PlayerInfo.GetSex # not-yet
-C_PlayerInfo.HasAccountInventoryLock # not-yet
 C_PlayerInfo.HasVisibleInvSlot # not-yet
-C_PlayerInfo.IsAccountBankEnabled # not-yet
-C_PlayerInfo.IsCharacterBankEnabled # not-yet
 C_PlayerInfo.IsConnected # not-yet
 C_PlayerInfo.IsDisplayRaceNative # not-yet
 C_PlayerInfo.IsExpansionLandingPageUnlockedForPlayer # not-yet
 C_PlayerInfo.IsMirrorImage # not-yet
 C_PlayerInfo.IsPlayerInChromieTime # not-yet
-C_PlayerInfo.IsPlayerInTimerunningHeroicWorldTier # not-yet
 C_PlayerInfo.IsReturningCharacter # not-yet
-C_PlayerInfo.IsSelfFoundActive # not-yet
 C_PlayerInfo.ShouldDisplaySurname # not-yet
 C_PlayerInfo.UnitIsSameServer # not-yet
 C_PlayerInteractionManager.ConfirmationInteraction # not-yet
@@ -1196,15 +1167,10 @@ C_PvP.GetSkirmishInfo # not-yet
 C_PvP.GetTeamInfo # not-yet
 C_PvP.GetUIDisplaySeason # not-yet
 C_PvP.GetWeeklyChestInfo # not-yet
-C_PvP.HasArenaSkirmishWinToday # not-yet
-C_PvP.HasRandomTrainingGroundArenaWinToday # not-yet
-C_PvP.HasRandomTrainingGroundBGWinToday # not-yet
-C_PvP.IsActiveMatchRegistered # not-yet
 C_PvP.IsBrawlSoloRBG # not-yet
 C_PvP.IsBrawlSoloShuffle # not-yet
 C_PvP.IsInRatedMatchWithDeserterPenalty # not-yet
 C_PvP.IsWarModeActive # not-yet
-C_PvP.IsWarModeFeatureEnabled # not-yet
 C_PvP.JoinBrawl # not-yet
 C_PvP.JoinRandomTrainingGroundBG # not-yet
 C_PvP.JoinRatedBGBlitz # not-yet
@@ -1254,7 +1220,6 @@ C_QuestSession.RequestSessionStart # not-yet
 C_QuestSession.RequestSessionStop # not-yet
 C_QuestSession.SendSessionBeginResponse # not-yet
 C_QuestSession.SetQuestIsSuperTracked # not-yet
-C_RaidLocks.IsRaidLockExtendFeatureEnabled # not-yet
 C_RaidLocks.IsRaidLockExtendFeatureSupported # not-yet
 C_RecentAllies.CanSetRecentAllyNote # not-yet
 C_RecentAllies.GetRecentAllyByFullName # not-yet
@@ -1699,9 +1664,7 @@ C_WeeklyRewards.GetNextActivitiesIncrease # not-yet
 C_WeeklyRewards.GetNextMythicPlusIncrease # not-yet
 C_WeeklyRewards.GetNumCompletedDungeonRuns # not-yet
 C_WeeklyRewards.GetSortedProgressForActivity # not-yet
-C_WeeklyRewards.HasGeneratedRewards # not-yet
 C_WeeklyRewards.HasInteraction # not-yet
-C_WeeklyRewards.IsWeeklyChestRetired # not-yet
 C_WeeklyRewards.OnUIInteract # not-yet
 C_WeeklyRewards.ShouldShowFinalRetirementMessage # not-yet
 C_WeeklyRewards.ShouldShowRetirementMessage # not-yet

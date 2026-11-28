@@ -6,6 +6,8 @@ The `A_Admin` namespace provides administrative functions for controlling simula
 
 ## Sections
 
+- [Scenario observations](scenario-observations.md) — Supplied player, group, PvP, weekly reward, world availability, minimap and housing editor state
+
 - [Player Identity](player-identity.md) — SetPlayerName, SetPlayerClass, SetPlayerRace, SetPlayerLevel, SetPlayerSex, SetCurrentRegion, SetTravelersLogAvailable
 - [Battle.net Account State](battle-net.md) — SetPlayerBattleNetInfo, SetBattleNetAccountFeatures
 - [Behavioral messaging](behavioral-messaging.md) — QueueBehavioralNotification, GetBehavioralNotificationReceipts
