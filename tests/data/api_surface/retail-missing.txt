@@ -481,7 +481,6 @@ C_ContentTracking.IsTrackable # not-yet
 C_ContentTracking.StartTracking # not-yet
 C_ContentTracking.StopTracking # not-yet
 C_ContentTracking.ToggleTracking # not-yet
-C_ContributionCollector.Close # not-yet
 C_ContributionCollector.Contribute # not-yet
 C_ContributionCollector.HasPendingContribution # not-yet
 C_ContributionCollector.IsAwaitingRewardQuestData # not-yet
