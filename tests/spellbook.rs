@@ -20,11 +20,7 @@ use wow_ui_sim::widget::{Frame, WidgetRegistry};
 // level zero while the MEDIUM SpellBook and its descendants share a positive
 // raised level. The observed global ordinals (18/20) are not fixture inputs.
 post_wrath_ui_fixture! {
-fn create_native_raised_spellbook_fixture() -> WowLuaEnv {
-    let env = setup_full_ui();
-    env.set_screen_size(1906.0, 960.0);
-    env.exec(
-        r#"
+const UNIT_OVERLAY_SETUP: &str = r#"
         assert(PlayerFrame.noPortraitMode == nil)
         local overlay = CreateFrame("Frame")
         overlay:SetParent(PlayerFrame)
@@ -34,24 +30,15 @@ fn create_native_raised_spellbook_fixture() -> WowLuaEnv {
         overlay.Texture = overlay:CreateTexture(nil, "OVERLAY")
         overlay.Texture:SetAllPoints()
         overlay.Texture:SetColorTexture(1, 0, 0, 1)
-        "#,
-    )
-    .expect("reproduce BetterBlizzFrames no-portrait creation order");
-    open_spellbook(&env);
-    env.exec(
-        r#"
-        local paper = PlayerSpellsFrame.SpellBookFrame.BookBGLeft
-        assert(paper:IsVisible(), "expanded SpellBook paper must be visible")
+        "#;
+const PLACE_UNIT_INSIDE_BOOK: &str = r#"
+        assert(paper:IsVisible(), "SpellBook paper for the active mode must be visible")
         local x, y = paper:GetCenter()
         local scale = paper:GetEffectiveScale() / UIParent:GetEffectiveScale()
         PlayerFrame:ClearAllPoints()
         PlayerFrame:SetPoint("CENTER", UIParent, "BOTTOMLEFT", x * scale, y * scale)
-        "#,
-    )
-    .expect("place only the test unit-frame geometry inside the actual book");
-    wow_ui_sim::startup::run_extra_update_ticks(&env, 2);
-    env.exec(
-        r#"
+        "#;
+const NATIVE_BOOK_RAW_LEVELS: &str = r#"
         assert(PlayerFrame:IsVisible() and PlayerFrame:IsToplevel())
         assert(PlayerFrame:GetFrameStrata() == "LOW" and PlayerFrame:GetFrameLevel() == 1)
         local overlay = PlayerFrame.noPortraitMode
@@ -61,9 +48,35 @@ fn create_native_raised_spellbook_fixture() -> WowLuaEnv {
         assert(PlayerSpellsFrame:GetFrameStrata() == "MEDIUM" and PlayerSpellsFrame:GetFrameLevel() == 1)
         local book = PlayerSpellsFrame.SpellBookFrame
         assert(book:IsVisible() and book:GetFrameStrata() == "MEDIUM" and book:GetFrameLevel() == 100)
-        "#,
-    )
-    .expect("native raw strata and levels remain unchanged by normal book opening");
+        "#;
+
+fn native_spellbook_paper_key() -> &'static str {
+    // Forever selects Camelot/Blizzard_PlayerSpellsFrame.lua:103-110 on first
+    // open; shared SpellBookFrame.xml:11-13 and .lua:285-319 show only halved art.
+    if cfg!(feature = "client-wowforever") {
+        "BookBGHalved"
+    } else {
+        "BookBGLeft"
+    }
+}
+
+fn create_native_raised_spellbook_fixture() -> WowLuaEnv {
+    let env = setup_full_ui();
+    env.set_screen_size(1906.0, 960.0);
+    env.exec(UNIT_OVERLAY_SETUP)
+        .expect("reproduce BetterBlizzFrames no-portrait creation order");
+    open_spellbook(&env);
+    if cfg!(feature = "client-wowforever") {
+        env.exec("assert(PlayerSpellsFrame:IsMinimized())").unwrap();
+    }
+    let paper_key = native_spellbook_paper_key();
+    env.exec(&format!(
+        "local paper = PlayerSpellsFrame.SpellBookFrame.{paper_key}\n{PLACE_UNIT_INSIDE_BOOK}"
+    ))
+    .expect("place only the test unit-frame geometry inside the actual book");
+    wow_ui_sim::startup::run_extra_update_ticks(&env, 2);
+    env.exec(NATIVE_BOOK_RAW_LEVELS)
+        .expect("native raw strata and levels remain unchanged by normal book opening");
     env
 }
 }
@@ -85,50 +98,99 @@ fn native_raised_spellbook_shares_positive_level_without_raising_unit_overlay() 
 }
 
 post_wrath_ui_fixture! {
+fn native_book_overlay_ids(registry: &WidgetRegistry) -> (u64, u64) {
+    let player = registry.get_by_name("PlayerFrame").unwrap();
+    let overlay = registry
+        .get(player.children_keys["noPortraitMode"])
+        .unwrap();
+    let panel = registry.get_by_name("PlayerSpellsFrame").unwrap();
+    let book = registry.get(panel.children_keys["SpellBookFrame"]).unwrap();
+    (
+        overlay.children_keys["Texture"],
+        book.children_keys[native_spellbook_paper_key()],
+    )
+}
+
+fn assert_marker_inside_paper(marker: wow_ui_sim::LayoutRect, paper: wow_ui_sim::LayoutRect) {
+    let within_width = marker.x >= paper.x && marker.x + marker.width <= paper.x + paper.width;
+    let within_height = marker.y >= paper.y && marker.y + marker.height <= paper.y + paper.height;
+    assert!(
+        within_width && within_height,
+        "unit marker must lie inside opaque book paper: marker={marker:?}, paper={paper:?}",
+    );
+}
+
+fn marker_quad_vertex(
+    batch: &wow_ui_sim::render::QuadBatch,
+    marker_rect: wow_ui_sim::LayoutRect,
+) -> u32 {
+    let markers: Vec<_> = batch
+        .vertices
+        .chunks_exact(4)
+        .enumerate()
+        .filter(|(_, vertices)| {
+            vertices.iter().all(|v| v.color == [1.0, 0.0, 0.0, 1.0])
+                && bounds_match_rect(quad_bounds_from_vertices(vertices), marker_rect)
+        })
+        .map(|(quad, _)| (quad * 4) as u32)
+        .collect();
+    assert_eq!(
+        markers.len(),
+        1,
+        "actual unit overlay must emit one marker quad"
+    );
+    markers[0]
+}
+
+fn assert_paper_draws_after_overlay(
+    batch: &wow_ui_sim::render::QuadBatch,
+    marker_rect: wow_ui_sim::LayoutRect,
+    paper_rect: wow_ui_sim::LayoutRect,
+    paper_path: &str,
+) {
+    let marker = marker_quad_vertex(batch, marker_rect);
+    let paper_request = batch
+        .texture_requests
+        .iter()
+        .find(|request| {
+            request.path.split("@crop:").next() == Some(paper_path)
+                && bounds_match_rect(quad_bounds(batch, request), paper_rect)
+        })
+        .expect("actual book paper must emit its textured quad");
+    let overlay_draw = batch
+        .indices
+        .iter()
+        .position(|&vertex| vertex == marker)
+        .unwrap();
+    let paper_draw = batch
+        .indices
+        .iter()
+        .position(|&vertex| vertex == paper_request.vertex_start)
+        .unwrap();
+    assert!(
+        overlay_draw < paper_draw,
+        "native raised SpellBook must cover the HIGH unit overlay: overlay draw={overlay_draw}, paper draw={paper_draw}"
+    );
+}
+
 #[test]
 fn native_raised_spellbook_paper_renders_after_high_strata_unit_overlay() {
     test_timeout! {
         let env = create_native_raised_spellbook_fixture();
-        let buckets = {
-            let mut state = env.state().borrow_mut();
-            state.ensure_layout_rects();
-            state.get_strata_buckets().unwrap().clone()
-        };
+        let buckets = build_strata_buckets(&env);
         let state = env.state().borrow();
         let registry = &state.widgets;
-        let player = registry.get_id_by_name("PlayerFrame").unwrap();
-        let overlay = registry.get(player).unwrap().children_keys["noPortraitMode"];
-        let marker = registry.get(overlay).unwrap().children_keys["Texture"];
-        let panel = registry.get_id_by_name("PlayerSpellsFrame").unwrap();
-        let book = registry.get(panel).unwrap().children_keys["SpellBookFrame"];
-        let paper = registry.get(book).unwrap().children_keys["BookBGLeft"];
+        let (marker, paper) = native_book_overlay_ids(registry);
         let marker_rect = compute_frame_rect(registry, marker, 1906.0, 960.0);
         let paper_rect = compute_frame_rect(registry, paper, 1906.0, 960.0);
-        assert!(
-            marker_rect.x >= paper_rect.x && marker_rect.y >= paper_rect.y
-                && marker_rect.x + marker_rect.width <= paper_rect.x + paper_rect.width
-                && marker_rect.y + marker_rect.height <= paper_rect.y + paper_rect.height,
-            "unit marker must lie inside opaque book paper: marker={marker_rect:?}, paper={paper_rect:?}",
-        );
+        assert_marker_inside_paper(marker_rect, paper_rect);
         let paper_frame = registry.get(paper).unwrap();
         assert_eq!(paper_frame.effective_alpha, 1.0, "native book paper must be opaque");
-        let paper_path = paper_frame.texture.as_ref().expect("native book paper texture");
+        let paper_path = paper_frame.texture.as_deref().expect("native book paper texture");
         let batch = build_quad_batch_for_registry(RegistryQuadBatchParams::new(
             registry, (1906.0, 960.0), &buckets,
         ));
-        let markers: Vec<_> = batch.vertices.chunks_exact(4).enumerate()
-            .filter(|(_, vertices)| vertices.iter().all(|v| v.color == [1.0, 0.0, 0.0, 1.0])
-                && bounds_match_rect(quad_bounds_from_vertices(vertices), marker_rect))
-            .map(|(quad, _)| (quad * 4) as u32).collect();
-        assert_eq!(markers.len(), 1, "actual unit overlay must emit one marker quad");
-        let paper_request = batch.texture_requests.iter().find(|request|
-            request.path.split("@crop:").next() == Some(paper_path.as_str())
-                && bounds_match_rect(quad_bounds(&batch, request), paper_rect)
-        ).expect("actual book paper must emit its textured quad");
-        let overlay_draw = batch.indices.iter().position(|&vertex| vertex == markers[0]).unwrap();
-        let paper_draw = batch.indices.iter().position(|&vertex| vertex == paper_request.vertex_start).unwrap();
-        assert!(overlay_draw < paper_draw,
-            "native raised SpellBook must cover the HIGH unit overlay: overlay draw={overlay_draw}, paper draw={paper_draw}");
+        assert_paper_draws_after_overlay(&batch, marker_rect, paper_rect, paper_path);
     }
 }
 }
