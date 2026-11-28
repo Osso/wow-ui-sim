@@ -307,4 +307,22 @@ fn hero_spec_icon_crop_request_matches_atlas_entry() {
     let request = require_icon_crop(&batch, icon, rect, atlas.info.file);
     assert_atlas_crop_coords(request, atlas.info);
 }
+
+#[test]
+fn hero_spec_icon_replaces_xml_placeholder_file_identity() {
+    let env = setup_full_ui();
+    open_class_talent_frame(&env);
+    env.exec(r#"
+        local button = PlayerSpellsFrame.TalentsFrame.HeroTalentsContainer.HeroSpecButton
+        local icon = button.Icon1
+        local placeholder = button.Icon2:GetTexture()
+        assert(not button.Icon2:IsShown(), "single active subtree fixture")
+        assert(placeholder == 134400 and button.Icon2:GetTextureFileID() == placeholder)
+        assert(icon:IsVisible() and icon:GetAtlas() == "talents-heroclass-paladin-lightsmith")
+        local atlas = C_Texture.GetAtlasInfo(icon:GetAtlas())
+        assert(icon:GetTextureFilePath() == atlas.filename, "atlas backing path")
+        assert(icon:GetTexture() ~= placeholder, "GetTexture retained the XML file ID")
+        assert(icon:GetTextureFileID() ~= placeholder, "GetTextureFileID retained the XML file ID")
+    "#).unwrap();
+}
 }
