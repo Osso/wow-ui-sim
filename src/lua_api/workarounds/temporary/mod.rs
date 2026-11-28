@@ -181,6 +181,7 @@ pub(crate) mod misc_global_frame_defaults;
 pub(crate) mod modified_click_defaults;
 #[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod mount_journal_dynamic_flight_popup;
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
 pub(crate) mod mythic_plus_cache_defaults;
 pub(crate) mod navigation_defaults;
 pub(crate) mod object_api_request_load_callbacks;

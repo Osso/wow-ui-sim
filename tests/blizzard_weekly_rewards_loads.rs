@@ -500,3 +500,48 @@ fn blizzard_weeklyrewards_toc_is_absent_from_classic_caches() {
     assert!(wow_ui_sim::loader::find_toc_file(&dir).is_none());
 }
 }
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn show_weekly_rewards_with_supplied_maps(env: &WowLuaEnv) {
+    env.exec("A_Admin.SetManualClock(0)")
+        .expect("manual clock should defer the original response event");
+    env.exec(
+        r#"
+        A_Admin.SetChallengeModeMapInfo(42, {name="Cache probe alpha", id=42,
+            timeLimit=1500, texture=321, backgroundTexture=654, mapID=142})
+        WeeklyRewards_ShowUI()
+        assert(WeeklyRewardsFrame:IsShown())
+        assert(WeeklyRewardsFrame:IsEventRegistered("CHALLENGE_MODE_MAPS_UPDATE"))
+        A_Admin.SetChallengeModeMapInfo(43, {name="Cache probe beta", id=43,
+            timeLimit=1600, texture=322, backgroundTexture=655, mapID=143})
+        A_Admin.AdvanceTime(0)
+        "#,
+    )
+    .expect("the original Weekly Rewards panel should consume its deferred map update");
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn weekly_rewards_map_snapshot(env: &WowLuaEnv) -> (String, i32, String, i32) {
+    env.eval(
+        "local alpha, _, _, _, _, alphaMap = C_ChallengeMode.GetMapUIInfo(42)\n\
+         local beta, _, _, _, _, betaMap = C_ChallengeMode.GetMapUIInfo(43)\n\
+         return alpha, alphaMap, beta, betaMap",
+    )
+    .expect("the original response consumer should see both supplied map records")
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn weekly_rewards_consumes_two_supplied_challenge_map_records() {
+    let env = crate::common::panel_fixtures::setup_env();
+    show_weekly_rewards_with_supplied_maps(&env);
+    assert_eq!(
+        weekly_rewards_map_snapshot(&env),
+        (
+            "Cache probe alpha".to_string(),
+            142,
+            "Cache probe beta".to_string(),
+            143,
+        )
+    );
+}
