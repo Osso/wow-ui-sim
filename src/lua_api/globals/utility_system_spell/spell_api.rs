@@ -244,6 +244,35 @@ fn unit_power_max(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+/// `UnitPercentHealthFromGUID(guid)`: health fraction (0..1) of the visible unit with
+/// that GUID; nil when no unit token resolves to it. Original consumer:
+/// Blizzard_GameTooltip GameTooltipUnitHealthBarMixin:UpdateUnitHealth.
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn unit_percent_health_from_guid(state: &mut LuaState) -> LuaResult<u32> {
+    let guid = val_to_string(state, stack_val(state, 1)).unwrap_or_default();
+    let unit = guid_unit_token(state, &guid);
+    let percent = unit
+        .map(|unit| lookup_unit_vitals(state, &unit))
+        .and_then(|vitals| {
+            (vitals.present && vitals.health_max > 0)
+                .then(|| f64::from(vitals.health) / f64::from(vitals.health_max))
+        });
+    state.push(percent.map_or(Val::Nil, Val::Num));
+    Ok(1)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn guid_unit_token(state: &LuaState, guid: &str) -> Option<String> {
+    let sim = borrow_state(state).ok()?;
+    let fixed = ["player", "target", "focus", "mouseover"].map(String::from);
+    let party = (1..=4).map(|index| format!("party{index}"));
+    let raid = (1..=40).map(|index| format!("raid{index}"));
+    fixed.into_iter().chain(party).chain(raid).find(|unit| {
+        crate::lua_api::globals::unit_misc::existing_guid_for_unit(&sim, unit).as_deref()
+            == Some(guid)
+    })
+}
+
 fn unit_power_missing(state: &mut LuaState) -> LuaResult<u32> {
     let unit = val_to_string(state, stack_val(state, 1)).unwrap_or_else(|| "player".to_string());
     let vitals = lookup_unit_vitals(state, &unit);
@@ -612,6 +641,12 @@ pub(super) fn register_spell_globals(lua: &mut rilua::Lua) -> LuaResult<()> {
     LuaApiMut::register_function(lua, "UnitHealthPercent", unit_health_percent)?;
     LuaApiMut::register_function(lua, "UnitPower", unit_power)?;
     LuaApiMut::register_function(lua, "UnitPowerMax", unit_power_max)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    LuaApiMut::register_function(
+        lua,
+        "UnitPercentHealthFromGUID",
+        unit_percent_health_from_guid,
+    )?;
     LuaApiMut::register_function(lua, "UnitPowerPercent", unit_power_percent)?;
     LuaApiMut::register_function(lua, "UnitPowerBarID", unit_power_bar_id)?;
     LuaApiMut::register_function(lua, "UnitPowerType", unit_power_type)?;

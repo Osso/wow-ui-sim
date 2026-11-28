@@ -802,6 +802,13 @@ pub struct SimState {
     /// Ghost form, resurrect-offer attributes, area spirit healer and cemetery inputs.
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     pub death_release: crate::lua_api::globals::real::death_release::DeathReleaseState,
+    /// Sheath, follow, low-level raid, out-of-bounds and unit-control inputs.
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub player_actions: crate::lua_api::globals::real::player_actions::PlayerActionState,
+    /// Guild invite awaiting AcceptGuild/DeclineGuild (`A_Admin.OfferGuildInvite`).
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pub pending_guild_invite:
+        Option<crate::lua_api::globals::real::guild_membership::PendingGuildInvite>,
     /// Host vehicle seats and seat-indicator layouts (`A_Admin.EnterVehicle`).
     #[cfg(feature = "vehicle-seats")]
     pub vehicle_seats: crate::lua_api::globals::real::vehicle_seats::VehicleSeatState,

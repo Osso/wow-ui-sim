@@ -273,6 +273,7 @@ fn register_frame_context_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
         super::real::guild_membership::register_all(lua)?;
         super::real::merchant_repair::register_all(lua)?;
         super::real::death_release::register_all(lua)?;
+        super::real::player_actions::register_all(lua)?;
     }
     #[cfg(feature = "vehicle-seats")]
     super::real::vehicle_seats::register_all(lua)?;

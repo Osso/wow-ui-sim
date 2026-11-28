@@ -1,7 +1,6 @@
 # Documented Retail API functions without a runtime function after full
 # Blizzard UI startup. Contract: docs/specs/api-surface-audit.md.
 # Format: <name> # <intentionally-unsupported|not-yet>[: reason]
-AcceptGuild # not-yet
 AcceptQuest # not-yet
 AcknowledgeAutoAcceptQuest # not-yet
 AcknowledgeSurvey # not-yet
@@ -2009,7 +2008,6 @@ CreateAbbreviateConfig # not-yet: temporary Lua workaround
 CreateForbiddenFrame # not-yet
 CreateNewRaidProfile # not-yet
 DeclineChannelInvite # not-yet
-DeclineGuild # not-yet
 DeclineName # not-yet
 DeclineQuest # not-yet
 DeleteGMTicket # not-yet
@@ -2017,7 +2015,6 @@ DeleteRaidProfile # not-yet
 DescendStop # not-yet
 DetectWowMouse # not-yet
 DismissCompanion # not-yet
-Dismount # not-yet
 DisplayChannelOwner # not-yet
 DoMasterLootRoll # not-yet
 DoesCurrentLocaleSellExpansionLevels # not-yet
@@ -2028,7 +2025,6 @@ ExpandGuildTradeSkillHeader # not-yet
 ExpandWarGameHeader # not-yet
 FlipCameraYaw # intentionally-unsupported: 3D camera/model
 FlyoutHasSpell # not-yet
-FollowUnit # not-yet
 ForfeitDuel # not-yet
 GMEuropaBugsEnabled # not-yet
 GMEuropaComplaintsEnabled # not-yet
@@ -2050,7 +2046,6 @@ GetAchievementNumRewards # not-yet
 GetAchievementReward # not-yet
 GetActiveArtifactByRace # not-yet
 GetActiveLevel # not-yet
-GetAllowLowLevelRaid # not-yet
 GetArchaeologyRaceInfoByID # not-yet
 GetAreaText # not-yet
 GetAvailableLevel # not-yet
@@ -2259,7 +2254,6 @@ GetScriptBucketThrottleLimits # not-yet: temporary Lua workaround
 GetSecondsUntilParentalControlsKick # not-yet
 GetSelectedDisplayChannel # not-yet
 GetSelectedWarGameType # not-yet
-GetSheathState # not-yet
 GetSoundEntryCount # not-yet
 GetSourceLocation # not-yet
 GetSpecializationSpells # not-yet
@@ -2349,7 +2343,6 @@ IsMovieLocal # not-yet
 IsMoviePlayable # not-yet
 IsMovieReadable # not-yet
 IsOnTournamentRealm # not-yet: temporary Lua workaround
-IsOutOfBounds # not-yet
 IsOutlineModeSupported # not-yet
 IsPetActive # not-yet
 IsPetAttackAction # not-yet
@@ -2505,7 +2498,6 @@ SelectedRealmName # not-yet
 SellCursorItem # not-yet
 SendSubscriptionInterstitialResponse # not-yet
 SendSystemMessage # not-yet
-SetAllowLowLevelRaid # not-yet
 SetBarSlotFromIntro # not-yet
 SetBattlefieldScoreFaction # not-yet
 SetChannelOwner # not-yet
@@ -2629,7 +2621,6 @@ TogglePlayerBounds # not-yet
 TogglePortals # not-yet
 ToggleRun # not-yet
 ToggleSelfHighlight # not-yet
-ToggleSheath # not-yet
 ToggleTris # not-yet
 ToggleWindowed # not-yet
 TurnInGuildCharter # not-yet
@@ -2642,7 +2633,6 @@ UnitChromieTimeID # not-yet
 UnitHasRelicSlot # not-yet
 UnitInAnyGroup # not-yet
 UnitInPartyShard # not-yet
-UnitIsControlling # not-yet
 UnitIsInteractable # not-yet
 UnitIsMercenary # not-yet
 UnitIsPVPSanctuary # not-yet
@@ -2652,7 +2642,6 @@ UnitNameplateShowsWidgetsOnly # not-yet
 UnitNumPowerBarTimers # not-yet
 UnitOwnerGUID # not-yet
 UnitPartialPower # not-yet
-UnitPercentHealthFromGUID # not-yet
 UnitPvpClassification # not-yet
 UnitQuestTrivialLevelRange # not-yet
 UnitQuestTrivialLevelRangeScaling # not-yet

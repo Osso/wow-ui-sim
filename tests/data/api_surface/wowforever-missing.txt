@@ -1,7 +1,6 @@
 # Documented WoW Forever API functions without a runtime function after full
 # Blizzard UI startup. Contract: docs/specs/api-surface-audit.md.
 # Format: <name> # <intentionally-unsupported|not-yet>[: reason]
-AcceptGuild # not-yet
 AddSourceLocationExclude # not-yet: temporary Lua workaround
 AreClassRolesSoftSuggestions # not-yet
 AutoEquipCursorItem # not-yet
@@ -1770,13 +1769,9 @@ CreateAbbreviateConfig # not-yet: temporary Lua workaround
 CreateFrameWithOptions # not-yet
 CursorHasMoney # not-yet
 CursorHasSpell # not-yet
-DeclineGuild # not-yet
 DeclineName # not-yet
-Dismount # not-yet
 DoesCurrentLocaleSellExpansionLevels # not-yet
 EquipPendingItem # not-yet
-FollowUnit # not-yet
-GetAllowLowLevelRaid # not-yet
 GetAreaText # not-yet
 GetAvailableBandwidth # not-yet: temporary Lua workaround
 GetAvailableLocales # not-yet
@@ -1827,7 +1822,6 @@ GetScreenDPIScale # not-yet: temporary Lua workaround
 GetScriptBucketThrottleLimits # not-yet
 GetScriptCPUUsage # not-yet: temporary Lua workaround
 GetSecondsUntilParentalControlsKick # not-yet
-GetSheathState # not-yet
 GetSourceLocation # not-yet
 GetTaxiBenchmarkMode # not-yet
 GetThreatStatusColor # not-yet: temporary Lua workaround
@@ -1861,7 +1855,6 @@ IsMovieLocal # not-yet
 IsMoviePlayable # not-yet
 IsMovieReadable # not-yet
 IsOnTournamentRealm # not-yet: temporary Lua workaround
-IsOutOfBounds # not-yet
 IsUsingFixedTimeStep # not-yet
 IsUsingMouse # not-yet
 LoadURLIndex # not-yet
@@ -1890,7 +1883,6 @@ Screenshot # not-yet
 SelectedRealmName # not-yet
 SellCursorItem # not-yet
 SendSubscriptionInterstitialResponse # not-yet
-SetAllowLowLevelRaid # not-yet
 SetConsoleKey # not-yet
 SetCursorByMode # not-yet
 SetCursorHoveredItem # not-yet: temporary Lua workaround
@@ -1936,7 +1928,6 @@ ToggleGravity # not-yet
 TogglePlayerBounds # not-yet
 TogglePortals # not-yet
 ToggleSelfHighlight # not-yet
-ToggleSheath # not-yet
 ToggleSit # not-yet
 ToggleTris # not-yet
 UIReload # not-yet
@@ -1947,7 +1938,6 @@ UnitChromieTimeID # not-yet
 UnitHasMouseoverHighlight # not-yet
 UnitInAnyGroup # not-yet
 UnitInPartyShard # not-yet
-UnitIsControlling # not-yet
 UnitIsMercenary # not-yet
 UnitIsPVPSanctuary # not-yet
 UnitIsSameServer # not-yet
@@ -1956,7 +1946,6 @@ UnitNameplateShowsWidgetsOnly # not-yet
 UnitNumPowerBarTimers # not-yet
 UnitOwnerGUID # not-yet
 UnitPartialPower # not-yet
-UnitPercentHealthFromGUID # not-yet
 UnitPowerDisplayMod # not-yet: temporary Lua workaround
 UnitPvpClassification # not-yet
 UnitSelectionType # not-yet

@@ -162,6 +162,8 @@ pub(crate) mod performance_metrics;
 pub mod pet_bar;
 pub mod pet_stats;
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) mod player_actions;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub mod player_facing;
 pub mod player_identity;
 pub(crate) mod player_languages;

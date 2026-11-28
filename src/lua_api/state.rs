@@ -1082,6 +1082,10 @@ macro_rules! build_empty_sim_state {
             totem_cannot_dismiss: BTreeSet::new(),
             #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
             death_release: Default::default(),
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            player_actions: Default::default(),
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            pending_guild_invite: None,
             #[cfg(feature = "vehicle-seats")]
             vehicle_seats: Default::default(),
             chat_bubbles: Vec::new(),
