@@ -57,6 +57,14 @@ pub fn fire_named_event_state(state: &mut LuaState, event_name: &str, args: &[Va
         state.push(*value);
     }
     for widget_id in get_event_listeners(state, event_name) {
+        match is_retail_secure_name_shadow(state, widget_id) {
+            Ok(true) => continue,
+            Ok(false) => {}
+            Err(error) => {
+                call_error_handler_state(state, &error.to_string());
+                break;
+            }
+        }
         if let Err(error) = dispatch_named_event_handlers(state, widget_id, event_name, args) {
             call_error_handler_state(state, &error.to_string());
             break;
@@ -64,6 +72,32 @@ pub fn fire_named_event_state(state: &mut LuaState, event_name: &str, args: &[Va
     }
     state.top = saved_top;
     crate::lua_api::taint::restore_active_stack_taint(state, taints);
+}
+
+/// INFERRED (R88g.1, R88t.t1/t2, loader state): secure-replayed duplicate names do not receive public events when the ordinary frame retains the name.
+fn is_retail_secure_name_shadow(state: &LuaState, widget_id: u64) -> rilua::LuaResult<bool> {
+    if !crate::client_profile::is_active_retail_12_1_5() {
+        return Ok(false);
+    }
+    let sim = borrow_state(state)?;
+    let Some(frame) = sim.widgets.get(widget_id) else {
+        return Ok(false);
+    };
+    let Some(name) = frame.name.as_deref() else {
+        return Ok(false);
+    };
+    let Some(owner) = frame
+        .owner_addon
+        .and_then(|owner| sim.addons.get(owner as usize))
+    else {
+        return Ok(false);
+    };
+    let loaded_in_both_environments = owner.loaded && owner.secure_loaded;
+    let name_points_to_another_frame = sim
+        .widgets
+        .get_id_by_name(name)
+        .is_some_and(|bound_id| bound_id != widget_id);
+    Ok(loaded_in_both_environments && name_points_to_another_frame)
 }
 
 /// Dispatch one frame's filtered precall, normal and postcall event scripts.
