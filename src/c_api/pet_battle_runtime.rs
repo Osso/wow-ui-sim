@@ -218,8 +218,8 @@ mod tests {
     fn runtime_members_read_supplied_state() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
         env.exec(
-            "A_Admin.SetPetBattleEffectName('Supplied effect'); \\
-             A_Admin.SetPetBattleTeamState(true, false, true, true); \\
+            "A_Admin.SetPetBattleEffectName('Supplied effect'); \
+             A_Admin.SetPetBattleTeamState(true, false, true, true); \
              A_Admin.SetPetBattleState(1)",
         )
         .expect("pet-battle state inputs");
