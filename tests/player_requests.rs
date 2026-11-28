@@ -78,3 +78,36 @@ fn player_requests_drive_follow_mount_role_poll_and_trade_consumers() {
     }
 }
 
+/// Retail has no ranged slot: main-hand bows, guns, crossbows and wands are
+/// ranged. PaperDollFrame_SetAttackPower picks its label from IsRangedWeapon.
+#[cfg(feature = "client-retail")]
+const WEAPON_CASES: &str = r#"
+local statFrame = CharacterStatsPane.statsFramePool:Acquire()
+local function attackPowerTag()
+    PAPERDOLL_STATINFO.ATTACK_AP.updateFunc(statFrame, "player")
+    return statFrame.tooltip
+end
+local function hasTag(tag) return attackPowerTag():find(tag, 1, true) ~= nil end
+A_Admin.UnequipItem(16)
+A_Admin.UnequipItem(17)
+assert(hasTag(MELEE_ATTACK_POWER) and not IsDualWielding(), "unarmed")
+A_Admin.EquipItem(16, 273784) -- Ancestral Amani Recurve (bow)
+assert(hasTag(RANGED_ATTACK_POWER), attackPowerTag())
+assert(not IsDualWielding(), "a bow alone")
+A_Admin.EquipItem(16, 212405) -- one-hand sword
+assert(hasTag(MELEE_ATTACK_POWER), attackPowerTag())
+A_Admin.EquipItem(17, 212405)
+assert(IsDualWielding(), "two one-hand weapons")
+A_Admin.UnequipItem(17)
+assert(not IsDualWielding(), "empty off hand")
+CharacterStatsPane.statsFramePool:Release(statFrame)
+"#;
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn equipped_weapon_queries_drive_paper_doll_attack_power_label() {
+    test_timeout! {
+        let env = load_game_ui();
+        env.exec(WEAPON_CASES).expect("equipped weapon queries");
+    }
+}

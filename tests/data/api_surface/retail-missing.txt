@@ -2309,7 +2309,6 @@ IsDebugBuild # not-yet
 IsDemonHunterAvailable # not-yet
 IsDisplayChannelModerator # not-yet
 IsDisplayChannelOwner # not-yet
-IsDualWielding # not-yet
 IsEuropeanNumbers # not-yet
 IsGamePadFreelookEnabled # not-yet
 IsGraphicsCVarValueSupported # not-yet
@@ -2340,7 +2339,6 @@ IsPlayerInGuildFromGUID # not-yet
 IsPlayerNeutral # not-yet
 IsQuestIDValidSpellTarget # not-yet
 IsQuestLogSpecialItemInRange # not-yet
-IsRangedWeapon # not-yet
 IsRightMetaKeyDown # not-yet
 IsServerControlledBackfill # not-yet
 IsSpecializationActivateSpell # not-yet

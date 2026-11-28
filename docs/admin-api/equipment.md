@@ -53,3 +53,11 @@ A_Admin.SetInventorySlotCandidates(11, false, {
 The call replaces the accepted candidate list for that one-based inventory slot and transmogrify mode. Each row uses one-based `equipmentSlot`, one-based `carriedSlot` for the backpack range, or `bagID` plus one-based `bagSlot` (`bagID` defaults to `0`). `carriedEnabled` and `carriedCount` control the carried-slot range. `link` is optional; omit it only when the supplied model should remove that location from the returned table. Options are also optional. `slotNames` adds or replaces name-to-one-based-slot mappings. The other fields supply the carried-slot range, bank-access predicate input, and readiness for this slot's transmog query. This setter does not derive candidates from equipped items or bags, and an empty list supplies no candidates; native eligibility filtering remains unknown.
 
 The existing Retail model publishes these supplied rows through `GetInventoryItemsForSlot`. **INFERRED:** R88k.1 Retail evidence supports this model; Forever registration is inferred from the selected `PaperDollFrameItemFlyout_GetItems` consumer call, with native evidence pending.
+
+## Equipped weapon predicates (Retail and WoW Forever)
+
+`IsRangedWeapon()` and `IsDualWielding()` read the items supplied with
+`A_Admin.EquipItem(slot, itemID)` (`real/combat_stats.rs`). WoW Forever reads its
+ranged slot (18); Retail has no ranged slot, so a main-hand (16) bow, gun,
+crossbow or wand is ranged. `IsDualWielding()` is true when slots 16 and 17 both
+hold one-hand weapons. INFERRED (R-ag10-15).
