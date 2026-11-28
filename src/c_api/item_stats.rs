@@ -15,6 +15,7 @@ pub struct ItemStatsState {
     pub by_link: HashMap<String, HashMap<String, f64>>,
 }
 
+// Forever 70707 ItemDocumentation.lua:986, :1003.
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     let namespace = ensure_namespace(state, "C_Item")?;
     table_set_rust_fn_static(state, namespace, "GetItemStats", c_item_get_item_stats)?;
@@ -24,6 +25,65 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
         "GetItemStatDelta",
         c_item_get_item_stat_delta,
     )
+}
+
+#[cfg(feature = "client-wowforever")]
+pub(crate) fn register_admin(
+    builder: crate::lua_bridge::TableBuilder,
+) -> LuaResult<crate::lua_bridge::TableBuilder> {
+    builder.set_function("SetItemStats", set_item_stats)
+}
+
+#[cfg(feature = "client-wowforever")]
+fn set_item_stats(state: &mut LuaState) -> LuaResult<u32> {
+    let key = stack_val(state, 1);
+    if !matches!(key, Val::Str(_)) {
+        return Err(runtime_error("SetItemStats: expected item link string"));
+    }
+    let link = require_link(state, key)?;
+    let stats = read_stat_map(state, stack_val(state, 2))?;
+    crate::lua_api::methods::borrow_state_mut(state)?
+        .item_stats
+        .by_link
+        .insert(link, stats);
+    Ok(0)
+}
+
+#[cfg(feature = "client-wowforever")]
+fn read_stat_map(state: &LuaState, value: Val) -> LuaResult<HashMap<String, f64>> {
+    let Val::Table(reference) = value else {
+        return Err(runtime_error("SetItemStats: expected stat table"));
+    };
+    let table = state
+        .gc
+        .tables
+        .get(reference)
+        .ok_or_else(|| runtime_error("SetItemStats: stat table unavailable"))?;
+    if table.array_slice().iter().any(|v| !matches!(v, Val::Nil)) {
+        return Err(runtime_error("SetItemStats: expected string keys"));
+    }
+    table
+        .hash_entries()
+        .iter()
+        .filter(|(_, v)| !matches!(v, Val::Nil))
+        .map(|(key, value)| decode_stat(state, *key, *value))
+        .collect()
+}
+
+#[cfg(feature = "client-wowforever")]
+fn decode_stat(state: &LuaState, key: Val, value: Val) -> LuaResult<(String, f64)> {
+    let Val::Str(_) = key else {
+        return Err(runtime_error("SetItemStats: expected string keys"));
+    };
+    let name = val_to_string(state, key)
+        .ok_or_else(|| runtime_error("SetItemStats: invalid stat name"))?;
+    let Val::Num(number) = value else {
+        return Err(runtime_error("SetItemStats: expected numeric stat value"));
+    };
+    if !number.is_finite() {
+        return Err(runtime_error("SetItemStats: stat value must be finite"));
+    }
+    Ok((name, number))
 }
 
 fn c_item_get_item_stats(state: &mut LuaState) -> LuaResult<u32> {

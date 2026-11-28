@@ -251,7 +251,7 @@ macro_rules! build_empty_sim_state {
             item_overrides: ::std::collections::HashMap::new(),
             item_level_color_condition_23: None,
             item_level_color_condition_24: None,
-            #[cfg(feature = "retail-12-0-0")]
+            #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
             item_stats: crate::c_api::ItemStatsState::default(),
             #[cfg(feature = "retail-12-0-0")]
             item_set_bonuses: crate::c_api::ItemSetBonuses::default(),
@@ -550,6 +550,8 @@ macro_rules! build_empty_sim_state {
             spell_loss_of_control: HashMap::new(),
             active_loss_of_control: HashMap::new(),
             spell_flyouts: HashMap::new(),
+            #[cfg(feature = "client-wowforever")]
+            spell_flyout_order: Vec::new(),
             #[cfg(feature = "client-retail")]
             call_pet_spell_indices: HashMap::new(),
             #[cfg(feature = "client-retail")]

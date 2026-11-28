@@ -11,6 +11,8 @@ pub(crate) mod c_behavioral_messaging;
 pub(crate) mod c_black_market;
 #[cfg(any(feature = "retail-12-1-0", feature = "client-wowforever"))]
 pub(crate) mod c_encounter_journal_difficulty;
+#[cfg(feature = "client-wowforever")]
+pub(crate) mod c_flyout;
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub(crate) mod c_gossip_info_poi;
 pub mod c_guild_info;
@@ -533,7 +535,7 @@ pub use c_color_overrides::{load_color_overrides, save_color_overrides};
 pub mod c_social_contract_glue;
 #[cfg(feature = "maw-power-model")]
 pub mod c_spell_maw_powers;
-mod c_timerunning_ui;
+pub(crate) mod c_timerunning_ui;
 pub mod c_toy_box_info;
 #[cfg(any(
     feature = "retail-12-0-0",
@@ -589,10 +591,10 @@ pub(crate) mod duration_text_binding;
 pub mod intl_native;
 pub mod item_location;
 pub mod item_spell;
-#[cfg(feature = "retail-12-0-0")]
-mod item_stats;
+#[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
+pub(crate) mod item_stats;
 pub mod item_upgrade_eligibility;
-#[cfg(feature = "retail-12-0-0")]
+#[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
 pub use item_stats::ItemStatsState;
 #[cfg(feature = "retail-12-0-0")]
 mod item_set_bonuses;
@@ -730,7 +732,7 @@ pub(crate) fn register_utility_bootstrap_tables(state: &mut LuaState) -> LuaResu
     restricted_actions::register(state)?;
     c_loot_history::register_c_loot_history(state)?;
     c_date_and_time::register(state)?;
-    #[cfg(feature = "retail-12-0-5")]
+    #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
     c_chat_info::register(state)?;
     if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Wrath {
         addon_message_prefixes::register(state)?;
@@ -757,6 +759,7 @@ pub(crate) fn register_utility_bootstrap_tables(state: &mut LuaState) -> LuaResu
     if matches!(
         crate::client_profile::ACTIVE,
         crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever
     ) {
         c_timerunning_ui::register(state)?;
     }

@@ -9,6 +9,10 @@ The `A_Admin` namespace provides administrative functions for controlling simula
 - [Player Identity](player-identity.md) — SetPlayerName, SetPlayerClass, SetPlayerRace, SetPlayerLevel, SetPlayerSex, SetCurrentRegion, SetTravelersLogAvailable
 - [Battle.net Account State](battle-net.md) — SetPlayerBattleNetInfo, SetBattleNetAccountFeatures
 - [Behavioral messaging](behavioral-messaging.md) — QueueBehavioralNotification, GetBehavioralNotificationReceipts
+- Forever chat restriction: `A_Admin.SetChatMessagingLockdown(restricted)` supplies an explicit boolean for `C_ChatInfo.InChatMessagingLockdown()`. Default false; no event or native restriction inference. See [chat messaging lockdown](../specs/chat-messaging-lockdown.md).
+- Forever active event season: `A_Admin.SetActiveTimerunningSeasonID(id)` supplies a nonnegative signed-32-bit ID, independently of the player's timerunning season. Default 0. See [active timerunning season](../specs/active-timerunning-season.md).
+- Forever item stats: `A_Admin.SetItemStats(link, stats)` replaces the supplied finite numeric stat map for the exact string link. Missing links have no supplied record. See [item stats](../specs/item-stats-supplied.md).
+- [Forever spell flyouts](../specs/forever-spell-flyouts.md) — SetSpellFlyouts
 - [Beta script policy](beta-script-policy.md) — SetScriptsDisallowedForBeta
 - [Combat](combat.md) — SetInCombat, SetCasting, StopCasting, SetGCD, SetSpellCooldown, SetCombatLogEntries
 - [Camera and tutorials](camera-tutorials.md) — SetCameraFOV, SetTutorialFlag, SetTutorialsEnabled, SetPlayerNPERestricted

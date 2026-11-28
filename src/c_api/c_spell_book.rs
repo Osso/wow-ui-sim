@@ -1311,12 +1311,12 @@ fn spell_flyout_slot(
 }
 
 fn push_flyout_slot_info(state: &mut LuaState, slot: SpellFlyoutSlot) {
-    let spell_name = create_string(state, &slot.spell_name);
+    let spell_name = create_string(state, slot.spell_name.as_deref().unwrap_or_default());
     state.push(Val::Num(slot.spell_id as f64));
     state.push(Val::Num(slot.override_spell_id as f64));
     state.push(Val::Bool(slot.is_known));
     state.push(spell_name);
-    state.push(Val::Num(slot.spec_id as f64));
+    state.push(Val::Num(slot.spec_id.unwrap_or_default() as f64));
 }
 
 fn push_empty_flyout_slot(state: &mut LuaState) {

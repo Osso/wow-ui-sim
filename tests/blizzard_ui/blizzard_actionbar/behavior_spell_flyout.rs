@@ -149,15 +149,15 @@ fn seed_spell_flyout(env: &WowLuaEnv) {
                     spell_id: FIRST_SPELL_ID,
                     override_spell_id: FIRST_SPELL_ID,
                     is_known: true,
-                    spell_name: "Flash of Light".to_string(),
-                    spec_id: 0,
+                    spell_name: Some("Flash of Light".to_string()),
+                    spec_id: Some(0),
                 },
                 SpellFlyoutSlot {
                     spell_id: SECOND_SPELL_ID,
                     override_spell_id: SECOND_SPELL_ID,
                     is_known: true,
-                    spell_name: "Crusader Strike".to_string(),
-                    spec_id: 0,
+                    spell_name: Some("Crusader Strike".to_string()),
+                    spec_id: Some(0),
                 },
             ],
         },
@@ -217,8 +217,8 @@ fn call_pet_flyout_slot(spell_id: u32) -> SpellFlyoutSlot {
         spell_id,
         override_spell_id: spell_id,
         is_known: true,
-        spell_name: "Fixture call-pet spell".to_string(),
-        spec_id: 0,
+        spell_name: Some("Fixture call-pet spell".to_string()),
+        spec_id: Some(0),
     }
 }
 

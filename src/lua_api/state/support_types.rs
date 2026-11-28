@@ -488,8 +488,8 @@ pub struct SpellFlyoutSlot {
     pub spell_id: u32,
     pub override_spell_id: u32,
     pub is_known: bool,
-    pub spell_name: String,
-    pub spec_id: i32,
+    pub spell_name: Option<String>,
+    pub spec_id: Option<i32>,
 }
 
 /// Legacy spell flyout metadata returned by `GetFlyoutInfo`. Empty by

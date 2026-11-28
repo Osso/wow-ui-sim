@@ -1,11 +1,11 @@
 # Active timerunning season
 
-Retail exposes the active event season separately from the player's timerunning season. The pinned retail `Blizzard_APIDocumentationGenerated/TimerunningUIDocumentation.lua:11-20` declares `C_TimerunningUI.GetActiveTimerunningSeasonID`.
+Retail and Forever expose the active event season separately from the player's timerunning season. The pinned Retail `Blizzard_APIDocumentationGenerated/TimerunningUIDocumentation.lua:11-20` and Forever 70707 `TimerunningUIDocumentation.lua:10` declare `C_TimerunningUI.GetActiveTimerunningSeasonID`.
 
 ## What it must do
 
 - [ ] Return the supplied signed active-season ID as one Lua number, including `0` for the no-season scenario.
-- [x] Keep the active season independent of the player's timerunning season.
+- [x] Keep the active season independent of the player's timerunning season. Forever supplies it with `A_Admin.SetActiveTimerunningSeasonID(id)` (nonnegative signed-32-bit scenario ID).
 - [x] Let the pinned `Blizzard_TimerunningUtil` select its no-season and Pandaria configurations from the supplied value.
 
 ## Best-guess basis
@@ -18,7 +18,7 @@ Native evidence for retail 12.1.5 build 70688 identifies a dedicated cached sign
 
 ## Implementation inventory
 
-- `src/c_api/c_timerunning_ui.rs`: retail namespace and query.
+- `src/c_api/c_timerunning_ui.rs`: Retail and Forever namespace and query; Forever admin input.
 - `src/lua_api/state/sim_state.rs`: supplied active-season state.
 - `src/lua_api/state.rs`: initial no-season scenario.
 

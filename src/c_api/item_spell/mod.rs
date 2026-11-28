@@ -59,11 +59,10 @@ pub(crate) fn register_item_and_spell_surfaces(state: &mut LuaState) -> LuaResul
     c_item::register_c_item(state)?;
     super::item_quality_color::register(state)?;
     super::item_overlay::register(state)?;
+    #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
+    super::item_stats::register(state)?;
     #[cfg(feature = "retail-12-0-0")]
-    {
-        super::item_stats::register(state)?;
-        super::item_set_bonuses::register(state)?;
-    }
+    super::item_set_bonuses::register(state)?;
     c_container::register_c_item_upgrade(state)?;
     super::item_upgrade_eligibility::register(state)?;
     c_container::register_c_container(state)?;

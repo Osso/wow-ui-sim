@@ -102,6 +102,8 @@ pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
 
     let builder = TableBuilder::new(lua.state_mut());
     let builder = register_admin_player_services(builder)?;
+    #[cfg(feature = "client-wowforever")]
+    let builder = register_forever_supplied_queries(builder)?;
     let builder = super::real::region::register_admin(builder)?;
     let builder = super::real::release_timer::register_admin(builder)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
@@ -183,6 +185,14 @@ fn register_admin_modeled_services(builder: TableBuilder) -> LuaResult<TableBuil
     let builder = crate::c_api::c_addons::register_admin(builder)?;
     let builder = crate::c_api::video_capabilities::register_admin(builder)?;
     crate::c_api::kiosk::register_admin(builder)
+}
+
+#[cfg(feature = "client-wowforever")]
+fn register_forever_supplied_queries(builder: TableBuilder) -> LuaResult<TableBuilder> {
+    let builder = crate::c_api::c_flyout::register_admin(builder)?;
+    let builder = crate::c_api::c_chat_info::register_admin(builder)?;
+    let builder = crate::c_api::c_timerunning_ui::register_admin(builder)?;
+    crate::c_api::item_stats::register_admin(builder)
 }
 
 fn register_admin_calendar_services(builder: TableBuilder) -> LuaResult<TableBuilder> {

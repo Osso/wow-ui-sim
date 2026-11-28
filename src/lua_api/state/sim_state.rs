@@ -267,7 +267,7 @@ pub struct SimState {
     pub item_level_color_condition_23: Option<bool>,
     pub item_level_color_condition_24: Option<bool>,
     /// Explicit exact-link fixtures only; initially empty, no catalog producer.
-    #[cfg(feature = "retail-12-0-0")]
+    #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
     pub item_stats: crate::c_api::ItemStatsState,
     /// Explicit (specialization, item) lists only; initially empty.
     #[cfg(feature = "retail-12-0-0")]
@@ -699,6 +699,8 @@ pub struct SimState {
     pub active_loss_of_control:
         HashMap<String, Vec<crate::c_api::c_loss_of_control::ActiveLossOfControlData>>,
     pub spell_flyouts: HashMap<u32, SpellFlyoutInfo>,
+    #[cfg(feature = "client-wowforever")]
+    pub spell_flyout_order: Vec<u32>,
     /// Host-supplied call-pet spell membership and slot-index candidates.
     #[cfg(feature = "client-retail")]
     pub call_pet_spell_indices: HashMap<u32, i32>,

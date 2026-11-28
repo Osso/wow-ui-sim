@@ -10,7 +10,7 @@ Cached Retail evidence recorded by the accepted draft: `~/.cache/wow-ui-sim/bliz
 
 ### Supplied state and queries
 
-- [x] Initialize each environment with empty supplied maps; direct Rust population suffices, without new host Lua commands. Prior source proof: `ItemStatsState::default()` in `src/c_api/item_stats.rs` and environment initialization in `src/lua_api/state.rs`; not a compiled producer GREEN claim.
+- [x] Initialize each environment with empty supplied maps. Retail/PTR retain Rust population. Forever 70707 declares both functions in `ItemDocumentation.lua:986,1003`; `A_Admin.SetItemStats(link, stats)` accepts an exact string link and a table of string keys with finite numeric values, replacing that link's observations. See the [admin API](../admin-api/README.md).
 - [x] Match complete strings exactly; distinct full links for one item ID remain distinct. Unknown strings, bare IDs/links, changed names or whitespace yield nil unless supplied independently.
 - [x] Return exact string-keyed numeric values, including explicit zeros, in fresh tables; caller mutation cannot affect other results or later queries.
 - [x] Compute first minus second over the union of supplied keys, treating missing keys as zero. Preserve positive/negative/fractional differences; omit exactly zero differences. Identical supplied links yield an empty table.

@@ -12,7 +12,7 @@ Bounded Retail 12.0.5 input and predicate for `C_ChatInfo.InChatMessagingLockdow
 
 Cached contract: `~/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ChatInfoDocumentation.lua`, lines 293–300, declares `Name = "InChatMessagingLockdown"` and exactly one return `{ Name = "isRestricted", Type = "bool", Nilable = false }`. Its description is “Returns true if API security restrictions regarding chat messaging are in effect.” This documents the return contract, not the native restriction producer or transition policy.
 
-**Bounded input policy:** Rust callers set a single per-environment bool. Default `false` is documented simulator input policy, not native-verified behavior. The input is gated by the existing `retail-12-0-5` epoch. No inference from combat, encounter, PvP, keystone, message, channel, or party state; no Lua/admin/test-only setter and no new state struct. The predicate reads this input directly and returns one ordinary boolean. No enforcement is implemented.
+**Bounded input policy:** Rust callers set a single per-environment bool. Default `false` is documented simulator input policy, not native-verified behavior. Retail uses direct Rust population. Forever 70707 `ChatInfoDocumentation.lua:292` declares the same predicate and `A_Admin.SetChatMessagingLockdown(restricted)` supplies the explicit boolean. No inference from combat, encounter, PvP, keystone, message, channel, or party state; no new state struct. The predicate reads this input directly and returns one ordinary boolean. No enforcement is implemented.
 
 ## How it works
 
@@ -23,7 +23,7 @@ Cached contract: `~/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocu
 - `src/lua_api/state/sim_state.rs` — explicit epoch-gated bool input.
 - `src/lua_api/state.rs` — per-environment false initialization.
 - `src/c_api/c_chat_info.rs` — state-backed predicate, pushing one `Val::Bool` and returning arity one.
-- `src/c_api/mod.rs` — `retail-12-0-5` module and utility registration gates. `ensure_namespace` preserves other slots; channel/message/default providers do not overwrite this predicate. No concrete predicate fallback remains; generic lazy namespace behavior is unchanged.
+- `src/c_api/mod.rs` — `retail-12-0-5` or Forever utility registration gates. `ensure_namespace` preserves other slots; channel/message/default providers do not overwrite this predicate. No concrete predicate fallback remains; generic lazy namespace behavior is unchanged.
 - `tests/chat_messaging_lockdown.rs` — five grouped, automatically discovered Retail predicate fixtures; no new Cargo target.
 
 ## Tests asserting this spec

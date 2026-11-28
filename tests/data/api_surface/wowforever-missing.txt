@@ -175,7 +175,6 @@ C_ChatInfo.GetClubStreamIDs # not-yet
 C_ChatInfo.GetColorForChatType # not-yet
 C_ChatInfo.GetMentorChannelID # not-yet
 C_ChatInfo.GetNumReservedChatWindows # not-yet: temporary Lua workaround
-C_ChatInfo.InChatMessagingLockdown # not-yet
 C_ChatInfo.IsChatLineCensored # not-yet
 C_ChatInfo.IsLoggingChat # not-yet
 C_ChatInfo.IsLoggingCombat # not-yet
@@ -536,11 +535,6 @@ C_EventToastManager.RemoveCurrentToast # not-yet
 C_ExpansionTrial.OnTrialLevelUpDialogClicked # not-yet
 C_ExpansionTrial.OnTrialLevelUpDialogShown # not-yet
 C_ExternalEventURL.LaunchURL # not-yet
-C_Flyout.FlyoutHasSpell # not-yet
-C_Flyout.GetFlyoutID # not-yet
-C_Flyout.GetFlyoutInfo # not-yet
-C_Flyout.GetFlyoutSlotInfo # not-yet
-C_Flyout.GetNumFlyouts # not-yet
 C_FriendList.IsIgnoredByGuid # not-yet
 C_GamePad.AddSDLMapping # not-yet
 C_GamePad.ApplyConfigs # not-yet
@@ -834,8 +828,6 @@ C_Item.GetItemLearnTransmogSet # not-yet
 C_Item.GetItemNumAddedSockets # not-yet
 C_Item.GetItemSetInfo # not-yet
 C_Item.GetItemSpecInfo # not-yet
-C_Item.GetItemStatDelta # not-yet
-C_Item.GetItemStats # not-yet
 C_Item.GetItemUniqueness # not-yet
 C_Item.GetItemUniquenessByID # not-yet
 C_Item.GetItemUpgradeInfo # not-yet
@@ -1490,7 +1482,6 @@ C_Texture.GetTitleIconTexture # not-yet
 C_Texture.IsTitleIconTextureReady # not-yet
 C_Texture.SetTitleIconTexture # not-yet
 C_Texture.SetURLTexture # not-yet
-C_TimerunningUI.GetActiveTimerunningSeasonID # not-yet
 C_TradeSkillUI.CancelProfessionRespec # not-yet
 C_TradeSkillUI.CheckRespecNPC # not-yet
 C_TradeSkillUI.ConfirmProfessionRespec # not-yet
