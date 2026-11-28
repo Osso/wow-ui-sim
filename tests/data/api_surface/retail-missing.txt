@@ -65,9 +65,6 @@ C_ArtifactUI.GetRespecCost # not-yet
 C_ArtifactUI.IsArtifactItem # not-yet
 C_ArtifactUI.SetForgeCamera # intentionally-unsupported: 3D camera/model
 C_AuctionHouse.CanCancelAuction # not-yet
-C_AuctionHouse.GetBids # not-yet
-C_AuctionHouse.GetNumReplicateItems # not-yet
-C_AuctionHouse.GetOwnedAuctions # not-yet
 C_AuctionHouse.GetReplicateItemBattlePetInfo # not-yet
 C_AuctionHouse.GetReplicateItemLink # not-yet
 C_AuctionHouse.GetReplicateItemTimeLeft # not-yet
@@ -204,7 +201,6 @@ C_ChatInfo.GetColorForChatType # not-yet
 C_ChatInfo.GetMentorChannelID # not-yet
 C_ChatInfo.GetNumReservedChatWindows # not-yet: temporary Lua workaround
 C_ChatInfo.IsChatLineCensored # not-yet
-C_ChatInfo.IsLoggingChat # not-yet
 C_ChatInfo.IsLoggingCombat # not-yet
 C_ChatInfo.IsValidCombatFilterName # not-yet
 C_ChatInfo.PerformEmote # not-yet: temporary Lua workaround
@@ -1222,7 +1218,6 @@ C_PetJournal.GetNonBattlePetLinkByIndex # not-yet
 C_PetJournal.GetNumDisplays # not-yet
 C_PetJournal.GetNumPetsInJournal # not-yet
 C_PetJournal.GetOwnedBattlePetString # not-yet
-C_PetJournal.GetOwnedPetIDs # not-yet
 C_PetJournal.GetPetTeamAverageLevel # not-yet
 C_PetJournal.GetSearchFilter # not-yet
 C_PetJournal.GetSummonRandomFavoritePetGUID # not-yet
@@ -1548,7 +1543,6 @@ C_SplashScreen.CanViewSplashScreen # not-yet
 C_SplashScreen.RequestLatestSplashScreen # not-yet
 C_SplashScreen.SendSplashScreenActionLaunchedTelem # not-yet
 C_SplashScreen.SendSplashScreenCloseTelem # not-yet
-C_StableInfo.GetNumActivePets # not-yet
 C_StableInfo.GetNumStablePets # not-yet
 C_StableInfo.GetStablePetFoodTypes # not-yet
 C_StableInfo.GetStabledPetList # not-yet
@@ -1714,8 +1708,6 @@ C_Transmog.ExtractTransmogIDList # not-yet
 C_Transmog.GetItemIDForSource # not-yet
 C_Transmog.GetSlotForInventoryType # not-yet
 C_TransmogCollection.AccountCanCollectSource # not-yet
-C_TransmogCollection.AreAllCollectionTypeFiltersChecked # not-yet
-C_TransmogCollection.AreAllSourceTypeFiltersChecked # not-yet
 C_TransmogCollection.CanAppearanceHaveIllusion # not-yet
 C_TransmogCollection.ClearNewAppearance # not-yet
 C_TransmogCollection.GetAppearanceCameraIDBySource # intentionally-unsupported: 3D camera/model

@@ -36,10 +36,7 @@ C_ArtifactUI.GetRespecCost # not-yet
 C_ArtifactUI.IsArtifactItem # not-yet
 C_ArtifactUI.SetForgeCamera # intentionally-unsupported: 3D camera/model
 C_AuctionHouse.CanCancelAuction # not-yet
-C_AuctionHouse.GetBids # not-yet
 C_AuctionHouse.GetItemKeySampleLink # not-yet
-C_AuctionHouse.GetNumReplicateItems # not-yet
-C_AuctionHouse.GetOwnedAuctions # not-yet
 C_AuctionHouse.GetReplicateItemBattlePetInfo # not-yet
 C_AuctionHouse.GetReplicateItemLink # not-yet
 C_AuctionHouse.GetReplicateItemTimeLeft # not-yet
@@ -1065,7 +1062,6 @@ C_PetJournal.GetDisplayProbabilityByIndex # not-yet
 C_PetJournal.GetNonBattlePetLinkByIndex # not-yet
 C_PetJournal.GetNumDisplays # not-yet
 C_PetJournal.GetNumPetsInJournal # not-yet
-C_PetJournal.GetOwnedPetIDs # not-yet
 C_PetJournal.GetPetInfoTableByPetID # not-yet
 C_PetJournal.GetPetInfoTableBySpeciesID # not-yet
 C_PetJournal.GetSearchFilter # not-yet
@@ -1531,8 +1527,6 @@ C_Transmog.ExtractTransmogIDList # not-yet
 C_Transmog.GetItemIDForSource # not-yet
 C_Transmog.GetSlotForInventoryType # not-yet
 C_TransmogCollection.AccountCanCollectSource # not-yet
-C_TransmogCollection.AreAllCollectionTypeFiltersChecked # not-yet
-C_TransmogCollection.AreAllSourceTypeFiltersChecked # not-yet
 C_TransmogCollection.CanAppearanceHaveIllusion # not-yet
 C_TransmogCollection.ClearNewAppearance # not-yet
 C_TransmogCollection.GetAppearanceCameraIDBySource # intentionally-unsupported: 3D camera/model

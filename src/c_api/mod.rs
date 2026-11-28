@@ -3,6 +3,8 @@
 //! Real/state-backed surfaces live at the root of this module. Intentionally
 //! unsupported compatibility gaps stay isolated under `permanent_shims`.
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+mod auction_result_reads;
 pub(crate) mod azerite_essence_spell_selector;
 mod c_account_info;
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
@@ -727,6 +729,10 @@ fn supports_super_tracking() -> bool {
 pub(crate) fn register_utility_bootstrap_tables(state: &mut LuaState) -> LuaResult<()> {
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     scenario_observations::register(state)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    auction_result_reads::register(state)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    c_transmog_collection::register_filter_aggregates(state)?;
     c_cvar_info::register(state)?;
     c_engraving::register(state)?;
     c_social_restrictions::register(state)?;
