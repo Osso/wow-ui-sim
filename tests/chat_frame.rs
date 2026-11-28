@@ -653,6 +653,10 @@ fn test_chat_frame2_can_be_enabled_explicitly(env: &WowLuaEnv) {
             if FCF_DockUpdate then
                 FCF_DockUpdate()
             end
+            -- Window 2 is docked (5c755d1e6a). The dock hides every unselected docked
+            -- frame (FloatingChatFrame.lua:2035-2041), whose OnHide clears the shown
+            -- flag (FloatingChatFrame.xml:560-567). Select its tab to display it.
+            ChatFrame2Tab:Click()
         "#,
         )
         .expect("ChatFrame2 enable setup failed");

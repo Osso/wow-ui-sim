@@ -43,17 +43,14 @@ fn inspect_specialization_deprecated_alias_matches_original_publisher(env: &WowL
         assert(GetCVarBool('loadDeprecationFallbacks'), 'deprecation fallback is disabled')
         assert(rawequal(GetInspectSpecialization, C_SpecializationInfo.GetInspectSpecialization),
             'Blizzard deprecated alias differs from C_SpecializationInfo.GetInspectSpecialization')
-        restoreSentinels = {
-            spec = C_SpecializationInfo.GetInspectSpecialization,
-            token = C_WowTokenSecure.GetTokenCount,
-            store = C_StoreSecure.GetProductGroups,
-        }
+        restoreSentinels = { spec = C_SpecializationInfo.GetInspectSpecialization }
     "#).unwrap();
     env.restore_post_cleanup_globals();
+    // EnvironmentCleanup.lua:3,224 clear both public secure namespaces; the
+    // post-cleanup restore leaves them cleared since ba4c5c08b9.
     env.exec(r#"
         assert(rawequal(restoreSentinels.spec, C_SpecializationInfo.GetInspectSpecialization))
-        assert(rawequal(restoreSentinels.token, C_WowTokenSecure.GetTokenCount))
-        assert(rawequal(restoreSentinels.store, C_StoreSecure.GetProductGroups))
+        assert(rawget(_G, 'C_WowTokenSecure') == nil and rawget(_G, 'C_StoreSecure') == nil)
         assert(rawequal(GetInspectSpecialization, C_SpecializationInfo.GetInspectSpecialization))
     "#).unwrap();
 }

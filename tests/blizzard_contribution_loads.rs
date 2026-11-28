@@ -141,6 +141,28 @@ fn blizzard_contribution_registers_uipanelwindows_entry(env: &WowLuaEnv) {
 }
 }
 
+/// The original ContributionCollectionMixin:OnHide (Blizzard_Contribution.lua:412-419)
+/// ends the supplied ContributionCollector interaction through C_ContributionCollector.Close.
+const CONTRIBUTION_HIDE_CLOSES_INTERACTION: &str = r##"
+    local collector = Enum.PlayerInteractionType.ContributionCollector
+    A_Admin.OpenContributionCollector()
+    local opened = ContributionCollectionFrame ~= nil and ContributionCollectionFrame:IsShown()
+    local interacting = C_PlayerInteractionManager.IsInteractingWithNpcOfType(collector)
+    HideUIPanel(ContributionCollectionFrame)
+    return opened, interacting,
+        C_PlayerInteractionManager.IsInteractingWithNpcOfType(collector),
+        select("#", C_ContributionCollector.Close())
+"##;
+
+prefork_full_ui_case! {
+fn blizzard_contribution_hide_closes_collector_interaction(env: &WowLuaEnv) {
+    let observed: (bool, bool, bool, i32) = env
+        .eval(CONTRIBUTION_HIDE_CLOSES_INTERACTION)
+        .expect("contribution interaction probe should run");
+    assert_eq!(observed, (true, true, false, 0));
+}
+}
+
 prefork_full_ui_case! {
 fn blizzard_contribution_collection_mixin_methods_are_defined(env: &WowLuaEnv) {
     load_addon(&env.loader_env(), &contribution_toc())

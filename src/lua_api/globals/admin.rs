@@ -49,6 +49,8 @@ use super::admin_collections::{
     set_transmog_for_slot, uncollect_campsite, uncollect_heirloom, uncollect_mount, uncollect_pet,
     uncollect_toy,
 };
+#[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
+use super::admin_crafting::set_spell_reagent;
 use super::admin_crafting::{
     clear_known_recipes, learn_recipe, relearn_profession, seed_reagents_for_recipe,
     set_reagent_count, set_selected_profession, unlearn_profession, unlearn_recipe,
@@ -63,7 +65,9 @@ use super::admin_equipment::{equip_item, set_equipped_item_durability, unequip_i
 use super::admin_events::{fire_event_admin, toggle_debug_anchors, toggle_debug_borders};
 use super::admin_interactions::{close_mailbox, open_mailbox};
 #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
-use super::admin_interactions::{open_guild_bank, open_guild_rename, open_world_map_interaction};
+use super::admin_interactions::{
+    open_contribution_collector, open_guild_bank, open_guild_rename, open_world_map_interaction,
+};
 use super::admin_mail::{add_mail, clear_inbox, set_inbox_count, set_stationery_catalog};
 use super::admin_movement::{set_falling, set_flying, set_mounted, set_moving, set_swimming};
 use super::admin_party_target_helpers::{
@@ -746,7 +750,8 @@ fn register_action_bars_and_bags(b: TableBuilder) -> LuaResult<TableBuilder> {
     let b = b
         .set_function("OpenGuildRename", open_guild_rename)?
         .set_function("OpenGuildBank", open_guild_bank)?
-        .set_function("OpenWorldMapInteraction", open_world_map_interaction)?;
+        .set_function("OpenWorldMapInteraction", open_world_map_interaction)?
+        .set_function("OpenContributionCollector", open_contribution_collector)?;
     b.set_function("SetPossessBarVisible", set_possess_bar_visible)?
         .set_function("SetActionSlot", set_action_slot)?
         .set_function(
@@ -894,15 +899,19 @@ fn register_inventory_misc(b: TableBuilder) -> LuaResult<TableBuilder> {
 }
 
 fn register_crafting(b: TableBuilder) -> LuaResult<TableBuilder> {
-    b.set_function("LearnRecipe", learn_recipe)?
+    let b = b
+        .set_function("LearnRecipe", learn_recipe)?
         .set_function("UnlearnRecipe", unlearn_recipe)?
         .set_function("ClearKnownRecipes", clear_known_recipes)?
         .set_function("SetSelectedProfession", set_selected_profession)?
         .set_function("UnlearnProfession", unlearn_profession)?
         .set_function("RelearnProfession", relearn_profession)?
         .set_function("SetReagentCount", set_reagent_count)?
-        .set_function("SeedReagentsForRecipe", seed_reagents_for_recipe)?
-        .set_function("RegisterTestAddon", register_test_addon)
+        .set_function("SeedReagentsForRecipe", seed_reagents_for_recipe)?;
+    // The spell reagent pair model exists only where the cast count reads it.
+    #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
+    let b = b.set_function("SetSpellReagent", set_spell_reagent)?;
+    b.set_function("RegisterTestAddon", register_test_addon)
 }
 
 // ── Player identity ──────────────────────────────────────────────────────────

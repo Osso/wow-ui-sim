@@ -2,6 +2,7 @@
 
 use super::super::shared::{opt_f32, opt_string};
 use super::sizing::refresh_tooltip_geometry;
+use crate::lua_api::frame::methods::text_attribute_event::refresh_text_measurements;
 use crate::lua_api::globals::create_frame::create_frame_instance;
 use crate::lua_api::methods::{
     borrow_state, borrow_state_mut, frame_id_from_stack, frame_ref, table_get, val_to_string,
@@ -239,6 +240,19 @@ pub(super) fn sync_tooltip_line_frame(
     let Some(line) = line else {
         return Ok(None);
     };
+    write_tooltip_line_frame(state, line_id, line, right_side)?;
+    // A FontString without a stored size takes its extent from its text, as
+    // SetText does; a sole-anchor zero-size region has no valid rectangle (dd80779628).
+    refresh_text_measurements(state, line_id);
+    Ok(Some(line_id))
+}
+
+fn write_tooltip_line_frame(
+    state: &mut LuaState,
+    line_id: u64,
+    line: TooltipLine,
+    right_side: bool,
+) -> LuaResult<()> {
     let wrap = line.wrap;
     let (text, color, text_segments) = tooltip_line_frame_content(line, right_side);
     let stripped = text
@@ -255,7 +269,7 @@ pub(super) fn sync_tooltip_line_frame(
             frame.visible = frame.text.as_ref().is_some_and(|text| !text.is_empty());
         }
     }
-    Ok(Some(line_id))
+    Ok(())
 }
 
 fn tooltip_line_frame_content(

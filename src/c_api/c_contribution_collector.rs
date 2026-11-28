@@ -77,7 +77,23 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     register_contribution_details(state, namespace)
 }
 
+/// `Enum.PlayerInteractionType.ContributionCollector`
+/// (Retail and Forever PlayerInteractionManagerConstantsDocumentation.lua:54).
+const CONTRIBUTION_COLLECTOR_INTERACTION: i32 = 41;
+
+/// INFERRED: Retail and Forever ContributionCollectorDocumentation.lua:11 declare
+/// `Close()` without arguments or returns; Blizzard_Contribution.lua:1 and :418
+/// call it to end the panel's interaction, like `C_Map.CloseWorldMapInteraction`.
+fn close_contribution_collector(state: &mut LuaState) -> LuaResult<u32> {
+    crate::c_api::c_player_interaction_manager::clear_interaction_type(
+        state,
+        CONTRIBUTION_COLLECTOR_INTERACTION,
+    )?;
+    Ok(0)
+}
+
 fn register_collector_queries(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
+    table_set_rust_fn_static(state, namespace, "Close", close_contribution_collector)?;
     table_set_rust_fn_static(
         state,
         namespace,

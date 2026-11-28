@@ -260,6 +260,9 @@ fn startup_legacy_dropdown_check_regions_remain_textures(env: &WowLuaEnv) {
         let result: String = env
             .eval(
                 r##"
+                -- Startup lists hold only Button1 (UIDropDownMenu.lua:3); the original
+                -- creator adds Button2 to every level (UIDropDownMenu.lua:342-362).
+                UIDropDownMenu_CreateFrames(2, 2)
                 local cases = {
                     { "DropDownList1Button1", DropDownList1Button1, DropDownList1Button1Check },
                     { "DropDownList1Button2", DropDownList1Button2, DropDownList1Button2Check },

@@ -306,15 +306,17 @@ fn blizzard_performance_bar_publishes_three_global_functions(env: &WowLuaEnv) {
 prefork_full_ui_case! {
 fn performance_api_shims_are_safe_noops(env: &WowLuaEnv) {
 
+    // 9fc0a48934 models the Update/Reset calls with zero returns (R88fg.3: Forever
+    // VERIFIED zero Lua values; Retail return values UNKNOWN), not the retired 0 results.
     let result: (f64, f64, f64, f64, f64) = env
         .eval(
-            r#"
+            r##"
             return GetFramerate(),
-                   UpdateAddOnMemoryUsage(),
-                   UpdateAddOnCPUUsage(),
-                   ResetCPUUsage(),
+                   select("#", UpdateAddOnMemoryUsage()),
+                   select("#", UpdateAddOnCPUUsage()),
+                   select("#", ResetCPUUsage()),
                    GetAddOnMemoryUsage("missing")
-            "#,
+            "##,
         )
         .expect("performance API shim probe should succeed");
 
