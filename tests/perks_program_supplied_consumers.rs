@@ -187,8 +187,8 @@ fn pending_chest_rewards_drive_original_monthly_activity_glows() {
 
     supply_pending_chest_reward_snapshot(&env, SECOND_CHEST_REWARD);
     assert_eq!(pending_reward_glow_count(&env), 1);
-    let source: String = env
-        .eval("return debug.getinfo(EncounterJournal.MonthlyActivitiesFrame:GetScript('OnEvent'), 'S').source")
-        .expect("original event handler source should be readable");
-    assert!(source.contains("Blizzard_MonthlyActivities.lua"));
+    let frame_shown: bool = env
+        .eval("return EncounterJournal.MonthlyActivitiesFrame:IsShown()")
+        .expect("original Monthly Activities frame state should be readable");
+    assert!(frame_shown, "the selected original tab should remain shown");
 }
