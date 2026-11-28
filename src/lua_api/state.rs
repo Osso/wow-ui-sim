@@ -129,7 +129,7 @@ macro_rules! build_empty_sim_state {
             gamepad_mapped_sticks: None,
             #[cfg(any(feature = "client-wowforever", feature = "client-ptr"))]
             gamepad_allow_hover_events_with_free_look: false,
-            #[cfg(feature = "retail-12-1-5")]
+            #[cfg(feature = "weather-state")]
             weather: crate::c_api::c_weather::WeatherState::default(),
             #[cfg(any(feature = "retail-12-1-0", feature = "client-wowforever"))]
             encounter_timeline: crate::c_api::c_encounter_timeline::Timeline::default(),
@@ -174,8 +174,8 @@ macro_rules! build_empty_sim_state {
                 feature = "client-anniversary"
             ))]
             wrath_legacy: Default::default(),
-            #[cfg(feature = "client-wrath")]
             who_routing: Default::default(),
+            lfg_list_roles: Default::default(),
             console_output: $collections.console_output,
             tutorial_requests: ::std::vec::Vec::new(),
             passed_time_events: [121, 248].into_iter().collect(),
@@ -207,6 +207,8 @@ macro_rules! build_empty_sim_state {
             encounter_journal: EncounterJournalState::default(),
             #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
             completed_encounters: Vec::new(),
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            raid_difficulty_redirects: Vec::new(),
             #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
             pending_raid_info_replies: VecDeque::new(),
             #[cfg(feature = "client-retail")]
@@ -1023,9 +1025,9 @@ macro_rules! build_empty_sim_state {
             #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
             selected_bnet_block: None,
             social_restrictions: SocialRestrictionsState::default(),
-            #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+            #[cfg(feature = "cinematic-summary")]
             cinematic_summaries: HashMap::new(),
-            #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+            #[cfg(feature = "cinematic-summary")]
             current_cinematic_id: 0,
             restricted_actions,
             restricted_actions_natural: [false; 6],
@@ -1085,6 +1087,19 @@ macro_rules! build_empty_sim_state {
             self_resurrect_options: Vec::new(),
             // Cached FrameXMLBase/Constants.lua: MAX_TOTEMS = 4.
             totem_slots: vec![None; 4],
+            totem_cannot_dismiss: BTreeSet::new(),
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            death_release: Default::default(),
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            player_actions: Default::default(),
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            pending_guild_invite: None,
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            guild_achievements_enabled: true,
+            #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+            pvp_match: Default::default(),
+            #[cfg(feature = "vehicle-seats")]
+            vehicle_seats: Default::default(),
             chat_bubbles: Vec::new(),
             summon_request: SummonRequestState::default(),
             player_map_position: (0.5, 0.5),
@@ -1137,7 +1152,7 @@ macro_rules! build_empty_sim_state {
             solo_group_guid: None,
             #[cfg(feature = "retail-12-0-7")]
             solo_group_last: None,
-            #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+            #[cfg(feature = "unit-role-assignment")]
             unit_roles: HashMap::new(),
             party_leader_index: None,
             ready_check: ReadyCheckState::default(),

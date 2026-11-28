@@ -24,6 +24,7 @@ use professions_legacy_trade_skill::register_legacy_trade_skill_globals;
 #[cfg(feature = "client-mists")]
 use professions_legacy_trainer::register_legacy_trainer_globals;
 use professions_registration::{register_crafting_order_namespace, register_trade_skill_namespace};
+pub(crate) use professions_tables::profession_table as profession_info_table;
 use professions_tables::{
     all_profession_tables, category_table, item_icon, item_link_value,
     profession_for_inventory_slot, profession_slots, profession_table, reagent_index_from_stack,

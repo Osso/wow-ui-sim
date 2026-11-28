@@ -1,7 +1,7 @@
 //! T6 service contracts; the original timer regression lives in cfactory_t6_opaque.
 #![cfg(not(feature = "client-wrath"))]
 
-use crate::cfactory_support::{documented_env, load_original};
+use crate::cfactory_support::documented_env;
 
 #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
 #[test]
@@ -92,13 +92,30 @@ fn cfactory_t6_corpse_position_absent_without_location_model() {
         .unwrap();
 }
 
+/// Forever 70707 GuildPreferredPlaySettings.lua:119-141 builds the locale menu on
+/// the frame's own LocaleDropdown (called from OnLoad, :37), so the original
+/// CommunitiesFrame instance drives it with the empty account-service catalog.
 #[cfg(feature = "client-wowforever")]
 #[test]
 fn cfactory_t6_original_preferred_locale_dropdown_handles_no_catalog() {
-    let env = wow_ui_sim::lua_api::WowLuaEnv::new().unwrap();
-    load_original(&env, "Blizzard_Communities/GuildPreferredPlaySettings.lua");
-    env.exec("CommunitiesGuildPreferredPlaySettingsFrameMixin.InitializeLocaleDropdown({}, 1)")
-        .unwrap();
+    crate::common::blizzard_addon_harness::with_blizzard_addon_smoke_shape(
+        &["Blizzard_Communities"],
+        &[],
+        |env, loaded| {
+            assert!(loaded.iter().any(|name| name == "Blizzard_Communities"));
+            let (locale_count, has_elements): (i32, bool) = env
+                .eval(
+                    r#"
+                    local dropdown = CommunitiesFrame.GuildPreferredPlaySettingsFrame.LocaleDropdown
+                    local ids = C_AccountServices.GetPreferredLocales()
+                    dropdown:GenerateMenu()
+                    return #(ids or {}), dropdown:HasElements()
+                    "#,
+                )
+                .expect("original locale dropdown generates with no catalog");
+            assert_eq!((locale_count, has_elements), (0, false));
+        },
+    );
 }
 
 #[cfg(feature = "client-wowforever")]

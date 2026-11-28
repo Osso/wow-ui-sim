@@ -104,6 +104,16 @@ pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
     let builder = register_admin_player_services(builder)?;
     let builder = super::real::region::register_admin(builder)?;
     let builder = super::real::release_timer::register_admin(builder)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let builder = super::real::death_release::register_admin(builder)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let builder = super::real::player_actions::register_admin(builder)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let builder = super::real::guild_membership::register_admin(builder)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let builder = crate::c_api::guild_achievements::register_admin(builder)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    let builder = crate::c_api::pvp_match_type::register_admin(builder)?;
     let builder = crate::c_api::c_death_recap::register_admin(builder)?;
     let builder = crate::c_api::c_death_info::register_admin(builder)?;
     #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
@@ -264,8 +274,11 @@ fn register_admin_inventory_items(builder: TableBuilder) -> LuaResult<TableBuild
     let builder = crate::c_api::c_transmog_outfit_info::register_admin(builder)?;
     #[cfg(feature = "client-retail")]
     let builder = crate::c_api::c_major_factions::register_admin(builder)?;
+    let builder = crate::c_api::c_major_factions::register_renown_admin(builder)?;
     let builder = crate::c_api::item_upgrade_eligibility::register_admin(builder)?;
     let builder = crate::c_api::reputation_admin::register_admin(builder)?;
+    let builder = crate::c_api::c_lfg_list_roles::register_admin(builder)?;
+    let builder = crate::c_api::c_lfg_list_members::register_admin(builder)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     let builder = super::admin_inventory_candidates::register(builder)?;
     let builder = builder
@@ -536,8 +549,23 @@ fn register_world(b: TableBuilder) -> LuaResult<TableBuilder> {
 }
 
 fn register_zone_and_economy(b: TableBuilder) -> LuaResult<TableBuilder> {
-    #[cfg(feature = "retail-12-1-5")]
+    #[cfg(feature = "weather-state")]
     let b = b.set_function("SetWeather", crate::c_api::c_weather::set_weather)?;
+    #[cfg(feature = "cinematic-summary")]
+    let b = b.set_function(
+        "SetCinematicSummary",
+        super::real::cinematic_summary::admin_set_cinematic_summary,
+    )?;
+    #[cfg(feature = "vehicle-seats")]
+    let b = b
+        .set_function(
+            "SetVehicleUIIndicator",
+            super::real::vehicle_seats::admin_set_vehicle_ui_indicator,
+        )?
+        .set_function(
+            "EnterVehicle",
+            super::real::vehicle_seats::admin_enter_vehicle,
+        )?;
     b.set_function("SetZone", set_zone)?
         .set_function("SetSubZone", set_sub_zone)?
         .set_function("SetBindLocation", set_bind_location)?
@@ -559,6 +587,11 @@ fn register_modifier_keys(b: TableBuilder) -> LuaResult<TableBuilder> {
         .set_function("SetControlKeyDown", set_control_key_down)?
         .set_function("SetAltKeyDown", set_alt_key_down)?
         .set_function("SetMetaKeyDown", set_meta_key_down)?
+        .set_function("SetTotem", super::real::totems::admin_set_totem)?
+        .set_function(
+            "SetActiveRaidMarkers",
+            super::real::publication_12_0_0::admin_set_active_raid_markers,
+        )?
         .set_function(
             "IsSimulatorExitRequested",
             super::real::session_exit::is_simulator_exit_requested,
@@ -890,14 +923,10 @@ fn register_inventory_misc(b: TableBuilder) -> LuaResult<TableBuilder> {
         .set_function("ToggleDebugAnchors", toggle_debug_anchors)?;
     #[cfg(feature = "interaction-dialogs")]
     let b = super::real::interaction_dialogs::register_admin(b)?;
-    #[cfg(feature = "totem-dismissal")]
-    let b = super::real::totems::dismissal::register_admin(b)?;
     #[cfg(feature = "player-requests")]
     let b = super::real::player_requests::register_admin(b)?;
     #[cfg(feature = "client-retail")]
     let b = super::real::merchant_purchases::register_admin(b)?;
-    #[cfg(feature = "world-marker-state")]
-    let b = super::real::publication_12_0_0::world_markers::register_admin(b)?;
     let b = super::admin_quests::register_quests(b)?
         .set_function("SimulateBossKill", simulate_boss_kill)?
         .set_function("AddLootItem", add_loot_item)?

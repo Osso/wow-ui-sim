@@ -2,28 +2,28 @@
 use rilua::LuaResult;
 use rilua::vm::state::LuaState;
 
-#[cfg(feature = "retail-12-1-5")]
+#[cfg(feature = "weather-state")]
 use crate::lua_api::methods::{borrow_state, borrow_state_mut, create_table_with_fields};
-#[cfg(feature = "retail-12-1-5")]
+#[cfg(feature = "weather-state")]
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
-#[cfg(feature = "retail-12-1-5")]
+#[cfg(feature = "weather-state")]
 use rilua::{Val, runtime_error};
 
 /// Clear/zero is the simulator's initial state, not an observed native default.
-#[cfg(feature = "retail-12-1-5")]
+#[cfg(feature = "weather-state")]
 #[derive(Clone, Copy, Default)]
 pub(crate) struct WeatherState {
     weather_type: u8,
     intensity: f64,
 }
 
-#[cfg(feature = "retail-12-1-5")]
+#[cfg(feature = "weather-state")]
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     let namespace = super::ensure_namespace(state, "C_Weather")?;
     table_set_rust_fn_static(state, namespace, "GetCurrentWeather", get_current_weather)
 }
 
-#[cfg(not(feature = "retail-12-1-5"))]
+#[cfg(not(feature = "weather-state"))]
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     let absent = super::ensure_namespace(state, "__wow_absent_namespaces")?;
     crate::lua_api::methods::table_set_static(
@@ -35,7 +35,7 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     Ok(())
 }
 
-#[cfg(feature = "retail-12-1-5")]
+#[cfg(feature = "weather-state")]
 fn get_current_weather(state: &mut LuaState) -> LuaResult<u32> {
     let weather = borrow_state(state)?.weather;
     let info = create_table_with_fields(
@@ -50,7 +50,7 @@ fn get_current_weather(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 /// Admin validation is a simulator contract; mutation never schedules events.
-#[cfg(feature = "retail-12-1-5")]
+#[cfg(feature = "weather-state")]
 pub(crate) fn set_weather(state: &mut LuaState) -> LuaResult<u32> {
     let (Val::Num(weather_type), Val::Num(intensity)) = (stack_val(state, 1), stack_val(state, 2))
     else {

@@ -16,3 +16,5 @@ INFERRED (Retail 12.1.5.70688) R88fb: the native loop bypasses the difficulty co
 VERIFIED from the pinned `RaidLocksDocumentation.lua:27-40`: `C_RaidLocks.IsEncounterComplete(mapID, encounterID, difficultyID?)` returns a non-nil boolean, and `difficultyID` is optional. The simulator returns `true` only when the selected row contains `encounterID`; unmatched rows or IDs return `false`.
 
 INFERRED (simulator behavior): `RequestRaidInfo()` queues `UPDATE_INSTANCE_INFO` for a later simulator timer tick. It does not dispatch the event during the function call.
+
+Forever only: `A_Admin.SetRaidDifficultyRedirects(rows)` replaces the supplied difficulty redirects read by `C_RaidLocks.GetRedirectedDifficultyID(mapID, difficultyID)`. Each row has `mapID`, `difficultyID` and `redirectedDifficultyID`. A pair without a row returns `difficultyID` (INFERRED; native evidence pending).

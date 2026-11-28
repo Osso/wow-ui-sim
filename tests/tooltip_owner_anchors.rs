@@ -124,7 +124,6 @@ fn tooltip_owner_anchor_totem_button_enter_anchors_bottomright() {
             icon: 0,
             mod_rate: 1.0,
             spell_id: 19750,
-            cannot_dismiss: false,
         })];
     let addons = wow_ui_sim::paths::default_blizzard_ui_addons_path().unwrap();
     let source =

@@ -107,7 +107,6 @@ pub mod video_capabilities;
 pub(crate) mod video_texture_capability;
 pub(crate) mod video_window;
 pub(crate) mod vignette_info;
-#[cfg(feature = "client-wrath")]
 pub mod who_routing;
 
 #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
@@ -267,9 +266,12 @@ pub(crate) mod c_key_bindings;
 pub mod c_legendary_crafting;
 pub mod c_lfg_info;
 pub(crate) mod c_lfg_list_active_entry;
+pub mod c_lfg_list_creation;
 pub(crate) mod c_lfg_list_filter;
+pub mod c_lfg_list_members;
 #[cfg(feature = "lfg-endgame-edit-policy")]
 pub mod c_lfg_list_policy;
+pub mod c_lfg_list_roles;
 pub mod c_lfg_list_search;
 #[cfg(feature = "rest-policy-flags")]
 mod c_limited_input;
@@ -358,11 +360,15 @@ pub mod external_event_url;
 #[cfg(feature = "client-wowforever")]
 mod forever_outfits;
 pub mod forever_startup;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) mod guild_achievements;
 pub(crate) mod level_link;
 mod lfr_availability;
 pub mod perks_activities;
 pub(crate) mod pet_orders;
 pub mod profession_spec_inputs;
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+pub(crate) mod pvp_match_type;
 pub mod ranged_slot;
 pub(crate) use lfr_availability::stock_lfr_availability;
 #[cfg(all(test, feature = "client-wowforever"))]
@@ -439,6 +445,7 @@ pub mod c_trade_skill_crafting_ui;
 pub(crate) mod c_trade_skill_favorites;
 pub(crate) mod c_trade_skill_filter;
 pub(crate) mod c_trade_skill_first_craft;
+pub(crate) mod c_trade_skill_profession_info;
 pub mod c_trade_skill_quality;
 mod c_trade_skill_source;
 #[cfg(feature = "client-mists")]
@@ -737,6 +744,10 @@ pub(crate) fn register_utility_bootstrap_tables(state: &mut LuaState) -> LuaResu
     #[cfg(any(feature = "retail-12-1-0", feature = "client-wowforever"))]
     c_cvar_readiness::register(state)?;
     c_achievement_info_relations::register(state)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    guild_achievements::register(state)?;
+    #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+    pvp_match_type::register(state)?;
     c_minimap_tracking::register(state)?;
     c_calendar::register(state)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]

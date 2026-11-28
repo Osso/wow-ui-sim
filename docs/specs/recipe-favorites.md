@@ -18,6 +18,11 @@ routing remains UNKNOWN.
 
 PTR 70493 `Blizzard_ProfessionsTemplates/Blizzard_ProfessionsRecipeSchematicForm.lua:469`
 consumes `IsRecipeFavorite` during original crafting-form initialization.
+
+**INFERRED (Forever 70707):** the same selected
+`Blizzard_ProfessionsRecipeSchematicForm.lua:469` consumer and its favorite
+checkbox (`:160`) need `IsRecipeFavorite`/`SetRecipeFavorite`, so Forever
+publishes the shared Retail model. Native Forever publication is not verified.
 **VERIFIED:** this consumer needs the API.
 
 **VERIFIED (Retail WM83):** `HasFavoriteOrderRecipes` is registered on Retail.

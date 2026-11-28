@@ -106,6 +106,26 @@ fn new_game_env() -> WowLuaEnv {
     env
 }
 
+/// Defines `__expected_panel_tab(frameName, i)`: the `i`-th tab in XML order.
+/// Forever's Camelot/FriendsFrame.xml:822-828 names its three tabs
+/// FriendsFrameTab1, FriendsFrameTab3 (id 2) and FriendsFrameTab4 (id 3).
+#[cfg(feature = "client-wowforever")]
+const EXPECTED_PANEL_TAB_LUA: &str = r#"
+    local TAB_NAMES = { FriendsFrame = { "FriendsFrameTab1", "FriendsFrameTab3", "FriendsFrameTab4" } }
+    function __expected_panel_tab(frame_name, i)
+        local names = TAB_NAMES[frame_name]
+        if names then return names[i] and _G[names[i]] end
+        return _G[frame_name .. "Tab" .. i]
+    end
+"#;
+
+#[cfg(not(feature = "client-wowforever"))]
+const EXPECTED_PANEL_TAB_LUA: &str = r#"
+    function __expected_panel_tab(frame_name, i)
+        return _G[frame_name .. "Tab" .. i]
+    end
+"#;
+
 const FIRST_PANEL_TAB_DIVERGENCE_LUA: &str = r#"
     local function first_divergence(frame_name, count)
         local frame = _G[frame_name]
@@ -114,7 +134,7 @@ const FIRST_PANEL_TAB_DIVERGENCE_LUA: &str = r#"
         end
         for i = 1, count do
             local tab = frame.Tabs[i]
-            local expected = _G[frame_name .. "Tab" .. i]
+            local expected = __expected_panel_tab(frame_name, i)
             if expected and tab ~= expected then
                 return table.concat({
                     frame_name,
@@ -138,6 +158,8 @@ const FIRST_PANEL_TAB_DIVERGENCE_LUA: &str = r#"
 "#;
 
 fn first_panel_tab_divergence(env: &WowLuaEnv) -> Option<String> {
+    env.exec(EXPECTED_PANEL_TAB_LUA)
+        .expect("define expected panel tab lookup");
     let summary: String = env
         .eval(FIRST_PANEL_TAB_DIVERGENCE_LUA)
         .expect("eval first panel tab divergence");
@@ -170,7 +192,7 @@ const PANEL_TAB_ANCHOR_TRACE_LUA: &str = r#"
             for i = 2, frame.numTabs or 0 do
                 local last_tab = frame.Tabs and frame.Tabs[i - 1] or _G[frame_name .. "Tab" .. (i - 1)]
                 local this_tab = frame.Tabs and frame.Tabs[i] or _G[frame_name .. "Tab" .. i]
-                local expected_tab = _G[frame_name .. "Tab" .. i]
+                local expected_tab = __expected_panel_tab(frame_name, i)
                 if this_tab ~= expected_tab then
                     __panel_tab_trace[#__panel_tab_trace + 1] = table.concat({
                         tostring(__panel_tab_trace_current_addon),
@@ -190,6 +212,8 @@ const PANEL_TAB_ANCHOR_TRACE_LUA: &str = r#"
 "#;
 
 fn install_panel_tab_anchor_trace(env: &WowLuaEnv) {
+    env.exec(EXPECTED_PANEL_TAB_LUA)
+        .expect("define expected panel tab lookup");
     env.exec(PANEL_TAB_ANCHOR_TRACE_LUA)
         .expect("install panel tab anchor trace");
 }

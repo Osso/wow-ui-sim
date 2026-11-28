@@ -1,6 +1,5 @@
-//! Totem dismissal, world-marker clearing and quest-giver requests driven
-//! through their original Blizzard consumers with A_Admin host inputs.
-#![cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+//! Quest-giver requests over supplied quest offer and reward state.
+#![cfg(feature = "client-retail")]
 
 use crate::common::blizzard_addon_harness::with_blizzard_addon_closure;
 
@@ -9,69 +8,6 @@ fn run_cases(roots: &[&str], cases: &str, what: &str) {
         assert!(loaded.iter().any(|addon| addon == roots[0]), "{what}: {loaded:?}");
         env.exec(cases).unwrap_or_else(|err| panic!("{what}: {err}"));
     });
-}
-
-const TOTEM_CASES: &str = r#"
-A_Admin.SetManualClock(100)
-assert(not pcall(A_Admin.SetTotem, 9, "Searing Totem", 60, 135825, 3599, false), "slot range")
-assert(not pcall(A_Admin.SetTotem, 1, "Searing Totem", 0, 135825, 3599, false), "duration")
-assert(GetTotemTimeLeft(1) == 0 and GetTotemCannotDismiss(1) == nil, "empty slot")
-A_Admin.SetTotem(1, "Searing Totem", 60, 135825, 3599, false)
-A_Admin.SetTotem(2, "Earthen Wall", 30, 136098, 198838, true)
-local function buttons()
-    local bySlot = {}
-    for button in TotemFrame.totemPool:EnumerateActive() do bySlot[button.slot] = button end
-    return bySlot
-end
-assert(TotemFrame:IsShown() and buttons()[1] and buttons()[2], "PLAYER_TOTEM_UPDATE shows both")
-assert(GetTotemTimeLeft(1) == 60 and GetTotemTimeLeft(2) == 30)
-assert(GetTotemCannotDismiss(1) == false and GetTotemCannotDismiss(2) == true)
-A_Admin.AdvanceTime(12.5)
-assert(GetTotemTimeLeft(1) == 47.5 and GetTotemTimeLeft(2) == 17.5, tostring(GetTotemTimeLeft(1)))
-buttons()[2]:Click("RightButton")
-assert(GetTotemInfo(2) == true and buttons()[2], "undismissable totem stays")
-buttons()[1]:Click("RightButton")
-assert(GetTotemInfo(1) == false and not buttons()[1], "right click destroys the totem")
-assert(GetTotemTimeLeft(1) == 0 and GetTotemCannotDismiss(1) == nil)
-A_Admin.AdvanceTime(20)
-assert(GetTotemTimeLeft(2) == 0 and GetTotemCannotDismiss(2) == nil, "expired")
-"#;
-
-#[test]
-fn totem_frame_counts_down_and_dismisses_supplied_totems() {
-    run_cases(&["Blizzard_UnitFrame"], TOTEM_CASES, "TotemFrame");
-}
-
-const WORLD_MARKER_CASES: &str = r#"
-assert(not pcall(A_Admin.SetWorldMarker, 9, true), "marker range")
-local markers = CompactRaidFrameManager.displayFrame.raidMarkers
-markers.raidMarkerGroundTab:Click()
-assert(markers.activeTab == markers.raidMarkerGroundTab)
-local function button(worldIndex)
-    for i = 1, NUM_WORLD_RAID_MARKERS do
-        local candidate = markers["raidMarker" .. i]
-        if WORLD_RAID_MARKER_ORDER[candidate:GetMarker()] == worldIndex then return candidate end
-    end
-end
-for _, index in ipairs({2, 5, 7}) do A_Admin.SetWorldMarker(index, true) end
-CompactRaidFrameManager_UpdateRaidIcons()
-assert(IsRaidMarkerActive(2) and IsRaidMarkerActive(5) and not IsRaidMarkerActive(4))
-assert(button(2).backgroundTexture:GetAtlas() == "GM-button-marker-applied")
-button(2):Click("RightButton")
-assert(not IsRaidMarkerActive(2) and IsRaidMarkerActive(5) and IsRaidMarkerActive(7))
-assert(button(2).backgroundTexture:GetAtlas() == "GM-button-marker-available")
-button(4):Click("RightButton")
-assert(IsRaidMarkerActive(5) and IsRaidMarkerActive(7), "inactive marker: nothing to clear")
-ClearRaidMarker(5)
-assert(not IsRaidMarkerActive(5) and IsRaidMarkerActive(7))
-A_Admin.SetWorldMarker(3, true)
-markers.raidMarkerReset:Click()
-assert(not IsRaidMarkerActive(3) and not IsRaidMarkerActive(7), "reset clears every marker")
-"#;
-
-#[test]
-fn raid_manager_ground_markers_clear_supplied_world_markers() {
-    run_cases(&["Blizzard_CompactRaidFrames"], WORLD_MARKER_CASES, "world markers");
 }
 
 // QuestFrame's detail panel needs QuestGetAutoAccept/QuestFlagsPVP (outside

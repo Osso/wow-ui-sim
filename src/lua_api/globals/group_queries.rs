@@ -625,7 +625,7 @@ fn unit_identity_is_secret(
     )
 }
 
-fn unit_name_for(state: &mut LuaState, unit: &str) -> LuaResult<String> {
+pub(crate) fn unit_name_for(state: &mut LuaState, unit: &str) -> LuaResult<String> {
     let name = {
         let st = borrow_state(state)?;
         match unit {

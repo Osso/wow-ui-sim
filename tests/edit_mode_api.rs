@@ -35,7 +35,6 @@ fn forever_edit_mode_refreshes_cooldown_viewer_totems() {
         icon: 135127,
         mod_rate: 1.0,
         spell_id: 5394,
-        cannot_dismiss: false,
     };
     let long = Totem {
         name: "Long totem".into(),

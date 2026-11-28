@@ -15,13 +15,6 @@ strings. Answers: `ItemTextGetItem`, `ItemTextGetMaterial`, `ItemTextGetCreator`
 `ItemTextNextPage` / `ItemTextPrevPage` move one page and fire `ITEM_TEXT_READY`.
 `CloseItemText` ends the session and fires `ITEM_TEXT_CLOSED`.
 
-### A_Admin.ReceiveGuildInvite(inviter, guildName, achievementPoints, oldGuildName, isNewGuild, joinRank, numMembers) (Retail and WoW Forever)
-
-Fires `GUILD_INVITE_REQUEST(inviter, guildName, achievementPoints, oldGuildName,
-isNewGuild)`. `joinRank` and `numMembers` are the membership the server grants.
-`AcceptGuild` joins that guild and fires `PLAYER_GUILD_UPDATE`. `DeclineGuild`
-drops the invite. Without an invite, both requests do nothing.
-
 ### A_Admin.OpenPetition(petitionType, title, bodyText, minSignatures, maxSignatures, originator, isOriginator, canSign, signatures) (Retail)
 
 Opens a `"guild"` or `"arena"` charter and fires `PETITION_SHOW`. `signatures`
@@ -35,17 +28,7 @@ Stores the incoming request (shared with `AcceptDuel`) and fires
 `DUEL_REQUESTED(challengerName)`. `CancelDuel` declines it and fires
 `DUEL_FINISHED`. Without a request, `CancelDuel` does nothing.
 
-### A_Admin.SetAreaSpiritHealer(secondsUntilWave, cemeterySelection) (Retail and WoW Forever)
-
-A number puts the player in range of an area spirit healer whose next
-resurrection wave is `secondsUntilWave` seconds away on the simulator clock, and
-fires `AREA_SPIRIT_HEALER_IN_RANGE`. `nil` leaves range and fires
-`AREA_SPIRIT_HEALER_OUT_OF_RANGE`. `AcceptAreaSpiritHeal` queues the player,
-`CancelAreaSpiritHeal` leaves the queue. `GetAreaSpiritHealerTime` returns the
-seconds left while queued and 0 otherwise. `IsCemeterySelectionAvailable`
-returns `cemeterySelection` while in range.
-
-## Instance and death countdowns (Retail and WoW Forever)
+## Instance countdowns (Retail and WoW Forever)
 
 Countdowns run on the simulator clock (`A_Admin.SetManualClock` /
 `A_Admin.AdvanceTime`). An expired or absent countdown reads `0`.
@@ -66,14 +49,3 @@ fires `INSTANCE_LOCK_STOP`. Answers `GetInstanceLockTimeRemaining()`
 (`timeLeft, extending, #encounters, #killed`) and
 `GetInstanceLockTimeRemainingEncounter(index)` (`name, texture, killed,
 ineligible`; nothing outside the list).
-
-### A_Admin.SetCorpseRecoveryDelay(seconds)
-
-Sets the delay before the player can accept a resurrection or recover the
-corpse. Answers `GetCorpseRecoveryDelay()`; the `RESURRECT` popup adds 60 s.
-
-### A_Admin.SetResSicknessDuration(text|nil)
-
-The formatted resurrection-sickness duration the spirit healer warns about.
-Answers `GetResSicknessDuration()`; `nil` means no sickness, and the original
-`CONFIRM_XP_LOSS` handler then shows no prompt.

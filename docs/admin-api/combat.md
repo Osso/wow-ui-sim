@@ -173,7 +173,3 @@ A_Admin.SetCombatLogEntries({
 local event, spell, amount = C_CombatLogSecure.GetCurrentEventInfo()
 -- "SPELL_HEAL", 19750, 275
 ```
-
-### A_Admin.SetTotem(slot, name, duration, icon, spellID, cannotDismiss) (Retail and WoW Forever)
-
-Summons the totem in `slot` (1 to `GetNumTotemSlots()`), starting at the current simulator clock, and fires `PLAYER_TOTEM_UPDATE(slot)`. `name` is a nonempty string, `duration` a positive number of seconds, `icon` a fileID and `spellID` a number. A nil `name` empties the slot. `cannotDismiss` is the server flag read by `GetTotemCannotDismiss`. `GetTotemTimeLeft` counts down on the simulator clock (use `A_Admin.SetManualClock`/`AdvanceTime` for exact values). `DestroyTotem(slot)` empties a dismissable slot and fires `PLAYER_TOTEM_UPDATE(slot)`; it does nothing for an empty or undismissable slot (INFERRED, R-ag10-6). Feature `totem-dismissal`.

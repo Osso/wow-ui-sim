@@ -4,7 +4,6 @@
 AddSourceLocationExclude # not-yet: temporary Lua workaround
 AreClassRolesSoftSuggestions # not-yet
 AutoEquipCursorItem # not-yet
-C_AchievementInfo.AreGuildAchievementsEnabled # not-yet
 C_AchievementInfo.IsGuildAchievement # not-yet
 C_ActionBar.FindAssistedCombatActionButtons # not-yet
 C_ActionBar.GetProfessionQuality # not-yet
@@ -173,7 +172,6 @@ C_ChallengeMode.StartChallengeMode # not-yet
 C_ChatInfo.GetChannelRosterInfo # not-yet
 C_ChatInfo.GetChatLineSenderGUID # not-yet
 C_ChatInfo.GetChatLineSenderName # not-yet
-C_ChatInfo.GetChatTypeName # not-yet
 C_ChatInfo.GetClubStreamIDs # not-yet
 C_ChatInfo.GetColorForChatType # not-yet
 C_ChatInfo.GetMentorChannelID # not-yet
@@ -182,7 +180,6 @@ C_ChatInfo.InChatMessagingLockdown # not-yet
 C_ChatInfo.IsChatLineCensored # not-yet
 C_ChatInfo.IsLoggingChat # not-yet
 C_ChatInfo.IsLoggingCombat # not-yet
-C_ChatInfo.IsPartyChannelType # not-yet
 C_ChatInfo.IsValidCombatFilterName # not-yet
 C_ChatInfo.PerformEmote # not-yet: temporary Lua workaround
 C_ChatInfo.ReplaceIconAndGroupExpressions # not-yet: temporary Lua workaround
@@ -546,8 +543,6 @@ C_Flyout.GetFlyoutInfo # not-yet
 C_Flyout.GetFlyoutSlotInfo # not-yet
 C_Flyout.GetNumFlyouts # not-yet
 C_FriendList.IsIgnoredByGuid # not-yet
-C_FriendList.SendWho # not-yet
-C_FriendList.SortWho # not-yet
 C_GamePad.AddSDLMapping # not-yet
 C_GamePad.ApplyConfigs # not-yet
 C_GamePad.AxisIndexToConfigName # not-yet
@@ -910,9 +905,7 @@ C_LFGInfo.GetRoleCheckDifficultyDetails # not-yet
 C_LFGInfo.IsLFREnabled # not-yet
 C_LFGList.CanActiveEntryUseAutoAccept # not-yet
 C_LFGList.ClearApplicationTextFields # not-yet
-C_LFGList.ClearCreationTextFields # not-yet
 C_LFGList.ConfirmCensoredActiveEntry # not-yet
-C_LFGList.CopyActiveEntryInfoToCreationFields # not-yet
 C_LFGList.CreateScenarioListing # not-yet
 C_LFGList.DoesCensoredTextMatch # not-yet
 C_LFGList.DoesEntryTitleMatchPrebuiltTitle # not-yet
@@ -922,8 +915,6 @@ C_LFGList.GetApplicantInfo # not-yet
 C_LFGList.GetApplicantPvpRatingInfoForListing # not-yet
 C_LFGList.GetKeystoneForActivity # not-yet
 C_LFGList.GetOwnedKeystoneActivityAndGroupAndLevel # not-yet
-C_LFGList.GetSearchResultLeaderInfo # not-yet
-C_LFGList.GetSearchResultPlayerInfo # not-yet
 C_LFGList.IsCensoredActiveEntryUnresolved # not-yet
 C_LFGList.ReportGroupAsAdvertisement # not-yet
 C_LFGList.RevealCensoredActiveEntry # not-yet
@@ -932,9 +923,6 @@ C_LFGList.SetEntryTitle # not-yet
 C_LFGList.SetSearchToScenarioID # not-yet
 C_LFGList.ValidateRequiredDungeonScore # not-yet
 C_LFGList.ValidateRequiredPvpRatingForActivity # not-yet
-C_LFGListRoles.GetRoles # not-yet
-C_LFGListRoles.GetSavedRoles # not-yet
-C_LFGListRoles.SetRoles # not-yet
 C_LegendaryCrafting.CraftRuneforgeLegendary # not-yet
 C_LegendaryCrafting.GetRuneforgeItemPreviewInfo # not-yet
 C_LegendaryCrafting.GetRuneforgeLegendaryComponentInfo # not-yet
@@ -991,7 +979,6 @@ C_Map.GetMapWorldSize # not-yet: temporary Lua workaround
 C_Map.GetUserWaypointFromHyperlink # not-yet
 C_Map.GetUserWaypointHyperlink # not-yet
 C_Map.IsCityMap # not-yet
-C_Map.IsMapValidForNavBarDropdown # not-yet
 C_Map.MapHasArt # not-yet: temporary Lua workaround
 C_Map.OpenWorldMap # not-yet
 C_MerchantFrame.GetBuybackItemID # not-yet
@@ -1216,15 +1203,9 @@ C_PvP.HasArenaSkirmishWinToday # not-yet
 C_PvP.HasRandomTrainingGroundArenaWinToday # not-yet
 C_PvP.HasRandomTrainingGroundBGWinToday # not-yet
 C_PvP.IsActiveMatchRegistered # not-yet
-C_PvP.IsArena # not-yet
-C_PvP.IsBattleground # not-yet
 C_PvP.IsBrawlSoloRBG # not-yet
 C_PvP.IsBrawlSoloShuffle # not-yet
-C_PvP.IsInBrawl # not-yet: temporary Lua workaround
 C_PvP.IsInRatedMatchWithDeserterPenalty # not-yet
-C_PvP.IsMatchFactional # not-yet
-C_PvP.IsPVPMap # not-yet
-C_PvP.IsSoloShuffle # not-yet: temporary Lua workaround
 C_PvP.IsWarModeActive # not-yet
 C_PvP.IsWarModeFeatureEnabled # not-yet
 C_PvP.JoinBrawl # not-yet
@@ -1276,7 +1257,6 @@ C_QuestSession.RequestSessionStart # not-yet
 C_QuestSession.RequestSessionStop # not-yet
 C_QuestSession.SendSessionBeginResponse # not-yet
 C_QuestSession.SetQuestIsSuperTracked # not-yet
-C_RaidLocks.GetRedirectedDifficultyID # not-yet
 C_RaidLocks.IsRaidLockExtendFeatureEnabled # not-yet
 C_RaidLocks.IsRaidLockExtendFeatureSupported # not-yet
 C_RecentAllies.CanSetRecentAllyNote # not-yet
@@ -1537,7 +1517,6 @@ C_TradeSkillUI.GetItemReagentQualityByItemInfo # not-yet
 C_TradeSkillUI.GetOriginalCraftRecipeID # not-yet
 C_TradeSkillUI.GetProfessionChildSkillLineID # not-yet
 C_TradeSkillUI.GetProfessionForCursorItem # not-yet
-C_TradeSkillUI.GetProfessionInfoBySkillLineID # not-yet
 C_TradeSkillUI.GetProfessionNameForSkillLineAbility # not-yet
 C_TradeSkillUI.GetProfessionSpells # not-yet
 C_TradeSkillUI.GetQualitiesForRecipe # not-yet
@@ -1552,7 +1531,6 @@ C_TradeSkillUI.IsEnchantTargetValid # not-yet
 C_TradeSkillUI.IsGuildTradeSkillsEnabled # not-yet: temporary Lua workaround
 C_TradeSkillUI.IsNearProfessionSpellFocus # not-yet
 C_TradeSkillUI.IsOriginalCraftRecipeLearned # not-yet
-C_TradeSkillUI.IsRecipeFirstCraft # not-yet
 C_TradeSkillUI.IsRecipeInBaseSkillLine # not-yet
 C_TradeSkillUI.IsRecipeProfessionLearned # not-yet
 C_TradeSkillUI.IsRecraftReagentValid # not-yet
@@ -1655,8 +1633,6 @@ C_TransmogSets.SetIsFavorite # not-yet
 C_TransmogSets.SetTransmogSetsClassFilter # not-yet
 C_Tutorial.SendTutorialStartButtonTelem # not-yet
 C_UI.GetTopRightNotchSafeRegion # not-yet
-C_UI.GetUIParent # not-yet
-C_UI.GetWorldFrame # not-yet
 C_UIColor.GetColors # not-yet: temporary Lua workaround
 C_UIWidgetManager.GetPreyHuntProgressWidgetVisualizationInfo # not-yet
 C_UnitAuras.AddAuraSound # not-yet
@@ -1718,7 +1694,6 @@ C_VoiceChat.SpeakRemoteTextSample # not-yet
 C_VoiceChat.ToggleDeafened # not-yet
 C_VoiceChat.ToggleMemberMuted # not-yet
 C_VoiceChat.ToggleMuted # not-yet
-C_Weather.GetCurrentWeather # not-yet
 C_WeeklyRewards.AreRewardsForCurrentRewardPeriod # not-yet
 C_WeeklyRewards.ClaimReward # not-yet
 C_WeeklyRewards.CloseInteraction # not-yet
@@ -1743,17 +1718,13 @@ C_WowTokenUI.StartTokenSell # not-yet
 C_XMLUtil.GetTemplates # not-yet
 CanChangePlayerDifficulty # not-yet
 CanDualWield # not-yet
-CanEjectPassengerFromSeat # not-yet
 CanMapChangeDifficulty # not-yet
 CanShowResetInstances # not-yet
-CanSwitchVehicleSeat # not-yet
 CanUpgradeToCurrentExpansion # not-yet
 CancelPendingEquip # not-yet
 CancelPreloadingMovie # not-yet
 CaseAccentInsensitiveParse # not-yet
 CheckTalentMasterDist # not-yet
-CinematicFinished # not-yet
-CinematicStarted # not-yet
 ClearCursorHoveredItem # not-yet: temporary Lua workaround
 ClearOutage # not-yet
 ClearPendingBindConversionItem # not-yet
@@ -1774,16 +1745,12 @@ CursorHasMoney # not-yet
 CursorHasSpell # not-yet
 DeclineName # not-yet
 DoesCurrentLocaleSellExpansionLevels # not-yet
-EjectPassengerFromSeat # not-yet
 EquipPendingItem # not-yet
-GetAllowLowLevelRaid # not-yet
 GetAreaText # not-yet
 GetAvailableBandwidth # not-yet: temporary Lua workaround
 GetAvailableLocales # not-yet
 GetBackgroundLoadingStatus # not-yet: temporary Lua workaround
 GetBillingTimeRested # not-yet: temporary Lua workaround
-GetCemeteryPreference # not-yet
-GetCurrentCinematicSummary # not-yet
 GetCurrentEventID # not-yet
 GetCursorCenterPosition # not-yet
 GetCursorDelta # not-yet
@@ -1826,11 +1793,9 @@ GetScreenDPIScale # not-yet: temporary Lua workaround
 GetScriptBucketThrottleLimits # not-yet
 GetScriptCPUUsage # not-yet: temporary Lua workaround
 GetSecondsUntilParentalControlsKick # not-yet
-GetSheathState # not-yet
 GetSourceLocation # not-yet
 GetTaxiBenchmarkMode # not-yet
 GetThreatStatusColor # not-yet: temporary Lua workaround
-GetTotemDuration # not-yet
 GetUnitChargedPowerPoints # not-yet
 GetUnitEmpowerMinHoldTime # not-yet
 GetUnitHealthModifier # not-yet
@@ -1841,8 +1806,6 @@ GetUnitPowerBarTextureInfo # not-yet
 GetUnitPowerBarTextureInfoByID # not-yet
 GetUnitPowerModifier # not-yet
 GetUpgradeExpansionLevel # not-yet: temporary Lua workaround
-GetVehicleUIIndicator # not-yet
-GetVehicleUIIndicatorSeat # not-yet
 HasDualWieldPenalty # not-yet
 HasFullControl # not-yet
 HasIgnoreDualWieldWeapon # not-yet
@@ -1856,16 +1819,12 @@ IsEuropeanNumbers # not-yet
 IsInsane # not-yet
 IsItemPreferredArmorType # not-yet
 IsJailersTowerLayerTimeLocked # not-yet
-IsLeftMetaKeyDown # not-yet
 IsLegacyDifficulty # not-yet
 IsLinuxClient # not-yet
 IsMovieLocal # not-yet
 IsMoviePlayable # not-yet
 IsMovieReadable # not-yet
 IsOnTournamentRealm # not-yet: temporary Lua workaround
-IsOutOfBounds # not-yet
-IsPlayerInGuildFromGUID # not-yet
-IsRightMetaKeyDown # not-yet
 IsUsingFixedTimeStep # not-yet
 IsUsingMouse # not-yet
 LoadURLIndex # not-yet
@@ -1877,14 +1836,10 @@ OutageDetected # not-yet
 PartialPlayTime # not-yet: temporary Lua workaround
 PlaceRaidMarker # not-yet
 PlatformIsHandheld # not-yet
-PlayerIsInCombat # not-yet
 PlayerIsSpellTarget # not-yet
-PlayerVehicleHasComboPoints # not-yet
 PortGraveyard # not-yet
 PreloadMovie # not-yet
 RandomRoll # not-yet
-RemoveRaidTargets # not-yet
-RepopMe # not-yet
 ReportBug # not-yet
 ReportPlayerIsPVPAFK # not-yet
 ReportSuggestion # not-yet
@@ -1893,15 +1848,11 @@ ResetInstances # not-yet
 ResistancePercent # not-yet
 RespondInstanceLock # not-yet
 RestartGx # not-yet
-ResurrectHasSickness # not-yet
-ResurrectHasTimer # not-yet
 RunScript # not-yet: temporary Lua workaround
 Screenshot # not-yet
 SelectedRealmName # not-yet
 SellCursorItem # not-yet
 SendSubscriptionInterstitialResponse # not-yet
-SetAllowLowLevelRaid # not-yet
-SetCemeteryPreference # not-yet
 SetConsoleKey # not-yet
 SetCursorByMode # not-yet
 SetCursorHoveredItem # not-yet: temporary Lua workaround
@@ -1939,7 +1890,6 @@ TargetPriorityHighlightEnd # not-yet
 TargetPriorityHighlightStart # not-yet
 TargetToggle # not-yet
 TargetTotem # not-yet
-TimeoutResurrect # not-yet
 ToggleAnimKitDisplay # not-yet
 ToggleCollision # not-yet
 ToggleCollisionDisplay # not-yet
@@ -1948,7 +1898,6 @@ ToggleGravity # not-yet
 TogglePlayerBounds # not-yet
 TogglePortals # not-yet
 ToggleSelfHighlight # not-yet
-ToggleSheath # not-yet
 ToggleSit # not-yet
 ToggleTris # not-yet
 UIReload # not-yet
@@ -1959,10 +1908,6 @@ UnitChromieTimeID # not-yet
 UnitHasMouseoverHighlight # not-yet
 UnitInAnyGroup # not-yet
 UnitInPartyShard # not-yet
-UnitInVehicleControlSeat # not-yet
-UnitInVehicleHidesPetFrame # not-yet
-UnitIsControlling # not-yet
-UnitIsInMyGuild # not-yet
 UnitIsMercenary # not-yet
 UnitIsPVPSanctuary # not-yet
 UnitIsSameServer # not-yet
@@ -1971,20 +1916,12 @@ UnitNameplateShowsWidgetsOnly # not-yet
 UnitNumPowerBarTimers # not-yet
 UnitOwnerGUID # not-yet
 UnitPartialPower # not-yet
-UnitPercentHealthFromGUID # not-yet
 UnitPowerDisplayMod # not-yet: temporary Lua workaround
 UnitPvpClassification # not-yet
 UnitSelectionType # not-yet
-UnitSetRole # not-yet
-UnitSetRoleEnum # not-yet
 UnitShouldDisplayName # not-yet
 UnitSpellTargetName # not-yet
-UnitSwitchToVehicleSeat # not-yet
-UnitUsingVehicle # not-yet
-UnitVehicleSeatCount # not-yet
-UnitVehicleSeatInfo # not-yet
 UnitWidgetSet # not-yet
 UpdateWindow # not-yet
 WorldLootObjectExists # not-yet: temporary Lua workaround
 secretunwrap # not-yet
-table.getcountinfo # not-yet

@@ -46,16 +46,9 @@ This activates `Enum.PlayerInteractionType.WorldMap` (the map-table NPC interact
 ## Player requests (Retail and WoW Forever)
 
 Implementation: `src/lua_api/globals/real/player_requests.rs` (feature
-`player-requests`). `FollowUnit(name)` resolves a unit token or a target/party
-member name (empty or `"0"` means the target) and fires `AUTOFOLLOW_BEGIN(name)`.
-`Dismount()` clears the mounted flag and fires `PLAYER_MOUNT_DISPLAY_CHANGED`.
-`InitiateRolePoll()` returns true and fires `ROLE_POLL_BEGIN(playerName)` for a
-grouped leader or assistant; otherwise it returns false.
-
-### A_Admin.StopAutoFollow()
-
-Ends the current follow and fires `AUTOFOLLOW_END` (the client stops following
-when the player moves). Without a follow target it does nothing.
+`player-requests`). `InitiateRolePoll()` returns true and fires
+`ROLE_POLL_BEGIN(playerName)` for a grouped leader or assistant; otherwise it
+returns false.
 
 ### A_Admin.RequestTrade(requesterName)
 

@@ -39,7 +39,6 @@ BattlefieldMgrQueueInviteResponse # not-yet
 BattlefieldMgrQueueRequest # not-yet
 BuyGuildBankTab # not-yet
 BuyGuildCharter # not-yet
-C_AchievementInfo.AreGuildAchievementsEnabled # not-yet
 C_AchievementInfo.IsGuildAchievement # not-yet
 C_ActionBar.GetProfessionQuality # not-yet
 C_ActionBar.HasPetActionButtons # not-yet
@@ -203,7 +202,6 @@ C_CharacterServices.HasRequiredBoostForUnrevoke # not-yet
 C_ChatInfo.GetChannelRosterInfo # not-yet
 C_ChatInfo.GetChatLineSenderGUID # not-yet
 C_ChatInfo.GetChatLineSenderName # not-yet
-C_ChatInfo.GetChatTypeName # not-yet
 C_ChatInfo.GetClubStreamIDs # not-yet
 C_ChatInfo.GetColorForChatType # not-yet
 C_ChatInfo.GetMentorChannelID # not-yet
@@ -211,7 +209,6 @@ C_ChatInfo.GetNumReservedChatWindows # not-yet: temporary Lua workaround
 C_ChatInfo.IsChatLineCensored # not-yet
 C_ChatInfo.IsLoggingChat # not-yet
 C_ChatInfo.IsLoggingCombat # not-yet
-C_ChatInfo.IsPartyChannelType # not-yet
 C_ChatInfo.IsValidCombatFilterName # not-yet
 C_ChatInfo.PerformEmote # not-yet: temporary Lua workaround
 C_ChatInfo.RequestCanLocalWhisperTarget # not-yet
@@ -1371,15 +1368,9 @@ C_PvP.HasArenaSkirmishWinToday # not-yet
 C_PvP.HasRandomTrainingGroundArenaWinToday # not-yet
 C_PvP.HasRandomTrainingGroundBGWinToday # not-yet
 C_PvP.IsActiveMatchRegistered # not-yet
-C_PvP.IsArena # not-yet
-C_PvP.IsBattleground # not-yet
 C_PvP.IsBrawlSoloRBG # not-yet
 C_PvP.IsBrawlSoloShuffle # not-yet
-C_PvP.IsInBrawl # not-yet: temporary Lua workaround
 C_PvP.IsInRatedMatchWithDeserterPenalty # not-yet
-C_PvP.IsMatchFactional # not-yet
-C_PvP.IsPVPMap # not-yet
-C_PvP.IsSoloShuffle # not-yet: temporary Lua workaround
 C_PvP.IsWarModeActive # not-yet
 C_PvP.IsWarModeFeatureEnabled # not-yet
 C_PvP.JoinBrawl # not-yet
@@ -1825,8 +1816,6 @@ C_Trophy.MonumentLoadSelectedTrophyID # not-yet
 C_Trophy.MonumentRevertAppearanceToSaved # not-yet
 C_Trophy.MonumentSaveSelection # not-yet
 C_UI.GetTopRightNotchSafeRegion # not-yet
-C_UI.GetUIParent # not-yet
-C_UI.GetWorldFrame # not-yet
 C_UnitAurasPrivate.AddPrivateAuraUpdateCallback # not-yet
 C_UnitAurasPrivate.AnchorPrivateAura # not-yet
 C_UnitAurasPrivate.GetAllPrivateAuraInstanceIDs # not-yet
@@ -1941,7 +1930,6 @@ CanCancelScene # not-yet
 CanChangePlayerDifficulty # not-yet
 CanDualWield # not-yet
 CanEditGuildEvent # not-yet
-CanEjectPassengerFromSeat # not-yet
 CanGamePadControlCursor # not-yet
 CanInitiateWarGame # not-yet
 CanItemBeSocketedToArtifact # not-yet
@@ -1950,7 +1938,6 @@ CanMapChangeDifficulty # not-yet
 CanResetTutorials # not-yet
 CanScanResearchSite # not-yet
 CanShowResetInstances # not-yet
-CanSwitchVehicleSeat # not-yet
 CanSwitchVehicleSeats # not-yet
 CanUpgradeToCurrentExpansion # not-yet
 CancelMasterLootRoll # not-yet
@@ -2012,7 +1999,6 @@ DoMasterLootRoll # not-yet
 DoesCurrentLocaleSellExpansionLevels # not-yet
 EJ_GetInstanceForMap # not-yet
 EJ_GetMapEncounter # not-yet
-EjectPassengerFromSeat # not-yet
 EquipPendingItem # not-yet
 ExpandGuildTradeSkillHeader # not-yet
 ExpandWarGameHeader # not-yet
@@ -2039,7 +2025,6 @@ GetAchievementNumRewards # not-yet
 GetAchievementReward # not-yet
 GetActiveArtifactByRace # not-yet
 GetActiveLevel # not-yet
-GetAllowLowLevelRaid # not-yet
 GetArchaeologyRaceInfoByID # not-yet
 GetAreaText # not-yet
 GetAvailableLevel # not-yet
@@ -2057,7 +2042,6 @@ GetBattlegroundPoints # not-yet
 GetBestFlexRaidChoice # not-yet
 GetBillingTimeRested # not-yet: temporary Lua workaround
 GetButtonMetatable # not-yet: temporary Lua workaround
-GetCemeteryPreference # not-yet
 GetClickFrame # not-yet
 GetCompanionInfo # not-yet
 GetCurrentEventID # not-yet
@@ -2237,7 +2221,6 @@ GetScriptBucketThrottleLimits # not-yet: temporary Lua workaround
 GetSecondsUntilParentalControlsKick # not-yet
 GetSelectedDisplayChannel # not-yet
 GetSelectedWarGameType # not-yet
-GetSheathState # not-yet
 GetSoundEntryCount # not-yet
 GetSourceLocation # not-yet
 GetSpecializationSpells # not-yet
@@ -2267,8 +2250,6 @@ GetUnitPowerBarTextureInfo # not-yet
 GetUnitPowerBarTextureInfoByID # not-yet
 GetUnitPowerModifier # not-yet
 GetUpgradeExpansionLevel # not-yet: temporary Lua workaround
-GetVehicleUIIndicator # not-yet
-GetVehicleUIIndicatorSeat # not-yet
 GetVideoCaps # not-yet
 GetWarGameQueueStatus # not-yet
 GetWarGameTypeInfo # not-yet
@@ -2319,7 +2300,6 @@ IsInventoryItemProfessionBag # not-yet: temporary Lua workaround
 IsItemPreferredArmorType # not-yet
 IsJailersTowerLayerTimeLocked # not-yet
 IsLFGComplete # not-yet
-IsLeftMetaKeyDown # not-yet
 IsLinuxClient # not-yet
 IsMasterLooter # not-yet
 IsMouselooking # intentionally-unsupported: 3D camera/model
@@ -2327,16 +2307,13 @@ IsMovieLocal # not-yet
 IsMoviePlayable # not-yet
 IsMovieReadable # not-yet
 IsOnTournamentRealm # not-yet: temporary Lua workaround
-IsOutOfBounds # not-yet
 IsOutlineModeSupported # not-yet
 IsPetActive # not-yet
 IsPetAttackAction # not-yet
 IsPetAttackActive # not-yet
-IsPlayerInGuildFromGUID # not-yet
 IsPlayerNeutral # not-yet
 IsQuestIDValidSpellTarget # not-yet
 IsQuestLogSpecialItemInRange # not-yet
-IsRightMetaKeyDown # not-yet
 IsServerControlledBackfill # not-yet
 IsSpecializationActivateSpell # not-yet
 IsSpellClassOrSpec # not-yet
@@ -2412,7 +2389,6 @@ PitchUpStart # intentionally-unsupported: 3D camera/model
 PitchUpStop # intentionally-unsupported: 3D camera/model
 PlaceRaidMarker # not-yet
 PlayAutoAcceptQuestSound # not-yet
-PlayerVehicleHasComboPoints # not-yet
 PortGraveyard # not-yet
 PreloadMovie # not-yet
 PrevView # intentionally-unsupported: 3D camera/model
@@ -2441,7 +2417,6 @@ RemovePvpTalent # not-yet
 RemoveTalent # not-yet
 RenamePetition # not-yet
 ReplaceGuildMaster # not-yet
-RepopMe # not-yet
 ReportBug # not-yet
 ReportPlayerIsPVPAFK # not-yet
 ReportSuggestion # not-yet
@@ -2459,8 +2434,6 @@ RespondInstanceLock # not-yet
 RespondMailLockSendItem # not-yet
 RestartGx # not-yet
 RestoreRaidProfileFromCopy # not-yet
-ResurrectHasSickness # not-yet
-ResurrectHasTimer # not-yet
 RunScript # not-yet: temporary Lua workaround
 SaveRaidProfileCopy # not-yet
 SaveView # intentionally-unsupported: 3D camera/model
@@ -2477,11 +2450,8 @@ SelectedRealmName # not-yet
 SellCursorItem # not-yet
 SendSubscriptionInterstitialResponse # not-yet
 SendSystemMessage # not-yet
-SetAllowLowLevelRaid # not-yet
-SetAutoDeclineGuildInvites # not-yet
 SetBarSlotFromIntro # not-yet
 SetBattlefieldScoreFaction # not-yet
-SetCemeteryPreference # not-yet
 SetChannelOwner # not-yet
 SetChatColorNameByClass # not-yet
 SetConsoleKey # not-yet
@@ -2592,7 +2562,6 @@ TargetPriorityHighlightEnd # not-yet
 TargetPriorityHighlightStart # not-yet
 TargetToggle # not-yet
 TargetTotem # not-yet
-TimeoutResurrect # not-yet
 ToggleAnimKitDisplay # not-yet
 ToggleAutoRun # not-yet
 ToggleCollision # not-yet
@@ -2603,7 +2572,6 @@ TogglePlayerBounds # not-yet
 TogglePortals # not-yet
 ToggleRun # not-yet
 ToggleSelfHighlight # not-yet
-ToggleSheath # not-yet
 ToggleTris # not-yet
 ToggleWindowed # not-yet
 TurnInGuildCharter # not-yet
@@ -2616,10 +2584,6 @@ UnitChromieTimeID # not-yet
 UnitHasRelicSlot # not-yet
 UnitInAnyGroup # not-yet
 UnitInPartyShard # not-yet
-UnitInVehicleControlSeat # not-yet
-UnitInVehicleHidesPetFrame # not-yet
-UnitIsControlling # not-yet
-UnitIsInMyGuild # not-yet
 UnitIsInteractable # not-yet
 UnitIsMercenary # not-yet
 UnitIsPVPSanctuary # not-yet
@@ -2629,16 +2593,11 @@ UnitNameplateShowsWidgetsOnly # not-yet
 UnitNumPowerBarTimers # not-yet
 UnitOwnerGUID # not-yet
 UnitPartialPower # not-yet
-UnitPercentHealthFromGUID # not-yet
 UnitPvpClassification # not-yet
 UnitQuestTrivialLevelRange # not-yet
 UnitQuestTrivialLevelRangeScaling # not-yet
 UnitSelectionType # not-yet
 UnitShouldDisplayName # not-yet
-UnitSwitchToVehicleSeat # not-yet
-UnitUsingVehicle # not-yet
-UnitVehicleSeatCount # not-yet
-UnitVehicleSeatInfo # not-yet
 UnitWidgetSet # not-yet
 UnlearnSpecialization # not-yet
 UnmuteSoundFile # not-yet: temporary Lua workaround

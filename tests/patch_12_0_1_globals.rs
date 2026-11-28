@@ -21,7 +21,6 @@ fn patch_12_0_1_totem_slots_and_duration_share_info_inputs() {
         icon: 135127,
         mod_rate: 1.0,
         spell_id: 0,
-        cannot_dismiss: false,
     });
     env.state().borrow_mut().totem_slots[1] = Some(Totem {
         name: "Expired".into(),
@@ -30,7 +29,6 @@ fn patch_12_0_1_totem_slots_and_duration_share_info_inputs() {
         icon: 135128,
         mod_rate: 1.0,
         spell_id: 0,
-        cannot_dismiss: false,
     });
     env.exec(r#"
         local active, name, start, duration, icon = GetTotemInfo(1)

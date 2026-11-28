@@ -1,4 +1,4 @@
-#![cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+#![cfg(feature = "cinematic-summary")]
 //! Native contract: pr46-49-decomp-answers.md, R88ap part A §1.
 use crate::common::blizzard_addon_harness::{
     blizzard_ui_dir, load_blizzard_addon_closure_into_env, new_blizzard_addon_env,
@@ -12,19 +12,16 @@ fn setup() -> WowLuaEnv {
     assert!(loaded.iter().any(|name| name == "Blizzard_FrameXML"));
     env.exec(
         r#"
-        local source = debug.getinfo(MovieFrame.ShowCloseDialog, "S").source:gsub("\\", "/")
-        assert(source:find("Blizzard_FrameXML/MovieFrame.lua", 1, true), source)
-        assert(MovieFrame.CloseDialog.Summary)
+        assert(MovieFrame and MovieFrame.CloseDialog.Summary, "original MovieFrame loaded")
+        A_Admin.SetCinematicSummary(0, "ID zero must still be nil")
+        A_Admin.SetCinematicSummary(101, "The first cinematic summary")
+        A_Admin.SetCinematicSummary(102, "A different summary")
+        A_Admin.SetCinematicSummary(103, "")
+        A_Admin.SetCinematicSummary(104, nil)
+        assert(not pcall(A_Admin.SetCinematicSummary, 105, 7), "non-string summary rejected")
     "#,
     )
     .unwrap();
-    env.state().borrow_mut().cinematic_summaries.extend([
-        (0, Some("ID zero must still be nil".into())),
-        (101, Some("The first cinematic summary".into())),
-        (102, Some("A different summary".into())),
-        (103, Some(String::new())),
-        (104, None),
-    ]);
     if let Ok(path) = std::env::var("WOW_SIM_CINEMATIC_SUMMARY_OVERLAY") {
         env.exec(&std::fs::read_to_string(path).unwrap()).unwrap();
     }
@@ -61,7 +58,6 @@ fn original_movie_dialog_follows_current_cinematic_summary() {
 #[test]
 fn cinematic_id_lifecycle_and_summary_arity() {
     let env = setup();
-    assert_eq!(env.state().borrow().current_cinematic_id, 0);
     env.exec(
         r#"
         assert(select('#', GetCurrentCinematicSummary()) == 1)

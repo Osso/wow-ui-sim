@@ -1,4 +1,4 @@
-//! Server dialogs (item text, guild invite, petition, duel, spirit healer)
+//! Server dialogs (item text, petition, duel, instance countdowns)
 //! driven through their original Blizzard frames with A_Admin host inputs.
 #![cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 
@@ -105,35 +105,9 @@ fn duel_popup_declines_supplied_requests() {
     run_cases(DIALOG_ROOTS, DUEL_CASES, "duel popup");
 }
 
-const HEALER_CASES: &str = r#"
-local function healer(seconds, cemetery)
-    A_Admin.SetAreaSpiritHealer(seconds, cemetery)
-    local dialog = StaticPopup_FindVisible("AREA_SPIRIT_HEAL")
-    assert(dialog, "spirit healer popup")
-    assert(math.abs(dialog.timeleft - seconds) < 0.5, "queued wave time " .. dialog.timeleft)
-    assert(IsCemeterySelectionAvailable() == cemetery)
-    assert(dialog.ButtonContainer.Button1:IsShown() == cemetery, "cemetery button")
-    return dialog
-end
-healer(25, false)
-local dialog = healer(12, true)
-dialog.ButtonContainer.Button2:Click()
-assert(GetAreaSpiritHealerTime() == 0, "cancel leaves the queue")
-AcceptAreaSpiritHeal()
-assert(math.abs(GetAreaSpiritHealerTime() - 12) < 0.5, "requeue")
-A_Admin.SetAreaSpiritHealer(nil)
-assert(GetAreaSpiritHealerTime() == 0 and not IsCemeterySelectionAvailable())
-assert(not StaticPopup_FindVisible("AREA_SPIRIT_HEAL"), "out of range hides the popup")
-"#;
-
-#[test]
-fn spirit_healer_popup_answers_supplied_wave() {
-    run_cases(DIALOG_ROOTS, HEALER_CASES, "spirit healer popup");
-}
-
 const TIMER_CASES: &str = r##"
 A_Admin.SetManualClock(50)
-assert(GetInstanceBootTimeRemaining() == 0 and GetCorpseRecoveryDelay() == 0, "no countdowns")
+assert(GetInstanceBootTimeRemaining() == 0, "no countdowns")
 assert(select("#", GetInstanceLockTimeRemainingEncounter(1)) == 0, "no lock encounters")
 assert(not pcall(A_Admin.SetInstanceBoot, -1), "negative boot time")
 A_Admin.SetInstanceBoot(90)
@@ -167,51 +141,9 @@ lock = StaticPopup_FindVisible("INSTANCE_LOCK")
 assert(lock and lock.data.enforceTime and lock.lockTimeleft == 45, "INSTANCE_LOCK_START enforces")
 assert(select(3, GetInstanceLockTimeRemaining()) == 0)
 A_Admin.SetInstanceLock(nil)
-for _, delay in ipairs({0, 20}) do
-    A_Admin.SetCorpseRecoveryDelay(delay)
-    local dialog = StaticPopup_Show("RESURRECT", "Anduin")
-    assert(dialog.timeleft == delay + 60, "RESURRECT timer " .. tostring(dialog.timeleft))
-    StaticPopup_Hide("RESURRECT")
-end
-A_Admin.AdvanceTime(25)
-assert(GetCorpseRecoveryDelay() == 0, "the recovery delay runs out")
-A_Admin.SetResSicknessDuration(nil)
-A_Admin.FireEvent("CONFIRM_XP_LOSS")
-assert(not StaticPopup_FindVisible("XP_LOSS"), "no sickness, no prompt")
-A_Admin.SetResSicknessDuration("10 Min")
-A_Admin.FireEvent("CONFIRM_XP_LOSS")
-local loss = StaticPopup_FindVisible("XP_LOSS") or StaticPopup_FindVisible("XP_LOSS_NO_SICKNESS_NO_DURABILITY")
-assert(loss and loss.data == "10 Min", "CONFIRM_XP_LOSS shows the supplied duration")
 "##;
 
 #[test]
-fn instance_and_death_popups_read_supplied_countdowns() {
-    run_cases(DIALOG_ROOTS, TIMER_CASES, "instance/death countdown popups");
-}
-
-const GUILD_INVITE_CASES: &str = r#"
-assert(not pcall(A_Admin.ReceiveGuildInvite, "", "G", 0, "", false, "Initiate", 3), "reject inviter")
-A_Admin.ReceiveGuildInvite("Thrall", "Earthen Ring", 1250, "", true, "Initiate", 40)
-assert(GuildInviteFrame:IsShown() and GuildInviteFrameGuildName:GetText() == "Earthen Ring")
-assert(GuildInviteFrameInviterName:GetText() == "Thrall")
-GuildInviteFrameJoinButton:Click()
-assert(IsInGuild(), "accepting joins the guild")
-local name, rank = GetGuildInfo("player")
-assert(name == "Earthen Ring" and rank == "Initiate", tostring(name) .. "/" .. tostring(rank))
-A_Admin.LeaveGuild()
-A_Admin.ReceiveGuildInvite("Garrosh", "Kor'kron", 90, "Earthen Ring", true, "Grunt", 12)
-assert(GuildInviteFrameGuildName:GetText() == "Kor'kron")
-GuildInviteFrameDeclineButton:Click()
-assert(not GuildInviteFrame:IsShown())
-AcceptGuild()
-assert(not IsInGuild(), "a declined invite cannot be accepted")
-"#;
-
-#[test]
-fn guild_invite_frame_joins_or_declines_supplied_invite() {
-    run_cases(
-        &["Blizzard_FrameXML", "Blizzard_StaticPopup_Game"],
-        GUILD_INVITE_CASES,
-        "GuildInviteFrame",
-    );
+fn instance_popups_read_supplied_countdowns() {
+    run_cases(DIALOG_ROOTS, TIMER_CASES, "instance countdown popups");
 }

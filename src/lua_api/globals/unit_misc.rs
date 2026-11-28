@@ -476,7 +476,7 @@ fn unit_affecting_combat(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-#[cfg(feature = "retail-12-0-0")]
+#[cfg(feature = "player-combat-query")]
 fn player_is_in_combat(state: &mut LuaState) -> LuaResult<u32> {
     let in_combat = borrow_state(state)?.player.in_combat;
     state.push(Val::Bool(in_combat));
@@ -568,7 +568,7 @@ pub fn register_all(lua: &mut rilua::Lua) -> crate::Result<()> {
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     super::real::unit_threat::register_api(lua)?;
     LuaApiMut::register_function(lua, "UnitAffectingCombat", unit_affecting_combat)?;
-    #[cfg(feature = "retail-12-0-0")]
+    #[cfg(feature = "player-combat-query")]
     LuaApiMut::register_function(lua, "PlayerIsInCombat", player_is_in_combat)?;
     LuaApiMut::register_function(lua, "UnitIsFeignDeath", unit_is_feign_death)?;
     LuaApiMut::register_function(lua, "GetCorruption", get_corruption)?;

@@ -15,7 +15,9 @@
 
 mod data;
 pub use data::{MajorFactionData, RenownHighlightInfo};
+mod renown_admin;
 mod renown_rewards;
+pub(crate) use renown_admin::register_admin as register_renown_admin;
 pub use renown_rewards::RenownRewardInfo;
 
 use crate::c_api::helpers::ensure_namespace;

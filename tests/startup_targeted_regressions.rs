@@ -6,8 +6,6 @@ use wow_ui_sim::loader::{discover_blizzard_addons, load_addon};
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 type FollowupSurfacesProbe = (
-    i32,
-    bool,
     bool,
     bool,
     bool,
@@ -262,6 +260,28 @@ fn startup_omits_followup_blizzard_lua_errors() {
     }
 }
 
+/// Retail publishes `GetItemLevelColor` from R88l.1 evidence
+/// (docs/specs/item-level-color.md). f7c27bf0d8 deliberately removed the guessed
+/// inert default; the spec keeps non-Retail behavior UNKNOWN, so Forever's
+/// Camelot consumer (PaperDollFrame.lua:2423) is an open native question.
+#[cfg(not(feature = "client-wowforever"))]
+fn assert_item_level_color_surface(env: &WowLuaEnv) {
+    let (color_count, channels_ok): (i32, bool) = env
+        .eval(
+            r##"
+            local r, g, b = GetItemLevelColor()
+            return select("#", GetItemLevelColor()),
+                type(r) == "number" and type(g) == "number" and type(b) == "number"
+            "##,
+        )
+        .expect("GetItemLevelColor probe should run");
+    assert_eq!(
+        color_count, 3,
+        "GetItemLevelColor should return three values"
+    );
+    assert!(channels_ok, "GetItemLevelColor channels should be numbers");
+}
+
 #[test]
 fn startup_followup_surfaces_expose_safe_defaults() {
     test_timeout! {
@@ -269,11 +289,8 @@ fn startup_followup_surfaces_expose_safe_defaults() {
         let result: FollowupSurfacesProbe = env
             .eval(
                 r##"
-                local r, g, b = GetItemLevelColor()
                 local appearanceSlotInfo, illusionSlotInfo = C_TransmogOutfitInfo.GetAllSlotLocationInfo()
                 return
-                    select("#", GetItemLevelColor()),
-                    type(r) == "number" and type(g) == "number" and type(b) == "number",
                     type(C_Club.GetClubStreamNotificationSettings("guild-0")) == "table",
                     type(C_WarbandScene.SearchWarbandSceneEntries({})) == "table",
                     type(appearanceSlotInfo) == "table",
@@ -299,9 +316,9 @@ fn startup_followup_surfaces_expose_safe_defaults() {
             )
             .expect("catalog shop nav soundkit probe should run");
 
+        #[cfg(not(feature = "client-wowforever"))]
+        assert_item_level_color_surface(&env);
         let (
-            color_count,
-            item_level_color_ok,
             club_stream_ok,
             warband_scene_ok,
             appearance_slot_info_ok,
@@ -316,10 +333,8 @@ fn startup_followup_surfaces_expose_safe_defaults() {
             set_cursor_hovered_trade_item_ok,
             request_guild_rewards_ok,
         ) = result;
-        assert_eq!(color_count, 3, "GetItemLevelColor should return three values");
         assert!(
-            item_level_color_ok
-                && club_stream_ok
+            club_stream_ok
                 && warband_scene_ok
                 && appearance_slot_info_ok
                 && illusion_slot_info_ok

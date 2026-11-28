@@ -10,17 +10,23 @@ use rilua::{LuaResult, Val, runtime_error};
 mod day_cooldown_data;
 
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
-    // PTR 70493 ProfessionsRecipeSchematicForm.lua:563 consumes this API.
-    // Same contract as Retail WM85; INFERRED for PTR pending native evidence.
-    if !matches!(
-        crate::client_profile::ACTIVE,
-        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
-    ) || !cfg!(feature = "retail-12-1-5")
-    {
+    if !publishes_recipe_cooldown() {
         return Ok(());
     }
     let namespace = super::ensure_namespace(state, "C_TradeSkillUI")?;
     table_set_rust_fn_static(state, namespace, "GetRecipeCooldown", get_recipe_cooldown)
+}
+
+/// PTR 70493 ProfessionsRecipeSchematicForm.lua:563 consumes this API; same
+/// contract as Retail WM85, INFERRED for PTR pending native evidence. INFERRED
+/// (Forever 70707): `Professions.IsRecipeOnCooldown`
+/// (Blizzard_ProfessionsTemplates/Blizzard_Professions.lua:1571) calls it while the
+/// selected crafting page validates a recipe; Forever publication is unverified.
+fn publishes_recipe_cooldown() -> bool {
+    use crate::client_profile::{ACTIVE, ClientProfile};
+    let modern_retail = matches!(ACTIVE, ClientProfile::Retail | ClientProfile::Ptr)
+        && cfg!(feature = "retail-12-1-5");
+    modern_retail || ACTIVE == ClientProfile::WowForever
 }
 
 fn recipe_id(state: &LuaState) -> LuaResult<i32> {

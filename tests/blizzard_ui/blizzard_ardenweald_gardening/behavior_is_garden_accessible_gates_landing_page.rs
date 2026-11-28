@@ -12,6 +12,9 @@ const GARDENING_STARTUP_ROOT: BlizzardAddonOverride<'static> = BlizzardAddonOver
     extra_roots: &[ROOT],
 };
 
+// Forever has no natural caller: Blizzard_GarrisonUI.toc:11 declares
+// `ExcludeLoadGameType: camelot` (see docs/specs/garrison-mission-lists.md).
+#[cfg(not(feature = "client-wowforever"))]
 #[test]
 fn garden_accessibility_gates_landing_page_panel_load() {
     with_blizzard_addon_smoke_shape(

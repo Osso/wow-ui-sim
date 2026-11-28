@@ -8,7 +8,7 @@ use rilua::table_security::unwrap_secret;
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val, runtime_error};
 
-#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[cfg(feature = "unit-role-assignment")]
 pub(crate) use super::unit_roles_assignment::read_role;
 
 pub(super) fn require_string(state: &LuaState, value: Val) -> LuaResult<String> {
@@ -19,7 +19,7 @@ pub(super) fn require_string(state: &LuaState, value: Val) -> LuaResult<String> 
 }
 
 /// Compare existing GUIDs only; do not infer native GUID components or raid IDs.
-#[cfg(feature = "retail-12-0-0")]
+#[cfg(any(feature = "retail-12-0-0", feature = "unit-role-assignment"))]
 pub(super) fn represented_identity(
     sim: &crate::lua_api::state::SimState,
     unit: &str,
@@ -42,7 +42,7 @@ pub(super) fn represented_identity(
         .map(|(index, _)| (guid, Some(index)))
 }
 
-#[cfg(not(any(feature = "client-retail", feature = "client-ptr")))]
+#[cfg(not(feature = "unit-role-assignment"))]
 pub(crate) fn read_role(state: &LuaState, _unit: &str) -> LuaResult<(&'static str, f64)> {
     // These profiles have no role assignment producer; preserve their unset reads.
     let _sim = crate::lua_api::methods::borrow_state(state)?;

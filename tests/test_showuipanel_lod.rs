@@ -789,6 +789,37 @@ fn professions_frame_loads_and_populates_specialization_tab() {
 }
 
 post_wrath_ui_fixture! {
+#[cfg(not(feature = "client-wowforever"))]
+const PROFESSIONS_FRAME_PAGES_LUA: &str = r#"
+    if not ProfessionsFrame then return "professions_frame_missing" end
+    if not ProfessionsFrame.CraftingPage then return "crafting_page_missing" end
+    if not ProfessionsFrame.SpecPage then return "spec_page_missing" end
+    if not ProfessionsFrame.OrdersPage then return "orders_page_missing" end
+    if not ProfessionsFrame.CraftingPage.LinkButton then return "link_button_missing" end
+    if not ProfessionsFrame.Pages or #ProfessionsFrame.Pages ~= 3 then
+        return "pages=" .. tostring(ProfessionsFrame.Pages and #ProfessionsFrame.Pages or nil)
+    end
+    return "ok"
+"#;
+
+/// Forever's Camelot frame declares only CraftingPage and BookPage in `Pages`
+/// (Blizzard_Professions/Camelot/Blizzard_ProfessionsFrame.xml:68,79); the TOC
+/// excludes the Mainline frame XML that adds SpecPage and OrdersPage.
+#[cfg(feature = "client-wowforever")]
+const PROFESSIONS_FRAME_PAGES_LUA: &str = r#"
+    if not ProfessionsFrame then return "professions_frame_missing" end
+    if not ProfessionsFrame.CraftingPage then return "crafting_page_missing" end
+    if not ProfessionsFrame.BookPage then return "book_page_missing" end
+    if ProfessionsFrame.SpecPage or ProfessionsFrame.OrdersPage then return "mainline_page_present" end
+    if not ProfessionsFrame.CraftingPage.LinkButton then return "link_button_missing" end
+    if not ProfessionsFrame.Pages or #ProfessionsFrame.Pages ~= 2
+        or ProfessionsFrame.Pages[1] ~= ProfessionsFrame.CraftingPage
+        or ProfessionsFrame.Pages[2] ~= ProfessionsFrame.BookPage then
+        return "pages=" .. tostring(ProfessionsFrame.Pages and #ProfessionsFrame.Pages or nil)
+    end
+    return "ok"
+"#;
+
 #[test]
 fn professions_frame_xml_pages_are_parent_keyed() {
     test_timeout! {
@@ -806,17 +837,7 @@ fn professions_frame_xml_pages_are_parent_keyed() {
             }
         }
 
-        let result: String = env.eval(r#"
-            if not ProfessionsFrame then return "professions_frame_missing" end
-            if not ProfessionsFrame.CraftingPage then return "crafting_page_missing" end
-            if not ProfessionsFrame.SpecPage then return "spec_page_missing" end
-            if not ProfessionsFrame.OrdersPage then return "orders_page_missing" end
-            if not ProfessionsFrame.CraftingPage.LinkButton then return "link_button_missing" end
-            if not ProfessionsFrame.Pages or #ProfessionsFrame.Pages ~= 3 then
-                return "pages=" .. tostring(ProfessionsFrame.Pages and #ProfessionsFrame.Pages or nil)
-            end
-            return "ok"
-        "#).unwrap();
+        let result: String = env.eval(PROFESSIONS_FRAME_PAGES_LUA).unwrap();
 
         assert_eq!(
             result,

@@ -715,7 +715,7 @@ pub fn register_all(lua: &mut rilua::Lua) -> rilua::LuaResult<()> {
     crate::lua_api::globals::real::loot_specialization::register(state)?;
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     crate::lua_api::globals::real::set_role_button::register(state)?;
-    #[cfg(all(feature = "profile-retail", feature = "retail-12-1-5"))]
+    #[cfg(feature = "cinematic-summary")]
     crate::lua_api::globals::real::cinematic_summary::register(state)?;
     crate::lua_api::globals::real::ui_widget_container::register_widget_container_mixin(state)?;
 

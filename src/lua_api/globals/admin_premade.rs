@@ -45,6 +45,7 @@ pub(super) fn add_premade_listing(state: &mut LuaState) -> LuaResult<u32> {
         num_bnet_friends: 0,
         num_char_friends: 0,
         num_guild_mates: 0,
+        members: Vec::new(),
     });
     drop(st);
     state.push(Val::Num(id as f64));

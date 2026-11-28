@@ -1,20 +1,12 @@
-//! Server countdowns read by death and instance dialogs.
-//!
-//! Declarations (byte-identical Retail/Forever): `InstanceDocumentation.lua`
-//! (`GetInstanceBootTimeRemaining -> number`, `GetInstanceLockTimeRemaining ->
-//! timeLeft, extending, encountersTotal, encountersCompleted`,
-//! `GetInstanceLockTimeRemainingEncounter(index) -> encounterName, texture,
-//! isKilled, ineligible`) and `PlayerScriptDocumentation.lua`
-//! (`GetCorpseRecoveryDelay -> number`, `GetResSicknessDuration -> string?`).
-//! Consumers: `Blizzard_StaticPopup_Game/GameDialogDefs.lua` `INSTANCE_BOOT`,
-//! `INSTANCE_LOCK` (opened by `INSTANCE_BOOT_START`, `INSTANCE_LOCK_START`,
-//! `INSTANCE_LOCK_WARNING`), `RESURRECT` (`timeleft = GetCorpseRecoveryDelay() + 60`)
-//! and `Blizzard_Game` `CONFIRM_XP_LOSS` (`GetResSicknessDuration`).
+//! Server countdowns read by the instance dialogs.
+//! Declarations (byte-identical Retail/Forever): `InstanceDocumentation.lua`.
+//! Consumers: `Blizzard_StaticPopup_Game/GameDialogDefs.lua` (`INSTANCE_BOOT`,
+//! `INSTANCE_LOCK`, opened by the corresponding instance events).
 //! Deadlines live on the simulator clock. INFERRED (R-ag10-10): an expired or
 //! absent countdown reads 0, and an encounter index outside the supplied list
 //! returns nothing.
 
-use super::{fire, push_optional_string};
+use super::fire;
 use crate::lua_api::methods::{
     borrow_state, borrow_state_mut, create_string, table_get, val_to_string,
 };
@@ -42,8 +34,6 @@ pub struct InstanceLock {
 pub struct SessionTimers {
     pub instance_boot_at: Option<f64>,
     pub instance_lock: Option<InstanceLock>,
-    pub corpse_recovery_at: f64,
-    pub res_sickness: Option<String>,
 }
 
 const LOCK_USAGE: &str =
@@ -202,46 +192,6 @@ fn get_instance_lock_time_remaining_encounter(state: &mut LuaState) -> LuaResult
     Ok(4)
 }
 
-fn set_corpse_recovery_delay(state: &mut LuaState) -> LuaResult<u32> {
-    let usage = "Usage: A_Admin.SetCorpseRecoveryDelay(seconds)";
-    let seconds = read_seconds(state, 1, usage)?.ok_or_else(|| runtime_error(usage))?;
-    let at = now(state)? + seconds;
-    borrow_state_mut(state)?
-        .interaction_dialogs
-        .timers
-        .corpse_recovery_at = at;
-    Ok(0)
-}
-
-fn get_corpse_recovery_delay(state: &mut LuaState) -> LuaResult<u32> {
-    let at = borrow_state(state)?
-        .interaction_dialogs
-        .timers
-        .corpse_recovery_at;
-    let left = remaining(state, Some(at))?;
-    state.push(Val::Num(left));
-    Ok(1)
-}
-
-fn set_res_sickness_duration(state: &mut LuaState) -> LuaResult<u32> {
-    let text = Option::<String>::from_stack(state, 1)?;
-    borrow_state_mut(state)?
-        .interaction_dialogs
-        .timers
-        .res_sickness = text;
-    Ok(0)
-}
-
-fn get_res_sickness_duration(state: &mut LuaState) -> LuaResult<u32> {
-    let text = borrow_state(state)?
-        .interaction_dialogs
-        .timers
-        .res_sickness
-        .clone();
-    push_optional_string(state, text.as_deref());
-    Ok(1)
-}
-
 type Global = (&'static str, fn(&mut LuaState) -> LuaResult<u32>);
 
 pub(crate) fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
@@ -258,8 +208,6 @@ pub(crate) fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
             "GetInstanceLockTimeRemainingEncounter",
             get_instance_lock_time_remaining_encounter,
         ),
-        ("GetCorpseRecoveryDelay", get_corpse_recovery_delay),
-        ("GetResSicknessDuration", get_res_sickness_duration),
     ];
     for (name, function) in functions {
         LuaApiMut::register_function(lua, name, *function)?;
@@ -269,7 +217,5 @@ pub(crate) fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
 
 pub(crate) fn register_admin(b: TableBuilder) -> LuaResult<TableBuilder> {
     b.set_function("SetInstanceBoot", set_instance_boot)?
-        .set_function("SetInstanceLock", set_instance_lock)?
-        .set_function("SetCorpseRecoveryDelay", set_corpse_recovery_delay)?
-        .set_function("SetResSicknessDuration", set_res_sickness_duration)
+        .set_function("SetInstanceLock", set_instance_lock)
 }

@@ -21,3 +21,13 @@ A_Admin.SetReputationFactions({
       currentStanding = 4500, isWatched = true },
 })
 ```
+
+## SetMajorFactionRenown
+
+`A_Admin.SetMajorFactionRenown(factionID, renownLevel, maxLevel)` supplies Renown progress for one major faction on every profile that registers `C_MajorFactions`. It updates an existing row or adds an unlocked row with no imported name or metadata. `GetRenownLevels` then lists levels `1..maxLevel`; levels above `renownLevel` are locked and the last level is the capstone (INFERRED). Validation: `factionID` positive, `maxLevel` a positive integer, `renownLevel` within `0..maxLevel`; invalid input raises `A_Admin.SetMajorFactionRenown: ...` before any change.
+
+A level change fires the documented synchronous `MAJOR_FACTION_RENOWN_LEVEL_CHANGED(majorFactionID, newRenownLevel, oldRenownLevel)` (Forever `MajorFactionsDocumentation.lua:233-242`); a new row counts as old level 0 (INFERRED). Forever's Legacy system reads faction `Constants.LegacyConsts.LEGACY_REWARD_TRACK_FACTION_ID` (2802): `LegacyMicroButton` and the Camelot achievement toggle open Legacy Challenges only when its renown is positive.
+
+```lua
+A_Admin.SetMajorFactionRenown(Constants.LegacyConsts.LEGACY_REWARD_TRACK_FACTION_ID, 3, 10)
+```

@@ -427,16 +427,33 @@ pub(super) fn unit_is_dead_or_ghost(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-/// `UnitIsDead(unit)` — true when the unit is dead.
+/// `UnitIsDead(unit)` — true when the unit is dead and not a ghost.
 pub(super) fn unit_is_dead(state: &mut LuaState) -> LuaResult<u32> {
-    unit_is_dead_or_ghost(state)
+    let unit = Option::<String>::from_stack(state, 1)?.unwrap_or_default();
+    let dead = {
+        let st = borrow_state(state)?;
+        is_unit_dead(&st, &unit) && !(unit == "player" && player_is_ghost(&st))
+    };
+    state.push(Val::Bool(dead));
+    Ok(1)
 }
 
-/// `UnitIsGhost(unit)` — the sim has no separate ghost state today.
+/// `UnitIsGhost(unit)` — only the player's released-spirit form is modeled.
 pub(super) fn unit_is_ghost(state: &mut LuaState) -> LuaResult<u32> {
-    let _ = Option::<String>::from_stack(state, 1)?;
-    state.push(Val::Bool(false));
+    let unit = Option::<String>::from_stack(state, 1)?.unwrap_or_default();
+    let ghost = unit == "player" && player_is_ghost(&*borrow_state(state)?);
+    state.push(Val::Bool(ghost));
     Ok(1)
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+fn player_is_ghost(st: &SimState) -> bool {
+    st.death_release.is_ghost
+}
+
+#[cfg(not(any(feature = "client-retail", feature = "client-wowforever")))]
+fn player_is_ghost(_st: &SimState) -> bool {
+    false
 }
 
 /// `UnitIsConnected(unit)` — party tokens read modeled connection state;

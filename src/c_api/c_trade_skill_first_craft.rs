@@ -8,13 +8,7 @@ use rilua::{LuaResult, Val};
 const USAGE: &str = "Usage: local result = C_TradeSkillUI.IsRecipeFirstCraft(recipeID)";
 
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
-    // PTR 70493 ProfessionsRecipeSchematicForm.lua:661 consumes this API.
-    // Same contract as Retail WM88; INFERRED for PTR pending native evidence.
-    if !matches!(
-        crate::client_profile::ACTIVE,
-        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
-    ) || !cfg!(feature = "retail-12-1-5")
-    {
+    if !publishes_first_craft() {
         return Ok(());
     }
     let namespace = super::ensure_namespace(state, "C_TradeSkillUI")?;
@@ -24,6 +18,17 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
         "IsRecipeFirstCraft",
         is_recipe_first_craft,
     )
+}
+
+/// PTR 70493 ProfessionsRecipeSchematicForm.lua:661 consumes this API; same
+/// contract as Retail WM88, INFERRED for PTR pending native evidence. Forever
+/// 70707 documents it (TradeSkillUIDocumentation.lua:971-983) and the same
+/// selected SchematicForm line calls it; Forever parity is INFERRED.
+fn publishes_first_craft() -> bool {
+    use crate::client_profile::{ACTIVE, ClientProfile};
+    let modern_retail = matches!(ACTIVE, ClientProfile::Retail | ClientProfile::Ptr)
+        && cfg!(feature = "retail-12-1-5");
+    modern_retail || ACTIVE == ClientProfile::WowForever
 }
 
 /// EMULATED (WM88): the simulator has no SkillLineAbility, SpellEffect or
