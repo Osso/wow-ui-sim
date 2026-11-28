@@ -32,7 +32,7 @@ Stores the incoming request (shared with `AcceptDuel`) and fires
 
 Set the Boolean host input read by
 `C_SecureTransfer.ShouldShowTradeOfferWarning` in the selected secure trade
- dialog. It reads `false` until supplied. This setter changes simulator state
+dialog. It reads `false` until supplied. This setter changes simulator state
 only; it does not start a trade or fire an event.
 
 The original `Blizzard_SecureTransferUI` test supplies distinct partners and
